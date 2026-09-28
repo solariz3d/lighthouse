@@ -1415,3 +1415,10 @@ composer, identical to shipped, unmeasured for want of a real capture).
 
 ## 2026-09-28 — D182 B12: a detector that relied on a default stopped detecting
 - Hand-back `handback/p-d182-b12-C_2026-09-28.md`. look.test.js now names a font no default gives and asserts the head does not already wear it; B12 caught by name on the tree and on A's continuity stage.
+
+## 2026-09-28 — D184: the skill's references and known-answer evals; per-vertex K is biased, ring sums are exact
+- `.claude/skills/track-equations/references/` 01–08 + README + MATH_SOURCES; `evals/` 25 checks, 24 mutants + CONTROL. Hand-back `handback/p-d184-references-C_2026-09-28.md`.
+- Under the lock 12:10:19Z: 50/50; mutation applied 24 / caught 24 / NOT APPLIED 0 (`scratchpad/d184/evals3.log`, sha256 07a647574f1222e2).
+- The torus per-vertex K̄ was 8.7% off even on a near-square grid — my "anisotropic grid" diagnosis was wrong; the triangulation biases how the defect is SHARED. Check by ring integrals (exact by Gauss–Bonnet). Rule: K is an integral or smoothed, never a vertex's value.
+- evals/checks.js needs the UNTRACKED tools/meshcurv.cjs committed alongside.
+- 2026-09-28 G2/G6: README says 'one heavy job at a time'; checks.js exports meshes (named params) + params.smoothRadius; 51/51 under the lock (evals4.log 22cac1af18d3223f).

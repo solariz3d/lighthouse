@@ -2028,3 +2028,11 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - The fourier privacy test skips only outside a git work tree (a copy), and runs in full in the checkout.
 - Results: 17 pass + 1 skip on A + C and on A only; 18/18 on the checkout.
 - `test/fourier.test.js` is now sha `f9f1ba89…`, superseding the one in the M4 hand-back's §3.
+
+## 2026-09-28 ~06:3x (D) · D184 the piecewise fitter, scripts and regression evals → `exo_memory/handback/p-d184-scripts-E_2026-09-28.md`
+- **The three registered predictions PASS.** Rainbow rebuilds at 99.84% line / 99.34% bank once split into 11 pieces. Sakura needs 1,304 DOF against M4's 12,003, and Centrifuge 1,853 against 24,003. The evals are 19/19, and they skip (saying so) with no AC folder.
+- **The Test Track caps at 500 CP** (bank 88.9%): the mesh normals are faceted and the bank jitters up to ~10° between stations. A fix is registered with its falsifier, not applied.
+- **reads/ was found empty** and restored from C's b12tree, proven by corpus.test 7/7.
+- **Carry:** a rule whose data are null must skip the row, not zero it; I proved that on the unfixed code. Score like-for-like in DOF, and say which line is the target (mesh or read).
+- 06:3x · D184 gaps: **G1** writeLocal ran git inside a missing reads/ → false "not ignored" (reproduced on HEAD); it now runs git from the nearest existing folder and creates reads/ only after the checks; two fresh-checkout tests; 33/33 under the lock. **G10:** the script headers name their SKILL.md steps. Carry: a heredoc into a JS template turns `\n` into a real newline, so edit escapes with Edit, not through shell layers.
+- 06:3x · D184 reads/ restore finished: 35 → 52 files. The 4 corpus files were copied from C's b12tree (sha-equal; corpus.test 7/7). The 13 equations were regenerated via fit-fourier --sweep --write, BYTE-IDENTICAL to the pre-wipe copies, and all ignored and untracked. Anything else is unknowable (reads/ is ignored; no listing before the wipe). Carry: take a listing of any ignored folder before a worktree removal.
