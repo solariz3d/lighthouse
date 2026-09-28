@@ -2036,3 +2036,10 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - **Carry:** a rule whose data are null must skip the row, not zero it; I proved that on the unfixed code. Score like-for-like in DOF, and say which line is the target (mesh or read).
 - 06:3x · D184 gaps: **G1** writeLocal ran git inside a missing reads/ → false "not ignored" (reproduced on HEAD); it now runs git from the nearest existing folder and creates reads/ only after the checks; two fresh-checkout tests; 33/33 under the lock. **G10:** the script headers name their SKILL.md steps. Carry: a heredoc into a JS template turns `\n` into a real newline, so edit escapes with Edit, not through shell layers.
 - 06:3x · D184 reads/ restore finished: 35 → 52 files. The 4 corpus files were copied from C's b12tree (sha-equal; corpus.test 7/7). The 13 equations were regenerated via fit-fourier --sweep --write, BYTE-IDENTICAL to the pre-wipe copies, and all ignored and untracked. Anything else is unknowable (reads/ is ignored; no listing before the wipe). Carry: take a listing of any ignored folder before a worktree removal.
+
+## 2026-09-28 ~08:3x (D) · D185 sculpt and close → `exo_memory/handback/p-d185-sculpt-close-E_2026-09-28.md`
+- **CLOSE:** a weighted least-norm Gauss–Newton (ref 04 §3), judged on A's adapter path. **Test 4 GREEN, 20 of 20:** worst gap 0.75 mm, the last piece's share ≤ 4.3e-6. Jumps are refused (NOT_YET).
+- **SCULPT:** smootherstep × knot averages on whole-support control points (LYCHE-MORKEN (5.30), primary). Bit for bit and channel C1 pass on all 30 brushes.
+- **B's sealed geometric rule fails 19 of 30, and fails with NO brush in 20 of 30:** it measures the base's curvature slope. On the brush's own change it is 27 of 30; the 3 misses are r = 20 m, where 20 m knots cap how narrow a brush can be.
+- Mutation 15/15 caught, control 68/68. Reference 10 is new (A holds 09).
+- **Carry:** a sync that rebuilds a tree wipes whatever lives inside it, so keep runners outside. Count a figure from its file before posting it; I posted 18 where the file said 20.

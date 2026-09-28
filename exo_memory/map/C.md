@@ -1422,3 +1422,9 @@ composer, identical to shipped, unmeasured for want of a real capture).
 - The torus per-vertex K̄ was 8.7% off even on a near-square grid — my "anisotropic grid" diagnosis was wrong; the triangulation biases how the defect is SHARED. Check by ring integrals (exact by Gauss–Bonnet). Rule: K is an integral or smoothed, never a vertex's value.
 - evals/checks.js needs the UNTRACKED tools/meshcurv.cjs committed alongside.
 - 2026-09-28 G2/G6: README says 'one heavy job at a time'; checks.js exports meshes (named params) + params.smoothRadius; 51/51 under the lock (evals4.log 22cac1af18d3223f).
+
+## 2026-09-28 — D185: the water (src/core/water.js), test 5 exact; an uneven-spacing bug at the seam, found by N
+- RK4 + projection on S(s,u) = pos + L·X(u) + U·Y(u) from the adapter's samples; reds lift-off/spill/shock; energy measured not enforced. Hand-back `handback/p-d185-water-C_2026-09-28.md`.
+- Test 5 (B sealed): 5a ranges/N/g to 4 digits, 5b spill stations within 0.01 m of theory; also 2/2 through A's real adapter (scratch copy).
+- The builder's closed seam leaves a 0.093 m span; an equal-spacing central difference for the frame put N 0.215 m/s² low there. Found only because N/g's minimum disagreed with the closed form. Rule: uneven spans are normal in builder paths — use the three-point difference.
+- Mutation 18/18 only after three checks were strengthened (a surface of revolution hides S_su; a slow profile change hides the blend; a smooth ring hides a 5 m extrapolation). Skill 06 §8 added first (K25–K28).
