@@ -243,3 +243,13 @@ off of"*
   - At r = 12 m Centrifuge flips; that radius was not scored, and reads as sensitivity, not rescue.
   - **The "locally hyperbolic" claim (§4, and the librarian's 23:4x wording to the keeper) is REFUTED for corners on
     both tracks.** WRONG, mine, as a claim; it was the keeper's intuition that I dressed as geometry without a check.
+- **M4 (E, p-m4-equations-E; recorded at the freeze): PASS by one track.** 7 of 13 layouts rebuild within 5 m / 5° on
+  ≥ 95% of the lap at N ≤ 200; the falsifier needed ≥ 7 failing and got 5.
+  - **The BANK is a short equation everywhere:** N ≤ 300 on all 13, ≤ 150 on 9.
+  - **The LINE's length grows with the lap:** every layout ≤ 10 km passes at N ≤ 200. Laps ≥ 21 km need 1,000–4,000,
+    except Onuris at 150. Rainbow never converges (282 glitches).
+    - Sakura 2,000; Centrifuge 4,000.
+    - (A sustained heading error of 0.25 mrad is 5 m over 20 km.)
+  - **Reading:** one smooth equation carries the shape at any length, and the line up to about 10 km. Long laps need
+    local terms, or a heading series with closure, for the line.
+  - Nothing is built on it tonight (the freeze). The equations stay local in reads/ (§12).
