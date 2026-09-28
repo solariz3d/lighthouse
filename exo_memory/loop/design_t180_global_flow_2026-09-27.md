@@ -156,3 +156,31 @@ tracks vs researching how to make a track. Like, AHHH idk if this is possible"*
   - parameter-space sculpting.
 
   Output due into `research/` with sources.
+
+## 11. The keeper, 00:17: "BE like water"
+
+*"Think of it like this as well, fluid dynamics through a pipe as well, usually flowing like water is the best lines, and
+also the best way to make a t-180 track, BE like water"*
+
+- **One principle, from four sides:**
+  - water in a bend climbs until its free surface tilts at tan θ = v²/(gR), the balanced bank. Water finds zero cant
+    deficiency by itself;
+  - a free stream takes the least-action path, which is the geodesic of the Jacobi metric (research §6);
+  - smooth flow has no separation, i.e. no jerk (research §3);
+  - so the water line = the natural line = the near-geodesic = zero cant deficiency.
+  - **"Be like water" is the design rule.**
+- **What water reads off a track:**
+  - separation and splash mark kinks;
+  - converging streams mark K > 0 (forgiving);
+  - spreading streams mark K < 0 (demanding);
+  - spilling over the lip means the wall is too low or the bank too shallow for the speed. That is a better RED than
+    a load number.
+- **The feature, "pour water down the track":** a particle sheet across the width at design speed rides the surface
+  with gravity and no steering, drawn in the preview. **It is R2's first form,** checked against the replays: does
+  Sakura's water run where the real T-180 drove?
+- **Where the analogy breaks:**
+  - water has pressure, viscosity and interaction; a car has grip, aero and a driver;
+  - it holds at the single-free-particle level, which is the geodesic level;
+  - grip-heavy tracks (Thunderhead) depart from it most.
+- **A research agent is sent** to bobsleigh/luge, water-slide and open-channel design (superelevation, supercritical
+  bends, particle trajectories). Output due into `research/`.
