@@ -184,3 +184,31 @@ also the best way to make a t-180 track, BE like water"*
   - grip-heavy tracks (Thunderhead) depart from it most.
 - **A research agent is sent** to bobsleigh/luge, water-slide and open-channel design (superelevation, supercritical
   bends, particle trajectories). Output due into `research/`.
+
+## 12. The track as ONE equation, and reverse-engineering the known tracks (the keeper, 00:25 and 00:29)
+
+*"what about a system, that just makes the whole track one shot. It would allow you to map out the entire track as an
+equation????"* then *"can you reverse engineer the equations for the tracks we know? Then we would have exampls to work
+off of"*
+
+- **The equation.** Each periodic function (heading rate, pitch rate, bank, width, the cross-section parameters,
+  friction) is a Fourier series along s. The heading rate's constant term 2π/Λ fixes one full turn. A whole lap is a
+  coefficient list.
+  - **Generate in one shot:** by hand (sliders on the low coefficients), by sampling from the library's spectra (M1), or
+    by optimising toward a load rhythm.
+  - **Close** by the projection step. **Test** by pouring water.
+  - **Local terms** (jumps, abrupt features) sit on top of the smooth series.
+- **M4, "the length of each track's equation" (registered here, before any fit):**
+  - For every T-180 layout in `reads/` (13, as in M1), fit each function with an increasing number of Fourier terms N.
+  - Rebuild the centreline and frame from the fitted functions (the builder's own geometry core), with the closure
+    projection.
+  - Report, per track, the smallest N at which the rebuilt line stays within **5 m** of the read line on ≥ 95% of the lap
+    and the bank within **5°** on ≥ 95%.
+  - **Prediction:** N ≤ 200 per function for most tracks (the smooth-equation idea holds). **It fails if** most tracks
+    need N > 1,000, or never converge because jumps and discontinuities dominate. In that case the local terms are the
+    main representation, not the series.
+- **The examples stay LOCAL.** An equation that rebuilds Sakura within 5 m IS Sakura's layout, another author's work.
+  - The coefficient files live in `reads/` (gitignored) on the keeper's PC, as examples to work from and to load into
+    the builder.
+  - The public repo gets only the summary per track (N, error, spectrum shape), never the coefficients.
+  - Sharing a derived equation needs the keeper's stance on other authors' work (ARCHITECTURE §11.6).
