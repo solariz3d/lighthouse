@@ -1925,3 +1925,17 @@ NEXT: librarian call_librarian with the pointer when the hand-back is written �
   - An equivalent mutant can point at a dead parameter.
   - Re-check which commit is main before judging a status table.
 NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: D175 is read and lands after D171–D174, unless the output says otherwise
+
+## 2026-09-27 ~20:1x (D) · D177 incremental validation → `exo_memory/handback/p-d177-incval-E_2026-09-27.md`
+- **The cause:** stacked() rebuilt a point grid of the WHOLE track per edit, 95% of validate's time. Rewritten as a station-pair broadphase with two exact bounds; bit-identical to HEAD on 8 tracks.
+- **The bench**, under the lock, on snapshots (40 km, seed 17), before → after on the shared path:
+  - place 352 → 21 ms;
+  - drags 483–1,493 → 29–76 ms (a curved word mid-track misses 50);
+  - full 3,001 → 83 ms.
+- **The shared path:** read through C's t180:track-request.
+- **The lap:** deferred while a drag is open.
+- **Mutants:** 26/22/0. The 4 survivors were test gaps, now tested; the re-run is NOT run (stopped for low memory).
+- **Routed to A:** a length drag on a closed loop leaves the document closed and the geometry open.
+- **Carry:**
+  - "Exactly" must name WHAT is equal: validation of the same path, not the path against a fresh build.
+  - Never put a timeout around a lock wait.
