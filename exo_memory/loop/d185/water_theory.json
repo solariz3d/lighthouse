@@ -1,0 +1,126 @@
+{
+ "law": "references/06_surfaces.md §7, on f(x,z) = tanθ·(√(x²+z²) − R)",
+ "g": 9.81,
+ "R": 500,
+ "widthM": 30,
+ "lapM": 3141.593,
+ "integrator": "RK4, dt 1e-4 s",
+ "A_balanced": {
+  "thetaDeg": 45,
+  "v": 70.0357,
+  "vKmh": 252.1,
+  "particles": [
+   {
+    "d0": -14,
+    "dMin": -14,
+    "dMax": -4.6874,
+    "NminOverG": 1.4002,
+    "energyMaxRelDrift": 6.76e-14,
+    "spill": null
+   },
+   {
+    "d0": -7,
+    "dMin": -7,
+    "dMax": -2.3385,
+    "NminOverG": 1.4072,
+    "energyMaxRelDrift": 6.26e-14,
+    "spill": null
+   },
+   {
+    "d0": 0,
+    "dMin": 0,
+    "dMax": 0,
+    "NminOverG": 1.4142,
+    "energyMaxRelDrift": 1.38e-13,
+    "spill": null
+   },
+   {
+    "d0": 7,
+    "dMin": 2.3282,
+    "dMax": 7,
+    "NminOverG": 1.4073,
+    "energyMaxRelDrift": 7.56e-14,
+    "spill": null
+   },
+   {
+    "d0": 14,
+    "dMin": 4.6463,
+    "dMax": 14,
+    "NminOverG": 1.4005,
+    "energyMaxRelDrift": 9.06e-14,
+    "spill": null
+   }
+  ]
+ },
+ "B_tooShallow": {
+  "thetaDeg": 10,
+  "v": 70.0357,
+  "closedForm": {
+   "aLat": 7.9575,
+   "tSpillS": 1.9417,
+   "stationM": 135.99
+  },
+  "particles": [
+   {
+    "d0": -14,
+    "dMin": -14,
+    "dMax": 15.0009,
+    "NminOverG": 1.1353,
+    "energyMaxRelDrift": 2.92e-14,
+    "spill": {
+     "side": "outer",
+     "stationM": 187.24,
+     "timeS": 2.702
+    }
+   },
+   {
+    "d0": -7,
+    "dMin": -7,
+    "dMax": 15.0002,
+    "NminOverG": 1.1396,
+    "energyMaxRelDrift": 3.86e-14,
+    "spill": {
+     "side": "outer",
+     "stationM": 163.02,
+     "timeS": 2.363
+    }
+   },
+   {
+    "d0": 0,
+    "dMin": 0,
+    "dMax": 15.0003,
+    "NminOverG": 1.1439,
+    "energyMaxRelDrift": 2.74e-14,
+    "spill": {
+     "side": "outer",
+     "stationM": 134.56,
+     "timeS": 1.959
+    }
+   },
+   {
+    "d0": 7,
+    "dMin": 7,
+    "dMax": 15.001,
+    "NminOverG": 1.1483,
+    "energyMaxRelDrift": 2.86e-14,
+    "spill": {
+     "side": "outer",
+     "stationM": 98.23,
+     "timeS": 1.437
+    }
+   },
+   {
+    "d0": 14,
+    "dMin": 14,
+    "dMax": 15.0004,
+    "NminOverG": 1.1528,
+    "energyMaxRelDrift": 9.92e-15,
+    "spill": {
+     "side": "outer",
+     "stationM": 34.72,
+     "timeS": 0.51
+    }
+   }
+  ]
+ }
+}

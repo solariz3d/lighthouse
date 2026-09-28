@@ -95,7 +95,7 @@ Through A's real shell and my preview model, on an 8-word track, counted by whic
 - **In A's area, and a real defect:** a sculpt of a word's END ROLL (`roll1`) to a value inside its range is **committed**, and leaves the document unable to resolve ("ROLL_STEP: w2 starts at roll 0 rad but w1 ends at 0.74 rad: the surface would tear"). The shell's own contract is "a failed action changes nothing and says why".
   - Minimal reproducer: place straight, straight; sculpt w1 roll1 = 0.74.
   - It is the `todo` test in `test/perf_soak.test.js`, which fails visibly without failing the suite.
-  - First seen at seed 1, op #67 (a sculpt). Before I made the soak undo such edits (as a user would), the document then stayed torn for 233 of 300 ops, and the geometry went unexercised.
+  - First seen at seed 1, op #71 (a sculpt). *(Corrected 2026-09-27 19:1x local: this line said #67. It re-derives as #71, both before and after the soak fix (B's D176 read §2.2), and the 10k run's own `firstUnresolved.index` above is 71. The todo's label in test/perf_soak.test.js is corrected with it.)* Before I made the soak undo such edits (as a user would), the document then stayed torn for 233 of 300 ops, and the geometry went unexercised.
 - **In my harnesses:**
   - a `todo`'s failure, and the summary's "✖ failing tests:" header, were counted as failures, and failed the control. Fixed in all three harnesses.
   - the short soak compared against a full build too rarely to catch mutant P1. It now checks every 10 ops.

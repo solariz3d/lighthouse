@@ -22,7 +22,7 @@ were not touched. **Nothing committed, nothing pushed, no AC launched.**
   - all of `app/test`: 111 pass, 0 fail;
   - the repo suite: 384 tests, 378 pass, 0 fail, 6 todo.
 - **Mutants,** on a copy, never the shared tree: the first pass was 46 applied, 40 caught, 0 NOT APPLIED, with all six
-  survivors handled (§3). **Final: 45 applied, 44 caught, 0 NOT APPLIED;** the one survivor is the named equivalent.
+  survivors handled (§3). **Final: 45 applied, 44 caught, 0 NOT APPLIED;** the one survivor is the named equivalent. *(Re-run 2026-09-27 ~15:3x for D169, same result, 45 / 44 / 0 NOT APPLIED: `node scratchpad/d168/mutate_app.js`. B's read at 15:12:59 saw the placeholder, which was filled at 15:13:42.)*
 - **Three seams are named for other seats** (§4). The largest: **load colours cannot appear in the app today.** The
   shell places words with no design speed, and FINDINGS has no car acceleration, so validation computes no loads. Only
   the geometry reds and ambers show.
@@ -149,7 +149,7 @@ coalesced.
 | `hpanel: two drags at once` | **equivalent**: A's history refuses a second drag with the same message | kept, because it fails before a bounds search that costs seconds |
 
 "Copy restored equal to live: NO" on that pass was because I edited the live files during the run, not a restore
-failure. **Final pass on the finished code: 45 applied / 44 caught / 0 NOT APPLIED; copy restored equal to live: yes.** The survivor is `hpanel: two drags at once`, the equivalent above. The dead-code mutant was dropped along with its code, which is why there are 45 and not 46.
+failure. **Final pass on the finished code: 45 applied / 44 caught / 0 NOT APPLIED; copy restored equal to live: yes.** *(Re-run 2026-09-27 ~15:3x for D169: 45 / 44 / 0 NOT APPLIED again, with two changes to the script. The CSP mutant's string was lengthened to the whole `setCsp` line, because D169's `setDesignSpeed` repeated its old one. `app/test/validate-ui-speed.test.js` was added to its tests, because D169's default design speed gives every controller test loads, and only that file still has a no-loads live test.)* The survivor is `hpanel: two drags at once`, the equivalent above. The dead-code mutant was dropped along with its code, which is why there are 45 and not 46.
 
 ## 4 · Seams, for the other seats
 
