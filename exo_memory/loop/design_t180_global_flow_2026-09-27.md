@@ -231,3 +231,15 @@ off of"*
   - Limit: per-vertex K is dominated by triangulation texture (5.9–21% K < 0 even on straights). A smoothed K over a
     few metres is owed, NOT run.
   - **The FAIL stands. A re-measure is a NEW registration, never a rescue of this one.**
+- **M2b (C, p-m2b-m3b-C; NEW registration `loop/m2b_m3b_registration_2026-09-28.md`, digested before any code): PASS,
+  clean.** ρ(speed, geodesic share) = −0.478 [−0.536, −0.419]. The confound check makes it stronger in tighter curves:
+  ρ = −0.32 / −0.56 / −0.74 by |κ| tercile. **The faster the car, the less it turns by grip, without the load coupling.**
+- **M3b (C): FAILS, in the OPPOSITE direction.** K smoothed at the scored radius (6 m):
+  - T-180 corners carry LESS K < 0 area than straights: Sakura 20.7% vs 31.6%, Centrifuge 16.3% vs 24.1%;
+  - they carry MORE K > 0 area: Sakura 78.8% vs 63.0%, Centrifuge 83.5% vs 73.4%.
+  - **Corners are ELLIPTIC (dished, sphere-like), not hyperbolic.** In the geodesic picture (§4), elliptic regions make
+    neighbouring lines CONVERGE: corners funnel the car back to its line.
+  - The pane's inner-half inference also fails (43.5%, 10.0%).
+  - At r = 12 m Centrifuge flips; that radius was not scored, and reads as sensitivity, not rescue.
+  - **The "locally hyperbolic" claim (§4, and the librarian's 23:4x wording to the keeper) is REFUTED for corners on
+    both tracks.** WRONG, mine, as a claim; it was the keeper's intuition that I dressed as geometry without a check.
