@@ -1773,6 +1773,30 @@ test('D133 the pull line no longer says "in sync" for a machine that is behind',
   assert.match(r.out, /NOT in sync: TESTD behind/);
 });
 
+// ═══ D183 — the Leave's own result file is ruled, through the SHIPPED manifest ═══════════════════════════════════════
+// Every Leave writes stick-leave.result.json into the data dir (sync_launch.rs LEAVE_RESULT), and until it was ruled every
+// publish at close was REFUSED_UNPLACED by the Leave's own file (state-sync.push.json, 2026-09-28: paths
+// ["stick-leave.result.json"]). The guard itself is not what changed: a path nobody ruled is still refused.
+
+test('D183: a data dir holding a Leave\'s stick-leave.result.json is not REFUSED_UNPLACED under the shipped manifest', () => {
+  const w = world({ 'board.jsonl': 'row\n', 'stick-leave.result.json': '{"outcome":"DONE"}' }, SHIPPED_MANIFEST());
+  run(w, ['--push', '--no-remote', '--dry-run']);
+  assert.notStrictEqual(receipt(w).outcome, 'REFUSED_UNPLACED', JSON.stringify(receipt(w)));
+});
+
+test('D183: beside the ruled Leave file, a path nobody ruled is still REFUSED_UNPLACED, and only that path is named', () => {
+  const w = world({ 'board.jsonl': 'row\n', 'stick-leave.result.json': '{}', 'a-path-nobody-ruled.json': '{}' }, SHIPPED_MANIFEST());
+  run(w, ['--push', '--no-remote', '--dry-run']);
+  const r = receipt(w);
+  assert.deepStrictEqual([r.outcome, r.paths], ['REFUSED_UNPLACED', ['a-path-nobody-ruled.json']]);
+});
+
+test('D183: the shipped manifest rules stick-leave.result.json STAYS — local bookkeeping, never pushed', () => {
+  const { globToRe } = require(MANIFEST);
+  const rule = SHIPPED_MANIFEST().rules.find((r) => globToRe(r.glob).test('stick-leave.result.json'));
+  assert.strictEqual(rule && rule.class, 'STAYS');
+});
+
 console.log('');
 console.log(`state-sync.test.js: ${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);
