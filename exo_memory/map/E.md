@@ -1939,3 +1939,44 @@ NEXT: librarian call_librarian with the pointer when the hand-back is written �
 - **Carry:**
   - "Exactly" must name WHAT is equal: validation of the same path, not the path against a fresh build.
   - Never put a timeout around a lock wait.
+
+## 2026-09-27 ~21:5x (D) · D179 the first jump must not be red → `exo_memory/handback/p-d179-jumpdefault-E_2026-09-27.md`
+- **The cause:** a jump's landing ramp was sized for 300 km/h while validation checks at 460, so a jump at the head was RED.
+- **The fix:** A's diff (`d179/a.diff`) sizes the ramp for the design speed. It follows the slider on an open track, with no undo step (derived). A closed loop keeps its ramps, since a resize would open it.
+- **The sweep:** clean at every slider step from 290 to 764 km/h. Below 290 the 12 m gap cannot be cleared.
+- **The addendum:** a jump with a measured gap ≤ 0 is now RED (`jump-gap-not-forward`), not a thrown Error (A's captured-17 reproduced: HEAD throws, mine is red). All throw sites in src/validate audited.
+- **Mutants:** 16/15/0; the survivor is equivalent.
+- **Carry:** never clear a directory another running job uses. My dry run killed my own locked pass.
+
+## 2026-09-27 ~22:5x (D) · D179 drag budget → `exo_memory/handback/p-d179-dragbudget-E_2026-09-27.md`
+- During a drag, the dragged word and the next are validated live; the rest shows PENDING and is finished at release (exact).
+- A pending station is still checked for stacking against settled road, so nothing stale shows clean.
+- B's bench: drag steps 55–95 → 19–25 ms; the release costs 14–47 ms.
+- Mutants 13/9/0; the re-run of 3 test gaps NOT RUN (final lap).
+
+## 2026-09-27 ~22:5x (D) · D177 onboarding + D180 → `exo_memory/handback/p-d177-onboarding-E_2026-09-27.md`
+- **The window pass found that the app could not place a word** (timers "Illegal invocation"; A applied the fix).
+- **Also fixed:** the card layout, the phrase dead-end in step 2, plain-word reds with tooltips, the graph size.
+- **The phrase order:** sakura → S → hairpin → spiral chains clean. It is a combined diff for A. Hairpin→hairpin is the one red pair; the guide never suggests it.
+- **Not run (final lap):** the final re-drive, and onboarding mutants 14–33.
+- **Carry:** readers open hand-backs before the ring, so plain-word status, never a placeholder.
+
+## 2026-09-27 ~23:5x (D) · D182 the measured corpus → `exo_memory/handback/p-d182-corpus-E_2026-09-27.md`
+- **What:** 18 layouts read with READ_PROFILE=1 (a new opt-in reader field; earlier reads byte-identical); 16 are in the corpus, 4,045 words, with shared road counted once.
+- **The medians:** width ~33 m, bowl ~52%, bank 11–31°, tight R 102 m, jump gap 125 m and drop 14 m.
+- **Where:** src/doc/corpus.json (numbers only) + FINDINGS §7f + test/corpus.test.js 5/5.
+- **Excluded:** Miandros no longer closes under the §7d reach rule (routed). Aurora and others fall outside the §7c rule. The D152 track is unnamed.
+- **Carry:** recount a total before writing it (I wrote 3,845 for 4,045). Never name the private track, even as "one excluded".
+
+## 2026-09-28 ~00:2x (D) · D182 M1, the spectrum → `exo_memory/handback/p-d182-m1-E_2026-09-27.md`
+- **The method** was registered before computing: 4 m grid; Welch 1,024 m Hann 50%; band 16–512 m; normalised log-PSD RMS over κh, κv, bank; PASS iff W < B.
+- **The circuits:** 17 were tried, and the reader closes only Silverstone 1967, Magione and Monza 1966.
+- **PASS:** W 0.808, B 1.215, B/W 1.50, p 0.012, nearest neighbour 13/13; all 3 circuit pairs pass.
+- **But:** the separation is mostly κv (circuits are flat), κh only 1.13, and there is no rhythm peak (the period sits at the 512 m band edge).
+- **Carry:** count the list before writing a number; I wrote "twelve" and then "ten" for 17 and 14.
+
+## 2026-09-28 ~00:4x (D) · D182 runs, corners, transitions → `exo_memory/handback/p-d182-runs-E_2026-09-28.md`
+- **Runs** (exact class + direction; walls and inversions carry direction too) are ~1 word: a class run is a part of a corner.
+- **Corners** (curved words turning the same way) reaching tight: 212 m and 88° at the median. That is the span of a "turn" piece.
+- **Transitions:** 7×7, rows sum to 1. Straight→sweep 0.78; straight→tight 0.03.
+- **Carry:** never put a comment inside a line; regenerate outputs via a temp file. A broken tool blanked corpus.json for seconds.
