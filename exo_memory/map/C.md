@@ -1381,3 +1381,37 @@ composer, identical to shipped, unmeasured for want of a real capture).
 - `docs/research/04_ac_physics_drivability.md` (t180, sha256 80dfdaf5abf7cc6a); hand-back `handback/p-r1-physics-C_2026-09-28.md`.
 - 25 of 39 installed surfaces.ini with `[COLLISION_PARAMS_...]` also set `WAV_PITCH=extended-0`; the builder's two exports do not. Whether the block needs it is UNVERIFIED: one AC test by the keeper.
 - The move that found it: reading the installed files AFTER the web research. The GitHub base car (checked raw at 8f655a5c) differs from the installed mach6_active in springs, stops and the whole downforce ray. A research note built only from the repository would have described a car nobody drives.
+
+## 2026-09-28 — D182 reader: the "heading lag" was a NaN argument, and I checked before believing the brief
+- Hand-back `handback/p-d182-reader-C_2026-09-28.md`. B's two builder laps were lost because the export wrote `"width": ""`, the runner passed `parseFloat('')` = NaN, and NaN made the reader's `usual` width NaN, which silently disabled its narrowest-cut search. Same reader with width 0 or 34: both laps close.
+- Fix: `tools/read_track.cjs` REFUSES a non-numeric hint by name (sha256 ea4fb383 → ca45c683). Acceptance, all pass: 17/17 real reads byte-identical; round-trip 46/46 + 6 standing todos; the old-palette control still FAILS P-LIKE on both tracks, now read to 2,980 m.
+- The move: reproduce the failure with the caller's EXACT arguments before touching the code the brief blamed. The brief said heading lag; the arguments said NaN.
+
+## 2026-09-28 — M2/M3: sealed first, and the pass that is partly true by construction
+- Hand-back `handback/p-d182-m2m3-C_2026-09-27.md` (registration §0 sha256 e71c5555ecd1cb04, digest on the board before code). FINDINGS §7i.
+- M2 PASS: ρ(load, geodesic share) −0.50 [−0.563, −0.433], every replay alone negative. But load contains v²·κn, so part of the pass is definitional; I saw it only when writing the result. Recorded beside the verdict, not used to re-score.
+- M3 FAILS: Centrifuge's corners carry less K<0 area than its straights (18.0% vs 21.0%); Sakura passes. K>0 rises in corners on both (the torus-inside/outside picture, half supported).
+- The move to keep: name the coupling between the axis and the statistic IN the registration. A falling share against a load that contains the share's denominator is not independent evidence.
+
+## 2026-09-28 — D182 fonts: the rim is a rate, the lip was the wall, and my diff's ripple is a trade, not a gift
+- Hand-back `handback/p-d182-fonts-C_2026-09-28.md`. Measured fonts bowl / half-pipe (Sakura mode) / flat from 3,543 road words (tools/fontshape.cjs, 48/48 bands equal to corpus.json first); no default wall; each font's steepest rise inside the real p10–p90, and ≤ p90 at every width 16–67 m.
+- Found by the registered test, fixed in the model: a real rim rises at a near-constant °/m (4.7 at 24 m, 3.6 above 36 m), so a narrow rim is LOWER. Also found in my own code: RATES held the pre-split median (4.45 vs 4.55) under a comment claiming the json; now pinned by a test.
+- Ripple: real geometry fixed in code (the grid floor ≤ 15°, from the tilt under 17 tracks' real slots; the pit lane leaving a tilted edge with G1). On A's whole landing my diffs clear 13 and add 12 failures in others' files: net −1, and the 12 are the walled-bowl default the keeper asked to remove.
+- The move: measure the DELTA my change makes on the landing (two suites, with and without), not the count on my own files. "My files are green" hid 12 failures elsewhere.
+
+## 2026-09-28 — M2b/M3b: the relation survives a clean axis; the hyperbolic corners do not
+- Hand-back `handback/p-m2b-m3b-C_2026-09-28.md`; registration `loop/m2b_m3b_registration_2026-09-28.md` sha256 36b23de8 (unedited); FINDINGS §7j.
+- M2b PASS on SPEED (not κn: κn sits inside |κ|, the same circularity as load): ρ −0.478 [−0.536, −0.419], 5/5 replays, stronger inside tighter-curve terciles (−0.32 → −0.74).
+- M3b FAILS opposite to the claim: smoothed at 6 m, corners are MORE elliptic than straights on both tracks. The registered caution fired (straights ≥ 10% K̄<0: the 1e-6 floor is below mesh noise). The inner/outer test hangs on an unverified handedness chain, so I called it no evidence either way.
+- The move: when an axis is chosen to break a coupling, check the replacement axis for the SAME coupling before registering. κn looked like the obvious fix and was circular too.
+
+## 2026-09-28 — D181 closed: a native crash that only appears under shared load
+- Hand-back `handback/p-d181-flaky-C_2026-09-27.md`. M15 judged by its named test (deterministic; loaded suite 0 fail). Export proved in the installed window. Native 0xC0000005: 1/15 soaks (plus B 2, A 1), no report; incval 0/10 and geom_mesh 0/20 on single-job re-runs. The later 0xD1 BSOD is a driver, not this.
+- The pattern across every sighting: several heavy jobs at once. The single-job re-runs never reproduce it. That is a correlation, not a cause, and the KNOWN ISSUE line says so with its counts.
+
+## 2026-09-28 — FREEZE: stopped at a clean point
+- Hand-back `handback/p-freeze-C_2026-09-28.md`. D182 part done; math shelf parked mid-verification (primers written; tests moved to docs/math/_parked_tests so no suite runs them; the first mutation run was invalid because two checks failed on the original). Nothing of mine running.
+- The move: before stopping, take unverified tests OUT of the shared glob. A parked file that other panes' suites still run is not parked.
+
+## 2026-09-28 — D182 B12: a detector that relied on a default stopped detecting
+- Hand-back `handback/p-d182-b12-C_2026-09-28.md`. look.test.js now names a font no default gives and asserts the head does not already wear it; B12 caught by name on the tree and on A's continuity stage.
