@@ -70,3 +70,57 @@ never another author's track equation.
    - **Rainbow**, which never converged in M4, must rebuild within 5 m / 5° on ≥ 95% once split.
    - **Sakura and Centrifuge** must need FEWER total terms than M4's 2,000 and 4,000.
    - **It fails if** Rainbow still misses the bar, or the piecewise totals exceed M4's.
+
+## The method, thought through (librarian, 05:3x): so E builds it rather than inventing it
+
+**1. Getting the TRUE centreline (the input M4 lacked).**
+- Keep the reader's s-stations for ORDER only.
+- At each station, cast a ray across the road in the station's cross-plane against the actual road triangles
+  (Möller–Trumbore, cited). Take the exact left and right edge hits; the centre is their midpoint, and the cross-section
+  is the exact hit polyline.
+- No ±20 m smoothing. Where the cross-ray hits nothing (a gap), that station is a JUMP gap, not bad data.
+- **Check before fitting:** station spacing and the width (right − left) must be smooth. Any jump in width > 20% between
+  neighbours is flagged as a seam or reader glitch and shown, never silently kept.
+
+**2. Splitting.**
+- **Jumps:** a run of stations with no hit, between a take-off (the last hit) and a landing (the first hit after).
+- **Long laps only:** also split at straights (|κ| < 1/1500 m for ≥ 200 m), at their midpoint, so each joint sits where
+  the curvature is ~0 and G2 is trivially satisfied.
+- A piece never starts inside a corner.
+
+**3. Fitting each open piece: an adaptive cubic B-spline in s, the position (x, y, z) and the bank.**
+- Start with a knot every 200 m.
+- Least squares, then insert a knot at the midpoint of every span whose max deviation exceeds the tolerance.
+- Repeat until everything is inside, or a per-piece cap (500 control points) is reached; hitting the cap is reported.
+- **Why B-spline, not Chebyshev:** local support, so a tight corner adds knots only where it is; Chebyshev spreads it
+  over the whole piece.
+- **The term count is the number of control points.**
+
+**4. Joints as constraints, not averages.**
+- Adjacent road pieces share an end control-point structure, forced by constrained least squares (KKT, equality rows)
+  so that position, tangent and curvature match (G2).
+- At a jump joint, no position constraint. Instead the take-off tangent and the landing point must be joined by the
+  ballistic arc at the replay-measured flight (FINDINGS §8 / §7d), reported as a check: does the arc land within the
+  landing's tolerance at the design speed?
+
+**5. Closure:** the last road piece's end is constrained to equal the first piece's start (G2), inside the same KKT
+system. So closure is exact by construction; no after-the-fact projection is needed for position.
+
+**6. What is reported per track** (this is the result, never a single number):
+- pieces (road, jumps);
+- control points per piece and in total;
+- line deviation: p95, max, and % within 5 m;
+- bank: p95 and % within 5°;
+- **the N-versus-tolerance curve** (at 10, 5, 2 and 1 m), so "how long is the equation" is shown as a function, not
+  cherry-picked at one tolerance;
+- every flagged glitch, by station.
+
+**7. The traps, named in advance:**
+- (a) **Overfitting reader glitches.** Step 1's width check is the guard; a flagged station is excluded from the fit
+  AND listed.
+- (b) **Roads that cross over or under** (Rainbow): the cross-ray must take the road surface nearest the previous
+  station's height, never the first hit.
+- (c) **Twisted / inverted sections:** the cross-plane uses the frame, not world-up, or a loop's cross-ray points into
+  the ground.
+- (d) **Comparison with M4 must be like-for-like:** M4 counted Fourier terms per function, B-splines count control
+  points. **Report both in DEGREES OF FREEDOM** (numbers stored), or the "fewer terms" eval is apples to oranges.
