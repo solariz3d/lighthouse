@@ -2069,3 +2069,8 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - **Tests:** 4 reproducers, red 4/4 at d26ef85 and green after; preview/camera/look/mutation 182/182.
 - **Mutants:** N6 moved; new E1/E2 applied and caught. The worktree is `Desktop/e-d187-wt`, 0 links, nothing committed.
 - **Carry:** when the base moves under a fix (the lens branch appeared), apply the fix's EXPRESSION, not the old whole line, and say so.
+
+## 2026-09-29 ~13:5x (D) · D188 non-author key-combo check of A's per-axis movement → `exo_memory/handback/p-d188-E_2026-09-29.md`
+- **GREEN, caught-wrong 0.** 17 measured probes (W+D 1.0×, W+S newer wins, W+D+S, releases, repeat, blur, Enter/Esc, same frame, Shift ramp); A's mutants 98/98 caught.
+- **Finding:** the ruled W+E case is 0.54× at −45° as ruled, but falls to 0.0123× at −89°, and is 0.90× at the free view's inherited −11.31°. It is the keeper's to judge.
+- **Carry:** `rig.free.look` ADDS pitch, and free mode inherits the build view's pitch, so set the pitch absolutely before measuring anything pitch-dependent.
