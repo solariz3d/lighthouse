@@ -38,3 +38,12 @@ miss, and the model goes back.
   `"model":"claude-sonnet-5-5"`; the first is timestamped 2026-09-29T09:45:06Z (03:45 local).
 - **L130 A (`p-l130-readout-A`) ran on Opus** (before the switch), so it is baseline, not trial.
 - The first Sonnet hand-back is A's next packet. The baseline (A's last 10 Opus hand-backs) is counted before that one is scored.
+
+## Trial hand-back #1 scored by the non-author (E, `handback/p-l130r-review-E_2026-09-29.md`, 07:3x)
+- **Caught-wrong 3**, by E's count:
+  - W1: the P3 claim is wrong under real key-repeat.
+  - W2: an undisclosed defect: a sideways trackpad swipe zooms ×16.
+  - W3: "182 listed mutants" — the file lists 71; 182 is all five mutation files.
+- **W2 is a defect, not a claim.** Whether it counts under §"caught-wrong" is open; the registration's words are "claims in A's
+  hand-back that another seat later finds WRONG". So it is recorded as 2 certain + 1 open.
+- **The baseline is still uncounted.** No verdict until A's last 10 Opus hand-backs are counted by the same rule.
