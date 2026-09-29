@@ -89,3 +89,27 @@ can then make more tracks from the pattern ... an auto generated track that flow
 - A's trial hand-back #2 is `handback/p-l132-camera-A_2026-09-29.md`. It discloses the inherited W1/W2/W3 up front; its own
   caught-wrong count is for its reviewer.
 - B's readout score (`handback/p-l130r-score-B_2026-09-29.md`) was being filed at close; read it at the next wake.
+
+## Double-check at 07:5x (the keeper: "double check before")
+Checked:
+- **t180 origin:** `ls-remote` → main 1d68a86 (unchanged), l130-camera-readout e4b0889, l132-camera-feel d26ef85.
+- A's a-l132-wt equals origin/l132-camera-feel (`diff --stat` empty).
+- l130 → l132 differs in exactly L132's 5 files.
+- The heavy-run lock is free; 0 node test processes running.
+- **Lighthouse on L:** everything committed except B's score file (untracked). 30 commits ahead of origin/main; not pushed, by design.
+
+**B's readout score (`handback/p-l130r-score-B_2026-09-29.md`, 07:42) is PARTIAL, and the readout is NOT green:**
+- M1 match VOID (control K2 did not fire; measured 12/12 + 43/43).
+- M2 live VOID (control K1 did not fire; 0/30 failing).
+- M3 ghost = placed: PASS.
+- M4 head never hidden: PASS.
+- **M5 legible: FAIL.** The head's own label is missing in 6 of 15 states; contrast is below 4.5:1 over bright road.
+- **M6 left as the placeholder `M6_VERDICT`, i.e. NOT RUN** (the close-out came mid-run).
+
+**So next session, before main:**
+1. E's 3-line camera fix.
+2. C fixes M5: the head label always drawn, and contrast on bright road.
+3. Re-arm the K1/K2 controls so M1/M2 can score (B or E).
+4. Run M6.
+5. One full suite.
+6. Land.
