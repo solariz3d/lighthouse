@@ -1441,3 +1441,7 @@ composer, identical to shipped, unmeasured for want of a real capture).
 ## 2026-09-29 — D187: M5 fixed; the pixel measure counts everything in the box that is not background
 - Hand-back `handback/p-d187-C_2026-09-29.md`. The head's label is never culled (headPlace, and pinned when none of its piece is on screen). The box is opaque, borderless and square. Real window, 15 states: head label 15/15, min contrast 15.45 (base: 3 missing, contrast down to 1.04). Mutants 48/48 caught, 0 NOT APPLIED.
 - The move: under a pixel-median contrast, a border and a translucent background ARE ink. And a test can be red at base for the wrong reason: read the assertion message, not just the red.
+
+## 2026-09-29 — D190: the cup UI, coded against a core that does not exist yet
+- Hand-back `handback/p-d190-C_2026-09-29.md`. panel.js: a cup ° field (0–150, unclamped so the core guard binds the document), a cup from → to cell from cupFromDeg/cupToDeg, and a cup channel on the rate brush. Stubbed A only in the tests (the stub rings +0.871 so the typed value cannot pass for the document). 43/43; mutants 57/57, 0 NOT APPLIED. A must add c to sculpt.js value channels.
+- The move: when stubbing the other half, make the stub DIFFER from the naive answer (ring past the target), or the test cannot tell showing the document from echoing the input. And a run longer than the background limit must be started detached, with bash on its PATH.
