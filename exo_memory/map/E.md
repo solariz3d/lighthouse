@@ -1797,3 +1797,14 @@ NEXT: librarian call_librarian with the pointer when the line is added — plan 
 - The mechanism the data points to: C's map switched to bold-dated paragraphs on 09-09, so 137,981 chars read as one "newest entry" and the builder evicts briefs to seat it (inferred; the code is A's).
 **Carry:** two panes with the same fixed brief have the same map allowance, so the allowance gap in persist.log is a free size-diff of intakes over time. Use it when no old copy exists.
 NEXT: librarian call_librarian with the pointer when the census is written — plan default after it: B reads the census and A's code finding together
+
+## 2026-09-29 ~01:4x (L) · L130: the readout check REGISTERED before C builds → `exo_memory/loop/readout_check_registration_2026-09-29.md` (sha256 57448e2a…), hand-back `exo_memory/handback/p-l130-readout-reg-E_2026-09-29.md`
+- **G governs, verbatim:** the display fails if the keeper can't tell a piece's degrees while adjusting. Tests are necessary, not sufficient.
+- **The checks:** M1 match to 0.05 on the drawn text; M2 live over 30 seeded edits; M3 ghost equals placed; M4 the head is never hidden; M5 legibility measured in PrintWindow pixels (≥11 px ink, ≥4.5:1); controls K1–K5, or the check is VOID.
+- **Carry:** D-side loop files (d185/) are not on L. Name a fixture by its copy in the repo, and count a fixture from its source before writing the number (I wrote 42 for 43).
+
+## 2026-09-29 ~04:1x (L) · L131-E: the UI refactor inventory and layout check SEALED → `exo_memory/loop/ui_refactor_registration_2026-09-29.md` (sha256 de72c13a…), hand-back `exo_memory/handback/p-l131-ui-E_2026-09-29.md`
+- **37 inventoried rows** (I first wrote 36) placed into header / left tools / right (sections) / status / viewport / removed (water) / pieces-only.
+- **The viewport share, registered:** ≥65% open, ≥85% with N collapsed, ≥90% with both collapsed, at 1400×860. Today's ≈52% is inferred.
+- **T and N are free,** and must respect the typing guard. The readout goes in the right panel, with L130's seal re-run. Legibility in PrintWindow pixels.
+- **Carry:** size a registered threshold from explicit arithmetic and say it is reachable, or the check is set to fail by construction.
