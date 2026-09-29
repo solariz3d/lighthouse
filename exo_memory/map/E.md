@@ -2074,3 +2074,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - **GREEN, caught-wrong 0.** 17 measured probes (W+D 1.0×, W+S newer wins, W+D+S, releases, repeat, blur, Enter/Esc, same frame, Shift ramp); A's mutants 98/98 caught.
 - **Finding:** the ruled W+E case is 0.54× at −45° as ruled, but falls to 0.0123× at −89°, and is 0.90× at the free view's inherited −11.31°. It is the keeper's to judge.
 - **Carry:** `rig.free.look` ADDS pitch, and free mode inherits the build view's pitch, so set the pitch absolutely before measuring anything pitch-dependent.
+- ~14:0x (D) · D189 feel-tier look at A's world-normalised free.move → `exo_memory/handback/p-d189-E_2026-09-29.md`
+  - **GREEN, caught-wrong 0.** 26 combos × 11 pitches all 1.0× measured through the keys; W+E at −89° is 3.000 m (was 0.037); Shift ramp and zero input kept; D188 combos 16/16.
+  - **Ruling:** A's out-of-list test edit is legitimate. The requirement changed, and the new assertion is stricter.
+  - **Carry:** my own D188 ruled-case probe encoded the old sub-1.0× speeds, and a changed requirement retires such a test.
