@@ -113,3 +113,10 @@ Checked:
 4. Run M6.
 5. One full suite.
 6. Land.
+- **UPDATED 07:5x: B's score is now FINAL** (run 2 finished inside the window).
+  - M1 PASS (12/12 + 43/43, K2 caught).
+  - M2 PASS (0/30, K1 caught).
+  - M3 PASS; M4 PASS.
+  - **M5 FAIL** (the head label is missing in 6/15 states; contrast below 4.5:1 over bright road).
+  - M6 NOT RUN (partial: 0 page exceptions; the empty doc draws 0 labels; the full suite and mutation not run).
+  - **So the "re-arm K1/K2" step above is DONE.** What remains before main: E's camera fix, C's M5 fix, M6, one full suite, land.
