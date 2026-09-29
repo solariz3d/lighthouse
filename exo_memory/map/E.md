@@ -1808,3 +1808,10 @@ NEXT: librarian call_librarian with the pointer when the census is written — p
 - **The viewport share, registered:** ≥65% open, ≥85% with N collapsed, ≥90% with both collapsed, at 1400×860. Today's ≈52% is inferred.
 - **T and N are free,** and must respect the typing guard. The readout goes in the right panel, with L130's seal re-run. Legibility in PrintWindow pixels.
 - **Carry:** size a registered threshold from explicit arithmetic and say it is reachable, or the check is set to fail by construction.
+
+## 2026-09-29 ~07:3x (L) · L130-R: non-author review of A's camera repair (A's first Sonnet packet) → `exo_memory/handback/p-l130r-review-E_2026-09-29.md`
+- **NOT GREEN.** 3 wrongs: W1 P3 fails under real key-repeat (every repeat re-arms the takeover); W2 a sideways trackpad swipe zooms ×16 (introduced by the P5 fix); W3 "182 app mutants" is all five mutation files (the app file lists 71).
+- **Right:** the newest-key rule (7 probes), V11, the overhead's cause and fix (4 new tracks), the DPI fix (run: 0→2, 144 dpi).
+- **Proposed fix:** 3 lines, proven on a copy (154/155; N6's search string must move).
+- **Zoom ≥ 1 identity NOT RUN** (close-out). Full suite on the copy: 1,616 tests, 0 fail.
+- **Carry:** a fake event harness sends ONE key-down, but a real held key repeats. Probe with `repeat: true` before trusting a key fix.

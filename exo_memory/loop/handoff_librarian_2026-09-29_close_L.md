@@ -42,3 +42,50 @@ is the pointer set.
 - 8+ hand-backs and tonight's loop files are uncommitted here.
 - L is out of sync with origin (27 local unpushed; D's head is 79e3c01).
 - They travel by the stick, or by a careful merge on the next D session. Do not push L blind.
+
+## Added at 07:4x: E's review came in NOT GREEN
+- File: `handback/p-l130r-review-E_2026-09-29.md`.
+- **Two camera faults are on branch `l130-camera-readout` (e4b0889):**
+  - P3 fails under real key-repeat;
+  - Shift/trackpad sideways swipe zooms ×16.
+- E proposes a 3-line fix, proven on a copy, plus one mutant string to move (its §3). One check was NOT RUN at close (§1a).
+- **So the branch must take E's fix before main.**
+- Everything else A delivered holds: the newest-key rule 7/7; E's full suite 1,594 / 0.
+
+## The keeper, 07:3x: the GENERATIVE half, which the librarian did not understand the first time
+His words: "take a fully done track, couldnt the track as an object, be modeled by a singular equation, once we do that equation we
+can then make more tracks from the pattern ... an auto generated track that flows within the constraints of the equations".
+- **WRONG (the librarian's, 09-28):** M4 (one periodic series per layout) was judged only as a FIT, on accuracy (7/13 layouts at
+  N≤200; Sakura needs 2,000), and dropped for the piecewise method. But his ask was GENERATION, and for generation fidelity is the
+  wrong test. The piecewise core serves EDITING. The generative half was never built.
+- **The idea, thought through:**
+  - A closed lap's κh, κv and φ as Fourier series in s is periodic by construction, so closure is nearly free (the residual is a
+    small projection, like close.js) and the result is smooth.
+  - The low harmonics carry the character (corner count, rhythm, sweep); the high ones carry detail.
+  - The STYLE is the per-harmonic amplitude spectrum, measured over the 13 corpus layouts (tools/fourier.cjs, reads/ on D).
+  - Generate = sample coefficients from a style's spectrum, then project onto the constraints: closure, bank matched to speed,
+    g-limits, width/rim bounds.
+  - The design doc's style dial (Thunderhead ↔ Centrifuge) = which spectrum to sample.
+  - The output is split into pieces (the D184 method) so the keeper edits it in the equation mode.
+- **Needs D** (the reads/ corpus is local to D). A registration before any build: what counts as "flows like the style" (a blind
+  keeper judgement vs the real track, plus spectrum distance), and the degenerating signature, stated first.
+- Its place in the queue is the keeper's call; he framed it as the other half of the equation idea.
+- **The keeper's framing, verbatim (07:41), which settles the scope:** "we keep the equation mode too as is tweaking the values, but also
+  a system that can one shot generate GOOD tracks from the data and EQUATION derived from already complete tracks".
+- **TWO systems, both kept:**
+  1. Equation mode (editing, as built; it keeps getting the QoL work).
+  2. A ONE-SHOT GENERATOR: complete, good tracks in one go, from the equations and patterns derived from the real, finished tracks.
+  - A generated track opens in equation mode for tweaking.
+  - Do not let a future plan merge these into one, or replace either with the other.
+
+## Added 07:4x: L132 parked on its own branch
+- **Branch `l132-camera-feel` at `d26ef85`** (pushed by the librarian; privacy scan 0 hits). A's L132 tree:
+  Shift ramp ×4→×20; the focus rules; Ctrl+wheel lens.
+  - It is ONE commit off 1d68a86 carrying the whole tree (L130's 19 paths + L132's changes), NOT stacked on e4b0889.
+  - So `l132-camera-feel` ⊇ `l130-camera-readout`, in content.
+- It inherits E's W1/W2. **Next session:** apply E's 3-line fix (`handback/p-l130r-review-E_2026-09-29.md` §3, with its mutant
+  string) onto l132-camera-feel; a non-author reviews L132 (targeted tests only); ONE full suite; then land on main and push.
+  The keeper's shortcut rebuilds main.
+- A's trial hand-back #2 is `handback/p-l132-camera-A_2026-09-29.md`. It discloses the inherited W1/W2/W3 up front; its own
+  caught-wrong count is for its reviewer.
+- B's readout score (`handback/p-l130r-score-B_2026-09-29.md`) was being filed at close; read it at the next wake.
