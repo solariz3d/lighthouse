@@ -2063,3 +2063,9 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
   - **The 22 cm κv = h″ drift is filed as ruling 1's evidence.**
   - **No git worktree of mine exists.** The scratch trees are copies with 0 reparse points, safe to remove. Stopped.
 - ~16:4x · D186 landed: main 9714b83 carries sculpt.js 38057ff8… and A's h/l (the hill is live on main); C's wiring is 1d68a86. Record written; stopped.
+
+## 2026-09-29 ~11:3x (D) · D187 packet 1: my W1/W2 fix applied on d26ef85 → `exo_memory/handback/p-d187-E_2026-09-29.md`
+- **The fix:** `!e.repeat` arms the takeover; deltaX counts only with Shift, which covers the new Ctrl+wheel lens.
+- **Tests:** 4 reproducers, red 4/4 at d26ef85 and green after; preview/camera/look/mutation 182/182.
+- **Mutants:** N6 moved; new E1/E2 applied and caught. The worktree is `Desktop/e-d187-wt`, 0 links, nothing committed.
+- **Carry:** when the base moves under a fix (the lens branch appeared), apply the fix's EXPRESSION, not the old whole line, and say so.

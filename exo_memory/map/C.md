@@ -1437,3 +1437,7 @@ composer, identical to shipped, unmeasured for want of a real capture).
 - Tests 1 and 6 not sealed → NOT RUN. Mutation 22/22.
 - 2026-09-28 D186 §11: tests 1 and 6 SCORED against B's seal (e80d7d25). T1 FAIL: run 1 was MY bug (the start pose was lost; fixed); run 2 hit Serpents with no grid straight and a Thunderhead RED ray-gap. T6 FAIL: extend p95 505 ms; E's hill takes 220–341 s per stroke at 40 km, so the sealed sculpt run was not completed. A's offsets: the segments no longer carry the road, so I added a lift hook; the water needs d1/d2 from A. c-d186-wt: 0 links, NOT removable until landed.
 - 2026-09-28 D186 §12: app mutation P1 was NOT APPLIED after my trackmodel.js lift rewrite; re-pointed at the current sculpt branch, now applied and caught (mutation.test.js 62/62, appmut.log a6142c32). Rule: when I rewrite a function, grep the mutation files for strings aimed at it.
+
+## 2026-09-29 — D187: M5 fixed; the pixel measure counts everything in the box that is not background
+- Hand-back `handback/p-d187-C_2026-09-29.md`. The head's label is never culled (headPlace, and pinned when none of its piece is on screen). The box is opaque, borderless and square. Real window, 15 states: head label 15/15, min contrast 15.45 (base: 3 missing, contrast down to 1.04). Mutants 48/48 caught, 0 NOT APPLIED.
+- The move: under a pixel-median contrast, a border and a translucent background ARE ink. And a test can be red at base for the wrong reason: read the assertion message, not just the red.
