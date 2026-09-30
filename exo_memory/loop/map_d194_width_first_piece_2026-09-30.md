@@ -66,3 +66,18 @@ because it changes how pieces are shaped and needs the ringing check.
   - the fixture re-baseline, with the diff measured: the steps → 0, the joint gaps ≤ 1 mm, the unchanged fixtures still byte-identical;
   - the seal row 5 amended by name in the hand-back.
   - Then **B** combines D195 (A + C) + D196, checks the joints, the ringing and the seams (1 mm), runs ONE full suite, and lands.
+- **Owed at the D195+D196 combine (B):** E's CHANGELOG line for the lag fix (`handback/p-d195-E-lag_2026-09-30.md` §6, line 92), since A held CHANGELOG. The combine rebases onto dbb92b6 (the lag fix landed there); the files are disjoint, and B confirms.
+
+## D196 collated (librarian, 03:5x): `handback/p-d196-A_2026-09-30.md`, commit d1f60fd on b7c7676
+- Legacy segments whose width or binding r changes are drawn as chords; the readers evaluate the blend (readsBlend = cup || chord).
+- D195's ramp: joint 262 mm → ≤ 1 mm; steps 4.8 m → 0.
+- Fixtures: F4, F6 and F8 change in segs/mesh/meshParts (F6 was not expected: its r brush binds the cap = "r changes", inside the
+  ruling). F1 F2 F3 F5 F7 F9 are identical in every digest; the PATH is identical in all 9. The seal's kit files are untouched; the
+  amendment is a new record `test/fixtures/manifest.d196.json`, and row 5 is amended by name.
+- **Queued, not in this lap:** F8's bowl → half-pipe FAMILY joint steps 239 mm (a different cross-section by design, unchanged by
+  D196). A family change has no morph. It is the same class as the cup morphs (D190), for a later lap if the keeper meets it.
+- **OUTPUT → NEXT: unchanged.**
+  - B combines D195 (A b7c7676 + C 2966f01) + D196 (d1f60fd) onto main dbb92b6, adding E's CHANGELOG line
+    (`p-d195-E-lag` §6, line 92).
+  - B checks: joints (C1), ringing (short ramps within bounds), seams (≤ 1 mm, same-family), the first piece (D194a) with the ramp;
+    then ONE full suite plus the core mutation. Land.
