@@ -1449,3 +1449,7 @@ composer, identical to shipped, unmeasured for want of a real capture).
 ## 2026-09-30 — D193: the fields show the head; a shown value is NOT a target equal to it
 - Hand-back `handback/p-d193-C_2026-09-30.md`, commit 6ed0b4f in c-d193-wt. Fields show headState() (empty track: bowl start); untouched text = no target, because blank CONTINUES (v + m·s) and a target = v bends a changing channel, and any cup target makes a cup piece. Both halves tested; 48/48.
 - The move: when told "X acts as Y", read the core to see what Y actually does before building X on it. Here the packet's premise was false for every channel with a slope, and for cup always.
+
+## 2026-09-30 — D194a: the first piece is what was typed from its start
+- Hand-back `handback/p-d194a-C_2026-09-30.md`, commit 4ccdd58 in c-d194-wt. On an empty track extendOptions passes first = targets (same units), so each typed channel is constant from s = 0 (red at 6ed0b4f: w(0)=31, phi(0)=0, c(0)=15.5); untouched fields keep defaults; later pieces unchanged; cup edge = c from s = 0 on every segment; a typed-first lap closes and exports clean. 53/53.
+- The move: a quantised channel read back in other units needs a tolerance in THOSE units (1e-9 rad is 6e-8 deg).
