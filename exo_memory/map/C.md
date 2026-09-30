@@ -1445,3 +1445,7 @@ composer, identical to shipped, unmeasured for want of a real capture).
 ## 2026-09-29 — D190: the cup UI, coded against a core that does not exist yet
 - Hand-back `handback/p-d190-C_2026-09-29.md`. panel.js: a cup ° field (0–150, unclamped so the core guard binds the document), a cup from → to cell from cupFromDeg/cupToDeg, and a cup channel on the rate brush. Stubbed A only in the tests (the stub rings +0.871 so the typed value cannot pass for the document). 43/43; mutants 57/57, 0 NOT APPLIED. A must add c to sculpt.js value channels.
 - The move: when stubbing the other half, make the stub DIFFER from the naive answer (ring past the target), or the test cannot tell showing the document from echoing the input. And a run longer than the background limit must be started detached, with bash on its PATH.
+
+## 2026-09-30 — D193: the fields show the head; a shown value is NOT a target equal to it
+- Hand-back `handback/p-d193-C_2026-09-30.md`, commit 6ed0b4f in c-d193-wt. Fields show headState() (empty track: bowl start); untouched text = no target, because blank CONTINUES (v + m·s) and a target = v bends a changing channel, and any cup target makes a cup piece. Both halves tested; 48/48.
+- The move: when told "X acts as Y", read the core to see what Y actually does before building X on it. Here the packet's premise was false for every channel with a slope, and for cup always.
