@@ -45,3 +45,24 @@ transitioning it, would alway make a bottle neck of width at the start of the tr
 ## Recommendation
 Do D194a now (it removes the bottleneck the keeper saw, for every field, with no core change). D194b follows as its own small lap,
 because it changes how pieces are shaped and needs the ringing check.
+
+## D195 collated (librarian, 03:2x): C's UI half (`p-d195-C`, commit 2966f01) and A's core half (`p-d195-A`, commit b7c7676)
+- A: a per-channel `transition` (a number or a map; `'start'` = the first knot span, ≤ 20 m). The fit rings (a 20 m ramp is 1.05 m past
+  the target), so A subdivides and clamps. Targeted regression 351/0; fixture row 5a still "0 of 9 differ".
+- **A's finding, NOT MET: legacy pieces draw width as a STAIRCASE.** `adapter.js` draws each 2 m legacy segment with ONE profile at its
+  mid-width.
+  - The 'start' ramp w 31→12: the joint gap is 262 mm (451 mm on 30 m) and the steps between segments reach 4.8 m.
+  - Today's whole-piece blends already step: 0.29 m (fixture F4), 0.86 m (F8).
+  - Cup pieces (D190 chords) have no such steps.
+- **RULING (the librarian): option (b).**
+  - Legacy segments whose width (or r) changes are drawn as CHORDS (the profile at the segment's end, blended from its start), like
+    the cup's chord segments.
+  - This re-baselines ONLY the fixtures whose render changes (expected F4, F8), each with a before/after measure showing the steps gone.
+  - Why re-baseline and not gate: the seal's "legacy renders as before" guarded against UNINTENDED change; this change is intended and
+    removes an existing visible defect. A gate on a step threshold would be a hack (A's word).
+  - **D195 does NOT land alone** (its ramp would look stepped). It lands together with this fix.
+- **D196 (GEOMETRY tier), to A:**
+  - legacy width/r chords in `src/core/adapter.js`, with the readers evaluating the blend as for cup;
+  - the fixture re-baseline, with the diff measured: the steps → 0, the joint gaps ≤ 1 mm, the unchanged fixtures still byte-identical;
+  - the seal row 5 amended by name in the hand-back.
+  - Then **B** combines D195 (A + C) + D196, checks the joints, the ringing and the seams (1 mm), runs ONE full suite, and lands.

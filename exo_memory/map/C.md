@@ -1453,3 +1453,7 @@ composer, identical to shipped, unmeasured for want of a real capture).
 ## 2026-09-30 — D194a: the first piece is what was typed from its start
 - Hand-back `handback/p-d194a-C_2026-09-30.md`, commit 4ccdd58 in c-d194-wt. On an empty track extendOptions passes first = targets (same units), so each typed channel is constant from s = 0 (red at 6ed0b4f: w(0)=31, phi(0)=0, c(0)=15.5); untouched fields keep defaults; later pieces unchanged; cup edge = c from s = 0 on every segment; a typed-first lap closes and exports clean. 53/53.
 - The move: a quantised channel read back in other units needs a tolerance in THOSE units (1e-9 rad is 6e-8 deg).
+
+## 2026-09-30 — D195 (D194b UI): an at-start box per Extend field
+- Hand-back `handback/p-d195-C_2026-09-30.md`, commit 2966f01 in c-d195-wt. A ticked field with a target sends transition { ch: min(20, length) }; untouched sends nothing; off = today. A stubbed (records, strips transition). 56/56; mutants 65/65 over two runs (U7 went NOT APPLIED first).
+- The move: run the mutant-string check BEFORE a long mutation run, every time I rewrite a line. I built mutcheck in D193 and skipped it here; it cost a 25-minute run to learn what it shows in 1 second.
