@@ -68,3 +68,15 @@ NEXT: chair dispatch D201 phase 1 to E when this plan is read
   - E runs the extraction (arm 1's reader, K = 3) over the first 30 H + 30 K post-exposure units;
   - B and C give the kind reads and verdicts on the §2.3/§3 sample, blind to each other and to the self-labels;
   - the librarian scores.
+
+## Phase 2a collated (librarian, 09:0x): `handback/p-d201-E-extract_2026-10-01.md` (git-blob `6173322a…`), commit `72d91ecf` in `e-d201-wt`
+- **§0 CONFIRMED: E followed the watch as written, and my "A6 collated" line said the same.** (a) is the labelled share over the first
+  30 H + 30 K, self-labelled, and it lives in the KEY. The verifiers' sample is §2.3: R19's message frame, M 100, K 3, 300 claims, and
+  it is the PACKET. H units have no turn, so they cannot be kind-read under R19 §3. My chair ring's "B and C read the 30+30" wording
+  was loose, and the watch governs.
+- Re-hashed by the librarian: the packet `600a936c…a5cd` and the key `7f89f0b2…184b` match E's. The hygiene counts are 0, and the
+  label tokens in the packet are 0.
+- The sample is D 94 / L 6 messages. Assignment B 194, C 157, overlap 51, with no seat reading its own claims.
+- (a): H 30 (D), K 30 (librarian 29). The first 30 fall right after exposure (09-27/28), as the watch defines. The second read takes the next 30.
+- **OUTPUT → NEXT: unchanged.** The chair lands `72d91ecf` (2 paths). Then B and C read the PACKET, blind to each other and to the KEY:
+  kind + verdict per R19 §3/§8, files per the watch. The leak E names (rowLines show labels) is registered in §2.3, not new.
