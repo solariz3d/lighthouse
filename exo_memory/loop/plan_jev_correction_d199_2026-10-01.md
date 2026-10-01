@@ -57,3 +57,16 @@
 At most 100 Jev calls of ~1–2k input tokens each, at $0.042/M: under $0.01.
 
 NEXT: chair dispatch D199 phase 1 to E when this plan is read
+
+## Phase 1 collated (librarian, 06:4x): `handback/p-d199-E-units_2026-10-01.md` (git-blob `773f763b…`), commit `911c29a` in `e-d199-wt`
+- Re-hashed by the librarian: units sha256 `f9ef72c5…f502` (60 `## U` headings), schema `f20c5ca5…3b32`. Both match E.
+- `grep -c sk-or-` over the units → 0. The key-bearing message (librarian, 10:56:15Z) was dropped.
+- 799 keeper turns → 651 eligible after drops: 2 credential, 25 private (a broad regex), 101 Third Place (the chair's addition).
+  Seed = the plan commit's full sha (`7774a3b0…`). 54 librarian + 6 chair units.
+- **RULING on E's §4 (the top-up pool):** the pool is CUT at this build's last eligible timestamp, as recorded in `build.log`. A top-up
+  (`--n 100`, U61–U100) draws only from turns at or before that cut, so later turns (this conversation onward) can never take a
+  slot. It is an obvious, reversible call, and it keeps U01–U60 identical.
+- **Noted, not blocking:** the Third Place drop removes 13% of turns, a topic rich in corrections. The agreement test (phase 3) is
+  unaffected. Any later count must state that its base rate is of these sources, not of all the keeper's turns.
+- **OUTPUT → NEXT: unchanged.** Phase 2: B and C read all 60 blind (`loop/qc_read_B_2026-10-01.md`, `loop/qc_read_C_2026-10-01.md`,
+  `U01: YES` format), from units sha `f9ef72c5…`. A reader given a different sha stops. The board is held QUIET.
