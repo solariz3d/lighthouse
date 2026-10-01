@@ -81,3 +81,4 @@ because it changes how pieces are shaped and needs the ringing check.
     (`p-d195-E-lag` §6, line 92).
   - B checks: joints (C1), ringing (short ramps within bounds), seams (≤ 1 mm, same-family), the first piece (D194a) with the ramp;
     then ONE full suite plus the core mutation. Land.
+- **UPDATED 03:5x:** A amended D196 to commit **90e8ebf** (parent b7c7676), which includes E's CHANGELOG line. B's combine uses 90e8ebf, not d1f60fd.
