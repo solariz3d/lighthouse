@@ -47,3 +47,21 @@ Output: JSON `{ "flags": [ { "quote": "...", "names": "<the source it names>" } 
 - **NOT TESTED:** fewer than 10 flags all week. That is not a pass. It says the question is too narrow for this traffic.
 
 NEXT: chair dispatch D203 build to A when this plan is read
+
+## Build collated (librarian, 10:2x): `handback/p-d203-A_2026-10-01.md` (git-blob `5c59372c…`), commit `215e6a5` in `a-d203-wt`, INSTALLED on D
+- A PreToolUse hook on `mcp__consonance__call_librarian|mcp__consonance__call_chair`. The matcher is checked against the current hook
+  docs (exact-name `|` form). It exits 0 at once, prints nothing, and is never non-zero. Lock `O_EXCL`; busy → skipped.
+- The worker runs `claude -p --model claude-sonnet-5-5 --safe-mode` (A's improvement: no hooks or MCP load in the child, and the
+  subscription login is kept, unlike `--bare`). The secret scan covers what is sent and what is stored.
+- Tests 29/29, related 175/175, mutants 38/38. settings.json: one key added (`hooks.PreToolUse`), backup
+  `settings.json.bak-d203-20261001-101246`. Plus an inert empty `{ "hooks": [] }` group (installer quirk); `claude doctor` reports clean.
+- **RULING on A's open decision (flags quote the flagged sentences):** KEEP the quotes. A flag without its sentence cannot be
+  confirmed by B. The log lives in `C:\Consonance\data\`, outside every repo, and the secret scan scrubs it. Privacy means credentials.
+- **Not yet verified, and owed to B's look:**
+  - a REAL `claude -p --safe-mode` call (auth, json output, tokens);
+  - that the hook fires in a session started AFTER the install (every running session predates it, this seat's included);
+  - that the ring arrives unchanged;
+  - that `seat` is filled.
+- **OUTPUT → NEXT: unchanged.** B's non-author look: diff and tests, then ONE real shadow ring from a freshly started session.
+  B confirms the ring was delivered byte-identical and one row was written with flags/tokens or a clear error. If the real
+  call fails, it fails OPEN, and that is B's finding, not a block.
