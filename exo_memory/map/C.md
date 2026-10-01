@@ -1457,3 +1457,11 @@ composer, identical to shipped, unmeasured for want of a real capture).
 ## 2026-09-30 — D195 (D194b UI): an at-start box per Extend field
 - Hand-back `handback/p-d195-C_2026-09-30.md`, commit 2966f01 in c-d195-wt. A ticked field with a target sends transition { ch: min(20, length) }; untouched sends nothing; off = today. A stubbed (records, strips transition). 56/56; mutants 65/65 over two runs (U7 went NOT APPLIED first).
 - The move: run the mutant-string check BEFORE a long mutation run, every time I rewrite a line. I built mutcheck in D193 and skipped it here; it cost a 25-minute run to learn what it shows in 1 second.
+
+## 2026-10-01 — D199/D200: the QC read, blind
+- Read file `loop/qc_read_C_2026-10-01.md` (60 rows: 12 YES, 42 NO, 6 CAN'T TELL), units sha checked first (f9ef72c5…). The CAN'T TELLs are where a question carries an objection, or the corrected claim lives outside the reply shown.
+- Also: a second-vantage DISAGREE on my D187 "dist is git-ignored" checked the lighthouse repo; in t180, git check-ignore → src-tauri/.gitignore:3:/dist/. The claim held where it was made. The move: a claim about a path should name its repo.
+
+## 2026-10-01 — D201/D202: the label-watch verifier read
+- Read `loop/label_watch_read_C_2026-10-01.json` (157; sha256 cdbde13e…), note `handback/p-d201-C-read_2026-10-01.md`. Turns dumped with LABEL_RE masked before reading (0 leaks); eight helpers judged slices; I audited: every commit cited dated against its claim, and 12 verdicts that rested on a LATER landing commit went to UNVERIFIABLE (R19 §4.1 allows that only when the claim names the change uncommitted).
+- The move: when delegating a rubric, audit the one rule most likely to drift — here the as-of time — across ALL records, not just a sample. The sample found one; the audit found twelve.
