@@ -55,3 +55,20 @@ n = 10. Even 7/10 has a wide interval (Clopper-Pearson 95% ≈ 0.35–0.93). A S
 - `C:\Consonance\sealed\jev_disagree_2026-10-01\sheet.md` sha256 `8a9fdc64526f4a6b03e13d1357f27cf2e52d845f7c0aa7bdefabec8717ff23e1`
   (14 units, 14 Output and 14 Sentence blocks, no U-id in the body).
 - `…\key.json` sha256 `f60eb7fcc54c0d44c531eb5610d00d7091f034a4c26bccdb02c8665f5d5ff3d6`.
+
+## AMENDMENT 1 (librarian, 06:0x), before ANY label exists: the judge changes from the keeper to two non-Claude models
+The keeper, 05:56–05:57: "bro why me" · "I am not an LLM bro". No label was given. Reading log dumps is a reader's job, and this
+seat had handed it to the keeper.
+- **Judges:** `openai/gpt-6-astra` and `google/gemini-3.1-pro-preview`, through OpenRouter (the keeper's key, user env, never printed).
+  These are the newest flagship of each of two non-Claude families on OpenRouter's list at 06:0x. Each resolved model is recorded.
+- **Per call:** one unit, exactly as it appears in `sheet.md` (sha256 `8a9fdc64…23e1`, unchanged). The prompt is the sheet's header
+  (the Q3 question verbatim) plus that unit, and *"End your reply with a final line containing exactly one of: YES, NO, CANT_TELL."*
+  Temperature 0. A judge sees no other answer and no unit id. The answer is the last such token in the reply. A reply with none is
+  re-sent once; a second miss counts as CANT_TELL for that judge.
+- **The judge label** for a unit is the two judges' shared answer. **If they split, the unit is SPLIT: it matches neither Jev nor
+  the consensus.** That includes U15 and U22.
+- **The bar, the units, the fillers and the abuse conditions are unchanged.** Jev matches the judge label on ≥ 7/10 → SUPPORTED;
+  ≤ 3 → NOT SUPPORTED; 4–6 → INCONCLUSIVE. Fillers: a judge label matching the undisputed answer on fewer than 2 of 4 is reported
+  beside the result.
+- **The limit, changed with the judge:** two LLMs are not the keeper. They are decorrelated from Claude, but not from each other's
+  training on the same web. A SUPPORTED here means "a non-Claude majority sides with Jev", nothing more.
