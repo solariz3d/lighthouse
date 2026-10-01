@@ -81,3 +81,11 @@ NEXT: chair dispatch D203 build to A when this plan is read
 - B's observation: the content-free test ring drew a flag, a false-positive shape. It is a week datum, not tuned.
 - **OUTPUT → NEXT: changed.** The chair lands `215e6a5`. Separately: A gets the installer fix (feel-ish tier: targeted test + B's look).
   The week runs untouched.
+
+## D205 collated (librarian, 10:3x): `handback/p-d205-A_2026-10-01.md` (git-blob `26a92fa6…`), commit `ace5fd6` in `a-d205-wt`
+- install.ps1: no placeholder for a matcher entry; an unmatched entry goes to a matcher-less group; empty groups are pruned on events
+  the run touched. install-only 32/32 (B's test red first, at the unfixed installer), mutants 7/7, related 94/94 + 63/63.
+- One `-Only` run on D, backup `settings.json.bak-d205-20261001-103424`.
+- **Librarian check:** the live `hooks.PreToolUse` is now exactly one group (the second reader's, same matcher, command and timeout).
+  **The hook still fires after the edit:** row 6 at 16:35:10Z (A's own ring, ok), after the 16:34Z run. That closes A's NOT-VERIFIED #1.
+- **OUTPUT → NEXT: unchanged.** B's quick non-author look (diff + install-only), then the chair lands `ace5fd6` (2 paths).
