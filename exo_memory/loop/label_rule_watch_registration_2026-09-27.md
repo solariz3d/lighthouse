@@ -323,3 +323,31 @@ appendix; the file's only commit was `1f448d71`), and **(2) the frame was L-only
 ### A5 · Unchanged, as sealed
 N, F1–F3, DG-A/DG-B, §5's predictions and the abuse clause stand exactly as written above. §6's "this watch reads L only" is replaced by A4's frame.
 Nothing in §1–§7 is edited. This amendment is appended, dated, and committed by path before phase 2.
+
+### A6 · 2026-10-01 (pane E, D201) — THE LOCATOR REFIX, as ruled, and the control re-run. Committed BEFORE any post-rule unit is read
+- **The ruling:** the librarian's "Phase 1 collated + RULING", `loop/plan_label_watch_first_read_2026-10-01.md` at `cb182f9c`, which adopts A3's
+  proposal. **This is the only locator refix.** If H were still above 20% UNLOCATED, DG-A2 would stand on H.
+- **The locator (it replaces §1.2's location step, for pre- and post-rule units alike):**
+  - Markdown characters (asterisk, underscore, backtick) are stripped from BOTH the unit text and the quote, and whitespace is collapsed on both sides.
+  - A claim is located at the first exact-substring match.
+  - A quote joined by an ellipsis ("…" or "...") is located by its first part when that part is ≥ 6 words, and is UNLOCATED otherwise.
+  - A statement with no quote stays UNLOCATED.
+  - The match maps back to the original text, so the physical line, its parent and `LABEL_RE` are read on the original lines.
+- **`LABEL_RE` is unchanged:** `/\b(checked|inferred):/` (A1).
+- **The control re-run:** the same 60 pre-rule units, the same reader outputs (`run-readers.json` sha256 `3d9618ab…`, not re-run, because only
+  the locator changed), and the same K = 3 selection.
+
+  | stratum | kept | located | UNLOCATED (no quote / ellipsis < 6 words / not found) | **labelled** | share |
+  |---|---|---|---|---|---|
+  | H | 90 | 74 | **16 (17.8%)** (5 / 5 / 6) | **0** | **0.000** |
+  | K | 87 | 72 | **15 (17.2%)** (8 / 2 / 5) | **0** | **0.000** |
+  | pooled | 177 | 146 | 31 (17.5%) | **0** | **0.000** |
+
+  - **DG-A1:** 0.000 ≤ 0.05, so it does not fire. **DG-A2 on the control:** H 17.8% and K 17.2% are both ≤ 20%, so it does not fire.
+  - **Correction to A3:** its estimate for H was about 12%, and the run gives 17.8%. All 5 of H's ellipsis quotes have a first part under 6 words,
+    so they stay UNLOCATED, as the ruling's 6-word bound says. Only the 6 markdown-only misses were recovered.
+- **Command** (record `C:\Consonance\sealed\label_watch_2026-10-01\d201_phase1\`, under the heavy-run lock):
+
+      node control_score_a6.js C:/Users/nname/Desktop/e-d201-wt out    # -> out/control-score-a6.json (sha256 9885cecd…70dc4); script sha256 196af8fa…4ce2
+
+- **Unchanged:** everything A5 lists. No post-rule unit's labelling has been read or scored.
