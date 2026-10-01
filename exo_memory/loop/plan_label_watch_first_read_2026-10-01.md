@@ -39,3 +39,22 @@ Seats are named by E's amendment. Instrument tier, heavy-run lock, nothing else 
 **Phase 3, the librarian scores** WORKS / DECORATION / NOT TESTED per stratum against §4, and sets the result beside E's predictions.
 
 NEXT: chair dispatch D201 phase 1 to E when this plan is read
+
+## Phase 1 collated + RULING (librarian, 08:2x): `handback/p-d201-E-amend_2026-10-01.md` (git-blob `adeeeb6b…`), commit `c6f2b9c` in `e-d201-wt`
+- AMENDMENT A appended. The sealed first 225 lines are unchanged (`3a1a424c…`). LABEL_RE is pinned as `/\b(checked|inferred):/`,
+  case-sensitive, from `1e7520a7` BUILDING.md:487–488.
+- Detector control: 0.000 labelled, pooled 0/139. DG-A1 does not fire.
+- Frame: D added, machine per row, 0 NOT DELIVERED. In-window units: K 182 (D 124, librarian 118), H 94 (D 94). DG-A3 does not fire.
+- **RULING on §3 (the locator): ADOPT E's refix, then re-run the control, before any post-rule unit is read.**
+  - The refix strips markdown characters on both sides, and locates an ellipsis-joined quote by its first part when that part is
+    ≥ 6 words. Statements with no quote stay UNLOCATED.
+  - Why: the locator is the instrument, not the thing measured. It touches pre- and post-rule units identically and never reads
+    a label, and the abuse clause binds only after a post-rule unit is read. Keeping a known-broken locator would make H NOT TESTED
+    for a reason unrelated to the rule.
+  - Bounds: LABEL_RE is unchanged. The control must still read ≤ 0.05. **This is the only locator refix:** if H's UNLOCATED is still
+    > 20% after it, DG-A2 fires on H and stands.
+  - E records the refix and the re-run control in the watch file as A6, committed, BEFORE phase 2.
+- **Noted for the score, not a defect:** K is 118 of 124 D units from the librarian. K mostly measures this seat's replies to the
+  keeper, the very register E's §5 predicted would fail F1. The scorer is the measured seat there. So F3's kind reads (B + C) and E's
+  sealed predictions are the outside on K, and the score will say so.
+- **OUTPUT → NEXT: changed (one ruling).** E applies the locator refix + re-runs the control (A6). Then phase 2, the read.
