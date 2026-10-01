@@ -223,3 +223,103 @@ git log --since=… --diff-filter=A --name-only -- exo_memory/handback   # hand-
   33 34 57 47 17 8 18  →  30 H units in about 1–4 days
 # §2.4: n = (1.96·√(2·0.037·0.963) + 0.84·√(0.049·0.951 + 0.025·0.975))² / 0.024² ≈ 969 per arm  (node -e; my hand figure was 971, from rounded intermediates)
 ```
+
+---
+
+## AMENDMENT A · 2026-10-01 (pane E, the registrar; D201 phase 1, on D) — committed BEFORE any post-rule unit is read
+
+Packet: the chair's D201 (lap row D202). Plan `loop/plan_label_watch_first_read_2026-10-01.md` (`b3b6d109`, sha256
+`9183705a…e91e6b`). It fixes the two defects the librarian found before any read: **(1) `LABEL_RE` was never pinned** (no §1.3
+appendix; the file's only commit was `1f448d71`), and **(2) the frame was L-only**, while the work since 09-27 is on D.
+**No post-rule unit's labelling has been read.** Post-rule units below are COUNTED only. The control (A2) reads pre-rule units only.
+
+### A1 · `LABEL_RE`, pinned from the landed text
+- **Source:** the rule as landed at `1e7520a7`, `consonance/src-tauri/brief/BUILDING.md:487–488`, WHAT A HAND-BACK OWES item 7:
+  `checked: <command or path:line> → <result>` and `inferred: <the claim>`.
+- **`LABEL_RE = /\b(checked|inferred):/`**: case-sensitive, and group 1 is the label read (`checked` → CHECKED, `inferred` → INFERRED, both → MIXED).
+  - It does **not** match the all-caps kind word `CHECKED` (R19:75), `unchecked:` (no word boundary inside a word), or a
+    sentence-case `Checked:`.
+  - The last is a known UNDER-count, accepted: the landed rule tells a writer to use the lowercase tokens, and §1.3 pins "the exact token".
+- Applied per §1.3, unchanged: the claim's physical line, its nearest preceding heading or bullet parent, and the table row (its own line).
+
+### A2 · The detector control (§1.3): PASSES, so no refix is needed (DG-A1 does not fire)
+- **Units:** the last 30 H and the last 30 K before R (`1e7520a7`, 2026-09-27T10:35:57Z), from D's history and transcripts, both machines' rows.
+  - H: 30 hand-back files by first commit, 2026-09-26T08:13Z → 2026-09-27T10:24Z (22 written on L, 8 on D).
+  - K: 30 replies to the keeper, 2026-09-26T13:33Z → 2026-09-27T10:11Z (L: librarian 11, two siblings 1 each; D: librarian 15, chair 2).
+- **Extraction:** as §1.2. Arm 1's reader is `claimrec.js readers` with no `--ask` (ask sha256 `07e7f855…d3c1`, arm 1, `c8c18d4` §2).
+  - 60 calls, 60 exit 0.
+  - `claude --version` was 2.1.286 before and after; the model was `claude-sonnet-5-5`; 0 transcripts were added.
+  - Statements were parsed by `parseStatements`; K = 3 per unit in `sha256(unitId|statementIndex)` order; claims were located per §1.2.
+- **Result:**
+
+  | stratum | statements | kept | located | UNLOCATED | **labelled** | share |
+  |---|---|---|---|---|---|---|
+  | H | 1,278 | 90 | 68 | 22 (24.4%) | **0** | **0.000** |
+  | K | 375 | 87 | 71 | 16 (18.4%) | **0** | **0.000** |
+  | pooled | 1,653 | 177 | 139 | 38 (21.5%) | **0** | **0.000** |
+
+  - The bar is a pre-rule labelled share > 0.05 → refix. **0.000 ≤ 0.05, so `LABEL_RE` stands as pinned.**
+  - For scale: the raw `LABEL_RE` matches anywhere in the 60 units total 10, in 6 units. None of them falls on a located claim's line or parent.
+- **Commands** (record: `C:\Consonance\sealed\label_watch_2026-10-01\d201_phase1\`, all under the heavy-run lock):
+
+      node frame.js <worktree> out                      # frame, exposure, counts; writes out/control/*.md (pre-rule only)
+      node exo_memory/loop/claimrec/claimrec.js readers --in out/control --out out/readers
+      node control_score.js <worktree> out              # the table above -> out/control-score.json (sha256 9631c689…674a)
+
+### A3 · ⚠ A FINDING FOR A RULING BEFORE THE READ (not applied here): the locator loses H above DG-A2's 20%
+- On the control, **H's UNLOCATED share is 24.4%**, above DG-A2's 20%. If the post-rule rate is similar, **H will be NOT TESTED at the read.**
+  K (18.4%) is under the bar.
+- **Why, on the 22 H misses** (`unloc_diag.js`, pre-rule units only):
+  - 6 differ from the text only by markdown (asterisk, underscore, backtick);
+  - 5 are ellipsis-joined quotes;
+  - 5 statements carry no quote;
+  - 6 are other mismatches.
+- **A locator that also strips those markdown characters on both sides, and locates an ellipsis-joined quote by its first part of 6 or more words, would bring H to about 11/90 (12%).**
+  inferred: estimated from the categories above, not run as a rule.
+- **This amendment does NOT change the locator.** The packet holds everything else as sealed. Under the abuse clause, a change made now,
+  before any post-rule unit is read, would not void. **It is the librarian's ruling to make** before phase 2, and either answer is lawful now.
+
+### A4 · The frame: machine D added, and L kept where reachable
+- **Machine of a row:** by the hook command path (R19's rule): `\Users\nname\` = D, `\Users\zackn\` = L.
+  - **Row by row, not file by file.** It is the most recent hook command path seen in its transcript file, in file order.
+  - checked: the persistent session files on D carry rows from BOTH machines. The librarian's has 175 session starts on D and 147 on L, read from SessionStart hook entries.
+- **Seats (D's live instances):** librarian, chair (`main`), and siblings `07b8a48f` (E), `0845a868`, `3d57124e`, `5bf9d657`.
+  The fresh-*, the stale siblings and third-place are outside the frame, as in R19.
+- **When the rule reached each machine's brief:**
+  - **L:** at R, `1e7520a7`, 2026-09-27T10:35:57Z.
+  - **D:** the merge `988fe6f9` at 2026-09-27T14:44:20Z. checked: `1e7520a7` is its ancestor, and D's resolved brief
+    `consonance/src-tauri/target/release/BUILDING.md` carries item 7, with mtime 14:44:02Z.
+- **Exposure (§1.4):** a seat's first session start after that time on that machine, with the hook source startup, resume, compact **or clear**.
+  `clear` is added because a `/clear` reloads the shell exactly as the other three do.
+
+  | seat | exposed on D | exposed on L |
+  |---|---|---|
+  | librarian | 2026-09-27T17:20:23Z (startup) | 2026-09-27T13:10:34Z (resume) |
+  | chair | 17:49:03Z (compact) | 13:10:30Z (resume) |
+  | sib-07b8a48f (E) | 19:20:46Z (compact) | 13:09:49Z (resume) |
+  | sib-0845a868 | 17:26:08Z (compact) | 2026-09-29T06:26:48Z (resume) |
+  | sib-3d57124e | 17:34:48Z (compact) | 13:09:46Z (resume) |
+  | sib-5bf9d657 | 23:16:30Z (compact) | 13:09:47Z (resume) |
+
+  - **Shell check on D:** each of the six instance `CLAUDE.md` files on D carries the rule today. `grep -c "Checked or inferred"` = 1 for the
+    librarian and the four siblings; `main/CLAUDE.md` carries item 7 itself. **NOT DELIVERED: none.**
+  - inferred: that each D shell carried it from its exposure time on. The shell regenerates at each start from the brief above, which has carried
+    it since 14:44Z, but a past shell's text is not on disk.
+  - **L:** the shells are not reachable, so exposure on L is inferred from the session starts in the carried rows.
+- **Units per machine** (post-exposure, inside the 14-day window to 2026-10-11; COUNTED, not read):
+
+  | stratum | D | L (reachable) | pooled |
+  |---|---|---|---|
+  | **K** | 124 (librarian 118, chair 2, E 2, 0845a868 1, 3d57124e 1) | 58 (librarian 48, chair 3, 3d57124e 3, 0845a868 2, 5bf9d657 2) | **182** |
+  | **H** | 94 (first commit after D's latest seat exposure, 23:16:30Z; 129 after the earliest) | 0 reachable | **94** |
+
+  - An H unit's machine is the lap letter in its file name (`p-d…` = D, `p-l…` = L), else the commit subject's "on L / on D".
+  - **7 post-R hand-backs carry neither and are excluded** (counted here).
+  - L's own hand-backs after R are in L's unpushed commits, so they are NOT READ from D (§6's limit, now for H only).
+- **DG-A3 does not fire on D or pooled:** ≥ 20 H and ≥ 20 K inside the window.
+- **The first read (§1.5)** takes the first 30 H and 30 K after exposure **in time order, pooled across machines**, and every share is printed per
+  machine and pooled.
+
+### A5 · Unchanged, as sealed
+N, F1–F3, DG-A/DG-B, §5's predictions and the abuse clause stand exactly as written above. §6's "this watch reads L only" is replaced by A4's frame.
+Nothing in §1–§7 is edited. This amendment is appended, dated, and committed by path before phase 2.
