@@ -813,7 +813,9 @@ foreach ($e in $regEntries) {
   # a single group deserialised as a bare object does not read as zero groups — that exact
   # serialisation bug cost a day on the pane list (9e74004).
   $groups = @($settings.hooks.$ev)
-  if ($groups.Count -eq 0) {
+  # D205 (B's finding, p-d203-B_2026-10-01 section 3): the empty placeholder group exists for an UNMATCHED entry to land in. It used to be seeded for EVERY new event
+  # array, so the first-ever entry on an event that carried a Matcher (PreToolUse, the second reader) left a stray { "hooks": [] } behind that nothing used.
+  if ($groups.Count -eq 0 -and -not $e.Matcher) {
     $groups = @([pscustomobject]@{ hooks = @() })
   }
 
@@ -870,7 +872,15 @@ foreach ($e in $regEntries) {
   }
 
   if (-not $found) {
-    if ($slot) { $target = $slot } else { $target = $groups[$groups.Count - 1] }
+    if ($slot) { $target = $slot }
+    else {
+      # D205: an UNMATCHED entry belongs in a group with NO matcher. It used to go to the LAST group, which on PreToolUse is the second reader's
+      # call_librarian|call_chair group: a future unmatched PreToolUse hook would have been silently scoped to those two tools. The LAST matcher-less group
+      # is taken (the old behaviour wherever every group is matcher-less); if there is none, a new one is made.
+      $target = $null
+      foreach ($g in $groups) { if (-not $g.PSObject.Properties['matcher'] -or -not $g.matcher) { $target = $g } }
+      if (-not $target) { $target = [pscustomobject]@{ hooks = @() }; $groups = @($groups) + @($target) }
+    }
     if (-not $target.PSObject.Properties['hooks']) {
       $target | Add-Member -NotePropertyName hooks -NotePropertyValue @() -Force
     }
@@ -882,7 +892,21 @@ foreach ($e in $regEntries) {
   $settings.hooks.$ev = $groups
 }
 
-if ($added -eq 0 -and $repointed -eq 0) {
+# D205: a group with NO hooks in it runs nothing and is only residue (the stray one the old placeholder left). Pruned on the events THIS run registered for (never an event it did
+# not touch, never a group that holds a hook, whoever installed it), and counted as a change so the run writes the file even when it added nothing.
+$pruned = 0
+foreach ($pev in @($regEntries | Where-Object { -not $_.Excluded } | ForEach-Object { $_.Event } | Select-Object -Unique)) {
+  if (-not $settings.hooks.PSObject.Properties[$pev]) { continue }
+  $all = @($settings.hooks.$pev)
+  $keep = @($all | Where-Object { $_.hooks -and @($_.hooks).Count -gt 0 })
+  if ($keep.Count -lt $all.Count) {
+    $changes += ("  PRUNE    {0,-17} {1} empty group(s) removed (no hooks in them)" -f $pev, ($all.Count - $keep.Count))
+    $pruned += ($all.Count - $keep.Count)
+    $settings.hooks.$pev = @($keep)
+  }
+}
+
+if ($added -eq 0 -and $repointed -eq 0 -and $pruned -eq 0) {
   if ($refused -gt 0) { Write-Host "`nregistration: nothing changed; $already hook(s) verified, $refused REFUSED above (a conflicting implementation is live). Not 'correct' until the refusal is resolved by hand." -ForegroundColor Magenta }
   else { Write-Host "`nregistration: already correct ($already hook(s) verified, $skipped excluded by ruling, nothing changed)." -ForegroundColor Green }
 } else {
@@ -919,7 +943,7 @@ if ($added -eq 0 -and $repointed -eq 0) {
 
   Write-Host "`nregistration:" -ForegroundColor Green
   $changes | ForEach-Object { Write-Host $_ -ForegroundColor Green }
-  Write-Host ("  {0} added, {1} re-pointed, {2} already correct, {3} EXCLUDED by ruling" -f $added, $repointed, $already, $skipped) -ForegroundColor Green
+  Write-Host ("  {0} added, {1} re-pointed, {2} empty group(s) pruned, {3} already correct, {4} EXCLUDED by ruling" -f $added, $repointed, $pruned, $already, $skipped) -ForegroundColor Green
   Write-Host ("  backup: {0}" -f $bak) -ForegroundColor DarkGray
 }
 

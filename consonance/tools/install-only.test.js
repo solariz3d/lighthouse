@@ -359,6 +359,136 @@ test('WHICH PYTHON: a single install is still found — the sort changes the ORD
     'one install must still be picked: ' + (pulseCommand(home) || '(not registered)'));
 });
 
+
+// ── D205: THE MERGE'S GROUP HANDLING (B's finding, p-d203-B_2026-10-01 §3). Two defects in one place, both in how a MATCHER-scoped event is merged:
+//   1. an event array that was NEW was seeded with an empty placeholder group {hooks: []} that only an UNMATCHED entry uses, so the first-ever entry on an event
+//      that carried a Matcher left that group behind: the stray { "hooks": [] } now in ~/.claude/settings.json PreToolUse;
+//   2. an UNMATCHED entry went to "the last group", so on PreToolUse, where the last group is the second reader's call_librarian|call_chair group, any future
+//      unmatched PreToolUse hook would have been silently scoped to those two tools instead of firing on every tool call.
+// The fixture adds a synthetic UNMATCHED PreToolUse entry to the throwaway copy of the script (the real manifest has none yet): hooks\session-end.js, a file the
+// throwaway repo carries, which also has its own real SessionEnd entry.
+const SR = 'mcp__consonance__call_librarian|mcp__consonance__call_chair';
+const UNMATCHED = "@{ Event = 'PreToolUse'; Rel = 'hooks\\session-end.js'; Runner = 'node' }";
+const unmatchedAfter = (b) => b.replace(/(Matcher = 'mcp__consonance__call_librarian\|mcp__consonance__call_chair' \})/, (m) => m + '\n  ' + UNMATCHED);
+const unmatchedFirst = (b) => b.replace(/(\$register = @\(\r?\n)/, (m) => m + '  ' + UNMATCHED + '\n');
+const SR_ONLY = ['-Only', 'second-reader.js,second-reader-worker.js'];
+const SR_UN = ['-Only', 'second-reader.js,second-reader-worker.js,session-end.js'];
+const groupsOf = (home) => [].concat(settings(home).hooks.PreToolUse || []);
+const cmdsIn = (g) => [].concat(g.hooks || []).map((h) => h.command);
+const leafs = (g, leaf) => cmdsIn(g).filter((c) => c.toLowerCase().replace(/\//g, '\\').endsWith('\\' + leaf + '"')).length;
+const hasHooks = (g) => [].concat(g.hooks || []).length > 0;
+
+test('D205 RED FIRST: a FRESH PreToolUse whose first entry carries a Matcher yields exactly ONE group (the matcher group), not a stray empty one', () => {
+  const repo = mkRepo(), home = mkHome();
+  const r = run(repo, home, SR_ONLY), g = groupsOf(home);
+  assert.strictEqual(g.length, 1, 'expected one group, got ' + JSON.stringify(g) + '\n' + r.out);
+  assert.strictEqual(g[0].matcher, SR); assert.strictEqual(leafs(g[0], 'second-reader.js'), 1, JSON.stringify(g[0]));
+  assert.ok(g.every(hasHooks), 'an empty group was written: ' + JSON.stringify(g));
+});
+
+test('D205 RED FIRST: an UNMATCHED PreToolUse entry registered AFTER a matcher group lands in a group with NO matcher, never in the matcher group', () => {
+  const repo = mkRepo(unmatchedAfter), home = mkHome();
+  const r = run(repo, home, SR_UN), g = groupsOf(home), sr = g.find((x) => x.matcher === SR), un = g.find((x) => !x.matcher);
+  assert.ok(sr, 'the second reader group is missing: ' + JSON.stringify(g) + '\n' + r.out);
+  assert.strictEqual(leafs(sr, 'session-end.js'), 0, 'the unmatched hook was scoped into the call_librarian|call_chair group: ' + JSON.stringify(sr));
+  assert.strictEqual(leafs(sr, 'second-reader.js'), 1);
+  assert.ok(un && leafs(un, 'session-end.js') === 1, 'the unmatched hook has no matcher-less group of its own: ' + JSON.stringify(g));
+  assert.strictEqual(g.length, 2, 'expected the matcher group and one matcher-less group: ' + JSON.stringify(g));
+});
+
+test('D205: an UNMATCHED entry registered BEFORE the matcher entry gets its matcher-less group, the matcher group stays pure, and there is no third group', () => {
+  const repo = mkRepo(unmatchedFirst), home = mkHome();
+  run(repo, home, SR_UN);
+  const g = groupsOf(home), sr = g.find((x) => x.matcher === SR), un = g.find((x) => !x.matcher);
+  assert.strictEqual(g.length, 2, JSON.stringify(g)); assert.strictEqual(leafs(sr, 'session-end.js'), 0, JSON.stringify(sr));
+  assert.strictEqual(leafs(un, 'session-end.js'), 1, JSON.stringify(un)); assert.strictEqual(leafs(un, 'second-reader.js'), 0);
+});
+
+test('D205: re-running adds nothing: the file is identical after a second run (no growth, no new empty group)', () => {
+  const repo = mkRepo(unmatchedAfter), home = mkHome();
+  run(repo, home, SR_UN);
+  const before = fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), r = run(repo, home, SR_UN);
+  assert.strictEqual(fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), before, 'a second run changed the file:\n' + r.out);
+  assert.ok(/already correct/.test(r.out), r.out);
+});
+
+test('D205 RED FIRST: a stray EMPTY group left by the old installer (the state on D) is removed by the next run, and nothing else changes: the matcher group and every other event are identical', () => {
+  const repo = mkRepo(), home = mkHome();
+  run(repo, home, SR_ONLY);
+  const clean = settings(home), stray = JSON.parse(JSON.stringify(clean));
+  stray.hooks.PreToolUse = [{ hooks: [] }, ...stray.hooks.PreToolUse];
+  stray.hooks.SessionStart = [{ hooks: [{ type: 'command', command: 'keep me', timeout: 3 }] }];   // another event, untouched by this run
+  fs.writeFileSync(path.join(home, '.claude', 'settings.json'), JSON.stringify(stray, null, 2));
+  const r = run(repo, home, SR_ONLY), after = settings(home);
+  assert.deepStrictEqual(after.hooks.PreToolUse, clean.hooks.PreToolUse, 'the empty group is still there, or the matcher group changed:\n' + JSON.stringify(after.hooks.PreToolUse) + '\n' + r.out);
+  assert.deepStrictEqual(after.hooks.SessionStart, stray.hooks.SessionStart); assert.deepStrictEqual(Object.keys(after.hooks).sort(), Object.keys(stray.hooks).sort());
+  assert.ok(/PRUNE/.test(r.out), 'the run must SAY it removed an empty group:\n' + r.out);
+});
+
+test('D205: an empty group on an event this run does NOT register for is left alone (it prunes only what it touched)', () => {
+  const repo = mkRepo(), home = mkHome({ Notification: [{ hooks: [] }] });
+  run(repo, home, SR_ONLY); assert.deepStrictEqual(settings(home).hooks.Notification, [{ hooks: [] }]);
+});
+
+test('D205: a group that holds a real hook is never pruned, even one with no matcher (a hook this script does not manage stays)', () => {
+  const repo = mkRepo(), home = mkHome({ PreToolUse: [{ hooks: [{ type: 'command', command: 'somebody elses hook' }] }, { hooks: [] }] });
+  run(repo, home, SR_ONLY); const g = groupsOf(home);
+  assert.ok(g.some((x) => cmdsIn(x).includes('somebody elses hook')), 'a foreign hook was removed: ' + JSON.stringify(g));
+  assert.ok(g.every(hasHooks), JSON.stringify(g)); assert.strictEqual(g.filter((x) => x.matcher === SR).length, 1);
+});
+
+test('D205: an unmatched entry joins an EXISTING matcher-less group on its event (it does not make a second one)', () => {
+  const repo = mkRepo(unmatchedAfter), home = mkHome({ PreToolUse: [{ hooks: [{ type: 'command', command: 'foreign' }] }] });
+  run(repo, home, SR_UN);
+  const g = groupsOf(home), plain = g.filter((x) => !x.matcher);
+  assert.strictEqual(plain.length, 1, JSON.stringify(g)); assert.ok(cmdsIn(plain[0]).includes('foreign') && leafs(plain[0], 'session-end.js') === 1, JSON.stringify(plain[0]));
+  assert.strictEqual(leafs(g.find((x) => x.matcher === SR), 'session-end.js'), 0);
+});
+
+// ── D205 MUTANTS: each breaks ONE of the three fixes in the throwaway copy of the script and requires the matching defect to come back. "Applied" is checked (the
+// replaced text must have been in the script), so an anchor that moved reads as NOT APPLIED, never as a catch.
+function mutate1(from, to, then) {
+  let hit = false;
+  const fn = (b) => { const o = b.split(from).join(to); hit = hit || o !== b; return then ? then(o) : o; };
+  return { fn, applied: () => hit };
+}
+const strayGroups = (g) => g.filter((x) => !hasHooks(x)).length;
+
+// FIX 1 AND THE PRUNE OVERLAP for this symptom (a placeholder seeded and never used is an empty group, and the prune removes empty groups), so re-seeding alone is an
+// EQUIVALENT mutant (measured: the file comes out clean). It is tested with the prune switched off as well, which shows the seeding fix stands on its own.
+test('D205 MUTANT 1: the placeholder group is seeded for EVERY new event again (with the prune off, so the seeding fix is what is measured), and the fresh-PreToolUse test catches it', () => {
+  const m = mutate1('if ($groups.Count -eq 0 -and -not $e.Matcher) {', 'if ($groups.Count -eq 0) {', (o) => o.split('if ($keep.Count -lt $all.Count) {').join('if ($false) {')), repo = mkRepo(m.fn), home = mkHome();
+  run(repo, home, SR_ONLY); assert.ok(m.applied(), 'NOT APPLIED: the anchor moved'); assert.ok(strayGroups(groupsOf(home)) > 0 || groupsOf(home).length !== 1, 'the stray empty group did not come back: ' + JSON.stringify(groupsOf(home)));
+});
+test('D205 MUTANT 2: an unmatched entry goes to the LAST group again, and the unmatched-after test catches it', () => {
+  const m = mutate1("foreach ($g in $groups) { if (-not $g.PSObject.Properties['matcher'] -or -not $g.matcher) { $target = $g } }", '$target = $groups[$groups.Count - 1]', unmatchedAfter), repo = mkRepo(m.fn), home = mkHome();
+  run(repo, home, SR_UN); assert.ok(m.applied(), 'NOT APPLIED');
+  const sr = groupsOf(home).find((x) => x.matcher === SR); assert.strictEqual(leafs(sr, 'session-end.js'), 1, 'the mis-scoping did not come back: ' + JSON.stringify(groupsOf(home)));
+});
+test('D205 MUTANT 3: no matcher-less group is made when none exists, and the unmatched-after test catches it', () => {
+  const m = mutate1('if (-not $target) { $target = [pscustomobject]@{ hooks = @() }; $groups = @($groups) + @($target) }', '', unmatchedAfter), repo = mkRepo(m.fn), home = mkHome();
+  const r = run(repo, home, SR_UN); assert.ok(m.applied(), 'NOT APPLIED');
+  const un = groupsOf(home).find((x) => !x.matcher && leafs(x, 'session-end.js') === 1); assert.ok(!un, 'a matcher-less group was still made: ' + JSON.stringify(groupsOf(home)) + r.out);
+});
+test('D205 MUTANT 4: the prune never removes anything, and the stray-group test catches it', () => {
+  const m = mutate1('if ($keep.Count -lt $all.Count) {', 'if ($false) {'), repo = mkRepo(m.fn), home = mkHome();
+  run(repo, home, SR_ONLY); const s = settings(home); s.hooks.PreToolUse = [{ hooks: [] }, ...s.hooks.PreToolUse]; fs.writeFileSync(path.join(home, '.claude', 'settings.json'), JSON.stringify(s));
+  run(repo, home, SR_ONLY); assert.ok(m.applied(), 'NOT APPLIED'); assert.strictEqual(strayGroups(groupsOf(home)), 1, 'the stray group was removed anyway');
+});
+test('D205 MUTANT 5: a prune is not counted as a change, so a run that only prunes writes nothing, and the stray-group test catches it', () => {
+  const m = mutate1('if ($added -eq 0 -and $repointed -eq 0 -and $pruned -eq 0) {', 'if ($added -eq 0 -and $repointed -eq 0) {'), repo = mkRepo(m.fn), home = mkHome();
+  run(repo, home, SR_ONLY); const s = settings(home); s.hooks.PreToolUse = [{ hooks: [] }, ...s.hooks.PreToolUse]; fs.writeFileSync(path.join(home, '.claude', 'settings.json'), JSON.stringify(s));
+  run(repo, home, SR_ONLY); assert.ok(m.applied(), 'NOT APPLIED'); assert.strictEqual(strayGroups(groupsOf(home)), 1, 'the stray group was removed anyway');
+});
+test('D205 MUTANT 6: the prune reaches events this run did not register for, and the untouched-event test catches it', () => {
+  const m = mutate1('@($regEntries | Where-Object { -not $_.Excluded } | ForEach-Object { $_.Event } | Select-Object -Unique)', '@($settings.hooks.PSObject.Properties.Name)'), repo = mkRepo(m.fn), home = mkHome({ Notification: [{ hooks: [] }] });
+  run(repo, home, SR_ONLY); assert.ok(m.applied(), 'NOT APPLIED'); assert.notDeepStrictEqual(settings(home).hooks.Notification, [{ hooks: [] }], 'the untouched event was left alone anyway');
+});
+test('D205 MUTANT 7: the prune removes a group that holds a hook, and the foreign-hook test catches it', () => {
+  const m = mutate1('$keep = @($all | Where-Object { $_.hooks -and @($_.hooks).Count -gt 0 })', '$keep = @($all | Where-Object { $false })'), repo = mkRepo(m.fn), home = mkHome({ PreToolUse: [{ hooks: [{ type: 'command', command: 'somebody elses hook' }] }, { hooks: [] }] });
+  run(repo, home, SR_ONLY); assert.ok(m.applied(), 'NOT APPLIED'); assert.ok(!groupsOf(home).some((x) => cmdsIn(x).includes('somebody elses hook')), 'the foreign hook survived the mutant');
+});
+
 console.log(`\n${pass} passed, ${fail} failed`);
 fs.rmSync(tmp, { recursive: true, force: true });
 process.exit(fail ? 1 : 0);
