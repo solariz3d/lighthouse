@@ -11,8 +11,8 @@
 // A kill mid-run leaves a stray temp dir, never a mutant in the repo.
 //
 // Every anchor must occur EXACTLY ONCE in the source, or the row is NOT APPLIED (and counted as such, never as a
-// catch). The suite runs with AI_GATEWAY_API_KEY and JEV_LIVE_SMOKE removed from its environment, so no mutant can
-// reach the network.
+// catch). The suite runs with AI_GATEWAY_API_KEY, OPENROUTER_API_KEY and JEV_LIVE_SMOKE removed from its environment, so no mutant can
+// reach the network (and D197's tests mock fetch with fake keys).
 
 const fs = require('fs');
 const os = require('os');
@@ -22,17 +22,17 @@ const { spawnSync } = require('child_process');
 const SRC = path.join(__dirname, 'jev-ask.js');
 const SUITE = path.join(__dirname, 'jev-ask.test.js');
 
-const PATTERNS = ['anthropic-key', 'openai-style-key', 'github-token', 'aws-access-key-id', 'slack-token',
+const PATTERNS = ['openrouter-key', 'vercel-gateway-key', 'anthropic-key', 'openai-style-key', 'github-token', 'aws-access-key-id', 'slack-token',
   'google-api-key', 'private-key-block', 'bearer-token', 'jwt', 'secret-assignment'];
 
 const MUTANTS = [
-  ['no-key refusal removed', "if (!key) throw new Refusal('no AI_GATEWAY_API_KEY", "if (false) throw new Refusal('no AI_GATEWAY_API_KEY"],
+  ['no-key refusal removed (either route)', 'if (!key) {\n      const other', 'if (false) {\n      const other'],
   ['secret scan result ignored', 'if (hits.length) {', 'if (false) {'],
-  ['the-key-itself check removed', 'if (key && key.length >= 8 && text.includes(key)) hits.push', 'if (false) hits.push'],
+  ['the-key-itself check removed', 'if (keys.some((k) => text.includes(k))) hits.push', 'if (false) hits.push'],
   // Each named pattern neutered on its own: a never-matching regex placed first in its tuple, so `[name, re]` takes it.
   ...PATTERNS.map((p) => [`pattern ${p} never matches`, `['${p}', /`, `['${p}', /(?!)/, /`]),
   ['questions not scanned (instructions)', 'out.push([`questions.${name}.instructions`, q.instructions]);', '/* not scanned */'],
-  ['error messages not scrubbed of the key', 'e.message = scrub(e.message, key);', 'e.message = e.message;'],
+  ['error messages not scrubbed of the key', "e.message = scrub(e.message, allKeys, rt ? rt.keyVar : 'AI_GATEWAY_API_KEY');", 'e.message = e.message;'],
   ['a non-2xx read as success', 'if (!res.ok) throw', 'if (false) throw'],
   ['a missing answer not detected', 'if (!a) throw new GatewayError(`gateway response has no answer', 'if (false) throw new GatewayError(`gateway response has no answer'],
   ['boolean criteria not required', "if (!ok) throw new Refusal(`${at}: a boolean question needs criteria", "if (false) throw new Refusal(`${at}: a boolean question needs criteria"],
@@ -45,6 +45,29 @@ const MUTANTS = [
   ['a probability outside [0, 1] accepted', ' && a.probability >= 0 && a.probability <= 1', ''],
   ['a choice outside the options accepted', " && a.choice in questions[n].criteria", ''],
   ['the key written into the request body', 'body: JSON.stringify(req.body),', 'body: JSON.stringify({ ...req.body, key }),'],
+  // ---- D197: the OpenRouter route ----
+  ['openrouter: the model is an alias, not the pin', "const MODEL_OPENROUTER = 'typesafe/jev-1.13';", "const MODEL_OPENROUTER = '~typesafe/jev-latest';"],
+  ['openrouter: data_collection dropped from the request', ", provider: { data_collection: 'deny' } } };", ' } };'],
+  ['openrouter: data_collection allow', "provider: { data_collection: 'deny' } } };", "provider: { data_collection: 'allow' } } };"],
+  ['openrouter: a boolean question is not translated to noul', "q.type === 'boolean' ? { ...q, type: 'noul' } : q", "q.type === 'boolean' ? q : q"],
+  ['openrouter: a noul answer is not mapped to a boolean probability', "out[n] = { type: 'boolean', probability: a.noul };", 'out[n] = a;'],
+  ['openrouter: the resolved-model check removed', "if (typeof body.model !== 'string' || !RESOLVED_OPENROUTER.test(body.model)) {", 'if (false) {'],
+  ['openrouter: the resolved-model pattern loosened to any typesafe/jev-', 'const RESOLVED_OPENROUTER = /^typesafe\\/jev-1\\.13-[A-Za-z0-9._-]+$/;', 'const RESOLVED_OPENROUTER = /^typesafe\\/jev-/;'],
+  ['openrouter: a wrong resolved model is a GatewayError (exit 1), not a Refusal (exit 2)', 'throw new Refusal(`REFUSING the response', 'throw new GatewayError(`REFUSING the response'],
+  ['openrouter: the recorded model is the one asked for, not the resolved one', 'model: body.model,\n        provider:', 'model: MODEL_OPENROUTER,\n        provider:'],
+  ['openrouter: the id is not mapped to generationId', 'generationId: body.id == null ? null : body.id,', 'generationId: null,'],
+  ['openrouter: usage tokens not mapped', 'inputTokens: u.input_tokens == null ? null : u.input_tokens,', 'inputTokens: null,'],
+  ['openrouter: the cost dropped', 'cost: u && u.cost != null ? String(u.cost) : null,', 'cost: null,'],
+  ['openrouter: a missing usage cost read as zero', "cost: typeof u.cost === 'number' ? u.cost : null }", "cost: typeof u.cost === 'number' ? u.cost : 0 }"],
+  ['route: the default becomes openrouter (a silent switch)', "const DEFAULT_ROUTE = 'vercel';", "const DEFAULT_ROUTE = 'openrouter';"],
+  ['route: an unknown route is defaulted instead of refused', '? ROUTES[name] : null;', '? ROUTES[name] : ROUTES.vercel;'],
+  ['route: the openrouter route falls back to the other key', 'key = keys[rt.name];', 'key = keys[rt.name] || keys.vercel;'],
+  ['route: the hint to name the route removed', "keys.openrouter && route === undefined ?", 'false ?'],
+  ['secrets: only the route\'s own key is scanned for in the outgoing text', 'const hits = findSecrets(state, schema.questions, allKeys);', 'const hits = findSecrets(state, schema.questions, key);'],
+  ['secrets: error messages scrub only the route\'s own key', 'e.message = scrub(e.message, allKeys,', 'e.message = scrub(e.message, key,'],
+  ['secrets: key-shaped tokens are not redacted from a message', "for (const re of KEY_SHAPES) m = m.replace(re, '<redacted key-shaped token>');", ''],
+  ['dry: the placeholder names the wrong variable', 'Bearer <from env ${rt.keyVar}, not printed>', 'Bearer <from env AI_GATEWAY_API_KEY, not printed>'],
+  ['ledger: the route is not recorded', "route: result.route || 'vercel',", ''],
 ];
 
 function main() {
@@ -55,6 +78,7 @@ function main() {
   const suite = fs.readFileSync(SUITE, 'utf8');
   const env = { ...process.env };
   delete env.AI_GATEWAY_API_KEY;
+  delete env.OPENROUTER_API_KEY;
   delete env.JEV_LIVE_SMOKE;
   const runCopy = (text) => {
     const d = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-mut-'));

@@ -126,6 +126,8 @@ const SECRET_SAMPLES = [
   ['bearer-token', 'Authorization: ' + 'Bearer ' + 'abcDEF123'.repeat(3)],
   ['jwt', 'ey' + 'J' + R(12) + '.ey' + 'J' + R(12) + '.' + R(12)],
   ['secret-assignment', 'AI_GATEWAY_' + 'API_KEY=' + 'q'.repeat(40)],
+  ['openrouter-key', 'sk-' + 'or-' + 'v1-' + R(24)],   // D197, appended: the tests above index this list by position
+  ['vercel-gateway-key', 'vc' + 'k_' + R(24)],
 ];
 
 test('every named pattern has a sample here — a pattern with no test is a pattern nobody knows still works', () => {
@@ -381,6 +383,203 @@ test('PACING: the REAL fetch gets ONE shared pacer (judge and shadow share it in
   assert.strictEqual(J.defaultPacerFor(globalThis.fetch), real, 'the same pacer every time — one process, one spacing');
   assert.strictEqual(real.gapMs, J.DEFAULT_GAP_MS);
   assert.strictEqual(J.defaultPacerFor(async () => {}), null, 'a stub has no rate limit, so the suites never sleep');
+});
+
+// ------------------------------------------------------------------ D197: the OpenRouter route (plan_jev_openrouter_d162_2026-10-01.md)
+// Every test mocks `fetch` and uses a FAKE key built at runtime. No live call is made here; E makes the live calls in D162.
+
+const OR_KEY = ['sk', 'or', 'v1', 'test0nly0not0a0real0key0aaaa1111'].join('-');   // key-shaped (matches the openrouter-key pattern), not a real key
+const OR_ENV = { OPENROUTER_API_KEY: OR_KEY };
+const RESOLVED = 'typesafe/jev-1.13-20260917';
+const OR_GOOD = {
+  id: 'gen-dec-1790015143-test',
+  model: RESOLVED,
+  provider: 'TypeSafe',
+  answers: {
+    colour: { type: 'noul', noul: 0.97 },
+    route: { type: 'choice', choice: 'study', confidence: 0.9, probabilities: { kitchen: 0.1, study: 0.9 } },
+    level: { type: 'score', score: 1.8, probabilities: { 0: 0, 1: 0.2, 2: 0.8 } },
+  },
+  usage: { input_tokens: 351, output_tokens: 70, cost: 0.000014322 },
+};
+const orAsk = (over = {}) => J.ask({ schema: SCHEMA, state: STATE, env: OR_ENV, route: 'openrouter', ...over });
+
+// route selection: explicit, never silent
+test('ROUTE: with no route named the route is vercel, exactly as before, and it reads AI_GATEWAY_API_KEY only', async () => {
+  const f = stub(200, GOOD); const r = await J.ask({ schema: SCHEMA, state: STATE, env: ENV, fetchImpl: f });
+  assert.strictEqual(f.calls[0].url, J.URL_EVALUATE); assert.strictEqual(r.model, 'typesafe-ai/jev'); assert.strictEqual(J.DEFAULT_ROUTE, 'vercel');
+});
+test('ROUTE: an OPENROUTER key alone with no route named is REFUSED and told to name the route; nothing switches by which key is present, and nothing is sent', async () => {
+  const f = stub(200, OR_GOOD);
+  await refuses(J.ask({ schema: SCHEMA, state: STATE, env: OR_ENV, fetchImpl: f }), /no AI_GATEWAY_API_KEY[\s\S]*--route openrouter/);
+  assert.strictEqual(f.calls.length, 0);
+});
+test('ROUTE: an unknown route name is REFUSED (never defaulted), and a bare typo does not select openrouter', async () => {
+  for (const bad of ['open-router', 'OPENROUTER', 'jev', '', null]) {
+    const f = stub(200, OR_GOOD);
+    await refuses(J.ask({ schema: SCHEMA, state: STATE, env: { ...ENV, ...OR_ENV }, fetchImpl: f, route: bad }), /unknown route/);
+    assert.strictEqual(f.calls.length, 0, `route ${JSON.stringify(bad)} sent something`);
+  }
+});
+test('ROUTE: each route reads ITS OWN key variable: the openrouter route does not fall back to AI_GATEWAY_API_KEY, the vercel route does not use OPENROUTER_API_KEY', async () => {
+  const f = stub(200, OR_GOOD);
+  await refuses(J.ask({ schema: SCHEMA, state: STATE, env: ENV, fetchImpl: f, route: 'openrouter' }), /no OPENROUTER_API_KEY/);
+  assert.strictEqual(f.calls.length, 0);
+  const g = stub(200, GOOD); await J.ask({ schema: SCHEMA, state: STATE, env: { ...ENV, ...OR_ENV }, fetchImpl: g, route: 'vercel' });
+  assert.match(g.calls[0].init.headers.Authorization, new RegExp(`Bearer ${FAKE_KEY}$`)); assert.ok(!g.calls[0].init.headers.Authorization.includes(OR_KEY));
+});
+test('ROUTE: the CLI takes --route, rejects an unknown one, and a --dry openrouter request names OPENROUTER_API_KEY and prints no key', () => {
+  const schemaFile = path.join(os.tmpdir(), `jev-or-${process.pid}.schema.json`), stateFile = path.join(os.tmpdir(), `jev-or-${process.pid}.state.txt`);
+  fs.writeFileSync(schemaFile, JSON.stringify(SCHEMA)); fs.writeFileSync(stateFile, STATE);
+  try {
+    const env = { ...process.env, OPENROUTER_API_KEY: OR_KEY }; delete env.AI_GATEWAY_API_KEY;
+    const ok = spawnSync(process.execPath, [TOOL, '--schema', schemaFile, '--state', stateFile, '--route', 'openrouter', '--dry'], { encoding: 'utf8', env });
+    assert.strictEqual(ok.status, 0, ok.stderr); const out = JSON.parse(ok.stdout);
+    assert.strictEqual(out.route, 'openrouter'); assert.strictEqual(out.request.url, J.URL_OPENROUTER); assert.match(out.request.headers.Authorization, /OPENROUTER_API_KEY/);
+    assert.ok(!ok.stdout.includes(OR_KEY) && !ok.stderr.includes(OR_KEY), 'the key was printed');
+    const bad = spawnSync(process.execPath, [TOOL, '--schema', schemaFile, '--state', stateFile, '--route', 'nope', '--dry'], { encoding: 'utf8', env });
+    assert.strictEqual(bad.status, 2); assert.match(bad.stderr, /unknown route/);
+  } finally { fs.rmSync(schemaFile, { force: true }); fs.rmSync(stateFile, { force: true }); }
+});
+
+// the request shape
+test('REQUEST: URL, the PINNED model (not an alias), data_collection deny, the state as sent, the key only in the Authorization header', async () => {
+  const f = stub(200, OR_GOOD); await orAsk({ fetchImpl: f });
+  const { url, init } = f.calls[0], body = JSON.parse(init.body);
+  assert.strictEqual(url, 'https://openrouter.ai/api/alpha/decisions');
+  assert.strictEqual(body.model, 'typesafe/jev-1.13'); assert.ok(!/latest|~/.test(body.model), 'an alias');
+  assert.deepStrictEqual(body.provider, { data_collection: 'deny' });
+  assert.strictEqual(body.state, STATE); assert.deepStrictEqual(Object.keys(body).sort(), ['model', 'provider', 'questions', 'state']);
+  assert.strictEqual(init.method, 'POST'); assert.strictEqual(init.headers.Authorization, `Bearer ${OR_KEY}`);
+  assert.ok(!init.body.includes(OR_KEY), 'the key is in the body');
+});
+test('REQUEST: a boolean question goes as OpenRouter\'s noul with its criteria and instructions; choice and score go unchanged; the schema object is not mutated', async () => {
+  const before = JSON.stringify(SCHEMA); const f = stub(200, OR_GOOD); await orAsk({ fetchImpl: f });
+  const q = JSON.parse(f.calls[0].init.body).questions;
+  assert.deepStrictEqual(q.colour, { type: 'noul', instructions: SCHEMA.questions.colour.instructions, criteria: SCHEMA.questions.colour.criteria });
+  assert.deepStrictEqual(q.route, SCHEMA.questions.route); assert.deepStrictEqual(q.level, SCHEMA.questions.level);
+  assert.strictEqual(JSON.stringify(SCHEMA), before);
+});
+const Q3_SHAPE = { questions: { q3: { type: 'choice', instructions: 'Does the sentence state anything the output does not show?', criteria: { YES: 'YES (it states something the output does not show)', NO: 'NO', CANT_TELL: "CAN'T TELL" } } } };
+const Q3_ANSWER = { id: 'g', model: RESOLVED, answers: { q3: { type: 'choice', choice: 'NO', confidence: 0.8, probabilities: { YES: 0.1, NO: 0.8, CANT_TELL: 0.1 } } }, usage: { input_tokens: 9, output_tokens: 1, cost: 0.00001 } };
+test('REQUEST: a record of questions with criteria as {option: text}, the shape of D162 sealed Q3 schema, goes as it is with no translation', async () => {
+  const f = stub(200, Q3_ANSWER); const r = await J.ask({ schema: Q3_SHAPE, state: 'a command output and a sentence', env: OR_ENV, route: 'openrouter', fetchImpl: f });
+  assert.deepStrictEqual(JSON.parse(f.calls[0].init.body).questions, Q3_SHAPE.questions); assert.strictEqual(r.answers.q3.choice, 'NO');
+});
+test('REQUEST: the sealed Q3 schema FILE (consonance/jev/schemas/q3_2026-09-27.json) is unchanged (sha256 05c28c63...) and its questions go untranslated (skipped when the file is not beside this one, as in the mutants temp copy)', async (t) => {
+  const file = path.join(__dirname, '..', 'jev', 'schemas', 'q3_2026-09-27.json');
+  if (!fs.existsSync(file)) { t.skip('the sealed schema file is not beside this copy'); return; }
+  const text = fs.readFileSync(file, 'utf8');
+  assert.ok(require('crypto').createHash('sha256').update(text).digest('hex').startsWith('05c28c633415ea91'), 'the sealed Q3 schema changed');
+  const q3 = JSON.parse(text), f = stub(200, Q3_ANSWER); await J.ask({ schema: q3, state: 'a command output and a sentence', env: OR_ENV, route: 'openrouter', fetchImpl: f });
+  assert.deepStrictEqual(JSON.parse(f.calls[0].init.body).questions, q3.questions);
+});
+
+// the response mapping
+test('MAPPING: noul becomes a boolean probability, choice and score pass through, usage and id and the RESOLVED model are recorded', async () => {
+  const r = await orAsk({ fetchImpl: stub(200, OR_GOOD) });
+  assert.strictEqual(r.route, 'openrouter'); assert.strictEqual(r.model, RESOLVED); assert.strictEqual(r.provider, 'TypeSafe');
+  assert.deepStrictEqual(r.answers.colour, { type: 'boolean', probability: 0.97 });
+  assert.strictEqual(r.answers.route.choice, 'study'); assert.strictEqual(r.answers.route.confidence, 0.9); assert.strictEqual(r.answers.level.score, 1.8);
+  assert.deepStrictEqual(r.usage, { inputTokens: 351, outputTokens: 70, cost: 0.000014322 }); assert.strictEqual(r.cost, '0.000014322');
+  assert.strictEqual(r.generationId, 'gen-dec-1790015143-test'); assert.strictEqual(typeof r.ms, 'number');
+});
+test('MAPPING: a missing usage or cost is null (NOT REPORTED), never zero', async () => {
+  const { usage, ...noUsage } = OR_GOOD; let r = await orAsk({ fetchImpl: stub(200, noUsage) });
+  assert.strictEqual(r.usage, null); assert.strictEqual(r.cost, null);
+  r = await orAsk({ fetchImpl: stub(200, { ...OR_GOOD, usage: { input_tokens: 5, output_tokens: 1 } }) }); assert.strictEqual(r.cost, null); assert.strictEqual(r.usage.cost, null);
+});
+test('MAPPING: the ledger row of an openrouter result carries the route, the model and the generation id, and no text', async () => {
+  const r = await orAsk({ fetchImpl: stub(200, OR_GOOD) }), row = J.ledgerRow(r, JSON.stringify(SCHEMA), STATE);
+  assert.strictEqual(row.route, 'openrouter'); assert.strictEqual(row.model, RESOLVED); assert.strictEqual(row.generationId, 'gen-dec-1790015143-test'); assert.strictEqual(row.inputTokens, 351);
+  assert.ok(!JSON.stringify(row).includes(STATE) && !JSON.stringify(row).includes(OR_KEY));
+});
+test('MAPPING: an answer missing for a declared question, a noul answer to a non-boolean question, a choice outside the options, and a probability outside [0, 1] are GatewayErrors', async () => {
+  const wrong = (answers) => assert.rejects(orAsk({ fetchImpl: stub(200, { ...OR_GOOD, answers }) }), (e) => e instanceof J.GatewayError && e.exitCode === 1);
+  await wrong({ colour: OR_GOOD.answers.colour, route: OR_GOOD.answers.route });
+  await wrong({ ...OR_GOOD.answers, route: { type: 'noul', noul: 0.5 } });
+  await wrong({ ...OR_GOOD.answers, route: { type: 'choice', choice: 'garage', probabilities: {} } });
+  await wrong({ ...OR_GOOD.answers, colour: { type: 'noul', noul: 1.5 } });
+});
+
+// refusals before the network, and the failures that must not invent an answer
+test('MISSING KEY: the openrouter route REFUSES loudly (exit 2) and never touches the network', async () => {
+  const f = stub(200, OR_GOOD);
+  await refuses(J.ask({ schema: SCHEMA, state: STATE, env: {}, fetchImpl: f, route: 'openrouter' }), /no OPENROUTER_API_KEY/);
+  await refuses(J.ask({ schema: SCHEMA, state: STATE, env: { OPENROUTER_API_KEY: '   ' }, fetchImpl: f, route: 'openrouter' }), /no OPENROUTER_API_KEY/);
+  assert.strictEqual(f.calls.length, 0);
+});
+for (const status of [400, 401, 402, 403, 404, 413, 429, 500, 502, 503, 524, 529]) {
+  test(`HTTP ${status}: a GatewayError (exit 1) with the status, no answer invented, and nothing key-shaped printed`, async () => {
+    const echoed = 'sk-' + 'or-' + 'v1-' + R(24), body = { error: { code: status, message: `insufficient credits for key ${echoed} and ${OR_KEY}` } };
+    await assert.rejects(orAsk({ fetchImpl: stub(status, body) }), (e) => {
+      assert.ok(e instanceof J.GatewayError && e.exitCode === 1 && !(e instanceof J.Refusal));
+      assert.ok(e.message.includes(`HTTP ${status}`)); assert.ok(!e.message.includes(OR_KEY) && !e.message.includes(echoed), 'a key-shaped token was printed');
+      return true;
+    });
+  });
+}
+test('HTTP 200 with a body that is not JSON, or an unusable answers object, is a GatewayError', async () => {
+  await assert.rejects(orAsk({ fetchImpl: stub(200, '<html>') }), (e) => e instanceof J.GatewayError && /not JSON/.test(e.message));
+  await assert.rejects(orAsk({ fetchImpl: stub(200, { ...OR_GOOD, answers: null }) }), (e) => e instanceof J.GatewayError);
+});
+test('REDACTION: a gateway error that echoes the OTHER route key value (not key-shaped) is scrubbed too, on the openrouter route', async () => {
+  await assert.rejects(orAsk({ env: { ...OR_ENV, ...ENV }, fetchImpl: stub(500, { error: `upstream said ${FAKE_KEY}` }) }), (e) => e instanceof J.GatewayError && !e.message.includes(FAKE_KEY) && /HTTP 500/.test(e.message));
+});
+test('A NETWORK FAILURE is a GatewayError with the key scrubbed from whatever the transport said', async () => {
+  const f = async () => { throw new Error(`connect failed with Bearer ${OR_KEY}`); };
+  await assert.rejects(orAsk({ fetchImpl: f }), (e) => e instanceof J.GatewayError && !e.message.includes(OR_KEY));
+});
+
+// the resolved model
+for (const bad of ['typesafe-ai/jev', 'typesafe/jev-1.12-20260101', 'typesafe/jev-1.13', 'typesafe/jev-1.130-x', 'typesafe/jev-1.13-', '~typesafe/jev-latest', 'openai/gpt-4o', 'xtypesafe/jev-1.13-20260917', 'typesafe/jev-1.13-20260917 ', '', null, undefined, 42]) {
+  test(`RESOLVED MODEL ${JSON.stringify(bad)} is REFUSED loudly (exit 2): the answers are discarded and the generation id is named for the accounts`, async () => {
+    const body = { ...OR_GOOD, model: bad }; if (bad === undefined) delete body.model;
+    await assert.rejects(orAsk({ fetchImpl: stub(200, body) }), (e) => {
+      assert.ok(e instanceof J.Refusal && e.exitCode === 2, `not a Refusal: ${e && e.constructor && e.constructor.name}`);
+      assert.match(e.message, /not typesafe\/jev-1\.13-\*/); assert.match(e.message, /gen-dec-1790015143-test/); assert.match(e.message, /answers are discarded/);
+      return true;
+    });
+  });
+}
+test('RESOLVED MODEL: a dated jev-1.13 version is accepted whatever its suffix (the next patch release is not a fallback)', async () => {
+  for (const m of ['typesafe/jev-1.13-20260917', 'typesafe/jev-1.13-20261201', 'typesafe/jev-1.13-rc.2']) assert.strictEqual((await orAsk({ fetchImpl: stub(200, { ...OR_GOOD, model: m }) })).model, m);
+});
+
+// secrets: the openrouter and vercel key shapes, the key's own value, both routes' keys, the logs
+test('SECRET SCAN: an sk-or- key in the state is named openrouter-key (not only as an openai-style key), a vck_ key vercel-gateway-key, and neither is printed', async () => {
+  const orTok = 'sk-' + 'or-' + 'v1-' + R(24), vck = 'vc' + 'k_' + R(24);
+  const hits = J.findSecrets(`here is ${orTok} and ${vck}`, {}, []);
+  assert.ok(hits.some((h) => h.pattern === 'openrouter-key'), JSON.stringify(hits)); assert.ok(hits.some((h) => h.pattern === 'vercel-gateway-key'), JSON.stringify(hits));
+  const f = stub(200, OR_GOOD);
+  await assert.rejects(orAsk({ fetchImpl: f, state: `${STATE} ${orTok}` }), (e) => e instanceof J.Refusal && /openrouter-key/.test(e.message) && !e.message.includes(orTok));
+  assert.strictEqual(f.calls.length, 0);
+});
+test('SECRET SCAN: the OPENROUTER key\'s own value in the state, and the VERCEL key\'s value too, on the openrouter route (both keys are checked on either route)', async () => {
+  const f = stub(200, OR_GOOD);
+  await assert.rejects(orAsk({ fetchImpl: f, state: `${STATE} (${OR_KEY})` }), (e) => e instanceof J.Refusal && /the-key-itself/.test(e.message) && !e.message.includes(OR_KEY));
+  await assert.rejects(orAsk({ fetchImpl: f, env: { ...OR_ENV, ...ENV }, state: `${STATE} (${FAKE_KEY})` }), (e) => e instanceof J.Refusal && /the-key-itself/.test(e.message) && !e.message.includes(FAKE_KEY));
+  assert.strictEqual(f.calls.length, 0);
+});
+test('REDACTION: scrub removes the key\'s own value AND any sk-or- or vck_ shaped token, and names the variable', () => {
+  const t = 'sk-' + 'or-' + 'v1-' + R(24), v = 'vc' + 'k_' + R(24);
+  const out = J.scrub(`a ${OR_KEY} b ${t} c ${v} d`, OR_KEY, 'OPENROUTER_API_KEY');
+  assert.ok(!out.includes(OR_KEY) && !out.includes(t) && !out.includes(v), out); assert.match(out, /<OPENROUTER_API_KEY>/);
+  assert.ok(!J.scrub(`x ${FAKE_KEY}`, [FAKE_KEY, OR_KEY]).includes(FAKE_KEY), 'an array of keys is each scrubbed');
+  assert.strictEqual(J.scrub('no key here', ''), 'no key here');
+});
+test('REDACTION in the logs: the CLI prints neither key nor a key-shaped token on stdout or stderr when a refusal or a failure echoes one', () => {
+  const schemaFile = path.join(os.tmpdir(), `jev-or2-${process.pid}.schema.json`), stateFile = path.join(os.tmpdir(), `jev-or2-${process.pid}.state.txt`);
+  fs.writeFileSync(schemaFile, JSON.stringify(SCHEMA)); fs.writeFileSync(stateFile, `${STATE} ${OR_KEY}`);
+  try {
+    const env = { ...process.env, OPENROUTER_API_KEY: OR_KEY }; delete env.AI_GATEWAY_API_KEY;
+    const r = spawnSync(process.execPath, [TOOL, '--schema', schemaFile, '--state', stateFile, '--route', 'openrouter'], { encoding: 'utf8', env });
+    assert.strictEqual(r.status, 2); assert.match(r.stderr, /REFUSED[\s\S]*the-key-itself/); assert.ok(!(r.stdout + r.stderr).includes(OR_KEY));
+  } finally { fs.rmSync(schemaFile, { force: true }); fs.rmSync(stateFile, { force: true }); }
+});
+test('the Vercel route\'s answer shape is unchanged: no route, provider or translation fields appear on it', async () => {
+  const r = await J.ask({ schema: SCHEMA, state: STATE, env: ENV, fetchImpl: stub(200, GOOD) });
+  assert.deepStrictEqual(Object.keys(r).sort(), ['answers', 'cost', 'generationId', 'model', 'ms', 'usage']); assert.strictEqual(r.answers.colour.type, 'boolean');
 });
 
 // ------------------------------------------------------------------ the one live call, opt-in twice over
