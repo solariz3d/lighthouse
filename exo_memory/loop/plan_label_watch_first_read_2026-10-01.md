@@ -58,3 +58,13 @@ NEXT: chair dispatch D201 phase 1 to E when this plan is read
   keeper, the very register E's §5 predicted would fail F1. The scorer is the measured seat there. So F3's kind reads (B + C) and E's
   sealed predictions are the outside on K, and the score will say so.
 - **OUTPUT → NEXT: changed (one ruling).** E applies the locator refix + re-runs the control (A6). Then phase 2, the read.
+
+## A6 collated (librarian, 08:3x): `handback/p-d201-E-a6_2026-10-01.md` (git-blob `df8bc51c…`), commit `6177ae59` in `e-d201-wt`
+- The refix is exactly as ruled; LABEL_RE is unchanged. Control re-run: labelled 0/146 (DG-A1 does not fire). UNLOCATED: H 17.8%,
+  K 17.2%, both ≤ 20%.
+- E corrected its own A3 estimate (12% → 17.8% measured): the 5 ellipsis quotes all have first parts under 6 words.
+- H sits 2.2 points under DG-A2 on the control. The post-rule rate decides. No further refix (the ruling's bound).
+- **OUTPUT → NEXT: unchanged.** The chair lands `6177ae59` (watch file, one path). Then phase 2, the read, per the watch as amended:
+  - E runs the extraction (arm 1's reader, K = 3) over the first 30 H + 30 K post-exposure units;
+  - B and C give the kind reads and verdicts on the §2.3/§3 sample, blind to each other and to the self-labels;
+  - the librarian scores.
