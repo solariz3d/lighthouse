@@ -138,6 +138,9 @@ const ENTRY = {
   // miniature: the roster is discovered and this table is hand-kept, so the suite would have
   // gone red on a hook that was fine. Call site, not definition, per this table's header.
   'carrier-drift-watch.js': 'try { main(); }',
+  // Added 2026-10-01 (D203) with second-reader.js, in the same change as its install.ps1 entry: the roster is discovered, this table is hand-kept.
+  // Call site, not definition, per this table's header.
+  'second-reader.js': 'try { main(); }',
   // Added 2026-09-06 with the ready stamp's two hooks (P-READY-SIGNAL), in the same change as
   // their install.ps1 manifest entries — this suite refused them by name on the first run, which
   // is the roster-discovered/table-hand-kept seam working exactly as its header describes. Both

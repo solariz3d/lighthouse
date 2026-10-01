@@ -164,6 +164,11 @@ $files = @(
   # chain the record describes as "residue fired from checkpoint" has never run on this machine.
   # Copying that wiring would have shipped a trigger that is a no-op here. See the hook's header.
   @{ From = 'consonance\hooks\carrier-drift-watch.js';    To = 'carrier-drift-watch.js' }
+  # Added 2026-10-01 (D203, the keeper's approval 09:34) with its registration below, same commit, same reason as the entries above. THE SECOND READER,
+  # in SHADOW: a PreToolUse hook on the two hand-back verbs that returns ALLOW at once and hands the message to a detached worker (Lib: it receives the job
+  # on a pipe, not from the host). Plan: exo_memory/loop/plan_second_reader_d203_2026-10-01.md. Install it with -Only second-reader.js,second-reader-worker.js.
+  @{ From = 'consonance\hooks\second-reader.js';           To = 'hooks\second-reader.js' }
+  @{ From = 'consonance\hooks\second-reader-worker.js';    To = 'hooks\second-reader-worker.js'; Lib = $true }
 )
 
 # What this script REGISTERS. Only these are ever touched in settings.json; anything else found
@@ -262,6 +267,10 @@ $register = @(
   # it is working reads exactly like a hook that was never installed, which is what the dispatch
   # gate's first probe cost to learn.
   @{ Event = 'Stop';             Rel = 'carrier-drift-watch.js';      Runner = 'node' }
+  # The second reader (D203). Matcher-scoped to the two hand-back verbs, in the docs' exact-name syntax (code.claude.com/docs/en/hooks: letters, digits, _, -, |
+  # are exact names). It allows at once and writes nothing to stdout; it must never fire on any other tool call.
+  @{ Event = 'PreToolUse';       Rel = 'hooks\second-reader.js';      Runner = 'node';
+     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair' }
 )
 
 # DELIBERATELY UNMANAGED -- the THIRD STATE, named. A file in a manifest source directory that is
