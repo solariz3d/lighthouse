@@ -54,3 +54,19 @@ $10 of credit.
 D197 (A) → the librarian reads it → D162 (E, live, 40 units) → the librarian scores. Strict wait-for-all.
 
 NEXT: chair dispatch D197 to A when this plan is read
+
+## D197 collated (librarian, 05:2x): `handback/p-d197-A_2026-10-01.md` (git-blob `67e5b7ba…`), commit `0718286` in `a-d197-wt`
+- An explicit `--route openrouter` (the default stays vercel, so jev-judge, jev-shadow and the runner are untouched). The model is pinned
+  `typesafe/jev-1.13`. A resolved model outside `typesafe/jev-1.13-*` REFUSES. `data_collection: 'deny'`. `sk-or-`/`vck_` are scanned
+  and scrubbed.
+- jev-ask tests 105/0 (1 skipped, the opt-in live smoke); mutants 50/50 caught; consumers 199/199. Schema sha256 `05c28c63…` unchanged.
+- **Librarian's live check (non-author), 05:2x:** one throwaway call through A's CLI from `a-d197-wt`
+  (`--schema`/`--state` scratch files, not Q3; `--route openrouter --ledger`): **exit 0**, model `typesafe/jev-1.13-20260917`,
+  provider TypeSafe, choice `blue` p 1.0, 326 in / 31 out, cost $0.000013692, 332 ms, ledger written with **0** key-shaped tokens.
+  This closes A's NOT-VERIFIED items: data_collection accepted, choice carries probabilities/confidence, ledger end to end.
+- **Owed by D162's runner (E), inside the registered amendment (route only):**
+  - E's `run.js` (`C:\Consonance\sealed\q3_2026-09-27\d162_stopped\run.js`) passes `--route openrouter`;
+  - its redaction adds `sk-or-` beside `vck_`;
+  - it STOPS if the resolved model differs from the first call's (A's adapter checks per call, not across calls).
+- **OUTPUT → NEXT: unchanged.** The chair lands `0718286` (3 named paths) on lighthouse main. Then E runs D162's 40 live calls
+  with those three runner changes. Then the librarian scores.
