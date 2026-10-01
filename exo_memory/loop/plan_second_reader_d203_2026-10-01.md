@@ -65,3 +65,19 @@ NEXT: chair dispatch D203 build to A when this plan is read
 - **OUTPUT → NEXT: unchanged.** B's non-author look: diff and tests, then ONE real shadow ring from a freshly started session.
   B confirms the ring was delivered byte-identical and one row was written with flags/tokens or a clear error. If the real
   call fails, it fails OPEN, and that is B's finding, not a block.
+
+## B's look collated (librarian, 10:3x): `handback/p-d203-B_2026-10-01.md`: GREEN for landing `215e6a5`
+- Tests 29/29, related 147/147, mutants 38/38 (B's own run). The installed hook files are byte-identical to the commit.
+- One real fresh-session ring: delivered byte-identical; exactly one row; `--safe-mode` auth, JSON, tokens and cost all work; seat filled;
+  no reentrant row, no stray process, lock released.
+- **The shadow week is DATED from the install: 2026-10-01 10:12 local (16:12Z).** Running sessions hot-loaded the settings
+  (B: two rows from 03:05 sessions). It ends at 2026-10-08 10:12 or at 60 rows, whichever comes first. A's "after restart" premise
+  is corrected.
+- **The installer bug B found (owner A, NOT blocking):** `install.ps1:815-817` seeds an empty group for a new event array.
+  - Worse, `:873` puts any future UNMATCHED PreToolUse hook into the LAST group, now the `call_librarian|call_chair` matcher group,
+    which scopes it silently to two tools.
+  - This is a small follow-up lap for A: B's 4-step fix plus the test. It touches no second-reader behaviour, so the week's rows are
+    unaffected.
+- B's observation: the content-free test ring drew a flag, a false-positive shape. It is a week datum, not tuned.
+- **OUTPUT → NEXT: changed.** The chair lands `215e6a5`. Separately: A gets the installer fix (feel-ish tier: targeted test + B's look).
+  The week runs untouched.
