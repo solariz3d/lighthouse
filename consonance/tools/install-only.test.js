@@ -489,6 +489,40 @@ test('D205 MUTANT 7: the prune removes a group that holds a hook, and the foreig
   run(repo, home, SR_ONLY); assert.ok(m.applied(), 'NOT APPLIED'); assert.ok(!groupsOf(home).some((x) => cmdsIn(x).includes('somebody elses hook')), 'the foreign hook survived the mutant');
 });
 
+// ── D212: THE SOURCES GATE'S REGISTRATION, on the REAL manifest (the hook files are the repo's own, copied into the throwaway repo). It must join the second reader's
+// matcher group AFTER it, on a fresh machine and on the state D is in now (the second reader alone), and change nothing else.
+const SG_ONLY = ['-Only', 'sources-gate.js'];
+const SG_BOTH = ['-Only', 'second-reader.js,second-reader-worker.js,sources-gate.js'];
+const SRSG = 'mcp__consonance__call_librarian|mcp__consonance__call_chair';
+test('D212: a fresh PreToolUse gets ONE matcher group holding the second reader then the SOURCES gate, and the gate file is installed byte-identical', () => {
+  const repo = mkRepo(), home = mkHome();
+  const r = run(repo, home, SG_BOTH), g = groupsOf(home);
+  assert.strictEqual(g.length, 1, JSON.stringify(g) + r.out); assert.strictEqual(g[0].matcher, SRSG);
+  assert.deepStrictEqual(cmdsIn(g[0]).map((c) => (c.match(/([\w-]+\.js)"?$/) || [])[1]), ['second-reader.js', 'sources-gate.js'], JSON.stringify(g[0]));
+  const found = []; const walk = (d) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else if (e.name === 'sources-gate.js') found.push(p); } };
+  walk(path.join(home, '.claude'));
+  assert.strictEqual(found.length, 1, 'installed copies: ' + found.join(', '));
+  assert.strictEqual(fs.readFileSync(found[0], 'utf8'), fs.readFileSync(path.join(REPO, 'consonance', 'hooks', 'sources-gate.js'), 'utf8'));
+});
+test('D212: on the state D is in now (the second reader alone) the gate joins its group after it, and every other event and setting is identical', () => {
+  const repo = mkRepo(), home = mkHome();
+  run(repo, home, SR_ONLY);
+  const s = settings(home); s.hooks.SessionStart = [{ hooks: [{ type: 'command', command: 'keep me', timeout: 3 }] }]; s.env = { X: '1' };
+  fs.writeFileSync(path.join(home, '.claude', 'settings.json'), JSON.stringify(s, null, 2));
+  const before = settings(home), r = run(repo, home, SG_ONLY), after = settings(home);
+  assert.strictEqual(groupsOf(home).length, 1, JSON.stringify(groupsOf(home)) + r.out);
+  assert.deepStrictEqual(cmdsIn(groupsOf(home)[0]).map((c) => (c.match(/([\w-]+\.js)"?$/) || [])[1]), ['second-reader.js', 'sources-gate.js']);
+  assert.deepStrictEqual(groupsOf(home)[0].hooks[0], before.hooks.PreToolUse[0].hooks[0], 'the second reader entry changed');
+  const rest = (x) => { const y = JSON.parse(JSON.stringify(x)); delete y.hooks.PreToolUse; return y; };
+  assert.deepStrictEqual(rest(after), rest(before), 'something other than PreToolUse changed');
+});
+test('D212: re-running the gate install changes nothing (the file is byte-identical, "already correct")', () => {
+  const repo = mkRepo(), home = mkHome();
+  run(repo, home, SG_BOTH);
+  const before = fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), r = run(repo, home, SG_BOTH);
+  assert.strictEqual(fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), before, r.out); assert.ok(/already correct/.test(r.out), r.out);
+});
+
 console.log(`\n${pass} passed, ${fail} failed`);
 fs.rmSync(tmp, { recursive: true, force: true });
 process.exit(fail ? 1 : 0);

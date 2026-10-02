@@ -503,6 +503,25 @@ night. `node consonance/tools/ferry.js --report`.*
    would act on it. **A checked claim can still be wrong** (a misread result): the label says a check
    ran, not that it was read right.
 
+8. **A SOURCES LINE ON EVERY HAND-OFF RING — and it is a GATE, not a request** (added 2026-10-02, D212; the
+   keeper, 13:42: *"lets do it, i have a good feeling about this"*; plan
+   `exo_memory/loop/plan_sources_gate_d212_2026-10-02.md`). A `call_librarian` or `call_chair` message carries
+   one line, directly above its NEXT trailer, naming what THIS turn opened or ran that the message relies on:
+
+       SOURCES: <path> · <path> · `<command>`
+       SOURCES: none (no state claims)
+
+   The hook `consonance/hooks/sources-gate.js` (PreToolUse, the same two verbs) **denies the ring** when the
+   line is missing or empty, or when an item matches no Read / Grep / Glob / WebFetch, Bash or PowerShell call
+   that completed in this turn. The deny comes back **in the same turn** with the unmatched items named, the
+   ring is logged first (`<data>/sources-gate.jsonl`, the pointer line and seat, never the message), and you
+   fix the line and re-send; nothing is lost. A path that only appears in an `echo` does not count as opened.
+   It fails open on any error of its own. **This item only tells you what the refusal will ask for; the gate is
+   the enforcement** (measured at D210: gated rules are followed 0.979 at the median, ungated per-claim
+   source rules 0.010 to 0.041, `exo_memory/loop/rule_census_score_2026-10-02.md`).
+   *What it cannot do:* tell whether an opened file backs the claim. Item 7's label and the second reader
+   are that half.
+
 ---
 
 ## THE FAILURE THIS DOCUMENT EXISTS TO PREVENT
