@@ -3061,6 +3061,41 @@ fn pointer_in(text: &str) -> Option<String> {
         .map(|(_, p)| (*p).clone())
 }
 
+/// D214 — the `SOURCES:` slot is NOT a pointer (D212). A ring now carries one line naming what its turn opened, and the SOURCES gate
+/// (consonance/hooks/sources-gate.js) lets a path be spelled the way the seat's call spelled it — B's ring cited `/c/…` only there,
+/// the digest gate took that as the ring's pointer, found no repo-relative path, and refused a ring that had no pointer at all.
+/// The pointer is chosen from the ring's prose, so the slot (the `SOURCES:` line and the lines that continue it, up to a blank line or the
+/// NEXT trailer — the same extent the hook reads) is taken out before the choice. The DELIVERED text keeps the line; only the choice
+/// ignores it. A ring that names no file outside the slot is then delivered with "[NO digest at ring — this call names no file to hash]".
+fn is_sources_head(line: &str) -> bool {
+    let t = line.trim_start_matches(|c: char| c == '*' || c == '_' || c == '>' || c == '-' || c.is_whitespace());
+    match t.strip_prefix("SOURCES") {
+        Some(rest) => rest.trim_start_matches(|c: char| c == '*' || c == '_').trim_start().starts_with(':'),
+        None => false,
+    }
+}
+
+fn without_sources(text: &str) -> String {
+    let mut out: Vec<&str> = Vec::new();
+    let mut in_slot = false;
+    for line in text.split('\n') {
+        let t = line.trim();
+        if is_sources_head(line) {
+            in_slot = true;
+            continue;
+        }
+        if in_slot {
+            if t.is_empty() || t.starts_with("NEXT:") {
+                in_slot = false;
+            } else {
+                continue;
+            }
+        }
+        out.push(line);
+    }
+    out.join("\n")
+}
+
 /// Remove every digest the PANE supplied, and say how many were removed. A digest word (`sha256`, `sha-256`, `sha1`,
 /// `git-blob`) takes its following hex token with it, so a stale value cannot survive as a bare 64-hex string.
 fn strip_supplied_digests(text: &str) -> (String, usize) {
@@ -3113,7 +3148,7 @@ fn digest_refusal(path: &str, why: &str) -> String {
     format!(
         "refused: THE RING COULD NOT COMPUTE THE DIGEST — {why}: {path}\n\
          The hand-back was NOT delivered, and the attempt was posted to the board.\n\
-         Recovery: write the file at that path, or correct the pointer, then ring again."
+         Recovery: write the file at that path, or correct the pointer, then ring again. The pointer is a repo-relative path in the ring's prose (exo_memory/handback/<packet>_<date>.md); a path on the SOURCES: line is never taken as the pointer."
     )
 }
 
@@ -3129,7 +3164,8 @@ fn digest_gate(
         Some(if removed > 0 { format!("{s}; {removed} pane-supplied digest(s) removed") } else { s.to_string() })
     };
     let marked = |why: &str| format!("[NO {DIGEST_MARK} — {why}]");
-    let p = match pointer_in(&clean) {
+    let body = without_sources(&clean.replace("\r\n", "\n"));
+    let p = match pointer_in(&body) {
         Some(p) => p,
         None => {
             return DigestVerdict::Deliver(DigestDeliver {
@@ -3155,7 +3191,7 @@ fn digest_gate(
     match git(&["hash-object", "--no-filters", &abs.to_string_lossy()]) {
         Ok(o) if o.code == 0 && o.stdout.trim().len() == 40 && o.stdout.trim().chars().all(|c| c.is_ascii_hexdigit()) => {
             let id = o.stdout.trim();
-            let others: Vec<String> = pointers_in(&clean).into_iter().filter(|o| *o != p).collect();
+            let others: Vec<String> = pointers_in(&body).into_iter().filter(|o| *o != p).collect();
             let also = if others.is_empty() {
                 String::new()
             } else {
@@ -3393,6 +3429,69 @@ mod digest_at_ring_tests {
         let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
         let d = delivered(digest_gate(RING, Some(&root), &mut |_| ok(BLOB)));
         assert!(!d.text.contains("not hashed"), "a single pointer must not grow a list: {}", d.text);
+    }
+
+    // ── D214: the SOURCES: slot is never the pointer ─────────────────────────────────────────────────────────────
+    // B's D212 look: a ring that cited a path (in the /c/… spelling the SOURCES gate asks the seat to use as its call spelled it)
+    // ONLY on its SOURCES: line was REFUSED by this gate, which took that path for the ring's pointer. The slot is now taken out
+    // before the pointer is chosen; the delivered text keeps it.
+    const SLOT_ONLY: &str = "D212 B's look is filed.\n\nSOURCES: /c/Users/n/Desktop/lighthouse/exo_memory/loop/plan_x.md · `git log -1`\n\nNEXT: librarian read it when the ring arrives";
+
+    #[test]
+    fn a_path_only_on_the_sources_line_is_not_a_pointer_so_the_ring_is_delivered_not_refused() {
+        let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+        let d = delivered(digest_gate(SLOT_ONLY, Some(&root), &mut |_| ok(BLOB)));
+        assert!(d.text.contains("this call names no file to hash"), "expected the no-pointer mark: {}", d.text);
+        assert!(d.text.contains("SOURCES: /c/Users/n/Desktop/lighthouse/exo_memory/loop/plan_x.md"), "the SOURCES line must reach the reader intact: {}", d.text);
+        assert_eq!(d.audit.as_deref(), Some("call_librarian: no pointer to hash"));
+        assert!(d.text.trim_end().ends_with("NEXT: librarian read it when the ring arrives"), "the trailer must stay last: {}", d.text);
+    }
+
+    #[test]
+    fn the_pointer_is_the_one_in_the_prose_and_the_sources_paths_are_not_listed_as_also_named() {
+        let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+        let ring = "hand-back at exo_memory/handback/p-x-A_2026-09-20.md\nSOURCES: /c/Users/n/lighthouse/exo_memory/loop/plan_x.md · C:\\Users\\n\\other.md\nNEXT: librarian x";
+        let d = delivered(digest_gate(ring, Some(&root), &mut |_| ok(BLOB)));
+        let line = d.text.lines().find(|l| l.contains(DIGEST_MARK)).unwrap_or("");
+        assert!(line.contains("exo_memory/handback/p-x-A_2026-09-20.md"), "the digest line must name the prose pointer: {line}");
+        assert!(!line.contains("plan_x.md") && !line.contains("not hashed"), "a SOURCES path was listed as named: {line}");
+    }
+
+    #[test]
+    fn a_newer_dated_hand_back_on_the_sources_line_does_not_outrank_the_ring_s_own_pointer() {
+        let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+        let ring = "hand-back at exo_memory/handback/p-x-A_2026-09-20.md\nSOURCES: exo_memory/handback/p-y-B_2026-09-30.md\nNEXT: librarian x";
+        assert_eq!(pointer_in(&without_sources(ring)).as_deref(), Some("exo_memory/handback/p-x-A_2026-09-20.md"));
+        assert_eq!(pointer_in(ring).as_deref(), Some("exo_memory/handback/p-y-B_2026-09-30.md"), "control: without the slot taken out the newer date wins, which is the bug");
+        let d = delivered(digest_gate(ring, Some(&root), &mut |_| ok(BLOB)));
+        assert!(d.text.contains("exo_memory/handback/p-x-A_2026-09-20.md, 6 bytes"), "wrong file hashed: {}", d.text);
+    }
+
+    #[test]
+    fn the_slot_ends_at_a_blank_line_or_the_next_trailer_and_continuation_lines_belong_to_it() {
+        assert_eq!(without_sources("a\nSOURCES: x/y.md\n- c/d.md\n- e/f.md\n\nhand-back g/h.md\nNEXT: z"), "a\n\nhand-back g/h.md\nNEXT: z");
+        assert_eq!(without_sources("SOURCES: x/y.md\nNEXT: z"), "NEXT: z", "the trailer directly under the slot must survive");
+        assert_eq!(without_sources("no slot here\nNEXT: z"), "no slot here\nNEXT: z");
+        assert_eq!(pointer_in(&without_sources("SOURCES: a/b.md\n\nfiled: exo_memory/handback/p-q_2026-10-02.md\nNEXT: z")).as_deref(), Some("exo_memory/handback/p-q_2026-10-02.md"));
+    }
+
+    #[test]
+    fn the_slot_head_is_the_hooks_head_and_nothing_looser() {
+        for yes in ["SOURCES: a", "SOURCES:", "**SOURCES:** a", "- SOURCES: a", "> SOURCES : a", "  SOURCES:a"] {
+            assert!(is_sources_head(yes), "should be a slot head: {yes}");
+        }
+        for no in ["RESOURCES: a", "sources: a", "SOURCES here", "see SOURCES: a", "NEXT: SOURCES: a", ""] {
+            assert!(!is_sources_head(no), "must not be a slot head: {no}");
+        }
+        assert_eq!(without_sources("filed exo_memory/handback/p_2026-10-02.md; the sources were read"), "filed exo_memory/handback/p_2026-10-02.md; the sources were read");
+    }
+
+    #[test]
+    fn a_ring_whose_own_pointer_is_not_repo_relative_is_still_refused_and_the_refusal_says_which_spelling_it_wants() {
+        let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+        let m = refused(digest_gate("hand-back at /c/Users/n/lighthouse/exo_memory/handback/p-x-A_2026-09-20.md\nSOURCES: exo_memory/loop/a.md\nNEXT: librarian x", Some(&root), &mut |_| ok(BLOB)));
+        assert!(m.contains("not a repo-relative path"), "{m}");
+        assert!(m.contains("repo-relative path in the ring's prose") && m.contains("never taken as the pointer"), "the refusal must name the one spelling: {m}");
     }
 
     // ── the pane's digest never survives ─────────────────────────────────────────────────────────────────────────
