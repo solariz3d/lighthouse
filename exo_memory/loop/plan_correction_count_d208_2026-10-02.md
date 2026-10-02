@@ -61,3 +61,10 @@ NEXT: chair dispatch D208 step 1 to E when this plan is read
   unless drawn; scored as recorded.
 - **OUTPUT → NEXT: changed.** A reads `qc_check_A`, C reads `qc_check_C`, blind to R1/R2 and to each other. Files go to
   `loop/qc_check_read_{A,C}_2026-10-02.md`. Then the librarian scores κ(R-consensus, panes) and the count.
+
+## C's half scored early (librarian, 07:4x; A is compacting). NOT rung, so nothing reaches A.
+- `loop/qc_check_read_C_2026-10-02.md` sha256 `ef266340…009c`, 60/60 rows. On the 56 units where R1 = R2: agreement 44/56,
+  **κ(R-consensus, C) = 0.618**. Cross-tab: NO→NO 22, YES→YES 22, NO→YES 4, YES→CT 3, NO→CT 3, CT→NO 1, YES→NO 1.
+- Just over the 0.60 label line. The sample is enriched (30 R1-YES + 30 others), so this κ is on a 50/50 mix, not the pool's 16%.
+- C called 4 R-NOs corrections and only 1 R-YES a non-correction. C leans slightly MORE toward "correction" than the scripted readers.
+  If that holds in A's half, the count is a floor.

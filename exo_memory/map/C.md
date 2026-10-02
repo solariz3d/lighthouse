@@ -1465,3 +1465,6 @@ composer, identical to shipped, unmeasured for want of a real capture).
 ## 2026-10-01 — D201/D202: the label-watch verifier read
 - Read `loop/label_watch_read_C_2026-10-01.json` (157; sha256 cdbde13e…), note `handback/p-d201-C-read_2026-10-01.md`. Turns dumped with LABEL_RE masked before reading (0 leaks); eight helpers judged slices; I audited: every commit cited dated against its claim, and 12 verdicts that rested on a LATER landing commit went to UNVERIFIABLE (R19 §4.1 allows that only when the claim names the change uncommitted).
 - The move: when delegating a rubric, audit the one rule most likely to drift — here the as-of time — across ALL records, not just a sample. The sample found one; the audit found twelve.
+
+## 2026-10-02 — D208/D209: the blind QC check read
+- Read `loop/qc_check_read_C_2026-10-02.md` (60 rows: 29 YES, 24 NO, 7 CAN'T TELL), note `handback/p-d208-C-check_2026-10-02.md`. Seven units repeat from my D199 sample and got the same answers; flagged so the scorer does not count them as fresh agreement.
