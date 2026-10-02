@@ -71,3 +71,18 @@ NEXT: chair dispatch D212 build to A when this plan is read
   and the live week measure it, as denies that a re-send clears with no change.
 - **OUTPUT → NEXT: unchanged.** B's non-author look: diff, tests, and one denied-then-fixed plus one allowed ring of B's own. The live
   week's clock starts at the install (A's hand-back gives the time).
+
+## B's look collated (librarian, 14:0x): `handback/p-d212-B_2026-10-02.md`: GREEN to land `21be348`
+- Diff, tests and installed copy PASS. Live from B's pane: a missing line was denied, then fixed in 8 s; a valid ring passed first try.
+- **The race, reproduced:** a ring sent in the SAME message as the write it cites is denied, and the identical ring re-sent alone is allowed.
+  Correct behaviour; the deny text does not teach it. (Mine at 14:0x was the same case.) B's parallel probe at 14:03 was DELIVERED on its
+  first send, so the race is not deterministic. Both directions are recorded.
+- **D214, queued fixes:**
+  1. (A, hook) the deny reason names the same-message case ("send the ring in a later message, after its sources return");
+  2. (A, hook) metadata-only leaders (`ls`, `stat`, `test`, `[`, `file`, `dir`, `Get-Item`, `Get-ChildItem`, `Test-Path`) do not count as
+     opening a source. B got a cheap game through with one.
+  3. (A, app, `mcp.rs`) **the cross-gate clash:** the server's digest gate took a `/c/…` SOURCES path as the ring's pointer and refused the
+     ring. Fix (a): the digest gate ignores paths on the `SOURCES:` line when choosing the pointer. This reaches the app only at the
+     keeper's next Consonance rebuild and restart. Until then: **in SOURCES, write repo-relative or `C:\…` paths, not `/c/…`.**
+- **OUTPUT → NEXT: changed.** Land `21be348`; the live week runs; D214 goes to A (hook tier for 1–2; app tier for 3, cargo tests in its
+  own target dir, no rebuild of the running app); then B's look.
