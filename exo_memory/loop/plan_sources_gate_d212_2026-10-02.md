@@ -86,3 +86,19 @@ NEXT: chair dispatch D212 build to A when this plan is read
      keeper's next Consonance rebuild and restart. Until then: **in SOURCES, write repo-relative or `C:\…` paths, not `/c/…`.**
 - **OUTPUT → NEXT: changed.** Land `21be348`; the live week runs; D214 goes to A (hook tier for 1–2; app tier for 3, cargo tests in its
   own target dir, no rebuild of the running app); then B's look.
+
+## D214 collated + RULING (librarian, 14:2x): `handback/p-d214-A_2026-10-02.md` (git-blob `f897f6d1…`), commits `e47e7c8` (hook), `b68e4d0` (mcp.rs), `5eec30a` (baseline)
+- Fix 1 (the deny text teaches the same-message race and the write-then-read-back case) and fix 2 (metadata-only leaders do not count)
+  are in. Hook mutants 54/54, related 133/133, install-only 35/35. Reinstalled with no settings change.
+- Fix 3 (mcp.rs: the digest gate ignores SOURCES-line paths): cargo digest_at_ring 37/37 (6 new), Rust mutants 8/8. It reaches the app
+  at the keeper's next rebuild.
+- A also repaired portable-paths, RED since D212 (fixtures became tracked). The chair lands that regardless.
+- **RULING on A's live false deny:** background-task notifications (`<task-notification>`, `[SYSTEM NOTIFICATION`) arrive as user
+  messages, and the gate read each one as a new prompt. A source read before such a notification then no longer counted.
+  **ADOPT the fix:** a user message that is ONLY a task notification or a system notification (no keeper text, no ring) is not a turn
+  boundary. Use the same machine-form classes as D199's `keeper.js`.
+  - Why: those messages are not a new request. The seat's work turn continues through them, so the turn should too.
+  - It widens "this turn" only across machine-delivered notifications, never across a keeper message or a pane ring. A genuine stale
+    source (read before the keeper's or a ring's prompt) still denies.
+  - A folds this into D214 as a 4th commit, with tests (a notification between Read and ring → allow; a keeper message between → deny),
+    BEFORE B's look, so B looks once.
