@@ -493,26 +493,29 @@ test('D205 MUTANT 7: the prune removes a group that holds a hook, and the foreig
 // matcher group AFTER it, on a fresh machine and on the state D is in now (the second reader alone), and change nothing else.
 const SG_ONLY = ['-Only', 'sources-gate.js'];
 const SG_BOTH = ['-Only', 'second-reader.js,second-reader-worker.js,sources-gate.js'];
-const SRSG = 'mcp__consonance__call_librarian|mcp__consonance__call_chair';
-test('D212: a fresh PreToolUse gets ONE matcher group holding the second reader then the SOURCES gate, and the gate file is installed byte-identical', () => {
+const SRSG = 'mcp__consonance__call_librarian|mcp__consonance__call_chair';   // the SECOND READER's matcher, unchanged
+const GATE3 = SRSG + '|mcp__consonance__chair_inject';                       // the SOURCES gate's (D215: + the chair's dispatch verb), so its own group
+const leafOf = (c) => (c.match(/([\w-]+\.js)"?$/) || [])[1];
+test('D212/D215: a fresh PreToolUse gets TWO matcher groups: the second reader on its two verbs, the SOURCES gate on those plus chair_inject; the gate file is installed byte-identical', () => {
   const repo = mkRepo(), home = mkHome();
   const r = run(repo, home, SG_BOTH), g = groupsOf(home);
-  assert.strictEqual(g.length, 1, JSON.stringify(g) + r.out); assert.strictEqual(g[0].matcher, SRSG);
-  assert.deepStrictEqual(cmdsIn(g[0]).map((c) => (c.match(/([\w-]+\.js)"?$/) || [])[1]), ['second-reader.js', 'sources-gate.js'], JSON.stringify(g[0]));
+  assert.strictEqual(g.length, 2, JSON.stringify(g) + r.out);
+  assert.strictEqual(g[0].matcher, SRSG); assert.deepStrictEqual(cmdsIn(g[0]).map(leafOf), ['second-reader.js'], JSON.stringify(g[0]));
+  assert.strictEqual(g[1].matcher, GATE3); assert.deepStrictEqual(cmdsIn(g[1]).map(leafOf), ['sources-gate.js'], JSON.stringify(g[1]));
   const found = []; const walk = (d) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else if (e.name === 'sources-gate.js') found.push(p); } };
   walk(path.join(home, '.claude'));
   assert.strictEqual(found.length, 1, 'installed copies: ' + found.join(', '));
   assert.strictEqual(fs.readFileSync(found[0], 'utf8'), fs.readFileSync(path.join(REPO, 'consonance', 'hooks', 'sources-gate.js'), 'utf8'));
 });
-test('D212: on the state D is in now (the second reader alone) the gate joins its group after it, and every other event and setting is identical', () => {
+test('D212/D215: on the state D had before the gate (the second reader alone) the gate gets its OWN group after it, the second reader\'s group is untouched, and every other event and setting is identical', () => {
   const repo = mkRepo(), home = mkHome();
   run(repo, home, SR_ONLY);
   const s = settings(home); s.hooks.SessionStart = [{ hooks: [{ type: 'command', command: 'keep me', timeout: 3 }] }]; s.env = { X: '1' };
   fs.writeFileSync(path.join(home, '.claude', 'settings.json'), JSON.stringify(s, null, 2));
   const before = settings(home), r = run(repo, home, SG_ONLY), after = settings(home);
-  assert.strictEqual(groupsOf(home).length, 1, JSON.stringify(groupsOf(home)) + r.out);
-  assert.deepStrictEqual(cmdsIn(groupsOf(home)[0]).map((c) => (c.match(/([\w-]+\.js)"?$/) || [])[1]), ['second-reader.js', 'sources-gate.js']);
-  assert.deepStrictEqual(groupsOf(home)[0].hooks[0], before.hooks.PreToolUse[0].hooks[0], 'the second reader entry changed');
+  assert.strictEqual(groupsOf(home).length, 2, JSON.stringify(groupsOf(home)) + r.out);
+  assert.deepStrictEqual(groupsOf(home)[0], before.hooks.PreToolUse[0], 'the second reader\'s group changed');
+  assert.strictEqual(groupsOf(home)[1].matcher, GATE3); assert.deepStrictEqual(cmdsIn(groupsOf(home)[1]).map(leafOf), ['sources-gate.js']);
   const rest = (x) => { const y = JSON.parse(JSON.stringify(x)); delete y.hooks.PreToolUse; return y; };
   assert.deepStrictEqual(rest(after), rest(before), 'something other than PreToolUse changed');
 });
@@ -521,6 +524,78 @@ test('D212: re-running the gate install changes nothing (the file is byte-identi
   run(repo, home, SG_BOTH);
   const before = fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), r = run(repo, home, SG_BOTH);
   assert.strictEqual(fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), before, r.out); assert.ok(/already correct/.test(r.out), r.out);
+});
+
+// ── D215: THE MATCHER MOVE. The SOURCES gate was registered (D212) in the second reader's group, on the two hand-back verbs; D215 widens ITS matcher to add chair_inject. The
+// installer used to read a hook found under another matcher as "already correct" and leave it there, so the widened matcher would never have reached D. It now MOVES the hook
+// to the group of its own matcher (REMATCH), leaves everything it does not manage where it is, and prunes the group it empties.
+function d212State(repo, home, extraInOldGroup) {
+  run(repo, home, SG_BOTH);                                           // learn the real command strings
+  const s = settings(home), sr = s.hooks.PreToolUse.find((x) => x.matcher === SRSG), gate = s.hooks.PreToolUse.find((x) => x.matcher === GATE3).hooks[0];
+  s.hooks.PreToolUse = [{ matcher: SRSG, hooks: [...sr.hooks, gate, ...(extraInOldGroup || [])] }];   // the shape D212 left on D: the gate INSIDE the second reader's group
+  s.hooks.SessionStart = [{ hooks: [{ type: 'command', command: 'keep me', timeout: 3 }] }]; s.env = { X: '1' };
+  fs.writeFileSync(path.join(home, '.claude', 'settings.json'), JSON.stringify(s, null, 2));
+  return settings(home);
+}
+test('D215: the gate registered in the second reader\'s group (the D212 state) is MOVED to its own group on the widened matcher: said as REMATCH, the second reader untouched, nothing else changed', () => {
+  const repo = mkRepo(), home = mkHome(), before = d212State(repo, home);
+  const r = run(repo, home, SG_ONLY), g = groupsOf(home), after = settings(home);
+  assert.ok(/REMATCH\s+PreToolUse\s+sources-gate\.js/.test(r.out) && /now matcher: .*chair_inject/.test(r.out), r.out);
+  assert.strictEqual(g.length, 2, JSON.stringify(g));
+  assert.strictEqual(g[0].matcher, SRSG); assert.deepStrictEqual(cmdsIn(g[0]).map(leafOf), ['second-reader.js'], 'the gate was left in the second reader\'s group (it would fire on two verbs only)');
+  assert.strictEqual(g[1].matcher, GATE3); assert.deepStrictEqual(cmdsIn(g[1]).map(leafOf), ['sources-gate.js']);
+  assert.strictEqual(cmdsIn(g[0]).concat(cmdsIn(g[1])).filter((c) => /sources-gate\.js/.test(c)).length, 1, 'the gate is registered twice');
+  assert.deepStrictEqual(g[0].hooks[0], before.hooks.PreToolUse[0].hooks[0], 'the second reader entry changed');
+  const rest = (x) => { const y = JSON.parse(JSON.stringify(x)); delete y.hooks.PreToolUse; return y; };
+  assert.deepStrictEqual(rest(after), rest(before), 'something other than PreToolUse changed');
+  assert.ok(g.every(hasHooks), 'an empty group was left behind');
+});
+test('D215: the move is idempotent: a second run says "already correct" and changes nothing', () => {
+  const repo = mkRepo(), home = mkHome(); d212State(repo, home); run(repo, home, SG_ONLY);
+  const before = fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), r = run(repo, home, SG_ONLY);
+  assert.strictEqual(fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), before, r.out); assert.ok(!/REMATCH/.test(r.out), r.out);
+});
+test('D215: a hook the installer does NOT manage that sits in the old group stays exactly where it is when the gate is moved out', () => {
+  const repo = mkRepo(), home = mkHome(), foreign = { type: 'command', command: 'somebody elses hook', timeout: 5 };
+  d212State(repo, home, [foreign]); run(repo, home, SG_ONLY);
+  const g = groupsOf(home), old = g.find((x) => x.matcher === SRSG);
+  assert.ok(old && cmdsIn(old).includes('somebody elses hook'), 'a foreign hook was moved or removed: ' + JSON.stringify(g));
+  assert.ok(!cmdsIn(old).some((c) => /sources-gate\.js/.test(c)), 'the gate is still in the old group');
+});
+test('D215: a gate registered with NO matcher (hand-edited) is moved to its matcher group, and the matcher-less group it empties is pruned', () => {
+  const repo = mkRepo(), home = mkHome(); run(repo, home, SG_BOTH);
+  const s = settings(home), gate = s.hooks.PreToolUse.find((x) => x.matcher === GATE3).hooks[0];
+  s.hooks.PreToolUse = [s.hooks.PreToolUse.find((x) => x.matcher === SRSG), { hooks: [gate] }];
+  fs.writeFileSync(path.join(home, '.claude', 'settings.json'), JSON.stringify(s, null, 2));
+  const r = run(repo, home, SG_ONLY), g = groupsOf(home);
+  assert.ok(/REMATCH/.test(r.out) && /\(no matcher\)/.test(r.out), r.out);
+  assert.strictEqual(g.length, 2, JSON.stringify(g)); assert.ok(g.every(hasHooks)); assert.strictEqual(g[1].matcher, GATE3);
+});
+test('D215: an entry WITHOUT a matcher is never moved (the rule is for matcher-scoped hooks only): re-running the unmatched-entry fixtures is unchanged', () => {
+  const repo = mkRepo(unmatchedAfter), home = mkHome();
+  run(repo, home, SR_UN); const before = fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), r = run(repo, home, SR_UN);
+  assert.strictEqual(fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), before, r.out); assert.ok(!/REMATCH/.test(r.out), r.out);
+});
+
+// ── D215 MUTANTS of the matcher move: each breaks ONE part of it in the throwaway copy of the script and requires the matching defect to come back ("applied" is asserted).
+test('D215 MUTANT 1: the move is switched off (a hook found under another matcher is "already correct" again), and the migration test catches it', () => {
+  const m = mutate1('if ($e.Matcher -and -not $inSlot) {', 'if ($false) {'), repo = mkRepo(m.fn), home = mkHome(); d212State(repo, home);
+  run(repo, home, SG_ONLY); assert.ok(m.applied(), 'NOT APPLIED: the anchor moved');
+  const old = groupsOf(home).find((x) => x.matcher === SRSG); assert.ok(cmdsIn(old).some((c) => /sources-gate\.js/.test(c)), 'the gate was moved anyway');
+});
+test('D215 MUTANT 2: a hook is dropped from its group and never kept, and the second reader goes missing', () => {
+  const m = mutate1('      $keep += $h\n', '', null), repo = mkRepo(), home = mkHome(); d212State(repo, home);   // the state is built by the UNMUTATED script; only the run under test is mutated
+  fs.writeFileSync(repo.script, m.fn(fs.readFileSync(repo.script, 'utf8')));
+  run(repo, home, SG_ONLY); assert.ok(m.applied(), 'NOT APPLIED');
+  const all = groupsOf(home).flatMap(cmdsIn); assert.ok(!all.some((c) => /second-reader\.js/.test(c)), 'the second reader survived the mutant');
+});
+test('D215 MUTANT 3: the hook is also moved out of its OWN matcher group, so a second run is never "already correct", and the idempotence test catches it', () => {
+  const m = mutate1('if ($e.Matcher -and -not $inSlot) {', 'if ($e.Matcher) {'), repo = mkRepo(m.fn), home = mkHome(); d212State(repo, home); run(repo, home, SG_ONLY);
+  const r = run(repo, home, SG_ONLY); assert.ok(m.applied(), 'NOT APPLIED'); assert.ok(/REMATCH/.test(r.out), 'a hook already in the right group was moved again');
+});
+test('D215 MUTANT 4: the move reaches entries WITHOUT a matcher, and the unmatched-entry fixture catches it', () => {
+  const m = mutate1('if ($e.Matcher -and -not $inSlot) {', 'if (-not $inSlot) {', unmatchedAfter), repo = mkRepo(m.fn), home = mkHome();
+  run(repo, home, SR_UN); const r = run(repo, home, SR_UN); assert.ok(m.applied(), 'NOT APPLIED'); assert.ok(/REMATCH/.test(r.out), 'an unmatched entry was moved');
 });
 
 console.log(`\n${pass} passed, ${fail} failed`);

@@ -275,9 +275,10 @@ $register = @(
   # are exact names). It allows at once and writes nothing to stdout; it must never fire on any other tool call.
   @{ Event = 'PreToolUse';       Rel = 'hooks\second-reader.js';      Runner = 'node';
      Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair' }
-  # The SOURCES gate (D212): the same matcher, so it joins the second reader's group (the D205 merge). Hooks of one matcher run in parallel; this is the only one that can deny.
+  # The SOURCES gate (D212; D215 added chair_inject, the chair's DISPATCHES). It was on the second reader's matcher and so in its group; it now has its OWN matcher (the two hand-back
+  # verbs plus chair_inject) and so its own group, and the second reader's matcher is UNCHANGED. Hooks run in parallel; this is the only one that can deny.
   @{ Event = 'PreToolUse';       Rel = 'hooks\sources-gate.js';       Runner = 'node';
-     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair' }
+     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair|mcp__consonance__chair_inject' }
 )
 
 # DELIBERATELY UNMANAGED -- the THIRD STATE, named. A file in a manifest source directory that is
@@ -844,8 +845,21 @@ foreach ($e in $regEntries) {
   $found = $false
   foreach ($g in $groups) {
     if (-not $g.hooks) { continue }
+    $inSlot = ($slot -and [object]::ReferenceEquals($g, $slot))
+    $keep = @()
     foreach ($h in @($g.hooks)) {
       if ($h.command -and (Test-SameHook $h.command $e)) {
+        if ($e.Matcher -and -not $inSlot) {
+          # D215: the SAME hook registered under ANOTHER matcher (or none). It used to read as "already correct" and stay there, so a matcher the manifest
+          # WIDENED (the SOURCES gate gained chair_inject) never reached it. It is MOVED, not duplicated: dropped from the old group, added to the group of its matcher below.
+          # This re-scopes a hook this script already owns; it never removes a hook the script does not manage (Test-SameHook is the same test as ever).
+          $was = if ($g.PSObject.Properties['matcher']) { [string]$g.matcher } else { '(no matcher)' }
+          $changes += ("  REMATCH  {0,-17} {1}" -f $ev, (Split-Path -Leaf $e.Rel))
+          $changes += ("           was matcher: {0}" -f $was)
+          $changes += ("           now matcher: {0}" -f $e.Matcher)
+          $repointed++
+          continue
+        }
         $found = $true
         if ($h.command -ne $want) {
           $changes += ("  REPOINT  {0,-17} {1}" -f $ev, (Split-Path -Leaf $e.Rel))
@@ -855,7 +869,9 @@ foreach ($e in $regEntries) {
           $repointed++
         } else { $already++ }
       }
+      $keep += $h
     }
+    if ($keep.Count -ne @($g.hooks).Count) { $g.hooks = @($keep) }
   }
 
   # THE CONFLICT GUARD (2026-08-31). Before adding an entry, look for a live registration of any

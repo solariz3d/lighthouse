@@ -255,6 +255,12 @@ happen? … Every time something like this happens we need to trace the source."
    the default belongs to whoever reads the output — the collator — and it is written there
    (WHAT A HAND-BACK OWES item 6).
 
+7. **A SOURCES LINE on the dispatch too; the gate enforces it** (added 2026-10-02, D215; plan
+   `exo_memory/loop/plan_sources_gate_dispatch_d215_2026-10-02.md`). A `chair_inject` message carries the same
+   `SOURCES:` line above its NEXT trailer as a hand-off ring, or `SOURCES: none (no state claims)` for a dispatch that
+   only routes work. WHAT A HAND-BACK OWES **item 8** is the master; `consonance/hooks/sources-gate.js` refuses a dispatch
+   without it, in the same turn, and never reads or logs the token.
+
 ## THE ORDER OF A DISPATCH — finish, verify, file, THEN ring (added 2026-08-24)
 
 

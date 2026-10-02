@@ -1,6 +1,7 @@
 // sources-gate.js - the SOURCES gate (D212, plan: exo_memory/loop/plan_sources_gate_d212_2026-10-02.md; the keeper approved it 2026-10-02 13:42).
 //
-// A PreToolUse hook on mcp__consonance__call_librarian and mcp__consonance__call_chair, the two hand-back channels, on the SAME matcher as the second
+// A PreToolUse hook on mcp__consonance__call_librarian and mcp__consonance__call_chair, the two hand-back channels (and, since D215, on the chair's DISPATCH verb
+// mcp__consonance__chair_inject: its `text` is gated the same way; its `token` is never read or logged), formerly on the SAME matcher as the second
 // reader. A hand-off ring must carry one line, `SOURCES: <path> · <path> · `<command>``, naming what this turn actually opened or ran that the message
 // relies on (or `SOURCES: none (no state claims)`). The gate DENIES the ring when the line is missing, empty, or names an item that matches no call in
 // THIS turn. A deny is returned to the SAME turn with the reason, so the seat fixes it and re-sends at once.
@@ -34,7 +35,8 @@ const os = require('os');
 const path = require('path');
 const crypto = require('crypto');
 
-const RING_TOOLS = new Set(['mcp__consonance__call_librarian', 'mcp__consonance__call_chair']);
+const DISPATCH_TOOL = 'mcp__consonance__chair_inject';   // D215: the chair's DISPATCH verb. Its input is { target, text, token }: the message is `text`; the TOKEN is a secret and is never read, hashed, logged or echoed (see redactToken)
+const RING_TOOLS = new Set(['mcp__consonance__call_librarian', 'mcp__consonance__call_chair', DISPATCH_TOOL]);
 const RUN_ENV = 'CONSONANCE_SECOND_READER_RUN';   // the second reader's own run: it never rings, but the guard is the room's one reentrancy variable
 const LEDGER = 'sources-gate.jsonl';
 const WATCHDOG_MS = 8000;
@@ -63,6 +65,8 @@ const SECRET_SHAPES = [
   /\b[A-Za-z0-9_]*(?:API_KEY|APIKEY|SECRET|TOKEN|PASSWORD)\s*[:=]\s*["']?[A-Za-z0-9_\-/+=.]{16,}/gi,
 ];
 function scrub(s) { let m = String(s == null ? '' : s); for (const re of SECRET_SHAPES) m = m.replace(re, '<redacted>'); return m; }
+/** D215: chair_inject carries a token in tool_input. The gate never reads it into a row or a reason, and on top of that every string it logs or returns has the token's exact value taken out (a token pasted into the text, or into a SOURCES item, would otherwise reach the ledger or the deny reason). */
+function redactToken(s, token) { const m = String(s == null ? '' : s); return typeof token === 'string' && token.length >= 4 ? m.split(token).join('<redacted-token>') : m; }
 const clip = (s, n) => (s.length > n ? s.slice(0, n) + '…' : s);
 
 function dataDir() {
@@ -241,17 +245,17 @@ function itemMatches(item, calls, cwd) {
 }
 
 /** The whole decision, with no I/O. calls come from turnCalls. Returns { decision, none, items, unmatched, reason }. */
-function decide(text, calls, cwd, ledgerPath = 'sources-gate.jsonl', ringSha = '') {
+function decide(text, calls, cwd, ledgerPath = 'sources-gate.jsonl', ringSha = '', what = 'ring') {
   const s = parseSources(text);
-  const tail = ` This ring was NOT delivered. Its pointer is logged (${ledgerPath}, ring ${String(ringSha).slice(0, 12)}), so nothing is lost: fix the line and re-send the same ring in this turn. Format: ${FORMAT}.`;
-  if (!s.present) return { decision: 'deny', none: false, items: [], unmatched: [], kind: 'missing', reason: 'SOURCES gate: the ring has no SOURCES: line. List what you opened or ran this turn that the message relies on.' + tail };
+  const tail = ` This ${what} was NOT delivered. Its pointer is logged (${ledgerPath}, ring ${String(ringSha).slice(0, 12)}), so nothing is lost: fix the line and re-send the same ${what} in this turn. Format: ${FORMAT}.`;
+  if (!s.present) return { decision: 'deny', none: false, items: [], unmatched: [], kind: 'missing', reason: `SOURCES gate: the ${what} has no SOURCES: line. List what you opened or ran this turn that the message relies on.` + tail };
   if (s.none) return { decision: 'allow', none: true, items: [], unmatched: [], kind: 'none', reason: '' };
   if (!s.items.length) return { decision: 'deny', none: false, items: [], unmatched: [], kind: 'empty', reason: 'SOURCES gate: the SOURCES: line is empty. List what you opened or ran this turn, or write "none (no state claims)".' + tail };
   const unmatched = s.items.filter((it) => !itemMatches(it, calls, cwd));
   if (!unmatched.length) return { decision: 'allow', none: false, items: s.items, unmatched: [], kind: 'matched', reason: '' };
   return {
     decision: 'deny', none: false, items: s.items, unmatched, kind: 'unmatched',
-    reason: `SOURCES gate: ${unmatched.length} of ${s.items.length} listed item(s) match nothing you opened or ran in THIS turn (a call from an earlier turn, a failed call, a metadata-only command such as ls or stat, or an echo that only names a path does not count; NOR does a call made in the SAME message as this ring, because it had not finished yet: send the ring in a LATER message, after its sources have returned; and a file you only WROTE this turn needs a read-back, Read or cat, in an earlier message): ${unmatched.map((u) => '"' + clip(u, 160) + '"').join(' ; ')}. Open each now (Read / Grep / Glob, or run the command), or drop it from the message. Write each item repo-relative or as a C:\\... path, not /c/... (a /c/ spelling still matches here, but the running digest gate has refused it); the hand-back POINTER in the ring's prose is repo-relative (exo_memory/handback/<packet>_<date>.md), the form the digest gate hashes.` + tail,
+    reason: `SOURCES gate: ${unmatched.length} of ${s.items.length} listed item(s) match nothing you opened or ran in THIS turn (a call from an earlier turn, a failed call, a metadata-only command such as ls or stat, or an echo that only names a path does not count; NOR does a call made in the SAME message as this ${what}, because it had not finished yet: send the ring in a LATER message, after its sources have returned; and a file you only WROTE this turn needs a read-back, Read or cat, in an earlier message): ${unmatched.map((u) => '"' + clip(u, 160) + '"').join(' ; ')}. Open each now (Read / Grep / Glob, or run the command), or drop it from the message. Write each item repo-relative or as a C:\\... path, not /c/... (a /c/ spelling still matches here, but the running digest gate has refused it); the hand-back POINTER in the ring's prose is repo-relative (exo_memory/handback/<packet>_<date>.md), the form the digest gate hashes.` + tail,
   };
 }
 
@@ -294,7 +298,10 @@ function main() {
   const seat = (process.env.CONSONANCE_PANE || '').trim() || null;
   const text = payload.tool_input && payload.tool_input.text;
   if (typeof text !== 'string' || !text.trim()) { if (dir) record(dir, { seat, tool, ringSha: null, decision: 'skipped-no-text' }); return process.exit(0); }
-  const ringSha = crypto.createHash('sha256').update(text).digest('hex');
+  const ringSha = crypto.createHash('sha256').update(text).digest('hex');   // of the TEXT only, never of tool_input as a whole: the token is not in it
+  const token = payload.tool_input && typeof payload.tool_input.token === 'string' ? payload.tool_input.token : '';
+  const R = (x) => redactToken(x, token);
+  const what = tool === DISPATCH_TOOL ? 'dispatch' : 'ring';
   if (!dir) return process.exit(0);   // no ledger, no deny: a deny that cannot be recorded could lose the pointer
 
   let calls;
@@ -302,19 +309,19 @@ function main() {
   catch (e) { record(dir, { seat, tool, ringSha, decision: 'error', error: 'transcript: ' + String(e && e.message || e).slice(0, 80) }); return process.exit(0); }
 
   let d;
-  try { d = decide(text, calls, payload.cwd || '', path.join(dir, LEDGER), ringSha); }
+  try { d = decide(text, calls, payload.cwd || '', path.join(dir, LEDGER), ringSha, what); }
   catch (e) { record(dir, { seat, tool, ringSha, decision: 'error', error: 'decide: ' + String(e && e.message || e).slice(0, 80) }); return process.exit(0); }
 
-  const base = { seat, tool, ringSha, sessionId: payload.session_id || null, kind: d.kind, nItems: d.items.length, nCalls: calls.length };
-  if (d.decision === 'allow') { record(dir, { ...base, decision: 'allow', items: d.items.slice(0, 12).map((x) => clip(scrub(x), 200)) }); return process.exit(0); }
+  const base = { seat, tool, ringSha, sessionId: payload.session_id || null, kind: d.kind, nItems: d.items.length, nCalls: calls.length, ...(tool === DISPATCH_TOOL ? { target: clip(scrub(R(String((payload.tool_input && payload.tool_input.target) || ''))), 20) } : {}) };
+  if (d.decision === 'allow') { record(dir, { ...base, decision: 'allow', items: d.items.slice(0, 12).map((x) => clip(scrub(R(x)), 200)) }); return process.exit(0); }
 
   const first = text.split(/\r?\n/).find((l) => l.trim()) || '';
-  const pointerPaths = (text.match(/[\w./\\:~-]*exo_memory[\w./\\-]*\.\w+/g) || []).slice(0, 5).map((x) => clip(scrub(x), 200));
-  const ok = record(dir, { ...base, decision: 'deny', unmatched: d.unmatched.slice(0, 12).map((x) => clip(scrub(x), 200)), pointer: clip(scrub(first.trim()), 400), pointerPaths });
+  const pointerPaths = (text.match(/[\w./\\:~-]*exo_memory[\w./\\-]*\.\w+/g) || []).slice(0, 5).map((x) => clip(scrub(R(x)), 200));
+  const ok = record(dir, { ...base, decision: 'deny', unmatched: d.unmatched.slice(0, 12).map((x) => clip(scrub(R(x)), 200)), pointer: clip(scrub(R(first.trim())), 400), pointerPaths });
   if (!ok) return process.exit(0);   // could not record the pointer: allow rather than risk losing it
-  return emitDeny(d.reason);
+  return emitDeny(R(d.reason));
 }
 
 if (require.main === module) { try { main(); } catch (_) { process.exit(0); } }   // fail OPEN, without exception
 
-module.exports = { RING_TOOLS, LEDGER, SECRET_SHAPES, PRINTERS, METADATA, NON_OPENING, isPrompt, isNotificationOnly, parseSources, norm, tails, opensInSegment, turnCalls, itemMatches, decide, readTurnEntries, scrub };
+module.exports = { DISPATCH_TOOL, redactToken, RING_TOOLS, LEDGER, SECRET_SHAPES, PRINTERS, METADATA, NON_OPENING, isPrompt, isNotificationOnly, parseSources, norm, tails, opensInSegment, turnCalls, itemMatches, decide, readTurnEntries, scrub };

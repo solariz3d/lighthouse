@@ -3,7 +3,7 @@
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
     "FATAL-DEFAULT": 24,
-    "BENIGN-TEST": 215,
+    "BENIGN-TEST": 228,
     "REVIEW": 17,
     "BENIGN-FIXTURE": 8,
     "DISGUISED": 14,
@@ -192,8 +192,29 @@
       "file": "consonance/hooks/sources-gate.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-FIXTURE",
-      "text": "reason: `SOURCES gate: ${unmatched.length} of ${s.items.length} listed item(s) match nothing you opened or ran in THIS turn (a call from an earlier turn, a failed call, a metadata-only command such as ls or stat, or an echo that only names a path does not count; NOR does a call made in the SAME message as this ring, because it had not finished yet: send the ring in a LATER message, after its sources have returned; and a file you only WROTE this turn needs a read-back, Read or cat, in an earlier message): ${unmatched.map((u) => '\"' + clip(u, 160) + '\"').join(' ; ')}. Open each now (Read / Grep / Glob, or run the command), or drop it from the message. Write each item repo-relative or as a C:\\\\... path, not /c/... (a /c/ spelling still matches here, but the running digest gate has refused it); the hand-back POINTER in the ring's prose is repo-relative (exo_memory/handback/<packet>_<date>.md), the form the digest gate hashes.` + tail,",
-      "key": "consonance/hooks/sources-gate.js\u0000reason: `SOURCES gate: ${unmatched.length} of ${s.items.length} listed item(s) match nothing you opened or ran in THIS turn (a call from an earlier turn, a failed call, a metadata-only command such as ls or stat, or an echo that only names a path does not count; NOR does a call made in the SAME message as this ring, because it had not finished yet: send the ring in a LATER message, after its sources have returned; and a file you only WROTE this turn needs a read-back, Read or cat, in an earlier message): ${unmatched.map((u) => '\"' + clip(u, 160) + '\"').join(' ; ')}. Open each now (Read / Grep / Glob, or run the command), or drop it from the message. Write each item repo-relative or as a C:\\\\... path, not /c/... (a /c/ spelling still matches here, but the running digest gate has refused it); the hand-back POINTER in the ring's prose is repo-relative (exo_memory/handback/<packet>_<date>.md), the form the digest gate hashes.` + tail,\u0000#1"
+      "text": "reason: `SOURCES gate: ${unmatched.length} of ${s.items.length} listed item(s) match nothing you opened or ran in THIS turn (a call from an earlier turn, a failed call, a metadata-only command such as ls or stat, or an echo that only names a path does not count; NOR does a call made in the SAME message as this ${what}, because it had not finished yet: send the ring in a LATER message, after its sources have returned; and a file you only WROTE this turn needs a read-back, Read or cat, in an earlier message): ${unmatched.map((u) => '\"' + clip(u, 160) + '\"').join(' ; ')}. Open each now (Read / Grep / Glob, or run the command), or drop it from the message. Write each item repo-relative or as a C:\\\\... path, not /c/... (a /c/ spelling still matches here, but the running digest gate has refused it); the hand-back POINTER in the ring's prose is repo-relative (exo_memory/handback/<packet>_<date>.md), the form the digest gate hashes.` + tail,",
+      "key": "consonance/hooks/sources-gate.js\u0000reason: `SOURCES gate: ${unmatched.length} of ${s.items.length} listed item(s) match nothing you opened or ran in THIS turn (a call from an earlier turn, a failed call, a metadata-only command such as ls or stat, or an echo that only names a path does not count; NOR does a call made in the SAME message as this ${what}, because it had not finished yet: send the ring in a LATER message, after its sources have returned; and a file you only WROTE this turn needs a read-back, Read or cat, in an earlier message): ${unmatched.map((u) => '\"' + clip(u, 160) + '\"').join(' ; ')}. Open each now (Read / Grep / Glob, or run the command), or drop it from the message. Write each item repo-relative or as a C:\\\\... path, not /c/... (a /c/ spelling still matches here, but the running digest gate has refused it); the hand-back POINTER in the ring's prose is repo-relative (exo_memory/handback/<packet>_<date>.md), the form the digest gate hashes.` + tail,\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ text: DISPATCH_OK('SOURCES: `cat C:/work/k.md ' + TOKEN + '`') }, // allow: an item that carries the token (the call really ran with it)",
+      "key": "consonance/hooks/sources-gate.test.js\u0000{ text: DISPATCH_OK('SOURCES: `cat C:/work/k.md ' + TOKEN + '`') }, // allow: an item that carries the token (the call really ran with it)\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ text: DISPATCH_OK('SOURCES: C:/work/a.md') }, // allow: matched",
+      "key": "consonance/hooks/sources-gate.test.js\u0000{ text: DISPATCH_OK('SOURCES: C:/work/a.md') }, // allow: matched\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ text: DISPATCH_OK('SOURCES: C:/work/never-opened.md') }, // deny: unmatched",
+      "key": "consonance/hooks/sources-gate.test.js\u0000{ text: DISPATCH_OK('SOURCES: C:/work/never-opened.md') }, // deny: unmatched\u0000#1"
     },
     {
       "file": "consonance/hooks/sources-gate.test.js",
@@ -201,6 +222,13 @@
       "verdict": "BENIGN-TEST",
       "text": "assert.ok(/repo-relative or as a C:\\\\.* path, not \\/c\\//.test(why), why); assert.ok(/POINTER in the ring's prose is repo-relative/.test(why), why);",
       "key": "consonance/hooks/sources-gate.test.js\u0000assert.ok(/repo-relative or as a C:\\\\.* path, not \\/c\\//.test(why), why); assert.ok(/POINTER in the ring's prose is repo-relative/.test(why), why);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(isDeny(runGate(dir, dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), HUMAN('a keeper message')], { text }))));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.ok(isDeny(runGate(dir, dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), HUMAN('a keeper message')], { text }))));\u0000#1"
     },
     {
       "file": "consonance/hooks/sources-gate.test.js",
@@ -236,6 +264,13 @@
       "verdict": "BENIGN-TEST",
       "text": "assert.ok(why.includes('never-opened.md'), why); assert.ok(!why.includes('\"C:/work/a.md\"'), 'a matched item was named as unmatched: ' + why);",
       "key": "consonance/hooks/sources-gate.test.js\u0000assert.ok(why.includes('never-opened.md'), why); assert.ok(!why.includes('\"C:/work/a.md\"'), 'a matched item was named as unmatched: ' + why);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], { text })).out, null);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], { text })).out, null);\u0000#1"
     },
     {
       "file": "consonance/hooks/sources-gate.test.js",
@@ -325,6 +360,13 @@
       "file": "consonance/hooks/sources-gate.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "const bad = spawnSync(process.execPath, [HOOK], { input: dispatchPayload(dir, null, { text: DISPATCH_OK('SOURCES: C:/work/a.md') }), env: envFor(dir), encoding: 'utf8', timeout: 20000 }); // no transcript: an error row",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const bad = spawnSync(process.execPath, [HOOK], { input: dispatchPayload(dir, null, { text: DISPATCH_OK('SOURCES: C:/work/a.md') }), env: envFor(dir), encoding: 'utf8', timeout: 20000 }); // no transcript: an error row\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "const cmd = lead === '[' ? '[ -f C:/work/a.md ]' : lead === '[[' ? '[[ -f C:/work/a.md ]]' : lead + ' C:/work/a.md';",
       "key": "consonance/hooks/sources-gate.test.js\u0000const cmd = lead === '[' ? '[ -f C:/work/a.md ]' : lead === '[[' ? '[[ -f C:/work/a.md ]]' : lead + ' C:/work/a.md';\u0000#1"
     },
@@ -334,6 +376,20 @@
       "verdict": "BENIGN-TEST",
       "text": "const dir = tmpDir(), cmd = 'cat C:/work/k.md ' + OR_TOKEN;",
       "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), cmd = 'cat C:/work/k.md ' + OR_TOKEN;\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), hb = 'C:/Users/n/lighthouse/exo_memory/handback/p-d210-B_2026-10-02.md';",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), hb = 'C:/Users/n/lighthouse/exo_memory/handback/p-d210-B_2026-10-02.md';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), r = runGate(dir, dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md')], { text: 'Do the thing. NEXT: A reports' }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), r = runGate(dir, dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md')], { text: 'Do the thing. NEXT: A reports' }));\u0000#1"
     },
     {
       "file": "consonance/hooks/sources-gate.test.js",
@@ -402,6 +458,20 @@
       "file": "consonance/hooks/sources-gate.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/plan_x.md'), ...bashCall('t2', 'git log -1 --format=%h')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/plan_x.md'), ...bashCall('t2', 'git log -1 --format=%h')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), text = DISPATCH_OK('SOURCES: C:/work/a.md');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), text = DISPATCH_OK('SOURCES: C:/work/a.md');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "const dir = tmpDir(), text = withSources('SOURCES: C:/work/a.md');",
       "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), text = withSources('SOURCES: C:/work/a.md');\u0000#1"
     },
@@ -446,6 +516,13 @@
       "verdict": "BENIGN-TEST",
       "text": "const ps = [USER('go'), ASSIST(USE('t2', 'PowerShell', { command: 'Get-Content C:\\\\work\\\\a.md | Select -First 3' })), RESULT('t2')];",
       "key": "consonance/hooks/sources-gate.test.js\u0000const ps = [USER('go'), ASSIST(USE('t2', 'PowerShell', { command: 'Get-Content C:\\\\work\\\\a.md | Select -First 3' })), RESULT('t2')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, dispatchPayload(dir, t, { text: DISPATCH_OK('SOURCES: C:/work/plan_x.md · `git log -1 --format=%h`') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, dispatchPayload(dir, t, { text: DISPATCH_OK('SOURCES: C:/work/plan_x.md · `git log -1 --format=%h`') }));\u0000#1"
     },
     {
       "file": "consonance/hooks/sources-gate.test.js",
@@ -514,6 +591,13 @@
       "file": "consonance/hooks/sources-gate.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "const r = spawnSync(process.execPath, [HOOK], { input: dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), ...bashCall('t2', 'cat C:/work/k.md ' + TOKEN)], c), env: envFor(dir), encoding: 'utf8', timeout: 20000 });",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = spawnSync(process.execPath, [HOOK], { input: dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), ...bashCall('t2', 'cat C:/work/k.md ' + TOKEN)], c), env: envFor(dir), encoding: 'utf8', timeout: 20000 });\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "const sc = [USER('go'), ...readCall('t1', 'C:/work/a.md').map(side)];",
       "key": "consonance/hooks/sources-gate.test.js\u0000const sc = [USER('go'), ...readCall('t1', 'C:/work/a.md').map(side)];\u0000#1"
     },
@@ -565,6 +649,13 @@
       "verdict": "BENIGN-TEST",
       "text": "const t2 = [USER('go'), ...readCall('t1', 'C:/work/a.md'), { ...USER('caveat text'), isMeta: true }, ...readCall('t2', 'C:/work/b.md')];",
       "key": "consonance/hooks/sources-gate.test.js\u0000const t2 = [USER('go'), ...readCall('t1', 'C:/work/a.md'), { ...USER('caveat text'), isMeta: true }, ...readCall('t2', 'C:/work/b.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "function dispatchPayload(dir, entries, { text, token = TOKEN, target = 'A', cwd = 'C:/work' } = {}) {",
+      "key": "consonance/hooks/sources-gate.test.js\u0000function dispatchPayload(dir, entries, { text, token = TOKEN, target = 'A', cwd = 'C:/work' } = {}) {\u0000#1"
     },
     {
       "file": "consonance/hooks/sources-gate.test.js",

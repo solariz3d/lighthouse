@@ -63,7 +63,7 @@ const MUTANTS = [
   ["match: `Get-Item` counts as opened", HOOK, "'get-item', ", ""],
   ["match: `Test-Path` counts as opened", HOOK, "'test-path', ", ""],
   ["match: the PowerShell dir/gci aliases count as opened", HOOK, "'get-childitem', 'gci', ", "'get-childitem', "],
-  ["reason: the same-message race is not named", HOOK, "; NOR does a call made in the SAME message as this ring, because it had not finished yet: send the ring in a LATER message, after its sources have returned", ""],
+  ["reason: the same-message race is not named", HOOK, "; NOR does a call made in the SAME message as this ${what}, because it had not finished yet: send the ring in a LATER message, after its sources have returned", ""],
   ["reason: the read-back after a write is not named", HOOK, "; and a file you only WROTE this turn needs a read-back, Read or cat, in an earlier message", ""],
   ["reason: the metadata-only exclusion is not named", HOOK, "a metadata-only command such as ls or stat, ", ""],
   ["reason: the spelling guidance is dropped", HOOK, " (a /c/ spelling still matches here, but the running digest gate has refused it)", ""],
@@ -89,12 +89,27 @@ const MUTANTS = [
   ['contract: a deny exits 2', HOOK, "permissionDecisionReason: reason } }), () => process.exit(0));", "permissionDecisionReason: reason } }), () => process.exit(2));"],
   // ---- the ledger: no message, no key ----
   ['ledger: the message text is written into the row', HOOK, 'const base = { seat, tool, ringSha, sessionId', 'const base = { seat, tool, ringSha, text, sessionId'],
-  ['ledger: the pointer line is not scrubbed', HOOK, 'pointer: clip(scrub(first.trim()), 400)', 'pointer: clip(first.trim(), 400)'],
-  ['ledger: the unmatched items are not scrubbed', HOOK, 'unmatched: d.unmatched.slice(0, 12).map((x) => clip(scrub(x), 200))', 'unmatched: d.unmatched.slice(0, 12).map((x) => clip(x, 200))'],
-  ['ledger: the allowed items are not scrubbed', HOOK, "items: d.items.slice(0, 12).map((x) => clip(scrub(x), 200))", "items: d.items.slice(0, 12).map((x) => clip(x, 200))"],
+  ["ledger: the pointer line is not scrubbed (a key shape)", HOOK, "pointer: clip(scrub(R(first.trim())), 400)", "pointer: clip(R(first.trim()), 400)"],
+  ["ledger: the unmatched items are not scrubbed (a key shape)", HOOK, "unmatched: d.unmatched.slice(0, 12).map((x) => clip(scrub(R(x)), 200))", "unmatched: d.unmatched.slice(0, 12).map((x) => clip(R(x), 200))"],
+  ["ledger: the allowed items are not scrubbed (a key shape)", HOOK, "items: d.items.slice(0, 12).map((x) => clip(scrub(R(x)), 200))", "items: d.items.slice(0, 12).map((x) => clip(R(x), 200))"],
   ['ledger: the sk-or- shape is not scrubbed', HOOK, '  /\\bsk-or-[A-Za-z0-9_-]{16,}/g,\n', ''],
+  // ---- D215: dispatches (chair_inject) and the token ----
+  ['dispatch: chair_inject is not in the gate\'s tool set', HOOK, "mcp__consonance__call_chair', DISPATCH_TOOL]);", "mcp__consonance__call_chair']);"],
+  ['dispatch: the reason says "ring" for a dispatch', HOOK, "const what = tool === DISPATCH_TOOL ? 'dispatch' : 'ring';", "const what = 'ring';"],
+  ['dispatch: the target is not logged', HOOK, "...(tool === DISPATCH_TOOL ? { target:", "...(false ? { target:"],
+  ['token: the ring sha is taken over the whole tool_input (the token goes into the hash)', HOOK, "const ringSha = crypto.createHash('sha256').update(text).digest('hex');", "const ringSha = crypto.createHash('sha256').update(text + JSON.stringify(payload.tool_input)).digest('hex');"],
+  ['token: redaction is switched off', HOOK, "return typeof token === 'string' && token.length >= 4 ? m.split(token).join('<redacted-token>') : m; }", "return m; }"],
+  ['token: redaction applies to a one-character token (ordinary text is eaten)', HOOK, "token.length >= 4 ?", "token.length >= 1 ?"],
+  ['token: the pointer line is not redacted', HOOK, "pointer: clip(scrub(R(first.trim())), 400)", "pointer: clip(scrub(first.trim()), 400)"],
+  ['token: the unmatched items are not redacted', HOOK, "unmatched: d.unmatched.slice(0, 12).map((x) => clip(scrub(R(x)), 200))", "unmatched: d.unmatched.slice(0, 12).map((x) => clip(scrub(x), 200))"],
+  ['token: the allowed items are not redacted', HOOK, "items: d.items.slice(0, 12).map((x) => clip(scrub(R(x)), 200))", "items: d.items.slice(0, 12).map((x) => clip(scrub(x), 200))"],
+  ['token: the deny reason is not redacted', HOOK, "return emitDeny(R(d.reason));", "return emitDeny(d.reason);"],
+  ['token: the token itself is written into the row', HOOK, "const base = { seat, tool, ringSha,", "const base = { token, seat, tool, ringSha,"],
+  ['token: the target is not redacted', HOOK, "clip(scrub(R(String((payload.tool_input && payload.tool_input.target) || ''))), 20)", "clip(scrub(String((payload.tool_input && payload.tool_input.target) || '')), 20)"],
   // ---- registration ----
-  ['install: the gate registers on every tool (no matcher scope)', INSTALL, "Rel = 'hooks\\sources-gate.js';       Runner = 'node';\n     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair' }", "Rel = 'hooks\\sources-gate.js';       Runner = 'node';\n     Matcher = 'mcp__consonance__.*' }"],
+  ['install: the gate no longer covers chair_inject', INSTALL, "|mcp__consonance__call_chair|mcp__consonance__chair_inject' }", "|mcp__consonance__call_chair' }"],
+  ['install: the SECOND READER\'s matcher also gains chair_inject', INSTALL, "Rel = 'hooks\\second-reader.js';      Runner = 'node';\n     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair' }", "Rel = 'hooks\\second-reader.js';      Runner = 'node';\n     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair|mcp__consonance__chair_inject' }"],
+  ["install: the gate registers on every tool (no matcher scope)", INSTALL, "Rel = 'hooks\\sources-gate.js';       Runner = 'node';\n     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair|mcp__consonance__chair_inject' }", "Rel = 'hooks\\sources-gate.js';       Runner = 'node';\n     Matcher = 'mcp__consonance__.*' }"],
 ];
 
 function tree() {

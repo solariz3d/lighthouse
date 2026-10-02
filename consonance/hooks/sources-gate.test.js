@@ -120,9 +120,9 @@ test('ALLOW: the allow row carries the items, redacted', () => {
   const raw = fs.readFileSync(path.join(dir, 'sources-gate.jsonl'), 'utf8'); assert.ok(!raw.includes(OR_TOKEN)); assert.ok(raw.includes('<redacted>'));
 });
 
-test('SCOPE: a tool that is not one of the two hand-back verbs is never gated, even with a text argument and no SOURCES line', () => {
+test('SCOPE: a tool that is not a hand-back verb or the dispatch verb is never gated, even with a text argument and no SOURCES line', () => {
   const dir = tmpDir();
-  for (const tool of ['mcp__consonance__post_board', 'Bash', 'mcp__consonance__chair_inject']) {
+  for (const tool of ['mcp__consonance__post_board', 'Bash', 'mcp__consonance__chair_phase']) {
     const r = runGate(dir, payloadOf(dir, [USER('go')], { tool, text: 'no sources here' }));
     assert.strictEqual(r.status, 0, tool); assert.strictEqual(r.out, null, tool + ' was gated');
   }
@@ -440,14 +440,112 @@ test('THE SECOND READER STILL FIRES: both hooks run on the same denied ring in p
 
 // ------------------------------------------------------------------ registration
 
-test('REGISTERED: install.ps1 registers the gate on the SAME matcher as the second reader, after it, and no other hook shares an event with a matcher it does not own', () => {
+test('REGISTERED: install.ps1 registers the gate on the two hand-back verbs PLUS chair_inject (D215), the second reader\'s matcher is UNCHANGED, and the gate registers after it', () => {
   const src = fs.readFileSync(INSTALL, 'utf8').replace(/\r\n/g, '\n');
   const reg = (rel) => { const m = src.match(new RegExp("@\\{ Event = 'PreToolUse';\\s+Rel = '" + rel.replace(/[\\.]/g, '\\$&') + "';\\s+Runner = 'node';\\s*\\n\\s*Matcher = '([^']+)' \\}")); return m && { matcher: m[1], at: m.index }; };
   const sr = reg('hooks\\second-reader.js'), sg = reg('hooks\\sources-gate.js');
   assert.ok(sr && sg, 'a registration is missing');
-  assert.strictEqual(sg.matcher, 'mcp__consonance__call_librarian|mcp__consonance__call_chair'); assert.strictEqual(sg.matcher, sr.matcher);
+  assert.strictEqual(sr.matcher, 'mcp__consonance__call_librarian|mcp__consonance__call_chair', 'the second reader\'s matcher changed');
+  assert.strictEqual(sg.matcher, 'mcp__consonance__call_librarian|mcp__consonance__call_chair|mcp__consonance__chair_inject');
+  assert.deepStrictEqual(sg.matcher.split('|').sort(), [...sr.matcher.split('|'), 'mcp__consonance__chair_inject'].sort());
   assert.ok(sg.at > sr.at, 'the gate must register after the second reader');
   assert.ok(/From = 'consonance\\hooks\\sources-gate\.js';\s+To = 'hooks\\sources-gate\.js'/.test(src), 'the file entry is missing');
+});
+
+// ------------------------------------------------------------------ D215: the chair's DISPATCHES (chair_inject: { target, text, token })
+// The TOKEN is a secret. The tests carry a per-run value built at runtime and require that it never reaches the ledger, the reason, stdout or stderr.
+const INJECT = 'mcp__consonance__chair_inject';
+const TOKEN = ['tok', crypto.randomBytes(6).toString('hex'), crypto.randomBytes(6).toString('hex')].join('-');
+function dispatchPayload(dir, entries, { text, token = TOKEN, target = 'A', cwd = 'C:/work' } = {}) {
+  const tp = entries ? writeTranscript(dir, entries) : null;
+  return JSON.stringify({ session_id: 's1', transcript_path: tp, cwd, hook_event_name: 'PreToolUse', tool_name: INJECT, tool_input: { target, text, token }, tool_use_id: RING_ID });
+}
+const ledgerRaw = (dir) => { try { return fs.readFileSync(path.join(dir, 'sources-gate.jsonl'), 'utf8'); } catch (_) { return ''; } };
+const DISPATCH_OK = (line) => 'D215 packet for A: build the thing. Plan: exo_memory/loop/plan_x.md\n\n' + line + '\n\nNEXT: A reports when done';
+
+test('D215 DISPATCH: chair_inject with no SOURCES line is denied, in-turn, and the reason says it is a DISPATCH that was not delivered', () => {
+  const dir = tmpDir(), r = runGate(dir, dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md')], { text: 'Do the thing. NEXT: A reports' }));
+  assert.strictEqual(r.status, 0); assert.ok(isDeny(r), JSON.stringify(r.out));
+  const why = reasonOf(r); assert.ok(/the dispatch has no SOURCES: line/.test(why), why); assert.ok(/This dispatch was NOT delivered/.test(why) && /re-send the same dispatch/.test(why), why);
+  const row = rows(dir).pop(); assert.strictEqual(row.tool, INJECT); assert.strictEqual(row.decision, 'deny'); assert.strictEqual(row.kind, 'missing'); assert.strictEqual(row.target, 'A');
+});
+
+test('D215 DISPATCH: chair_inject with matched items is allowed (a command and a path), and the ring-shaped form to a pane works the same', () => {
+  const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/plan_x.md'), ...bashCall('t2', 'git log -1 --format=%h')];
+  const r = runGate(dir, dispatchPayload(dir, t, { text: DISPATCH_OK('SOURCES: C:/work/plan_x.md · `git log -1 --format=%h`') }));
+  assert.strictEqual(r.status, 0); assert.strictEqual(r.out, null, JSON.stringify(r.out));
+  const row = rows(dir).pop(); assert.strictEqual(row.decision, 'allow'); assert.strictEqual(row.kind, 'matched'); assert.strictEqual(row.tool, INJECT); assert.strictEqual(row.nItems, 2);
+});
+
+test('D215 DISPATCH: a pane\'s hand-back read in the same turn, then a dispatch citing it, is allowed; an unmatched item is denied naming exactly it', () => {
+  const dir = tmpDir(), hb = 'C:/Users/n/lighthouse/exo_memory/handback/p-d210-B_2026-10-02.md';
+  const t = [USER('go'), ...readCall('t1', hb)];
+  assert.strictEqual(runGate(dir, dispatchPayload(dir, t, { text: DISPATCH_OK('SOURCES: exo_memory/handback/p-d210-B_2026-10-02.md') })).out, null);
+  const r = runGate(dir, dispatchPayload(dir, t, { text: DISPATCH_OK('SOURCES: exo_memory/handback/p-d210-B_2026-10-02.md · exo_memory/handback/p-d210-C_2026-10-02.md') }));
+  assert.ok(isDeny(r)); assert.ok(reasonOf(r).includes('p-d210-C_2026-10-02.md') && !reasonOf(r).includes('"exo_memory/handback/p-d210-B_2026-10-02.md"'), reasonOf(r));
+});
+
+test('D215 DISPATCH: "SOURCES: none (no state claims)" stays valid for a dispatch that only routes work, and is logged as none', () => {
+  const dir = tmpDir(), r = runGate(dir, dispatchPayload(dir, [USER('go')], { text: DISPATCH_OK('SOURCES: none (no state claims)') }));
+  assert.strictEqual(r.out, null); const row = rows(dir).pop(); assert.strictEqual(row.kind, 'none'); assert.strictEqual(row.tool, INJECT);
+});
+
+test('D215 DISPATCH: the dispatch obeys the turn rules: a source read before a KEEPER message is stale, and a notification between is not a boundary', () => {
+  const dir = tmpDir(), text = DISPATCH_OK('SOURCES: C:/work/a.md');
+  assert.ok(isDeny(runGate(dir, dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), HUMAN('a keeper message')], { text }))));
+  assert.strictEqual(runGate(dir, dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], { text })).out, null);
+});
+
+test('D215 SECOND READER: chair_inject does NOT trigger the second reader (its tool set and its registered matcher are unchanged); a hand-back ring still does', async () => {
+  const dir = tmpDir(), stub = path.join(dir, 'stub-worker.js');
+  fs.writeFileSync(stub, "const fs=require('fs'),path=require('path');let b='';process.stdin.on('data',c=>b+=c).on('end',()=>{const j=JSON.parse(b);fs.writeFileSync(path.join(j.dir,'stub-ran-'+j.tool),'1');try{fs.unlinkSync(path.join(j.dir,'second-reader.lock'));}catch(_){}process.exit(0);});");
+  const SRH = require('./second-reader.js');
+  assert.ok(!SRH.RING_TOOLS.has(INJECT), 'the second reader\'s tool set gained chair_inject'); assert.deepStrictEqual([...SRH.RING_TOOLS].sort(), [CHAIR, LIB].sort());
+  const env = envFor(dir, { CONSONANCE_SECOND_READER_WORKER: stub });
+  const r1 = spawnSync(process.execPath, [SR_HOOK], { input: dispatchPayload(dir, [USER('go')], { text: 'a dispatch' }), env, encoding: 'utf8', timeout: 15000 });
+  assert.strictEqual(r1.status, 0); assert.strictEqual(r1.stdout.trim(), '');
+  await new Promise((r) => setTimeout(r, 800));
+  assert.ok(!fs.existsSync(path.join(dir, 'stub-ran-' + INJECT)), 'the second reader started a worker on a dispatch'); assert.ok(!fs.existsSync(path.join(dir, 'second-reader.jsonl')), 'the second reader logged a dispatch');
+  spawnSync(process.execPath, [SR_HOOK], { input: payloadOf(dir, [USER('go')], { text: 'a hand-back ring' }), env, encoding: 'utf8', timeout: 15000 });
+  const end = Date.now() + 6000; while (Date.now() < end && !fs.existsSync(path.join(dir, 'stub-ran-' + LIB))) await new Promise((r) => setTimeout(r, 50));
+  assert.ok(fs.existsSync(path.join(dir, 'stub-ran-' + LIB)), 'control: the second reader no longer fires on a hand-back ring');
+});
+
+test('D215 TOKEN: the chair_inject token never appears in sources-gate.jsonl, in the deny reason, on stdout or on stderr: not on a deny, an allow, a none, an empty text or an error, nor when the token is pasted into the text or an item', () => {
+  const dir = tmpDir(), seen = [];
+  const cases = [
+    { text: 'Do the thing, no sources line' },                                                        // deny: missing
+    { text: DISPATCH_OK('SOURCES: C:/work/never-opened.md') },                                           // deny: unmatched
+    { text: 'first line carries the token ' + TOKEN + ' by mistake\n\nSOURCES: `echo ' + TOKEN + '`\n\nNEXT: A x' },   // the token inside the pointer line AND an item
+    { text: DISPATCH_OK('SOURCES: none (no state claims)') },                                            // allow: none
+    { text: DISPATCH_OK('SOURCES: C:/work/a.md') },                                                      // allow: matched
+    { text: DISPATCH_OK('SOURCES: `cat C:/work/k.md ' + TOKEN + '`') },                                  // allow: an item that carries the token (the call really ran with it)
+    { text: DISPATCH_OK('SOURCES: none (no state claims)'), target: TOKEN },                              // the target field itself is the token
+    { text: '   ' },                                                                                     // skipped: no text
+  ];
+  for (const c of cases) {
+    const r = spawnSync(process.execPath, [HOOK], { input: dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), ...bashCall('t2', 'cat C:/work/k.md ' + TOKEN)], c), env: envFor(dir), encoding: 'utf8', timeout: 20000 });
+    seen.push(r.stdout, r.stderr);
+  }
+  const bad = spawnSync(process.execPath, [HOOK], { input: dispatchPayload(dir, null, { text: DISPATCH_OK('SOURCES: C:/work/a.md') }), env: envFor(dir), encoding: 'utf8', timeout: 20000 });   // no transcript: an error row
+  seen.push(bad.stdout, bad.stderr);
+  assert.ok(rows(dir).some((x) => x.decision === 'error'), 'the error case did not run');
+  assert.ok(!ledgerRaw(dir).includes(TOKEN), 'the token reached the ledger'); assert.ok(!seen.join('\n').includes(TOKEN), 'the token reached stdout or stderr');
+  assert.ok(ledgerRaw(dir).includes('<redacted-token>'), 'control: the token pasted into the text was not even redacted');
+  for (const row of rows(dir)) assert.ok(!('token' in row) && !JSON.stringify(row).includes('tok-'), 'a row carries a token-shaped field: ' + JSON.stringify(row));
+});
+
+test('D215 TOKEN: the ring sha is of the TEXT alone (the token is not in what is hashed), and the hook source never reads tool_input.token into a row', () => {
+  const dir = tmpDir(), text = DISPATCH_OK('SOURCES: none (no state claims)');
+  runGate(dir, dispatchPayload(dir, [USER('go')], { text, token: 'one-token-aaaa' })); runGate(dir, dispatchPayload(dir, [USER('go')], { text, token: 'another-token-bbbb' }));
+  const rs = rows(dir); assert.strictEqual(rs[0].ringSha, sha(text)); assert.strictEqual(rs[1].ringSha, sha(text));
+  const src = fs.readFileSync(HOOK, 'utf8').split('\n').filter((l) => !/^\s*\/\//.test(l)).join('\n');
+  assert.strictEqual(src.split('\n').filter((l) => /tool_input\.token/.test(l)).length, 1, 'tool_input.token is read on exactly one line (the redaction setup)');
+});
+
+test('D215 TOKEN: redactToken takes every occurrence out, leaves short or absent tokens alone, and a missing token is a no-op', () => {
+  assert.strictEqual(G.redactToken('a ' + TOKEN + ' b ' + TOKEN, TOKEN), 'a <redacted-token> b <redacted-token>');
+  assert.strictEqual(G.redactToken('abc', 'abc'), 'abc', 'a token under 4 characters would redact ordinary text'); assert.strictEqual(G.redactToken('x', ''), 'x'); assert.strictEqual(G.redactToken('x', undefined), 'x');
 });
 
 test('PLAN: the plan the hook cites exists', () => { assert.ok(fs.existsSync(PLAN)); });
