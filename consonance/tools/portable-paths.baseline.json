@@ -3,12 +3,12 @@
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
     "FATAL-DEFAULT": 24,
-    "BENIGN-TEST": 145,
+    "BENIGN-TEST": 202,
     "REVIEW": 17,
+    "BENIGN-FIXTURE": 8,
     "DISGUISED": 14,
     "BENIGN-MESSAGE": 5,
     "FATAL-USER": 7,
-    "BENIGN-FIXTURE": 7,
     "FATAL-TEST-READ": 2,
     "FATAL-SHIPPED-INSTRUCTION": 2
   },
@@ -187,6 +187,412 @@
       "verdict": "BENIGN-TEST",
       "text": "toolUse('Write', { file_path: 'C:\\\\repo\\\\notes\\\\report.md', content: 'Suite green.\\nThe suite has 267 tests passing.\\n' }),",
       "key": "consonance/hooks/sourced-stop.test.js\u0000toolUse('Write', { file_path: 'C:\\\\repo\\\\notes\\\\report.md', content: 'Suite green.\\nThe suite has 267 tests passing.\\n' }),\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "reason: `SOURCES gate: ${unmatched.length} of ${s.items.length} listed item(s) match nothing you opened or ran in THIS turn (a call from an earlier turn, a failed call, a metadata-only command such as ls or stat, or an echo that only names a path does not count; NOR does a call made in the SAME message as this ring, because it had not finished yet: send the ring in a LATER message, after its sources have returned; and a file you only WROTE this turn needs a read-back, Read or cat, in an earlier message): ${unmatched.map((u) => '\"' + clip(u, 160) + '\"').join(' ; ')}. Open each now (Read / Grep / Glob, or run the command), or drop it from the message. Write each item repo-relative or as a C:\\\\... path, not /c/... (a /c/ spelling still matches here, but the running digest gate has refused it); the hand-back POINTER in the ring's prose is repo-relative (exo_memory/handback/<packet>_<date>.md), the form the digest gate hashes.` + tail,",
+      "key": "consonance/hooks/sources-gate.js\u0000reason: `SOURCES gate: ${unmatched.length} of ${s.items.length} listed item(s) match nothing you opened or ran in THIS turn (a call from an earlier turn, a failed call, a metadata-only command such as ls or stat, or an echo that only names a path does not count; NOR does a call made in the SAME message as this ring, because it had not finished yet: send the ring in a LATER message, after its sources have returned; and a file you only WROTE this turn needs a read-back, Read or cat, in an earlier message): ${unmatched.map((u) => '\"' + clip(u, 160) + '\"').join(' ; ')}. Open each now (Read / Grep / Glob, or run the command), or drop it from the message. Write each item repo-relative or as a C:\\\\... path, not /c/... (a /c/ spelling still matches here, but the running digest gate has refused it); the hand-back POINTER in the ring's prose is repo-relative (exo_memory/handback/<packet>_<date>.md), the form the digest gate hashes.` + tail,\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(/repo-relative or as a C:\\\\.* path, not \\/c\\//.test(why), why); assert.ok(/POINTER in the ring's prose is repo-relative/.test(why), why);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.ok(/repo-relative or as a C:\\\\.* path, not \\/c\\//.test(why), why); assert.ok(/POINTER in the ring's prose is repo-relative/.test(why), why);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(isDeny(runGate(dir, payloadOf(dir, grepDirMiss, { text: withSources('SOURCES: C:/work/a.md') }))));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.ok(isDeny(runGate(dir, payloadOf(dir, grepDirMiss, { text: withSources('SOURCES: C:/work/a.md') }))));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(isDeny(runGate(dir, payloadOf(dir, sc, { text: withSources('SOURCES: C:/work/a.md') }))), 'a sidechain read counted');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.ok(isDeny(runGate(dir, payloadOf(dir, sc, { text: withSources('SOURCES: C:/work/a.md') }))), 'a sidechain read counted');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(why.includes('never-opened.md'), why); assert.ok(!why.includes('\"C:/work/a.md\"'), 'a matched item was named as unmatched: ' + why);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.ok(why.includes('never-opened.md'), why); assert.ok(!why.includes('\"C:/work/a.md\"'), 'a matched item was named as unmatched: ' + why);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'cat /c/Users/n/x.md')], { text: withSources('SOURCES: C:\\\\Users\\\\n\\\\x.md') })).out, null, 'a C:\\\\ item no longer matches a /c/ command');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'cat /c/Users/n/x.md')], { text: withSources('SOURCES: C:\\\\Users\\\\n\\\\x.md') })).out, null, 'a C:\\\\ item no longer matches a /c/ command');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:\\\\Users\\\\n\\\\x.md')], { text: withSources('SOURCES: /c/Users/n/x.md') })).out, null, 'a /c/ item no longer matches a C:\\\\ Read');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:\\\\Users\\\\n\\\\x.md')], { text: withSources('SOURCES: /c/Users/n/x.md') })).out, null, 'a /c/ item no longer matches a C:\\\\ Read');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, glob, { text: withSources('SOURCES: C:/work/a.md') })).out, null);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, glob, { text: withSources('SOURCES: C:/work/a.md') })).out, null);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, grepDirHit, { text: withSources('SOURCES: C:/work/a.md') })).out, null);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, grepDirHit, { text: withSources('SOURCES: C:/work/a.md') })).out, null);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, grepFile, { text: withSources('SOURCES: C:/work/a.md') })).out, null);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, grepFile, { text: withSources('SOURCES: C:/work/a.md') })).out, null);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, t, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') })).out, null, 'a result carrying a reminder cut the turn');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, t, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') })).out, null, 'a result carrying a reminder cut the turn');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, t, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') })).out, null);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, t, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') })).out, null);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, t1, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') })).out, null, 'a sidechain prompt cut the turn');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, t1, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') })).out, null, 'a sidechain prompt cut the turn');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, t2, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') })).out, null, 'a meta message cut the turn');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, t2, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') })).out, null, 'a meta message cut the turn');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const again = runGate(dir, payloadOf(dir, [...t, ...readCall('t2', 'C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const again = runGate(dir, payloadOf(dir, [...t, ...readCall('t2', 'C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const cmd = lead === '[' ? '[ -f C:/work/a.md ]' : lead === '[[' ? '[[ -f C:/work/a.md ]]' : lead + ' C:/work/a.md';",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const cmd = lead === '[' ? '[ -f C:/work/a.md ]' : lead === '[[' ? '[[ -f C:/work/a.md ]]' : lead + ' C:/work/a.md';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), cmd = 'cat C:/work/k.md ' + OR_TOKEN;",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), cmd = 'cat C:/work/k.md ' + OR_TOKEN;\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', '# C:/work/a.md\\nls')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', '# C:/work/a.md\\nls')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md')], { text: 'Pointer: exo_memory/handback/p-x_2026-10-02.md\\n\\nNEXT: librarian collate' }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md')], { text: 'Pointer: exo_memory/handback/p-x_2026-10-02.md\\n\\nNEXT: librarian collate' }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:\\\\work\\\\a.md')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:\\\\work\\\\a.md')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go'), ASSIST(USE('t1', 'Read', { file_path: 'C:/work/a.md' }), USE(RING_ID, LIB, { text: 'x' }))], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go'), ASSIST(USE('t1', 'Read', { file_path: 'C:/work/a.md' }), USE(RING_ID, LIB, { text: 'x' }))], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = [USER('first prompt'), ...readCall('t1', 'C:/work/a.md'), ASSIST({ type: 'text', text: 'done' }), USER('second prompt')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), t = [USER('first prompt'), ...readCall('t1', 'C:/work/a.md'), ASSIST({ type: 'text', text: 'done' }), USER('second prompt')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ...bashCall('t2', 'ls'), ...bashCall('t3', 'pwd'), ...readCall('t4', 'C:/work/b.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ...bashCall('t2', 'ls'), ...bashCall('t3', 'pwd'), ...readCall('t4', 'C:/work/b.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ...readCall('t2', 'C:/work/b.md'), ...readCall('t3', 'C:/work/c.md'), ...readCall('t4', 'C:/work/d.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ...readCall('t2', 'C:/work/b.md'), ...readCall('t3', 'C:/work/c.md'), ...readCall('t4', 'C:/work/d.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), text = withSources('SOURCES: C:/work/a.md');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), text = withSources('SOURCES: C:/work/a.md');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), text = withSources('SOURCES: C:/work/a.md');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), text = withSources('SOURCES: C:/work/a.md');\u0000#2"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const glob = [USER('go'), ASSIST(USE('t1', 'Glob', { pattern: '**/*.md', path: 'C:/work' })), RESULT('t1', 'C:/work/a.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const glob = [USER('go'), ASSIST(USE('t1', 'Glob', { pattern: '**/*.md', path: 'C:/work' })), RESULT('t1', 'C:/work/a.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const grepDirHit = [USER('go'), ASSIST(USE('t1', 'Grep', { pattern: 'x', path: 'C:/work' })), RESULT('t1', 'C:/work/a.md\\nC:/work/z.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const grepDirHit = [USER('go'), ASSIST(USE('t1', 'Grep', { pattern: 'x', path: 'C:/work' })), RESULT('t1', 'C:/work/a.md\\nC:/work/z.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const grepDirMiss = [USER('go'), ASSIST(USE('t1', 'Grep', { pattern: 'x', path: 'C:/work' })), RESULT('t1', 'C:/work/z.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const grepDirMiss = [USER('go'), ASSIST(USE('t1', 'Grep', { pattern: 'x', path: 'C:/work' })), RESULT('t1', 'C:/work/z.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const grepFile = [USER('go'), ASSIST(USE('t1', 'Grep', { pattern: 'x', path: 'C:/work/a.md' })), RESULT('t1', 'match')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const grepFile = [USER('go'), ASSIST(USE('t1', 'Grep', { pattern: 'x', path: 'C:/work/a.md' })), RESULT('t1', 'match')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const ps = [USER('go'), ASSIST(USE('t2', 'PowerShell', { command: 'Get-Content C:\\\\work\\\\a.md | Select -First 3' })), RESULT('t2')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const ps = [USER('go'), ASSIST(USE('t2', 'PowerShell', { command: 'Get-Content C:\\\\work\\\\a.md | Select -First 3' })), RESULT('t2')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', cmd)], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', cmd)], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md · C:/work/never-opened.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md · C:/work/never-opened.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, payloadOf(dir, t, { text: withSources('**SOURCES:** C:/work/a.md:12-40 · C:/work/b.md (the plan) · `C:/work/c.md` · C:/work/d.md#L10') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, t, { text: withSources('**SOURCES:** C:/work/a.md:12-40 · C:/work/b.md (the plan) · `C:/work/c.md` · C:/work/d.md#L10') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, payloadOf(dir, t, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, t, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, payloadOf(dir, t, { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, t, { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const sc = [USER('go'), ...readCall('t1', 'C:/work/a.md').map(side)];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const sc = [USER('go'), ...readCall('t1', 'C:/work/a.md').map(side)];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const second = [...first, RESULT('r1', 'SOURCES gate: ...', true), ...readCall('t2', 'C:/work/a.md'), ASSIST(USE('r2', LIB, { text }))];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const second = [...first, RESULT('r1', 'SOURCES gate: ...', true), ...readCall('t2', 'C:/work/a.md'), ASSIST(USE('r2', LIB, { text }))];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ASSIST(USE('t2', 'Bash', { command: 'cat huge' })), RESULT('t2', big), ...readCall('t3', 'C:/work/b.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ASSIST(USE('t2', 'Bash', { command: 'cat huge' })), RESULT('t2', big), ...readCall('t3', 'C:/work/b.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ASSIST(USE('t2', 'Bash', { command: 'ls' })), rem, ...readCall('t3', 'C:/work/b.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ASSIST(USE('t2', 'Bash', { command: 'ls' })), rem, ...readCall('t3', 'C:/work/b.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const t1 = [USER('go'), ...readCall('t1', 'C:/work/a.md'), side(USER('subagent prompt')), ...readCall('t2', 'C:/work/b.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const t1 = [USER('go'), ...readCall('t1', 'C:/work/a.md'), side(USER('subagent prompt')), ...readCall('t2', 'C:/work/b.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const t2 = [USER('go'), ...readCall('t1', 'C:/work/a.md'), { ...USER('caveat text'), isMeta: true }, ...readCall('t2', 'C:/work/b.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const t2 = [USER('go'), ...readCall('t1', 'C:/work/a.md'), { ...USER('caveat text'), isMeta: true }, ...readCall('t2', 'C:/work/b.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "function payloadOf(dir, entries, { tool = LIB, text, cwd = 'C:/work', extra = {} } = {}) {",
+      "key": "consonance/hooks/sources-gate.test.js\u0000function payloadOf(dir, entries, { tool = LIB, text, cwd = 'C:/work', extra = {} } = {}) {\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'cd /c/Users/n/lighthouse/exo_memory && cat loop/plan.md')], { text: withSources('SOURCES: C:/Users/n/lighthouse/exo_memory/loop/plan.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000let r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'cd /c/Users/n/lighthouse/exo_memory && cat loop/plan.md')], { text: withSources('SOURCES: C:/Users/n/lighthouse/exo_memory/loop/plan.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'echo C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000let r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'echo C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'ls -la C:/work/a.md && cat C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000let r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'ls -la C:/work/a.md && cat C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/Users/n/lighthouse/exo_memory/loop/plan.md')], { text: withSources('SOURCES: exo_memory/loop/plan.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000let r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/Users/n/lighthouse/exo_memory/loop/plan.md')], { text: withSources('SOURCES: exo_memory/loop/plan.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let r = runGate(dir, payloadOf(dir, [USER('go'), ASSIST(USE('t1', 'Read', { file_path: 'C:/work/a.md' })), RESULT('t1', 'File does not exist', true)], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000let r = runGate(dir, payloadOf(dir, [USER('go'), ASSIST(USE('t1', 'Read', { file_path: 'C:/work/a.md' })), RESULT('t1', 'File does not exist', true)], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'cat C:/work/a.md', 'cat: no such file', true)], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'cat C:/work/a.md', 'cat: no such file', true)], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'echo start && cat C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'echo start && cat C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'ls -la C:/work/a.md | head -3')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'ls -la C:/work/a.md | head -3')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'printf \"%s\" C:/work/a.md; Write-Host C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'printf \"%s\" C:/work/a.md; Write-Host C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'wc -l C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'wc -l C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'a.md')], { cwd: 'C:/work', text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'a.md')], { cwd: 'C:/work', text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = runGate(dir, payloadOf(dir, [USER('go'), ASSIST(USE('t1', 'PowerShell', { command: 'Get-Item C:\\\\work\\\\a.md; Test-Path C:\\\\work\\\\a.md' })), RESULT('t1')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000r = runGate(dir, payloadOf(dir, [USER('go'), ASSIST(USE('t1', 'PowerShell', { command: 'Get-Item C:\\\\work\\\\a.md; Test-Path C:\\\\work\\\\a.md' })), RESULT('t1')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = runGate(dir, payloadOf(dir, [USER('go'), ASSIST(USE('t1', 'Read', { file_path: 'C:/work/a.md' }), USE(RING_ID, LIB, { text: 'x' }))], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000r = runGate(dir, payloadOf(dir, [USER('go'), ASSIST(USE('t1', 'Read', { file_path: 'C:/work/a.md' }), USE(RING_ID, LIB, { text: 'x' }))], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = runGate(dir, payloadOf(dir, ps, { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000r = runGate(dir, payloadOf(dir, ps, { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "test('D214 SPELLING: the guidance says ONE thing (repo-relative or C:\\\\ for items, a repo-relative pointer), and a /c/ item still matches a call spelled either way', () => {",
+      "key": "consonance/hooks/sources-gate.test.js\u0000test('D214 SPELLING: the guidance says ONE thing (repo-relative or C:\\\\ for items, a repo-relative pointer), and a /c/ item still matches a call spelled either way', () => {\u0000#1"
     },
     {
       "file": "consonance/import-instance.ps1",

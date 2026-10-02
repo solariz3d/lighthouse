@@ -193,6 +193,44 @@ test('GAMING: a path merely mentioned in a Bash echo does not count as opened; a
   assert.strictEqual(r.out, null, 'a real cat after an echo was refused: ' + JSON.stringify(r.out));
 });
 
+test('D214 METADATA: every metadata-only leader (ls, stat, test, [, file, dir, Get-Item, Test-Path ...) is refused as having opened a path, leader by leader', () => {
+  const dir = tmpDir();
+  for (const lead of G.METADATA) {
+    const cmd = lead === '[' ? '[ -f C:/work/a.md ]' : lead === '[[' ? '[[ -f C:/work/a.md ]]' : lead + ' C:/work/a.md';
+    const r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', cmd)], { text: withSources('SOURCES: C:/work/a.md') }));
+    assert.ok(isDeny(r), 'a metadata leader counted as opened: ' + cmd);
+  }
+  assert.deepStrictEqual([...G.METADATA].sort(), ['[', '[[', 'dir', 'du', 'file', 'get-childitem', 'get-item', 'gci', 'll', 'la', 'ls', 'resolve-path', 'stat', 'test', 'test-path', 'tree'].sort(), 'the explicit list changed');
+});
+
+test('D214 METADATA: an ls does not hide a real read in another segment, and wc (which reads the bytes) and a plain cat DO open', () => {
+  const dir = tmpDir();
+  let r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'ls -la C:/work/a.md && cat C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));
+  assert.strictEqual(r.out, null, 'a real cat after an ls was refused: ' + JSON.stringify(r.out));
+  r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'wc -l C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));
+  assert.strictEqual(r.out, null, 'wc is listed as opening, deliberately');
+  r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'ls -la C:/work/a.md | head -3')], { text: withSources('SOURCES: C:/work/a.md') }));
+  assert.ok(isDeny(r), 'ls piped to head counted');
+  r = runGate(dir, payloadOf(dir, [USER('go'), ASSIST(USE('t1', 'PowerShell', { command: 'Get-Item C:\\work\\a.md; Test-Path C:\\work\\a.md' })), RESULT('t1')], { text: withSources('SOURCES: C:/work/a.md') }));
+  assert.ok(isDeny(r), 'PowerShell Get-Item / Test-Path counted');
+});
+
+test('D214 REASON: an unmatched deny names the same-message race, the later-message fix and the read-back after a write', () => {
+  const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go'), ASSIST(USE('t1', 'Read', { file_path: 'C:/work/a.md' }), USE(RING_ID, LIB, { text: 'x' }))], { text: withSources('SOURCES: C:/work/a.md') }));
+  assert.ok(isDeny(r)); const why = reasonOf(r);
+  assert.ok(/SAME message as this ring/.test(why), why); assert.ok(/LATER message, after its sources have returned/.test(why), why);
+  assert.ok(/WROTE this turn needs a read-back/.test(why), why); assert.ok(/metadata-only command such as ls or stat/.test(why), why);
+});
+
+test('D214 SPELLING: the guidance says ONE thing (repo-relative or C:\\ for items, a repo-relative pointer), and a /c/ item still matches a call spelled either way', () => {
+  const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go')], { text: withSources('SOURCES: exo_memory/x.md') }));
+  const why = reasonOf(r);
+  assert.ok(/repo-relative or as a C:\\.* path, not \/c\//.test(why), why); assert.ok(/POINTER in the ring's prose is repo-relative/.test(why), why);
+  assert.ok(/a \/c\/ spelling still matches here, but the running digest gate has refused it/.test(why), why);
+  assert.strictEqual(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:\\Users\\n\\x.md')], { text: withSources('SOURCES: /c/Users/n/x.md') })).out, null, 'a /c/ item no longer matches a C:\\ Read');
+  assert.strictEqual(runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'cat /c/Users/n/x.md')], { text: withSources('SOURCES: C:\\Users\\n\\x.md') })).out, null, 'a C:\\ item no longer matches a /c/ command');
+});
+
 test('GAMING: a comment line in a script does not count as opened', () => {
   const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', '# C:/work/a.md\nls')], { text: withSources('SOURCES: C:/work/a.md') }));
   assert.ok(isDeny(r));

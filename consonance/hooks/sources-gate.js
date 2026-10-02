@@ -18,7 +18,8 @@
 // WHAT COUNTS AS "OPENED" (the matching, chosen cheaply on purpose):
 //   - a Read file_path; a Grep path (a file, or a directory only if the result names the item); a Glob whose result names the item; a WebFetch url;
 //   - a Bash / PowerShell command segment that contains the item (a path, or the quoted command) and whose leading word is not a pure printer
-//     (echo, printf, Write-Host, Write-Output ...), so a path merely MENTIONED in an echo does not count. Segments split on && || ; | and newlines.
+//     (echo, printf, Write-Host, Write-Output ...) or a metadata-only one (ls, stat, test, [, file, dir, Get-Item, Get-ChildItem, Test-Path ...), so a path merely MENTIONED in an echo or
+//     only stat-ed by an ls does not count. Segments split on && || ; | and newlines.
 //   - only calls that COMPLETED in this turn count (a call with no recorded result, or an errored one, did not open anything), and only calls after
 //     the seat's last prompt (a user message with text and no tool result).
 // NOT CAUGHT, and said so: a path printed by `node -e`, `python -c` or inside a wrapper shell string; a listed item that opens but does not back
@@ -38,7 +39,12 @@ const RUN_ENV = 'CONSONANCE_SECOND_READER_RUN';   // the second reader's own run
 const LEDGER = 'sources-gate.jsonl';
 const WATCHDOG_MS = 8000;
 const TAIL_START = 4 * 1024 * 1024, TAIL_MAX = 64 * 1024 * 1024;   // read the transcript from the end, doubling until the turn's start is in view
-const NON_OPENING = new Set(['echo', 'printf', 'write-host', 'write-output', 'write-verbose', 'write-warning', 'write-error', 'write-information', 'true', ':']);
+// Leading words that do NOT open a source (D212, D214). PRINTERS only print what they are given; METADATA leaders ask about a file (does it exist, how big, when,
+// what kind) and never read its content (B's look, p-d212-B section 5: `ls -la <path>` was ALLOWED as having opened it). The list is explicit and tested leader by leader.
+// DELIBERATELY NOT here: `wc` (it reads every byte and reports a measure of it), `find` (`-exec cat` opens), `git` (`git log -- path`, `git show` read content), `cd`.
+const PRINTERS = ['echo', 'printf', 'write-host', 'write-output', 'write-verbose', 'write-warning', 'write-error', 'write-information', 'true', ':'];
+const METADATA = ['ls', 'll', 'la', 'dir', 'stat', 'test', '[', '[[', 'file', 'du', 'tree', 'get-item', 'get-childitem', 'gci', 'test-path', 'resolve-path'];
+const NON_OPENING = new Set([...PRINTERS, ...METADATA]);
 const FORMAT = 'SOURCES: <path> · <path> · `<command>`   (one line, above the NEXT: line; or  SOURCES: none (no state claims)  when the message states nothing about state)';
 
 /* THE SECRET SCAN, self-contained (an installed hook cannot require the repo's tools); second-reader.test.js-style drift guard in sources-gate.test.js. */
@@ -217,7 +223,7 @@ function decide(text, calls, cwd, ledgerPath = 'sources-gate.jsonl', ringSha = '
   if (!unmatched.length) return { decision: 'allow', none: false, items: s.items, unmatched: [], kind: 'matched', reason: '' };
   return {
     decision: 'deny', none: false, items: s.items, unmatched, kind: 'unmatched',
-    reason: `SOURCES gate: ${unmatched.length} of ${s.items.length} listed item(s) match nothing you opened or ran in THIS turn (a call from an earlier turn, a failed call, or an echo that only names a path does not count): ${unmatched.map((u) => '"' + clip(u, 160) + '"').join(' ; ')}. Open each now (Read / Grep / Glob, or run the command), or drop it from the message, and list a path as the call spelled it.` + tail,
+    reason: `SOURCES gate: ${unmatched.length} of ${s.items.length} listed item(s) match nothing you opened or ran in THIS turn (a call from an earlier turn, a failed call, a metadata-only command such as ls or stat, or an echo that only names a path does not count; NOR does a call made in the SAME message as this ring, because it had not finished yet: send the ring in a LATER message, after its sources have returned; and a file you only WROTE this turn needs a read-back, Read or cat, in an earlier message): ${unmatched.map((u) => '"' + clip(u, 160) + '"').join(' ; ')}. Open each now (Read / Grep / Glob, or run the command), or drop it from the message. Write each item repo-relative or as a C:\\... path, not /c/... (a /c/ spelling still matches here, but the running digest gate has refused it); the hand-back POINTER in the ring's prose is repo-relative (exo_memory/handback/<packet>_<date>.md), the form the digest gate hashes.` + tail,
   };
 }
 
@@ -284,4 +290,4 @@ function main() {
 
 if (require.main === module) { try { main(); } catch (_) { process.exit(0); } }   // fail OPEN, without exception
 
-module.exports = { RING_TOOLS, LEDGER, SECRET_SHAPES, NON_OPENING, parseSources, norm, tails, opensInSegment, turnCalls, itemMatches, decide, readTurnEntries, scrub };
+module.exports = { RING_TOOLS, LEDGER, SECRET_SHAPES, PRINTERS, METADATA, NON_OPENING, parseSources, norm, tails, opensInSegment, turnCalls, itemMatches, decide, readTurnEntries, scrub };
