@@ -3,7 +3,7 @@
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
     "FATAL-DEFAULT": 24,
-    "BENIGN-TEST": 203,
+    "BENIGN-TEST": 215,
     "REVIEW": 17,
     "BENIGN-FIXTURE": 8,
     "DISGUISED": 14,
@@ -206,6 +206,20 @@
       "file": "consonance/hooks/sources-gate.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "assert.ok(isDeny(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), bare], { text: SRC_A }))), 'a bare reminder was read as a notification');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.ok(isDeny(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), bare], { text: SRC_A }))), 'a bare reminder was read as a notification');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(isDeny(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), pasted], { text: SRC_A }))));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.ok(isDeny(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), pasted], { text: SRC_A }))));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "assert.ok(isDeny(runGate(dir, payloadOf(dir, grepDirMiss, { text: withSources('SOURCES: C:/work/a.md') }))));",
       "key": "consonance/hooks/sources-gate.test.js\u0000assert.ok(isDeny(runGate(dir, payloadOf(dir, grepDirMiss, { text: withSources('SOURCES: C:/work/a.md') }))));\u0000#1"
     },
@@ -227,8 +241,22 @@
       "file": "consonance/hooks/sources-gate.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, [USER('first'), HUMAN('second'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], { text: SRC_A })).out, null);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, [USER('first'), HUMAN('second'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], { text: SRC_A })).out, null);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "assert.strictEqual(runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'cat /c/Users/n/x.md')], { text: withSources('SOURCES: C:\\\\Users\\\\n\\\\x.md') })).out, null, 'a C:\\\\ item no longer matches a /c/ command');",
       "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'cat /c/Users/n/x.md')], { text: withSources('SOURCES: C:\\\\Users\\\\n\\\\x.md') })).out, null, 'a C:\\\\ item no longer matches a /c/ command');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), marked], { text: SRC_A })).out, null);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), marked], { text: SRC_A })).out, null);\u0000#1"
     },
     {
       "file": "consonance/hooks/sources-gate.test.js",
@@ -346,6 +374,13 @@
       "file": "consonance/hooks/sources-gate.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = [USER('first'), ...readCall('t1', 'C:/work/a.md'), HUMAN('second'), NOTIF()];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), t = [USER('first'), ...readCall('t1', 'C:/work/a.md'), HUMAN('second'), NOTIF()];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ...bashCall('t2', 'ls'), ...bashCall('t3', 'pwd'), ...readCall('t4', 'C:/work/b.md')];",
       "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ...bashCall('t2', 'ls'), ...bashCall('t3', 'pwd'), ...readCall('t4', 'C:/work/b.md')];\u0000#1"
     },
@@ -355,6 +390,13 @@
       "verdict": "BENIGN-TEST",
       "text": "const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ...readCall('t2', 'C:/work/b.md'), ...readCall('t3', 'C:/work/c.md'), ...readCall('t4', 'C:/work/d.md')];",
       "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ...readCall('t2', 'C:/work/b.md'), ...readCall('t3', 'C:/work/c.md'), ...readCall('t4', 'C:/work/d.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF(), NOTIF()];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF(), NOTIF()];\u0000#1"
     },
     {
       "file": "consonance/hooks/sources-gate.test.js",
@@ -416,6 +458,34 @@
       "file": "consonance/hooks/sources-gate.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), f], { text: SRC_A }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), f], { text: SRC_A }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), mixed], { text: SRC_A }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), mixed], { text: SRC_A }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF(), HUMAN(text)], { text: SRC_A }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF(), HUMAN(text)], { text: SRC_A }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF(), mk()], { text: SRC_A }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF(), mk()], { text: SRC_A }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md · C:/work/never-opened.md') }));",
       "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md · C:/work/never-opened.md') }));\u0000#1"
     },
@@ -458,8 +528,22 @@
       "file": "consonance/hooks/sources-gate.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "const SRC_A = withSources('SOURCES: C:/work/a.md');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const SRC_A = withSources('SOURCES: C:/work/a.md');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "const t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ASSIST(USE('t2', 'Bash', { command: 'cat huge' })), RESULT('t2', big), ...readCall('t3', 'C:/work/b.md')];",
       "key": "consonance/hooks/sources-gate.test.js\u0000const t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ASSIST(USE('t2', 'Bash', { command: 'cat huge' })), RESULT('t2', big), ...readCall('t3', 'C:/work/b.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ASSIST(USE('t2', 'Bash', { command: 'cat huge' })), RESULT('t2', big), NOTIF(), NOTIF()];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ASSIST(USE('t2', 'Bash', { command: 'cat huge' })), RESULT('t2', big), NOTIF(), NOTIF()];\u0000#1"
     },
     {
       "file": "consonance/hooks/sources-gate.test.js",

@@ -157,15 +157,43 @@ function opensInSegment(command, itemN) {
   return false;
 }
 
+// ------------------------------------------------------------------ what is a PROMPT (a turn boundary)
+
+const textOf = (c) => (typeof c === 'string' ? c : Array.isArray(c) ? c.filter((p) => p && p.type === 'text').map((p) => p.text || '').join('\n') : '');
+const hasToolResult = (m) => Array.isArray(m.content) && m.content.some((p) => p && p.type === 'tool_result');
+// D214, the librarian's ruling on a live false deny: a background-task notification or a system notification arrives as a USER message with text
+// (Claude Code writes it with origin.kind "task-notification" and a content string that starts <task-notification>; the reminder form is
+// "[SYSTEM NOTIFICATION"). It is not a new request, so the seat's turn runs through it and a source read before it still counts after it. These are
+// D199's keeper.js machine-form classes for notifications (`<task-notification`, `[SYSTEM`), and NO others: a keeper message, a chair or pane ring and
+// a keep-warm are all still boundaries.
+// HOW A MIXED MESSAGE IS TOLD APART: take out the harness's own wrappers (<system-reminder> blocks, hook-output blocks, <task-notification> blocks, a
+// "[SYSTEM NOTIFICATION ...]" banner) and look at what is LEFT. Nothing left, and a notification marker was present: it is machine-only, NOT a boundary.
+// ANY text left, even one word beside a notification: it is the keeper's (or a ring's), a boundary. An unterminated <task-notification> leaves its text
+// behind, so it is a boundary too (the safe side). And a message Claude Code itself records as typed by a human (origin.kind "human") is a boundary
+// whatever it contains.
+const NOTE_WRAPPERS = [/<system-reminder>[\s\S]*?<\/system-reminder>/g, /<([a-z-]*hook[a-z-]*)>[\s\S]*?<\/\1>/gi, /<task-notification>[\s\S]*?<\/task-notification>/g, /\[SYSTEM NOTIFICATION[^\]]*\]/g];
+function isNotificationOnly(e, text) {
+  if (e && e.origin && e.origin.kind === 'human') return false;
+  const marked = /<task-notification|\[SYSTEM NOTIFICATION/.test(text) || !!(e && e.origin && e.origin.kind === 'task-notification');
+  if (!marked) return false;
+  let rest = String(text);
+  for (const re of NOTE_WRAPPERS) rest = rest.replace(re, '');
+  return rest.trim() === '';
+}
+/** A PROMPT: a user message with text, no tool result, not meta, not a subagent's, and not a machine-only notification. */
+function isPrompt(e) {
+  const m = e && e.message;
+  if (!m || m.role !== 'user' || e.isSidechain || e.isMeta || hasToolResult(m)) return false;
+  const t = textOf(m.content);
+  return !!t.trim() && !isNotificationOnly(e, t);
+}
+
 /** The completed calls of THIS turn: everything after the seat's last prompt, minus the ring itself, minus errored calls and calls with no recorded result. */
 function turnCalls(entries, ring = {}) {
-  const hasToolResult = (m) => Array.isArray(m.content) && m.content.some((p) => p && p.type === 'tool_result');
-  const textOf = (c) => (typeof c === 'string' ? c : Array.isArray(c) ? c.filter((p) => p && p.type === 'text').map((p) => p.text || '').join('\n') : '');
   const live = entries.filter((e) => e && !e.isSidechain);
   let from = 0;
   for (let i = live.length - 1; i >= 0; i--) {
-    const e = live[i], m = e.message;
-    if (m && m.role === 'user' && !e.isMeta && textOf(m.content).trim() && !hasToolResult(m)) { from = i + 1; break; }
+    if (isPrompt(live[i])) { from = i + 1; break; }
   }
   const calls = [], byId = new Map();
   for (const e of live.slice(from)) {
@@ -243,8 +271,7 @@ function readTurnEntries(transcriptPath) {
       const out = [];
       for (const line of text.split('\n')) { if (!line.trim()) continue; try { out.push(JSON.parse(line)); } catch (_) { /* a partial or foreign line */ } }
       if (!out.length && text.trim()) throw new Error('unparseable');   // a transcript with content and no parseable line is not one this hook can read: fail open
-      const hasBoundary = out.some((e) => e && !e.isSidechain && !e.isMeta && e.message && e.message.role === 'user' && !(Array.isArray(e.message.content) && e.message.content.some((p) => p && p.type === 'tool_result'))
-        && (typeof e.message.content === 'string' ? e.message.content.trim() : Array.isArray(e.message.content) && e.message.content.some((p) => p && p.type === 'text' && String(p.text || '').trim())));
+      const hasBoundary = out.some(isPrompt);
       if (hasBoundary || start === 0 || want >= TAIL_MAX) return out;
     }
   } finally { fs.closeSync(fd); }
@@ -290,4 +317,4 @@ function main() {
 
 if (require.main === module) { try { main(); } catch (_) { process.exit(0); } }   // fail OPEN, without exception
 
-module.exports = { RING_TOOLS, LEDGER, SECRET_SHAPES, PRINTERS, METADATA, NON_OPENING, parseSources, norm, tails, opensInSegment, turnCalls, itemMatches, decide, readTurnEntries, scrub };
+module.exports = { RING_TOOLS, LEDGER, SECRET_SHAPES, PRINTERS, METADATA, NON_OPENING, isPrompt, isNotificationOnly, parseSources, norm, tails, opensInSegment, turnCalls, itemMatches, decide, readTurnEntries, scrub };

@@ -30,6 +30,11 @@ const USER = (text) => ({ type: 'user', message: { role: 'user', content: text }
 const ASSIST = (...blocks) => ({ type: 'assistant', message: { role: 'assistant', content: blocks } });
 const USE = (id, name, input) => ({ type: 'tool_use', id, name, input });
 const RESULT = (id, text = 'ok', err = false) => ({ type: 'user', message: { role: 'user', content: [{ type: 'tool_result', tool_use_id: id, content: text, ...(err ? { is_error: true } : {}) }] } });
+// D214: the shapes Claude Code really writes (checked against this session's transcript): a background-task notification is a user entry with
+// origin.kind "task-notification" and a content STRING that starts <task-notification>; a ring, a keep-warm and a typed keeper message carry origin.kind "human".
+const NOTE_BODY = '<task-notification>\n<task-id>b1</task-id>\n<status>completed</status>\n<summary>Background command completed</summary>\n</task-notification>';
+const NOTIF = (extra = {}) => ({ ...USER(NOTE_BODY), origin: { kind: 'task-notification', producer: 'session-task' }, ...extra });
+const HUMAN = (text) => ({ ...USER(text), origin: { kind: 'human' }, promptSource: 'typed' });
 const readCall = (id, p) => [ASSIST(USE(id, 'Read', { file_path: p })), RESULT(id, 'file text')];
 const bashCall = (id, cmd, out = 'out', err = false) => [ASSIST(USE(id, 'Bash', { command: cmd })), RESULT(id, out, err)];
 const writeTranscript = (dir, entries) => { const f = path.join(dir, 'transcript.jsonl'); fs.writeFileSync(f, entries.map((e) => JSON.stringify(e)).join('\n') + '\n'); return f; };
@@ -128,6 +133,81 @@ test('TURN: a tool-result message that carries a reminder text block is still a 
   const dir = tmpDir(), rem = { type: 'user', message: { role: 'user', content: [{ type: 'tool_result', tool_use_id: 't2', content: 'ok' }, { type: 'text', text: '<system-reminder>carried with a result</system-reminder>' }] } };
   const t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ASSIST(USE('t2', 'Bash', { command: 'ls' })), rem, ...readCall('t3', 'C:/work/b.md')];
   assert.strictEqual(runGate(dir, payloadOf(dir, t, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') })).out, null, 'a result carrying a reminder cut the turn');
+});
+
+const SRC_A = withSources('SOURCES: C:/work/a.md');
+test('D214 NOTIFICATION: a task notification between the Read and the ring is NOT a boundary: the read still counts (the live false deny)', () => {
+  const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF(), NOTIF()];
+  const r = runGate(dir, payloadOf(dir, t, { text: SRC_A }));
+  assert.strictEqual(r.out, null, 'a notification cut the turn: ' + JSON.stringify(r.out));
+  assert.strictEqual(rows(dir).pop().decision, 'allow');
+});
+
+test('D214 NOTIFICATION: a KEEPER message between the Read and the ring IS a boundary: the read is stale and the ring is denied', () => {
+  const dir = tmpDir();
+  for (const mk of [() => HUMAN('actually do the other thing'), () => USER('a keeper message with no origin recorded')]) {
+    const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF(), mk()], { text: SRC_A }));
+    assert.ok(isDeny(r), 'a keeper message did not cut the turn'); assert.ok(reasonOf(r).includes('a.md'));
+  }
+});
+
+test('D214 NOTIFICATION: a PANE or CHAIR ring between the Read and the ring IS a boundary, and so is a keep-warm', () => {
+  const dir = tmpDir();
+  for (const text of ['[pane:B] D210 hand-back is at exo_memory/handback/p-x.md', '\n\n<pasted_content id="e589">\n[chair:MAIN] D214 a 4th commit\n</pasted_content id="e589">', '[keep-warm, from the chair — not the keeper] Reply with exactly: ok']) {
+    const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF(), HUMAN(text)], { text: SRC_A }));
+    assert.ok(isDeny(r), 'a ring or keep-warm did not cut the turn: ' + text.slice(0, 30));
+  }
+});
+
+test('D214 NOTIFICATION: a message that MIXES a notification with keeper text is the keeper\'s, a boundary; an unterminated notification is too', () => {
+  const dir = tmpDir();
+  for (const text of [NOTE_BODY + '\nplease stop what you are doing', 'one word first ' + NOTE_BODY, '<task-notification>\n<task-id>b1</task-id>\n(never closed)']) {
+    for (const origin of [{ kind: 'task-notification' }, undefined]) {
+      const mixed = { ...USER(text), ...(origin ? { origin } : {}) };
+      const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), mixed], { text: SRC_A }));
+      assert.ok(isDeny(r), 'a mixed or unterminated message was read as machine-only: ' + JSON.stringify(text.slice(0, 40)) + ' origin ' + JSON.stringify(origin));
+    }
+  }
+});
+
+test('D214 NOTIFICATION: a message Claude Code records as typed by a human is a boundary even if it contains only a notification-shaped paste', () => {
+  const dir = tmpDir(), pasted = { ...USER(NOTE_BODY), origin: { kind: 'human' } };
+  assert.ok(isDeny(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), pasted], { text: SRC_A }))));
+});
+
+test('D214 NOTIFICATION: the recognised machine-only forms are not boundaries: a bare text notification, the reminder-wrapped system form, hook output beside one, and a banner line', () => {
+  const dir = tmpDir();
+  const forms = [
+    USER(NOTE_BODY),                                                                                                   // text only, no origin recorded
+    USER('<system-reminder>\n[SYSTEM NOTIFICATION - NOT USER INPUT]\nThis is an automated background-task event.\n<task-notification>\n<task-id>b1</task-id>\n</task-notification>\n</system-reminder>'),
+    USER(NOTE_BODY + '\n<user-prompt-submit-hook>\n[pulse] Fri 2:19 PM\n</user-prompt-submit-hook>'),                  // hook output beside it
+    USER('[SYSTEM NOTIFICATION - NOT USER INPUT]\n<system-reminder>queued</system-reminder>'),                          // the banner outside a reminder
+    { ...USER([{ type: 'text', text: NOTE_BODY }]), origin: { kind: 'task-notification' } },                           // content as a block array
+  ];
+  for (const f of forms) {
+    const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), f], { text: SRC_A }));
+    assert.strictEqual(r.out, null, 'a machine-only notification cut the turn: ' + JSON.stringify(f.message.content).slice(0, 90));
+  }
+});
+
+test('D214 NOTIFICATION: narrow on purpose: a message with no notification marker (a bare reminder) is still a boundary, while one the harness marks as a task notification and that holds only wrappers is not', () => {
+  const dir = tmpDir();
+  const bare = USER('<system-reminder>some reminder</system-reminder>');
+  assert.ok(isDeny(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), bare], { text: SRC_A }))), 'a bare reminder was read as a notification');
+  const marked = { ...USER('<system-reminder>queued</system-reminder>'), origin: { kind: 'task-notification' } };
+  assert.strictEqual(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), marked], { text: SRC_A })).out, null);
+});
+
+test('D214 NOTIFICATION: a notification does not hide a stale source: read, then a keeper prompt, then a notification, then the ring is denied; read after the prompt and before the notification is allowed', () => {
+  const dir = tmpDir(), t = [USER('first'), ...readCall('t1', 'C:/work/a.md'), HUMAN('second'), NOTIF()];
+  assert.ok(isDeny(runGate(dir, payloadOf(dir, t, { text: SRC_A }))));
+  assert.strictEqual(runGate(dir, payloadOf(dir, [USER('first'), HUMAN('second'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], { text: SRC_A })).out, null);
+});
+
+test('D214 NOTIFICATION: a long notification-only tail does not stop the backward read early (the real prompt is further back than the first window)', () => {
+  const dir = tmpDir(), big = 'x'.repeat(5 * 1024 * 1024);
+  const t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ASSIST(USE('t2', 'Bash', { command: 'cat huge' })), RESULT('t2', big), NOTIF(), NOTIF()];
+  assert.strictEqual(runGate(dir, payloadOf(dir, t, { text: SRC_A })).out, null, 'the read stopped at a notification');
 });
 
 test('TURN: a subagent (sidechain) read does not count, and a sidechain or meta user message does not start a new turn', () => {
