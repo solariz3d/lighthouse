@@ -59,3 +59,15 @@ The keeper, 13:42: "lets do it, i have a good feeling about this".
     at week end. If more than 5 of 20 are perfunctory, the slot is satisfied in form only.
 
 NEXT: chair dispatch D212 build to A when this plan is read
+
+## Build collated (librarian, 14:0x): `handback/p-d212-A_2026-10-02.md` (git-blob `1317b63f…`), commit `21be348`, INSTALLED on D
+- `consonance/hooks/sources-gate.js`. It denies when the line is missing, empty, or an item matches no completed call this turn. Bash
+  segments led by a printer (echo …) do not count. It fails open (8 s watchdog under the 10 s timeout), and every deny logs the pointer.
+- Tests 34/34, mutants 42/42 (3 real findings fixed on the first run). BUILDING.md item 8 added.
+- **LIVE, already:** `C:\Consonance\data\sources-gate.jsonl` holds A's deny at 19:58:12Z (kind unmatched) and the allow at 19:58:44Z, the
+  fixed re-send, 32 s later. The second reader fired on the denied ring too (ts 19:58:17Z). The ring that carried this hand-back passed the gate.
+- Line position is not enforced (A's call: the last SOURCES line wins). Accepted.
+- A's NOT-VERIFIED item worth watching: the transcript-flush race (a call made just before the ring may not be on disk yet). B's look
+  and the live week measure it, as denies that a re-send clears with no change.
+- **OUTPUT → NEXT: unchanged.** B's non-author look: diff, tests, and one denied-then-fixed plus one allowed ring of B's own. The live
+  week's clock starts at the install (A's hand-back gives the time).
