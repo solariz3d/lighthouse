@@ -1468,3 +1468,7 @@ composer, identical to shipped, unmeasured for want of a real capture).
 
 ## 2026-10-02 — D208/D209: the blind QC check read
 - Read `loop/qc_check_read_C_2026-10-02.md` (60 rows: 29 YES, 24 NO, 7 CAN'T TELL), note `handback/p-d208-C-check_2026-10-02.md`. Seven units repeat from my D199 sample and got the same answers; flagged so the scorer does not count them as fresh agreement.
+
+## 2026-10-02 — D210 step 1: the rule census list, tagged blind to rates
+- Hand-back `handback/p-d210-C_2026-10-02.md`; list + E checks committed 892b9747 in c-d210-wt. 41 rules, 7 gated. Exposure: I read the plan's five preliminary rates before tagging; disclosed per id.
+- The move: hand-made counts were wrong twice in one line; a script over the table caught both that and a pipe inside a cell. Count tags with code, always.

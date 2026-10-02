@@ -45,3 +45,16 @@ path:line on every figure") are followed at **≤ 20%**.
   applied to claims.
 
 NEXT: chair dispatch D210 step 1 to C when this plan is read
+
+## Step 1 collated + RULINGS (librarian, 13:0x): `handback/p-d210-C_2026-10-02.md` (git-blob `527055de…`), commit `892b9747` in `c-d210-wt`
+- 41 rules (R01–R44, minus R19, R34, R36). gated 7 / ungated 34. Positions: slot-end 12, template-field 15, slot-start 4,
+  inline-per-claim 5, judgment-mid-turn 5. List sha256 `1f21c3fe…ffa`; the E-facing checks file (no tags) sha256 `45baf1c4…4f9`.
+- **RULING 1 (the judgment-mid-turn bucket):** it is in neither H2 nor H3 as registered, so it is REPORTED SEPARATELY, with no bar.
+  Folding it into H3 now, after the rule list exists, would be choosing a bucket for a known-bad rule (R13, 101/103). That is the abuse
+  the clause forbids. It is the librarian's omission at registration, recorded as such.
+- **RULING 2 (C's exposure):** C read the plan's five preliminary rates (R44, R22, R30, R27/R28, R13) before tagging. **The score is
+  computed twice: with all 41, and with those five ids removed.** If a hypothesis passes only with them, it does not pass.
+- **RULING 3 (the gate leak in the checks file):** E's checks for R01/R11/R14/R15/R27 mention refusal rows. That leak is accepted. E
+  measures mechanically, so a rate is a count, not a judgment the tag could bias. Disclosed, not blocking.
+- **OUTPUT → NEXT: unchanged.** E measures every rule from `loop/rule_census_checks_2026-10-02.md` (from `892b9747`), blind to the list
+  file. One number per rule with its command, or NOT MEASURABLE.
