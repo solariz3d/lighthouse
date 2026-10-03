@@ -68,6 +68,11 @@ test('TOKENS: plain prose, a bare number, a decimal, a word of hex-like letters,
   }
 });
 
+test('TOKENS: a sentence-final full stop, comma or closing bracket is not part of the token', () => {
+  assert.deepStrictEqual(R.tokensIn('Filed at exo_memory/loop/x.md.').map((t) => t.text), ['exo_memory/loop/x.md']);
+  assert.deepStrictEqual(R.tokensIn('(see consonance/hooks/a.js), then more').filter((t) => t.kind === 'path').map((t) => t.text), ['consonance/hooks/a.js']);
+});
+
 test('TOKENS: a flagged token is clipped, redacted of key shapes, deduplicated and capped at 12; no surrounding text is kept', () => {
   const many = Array.from({ length: 30 }, (_, i) => `exo_memory/loop/f${i}.md`).join(' ');
   assert.strictEqual(R.tokensIn(many).length, 12);

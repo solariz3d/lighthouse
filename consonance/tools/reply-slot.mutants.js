@@ -39,7 +39,8 @@ const MUTANTS = [
   dropKind('path'), dropKind('sha'), dropKind('commit'), dropKind('count'), dropKind('percentage'), dropKind('version'),
   ['tokens: no cap at 12', HOOK, 'if (out.length >= 12) return out;', ''],
   ['tokens: no de-duplication', HOOK, 'if (seen.has(key)) continue; seen.add(key);', ''],
-  ['tokens: a flagged token is not redacted', HOOK, "clip(G ? G.scrub(m[0]) : '<unscrubbed>', 80)", 'clip(m[0], 80)'],
+  ['tokens: a flagged token is not redacted', HOOK, "clip(G ? G.scrub(trimmed) : '<unscrubbed>', 80)", 'clip(trimmed, 80)'],
+  ['tokens: a sentence-final full stop stays in the token', HOOK, "const trimmed = m[0].replace(/[.,;:!?)\\]'\"]+$/, '');", 'const trimmed = m[0];'],
   // ---- which turns ----
   ['turn: the bare "ok" reply is evaluated', HOOK, "if (/^\\s*ok[.!]?\\s*$/i.test(text) || !text.trim()) {", 'if (false) {'],
   ['turn: a keep-warm prompt is not recognised', HOOK, "if (KEEPWARM.test(t)) return 'keepwarm';", ''],

@@ -91,7 +91,8 @@ function tokensIn(reply) {
   const out = [], seen = new Set();
   for (const [kind, re] of TOKEN_KINDS) {
     for (const m of String(reply).matchAll(re)) {
-      const text = clip(G ? G.scrub(m[0]) : '<unscrubbed>', 80), key = kind + '|' + text;
+      const trimmed = m[0].replace(/[.,;:!?)\]'"]+$/, '');   // a sentence-final full stop or a closing bracket is not part of the token
+      const text = clip(G ? G.scrub(trimmed) : '<unscrubbed>', 80), key = kind + '|' + text;
       if (seen.has(key)) continue; seen.add(key); out.push({ kind, text });
       if (out.length >= 12) return out;
     }
