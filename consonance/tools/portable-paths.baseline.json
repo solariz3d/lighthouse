@@ -6,7 +6,7 @@
     "BENIGN-TEST": 260,
     "REVIEW": 17,
     "BENIGN-FIXTURE": 8,
-    "DISGUISED": 14,
+    "DISGUISED": 15,
     "BENIGN-MESSAGE": 5,
     "FATAL-USER": 7,
     "FATAL-TEST-READ": 2,
@@ -2043,6 +2043,13 @@
       "verdict": "FATAL-DEFAULT",
       "text": "const LEDGER = process.env.READ_LEDGER || 'C:\\\\Consonance\\\\data\\\\read_ledger.jsonl';",
       "key": "consonance/tools/read-ledger.js\u0000const LEDGER = process.env.READ_LEDGER || 'C:\\\\Consonance\\\\data\\\\read_ledger.jsonl';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/reply-slot-replay.js",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "const TRANSCRIPT = path.join(os.homedir(), '.claude', 'projects', 'C--Consonance-instances-librarian', '0c0c0c0b-0000-4000-8000-00000000115b.jsonl');",
+      "key": "consonance/tools/reply-slot-replay.js\u0000const TRANSCRIPT = path.join(os.homedir(), '.claude', 'projects', 'C--Consonance-instances-librarian', '0c0c0c0b-0000-4000-8000-00000000115b.jsonl');\u0000#1"
     },
     {
       "file": "consonance/tools/residue.js",
