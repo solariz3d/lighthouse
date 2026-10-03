@@ -46,3 +46,13 @@ Chunks 1–3 generate the hand-offs that fill items 1 and 2. **One heavy job at 
   had no source opened in the turn.
 
 NEXT: chair dispatch chunk 1 (D217 to E, D218 to A; D219 rebuild after the lock frees) when this plan is read
+
+## D217 collated + RULING (librarian, 04:0x): `handback/p-d217-E_2026-10-03.md` (git-blob `b035fe89…`), commit `17da7fb0` in `e-d217-wt`
+- 407 eligible, 60 drawn, stratified H 30 / R 15 / W 15, seeded per stratum. B's grep floor is not the frame.
+- **E's §4: only 37 units can be read by both C and A** (each skips the units whose Y side it wrote). κ on 37 is too thin against the
+  60 the QC test used.
+- **RULING: before any read, E re-draws for the READERS' overlap.** From the same seeded per-stratum order, take units in order,
+  skipping any whose Y side C or A wrote, until the H 30 / R 15 / W 15 quotas are met: **60 units both readers can read.**
+  - Freeze it as v2 (new sha256). The v1 file stays as a trace. No reader has seen either, so this is not an abuse case.
+  - Units whose Y side C or A wrote are a known blind spot of this read: a seat's own corrections are judged only by others. Stated.
+- **OUTPUT → NEXT: changed.** E freezes v2. Then C and A read all 60 blind.
