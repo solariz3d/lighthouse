@@ -35,3 +35,13 @@ that is days away.
    and every seat wakes with BUILDING.md item 8 in its brief.
 
 NEXT: chair dispatch D220 step 1 (A: the replay) when this plan is read
+
+## SCORE (librarian, 05:4x): REAL 18 of 30. The bar is ≥ 15, so the reply slot goes LIVE.
+- B's read `loop/reply_slot_replay_read_B_2026-10-03.md` sha256 `806c0fea…`, input checked `669c4d2b…`. Recount by grep: REAL 18, NOT 12, CAN'T TELL 0.
+- Conservative: 17 (W101 is borderline). Both are above 15.
+- **The edge rule B applied, ruled as registered:** a figure carried in from the prompt or an earlier turn, and not opened in THIS turn,
+  counts as unbacked. That is the question's literal wording, and the failure the whole retrieval line is about: KNOWN, not opened now.
+- **What it means in plain terms:** on the replay, 60% of the slot's would-blocks named a claim I had not checked in that turn.
+- **Next:** A flips `SHADOW = false` with a test pinning it, then reinstalls. B takes a quick look with one live blocked-then-fixed reply.
+  The live week's rate clause: more than 1 in 3 token-bearing replies still blocked after a week → back to shadow.
+- Then the keeper launches the D219 build.
