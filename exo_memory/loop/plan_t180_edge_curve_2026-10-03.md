@@ -100,3 +100,14 @@ and then the outer curve".
 - **The lip:** not in v1. The keeper hasn't answered, and it can be a later additive control.
 - **Next:** A builds the core (tube family, the heartline-only roll interpolation fix with e = 0 identity kept, the edge term, /4 migration,
   validator rows incl. the spiral's loads), C builds the Extend fields. Then B is the non-author against the seal. ONE serialized suite.
+
+## A + C collated (librarian, 10:4x): A `p-xsec-A_2026-10-03.md` (core, `40dbe573`), C `p-xsec-C_2026-10-03.md` + ADDENDUM (app, `67fd8f1`)
+- A: targeted 878 tests, 875 pass / 0 fail / 3 skipped. **The e = 0 identity holds: row 5a, all nine fixtures byte for byte.** /4 saves carry
+  no e/s/t when unused. Mutants 55/55 (after fixing a vacuous KC3). The existing cup, chord, ramp, water and geom harnesses all pass.
+- C: 234 related app tests, 0 fail. Wired to A's contract, which matched exactly.
+- **A's six decisions, RULED: all ACCEPTED as written.** (1) edge knots `max(64, ceil(1.5·e_max))`; (2) a heartline ramp from 300° (= 2·CUP_MAX,
+  so a tube→cup joint has heartline 0); (3) `roll-rate` scoped to core segments (the paused piece builder isn't judged by a bar measured for
+  the core); (4) the `edge-past-cap` row; (5) EDGE_SEAM 0.01°; (6) a target past the cap refused, not clamped.
+- X1 (iii) "no red with a tube" is replaced by A's assertion: every red lies in a slot zone ±2.5 m (ruling 3, consistent).
+- **For B to fold in, from C's flags:** the brush offers e/s/t (`channelsFor` + PER_PX), and the plain-words text keyed to A's id `roll-rate`.
+- **NEXT:** B combines A + C, scores every seal row (incl. KS3-3 and X2's camera/marker in a real window), then ONE serialized full suite.
