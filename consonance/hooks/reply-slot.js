@@ -1,4 +1,7 @@
-// reply-slot.js - the REPLY SLOT, in SHADOW (D218; plan: exo_memory/loop/plan_finish_retrieval_2026-10-03.md "Chunk 1, D218"; the keeper, 03:52: "lets finish it all").
+// reply-slot.js - the REPLY SLOT, LIVE since D220 (built in SHADOW at D218; plan: exo_memory/loop/plan_finish_retrieval_2026-10-03.md "Chunk 1, D218"; the keeper, 03:52: "lets finish it all").
+// D220: the replay of the librarian's past replies scored REAL 18 of 30 (bar 15), so a would-block is now a BLOCK: Stop JSON {"decision":"block","reason":...}, ONCE per turn
+// (stop_hook_active is the loop guard), and the reason names the unbacked tokens and the two ways out. The rate clause: more than 1 in 3 token-bearing replies still blocked after
+// a week and the slot goes back to shadow (set SHADOW = true). The shadow paragraph below is the D218 text, kept as the record of how it was built.
 //
 // A Stop hook for the LIBRARIAN and CHAIR sessions only. When such a seat ends a turn that was a reply to the KEEPER and the reply names a path, a sha, a commit,
 // a count N/M, a percentage or a version, the reply is expected to END with one line, `Sources: <path> · <path> · `<command>``, whose items match calls that
@@ -40,7 +43,7 @@ const crypto = require('crypto');
 
 const LEDGER = 'reply-slot.jsonl';
 const WATCHDOG_MS = 5000;
-const SHADOW = true;   // main() passes live: !SHADOW. Flipping this constant is the whole difference between shadow and live; it is a ruling, not a default.
+const SHADOW = false;   // main() passes live: !SHADOW. D220: LIVE. The replay scored REAL 18 of 30 against the 15 bar (plan_reply_slot_replay_d220, "SCORE"). Flipping this constant is the whole difference between shadow and live; it is a ruling, not a default, and a test pins it.
 // The two fixed session ids (consonance/src-tauri/src/main.rs: MAIN_SID at "fixed session id, so Main --resumes itself", LIBRARIAN_SID). A test pins them to main.rs.
 const SEAT_IDS = { 'MAIN': '0c0c0c0a-0000-4000-8000-000000000a01', 'LIBRARIAN': '0c0c0c0b-0000-4000-8000-00000000115b' };
 const INSTANCE_DIRS = { main: 'chair', librarian: 'librarian' };
@@ -195,7 +198,9 @@ function verdict({ reply, entries, stopHookActive, live = false, seat = null }) 
   r.wouldBlock = r.kind.startsWith('would-block');
   if (live && r.wouldBlock) {
     const named = r.unmatched.length ? ' These Sources items match nothing you opened or ran in this turn: ' + r.unmatched.map((u) => '"' + clip(u, 120) + '"').join(' ; ') + '.' : '';
-    r.output = { decision: 'block', reason: 'REPLY SLOT: this reply names ' + r.tokens.map((t) => t.kind).filter((k, i, a) => a.indexOf(k) === i).join(', ') + ' and does not END with a Sources: line whose items you opened or ran in this turn.' + named + ' Open them (or drop the claim) and finish the reply with `Sources: <path> · <path> · \`<command>\`` as its last line, or `Sources: none` if it states nothing checkable.' };
+    const why = r.kind === 'would-block-missing' ? 'does not END with a Sources: line' : r.kind === 'would-block-empty' ? 'ends with an EMPTY Sources: line' : 'ends with a Sources: line some of whose items you did not open or run';
+    const shown = r.tokens.slice(0, 6).map((t) => t.kind + ' ' + clip(String(t.text).replace(/`/g, "'"), 60)).join(' ; ') + (r.tokens.length > 6 ? ' ; and ' + (r.tokens.length - 6) + ' more' : '');
+    r.output = { decision: 'block', reason: 'REPLY SLOT: this reply names ' + shown + ' and ' + why + ' whose items you opened or ran in THIS turn (a figure carried from the prompt or an earlier turn counts as unbacked).' + named + ' Fix it now, in this turn, in one of two ways: (1) OPEN the source first (Read / Grep, or run the command), then send the reply again ending with a final line `Sources: <path> · \`<command>\`` that lists only what you opened or ran this turn (repo-relative or C:\\... paths); or (2) drop the claim from the reply, or end with `Sources: none` if it states nothing checkable. This hook blocks once per turn: your next reply ends the turn.' };
   }
   return r;
 }
@@ -211,7 +216,7 @@ function main() {
   if (!seat) return process.exit(0);   // a committee pane or any other session: no row, no output
   const dir = dataDir();
   const sid = String(payload.session_id || '').slice(0, 8);
-  const log = (row) => { if (dir) record(dir, { v: 1, shadow: SHADOW, seat, session: sid, ...row }); };
+  const log = (row) => (dir ? record(dir, { v: 1, shadow: SHADOW, seat, session: sid, ...row }) : false);   // true only when the row is on disk
   if (!G) { log({ kind: 'error', error: 'sources-gate: ' + GATE_ERR }); return process.exit(0); }
   const reply = typeof payload.last_assistant_message === 'string' ? payload.last_assistant_message : null;
   if (reply === null) { log({ kind: 'error', error: 'no last_assistant_message (Claude Code older than v2.1.196?)' }); return process.exit(0); }
@@ -222,8 +227,9 @@ function main() {
   let v;
   try { v = verdict({ reply, entries, stopHookActive: !!payload.stop_hook_active, live: !SHADOW, seat }); }
   catch (e) { log({ kind: 'error', replySha, error: 'verdict: ' + String((e && e.message) || e).slice(0, 80) }); return process.exit(0); }
-  log({ kind: v.kind, prompt: v.prompt, wouldBlock: v.wouldBlock, replySha, replyChars: reply.length, tokenKinds: [...new Set(v.tokens.map((t) => t.kind))], tokens: v.tokens, nSources: v.items.length, none: v.none, unmatched: v.unmatched.slice(0, 12).map((x) => clip(G.scrub(x), 200)), nCalls: v.nCalls });
-  if (v.output) { process.stdout.write(JSON.stringify(v.output), () => process.exit(0)); setTimeout(() => process.exit(0), 1000).unref(); return; }
+  const logged = log({ kind: v.kind, prompt: v.prompt, wouldBlock: v.wouldBlock, blocked: !!v.output, replySha, replyChars: reply.length, tokenKinds: [...new Set(v.tokens.map((t) => t.kind))], tokens: v.tokens, nSources: v.items.length, none: v.none, unmatched: v.unmatched.slice(0, 12).map((x) => clip(G.scrub(x), 200)), nCalls: v.nCalls });
+  if (v.output && logged) {   // D220: block only AFTER the row is on disk (the sources gate's rule): no data dir or an unwritable ledger means the stop proceeds
+    process.stdout.write(JSON.stringify(v.output), () => process.exit(0)); setTimeout(() => process.exit(0), 1000).unref(); return; }
   return process.exit(0);
 }
 

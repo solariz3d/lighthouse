@@ -167,8 +167,9 @@ test('D218 SCOPE: keep-warm and machine prompts stay skipped in BOTH sessions, a
   run(dir, stopPayload(dir, [USER('x'), HUMAN('[pane:B] hand-back'), ASSIST({ type: 'text', text: 'an earlier reply that ended the turn' }), NOTIF()], '47/47 at exo_memory/x.md')); assert.strictEqual(last(dir).kind, 'skip-not-keeper-machine');
   run(dir, stopPayload(dir, [USER('x'), HUMAN('[pane:B] hand-back'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], '47/47 at C:/work/a.md.')); assert.strictEqual(last(dir).kind, 'would-block-missing', 'a notification that arrived mid-work must not hide a pane-ring turn');
 });
-test('D218 SCOPE: still SHADOW: a pane-ring would-block prints nothing; with live true the block is produced only for the librarian seat, and never for the chair or with no seat named', () => {
-  const dir = tmpDir(), r = run(dir, stopPayload(dir, PANE_RING_TURN(), 'B is at 47/47.')); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, ''); assert.strictEqual(r.stderr, '');
+test('D218 SCOPE (LIVE since D220): a pane-ring would-block in the librarian session prints the block; the block is produced only for the librarian seat, and never for the chair or with no seat named', () => {
+  const dir = tmpDir(), r = run(dir, stopPayload(dir, PANE_RING_TURN(), 'B is at 47/47.')); assert.strictEqual(r.status, 0); assert.strictEqual(r.stderr, ''); assert.strictEqual(JSON.parse(r.stdout).decision, 'block', 'a librarian pane-ring would-block must block');
+  const rc = run(dir, stopPayload(dir, PANE_RING_TURN(), 'B is at 47/47.'), { CONSONANCE_PANE: MAIN_ID }); assert.strictEqual(rc.status, 0); assert.strictEqual(rc.stdout, '', 'a chair-session pane ring must stay skipped');
   const entries = PANE_RING_TURN(), reply = 'B is at 47/47 at exo_memory/handback/p-x.md.';
   const live = R.verdict({ reply, entries, stopHookActive: false, live: true, seat: 'librarian' }); assert.ok(live.output && live.output.decision === 'block', JSON.stringify(live.output));
   assert.strictEqual(R.verdict({ reply, entries, stopHookActive: false, live: true, seat: 'chair' }).output, null); assert.strictEqual(R.verdict({ reply, entries, stopHookActive: false, live: true }).output, null, 'no seat named must not evaluate a ring');
@@ -197,14 +198,38 @@ test('WHO: the two fixed ids are the ones main.rs declares', () => {
 
 // ------------------------------------------------------------------ never blocks in shadow; the guard; live is built
 
-test('SHADOW: it NEVER blocks: every verdict, would-block ones included, prints nothing and exits 0', () => {
+test('LIVE PIN (D220): SHADOW is false; every would-block prints the Stop block JSON and exits 0 with nothing on stderr; a matched reply, "Sources: none", a no-claim reply and a keep-warm print nothing', () => {
+  assert.strictEqual(R.SHADOW, false, 'the slot must be LIVE (D220 ruling: replay REAL 18 of 30)');
   const dir = tmpDir(), t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md'));
-  for (const reply of ['It is 47/47 green.', 'Done at C:/work/zzz.md, 3 of 5.\n\nSources: C:/work/zzz.md', 'Total 47/47.\n\nSources:', REPLY_OK, 'Yes.']) {
-    const r = run(dir, stopPayload(dir, t, reply)); assert.strictEqual(r.status, 0, reply); assert.strictEqual(r.stdout, '', 'printed something: ' + reply); assert.strictEqual(r.stderr, '', reply);
+  for (const reply of ['It is 47/47 green.', 'Done at C:/work/zzz.md, 3 of 5.\n\nSources: C:/work/zzz.md', 'Total 47/47.\n\nSources:']) {
+    const r = run(dir, stopPayload(dir, t, reply)); assert.strictEqual(r.status, 0, reply); assert.strictEqual(r.stderr, '', reply);
+    const out = JSON.parse(r.stdout); assert.strictEqual(out.decision, 'block', reply); assert.deepStrictEqual(Object.keys(out).sort(), ['decision', 'reason']);
   }
-  assert.ok(rows(dir).some((x) => x.wouldBlock), 'control: nothing would have blocked'); assert.ok(R.SHADOW === true);
+  for (const reply of [REPLY_OK, 'Total 47/47.\n\nSources: none', 'Yes.', 'ok']) { const r = run(dir, stopPayload(dir, t, reply)); assert.strictEqual(r.status, 0, reply); assert.strictEqual(r.stdout, '', 'blocked a reply that should pass: ' + reply); assert.strictEqual(r.stderr, '', reply); }
+  assert.ok(rows(dir).some((x) => x.wouldBlock && x.blocked === true), 'the row must say it blocked'); assert.ok(rows(dir).every((x) => x.shadow === false));
 });
-test('LIVE (built, not on): with live true a would-block returns the Stop block JSON naming the kinds and the unmatched items; stop_hook_active true returns nothing', () => {
+test('LIVE REASON (D220): the block names the unbacked tokens, says what was and was not opened, and gives both ways out: open the source then end with a Sources: line, or drop the claim / Sources: none; and says it blocks once', () => {
+  const t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md')), v = R.verdict({ reply: 'Done at C:/work/zzz.md, 3 of 5, 94%.\n\nSources: C:/work/zzz.md', entries: t, stopHookActive: false, live: true, seat: 'librarian' }), why = v.output.reason;
+  assert.ok(/path C:\/work\/zzz\.md/.test(why) && /count 3 of 5/.test(why) && /percentage 94%/.test(why), 'the tokens are not named: ' + why);
+  assert.ok(/C:\/work\/zzz\.md/.test(why) && /did not open or run/.test(why), 'the unmatched item is not named'); assert.ok(/OPEN the source first/.test(why) && /Sources: <path>/.test(why) && /LAST|final line/i.test(why), 'the fix is not spelled out');
+  assert.ok(/Sources: none/.test(why) && /drop the claim/.test(why), 'the way out without a source is missing'); assert.ok(/once per turn/.test(why) && /THIS turn/.test(why) && /earlier turn/.test(why));
+  const longReply = 'a/b.md c/d.md e/f.md g/h.md i/j.md k/l.md m/n.md o/p.md', toks = R.tokensIn(longReply); assert.ok(toks.length >= 7, 'control: need 7 or more tokens, got ' + toks.length);
+  const many = R.verdict({ reply: longReply, entries: t, stopHookActive: false, live: true, seat: 'librarian' }).output.reason; assert.ok(/and \d+ more/.test(many), 'a long token list is not marked as cut'); assert.ok(many.includes(toks[5].text), 'the 6th token is not shown'); assert.ok(!many.includes(toks[6].text), 'a long token list is not capped at 6');
+  const nokey = R.verdict({ reply: 'see ' + OR_TOKEN + ' at C:/work/q.md', entries: t, stopHookActive: false, live: true, seat: 'librarian' }).output.reason; assert.ok(!nokey.includes(OR_TOKEN), 'a key shape reached the block reason');
+});
+test('LIVE FIXABLE (D220): a blocked reply can always be fixed in the same turn: opening the source and ending with a matching Sources: line passes, "Sources: none" passes, and a SECOND Stop in the turn (stop_hook_active) never blocks even when still unbacked', () => {
+  const dir = tmpDir(), first = run(dir, stopPayload(dir, KEEPER_TURN(), 'Done at C:/work/zzz.md.')); assert.strictEqual(JSON.parse(first.stdout).decision, 'block');
+  const turn = KEEPER_TURN(ASSIST({ type: 'text', text: 'Done at C:/work/zzz.md.' }), ...readCall('t2', 'C:/work/zzz.md'));
+  const fixed = run(dir, stopPayload(dir, turn, 'Done at C:/work/zzz.md.\n\nSources: C:/work/zzz.md')); assert.strictEqual(fixed.stdout, ''); assert.strictEqual(last(dir).kind, 'pass-matched');
+  const none = run(dir, stopPayload(dir, turn, 'Done at C:/work/zzz.md.\n\nSources: none')); assert.strictEqual(none.stdout, ''); assert.strictEqual(last(dir).kind, 'pass-none');
+  const again = run(dir, stopPayload(dir, KEEPER_TURN(), 'Still at C:/work/zzz.md, 47/47.', { stop_hook_active: true })); assert.strictEqual(again.status, 0); assert.strictEqual(again.stdout, '', 'THE LOOP GUARD: a second Stop in the turn blocked'); assert.strictEqual(last(dir).kind, 'skip-active');
+});
+test('LIVE CHAIR (D220): the chair session blocks a keeper-message would-block too, and skips its pane-ring replies, keep-warm, and machine prompts', () => {
+  const dir = tmpDir(), env = { CONSONANCE_PANE: MAIN_ID };
+  assert.strictEqual(JSON.parse(run(dir, stopPayload(dir, KEEPER_TURN(), 'It is 47/47 at exo_memory/x.md.'), env).stdout).decision, 'block'); assert.strictEqual(last(dir).seat, 'chair');
+  for (const t of [[USER('x'), HUMAN('[pane:B] hand-back at exo_memory/x.md')], [USER('x'), HUMAN('[keep-warm, from the chair — not the keeper] Reply with exactly: ok')], [USER('x'), HUMAN('/compact')]]) assert.strictEqual(run(dir, stopPayload(dir, t, 'It is 47/47 at exo_memory/x.md.'), env).stdout, '');
+});
+test('LIVE (verdict level): with live true a would-block returns the Stop block JSON naming the kinds and the unmatched items; stop_hook_active true returns nothing', () => {
   const entries = KEEPER_TURN(...readCall('t1', 'C:/work/a.md')), reply = 'Done at C:/work/zzz.md, 3 of 5.\n\nSources: C:/work/zzz.md';
   const v = R.verdict({ reply, entries, stopHookActive: false, live: true });
   assert.ok(v.output && v.output.decision === 'block', JSON.stringify(v.output)); assert.ok(/path/.test(v.output.reason) && /count/.test(v.output.reason) && /C:\/work\/zzz\.md/.test(v.output.reason), v.output.reason);
@@ -231,7 +256,7 @@ test('LEDGER: a row carries a sha of the reply, its length and the flagged token
   run(dir, stopPayload(dir, KEEPER_TURN(), reply));
   const row = last(dir), raw = fs.readFileSync(path.join(dir, 'reply-slot.jsonl'), 'utf8');
   assert.ok(!raw.includes('unmistakable') && !raw.includes('stored anywhere'), 'reply text reached the ledger'); assert.strictEqual(row.replySha, sha(reply)); assert.strictEqual(row.replyChars, reply.length);
-  assert.strictEqual(row.shadow, true); assert.strictEqual(row.session, 'abcdef01'); assert.strictEqual(row.v, 1); assert.ok(row.tokenKinds.includes('count') && row.tokenKinds.includes('path'));
+  assert.strictEqual(row.shadow, false); assert.strictEqual(row.session, 'abcdef01'); assert.strictEqual(row.v, 1); assert.ok(row.tokenKinds.includes('count') && row.tokenKinds.includes('path'));
   assert.ok(Array.isArray(row.tokens) && row.tokens.every((t) => typeof t.kind === 'string' && typeof t.text === 'string'));
 });
 test('LEDGER: a key shape in an unmatched Sources item is redacted', () => {

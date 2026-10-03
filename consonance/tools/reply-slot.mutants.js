@@ -22,12 +22,20 @@ const dropKind = (k) => ['tokens: the ' + k + ' kind is not detected', HOOK, 'fo
 const MUTANTS = [
   // ---- guards: dream, shadow, the loop guard ----
   ['guard: the dream gate removed', HOOK, 'if (process.env.CONSONANCE_DREAM) process.exit(0);', ''],
-  ['shadow: the SHADOW constant is false (the slot is live)', HOOK, 'const SHADOW = true;', 'const SHADOW = false;'],
-  ['shadow: a would-block produces its block output even when live is false', HOOK, 'if (live && r.wouldBlock) {', 'if (r.wouldBlock) {'],
+  ['live: the SHADOW constant is true (the slot is back in shadow)', HOOK, 'const SHADOW = false;', 'const SHADOW = true;'],
+  ['live: a would-block produces its block output even when live is false', HOOK, 'if (live && r.wouldBlock) {', 'if (r.wouldBlock) {'],
   ['loop guard: stop_hook_active is ignored in the verdict', HOOK, "if (stopHookActive) { r.kind = 'skip-active'; return r; }", 'if (false) { r.kind = "skip-active"; return r; }'],
   ['loop guard: the transcript is read even when stop_hook_active is true', HOOK, 'entries = payload.stop_hook_active ? [] : G.readTurnEntries(payload.transcript_path);', 'entries = G.readTurnEntries(payload.transcript_path);'],
   ['live: the block is never built', HOOK, 'if (live && r.wouldBlock) {', 'if (false) {'],
   ['live: the decision is not "block"', HOOK, "r.output = { decision: 'block',", "r.output = { decision: 'approve',"],
+  ["live: the block is emitted even when the ledger row was not written (no data dir, unwritable ledger)", HOOK, "if (v.output && logged) {", "if (v.output) {"],
+  ["live: log() reports success when it wrote nothing", HOOK, "(dir ? record(dir, { v: 1, shadow: SHADOW, seat, session: sid, ...row }) : false);   // true only", "(dir ? record(dir, { v: 1, shadow: SHADOW, seat, session: sid, ...row }) : true);   // true only"],
+  ["live: the block reason does not name the tokens", HOOK, "this reply names ' + shown + ' and '", "this reply names ' + '' + ' and '"],
+  ["live: the block reason has no way out without a source", HOOK, "(2) drop the claim from the reply, or end with `Sources: none` if it states nothing checkable.", ""],
+  ["live: the block reason does not say it blocks once", HOOK, " This hook blocks once per turn: your next reply ends the turn.", ""],
+  ["live: the block reason does not say to open the source first", HOOK, "(1) OPEN the source first", "(1) Write the source"],
+  ["live: the token list in the reason is not capped", HOOK, "r.tokens.slice(0, 6).map(", "r.tokens.slice(0, 60).map("],
+  ["live: the row does not say it blocked", HOOK, "blocked: !!v.output, replySha, replyChars", "blocked: false, replySha, replyChars"],
   // ---- who ----
   ['who: no seat gate (every session is evaluated)', HOOK, 'if (!seat) return process.exit(0);', ''],
   ['who: the chair\'s pane id is not recognised', HOOK, "if (pane === SEAT_IDS.MAIN) return 'chair';", ''],
@@ -67,7 +75,7 @@ const MUTANTS = [
   ['verdict: an unmatched item still passes', HOOK, "r.kind = r.unmatched.length ? 'would-block-unmatched' : 'pass-matched';", "r.kind = 'pass-matched';"],
   ['verdict: wouldBlock is never set', HOOK, "r.wouldBlock = r.kind.startsWith('would-block');", 'r.wouldBlock = false;'],
   // ---- the ledger ----
-  ['ledger: the reply text is written into the row', HOOK, "log({ kind: v.kind, prompt: v.prompt, wouldBlock: v.wouldBlock, replySha,", "log({ text: reply, kind: v.kind, prompt: v.prompt, wouldBlock: v.wouldBlock, replySha,"],
+  ['ledger: the reply text is written into the row', HOOK, "log({ kind: v.kind, prompt: v.prompt, wouldBlock: v.wouldBlock, blocked: !!v.output, replySha,", "log({ text: reply, kind: v.kind, prompt: v.prompt, wouldBlock: v.wouldBlock, blocked: !!v.output, replySha,"],
   ['ledger: an unmatched item is not redacted', HOOK, 'unmatched: v.unmatched.slice(0, 12).map((x) => clip(G.scrub(x), 200))', 'unmatched: v.unmatched.slice(0, 12).map((x) => clip(x, 200))'],
   // ---- fail open ----
   ['fail-open: a missing last_assistant_message is not logged', HOOK, "if (reply === null) {", 'if (false) {'],
