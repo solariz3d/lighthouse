@@ -3,9 +3,9 @@
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
     "FATAL-DEFAULT": 24,
-    "BENIGN-TEST": 260,
+    "BENIGN-TEST": 269,
     "REVIEW": 17,
-    "BENIGN-FIXTURE": 8,
+    "BENIGN-FIXTURE": 9,
     "DISGUISED": 15,
     "BENIGN-MESSAGE": 5,
     "FATAL-USER": 7,
@@ -105,11 +105,46 @@
       "key": "consonance/hooks/precompact-preserve.test.js\u0000const bad = process.platform === 'win32' ? 'Z:\\\\nope\\\\precompact.jsonl' : '/proc/nope/x.jsonl';\u0000#1"
     },
     {
+      "file": "consonance/hooks/reply-slot.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "r.output = { decision: 'block', reason: 'REPLY SLOT: this reply names ' + shown + ' and ' + why + ' whose items you opened or ran in THIS turn (a figure carried from the prompt or an earlier turn counts as unbacked).' + named + ' Fix it now, in this turn, in one of two ways: (1) OPEN the source first (Read / Grep, or run the command), then send the reply again ending with a final line `Sources: <path> · \\`<command>\\`` that lists only what you opened or ran this turn (repo-relative or C:\\\\... paths); or (2) drop the claim from the reply, or end with `Sources: none` if it states nothing checkable. This hook blocks once per turn: your next reply ends the turn.' };",
+      "key": "consonance/hooks/reply-slot.js\u0000r.output = { decision: 'block', reason: 'REPLY SLOT: this reply names ' + shown + ' and ' + why + ' whose items you opened or ran in THIS turn (a figure carried from the prompt or an earlier turn counts as unbacked).' + named + ' Fix it now, in this turn, in one of two ways: (1) OPEN the source first (Read / Grep, or run the command), then send the reply again ending with a final line `Sources: <path> · \\`<command>\\`` that lists only what you opened or ran this turn (repo-relative or C:\\\\... paths); or (2) drop the claim from the reply, or end with `Sources: none` if it states nothing checkable. This hook blocks once per turn: your next reply ends the turn.' };\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(/C:\\/work\\/zzz\\.md/.test(why) && /did not open or run/.test(why), 'the unmatched item is not named'); assert.ok(/OPEN the source first/.test(why) && /Sources: <path>/.test(why) && /LAST|final line/i.test(why), 'the fix is not spelled out');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000assert.ok(/C:\\/work\\/zzz\\.md/.test(why) && /did not open or run/.test(why), 'the unmatched item is not named'); assert.ok(/OPEN the source first/.test(why) && /Sources: <path>/.test(why) && /LAST|final line/i.test(why), 'the fix is not spelled out');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(/path C:\\/work\\/zzz\\.md/.test(why) && /count 3 of 5/.test(why) && /percentage 94%/.test(why), 'the tokens are not named: ' + why);",
+      "key": "consonance/hooks/reply-slot.test.js\u0000assert.ok(/path C:\\/work\\/zzz\\.md/.test(why) && /count 3 of 5/.test(why) && /percentage 94%/.test(why), 'the tokens are not named: ' + why);\u0000#1"
+    },
+    {
       "file": "consonance/hooks/reply-slot.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
       "text": "assert.ok(v.output && v.output.decision === 'block', JSON.stringify(v.output)); assert.ok(/path/.test(v.output.reason) && /count/.test(v.output.reason) && /C:\\/work\\/zzz\\.md/.test(v.output.reason), v.output.reason);",
       "key": "consonance/hooks/reply-slot.test.js\u0000assert.ok(v.output && v.output.decision === 'block', JSON.stringify(v.output)); assert.ok(/path/.test(v.output.reason) && /count/.test(v.output.reason) && /C:\\/work\\/zzz\\.md/.test(v.output.reason), v.output.reason);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const again = run(dir, stopPayload(dir, KEEPER_TURN(), 'Still at C:/work/zzz.md, 47/47.', { stop_hook_active: true })); assert.strictEqual(again.status, 0); assert.strictEqual(again.stdout, '', 'THE LOOP GUARD: a second Stop in the turn blocked'); assert.strictEqual(last(dir).kind, 'skip-active');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const again = run(dir, stopPayload(dir, KEEPER_TURN(), 'Still at C:/work/zzz.md, 47/47.', { stop_hook_active: true })); assert.strictEqual(again.status, 0); assert.strictEqual(again.stdout, '', 'THE LOOP GUARD: a second Stop in the turn blocked'); assert.strictEqual(last(dir).kind, 'skip-active');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), first = run(dir, stopPayload(dir, KEEPER_TURN(), 'Done at C:/work/zzz.md.')); assert.strictEqual(JSON.parse(first.stdout).decision, 'block');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const dir = tmpDir(), first = run(dir, stopPayload(dir, KEEPER_TURN(), 'Done at C:/work/zzz.md.')); assert.strictEqual(JSON.parse(first.stdout).decision, 'block');\u0000#1"
     },
     {
       "file": "consonance/hooks/reply-slot.test.js",
@@ -171,6 +206,27 @@
       "file": "consonance/hooks/reply-slot.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "const fixed = run(dir, stopPayload(dir, turn, 'Done at C:/work/zzz.md.\\n\\nSources: C:/work/zzz.md')); assert.strictEqual(fixed.stdout, ''); assert.strictEqual(last(dir).kind, 'pass-matched');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const fixed = run(dir, stopPayload(dir, turn, 'Done at C:/work/zzz.md.\\n\\nSources: C:/work/zzz.md')); assert.strictEqual(fixed.stdout, ''); assert.strictEqual(last(dir).kind, 'pass-matched');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const nokey = R.verdict({ reply: 'see ' + OR_TOKEN + ' at C:/work/q.md', entries: t, stopHookActive: false, live: true, seat: 'librarian' }).output.reason; assert.ok(!nokey.includes(OR_TOKEN), 'a key shape reached the block reason');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const nokey = R.verdict({ reply: 'see ' + OR_TOKEN + ' at C:/work/q.md', entries: t, stopHookActive: false, live: true, seat: 'librarian' }).output.reason; assert.ok(!nokey.includes(OR_TOKEN), 'a key shape reached the block reason');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const none = run(dir, stopPayload(dir, turn, 'Done at C:/work/zzz.md.\\n\\nSources: none')); assert.strictEqual(none.stdout, ''); assert.strictEqual(last(dir).kind, 'pass-none');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const none = run(dir, stopPayload(dir, turn, 'Done at C:/work/zzz.md.\\n\\nSources: none')); assert.strictEqual(none.stdout, ''); assert.strictEqual(last(dir).kind, 'pass-none');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "const r = run(dir, JSON.stringify({ session_id: 's', cwd: 'C:/Consonance/instances/librarian', stop_hook_active: false })); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');",
       "key": "consonance/hooks/reply-slot.test.js\u0000const r = run(dir, JSON.stringify({ session_id: 's', cwd: 'C:/Consonance/instances/librarian', stop_hook_active: false })); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');\u0000#1"
     },
@@ -192,6 +248,20 @@
       "file": "consonance/hooks/reply-slot.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "const t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md')), v = R.verdict({ reply: 'Done at C:/work/zzz.md, 3 of 5, 94%.\\n\\nSources: C:/work/zzz.md', entries: t, stopHookActive: false, live: true, seat: 'librarian' }), why = v.output.reason;",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md')), v = R.verdict({ reply: 'Done at C:/work/zzz.md, 3 of 5, 94%.\\n\\nSources: C:/work/zzz.md', entries: t, stopHookActive: false, live: true, seat: 'librarian' }), why = v.output.reason;\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const turn = KEEPER_TURN(ASSIST({ type: 'text', text: 'Done at C:/work/zzz.md.' }), ...readCall('t2', 'C:/work/zzz.md'));",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const turn = KEEPER_TURN(ASSIST({ type: 'text', text: 'Done at C:/work/zzz.md.' }), ...readCall('t2', 'C:/work/zzz.md'));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "for (const [pane, cwd] of [[PANE_ID, 'C:/Consonance/instances/sibling-3d57124e'], [PANE_ID, 'C:/Consonance/instances/librarian'], ['', 'C:/Consonance/instances/sibling-3d57124e'], ['', 'C:/Consonance/instances/main/sub'], ['', 'C:/work']]) {",
       "key": "consonance/hooks/reply-slot.test.js\u0000for (const [pane, cwd] of [[PANE_ID, 'C:/Consonance/instances/sibling-3d57124e'], [PANE_ID, 'C:/Consonance/instances/librarian'], ['', 'C:/Consonance/instances/sibling-3d57124e'], ['', 'C:/Consonance/instances/main/sub'], ['', 'C:/work']]) {\u0000#1"
     },
@@ -199,8 +269,8 @@
       "file": "consonance/hooks/reply-slot.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
-      "text": "for (const reply of ['It is 47/47 green.', 'Done at C:/work/zzz.md, 3 of 5.\\n\\nSources: C:/work/zzz.md', 'Total 47/47.\\n\\nSources:', REPLY_OK, 'Yes.']) {",
-      "key": "consonance/hooks/reply-slot.test.js\u0000for (const reply of ['It is 47/47 green.', 'Done at C:/work/zzz.md, 3 of 5.\\n\\nSources: C:/work/zzz.md', 'Total 47/47.\\n\\nSources:', REPLY_OK, 'Yes.']) {\u0000#1"
+      "text": "for (const reply of ['It is 47/47 green.', 'Done at C:/work/zzz.md, 3 of 5.\\n\\nSources: C:/work/zzz.md', 'Total 47/47.\\n\\nSources:']) {",
+      "key": "consonance/hooks/reply-slot.test.js\u0000for (const reply of ['It is 47/47 green.', 'Done at C:/work/zzz.md, 3 of 5.\\n\\nSources: C:/work/zzz.md', 'Total 47/47.\\n\\nSources:']) {\u0000#1"
     },
     {
       "file": "consonance/hooks/reply-slot.test.js",
