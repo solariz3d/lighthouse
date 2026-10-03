@@ -173,6 +173,10 @@ $files = @(
   # on the same two hand-back verbs that DENIES a ring with no SOURCES: line or an item no call of this turn backs, fails open, logs every decision. Plan:
   # exo_memory/loop/plan_sources_gate_d212_2026-10-02.md. Install it with -Only sources-gate.js.
   @{ From = 'consonance\hooks\sources-gate.js';            To = 'hooks\sources-gate.js' }
+  # Added 2026-10-03 (D218, the keeper: "lets finish it all") with its registration below, same commit, same reason as the entries above. THE REPLY SLOT, in SHADOW: a Stop hook for the
+  # librarian and chair sessions only that LOGS what it would block (a reply to the keeper that names a path/sha/count/percentage/version and does not end with a Sources: line the turn
+  # backs) and NEVER blocks. It requires ./sources-gate.js, so it installs into the SAME directory. Plan: exo_memory/loop/plan_finish_retrieval_2026-10-03.md. Install with -Only reply-slot.js.
+  @{ From = 'consonance\hooks\reply-slot.js';              To = 'hooks\reply-slot.js' }
 )
 
 # What this script REGISTERS. Only these are ever touched in settings.json; anything else found
@@ -275,6 +279,8 @@ $register = @(
   # are exact names). It allows at once and writes nothing to stdout; it must never fire on any other tool call.
   @{ Event = 'PreToolUse';       Rel = 'hooks\second-reader.js';      Runner = 'node';
      Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair' }
+  # The reply slot (D218), SHADOW ONLY: a Stop hook, no matcher. It is silent on every path (no output, exit 0) and ignores every session that is not the librarian or the chair.
+  @{ Event = 'Stop';             Rel = 'hooks\reply-slot.js';        Runner = 'node' }
   # The SOURCES gate (D212; D215 added chair_inject, the chair's DISPATCHES). It was on the second reader's matcher and so in its group; it now has its OWN matcher (the two hand-back
   # verbs plus chair_inject) and so its own group, and the second reader's matcher is UNCHANGED. Hooks run in parallel; this is the only one that can deny.
   @{ Event = 'PreToolUse';       Rel = 'hooks\sources-gate.js';       Runner = 'node';

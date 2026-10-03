@@ -598,6 +598,32 @@ test('D215 MUTANT 4: the move reaches entries WITHOUT a matcher, and the unmatch
   run(repo, home, SR_UN); const r = run(repo, home, SR_UN); assert.ok(m.applied(), 'NOT APPLIED'); assert.ok(/REMATCH/.test(r.out), 'an unmatched entry was moved');
 });
 
+// ── D218: THE REPLY SLOT'S REGISTRATION, on the REAL manifest. A Stop hook with no matcher, appended to the Stop event; every other Stop hook (and every other event) must stay byte-identical.
+const RS_ONLY = ['-Only', 'reply-slot.js'];
+const RS_BOTH = ['-Only', 'reply-slot.js,sources-gate.js'];
+const stopCmds = (home) => [].concat((settings(home).hooks || {}).Stop || []).flatMap((g) => cmdsIn(g));
+test('D218: on a home that already has Stop hooks, the reply slot is APPENDED to Stop once, every other Stop hook and every other event is byte-identical, and a second run changes nothing', () => {
+  const repo = mkRepo(), foreign = [{ hooks: [{ type: 'command', command: 'stop hook one', timeout: 3 }, { type: 'command', command: 'stop hook two', timeout: 4 }] }, { hooks: [{ type: 'command', command: 'stop hook three' }] }];
+  const home = mkHome({ Stop: foreign, SessionStart: [{ hooks: [{ type: 'command', command: 'keep me', timeout: 3 }] }] });
+  const before = settings(home), r = run(repo, home, RS_ONLY), after = settings(home);
+  assert.strictEqual(stopCmds(home).filter((c) => /reply-slot\.js/.test(c)).length, 1, r.out);
+  const flatAfter = [].concat(after.hooks.Stop).flatMap((g) => g.hooks).filter((h) => !/reply-slot\.js/.test(h.command));
+  assert.deepStrictEqual(flatAfter, [].concat(before.hooks.Stop).flatMap((g) => g.hooks), 'an existing Stop hook changed or moved');
+  assert.ok([].concat(after.hooks.Stop).every((g) => !g.matcher), 'the reply slot got a matcher');
+  const rest = (x) => { const y = JSON.parse(JSON.stringify(x)); delete y.hooks.Stop; return y; };
+  assert.deepStrictEqual(rest(after), rest(before), 'something other than Stop changed');
+  const text = fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), r2 = run(repo, home, RS_ONLY);
+  assert.strictEqual(fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), text, r2.out); assert.ok(/already correct/.test(r2.out), r2.out);
+});
+test('D218: a fresh machine gets reply-slot.js and sources-gate.js in the SAME directory (the hook requires the gate beside it), each byte-identical to the repo\'s', () => {
+  const repo = mkRepo(), home = mkHome(); run(repo, home, RS_BOTH);
+  const found = {}; const walk = (d) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else if (e.name === 'reply-slot.js' || e.name === 'sources-gate.js') (found[e.name] = found[e.name] || []).push(p); } };
+  walk(path.join(home, '.claude'));
+  assert.strictEqual((found['reply-slot.js'] || []).length, 1); assert.strictEqual((found['sources-gate.js'] || []).length, 1);
+  assert.strictEqual(path.dirname(found['reply-slot.js'][0]), path.dirname(found['sources-gate.js'][0]), 'the two are not side by side');
+  for (const n of ['reply-slot.js', 'sources-gate.js']) assert.strictEqual(fs.readFileSync(found[n][0], 'utf8'), fs.readFileSync(path.join(REPO, 'consonance', 'hooks', n), 'utf8'), n);
+});
+
 console.log(`\n${pass} passed, ${fail} failed`);
 fs.rmSync(tmp, { recursive: true, force: true });
 process.exit(fail ? 1 : 0);
