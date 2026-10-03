@@ -3,7 +3,7 @@
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
     "FATAL-DEFAULT": 24,
-    "BENIGN-TEST": 228,
+    "BENIGN-TEST": 256,
     "REVIEW": 17,
     "BENIGN-FIXTURE": 8,
     "DISGUISED": 14,
@@ -103,6 +103,202 @@
       "verdict": "BENIGN-TEST",
       "text": "const bad = process.platform === 'win32' ? 'Z:\\\\nope\\\\precompact.jsonl' : '/proc/nope/x.jsonl';",
       "key": "consonance/hooks/precompact-preserve.test.js\u0000const bad = process.platform === 'win32' ? 'Z:\\\\nope\\\\precompact.jsonl' : '/proc/nope/x.jsonl';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(v.output && v.output.decision === 'block', JSON.stringify(v.output)); assert.ok(/path/.test(v.output.reason) && /count/.test(v.output.reason) && /C:\\/work\\/zzz\\.md/.test(v.output.reason), v.output.reason);",
+      "key": "consonance/hooks/reply-slot.test.js\u0000assert.ok(v.output && v.output.decision === 'block', JSON.stringify(v.output)); assert.ok(/path/.test(v.output.reason) && /count/.test(v.output.reason) && /C:\\/work\\/zzz\\.md/.test(v.output.reason), v.output.reason);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), r = run(dir, stopPayload(dir, KEEPER_TURN(...readCall('t1', 'C:/work/a.md')), REPLY_OK));",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const dir = tmpDir(), r = run(dir, stopPayload(dir, KEEPER_TURN(...readCall('t1', 'C:/work/a.md')), REPLY_OK));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), reply = 'An unmistakable sentence that must not be stored anywhere. It is 47/47 at C:/work/q.md.\\n\\nSources: C:/work/q.md';",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const dir = tmpDir(), reply = 'An unmistakable sentence that must not be stored anywhere. It is 47/47 at C:/work/q.md.\\n\\nSources: C:/work/q.md';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), reply = 'Done: C:/work/a.md and C:/work/b.md, 4 of 5.\\n\\nSources: C:/work/a.md · C:/work/b.md';",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const dir = tmpDir(), reply = 'Done: C:/work/a.md and C:/work/b.md, 4 of 5.\\n\\nSources: C:/work/a.md · C:/work/b.md';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md'));",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const dir = tmpDir(), t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md'));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md'));",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const dir = tmpDir(), t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md'));\u0000#2"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md'));",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const dir = tmpDir(), t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md'));\u0000#3"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const entries = KEEPER_TURN(...readCall('t1', 'C:/work/a.md')), reply = 'Done at C:/work/zzz.md, 3 of 5.\\n\\nSources: C:/work/zzz.md';",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const entries = KEEPER_TURN(...readCall('t1', 'C:/work/a.md')), reply = 'Done at C:/work/zzz.md, 3 of 5.\\n\\nSources: C:/work/zzz.md';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = run(dir, JSON.stringify({ session_id: 's', cwd: 'C:/Consonance/instances/librarian', stop_hook_active: false })); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const r = run(dir, JSON.stringify({ session_id: 's', cwd: 'C:/Consonance/instances/librarian', stop_hook_active: false })); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const REPLY_OK = 'The plan is at C:/work/a.md and 3 of 5 are done.\\n\\nSources: C:/work/a.md';",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const REPLY_OK = 'The plan is at C:/work/a.md and 3 of 5 are done.\\n\\nSources: C:/work/a.md';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const row = last(dir); assert.strictEqual(row.kind, 'would-block-unmatched'); assert.strictEqual(row.wouldBlock, true); assert.deepStrictEqual(row.unmatched, ['C:/work/b.md']);",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const row = last(dir); assert.strictEqual(row.kind, 'would-block-unmatched'); assert.strictEqual(row.wouldBlock, true); assert.deepStrictEqual(row.unmatched, ['C:/work/b.md']);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const [pane, cwd] of [[PANE_ID, 'C:/Consonance/instances/sibling-3d57124e'], [PANE_ID, 'C:/Consonance/instances/librarian'], ['', 'C:/Consonance/instances/sibling-3d57124e'], ['', 'C:/Consonance/instances/main/sub'], ['', 'C:/work']]) {",
+      "key": "consonance/hooks/reply-slot.test.js\u0000for (const [pane, cwd] of [[PANE_ID, 'C:/Consonance/instances/sibling-3d57124e'], [PANE_ID, 'C:/Consonance/instances/librarian'], ['', 'C:/Consonance/instances/sibling-3d57124e'], ['', 'C:/Consonance/instances/main/sub'], ['', 'C:/work']]) {\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const reply of ['It is 47/47 green.', 'Done at C:/work/zzz.md, 3 of 5.\\n\\nSources: C:/work/zzz.md', 'Total 47/47.\\n\\nSources:', REPLY_OK, 'Yes.']) {",
+      "key": "consonance/hooks/reply-slot.test.js\u0000for (const reply of ['It is 47/47 green.', 'Done at C:/work/zzz.md, 3 of 5.\\n\\nSources: C:/work/zzz.md', 'Total 47/47.\\n\\nSources:', REPLY_OK, 'Yes.']) {\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "path: ['The plan is at exo_memory/loop/plan_x.md now.', 'See C:\\\\Users\\\\n\\\\notes.txt for it.', 'in consonance/hooks/reply-slot.js'],",
+      "key": "consonance/hooks/reply-slot.test.js\u0000path: ['The plan is at exo_memory/loop/plan_x.md now.', 'See C:\\\\Users\\\\n\\\\notes.txt for it.', 'in consonance/hooks/reply-slot.js'],\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = run(dir, JSON.stringify({ session_id: 's', transcript_path: bad, cwd: 'C:/x', stop_hook_active: false, last_assistant_message: reply })); assert.strictEqual(r.stdout, ''); assert.strictEqual(last(dir).kind, 'error');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000r = run(dir, JSON.stringify({ session_id: 's', transcript_path: bad, cwd: 'C:/x', stop_hook_active: false, last_assistant_message: reply })); assert.strictEqual(r.stdout, ''); assert.strictEqual(last(dir).kind, 'error');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "return JSON.stringify({ session_id: 'abcdef012345', transcript_path: entries ? writeTranscript(dir, entries) : null, cwd: 'C:/Consonance/instances/librarian', hook_event_name: 'Stop', stop_hook_active: false, last_assistant_message: reply, ...extra });",
+      "key": "consonance/hooks/reply-slot.test.js\u0000return JSON.stringify({ session_id: 'abcdef012345', transcript_path: entries ? writeTranscript(dir, entries) : null, cwd: 'C:/Consonance/instances/librarian', hook_event_name: 'Stop', stop_hook_active: false, last_assistant_message: reply, ...extra });\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(d2, stopPayload(d2, [USER('x'), HUMAN('keeper words'), ASSIST(USE('t1', 'Read', { file_path: 'C:/work/a.md' })), NOTIF(), RESULT('t1')], '47/47 at exo_memory/x.md')); assert.strictEqual(last(d2).kind, 'would-block-missing');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(d2, stopPayload(d2, [USER('x'), HUMAN('keeper words'), ASSIST(USE('t1', 'Read', { file_path: 'C:/work/a.md' })), NOTIF(), RESULT('t1')], '47/47 at exo_memory/x.md')); assert.strictEqual(last(d2).kind, 'would-block-missing');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, input('C:/anywhere'), { CONSONANCE_PANE: LIB_ID.toUpperCase() }); assert.strictEqual(last(dir).seat, 'librarian');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, input('C:/anywhere'), { CONSONANCE_PANE: LIB_ID.toUpperCase() }); assert.strictEqual(last(dir).seat, 'librarian');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, input('C:/anywhere'), { CONSONANCE_PANE: MAIN_ID }); assert.strictEqual(last(dir).seat, 'chair');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, input('C:/anywhere'), { CONSONANCE_PANE: MAIN_ID }); assert.strictEqual(last(dir).seat, 'chair');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, input('C:/Consonance/instances/librarian/'), { CONSONANCE_PANE: '' }); assert.strictEqual(last(dir).seat, 'librarian');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, input('C:/Consonance/instances/librarian/'), { CONSONANCE_PANE: '' }); assert.strictEqual(last(dir).seat, 'librarian');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, input('C:\\\\Consonance\\\\instances\\\\main'), { CONSONANCE_PANE: '' }); assert.strictEqual(last(dir).seat, 'chair');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, input('C:\\\\Consonance\\\\instances\\\\main'), { CONSONANCE_PANE: '' }); assert.strictEqual(last(dir).seat, 'chair');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, stopPayload(dir, [USER('x'), ...readCall('t1', 'C:/work/a.md'), HUMAN('a keeper message')], REPLY_OK)); assert.strictEqual(last(dir).kind, 'would-block-unmatched');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, stopPayload(dir, [USER('x'), ...readCall('t1', 'C:/work/a.md'), HUMAN('a keeper message')], REPLY_OK)); assert.strictEqual(last(dir).kind, 'would-block-unmatched');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, stopPayload(dir, [USER('x'), HUMAN('keeper words'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], '47/47 at exo_memory/x.md')); assert.strictEqual(last(dir).kind, 'would-block-missing', 'a notification that arrived MID-WORK must not turn the keeper\\'s turn into a machine one');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, stopPayload(dir, [USER('x'), HUMAN('keeper words'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], '47/47 at exo_memory/x.md')); assert.strictEqual(last(dir).kind, 'would-block-missing', 'a notification that arrived MID-WORK must not turn the keeper\\'s turn into a machine one');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, stopPayload(dir, KEEPER_TURN(...bashCall('t1', 'ls -la C:/work/a.md')), 'At C:/work/a.md, 3 of 5.\\n\\nSources: C:/work/a.md')); assert.strictEqual(last(dir).kind, 'would-block-unmatched');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, stopPayload(dir, KEEPER_TURN(...bashCall('t1', 'ls -la C:/work/a.md')), 'At C:/work/a.md, 3 of 5.\\n\\nSources: C:/work/a.md')); assert.strictEqual(last(dir).kind, 'would-block-unmatched');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, stopPayload(dir, KEEPER_TURN(...readCall('t1', 'C:/work/a.md'), NOTIF()), REPLY_OK)); assert.strictEqual(last(dir).kind, 'pass-matched');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, stopPayload(dir, KEEPER_TURN(...readCall('t1', 'C:/work/a.md'), NOTIF()), REPLY_OK)); assert.strictEqual(last(dir).kind, 'pass-matched');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, stopPayload(dir, KEEPER_TURN(...readCall('t1', 'C:/work/a.md')), reply));",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, stopPayload(dir, KEEPER_TURN(...readCall('t1', 'C:/work/a.md')), reply));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, stopPayload(dir, t, 'At C:/work/a.md, 3 of 5.\\n\\n**sources:** C:/work/a.md')); assert.strictEqual(last(dir).kind, 'pass-matched');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, stopPayload(dir, t, 'At C:/work/a.md, 3 of 5.\\n\\n**sources:** C:/work/a.md')); assert.strictEqual(last(dir).kind, 'pass-matched');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, stopPayload(dir, t, 'It is 47/47 green.\\n\\nSources: C:/work/a.md\\n\\nAnd one more paragraph of prose.')); assert.strictEqual(last(dir).kind, 'would-block-missing');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, stopPayload(dir, t, 'It is 47/47 green.\\n\\nSources: C:/work/a.md\\n\\nAnd one more paragraph of prose.')); assert.strictEqual(last(dir).kind, 'would-block-missing');\u0000#1"
     },
     {
       "file": "consonance/hooks/sessionstart-state.js",
