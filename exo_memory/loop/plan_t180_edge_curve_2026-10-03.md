@@ -79,3 +79,24 @@ and then the outer curve".
   author's version is a kinked smoothing of the same idea.
 - **NEW, from the data, offered to the keeper and NOT added without his word:** the outer LIP roll-back (the last ~10% eases back ~9°).
   It would be a third optional control, "lip", later.
+
+## The seal, collated + RULINGS (librarian, 09:2x): `loop/cross_section_seal_registration_2026-10-03.md`, handback `p-xsec-E-seal_2026-10-03.md`
+- E's own rulings are accepted:
+  - G = cubic smoothstep 3t² − 2t³ (holds the band's angle at the edge, as the test track shows);
+  - schema `t180b.core/4`, because today's reader would silently DROP e/s on save;
+  - s default 0.64;
+  - bank unwrapping already exists (a regression row, not new work);
+  - the heartline's reason corrected (a heartline STEP jumps 4.46 m);
+  - the e = 0 identity is a pure `+ 0`, with no knot insertion.
+- **RULING 1, the narrowest tube (T1 iv / X2 i):** a CLOSED tube with w < 9.43 m is REFUSED by name (validator red `tube-too-narrow`), not
+  camera-patched. Below that the chase eye cannot fit, and a T-180 cannot drive it. Never silent. Open tubes keep the normal camera.
+- **RULING 2, the roll-rate bar (V7) vs the keeper's 360° over 300 m:** the bar STANDS as sealed (RED > 1.2144°/m, AMBER > 0.9338°/m at a 20 m
+  chord, from Centrifuge's measured lap). The keeper's example reds. A full 360° turn needs ~450 m to pass and ~600 m to clear amber. The
+  keeper is told this plainly. It is his design call, and the validator just says so.
+- **RULING 3, a tube closing along the road reds `downforce-ray-gap`** over its slot zone. It STANDS: CSP's downforce rays can miss through the
+  narrowing slot, a real hazard if the car is on the wall there. No exemption. Fully closed and fully open stretches stay green, so the
+  keeper's choice is where to put the closing transition (e.g. with the driving line on the floor, not mid-spiral).
+- **Also owed (X2 ii):** the head marker points along the road's U, not world y, so it stays inside a tube and right-side-up when inverted.
+- **The lip:** not in v1. The keeper hasn't answered, and it can be a later additive control.
+- **Next:** A builds the core (tube family, the heartline-only roll interpolation fix with e = 0 identity kept, the edge term, /4 migration,
+  validator rows incl. the spiral's loads), C builds the Extend fields. Then B is the non-author against the seal. ONE serialized suite.
