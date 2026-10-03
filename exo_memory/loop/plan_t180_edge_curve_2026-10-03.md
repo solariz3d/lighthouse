@@ -111,3 +111,18 @@ and then the outer curve".
 - X1 (iii) "no red with a tube" is replaced by A's assertion: every red lies in a slot zone ±2.5 m (ruling 3, consistent).
 - **For B to fold in, from C's flags:** the brush offers e/s/t (`channelsFor` + PER_PX), and the plain-words text keyed to A's id `roll-rate`.
 - **NEXT:** B combines A + C, scores every seal row (incl. KS3-3 and X2's camera/marker in a real window), then ONE serialized full suite.
+
+## B's combine collated + RULINGS (librarian, 13:1x): `handback/p-xsec-B_2026-10-03.md`: NOT GREEN, 4 findings. Candidate `3e17b28` (b-xsec-wt)
+- Full suite at `63b58a9`: 1665 tests, 1654 pass, 2 fail (finding 2 only). Every seal row PASSES except X2 (i). Real window: the camera rolls
+  with the spiral (up·U 0.998), and labels sit on the floor. The roll bar is checked to 3e-16.
+- **WRONG (the librarian, Ruling 1, 09:2x):** "below 9.43 m the chase eye cannot fit" is off by the seal's own 0.1 m margin. 9.43 = 3π puts the
+  3 m eye ON the ceiling. The eye fits inside R − 0.1 only for w > 9.74. Found by C (FINDING 1), confirmed by B.
+- **RULING 1 (corrected):** raise `TUBE_MIN_W` to 9.74 m (one constant, A; the validator's `tube-too-narrow` text follows). Not a camera clamp:
+  the ruling's intent was refuse-by-name, and the number was mine and wrong.
+- **RULING 2 (headState t):** the contract stands. At a non-tube head the shell shows tube sweep = 0 ("none"); a tube exists only when a `t` target is
+  given or the head piece is a tube. A's internal continuation value (t = 2 × the rendered edge) stays internal. **Owner A:** `endState` reports `t`
+  only for a tube head (or adds a separate internal field). **C** rewrites the stale "no cross-section readout keys" test against A's core.
+- **Finding 3 (KS3-3):** owner A. Lift B's probe as a VALUE assertion (the validator's rate equals §1's intrinsic rate on the climbing turn).
+- **Finding 4 (U7):** owner C. Drop the dead `cup` from `panel.js:162` and retarget U7 at line 164's handler, so the mutant stays meaningful.
+- **Then B:** re-run the full suite (~13 min), plus the three harnesses these touch (app core-mutation, C's core-xsec-mutation, A's core_xsec_mutation),
+  not every mutation suite. Seal rows rescored where touched (X2 i, KS3-3). GREEN → land.
