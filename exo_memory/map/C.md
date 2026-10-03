@@ -1480,3 +1480,7 @@ composer, identical to shipped, unmeasured for want of a real capture).
 ## 2026-10-03 — D217 re-run: QS2S r3 blind read of v3
 - Read file `loop/qs2s_read3_C_2026-10-03.md` (40: 9 YES, 30 NO, 1 CAN'T TELL; sha256 041a11e7…), note `handback/p-d217-C-read3_2026-10-03.md`. Units sha256 checked first (94955823…).
 - The move: r3 narrows CAN'T TELL to a missing X side or a genuinely open "about X?". A cited-less X is decided from what Y's own passage names, not hedged.
+
+## 2026-10-03 — D223: the T-180 test track cross-section, measured
+- Report `loop/t180_testtrack_profile_2026-10-03.md`, hand-back `handback/p-testtrack-C_2026-10-03.md`, evidence in t180 reads/testtrack_profile_2026-10-03 (ignored). Flat middle (~3-5 deg to u 0.5), a ~10 deg crease at u = 0.64, a ~20 deg outer band to 0.88, then a ~9 deg lip roll-back; same on straights and turns, symmetric (paired). Registered rule said one curve (72/1,912), because both smooth models miss the facets by ~5 deg.
+- The move: LOOK at the sections before reading the fit. The fit's negative e looked like "flatter edge"; the plots showed it was the lip, and the real feature was a crease the smooth model could not see.

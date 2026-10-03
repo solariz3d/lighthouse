@@ -68,3 +68,14 @@ and then the outer curve".
   - the camera inside a closed tube (no clipping, chase cam rolls with the road).
 - **Owners as above.** It stays QUEUED behind D222, then: E seal → A core (tube family, unwrapped bank, heartline roll) → C fields (tube
   sweep, edge angle, edge start; bank accepting > ±180) → B non-author → ONE suite → install → the keeper spirals it in AC.
+
+## C's test-track measurement, collated (librarian, 09:0x): `loop/t180_testtrack_profile_2026-10-03.md` (handback `p-testtrack-C_2026-10-03.md`)
+- The real T-180 test track (1,912 sections, a 7,852 m lap): a flat middle (ψ ≈ 3° at u 0.26, 5° at 0.50), a CREASE at u ≈ 0.64 (+~10° in one
+  step), a steep outer band at ψ ≈ 19–20° from u 0.66 to 0.88, then a LIP that rolls back ~9° over the last ~10% (ψ ≈ 10.7° at the edge).
+  It is symmetric (turn outside = inside = straights) and faceted (median 4 flat facets a side), not smooth.
+- By C's pre-registered rule it is "one curve" (only 72/1,912 sections met the smooth two-zone bar), because smooth models can't follow
+  facets. Read the facets, and the keeper's shape is there: middle → steeper outer band.
+- **Seal defaults from it:** `s` = 0.64, `e` ≈ +15° (outer ~20° vs inner ~5°). The keeper asked for SMOOTH, so G stays smooth (G1/G2). The
+  author's version is a kinked smoothing of the same idea.
+- **NEW, from the data, offered to the keeper and NOT added without his word:** the outer LIP roll-back (the last ~10% eases back ~9°).
+  It would be a third optional control, "lip", later.
