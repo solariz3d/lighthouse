@@ -49,6 +49,15 @@ const MUTANTS = [
   ['turn: a turn a notification started while idle is read as the keeper', HOOK, "if (startedByNotification(live, i + 1)) return 'machine';", ''],
   ['turn: a notification that arrives mid-work (after a tool call) is read as starting the turn', HOOK, "&& !(Array.isArray(prev.message.content) && prev.message.content.some((p) => p && p.type === 'tool_use'))) return true;", ') return true;'],
   ['turn: every turn is evaluated, whoever prompted it', HOOK, "if (pk !== 'keeper') {", 'if (false) {'],
+  // ---- D218 scope fix: a pane ring's reply is keeper-facing in the LIBRARIAN session only ----
+  ["pane ring: a [pane: ring is not told apart from the other rings", HOOK, "    if (PANE_RING.test(t)) return 'pane-ring';\n", ""],
+  ["pane ring: it is never evaluated, even in the librarian session", HOOK, "if (pk === 'pane-ring') pk = seat === 'librarian' ? 'keeper' : 'ring';", "if (pk === 'pane-ring') pk = 'ring';"],
+  ["pane ring: it is evaluated in EVERY session, the chair's too", HOOK, "if (pk === 'pane-ring') pk = seat === 'librarian' ? 'keeper' : 'ring';", "if (pk === 'pane-ring') pk = 'keeper';"],
+  ["pane ring: it is evaluated when no seat is named", HOOK, "pk = seat === 'librarian' ? 'keeper' : 'ring';", "pk = seat !== 'chair' ? 'keeper' : 'ring';"],
+  ["pane ring: main does not pass the seat to the verdict", HOOK, "live: !SHADOW, seat });", "live: !SHADOW });"],
+  ["pane ring: a CHAIR ring is also read as a pane ring (so it is evaluated in the librarian session)", HOOK, "const PANE_RING = /^\\s*\\[pane:/i;", "const PANE_RING = /^\\s*\\[(pane|chair):/i;"],
+  ["pane ring: the keep-warm check no longer precedes the pane-ring mapping", HOOK, "  if (pk === 'keepwarm') { r.kind = 'skip-keepwarm'; return r; }\n  // D218 scope fix", "  // D218 scope fix"],
+  ["pane ring: the row does not say what the prompt was", HOOK, "log({ kind: v.kind, prompt: v.prompt, wouldBlock:", "log({ kind: v.kind, wouldBlock:"],
   // ---- the slot ----
   ['slot: the Sources line need not be the FINAL block (it is found across a blank line)', HOOK, 'for (let i = last; i >= 0 && lines[i].trim(); i--)', 'for (let i = last; i >= 0; i--)'],
   ['slot: "sources:" is case-sensitive', HOOK, 'if (/^\\s*[*_>\\-\\s]*sources[*_]*\\s*:/i.test(lines[i]))', 'if (/^\\s*[*_>\\-\\s]*sources[*_]*\\s*:/.test(lines[i]))'],
@@ -58,7 +67,7 @@ const MUTANTS = [
   ['verdict: an unmatched item still passes', HOOK, "r.kind = r.unmatched.length ? 'would-block-unmatched' : 'pass-matched';", "r.kind = 'pass-matched';"],
   ['verdict: wouldBlock is never set', HOOK, "r.wouldBlock = r.kind.startsWith('would-block');", 'r.wouldBlock = false;'],
   // ---- the ledger ----
-  ['ledger: the reply text is written into the row', HOOK, 'log({ kind: v.kind, wouldBlock: v.wouldBlock, replySha,', 'log({ text: reply, kind: v.kind, wouldBlock: v.wouldBlock, replySha,'],
+  ['ledger: the reply text is written into the row', HOOK, "log({ kind: v.kind, prompt: v.prompt, wouldBlock: v.wouldBlock, replySha,", "log({ text: reply, kind: v.kind, prompt: v.prompt, wouldBlock: v.wouldBlock, replySha,"],
   ['ledger: an unmatched item is not redacted', HOOK, 'unmatched: v.unmatched.slice(0, 12).map((x) => clip(G.scrub(x), 200))', 'unmatched: v.unmatched.slice(0, 12).map((x) => clip(x, 200))'],
   // ---- fail open ----
   ['fail-open: a missing last_assistant_message is not logged', HOOK, "if (reply === null) {", 'if (false) {'],

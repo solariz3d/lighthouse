@@ -18,8 +18,10 @@
 // LIBRARIAN_SID), or, with no such variable, the session's cwd is the `instances/main` or `instances/librarian` directory. Every committee pane (A, B, C ...) and every
 // other session is ignored without a row.
 //
-// WHICH TURNS. Only a turn whose last prompt is a KEEPER message: not a chair or pane ring, not a keep-warm, not a slash command, not a machine notification. A
-// notification between the keeper's message and the reply does not change that (the sources-gate's turn boundary, D214). A keep-warm "ok" passes untouched.
+// WHICH TURNS. Only a turn whose last prompt is KEEPER-FACING: a keeper message; and, IN THE LIBRARIAN SESSION ONLY, a pasted `[pane:` ring (the librarian's ruling, 2026-10-03,
+// plan_finish_retrieval "QS2S two-reader SCORE": the keeper reads every reply in that pane, and most of the keeper-facing prose there answers a pane ring). NOT a keep-warm, a chair
+// ring, a slash command or a machine notification, in either session; and in the CHAIR session a pane ring stays skipped (the keeper reads the chair's ring replies less). A
+// notification between the prompt and the reply does not change that (the sources-gate's turn boundary, D214). A keep-warm "ok" passes untouched.
 //
 // REUSE, NOT COPY. The turn reader (readTurnEntries / turnCalls / isPrompt), the item grammar (parseSources) and the matcher (itemMatches) are the SOURCES gate's, taken
 // with require('./sources-gate.js'): installed side by side in ~/.claude/shell/hooks/. If it cannot be loaded this hook fails open with an error row.
@@ -105,6 +107,7 @@ function tokensIn(reply) {
 const WRAPPERS = [/<system-reminder>[\s\S]*?<\/system-reminder>/g, /<([a-z-]*hook[a-z-]*)>[\s\S]*?<\/\1>/gi];
 const PASTE_OPEN = /<pasted_content id="?[^">]*"?>/g;
 const RING = /^\s*\[(chair:|pane:|librarian:|keep-warm|sync|lap |orchestrator)/i;
+const PANE_RING = /^\s*\[pane:/i;   // the ring a committee pane sends the librarian (call_librarian renders it as `[pane:<letter>] ...`)
 const KEEPWARM = /^\s*\[keep-warm|reply with exactly: ok\s*$/i;
 // D199's keeper.js MACHINE forms (the prompts that are NOT a keeper's turn): task notification, local-command echo, interrupt, compaction preamble, overseer, system banner, a bare slash command, the gap-dream preamble.
 const MACHINE = /^\s*(<task-notification|<local-command|<command-name|<command-message|Caveat: The messages below|\[Request interrupted|This session is being continued|You are an (L3 )?overseer|\[SYSTEM|\/[a-z][\w:-]*\s*$|This is a gap-)/i;
@@ -125,7 +128,7 @@ function startedByNotification(live, from) {
   }
   return false;
 }
-/** 'keeper' | 'keepwarm' | 'ring' | 'machine' | null (no prompt found), for the turn's last prompt. */
+/** 'keeper' | 'keepwarm' | 'pane-ring' | 'ring' | 'machine' | null (no prompt found), for the turn's last prompt. 'pane-ring' is a `[pane:` ring, told apart from the other rings so the verdict can treat it by seat. */
 function promptKind(entries) {
   const live = entries.filter((e) => e && !e.isSidechain);
   for (let i = live.length - 1; i >= 0; i--) {
@@ -136,6 +139,7 @@ function promptKind(entries) {
     for (const re of WRAPPERS) t = t.replace(re, '');
     t = t.replace(PASTE_OPEN, '').trim();
     if (KEEPWARM.test(t)) return 'keepwarm';
+    if (PANE_RING.test(t)) return 'pane-ring';
     if (RING.test(t)) return 'ring';
     if (MACHINE.test(t)) return 'machine';
     if (live[i].origin && live[i].origin.kind === 'task-notification') return 'machine';
@@ -166,13 +170,15 @@ function slotOf(reply) {
  * The whole decision, no I/O. Returns { kind, wouldBlock, tokens, items, unmatched, none, nCalls, output }.
  * `output` is null unless live is true AND the verdict is a block AND stop_hook_active is false: then it is the Stop block JSON. In shadow it is always null.
  */
-function verdict({ reply, entries, stopHookActive, live = false }) {
-  const r = { kind: '', wouldBlock: false, tokens: [], items: [], unmatched: [], none: false, nCalls: 0, output: null };
+function verdict({ reply, entries, stopHookActive, live = false, seat = null }) {
+  const r = { kind: '', prompt: null, wouldBlock: false, tokens: [], items: [], unmatched: [], none: false, nCalls: 0, output: null };
   if (stopHookActive) { r.kind = 'skip-active'; return r; }   // THE LOOP GUARD: a Stop hook has already run this turn; do nothing
   const text = String(reply == null ? '' : reply);
   if (/^\s*ok[.!]?\s*$/i.test(text) || !text.trim()) { r.kind = 'skip-keepwarm'; return r; }
-  const pk = promptKind(entries);
+  let pk = promptKind(entries); r.prompt = pk;
   if (pk === 'keepwarm') { r.kind = 'skip-keepwarm'; return r; }
+  // D218 scope fix (the librarian's ruling): in the LIBRARIAN session a pane ring's reply is keeper-facing; in the chair's (or with no seat named) it stays skipped
+  if (pk === 'pane-ring') pk = seat === 'librarian' ? 'keeper' : 'ring';
   if (pk !== 'keeper') { r.kind = pk ? 'skip-not-keeper-' + pk : 'skip-no-prompt'; return r; }
   r.tokens = tokensIn(text);
   if (!r.tokens.length) { r.kind = 'pass-notoken'; return r; }
@@ -214,9 +220,9 @@ function main() {
   try { entries = payload.stop_hook_active ? [] : G.readTurnEntries(payload.transcript_path); }
   catch (e) { log({ kind: 'error', replySha, error: 'transcript: ' + String((e && e.message) || e).slice(0, 80) }); return process.exit(0); }
   let v;
-  try { v = verdict({ reply, entries, stopHookActive: !!payload.stop_hook_active, live: !SHADOW }); }
+  try { v = verdict({ reply, entries, stopHookActive: !!payload.stop_hook_active, live: !SHADOW, seat }); }
   catch (e) { log({ kind: 'error', replySha, error: 'verdict: ' + String((e && e.message) || e).slice(0, 80) }); return process.exit(0); }
-  log({ kind: v.kind, wouldBlock: v.wouldBlock, replySha, replyChars: reply.length, tokenKinds: [...new Set(v.tokens.map((t) => t.kind))], tokens: v.tokens, nSources: v.items.length, none: v.none, unmatched: v.unmatched.slice(0, 12).map((x) => clip(G.scrub(x), 200)), nCalls: v.nCalls });
+  log({ kind: v.kind, prompt: v.prompt, wouldBlock: v.wouldBlock, replySha, replyChars: reply.length, tokenKinds: [...new Set(v.tokens.map((t) => t.kind))], tokens: v.tokens, nSources: v.items.length, none: v.none, unmatched: v.unmatched.slice(0, 12).map((x) => clip(G.scrub(x), 200)), nCalls: v.nCalls });
   if (v.output) { process.stdout.write(JSON.stringify(v.output), () => process.exit(0)); setTimeout(() => process.exit(0), 1000).unref(); return; }
   return process.exit(0);
 }

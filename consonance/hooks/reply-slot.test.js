@@ -120,7 +120,7 @@ test('PASSES: no token is pass-notoken; the keep-warm "ok" and a keep-warm turn 
   run(dir, stopPayload(dir, KEEPER_TURN(), 'Yes, go ahead.')); assert.strictEqual(last(dir).kind, 'pass-notoken'); assert.strictEqual(last(dir).wouldBlock, false);
   run(dir, stopPayload(dir, [USER('x'), HUMAN('[keep-warm, from the chair — not the keeper] Reply with exactly: ok')], 'ok')); assert.strictEqual(last(dir).kind, 'skip-keepwarm');
   run(dir, stopPayload(dir, [USER('x'), HUMAN('[keep-warm, from the chair — not the keeper] Reply with exactly: ok')], 'ok, and 47/47 at exo_memory/x.md')); assert.strictEqual(last(dir).kind, 'skip-keepwarm', 'a keep-warm TURN is skipped whatever the reply says');
-  run(dir, stopPayload(dir, [USER('x'), HUMAN('[pane:B] D210 hand-back at exo_memory/handback/p.md')], 'Read it: 47/47 at exo_memory/handback/p.md')); assert.strictEqual(last(dir).kind, 'skip-not-keeper-ring');
+  run(dir, stopPayload(dir, [USER('x'), HUMAN('[pane:B] D210 hand-back at exo_memory/handback/p.md')], 'Read it: 47/47 at exo_memory/handback/p.md'), { CONSONANCE_PANE: MAIN_ID }); assert.strictEqual(last(dir).kind, 'skip-not-keeper-ring', 'in the CHAIR session a pane ring stays skipped');
   run(dir, stopPayload(dir, [USER('x'), HUMAN('\n\n<pasted_content id="e1">\n[chair:MAIN] D218 go\n</pasted_content id="e1">')], '47/47')); assert.strictEqual(last(dir).kind, 'skip-not-keeper-ring');
   run(dir, stopPayload(dir, [USER('x'), HUMAN('keeper words'), ASSIST({ type: 'text', text: 'an earlier reply that ended the turn' }), NOTIF()], '47/47 at exo_memory/x.md')); assert.strictEqual(last(dir).kind, 'skip-not-keeper-machine', 'a turn a notification started while the seat was idle is not a reply to the keeper');
   run(dir, stopPayload(dir, [USER('x'), HUMAN('keeper words'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], '47/47 at exo_memory/x.md')); assert.strictEqual(last(dir).kind, 'would-block-missing', 'a notification that arrived MID-WORK must not turn the keeper\'s turn into a machine one');
@@ -130,6 +130,50 @@ test('PASSES: no token is pass-notoken; the keep-warm "ok" and a keep-warm turn 
 test('PASSES: a bare "ok" reply, whatever the prompt, and an empty reply are skipped', () => {
   const dir = tmpDir();
   for (const reply of ['ok', 'OK.', '  ok\n', '']) { run(dir, stopPayload(dir, KEEPER_TURN(), reply)); assert.strictEqual(last(dir).kind, 'skip-keepwarm', JSON.stringify(reply)); }
+});
+
+// ------------------------------------------------------------------ D218 scope fix: a pane ring's reply is keeper-facing in the LIBRARIAN session only
+
+const PANE_RING_TURN = (...more) => [USER('earlier'), HUMAN('[pane:B] D210 hand-back is at exo_memory/handback/p-x.md, 47/47'), ...more];
+const PASTED_PANE_RING = '\n\n<pasted_content id="d7d4">\n[pane:B] D210 hand-back is at exo_memory/handback/p-x.md\n</pasted_content id="d7d4">';
+test('D218 SCOPE: in the LIBRARIAN session a reply to a [pane: ring is EVALUATED (plain and pasted), and the row says it was a pane ring', () => {
+  const dir = tmpDir();
+  run(dir, stopPayload(dir, PANE_RING_TURN(), 'B is at 47/47, filed at exo_memory/handback/p-x.md.')); let row = last(dir);
+  assert.strictEqual(row.kind, 'would-block-missing'); assert.strictEqual(row.prompt, 'pane-ring'); assert.strictEqual(row.seat, 'librarian'); assert.strictEqual(row.wouldBlock, true);
+  run(dir, stopPayload(dir, [USER('x'), HUMAN(PASTED_PANE_RING)], 'B is at 47/47.')); assert.strictEqual(last(dir).kind, 'would-block-missing'); assert.strictEqual(last(dir).prompt, 'pane-ring');
+  run(dir, stopPayload(dir, PANE_RING_TURN(), 'Understood, I will collate.')); assert.strictEqual(last(dir).kind, 'pass-notoken'); assert.strictEqual(last(dir).prompt, 'pane-ring');
+});
+test('D218 SCOPE: a pane-ring reply in the librarian session is judged on its Sources line exactly like a keeper reply (matched, unmatched, none)', () => {
+  const dir = tmpDir(), t = PANE_RING_TURN(...readCall('t1', 'C:/work/a.md'));
+  run(dir, stopPayload(dir, t, 'At C:/work/a.md, 3 of 5.\n\nSources: C:/work/a.md')); assert.strictEqual(last(dir).kind, 'pass-matched');
+  run(dir, stopPayload(dir, t, 'At C:/work/a.md and C:/work/b.md, 3 of 5.\n\nSources: C:/work/a.md · C:/work/b.md')); assert.strictEqual(last(dir).kind, 'would-block-unmatched'); assert.deepStrictEqual(last(dir).unmatched, ['C:/work/b.md']);
+  run(dir, stopPayload(dir, t, 'Total 47/47.\n\nSources: none')); assert.strictEqual(last(dir).kind, 'pass-none');
+});
+test('D218 SCOPE: in the CHAIR session a [pane: ring (plain or pasted) stays skipped, and so does every other ring; and in the librarian session a chair ring is still skipped', () => {
+  const dir = tmpDir();
+  run(dir, stopPayload(dir, PANE_RING_TURN(), 'B is at 47/47 at exo_memory/handback/p-x.md.'), { CONSONANCE_PANE: MAIN_ID }); assert.strictEqual(last(dir).kind, 'skip-not-keeper-ring'); assert.strictEqual(last(dir).seat, 'chair'); assert.strictEqual(last(dir).prompt, 'pane-ring');
+  run(dir, stopPayload(dir, [USER('x'), HUMAN(PASTED_PANE_RING)], '47/47'), { CONSONANCE_PANE: MAIN_ID }); assert.strictEqual(last(dir).kind, 'skip-not-keeper-ring');
+  run(dir, stopPayload(dir, [USER('x'), HUMAN('\n\n<pasted_content id="e1">\n[chair:MAIN] D218 go\n</pasted_content id="e1">')], '47/47 at exo_memory/x.md')); assert.strictEqual(last(dir).kind, 'skip-not-keeper-ring', 'a CHAIR ring in the librarian session is not keeper-facing');
+  for (const lead of ['[librarian: x]', '[sync] x', '[lap D1] x', '[orchestrator] x']) { run(dir, stopPayload(dir, [USER('x'), HUMAN(lead)], '47/47 at exo_memory/x.md')); assert.strictEqual(last(dir).kind, 'skip-not-keeper-ring', lead); }
+});
+test('D218 SCOPE: keep-warm and machine prompts stay skipped in BOTH sessions, and a turn a notification started while the seat was idle is still not keeper-facing after a pane ring', () => {
+  const dir = tmpDir(), kw = HUMAN('[keep-warm, from the chair — not the keeper] Reply with exactly: ok');
+  for (const pane of [LIB_ID, MAIN_ID]) {
+    run(dir, stopPayload(dir, [USER('x'), kw], 'ok'), { CONSONANCE_PANE: pane }); assert.strictEqual(last(dir).kind, 'skip-keepwarm');
+    run(dir, stopPayload(dir, [USER('x'), kw], '47/47 at exo_memory/x.md'), { CONSONANCE_PANE: pane }); assert.strictEqual(last(dir).kind, 'skip-keepwarm');
+    run(dir, stopPayload(dir, [USER('x'), HUMAN('/compact')], '47/47'), { CONSONANCE_PANE: pane }); assert.strictEqual(last(dir).kind, 'skip-not-keeper-machine');
+    run(dir, stopPayload(dir, [USER('x'), HUMAN('keeper words'), ASSIST({ type: 'text', text: 'an earlier reply that ended the turn' }), NOTIF()], '47/47'), { CONSONANCE_PANE: pane }); assert.strictEqual(last(dir).kind, 'skip-not-keeper-machine', 'a turn a notification started while idle');
+  }
+  run(dir, stopPayload(dir, [USER('x'), HUMAN('[pane:B] hand-back'), ASSIST({ type: 'text', text: 'an earlier reply that ended the turn' }), NOTIF()], '47/47 at exo_memory/x.md')); assert.strictEqual(last(dir).kind, 'skip-not-keeper-machine');
+  run(dir, stopPayload(dir, [USER('x'), HUMAN('[pane:B] hand-back'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], '47/47 at C:/work/a.md.')); assert.strictEqual(last(dir).kind, 'would-block-missing', 'a notification that arrived mid-work must not hide a pane-ring turn');
+});
+test('D218 SCOPE: still SHADOW: a pane-ring would-block prints nothing; with live true the block is produced only for the librarian seat, and never for the chair or with no seat named', () => {
+  const dir = tmpDir(), r = run(dir, stopPayload(dir, PANE_RING_TURN(), 'B is at 47/47.')); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, ''); assert.strictEqual(r.stderr, '');
+  const entries = PANE_RING_TURN(), reply = 'B is at 47/47 at exo_memory/handback/p-x.md.';
+  const live = R.verdict({ reply, entries, stopHookActive: false, live: true, seat: 'librarian' }); assert.ok(live.output && live.output.decision === 'block', JSON.stringify(live.output));
+  assert.strictEqual(R.verdict({ reply, entries, stopHookActive: false, live: true, seat: 'chair' }).output, null); assert.strictEqual(R.verdict({ reply, entries, stopHookActive: false, live: true }).output, null, 'no seat named must not evaluate a ring');
+  assert.strictEqual(R.verdict({ reply, entries, stopHookActive: true, live: true, seat: 'librarian' }).output, null, 'the loop guard must hold for a pane ring too');
+  assert.strictEqual(R.promptKind(entries), 'pane-ring');
 });
 
 // ------------------------------------------------------------------ who
