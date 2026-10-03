@@ -41,3 +41,30 @@ and then the outer curve".
 2. E registers the seal → A builds core + adapter + export → C builds the two Extend fields → B is the non-author (seal re-run plus
    unscripted cases) → ONE serialized full suite → land → the librarian installs. The keeper's hands are the last check, at 900+ km/h in AC.
 3. **Not in v1:** outside-of-turn-only (asymmetric), a different G shape per side, and the full-pipe tube. Each is a later option.
+
+## AMENDMENT (librarian, 08:0x): one CROSS-SECTION lap = edge curve + TUBE + spiral. The keeper, 07:59: "id like that, since i like the idea of spiraling through it".
+- **Why one lap:** both change the cross-section function. Doing them together gives one seal, one fixture re-baseline and one suite.
+- **The keeper's screenshot** (`C:\Users\nname\Pictures\Screenshots\max cup doesnt complete cylinder.png`, cup 150, width 60, a straight):
+  the 60° gap at the top is the cup working as built. Its walls meet at 159.681° (D190 seal), so CUP_MAX is 150. The cup's bowl curve
+  cannot close.
+- **TUBE:** a new cross-section family, a CIRCULAR ARC (constant curvature) with a sweep angle `t` from 0 to 360°.
+  - At 360° the section closes into a cylinder of circumference = width; the road is the whole inner wall.
+  - A circle never self-intersects below closure, so there is no 159° wall.
+  - The tube composes with the edge curve only when open (`t` < 360); closed, the edge curve is moot.
+  - Transitions between cup and tube pieces blend over the piece, like the cup morph zones (D190 morphZone/tailZone), with joints C1
+    and seams ≤ 1 mm.
+- **SPIRAL (what the keeper wants to do in it):** inside a closed tube, the driving line is where "down" points, and that is bank. To
+  spiral, bank must WIND through ±180° continuously along a piece (e.g. 360° over 300 m) instead of being clamped.
+  - That needs bank unwrapping in the core: a continuous angle, no wrap at ±180.
+  - It needs the queued INVERSION geometry: roll about the heartline, not the centreline, so the car's path does not jump when it
+    goes inverted. Plus a ROLL-RATE check in the validator: the roll rate the car feels at design speed, red above a limit sealed by E
+    from a real track (Centrifuge's inverted sections).
+- **Seal additions (E):**
+  - tube closure (the 360° seam meets itself within 1 mm);
+  - bank winding (continuity across ±180);
+  - the heartline path stays smooth through an inversion;
+  - the roll-rate bar;
+  - the export: the ceiling of a closed tube is road, physics-solid, CSP raycast on;
+  - the camera inside a closed tube (no clipping, chase cam rolls with the road).
+- **Owners as above.** It stays QUEUED behind D222, then: E seal → A core (tube family, unwrapped bank, heartline roll) → C fields (tube
+  sweep, edge angle, edge start; bank accepting > ±180) → B non-author → ONE suite → install → the keeper spirals it in AC.
