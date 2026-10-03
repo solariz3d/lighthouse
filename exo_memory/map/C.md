@@ -1472,3 +1472,7 @@ composer, identical to shipped, unmeasured for want of a real capture).
 ## 2026-10-02 — D210 step 1: the rule census list, tagged blind to rates
 - Hand-back `handback/p-d210-C_2026-10-02.md`; list + E checks committed 892b9747 in c-d210-wt. 41 rules, 7 gated. Exposure: I read the plan's five preliminary rates before tagging; disclosed per id.
 - The move: hand-made counts were wrong twice in one line; a script over the table caught both that and a pipe inside a cell. Count tags with code, always.
+
+## 2026-10-03 — D217: the QS2S blind read
+- Read file `loop/qs2s_read_C_2026-10-03.md` (60: 8 YES, 44 NO, 8 CAN'T TELL; sha256 0c0ec80a…), note `handback/p-d217-C-read_2026-10-03.md`. Units sha256 checked first (64e4cb20…).
+- The move: a correction counts only when the thing corrected is X's, so a NOT GREEN on a third seat's work that X dispatched is NO; where the corrected premise has no visible author, CAN'T TELL instead of a guess.
