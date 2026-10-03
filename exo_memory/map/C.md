@@ -1476,3 +1476,7 @@ composer, identical to shipped, unmeasured for want of a real capture).
 ## 2026-10-03 — D217: the QS2S blind read
 - Read file `loop/qs2s_read_C_2026-10-03.md` (60: 8 YES, 44 NO, 8 CAN'T TELL; sha256 0c0ec80a…), note `handback/p-d217-C-read_2026-10-03.md`. Units sha256 checked first (64e4cb20…).
 - The move: a correction counts only when the thing corrected is X's, so a NOT GREEN on a third seat's work that X dispatched is NO; where the corrected premise has no visible author, CAN'T TELL instead of a guess.
+
+## 2026-10-03 — D217 re-run: QS2S r3 blind read of v3
+- Read file `loop/qs2s_read3_C_2026-10-03.md` (40: 9 YES, 30 NO, 1 CAN'T TELL; sha256 041a11e7…), note `handback/p-d217-C-read3_2026-10-03.md`. Units sha256 checked first (94955823…).
+- The move: r3 narrows CAN'T TELL to a missing X side or a genuinely open "about X?". A cited-less X is decided from what Y's own passage names, not hedged.

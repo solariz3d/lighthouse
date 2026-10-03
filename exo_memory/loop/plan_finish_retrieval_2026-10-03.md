@@ -56,3 +56,40 @@ NEXT: chair dispatch chunk 1 (D217 to E, D218 to A; D219 rebuild after the lock 
   - Freeze it as v2 (new sha256). The v1 file stays as a trace. No reader has seen either, so this is not an abuse case.
   - Units whose Y side C or A wrote are a known blind spot of this read: a seat's own corrections are judged only by others. Stated.
 - **OUTPUT → NEXT: changed.** E freezes v2. Then C and A read all 60 blind.
+
+## QS2S two-reader SCORE (librarian, 04:2x): BORDERLINE
+- `qs2s_read_A_2026-10-03.md` sha256 `4e8f7eb8…`, `qs2s_read_C_2026-10-03.md` sha256 `0c0ec80a…`, both over v2 (`64e4cb20…`).
+- **κ(C, A) = 0.508** (48/60). A: YES 9 / NO 46 / CT 5; C: YES 8 / NO 44 / CT 8. Splits: 9 involve a CAN'T TELL (YES/CT 2, CT/NO 3,
+  NO/CT 4); 3 are YES-vs-NO (NO/YES 2, YES/NO 1).
+- **By the QC bars, 0.40–0.60 is BORDERLINE: one sharpening of the wording, re-run on 40 FRESH units, no second sharpening.**
+  - B (the question's author) sharpens QS2S, aimed at the CAN'T-TELL band: what makes a response "correcting" when it adds a
+    finding next to X's.
+  - E draws 40 fresh units from the same frame and seeded order, past v2's units, readable by both C and A.
+  - C and A read blind. If κ ≥ 0.60, E's scripted count runs. If not, QS2S closes NOT USABLE and the falsifier stays open.
+- **The reply-slot's first live rows (`C:\Consonance\data\reply-slot.jsonl`):** this seat's 10:16Z reply was `skip-not-keeper-ring`. The
+  slot skips replies whose prompt was a pane ring. **But in this pane the keeper reads every one of those replies.** Most of today's
+  keeper-facing prose answered a pane ring. **RULING (shadow, so it is reversible):** in the LIBRARIAN session, replies to pasted
+  `[pane:` rings count as keeper-facing. Keep-warm and machine prompts stay skipped. In the chair session, ring replies stay skipped (the
+  keeper reads the chair less). A folds this into D218 before B's look ends.
+
+## RULING on D217 v3 (librarian, 04:2x): `handback/p-d217-E-v3_2026-10-03.md`
+- R has only 6 fresh units past v2 (21 eligible in all). **Option 1: H 20, R 6, W 14 = 40**, the same seeded order past v2, with C/A
+  Y-sides skipped.
+- Why: the bars were fixed at 40 fresh units, and n matters more than the stratum ratio for κ. Option 2 (24 units) under-powers the one
+  allowed re-run. Option 3 drops rulings, a real channel of seat → seat correction, from the test that decides usability.
+- The composition shift (3.3:1:2.3) is stated in the score. κ is reported pooled and per stratum where n allows.
+
+## QS2S RE-RUN (r3 on v3) SCORE (librarian, 04:4x): NOT USABLE. The question closes.
+- `qs2s_read3_A_2026-10-03.md` sha256 `9665d861…`, `qs2s_read3_C_2026-10-03.md` sha256 `041a11e7…`, over v3 (`f5139547`).
+- **κ(C, A) = 0.4545** (31/40). A: YES 11 / NO 28 / CT 1; C: YES 9 / NO 30 / CT 1.
+  Splits: YES/NO 4, NO/YES 3, CT/NO 1, YES/CT 1.
+- **The sharpening worked on what it aimed at and moved the disagreement elsewhere.** CAN'T TELL fell from 13 answers to 2. YES-vs-NO
+  splits rose from 3 of 60 to 7 of 40. The readers now commit, and disagree about WHICH cross-seat responses are corrections.
+- **By the bars, with no second sharpening allowed: QS2S closes NOT USABLE.** The seat → seat count does not run on this question.
+  D208's registered falsifier ("the keeper is the room's main corrector") **stays OPEN**: half-answered, with the keeper → seat half
+  at 14.9%.
+- **A's disclosure, weighed:** A had read the plan's QS2S score section (aggregate κ and split counts, no unit answers) before this
+  packet. That could only push A away from CAN'T TELL. The verdict fails regardless, so the exposure changes nothing. Recorded.
+- **What this teaches, stated as a reading and not a finding:** the keeper's corrections are judgeable in one message (QC κ 0.71). A
+  seat's correction of another seat lives inside technical content that the reader must itself judge. That is the regress the keeper
+  named on 10-02: the reader must retrieve too.
