@@ -1,0 +1,117 @@
+{
+ "flat_overhead_auto": {
+  "grid": "auto",
+  "drawn": "ground",
+  "flat": true,
+  "range": 0,
+  "mirror": "off",
+  "centre": null,
+  "gap": null,
+  "lines": 86,
+  "levels": 0,
+  "spacing": 10
+ },
+ "flat_build_auto": {
+  "grid": "auto",
+  "drawn": "ground",
+  "flat": true,
+  "range": 0,
+  "mirror": "off",
+  "centre": null,
+  "gap": null,
+  "lines": 86,
+  "levels": 0,
+  "spacing": 10
+ },
+ "hilly_side_auto": {
+  "grid": "auto",
+  "drawn": "3d",
+  "flat": false,
+  "range": 150.49672677922104,
+  "mirror": "off",
+  "centre": null,
+  "gap": null,
+  "lines": 558,
+  "levels": 8,
+  "spacing": 10
+ },
+ "hilly_overhead_auto": {
+  "grid": "auto",
+  "drawn": "3d",
+  "flat": false,
+  "range": 150.49672677922104,
+  "mirror": "off",
+  "centre": null,
+  "gap": null,
+  "lines": 558,
+  "levels": 8,
+  "spacing": 10
+ },
+ "hilly_build_auto": {
+  "grid": "auto",
+  "drawn": "3d",
+  "flat": false,
+  "range": 150.49672677922104,
+  "mirror": "off",
+  "centre": null,
+  "gap": null,
+  "lines": 558,
+  "levels": 8,
+  "spacing": 10
+ },
+ "hilly_overhead_mirror_both": {
+  "grid": "auto",
+  "drawn": "3d",
+  "flat": false,
+  "range": 150.49672677922104,
+  "mirror": "both",
+  "centre": {
+   "x": 171.8621356388826,
+   "z": 527.787329488877,
+   "set": false
+  },
+  "gap": {
+   "kind": "both",
+   "max": 341.99305486195874,
+   "mean": 253.20094634340845,
+   "n": 601
+  },
+  "lines": 946,
+  "levels": 8,
+  "spacing": 10
+ },
+ "hilly_overhead_mirror_x": {
+  "grid": "auto",
+  "drawn": "3d",
+  "flat": false,
+  "range": 150.49672677922104,
+  "mirror": "x",
+  "centre": {
+   "x": 171.8621356388826,
+   "z": 527.787329488877,
+   "set": false
+  },
+  "gap": {
+   "kind": "x",
+   "max": 343.7242712777652,
+   "mean": 248.15730760092305,
+   "n": 601
+  },
+  "lines": 946,
+  "levels": 8,
+  "spacing": 10
+ },
+ "hilly_overhead_off": {
+  "grid": "off",
+  "drawn": "off",
+  "flat": null,
+  "range": null,
+  "mirror": "off",
+  "centre": null,
+  "gap": null,
+  "lines": 0,
+  "levels": 0,
+  "spacing": null
+ },
+ "errors": []
+}
