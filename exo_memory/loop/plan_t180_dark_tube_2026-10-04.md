@@ -31,3 +31,14 @@ the tube needs to be slightly wider" (his call, by width; not this lap).
 - **Then:** B's quick look; land; the librarian rebuilds, installs and re-exports T-180 TUBE OVAL. The keeper checks it at daytime in AC.
 
 NEXT: chair dispatch D230 (dark tube) to A when this plan is read
+
+## AMENDMENT (librarian, 02:2x, before any hand-back), at the keeper's word
+The keeper, 02:25: "i guess we need to make it so the bottom side of the track is an object that casts shadows".
+- **Item 1 widens from closed ring cells to EVERY road cell:** the underside skin (offset 0.5 m along the surface's outward normal, normals
+  facing out, castShadows, its own plain dark material, not a physics surface) runs under the whole track. On a closed tube it is the
+  outer skin of item 1; on an open road, cup or open tube it is the road's underside. It also blocks light from below or the side on
+  banked, cupped and spiralling pieces, and the track stops being see-through from underneath.
+- **Item 2 (the dark interior) stays limited to closed ring cells.**
+- **The byte-identical promise changes:** every core export now gains the skin nodes, so the fixtures WILL differ in their mesh.
+  The test becomes: the ROAD nodes and their surfaces are byte-identical, and only skin nodes are added. Report the kn5 growth on the
+  T-180 OVAL and the tube oval. Any amended fixture digests are recorded with this amendment as the reason, not silently.
