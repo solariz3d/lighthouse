@@ -31,3 +31,6 @@ Seat A, Sonnet 5.5, on D. t180 is public; nothing pushed; no AC launched; tests 
 The full suite and the other mutation harnesses (cup was the only one anchored on `layout.js`; chord, ramp, water, geom, xsec, app core-mutation were not re-run); a real-window run of either fix (the two new native commands in the app; the single column in the preview); a real export of the keeper's `T-180 TUBE OVAL` (it has a personal file I did not open; the librarian exports it); how the AC start looks with a single column of cars; the slot checks beyond `markers` check ids all ok; a release build; machine L; AC.
 
 SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_tube_export_fix_2026-10-03.md
+
+## Correction, 2026-10-03 (D227, A): the cup-harness count above is wrong in its unit
+The line "`core_cup_mutation` ... 59 tests, 59 pass, the control plus 50 mutants" counts TWO files: I ran `test/core_cup_mutation.test.js` together with `test/core_cup_readers.test.js` (which I had just changed), and 59 is the sum. The harness alone is **51 tests = the control plus 50 mutants** (B's count, and my own first run's "tests 51"); `core_cup_readers.test.js` is the other 8. The 50 mutants applied and caught is unchanged.
