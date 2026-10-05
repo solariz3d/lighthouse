@@ -24,6 +24,16 @@ const CWD = {
   tpPrefix: 'C:\\Consonance\\instances\\third-place-x', tpGlued: 'C:\\Consonance\\instances\\notthird-place', tpSub: 'C:\\Consonance\\instances\\third-place\\sub', tpMid: 'C:\\x\\third-place\\y', none: null,
 };
 const SEAT = ['tp', 'tpSlash', 'tpSlash2', 'tpUpper', 'tpFwd'];
+// D245 item 3 follow-up (B, 2026-10-05): the seat spelled with a trailing "." segment (row 6), and nine names that only LOOK like it (row 7)
+Object.assign(CWD, {
+  tpDot: 'C:\\Consonance\\instances\\third-place\\.', tpDotFwd: 'C:/Consonance/instances/third-place/./', tpDotDot: 'C:\\Consonance\\instances\\main\\..\\third-place',
+  tpSubUp: 'C:\\Consonance\\instances\\third-place\\sub\\..',
+  lkPlacement: 'C:\\Consonance\\instances\\third-placement', lkOldUnder: 'C:\\x\\third_place_old', lkUnderscore: 'C:\\Consonance\\instances\\third_place',
+  lkBak: 'C:\\Consonance\\instances\\third-place.bak', lkTwo: 'C:\\Consonance\\instances\\third-place2', lkSpace: 'C:\\Consonance\\instances\\my third-place',
+  lkDashPrefix: 'C:\\Consonance\\instances\\x-third-place', lkDotDotOut: 'C:\\Consonance\\instances\\third-place\\..\\main', lkRelative: 'third-place',
+});
+const SEAT_DOT = ['tpDot', 'tpDotFwd', 'tpDotDot', 'tpSubUp'];
+const LOOKALIKE = ['lkPlacement', 'lkOldUnder', 'lkUnderscore', 'lkBak', 'lkTwo', 'lkSpace', 'lkDashPrefix', 'lkDotDotOut', 'lkRelative'];
 
 function install(hooksDir) {   // hooksDir: where the five hooks are taken from (the repo's own, or a mutated copy)
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'tp-gate-')), shell = path.join(root, 'shell'), home = path.join(root, 'home'), repo = path.join(root, 'repo');
@@ -113,4 +123,19 @@ test('row 5: the state hook says it SKIPPED the seat (a ledger row with the reas
   fs.rmSync(ledger, { force: true }); H.state('tp'); H.state('main');
   const rows = fs.readFileSync(ledger, 'utf8').trim().split('\n').map((l) => JSON.parse(l));
   assert.equal(rows.length, 2); assert.deepEqual([rows[0].event, rows[0].source, rows[0].reason], ['skipped', 'compact', 'third-place cwd']); assert.equal(rows[1].event, 'emitted', 'and another seat is still served and recorded');
+});
+
+test('row 6: the seat spelled with a "." segment (.../third-place/., .../third-place/./, .../main/../third-place, .../third-place/sub/.., either separator) is the seat: the cwd is normalised before the test', () => {
+  for (const k of SEAT_DOT) {
+    assert.doesNotMatch(ctx(H.sessionStart(k)), /Recent session digests/, `${k}: no digests`); assert.doesNotMatch(ctx(H.prompt(k)), /chain:/, `${k}: no chain line`);
+    assert.equal(H.state(k), '', `${k}: no state block`); assert.equal(H.ask(k), '', `${k}: no asks`); assert.equal(H.compact(k), '', `${k}: no checkpoint`);
+    assert.match(ctx(H.prompt(k)), /^\[pulse\] Mon, 10\/05\/2026, 11:00 AM\n/, `${k}: the date line stays`);
+  }
+});
+
+test('row 7: nine names that only LOOK like the seat keep everything (third-placement, third_place_old, third_place, third-place.bak, third-place2, "my third-place", x-third-place, third-place/../main, a relative "third-place")', () => {
+  for (const k of LOOKALIKE) {
+    assert.match(ctx(H.sessionStart(k)), /Recent session digests/, `${k}: digests`); assert.match(ctx(H.prompt(k)), /chain: STUB D999/, `${k}: chain`);
+    assert.match(ctx(H.state(k)), /STATE BLOCK STUB/, `${k}: state`); assert.match(ctx(H.ask(k)), /ASK-999/, `${k}: ask`); assert.match(H.compact(k), /Checkpoint STUB/, `${k}: checkpoint`);
+  }
 });

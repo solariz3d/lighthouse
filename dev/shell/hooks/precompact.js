@@ -47,7 +47,10 @@ try {
 
 // D245 item 3 (the Third Place's own return, 2026-10-05): the checkpoint is the BUILD's state (the repos, the dirty files, the residue) and "This seat is not the build". The same cwd test
 // as board-digest.js:302; the Third Place compacts without it, as a fresh pane does, and no CHECKPOINT is written for its compaction.
-if (/[\\/]third-place[\\/]?$/i.test(String(payload.cwd || "").replace(/[\\/]+$/, ""))) process.exit(0);
+// The cwd is NORMALISED first (D245 item 3 follow-up, B, 2026-10-05): an ABSOLUTE spelling of the seat's directory with "\." or "\..\" in it
+// (C:\...\third-place\., C:/.../third-place/./) is the seat too. A RELATIVE cwd is left as it is: resolving it would make the answer depend on this process's cwd.
+const tpNorm = (cwd) => { let c = String(cwd || ''); if (c && path.isAbsolute(c)) c = path.resolve(c); return c.replace(/(?:[\\/]+\.)+[\\/]*$/, '').replace(/[\\/]+$/, ''); };
+if (/[\\/]third-place[\\/]?$/i.test(tpNorm(payload.cwd))) process.exit(0);
 
 try {
   if (!fs.existsSync(SCRIPT)) process.exit(0);   // different machine, no room here

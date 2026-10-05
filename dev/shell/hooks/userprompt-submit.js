@@ -46,7 +46,10 @@ const EVENT_LOG = path.join(SHELL_DIR, 'event_log.jsonl');
 
 // D245 item 3 (the Third Place's own return, 2026-10-05): the chain line is the BUILD's state (the lap, the holder, the dirty count) and "This seat is not the build". The same cwd
 // test as board-digest.js:302. The Third Place keeps the date, the thread's age and the interval; only the chain line is withheld.
-const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(String(cwd || '').replace(/[\\/]+$/, ''));
+// The cwd is NORMALISED first (D245 item 3 follow-up, B, 2026-10-05): an ABSOLUTE spelling of the seat's directory with "\." or "\..\" in it
+// (C:\...\third-place\., C:/.../third-place/./) is the seat too. A RELATIVE cwd is left as it is: resolving it would make the answer depend on this process's cwd.
+const tpNorm = (cwd) => { let c = String(cwd || ''); if (c && path.isAbsolute(c)) c = path.resolve(c); return c.replace(/(?:[\\/]+\.)+[\\/]*$/, '').replace(/[\\/]+$/, ''); };
+const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(tpNorm(cwd));
 
 // ── The interval, per turn ───────────────────────────────────────────────────
 // Consonance's pulse tells a RESTORED thread how long it was dark. It fires at a

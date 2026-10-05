@@ -45,7 +45,10 @@ const CONFIG_NAME = '.consonance.json';
 
 // D245 item 3 (the Third Place's own return, 2026-10-05): the state block is the BUILD's state (HEAD, the dirty files, the instruments, the room's triggers) and "This seat is not the build".
 // The same cwd test as board-digest.js:302, matched on the seat's directory.
-const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(String(cwd || '').replace(/[\\/]+$/, ''));
+// The cwd is NORMALISED first (D245 item 3 follow-up, B, 2026-10-05): an ABSOLUTE spelling of the seat's directory with "\." or "\..\" in it
+// (C:\...\third-place\., C:/.../third-place/./) is the seat too. A RELATIVE cwd is left as it is: resolving it would make the answer depend on this process's cwd.
+const tpNorm = (cwd) => { let c = String(cwd || ''); if (c && path.isAbsolute(c)) c = path.resolve(c); return c.replace(/(?:[\\/]+\.)+[\\/]*$/, '').replace(/[\\/]+$/, ''); };
+const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(tpNorm(cwd));
 const BOM = /^﻿/;
 
 /* Which sources get the block. `compact` is the one the plan exists for; `startup` and `resume`
