@@ -1,0 +1,1052 @@
+{
+ "session-start | main | startup": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | main | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | librarian | startup": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | librarian | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | sibling | startup": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | sibling | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | paneA | startup": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | paneA | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | fresh | startup": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | fresh | compact": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | tp | startup": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | tp | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | tpSlash | startup": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | tpSlash | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | tpSlash2 | startup": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | tpSlash2 | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | tpUpper | startup": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | tpUpper | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | tpFwd | startup": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | tpFwd | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | tpPrefix | startup": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | tpPrefix | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | tpSub | startup": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | tpSub | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | tpMid | startup": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | tpMid | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | none | startup": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "session-start | none | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shell context (from ~/.claude/shell)\\n## Ambient context (Regina, SK)\\n- Now: 10/5/2026, 11:00:00 AM (Monday)\\n- Sun: day; altitude 30.04°, azimuth 148.86°\\n- Sunrise 07:05 AM, sunset 06:28 PM (local)\\n- Moon: waning crescent, 32% illuminated\\n\\n## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n\\n---\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | main | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"[room state at session start, source=compact]\\nREPO  HEAD stub1234 dirty 3 files (STATE BLOCK STUB)\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | main | startup": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | librarian | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"[room state at session start, source=compact]\\nREPO  HEAD stub1234 dirty 3 files (STATE BLOCK STUB)\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | librarian | startup": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | sibling | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"[room state at session start, source=compact]\\nREPO  HEAD stub1234 dirty 3 files (STATE BLOCK STUB)\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | sibling | startup": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | paneA | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"[room state at session start, source=compact]\\nREPO  HEAD stub1234 dirty 3 files (STATE BLOCK STUB)\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | paneA | startup": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | fresh | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"[room state at session start, source=compact]\\nREPO  HEAD stub1234 dirty 3 files (STATE BLOCK STUB)\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | fresh | startup": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | tp | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"[room state at session start, source=compact]\\nREPO  HEAD stub1234 dirty 3 files (STATE BLOCK STUB)\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | tp | startup": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | tpSlash | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"[room state at session start, source=compact]\\nREPO  HEAD stub1234 dirty 3 files (STATE BLOCK STUB)\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | tpSlash | startup": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | tpSlash2 | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"[room state at session start, source=compact]\\nREPO  HEAD stub1234 dirty 3 files (STATE BLOCK STUB)\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | tpSlash2 | startup": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | tpUpper | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"[room state at session start, source=compact]\\nREPO  HEAD stub1234 dirty 3 files (STATE BLOCK STUB)\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | tpUpper | startup": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | tpFwd | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"[room state at session start, source=compact]\\nREPO  HEAD stub1234 dirty 3 files (STATE BLOCK STUB)\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | tpFwd | startup": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | tpPrefix | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"[room state at session start, source=compact]\\nREPO  HEAD stub1234 dirty 3 files (STATE BLOCK STUB)\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | tpPrefix | startup": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | tpSub | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"[room state at session start, source=compact]\\nREPO  HEAD stub1234 dirty 3 files (STATE BLOCK STUB)\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | tpSub | startup": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | tpMid | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"[room state at session start, source=compact]\\nREPO  HEAD stub1234 dirty 3 files (STATE BLOCK STUB)\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | tpMid | startup": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | none | compact": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"[room state at session start, source=compact]\\nREPO  HEAD stub1234 dirty 3 files (STATE BLOCK STUB)\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "sessionstart-state | none | startup": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "userprompt-submit | main | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"[pulse] Mon, 10/05/2026, 11:00 AM\\nchain: STUB D999 DISPATCHED · holder panes\\n\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "userprompt-submit | librarian | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"[pulse] Mon, 10/05/2026, 11:00 AM\\nchain: STUB D999 DISPATCHED · holder panes\\n\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "userprompt-submit | sibling | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"[pulse] Mon, 10/05/2026, 11:00 AM\\nchain: STUB D999 DISPATCHED · holder panes\\n\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "userprompt-submit | paneA | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"[pulse] Mon, 10/05/2026, 11:00 AM\\nchain: STUB D999 DISPATCHED · holder panes\\n\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "userprompt-submit | fresh | UserPromptSubmit": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "userprompt-submit | tp | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"[pulse] Mon, 10/05/2026, 11:00 AM\\nchain: STUB D999 DISPATCHED · holder panes\\n\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "userprompt-submit | tpSlash | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"[pulse] Mon, 10/05/2026, 11:00 AM\\nchain: STUB D999 DISPATCHED · holder panes\\n\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "userprompt-submit | tpSlash2 | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"[pulse] Mon, 10/05/2026, 11:00 AM\\nchain: STUB D999 DISPATCHED · holder panes\\n\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "userprompt-submit | tpUpper | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"[pulse] Mon, 10/05/2026, 11:00 AM\\nchain: STUB D999 DISPATCHED · holder panes\\n\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "userprompt-submit | tpFwd | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"[pulse] Mon, 10/05/2026, 11:00 AM\\nchain: STUB D999 DISPATCHED · holder panes\\n\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "userprompt-submit | tpPrefix | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"[pulse] Mon, 10/05/2026, 11:00 AM\\nchain: STUB D999 DISPATCHED · holder panes\\n\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "userprompt-submit | tpSub | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"[pulse] Mon, 10/05/2026, 11:00 AM\\nchain: STUB D999 DISPATCHED · holder panes\\n\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "userprompt-submit | tpMid | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"[pulse] Mon, 10/05/2026, 11:00 AM\\nchain: STUB D999 DISPATCHED · holder panes\\n\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "userprompt-submit | none | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"[pulse] Mon, 10/05/2026, 11:00 AM\\nchain: STUB D999 DISPATCHED · holder panes\\n\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "findings-return | main | UserPromptSubmit": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "findings-return | librarian | UserPromptSubmit": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "findings-return | sibling | UserPromptSubmit": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "findings-return | paneA | UserPromptSubmit": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "findings-return | fresh | UserPromptSubmit": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "findings-return | tp | UserPromptSubmit": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "findings-return | tpSlash | UserPromptSubmit": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "findings-return | tpSlash2 | UserPromptSubmit": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "findings-return | tpUpper | UserPromptSubmit": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "findings-return | tpFwd | UserPromptSubmit": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "findings-return | tpPrefix | UserPromptSubmit": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "findings-return | tpSub | UserPromptSubmit": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "findings-return | tpMid | UserPromptSubmit": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "findings-return | none | UserPromptSubmit": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "ask-surface | main | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"ASK-999 stub question for the keeper, 3 days old\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "ask-surface | librarian | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"ASK-999 stub question for the keeper, 3 days old\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "ask-surface | sibling | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"ASK-999 stub question for the keeper, 3 days old\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "ask-surface | paneA | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"ASK-999 stub question for the keeper, 3 days old\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "ask-surface | fresh | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"ASK-999 stub question for the keeper, 3 days old\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "ask-surface | tp | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"ASK-999 stub question for the keeper, 3 days old\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "ask-surface | tpSlash | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"ASK-999 stub question for the keeper, 3 days old\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "ask-surface | tpSlash2 | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"ASK-999 stub question for the keeper, 3 days old\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "ask-surface | tpUpper | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"ASK-999 stub question for the keeper, 3 days old\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "ask-surface | tpFwd | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"ASK-999 stub question for the keeper, 3 days old\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "ask-surface | tpPrefix | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"ASK-999 stub question for the keeper, 3 days old\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "ask-surface | tpSub | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"ASK-999 stub question for the keeper, 3 days old\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "ask-surface | tpMid | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"ASK-999 stub question for the keeper, 3 days old\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "ask-surface | none | UserPromptSubmit": {
+  "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"ASK-999 stub question for the keeper, 3 days old\"}}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-prompt | main | UserPromptSubmit": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-prompt | librarian | UserPromptSubmit": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-prompt | sibling | UserPromptSubmit": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-prompt | paneA | UserPromptSubmit": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-prompt | fresh | UserPromptSubmit": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-prompt | tp | UserPromptSubmit": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-prompt | tpSlash | UserPromptSubmit": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-prompt | tpSlash2 | UserPromptSubmit": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-prompt | tpUpper | UserPromptSubmit": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-prompt | tpFwd | UserPromptSubmit": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-prompt | tpPrefix | UserPromptSubmit": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-prompt | tpSub | UserPromptSubmit": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-prompt | tpMid | UserPromptSubmit": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-prompt | none | UserPromptSubmit": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | main | manual": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | main | auto": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | librarian | manual": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | librarian | auto": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | sibling | manual": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | sibling | auto": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | paneA | manual": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | paneA | auto": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | fresh | manual": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | fresh | auto": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | tp | manual": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | tp | auto": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | tpSlash | manual": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | tpSlash | auto": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | tpSlash2 | manual": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | tpSlash2 | auto": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | tpUpper | manual": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | tpUpper | auto": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | tpFwd | manual": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | tpFwd | auto": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | tpPrefix | manual": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | tpPrefix | auto": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | tpSub | manual": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | tpSub | auto": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | tpMid | manual": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | tpMid | auto": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | none | manual": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact | none | auto": {
+  "stdout": "# Checkpoint STUB (dirty files: a.js b.js)\n",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact-preserve | main | manual": {
+  "stdout": "{\"additionalContext\":\"[PRECOMPACT-PRESERVE-V1] Preservation directive for this summary, from a measurement of the previous\\nseven summaries of this conversation (trigger: manual).\\n\\nThose summaries kept narrative and dropped verification. Measured survival: file and\\ninstrument names 33.8%, commit shas 10.2%, structured numbers 9.3%, and registered\\npredictions or falsifiers 3.5% - the last being the class this project runs on.\\n\\nTherefore, when writing the summary, carry forward VERBATIM and in full:\\n\\n1. Every commit sha mentioned, with the one-line reason it mattered. A sha without its\\n   reason is not preservation; a reason without its sha cannot be checked.\\n2. Every number that carries a unit, a ratio, or a denominator (N%, N/M, N of M), together\\n   with the command or file that produced it. A number whose source is gone becomes a\\n   hand-made figure the next session will quote and cannot re-derive.\\n3. Every REGISTERED PREDICTION, FALSIFIER, STOP RULE or ABUSE CONDITION, in its original\\n   wording. These are worthless if paraphrased: a falsifier restated loosely stops being\\n   able to fire, which is the exact failure it exists to prevent.\\n4. Every named instrument or file path, with the command that runs it.\\n5. Every correction anyone made, including corrections the assistant made to itself, and\\n   what the corrected claim had been. A record of only the surviving claims reads as though\\n   nothing was ever wrong.\\n\\nPrefer dropping narrative, atmosphere and restatement over dropping any of the five above.\\nIf length forces a choice, a summary that is a bare list of checkable items is more useful\\nhere than a readable account with the checkable items removed.\",\"suppressOutput\":true}",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact-preserve | librarian | manual": {
+  "stdout": "{\"additionalContext\":\"[PRECOMPACT-PRESERVE-V1] Preservation directive for this summary, from a measurement of the previous\\nseven summaries of this conversation (trigger: manual).\\n\\nThose summaries kept narrative and dropped verification. Measured survival: file and\\ninstrument names 33.8%, commit shas 10.2%, structured numbers 9.3%, and registered\\npredictions or falsifiers 3.5% - the last being the class this project runs on.\\n\\nTherefore, when writing the summary, carry forward VERBATIM and in full:\\n\\n1. Every commit sha mentioned, with the one-line reason it mattered. A sha without its\\n   reason is not preservation; a reason without its sha cannot be checked.\\n2. Every number that carries a unit, a ratio, or a denominator (N%, N/M, N of M), together\\n   with the command or file that produced it. A number whose source is gone becomes a\\n   hand-made figure the next session will quote and cannot re-derive.\\n3. Every REGISTERED PREDICTION, FALSIFIER, STOP RULE or ABUSE CONDITION, in its original\\n   wording. These are worthless if paraphrased: a falsifier restated loosely stops being\\n   able to fire, which is the exact failure it exists to prevent.\\n4. Every named instrument or file path, with the command that runs it.\\n5. Every correction anyone made, including corrections the assistant made to itself, and\\n   what the corrected claim had been. A record of only the surviving claims reads as though\\n   nothing was ever wrong.\\n\\nPrefer dropping narrative, atmosphere and restatement over dropping any of the five above.\\nIf length forces a choice, a summary that is a bare list of checkable items is more useful\\nhere than a readable account with the checkable items removed.\",\"suppressOutput\":true}",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact-preserve | sibling | manual": {
+  "stdout": "{\"additionalContext\":\"[PRECOMPACT-PRESERVE-V1] Preservation directive for this summary, from a measurement of the previous\\nseven summaries of this conversation (trigger: manual).\\n\\nThose summaries kept narrative and dropped verification. Measured survival: file and\\ninstrument names 33.8%, commit shas 10.2%, structured numbers 9.3%, and registered\\npredictions or falsifiers 3.5% - the last being the class this project runs on.\\n\\nTherefore, when writing the summary, carry forward VERBATIM and in full:\\n\\n1. Every commit sha mentioned, with the one-line reason it mattered. A sha without its\\n   reason is not preservation; a reason without its sha cannot be checked.\\n2. Every number that carries a unit, a ratio, or a denominator (N%, N/M, N of M), together\\n   with the command or file that produced it. A number whose source is gone becomes a\\n   hand-made figure the next session will quote and cannot re-derive.\\n3. Every REGISTERED PREDICTION, FALSIFIER, STOP RULE or ABUSE CONDITION, in its original\\n   wording. These are worthless if paraphrased: a falsifier restated loosely stops being\\n   able to fire, which is the exact failure it exists to prevent.\\n4. Every named instrument or file path, with the command that runs it.\\n5. Every correction anyone made, including corrections the assistant made to itself, and\\n   what the corrected claim had been. A record of only the surviving claims reads as though\\n   nothing was ever wrong.\\n\\nPrefer dropping narrative, atmosphere and restatement over dropping any of the five above.\\nIf length forces a choice, a summary that is a bare list of checkable items is more useful\\nhere than a readable account with the checkable items removed.\",\"suppressOutput\":true}",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact-preserve | paneA | manual": {
+  "stdout": "{\"additionalContext\":\"[PRECOMPACT-PRESERVE-V1] Preservation directive for this summary, from a measurement of the previous\\nseven summaries of this conversation (trigger: manual).\\n\\nThose summaries kept narrative and dropped verification. Measured survival: file and\\ninstrument names 33.8%, commit shas 10.2%, structured numbers 9.3%, and registered\\npredictions or falsifiers 3.5% - the last being the class this project runs on.\\n\\nTherefore, when writing the summary, carry forward VERBATIM and in full:\\n\\n1. Every commit sha mentioned, with the one-line reason it mattered. A sha without its\\n   reason is not preservation; a reason without its sha cannot be checked.\\n2. Every number that carries a unit, a ratio, or a denominator (N%, N/M, N of M), together\\n   with the command or file that produced it. A number whose source is gone becomes a\\n   hand-made figure the next session will quote and cannot re-derive.\\n3. Every REGISTERED PREDICTION, FALSIFIER, STOP RULE or ABUSE CONDITION, in its original\\n   wording. These are worthless if paraphrased: a falsifier restated loosely stops being\\n   able to fire, which is the exact failure it exists to prevent.\\n4. Every named instrument or file path, with the command that runs it.\\n5. Every correction anyone made, including corrections the assistant made to itself, and\\n   what the corrected claim had been. A record of only the surviving claims reads as though\\n   nothing was ever wrong.\\n\\nPrefer dropping narrative, atmosphere and restatement over dropping any of the five above.\\nIf length forces a choice, a summary that is a bare list of checkable items is more useful\\nhere than a readable account with the checkable items removed.\",\"suppressOutput\":true}",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact-preserve | fresh | manual": {
+  "stdout": "{\"additionalContext\":\"[PRECOMPACT-PRESERVE-V1] Preservation directive for this summary, from a measurement of the previous\\nseven summaries of this conversation (trigger: manual).\\n\\nThose summaries kept narrative and dropped verification. Measured survival: file and\\ninstrument names 33.8%, commit shas 10.2%, structured numbers 9.3%, and registered\\npredictions or falsifiers 3.5% - the last being the class this project runs on.\\n\\nTherefore, when writing the summary, carry forward VERBATIM and in full:\\n\\n1. Every commit sha mentioned, with the one-line reason it mattered. A sha without its\\n   reason is not preservation; a reason without its sha cannot be checked.\\n2. Every number that carries a unit, a ratio, or a denominator (N%, N/M, N of M), together\\n   with the command or file that produced it. A number whose source is gone becomes a\\n   hand-made figure the next session will quote and cannot re-derive.\\n3. Every REGISTERED PREDICTION, FALSIFIER, STOP RULE or ABUSE CONDITION, in its original\\n   wording. These are worthless if paraphrased: a falsifier restated loosely stops being\\n   able to fire, which is the exact failure it exists to prevent.\\n4. Every named instrument or file path, with the command that runs it.\\n5. Every correction anyone made, including corrections the assistant made to itself, and\\n   what the corrected claim had been. A record of only the surviving claims reads as though\\n   nothing was ever wrong.\\n\\nPrefer dropping narrative, atmosphere and restatement over dropping any of the five above.\\nIf length forces a choice, a summary that is a bare list of checkable items is more useful\\nhere than a readable account with the checkable items removed.\",\"suppressOutput\":true}",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact-preserve | tp | manual": {
+  "stdout": "{\"additionalContext\":\"[PRECOMPACT-PRESERVE-V1] Preservation directive for this summary, from a measurement of the previous\\nseven summaries of this conversation (trigger: manual).\\n\\nThose summaries kept narrative and dropped verification. Measured survival: file and\\ninstrument names 33.8%, commit shas 10.2%, structured numbers 9.3%, and registered\\npredictions or falsifiers 3.5% - the last being the class this project runs on.\\n\\nTherefore, when writing the summary, carry forward VERBATIM and in full:\\n\\n1. Every commit sha mentioned, with the one-line reason it mattered. A sha without its\\n   reason is not preservation; a reason without its sha cannot be checked.\\n2. Every number that carries a unit, a ratio, or a denominator (N%, N/M, N of M), together\\n   with the command or file that produced it. A number whose source is gone becomes a\\n   hand-made figure the next session will quote and cannot re-derive.\\n3. Every REGISTERED PREDICTION, FALSIFIER, STOP RULE or ABUSE CONDITION, in its original\\n   wording. These are worthless if paraphrased: a falsifier restated loosely stops being\\n   able to fire, which is the exact failure it exists to prevent.\\n4. Every named instrument or file path, with the command that runs it.\\n5. Every correction anyone made, including corrections the assistant made to itself, and\\n   what the corrected claim had been. A record of only the surviving claims reads as though\\n   nothing was ever wrong.\\n\\nPrefer dropping narrative, atmosphere and restatement over dropping any of the five above.\\nIf length forces a choice, a summary that is a bare list of checkable items is more useful\\nhere than a readable account with the checkable items removed.\",\"suppressOutput\":true}",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact-preserve | tpSlash | manual": {
+  "stdout": "{\"additionalContext\":\"[PRECOMPACT-PRESERVE-V1] Preservation directive for this summary, from a measurement of the previous\\nseven summaries of this conversation (trigger: manual).\\n\\nThose summaries kept narrative and dropped verification. Measured survival: file and\\ninstrument names 33.8%, commit shas 10.2%, structured numbers 9.3%, and registered\\npredictions or falsifiers 3.5% - the last being the class this project runs on.\\n\\nTherefore, when writing the summary, carry forward VERBATIM and in full:\\n\\n1. Every commit sha mentioned, with the one-line reason it mattered. A sha without its\\n   reason is not preservation; a reason without its sha cannot be checked.\\n2. Every number that carries a unit, a ratio, or a denominator (N%, N/M, N of M), together\\n   with the command or file that produced it. A number whose source is gone becomes a\\n   hand-made figure the next session will quote and cannot re-derive.\\n3. Every REGISTERED PREDICTION, FALSIFIER, STOP RULE or ABUSE CONDITION, in its original\\n   wording. These are worthless if paraphrased: a falsifier restated loosely stops being\\n   able to fire, which is the exact failure it exists to prevent.\\n4. Every named instrument or file path, with the command that runs it.\\n5. Every correction anyone made, including corrections the assistant made to itself, and\\n   what the corrected claim had been. A record of only the surviving claims reads as though\\n   nothing was ever wrong.\\n\\nPrefer dropping narrative, atmosphere and restatement over dropping any of the five above.\\nIf length forces a choice, a summary that is a bare list of checkable items is more useful\\nhere than a readable account with the checkable items removed.\",\"suppressOutput\":true}",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact-preserve | tpSlash2 | manual": {
+  "stdout": "{\"additionalContext\":\"[PRECOMPACT-PRESERVE-V1] Preservation directive for this summary, from a measurement of the previous\\nseven summaries of this conversation (trigger: manual).\\n\\nThose summaries kept narrative and dropped verification. Measured survival: file and\\ninstrument names 33.8%, commit shas 10.2%, structured numbers 9.3%, and registered\\npredictions or falsifiers 3.5% - the last being the class this project runs on.\\n\\nTherefore, when writing the summary, carry forward VERBATIM and in full:\\n\\n1. Every commit sha mentioned, with the one-line reason it mattered. A sha without its\\n   reason is not preservation; a reason without its sha cannot be checked.\\n2. Every number that carries a unit, a ratio, or a denominator (N%, N/M, N of M), together\\n   with the command or file that produced it. A number whose source is gone becomes a\\n   hand-made figure the next session will quote and cannot re-derive.\\n3. Every REGISTERED PREDICTION, FALSIFIER, STOP RULE or ABUSE CONDITION, in its original\\n   wording. These are worthless if paraphrased: a falsifier restated loosely stops being\\n   able to fire, which is the exact failure it exists to prevent.\\n4. Every named instrument or file path, with the command that runs it.\\n5. Every correction anyone made, including corrections the assistant made to itself, and\\n   what the corrected claim had been. A record of only the surviving claims reads as though\\n   nothing was ever wrong.\\n\\nPrefer dropping narrative, atmosphere and restatement over dropping any of the five above.\\nIf length forces a choice, a summary that is a bare list of checkable items is more useful\\nhere than a readable account with the checkable items removed.\",\"suppressOutput\":true}",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact-preserve | tpUpper | manual": {
+  "stdout": "{\"additionalContext\":\"[PRECOMPACT-PRESERVE-V1] Preservation directive for this summary, from a measurement of the previous\\nseven summaries of this conversation (trigger: manual).\\n\\nThose summaries kept narrative and dropped verification. Measured survival: file and\\ninstrument names 33.8%, commit shas 10.2%, structured numbers 9.3%, and registered\\npredictions or falsifiers 3.5% - the last being the class this project runs on.\\n\\nTherefore, when writing the summary, carry forward VERBATIM and in full:\\n\\n1. Every commit sha mentioned, with the one-line reason it mattered. A sha without its\\n   reason is not preservation; a reason without its sha cannot be checked.\\n2. Every number that carries a unit, a ratio, or a denominator (N%, N/M, N of M), together\\n   with the command or file that produced it. A number whose source is gone becomes a\\n   hand-made figure the next session will quote and cannot re-derive.\\n3. Every REGISTERED PREDICTION, FALSIFIER, STOP RULE or ABUSE CONDITION, in its original\\n   wording. These are worthless if paraphrased: a falsifier restated loosely stops being\\n   able to fire, which is the exact failure it exists to prevent.\\n4. Every named instrument or file path, with the command that runs it.\\n5. Every correction anyone made, including corrections the assistant made to itself, and\\n   what the corrected claim had been. A record of only the surviving claims reads as though\\n   nothing was ever wrong.\\n\\nPrefer dropping narrative, atmosphere and restatement over dropping any of the five above.\\nIf length forces a choice, a summary that is a bare list of checkable items is more useful\\nhere than a readable account with the checkable items removed.\",\"suppressOutput\":true}",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact-preserve | tpFwd | manual": {
+  "stdout": "{\"additionalContext\":\"[PRECOMPACT-PRESERVE-V1] Preservation directive for this summary, from a measurement of the previous\\nseven summaries of this conversation (trigger: manual).\\n\\nThose summaries kept narrative and dropped verification. Measured survival: file and\\ninstrument names 33.8%, commit shas 10.2%, structured numbers 9.3%, and registered\\npredictions or falsifiers 3.5% - the last being the class this project runs on.\\n\\nTherefore, when writing the summary, carry forward VERBATIM and in full:\\n\\n1. Every commit sha mentioned, with the one-line reason it mattered. A sha without its\\n   reason is not preservation; a reason without its sha cannot be checked.\\n2. Every number that carries a unit, a ratio, or a denominator (N%, N/M, N of M), together\\n   with the command or file that produced it. A number whose source is gone becomes a\\n   hand-made figure the next session will quote and cannot re-derive.\\n3. Every REGISTERED PREDICTION, FALSIFIER, STOP RULE or ABUSE CONDITION, in its original\\n   wording. These are worthless if paraphrased: a falsifier restated loosely stops being\\n   able to fire, which is the exact failure it exists to prevent.\\n4. Every named instrument or file path, with the command that runs it.\\n5. Every correction anyone made, including corrections the assistant made to itself, and\\n   what the corrected claim had been. A record of only the surviving claims reads as though\\n   nothing was ever wrong.\\n\\nPrefer dropping narrative, atmosphere and restatement over dropping any of the five above.\\nIf length forces a choice, a summary that is a bare list of checkable items is more useful\\nhere than a readable account with the checkable items removed.\",\"suppressOutput\":true}",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact-preserve | tpPrefix | manual": {
+  "stdout": "{\"additionalContext\":\"[PRECOMPACT-PRESERVE-V1] Preservation directive for this summary, from a measurement of the previous\\nseven summaries of this conversation (trigger: manual).\\n\\nThose summaries kept narrative and dropped verification. Measured survival: file and\\ninstrument names 33.8%, commit shas 10.2%, structured numbers 9.3%, and registered\\npredictions or falsifiers 3.5% - the last being the class this project runs on.\\n\\nTherefore, when writing the summary, carry forward VERBATIM and in full:\\n\\n1. Every commit sha mentioned, with the one-line reason it mattered. A sha without its\\n   reason is not preservation; a reason without its sha cannot be checked.\\n2. Every number that carries a unit, a ratio, or a denominator (N%, N/M, N of M), together\\n   with the command or file that produced it. A number whose source is gone becomes a\\n   hand-made figure the next session will quote and cannot re-derive.\\n3. Every REGISTERED PREDICTION, FALSIFIER, STOP RULE or ABUSE CONDITION, in its original\\n   wording. These are worthless if paraphrased: a falsifier restated loosely stops being\\n   able to fire, which is the exact failure it exists to prevent.\\n4. Every named instrument or file path, with the command that runs it.\\n5. Every correction anyone made, including corrections the assistant made to itself, and\\n   what the corrected claim had been. A record of only the surviving claims reads as though\\n   nothing was ever wrong.\\n\\nPrefer dropping narrative, atmosphere and restatement over dropping any of the five above.\\nIf length forces a choice, a summary that is a bare list of checkable items is more useful\\nhere than a readable account with the checkable items removed.\",\"suppressOutput\":true}",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact-preserve | tpSub | manual": {
+  "stdout": "{\"additionalContext\":\"[PRECOMPACT-PRESERVE-V1] Preservation directive for this summary, from a measurement of the previous\\nseven summaries of this conversation (trigger: manual).\\n\\nThose summaries kept narrative and dropped verification. Measured survival: file and\\ninstrument names 33.8%, commit shas 10.2%, structured numbers 9.3%, and registered\\npredictions or falsifiers 3.5% - the last being the class this project runs on.\\n\\nTherefore, when writing the summary, carry forward VERBATIM and in full:\\n\\n1. Every commit sha mentioned, with the one-line reason it mattered. A sha without its\\n   reason is not preservation; a reason without its sha cannot be checked.\\n2. Every number that carries a unit, a ratio, or a denominator (N%, N/M, N of M), together\\n   with the command or file that produced it. A number whose source is gone becomes a\\n   hand-made figure the next session will quote and cannot re-derive.\\n3. Every REGISTERED PREDICTION, FALSIFIER, STOP RULE or ABUSE CONDITION, in its original\\n   wording. These are worthless if paraphrased: a falsifier restated loosely stops being\\n   able to fire, which is the exact failure it exists to prevent.\\n4. Every named instrument or file path, with the command that runs it.\\n5. Every correction anyone made, including corrections the assistant made to itself, and\\n   what the corrected claim had been. A record of only the surviving claims reads as though\\n   nothing was ever wrong.\\n\\nPrefer dropping narrative, atmosphere and restatement over dropping any of the five above.\\nIf length forces a choice, a summary that is a bare list of checkable items is more useful\\nhere than a readable account with the checkable items removed.\",\"suppressOutput\":true}",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact-preserve | tpMid | manual": {
+  "stdout": "{\"additionalContext\":\"[PRECOMPACT-PRESERVE-V1] Preservation directive for this summary, from a measurement of the previous\\nseven summaries of this conversation (trigger: manual).\\n\\nThose summaries kept narrative and dropped verification. Measured survival: file and\\ninstrument names 33.8%, commit shas 10.2%, structured numbers 9.3%, and registered\\npredictions or falsifiers 3.5% - the last being the class this project runs on.\\n\\nTherefore, when writing the summary, carry forward VERBATIM and in full:\\n\\n1. Every commit sha mentioned, with the one-line reason it mattered. A sha without its\\n   reason is not preservation; a reason without its sha cannot be checked.\\n2. Every number that carries a unit, a ratio, or a denominator (N%, N/M, N of M), together\\n   with the command or file that produced it. A number whose source is gone becomes a\\n   hand-made figure the next session will quote and cannot re-derive.\\n3. Every REGISTERED PREDICTION, FALSIFIER, STOP RULE or ABUSE CONDITION, in its original\\n   wording. These are worthless if paraphrased: a falsifier restated loosely stops being\\n   able to fire, which is the exact failure it exists to prevent.\\n4. Every named instrument or file path, with the command that runs it.\\n5. Every correction anyone made, including corrections the assistant made to itself, and\\n   what the corrected claim had been. A record of only the surviving claims reads as though\\n   nothing was ever wrong.\\n\\nPrefer dropping narrative, atmosphere and restatement over dropping any of the five above.\\nIf length forces a choice, a summary that is a bare list of checkable items is more useful\\nhere than a readable account with the checkable items removed.\",\"suppressOutput\":true}",
+  "stderr": "",
+  "status": 0
+ },
+ "precompact-preserve | none | manual": {
+  "stdout": "{\"additionalContext\":\"[PRECOMPACT-PRESERVE-V1] Preservation directive for this summary, from a measurement of the previous\\nseven summaries of this conversation (trigger: manual).\\n\\nThose summaries kept narrative and dropped verification. Measured survival: file and\\ninstrument names 33.8%, commit shas 10.2%, structured numbers 9.3%, and registered\\npredictions or falsifiers 3.5% - the last being the class this project runs on.\\n\\nTherefore, when writing the summary, carry forward VERBATIM and in full:\\n\\n1. Every commit sha mentioned, with the one-line reason it mattered. A sha without its\\n   reason is not preservation; a reason without its sha cannot be checked.\\n2. Every number that carries a unit, a ratio, or a denominator (N%, N/M, N of M), together\\n   with the command or file that produced it. A number whose source is gone becomes a\\n   hand-made figure the next session will quote and cannot re-derive.\\n3. Every REGISTERED PREDICTION, FALSIFIER, STOP RULE or ABUSE CONDITION, in its original\\n   wording. These are worthless if paraphrased: a falsifier restated loosely stops being\\n   able to fire, which is the exact failure it exists to prevent.\\n4. Every named instrument or file path, with the command that runs it.\\n5. Every correction anyone made, including corrections the assistant made to itself, and\\n   what the corrected claim had been. A record of only the surviving claims reads as though\\n   nothing was ever wrong.\\n\\nPrefer dropping narrative, atmosphere and restatement over dropping any of the five above.\\nIf length forces a choice, a summary that is a bare list of checkable items is more useful\\nhere than a readable account with the checkable items removed.\",\"suppressOutput\":true}",
+  "stderr": "",
+  "status": 0
+ },
+ "stop | main | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "stop | librarian | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "stop | sibling | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "stop | paneA | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "stop | fresh | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "stop | tp | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "stop | tpSlash | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "stop | tpSlash2 | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "stop | tpUpper | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "stop | tpFwd | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "stop | tpPrefix | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "stop | tpSub | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "stop | tpMid | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "stop | none | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "sourced-stop | main | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sourced-stop | librarian | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sourced-stop | sibling | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sourced-stop | paneA | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sourced-stop | fresh | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sourced-stop | tp | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sourced-stop | tpSlash | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sourced-stop | tpSlash2 | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sourced-stop | tpUpper | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sourced-stop | tpFwd | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sourced-stop | tpPrefix | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sourced-stop | tpSub | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sourced-stop | tpMid | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "sourced-stop | none | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-stop | main | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-stop | librarian | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-stop | sibling | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-stop | paneA | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-stop | fresh | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-stop | tp | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-stop | tpSlash | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-stop | tpSlash2 | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-stop | tpUpper | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-stop | tpFwd | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-stop | tpPrefix | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-stop | tpSub | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-stop | tpMid | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "ready-stop | none | Stop": {
+  "stdout": "{}",
+  "stderr": "",
+  "status": 0
+ },
+ "reply-slot | main | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "reply-slot | librarian | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "reply-slot | sibling | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "reply-slot | paneA | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "reply-slot | fresh | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "reply-slot | tp | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "reply-slot | tpSlash | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "reply-slot | tpSlash2 | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "reply-slot | tpUpper | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "reply-slot | tpFwd | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "reply-slot | tpPrefix | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "reply-slot | tpSub | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "reply-slot | tpMid | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ },
+ "reply-slot | none | Stop": {
+  "stdout": "",
+  "stderr": "",
+  "status": 0
+ }
+}

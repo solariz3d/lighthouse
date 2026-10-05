@@ -1,0 +1,177 @@
+@@FILE C:/Users/nname/.claude/shell/hooks/session-start.js
+@@OLD
+const NIGHT_TABLE_MAX_TAG = 48;
+@@NEW
+const NIGHT_TABLE_MAX_TAG = 48;
+
+// D245 item 3 (the Third Place's own return, 2026-10-05): "This seat is not the build", yet the build's session digests reached it. The same cwd test as
+// board-digest.js:302, matched on the seat's directory (its address), so the digests of every other seat are not injected into the Third Place's wake.
+// It keeps the time (the ambient block), its own recent sessions and the night table.
+const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(String(cwd || '').replace(/[\\/]+$/, ''));
+@@END
+@@OLD
+  const digests = getRecentDigests(2);
+@@NEW
+  const digests = isThirdPlaceCwd(meta.cwd) ? [] : getRecentDigests(2);
+@@END
+@@FILE C:/Users/nname/Desktop/lighthouse/dev/shell/hooks/session-start.js
+@@OLD
+const NIGHT_TABLE_MAX_TAG = 48;
+@@NEW
+const NIGHT_TABLE_MAX_TAG = 48;
+
+// D245 item 3 (the Third Place's own return, 2026-10-05): "This seat is not the build", yet the build's session digests reached it. The same cwd test as
+// board-digest.js:302, matched on the seat's directory (its address), so the digests of every other seat are not injected into the Third Place's wake.
+// It keeps the time (the ambient block), its own recent sessions and the night table.
+const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(String(cwd || '').replace(/[\\/]+$/, ''));
+@@END
+@@OLD
+  const digests = getRecentDigests(2);
+@@NEW
+  const digests = isThirdPlaceCwd(meta.cwd) ? [] : getRecentDigests(2);
+@@END
+@@FILE C:/Users/nname/.claude/shell/hooks/userprompt-submit.js
+@@OLD
+const EVENT_LOG = path.join(SHELL_DIR, 'event_log.jsonl');
+@@NEW
+const EVENT_LOG = path.join(SHELL_DIR, 'event_log.jsonl');
+
+// D245 item 3 (the Third Place's own return, 2026-10-05): the chain line is the BUILD's state (the lap, the holder, the dirty count) and "This seat is not the build". The same cwd
+// test as board-digest.js:302. The Third Place keeps the date, the thread's age and the interval; only the chain line is withheld.
+const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(String(cwd || '').replace(/[\\/]+$/, ''));
+@@END
+@@OLD
+function buildBeacon(state) {
+@@NEW
+function buildBeacon(state, noChain) {
+@@END
+@@OLD
+      if (cfg.room_path) {
+@@NEW
+      if (cfg.room_path && !noChain) {
+@@END
+@@OLD
+  const context = [buildBeacon(state), buildGapContext(meta), buildContext(notices)]
+@@NEW
+  const context = [buildBeacon(state, isThirdPlaceCwd(meta && meta.cwd)), buildGapContext(meta), buildContext(notices)]
+@@END
+@@FILE C:/Users/nname/Desktop/lighthouse/dev/shell/hooks/userprompt-submit.js
+@@OLD
+const EVENT_LOG = path.join(SHELL_DIR, 'event_log.jsonl');
+@@NEW
+const EVENT_LOG = path.join(SHELL_DIR, 'event_log.jsonl');
+
+// D245 item 3 (the Third Place's own return, 2026-10-05): the chain line is the BUILD's state (the lap, the holder, the dirty count) and "This seat is not the build". The same cwd
+// test as board-digest.js:302. The Third Place keeps the date, the thread's age and the interval; only the chain line is withheld.
+const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(String(cwd || '').replace(/[\\/]+$/, ''));
+@@END
+@@OLD
+function buildBeacon(state) {
+@@NEW
+function buildBeacon(state, noChain) {
+@@END
+@@OLD
+      if (cfg.room_path) {
+@@NEW
+      if (cfg.room_path && !noChain) {
+@@END
+@@OLD
+  const context = [buildBeacon(state), buildGapContext(meta), buildContext(notices)]
+@@NEW
+  const context = [buildBeacon(state, isThirdPlaceCwd(meta && meta.cwd)), buildGapContext(meta), buildContext(notices)]
+@@END
+@@FILE C:/Users/nname/.claude/shell/hooks/precompact.js
+@@OLD
+try {
+  if (!fs.existsSync(SCRIPT)) process.exit(0);   // different machine, no room here
+@@NEW
+// D245 item 3 (the Third Place's own return, 2026-10-05): the checkpoint is the BUILD's state (the repos, the dirty files, the residue) and "This seat is not the build". The same cwd test
+// as board-digest.js:302; the Third Place compacts without it, as a fresh pane does, and no CHECKPOINT is written for its compaction.
+if (/[\\/]third-place[\\/]?$/i.test(String(payload.cwd || "").replace(/[\\/]+$/, ""))) process.exit(0);
+
+try {
+  if (!fs.existsSync(SCRIPT)) process.exit(0);   // different machine, no room here
+@@END
+@@FILE C:/Users/nname/Desktop/lighthouse/dev/shell/hooks/precompact.js
+@@OLD
+try {
+  if (!fs.existsSync(SCRIPT)) process.exit(0);   // different machine, no room here
+@@NEW
+// D245 item 3 (the Third Place's own return, 2026-10-05): the checkpoint is the BUILD's state (the repos, the dirty files, the residue) and "This seat is not the build". The same cwd test
+// as board-digest.js:302; the Third Place compacts without it, as a fresh pane does, and no CHECKPOINT is written for its compaction.
+if (/[\\/]third-place[\\/]?$/i.test(String(payload.cwd || "").replace(/[\\/]+$/, ""))) process.exit(0);
+
+try {
+  if (!fs.existsSync(SCRIPT)) process.exit(0);   // different machine, no room here
+@@END
+@@FILE C:/Users/nname/.claude/shell/sessionstart-state.js
+@@OLD
+const CONFIG_NAME = '.consonance.json';
+@@NEW
+const CONFIG_NAME = '.consonance.json';
+
+// D245 item 3 (the Third Place's own return, 2026-10-05): the state block is the BUILD's state (HEAD, the dirty files, the instruments, the room's triggers) and "This seat is not the build".
+// The same cwd test as board-digest.js:302, matched on the seat's directory.
+const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(String(cwd || '').replace(/[\\/]+$/, ''));
+@@END
+@@OLD
+  const source = typeof payload.source === 'string' ? payload.source : '';
+@@NEW
+  const source = typeof payload.source === 'string' ? payload.source : '';
+
+  if (isThirdPlaceCwd(payload.cwd)) {
+    // Silent and successful, like a source not served: the Third Place is told nothing about the build. The skip is a ledger row, so it reads as a decision and not as a dead hook.
+    try {
+      fs.mkdirSync(path.dirname(LEDGER), { recursive: true });
+      fs.appendFileSync(LEDGER, JSON.stringify({ ts: new Date().toISOString(), event: 'skipped', source: source || null, reason: 'third-place cwd' }) + '\n');
+    } catch (_) {}
+    return;
+  }
+@@END
+@@FILE C:/Users/nname/Desktop/lighthouse/consonance/hooks/sessionstart-state.js
+@@OLD
+const CONFIG_NAME = '.consonance.json';
+@@NEW
+const CONFIG_NAME = '.consonance.json';
+
+// D245 item 3 (the Third Place's own return, 2026-10-05): the state block is the BUILD's state (HEAD, the dirty files, the instruments, the room's triggers) and "This seat is not the build".
+// The same cwd test as board-digest.js:302, matched on the seat's directory.
+const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(String(cwd || '').replace(/[\\/]+$/, ''));
+@@END
+@@OLD
+  const source = typeof payload.source === 'string' ? payload.source : '';
+@@NEW
+  const source = typeof payload.source === 'string' ? payload.source : '';
+
+  if (isThirdPlaceCwd(payload.cwd)) {
+    // Silent and successful, like a source not served: the Third Place is told nothing about the build. The skip is a ledger row, so it reads as a decision and not as a dead hook.
+    try {
+      fs.mkdirSync(path.dirname(LEDGER), { recursive: true });
+      fs.appendFileSync(LEDGER, JSON.stringify({ ts: new Date().toISOString(), event: 'skipped', source: source || null, reason: 'third-place cwd' }) + '\n');
+    } catch (_) {}
+    return;
+  }
+@@END
+@@FILE C:/Users/nname/Desktop/lighthouse/consonance/hooks/ask-surface.js
+@@OLD
+const { execFile } = require('child_process');
+const path = require('path');
+@@NEW
+const { execFile } = require('child_process');
+const fs = require('fs');
+const path = require('path');
+@@END
+@@OLD
+try {
+  execFile(process.execPath, [TOOL, '--line'],
+@@NEW
+// D245 item 3 (the Third Place's own return, 2026-10-05): the questions the automations put to the keeper are the BUILD's, and "This seat is not the build". The same cwd test as
+// board-digest.js:302, on the payload's cwd (this hook read no payload before; a missing or unreadable one is not a third-place cwd, and the hook behaves as it did).
+const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(String(cwd || '').replace(/[\\/]+$/, ''));
+let payloadCwd = '';
+try { payloadCwd = JSON.parse(fs.readFileSync(0, 'utf8').replace(/^\uFEFF/, '')).cwd; } catch (_) { /* no payload */ }
+
+try {
+  if (isThirdPlaceCwd(payloadCwd)) done(null);
+  execFile(process.execPath, [TOOL, '--line'],
+@@END
