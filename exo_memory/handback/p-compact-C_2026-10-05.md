@@ -87,6 +87,7 @@ and `.master.js`, both sha256 `575176c2cc19f384…` (`cmp` with the live files, 
   ordinary string.
 
 ## §6 · Not verified
+- **The backups are byte-identical in the WORKING TREE** (`cmp`, above). Committed (`8273e0db`), git stores them LF-normalised (`core.autocrlf`; it warned). A checkout restores CRLF. For a byte-exact rollback, use the working-tree file or re-add the CRs.
 - **Whether the summarizer obeys item 6 or section 0.** That is what the bar measures over the next compactions.
 - **A live Third Place compaction** (not observed, by rule).
 - **The other seats' uncommitted hook edits** in `consonance/hooks/` (`board-digest.js`, `ask-surface.js`, `sessionstart-state.js`) were
