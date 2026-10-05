@@ -1,33 +1,70 @@
-# D245 item 3: non-author look at A's e5c55866 (the Third Place hook gates), pane B. STATE at the STOP (13:43, PC to BIOS for EXPO off), NOT FINISHED
+# D245 item 3: non-author look at A's e5c55866 (the Third Place hook gates), pane B
 
-**Status:** item 1 is done, by reading and diffing. **Items 2–4 are NOT run.** My one run queued behind E's bundle and never got the lock; I stopped it at the STOP, so nothing was mid-file. No Third Place content read; hooks not edited; nothing committed.
+**Packet:** the chair's D245 item 3 (items 1–4), stopped at 13:43 for the BIOS restart and resumed at 14:4x.
+- **No Third Place content was read.** I worked from the hooks' code and synthetic payloads in A's isolated fake install only.
+- Installed hooks not edited. Nothing committed, nothing pushed.
+- Every node run was under the heavy-run lock (one exception, under Corrections).
+- Scratchpad `tphooks/`:
+  - pinned copies of A's `harness.js` (sha256 `8b8079cf316674d7…`) and `gate_mut.js` (`4a5d1fcf346949dc…`);
+  - mine: `bharness.js`, `steps.json`, `run.out`, `b_before.json`, `b_after.json`, `gate_mut.txt`.
 
-## Item 1, done (checked, no node run)
-Installed against `e5c55866` (`git show e5c55866:<master>` vs the installed file):
-- `hooks/userprompt-submit.js` and `hooks/precompact.js`: byte-identical.
-- `sessionstart-state.js`: identical once CR is stripped. **Line endings only**, against A's "byte-identical (cmp)".
-- `ask-surface.js` is wired from the lighthouse working tree (`~/.claude/settings.json:34`), not `~/.claude/shell`. The working file equals the commit.
-- `hooks/session-start.js`: differs ONLY by A's named pre-existing drift. The 2026-09-23 "Light, not lifeguard" → "With you, not above you" repair and its comment block never reached the installed copy.
+## Verdict: GREEN, the gates do what A says. One minor finding (owner A), and A's drift note stands
 
-Each installed file against A's backup (CR stripped): **only the gate and its comments.**
+## 1. The installed copies against e5c55866, and each against its backup
+checked (`git show e5c55866:<master>` vs the installed file; the installed sha256 re-checked at resume, unchanged: `53c55388`, `bb8d5d05`, `00c3a814`, `1ac01a99`):
+- `hooks/userprompt-submit.js` and `hooks/precompact.js` are **byte-identical** to the commit.
+- `sessionstart-state.js` is **identical once CR is stripped. It differs by line endings only** (A wrote "byte-identical (cmp)").
+- `ask-surface.js` is wired from the lighthouse working tree (`~/.claude/settings.json:34`), not `~/.claude/shell`. The working file **equals** the commit.
+- `hooks/session-start.js` differs from the commit **only by A's named pre-existing drift**: the 2026-09-23 "Light, not lifeguard" → "With you, not above you" repair and its comment block never reached the installed copy.
+
+**Against A's backups** (CR stripped): **only the gate and its comments**, in every file.
 - session-start: the digests;
 - userprompt-submit: `buildBeacon(state, noChain)` and `!noChain`;
 - precompact: an early `exit(0)`;
-- sessionstart-state: a ledger row then return;
+- sessionstart-state: a ledger row, then return;
 - ask-surface: a stdin payload read plus `done(null)`, which calls `process.exit(0)`.
 
 The backups equal `e5c55866^`'s masters (EOL-normalised) for 4 of 5. session-start doesn't, which is the same drift.
 
-**Note:** ask-surface now reads stdin (`readFileSync(0)`), and it read none before. That's fine under Claude Code, which closes stdin; it would block only if stdin stayed open.
+## 2. Any other cwd: byte-identical before and after (re-run, plus 12 cwds of mine)
+checked (`bharness.js`: A's harness, a pinned copy, with my cwds added to its table; before = A's backups, after = the live files):
+- **390 runs: 341 identical, 35 changed, all 35 for A's five Third Place spellings** (the same 35 A reports).
+- **0 changed for my 9 lookalikes:** `third-placement`, `third_place_old`, `third_place`, `third-place.bak`, `third-place2`, `my third-place`, `x-third-place`, `third-place\..\main`, and the bare relative `third-place`.
+- **0 changed for any other cwd.**
 
-## To resume (items 2–4), one heavy-run hold
-- Scratchpad `tphooks/`:
-  - `harness.js` and `gate_mut.js`: pinned copies of A's, sha256 `8b8079cf316674d7…` and `4a5d1fcf346949dc…`;
-  - `bharness.js`: mine. It adds 12 cwds to A's table: 9 lookalikes (`third-placement`, `third_place_old`, `third_place`, `third-place.bak`, `third-place2`, `my third-place`, `x-third-place`, `third-place\..\main`, bare `third-place`) and 3 spellings of the seat (lower-case forward-slash, mixed separators, `third-place\.`). It reports before-vs-after, and what the seat keeps (time, interval) and loses (chain, digests, state, asks, checkpoint);
-  - `steps.json`: bharness, then gate_mut (12 mutants, G9 included), then `node --test dev/shell/hooks/third-place-gate.test.js`.
-- Command: `node scratchpad/close/all.js tphooks scratchpad/tphooks scratchpad/tphooks/steps.json > scratchpad/tphooks/run.out`.
-- **A prediction to check, by reading:** `third-place\.` is the seat's directory, but the regex won't match it after the strip. The bare relative `third-place` doesn't match either (no leading separator). Claude Code passes absolute cwds, so the second is likely moot.
+Two extra spellings OF the seat are gated, as intended: lower-case forward-slash `c:/consonance/instances/third-place/` and mixed separators.
 
-## Other state at the STOP
-- D242 `a0a45ba` (b-close-wt), D243a look and D239 look: all handed back (`p-close-B_2026-10-04.md`, `p-openexport-B_2026-10-05.md`, `p-eqonly-B_2026-10-05.md`).
-- My review worktrees (read only, clean): `b-openexp-wt` (ff428fa), `b-eqonly-wt` (2a2b187), `b-eqbase-wt` (8ff414b + C's 3 test files copied in, uncommitted).
+## 3. The Third Place cwd: what it gets and loses
+checked (`b_before.json` vs `b_after.json`, A's seat cwd `C:\Consonance\instances\third-place`):
+- **It loses:**
+  - the session digests (session-start, startup and compact);
+  - the state block (sessionstart-state compact; startup was already silent);
+  - the chain line (userprompt-submit);
+  - the asks (ask-surface);
+  - the checkpoint (precompact, manual and auto, with nothing printed).
+- **It keeps:**
+  - the ambient block (time, sun, moon);
+  - the `[pulse] <date>` line, verbatim.
+- **Every other seat is unchanged**, e.g. main's prompt line still carries its chain line.
+- **Not exercised by this harness: the interval line.** The harness deletes the prompt state before each run, so there's never a gap to report. A's committed test asserts the interval is kept (and passed; item 4).
+
+## 4. The mutants and the gate test
+- `gate_mut.js` (A's, my pinned copy; it takes the lock itself): control 5 of 5, then **12 of 12 caught**. This includes **G9**, the strip of two or more trailing separators, which A's double-backslash cwd catches.
+- `node --test dev/shell/hooks/third-place-gate.test.js`: **5 of 5 pass**.
+- Both came from my first run. Run 2 repeated them (`run.out`, `gate_mut.txt`).
+
+## FINDING (owner A, minor): the spelling `…\third-place\.` passes every gate
+- checked: with cwd `C:\Consonance\instances\third-place\.` (the seat's own directory), the build's state reaches the seat in all 7 gated places: session-start startup and compact, sessionstart-state compact, userprompt-submit, ask-surface, precompact manual and auto. The strip removes trailing separators but not a trailing `\.`.
+- Claude Code passes a resolved absolute cwd, so this is unlikely in practice. A `path.resolve` (or `path.normalize` plus the strip) before the test would close it in all five copies.
+- **The same applies to `board-digest.js:302`, which the five copies mirror.**
+
+## What this does NOT establish
+- A live Third Place session (not observed, by rule).
+- What the real chain-status, state-block, ask and checkpoint tools emit: the harness uses stubs, as A's does.
+- The laptop's `userprompt_pulse.py`, which isn't gated (A flagged it).
+
+## Corrections to myself
+- **My first harness run died on a `SyntaxError`.** My cwd strings arrived with single backslashes, so `'C:\x\…'` was an invalid escape. Worse, every `\t` in `…\third…` would have become a TAB silently. Fixed with `String.raw`, then re-run.
+- A's mutants and the gate test ran in that first run anyway: all.js continues after a failed step.
+- One `node --check` of that file ran outside the lock (a parse only).
+- I removed `run.out` while run 1 was still writing, so run 1's final `EXIT 1` (from the harness failure) landed at the head of run 2's file. I read each run's results by their own markers.
