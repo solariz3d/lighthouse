@@ -1,0 +1,123 @@
+{
+ "exe": "t180-track-builder.exe",
+ "started": "2026-10-05T21:38:01.781Z",
+ "errors": [],
+ "console": [],
+ "checks": {
+  "start": {
+   "status": "unsaved",
+   "info": "0 pieces · 0 m · open",
+   "msg": "No saved pieces yet: select pieces on the track and press Save as piece."
+  },
+  "paste": "opened \"window pieces\" from its code (Ctrl+Z goes back)",
+  "afterPaste": {
+   "status": "unsaved •",
+   "info": "5 pieces · 780 m · open · last paste 0 ms",
+   "msg": "No saved pieces yet: select pieces on the track and press Save as piece."
+  },
+  "where": {
+   "rect": {
+    "left": 320,
+    "top": 44,
+    "w": 1064,
+    "h": 645.015625
+   },
+   "pick": {
+    "p5": {
+     "x": 1188,
+     "y": 216,
+     "n": 16
+    },
+    "p4": {
+     "x": 1188,
+     "y": 296,
+     "n": 25
+    },
+    "p3": {
+     "x": 1172,
+     "y": 424,
+     "n": 38
+    },
+    "p1": {
+     "x": 468,
+     "y": 528,
+     "n": 74
+    },
+    "p2": {
+     "x": 1044,
+     "y": 576,
+     "n": 37
+    }
+   }
+  },
+  "selectP2": "Selected: p2 · 150 m",
+  "selectP2toP4": "Selected: p2 to p4 (3 pieces) · 400 m",
+  "saveClick": "clicked",
+  "saved": {
+   "file": true,
+   "equalsCore": true,
+   "parses": true
+  },
+  "rows": [
+   "window run3 pieces · 400 m · turn +95.6° · climb 0.0° · plainAdd at headRenameDelete"
+  ],
+  "saveAgain": "the piece was not saved: a piece named \"window run\" already exists; delete it first or use another name",
+  "saveAgainFileSame": true,
+  "before": "5 pieces · 780 m · open · last paste 0 ms",
+  "addClick": "clicked",
+  "afterAdd": "8 pieces · 1,180 m · open · last insertPiece 3 ms",
+  "mirrorOn": true,
+  "addMirrorClick": "clicked",
+  "afterMirror": "11 pieces · 1,580 m · open · last insertPiece 3 ms",
+  "addMsg": "added the piece \"window run\" mirrored at the head: 3 pieces (Ctrl+Z takes it back)",
+  "afterUndo": "5 pieces · 780 m · open · last insertPiece 3 ms",
+  "selectP3": "Selected: p3 · 150 m",
+  "backupsBefore": [],
+  "deleteClick": "clicked",
+  "preview": "Preview: 1 piece (p3) would be taken out of the middle of the track. The two sides are joined again at the gap, which changes the start of p4 (up to 156.6 m), and everything after the gap moves along with it. The see-through track on the preview is the result.Moves: p5 up to 188.9 m, p4 up to 156.6 m; 0 pieces after the gap keep their place; everything before the gap is exactly as it was.No overlap and no red on the track after the delete.",
+  "previewInfo": "5 pieces · 780 m · open · last insertPiece 3 ms",
+  "backupsDuringPreview": [],
+  "applyClick": "clicked",
+  "afterApply": {
+   "info": "4 pieces · 630 m · open · last deletePieces 2 ms",
+   "msg": "deleted 1 piece from the middle of the track (Ctrl+Z puts it back)",
+   "backups": [
+    "eq-unsaved.2026-10-05_153823.t180track"
+   ]
+  },
+  "backupIsTheTrackBefore": true,
+  "afterDeleteUndo": "5 pieces · 780 m · open · last deletePieces 2 ms",
+  "selectP5": "Selected: p5 · 80 m · at the end of the track",
+  "endDelete": "clicked",
+  "afterEndDelete": {
+   "info": "4 pieces · 700 m · open · last deletePieces 2 ms",
+   "preview": "",
+   "msg": "deleted 1 piece at the end of the track (Ctrl+Z puts it back)"
+  },
+  "afterEndUndo": "5 pieces · 780 m · open · last deletePieces 2 ms",
+  "renameClick": "clicked",
+  "okClick": "clicked",
+  "afterRename": {
+   "files": [
+    "renamed run.t180piece"
+   ],
+   "rows": [
+    "renamed run3 pieces · 400 m · turn +95.6° · climb 0.0° · plainAdd at headRenameDelete"
+   ]
+  },
+  "delClick": "clicked",
+  "confirmShown": true,
+  "yesClick": "clicked",
+  "afterDelete": {
+   "files": [],
+   "rows": []
+  }
+ },
+ "keeperFiles": 9,
+ "keeperChanged": [],
+ "runAppData": [
+  "autosave.t180auto",
+  "track-backups/eq-unsaved.2026-10-05_153823.t180track"
+ ],
+ "ended": "2026-10-05T21:38:36.026Z"
+}
