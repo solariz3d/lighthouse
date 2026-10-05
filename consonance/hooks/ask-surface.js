@@ -31,6 +31,7 @@
 'use strict';
 
 const { execFile } = require('child_process');
+const fs = require('fs');
 const path = require('path');
 
 const TOOL = path.join(__dirname, '..', 'tools', 'ask.js');
@@ -51,7 +52,14 @@ function done(line) {
   process.exit(0);
 }
 
+// D245 item 3 (the Third Place's own return, 2026-10-05): the questions the automations put to the keeper are the BUILD's, and "This seat is not the build". The same cwd test as
+// board-digest.js:302, on the payload's cwd (this hook read no payload before; a missing or unreadable one is not a third-place cwd, and the hook behaves as it did).
+const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(String(cwd || '').replace(/[\\/]+$/, ''));
+let payloadCwd = '';
+try { payloadCwd = JSON.parse(fs.readFileSync(0, 'utf8').replace(/^\uFEFF/, '')).cwd; } catch (_) { /* no payload */ }
+
 try {
+  if (isThirdPlaceCwd(payloadCwd)) done(null);
   execFile(process.execPath, [TOOL, '--line'], { timeout: TIMEOUT_MS, encoding: 'utf8' },
     (err, stdout) => {
       // A NON-ZERO EXIT IS NOT A REASON TO PRINT NOTHING, and it is not a reason to print either.

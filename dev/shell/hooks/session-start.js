@@ -50,6 +50,11 @@ const DURATION_DIR = path.join(SHELL_DIR, 'duration');
 const INSTANCES_DIR = path.join('C:', path.sep, 'Consonance', 'instances');
 const NIGHT_TABLE_MAX_TAG = 48;
 
+// D245 item 3 (the Third Place's own return, 2026-10-05): "This seat is not the build", yet the build's session digests reached it. The same cwd test as
+// board-digest.js:302, matched on the seat's directory (its address), so the digests of every other seat are not injected into the Third Place's wake.
+// It keeps the time (the ambient block), its own recent sessions and the night table.
+const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(String(cwd || '').replace(/[\\/]+$/, ''));
+
 // Surface L3 trajectory notices from the last N hours. L3 verdicts are
 // trajectory observations (cadence, frame-hardening, dependence) per
 // lighthouse/WELFARE.md. Only NON-STABLE verdicts surface — stable is the
@@ -295,7 +300,7 @@ function buildContext(meta) {
     }
   }
 
-  const digests = getRecentDigests(2);
+  const digests = isThirdPlaceCwd(meta.cwd) ? [] : getRecentDigests(2);
   if (digests.length > 0) {
     sections.push('## Recent session digests');
     for (const d of digests) {

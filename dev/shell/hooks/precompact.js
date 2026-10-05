@@ -45,6 +45,10 @@ try {
   if (require("../lib/fresh-guard.js").isFreshCwd(payload.cwd)) process.exit(0);
 } catch { /* guard missing: fall through to normal behaviour */ }
 
+// D245 item 3 (the Third Place's own return, 2026-10-05): the checkpoint is the BUILD's state (the repos, the dirty files, the residue) and "This seat is not the build". The same cwd test
+// as board-digest.js:302; the Third Place compacts without it, as a fresh pane does, and no CHECKPOINT is written for its compaction.
+if (/[\\/]third-place[\\/]?$/i.test(String(payload.cwd || "").replace(/[\\/]+$/, ""))) process.exit(0);
+
 try {
   if (!fs.existsSync(SCRIPT)) process.exit(0);   // different machine, no room here
   const args = [SCRIPT, "--write", "--trigger", String(payload.trigger || "auto")];

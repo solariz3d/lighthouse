@@ -42,6 +42,10 @@ if (process.env.CONSONANCE_DREAM) process.exit(0);
 const DATA = process.env.CONSONANCE_DATA || 'C:\\Consonance\\data';
 const LEDGER = process.env.CONSONANCE_SESSIONSTATE_LOG || path.join(DATA, 'sessionstart-state.jsonl');
 const CONFIG_NAME = '.consonance.json';
+
+// D245 item 3 (the Third Place's own return, 2026-10-05): the state block is the BUILD's state (HEAD, the dirty files, the instruments, the room's triggers) and "This seat is not the build".
+// The same cwd test as board-digest.js:302, matched on the seat's directory.
+const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(String(cwd || '').replace(/[\\/]+$/, ''));
 const BOM = /^﻿/;
 
 /* Which sources get the block. `compact` is the one the plan exists for; `startup` and `resume`
@@ -121,6 +125,15 @@ function main() {
   let payload = {};
   try { payload = JSON.parse(readStdin() || '{}'); } catch (_) { /* a bad payload must not break a session start */ }
   const source = typeof payload.source === 'string' ? payload.source : '';
+
+  if (isThirdPlaceCwd(payload.cwd)) {
+    // Silent and successful, like a source not served: the Third Place is told nothing about the build. The skip is a ledger row, so it reads as a decision and not as a dead hook.
+    try {
+      fs.mkdirSync(path.dirname(LEDGER), { recursive: true });
+      fs.appendFileSync(LEDGER, JSON.stringify({ ts: new Date().toISOString(), event: 'skipped', source: source || null, reason: 'third-place cwd' }) + '\n');
+    } catch (_) {}
+    return;
+  }
 
   if (!SOURCES.includes(source)) {
     // Silent and successful: this is a source we deliberately do not serve, not a failure.
