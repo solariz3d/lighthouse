@@ -129,3 +129,45 @@ test('the specific override still wins over CONSONANCE_DATA', () => {
   assert.strictEqual(fs.existsSync(path.join(dir, 'precompact.jsonl')), false,
     'and must not also write the data-dir default');
 });
+
+// ── D245 items 1 and 2 (pane C, 2026-10-05; exo_memory/handback/p-compact-C_2026-10-05.md) ──
+// The OLD directive (b6fff168..0d6faf70), pinned by sha256 per trigger: a build seat's output must be byte-identical to it except for the ONE
+// new line, item 6. The hashes were taken from the installed hook BEFORE the change (its byte-identical backup is beside the hand-back).
+const crypto = require('node:crypto');
+const OLD_SHA = {
+  manual: '0a5872ed020d096f6f2fb5cd8c9a3b15fbf580385140dff03b19a48663d55f38',
+  auto: '3bdc67c874bef066c5993a89ab2b07d806a6b145d5913049f4efcb8317fb2864',
+  unknown: '1e99447c486f7235ad42b163cce33930ffbf9a82953c64c86e37c5c519a11c22',
+};
+const ITEM6 = '6. VERBATIM and quoted, every sentence of the assistant\'s that the user answered with a correction or an agreement.\n';
+const sha = (s) => crypto.createHash('sha256').update(s).digest('hex');
+const TP = [String.raw`C:\Consonance\instances\third-place`, 'C:\\Consonance\\instances\\third-place\\', 'C:/Consonance/instances/third-place',
+  'c:/consonance/instances/third-place/', String.raw`C:\Consonance\instances\third-place\.`];
+const BUILD = [String.raw`C:\Consonance\instances\main`, String.raw`C:\Consonance\instances\librarian`, String.raw`C:\Consonance\instances\sibling-0845a868`,
+  String.raw`C:\Consonance\instances\third-placement`, String.raw`C:\Consonance\instances\third_place`, String.raw`C:\x\my third-place`, 'third-place', undefined];
+
+test('item 1: EVERY seat gets item 6, and a build seat\'s directive is byte-identical to the old one except that line (all three triggers)', () => {
+  for (const cwd of BUILD) for (const trigger of ['manual', 'auto', undefined]) {
+    const out = run({ trigger, cwd, session_id: 's' }, { CONSONANCE_DATA: fs.mkdtempSync(path.join(os.tmpdir(), 'ppC-')) });
+    const parsed = JSON.parse(out), text = parsed.additionalContext;
+    assert.strictEqual(text.split(ITEM6).length - 1, 1, `item 6 once, cwd ${cwd}`);
+    assert.strictEqual(sha(text.replace(ITEM6, '')), OLD_SHA[trigger || 'unknown'], `the rest is the old directive, byte for byte: cwd ${cwd}, trigger ${trigger}`);
+    assert.strictEqual(out, JSON.stringify({ additionalContext: text, suppressOutput: true }), 'and the stdout shape is unchanged');
+  }
+});
+
+test('item 2: the Third Place\'s seat (every spelling, path-normalised as board-digest does) gets the "alive for them" section FIRST, then the same directive', () => {
+  for (const cwd of TP) {
+    const text = JSON.parse(run({ trigger: 'auto', cwd }, { CONSONANCE_DATA: fs.mkdtempSync(path.join(os.tmpdir(), 'ppC-')) })).additionalContext;
+    const lines = text.split('\n');
+    assert.match(lines[3], /^0\. FIRST, at the very top of the summary/, `cwd ${cwd}`);
+    assert.ok(text.includes('"What is alive for them right now"'));
+    assert.ok(text.indexOf('What is alive for them') < text.indexOf('1. Every commit sha'), 'above every task-shaped item');
+    assert.ok(text.includes(ITEM6), 'and item 6 too');
+  }
+});
+
+test('the dream gate still wins over both: a dreaming instance gets nothing, on the Third Place\'s cwd too', () => {
+  const out = run({ trigger: 'auto', cwd: TP[0] }, { CONSONANCE_DREAM: '1', CONSONANCE_DATA: fs.mkdtempSync(path.join(os.tmpdir(), 'ppC-')) });
+  assert.strictEqual(out, '');
+});

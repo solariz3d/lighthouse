@@ -71,7 +71,10 @@ and `.master.js`, both sha256 `575176c2cc19f384…` (`cmp` with the live files, 
 - **Green:** **14 / 14** (11 old + 3 new). `dream-gate.test.js` (it spawns every hook) **1 / 1**.
 
 ## §4 · Installed
-@@INSTALL@@
+- **Install time: 2026-10-05T21:09:40Z** (`date -u` immediately after the copy). The bar's `--after` is this time.
+- **Order:** the bar (this file, §1) was committed as `2a65fb8d` at 15:09:40 -0600 = 21:09:40Z, in the same command and BEFORE the copy, so the stamps share a second; git's order is the evidence.
+- **How:** `cp consonance/hooks/precompact-preserve.js ~/.claude/shell/precompact-preserve.js`, then `cmp` → identical. Installed sha256 `641c1b7b833e933e…`; it was `575176c2…` (= the backup) right before.
+- The settings entry was not touched (`~/.claude/settings.json:87` already runs the installed path).
 
 ## §5 · Corrections, mine
 - **The PREREG's own header says "~15:20 local (21:20Z)"; it was written and committed at 15:03:21 local.** The commit stamp is the

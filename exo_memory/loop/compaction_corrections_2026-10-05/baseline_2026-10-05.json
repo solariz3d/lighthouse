@@ -1,0 +1,62 @@
+{
+ "root": "C:\\Users\\nname\\.claude\\projects",
+ "dirs": 878,
+ "skippedByName": [
+  "C--Consonance-instances-third-place",
+  "C--Users-nname-AppData-Local-Temp-claude-C--Consonance-instances-third-place-3d000000-0000-4000-8000-000000003d00-scratchpad"
+ ],
+ "filesScanned": 2828,
+ "all": {
+  "events": 137,
+  "eventsWithCadj": 61,
+  "replies": {
+   "correction": 131,
+   "agreement": 175,
+   "neither": 11061
+  },
+  "cadj": {
+   "n": 4698,
+   "verbatim": 6,
+   "fuzzy": 160,
+   "verbatimPct": 0.13,
+   "fuzzyPct": 3.41,
+   "medianEventVerbatimPct": 0
+  },
+  "control": {
+   "n": 126949,
+   "verbatim": 53,
+   "fuzzy": 5166,
+   "verbatimPct": 0.04,
+   "fuzzyPct": 4.07,
+   "medianEventVerbatimPct": 0
+  },
+  "summaryCharsMedian": 18393
+ },
+ "baseline": {
+  "after": "2026-08-19T00:00:00Z",
+  "events": 102,
+  "eventsWithCadj": 28,
+  "replies": {
+   "correction": 52,
+   "agreement": 41,
+   "neither": 6103
+  },
+  "cadj": {
+   "n": 1759,
+   "verbatim": 5,
+   "fuzzy": 104,
+   "verbatimPct": 0.28,
+   "fuzzyPct": 5.91,
+   "medianEventVerbatimPct": 0
+  },
+  "control": {
+   "n": 78653,
+   "verbatim": 30,
+   "fuzzy": 4234,
+   "verbatimPct": 0.04,
+   "fuzzyPct": 5.38,
+   "medianEventVerbatimPct": 0
+  },
+  "summaryCharsMedian": 18674
+ }
+}

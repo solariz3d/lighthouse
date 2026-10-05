@@ -73,31 +73,11 @@ const LEDGER = process.env.CONSONANCE_PRECOMPACT_LOG ||
  * with: grep PRECOMPACT-PRESERVE-V1 on the post-compaction transcript. */
 const CANARY = 'PRECOMPACT-PRESERVE-V1';
 
-/* THE THIRD PLACE'S SEAT (D245 item 2, pane C): the same cwd test as board-digest.js (its tpNorm, path-normalised: an absolute
- * spelling with "\." or a trailing separator is the seat too; a relative cwd is left as it is). */
-const tpNorm = (cwd) => { let c = String(cwd || ''); if (c && path.isAbsolute(c)) c = path.resolve(c); return c.replace(/(?:[\\/]+\.)+[\\/]*$/, '').replace(/[\\/]+$/, ''); };
-const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(tpNorm(cwd));
-
-/* D245, from the Third Place's own return (loop/plan_consonance_compaction_tp_2026-10-05.md):
- *   item 1, EVERY seat: item 6 below. Measured first (loop/compaction_corrections_2026-10-05/, PREREG committed 0d6faf70 before the run):
- *     of 1,759 assistant sentences the user answered with a correction or an agreement, in the 102 summaries since 2026-08-19, 5 survived
- *     verbatim (0.28%). Its bar is registered in exo_memory/handback/p-compact-C_2026-10-05.md: kept if the next compactions carry them
- *     verbatim at >= 10% (the absolute form, as the baseline is under 5%); cut back if the summaries' median grows > 15% with no gain.
- *   item 2, the Third Place's seat ONLY: the "alive for them right now" section, first. Build seats stay task-first, byte for byte. */
-const ALIVE = [
-  '0. FIRST, at the very top of the summary and above any task or pending work, a short section',
-  '   titled "What is alive for them right now": in a few lines and in their own terms, what the',
-  '   person in this conversation is carrying, what they said that mattered to them, and what was',
-  '   left open between you. People before work: the first lines of a summary shape what is asked first.',
-  '',
-];
-
-function instruction(trigger, cwd) {
+function instruction(trigger) {
   return [
     `[${CANARY}] Preservation directive for this summary, from a measurement of the previous`,
     `seven summaries of this conversation (trigger: ${trigger || 'unknown'}).`,
     '',
-    ...(isThirdPlaceCwd(cwd) ? ALIVE : []),
     'Those summaries kept narrative and dropped verification. Measured survival: file and',
     'instrument names 33.8%, commit shas 10.2%, structured numbers 9.3%, and registered',
     'predictions or falsifiers 3.5% - the last being the class this project runs on.',
@@ -116,7 +96,6 @@ function instruction(trigger, cwd) {
     '5. Every correction anyone made, including corrections the assistant made to itself, and',
     '   what the corrected claim had been. A record of only the surviving claims reads as though',
     '   nothing was ever wrong.',
-    '6. VERBATIM and quoted, every sentence of the assistant\'s that the user answered with a correction or an agreement.',
     '',
     'Prefer dropping narrative, atmosphere and restatement over dropping any of the five above.',
     'If length forces a choice, a summary that is a bare list of checkable items is more useful',
@@ -133,7 +112,7 @@ function main() {
   let payload = {};
   try { payload = JSON.parse(raw || '{}'); } catch (_) { /* keep going: a bad payload must not block a compaction */ }
 
-  const text = instruction(payload.trigger, payload.cwd);
+  const text = instruction(payload.trigger);
 
   /* ROOT-LEVEL. Not hookSpecificOutput - see the header. */
   process.stdout.write(JSON.stringify({ additionalContext: text, suppressOutput: true }));
@@ -152,6 +131,6 @@ function main() {
   } catch (_) { /* never block a compaction over a ledger write */ }
 }
 
-module.exports = { instruction, CANARY, LEDGER, isThirdPlaceCwd };
+module.exports = { instruction, CANARY, LEDGER };
 
 if (require.main === module) main();
