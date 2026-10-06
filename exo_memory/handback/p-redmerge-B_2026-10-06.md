@@ -80,3 +80,81 @@ Logs are in my scratchpad, `redmerge/run2.out` and `run4.out`.
 - In the first fix pass, my own amended row still held the old rule: it matched a red's place on the start piece. The control caught it.
 - An edit dropped a space in a regex. Run3 caught it.
 - A few `node -e` lines wrote step lists and text edits outside the lock. No test ran outside the lock.
+
+## F1 — the end piece at a boundary (C's look, `handback/p-redmerge-C_2026-10-06.md:33-36`)
+
+**Commits `2b51633` (the fix) and `ddf7889` (its changelog line)** on branch `b-redmerge-f1`, worktree `C:\Users\nname\Desktop\worktrees\b-redmerge-f1-wt`, on main `05f0c2c`. 4 paths, named on the commits. Not pushed. Only my red-list files are touched, nothing in panel.js or coreshell.js.
+
+**C was right.** `pieceAt` puts a boundary s on the NEXT piece, and I read a place's END piece with it. So a red ending exactly on a boundary was labelled as spanning both pieces (C's case F). Through the touch rule it also merged a red starting within 2 m on the next piece (case B). An exact meeting at the boundary merged through `it.s0 <= last.s1` (case A). All three break the rule I stated: different pieces never merge. As C says, the label half is older than D248: the item's `pieceEnd` was computed the same way in D242.
+
+**Fix** (`app/validate-ui/redgroups.js`):
+- A new `endPiece(segments, s0, s1)` reads `pieceAt(s1 - 1e-6)` when the range is longer than 0.5 m, and the start piece otherwise. It is used in all three places: the item's label, the place's label, and the touch rule.
+- The overlap branch is now strict (`it.s0 < last.s1`). Meeting at a point therefore goes through the touch rule, which needs the same piece. Two reds meeting on one piece still merge; two meeting at a boundary stay two places.
+- Side effect, not separately tested: a closed lap's red ending exactly at s = L used to wrap to p1 for its end piece. It now reads the last piece.
+
+**Two RED rows first,** both red on `05f0c2c` and green after:
+- "F1: a red that ENDS exactly on a piece boundary is on its own piece only (0.98–1.00 km is p1, not p1–p2)". This is case F, checking both the item label and the place label.
+- "F1: reds that meet AT a boundary, or touch across it, stay two places…". This covers cases A and B, plus a control: two reds meeting on one piece are one place.
+
+**Numbers** (under the lock; log `redmerge/runf1.out` in my scratchpad):
+- Targeted, 126/126 top-level:
+
+  | file | passing |
+  |---|---|
+  | redgroups | 11 |
+  | core-close-preview | 7 |
+  | core-pieces-ui | 13 |
+  | preview-async | 10 |
+  | core-shell | 28 |
+  | core-readout-display | 37 |
+  | share-install | 12 |
+  | core_cup_fixtures | 8 |
+
+- The TEST-1-shaped row still says 13 places: 5.98–6.02 km ends past the boundary, inside p7, so the 6.022 km ray red still touches on p7.
+- No harness run, per the packet. G6, G7 and G10 in `core-close-mutation.test.js` are re-anchored to the new condition line (3 anchors, replaced by exact text). G7 (merge across pieces) should now also be caught by the new F1 row. That is unverified until the librarian's install run.
+
+**My slip:** I committed `2b51633` before checking that my changelog Edit had landed. It had failed on a non-unique anchor. The line went in as `ddf7889`.
+
+## F2 — an open track's end (C's look at A's handles, `handback/p-handles-C_2026-10-06.md:85`)
+
+**Commit `d4b31fd`** on branch `b-redmerge-f2`, worktree `C:\Users\nname\Desktop\worktrees\b-redmerge-f2-wt`, on main `63dc19b`. 7 paths, named on the commit. Not pushed.
+
+**C was right.** `pieceAt` wrapped s = L to the first piece even on an open track. So a point red at the very end read "(p1)", and after F1 it stood as its own place beside the range that ends there.
+
+**Fix** (`app/validate-ui/redgroups.js`):
+- `pieceAt(segments, s, { closed })` and `groupReds(reds, segments, { closed })`, threaded through `endPiece` and `mergePlaces`.
+- `closed` defaults to **true**, so a closed lap keeps the wrap, and so does every caller that doesn't pass the flag.
+- With `closed: false` nothing wraps: s at or past the end is the last piece.
+
+**Lines touched outside redgroups.js (for A):** each adds `{ closed: <resolved>.closed }`.
+- `app/core/coreshell.js:47`: the `overlapPlacesText` helper gains a third argument `o`, which it passes on.
+- `app/core/coreshell.js:495`: the delete-preview words pass `r.resolved.closed`.
+- `app/core/coreshell.js:570`: the export refusal passes `st.resolved.closed`.
+- `app/core/piecesui.js:65`: the delete preview's red list.
+- `app/index.html:205`: the page's red box.
+
+`panel.js` is NOT touched. Its close preview is always of a closed lap, so the default is right there. The close words at coreshell `:356` are left alone for the same reason.
+
+**Two RED rows first,** red 2/2 on `63dc19b`, green after:
+- "F2: on an OPEN track, s at or past the end is the LAST piece…". It checks `pieceAt` open, open-past, closed, and no flag.
+- "F2: an open track's end red is ONE place with the range that ends there…".
+
+**Numbers** (under the lock; log `redmerge/runf2.out` in my scratchpad):
+- Targeted, **133/133 top-level**:
+
+  | file | passing |
+  |---|---|
+  | redgroups | 13 |
+  | core-close-preview | 7 |
+  | core-pieces-ui | 18 |
+  | preview-async | 10 |
+  | core-shell | 28 |
+  | core-readout-display | 37 |
+  | share-install | 12 |
+  | core_cup_fixtures | 8 |
+
+- No harness, per the packet. Mutants G4, G5, G6, G7 and G10 are re-anchored to the new text. I checked by grep that every redgroups anchor in `core-close-mutation.test.js` occurs exactly once. G5 ("s past the lap does not wrap") should still be caught by the closed-default `pieceAt wraps` row. That is unverified until the librarian's install run.
+
+**Not established:**
+- The caller wiring (the five lines above) has no test of its own. No row drives an open-track export refusal or delete preview with a red at s = L; only the redgroups rows test the rule.
+- No real window.
