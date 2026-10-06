@@ -73,3 +73,39 @@ Scratch `maxspeed/confirm.js` → `confirm.jsonl` (sha256 `76c42b94…`); the co
 - **A real window:** the "holds above N km/h" lines, and how many there are on a big track. TEST 1 has 11 ranges.
 - **Jumps:** the core's ramps are still sized at 460 (ruling: unchanged). At full speed every open-track jump in the panel will read as a landing WARNING (D250), not a red.
 - **A stale string, NOT changed** (outside this packet): `app/core/jumpplan.js:85` still says "the jump is red" for a fall that misses, though D250 made it a warning.
+
+## Suite reds (the librarian's full suite on 1ff9963: 7 fail) — judged and fixed, on main ea2a642
+
+**Commit `744297c`** on `ea2a642` (B's D257).
+- Branch `d256-suitereds`, worktree `C:/Users/nname/Desktop/worktrees/e-suitereds-wt`; it fast-forwards from main. Not pushed.
+- 4 files: `src/validate/index.js`, `test/validate_fullspeed.test.js`, `test/vocab-corpus.test.js` (restored), `CHANGELOG.md`.
+
+**The 7 reds:**
+- **6 are deterministic, all from the retired word builder (gone since D239; pane C's note agrees):**
+  - `test/phrasebook.test.js`: "S: … NO red at its default tempo and the design speed", and "S: no red with no speed either". S has its own word speeds, so "no speed" still has loads. Both read `leaves-surface`.
+  - The two starter-chain rows: `leaves-surface` in S's turns.
+  - `test/validate_bounds.test.js`: "bank on a CSP export has no red limit" (`range` → `red`) and "where no limit binds …" (climb below → `red`). The new checks put a red limit on a word straight's bank and a tight word's climb.
+- **1 was core-textures:** a native crash (0xC0000005), not this code. Pane C's flake note covers it. It passed in my full run.
+
+**The judgment: not a test to re-pin; a scope to correct.**
+- All six are the D256 checks (centreline lift-off on an open track; holds-above / no-speed-holds) judging WORD documents.
+- The keeper's always-max decision was about his equation tracks. `src/validate` already has the precedent for this exact case: the roll-rate bar judges only `word: 'core'` segments ("the paused piece builder's word documents are not newly judged by a bar …").
+- **So both new checks now judge only the equation core's roads** (`coreRoad` = `segments[p.seg].word === 'core'`).
+- Result: none of the six rows is re-pinned; they pass as written. My own D256 amendment of the vocab-corpus starter row (it had pinned two lift-off places) is **reverted to its original**.
+- **The physical finding stays on record, not judged:** the word builder's S phrase and its starter chain DO lift off on the centreline at their own tempo (D256 measured −3.1 g in a turn). The builder is retired, so nothing acts on it.
+- **I chose this over the chair's suggested restating-by-name** because restating would have pinned a retired builder's verdicts to a check meant for the core; scoping gives the same outcome with no test changed.
+
+**Rows:**
+- `test/validate_fullspeed.test.js` rows now build `word: 'core'` segments.
+- New row: "a word document (the paused piece builder) is not newly judged: no lift-off red on an open track, no holds-above, no no-speed-holds".
+- The keeper-copy confirmation (TEST 1 recovered p7/p9/p31/p32, TEST p3) is unaffected: every core track is word `core`.
+
+**The run, the WHOLE non-mutation suite** (148 files, the librarian's count; every `*mutation*` file excluded), under the lock, serial shim, on `ea2a642` + the fix:
+- **1958 tests: 1945 pass, 0 fail, 6 skipped** (reads/ absent), **7 todo** (the long-standing read_track round-trip and preview paint todos).
+- Evidence: scratch `suitereds/whole.tap`, sha256 `a872cf54…`, 1014 s.
+
+**Not mine, noted:** `app/test/mutation.test.js` (4 fail, 3 not applied in the librarian's run) mutates `preview/` and `camera/` (B's D255/D257 area); no mutant targets a file I changed.
+
+**My process errors this round:**
+- A file-anchor check `require()`d `test/core_jump_mutation.test.js` (D258 worktree), which RAN its control outside the lock, overlapping my own suite run: two heavy jobs at once, for about a minute. The suite still passed.
+- **Carry:** check a test module's data by parsing it, never by loading it.
