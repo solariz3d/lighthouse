@@ -86,3 +86,86 @@ Chrome off-screen at -12000, browser storage only (stricter than T180_TEST_APP_D
 ## My slips
 - My first window run read nothing from the camera. My `view()` returned a Promise and the probe's evaluate does not await it. I changed it to a synchronous read and re-ran; the table is from the re-run.
 - One heredoc failed to parse in bash before anything ran; I wrote the script with the Write tool instead.
+
+## Second item: one export button, and the AC folder chosen at the first start
+
+**Commit `33cf6ab`** on the same branch `b-spacefly`, on top of `4d58b99`. 7 paths, named on the commit. Not pushed.
+
+**I built the plan's REVISED point 2 (the keeper, 11:39), not the packet's "change folder" link.** The plan's section "Second item REVISED" replaces point 2: *"it shouldnt be there, creates too much clutter, the AC folder, instead, in the EXE startup, the user can choose where the track folder is"*. So the result line carries **no** link. Points 1 and 3 stand as written.
+
+**What it does:**
+1. **The header's export area is Export to Assetto Corsa plus a ⋯ menu.** The menu is a `<details id="more">` that drops down over the page and holds:
+   - Export…
+   - Test export (unfinished)…
+   - **Assetto Corsa folder…** (to change it later)
+   - See it in Assetto with its setting
+
+   `#export` and `#testexport` keep their ids, so their click bindings are untouched. "AC folder…" is gone from the main screen.
+2. **The startup card.** When no folder is remembered (first run, or the remembered one is gone), a one-time card appears in the banner row:
+   - with Steam's find: "Assetto Corsa found at <path> (through Steam)", with **Use it** / **Choose another…**;
+   - with no Steam find: it asks for the folder that holds content\tracks (**Choose…**).
+
+   The answer is remembered, and later starts say nothing.
+   - The card lives in a `#setup` slot that `drawBanner` re-appends on every redraw. Without that, the banner's redraw would wipe it.
+   - The native side has a new command, `find_ac_root`, backed by `ac::root_status`. It returns the remembered folder, or else the Steam-found one, and **writes nothing**, so the card asks first.
+   - `get_ac_root` keeps D250's find-and-remember: pressing Export without answering the card still finds AC itself. When Steam has none, the existing picker still opens ("not found" behaviour unchanged).
+3. **The guide's export step** now targets `#install` and names the one button and the ⋯ menu. `#export` sits inside the closed menu now, so the guide's highlight would have pointed at nothing.
+
+**Lines touched** (A is in handles.js; I touched nothing there or in panel.js/coreshell.js):
+- `app/index.html`:
+  - the header (`:80-86`): Export… and Test export moved into the menu, plus `#more-install`;
+  - the CSS (`.more`, `.more-menu`, after `#banner:empty`);
+  - `drawBanner` (the `setupSlot`);
+  - the native bridge (`findAcRoot`);
+  - the install mount (`more`, `card`).
+- `app/install/index.js`: `mount`'s `more` and `card` options, the button renamed "Assetto Corsa folder…", the startup card.
+- `app/onboarding/guide.js:41-42`: the export step.
+- `src-tauri/src/ac.rs`: `root_status`, plus 1 test.
+- `src-tauri/src/lib.rs`: the header comment, `AcRootStatus`, `find_ac_root`, and its registration.
+- `CHANGELOG.md`, `app/test/share-install.test.js`: 4 rows.
+
+**No test pinned a moved button by name.** The one button test, "the Export to Assetto Corsa button…", finds that button, which is unchanged. So nothing needed amending.
+
+**Tests: red first, then green (under the lock):**
+- **Red on `4d58b99`:** share-install 15 pass, **4 fail** (all 4 new rows). `cargo test ac::` **did not compile** (no `root_status`). Log: `spacefly/tidyred.out`.
+- **The rows:**
+  - one button on the main row, with Assetto Corsa folder… and See it (+ checkbox) in `more`, and no "AC folder…" anywhere;
+  - the card offers Steam's folder, Use it remembers exactly that one, and the card is gone;
+  - Choose another… opens the picker and remembers the pick; no Steam find gives a card with Choose…;
+  - a remembered folder gives no card;
+  - Rust: `root_status` reports the remembered folder (and does not ask Steam), or else the Steam-found one, and writes nothing.
+- **Green on `33cf6ab`:**
+
+  | file | passing |
+  |---|---|
+  | share-install | 19/19 |
+  | onboarding | 14/14 |
+  | core-eqonly | 31/31 |
+  | core-shell | 28/28 |
+  | preview | 73/73 |
+  | layout-css | 3/3 |
+  | shell-layout | 3/3 |
+  | cargo (whole lib) | 31/31 |
+
+  Log: `spacefly/tidygreen.out`.
+
+**Real window.** Chrome off-screen at -12000, browser storage only. **No Tauri exists in Chrome, so a FAKE native side was injected before load** (`spacefly/fake.js` via `Page.addScriptToEvaluateOnNewDocument`). It records every call, answers `find_ac_root` with a Steam-found path, keeps everything in memory, and touches no AC and no real folder. Probe `spacefly/wprobe2.js`, output `wprobe2.json`; 0 page errors.
+
+| step | what showed |
+|---|---|
+| start, nothing remembered | visible header buttons: **New, Save, Export to Assetto Corsa, ⋯**. Banner: "Assetto Corsa found at G:\SteamLibrary\steamapps\common\assettocorsa (through Steam). … Use it / Choose another…" |
+| Use it | `set_ac_root` called; the banner is empty; the note reads "Exports go into Assetto Corsa at G:\…\assettocorsa"; no dialog |
+| ⋯ opened | the menu lists **Export…, Test export (unfinished)…, Assetto Corsa folder…, See it in Assetto (disabled)** and its setting. It is `position: absolute`, at x 1201–1461, y 41–211, inside the 1818×1100 window |
+| Export to Assetto Corsa, unnamed track | the install's own "name the track first…", and no dialog opened |
+| header | scrollWidth 1818 = clientWidth 1818, no overflow |
+
+**Not established:**
+- No Tauri build. `find_ac_root` was never run against the real registry or a real Steam (by design).
+- The card's look in the keeper's hands.
+- **No AC launch.**
+- Choose another… was not driven in the window, because the fake picker returns nothing. It is tested headless.
+
+**My slips (this item):**
+- My first window run counted the closed menu's items as visible: `offsetParent` is not null for a closed `<details>` in this Chrome. I switched to `checkVisibility()` and re-ran.
+- My shell heredoc reduced the fake path's doubled backslashes (`\\`) to single ones, so the page showed "G:SteamLibrary…". That was a probe artifact, not the product; I rewrote `fake.js` with the Write tool and re-ran.
+- One test-row file and one implementation script were written with heredocs and then checked (escapes verified by grep).
