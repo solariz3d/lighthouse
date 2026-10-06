@@ -169,3 +169,70 @@ Chrome off-screen at -12000, browser storage only (stricter than T180_TEST_APP_D
 - My first window run counted the closed menu's items as visible: `offsetParent` is not null for a closed `<details>` in this Chrome. I switched to `checkVisibility()` and re-ran.
 - My shell heredoc reduced the fake path's doubled backslashes (`\\`) to single ones, so the page showed "G:SteamLibrary…". That was a probe artifact, not the product; I rewrote `fake.js` with the Write tool and re-ran.
 - One test-row file and one implementation script were written with heredocs and then checked (escapes verified by grep).
+
+## Update: the startup card tested as the chair asked, plus the 200 ms Ctrl hold, folded into one commit
+
+**Commit `44c7b5f`** (amends my unpushed `33cf6ab`, as the chair asked: "fold it into your item 2 commit"), on `4d58b99`, branch `b-spacefly`. 9 paths. Not pushed. **The second-item section above still describes the UI. What changed since then is below.**
+
+### The startup card on T180_TEST_APP_DATA and a FAKE Steam tree
+- **New test seam, `T180_TEST_STEAM_PATH`** (`ac.rs` `test_steam_path` and `steam_path`). It is launch-time, like `T180_TEST_APP_DATA`. An existing absolute folder stands in for the registry's SteamPath.
+  - **If it is set but is not a folder, the result is nothing.** A test run never falls through to the real registry, so a run can never find the real AC.
+  - `lib.rs`: `get_ac_root` and `find_ac_root` use `ac::steam_path`; the header comment names the seam.
+  - Nothing in normal use sets it.
+- **New Rust rows:**
+  - the three startup states (empty gives the card; remembered is silent; remembered-then-deleted gives the card again with Steam's find);
+  - the seam takes only an existing absolute folder (relative and missing are refused).
+
+  The states row passed on the code as it was. The seam row did not compile before `test_steam_path` existed: that is its red.
+- **The real app.** Our own debug build (`cargo build`, own target dir), launched four times by `spacefly/card_window.js` (A's launch pattern). Each launch had its own WebView2 profile and DevTools port, `T180_TEST_APP_DATA` set to a fresh folder, and `T180_TEST_STEAM_PATH` set to a fake Steam tree: `steam/` names `lib2/` in a real-format `libraryfolders.vdf`, and `lib2/` holds `steamapps/common/assettocorsa/content/tracks`. The window was off-screen. The run refuses to start while any t180 exe is running. Report: `spacefly/cardrun/report.json`.
+
+  | launch | card | header | ac_root.txt |
+  |---|---|---|---|
+  | 1. empty app data | "Assetto Corsa found at <fake lib2 AC> (through Steam)…", **Use it / Choose another…** | New, Save, Export to Assetto Corsa, ⋯ | none |
+  | 1b. Use it | gone; note "Exports go into Assetto Corsa at <fake AC>" | same | **the fake AC folder** |
+  | 2. relaunch | **none (silent)** | same | unchanged |
+  | 3. remembered folder deleted | **the card again**, offering Steam's find | same | the deleted path, still unanswered |
+  | 4. a Steam with no AC, nothing remembered | "Assetto Corsa was not found through Steam: pick the folder that holds content\tracks…", **Choose…** | same | none |
+
+  0 page errors. **The keeper's app data folder: 10 files, 0 changed** (sha256 snapshot before and after). No AC launch, and no real AC install read.
+
+### The 200 ms Ctrl hold (the chair's ruling on the dip I named)
+- **Left Ctrl descends only after it has been held ALONE for `CTRL_HOLD_S` = 0.2 s.**
+  - Its key-down now arms `ctrlFly.wait`, and the frame loop counts it down.
+  - Only when the wait runs out does Ctrl join `held` and take the view over.
+  - **The undo stays as the backstop** for a shortcut slower than 200 ms.
+  - `preview.js` lines: the D252 help paragraph, the `ctrlFly` comment, `CTRL_HOLD_S` beside `UP`/`DOWN`, the Left Ctrl branch in `onKey`, and 2 lines at the top of the frame loop.
+- **New row, red first** (`preview.test.js`, 73 pass and **1 fail** before the change). Ctrl then Z within 200 ms:
+  - not one millimetre after 100 ms of Ctrl alone, or after Z;
+  - from the build view, no takeover inside the window;
+  - a deliberate 500 ms hold still descends more than 5 m.
+
+  The existing rows needed no change: their Ctrl cases step 200 ms or more before they look.
+- **Real window** (Chrome, real keys; `spacefly/wprobe.json`):
+  - Ctrl held 600 ms descends **12.25 m**, which is the 400 ms after the hold.
+  - **A quick Ctrl+Z, with Ctrl alone for 100 ms: the eye is identical before, at 100 ms and after, and the piece is undone.**
+  - The 300 ms Ctrl+Z (the backstop) dips 3.3 m and comes back to the exact eye.
+  - Space, Right Ctrl, the focused-button and the name-field rows are unchanged from the table above.
+
+### Numbers (one heavy-run hold; log `spacefly/final.out`)
+
+| file | passing |
+|---|---|
+| preview | 74/74 |
+| keys-anywhere | 6/6 |
+| undo-guard | 6/6 |
+| camera | 31/31 |
+| share-install | 19/19 |
+| onboarding | 14/14 |
+| core-eqonly | 31/31 |
+| core-shell | 28/28 |
+| layout-css | 3/3 |
+| shell-layout | 3/3 |
+| **cargo (whole lib)** | **33/33** |
+
+The run then did the debug build, the card window and the Space/Ctrl window, all exit 0.
+
+### My slips (this update)
+- Applying the 200 ms change, **a comment I put mid-line swallowed the rest of that line** (`else ctrlFly = 'spoiled'; }`). preview.js then would not parse, and the first run failed to load `preview.test.js` (plus a `camera.test.js` row that requires it). I moved the comment to the end of the line and re-ran. The numbers above are from the re-run. This is the same slip I made in D242; I now check with `node --check` after any edit that adds a comment mid-line.
+- The two `node --check` calls ran outside the lock. They only parse, and run no tests.
+- I stopped my first card run (`bor5ju5q1`) before it started, while it was still queued behind A's lock hold, so I could fold in the 200 ms change and run everything once.
