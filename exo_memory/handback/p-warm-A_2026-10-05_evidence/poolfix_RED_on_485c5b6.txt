@@ -1,0 +1,65 @@
+✔ row 1: the job a worker runs gives EXACTLY the synchronous overlapCheck, on a coil and on TEST-1-sized tracks (50042.4029ms)
+✔ row 2: the worker SCRIPT, run in a sandbox with a fake self, loads its modules through the app's own loader and answers with the same result (20925.081ms)
+✖ row 3: the runner: two warm workers made with it, one part each, reused by the next job; cancel and ANY failure terminate both and make two fresh; replies carry the job serial (2.1771ms)
+✖ row 3c: THE POOL FIX: one part FAILS while the other is still computing, then the next job starts at once: job 2 resolves with job 2's parts ONLY (B's pool.js case 4) (4.0071ms)
+✔ row 3b: the check's TWO PARTS put together are EXACTLY the one-piece check (a coil with overlaps, a jump, a cup, a tube, a 13 km delete, a 14 km Close) (64413.331ms)
+✔ row 4a: Close, with a runner: the preview is there at once, Apply is refused until the result lands (then works, the backup first); Cancel stops the check; a stale answer changes nothing (755.6659ms)
+✔ row 4b: the delete, with a runner: the same, and every way the preview can go (Cancel, an edit, an Undo, another selection, a newer preview) stops the running check (95.7835ms)
+✔ row 4c: a worker that cannot start falls back to the page AFTER the preview has painted, with the same answer; with no runner at all the check is made on the spot, as it always was (1439.8193ms)
+✔ row 5: the panels: "Checking for overlaps… N s", Apply disabled until the result lands, then the groups; Cancel stops the job (Close's box and the delete's box) (422.1465ms)
+✔ row 6: the ghost is on the preview WHILE the check runs, and it is not rebuilt when the answer lands (489.0587ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 8
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 138764.3387
+
+✖ failing tests:
+
+test at app\test\preview-async.test.js:114:1
+✖ row 3: the runner: two warm workers made with it, one part each, reused by the next job; cancel and ANY failure terminate both and make two fresh; replies carry the job serial (2.1771ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      closed: false,
+      designSpeedKmh: 90,
+      doc: {
+        x: 1
+      },
+  +   id: 1,
+  -   id: '1:rest',
+      part: 'rest'
+    }
+  
+      at TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\test\preview-async.test.js:121:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { id: 1, part: 'rest', doc: { x: 1 }, designSpeedKmh: 90, closed: false },
+    expected: { id: '1:rest', part: 'rest', doc: { x: 1 }, designSpeedKmh: 90, closed: false },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at app\test\preview-async.test.js:143:1
+✖ row 3c: THE POOL FIX: one part FAILS while the other is still computing, then the next job starts at once: job 2 resolves with job 2's parts ONLY (B's pool.js case 4) (4.0071ms)
+  AssertionError [ERR_ASSERTION]: the workers are REPLACED on a failure: the one still busy with job 1 is gone
+      at TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\test\preview-async.test.js:160:58)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

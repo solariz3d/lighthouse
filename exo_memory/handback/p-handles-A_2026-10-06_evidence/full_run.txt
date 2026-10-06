@@ -1,0 +1,21 @@
+heavy-run: waiting on 12fb81f6 pid 16724 (B D242 D248 rerun 3, since 2026-10-06T08:04:03.807Z)
+heavy-run: waiting on 12fb81f6 pid 16724 (B D242 D248 rerun 3, since 2026-10-06T08:04:03.807Z)
+heavy-run: waiting on 12fb81f6 pid 16724 (B D242 D248 rerun 3, since 2026-10-06T08:04:03.807Z)
+heavy-run: waiting on 12fb81f6 pid 16724 (B D242 D248 rerun 3, since 2026-10-06T08:04:03.807Z)
+exit 0 tests 1046 pass 1043 fail 0
+✔ the cupLocal option keeps segment.profile LOCAL (its edge is c at the end of the segment within 0.05 deg), and the default does NOT (its profile is the widest of the run, the target of the blend): the readers evaluate the blend (test/core_cup_readers.test.js) (2.4451ms)
+✖ failing tests:
+test at app\test\aclook.test.js:197:1
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  -     't180b_paint',
+  +     'PAINT_GRID_0',
+  +     'PAINT_GRID_1',
+  +     'PAINT_GRID_2',
+  +     'PAINT_GRID_3',
+  +     'PAINT_PIT_0',
+  +     'PAINT_PIT_1',
+  +     'PAINT_START_LINE'
+      at TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\a-handles-wt\app\test\aclook.test.js:199:10)
+    actual: [
+    expected: [

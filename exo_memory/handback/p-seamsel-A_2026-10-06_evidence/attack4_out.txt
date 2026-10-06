@@ -1,0 +1,7 @@
+ok   no roll docs the document made from the saved runs has the same pieces as the hand-built one (ids aside): true
+ok   no roll export saved-runs lap and hand-built lap export the SAME BYTES: [9,true]
+DIFF a whole roll over one piece (fast) docs the document made from the saved runs has the same pieces as the hand-built one (ids aside): false  (expected true)  | first piece start phi: saved -6.283200832 vs hand -6.283200832
+ok   a whole roll over one piece (fast) export saved-runs lap and hand-built lap give the SAME result (bytes, or the same refusal): ["not exported: the track has no straight word to put the grid on","not exported: the track has no straight word to put the grid on"]  | saved: not exported: the track has no straight word to put the grid on | hand: not exported: the track has no straight word to put the grid on
+DIFF a whole roll slowly (over 2 pieces) docs the document made from the saved runs has the same pieces as the hand-built one (ids aside): false  (expected true)  | first piece start phi: saved -6.283200832 vs hand -6.283200832
+ok   a whole roll slowly (over 2 pieces) export saved-runs lap and hand-built lap give the SAME result (bytes, or the same refusal): ["not exported: the track has no straight word to put the grid on","not exported: the track has no straight word to put the grid on"]  | saved: not exported: the track has no straight word to put the grid on | hand: not exported: the track has no straight word to put the grid on
+summary: a whole roll over one piece (fast) docs, a whole roll slowly (over 2 pieces) docs

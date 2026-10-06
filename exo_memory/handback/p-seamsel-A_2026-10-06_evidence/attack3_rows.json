@@ -1,0 +1,134 @@
+[
+ {
+  "id": "no roll rest1",
+  "what": "p2..p4 is selected inside (the short way)",
+  "got": [
+   1,
+   3,
+   3
+  ],
+  "expect": [
+   1,
+   3,
+   3
+  ],
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "no roll longrun",
+  "what": "the rest of the lap as ONE run (p2..p5) is not selectable inside: the short way across the line wins (C documents this cost)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "no roll rot",
+  "what": "the three runs put back at an EMPTY head: the rotated lap has all 6 pieces, no refusal",
+  "got": [
+   6,
+   "ok"
+  ],
+  "expect": [
+   6,
+   "ok"
+  ],
+  "ok": true,
+  "note": "added the piece \"rest2\" at the head: 1 piece (Ctrl+Z takes it back)"
+ },
+ {
+  "id": "no roll export",
+  "what": "the rotated lap (marked closed) EXPORTS with every check on",
+  "got": "exports 1 folder(s)",
+  "expect": "exports 1 folder(s)",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "no roll ctl",
+  "what": "the original lap exports (control)",
+  "got": "exports 1 folder(s)",
+  "expect": "exports 1 folder(s)",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "no roll files",
+  "what": "the same set of files in both",
+  "got": [
+   9,
+   9,
+   false
+  ],
+  "expect": [
+   9,
+   9,
+   true
+  ],
+  "ok": false,
+  "note": ""
+ },
+ {
+  "id": "no roll ai-size",
+  "what": "the AI line file has the same size (the same lap, a different start)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "ai bytes 23024 vs 23024"
+ },
+ {
+  "id": "one whole roll rest1",
+  "what": "p2..p4 is selected inside (the short way)",
+  "got": [
+   1,
+   3,
+   3
+  ],
+  "expect": [
+   1,
+   3,
+   3
+  ],
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "one whole roll longrun",
+  "what": "the rest of the lap as ONE run (p2..p5) is not selectable inside: the short way across the line wins (C documents this cost)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "one whole roll rot",
+  "what": "the three runs put back at an EMPTY head: the rotated lap has all 6 pieces, no refusal",
+  "got": [
+   6,
+   "ok"
+  ],
+  "expect": [
+   6,
+   "ok"
+  ],
+  "ok": true,
+  "note": "added the piece \"rest2\" at the head: 1 piece (Ctrl+Z takes it back)"
+ },
+ {
+  "id": "one whole roll export",
+  "what": "the rotated lap (marked closed) EXPORTS with every check on",
+  "got": "not exported: the track has no straight word to put the grid on",
+  "expect": "exports 1 folder(s)",
+  "ok": false,
+  "note": ""
+ },
+ {
+  "id": "one whole roll ctl",
+  "what": "the original lap exports (control)",
+  "got": "RED: validation is red, nothing written: roll-rate at s 357.7–525.0 m (D225 seal V7 / S3 (exo_memory/loop/cross_section_seal_registration_20",
+  "expect": "exports 1 folder(s)",
+  "ok": false,
+  "note": ""
+ }
+]

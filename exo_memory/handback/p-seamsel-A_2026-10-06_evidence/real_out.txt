@@ -1,0 +1,7 @@
+eq-T-180 OVAL.t180track            6 pieces, bank winding 0.000pi: {"KEPT":15}
+eq-T-180 TUBE OVAL.t180track       6 pieces, bank winding 0.000pi: {"KEPT":15}
+eq-T180 TUBE V2.t180track          open (never wraps)
+eq-TEST 1 recovered.t180track      open (never wraps)
+eq-TEST 1.t180track                46 pieces, bank winding -4.000pi: {"MIXED_RUN":1035}
+eq-TEST OVAL.t180track             6 pieces, bank winding 0.000pi: {"KEPT":15}
+eq-TEST.t180track                  open (never wraps)

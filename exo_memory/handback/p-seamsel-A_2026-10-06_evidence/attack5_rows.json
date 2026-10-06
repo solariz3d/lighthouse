@@ -1,0 +1,133 @@
+[
+ {
+  "id": "J-7..0",
+  "what": "run across the line (rr)",
+  "got": "KEPT",
+  "expect": "KEPT",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "J-7..0-insert",
+  "what": "put at an empty head",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "J-7..1",
+  "what": "run across the line (rrf)",
+  "got": "KEPT",
+  "expect": "KEPT",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "J-7..1-insert",
+  "what": "put at an empty head",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "J-7..2",
+  "what": "run across the line (rrfr)",
+  "got": "KEPT",
+  "expect": "KEPT",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "J-7..2-insert",
+  "what": "put at an empty head",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "J-6..2",
+  "what": "run across the line (rrrfr)",
+  "got": "KEPT",
+  "expect": "KEPT",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "J-6..2-insert",
+  "what": "put at an empty head",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "J-2..1",
+  "what": "run across the line (rrrrrrrf)",
+  "got": "KEPT",
+  "expect": "KEPT",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "J-2..1-insert",
+  "what": "put at an empty head",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "J-sel",
+  "what": "the short way across the line, the flight included",
+  "got": [
+   [
+    "p8",
+    "p1",
+    "p2",
+    "p3"
+   ],
+   4,
+   null
+  ],
+  "expect": [
+   [
+    "p8",
+    "p1",
+    "p2",
+    "p3"
+   ],
+   4,
+   null
+  ],
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "J-highlight",
+  "what": "the highlight draws every selected piece that has road (the flight has none), in lap order",
+  "got": [
+   "p8",
+   "p1",
+   "p2",
+   "p3"
+  ],
+  "expect": [
+   "p8",
+   "p1",
+   "p3"
+  ],
+  "ok": false,
+  "note": ""
+ },
+ {
+  "id": "J-highlight-first",
+  "what": "the first line is the last piece of the lap (the run starts before the line)",
+  "got": "p8",
+  "expect": "p8",
+  "ok": true,
+  "note": ""
+ }
+]

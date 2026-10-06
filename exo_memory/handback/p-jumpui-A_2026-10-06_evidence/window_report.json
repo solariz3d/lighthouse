@@ -1,0 +1,144 @@
+{
+ "exe": "t180-track-builder.exe",
+ "started": "2026-10-06T11:57:27.043Z",
+ "errors": [],
+ "console": [],
+ "checks": {
+  "start": {
+   "status": "unsaved",
+   "info": "0 pieces · 0 m · open",
+   "msg": "No saved pieces yet: select pieces on the track and press Save as piece."
+  },
+  "jumpFieldsStart": {
+   "gap": "20",
+   "drop": "1",
+   "land": "-2"
+  },
+  "hintAtStart": "Add jump takes off from the end of the road (set its climb with the fields above first); then press Extend to lay the road the car lands on.The landing ramp is sized for 460 km/h, fixed today.",
+  "refusedOnEmpty": "No saved pieces yet: select pieces on the track and press Save as piece. | A jump needs road to take off from: press Extend first, then Add jump.",
+  "emptyPieces": "0 pieces · 0 m · open",
+  "pieces3": "3 pieces · 300 m · open · last extend 1 ms",
+  "noteClear": "The dashed arcs are the car's flight, ballistic, at 460 km/h, falling at 3.2 g and 6.3 g (the lighter fall carries farther).3.2 g: comes down 46.9 m after the lip, 31.9 m onto the ramp.6.3 g: comes down 27.6 m after the lip, 12.6 m onto the ramp.The ramp is 41.9 m long.The landing ramp is sized for 460 km/h, fixed today; the keeper has not decided whether it should follow the lap's speed.",
+  "pixelsClear": {
+   "cyan": 419,
+   "red": 0,
+   "other": 2044
+  },
+  "handlesDuringJump": [],
+  "pixelsSide": {
+   "cyan": 1136,
+   "red": 0,
+   "other": 4380
+  },
+  "pixelsOverhead": {
+   "cyan": 44,
+   "red": 0,
+   "other": 116
+  },
+  "noteLong": "The dashed arcs are the car's flight, ballistic, at 460 km/h, falling at 3.2 g and 6.3 g (the lighter fall carries farther).3.2 g: does NOT reach the landing at 460 km/h (it needs 989 km/h): the jump is red.6.3 g: does NOT reach the landing at 460 km/h (it needs 1387 km/h): the jump is red.The ramp is 10.0 m long.The landing ramp is sized for 460 km/h, fixed today; the keeper has not decided whether it should follow the lap's speed.",
+  "pixelsLong": {
+   "cyan": 248,
+   "red": 178,
+   "other": 2112
+  },
+  "onHover": {
+   "pixels": {
+    "cyan": 419,
+    "red": 0,
+    "other": 2079
+   },
+   "handles": 0
+  },
+  "afterLeave": {
+   "pixels": {
+    "cyan": 0,
+    "red": 0,
+    "other": 0
+   },
+   "handles": 10
+  },
+  "afterAdd": {
+   "before": "3 pieces · 300 m · open · last extend 1 ms",
+   "after": "4 pieces · 357 m · open · last jump 1 ms",
+   "status": "No saved pieces yet: select pieces on the track and press Save as piece. | Jump added. Press Extend to lay the road it lands on.",
+   "pixels": {
+    "cyan": 0,
+    "red": 0,
+    "other": 0
+   },
+   "handles": 10
+  },
+  "track1": {
+   "n": 152,
+   "gap": true,
+   "kinds": [
+    "gap:gap:p4",
+    "road:land:p4"
+   ],
+   "landPitch": -1.999999997714666,
+   "afterPitch": null
+  },
+  "placedFlightSide": {
+   "cyan": 876,
+   "red": 0,
+   "other": 3651
+  },
+  "refusedTwice": {
+   "status": "No saved pieces yet: select pieces on the track and press Save as piece. | The track already ends in a jump. Press Extend first, so the car has road to land on, then add the next one.",
+   "pieces": "4 pieces · 357 m · open · last jump 1 ms"
+  },
+  "afterExtend": {
+   "info": "5 pieces · 457 m · open · last extend 1 ms",
+   "track": {
+    "n": 202,
+    "gap": true,
+    "kinds": [
+     "gap:gap:p4",
+     "road:land:p4",
+     "road:body:p5"
+    ],
+    "landPitch": -1.999999997714666,
+    "afterPitch": -1.999999997714666
+   },
+   "pixels": {
+    "cyan": 0,
+    "red": 0,
+    "other": 0
+   }
+  },
+  "afterExtendSide": {
+   "cyan": 0,
+   "red": 0,
+   "other": 0
+  },
+  "afterExtendOverhead": {
+   "cyan": 311,
+   "red": 0,
+   "other": 1799
+  },
+  "afterUndo2": {
+   "info": "3 pieces · 300 m · open · last extend 1 ms",
+   "pixels": {
+    "cyan": 0,
+    "red": 0,
+    "other": 0
+   },
+   "track": {
+    "n": 150,
+    "gap": false,
+    "kinds": [
+     "road:body:p1",
+     "road:body:p3"
+    ],
+    "landPitch": null,
+    "afterPitch": null
+   }
+  }
+ },
+ "keeperFiles": 9,
+ "keeperChanged": [],
+ "runAppData": [
+  "autosave.t180auto"
+ ],
+ "ended": "2026-10-06T11:58:01.742Z"
+}

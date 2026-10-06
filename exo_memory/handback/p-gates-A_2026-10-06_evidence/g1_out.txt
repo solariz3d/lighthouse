@@ -1,0 +1,44 @@
+ok   G1-a git push, a clean commit: allow
+ok   G1-b git push, a commit adding a vck_ key: deny  |   cfg/app.env:2  (gateway key (vck_))
+ok   G1-b2 the reason shows file:line and the kind, not the key: true
+ok   G1-c git push --force, the key still there: deny
+ok   G1-c2 git push -f origin main: deny
+ok   G1-c3 git push --force-with-lease: deny
+ok   G1-d after the key commit is gone: git push --force: allow
+ok   G1-d2 git push -f (clean): allow
+ok   G1-e-vck each shape is refused: vck: deny
+ok   G1-e-ant each shape is refused: ant: deny
+ok   G1-e-ghp each shape is refused: ghp: deny
+ok   G1-e-aws each shape is refused: aws: deny
+ok   G1-e-pem each shape is refused: pem: deny
+ok   G1-f a key the diff REMOVES (an earlier pushed key deleted now) is allowed: allow
+ok   G1-g no upstream (a new branch), clean: allowed: allow
+ok   G1-h no upstream (a new branch), a key: refused (scanned from the merge base with origin/main): deny  | merge-base with origin/main
+DIFF G1-i the FIRST push of a new repo to an empty remote, the first commit holds a key: allow  (expected deny)  | HOLE if allow: no base to diff against, so it fails open and scans nothing
+DIFF G1-j a remote NOT named origin and no upstream, a key in the unpushed commit: allow  (expected deny)  | HOLE if allow: only refs/remotes/origin/* are tried
+DIFF G1-k a key ADDED in one unpushed commit and REMOVED in the next: the push publishes the first commit: allow  (expected deny)  | HOLE if allow: the key is in the history being pushed (confirmed in git log -p), the net diff is clean
+DIFF G1-l cd <repo with a key> && git push   (session cwd is not a repo): allow  (expected deny)  | HOLE if allow: the gate runs git in the session cwd, not the cd
+DIFF G1-m cd <clean repo> && git push   (session cwd = a repo holding a key): deny  (expected allow)  | FALSE POSITIVE if deny: it scanned the session repo, not the cd
+ok   G1-n git -C <repo with a key> push (the form it does handle): deny
+ok   G1-o git -C <relative repo> push: deny
+ok   G1-p PowerShell tool: git -C <repo> push: deny
+ok   G1-q a push in a chain after other commands: deny
+ok   G1-r git status (not a push): allow
+ok   G1-s git log -1 (not a push): allow
+ok   G1-t git pull: allow
+DIFF G1-u git commit -m "notes on git push" with an unpushed key in the history: deny  (expected allow)  | FALSE POSITIVE if deny (E names it): a commit refused because of the words
+ok   G1-v echo "git push later": allow  | same family
+ok   G1-w1 fails OPEN: not json: status 0, stdout ""
+ok   G1-w2 fails OPEN: empty stdin: status 0, stdout ""
+ok   G1-w3 fails OPEN: no tool_name: status 0, stdout ""
+ok   G1-w4 fails OPEN: command is a number: status 0, stdout ""
+ok   G1-w5 fails OPEN: not a shell tool: status 0, stdout ""
+ok   G1-w6 fails OPEN: cwd does not exist: status 0, stdout ""
+ok   G1-x git not found on PATH: fails open (and says so in the ledger): status 0, stdout ""
+ok   G1-y an unwritable ledger does not stop the deny: deny
+ok   G1-z git hangs (a textconv that sleeps 30 s) with a key in the diff: allowed, within the watchdog: status 0, deny false, within 9.5 s  | 6150 ms: FAILS OPEN on the timeout, by design; note the key goes unscanned
+   real repo lighthouse: allow in 402 ms
+   real repo t180 main: allow in 201 ms
+ok   G1-ledger the ledger has file, line and kind, and no key text: true  | 30 rows
+
+DIFFS: G1-i, G1-j, G1-k, G1-l, G1-m, G1-u

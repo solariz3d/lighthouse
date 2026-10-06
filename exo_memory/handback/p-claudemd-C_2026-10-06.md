@@ -209,4 +209,21 @@ Unchanged lines (50 of 60) are elided as `...`. After the keeper's line-by-line 
 - **The other projects have few transcripts since 08-01** (37 turn-ending replies across all of them). Their weight here comes from their memories, not from rates.
 - None of the three gates is built or dry-run. G3's false-positive rate is unknown, which is why it starts in shadow.
 
-NEXT: librarian bring the keeper the line-by-line decisions when this is read — plan default: he approves line by line, then the master is edited, copied and compared
+## APPLIED (2026-10-06 02:3x, at the keeper's delegation and the librarian's ruling; plan "The keeper's decisions")
+1. **Backup, byte-identical:** `cp -p ~/.claude/CLAUDE.md exo_memory/handback/p-claudemd-C_2026-10-06_CLAUDE.md.before` → `cmp` silent
+   (BACKUP-IDENTICAL). Pre-edit sha256 `bd243cdf…`, 95 lines.
+2. **The master edited first** (`exo_memory/CLAUDE.global.md`), with exactly the proposed diff above minus the `# tag` comments. That is V1,
+   V7, SEC2, C1, A2, A3, T1–T4 and the added "Working with the user". CRLF kept (`file`: "with CRLF line terminators"), 100 lines.
+3. **Copied:** `cp exo_memory/CLAUDE.global.md ~/.claude/CLAUDE.md` → **`cmp: IDENTICAL`** (both sha256 `792c2843…`, 8,878 bytes),
+   re-checked after the commit: IDENTICAL.
+4. **Read back against the proposal:** `git diff --no-index <backup> <master>` → **15 insertions, 10 deletions**. Its 15 `+` lines `diff`
+   EQUAL to the proposal's 15 `+` lines with the tags stripped ("APPLIED == PROPOSED"). The 10 `−` lines are exactly the 10 reworded rules;
+   nothing else in the file changed.
+5. **Commit `686955f8`** in lighthouse, `exo_memory/CLAUDE.global.md` only, by named path, seat C in the body. Not pushed. The backup file and
+   this hand-back are left for the chair's commit.
+- Git warns that the working copy's CRLF "will be replaced by LF the next time Git touches it". inferred: the repo normalises line endings,
+  so a future checkout of the master may write LF. The live `~/.claude/CLAUDE.md` is not under git and stays as copied. Anyone re-copying
+  later should `cmp` again.
+- No gates built (E builds G1/G2; G3 is shadow only).
+
+NEXT: librarian tell the keeper it's live when this is read — plan default: E builds G1/G2 and G3 in shadow

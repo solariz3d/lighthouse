@@ -1,0 +1,75 @@
+── E. ROTATION: put the wrapped run and the REST back at an empty head, in lap order: the track must still CLOSE
+   control: the ORIGINAL legacy lap, same measure: end-to-start gap 0.0002 m
+ok   E-legacy-5..0 rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 1.1e-7, bank seam 0.0e+0 (mod 2pi): true
+ok   E-legacy-4..1 rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 1.1e-7, bank seam 0.0e+0 (mod 2pi): true
+ok   E-legacy-3..1 rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 1.1e-7, bank seam 0.0e+0 (mod 2pi): true
+ok   E-roll1-5..0 rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 3.3e-8, bank seam 1.8e-10 (mod 2pi): true
+ok   E-roll1-4..1 rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 4.2e-8, bank seam 1.8e-10 (mod 2pi): true
+ok   E-roll1-3..1 rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 4.2e-8, bank seam 1.8e-10 (mod 2pi): true
+ok   E-rollp-5..0 rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 3.3e-8, bank seam 1.8e-10 (mod 2pi): true
+ok   E-rollp-4..1 rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 4.2e-8, bank seam 1.8e-10 (mod 2pi): true
+ok   E-rollp-3..1 rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 4.2e-8, bank seam 1.8e-10 (mod 2pi): true
+ok   E-cup-5..0 rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 1.1e-7, bank seam 0.0e+0 (mod 2pi): true
+ok   E-cup-4..1 rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 1.1e-7, bank seam 0.0e+0 (mod 2pi): true
+ok   E-cup-3..1 rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 1.1e-7, bank seam 0.0e+0 (mod 2pi): true
+ok   E-tube-5..0 rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 1.1e-7, bank seam 0.0e+0 (mod 2pi): true
+ok   E-tube-4..1 rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 1.1e-7, bank seam 0.0e+0 (mod 2pi): true
+ok   E-tube-3..1 rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 1.1e-7, bank seam 0.0e+0 (mod 2pi): true
+ok   E-tuberoll-5..0 rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 4.2e-8, bank seam 1.8e-10 (mod 2pi): true
+ok   E-tuberoll-4..1 rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 5.2e-8, bank seam 1.8e-10 (mod 2pi): true
+ok   E-tuberoll-3..1 rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 5.2e-8, bank seam 1.8e-10 (mod 2pi): true
+
+── F. BYTE-LEVEL: the wrapped save equals the save of the HAND-BUILT open track (the pieces in lap order, the winding added by my own arithmetic)
+ok   F-legacy-5..0 the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth): "ok"
+ok   F-legacy-5..0-bytes wrapped save text === hand-built save text: true
+ok   F-legacy-4..1 the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth): "ok"
+ok   F-legacy-4..1-bytes wrapped save text === hand-built save text: true
+ok   F-legacy-2..1 the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth): "ok"
+ok   F-legacy-2..1-bytes wrapped save text === hand-built save text: true
+ok   F-roll1-5..0 the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth): "ok"
+ok   F-roll1-5..0-bytes wrapped save text === hand-built save text: true
+ok   F-roll1-4..1 the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth): "ok"
+ok   F-roll1-4..1-bytes wrapped save text === hand-built save text: true
+ok   F-roll1-2..1 the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth): "ok"
+ok   F-roll1-2..1-bytes wrapped save text === hand-built save text: true
+ok   F-rollp-5..0 the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth): "ok"
+ok   F-rollp-5..0-bytes wrapped save text === hand-built save text: true
+ok   F-rollp-4..1 the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth): "ok"
+ok   F-rollp-4..1-bytes wrapped save text === hand-built save text: true
+ok   F-rollp-2..1 the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth): "ok"
+ok   F-rollp-2..1-bytes wrapped save text === hand-built save text: true
+ok   F-cup-5..0 the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth): "ok"
+ok   F-cup-5..0-bytes wrapped save text === hand-built save text: true
+ok   F-cup-4..1 the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth): "ok"
+ok   F-cup-4..1-bytes wrapped save text === hand-built save text: true
+ok   F-cup-2..1 the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth): "ok"
+ok   F-cup-2..1-bytes wrapped save text === hand-built save text: true
+ok   F-tube-5..0 the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth): "ok"
+ok   F-tube-5..0-bytes wrapped save text === hand-built save text: true
+ok   F-tube-4..1 the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth): "ok"
+ok   F-tube-4..1-bytes wrapped save text === hand-built save text: true
+ok   F-tube-2..1 the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth): "ok"
+ok   F-tube-2..1-bytes wrapped save text === hand-built save text: true
+ok   F-tuberoll-5..0 the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth): "ok"
+ok   F-tuberoll-5..0-bytes wrapped save text === hand-built save text: true
+ok   F-tuberoll-4..1 the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth): "ok"
+ok   F-tuberoll-4..1-bytes wrapped save text === hand-built save text: true
+ok   F-tuberoll-2..1 the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth): "ok"
+ok   F-tuberoll-2..1-bytes wrapped save text === hand-built save text: true
+
+── G. THE SHELL
+ok   G-del Delete selected on a wrapped run of a closed lap: refused CLOSED, nothing changed: [true,true,true,true]  | CLOSED: a closed track has no open end to delete from; Ctrl+Backspace removes th
+ok   G-del2 proposeDelete called directly on it: also refused by name, no preview: [true,true]
+ok   G-sculpt D244b: Sculpt with a WRAPPED selection offers no piece (it needs ONE): null
+ok   G-sculpt2 beginSculpt on it: refused, no drag: [null,true]
+ok   G-info a 4-piece wrapped run: ids in lap order, count 4, length the sum of those four, atEnd false: [["p5","p6","p1","p2"],4,925.49,false,true]
+ok   G-open an OPEN track never wraps: the run is 0..n-1: [0,5,6]
+ok   G-same shift-click on the same piece: one piece: 1
+ok   G-anchor the first piece stays the anchor: p2 then p6 (across the line) then p4 (inside): [["p6","p1","p2"],["p2","p3","p4"]]
+ok   G-tie-real on the keeper's real ovals (3 read, read only): every exact tie (9) stays inside the lap: 0
+DIFF G-rest the rest of the lap (4 pieces, p2..p5) selected inside: [4,1,4]  (expected [1,4,4])
+ok   G-rot the two saved runs put back at an EMPTY head: the rotated lap has all 6 pieces, joined (no refusal): [6,"ok"]  | added the piece "rest" at the head: 4 pieces (Ctrl+Z takes it back)
+ok   G-rot-closed marked closed it is a valid closed document: "ok"
+DIFF G-export the rotated lap EXPORTS (every check on) like any closed lap: "buildPath: closed loop does not close (position 3.38e+2 m, tangent 1.34e+0)"  (expected "exports")
+
+summary: G-rest, G-export

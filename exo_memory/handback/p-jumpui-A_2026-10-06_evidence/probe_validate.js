@@ -1,0 +1,5 @@
+const W='C:/Users/nname/Desktop/worktrees/a-jumpui-wt/'; const { createCoreShell } = require(W+'app/core/coreshell.js'); const G=require(W+'src/geom/index.js'); const V=require(W+'src/validate/index.js');
+const reds=(s,speedKmh)=>{ const r=s.getState().resolved; const p=G.buildPath(r.segments,{step:2,closed:false,start:r.start}); const v=V.validate(p,r.segments,{csp:true,softCollision:true,...(speedKmh?{designSpeed:speedKmh/3.6}:{})}); return v.red.map(x=>x.reason+(x.worst!=null?`(${(+x.worst).toFixed?(+x.worst).toFixed(1):x.worst})`:'')); };
+(async()=>{ const mk=async()=>{ const s=await createCoreShell({autosaveMs:0}); s.extend({length:300,family:'bowl'}); s.extend({length:100,targets:{kv:0.002}}); return s; };
+ for (const [label,o,ext] of [['short gap 15 m',{gap:15,drop:1,landDeg:-2},0],['gap 30 m',{gap:30,drop:1,landDeg:-2},0],['long gap 120 m',{gap:120,drop:3,landDeg:-3},0],['gap 30 + Extend',{gap:30,drop:1,landDeg:-2},1]]) { const s=await mk(); s.addJump(o); if(ext) s.extend({length:100}); console.log(label,'| no speed:',JSON.stringify(reds(s)),'| at 460:',JSON.stringify(reds(s,460)),'| at 300:',JSON.stringify(reds(s,300))); }
+})();

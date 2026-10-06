@@ -1,0 +1,10 @@
+probed [33m1038[39m {"allow":1037,"deny":1}
+   deny scratchpad ances-sibling-3d57124e/6fe15f0a ances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad ["gates\\work\\wt\\wt2\\reads -> C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\gates\\work\\wt\\precious","gates\\work\\globtest\\logs\\unrelated -> C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\gates\\work\\wt\\precious","gates\\work\\deep\\a\\b\\c\\d\\e\\lnk -> C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\gates\\work\\wt\\precious"]
+slowest ms: [33m1792[39m
+node_modules found: [33m6[39m
+   allow C:\Users\nname\Desktop\brain rot\node_modules 26 ms
+   allow C:\Users\nname\Desktop\fractal\node_modules 30 ms
+   allow C:\Users\nname\Desktop\new project\node_modules 27 ms
+   allow C:\Users\nname\Desktop\newer project\node_modules 17 ms
+   allow C:\Users\nname\Desktop\signal audio\node_modules 89 ms
+   allow C:\Users\nname\Desktop\the_loop\node_modules 16 ms

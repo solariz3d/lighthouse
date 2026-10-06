@@ -95,4 +95,17 @@ paths. Not pushed, no AC. GEOMETRY tier for the core part; targeted tests only, 
 - Not done: A's finding C (a wound straight not read as straight by `startLayout`). It is not this change, and A untested its one-line fix.
 - **For landing:** f13cded and 8292269 both conflict with 8b15ee9 in `CHANGELOG.md` only. See `p-steamac-C_2026-10-06.md` for the resolution.
 
-NEXT: librarian collate the fixes when read — plan default: A re-checks rows 1d and 1e, then it lands with 8292269 on 8b15ee9
+## P2/P3 (the librarian's install run on main da2c2d6: core_piece_mutation 65/67, P2 and P3 NOT APPLIED): commit `eeec787` on da2c2d6
+- **Cause, mine:** f13cded rewrote `saveRun`'s range check (so that from > to is valid across a closed lap's start line), and P2/P3's anchor
+  `from < 0 || to >= doc.pieces.length || to < from)` left `src/core/piece.js`.
+  - I did not grep the harness anchors for that line when I changed it. That is the move my own map has recorded since 10-05 (the P28 lap),
+    broken again.
+- **Re-anchored, the same meaning,** on the new check's tail `from >= n || to >= n || (to < from && !wrap))` (`grep -cF` → 1 in piece.js):
+  - **P2 "a run that ends before it starts is accepted (on an open track)":** drops `(to < from && !wrap)`. It is caught by row 9's 3..2 on
+    the OPEN track (added in f13cded); with the refusal gone, `runOf` would wrap the run and save it.
+  - **P3 "a run past the end of the track is accepted":** drops `to >= n`. It is caught by row 9's `0..n`.
+- `node --test --test-concurrency=1 test/core_piece_mutation.test.js`, ONCE, under the lock → **67 / 67**: control green, P2 and P3 applied
+  and caught, **0 NOT APPLIED** (`p23/pm.out`, sha256 `cc695aab…`).
+- Fresh worktree `C:\Users\nname\Desktop\worktrees\c-p2p3-wt` (branch `p2p3-c`). **The test file only**, by named path. Not pushed.
+
+NEXT: librarian collate P2/P3 when read — plan default: the chair fast-forwards eeec787 and the librarian pushes (no install, test-only)

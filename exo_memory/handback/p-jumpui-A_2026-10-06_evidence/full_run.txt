@@ -1,0 +1,16 @@
+exit 0 tests 659 pass 658 fail 0
+✖ failing tests:
+test at app\test\aclook.test.js:197:1
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  -     't180b_paint',
+  +     'PAINT_GRID_0',
+  +     'PAINT_GRID_1',
+  +     'PAINT_GRID_2',
+  +     'PAINT_GRID_3',
+  +     'PAINT_PIT_0',
+  +     'PAINT_PIT_1',
+  +     'PAINT_START_LINE'
+      at TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\a-jumpui-wt\app\test\aclook.test.js:199:10)
+    actual: [
+    expected: [

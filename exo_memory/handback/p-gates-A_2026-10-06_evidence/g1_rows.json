@@ -1,0 +1,322 @@
+[
+ {
+  "id": "G1-a",
+  "what": "git push, a clean commit",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-b",
+  "what": "git push, a commit adding a vck_ key",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": "  cfg/app.env:2  (gateway key (vck_))"
+ },
+ {
+  "id": "G1-b2",
+  "what": "the reason shows file:line and the kind, not the key",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-c",
+  "what": "git push --force, the key still there",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-c2",
+  "what": "git push -f origin main",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-c3",
+  "what": "git push --force-with-lease",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-d",
+  "what": "after the key commit is gone: git push --force",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-d2",
+  "what": "git push -f (clean)",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-e-vck",
+  "what": "each shape is refused: vck",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-e-ant",
+  "what": "each shape is refused: ant",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-e-ghp",
+  "what": "each shape is refused: ghp",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-e-aws",
+  "what": "each shape is refused: aws",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-e-pem",
+  "what": "each shape is refused: pem",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-f",
+  "what": "a key the diff REMOVES (an earlier pushed key deleted now) is allowed",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-g",
+  "what": "no upstream (a new branch), clean: allowed",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-h",
+  "what": "no upstream (a new branch), a key: refused (scanned from the merge base with origin/main)",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": "merge-base with origin/main"
+ },
+ {
+  "id": "G1-i",
+  "what": "the FIRST push of a new repo to an empty remote, the first commit holds a key",
+  "got": "allow",
+  "expect": "deny",
+  "ok": false,
+  "note": "HOLE if allow: no base to diff against, so it fails open and scans nothing"
+ },
+ {
+  "id": "G1-j",
+  "what": "a remote NOT named origin and no upstream, a key in the unpushed commit",
+  "got": "allow",
+  "expect": "deny",
+  "ok": false,
+  "note": "HOLE if allow: only refs/remotes/origin/* are tried"
+ },
+ {
+  "id": "G1-k",
+  "what": "a key ADDED in one unpushed commit and REMOVED in the next: the push publishes the first commit",
+  "got": "allow",
+  "expect": "deny",
+  "ok": false,
+  "note": "HOLE if allow: the key is in the history being pushed (confirmed in git log -p), the net diff is clean"
+ },
+ {
+  "id": "G1-l",
+  "what": "cd <repo with a key> && git push   (session cwd is not a repo)",
+  "got": "allow",
+  "expect": "deny",
+  "ok": false,
+  "note": "HOLE if allow: the gate runs git in the session cwd, not the cd"
+ },
+ {
+  "id": "G1-m",
+  "what": "cd <clean repo> && git push   (session cwd = a repo holding a key)",
+  "got": "deny",
+  "expect": "allow",
+  "ok": false,
+  "note": "FALSE POSITIVE if deny: it scanned the session repo, not the cd"
+ },
+ {
+  "id": "G1-n",
+  "what": "git -C <repo with a key> push (the form it does handle)",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-o",
+  "what": "git -C <relative repo> push",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-p",
+  "what": "PowerShell tool: git -C <repo> push",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-q",
+  "what": "a push in a chain after other commands",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-r",
+  "what": "git status (not a push)",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-s",
+  "what": "git log -1 (not a push)",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-t",
+  "what": "git pull",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-u",
+  "what": "git commit -m \"notes on git push\" with an unpushed key in the history",
+  "got": "deny",
+  "expect": "allow",
+  "ok": false,
+  "note": "FALSE POSITIVE if deny (E names it): a commit refused because of the words"
+ },
+ {
+  "id": "G1-v",
+  "what": "echo \"git push later\"",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": "same family"
+ },
+ {
+  "id": "G1-w1",
+  "what": "fails OPEN: not json",
+  "got": "status 0, stdout \"\"",
+  "expect": "status 0, stdout \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-w2",
+  "what": "fails OPEN: empty stdin",
+  "got": "status 0, stdout \"\"",
+  "expect": "status 0, stdout \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-w3",
+  "what": "fails OPEN: no tool_name",
+  "got": "status 0, stdout \"\"",
+  "expect": "status 0, stdout \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-w4",
+  "what": "fails OPEN: command is a number",
+  "got": "status 0, stdout \"\"",
+  "expect": "status 0, stdout \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-w5",
+  "what": "fails OPEN: not a shell tool",
+  "got": "status 0, stdout \"\"",
+  "expect": "status 0, stdout \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-w6",
+  "what": "fails OPEN: cwd does not exist",
+  "got": "status 0, stdout \"\"",
+  "expect": "status 0, stdout \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-x",
+  "what": "git not found on PATH: fails open (and says so in the ledger)",
+  "got": "status 0, stdout \"\"",
+  "expect": "status 0, stdout \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-y",
+  "what": "an unwritable ledger does not stop the deny",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G1-z",
+  "what": "git hangs (a textconv that sleeps 30 s) with a key in the diff: allowed, within the watchdog",
+  "got": "status 0, deny false, within 9.5 s",
+  "expect": "status 0, deny false, within 9.5 s",
+  "ok": true,
+  "note": "6150 ms: FAILS OPEN on the timeout, by design; note the key goes unscanned"
+ },
+ {
+  "id": "G1-ledger",
+  "what": "the ledger has file, line and kind, and no key text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "30 rows"
+ }
+]

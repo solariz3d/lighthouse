@@ -86,3 +86,10 @@
 - Not pushed. The body says B wrote it.
 - **The harness, run once on the commit:** `node --test --test-concurrency=1 app/test/core-close-mutation.test.js` → **32 tests, 32 pass, 0 fail, 0 NOT APPLIED** (`async/run3.out`, under the lock, with the serial shim).
 - Worktree clean after the commit (`git status --short` → 0 lines).
+
+### Rebuilt on the landed main (the chair's 17:38 packet): **`974e35e`**
+- `f1d351d` cherry-picked **cleanly** onto t180 main **`14519ba`**, on my branch `b-reanchor-a5u1-14519ba` (worktree `b-async-wt`).
+  - **`974e35e`**: one file, `app/test/core-close-mutation.test.js`, 2 lines, the same two `from:` strings. Not pushed.
+- **The harness, run once on `974e35e`:** `node --test --test-concurrency=1 app/test/core-close-mutation.test.js` → **32 tests, 32 pass, 0 fail, 0 NOT APPLIED** (`async/run4.out`; under the lock, behind the librarian's full suite on `14519ba`; serial shim).
+- Worktree clean (`git status --short` → 0 lines).
+- **Land `974e35e`**; `f1d351d` (on `9de8828`) is superseded.

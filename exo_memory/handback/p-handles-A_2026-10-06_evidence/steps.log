@@ -1,0 +1,162 @@
+2026-10-06T09:31:40.654Z ev (() => ({ extend: [...document.querySelectorAll('button')].some((b) => b.textContent.trim() === 'Ext
+2026-10-06T09:31:41.466Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T09:31:41.467Z CHECK start {"status":"unsaved","info":"0 pieces · 0 m · open","msg":"No saved pieces yet: select pieces on the track and press Save as piece."}
+2026-10-06T09:31:42.974Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: 'overhead' } }))
+2026-10-06T09:31:44.483Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:31:44.484Z CHECK initialHandles ["length:0","width:1","width:-1","bank:1","bank:-1","cup:1","cup:-1","turn:1","turn:-1","climb:0"]
+2026-10-06T09:31:44.517Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: 'build' } }))
+2026-10-06T09:31:45.761Z ev (() => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim() === "Ex
+2026-10-06T09:31:47.258Z ev (() => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim() === "Ex
+2026-10-06T09:31:48.272Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:31:48.273Z CHECK handlesAfterTwoPieces ["length:0","width:1","width:-1","bank:1","bank:-1","cup:1","cup:-1","turn:1","turn:-1","climb:0"]
+2026-10-06T09:31:48.363Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T09:31:48.364Z CHECK infoBefore "2 pieces · 200 m · open · last extend 1 ms"
+2026-10-06T09:31:48.364Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:48.365Z CHECK fieldsBefore {"length m":"100","turn °/100m":"0","climb °/100m":"0","bank °":"0","cup °":"15.5","width m":"31","edge angle °":"0","edge start":"0.64","tube sweep °":"0","radius m":"60"}
+2026-10-06T09:31:48.365Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:31:48.366Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:49.252Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:49.253Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:31:49.254Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:50.149Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:50.150Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:31:50.151Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:51.037Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:51.038Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:31:51.039Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:51.937Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:51.938Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:31:51.939Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:52.825Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:52.826Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:31:52.827Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:53.723Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:53.724Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:31:53.725Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:54.612Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:54.613Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:31:54.614Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:55.512Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:55.513Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:31:55.514Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:56.404Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:56.406Z CHECK drags {"length:0":{"field":"length m","before":"100","after":"120","m":20,"pxPerM":0.29},"width:1":{"field":"width m","before":"31","after":"33","m":1,"pxPerM":4.09},"width:-1":{"field":"width m","before":"33","after":"35","m":1,"pxPerM":4.09},"bank:1":{"field":"bank °","before":"0","after":"6.9","m":2,"pxPerM":7.23},"bank:-1":{"field":"bank °","before":"6.9","after":"13.8","m":2,"pxPerM":7.17},"cup:1":{"field":"cup °","before":"15.5","after":"21.5","m":3,"pxPerM":7.22},"turn:1":{"field":"turn °/100m","before":"0","after":"2","m":4,"pxPerM":5.29},"turn:-1":{"field":"turn °/100m","before":"2","after"
+2026-10-06T09:31:56.406Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T09:31:56.406Z CHECK infoAfterDrags "2 pieces · 200 m · open · last extend 1 ms"
+2026-10-06T09:31:56.407Z CHECK noDocumentEdit true
+2026-10-06T09:31:56.492Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T09:31:56.812Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:31:57.607Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:57.608Z CHECK shiftFine {"from":100,"m":20,"to":"102","expect":"102 (a tenth of 20)"}
+2026-10-06T09:31:57.608Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T09:31:57.919Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:31:58.712Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:31:58.713Z CHECK ctrlSnap {"from":100,"m":23,"to":"120","expect":"a multiple of 10"}
+2026-10-06T09:31:58.713Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T09:31:59.036Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:31:59.529Z ev document.getElementById('preview').style.cursor
+2026-10-06T09:31:59.529Z CHECK cursorOnHandle "ns-resize"
+2026-10-06T09:31:59.738Z ev document.getElementById('preview').style.cursor
+2026-10-06T09:31:59.739Z CHECK cursorOff ""
+2026-10-06T09:31:59.739Z ev (() => { let v = null; document.dispatchEvent(new CustomEvent('t180:view', { detail: { reply: (x) =>
+2026-10-06T09:32:00.625Z ev (() => { let v = null; document.dispatchEvent(new CustomEvent('t180:view', { detail: { reply: (x) =>
+2026-10-06T09:32:00.626Z CHECK cameraRightDrag {"moved":true}
+2026-10-06T09:32:00.626Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:00.626Z ev (() => { let v = null; document.dispatchEvent(new CustomEvent('t180:view', { detail: { reply: (x) =>
+2026-10-06T09:32:01.420Z ev (() => { let v = null; document.dispatchEvent(new CustomEvent('t180:view', { detail: { reply: (x) =>
+2026-10-06T09:32:01.420Z CHECK handleDragLeavesCamera true
+2026-10-06T09:32:01.421Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T09:32:01.747Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:32:01.748Z ev (() => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim() === "Ex
+2026-10-06T09:32:01.767Z CHECK extendClick "clicked"
+2026-10-06T09:32:02.975Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T09:32:02.976Z CHECK infoAfterExtend "3 pieces · 360 m · open · last extend 1 ms"
+2026-10-06T09:32:03.088Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:03.972Z ev (() => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim() === "Ex
+2026-10-06T09:32:05.191Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:06.078Z ev (() => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim() === "Ex
+2026-10-06T09:32:07.307Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:08.197Z ev (() => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim() === "Ex
+2026-10-06T09:32:09.426Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T09:32:09.427Z CHECK infoTrack "6 pieces · 840 m · open · last extend 1 ms"
+2026-10-06T09:32:09.427Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: 'overhead' } }))
+2026-10-06T09:32:10.982Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:10.985Z CHECK ghostAfterExtend 10
+2026-10-06T09:32:10.985Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: 'build' } }))
+2026-10-06T09:32:12.486Z ev (() => { const c = document.querySelector('[aria-label="brush on"]'); c.checked = true; return c.che
+2026-10-06T09:32:12.487Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:12.488Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:32:13.377Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T09:32:13.379Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T09:32:13.379Z CHECK armedPressOnHandle {"lengthBefore":"160","lengthAfter":"170","brushRan":false}
+2026-10-06T09:32:13.379Z ev (() => { const c = document.querySelector('[aria-label="brush on"]'); c.checked = false; c.dispatchE
+2026-10-06T09:32:13.380Z ev (() => { const c = document.querySelector('[aria-label="sculpt on"]'); c.checked = true; c.dispatchE
+2026-10-06T09:32:13.382Z CHECK sculptOn true
+2026-10-06T09:32:13.890Z ev (() => [...document.querySelector('[aria-label="brush channel"]').options].map((o) => o.value))()
+2026-10-06T09:32:13.891Z CHECK sculptChannels ["phi","c","w","e","s","r","t"]
+2026-10-06T09:32:13.891Z ev document.querySelector('[aria-label="brush mode"]').disabled
+2026-10-06T09:32:13.893Z CHECK sculptModeDisabled true
+2026-10-06T09:32:13.893Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:13.893Z CHECK noHandlesUntilSelected 0
+2026-10-06T09:32:13.893Z ev (() => { const e = document.querySelector('[aria-label="sculpt hint"]'); return e ? e.textContent : 
+2026-10-06T09:32:13.895Z CHECK sculptHint "Select ONE piece: click it on the track. Only its shape (bank, cup, width, edge, wall rise, tube sweep) can change; turn and climb are not offered, and the centreline is checked on every step."
+2026-10-06T09:32:13.895Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: 'overhead' } }))
+2026-10-06T09:32:15.099Z ev (() => { const st = document.getElementById('preview'), r = st.getBoundingClientRect(); let track = 
+2026-10-06T09:32:15.476Z CHECK where {"x":778,"y":526,"s":188,"mid":188}
+2026-10-06T09:32:16.185Z ev (() => { const e = document.querySelector('[aria-label="selection"]'); return e ? e.textContent : nu
+2026-10-06T09:32:16.186Z CHECK selection "Selected: p2 · 100 m"
+2026-10-06T09:32:16.186Z ev (() => { const e = document.querySelector('[aria-label="sculpt hint"]'); return e ? e.textContent : 
+2026-10-06T09:32:16.187Z CHECK sculptHintSelected "Sculpting p2: drag its handles (bank, width) or use the brush; one drag is one undo step. The route never moves."
+2026-10-06T09:32:16.187Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:16.188Z CHECK sculptHandles ["bank:1","bank:-1","width:1","width:-1"]
+2026-10-06T09:32:16.238Z ev (() => { let t = null; document.dispatchEvent(new CustomEvent('t180:track-request', { detail: { repl
+2026-10-06T09:32:16.240Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T09:32:16.241Z CHECK undoBefore "6 pieces · 840 m · open · last extend 1 ms"
+2026-10-06T09:32:17.618Z ev (() => { let t = null; document.dispatchEvent(new CustomEvent('t180:track-request', { detail: { repl
+2026-10-06T09:32:17.672Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T09:32:17.673Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T09:32:17.674Z CHECK sculptDrag {"samples":[421,421],"centrelineMaxDiffM":0,"rollChangedInsideP2":0.183105711,"rollChangedOutside":0,"info":"6 pieces · 840 m · open · last brush:rate 3 ms","msg":"Sculpting p2: drag its handles (bank, width) or use the brush; one drag is one undo step. The route never moves. | No saved pieces yet: select pieces on the track and press Save as piece."}
+2026-10-06T09:32:17.674Z ev (() => { const b = [...document.querySelectorAll("#palette button")].find((x) => x.textContent.trim(
+2026-10-06T09:32:18.596Z ev (() => { let t = null; document.dispatchEvent(new CustomEvent('t180:track-request', { detail: { repl
+2026-10-06T09:32:18.603Z CHECK afterUndoOnce {"rollMaxDiffFromBefore":0,"posMaxDiff":0,"pieces":true}
+2026-10-06T09:32:18.604Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:18.859Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:19.125Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:19.375Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:19.639Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:19.901Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:20.166Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:20.432Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:20.694Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:20.960Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:21.223Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:21.487Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:21.752Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:22.018Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:22.281Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:22.544Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:22.809Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:23.074Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:23.337Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:23.602Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:23.866Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:24.133Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:24.398Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:24.663Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:24.927Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:25.191Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:25.457Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:25.708Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:25.973Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:26.223Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:26.487Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:26.753Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:27.019Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:27.285Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:27.550Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:27.801Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:27.802Z ev (() => { const c = document.querySelector('[aria-label="sculpt on"]'); c.checked = false; c.dispatch
+2026-10-06T09:32:28.406Z ev (() => [...document.querySelector('[aria-label="brush channel"]').options].map((o) => o.value))()
+2026-10-06T09:32:28.408Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T09:32:28.411Z CHECK sculptOff {"channels":["kv","kh","phi","w","r","c","e","s","t"],"handles":10}
+2026-10-06T09:32:28.411Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: 'build' } }))

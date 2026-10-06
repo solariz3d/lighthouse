@@ -1,0 +1,1190 @@
+[
+ {
+  "id": "A-no-5..0 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-no-5..0 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 0"
+ },
+ {
+  "id": "A-no-5..0 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "180 segments, max diff 0"
+ },
+ {
+  "id": "A-no-5..0 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 0"
+ },
+ {
+  "id": "A-no-4..1 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-no-4..1 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 0"
+ },
+ {
+  "id": "A-no-4..1 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "464 segments, max diff 0"
+ },
+ {
+  "id": "A-no-4..1 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 0"
+ },
+ {
+  "id": "A-no-5..1 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-no-5..1 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 0"
+ },
+ {
+  "id": "A-no-5..1 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "322 segments, max diff 0"
+ },
+ {
+  "id": "A-no-5..1 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 0"
+ },
+ {
+  "id": "A-no-2..1 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-no-2..1 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 0"
+ },
+ {
+  "id": "A-no-2..1 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "748 segments, max diff 0"
+ },
+ {
+  "id": "A-no-2..1 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 0"
+ },
+ {
+  "id": "A-no-1..0 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-no-1..0 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 0"
+ },
+ {
+  "id": "A-no-1..0 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "748 segments, max diff 0"
+ },
+ {
+  "id": "A-no-1..0 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 0"
+ },
+ {
+  "id": "A-one-5..0 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-one-5..0 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 1.7958612374968652e-10"
+ },
+ {
+  "id": "A-one-5..0 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "180 segments, max diff 0"
+ },
+ {
+  "id": "A-one-5..0 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 1.7958790010652592e-10"
+ },
+ {
+  "id": "A-one-4..1 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-one-4..1 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 1.7958790010652592e-10"
+ },
+ {
+  "id": "A-one-4..1 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "464 segments, max diff 0"
+ },
+ {
+  "id": "A-one-4..1 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 1.7958878828494562e-10"
+ },
+ {
+  "id": "A-one-5..1 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-one-5..1 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 1.7958790010652592e-10"
+ },
+ {
+  "id": "A-one-5..1 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "322 segments, max diff 0"
+ },
+ {
+  "id": "A-one-5..1 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 1.7958878828494562e-10"
+ },
+ {
+  "id": "A-one-2..1 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-one-2..1 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 1.7958790010652592e-10"
+ },
+ {
+  "id": "A-one-2..1 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "748 segments, max diff 0"
+ },
+ {
+  "id": "A-one-2..1 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 1.7958878828494562e-10"
+ },
+ {
+  "id": "A-one-1..0 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-one-1..0 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 1.7958612374968652e-10"
+ },
+ {
+  "id": "A-one-1..0 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "748 segments, max diff 0"
+ },
+ {
+  "id": "A-one-1..0 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 1.7958790010652592e-10"
+ },
+ {
+  "id": "A-onep-5..0 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-onep-5..0 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 1.7958612374968652e-10"
+ },
+ {
+  "id": "A-onep-5..0 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "180 segments, max diff 0"
+ },
+ {
+  "id": "A-onep-5..0 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 1.7958790010652592e-10"
+ },
+ {
+  "id": "A-onep-4..1 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-onep-4..1 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 1.7958790010652592e-10"
+ },
+ {
+  "id": "A-onep-4..1 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "464 segments, max diff 0"
+ },
+ {
+  "id": "A-onep-4..1 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 1.7958878828494562e-10"
+ },
+ {
+  "id": "A-onep-5..1 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-onep-5..1 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 1.7958790010652592e-10"
+ },
+ {
+  "id": "A-onep-5..1 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "322 segments, max diff 0"
+ },
+ {
+  "id": "A-onep-5..1 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 1.7958878828494562e-10"
+ },
+ {
+  "id": "A-onep-2..1 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-onep-2..1 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 1.7958790010652592e-10"
+ },
+ {
+  "id": "A-onep-2..1 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "748 segments, max diff 0"
+ },
+ {
+  "id": "A-onep-2..1 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 1.7958878828494562e-10"
+ },
+ {
+  "id": "A-onep-1..0 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-onep-1..0 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 1.7958612374968652e-10"
+ },
+ {
+  "id": "A-onep-1..0 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "748 segments, max diff 0"
+ },
+ {
+  "id": "A-onep-1..0 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 1.7958790010652592e-10"
+ },
+ {
+  "id": "A-two-5..0 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-two-5..0 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 3.5917224749937304e-10"
+ },
+ {
+  "id": "A-two-5..0 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "180 segments, max diff 0"
+ },
+ {
+  "id": "A-two-5..0 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 3.5917580021305184e-10"
+ },
+ {
+  "id": "A-two-4..1 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-two-4..1 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 3.5917580021305184e-10"
+ },
+ {
+  "id": "A-two-4..1 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "464 segments, max diff 0"
+ },
+ {
+  "id": "A-two-4..1 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 3.5917757656989124e-10"
+ },
+ {
+  "id": "A-two-5..1 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-two-5..1 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 3.5917580021305184e-10"
+ },
+ {
+  "id": "A-two-5..1 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "322 segments, max diff 0"
+ },
+ {
+  "id": "A-two-5..1 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 3.5917757656989124e-10"
+ },
+ {
+  "id": "A-two-2..1 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-two-2..1 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 3.5917580021305184e-10"
+ },
+ {
+  "id": "A-two-2..1 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "748 segments, max diff 0"
+ },
+ {
+  "id": "A-two-2..1 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 3.5917757656989124e-10"
+ },
+ {
+  "id": "A-two-1..0 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-two-1..0 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 3.5917224749937304e-10"
+ },
+ {
+  "id": "A-two-1..0 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "748 segments, max diff 0"
+ },
+ {
+  "id": "A-two-1..0 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 3.5917580021305184e-10"
+ },
+ {
+  "id": "A-cup-5..0 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-cup-5..0 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 0"
+ },
+ {
+  "id": "A-cup-5..0 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "180 segments, max diff 0"
+ },
+ {
+  "id": "A-cup-5..0 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 0"
+ },
+ {
+  "id": "A-cup-4..1 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-cup-4..1 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 0"
+ },
+ {
+  "id": "A-cup-4..1 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "464 segments, max diff 0"
+ },
+ {
+  "id": "A-cup-4..1 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 0"
+ },
+ {
+  "id": "A-tube-last..0 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-tube-last..0 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 0"
+ },
+ {
+  "id": "A-tube-last..0 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "180 segments, max diff 0"
+ },
+ {
+  "id": "A-tube-last..0 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 0"
+ },
+ {
+  "id": "A-tube-4..1 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-tube-4..1 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 0"
+ },
+ {
+  "id": "A-tube-4..1 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "464 segments, max diff 0"
+ },
+ {
+  "id": "A-tube-4..1 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 0"
+ },
+ {
+  "id": "A-tuberoll-last..0 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-tuberoll-last..0 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 1.7958612374968652e-10"
+ },
+ {
+  "id": "A-tuberoll-last..0 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "180 segments, max diff 0"
+ },
+ {
+  "id": "A-tuberoll-last..0 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 1.7958790010652592e-10"
+ },
+ {
+  "id": "A-whole-3..2 count",
+  "what": "the same pieces in the same order",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A-whole-3..2 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 1.7958790010652592e-10"
+ },
+ {
+  "id": "A-whole-3..2 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "748 segments, max diff 0"
+ },
+ {
+  "id": "A-whole-3..2 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 1.7958878828494562e-10"
+ },
+ {
+  "id": "A-whole-0..n-1 count",
+  "what": "the same pieces in the same order",
+  "got": false,
+  "expect": true,
+  "ok": false,
+  "note": ""
+ },
+ {
+  "id": "A-whole-0..n-1 channels",
+  "what": "every channel equals the independent oracle (max difference < 2e-5, the quantum)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max diff 0"
+ },
+ {
+  "id": "A-whole-0..n-1 route",
+  "what": "the route fields of every segment equal the lap's (the flight of the road is the same)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "748 segments, max diff 0"
+ },
+ {
+  "id": "A-whole-0..n-1 roll",
+  "what": "the roll of every segment equals the lap's modulo whole turns (the road leans the same way)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "max 0"
+ },
+ {
+  "id": "A2-half a turn off (pi)",
+  "what": "a hand-edited lap, the bank half a turn off (pi): the run across the line",
+  "got": "SEAM_RUN",
+  "expect": "SEAM_RUN",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A2-0.3 rad off",
+  "what": "a hand-edited lap, the bank 0.3 rad off: the run across the line",
+  "got": "SEAM_RUN",
+  "expect": "SEAM_RUN",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A2-2e-5 rad off (above the quantum)",
+  "what": "a hand-edited lap, the bank 2e-5 rad off (above the quantum): the run across the line",
+  "got": "SEAM_RUN",
+  "expect": "SEAM_RUN",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A2-5e-5 rad off",
+  "what": "a hand-edited lap, the bank 5e-5 rad off: the run across the line",
+  "got": "SEAM_RUN",
+  "expect": "SEAM_RUN",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "A2-wholeok",
+  "what": "the whole-roll lap unchanged: kept",
+  "got": "KEPT",
+  "expect": "KEPT",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "B-w",
+  "what": "a 3 m width step at the line: across the line",
+  "got": "SEAM_RUN",
+  "expect": "SEAM_RUN",
+  "ok": true,
+  "note": "the hand-edited lap passes checkDoc"
+ },
+ {
+  "id": "B-phi",
+  "what": "a bank step of 0.2 rad at the line: across the line",
+  "got": "SEAM_RUN",
+  "expect": "SEAM_RUN",
+  "ok": true,
+  "note": "the hand-edited lap passes checkDoc"
+ },
+ {
+  "id": "B-kh",
+  "what": "a slope step in the turn rate at the line: across the line",
+  "got": "SEAM_RUN",
+  "expect": "SEAM_RUN",
+  "ok": true,
+  "note": "the hand-edited lap passes checkDoc"
+ },
+ {
+  "id": "B-kv",
+  "what": "a slope step in the climb rate at the line: across the line",
+  "got": "SEAM_RUN",
+  "expect": "SEAM_RUN",
+  "ok": true,
+  "note": "the hand-edited lap passes checkDoc"
+ },
+ {
+  "id": "B-r",
+  "what": "a wall-rise step at the line: across the line",
+  "got": "SEAM_RUN",
+  "expect": "SEAM_RUN",
+  "ok": true,
+  "note": "the hand-edited lap passes checkDoc"
+ },
+ {
+  "id": "B-either-a",
+  "what": "each side of the line ALONE is kept (the last piece)",
+  "got": "KEPT",
+  "expect": "KEPT",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "B-either-b",
+  "what": "each side of the line ALONE is kept (the first piece)",
+  "got": "KEPT",
+  "expect": "KEPT",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "B-away",
+  "what": "a wrapped run whose ends are away from the broken line... still crosses it: refused",
+  "got": "SEAM_RUN",
+  "expect": "SEAM_RUN",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "B-mixed",
+  "what": "a cup lap with a legacy piece edited in at the line: MIXED_RUN comes first, not SEAM_RUN",
+  "got": "MIXED_RUN",
+  "expect": "MIXED_RUN",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "C-core",
+  "what": "PC.deleteRun on a CLOSED lap, from > to",
+  "got": "CLOSED",
+  "expect": "CLOSED",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "C-core2",
+  "what": "PC.deleteRun on a CLOSED lap, ordinary range",
+  "got": "CLOSED",
+  "expect": "CLOSED",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "C-open-del",
+  "what": "PC.deleteRun on an OPEN track, from > to",
+  "got": "BAD_RANGE",
+  "expect": "BAD_RANGE",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "C-open-save",
+  "what": "PC.saveRun on an OPEN track, from > to",
+  "got": "BAD_RANGE",
+  "expect": "BAD_RANGE",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "C-range-to past the end",
+  "what": "PC.saveRun on a closed lap, to past the end",
+  "got": "BAD_RANGE",
+  "expect": "BAD_RANGE",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "C-range-from past the end",
+  "what": "PC.saveRun on a closed lap, from past the end",
+  "got": "BAD_RANGE",
+  "expect": "BAD_RANGE",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "C-range-negative",
+  "what": "PC.saveRun on a closed lap, negative",
+  "got": "BAD_RANGE",
+  "expect": "BAD_RANGE",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "C-range-negative to",
+  "what": "PC.saveRun on a closed lap, negative to",
+  "got": "BAD_RANGE",
+  "expect": "BAD_RANGE",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "C-range-a fraction",
+  "what": "PC.saveRun on a closed lap, a fraction",
+  "got": "BAD_RANGE",
+  "expect": "BAD_RANGE",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "C-range-NaN",
+  "what": "PC.saveRun on a closed lap, NaN",
+  "got": "BAD_RANGE",
+  "expect": "BAD_RANGE",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "C-range-null to",
+  "what": "PC.saveRun on a closed lap, null to",
+  "got": "BAD_RANGE",
+  "expect": "BAD_RANGE",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "C-saveopen-same",
+  "what": "a wrapped range where to === from - 1 covers every piece",
+  "got": "KEPT",
+  "expect": "KEPT",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "D-short",
+  "what": "last then first piece: the two pieces across the line",
+  "got": [
+   [
+    "p6",
+    "p1"
+   ],
+   true
+  ],
+  "expect": [
+   [
+    "p6",
+    "p1"
+   ],
+   true
+  ],
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "D-order",
+  "what": "first then last piece (the other click order): the same run",
+  "got": [
+   "p6",
+   "p1"
+  ],
+  "expect": [
+   "p6",
+   "p1"
+  ],
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "D-inside",
+  "what": "a short inside run stays inside",
+  "got": [
+   1,
+   3
+  ],
+  "expect": [
+   1,
+   3
+  ],
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "D-long",
+  "what": "a run over half the lap is NOT selectable the long way (the short way across the line wins)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": "[\"p6\",\"p1\",\"p2\"]"
+ },
+ {
+  "id": "D-tie-float",
+  "what": "a tie in exact arithmetic is never taken across the line by floating-point error",
+  "got": 0,
+  "expect": 0,
+  "ok": true,
+  "note": "0 of 0 exact ties flipped"
+ },
+ {
+  "id": "D-save",
+  "what": "Save as piece on the wrapped run: ok, 2 pieces named in the message",
+  "got": [
+   "ok",
+   true
+  ],
+  "expect": [
+   "ok",
+   true
+  ],
+  "ok": true,
+  "note": "saved the piece \"across\": 2 pieces from the track (it is in the library below)"
+ },
+ {
+  "id": "D-saved-kind",
+  "what": "the saved text holds two road pieces",
+  "got": [
+   "road",
+   "road"
+  ],
+  "expect": [
+   "road",
+   "road"
+  ],
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "D-insert",
+  "what": "the saved wrapped run goes in at an OPEN head with a road already there: ok",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": "added the piece \"across\" at the head: 2 pieces (Ctrl+Z takes it back)"
+ },
+ {
+  "id": "D-insert-count",
+  "what": "one head piece and the two saved ones",
+  "got": 3,
+  "expect": 3,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "D-insert-c1",
+  "what": "the whole open track passes checkDoc (every joint C1, the join with the head included)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ }
+]

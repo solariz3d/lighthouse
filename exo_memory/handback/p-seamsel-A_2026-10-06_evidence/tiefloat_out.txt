@@ -1,0 +1,10 @@
+{"lens":[300,282.7433,300,282.7433],"from":0,"to":2,"wrapLen":882.7433,"insideLen":882.7433,"wraps":false,"exactTie":true}
+{"lens":[300.1,282.7433,300.1,282.7433],"from":0,"to":2,"wrapLen":882.9433,"insideLen":882.9433,"wraps":false,"exactTie":true}
+{"lens":[250.5,314.1593,250.5,314.1593],"from":0,"to":2,"wrapLen":815.1593,"insideLen":815.1593,"wraps":false,"exactTie":true}
+{"lens":[120.3,99.9,120.3,99.9],"from":0,"to":2,"wrapLen":340.5,"insideLen":340.5,"wraps":false,"exactTie":true}
+{"lens":[100.1,100.2,100.1,100.2],"from":0,"to":2,"wrapLen":300.4,"insideLen":300.4,"wraps":false,"exactTie":true}
+{"lens":[333.3,111.1,333.3,111.1],"from":0,"to":2,"wrapLen":777.7,"insideLen":777.7,"wraps":false,"exactTie":true}
+EXACT TIE taken across the line: {"lens":[317.1,352.1,315.8,352.1],"from":0,"to":2,"wrapLen":984.9999999999999,"insideLen":985,"wraps":true}
+EXACT TIE taken across the line: {"lens":[185.1,349.7,201.4,349.7],"from":0,"to":2,"wrapLen":736.1999999999998,"insideLen":736.1999999999999,"wraps":true}
+EXACT TIE taken across the line: {"lens":[337.2,126.5,337.2,62.4],"from":1,"to":3,"wrapLen":526.0999999999999,"insideLen":526.1,"wraps":true}
+DETERMINISTIC {"lens":[327.7,170.3,327.7,257.4],"from":1,"to":3,"insideTenths":7554,"wrapTenths":7554,"wrapLen":755.3999999999999,"insideLen":755.4,"wraps":true}

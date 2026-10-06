@@ -1,0 +1,22 @@
+control (no mutant): green
+caught   M1 route: heartline not compared <- app/test/core-sculpt.test.js
+caught   M2 route: roll never compared <- app/test/core-sculpt.test.js
+caught   M3 route: offsets ignored <- app/test/core-sculpt.test.js
+caught   M4 path: a 1 mm tolerance <- app/test/core-sculpt.test.js
+caught   M5 route: the start pose ignored <- app/test/core-sculpt.test.js
+caught   M6 shell: the per-step guard removed <- app/test/core-sculpt.test.js
+caught   M7 shell: turn is offered <- app/test/core-sculpt.test.js
+SURVIVED M8 shell: the end-of-drag path check removed
+caught   M9 shell: the selection is not kept through a sculpt step <- app/test/core-sculpt.test.js
+caught   M10 shell: the sculpt window is the whole piece twice over <- app/test/core-sculpt.test.js
+caught   M11 handles: no floor on the bank lever <- app/test/handles.test.js
+caught   M12 handles: bank ignores the side <- app/test/handles.test.js
+caught   M13 handles: a tie goes to the later handle <- app/test/handles.test.js
+caught   M14 handles: Shift is not fine <- app/test/handles.test.js
+caught   M15 handles: the press is not stopped <- app/test/handles.test.js
+caught   M16 panel: the handles host applies to the field without the handler <- app/test/core-pieces-ui.test.js
+caught   M17 panel: a sculpt drag never ends <- app/test/core-pieces-ui.test.js
+caught   M18 preview: a delete preview ghost gets handles <- app/test/core-pieces-ui.test.js
+mutants 18: caught 17, survived 1, not applied 0
+survivors: M8 shell: the end-of-drag path check removed
+done

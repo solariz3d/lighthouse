@@ -1,0 +1,88 @@
+2026-10-06T11:57:29.068Z ev (() => ({ extend: [...document.querySelectorAll('button')].some((b) => b.textContent.trim() === 'Ext
+2026-10-06T11:57:29.878Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T11:57:29.880Z CHECK start {"status":"unsaved","info":"0 pieces · 0 m · open","msg":"No saved pieces yet: select pieces on the track and press Save as piece."}
+2026-10-06T11:57:31.388Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T11:57:31.389Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T11:57:31.390Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T11:57:31.391Z CHECK jumpFieldsStart {"gap":"20","drop":"1","land":"-2"}
+2026-10-06T11:57:31.391Z ev (() => { const e = document.querySelector('[aria-label="jump flight"]'); return e ? e.textContent : 
+2026-10-06T11:57:31.391Z CHECK hintAtStart "Add jump takes off from the end of the road (set its climb with the fields above first); then press Extend to lay the road the car lands on.The landing ramp is sized for 460 km/h, fixed today."
+2026-10-06T11:57:31.392Z ev document.querySelector('[aria-label="jump flight"]').scrollIntoView({ block: 'center' })
+2026-10-06T11:57:31.833Z ev (() => { const b = [...document.querySelectorAll('button')].find((x) => x.textContent.trim() === "Ad
+2026-10-06T11:57:32.343Z ev (() => { const m = [...document.querySelectorAll('#palette p.message')].map((e) => e.textContent).fi
+2026-10-06T11:57:32.344Z CHECK refusedOnEmpty "No saved pieces yet: select pieces on the track and press Save as piece. | A jump needs road to take off from: press Extend first, then Add jump."
+2026-10-06T11:57:32.344Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T11:57:32.345Z CHECK emptyPieces "0 pieces · 0 m · open"
+2026-10-06T11:57:32.382Z ev (() => { const b = [...document.querySelectorAll('button')].find((x) => x.textContent.trim() === "Ex
+2026-10-06T11:57:33.746Z ev (() => { const b = [...document.querySelectorAll('button')].find((x) => x.textContent.trim() === "Ex
+2026-10-06T11:57:34.669Z ev (() => { const b = [...document.querySelectorAll('button')].find((x) => x.textContent.trim() === "Ex
+2026-10-06T11:57:35.590Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: "build" } }))
+2026-10-06T11:57:37.098Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T11:57:37.099Z CHECK pieces3 "3 pieces · 300 m · open · last extend 1 ms"
+2026-10-06T11:57:37.099Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T11:57:37.105Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T11:57:37.110Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T11:57:38.017Z ev (() => { const e = document.querySelector('[aria-label="jump flight"]'); return e ? e.textContent : 
+2026-10-06T11:57:38.018Z CHECK noteClear "The dashed arcs are the car's flight, ballistic, at 460 km/h, falling at 3.2 g and 6.3 g (the lighter fall carries farther).3.2 g: comes down 46.9 m after the lip, 31.9 m onto the ramp.6.3 g: comes down 27.6 m after the lip, 12.6 m onto the ramp.The ramp is 41.9 m long.The landing ramp is sized for 460 km/h, fixed today; the keeper has not decided whether it should follow the lap's speed."
+2026-10-06T11:57:38.019Z ev (() => { const c = document.querySelector('canvas[aria-label="flights"]'); if (!c) return null; cons
+2026-10-06T11:57:38.036Z CHECK pixelsClear {"cyan":419,"red":0,"other":2044}
+2026-10-06T11:57:38.036Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T11:57:38.038Z CHECK handlesDuringJump []
+2026-10-06T11:57:38.038Z ev document.querySelector('[aria-label="jump flight"]').scrollIntoView({ block: 'center' })
+2026-10-06T11:57:38.432Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: "side" } }))
+2026-10-06T11:57:40.453Z ev (() => { const c = document.querySelector('canvas[aria-label="flights"]'); if (!c) return null; cons
+2026-10-06T11:57:40.458Z CHECK pixelsSide {"cyan":1136,"red":0,"other":4380}
+2026-10-06T11:57:40.494Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: "overhead" } }))
+2026-10-06T11:57:42.008Z ev (() => { const c = document.querySelector('canvas[aria-label="flights"]'); if (!c) return null; cons
+2026-10-06T11:57:42.012Z CHECK pixelsOverhead {"cyan":44,"red":0,"other":116}
+2026-10-06T11:57:42.052Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: "build" } }))
+2026-10-06T11:57:43.566Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T11:57:43.575Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T11:57:43.580Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T11:57:44.484Z ev (() => { const e = document.querySelector('[aria-label="jump flight"]'); return e ? e.textContent : 
+2026-10-06T11:57:44.485Z CHECK noteLong "The dashed arcs are the car's flight, ballistic, at 460 km/h, falling at 3.2 g and 6.3 g (the lighter fall carries farther).3.2 g: does NOT reach the landing at 460 km/h (it needs 989 km/h): the jump is red.6.3 g: does NOT reach the landing at 460 km/h (it needs 1387 km/h): the jump is red.The ramp is 10.0 m long.The landing ramp is sized for 460 km/h, fixed today; the keeper has not decided whether it should follow the lap's speed."
+2026-10-06T11:57:44.486Z ev (() => { const c = document.querySelector('canvas[aria-label="flights"]'); if (!c) return null; cons
+2026-10-06T11:57:44.488Z CHECK pixelsLong {"cyan":248,"red":178,"other":2112}
+2026-10-06T11:57:44.571Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T11:57:44.575Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T11:57:44.579Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T11:57:44.892Z ev (() => { const b = [...document.querySelectorAll('button')].find((x) => x.textContent.trim() === "Ad
+2026-10-06T11:57:45.606Z ev (() => { const c = document.querySelector('canvas[aria-label="flights"]'); if (!c) return null; cons
+2026-10-06T11:57:45.609Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T11:57:45.610Z CHECK onHover {"pixels":{"cyan":419,"red":0,"other":2079},"handles":0}
+2026-10-06T11:57:47.415Z ev (() => { const c = document.querySelector('canvas[aria-label="flights"]'); if (!c) return null; cons
+2026-10-06T11:57:47.417Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T11:57:47.418Z CHECK afterLeave {"pixels":{"cyan":0,"red":0,"other":0},"handles":10}
+2026-10-06T11:57:47.418Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T11:57:47.419Z ev (() => { const b = [...document.querySelectorAll('button')].find((x) => x.textContent.trim() === "Ad
+2026-10-06T11:57:48.646Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T11:57:48.647Z ev (() => { const m = [...document.querySelectorAll('#palette p.message')].map((e) => e.textContent).fi
+2026-10-06T11:57:48.648Z ev (() => { const c = document.querySelector('canvas[aria-label="flights"]'); if (!c) return null; cons
+2026-10-06T11:57:48.651Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T11:57:48.652Z CHECK afterAdd {"before":"3 pieces · 300 m · open · last extend 1 ms","after":"4 pieces · 357 m · open · last jump 1 ms","status":"No saved pieces yet: select pieces on the track and press Save as piece. | Jump added. Press Extend to lay the road it lands on.","pixels":{"cyan":0,"red":0,"other":0},"handles":10}
+2026-10-06T11:57:48.653Z ev (() => { let t = null; document.dispatchEvent(new CustomEvent('t180:track-request', { detail: { repl
+2026-10-06T11:57:48.655Z CHECK track1 {"n":152,"gap":true,"kinds":["gap:gap:p4","road:land:p4"],"landPitch":-1.999999997714666,"afterPitch":null}
+2026-10-06T11:57:48.655Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: "side" } }))
+2026-10-06T11:57:50.158Z ev (() => { const c = document.querySelector('canvas[aria-label="flights"]'); if (!c) return null; cons
+2026-10-06T11:57:50.161Z CHECK placedFlightSide {"cyan":876,"red":0,"other":3651}
+2026-10-06T11:57:50.199Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: "build" } }))
+2026-10-06T11:57:52.410Z ev (() => { const m = [...document.querySelectorAll('#palette p.message')].map((e) => e.textContent).fi
+2026-10-06T11:57:52.411Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T11:57:52.411Z CHECK refusedTwice {"status":"No saved pieces yet: select pieces on the track and press Save as piece. | The track already ends in a jump. Press Extend first, so the car has road to land on, then add the next one.","pieces":"4 pieces · 357 m · open · last jump 1 ms"}
+2026-10-06T11:57:52.412Z ev (() => { const b = [...document.querySelectorAll('button')].find((x) => x.textContent.trim() === "Ex
+2026-10-06T11:57:53.636Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T11:57:53.637Z ev (() => { let t = null; document.dispatchEvent(new CustomEvent('t180:track-request', { detail: { repl
+2026-10-06T11:57:53.638Z ev (() => { const c = document.querySelector('canvas[aria-label="flights"]'); if (!c) return null; cons
+2026-10-06T11:57:53.640Z CHECK afterExtend {"info":"5 pieces · 457 m · open · last extend 1 ms","track":{"n":202,"gap":true,"kinds":["gap:gap:p4","road:land:p4","road:body:p5"],"landPitch":-1.999999997714666,"afterPitch":-1.999999997714666},"pixels":{"cyan":0,"red":0,"other":0}}
+2026-10-06T11:57:53.640Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: "side" } }))
+2026-10-06T11:57:55.142Z ev (() => { const c = document.querySelector('canvas[aria-label="flights"]'); if (!c) return null; cons
+2026-10-06T11:57:55.145Z CHECK afterExtendSide {"cyan":0,"red":0,"other":0}
+2026-10-06T11:57:55.145Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: "overhead" } }))
+2026-10-06T11:57:56.654Z ev (() => { const c = document.querySelector('canvas[aria-label="flights"]'); if (!c) return null; cons
+2026-10-06T11:57:56.658Z CHECK afterExtendOverhead {"cyan":311,"red":0,"other":1799}
+2026-10-06T11:57:56.695Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: "build" } }))
+2026-10-06T11:57:58.298Z ev (() => { const b = [...document.querySelectorAll('#palette button')].find((x) => x.textContent.trim(
+2026-10-06T11:58:00.060Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T11:58:00.061Z ev (() => { const c = document.querySelector('canvas[aria-label="flights"]'); if (!c) return null; cons
+2026-10-06T11:58:00.063Z ev (() => { let t = null; document.dispatchEvent(new CustomEvent('t180:track-request', { detail: { repl
+2026-10-06T11:58:00.064Z CHECK afterUndo2 {"info":"3 pieces · 300 m · open · last extend 1 ms","pixels":{"cyan":0,"red":0,"other":0},"track":{"n":150,"gap":false,"kinds":["road:body:p1","road:body:p3"],"landPitch":null,"afterPitch":null}}
