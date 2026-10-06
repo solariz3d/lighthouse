@@ -86,3 +86,28 @@ On row 51:
 - AC.
 
 SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_keeper_choices_2026-10-06.md · `git -C C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt log --oneline -3` · scratchpad jumpwarn/targeted2.tap
+
+## Rebased on 6081ee6 (the chair, 07:30)
+
+**Tip `da2c2d6ea0a0da6a5613675ec0452732f533c174`.**
+- Branch `d250-jumpwarn-on-6081ee6`, worktree `C:/Users/nname/Desktop/worktrees/e-jumpwarn2-wt` (fresh), on t180 main `6081ee6`.
+- Two commits: `2da9c44` (mine), then `da2c2d6` (B's refusal rows `7be2bfb`, unchanged). Tree clean, not pushed.
+- 18 files, +184/−43 against `6081ee6`.
+
+**What I cherry-picked:**
+- **`51e2949` and `7be2bfb`**, the line B's look sits on. `51e2949` is my `6047714` re-applied when A's commits landed as `9e2e249`/`d61f7d1`.
+- **checked:** its diff equals `6047714`'s except for one hunk offset in core-pieces-ui (−491 → −500).
+
+**Two conflicts, both resolved as unions:**
+1. **`app/install/install.js:46–50`:** B's line is kept whole, with its `where` full folder and "exporting this track again updates that folder (…)"; my `jump: …` warnings are appended after it.
+   - My row in `app/test/share-install.test.js` gained one assertion: the export line's "exporting this track again updates that folder" is still present beside the jump line.
+   - That assertion is the only new edit in this rebase. The rest of the row never depended on the old "installed" wording.
+2. **`CHANGELOG.md`:** every entry kept. On main the Changed section already holds TWO different "Shift-click across the start line" entries (item 4, and item 4's fixes); both stay as they were, and my D250 item 2 entry follows them.
+
+**The run (TARGETED, under the lock, serial shim, merged tree):**
+- The 9 files the chair named: share-install, export, export_words, validate_head, validate_jumps, core_jump, preview-async, validate-ui-jumpdefault, vocab-corpus.
+- Plus `test/jumpwarn_refusals.test.js` (B's commit, which rides here) and `app/test/core-pieces-ui.test.js` (my commit edits its note regex).
+- **164 tests: 163 pass, 0 fail, 1 skipped** (the old reads/ skip).
+- Evidence: scratchpad `jumpwarn/rebased.tap`, sha256 `70cb3f9c…`; 242 s.
+
+**Not run:** the harnesses, which are the librarian's at install (the note above on `core_jump_mutation` stands), a real window, and AC.
