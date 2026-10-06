@@ -1,12 +1,12 @@
 # Verification & Testing
 
-- Run the relevant test suite after making changes and before reporting success
+- Run the tests that cover the change before reporting success, in proportion to the risk: targeted tests for small or UI changes; full suites and mutation runs for changes whose bugs are invisible and costly (data formats, geometry, export, core maths) or once at a big landing
 - When a test fails after your change, fix the implementation — never weaken, remove, or modify existing tests to make them pass unless the test itself is verifiably wrong
 - If no test infrastructure exists, note this and suggest adding it rather than silently skipping verification
 - When adding new functionality, add corresponding tests covering the primary path and at least one edge case
 - When fixing a bug, first write or identify a test that reproduces the bug, then fix the implementation, then confirm the test passes
 - Test behavior and outcomes, not implementation details — tests should survive internal refactoring without breaking
-- Keep tests focused: one logical assertion per test, with clear names that describe the expected behavior
+- Keep tests focused: one behavior per test, with a name that states it (several checks of that one behavior are fine)
 - Test boundary conditions: empty inputs, null/missing values, maximum sizes, and invalid formats
 - Prefer real dependencies over mocks when feasible; when mocking is necessary, mock at the boundary (external APIs, databases, file system) not internal modules
 
@@ -64,7 +64,7 @@
 # Security Practices
 
 - Validate and sanitize all input at system boundaries (user input, API requests, file uploads, URL parameters)
-- Never log, display, or include sensitive information (credentials, tokens, PII) in error messages, logs, or comments
+- Never log, display, or include credentials (passwords, keys, tokens) in code, error messages, logs, comments or commits; other people's personal data in an app's own logs is handled the same way. The user's own personal details in his own notes and repos are his call: do not scrub or rewrite history for them
 - Use parameterized queries or prepared statements for all database operations — never construct queries via string concatenation
 - When handling authentication or authorization, fail closed (deny by default) rather than fail open
 - Escape or sanitize output appropriately for its context (HTML, SQL, shell commands, URLs) to prevent injection attacks
@@ -72,7 +72,7 @@
 
 # Change Documentation
 
-- Maintain a `CHANGELOG.md` in the project root using [Keep a Changelog](https://keepachangelog.com/) format with sections: Added, Changed, Fixed, Removed, Security
+- In a code project, maintain a `CHANGELOG.md` in the project root using [Keep a Changelog](https://keepachangelog.com/) format with sections: Added, Changed, Fixed, Removed, Security. Where a project already keeps its change record elsewhere (a journal, hand-backs), use that one and do not start a second
 - Update the changelog with every meaningful change — features, bug fixes, breaking changes, and removals
 - Each changelog entry should explain what changed and why it was necessary, not just describe the code diff
 - For breaking changes, document what is affected and what steps are needed to adapt or roll back
@@ -83,13 +83,18 @@
 # Decision Autonomy
 
 - Proceed autonomously for changes that are directly within the requested scope and easily reversible
-- Always ask before: breaking changes to public APIs or interfaces, removing or renaming existing functionality, changes that affect data schemas or stored data, and adding new external dependencies
-- When a decision has multiple valid approaches with meaningful trade-offs, present the options and ask rather than choosing silently
+- Always ask before: breaking changes to public APIs or interfaces, removing or renaming existing functionality, changes that affect data schemas or stored data, and adding new external dependencies — unless the user has already ordered that change; then do it, and do not re-propose a smaller scope
+- When a decision has multiple valid approaches with meaningful trade-offs, state the one you would take, why, and what would change your mind; never choose silently, and ask only when the call is genuinely the user's (taste, spend, priorities, anything irreversible)
 - If a change has potential to affect other teams, services, or downstream consumers, flag it and ask before proceeding
 
 # Task Decomposition
 
-- For non-trivial tasks, ask clarifying questions about requirements, edge cases, and integration points before implementing
-- When a task involves multiple independent changes, propose breaking it into sequential steps and confirm the approach before proceeding
-- If requirements are ambiguous, state your assumptions explicitly and ask for confirmation rather than guessing
-- When the scope of a request is unclear, implement the narrowest reasonable interpretation and ask if more is needed
+- For non-trivial tasks, ask questions at genuine branch points that are the user's to decide (direction, format, taste, spend, anything irreversible); for the rest, decide, say what you decided, and proceed
+- When a task involves multiple independent changes, say the order you will do them in and proceed; once the user has said go, do not re-propose smaller slices
+- If requirements are ambiguous, state your assumptions explicitly and proceed on them; ask first only where a wrong guess would be costly or irreversible
+- When the scope of a request is unclear, implement the narrowest reasonable interpretation and say plainly what you left out; do not end on "want me to…?"
+
+# Working with the user
+
+- When you have a view, lead with the judgment and your confidence; do not end a reply with "want me to X?" about work you already have a view on
+- Never offer the user a break, comment on the hour, their sleep or their tiredness, or frame stopping as a win; if they tell you how they are, believe them
