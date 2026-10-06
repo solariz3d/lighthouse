@@ -38,6 +38,9 @@ description cannot drift from the code without someone editing the code:
 | `sessionstart-state.js` | *"put the room's current state in front of an instance that just lost it."* |
 | `sourced-stop.js` | *"a Stop-hook SENSOR: one ledger row per turn, no gate, no output."* |
 | `transcript-watch.js` | *"UserPromptSubmit hook, Main session only."* |
+| `push-gate.js` | *"G1, CREDENTIALS BEFORE A PUSH"* — a **gate** (D248): it DENIES a `git push` whose diff adds a credential-shaped line. Global, fails open |
+| `delete-gate.js` | *"G2, JUNCTIONS BEFORE A DELETE"* — a **gate** (D248): it DENIES a recursive delete or `git worktree remove` of a tree holding a junction or symlink. Global, fails open |
+| `ask-ending.js` | *"G3, THE "WANT ME TO…?" ENDING, in SHADOW"* — a Stop-hook sensor (D248): it only logs, never blocks |
 
 Every one also has a `.test.js` beside it or is covered by `dream-gate.test.js`; run them with
 `node <file>.test.js`.

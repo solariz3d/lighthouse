@@ -177,6 +177,14 @@ $files = @(
   # librarian and chair sessions only that LOGS what it would block (a reply to the keeper that names a path/sha/count/percentage/version and does not end with a Sources: line the turn
   # backs) and NEVER blocks. It requires ./sources-gate.js, so it installs into the SAME directory. Plan: exo_memory/loop/plan_finish_retrieval_2026-10-03.md. Install with -Only reply-slot.js.
   @{ From = 'consonance\hooks\reply-slot.js';              To = 'hooks\reply-slot.js' }
+  # Added 2026-10-06 (D248; C's CLAUDE.md audit, p-claudemd-C_2026-10-06.md "GATES"; the keeper delegated, the librarian ruled) with their registrations below, same
+  # commit. GLOBAL gates, every seat and every project: G1 PUSH-GATE denies a `git push` whose diff ADDS a credential-shaped line (file and line named, never the
+  # secret); G2 DELETE-GATE denies a recursive delete or `git worktree remove` of a tree holding a junction or symlink (memory worktree-remove-follows-junctions);
+  # G3 ASK-ENDING logs, in SHADOW ONLY, a reply whose last line is a "want me to…?" (C's M1 pattern) and never blocks. All three fail open. Install with
+  # -Only push-gate.js,delete-gate.js,ask-ending.js.
+  @{ From = 'consonance\hooks\push-gate.js';               To = 'hooks\push-gate.js' }
+  @{ From = 'consonance\hooks\delete-gate.js';             To = 'hooks\delete-gate.js' }
+  @{ From = 'consonance\hooks\ask-ending.js';              To = 'hooks\ask-ending.js' }
 )
 
 # What this script REGISTERS. Only these are ever touched in settings.json; anything else found
@@ -285,6 +293,13 @@ $register = @(
   # verbs plus chair_inject) and so its own group, and the second reader's matcher is UNCHANGED. Hooks run in parallel; this is the only one that can deny.
   @{ Event = 'PreToolUse';       Rel = 'hooks\sources-gate.js';       Runner = 'node';
      Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair|mcp__consonance__chair_inject' }
+  # G1 and G2 (D248): the two shell tools, exact names. Each reads the command and exits at once unless it is a push (G1) or a recursive delete (G2).
+  @{ Event = 'PreToolUse';       Rel = 'hooks\push-gate.js';          Runner = 'node';
+     Matcher = 'Bash|PowerShell' }
+  @{ Event = 'PreToolUse';       Rel = 'hooks\delete-gate.js';        Runner = 'node';
+     Matcher = 'Bash|PowerShell' }
+  # G3 (D248), SHADOW ONLY: a Stop hook, no matcher. Silent on every path (no output, exit 0); it only writes ask-ending.jsonl.
+  @{ Event = 'Stop';             Rel = 'hooks\ask-ending.js';         Runner = 'node' }
 )
 
 # DELIBERATELY UNMANAGED -- the THIRD STATE, named. A file in a manifest source directory that is
