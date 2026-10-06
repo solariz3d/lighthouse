@@ -70,4 +70,29 @@ paths. Not pushed, no AC. GEOMETRY tier for the core part; targeted tests only, 
 - The selection highlight across the line: it draws by ids, inferred to work, not seen.
 - No harnesses (the librarian at install). The full suite.
 
-NEXT: librarian collate this when read — plan default: a quick look, land on the merged tree
+## Fixes (A's look `p-seamsel-A_2026-10-06.md`, as ruled by the librarian): commit `0b04996` on f13cded
+4 named paths: `app/core/coreshell.js`, `app/core/piecesui.js`, `app/test/core-pieces-ui.test.js`, `CHANGELOG.md`. Targeted only.
+- **A. The short way only where it can be kept.** On a closed lap the short way is still chosen first. But when the run across the line is
+  refused **MIXED_RUN or SEAM_RUN**, and the run inside the lap saves, the INSIDE run is selected.
+  - `selectionInfo().longWay` says why, and the selection line shows it: "the long way round: the short way crosses the start line between a
+    cup and a plain piece". The kinds are read from the pieces either side of the line.
+  - When neither run can be saved, the short way stands (the keeper's choice).
+  - This restores TEST 1's 191 pairs (A's count), and changes nothing where the short way saves.
+- **B. The tie within 1e-6 m:** the across run must be shorter by more than 1e-6 m, so a tie stays inside.
+- **Rows** (`app/test/core-pieces-ui.test.js`):
+  - **1d:** a closed lap whose last piece is a cup and first piece plain, as TEST 1's p46/p1.
+    - p1 then the last but one → the inside run, no save problem, and the line text (read through the mounted panel).
+    - Control: the inside run is also mixed → the short way is kept.
+    - Control: an inside run that is already short → no `longWay`.
+  - **1e:** A's tiefloat case, lengths 327.7/170.3/327.7/257.4, p2 then p4 → `[1, 3]`.
+- **Red on f13cded** (`ss/fix_red.out`, `71030eab…`): **both fail, for the intended reason.**
+  - 1d gets `[4, 0, "MIXED_RUN: …"]`, the across run.
+  - 1e gets `[3, 1, 3]`, the float tie read as across.
+- **Amended by name:** row 1's exact `selectionInfo` shape gains `longWay: null`.
+- **Green on 0b04996:** `node --test --test-concurrency=1 test/core_piece.test.js app/test/core-pieces-ui.test.js test/core_cup_fixtures.test.js app/test/core-shell.test.js` → **97 / 97, "0 of 9 differ"** (`ss/fix_green.out`, `fe785948…`).
+- **coreshell.js lines** (for A's Add-jump work), `git diff -U0 f13cded HEAD`: `@@ -399,3 +399,17` (selectPiece), `@@ -403 +417` and `@@ -413 +427`
+  (selectionInfo's `longWay`, and the same lines shifted). No panel.js.
+- Not done: A's finding C (a wound straight not read as straight by `startLayout`). It is not this change, and A untested its one-line fix.
+- **For landing:** f13cded and 8292269 both conflict with 8b15ee9 in `CHANGELOG.md` only. See `p-steamac-C_2026-10-06.md` for the resolution.
+
+NEXT: librarian collate the fixes when read — plan default: A re-checks rows 1d and 1e, then it lands with 8292269 on 8b15ee9
