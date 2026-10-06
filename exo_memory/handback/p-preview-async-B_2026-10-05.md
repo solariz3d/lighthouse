@@ -74,3 +74,15 @@
 ## Corrections to myself
 - None in the results.
 - Two text-only edits to my own probe scripts ran via `node -e` outside the lock.
+
+---
+
+## Re-anchor commit (the chair's 17:29 packet: my catch, my fix)
+**`f1d351d3c4395034206f3b6339efb8f12cdda543`** (`f1d351d`), on **my own branch `b-reanchor-a5u1`**, on A's `9de8828` (worktree `b-async-wt`).
+- One named path, `app/test/core-close-mutation.test.js`, **2 lines changed: only the two `from:` strings.**
+  - **A5** → `history: D.commit(st.history, p.doc), resolved: p.resolved, resolveError: null, dirty: true, closeProposal: null,` (the Close's own Apply, unique);
+  - **U1** → `showHead(); if (undone) putBack(m.made); for`.
+  - Each `to:` keeps the same mutation.
+- Not pushed. The body says B wrote it.
+- **The harness, run once on the commit:** `node --test --test-concurrency=1 app/test/core-close-mutation.test.js` → **32 tests, 32 pass, 0 fail, 0 NOT APPLIED** (`async/run3.out`, under the lock, with the serial shim).
+- Worktree clean after the commit (`git status --short` → 0 lines).

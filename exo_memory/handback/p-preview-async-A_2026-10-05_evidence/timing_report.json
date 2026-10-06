@@ -1,0 +1,116 @@
+{
+ "exe": "t180-track-builder.exe",
+ "started": "2026-10-05T23:05:50.416Z",
+ "errors": [],
+ "console": [],
+ "checks": {
+  "start": {
+   "status": "unsaved",
+   "info": "0 pieces · 0 m · open",
+   "msg": "No saved pieces yet: select pieces on the track and press Save as piece."
+  },
+  "big46": {
+   "status": "big46",
+   "info": "46 pieces · 13,050 m · open",
+   "msg": "No saved pieces yet: select pieces on the track and press Save as piece."
+  },
+  "picked": {
+   "id": "p43",
+   "at": {
+    "x": 936,
+    "y": 120,
+    "px": 1.6389236145311095,
+    "s": 11950
+   }
+  },
+  "selected": "Selected: p43 · 250 m",
+  "delete": {
+   "label": "middle delete, 46 pieces, 13.1 km",
+   "samples": [],
+   "tPreview": 959,
+   "tApplyOn": 13010,
+   "tCheckLine": 959,
+   "maxFrameGap": 903,
+   "maxTickGap": 959,
+   "seenSeconds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "click": "clicked",
+   "finalLine": "No overlap and no red on the track after the delete.",
+   "applyDisplay": "",
+   "total": 13010
+  },
+  "deleteCancelMid": {
+   "mid": {
+    "previewShown": true,
+    "line": "Checking the track for overlaps… 1 s. Apply is off until this finishes; Cancel stops it.",
+    "applyDisabled": true
+   },
+   "after": {
+    "previewText": "",
+    "applyDisplay": "none",
+    "msg": "No saved pieces yet: select pieces on the track and press Save as piece."
+   },
+   "ms": 16353
+  },
+  "biglap": {
+   "status": "biglap",
+   "info": "8 pieces · 14,283 m · open",
+   "msg": "No saved pieces yet: select pieces on the track and press Save as piece."
+  },
+  "close": {
+   "label": "Close, 8 pieces, 14.3 km",
+   "samples": [],
+   "tPreview": 2065,
+   "tApplyOn": 16389,
+   "tCheckLine": 2065,
+   "maxFrameGap": 1970,
+   "maxTickGap": 2065,
+   "seenSeconds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ],
+   "click": "clicked",
+   "finalLine": "No overlap and no red on the closed track.",
+   "applyDisplay": "",
+   "total": 16389
+  },
+  "afterClose": {
+   "status": "biglap",
+   "info": "8 pieces · 14,283 m · open",
+   "msg": "No saved pieces yet: select pieces on the track and press Save as piece. | close preview: closed in 3 step(s): 0.144 mm, tangent 0.0e+0 rad; 3 of 8 pieces move. Apply or cancel"
+  }
+ },
+ "keeperFiles": 9,
+ "keeperChanged": [],
+ "runAppData": [
+  "tracks/eq-big46.t180track",
+  "tracks/eq-biglap.t180track"
+ ],
+ "ended": "2026-10-05T23:07:01.499Z"
+}
