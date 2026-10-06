@@ -28,3 +28,9 @@ The keeper, 11:14: "is there a way to make shells go faster, without crashing my
   hardware question (RAM profile / CPU tuning to stock, a memory test) stays the keeper's, and would be the bigger win if it is the cause.
 
 NEXT: chair dispatch the two-lane suite lap to E when D225's suite has released the heavy-run lock
+
+## Amendment (librarian, 11:2x), before any run: sized to the machine
+The keeper: "we have a beefy cpu and 64gb of ddr5 ram but not infinity". Checked (`Get-CimInstance`): Ryzen 7 9850X3D, 8 cores / 16 threads,
+61.4 GB visible, 40.7 GB free WHILE B's serialized suite runs. **The light lane's cap becomes N = min(cores − 2 = 6, floor((free − 8 GB) / max
+light peak))**, not 4. Tests are CPU-bound, so beyond the physical cores adds little and costs heat. The 8 GB floor and the memory guard stay.
+The 09-30 dumps pointed at instability under load more than at RAM running out, so the heavy lane stays serial however much RAM is free.

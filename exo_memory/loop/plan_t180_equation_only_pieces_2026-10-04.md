@@ -52,3 +52,13 @@ Getting-started guide.**
 - **Then** B's look per lap; land; install.
 
 NEXT: chair dispatch D239 to A when this plan is read; D240 to A after D239 lands
+
+## AMENDMENT to D239 (librarian, 2026-10-05 09:0x): SAVE KEEPS THE PREVIOUS VERSION
+The keeper lost hours of TEST 1 to one Close, with no copy from before it (`loop/plan_t180_safe_close_reds_2026-10-04.md`).
+- **Every Save of an equation track first moves the file it overwrites to `%APPDATA%\com.solariz3d.t180-track-builder\track-backups\`**
+  as `<name>.<yyyy-mm-dd_hhmmss>.t180track`, keeping the newest 20 per track (older ones pruned, oldest first).
+- **Also, before Close (and later, before any whole-track operation), the document as it was is written there too**, so a Close can be
+  undone after the app is closed.
+- "Open…" gets a "Previous versions" entry for the open track that lists them (time, length, closed or not) and opens one as a copy.
+- **Tests:** a save over an existing file leaves its previous bytes in backups; the 21st save prunes the oldest; a Close writes a
+  pre-close copy; nothing is ever deleted except by the prune.

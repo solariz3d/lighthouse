@@ -40,6 +40,7 @@ fucked" (Undo didn't bring it back for him).
    - a click on a red moves the camera there.
    - The live validation panel should already show them while building; check it does on TEST 1 and say why the keeper didn't see it.
 5. **Piece labels on HOVER only** (the keeper, 23:46: "when there are lots of pieces, the tags take up a lot of space, it should be only when you hover over the pieces does it come up to save performance"): `app/core/labels.js` draws every piece's tag each frame (E's D235 profile: labels laid out every animation frame). Show ONE label, for the piece under the pointer (and the selected / head piece); none otherwise. The layout work drops to that one label.
+6. **Straights after a turn** (the keeper, 23:52: "ever since a turn is introduced, it is impossible to create a perfect straight"). Checked by the librarian through the core shell (`lib-mirror-build`): after a 30°/100m turn, Extend 300 m at turn 0 eases over the WHOLE piece (30.0, 28.5 at 40 m, 22.2 at 100 m, 7.8 at 200 m, 0 only at 300 m) unless the turn field's "at start" box is ticked, which gives 30 → 2.5 at 10 m → 0.0000 from 20 m on, a perfect straight. So the core works; the default hides it. Add a **Straight** button (turn 0 and climb 0, both "at start", one click), and when the turn target is 0 after a turn, show a one-line hint that "at start" makes it straight from 20 m.
 - **Tests:**
   - a close confined to the last piece leaves every earlier piece's control points bit-identical;
   - a close that can't fit its window refuses by name;
@@ -49,3 +50,32 @@ fucked" (Undo didn't bring it back for him).
   - the existing close tests either still pass or are amended by name where "whole-lap" was the asserted behaviour.
 
 NEXT: chair dispatch D242 to A (relaunched) or C after D239 when this plan is read; the keeper is blocked on TEST 1
+
+## AMENDMENT (librarian, 2026-10-05 09:0x): item 7, Undo gives back the undone piece's values
+The keeper, 09:03: "when you press undo, it doesnt keep the stats for the piece you undid to tweak, it carries over the equation from
+the stats of the undo that disappears".
+- **Checked:** `app/core/panel.js:245`: on ANY new document (Extend, Undo, Redo, open, a brush) the Extend fields are refilled with
+  `showHead()` (`:127`), the HEAD's end state. So after Undo they show where the previous piece ENDS, and the undone piece's own length,
+  turn, climb, bank, cup, width, edge, tube and its "at start" ticks are gone. Re-extending can't reproduce it with one number tweaked.
+- **7. When Undo removes an Extend, fill the fields with THAT piece's values** (its length, its target at its end for every channel it set,
+  and its at-start ticks), so pressing Extend again rebuilds it exactly, and the keeper changes only the one number he wanted. Redo, a
+  brush and open keep today's behaviour. **Test:** extend with values X, undo, and the fields read X; Extend again rebuilds a
+  byte-identical piece.
+- **Item 7, refined (librarian, 09:0x), after the keeper's "bc the equation carries over from where it was before you pressed undo":**
+  checked through the core shell (`lib-mirror-build`): extend a straight, extend a 30°/100m turn with 20° bank, Undo, extend turn 0 →
+  the new piece starts at turn 0.000, bank 0.000. **The core restarts correctly from the current end.** So whatever "carries over" lives in
+  the PANEL (the fields, the ghost or the readout after Undo). B reproduces it in the real page first (extend X, Undo, then look at what the
+  fields, ghost and readout show and what the next Extend builds), says exactly what carried over, and fixes it to the spec above.
+
+## AMENDMENT (librarian, 2026-10-05 09:1x): item 8, undo/redo like an editor
+The keeper, 09:04: "make it like photoshop or video editing programs, cntrl z and what ever to go forward and back".
+- **Checked:** the shortcuts EXIST, in `app/shell.js:282-291` `keyAction`: Ctrl+Z undo, Ctrl+Shift+Z and Ctrl+Y redo, Ctrl+S save,
+  Ctrl+Backspace remove head. But `if (inField) return null` (`:283`): **while the cursor is in any Extend field, which is most of the
+  time when editing, Ctrl+Z does nothing to the track** (the browser undoes typing in the box instead). The Undo/Redo buttons don't name
+  the keys.
+- **8a.** Ctrl+Z / Ctrl+Y / Ctrl+Shift+Z work on the TRACK from anywhere on the page, number fields included. A field with half-typed,
+  un-extended text loses that text on undo, because Undo refills the fields (item 7). The buttons' tooltips name the keys.
+- **8b. A History list** (Photoshop-style), in the left column under Undo/Redo: every step by name ("Extend 300 m, turn 30", "Brush bank
+  at 4.2 km", "Close"). Click one to jump back to it; steps after it stay until the next edit (then they drop, as Redo does today).
+- **D239 note:** removing the Pieces mode removes `app/shell.js`. `keyAction` must MOVE to the core page, not be deleted with it.
+- **Tests:** Ctrl+Z with focus in a number field undoes the track; the History list jumps to step N and Redo goes forward from it.
