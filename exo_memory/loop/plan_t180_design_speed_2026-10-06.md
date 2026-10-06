@@ -27,3 +27,13 @@ always be maxed out".
 - The keeper decides after the numbers. Nothing in the checker changes in this lap.
 
 NEXT: chair pass item 1 to B with D255, and dispatch item 2 to E, when this plan is read
+
+## The keeper's decision (13:2x), on E's measurement (`loop/design_speed_measure_2026-10-06.md`): ALL THREE
+1. **Always max:** the slider (and its off box) goes; the panel checks loads at 970 (`MACH6.vmaxKmh`), as the export already does; on a
+   closed loop the panel uses the ghost lap, so panel and export never disagree. (This replaces B's off-box fix: there is no box.)
+2. **Centreline lift-off on OPEN tracks too** (`leaves-surface` beyond the closed lap's proof), at full speed. Expected new reds: TEST 1
+   recovered p7, p9, p31, p32 (lift off already at 460), TEST p3.
+3. **"holds above N km/h"** on centreline stations facing down (`sqrt(−B/A)`), as information; red only where no speed holds.
+- Also: the D179 comment in `app/validate-ui/index.js` (the slider sizes jump ramps) is false for the equation core; correct it.
+Owner E (validation; EXPORT tier, since export semantics change for open-track lift-off in the TEST export's warning list). Red rows first;
+targeted tests; the librarian runs the validate/export harnesses once at install.
