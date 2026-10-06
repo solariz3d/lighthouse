@@ -12,9 +12,13 @@
 // The walk is capped (200,000 entries) and inside the hook's 8 s watchdog. A tree too big to finish is ALLOWED and logged as unfinished: the gate fails open on
 // its own limits, as on any error of its own. Every decision with a target is logged to <data dir>/delete-gate.jsonl.
 //
+// Read as the command runs (the fix lap, from A's look, exo_memory/handback/p-gates-A_2026-10-06.md): a relative target is resolved against the `cd` /
+// `Set-Location` earlier in the same command (F1); a wildcard in a target's last part checks only the entries it matches (F2); heredoc and here-string BODIES
+// are text, not commands, and are skipped (F3).
+//
 // NOT CAUGHT, and said so: a delete inside a script or a `node -e` string; a variable the command itself sets (`d=x; rm -rf $d`: environment variables ARE
-// expanded, $env:NAME, ${NAME}, $NAME); cmd's `rmdir /s`; other deleting tools (robocopy /MIR, rimraf, fs.rmSync in code). A wildcard target is checked at its
-// parent directory. A chain that removes a link and then the tree in ONE command is refused (it is checked before any part runs).
+// expanded, $env:NAME, ${NAME}, $NAME); cmd's `rmdir /s`; other deleting tools (robocopy /MIR, rimraf, fs.rmSync in code). A wildcard in an EARLIER part of a
+// target checks the deepest folder above it. A chain that removes a link and then the tree in ONE command is refused (it is checked before any part runs).
 'use strict';
 
 if (process.env.CONSONANCE_DREAM) process.exit(0);   // THE DREAM GATE (dream-gate.test.js): the gap-dream gets no hooks
@@ -40,19 +44,52 @@ function record(dir, row) {
 
 /** Shell-ish words of one segment: a word is a run of quoted and unquoted pieces with no space between them (`"a b"/*` is ONE word, `a b/*`), quotes stripped. */
 function words(seg) { return (String(seg).match(/(?:"[^"]*"|'[^']*'|[^\s"'])+/g) || []).map((w) => w.replace(/"([^"]*)"|'([^']*)'/g, (_, a, b) => (a !== undefined ? a : b))); }
+/** A path as written in the command, made one this process can open: environment variables, ~, and Git Bash's MSYS form (nativePath, expandEnv below). */
+function toPath(p) { return nativePath(expandEnv(p).replace(/^~(?=$|[\\/])/, os.homedir())); }
 /**
- * The trees a command deletes recursively: [{ how, target, base }]. `base` is the directory a relative target is read from: the segment's `git -C <dir>`, or null
- * (the hook's cwd). Segments split on && || ; | and newlines.
+ * The command with heredoc and here-string BODIES taken out (A's F3: `cat > f.sh <<'EOF' … rm -rf … EOF` is a script being written, not a delete). Bash `<<WORD`,
+ * `<<'WORD'`, `<<-WORD` (the body ends at a line that is the word, leading tabs allowed for <<-); PowerShell `@'` / `@"` at a line's end (the body ends at a line
+ * starting '@ / "@, whose rest is a command again). The same function as push-gate.js.
  */
-function deleteTargets(command) {
-  const out = [];
-  for (const seg of String(command || '').split(/&&|\|\||[;|\n]/)) {
+function stripHeredocs(command) {
+  const lines = String(command || '').split('\n'), out = [];
+  for (let i = 0; i < lines.length;) {
+    const l = lines[i++]; out.push(l);
+    for (const m of l.matchAll(/<<(-?)\s*(['"]?)([A-Za-z_][A-Za-z0-9_]*)\2/g)) { while (i < lines.length && (m[1] ? lines[i].replace(/^\t+/, '') : lines[i]).replace(/\r$/, '') !== m[3]) i++; i++; }
+    const ps = /@(['"])\s*$/.exec(l);
+    if (ps) { while (i < lines.length && !lines[i].startsWith(ps[1] + '@')) i++; if (i < lines.length) out.push(lines[i++].slice(2)); }
+  }
+  return out.join('\n');
+}
+/**
+ * The command's segments in order, each with the directory it runs in (A's F1: the Bash tool resets its cwd every call, so `cd <dir> && rm -rf build` is how a
+ * seat deletes, and `build` is the cd's, not the session's). A `cd` / `pushd` / `Set-Location` / `sl` / `chdir` moves the segments after it. Split on && || ; |
+ * and newlines. The same function as push-gate.js.
+ */
+function segments(command, cwd) {
+  const out = []; let dir = path.resolve(cwd || process.cwd());
+  for (const seg of stripHeredocs(command).split(/&&|\|\||[;|\n]/)) {
     const w = words(seg.trim()); if (!w.length) continue;
     const lead = w[0].toLowerCase();
+    if (['cd', 'pushd', 'set-location', 'sl', 'chdir'].includes(lead)) {
+      let arg = null;
+      for (let i = 1; i < w.length; i++) { if (/^-(?:path|literalpath|lp)$/i.test(w[i])) { arg = w[i + 1]; break; } if (!w[i].startsWith('-')) { arg = w[i]; break; } }
+      if (arg === null) dir = os.homedir(); else if (arg !== '-') dir = path.resolve(dir, toPath(arg));
+      continue;
+    }
+    out.push({ words: w, dir });
+  }
+  return out;
+}
+/** The trees a command deletes recursively: [{ how, target, base }]. `base` is the directory a relative target is read from: the segment's cd, then `git -C`. */
+function deleteTargets(command, cwd) {
+  const out = [];
+  for (const s of segments(command, cwd)) {
+    const w = s.words, lead = w[0].toLowerCase();
     // git [-C dir] worktree remove [-f|--force] <path>
     if (lead === 'git') {
-      let i = 1, base = null;
-      while (i < w.length && w[i].startsWith('-')) { if (w[i] === '-C' && w[i + 1]) { base = w[i + 1]; i += 2; } else i++; }
+      let i = 1, base = s.dir;
+      while (i < w.length && w[i].startsWith('-')) { if (w[i] === '-C' && w[i + 1]) { base = path.resolve(s.dir, toPath(w[i + 1])); i += 2; } else i++; }
       if (w[i] === 'worktree' && w[i + 1] === 'remove') for (const a of w.slice(i + 2)) if (!a.startsWith('-')) out.push({ how: 'git worktree remove', target: a, base });
       continue;
     }
@@ -61,7 +98,7 @@ function deleteTargets(command) {
       const flags = w.slice(1).filter((a) => a.startsWith('-'));
       const posixRecursive = flags.some((f) => f === '--recursive' || (/^-[a-zA-Z]+$/.test(f) && /[rR]/.test(f)));
       const psRecursive = flags.some((f) => /^-rec(?:u(?:r(?:s(?:e)?)?)?)?$/i.test(f));   // PowerShell's rm is Remove-Item
-      if (posixRecursive || psRecursive) for (const a of w.slice(1)) if (!a.startsWith('-')) out.push({ how: psRecursive ? 'Remove-Item -Recurse' : 'rm -r', target: a, base: null });
+      if (posixRecursive || psRecursive) for (const a of w.slice(1)) if (!a.startsWith('-')) out.push({ how: psRecursive ? 'Remove-Item -Recurse' : 'rm -r', target: a, base: s.dir });
       continue;
     }
     // PowerShell Remove-Item and its aliases, with -Recurse (any unique prefix: -r is ambiguous in PowerShell, so it is not counted; -rec and longer are)
@@ -70,13 +107,27 @@ function deleteTargets(command) {
       if (!recursive) continue;
       for (let i = 1; i < w.length; i++) {
         const a = w[i];
-        if (/^-(?:path|literalpath|lp)$/i.test(a) && w[i + 1]) { for (const p of w[i + 1].split(',')) out.push({ how: 'Remove-Item -Recurse', target: p.trim(), base: null }); i++; continue; }
+        if (/^-(?:path|literalpath|lp)$/i.test(a) && w[i + 1]) { for (const p of w[i + 1].split(',')) out.push({ how: 'Remove-Item -Recurse', target: p.trim(), base: s.dir }); i++; continue; }
         if (a.startsWith('-')) { if (/^-(?:filter|include|exclude)$/i.test(a)) i++; continue; }
-        for (const p of a.split(',')) if (p.trim()) out.push({ how: 'Remove-Item -Recurse', target: p.trim(), base: null });
+        for (const p of a.split(',')) if (p.trim()) out.push({ how: 'Remove-Item -Recurse', target: p.trim(), base: s.dir });
       }
     }
   }
   return out;
+}
+/**
+ * The paths a target names (A's F2: `rm -rf logs/*.log` was refused for an unrelated junction elsewhere in logs/). A wildcard in the LAST part is matched against
+ * that folder's entries, dot-entries included (PowerShell's * matches them), and only the matches are checked. A wildcard in an earlier part checks the deepest
+ * folder above it, as before: rare, and the safe direction.
+ */
+function expandTarget(t, base) {
+  const p = path.resolve(base || process.cwd(), toPath(t));
+  if (!/[*?]/.test(p)) return [p];
+  const dir = path.dirname(p), leaf = path.basename(p);
+  if (/[*?]/.test(dir)) { let d = dir; while (/[*?]/.test(d)) d = path.dirname(d); return [d]; }
+  const re = new RegExp('^' + leaf.replace(/[.+^${}()|\\]/g, '\\$&').replace(/\*/g, '.*').replace(/\?/g, '.') + '$', 'i');
+  let names; try { names = fs.readdirSync(dir); } catch (_) { return []; }
+  return names.filter((n) => re.test(n)).map((n) => path.join(dir, n));
 }
 const isLink = (st) => st.isSymbolicLink();   // node reports a Windows JUNCTION as a symbolic link from lstat, as it does a symlink
 const linkTarget = (p) => { try { return fs.readlinkSync(p); } catch (_) { return '?'; } };
@@ -118,18 +169,20 @@ function nativePath(p) {
  * itself sets (`d=...; rm -rf $d`) is not in the environment and stays as written (NOT CAUGHT, in the header).
  */
 const expandEnv = (p) => String(p).replace(/\$env:([A-Za-z_][A-Za-z0-9_]*)|\$\{([A-Za-z_][A-Za-z0-9_]*)\}|\$([A-Za-z_][A-Za-z0-9_]*)/gi, (m, a, b, c) => { const k = a || b || c, v = process.env[k] !== undefined ? process.env[k] : process.env[Object.keys(process.env).find((x) => x.toLowerCase() === k.toLowerCase())]; return v !== undefined ? v : m; });
-/** A wildcard target is checked at its parent directory (what the glob can reach). */
-const resolveTarget = (t, base, cwd) => { let p = nativePath(expandEnv(t).replace(/^~(?=$|[\\/])/, os.homedir())); if (/[*?]/.test(p)) p = path.dirname(p); return path.resolve(cwd || '.', nativePath(expandEnv(base || '.')), p); };
 
 function decide(command, cwd) {
-  const targets = deleteTargets(command);
+  const targets = deleteTargets(command, cwd);
   if (!targets.length) return { decision: 'not-a-delete' };
   const t0 = Date.now(), hits = [], checked = [];
   for (const t of targets) {
-    const abs = resolveTarget(t.target, t.base, cwd), r = reparsePoints(abs, t0);
-    checked.push({ how: t.how, target: abs, missing: !!r.missing, unfinished: !!r.unfinished, links: r.found.length });
-    for (const f of r.found) hits.push({ how: t.how, target: abs, link: f.path, to: f.to });
-    if (r.unfinished) break;   // out of walk budget: what was found so far still counts
+    let stop = false;
+    for (const abs of expandTarget(t.target, t.base)) {
+      const r = reparsePoints(abs, t0);
+      checked.push({ how: t.how, target: abs, missing: !!r.missing, unfinished: !!r.unfinished, links: r.found.length });
+      for (const f of r.found) hits.push({ how: t.how, target: abs, link: f.path, to: f.to });
+      if (r.unfinished) { stop = true; break; }   // out of walk budget: what was found so far still counts
+    }
+    if (stop) break;
   }
   if (hits.length) return { decision: 'deny', checked, hits };   // a junction found is refused, whatever a later target's walk could not finish
   return { decision: checked.some((c) => c.unfinished) ? 'allow-unfinished' : 'allow', checked };
@@ -158,4 +211,4 @@ function main() {
 
 if (require.main === module) { try { main(); } catch (_) { process.exit(0); } }   // fail OPEN, without exception
 
-module.exports = { LEDGER, WALK_MAX, words, deleteTargets, reparsePoints, resolveTarget, decide, reasonOf, nativePath, expandEnv };
+module.exports = { LEDGER, WALK_MAX, words, stripHeredocs, segments, deleteTargets, expandTarget, reparsePoints, decide, reasonOf, nativePath, expandEnv };

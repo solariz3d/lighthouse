@@ -69,7 +69,7 @@ test('RED, no upstream: a new branch is scanned from its merge base with origin\
   const { work } = repo(), data = tmp('pgd-');
   git(work, 'checkout', '-q', '-b', 'topic'); fs.writeFileSync(path.join(work, 't.txt'), `${FAKE_VCK}\n`); git(work, 'add', 't.txt'); git(work, 'commit', '-q', '-m', 'topic');
   const r = runHook(push(work, 'git push -u origin topic'), data);
-  assert.equal(r.deny, true, r.out); assert.match(r.reason, /t\.txt:1/); assert.match(r.reason, /merge-base with origin\/(HEAD|main)/);
+  assert.equal(r.deny, true, r.out); assert.match(r.reason, /t\.txt:1/); assert.match(r.reason, /every commit origin does not have/);   // fix lap: scanned as every commit the remote lacks (was: the merge base)
 });
 test('RED: `git -C <repo> push` from another directory scans that repo; a push after && in a chain is seen', () => {
   const { root, work } = repo(), data = tmp('pgd-');
@@ -89,11 +89,46 @@ test('RED: the Bash tool\'s MSYS paths are read as Git Bash means them: /c/Users
   assert.equal(runHook(push(root, `git -C ${viaTmp} push`), data).deny, true, 'the /tmp/... form');
   assert.equal(G.nativePath('C:/already/native'), 'C:/already/native');
 });
+// ── the fix lap, from A's look (exo_memory/handback/p-gates-A_2026-10-06.md) ──
+test('RED (A H3): a key ADDED in one unpushed commit and REMOVED in the next is in the pushed history: refused, naming the commit', () => {
+  const { work } = repo(), data = tmp('pgd-');
+  fs.writeFileSync(path.join(work, 'h.txt'), `k = ${FAKE_VCK}\n`); git(work, 'add', 'h.txt'); git(work, 'commit', '-q', '-m', 'add');
+  const added = git(work, 'rev-parse', '--short', 'HEAD').trim();
+  fs.writeFileSync(path.join(work, 'h.txt'), 'k = gone\n'); git(work, 'add', 'h.txt'); git(work, 'commit', '-q', '-m', 'remove');
+  const r = runHook(push(work), data);
+  assert.equal(r.deny, true, 'the net diff is clean but the history is not'); assert.match(r.reason, /h\.txt:1/); assert.ok(r.reason.includes(added), `names the commit ${added}`);
+  assert.ok(!r.reason.includes(FAKE_VCK) && !r.ledger.includes(FAKE_VCK));
+});
+test('RED (A H1): the FIRST push to an EMPTY remote scans the whole history', () => {
+  const root = tmp('pg1-'), work = path.join(root, 'w'), data = tmp('pgd-');
+  git(root, 'init', '--bare', '-q', path.join(root, 'empty.git')); fs.mkdirSync(work); git(work, 'init', '-q'); git(work, 'remote', 'add', 'origin', path.join(root, 'empty.git'));
+  fs.writeFileSync(path.join(work, '.env'), `KEY=${FAKE_VCK}\n`); git(work, 'add', '.env'); git(work, 'commit', '-q', '-m', 'first');
+  const r = runHook(push(work, 'git push -u origin main'), data);
+  assert.equal(r.deny, true, r.out); assert.match(r.reason, /\.env:1/);
+});
+test('RED (A H2): a remote NOT called origin, no upstream: what it lacks is scanned', () => {
+  const { root, work } = repo(), data = tmp('pgd-');
+  git(root, 'init', '--bare', '-q', path.join(root, 'other.git')); git(work, 'remote', 'add', 'backup', path.join(root, 'other.git'));
+  git(work, 'checkout', '-q', '-b', 'side'); fs.writeFileSync(path.join(work, 's.txt'), `${FAKE_VCK}\n`); git(work, 'add', 's.txt'); git(work, 'commit', '-q', '-m', 's');
+  git(work, 'update-ref', '-d', 'refs/remotes/origin/HEAD'); git(work, 'update-ref', '-d', 'refs/remotes/origin/main');   // nothing on origin either: the old gate found no base
+  const r = runHook(push(work, 'git push backup side'), data);
+  assert.equal(r.deny, true, r.out); assert.match(r.reason, /s\.txt:1/);
+});
+test('RED (A §4): `cd <repo> && git push` from a session in ANOTHER directory scans the cd\'s repo', () => {
+  const { work } = repo(), data = tmp('pgd-'), elsewhere = tmp('pge-');
+  fs.writeFileSync(path.join(work, 'cd.txt'), `${FAKE_VCK}\n`); git(work, 'add', 'cd.txt'); git(work, 'commit', '-q', '-m', 'cd');
+  assert.equal(runHook(push(elsewhere, `cd "${work}" && git push`), data).deny, true, 'bash cd');
+  assert.equal(runHook({ ...push(elsewhere, `Set-Location "${work}"; git push`), tool_name: 'PowerShell' }, data).deny, true, 'PowerShell Set-Location');
+  assert.equal(runHook(push(path.dirname(work), `cd ${path.basename(work)} && git push`), data).deny, true, 'a relative cd');
+});
+test('pass: a heredoc that only MENTIONS git push is not a push', () => {
+  const { work } = repo(), data = tmp('pgd-');
+  fs.writeFileSync(path.join(work, 'x.txt'), `${FAKE_VCK}\n`); git(work, 'add', 'x.txt'); git(work, 'commit', '-q', '-m', 'x');
+  assert.equal(runHook(push(work, "cat > notes.md <<'EOF'\nthen git push\nEOF"), data).out, '', 'the heredoc body is text, not a command');
+});
 test('fails OPEN: not a git repo, no base to diff, a malformed payload, another tool: allowed with no output', () => {
   const data = tmp('pgd-'), plain = tmp('pgp-');
   assert.equal(runHook(push(plain), data).out, '', 'not a repo');
-  const lone = tmp('pgl-'); git(lone, 'init', '-q'); fs.writeFileSync(path.join(lone, 'x'), `${FAKE_VCK}\n`); git(lone, 'add', 'x'); git(lone, 'commit', '-q', '-m', 'x');
-  assert.equal(runHook(push(lone), data).out, '', 'no upstream and no origin: nothing to diff against');
   assert.equal(runHook('{not json', data).out, '');
   assert.equal(runHook({ tool_name: 'Read', tool_input: { file_path: 'git push' } }, data).out, '');
   assert.ok(!fs.readFileSync(path.join(data, G.LEDGER), 'utf8').includes(FAKE_VCK));
@@ -102,6 +137,8 @@ test('a command that is not a push is ignored: no scan, no row', () => {
   const { work } = repo(), data = tmp('pgd-');
   assert.equal(runHook(push(work, 'git status'), data).out, '');
   assert.ok(!fs.existsSync(path.join(data, G.LEDGER)), 'no row for a command that is not a push');
-  assert.deepEqual(G.pushTargets('git -C "C:/a b" push origin main'), [{ dir: 'C:/a b' }]);
-  assert.deepEqual(G.pushTargets('echo done; git -c core.x=1 push'), [{ dir: null }]);
+  assert.deepEqual(G.pushTargets('git -C "C:/a b" push origin main', 'C:/x'), [{ dir: path.resolve('C:/a b'), remote: 'origin', src: 'main', deleting: false }]);
+  assert.deepEqual(G.pushTargets('echo done; git -c core.x=1 push', 'C:/x'), [{ dir: path.resolve('C:/x'), remote: null, src: null, deleting: false }]);
+  assert.deepEqual(G.pushTargets('git push backup +topic:main', 'C:/x').map((t) => [t.remote, t.src]), [['backup', 'topic']]);
+  assert.equal(G.pushTargets('git push origin :old', 'C:/x')[0].deleting, true, 'a delete of a remote ref sends nothing of ours');
 });

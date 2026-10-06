@@ -59,6 +59,28 @@ test('RED: an environment variable in the target is expanded ($env:NAME, ${NAME}
   finally { delete process.env.E_GATE_ROOT; }
   assert.equal(G.expandEnv('$NO_SUCH_VAR_E_GATE/x'), '$NO_SUCH_VAR_E_GATE/x', 'an unknown variable stays as written');
 });
+// ── the fix lap, from A's look (exo_memory/handback/p-gates-A_2026-10-06.md) ──
+test('RED (A F1): a relative target after `cd <dir> &&` is read against the cd, not the session cwd', () => {
+  const t = tree(), data = tmp('dgd-'), elsewhere = tmp('dge-');
+  assert.equal(runHook(cmd(`cd "${t.root}" && rm -rf worktree`, elsewhere), data).deny, true, 'bash cd');
+  assert.equal(runHook(cmd(`Set-Location "${t.root}"; Remove-Item -Recurse worktree`, elsewhere, 'PowerShell'), data).deny, true, 'PowerShell Set-Location');
+  fs.mkdirSync(path.join(elsewhere, 'worktree'));   // the false-positive side: a same-named, link-free dir in the session cwd must not be what is read
+  const clean = tree({ link: false });
+  assert.equal(runHook(cmd(`cd "${clean.root}" && rm -rf worktree`, t.root), data).out, '', 'the cd\'s worktree (clean) is checked, not the session cwd\'s (linked)');
+});
+test('pass (A F2): a wildcard checks the entries it MATCHES, not the whole folder', () => {
+  const t = tree(), data = tmp('dgd-');
+  fs.writeFileSync(path.join(t.wt, 'a.log'), 'x'); fs.writeFileSync(path.join(t.wt, 'b.log'), 'y');
+  assert.equal(runHook(cmd(`rm -rf "${t.wt}"/*.log`, t.root), data).out, '', '*.log matches two files; the junction "reads" is not matched');
+  assert.equal(runHook(cmd(`rm -rf "${t.wt}"/rea*`, t.root), data).deny, true, 'a glob that matches the junction is refused');
+  assert.equal(runHook(cmd(`rm -rf "${t.wt}"/*`, t.root), data).deny, true, '* matches everything, the junction included');
+});
+test('pass (A F3): a heredoc BODY is text being written, not a command', () => {
+  const t = tree(), data = tmp('dgd-');
+  assert.equal(runHook(cmd(`cat > clean.sh <<'EOF'\nrm -rf "${t.wt}"\nEOF\necho done`, t.root), data).out, '', 'bash heredoc');
+  assert.equal(runHook(cmd(`@'\nRemove-Item -Recurse "${t.wt}"\n'@ | Set-Content clean.ps1`, t.root, 'PowerShell'), data).out, '', 'PowerShell here-string');
+  assert.equal(runHook(cmd(`cat > a <<'EOF'\nx\nEOF\nrm -rf "${t.wt}"`, t.root), data).deny, true, 'a delete AFTER the heredoc is still a command');
+});
 test('RED: the target itself being a junction is refused (a recursive delete of the link can empty what it points to)', () => {
   const t = tree(), data = tmp('dgd-');
   assert.equal(runHook(cmd(`Remove-Item -Recurse "${t.link}"`, t.root, 'PowerShell'), data).deny, true);
