@@ -64,3 +64,46 @@ No harness run.
 - The keeper's hands: whether rolling the short way every piece is how he wants to build a corkscrew.
 - **Sculpt's bank handle** (a placed piece's bank) drags by a delta of the piece's own value. Its label now reads wrapped, but its behaviour is unchanged and not re-checked in a window.
 - No harness, and no real window.
+
+## Rework: the keeper's FINAL rule, a signed wrap at ±360 (state at the BIOS-flash stop)
+
+**Commit `ec78ea1`** ("WIP: D259: the bank keeps within one full turn, its sign kept…") on branch **`b-bankwrap`**, worktree `C:\Users\nname\Desktop\worktrees\b-bankwrap-wt`, **rebased onto main `cc177c5`** (A's D258). Clean tree. Not pushed. **It replaces `4aba04d` above, which built the superseded rule (−180…+180, nearest equivalent, short way) and never landed.**
+
+**WIP only because its tests have NOT run.** The code is complete. My red/green hold queued twice behind the librarian's three mutation harnesses (lock pid 24664, held since 00:53Z): the first gave up after 30 min with exit 3, and the second was cut off when the session ended, also never running. Nothing of mine is running or waiting now (checked: no node process carries my run's command line).
+
+**The rule built** (the keeper, 18:24: "same for -360 if it banks the other way ... it should reset back to 0"):
+- The bank lives in (−360, +360) and **keeps its sign**: `handles.wrapTurn(x) = x % 360`, with no −0. So 370 → 10, −370 → −10, 300 stays 300, a typed 400 → 40, and 360 → 0.
+- It applies to the value **shown and the value applied**, in all three places:
+  - the Extend bank field (`HEAD`) and the ghost's bank handle (the host's `apply` writes it wrapped);
+  - a typed value, sent wrapped and otherwise as typed (`panel bankTarget`, absolute; `extendOptions` unchanged);
+  - **Sculpt's bank handle and the bank brush**, both through `coreshell brushTo`: the new `bankWithinTurn` reads the bank at the drag's centre on the drag's BASE document (`b.s0`; Sculpt passes the piece's middle). If base plus delta would pass one turn, it sends the delta that lands on the wrapped value. A drag that stays inside one turn is applied exactly as given.
+- **No nearest-equivalent rewrite.** The stored winding of existing tracks is untouched; there is no core or file change.
+
+**Rows written (each must be shown red on a `cc177c5` copy, then green, when the lock is free):**
+- `core-pieces-ui`:
+  - a typed 300 stays 300 and a typed 400 becomes 40, with the field showing them;
+  - a ghost bank-handle drag from 350 by about +20 gives about 10, and from −350 by about −20 about −10; Extend applies what the field shows.
+- `core-sculpt`:
+  - Sculpt from 350 by +20 gives 10, from −350 by −20 gives −10, and 300 stays 300; the handle label reads 10, −10, 300, 0;
+  - a bank brush by 370 gives 10, by 300 gives 300, by −370 gives −10, at its centre.
+- `core-xsec`: the S1 iv row amended BY NAME again, to "the bank field takes any number and keeps it within one turn, its sign kept: 360 is 0 and −540 is −180 (D259)".
+
+**Lines touched against `cc177c5`** (an 80-insertion / 11-deletion diff):
+
+| file | change |
+|---|---|
+| `app/core/panel.js` | `HEAD.bank`; `bankTarget`, after `asTyped`; `opts()`; the handles host's `apply` |
+| `app/core/handles.js` | `format`; new `wrapTurn`; exports |
+| `app/core/coreshell.js` | new `bankWithinTurn`, after `pieceOffsets`; the head of `brushTo` |
+| `CHANGELOG.md` | the D259 entry, rewritten for the final rule |
+| tests | the three files above |
+
+**The rebase:** one conflict, on `handles.js`'s exports line (A's `LANDING_ORDER` and my `wrapTurn`); both kept. My resolution had switched the file to CRLF while the base stores LF, so I set the endings back; the diff is now the true 8 lines for that file.
+
+**To finish, after the flash, under one hold** (my steps file `bankwrap/stepsfinal.json`):
+1. the reds, in my scratch worktree `C:\Users\nname\Desktop\worktrees\b-bankred-wt` (detached at `cc177c5`, holding uncommitted COPIES of the three test files, nothing else);
+2. the greens on `b-bankwrap`: core-pieces-ui, core-xsec, core-sculpt, handles, core-readout-display, core-eqonly, core-shell, jump-ui, preview, core-close-preview.
+
+Then drop the "WIP:" from the subject and hand back the numbers here. A note to keep: the label assertion in the Sculpt row would already pass on a tree carrying `format`'s change; its red comes from the drag and brush parts.
+
+**My slip:** before the final rule arrived I ran a `git stash push` on files that were already committed, which saved nothing, with a queued `git stash pop` after it. The stash list is shared across this repo's worktrees, so the pop could have applied another seat's stash. I checked: the list was empty, and I stopped that run before the pop ran. Nothing was applied.

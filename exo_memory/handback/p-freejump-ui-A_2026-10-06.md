@@ -45,3 +45,21 @@ SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_free_jump_2
 - Found by my own row: the landing's "bank °" box has the same label as Extend's bank field; the tests take the boxes by their `aria-label` (`landing bank`), the visible labels stay short.
 
 NEXT: librarian — plan default: both land together as one D258 install (E's `1e76d35` + `b57d72c`); a non-author look should read `app/core/handles.js` (the free kinds), `app/core/landing.js`, the shell's landing methods and `jump-ui.test.js` row 3 (the arrows-are-axes proof); the keeper's hand then tunes the four speeds and mark offsets
+
+---
+
+# A4 (follow-up on main cc177c5: core-close-mutation A4 "the overlap check is skipped" applied but not caught by row 4) — STATE AT THE BIOS STOP, 2026-10-06 ~20:10: INVESTIGATED, NOT FINISHED, NO CODE CHANGED
+
+SOURCES: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-librarian\0c0c0c0b-0000-4000-8000-00000000115b\scratchpad\mutcc1-core-close-mutation.test.js.tap · worktree `C:\Users\nname\Desktop\worktrees\a-a4-wt` (branch `a4-fix-a`, = main `cc177c5`, clean, nothing to commit)
+
+**Checked (each by a command this session):**
+- **Row 4 still exercises the no-worker fallback.** The mutated line is `check: overlapRunner ? null : Object.freeze(overlapCheck(r.resolved, st.designSpeedKmh))` (`app/core/coreshell.js:403` and `:562`); row 4 builds its shell with `createCoreShell({ brushFn: null })`, which has no `overlapRunner`, so `p.check` comes from that very call.
+- **I cannot reproduce the miss.** Applying the mutant by hand to `coreshell.js` and running `core-close-preview.test.js`: row 4 FAILS with "the closed coil overlaps itself" (6 pass, 1 fail). Replaying the harness's own temp-copy procedure for A4 alone (copy `app/` minus tests, `src/`, `tools/`, the one test file, patch, `node --test`): the same, row 4 is the failing test. Running the harness's A4 test alone (`--test-name-pattern="mutation A4"`): **✔ caught by row 4** (7 s).
+- **The librarian's tap shows a different thing:** its failing list on the mutant is the whole FILE (`...\app\test\core-close-preview.test.js (1231.9753ms)`) with no named row, in 1.4 s for the whole subtest (mine takes 7 s). A file-level failure with no row suggests the child process died or the run was cut off before row 4 printed, not that row 4 lost its coverage. Cause not found; candidates I could not test: memory or load on the librarian's machine while its three harnesses ran, or a crash on a different tree (`lib-582-wt`).
+- **The ONE full harness run the chair asked for did NOT happen:** it queued on the heavy-run lock behind the librarian's three-harness hold (`waiting on 0c0c0c0b … since 2026-10-07T00:53Z`) and the session ended; no result, no partial output (`a4_harness.txt` was never written). So there is no 37/37 from me.
+
+**Not established:** that A4 is caught in a full harness run; why the librarian's run failed at file level; any fix. **No test or source file was edited**, so there is no `caughtBy` change to make unless the full run shows a real miss.
+
+**To resume (after the flash):** run `node --test --test-concurrency=1 app/test/core-close-mutation.test.js` once in `a-a4-wt` under the lock and read A4's line; if A4 is caught, the librarian's file-level failure was environmental and the answer is "no change"; if not, print the failing test list of that mutant and decide re-point or restore.
+
+NEXT: librarian re-dispatch the single A4 harness run to A when the machine is back and no other harness holds the lock

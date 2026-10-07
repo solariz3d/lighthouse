@@ -1562,3 +1562,7 @@ composer, identical to shipped, unmeasured for want of a real capture).
 ## 2026-10-06 — the 'one-off flake' (D257): a native 0xC0000005 crash of node, the machine the likely cause
 - Hand-back `handback/p-flake-C_2026-10-06.md`. The TAP gives exitCode 3221225477 (access violation): not a kill, not OOM (OOM gives 134). Not reproduced: 50/50 alone, full suite 0 crashes. Same code in 5 hand-backs on 09-27 (unrelated code) and in Defender, Vanguard, League, plus 4 kernel AV bugchecks at varying addresses; RAM reports 6000 MT/s (an EXPO kit) despite 'EXPO off'. Corrects my 09-27 'node/V8 itself'. Proposed: BIOS + memory test; runners log exitCode and re-run a 0xC0000005 file once, reported.
 - The move: read the exit code before anything else, then look OUTSIDE the program (event logs) for the same code in other processes; a fault shared across unrelated software and the kernel is the machine.
+
+## 2026-10-06 — D260 draw calls (WIP 877e974 on drawcalls-c, paused for the BIOS flash)
+- Hand-back `handback/p-drawcalls-C_2026-10-06.md`. Cause: mesh.js assemble() writes one mesh per (piece, cell), and an equation track's cells are 2 m segments; underskin mirrors each. mergeForAc (acready.js, after weldSeams) chunks 1ROAD_/UNDERSKIN_ to 65,536 verts or 400 m. Copies: TEST 1 recovered 15,271→70 meshes, tube oval 6,008→60, triangle sets equal, AI line identical. Tests unrun, F1/F2 manifest owed.
+- The move: the merge goes AFTER the weld, because weldSeams finds seams by name; check pipeline order before slotting a pass in.
