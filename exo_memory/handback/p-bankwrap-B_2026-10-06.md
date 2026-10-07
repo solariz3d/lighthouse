@@ -151,3 +151,9 @@ They now check the **rule**, within 3% of the change sent: the bank stays within
 - The keeper's hands: whether wrapping back from 0 past a full turn feels right while dragging.
 - No real window.
 - No harness. The touched lines are listed in the Rework section above; `coreshell.brushTo`'s head and the new `bankWithinTurn` are what a harness run should cover at install.
+
+## X6 (2026-10-07 04:0x, the chair's follow-up; test-only)
+
+- **The miss was a stale name.** The librarian's core-xsec harness on v0.3.1 (`b33bac5`) read 30/31. X6's `caughtBy` at `app/test/core-xsec-mutation.test.js:19` still read `'xsec panel: the bank field takes 360'`. D259 had renamed that row (`app/test/core-xsec.test.js:270`) to `'xsec panel: the bank field takes any number and keeps it within one turn, its sign kept: 360 is 0 and -540 is -180 (D259)'`. The harness matches a failed test's line by substring (`failed.some((l) => l.includes(m.caughtBy))`, :65), so the mutant was caught but counted as a miss.
+- **Fix:** commit **`e850c45`** on branch `b-x6name`, on `b33bac5` (worktree `C:\Users\nname\Desktop\worktrees\b-x6-wt`), not pushed. One line: X6's `caughtBy` is now the renamed row's stable prefix, `'xsec panel: the bank field takes any number'`, with a `CHANGED D259` comment. The prefix occurs once in `core-xsec.test.js`.
+- **Harness, run once under the lock:** `node --test app/test/core-xsec-mutation.test.js` on `e850c45` gave **31 tests, 31 pass, 0 fail** (control included), 20.2 s. The harness's own line reads: "mutation X6 (KS1-2) max="180" on the bank input: applied, and caught by "xsec panel: the bank field takes any number…"". Log: my scratchpad `x6/harness.out`.
