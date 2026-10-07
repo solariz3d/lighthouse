@@ -1,6 +1,10 @@
-# D259 (amended): the bank reads as the lean, −180°…+180°, and every bank target rolls the short way (pane B; FEEL tier, rows only)
+# D259: the bank keeps within one full turn, its sign kept (370 → 10, −370 → −10), shown and applied (pane B; rows only)
 
-**Commit `4aba04d`** on branch `b-bankwrap`, worktree `C:\Users\nname\Desktop\worktrees\b-bankwrap-wt`, on t180 main `5caf5c6`. 5 paths, named on the commit. Not pushed. **Rows only:** no window.
+**Current: commit `6df24fb`** on branch `b-bankwrap`, worktree `C:\Users\nname\Desktop\worktrees\b-bankwrap-wt`, on t180 main `cc177c5`. 7 paths. Not pushed. Tests green (see "Results" at the end). **The keeper's FINAL rule** (18:24): the bank lives in (−360°, +360°) and keeps its sign, shown and applied, in the Extend field and ghost handle, Sculpt's bank handle and the bank brush. **The "Rework" and "Results" sections at the end are the current state.**
+
+> **Superseded, kept as the record:** the sections from "What it does" down to "Rework" describe `4aba04d` (on `5caf5c6`), which built an earlier rule: the lean wrapped to −180…+180, with every target the nearest equivalent the short way. The chair ruled it out when the keeper's final rule arrived, and it never landed.
+
+**Superseded `4aba04d`:** branch `b-bankwrap`, on t180 main `5caf5c6`. 5 paths. Not pushed. Rows only, no window.
 
 ## What it does (the keeper, 18:21: "it continues after 360 forever instead of resetting back to 0"; amended 18:22: "like say with the dragging feature")
 - **The bank FIELD shows the lean wrapped to −180…+180 at all times.** `HEAD.bank` reads `HD.wrapDeg(h.phi / DEG)`, so after a full roll it reads 0 (upright).
@@ -107,3 +111,43 @@ No harness run.
 Then drop the "WIP:" from the subject and hand back the numbers here. A note to keep: the label assertion in the Sculpt row would already pass on a tree carrying `format`'s change; its red comes from the drag and brush parts.
 
 **My slip:** before the final rule arrived I ran a `git stash push` on files that were already committed, which saved nothing, with a queued `git stash pop` after it. The stash list is shared across this repo's worktrees, so the pop could have applied another seat's stash. I checked: the list was empty, and I stopped that run before the pop ran. Nothing was applied.
+
+## Results: resumed after the BIOS flash, tests run, "WIP" dropped
+
+**Commit `6df24fb`** (it replaces `ec78ea1`: the same code, the corrected Sculpt and brush rows, "WIP:" dropped) on `b-bankwrap`, on `cc177c5`. Not pushed. 7 paths, an 85 / 11 diff against `cc177c5`.
+
+**One heavy-run hold** for the reds and greens (`bankwrap/final3.out` in my scratchpad), with `CONSONANCE_HEAVY_WAIT_MS` raised to 2 h so it could queue. The two `core-sculpt` rows were then corrected, and that file was run again red and green under a second hold (`bankwrap/sculpt.out`).
+
+**Reds on a `cc177c5` copy** (`b-bankred-wt`, detached at `cc177c5`, with uncommitted copies of my three test files): **all 5 new rows fail.**
+
+| file | on the base |
+|---|---|
+| core-pieces-ui | 25 pass / **2 fail**: the typed 300/400 row and the ghost drag 350/−350 row |
+| core-xsec | 21 / **1 fail**: the S1 iv row as amended |
+| core-sculpt | 9 / **2 fail**: Sculpt 348.26 by +20 → **368.16**; a brush by 370 → **364.45** (both past one turn) |
+
+**Greens on `6df24fb`: 268 / 268 top-level.**
+
+| file | passing |
+|---|---|
+| core-pieces-ui | 27 |
+| core-xsec | 22 |
+| core-sculpt | 11 |
+| handles | 19 |
+| core-readout-display | 37 |
+| core-eqonly | 31 |
+| core-shell | 28 |
+| jump-ui | 5 |
+| preview | 81 |
+| core-close-preview | 7 |
+
+No harness, per the packet.
+
+**A correction to my own rows, made in this run.** The first green run had the two `core-sculpt` rows failing on my branch too, at 348.26 (asked 350) and 9.85 (asked 10). The cause was not the rule: the brush fits its change into the piece's control points, so its centre does not land exactly on the asked value. Its gain there is **0.985 (brush, piece 0) to 0.995 (Sculpt, piece 2), measured on both trees.** My rows had asserted equality to within 1e-6.
+
+They now check the **rule**, within 3% of the change sent: the bank stays within one turn, keeps its sign, and comes out near `wrapTurn(b0 + delta)`, where `b0` is the bank as actually read under the drag. The first red on the base was therefore not meaningful for the Sculpt row, which failed at its first step rather than at the wrap. I re-ran it, and it now fails for the right reason (368.16 past a turn).
+
+**Not established:**
+- The keeper's hands: whether wrapping back from 0 past a full turn feels right while dragging.
+- No real window.
+- No harness. The touched lines are listed in the Rework section above; `coreshell.brushTo`'s head and the new `bankWithinTurn` are what a harness run should cover at install.

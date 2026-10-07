@@ -63,3 +63,13 @@ SOURCES: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-librar
 **To resume (after the flash):** run `node --test --test-concurrency=1 app/test/core-close-mutation.test.js` once in `a-a4-wt` under the lock and read A4's line; if A4 is caught, the librarian's file-level failure was environmental and the answer is "no change"; if not, print the failing test list of that mutant and decide re-point or restore.
 
 NEXT: librarian re-dispatch the single A4 harness run to A when the machine is back and no other harness holds the lock
+
+## A4 RESULT (after the flash, 2026-10-06 ~21:10): CAUGHT. No change; the librarian's file-level failure was environmental.
+
+SOURCES: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\a4_harness.txt · `node --test --test-concurrency=1 app/test/core-close-mutation.test.js` in `a-a4-wt` (main `cc177c5`, clean)
+
+**checked:** the harness ran ONCE, in the background, under the heavy-run lock (it waited behind the librarian's three-harness hold, then ran 252 s) → **37 tests, 37 pass, 0 fail; `✔ mutation A4 the overlap check is skipped: applied, and caught by "row 4: the preview's OVERLAP CHECK…" (5825 ms)`**, no NOT APPLIED. So 37/37 as the chair asked, A4 included.
+
+**inferred:** the earlier file-level failure (1.4 s, no named row) was a dead or cut-off child process on the librarian's loaded machine, not a lost row 4: I could not reproduce it four ways (by hand, by replaying the harness's copy steps, A4 alone, and now the full harness). **Not established:** what exactly killed that child. No file changed, nothing to commit.
+
+NEXT: librarian note A4 closed as "no change"; worktree a-a4-wt (branch a4-fix-a = cc177c5) can be removed
