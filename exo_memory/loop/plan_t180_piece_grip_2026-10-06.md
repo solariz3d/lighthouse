@@ -30,3 +30,14 @@ It would be interesting to be able to change which piece has different grip, tha
 - AC is the test: the keeper drives a track with a low-grip and a high-grip piece.
 
 NEXT: chair queue D261 (C research first, after D260; then E core/export; then A UI) when D258–D260 are in
+
+## The keeper's range decision (librarian, 21:2x)
+- **Grip field: 50–150%** (AskUserQuestion, recommended option). 100% = AC ROAD friction 1.0, writes no grip key. Outside 60–110% the words say "untested: drive it" (E's survey: installed range 0.6–1.1, n 753).
+
+## Addition (the keeper, 21:18): a "Grip like…" reference, as "Width like…" (D232)
+> "LIKE how we took the width reference of other tracks, perhaps do the same with the friction for users to see which tracks they want to emulate grip"
+- A **Grip like…** drop-down beside the Grip field: each known track's measured ROAD friction as a percentage (e.g. 0.96 → 96%), picked to fill the field.
+- **Source:** E's survey (`grip/survey.json`, 753 surfaces, 70 track folders): per track, the drivable road key's FRICTION (the ROAD key, or the T-180 road keys E named).
+  Lead with the T-180 tracks the width list already uses (Thunderhead, Aurora, Nordic) plus the CSP-collision tracks (Sakura, Hazen Loop, Centrifuge, Serpents Spiral, Rainbow Road), then Kunos's own tracks.
+- **The friend's private track is never listed** (E's survey already keeps it unnamed). Only numbers are taken, as with the widths; no author's file is copied.
+- Owners: E builds the table (with the source file and key for each row); A adds the drop-down with the Grip field.
