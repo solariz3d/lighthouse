@@ -1,0 +1,272 @@
+[32m✔ row 1: every kind is placed where the keeper marked it, and every kind with a side is on BOTH sides, mirrored about the centreline [90m(1.4301ms)[39m[39m
+[32m✔ row 1b: the road's width at the handle sets how far out an edge handle sits, and an unknown or absent kind places nothing [90m(0.1799ms)[39m[39m
+[32m✔ row 2: a positive drag runs outward (width, cup), left on both sides (turn), up on the left edge and down on the right (bank), away from the piece (length: its near end stays put), up (climb) [90m(0.1426ms)[39m[39m
+[31m✖ row 3: the two mirrored handles change the SAME value: the same outward motion from either side gives the same field value [90m(0.2312ms)[39m[39m
+[31m✖ row 4: a value from a drag in PIXELS: the rates per pixel, the clamps, the rounding, Shift (a tenth) and Ctrl (snap) [90m(0.4393ms)[39m[39m
+[31m✖ row 5: the screen: where a handle is, one metre along its axis in px, behind the camera, an axis seen end-on [90m(0.2117ms)[39m[39m
+[32m✔ row 6: the hit test takes the nearest handle inside the radius, none outside, and skips a handle behind the camera [90m(0.1707ms)[39m[39m
+[31m✖ row 7: the overlay: a press ON a handle opens the drag and nothing else sees it; a press elsewhere is left alone; one apply a frame; the release applies the last position and ends [90m(1.0611ms)[39m[39m
+[32m✔ row 7b: no model, no pose or a refused press: no handles are drawn and a press is not taken; a right-button press is never a handle [90m(0.1999ms)[39m[39m
+[31m✖ row 8: the speed is per PIXEL: 20 px of drag changes a field by the same amount zoomed in and zoomed out [90m(1.0903ms)[39m[39m
+[31m✖ row 9: the detents: a drag holds about 6 px at the value it started from and, for bank, turn and climb, at 0; Ctrl snaps instead; past the hold it moves again [90m(0.1825ms)[39m[39m
+[31m✖ row 10: the value is rounded to the step with Shift too: a fine drag lands on 0.0, not 0.03 [90m(0.2418ms)[39m[39m
+[31m✖ row 11: a double-click on a handle resets it: 0 for bank, turn, climb; the value before the last drag for length, width, cup; and it is the handle's, not the camera's [90m(0.1683ms)[39m[39m
+[31m✖ row 12: the label shows the exact value the drag sets, and what a double-click would set [90m(0.5773ms)[39m[39m
+[34mℹ tests 14[39m
+[34mℹ suites 0[39m
+[34mℹ pass 5[39m
+[34mℹ fail 9[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 53.9846[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\handles.test.js:65:1
+[31m✖ row 3: the two mirrored handles change the SAME value: the same outward motion from either side gives the same field value [90m(0.2312ms)[39m[39m
+  TypeError: HD.dragPixels is not a function
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-precision-base\[39mapp\test\handles.test.js:70:19[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at app\test\handles.test.js:82:1
+[31m✖ row 4: a value from a drag in PIXELS: the rates per pixel, the clamps, the rounding, Shift (a tenth) and Ctrl (snap) [90m(0.4393ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: length: half a metre a pixel
+  
+  200 !== 180
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-precision-base\[39mapp\test\handles.test.js:84:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m200[39m,
+    expected: [33m180[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\handles.test.js:95:1
+[31m✖ row 5: the screen: where a handle is, one metre along its axis in px, behind the camera, an axis seen end-on [90m(0.2117ms)[39m[39m
+  TypeError: HD.dragPixels is not a function
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-precision-base\[39mapp\test\handles.test.js:103:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at app\test\handles.test.js:127:1
+[31m✖ row 7: the overlay: a press ON a handle opens the drag and nothing else sees it; a press elsewhere is left alone; one apply a frame; the release applies the last position and ends [90m(1.0611ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: 30 px outward is 3 m wider, 34, which Ctrl snaps to 5 m: 35
+  [32m+ actual[39m [31m- expected[39m
+  
+  [39m  [
+  [39m    'apply',
+  [39m    'width:1',
+  [32m+[39m   40,
+  [31m-[39m   35,
+  [39m    false,
+  [39m    true,
+  [39m    false
+  [39m  ]
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-precision-base\[39mapp\test\handles.test.js:146:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [32m'apply'[39m, [32m'width:1'[39m, [33m40[39m, [33mfalse[39m, [33mtrue[39m, [33mfalse[39m ],
+    expected: [ [32m'apply'[39m, [32m'width:1'[39m, [33m35[39m, [33mfalse[39m, [33mtrue[39m, [33mfalse[39m ],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\handles.test.js:182:1
+[31m✖ row 8: the speed is per PIXEL: 20 px of drag changes a field by the same amount zoomed in and zoomed out [90m(1.0903ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: 20 px: turn 0.05 a pixel, width 0.1 m a pixel, length 0.5 m a pixel
+  [32m+ actual[39m [31m- expected[39m
+  
+  [39m  [
+  [32m+[39m   4,
+  [32m+[39m   38.4,
+  [32m+[39m   165.9
+  [31m-[39m   1,
+  [31m-[39m   33,
+  [31m-[39m   170
+  [39m  ]
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-precision-base\[39mapp\test\handles.test.js:189:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [33m4[39m, [33m38.4[39m, [33m165.9[39m ],
+    expected: [ [33m1[39m, [33m33[39m, [33m170[39m ],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\handles.test.js:193:1
+[31m✖ row 9: the detents: a drag holds about 6 px at the value it started from and, for bank, turn and climb, at 0; Ctrl snaps instead; past the hold it moves again [90m(0.1825ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: 36 px down from 2 is 0.2 from 0, inside the hold: exactly 0, not -5.2
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-precision-base\[39mapp\test\handles.test.js:194:60[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\handles.test.js:203:1
+[31m✖ row 10: the value is rounded to the step with Shift too: a fine drag lands on 0.0, not 0.03 [90m(0.2418ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: a slow drag to nothing is exactly 0, not -5.96
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-precision-base\[39mapp\test\handles.test.js:204:78[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\handles.test.js:210:1
+[31m✖ row 11: a double-click on a handle resets it: 0 for bank, turn, climb; the value before the last drag for length, width, cup; and it is the handle's, not the camera's [90m(0.1683ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: taken by the handle
+  
+  false !== true
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-precision-base\[39mapp\test\handles.test.js:212:99[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\handles.test.js:224:1
+[31m✖ row 12: the label shows the exact value the drag sets, and what a double-click would set [90m(0.5773ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: hovering: the value it has and what a double-click sets
+  [32mactual[39m [31mexpected[39m
+  
+  [39m'[39m[39mt[39m[39mu[39m[39mr[39m[39mn[39m[39m [39m[39m2[39m[39m.[39m[39m0[39m[39m°[39m[39m/[39m[39m1[39m[39m0[39m[39m0[39m[39m [39m[39mm[39m[31m [39m[31m·[39m[31m [39m[31md[39m[31mo[39m[31mu[39m[31mb[39m[31ml[39m[31me[39m[31m-[39m[31mc[39m[31ml[39m[31mi[39m[31mc[39m[31mk[39m[31m:[39m[31m [39m[31m0[39m[39m'[39m
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-precision-base\[39mapp\test\handles.test.js:227:79[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'turn 2.0°/100 m'[39m,
+    expected: [32m'turn 2.0°/100 m · double-click: 0'[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+[32m✔ row 1c: on a CLOSED lap a shift-click across the start line takes the SHORT way: the pieces either side of the line; Save keeps them, Delete says CLOSED [90m(152.0235ms)[39m[39m
+[32m✔ row 1d: where the run across the start line CANNOT be saved (a cup at one side of it, a plain piece at the other) and the inside run can, the inside run is selected and the line says why [90m(114.1972ms)[39m[39m
+[32m✔ row 1e: a tie stays inside the lap even when the lengths are decimals whose sums differ in the last bit (A's tiefloat case) [90m(3.7866ms)[39m[39m
+[32m✔ row 1: select a piece, shift-click a run (the first piece selected stays the anchor), an out-of-range piece is refused, and any change of the document drops the selection [90m(93.4709ms)[39m[39m
+[32m✔ row 2: Save as piece stores exactly the core's text; a name already used is refused and the stored piece untouched; a bad name and a mixed run are refused by name [90m(15.7116ms)[39m[39m
+[32m✔ row 3: the library lists name, length, turn, climb and a thumbnail; an unreadable file and a whole track are LISTED with the reason [90m(12.8288ms)[39m[39m
+[32m✔ row 4: Add at head is the core's insert as ONE undo step, mirrored on request; closed, missing and damaged are refused by name with nothing changed [90m(86.4819ms)[39m[39m
+[32m✔ row 5 (REQUIRED, through the app): a track built by saving a run and adding it back through the shell is the SAME DOCUMENT and exports the SAME BYTES [90m(2938.69ms)[39m[39m
+[32m✔ row 6: rename (the new name must be free; the file's own name changes) and delete of a saved piece [90m(8.6052ms)[39m[39m
+[32m✔ row 6b: a CASE-ONLY rename (Run to run) works where names are case-blind (C, look F2), on a case-sensitive store too, and a failure on the way never loses the piece [90m(14.5723ms)[39m[39m
+[32m✔ row 7: delete at the open end is simple (one undo step, ids kept); a closed track refuses by name [90m(92.5649ms)[39m[39m
+[32m✔ row 8: delete in the MIDDLE is previewed (displacement, overlap check); Apply writes the backup FIRST and is one undo step; a failed copy refuses; Cancel, a stale preview, and DELETE_REJOIN [90m(2260.8953ms)[39m[39m
+[32m✔ row 8b: the delete preview's overlap check finds a road running into itself (a two-circle coil, as TEST 1 stacked) and reports where [90m(4172.537ms)[39m[39m
+[32m✔ row 9: the preview shows a delete's proposal as a ghost (dropped on Cancel and on Apply), and the selection highlight lands where the preview's own pick says the piece is [90m(1028.3911ms)[39m[39m
+[32m✔ row 10: the panel: a click selects the piece under it and a shift-click the run; a drag, an armed brush and a click on nothing do not select; Save as piece, the list, Add at head with Mirror, Rename, Delete with its confirm [90m(38.3218ms)[39m[39m
+[32m✔ row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot be saved [90m(892.5789ms)[39m[39m
+[31m✖ row 11: Extend's handles: on the ghost and only while there is one; a drag types into the matching field and reaches no document until Extend; mirrored handles change the same field; Extend places what was dragged [90m(38.5648ms)[39m[39m
+[31m✖ row 11b: no ghost, no handles; a press ON a handle is the handle's and the armed brush and the camera keep a press anywhere else; the cup's handles go with the cup field; the switch turns them off [90m(46.0703ms)[39m[39m
+[32m✔ row 11c: the preview mounts AFTER the panel, so the first ask for the ghost can go to nobody: the handles ask again about every half second and appear once it listens (found in the real window) [90m(238.5425ms)[39m[39m
+[32m✔ row 12: Sculpt through the panel: only the shape channels; ONE selected piece gets its handles; a drag reshapes that piece, is ONE undo step and the centreline does not move; Undo gives it back [90m(159.0296ms)[39m[39m
+[32m✔ row 13: the preview's ghostInfo (what the handles read): none without a ghost, the path's samples and where the new piece starts with one, none for a delete preview's ghost, none after clearGhost [90m(528.1747ms)[39m[39m
+[32m✔ row 14: the Jump block: the hint and the ramp speed from the start; a ghost with the flight in words; a refused jump says why; the handles stay off the jump ghost; Add jump is one step and the next Extend lays the landing road [90m(309.8067ms)[39m[39m
+[32m✔ row 15: the preview's ghostInfo says whether the ghost is a jump's and carries its segments (what the handles and the flight overlay read) [90m(58.4045ms)[39m[39m
+[34mℹ tests 23[39m
+[34mℹ suites 0[39m
+[34mℹ pass 21[39m
+[34mℹ fail 2[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 13411.7276[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\core-pieces-ui.test.js:434:1
+[31m✖ row 11: Extend's handles: on the ghost and only while there is one; a drag types into the matching field and reaches no document until Extend; mirrored handles change the same field; Extend places what was dragged [90m(38.5648ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: length: 40 px along the road, half a metre each
+  
+  '115.6' !== '120'
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-precision-base\[39mapp\test\core-pieces-ui.test.js:442:96[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'115.6'[39m,
+    expected: [32m'120'[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-pieces-ui.test.js:469:1
+[31m✖ row 11b: no ghost, no handles; a press ON a handle is the handle's and the armed brush and the camera keep a press anywhere else; the cup's handles go with the cup field; the switch turns them off [90m(46.0703ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: a whole drag on a handle with the brush armed edits the field
+  
+  '115.6' !== '120'
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-precision-base\[39mapp\test\core-pieces-ui.test.js:478:80[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'115.6'[39m,
+    expected: [32m'120'[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }

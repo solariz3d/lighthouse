@@ -1,0 +1,90 @@
+2026-10-06T17:40:56.874Z ev (() => ({ extend: [...document.querySelectorAll('button')].some((b) => b.textContent.trim() === 'Ext
+2026-10-06T17:40:57.677Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T17:40:57.678Z CHECK start {"status":"unsaved","info":"0 pieces · 0 m · open","msg":"No saved pieces yet: select pieces on the track and press Save as piece."}
+2026-10-06T17:40:59.190Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: 'build' } }))
+2026-10-06T17:41:00.401Z ev (() => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim() === "Ex
+2026-10-06T17:41:01.865Z ev (() => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim() === "Ex
+2026-10-06T17:41:02.886Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T17:41:02.888Z CHECK infoBefore "2 pieces · 200 m · open · last extend 1 ms"
+2026-10-06T17:41:02.888Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:03.305Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:03.307Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:04.232Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:04.233Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:04.653Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:04.655Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:05.583Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:05.585Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:06.005Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:06.006Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:06.940Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:06.941Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:07.363Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:07.364Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:08.300Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:08.301Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:08.721Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:08.722Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:11.149Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:11.150Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:11.573Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:11.574Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:14.001Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:14.003Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:14.422Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:14.423Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:16.861Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:19.285Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:19.286Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:19.704Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:19.705Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:22.132Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:22.133Z CHECK turnTo0 {"noShift_40px":{"before":"2","after":"0","px":-40,"pxPerM":6.07},"noShift_37px":{"before":"2","after":"0","px":-37,"pxPerM":6.07},"noShift_43px":{"before":"2","after":"0","px":-43,"pxPerM":6.07},"noShift_30px_not_held":{"before":"2","after":"0.5","px":-30,"pxPerM":6.07},"shift_400px_one_drag":{"before":"2","after":"0","parts":[-400],"pxPerM":6.07},"shift_397px_one_drag":{"before":"2","after":"0","parts":[-397],"pxPerM":6.07},"shift_2x200px":{"before":"2","after":"0","parts":[-200,-200],"pxPerM":6.07},"shift_103_7px_not_held":{"before":"2","after":"1.5","parts":[-103.7],"pxPerM":6.07}}
+2026-10-06T17:41:22.227Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:22.644Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:23.066Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:23.475Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:24.410Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:25.347Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:26.278Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:26.279Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:26.280Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:26.281Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:28.684Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:29.105Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:29.525Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:29.942Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:30.877Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:31.810Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:32.744Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:32.745Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:32.746Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:32.747Z CHECK zoom {"build":{"turn":"1","width":"29","length":"110","pxPerMeter":{"turn":6.05,"width":29.65,"length":11.82}},"zoomedOut":{"turn":"1","width":"29","length":"110","pxPerMeter":{"turn":4.52,"width":11.15,"length":4.29}}}
+2026-10-06T17:41:32.807Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:33.227Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:33.649Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:34.194Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:34.195Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:34.736Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:34.737Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:35.155Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:36.075Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:36.076Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:36.621Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:36.622Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:37.040Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:37.971Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:37.973Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:38.519Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:38.520Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:38.943Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:39.878Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:39.879Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:40.424Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:40.426Z CHECK reset {"turn":{"from":2,"to":"0"},"bank":{"from":6,"to":"0"},"length":{"before":100,"dragged":"120","afterDoubleClick":"100"},"width":{"before":31,"dragged":"26","afterDoubleClick":"31"},"cup":{"before":8,"dragged":"16","afterDoubleClick":"8"}}
+2026-10-06T17:41:40.426Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-06T17:41:40.426Z CHECK noDocumentEdit true
+2026-10-06T17:41:40.427Z ev (() => { const l = [...document.querySelectorAll('#palette label.picker')].find((x) => x.children[0]
+2026-10-06T17:41:40.850Z ev (() => { let h = null; document.dispatchEvent(new CustomEvent('t180:handles-request', { detail: { re
+2026-10-06T17:41:42.166Z ev (() => { const out = {}; for (const l of document.querySelectorAll('#palette label.picker')) { const
+2026-10-06T17:41:42.167Z CHECK fieldWhileDragging "0"
