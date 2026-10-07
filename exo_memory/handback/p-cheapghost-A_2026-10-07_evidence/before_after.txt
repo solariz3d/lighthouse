@@ -1,0 +1,3 @@
+node measure2.js <root>   (headless, one drag step on a 1000 m tube piece; median of 9; the core's candidate + candidateReadout, then the track model's ghostFor)
+before (main 2b929c2): {"full":{"stepMs":514,"coreMs":16,"ghostMs":497,"vertices":392455,"uploadMB":17.3},"cheap":{"stepMs":505,...same: the base ignores cheap}}
+after  (cheapghost-a): {"full":{"stepMs":583,"coreMs":18,"ghostMs":565,"vertices":392455,"uploadMB":17.3},"cheap":{"stepMs":95,"coreMs":18,"ghostMs":77,"vertices":34097,"uploadMB":1.5}}
