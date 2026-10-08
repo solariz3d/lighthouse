@@ -1156,6 +1156,12 @@ const SYNTHETIC = [/C:[\\/]{1,4}notes/i, /C:[\\/]{1,4}x[\\/]/i, /Users[\\/]{1,4}
 function dedangle(body) {
   let n = 0;
   const bump = () => { n++; };
+  /* D273 lap 2 (pane B, 2026-10-08): a markdown LINK whose target is a record path that never ships becomes its text followed by the prose, so the
+   * output never links to a sentence. Without this pass the rules below rewrote only the TARGET, leaving [text](a registration in this line of record):
+   * the root README carried 13 of them, found by arch_test::every_relative_link_in_the_docs_exists_in_a_fresh_clone. */
+  const LINKED = { loop: 'a registration', map: 'a map entry', handback: 'a hand-back', librarian: 'a librarian entry' };
+  body = body.replace(/\[([^\]\n]+)\]\((?:\.\.\/)*(?:exo_memory\/)?(loop|map|handback|librarian)\/[A-Za-z0-9_.-]+\.md(?::[\d-]+)?\)/g,
+    (m, text, dir) => { bump(); return text + ' (' + LINKED[dir] + ' in this line of record)'; });
   let out = body
     /* RE-POINT, NOT PROSE -- 2026-09-06 (L038). Both of these used to rewrite a dated journal
      * citation into the words `the record, <date>`, which was correct while the journals stayed

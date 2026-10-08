@@ -1369,3 +1369,15 @@ test('D273/A: a declaration whose anchor is gone is REFUSED, not silently skippe
   assert.deepStrictEqual([ok.missing, ok.n], [[], 1]);
   assert.match(ok.body, /test\('PLAN: the plan the hook cites exists', \{ skip: "WORKSHOP-BOUND: [^"]+" \}, \(\) =>/);
 });
+
+test('D273: a markdown LINK whose target is a record path becomes its text and the prose, never a link to prose (the root README carried 13)', () => {
+  /* Found by arch_test::every_relative_link_in_the_docs_exists_in_a_fresh_clone on the lap-2 generated tree, the first one with the root README.md:
+   * dedangle rewrote the TARGET of [text](exo_memory/loop/x.md) to prose and left the link syntax, so the README linked to
+   * "(a registration in this line of record)" 13 times. */
+  const { body, n } = G.dedangle('see [the plan](exo_memory/loop/plan_x_2026-10-01.md), [B](../exo_memory/handback/p-x-B_2026-10-01.md:12), '
+    + '[the map](exo_memory/map/B.md) and [a note](exo_memory/librarian/2026-10-01.md); keep [GUIDE](consonance/GUIDE.md).\n');
+  assert.strictEqual(body, 'see the plan (a registration in this line of record), B (a hand-back in this line of record), '
+    + 'the map (a map entry in this line of record) and a note (a librarian entry in this line of record); keep [GUIDE](consonance/GUIDE.md).\n');
+  assert.strictEqual(n, 4);
+  assert.doesNotMatch(body, /\]\(a (registration|hand-back|map entry|librarian entry) in this line of record\)/);
+});
