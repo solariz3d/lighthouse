@@ -1427,3 +1427,20 @@ test('D273 lap 3 (C): consumer-relabel.js and its two tests do not ship, each wi
     assert.match(G.EXCLUDE[rel] || '', re, rel + ' ships, or its reason is not C\'s');
   }
 });
+
+test('D273 lap 3: brief/frag-fork.md ships byte for byte (main.rs include_str!s it in a test, and the generated tree did not compile its tests without it)', () => {
+  /* Found by the lap-3 parity run: `cargo test` in the generated tree failed to compile, "couldn't read src\\../brief/frag-fork.md" at main.rs's
+   * fork-note test (C's lap 3). It is a TEMPLATE ({FORK_SHA}, {FORK_DATE}) that consumer-relabel.js fills into BOOT and SEED; the file itself must
+   * reach the consumer untouched, so its marker and end lines stay byte-identical to what main.rs pins. */
+  const r = G.build('', { dry: true, allowDirty: true });
+  try {
+    const rel = 'consonance/src-tauri/brief/frag-fork.md';
+    assert.ok(fs.existsSync(path.join(r.staging, rel)), rel + ' did not ship');
+    assert.strictEqual(fs.readFileSync(path.join(r.staging, rel), 'utf8'), fs.readFileSync(path.join(REPO, rel), 'utf8'), rel + ' was transformed');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273 lap 3: dev/shell/install-fresh-home.test.js ships beside the install.ps1 it tests (E, lap 2)', () => {
+  assert.ok(G.collect().some((x) => x.from === 'dev/shell/install.ps1'), 'control: install.ps1 ships');
+  assert.ok(G.collect().some((x) => x.from === 'dev/shell/install-fresh-home.test.js' && !G.EXCLUDE[x.from]), 'the test of a shipped installer does not ship');
+});

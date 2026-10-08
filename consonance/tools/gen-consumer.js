@@ -245,6 +245,9 @@ const MANIFEST = [
   // guard here found that within a minute of the resource being declared -- the manifest is an
   // ALLOW-list, so a new declared resource is ABSENT by default, and absent reads like fine.
   { from: 'consonance/src-tauri/brief/THIRD_PLACE.md', to: 'consonance/src-tauri/brief/THIRD_PLACE.md', kind: 'prose' },
+  /* D273 lap 3 (pane B): C's fork-note TEMPLATE ({FORK_SHA}, {FORK_DATE}). consumer-relabel.js fills it into BOOT and SEED; main.rs's fork test
+   * include_str!s this file, so without it the generated tree's tests did not compile (lap-3 parity). It must ship byte for byte (a test pins it). */
+  { from: 'consonance/src-tauri/brief/frag-fork.md', to: 'consonance/src-tauri/brief/frag-fork.md', kind: 'prose' },
 
   /* TWO MANIFEST GAPS WERE KNOWINGLY LEFT OPEN, 2026-09-04. **CLOSED 2026-09-06 (L037 P2), BY
    * SHIPPING**, which is the only way a gap closes. The block below is kept in full because the
@@ -306,6 +309,9 @@ const MANIFEST = [
    * AND ONE FILE IS SHIPPED THAT THE INSTALLER DOES NOT NAME EITHER: `dev/shell/README.md`, ruled at
    * the entry below rather than here, because the reason is a reference inside `install.ps1`. */
   { from: 'dev/shell/install.ps1', to: 'dev/shell/install.ps1', kind: 'code' },
+  /* D273 lap 3 (pane B): E's test of the installer above (lap 2: a fresh home with no settings.json, a home that has one, no jev-flags). It runs
+   * install.ps1 against temp homes only, so it is a product test of a shipped file; the lap-3 parity run found it unshipped (it was in I). */
+  { from: 'dev/shell/install-fresh-home.test.js', to: 'dev/shell/install-fresh-home.test.js', kind: 'code' },
   /* `install.ps1` PROSE NAMES `dev/shell/README.md` AT ITS `:731`, inside the -Check advisory
    * here-string. That is a live dangling reference in the generated tree the moment this entry
    * lands, and it is the exact shape this lap's falsifier names ("a shipped file still reads a path
