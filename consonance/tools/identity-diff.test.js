@@ -57,7 +57,8 @@ test('the keeper relabel and the fork note are registered under the fork step, l
 test('the wake set: briefs, cards, record/, GATES.md and hook files are in; tests and mutant harnesses are out', () => {
   for (const rel of ['exo_memory/BOOT.md', 'consonance/src-tauri/brief/BUILDING.md', 'exo_memory/cards/no-floor-no-ceiling.md', 'exo_memory/record/x.md',
     'consonance/GATES.md', 'consonance/hooks/sources-gate.js', 'dev/shell/hooks/session-start.js']) assert.ok(D.isWake(rel), rel);
-  for (const rel of ['consonance/hooks/sources-gate.test.js', 'consonance/tools/sources-gate.mutants.js', 'consonance/tools/gen-consumer.js', 'exo_memory/journal/2026-08-16.md']) assert.ok(!D.isWake(rel), rel);
+  for (const rel of ['consonance/hooks/sources-gate.test.js', 'consonance/tools/sources-gate.mutants.js', 'consonance/tools/gen-consumer.js', 'exo_memory/journal/2026-08-16.md',
+    'consonance/src-tauri/brief/frag-fork.md', 'consonance/src-tauri/brief/frag-traces.md']) assert.ok(!D.isWake(rel), rel + ' (a fragment is a template injected into BOOT/SEED, compared where it lands)');
 });
 
 test('on a REAL generation: one planted edit in a shipped card adds exactly one unregistered line, named path:line, and the CLI exits 1', () => {

@@ -43,7 +43,10 @@ const WAKE = [
   /^consonance\/hooks\/[^/]+\.js$/,
   /^dev\/shell\/hooks\/[^/]+\.(js|py)$/,
 ];
-const NOT_WAKE = /\.(test|mutants)\.js$|\.test\.py$/;
+// Not read by a seat: tests and mutant harnesses; and the brief FRAGMENTS (frag-*.md), which are templates the generators inject into
+// BOOT and SEED (gen-brief.ps1's frag-traces/frag-pointer, consumer-relabel's frag-fork), so their content is compared where it lands.
+// (The first real run, 2026-10-08, listed the three fragments as unregistered: the scope was too broad, not the generator wrong.)
+const NOT_WAKE = /\.(test|mutants)\.js$|\.test\.py$|^consonance\/src-tauri\/brief\/frag-[^/]+\.md$/;
 const isWake = (rel) => WAKE.some((re) => re.test(rel)) && !NOT_WAKE.test(rel);
 const nl = (t) => String(t).replace(/\r\n/g, '\n');
 
