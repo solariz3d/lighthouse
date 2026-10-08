@@ -965,13 +965,18 @@ test('L038/A · a dirty tree is REFUSED, because the sha it would stamp is not e
   if (w.staging) { try { fs.rmSync(w.staging, { recursive: true, force: true }); } catch (_) {} }
 
   // The override exists and is not silent — that is the whole difference from a bypass.
-  const ok = G.build(out, { allowDirty: true });
+  // D273 lap 2 AMENDED THIS ROW BY NAME (pane B, 2026-10-08): the override build now goes into its OWN empty directory. The output became a fresh-history
+  // git repository, and a directory that already holds a history is refused; on a CLEAN tree the write above made one, so writing again into `out` was
+  // refused for that reason and this row (whose subject is dirtiness, not re-use of a directory) failed only when the tree was clean.
+  const out2 = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-dirty-override-'));
+  const ok = G.build(out2, { allowDirty: true });
   assert.ok(!ok.refused, '--allow-dirty did not lift the refusal: ' + ok.refused);
-  assert.match(fs.readFileSync(path.join(out, 'exo_memory', 'CUTOFF.md'), 'utf8'),
+  assert.match(fs.readFileSync(path.join(out2, 'exo_memory', 'CUTOFF.md'), 'utf8'),
     reallyDirty ? /THIS PROVENANCE IS NOT EARNED/ : /Generated from the private record at commit/,
     'the written CUTOFF does not describe the state it was generated in');
   if (ok.staging) { try { fs.rmSync(ok.staging, { recursive: true, force: true }); } catch (_) {} }
   fs.rmSync(out, { recursive: true, force: true });
+  fs.rmSync(out2, { recursive: true, force: true });
 });
 
 test('L038/A · an overridden stamp is legible as one, in both documents', () => {
