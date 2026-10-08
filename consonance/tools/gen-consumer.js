@@ -438,6 +438,10 @@ const MANIFEST = [
   { from: 'INSTRUMENTS.md', to: 'INSTRUMENTS.md', kind: 'prose' },
   { from: 'dev/SPINE.md', to: 'dev/SPINE.md', kind: 'prose' },
   { from: 'consonance/AUTONOMY.md', to: 'consonance/AUTONOMY.md', kind: 'prose' },
+  /* D273 (pane B): the one page that explains the gates. Every refusal of sources-gate and the reply slot points to it (sources-gate gatesDocFrom).
+   * Ruled to ship in lap 2; the row never landed, which C's identity-diff found on its first real run: in the consumer every refusal pointed at a
+   * missing file. */
+  { from: 'consonance/GATES.md', to: 'consonance/GATES.md', kind: 'prose' },
 ];
 
 /* THE FORK HOOK POINT — D273 lap 2 (pane B, 2026-10-08). C's ROLE/PROVENANCE relabel and frag-fork injection is a SEPARATE module (C names it); its one
@@ -723,6 +727,11 @@ const EXCLUDE = {
     'tests the rule against the dev briefs, which a consumer tree only has already relabelled',
   'consonance/tools/consumer-fork-wiring.test.js':
     'generates a tree with gen-consumer.js, which does not ship',
+  /* D273 (C's identity-diff, "Owed to B"): the same reason as consumer-relabel. */
+  'consonance/tools/identity-diff.js':
+    'replays gen-consumer.js against the dev tree to compare the shipped wake files with their sources; neither the generator nor the dev tree ships',
+  'consonance/tools/identity-diff.test.js':
+    'tests identity-diff, which needs gen-consumer.js and the dev tree, neither of which ships',
 };
 
 /* ------------------------------------------------------------------ seeded files
@@ -2021,15 +2030,10 @@ function build(outDir, opts) {
 
   /* What `memory/` actually ships, by BASENAME, because that is how its index links. Computed from
    * the same two structures the loop below obeys, so the index and the tree cannot disagree. */
-  const shippedMemory = new Set(files
-    .filter((f) => f.to.startsWith('exo_memory/memory/') && !EXCLUDE[f.from])
-    .map((f) => f.to.slice('exo_memory/memory/'.length)));
-
   /* Card NAMES (no extension), across both directories the deck cross-references — `cards/` and
-   * `memory/` link into each other, so a set built from one of them alone would drop live links. */
-  const shippedCards = new Set(files
-    .filter((f) => /^exo_memory\/(cards|memory)\/.+\.md$/.test(f.to) && !EXCLUDE[f.from])
-    .map((f) => path.basename(f.to, '.md')));
+   * `memory/` link into each other, so a set built from one of them alone would drop live links.
+   * D273: computed by shippedSets(), exported, so identity-diff reads the same sets instead of copying the expressions. */
+  const { shippedMemory, shippedCards } = shippedSets(files);
   /* On the report so it can be asserted DIRECTLY. Narrowing this set to cards/ alone is an
    * EQUIVALENT mutant on today's data — no shipped card currently links to a memory-only card, so
    * the output is byte-identical either way and no output-level test can tell them apart. The set
@@ -2359,6 +2363,18 @@ function build(outDir, opts) {
 /* One commit, a neutral author (never a person's name or address: the history is what gets pushed), dated to the source commit so two generations
  * of one commit are the same commit. NO REMOTE, and remote.pushDefault = no_push, so a bare `git push` goes nowhere until someone adds a remote on
  * purpose (the plan: any consumer checkout's push stays no_push). */
+/* THE TWO SHIPPED SETS, from collect()'s files and EXCLUDE (D273: exported for identity-diff, C's item 3, so its replay reads these instead of a copy).
+ * shippedMemory: what memory/ ships, by BASENAME, because that is how its index links. shippedCards: card NAMES across cards/ and memory/. */
+function shippedSets(files) {
+  const shippedMemory = new Set(files
+    .filter((f) => f.to.startsWith('exo_memory/memory/') && !EXCLUDE[f.from])
+    .map((f) => f.to.slice('exo_memory/memory/'.length)));
+  const shippedCards = new Set(files
+    .filter((f) => /^exo_memory\/(cards|memory)\/.+\.md$/.test(f.to) && !EXCLUDE[f.from])
+    .map((f) => path.basename(f.to, '.md')));
+  return { shippedMemory, shippedCards };
+}
+
 function commitFresh(dir, commit) {
   const { execFileSync } = require('child_process');
   const g = (args, env) => execFileSync('git', args, { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, ...env } }).trim();
@@ -2575,4 +2591,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { FORK_HOOK, commitFresh, descreen, SCREEN_SCRUB, WORKSHOP, declareWorkshop, fixtureKind, MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, STAYS_PRIVATE, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, depath, repath, desync, reseed, reindex, dewiki, SEED_ANCHOR, SEED_SENTENCE, JOURNAL_SEED, renderCutoff, verifyCutoff, renderStatusDoc, generatedFiles, commitIdentity, build };
+module.exports = { FORK_HOOK, commitFresh, shippedSets, descreen, SCREEN_SCRUB, WORKSHOP, declareWorkshop, fixtureKind, MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, STAYS_PRIVATE, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, depath, repath, desync, reseed, reindex, dewiki, SEED_ANCHOR, SEED_SENTENCE, JOURNAL_SEED, renderCutoff, verifyCutoff, renderStatusDoc, generatedFiles, commitIdentity, build };

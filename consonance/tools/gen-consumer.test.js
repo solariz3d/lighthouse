@@ -1469,3 +1469,37 @@ test('D273 lap 3: the OS-user rule does not eat a "\\n" escape followed by name 
     assert.ok(!/\bnname\b/.test(G.deidentify(leak).body), 'a real OS-user path survived deidentify: ' + leak);
   }
 });
+
+test('D273: consonance/GATES.md ships, and the gate refusals\' pointer resolves to it in the generated tree', () => {
+  /* C's identity-diff, first real run (handback/p-consumer-fork-C_2026-10-08.md, "Owed to B"): GATES.md was ruled to ship in lap 2 and its MANIFEST
+   * row never landed, so in the consumer every gate refusal pointed at a file that was not there (sources-gate's gatesDocFrom falls back to
+   * "consonance/GATES.md (in the Consonance repository)"). Checked with the GENERATED hook's own resolver, against the generated tree. */
+  const r = G.build('', { dry: true, allowDirty: true });
+  try {
+    assert.ok(!r.refused, r.refused);
+    const gates = path.join(r.staging, 'consonance', 'GATES.md');
+    assert.ok(fs.existsSync(gates), 'consonance/GATES.md did not ship');
+    assert.deepStrictEqual(r.leaks.filter((l) => l.rel === 'consonance/GATES.md'), [], 'GATES.md shipped a leak');
+    const SG = require(path.join(r.staging, 'consonance', 'hooks', 'sources-gate.js'));
+    assert.strictEqual(SG.gatesDocFrom(path.join(r.staging, 'exo_memory', 'BOOT.md'), fs.existsSync), gates, 'the refusal pointer does not resolve to the shipped GATES.md');
+    for (const hook of ['sources-gate.js', 'reply-slot.js']) {
+      assert.match(fs.readFileSync(path.join(r.staging, 'consonance', 'hooks', hook), 'utf8'), /GATES\.md/, hook + ' no longer names GATES.md, so this check proves nothing');
+    }
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273: identity-diff.js and its test do not ship (they need gen-consumer.js and the dev tree, as consumer-relabel does)', () => {
+  for (const rel of ['consonance/tools/identity-diff.js', 'consonance/tools/identity-diff.test.js']) {
+    assert.ok(G.collect().some((x) => x.from === rel), rel + ' is reached by no rule, so the exclusion proves nothing');
+    assert.match(G.EXCLUDE[rel] || '', /gen-consumer\.js/, rel + ' ships, or its reason does not say why');
+  }
+});
+
+test('D273: shippedSets() is exported and is what build() uses, so identity-diff can read it instead of copying (C, item 3)', () => {
+  const s = G.shippedSets(G.collect());
+  assert.ok(s.shippedMemory instanceof Set && s.shippedCards instanceof Set, 'not two Sets');
+  assert.ok(s.shippedCards.size > 5, 'the card set is empty, so this check proves nothing');
+  const r = G.build('', { dry: true, allowDirty: true });
+  try { assert.deepStrictEqual([...s.shippedCards].sort(), r.linkTargets, 'build() uses a different card set'); }
+  finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
