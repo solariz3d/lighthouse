@@ -118,7 +118,10 @@ test.after(() => { try { fs.rmSync(R.staging, { recursive: true, force: true });
 
 /* ---------------------------------------------------------------- 1. the repair, over the tree */
 
-test('the 2026-08-23 casualties survive the REAL build byte-intact', () => {
+// D273 lap 3 AMENDED THIS ROW BY NAME (pane B, 2026-10-08): it was "the 2026-08-23 casualties survive the REAL build byte-intact". A's lap-3 ruling
+// declares two rows of second-vantage.test.js WORKSHOP-BOUND, and a declaration is the ONE sanctioned rewrite of a fixture (its own tests are in
+// gen-consumer.test.js). So each file is compared with its SOURCE with only the generator's declarations applied: any OTHER transform still fails here.
+test('the 2026-08-23 casualties survive the REAL build byte-intact, apart from their WORKSHOP-BOUND declarations', () => {
   /* Each of these is a file the generator actually damaged on 2026-08-23, named in the record.
    * Byte equality is the assertion because the damage was a rewrite, and any rewrite of a fixture
    * either breaks its assertion or leaves it green over data that no longer means what it meant.
@@ -129,7 +132,9 @@ test('the 2026-08-23 casualties survive the REAL build byte-intact', () => {
   for (const rel of ['consonance/tools/agreement-spread.test.js',
                      'consonance/tools/corrections-gate.test.js',
                      'consonance/tools/second-vantage.test.js']) {
-    assert.strictEqual(staged(rel), source(rel),
+    const declared = G.declareWorkshop(source(rel), rel);
+    assert.deepStrictEqual(declared.missing, [], rel + ': a declaration did not find its anchor in the source');
+    assert.strictEqual(staged(rel), declared.body,
       rel + ' was rewritten by the generator; its assertions no longer key on what they tested');
   }
   /* The Rust one is narrower and worth pinning by content: `cargo check` without `--all-targets`

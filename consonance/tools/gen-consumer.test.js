@@ -1335,7 +1335,10 @@ test('D273/A: contamination and tj1-k-render do not ship, with their tests, each
   }
 });
 
-test('D273/A: the declared JS rows (15 of A + 1 Jev) and 12 Rust tests are declared in the OUTPUT, and plain in the SOURCE so the source suite still runs them', () => {
+// D273 lap 3 AMENDED THIS ROW BY NAME (pane B, 2026-10-08): it was "D273/A: the declared JS rows (15 of A + 1 Jev) and 12 Rust tests are declared in
+// the OUTPUT, and plain in the SOURCE so the source suite still runs them". A's lap-3 ruling (lap3_generator.patch) declares 11 more JS rows, from the
+// five record-shaped members (corpus-age 4, librarian-notes 2, second-vantage 2, shelf-recursion 3); the counts below follow it.
+test('D273/A: the declared JS rows (26 of A + 1 Jev) and 12 Rust tests are declared in the OUTPUT, and plain in the SOURCE so the source suite still runs them', () => {
   const r = dryStaged();
   try {
     assert.ok(!r.refused, r.refused);
@@ -1356,9 +1359,9 @@ test('D273/A: the declared JS rows (15 of A + 1 Jev) and 12 Rust tests are decla
       const out = fs.readFileSync(path.join(r.staging, rel), 'utf8');
       for (const [name] of names) { assert.match(out, new RegExp('#\\[ignore = "WORKSHOP-BOUND: [^"]+"\\]\\s*\\n\\s*fn ' + name + '\\(\\)'), rel + ': ' + name); rs++; }
     }
-    // A's 15 workshop rows, plus jev-flags' one row that compares with the excluded jev-room.js (labelled EXCLUDED-WITH-JEV, not workshop)
-    assert.deepStrictEqual([js, rs], [16, 12]);
-    assert.deepStrictEqual([r.declared.js, r.declared.rust], [16, 12]);
+    // A's 15 lap-2 rows and 11 lap-3 rows, plus jev-flags' one row that compares with the excluded jev-room.js (labelled EXCLUDED-WITH-JEV, not workshop)
+    assert.deepStrictEqual([js, rs], [27, 12]);
+    assert.deepStrictEqual([r.declared.js, r.declared.rust], [27, 12]);
   } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
 });
 
@@ -1394,4 +1397,33 @@ test('D273 lap 3: METHOD.md, INSTRUMENTS.md, dev/SPINE.md and consonance/AUTONOM
     }
     assert.doesNotMatch(fs.readFileSync(path.join(r.staging, 'README.md'), 'utf8'), /\]\((\.\.\/)*jev\//, 'the README links into the excluded jev/');
   } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273 lap 3 (A\'s catch): the GENERATED corrections-gate.js guards exactly what the source one guards (the muscle_map rule had emptied its regex)', () => {
+  /* A, lap 3 (handback/p-consumer-workshop-A_2026-10-08_evidence/lap3_generator.patch): dedangle's bare-token muscle_map rule rewrote
+   * corrections-gate.js:51 `const GUARDED = [/muscle_map\.md$/i];` into a regex for "this line of record.md", which matches no file, so the gate
+   * guarded nothing in the consumer. Compared by BEHAVIOUR on both trees' own modules, not by the line's text. */
+  const r = G.build('', { dry: true, allowDirty: true });
+  try {
+    assert.ok(!r.refused, r.refused);
+    const src = require(path.join(REPO, 'consonance/tools/corrections-gate.js')).GUARDED;
+    const out = require(path.join(r.staging, 'consonance/tools/corrections-gate.js')).GUARDED;
+    const paths = ['exo_memory/muscle_map.md', 'deep/dir/muscle_map.md', 'MUSCLE_MAP.MD', 'exo_memory/this line of record.md', 'README.md', 'muscle_map.md.bak'];
+    const hits = (G2) => paths.map((p) => G2.some((re) => re.test(p)));
+    assert.ok(hits(src).some(Boolean), 'control: the source gate guards something');
+    assert.deepStrictEqual(hits(out), hits(src), 'the generated gate guards a different set of files');
+    assert.deepStrictEqual(out.map(String), src.map(String), 'the generated regexes differ from the source ones');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273 lap 3 (C): consumer-relabel.js and its two tests do not ship, each with C\'s reason', () => {
+  const want = {
+    'consonance/tools/consumer-relabel.js': /property of the generator/,
+    'consonance/tools/consumer-relabel.test.js': /dev briefs/,
+    'consonance/tools/consumer-fork-wiring.test.js': /gen-consumer\.js, which does not ship/,
+  };
+  for (const [rel, re] of Object.entries(want)) {
+    assert.ok(G.collect().some((x) => x.from === rel), rel + ' is reached by no rule, so the exclusion proves nothing');
+    assert.match(G.EXCLUDE[rel] || '', re, rel + ' ships, or its reason is not C\'s');
+  }
 });
