@@ -312,3 +312,12 @@ test('HOOK SOURCE: no process is spawned, no network is called, and nothing but 
   const src = fs.readFileSync(HOOK, 'utf8').split('\n').filter((l) => !/^\s*\/\//.test(l)).join('\n');
   assert.ok(!/child_process|spawn\(|exec\(|https?\.request|fetch\(/.test(src)); assert.strictEqual((src.match(/appendFileSync|writeFileSync/g) || []).length, 1, 'writes more than the ledger');
 });
+
+// D273 (the consumer): the reply slot's block names GATES.md section 2, at the path the hook resolved.
+test('D273: the block reason names GATES.md section 2 at the path it is given, and the default when none is', () => {
+  const t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md'));
+  const given = R.verdict({ reply: 'Done at C:/work/zzz.md, 3 of 5.', entries: t, stopHookActive: false, live: true, seat: 'librarian', gates: 'C:/repo/consonance/GATES.md' });
+  assert.ok(given.output && given.output.reason.endsWith('How this works and why: C:/repo/consonance/GATES.md, section 2 (the reply slot).'), given.output && given.output.reason);
+  const dflt = R.verdict({ reply: 'Done at C:/work/zzz.md, 3 of 5.', entries: t, stopHookActive: false, live: true, seat: 'librarian' });
+  assert.ok(dflt.output.reason.includes('consonance/GATES.md, section 2'), dflt.output.reason);
+});

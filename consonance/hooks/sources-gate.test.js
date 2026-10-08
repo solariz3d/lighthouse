@@ -554,3 +554,23 @@ test('HOOK SOURCE: it never writes the message text anywhere, never spawns a pro
   const src = fs.readFileSync(HOOK, 'utf8').split('\n').filter((l) => !/^\s*\/\//.test(l)).join('\n');
   assert.ok(!/child_process|spawn\(|exec\(|https?\.request|fetch\(/.test(src), 'the gate must be inert beyond reading the transcript and writing its ledger');
 });
+
+// D273 (the consumer): every SOURCES refusal names GATES.md, at the path it has on this machine.
+test('D273: each deny names GATES.md section 1, at the path it is given; an allow carries no pointer', () => {
+  const p = 'C:/repo/consonance/GATES.md';
+  for (const text of ['no sources line here', 'x\nSOURCES:\nNEXT: librarian x when y', 'x\nSOURCES: C:/never/opened.md\nNEXT: librarian x when y']) {
+    const d = G.decide(text, [], 'C:/work', 'L.jsonl', 'abc', 'ring', p);
+    assert.strictEqual(d.decision, 'deny', text);
+    assert.ok(d.reason.includes('How this gate works and why: ' + p + ', section 1 (SOURCES).'), d.reason);
+  }
+  assert.ok(G.decide('no sources line here', [], 'C:/work').reason.includes(G.GATES_REL), 'the default names the repo-relative file');
+  assert.strictEqual(G.decide('x\nSOURCES: none (no state claims)', [], 'C:/work', 'L', 'a', 'ring', p).reason, '');
+});
+test('D273: gatesDocFrom resolves <repo>/consonance/GATES.md from room_path when the file is there, and names it relative otherwise', () => {
+  const room = path.join('C:', 'r', 'exo_memory', 'BOOT.md'), want = path.join('C:', 'r', 'consonance', 'GATES.md');
+  assert.strictEqual(G.gatesDocFrom(room, (p) => p === want), want);
+  assert.strictEqual(G.gatesDocFrom(room, () => false), G.GATES_REL + ' (in the Consonance repository)', 'a missing file is not named as if it were there');
+  assert.strictEqual(G.gatesDocFrom(path.join('C:', 'rooms', 'mine', 'CLAUDE.md'), () => true), G.GATES_REL + ' (in the Consonance repository)', 'a room outside a repo');
+  assert.strictEqual(G.gatesDocFrom('', () => true), G.GATES_REL + ' (in the Consonance repository)');
+  assert.strictEqual(G.gatesDocFrom(room, () => { throw new Error('EACCES'); }), G.GATES_REL + ' (in the Consonance repository)', 'an error checking the file falls back, never throws');
+});

@@ -3685,7 +3685,8 @@ fn trailer_gate(verb: crate::trailer::Verb, verb_name: &str, text: &str) -> Trai
         Ok(_) => return TrailerDecision::Deliver { text: text.to_string(), audit: None },
         Err(why) => why,
     };
-    let reply = refusal_text(verb, why, text);
+    // D273: the refusal's GATES.md pointer, resolved to the path it has on this machine (the first occurrence is the pointer line).
+    let reply = refusal_text(verb, why, text).replacen(crate::trailer::GATES_DOC, &crate::gates_doc_path(), 1);
     // The refusal's first line is "refused by the NEXT-trailer gate: <what is missing>." — reuse it, so the board and
     // the seat are told the same thing in the same words.
     let missing = reply
@@ -3708,6 +3709,17 @@ fn trailer_gate(verb: crate::trailer::Verb, verb_name: &str, text: &str) -> Trai
 mod trailer_gate_tests {
     use super::*;
     use crate::trailer::{Verb, RULE_FILE};
+
+    /// D273: a refused message names GATES.md at the path it has on this machine (under `cargo test` the checkout is the crate's
+    /// own repo, and the file is there once GATES.md lands), and still returns the message whole.
+    #[test]
+    fn a_refusal_names_gates_md_at_its_resolved_path() {
+        let msg = "a ring with no trailer";
+        let TrailerDecision::Refuse { reply, .. } = trailer_gate(Verb::ChairInject, "chair_inject -> B", msg) else { panic!("not refused") };
+        let want = crate::gates_doc_path();
+        assert!(reply.contains(&format!("How this gate works and why: {want}, section 3 (the NEXT trailer).")), "{reply}");
+        assert!(reply.contains(msg), "the message is no longer returned whole");
+    }
 
     /// This file's source, CRLF-normalised, cut at the method's closing brace (same rule as `tests::body_of`).
     fn body_of(header: &str) -> String {

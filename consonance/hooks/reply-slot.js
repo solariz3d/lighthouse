@@ -173,7 +173,7 @@ function slotOf(reply) {
  * The whole decision, no I/O. Returns { kind, wouldBlock, tokens, items, unmatched, none, nCalls, output }.
  * `output` is null unless live is true AND the verdict is a block AND stop_hook_active is false: then it is the Stop block JSON. In shadow it is always null.
  */
-function verdict({ reply, entries, stopHookActive, live = false, seat = null }) {
+function verdict({ reply, entries, stopHookActive, live = false, seat = null, gates = 'consonance/GATES.md' }) {
   const r = { kind: '', prompt: null, wouldBlock: false, tokens: [], items: [], unmatched: [], none: false, nCalls: 0, output: null };
   if (stopHookActive) { r.kind = 'skip-active'; return r; }   // THE LOOP GUARD: a Stop hook has already run this turn; do nothing
   const text = String(reply == null ? '' : reply);
@@ -200,7 +200,7 @@ function verdict({ reply, entries, stopHookActive, live = false, seat = null }) 
     const named = r.unmatched.length ? ' These Sources items match nothing you opened or ran in this turn: ' + r.unmatched.map((u) => '"' + clip(u, 120) + '"').join(' ; ') + '.' : '';
     const why = r.kind === 'would-block-missing' ? 'does not END with a Sources: line' : r.kind === 'would-block-empty' ? 'ends with an EMPTY Sources: line' : 'ends with a Sources: line some of whose items you did not open or run';
     const shown = r.tokens.slice(0, 6).map((t) => t.kind + ' ' + clip(String(t.text).replace(/`/g, "'"), 60)).join(' ; ') + (r.tokens.length > 6 ? ' ; and ' + (r.tokens.length - 6) + ' more' : '');
-    r.output = { decision: 'block', reason: 'REPLY SLOT: this reply names ' + shown + ' and ' + why + ' whose items you opened or ran in THIS turn (a figure carried from the prompt or an earlier turn counts as unbacked).' + named + ' Fix it now, in this turn, in one of two ways: (1) OPEN the source first (Read / Grep, or run the command), then send the reply again ending with a final line `Sources: <path> · \`<command>\`` that lists only what you opened or ran this turn (repo-relative or C:\\... paths); or (2) drop the claim from the reply, or end with `Sources: none` if it states nothing checkable. This hook blocks once per turn: your next reply ends the turn.' };
+    r.output = { decision: 'block', reason: 'REPLY SLOT: this reply names ' + shown + ' and ' + why + ' whose items you opened or ran in THIS turn (a figure carried from the prompt or an earlier turn counts as unbacked).' + named + ' Fix it now, in this turn, in one of two ways: (1) OPEN the source first (Read / Grep, or run the command), then send the reply again ending with a final line `Sources: <path> · \`<command>\`` that lists only what you opened or ran this turn (repo-relative or C:\\... paths); or (2) drop the claim from the reply, or end with `Sources: none` if it states nothing checkable. This hook blocks once per turn: your next reply ends the turn. How this works and why: ' + gates + ', section 2 (the reply slot).' };
   }
   return r;
 }
@@ -225,7 +225,7 @@ function main() {
   try { entries = payload.stop_hook_active ? [] : G.readTurnEntries(payload.transcript_path); }
   catch (e) { log({ kind: 'error', replySha, error: 'transcript: ' + String((e && e.message) || e).slice(0, 80) }); return process.exit(0); }
   let v;
-  try { v = verdict({ reply, entries, stopHookActive: !!payload.stop_hook_active, live: !SHADOW, seat }); }
+  try { v = verdict({ reply, entries, stopHookActive: !!payload.stop_hook_active, live: !SHADOW, seat, gates: G.gatesDoc ? G.gatesDoc() : undefined }); }
   catch (e) { log({ kind: 'error', replySha, error: 'verdict: ' + String((e && e.message) || e).slice(0, 80) }); return process.exit(0); }
   const logged = log({ kind: v.kind, prompt: v.prompt, wouldBlock: v.wouldBlock, blocked: !!v.output, replySha, replyChars: reply.length, tokenKinds: [...new Set(v.tokens.map((t) => t.kind))], tokens: v.tokens, nSources: v.items.length, none: v.none, unmatched: v.unmatched.slice(0, 12).map((x) => clip(G.scrub(x), 200)), nCalls: v.nCalls });
   if (v.output && logged) {   // D220: block only AFTER the row is on disk (the sources gate's rule): no data dir or an unwritable ledger means the stop proceeds

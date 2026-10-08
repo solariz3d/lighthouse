@@ -15,6 +15,10 @@
 /// Where a refused seat reads the rule. Named in every refusal and warning, so the rule travels with the refusal.
 pub const RULE_FILE: &str = "consonance/src-tauri/brief/BUILDING.md";
 
+/// D273: the one page that explains every gate (what it does, why, how to answer a refusal). Named repo-relative here, since
+/// this file stays standalone; `mcp.rs` `trailer_gate` swaps in the path it has on this machine (`gates_doc_path`).
+pub const GATES_DOC: &str = "consonance/GATES.md";
+
 /// A parsed trailer. `station` is the first word after `NEXT:` — a seat, or the verb that reaches one.
 #[derive(Debug, PartialEq, Eq)]
 pub struct Trailer<'a> {
@@ -238,11 +242,13 @@ pub fn refusal_text(verb: Verb, why: Missing, message: &str) -> String {
              The keeper: \"how do we know the next step before we get the results from the current pane or seat that works on their chunk of the loop?\"\n\
              A collation's line directly before its NEXT trailer must be:\n    OUTPUT → NEXT: changed|unchanged — <why, from the output>\n\
              e.g. OUTPUT → NEXT: unchanged — both hand-backs green and inside their packets\n\
+             How this gate works and why: {gates}, section 3 (the NEXT trailer).\n\
              Nothing was delivered. Your message, returned whole — add the line and send it again:\n\
              -----\n{message}\n-----",
             missing = what_is_missing(why),
             file = RULE_FILE,
             section = section(verb),
+            gates = GATES_DOC,
             message = message,
         );
     }
@@ -251,11 +257,13 @@ pub fn refusal_text(verb: Verb, why: Missing, message: &str) -> String {
          The rule: {file}, {section} item 6. The keeper, 2026-09-16: \"each seat tells the next where to hand it to remind it.\"\n\
          The last non-empty line must be:\n    NEXT: <station> <command> when <condition>\n\
          e.g. NEXT: librarian collate the chunk when all four hand-backs are in\n\
+         How this gate works and why: {gates}, section 3 (the NEXT trailer).\n\
          Nothing was delivered. Your message, returned whole — add the trailer as its last line and send it again:\n\
          -----\n{message}\n-----",
         missing = what_is_missing(why),
         file = RULE_FILE,
         section = section(verb),
+        gates = GATES_DOC,
         message = message,
     )
 }
@@ -561,5 +569,16 @@ mod tests {
         // decision to refuse the return leg reads the right item.
         let r = refusal_text(Verb::CallLibrarian, Missing::NoTrailer, A_RING);
         assert!(r.contains("WHAT A HAND-BACK OWES"), "{r}");
+    }
+
+    /// D273: both refusal forms point to the page that explains the gates, before the returned message, never inside it.
+    #[test]
+    fn every_refusal_points_to_gates_md_section_3_before_the_returned_message() {
+        for (verb, why) in [(Verb::ChairInject, Missing::NoTrailer), (Verb::CallChair, Missing::NoOutputNext), (Verb::ChairInject, Missing::NoCondition)] {
+            let r = refusal_text(verb, why, "a message");
+            let at = r.find(&format!("How this gate works and why: {GATES_DOC}, section 3 (the NEXT trailer).")).unwrap_or_else(|| panic!("no pointer: {r}"));
+            assert!(at < r.find("Nothing was delivered").unwrap(), "the pointer must come before the returned message: {r}");
+            assert_eq!(r.matches(GATES_DOC).count(), 1, "{r}");
+        }
     }
 }

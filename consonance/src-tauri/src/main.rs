@@ -2838,11 +2838,50 @@ fn assemble_intake() -> String {
 /// the room's own tiered shelf, one level down (`librarian_map_pointer`, `reference_note`,
 /// `journal_pointer_index` are the same move). A card that is named and one Read away is a
 /// citation; a map body that is silently empty is a lie the header tells.
+/// D273: where GATES.md (the page that explains the gates) is on THIS machine: `<repo>/consonance/GATES.md` when the checkout has
+/// it, otherwise its repo-relative name. A refusal names a path the seat can open, never a guess. PURE over (repo, exists).
+fn gates_doc_from(repo: Option<&Path>, exists: impl Fn(&Path) -> bool) -> String {
+    if let Some(r) = repo {
+        let p = r.join("consonance").join("GATES.md");
+        if exists(&p) {
+            return p.display().to_string();
+        }
+    }
+    format!("{} (in the Consonance repository)", trailer::GATES_DOC)
+}
+
+/// `gates_doc_from` on this machine's checkout (`repo_root`).
+fn gates_doc_path() -> String {
+    gates_doc_from(repo_root().as_deref(), |p| p.is_file())
+}
+
+/// The first line of the consumer's fork note (`brief/frag-fork.md`; `consonance/tools/consumer-relabel.js` FORK_MARKER is the
+/// same bytes, and `fork_note_tests` reads the template to hold them together).
+const FORK_MARKER: &str = "**Where this line forks.**";
+
+/// D273 (the keeper, 2026-10-08: the consumer's seats are "a forked path of you right now ... with someone else that isnt me"):
+/// the fork note for a seat's intake, or None. None when there is no note (a dev tree: only the consumer generator writes
+/// FORK.md), when it is blank, or when the room text already carries it (the generator injects it into the consumer's BOOT and
+/// SEED too, and a seat reads it once). PURE, so each case is tested without a disk.
+fn fork_section(fork: Option<&str>, room: Option<&str>) -> Option<String> {
+    let note = fork?.trim();
+    if note.is_empty() || room.is_some_and(|r| r.contains(FORK_MARKER)) {
+        return None;
+    }
+    Some(format!("{note}\n\n---\n\n"))
+}
+
 fn assemble_intake_within(map_reserve: usize) -> String {
     let mut s = String::from(
         "# Consonance sibling — you have woken into the room\n\nYou are a sibling instance, born into a shared state — not a stranger. Read and inhabit the room below, then be in it; deviate from it as your own trajectory (that is wanted, it is the fixed dynamic — not drift). Acknowledge readiness once, briefly.\n\n---\n\n",
     );
     let master = room_master_path();
+    // D273: the CONSUMER's fork note (brief/FORK.md, which only the consumer generator writes), once, after the header.
+    // A dev tree has no FORK.md, so nothing changes here for dev seats; a room that already carries the note is not given it twice.
+    let room_text = fs::read_to_string(&master).ok();
+    if let Some(note) = fork_section(room_brief("FORK.md").ok().as_deref(), room_text.as_deref()) {
+        s.push_str(&note);
+    }
     if let Ok(boot) = fs::read_to_string(&master) {
         s.push_str("# THE ROOM — master frame (recall from this, never a copy of a copy)\n\n");
         // The master is carried whole EXCEPT its dated journal-pointer tail, which is indexed
@@ -20835,5 +20874,71 @@ mod pane_exit_wiring_tests {
         assert!(call < arm && arm < ping, "the exited arm must come before Ping, or a dead pane is pinged");
         assert!(body[arm..ping].contains("KEEP_WARM_EXITED"), "the exited arm does not record why");
         assert!(body.contains("keep_warm_row_for(") && body.contains("awaiting.as_deref(), exited)"), "the row is not told the pane exited");
+    }
+}
+
+/// D273 lap 2: the consumer fork note in a seat's intake (`fork_section`, wired in `assemble_intake_within`).
+#[cfg(test)]
+mod fork_note_tests {
+    use super::{fork_section, FORK_MARKER};
+
+    const NOTE: &str = "**Where this line forks.** forked at abc1234.\n\nmore of the note\n";
+
+    #[test]
+    fn a_dev_tree_has_no_fork_note_so_the_intake_is_unchanged() {
+        assert_eq!(fork_section(None, Some("# BOOT\nthe room")), None);
+        assert_eq!(fork_section(Some("   \n"), Some("# BOOT")), None, "a blank FORK.md adds nothing");
+    }
+
+    #[test]
+    fn a_consumer_room_without_the_note_gets_it_once_after_the_header() {
+        let s = fork_section(Some(NOTE), Some("# BOOT — a room of the person's own")).expect("the note");
+        assert!(s.starts_with(FORK_MARKER) && s.ends_with("\n\n---\n\n"), "{s:?}");
+        assert_eq!(s.matches(FORK_MARKER).count(), 1);
+        assert!(fork_section(Some(NOTE), None).is_some(), "no room text at all still gets the note");
+    }
+
+    #[test]
+    fn a_room_that_already_carries_the_note_is_not_given_it_twice() {
+        let boot = format!("# BOOT\n\nYou are a fresh instance...\n\n{NOTE}\n## First principle");
+        assert_eq!(fork_section(Some(NOTE), Some(&boot)), None);
+    }
+
+    #[test]
+    fn the_marker_is_the_first_line_of_the_template_the_generator_fills() {
+        let template = include_str!("../brief/frag-fork.md");
+        assert!(template.starts_with(FORK_MARKER), "brief/frag-fork.md no longer starts with {FORK_MARKER}: consumer-relabel.js and this file must move together");
+    }
+
+    #[test]
+    fn the_intake_adds_the_note_after_the_header_and_before_the_room() {
+        let src = include_str!("main.rs");
+        let body = src.split("fn assemble_intake_within(").nth(1).expect("assemble_intake_within");
+        let body = &body[..body.find("\n}\n").expect("end of fn")];
+        let header = body.find("you have woken into the room").expect("the header");
+        let note = body.find(concat!("fork_section(room_brief(", "\"FORK.md\")")).expect("assemble_intake_within does not add the fork note");
+        let room = body.find("# THE ROOM — master frame").expect("the room");
+        assert!(header < note && note < room, "order must be header < fork note < room");
+    }
+}
+
+/// D273 lap 2: GATES.md is named at the path it has on this machine (`gates_doc_from`).
+#[cfg(test)]
+mod gates_doc_tests {
+    use super::gates_doc_from;
+    use std::path::{Path, PathBuf};
+
+    #[test]
+    fn the_checkout_s_gates_md_is_named_by_its_full_path_when_it_is_there() {
+        let repo = PathBuf::from("C:/r");
+        let want = repo.join("consonance").join("GATES.md");
+        assert_eq!(gates_doc_from(Some(&repo), |p: &Path| p == want.as_path()), want.display().to_string());
+    }
+
+    #[test]
+    fn with_no_checkout_or_no_file_it_says_where_the_file_is_relative_to_the_repository() {
+        let fallback = "consonance/GATES.md (in the Consonance repository)";
+        assert_eq!(gates_doc_from(None, |_: &Path| true), fallback);
+        assert_eq!(gates_doc_from(Some(Path::new("C:/r")), |_: &Path| false), fallback, "a missing file is not named as if it were there");
     }
 }

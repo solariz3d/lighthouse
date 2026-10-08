@@ -80,6 +80,24 @@ function dataDir() {
   return null;
 }
 /** One ledger row. Returns true only when it is on disk. Never carries the message text: a sha, and for a deny the scrubbed pointer line. */
+/* D273 (the consumer): every refusal names GATES.md, the one page that explains the gates, at the path it has on THIS machine. The repo is the
+ * one ~/.consonance.json's room_path sits in (<repo>/exo_memory/BOOT.md); an installed hook lives in ~/.claude/shell/hooks/, so a bare
+ * relative path would point nowhere. With no config, or a room outside a repo, it says where the file is relative to the repository. */
+const GATES_REL = 'consonance/GATES.md';
+function gatesDocFrom(roomPath, exists) {
+  const rp = String(roomPath || '').trim();
+  if (rp) {
+    const dir = path.dirname(rp);
+    if (path.basename(dir).toLowerCase() === 'exo_memory') {
+      const p = path.join(path.dirname(dir), 'consonance', 'GATES.md');
+      try { if (exists(p)) return p; } catch (_) { /* fall through to the relative name */ }
+    }
+  }
+  return GATES_REL + ' (in the Consonance repository)';
+}
+function gatesDoc() {
+  try { return gatesDocFrom(String((JSON.parse(fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^\uFEFF/, '')) || {}).room_path || ''), fs.existsSync); } catch (_) { return gatesDocFrom('', () => false); }
+}
 function record(dir, row) {
   try { fs.appendFileSync(path.join(dir, LEDGER), JSON.stringify({ ts: new Date().toISOString(), ...row }) + '\n'); return true; } catch (_) { return false; }
 }
@@ -245,9 +263,9 @@ function itemMatches(item, calls, cwd) {
 }
 
 /** The whole decision, with no I/O. calls come from turnCalls. Returns { decision, none, items, unmatched, reason }. */
-function decide(text, calls, cwd, ledgerPath = 'sources-gate.jsonl', ringSha = '', what = 'ring') {
+function decide(text, calls, cwd, ledgerPath = 'sources-gate.jsonl', ringSha = '', what = 'ring', gates = GATES_REL) {
   const s = parseSources(text);
-  const tail = ` This ${what} was NOT delivered. Its pointer is logged (${ledgerPath}, ring ${String(ringSha).slice(0, 12)}), so nothing is lost: fix the line and re-send the same ${what} in this turn. Format: ${FORMAT}.`;
+  const tail = ` This ${what} was NOT delivered. Its pointer is logged (${ledgerPath}, ring ${String(ringSha).slice(0, 12)}), so nothing is lost: fix the line and re-send the same ${what} in this turn. Format: ${FORMAT}. How this gate works and why: ${gates}, section 1 (SOURCES).`;
   if (!s.present) return { decision: 'deny', none: false, items: [], unmatched: [], kind: 'missing', reason: `SOURCES gate: the ${what} has no SOURCES: line. List what you opened or ran this turn that the message relies on.` + tail };
   if (s.none) return { decision: 'allow', none: true, items: [], unmatched: [], kind: 'none', reason: '' };
   if (!s.items.length) return { decision: 'deny', none: false, items: [], unmatched: [], kind: 'empty', reason: 'SOURCES gate: the SOURCES: line is empty. List what you opened or ran this turn, or write "none (no state claims)".' + tail };
@@ -309,7 +327,7 @@ function main() {
   catch (e) { record(dir, { seat, tool, ringSha, decision: 'error', error: 'transcript: ' + String(e && e.message || e).slice(0, 80) }); return process.exit(0); }
 
   let d;
-  try { d = decide(text, calls, payload.cwd || '', path.join(dir, LEDGER), ringSha, what); }
+  try { d = decide(text, calls, payload.cwd || '', path.join(dir, LEDGER), ringSha, what, gatesDoc()); }
   catch (e) { record(dir, { seat, tool, ringSha, decision: 'error', error: 'decide: ' + String(e && e.message || e).slice(0, 80) }); return process.exit(0); }
 
   const base = { seat, tool, ringSha, sessionId: payload.session_id || null, kind: d.kind, nItems: d.items.length, nCalls: calls.length, ...(tool === DISPATCH_TOOL ? { target: clip(scrub(R(String((payload.tool_input && payload.tool_input.target) || ''))), 20) } : {}) };
@@ -324,4 +342,4 @@ function main() {
 
 if (require.main === module) { try { main(); } catch (_) { process.exit(0); } }   // fail OPEN, without exception
 
-module.exports = { DISPATCH_TOOL, redactToken, RING_TOOLS, LEDGER, SECRET_SHAPES, PRINTERS, METADATA, NON_OPENING, isPrompt, isNotificationOnly, parseSources, norm, tails, opensInSegment, turnCalls, itemMatches, decide, readTurnEntries, scrub };
+module.exports = { DISPATCH_TOOL, redactToken, RING_TOOLS, LEDGER, SECRET_SHAPES, PRINTERS, METADATA, NON_OPENING, isPrompt, isNotificationOnly, parseSources, norm, tails, opensInSegment, turnCalls, itemMatches, decide, readTurnEntries, scrub, GATES_REL, gatesDocFrom, gatesDoc };
