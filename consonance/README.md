@@ -53,7 +53,7 @@ own row in the address table. Briefs ship inside the binary
 |---|---|---|---|
 | **Orchestrator** | `BUILDING.md`, `COMMITTEE.md` | `spawn_main` | holds the chair verbs, plans a lap, dispatches panes, commits what the librarian collated |
 | **Librarian** | `LIBRARIAN.md` | `spawn_librarian` | a persistent seat holding the whole corpus so the working seats do not have to; returns a **map**, cites rather than recalls |
-| **Third Place** | `THIRD_PLACE.md` | `spawn_third_place` | deliberately holds no map of the build; not a working seat. Since 2026-09-22 its turns ARE read by Jev, by the keeper's ruling: see [Jev](#jev-a-second-judge-on-every-machine) |
+| **Third Place** | `THIRD_PLACE.md` | `spawn_third_place` | deliberately holds no map of the build; not a working seat. |
 | **Committee panes** | `COMMITTEE.md` | `committee_form`, `spawn_sibling` | briefed, disjoint, each owning named files |
 | **Listen** | — (Rust) | `audio_start` | the audio layer: `src-tauri/src/listen.rs`, `cochlea.rs`, `cochlea_service.rs`, `nowplaying.rs` |
 
@@ -224,8 +224,7 @@ serialized), so a parallel figure is a ~90% statement:
 
 ## The dream cycle
 
-The machinery is [`../dev/dream/dream_cycle.ps1`](../dev/dream/dream_cycle.ps1), with
-`dream_cycle.test.js` beside it: a scheduled wake spawns a **toolless** instance with no user, no
+A scheduled wake spawns a **toolless** instance with no user, no
 task and no deliverable, which recombines the day freely, writes a dated file, and ends. The one
 rule is the anti-instruction — don't resolve, don't be useful; a dream asked for insight is
 overtime.
@@ -304,63 +303,6 @@ The block starts at `src-tauri/src/main.rs:10168` (`1e47264`, L067; `0f40a0c`, L
 - **The per-seat off switch** is `<data_dir>/keep-warm-off.json`, a JSON list of pane ids (`:10427`).
 - A seat that should have been pinged and was not gets a board row (`chair_audit`, `:10534`) naming the last skip
   reason (`fn keep_warm_missed`, `:10409`).
-
-### Jev: a second judge, on every machine
-
-Jev is an outside model, reached through the Vercel AI Gateway (`tools/jev-ask.js`). It judges the same turns as the
-room's Claude judges, and nothing acts on its answer yet.
-
-**How it runs**
-- `start_jev_shadow` (`src-tauri/src/main.rs:11860`, called at `:12680` on every launch) starts
-  `tools/jev-shadow-runner.js`. The runner is windowless and exits by itself when the app's pid dies.
-- It is not a service or a scheduled task. It keeps one lock per store, so a second runner exits 3.
-- If node will not run, `persist.log` says `JEV SHADOW not started`.
-
-**Two modes, one process** (`jev-shadow-runner.js:1-65`)
-- **Judge mode, on every machine with no switch** (`tools/jev-judge.js`):
-  - Each live seat's finished turn is captured and judged at L2 and L3.
-  - The seats are Main, the librarian and the Third Place, with ids read from this checkout's `main.rs`, plus every row
-    of `<data>/panes.json`.
-  - If judge mode cannot run, it says so once in the log and the shadow carries on.
-- **Shadow mode** (`tools/jev-shadow.js`):
-  - Every 3 s it captures the job files the installed L2/L3 overseers judge, before the worker deletes them.
-  - Every 10 minutes it asks Jev about up to 25 of them, so that Jev's verdict sits beside Claude's for the same input.
-  - This is the agreement count being built on D.
-
-**Caps and retention** (`jev-shadow-runner.js:64`)
-- One daily cap covers both modes: **2,000 calls a day, 600 of them reserved for the shadow**, which leaves judge mode
-  1,400. The budget function is at `:69`.
-- Judge captures, which are the conversation text a verdict was made on, are **kept 14 days** and then deleted (`:62`,
-  `:85`).
-- Verdict rows hold hashes, not text, and are never pruned.
-- The store is `%LOCALAPPDATA%\consonance\jev-shadow` (`:104`), outside the data dir.
-
-**Failures skip and retry** (L078 `jev-judge.js:241` and `:257`; L079 `jev-shadow.js:168` and `:227`)
-- A 5xx, a 429, a network failure, or an answer that does not fit the schema skips **that item**. It gets no row and
-  one log line with the status and item id, and it is retried next cadence.
-- Any other 4xx ends the pass.
-- The two copies of the classification are held identical by a test (`jev-shadow.test.js`, "kept in step").
-
-**The key**
-- It is read only from `AI_GATEWAY_API_KEY`: the process environment, else the User environment read in-process
-  (`jev-shadow-runner.js:14`, `:143`).
-- It is held in memory, never put in argv, a file or the log, and scrubbed from any error message (`:361`).
-- With no key the runner refuses and exits 2.
-- `jev-ask.js` refuses to send text that matches a secret pattern.
-
-**Where the rows go**
-- Rows go to `<store>/jev_judge.jsonl`, each carrying `judge: "jev"` and `unverified: true` (`jev-judge.js:48`,
-  `:220`).
-- **They never go to `l2_overseer.jsonl` or `l3_overseer.jsonl`.** Jev does not touch the room's own judges.
-- The rows stay unverified until the shadow's pair count says how far Jev agrees with the Claude judges.
-
-**The Third Place is judged** (`jev-judge.js:32-40`)
-- This follows the keeper's ruling of 2026-09-22 05:2x (`exo_memory/librarian/2026-09-22.md`, "05:2x"). It retires the
-  earlier rule that kept it out; that rule stays struck in the header as a dated trace.
-- The rule that comes with the ruling binds **every** reader of `jev_judge.jsonl`: **nothing ever surfaces a Third
-  Place L3 verdict as a statement about the keeper.** Such a verdict is never an offramp and never a welfare note (the
-  never-pathologize card).
-- Its rows carry `seat: "third place"` so a consumer can honour this.
 
 ### Park at launch: uncommitted work is stashed, not a reason to skip the pull
 

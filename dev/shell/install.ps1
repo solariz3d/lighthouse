@@ -144,7 +144,8 @@ $files = @(
   # entry gave was wrong until L089 — an installed copy could not find main.rs from ~/.claude/shell/hooks/ and was
   # silent forever. It now resolves the room through ~/.consonance.json room_path and says so loudly when it cannot.
   # Reaches D on D's next install (the plan: "D gets the same on its next day").
-  @{ From = 'consonance\hooks\jev-flags.js';              To = 'hooks\jev-flags.js' }
+  # RETIRED 2026-10-08 (D273 ruling 5, Jev off since D164): no longer copied; its registration is Excluded below. The entry was:
+  #   @{ From = 'consonance\hooks\jev-flags.js';              To = 'hooks\jev-flags.js' }
   # Added 2026-08-18 with the hook itself, deliberately in the same commit. Nine hooks existed
   # ONLY as installed copies until 58b94f9 because each was registered by hand and the manifest
   # was updated later or never; a file that runs on this machine and exists nowhere else is the
@@ -214,7 +215,12 @@ $register = @(
   @{ Event = 'UserPromptSubmit'; Rel = 'userprompt_pulse.py';         Runner = 'py';
      Conflicts = @('userprompt-submit.js') }
   @{ Event = 'UserPromptSubmit'; Rel = 'findings-return.js';          Runner = 'node' }
-  @{ Event = 'UserPromptSubmit'; Rel = 'hooks\jev-flags.js';          Runner = 'node' }   # L089, see its $files entry
+  # RETIRED, 2026-10-08 (D273 ruling 5: "drop the jev-flags.js registration from install.ps1 (Jev is retired in dev too)"; Jev off since D164).
+  # Excluded, not deleted, by the D105 precedent below: no write path registers it, and -Check reports EXCLUDED BUT LIVE on any machine where an older
+  # run left it registered (this script never unregisters). Its file is no longer copied. The entry as it stood, verbatim:
+  #   @{ Event = 'UserPromptSubmit'; Rel = 'hooks\jev-flags.js';          Runner = 'node' }   # L089, see its $files entry
+  @{ Event = 'UserPromptSubmit'; Rel = 'hooks\jev-flags.js';          Runner = 'node';
+     Excluded = 'Jev retired (D164); D273 ruling 5, 2026-10-08: the registration is dropped from install.ps1' }
   # EXCLUDED BY A KEEPER RULING, 2026-09-06 06:55 (exo_memory/librarian/2026-09-06.md:603):
   # "READY PAIR ONLY -- the three passengers stay unregistered". The entries STAY HERE rather than
   # being deleted, because deleting them loses the ruling: a seat reading a manifest with no

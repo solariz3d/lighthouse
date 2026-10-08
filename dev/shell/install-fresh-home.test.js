@@ -3,6 +3,7 @@
 // runs it with USERPROFILE (and HOME) pointed at a fresh temp folder: nothing of the machine's own ~/.claude is touched. Windows only (PowerShell).
 //   1  a fresh home: exit 0, the message says it created an empty settings.json, and the file is JSON with no BOM and the hooks registered in it
 //   2  a home that HAS a settings.json: it is merged into, never re-created (the user's own keys survive) and the "created" message does not appear
+//   3  D273 ruling 5: no jev-flags registration and no jev-flags.js (Jev retired)
 // Run: node --test dev/shell/install-fresh-home.test.js
 'use strict';
 const test = require('node:test');
@@ -40,5 +41,18 @@ test('row 2: a home that HAS a settings.json is merged into, never re-created: t
     assert.doesNotMatch(out, /created an empty one/);
     const s = JSON.parse(fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'));
     assert.strictEqual(s.theme, 'dark'); assert.strictEqual(s.model, 'theirs'); assert.ok(s.hooks);
+  } finally { fs.rmSync(home, { recursive: true, force: true }); }
+});
+
+test('row 3: D273 ruling 5 (Jev retired): a fresh install registers no jev-flags hook and copies no jev-flags.js', { skip }, () => {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'fresh-home-'));
+  try {
+    const r = install(home), out = r.stdout + r.stderr;
+    assert.strictEqual(r.status, 0, out.slice(-2000));
+    const s = JSON.parse(fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'));
+    const cmds = Object.values(s.hooks || {}).flat().flatMap((g) => (g.hooks || []).map((h) => String(h.command)));
+    assert.ok(cmds.length > 0, 'control: hooks are registered');
+    assert.deepStrictEqual(cmds.filter((c) => /jev-flags/.test(c)), [], 'no jev-flags registration');
+    assert.ok(!fs.existsSync(path.join(home, '.claude', 'shell', 'hooks', 'jev-flags.js')), 'no jev-flags.js copied');
   } finally { fs.rmSync(home, { recursive: true, force: true }); }
 });
