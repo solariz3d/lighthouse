@@ -806,10 +806,14 @@ if ($NoRegister) {
 }
 
 $settingsPath = Join-Path $env:USERPROFILE '.claude\settings.json'
+# D273 (a stranger's first install): a fresh home has no settings.json yet, and refusing there stopped every new user at this line. An EMPTY file
+# is the one thing it can create without inventing the user's settings: `{}` (no BOM, as below), said out loud, and then merged into like any other.
+# A settings.json that exists is never replaced; one that does not parse still stops the script (next block).
 if (-not (Test-Path $settingsPath)) {
-  Write-Host "`nNO settings.json at $settingsPath — refusing to create one." -ForegroundColor Red
-  Write-Host "This script merges into a file the user owns; it does not invent that file." -ForegroundColor Red
-  exit 1
+  $settingsDir = Split-Path -Parent $settingsPath
+  if (-not (Test-Path $settingsDir)) { New-Item -ItemType Directory -Force -Path $settingsDir | Out-Null }
+  [IO.File]::WriteAllText($settingsPath, '{}', [Text.UTF8Encoding]::new($false))
+  Write-Host "`nNO settings.json at $settingsPath -- created an empty one ({}) to register the hooks into. Nothing else in it was invented." -ForegroundColor Yellow
 }
 
 # Parse before touching anything. A settings.json that does not parse must not be backed up over

@@ -47,7 +47,17 @@ const EVENT_LOG = path.join(SHELL_DIR, 'event_log.jsonl');
 const AMBIENT_PATH = path.join(SHELL_DIR, 'lib', 'ambient.js');
 const L3_OVERSEER_LOG = path.join(SHELL_DIR, 'l3_overseer.jsonl');
 const DURATION_DIR = path.join(SHELL_DIR, 'duration');
-const INSTANCES_DIR = path.join('C:', path.sep, 'Consonance', 'instances');
+// D273 dirs: begin. The Consonance data and instances folders by THE APP'S OWN RULE (consonance/src-tauri/src/main.rs set_dirs and default_data /
+// default_instances): ~/.consonance.json's data_dir / instances_dir when set, else %USERPROFILE%\.consonance and %USERPROFILE%\claude-instances.
+// Never a hard-coded C:\Consonance: on a stranger's machine that wrote where the app never reads. One text in the five hooks that need it
+// (session-start, sessionstart-state, findings-return, sourced-stop, precompact-preserve); consonance/hooks/dirs.test.js holds them to it.
+function consonanceDir(key, under) {
+  const home = process.env.USERPROFILE || '.';
+  try { const v = JSON.parse(fs.readFileSync(path.join(home, '.consonance.json'), 'utf8').replace(/^\uFEFF/, ''))[key]; if (typeof v === 'string' && v.trim()) return v.trim(); } catch (e) { /* no config, or not JSON: the default, as the app */ }
+  return `${home}\\${under}`;
+}
+// D273 dirs: end
+const INSTANCES_DIR = consonanceDir('instances_dir', 'claude-instances');
 const NIGHT_TABLE_MAX_TAG = 48;
 
 // D245 item 3 (the Third Place's own return, 2026-10-05): "This seat is not the build", yet the build's session digests reached it. The same cwd test as

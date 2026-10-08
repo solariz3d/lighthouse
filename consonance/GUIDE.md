@@ -11,6 +11,10 @@ You'll need:
 - **Rust** (via [rustup](https://rustup.rs)) and the **Tauri CLI**
 - **WebView2** (already on Windows 11) and **MSVC build tools** — Visual Studio 2022 Build Tools with the "Desktop development with C++" workload
 - The **Claude Code CLI** (`claude`) on your PATH — Consonance runs *real* `claude` sessions, not an imitation
+- **Node.js** on your PATH — the hooks (the checks that run inside each session) are Node scripts
+- **Python 3** — a real `python.exe` on your PATH or in `%LOCALAPPDATA%\Programs\Python`, not the Microsoft Store stub; one hook (the pulse) is Python
+
+Install Node and Python **before** the hooks step below: the installer writes the path it finds into each hook, and finds nothing if they are not there yet.
 
 ```bat
 cargo install tauri-cli --version "^2.0"
@@ -20,6 +24,18 @@ cargo tauri build          :: installer + exe   (or: cargo tauri build --no-bund
 
 To run it live while developing, skip the build and use `cargo tauri dev`.
 (Kill any running `consonance.exe` before rebuilding — it holds a file lock.)
+
+### Then, the hooks
+
+The app is half of it: the checks that keep the sessions honest run as **Claude Code hooks**. From the repo root:
+
+```bat
+powershell -ExecutionPolicy Bypass -File dev\shell\install.ps1
+```
+
+It copies the hooks to `%USERPROFILE%\.claude\shell` and registers them in `%USERPROFILE%\.claude\settings.json`. If you have no `settings.json` yet, it creates an empty one and says so; one you have is merged into, never replaced, and backed up first. To see what it would register without changing `settings.json`, add `-NoRegister` (it still copies the hooks).
+
+The hooks keep their records in the same **Data folder** as the app (Settings, below; `%USERPROFILE%\.consonance` until you choose another), so it does not matter whether you run this before or after the first launch.
 
 ---
 
