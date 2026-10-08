@@ -12,6 +12,8 @@
  *   4  the intake cap is READ from main.rs (a number, or a name that resolves to one), and absent it the tool refuses to print a number
  *   5  the command line: --json prints the same sizes the module computes
  *   6  --apply moves, writes a manifest, keeps the bytes, never deletes, and never overwrites a name already in attic/
+ *   7  the batched age map agrees with a per-file `git log` for every file (the 49 s -> 0.17 s change must not change an answer)
+ *   8  the tool's by-name exclusions are the ones the REAL shelf (main.rs, which ships) drops
  *
  * It copies corpus-age.js into the throwaway repo (the tool resolves its repo from its own location), so it runs the SHIPPED file, unchanged.
  * Real git, real dates (the author date is set per commit); no network. Source and consumer run the same file.
@@ -96,6 +98,9 @@ test('3: a proposal needs BOTH conditions, unreferenced and old', () => {
   assert.strictEqual(by['fresh-unref-thing.md'].propose, false, 'unreferenced but young: NOT proposed');
   assert.ok(by['fresh-unref-thing.md'].days <= 1, 'the young file reads as young: ' + by['fresh-unref-thing.md'].days);
   assert.strictEqual(A.review('loop', 1000).rows.filter((r) => r.propose).length, 0, 'raise the age bar above every file and nothing is proposed');
+  const all = A.review('loop', 0).rows, cited = all.filter((r) => r.referenced);
+  assert.ok(cited.length > 0, 'fixture broken: nothing in loop/ is referenced');
+  for (const r of cited) assert.strictEqual(r.propose, false, 'a referenced file was proposed whatever the age bar: ' + r.rel);
 });
 
 test('4: the intake cap is read from main.rs, as a number or through a name, and without it the tool refuses to print one', () => {
@@ -138,4 +143,22 @@ test('6: --apply moves to attic/ with a manifest, keeps the bytes, deletes nothi
   // asking again moves nothing and says so, with a non-zero exit
   const again = run(takenRel); assert.strictEqual(again.status, 1); assert.match(again.stdout, /nothing moved/);
   assert.strictEqual(run().status, 2, '--apply with no path is refused');
+});
+
+test('7: the batched age map agrees with a per-file git log for every committed file', () => {
+  const ages = A.ageDaysMap('loop');
+  assert.ok(ages instanceof Map && ages.size >= 5, 'fixture broken: too few committed files under loop/ for agreement to mean anything');
+  for (const rel of ages.keys()) {
+    const at = parseInt(git({}, 'log', '-1', '--format=%at', '--', rel).trim(), 10);
+    assert.strictEqual(ages.get(rel), Math.floor((Date.now() / 1000 - at) / 86400), 'batched age disagrees with per-file git log for ' + rel);
+  }
+  assert.ok(ages.get('exo_memory/loop/stale-unref-thing.md') >= 99 && ages.get('exo_memory/loop/fresh-unref-thing.md') <= 1, 'and the two commits really are 100 days apart');
+});
+
+test('8: the tool\'s by-name exclusions are the ones the real shelf drops (main.rs ships, so this holds in a consumer too)', () => {
+  const real = require('./corpus-age.js');   // the SHIPPED tool at its own location, not the throwaway copy
+  const src = fs.readFileSync(real.MAIN_RS, 'utf8');
+  assert.ok(real.EXCLUDED_PREFIXES.length > 0);
+  for (const p of real.EXCLUDED_PREFIXES) assert.ok(src.includes('label.starts_with("' + p + '")'), 'the tool excludes ' + p + ' but the shelf does not: the two sets have drifted');
+  assert.deepStrictEqual(A.EXCLUDED_PREFIXES, real.EXCLUDED_PREFIXES, 'the copy under test is the shipped tool');
 });
