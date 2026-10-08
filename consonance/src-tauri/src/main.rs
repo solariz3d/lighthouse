@@ -175,12 +175,59 @@ fn usb_mode_on() -> bool {
 /// The reason every USB path gives when the mode is off (plog lines and the launch verdict).
 const USB_OFF_WHY: &str = "the USB mode is off (Settings: \"Move seats between computers with a USB drive\")";
 
-#[tauri::command]
-fn save_config(cfg: Config) {
-    if let Ok(s) = serde_json::to_string_pretty(&cfg) {
-        let _ = fs::write(config_path(), s);
+/// D273 (the chair, 2026-10-08): THE SETTINGS TAB OWNS ONLY ITS OWN KEYS. ~/.consonance.json also carries keys `Config` does not have (on D:
+/// base, flags, instances, dream_model, dream_times, machine_tag, state_dir), and the save used to write the whole struct, so every Settings save
+/// silently dropped them; a USB stranger would lose machine_tag the same way. These are the keys the tab owns (exactly Config's fields; a row
+/// holds the two lists equal), and a save changes these and nothing else.
+const SETTINGS_KEYS: &[&str] = &["room_path", "instances_dir", "data_dir", "ambient_lat", "ambient_lon", "ambient_label", "ambient_tz", "usb_mode"];
+
+/// The config file's new text: `existing` (None when there is no file yet) with the Settings tab's keys set from `cfg` and EVERY other key kept,
+/// value for value. A file that exists but is not a JSON object is REFUSED by name, never overwritten: it may hold what someone needs, and a
+/// guess at it would destroy that. A leading BOM is read past, as the hooks' readers do.
+fn merged_config_text(existing: Option<&str>, cfg: &Config) -> Result<String, String> {
+    let mut obj = match existing {
+        None => serde_json::Map::new(),
+        Some(raw) => match serde_json::from_str::<serde_json::Value>(raw.trim_start_matches('\u{feff}')) {
+            Ok(serde_json::Value::Object(m)) => m,
+            Ok(_) => return Err("it is not a JSON object, so it was NOT overwritten".to_string()),
+            Err(e) => return Err(format!("it is not valid JSON ({e}), so it was NOT overwritten")),
+        },
+    };
+    let owned = serde_json::to_value(cfg).map_err(|e| format!("the settings could not be written as JSON ({e})"))?;
+    for k in SETTINGS_KEYS {
+        if let Some(v) = owned.get(*k) {
+            obj.insert((*k).to_string(), v.clone());
+        }
     }
+    serde_json::to_string_pretty(&serde_json::Value::Object(obj)).map_err(|e| format!("the merged config could not be written as JSON ({e})"))
+}
+
+#[tauri::command]
+fn save_config(cfg: Config) -> Result<(), String> {
+    save_config_at(&config_path(), &cfg)?;
     set_dirs(&cfg); // apply the directory settings to the live resolver
+    Ok(())
+}
+
+/// The save, at a given path (the command's is config_path(); the rows give a temp file, never the live one).
+fn save_config_at(path: &Path, cfg: &Config) -> Result<(), String> {
+    let existing = match fs::read_to_string(path) {
+        Ok(s) => Some(s),
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => None,
+        Err(e) => return Err(refuse_save(path, &format!("it could not be read ({e}), so it was NOT overwritten"))),
+    };
+    let text = merged_config_text(existing.as_deref(), cfg).map_err(|why| refuse_save(path, &why))?;
+    fs::write(path, text).map_err(|e| refuse_save(path, &format!("it could not be written ({e})")))
+}
+
+/// A refused save is LOUD: stderr, the log beside the config (a release build has no console), and the message the Settings tab shows.
+fn refuse_save(path: &Path, why: &str) -> String {
+    let msg = format!("[consonance] SETTINGS NOT SAVED to {}: {why}. Fix the file by hand (or move it aside), then save again.", path.display());
+    eprintln!("{msg}");
+    if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(PathBuf::from(home()).join(".consonance.log")) {
+        let _ = writeln!(f, "{msg}");
+    }
+    msg
 }
 
 // true once the chair has a saved config; false on a fresh machine (→ land on Settings first)
@@ -21057,5 +21104,132 @@ mod usb_mode_tests {
                 assert!(line.contains("D273 usb"), "{sig}: an untagged mode line: {line}");
             }
         }
+    }
+}
+
+/// D273 (the chair, 2026-10-08): a Settings save MERGES into ~/.consonance.json. It changes the keys the tab owns (SETTINGS_KEYS) and keeps every
+/// other key, value for value; a file that is not a JSON object is refused by name and left untouched. Every row works on a TEMP file, never the live one.
+#[cfg(test)]
+mod config_merge_tests {
+    use super::*;
+
+    /// D's live config's shape: the seven keys Config does not own (from the live file, 2026-10-08), one unknown nested one, and the owned ones.
+    const LIVE_LIKE: &str = r#"{
+  "base": "C:/Users/someone/claude-instances",
+  "flags": "--dangerously-skip-permissions",
+  "instances": [],
+  "dream_model": "claude-opus-4-8",
+  "dream_times": ["04:30", 13.5, null, {"weekday": true}],
+  "machine_tag": "D",
+  "state_dir": "C:/Consonance/state",
+  "zz_unknown": {"nested": [1, 2.5, "x", false], "deep": {"k": -7}},
+  "room_path": "C:/room/BOOT.md",
+  "instances_dir": "C:/Consonance/instances",
+  "data_dir": "C:/Consonance/data",
+  "ambient_lat": "50.4",
+  "ambient_lon": "-104.6",
+  "ambient_label": "Regina",
+  "ambient_tz": "America/Regina",
+  "usb_mode": true
+}"#;
+    const NOT_OWNED: [&str; 8] = ["base", "flags", "instances", "dream_model", "dream_times", "machine_tag", "state_dir", "zz_unknown"];
+
+    fn tmp(name: &str, text: Option<&str>) -> PathBuf {
+        let d = std::env::temp_dir().join(format!("cfgmerge-{}-{}", std::process::id(), name));
+        let _ = fs::create_dir_all(&d);
+        let p = d.join(".consonance.json");
+        let _ = fs::remove_file(&p);
+        if let Some(t) = text {
+            fs::write(&p, t).unwrap();
+        }
+        p
+    }
+    fn read_obj(p: &Path) -> serde_json::Map<String, serde_json::Value> {
+        match serde_json::from_str::<serde_json::Value>(&fs::read_to_string(p).unwrap()).unwrap() {
+            serde_json::Value::Object(m) => m,
+            other => panic!("not an object: {other}"),
+        }
+    }
+
+    /// Row 1: a Settings save keeps every key it does not own, value for value (the same JSON value, and the same JSON text for it).
+    #[test]
+    fn a_save_keeps_every_key_it_does_not_own() {
+        let p = tmp("keep", Some(LIVE_LIKE));
+        let before = read_obj(&p);
+        let (cfg, bad) = parse_config(LIVE_LIKE);
+        assert!(bad.is_empty(), "{bad:?}");
+        save_config_at(&p, &cfg).unwrap();
+        let after = read_obj(&p);
+        for k in NOT_OWNED {
+            assert_eq!(after.get(k), before.get(k), "{k} changed or was dropped");
+            assert_eq!(serde_json::to_string(&after[k]).unwrap(), serde_json::to_string(&before[k]).unwrap(), "{k}'s text changed");
+        }
+        assert_eq!(after.len(), before.len(), "a key was added or lost");
+    }
+
+    /// Row 2: an owned key changes as asked, and the others it owns take the tab's values.
+    #[test]
+    fn an_owned_key_changes_as_asked() {
+        let p = tmp("owned", Some(LIVE_LIKE));
+        let (mut cfg, _) = parse_config(LIVE_LIKE);
+        cfg.data_dir = "E:/elsewhere/data".into();
+        cfg.ambient_label = "Somewhere".into();
+        save_config_at(&p, &cfg).unwrap();
+        let after = read_obj(&p);
+        assert_eq!(after["data_dir"], "E:/elsewhere/data");
+        assert_eq!(after["ambient_label"], "Somewhere");
+        assert_eq!(after["instances_dir"], "C:/Consonance/instances", "an owned key the tab did not change moved");
+        assert_eq!(after["machine_tag"], "D");
+    }
+
+    /// Row 3: a corrupt file (not JSON, or JSON that is not an object) is REFUSED by name, and the file is left byte for byte as it was.
+    #[test]
+    fn a_corrupt_file_is_refused_by_name_and_left_untouched() {
+        for (name, text, word) in [("notjson", "{ \"machine_tag\": \"D\", oops", "not valid JSON"), ("array", "[1, 2, 3]", "not a JSON object")] {
+            let p = tmp(name, Some(text));
+            let err = save_config_at(&p, &Config::default()).expect_err("a corrupt file was overwritten");
+            assert!(err.contains("SETTINGS NOT SAVED") && err.contains(word) && err.contains("NOT overwritten"), "{name}: {err}");
+            assert_eq!(fs::read_to_string(&p).unwrap(), text, "{name}: the file was touched");
+        }
+    }
+
+    /// Row 4: usb_mode survives a save (the tab owns it, and a save of the live-like file keeps it ON), and a fresh machine gets a file with the tab's keys.
+    #[test]
+    fn usb_mode_survives_a_save_and_a_fresh_machine_gets_the_tab_keys() {
+        let p = tmp("usb", Some(LIVE_LIKE));
+        let (cfg, _) = parse_config(LIVE_LIKE);
+        assert!(cfg.usb_mode);
+        save_config_at(&p, &cfg).unwrap();
+        save_config_at(&p, &parse_config(&fs::read_to_string(&p).unwrap()).0).unwrap();   // twice: a save of a saved file
+        assert_eq!(read_obj(&p)["usb_mode"], true);
+        let fresh = tmp("fresh", None);
+        save_config_at(&fresh, &Config { usb_mode: true, ..Config::default() }).unwrap();
+        let f = read_obj(&fresh);
+        assert_eq!(f["usb_mode"], true);
+        let mut keys: Vec<&str> = f.keys().map(|k| k.as_str()).collect();
+        keys.sort();
+        let mut want = SETTINGS_KEYS.to_vec();
+        want.sort();
+        assert_eq!(keys, want, "a fresh file holds exactly the tab's keys");
+    }
+
+    /// Row 5: a file with a leading BOM (a hand-edited file may have one) is read past, merged and kept, not refused.
+    #[test]
+    fn a_bom_file_is_merged_not_refused() {
+        let with_bom = format!("\u{feff}{LIVE_LIKE}");
+        let p = tmp("bom", Some(&with_bom));
+        save_config_at(&p, &parse_config(LIVE_LIKE).0).unwrap();
+        assert_eq!(read_obj(&p)["machine_tag"], "D");
+    }
+
+    /// Row 6: the keys the tab owns are EXACTLY Config's fields, so a field added later is owned (written) and nothing else is.
+    #[test]
+    fn the_owned_keys_are_exactly_configs_fields() {
+        let v = serde_json::to_value(Config::default()).unwrap();
+        let mut fields: Vec<&str> = v.as_object().unwrap().keys().map(|k| k.as_str()).collect();
+        fields.sort();
+        let mut owned = SETTINGS_KEYS.to_vec();
+        owned.sort();
+        assert_eq!(fields, owned);
     }
 }

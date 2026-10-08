@@ -341,6 +341,8 @@ $unmanaged = @(
      Why  = 'Stop hook that BLOCKS to wake the outgoing seat. sourced-stop.js refused a gate on this same event in writing; a blocking hook is the keeper call this one has not had. No ruling yet. PRECONDITION, measured 2026-09-08: NO CONSONANCE_DREAM guard either (grep -c -> 0). A blocking hook the dream runner cannot switch off is the worst member of that class.' }
   @{ Src = 'consonance\hooks\live-mirror-stop.js';
      Why  = 'Stop hook of the per-seat live mirror (L052, pane E). It reaches a NETWORK REMOTE every turn and moves the lease that decides which machine may drive a seat, so registering it is a keeper decision twice over: it publishes outward on its own (journal 2026-07-28 -- committing is not publishing, a human stays awake saying yes), and its measured state round trip is 4760ms against the keeper''s 5000ms bound at a ZERO poll interval, so wiring it does not yet deliver what it is for (consonance/tools/live-host.js roundTrip). The lease half alone is sound and proved end-to-end against the real remote; the state half is default-OFF behind CONSONANCE_MIRROR_STATE=1. It DOES carry a CONSONANCE_DREAM guard, unlike the two above. No ruling yet -- see exo_memory/handback/p-live-mirror_2026-09-09.md.' }
+  @{ Src = 'consonance\hooks\jev-flags.js';
+     Why  = 'RETIRED, not unruled: Jev is off since D164, and D273 ruling 5 (2026-10-08) dropped its registration and its copy from this installer (the Excluded entry in $register). The file stays in the repo as the record of what ran; nothing installs it.' }
 )
 
 # MUTANT-ANCHOR: THE FILTER. -Only narrows what this run ACTS on and nothing else. The universe and
