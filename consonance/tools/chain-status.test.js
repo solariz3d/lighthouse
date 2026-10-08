@@ -59,14 +59,18 @@ test('reader: with a ledger it prints one line naming lap, stage and holder', ()
   fx.cleanup();
 });
 
-test('reader: WITHOUT a ledger it prints nothing, writes no stderr, and exits 0', () => {
+// D273 lap 2 AMENDED THIS ROW BY NAME (pane B, 2026-10-08). It was "reader: WITHOUT a ledger it prints nothing, writes no stderr, and exits 0". The parity
+// cold sweep scores a README tool that exits 0 with zero bytes as MUTE (lap 1: handback/p-consumer-parity-B_2026-10-08.md §4), and the lap's ruling is that
+// the MUTE is fixed. The pulse's contract is unchanged: both callers (userprompt_pulse.py, userprompt-submit.js) read STDOUT only, so the reason goes to stderr.
+test('reader: WITHOUT a ledger it prints nothing on stdout, exits 0, and says why on stderr (never MUTE)', () => {
   // Called from the pulse on every prompt in every seat. A reader that can fail takes the pulse
   // with it, and a hook that errors every turn is uninstalled within a day.
   const fx = fixture(null);
   const r = run(READER, ['--ledger', fx.ledger], fx.ledger);
   assert.strictEqual(r.code, 0, 'absent ledger must exit 0, got ' + r.code + ' / ' + r.stderr);
-  assert.strictEqual(r.stdout, '', 'absent ledger must print NOTHING, got ' + JSON.stringify(r.stdout));
-  assert.strictEqual(r.stderr, '', 'and must not complain either');
+  assert.strictEqual(r.stdout, '', 'absent ledger must print NOTHING on stdout, got ' + JSON.stringify(r.stdout));
+  assert.match(r.stderr, /silent — no ledger/, 'a person running it must learn why it said nothing: ' + JSON.stringify(r.stderr));
+  assert.strictEqual(r.stderr.trim().split('\n').length, 1, 'one line, not a report');
   fx.cleanup();
 });
 
@@ -495,12 +499,14 @@ test('more unwitnessed laps than the list cap: ids truncate with +N and the COUN
   fx.cleanup();
 });
 
-test('a ledger with chain rows and NOTHING unwitnessed still exits 0 in silence', () => {
+// D273 lap 2 AMENDED THIS ROW BY NAME (pane B, 2026-10-08), the same rule change as the no-ledger row above: it was "a ledger with chain rows and NOTHING
+// unwitnessed still exits 0 in silence", with an empty stderr. Stdout (what the pulse reads) is still empty; the reason for the silence now goes to stderr.
+test('a ledger with chain rows and NOTHING unwitnessed still exits 0 with stdout silent, and stderr says why', () => {
   const fx = fixture(ALIVE('L008', 1000));
   const r = run(READER, ['--ledger', fx.ledger], fx.ledger);
   assert.strictEqual(r.code, 0, 'exit ' + r.code + ' / ' + r.stderr);
   assert.strictEqual(r.stdout, '', 'printed on a clean chain: ' + JSON.stringify(r.stdout));
-  assert.strictEqual(r.stderr, '');
+  assert.match(r.stderr, /^chain-status: silent — /, 'the silence must be attributable: ' + JSON.stringify(r.stderr));
   fx.cleanup();
 });
 

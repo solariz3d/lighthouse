@@ -1203,3 +1203,75 @@ test('L038 · no transform changes whether a shipped file ends in a newline', ()
   assert.deepStrictEqual(bad, [], 'a transform changed the file ending of: ' + bad.join(', '));
   try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {}
 });
+
+/* ============================================================ D273 LAP 2 (pane B, 2026-10-08)
+ * The lap-1 parity run (handback/p-consumer-parity-B_2026-10-08.md) put P at 32. Lap 2's rulings
+ * (loop/plan_consumer_refresh_2026-10-08.md, "Lap 2"): the output is a fresh-history git repository;
+ * state-manifest.json and the root README.md ship; jev/ is EXCLUDED with its tests (Jev retired, D164);
+ * one hook point for C's ROLE/PROVENANCE module, whose rule is not written here. */
+const { execFileSync } = require('node:child_process');
+const gitIn = (dir, args) => execFileSync('git', args, { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+
+test('D273: the Jev tool family does not ship (retired, D164): every consonance/tools/jev-* file is EXCLUDED with a reason; the jev-flags hook still ships', () => {
+  const jev = G.collect().map((f) => f.from).filter((r) => /^consonance\/tools\/jev-/.test(r));
+  assert.ok(jev.length >= 10, 'the manifest no longer reaches the Jev tools, so this guard proves nothing: ' + jev.length);
+  assert.deepStrictEqual(jev.filter((r) => !G.EXCLUDE[r]), [], 'a Jev tool ships');
+  for (const r of jev) assert.match(G.EXCLUDE[r], /Jev|D164/, r + ' is excluded without saying why');
+  assert.ok(G.collect().some((f) => f.from === 'consonance/hooks/jev-flags.js') && !G.EXCLUDE['consonance/hooks/jev-flags.js'],
+    'install.ps1 registers hooks/jev-flags.js, so withholding it would break the install');
+});
+
+test('D273: consonance/state-manifest.json and the root README.md ship, and the README keeps the About block the app checks', () => {
+  const r = G.build('', { dry: true, allowDirty: true });
+  try {
+    assert.ok(fs.existsSync(path.join(r.staging, 'consonance/state-manifest.json')), 'state-manifest.json did not ship');
+    JSON.parse(fs.readFileSync(path.join(r.staging, 'consonance/state-manifest.json'), 'utf8'));
+    const readme = fs.readFileSync(path.join(r.staging, 'README.md'), 'utf8');
+    assert.match(readme, /<!-- about:begin/, 'the root README lost the About block ui/about-readme.test.js reads');
+    assert.deepStrictEqual(r.leaks, [], 'a new file shipped a leak');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273: the output is a FRESH-HISTORY git repository: one commit, a neutral author, a clean tree, no remote, and a push goes nowhere', () => {
+  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-consumer-git-'));
+  try {
+    const r = G.build(out, { allowDirty: true });
+    assert.ok(!r.refused, 'refused: ' + r.refused);
+    assert.strictEqual(gitIn(out, ['rev-list', '--count', 'HEAD']), '1', 'not one commit');
+    const who = gitIn(out, ['log', '-1', '--format=%an <%ae> | %cn <%ce>']);
+    assert.doesNotMatch(who, /nname|solariz3d|gmail|zacc/i, 'the commit carries a real identity: ' + who);
+    assert.strictEqual(gitIn(out, ['status', '--porcelain']), '', 'the generated tree is not all committed');
+    assert.strictEqual(gitIn(out, ['remote']), '', 'the generated repository has a remote');
+    assert.strictEqual(gitIn(out, ['config', '--get', 'remote.pushDefault']), 'no_push');
+    assert.throws(() => execFileSync('git', ['push'], { cwd: out, stdio: 'pipe', timeout: 30000 }), 'a push went somewhere');
+    assert.strictEqual(r.git && r.git.sha, gitIn(out, ['rev-parse', 'HEAD']), 'the report does not name the commit it made');
+  } finally { fs.rmSync(out, { recursive: true, force: true }); }
+});
+
+test('D273: generating into a directory that already holds a history is REFUSED before anything is written (fresh history means fresh)', () => {
+  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-consumer-again-'));
+  try {
+    gitIn(out, ['init', '-q']); fs.writeFileSync(path.join(out, 'keep.txt'), 'theirs\n');
+    const r = G.build(out, { allowDirty: true });
+    assert.match(String(r.refused), /history/, 'not refused: ' + r.refused);
+    assert.deepStrictEqual(fs.readdirSync(out).sort(), ['.git', 'keep.txt'], 'something was written over it');
+  } finally { fs.rmSync(out, { recursive: true, force: true }); }
+});
+
+test('D273: the FORK hook point sees every text file once with (body, to, kind), never a binary, and the scan reads what it returns', () => {
+  const seen = [], prev = G.FORK_HOOK.apply;
+  try {
+    G.FORK_HOOK.apply = (body, rel, kind) => { seen.push([rel, kind]); return { body, n: 0 }; };
+    const r = G.build('', { dry: true, allowDirty: true });
+    try {
+      const text = G.collect().filter((f) => !G.EXCLUDE[f.from] && f.kind !== 'binary').length;
+      assert.strictEqual(seen.length, text, 'the hook did not see each shipped text file once');
+      assert.ok(!seen.some(([rel]) => /\.(png|ico)$/.test(rel)), 'a binary reached the hook');
+    } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+    // an IDENTITY leak (the keeper's handle), not a path under Users/nname, which SYNTHETIC deliberately exempts as a test-fixture shape
+    G.FORK_HOOK.apply = (body, rel) => ({ body: rel === 'exo_memory/SEED.md' ? body + '\nplanted by the hook: solariz3d\n' : body, n: 1 });
+    const bad = G.build('', { dry: true, allowDirty: true });
+    try { assert.ok(bad.leaks.some((l) => l.rel === 'exo_memory/SEED.md'), 'a leak the hook added was not scanned'); }
+    finally { try { fs.rmSync(bad.staging, { recursive: true, force: true }); } catch (_) {} }
+  } finally { G.FORK_HOOK.apply = prev; }
+});

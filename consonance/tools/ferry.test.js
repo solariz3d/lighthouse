@@ -332,6 +332,31 @@ test('the miss rate is withheld below its floor and printed at it', () => {
   assert.ok(/%/.test(at), `at the floor the rate must be printed: ${at}`);
 });
 
+
+/* D273 lap 2 (pane B, 2026-10-08). With no FERRY_REPO the repo defaulted to a hardcoded C:\Consonance\lighthouse, which does not exist on either machine
+ * of this room (the checkout is elsewhere) and became an unexpandable '%CONSONANCE_HOME%' in the consumer tree, where `ferry.js --due` died with
+ * "spawnSync cmd.exe ENOENT" (handback/p-consumer-parity-B_2026-10-08.md §4: B = 1). The suite stayed green because every test above sets FERRY_REPO.
+ * Now: FERRY_REPO, else the checkout this file is in. The ledger: FERRY_LEDGER, else <data dir>/ferry.jsonl, the data dir found as the app finds it. */
+function ferryChild(env, expr) {
+  const base = { ...process.env }; for (const k of ['FERRY_REPO', 'FERRY_LEDGER', 'CONSONANCE_DATA']) delete base[k];
+  return execFileSync(process.execPath, ['-e', `const f = require(${JSON.stringify(path.join(__dirname, 'ferry.js'))}); console.log(${expr});`],
+    { encoding: 'utf8', env: { ...base, ...env } }).trim();
+}
+test('D273: with no FERRY_REPO the repository is the checkout ferry.js lives in, never a hardcoded path', () => {
+  assert.strictEqual(ferryChild({}, 'f.repoRoot()'), path.resolve(__dirname, '..', '..'));
+  assert.strictEqual(ferryChild({ FERRY_REPO: tmp }, 'f.repoRoot()'), tmp, 'FERRY_REPO still wins');
+  const code = fs.readFileSync(path.join(__dirname, 'ferry.js'), 'utf8').split('\n').filter((l) => !/^\s*(\/\/|\*|\/\*)/.test(l)).join('\n');
+  assert.doesNotMatch(code, /Consonance\\{1,2}(lighthouse|data)/, 'a hardcoded machine path is still in the code');
+});
+test('D273: with no FERRY_LEDGER the ledger is ferry.jsonl in CONSONANCE_DATA, else ~/.consonance.json data_dir, else ~/.consonance', () => {
+  const home = fs.mkdtempSync(path.join(tmp, 'home-'));
+  assert.strictEqual(ferryChild({ CONSONANCE_DATA: path.join(tmp, 'd') }, 'f.LEDGER'), path.join(tmp, 'd', 'ferry.jsonl'));
+  fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify({ data_dir: path.join(tmp, 'cfg') }));
+  assert.strictEqual(ferryChild({ USERPROFILE: home, HOME: home }, 'f.LEDGER'), path.join(tmp, 'cfg', 'ferry.jsonl'));
+  fs.rmSync(path.join(home, '.consonance.json'));
+  assert.strictEqual(ferryChild({ USERPROFILE: home, HOME: home }, 'f.LEDGER'), path.join(home, '.consonance', 'ferry.jsonl'));
+});
+
 console.log(`\n${pass} passed, ${fail} failed`);
 fs.rmSync(tmp, { recursive: true, force: true });
 process.exit(fail ? 1 : 0);

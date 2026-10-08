@@ -412,7 +412,19 @@ const MANIFEST = [
    * conditional is discharged by `depath()` + the scan change, not by a promise. */
   { from: 'exo_memory/TRAINING.md', to: 'exo_memory/TRAINING.md', kind: 'prose' },
   { dir: 'exo_memory/memory', to: 'exo_memory/memory', match: /\.md$/, kind: 'prose' },
+
+  /* D273 lap 2 (pane B, 2026-10-08), lap 1's manifest gaps (handback/p-consumer-parity-B_2026-10-08.md §3 C). state-manifest.json is the data
+   * three shipped tools read (state-sync, state-manifest, ledger-union); the root README.md is the repo's front door: consonance/README.md links
+   * it, ui/about-readme.test.js reads its About block, and without it the generated root held only CONSUMER-STATUS.md. */
+  { from: 'consonance/state-manifest.json', to: 'consonance/state-manifest.json', kind: 'code' },
+  { from: 'README.md', to: 'README.md', kind: 'prose' },
 ];
+
+/* THE FORK HOOK POINT — D273 lap 2 (pane B, 2026-10-08). C's ROLE/PROVENANCE relabel and frag-fork injection is a SEPARATE module (C names it); its one
+ * require/call line sets FORK_HOOK.apply. The rule is C's and is not written here. Contract: apply(body, to, kind) -> { body, n }, called once for
+ * every shipped TEXT file after the generator's own transforms and BEFORE the write and the scan, so whatever it returns is what is scanned and what
+ * ships. Never called for a binary, an excluded file, or the generated files (CUTOFF, CONSUMER-STATUS). report.forked is the sum of n. */
+const FORK_HOOK = { apply: null };
 
 /* Named exclusions -- files that MATCH a manifest rule but must not ship, each with its reason.
  * Kept as data rather than as a filter buried in code, so the list is readable and arguable. */
@@ -421,6 +433,7 @@ const MANIFEST = [
  * The declaration is checked in both directions (see build()): an undeclared dead entry refuses,
  * and so does a declared entry that has become reachable. Without that, a dead exclusion reads as
  * coverage -- the same shape as the demachine() pattern that could not match, found the same day. */
+const JEV_EXCLUDED = "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship";
 const EXCLUDE = {
   /* ARMED 2026-09-04 (D009 P3). The `UNREACHABLE:` prefix is DROPPED here, and that is the whole
    * point of the entry rather than a bookkeeping tidy-up.
@@ -543,6 +556,25 @@ const EXCLUDE = {
    * sanitising a trace INSIDE a shipped card (interior-at-the-seam), never about which files ship. */
   'exo_memory/memory/signal-and-606-night.md':
     'STATE by the keeper\'s own rule — a build log of one night on one project, carrying the old machine\'s paths. UNNAMED in the 03:13 cut; classified here rather than shipped by default, and flagged for overturning',
+  /* ============================================================ THE JEV FAMILY — D273 lap 2 (pane B, 2026-10-08)
+   * Ruling (2) of loop/plan_consumer_refresh_2026-10-08.md: "jev/ is EXCLUDED with its tests (Jev is off since D164)". jev/ itself is reached by no
+   * manifest rule; these are the tools under consonance/tools that ARE the Jev client and its tests. hooks/jev-flags.js still ships: install.ps1
+   * registers it, and withholding it would make every install report the file ABSENT FROM REPO (E owns install.ps1). */
+  'consonance/tools/jev-ask.js': JEV_EXCLUDED,
+  'consonance/tools/jev-ask.mutants.js': JEV_EXCLUDED,
+  'consonance/tools/jev-ask.test.js': JEV_EXCLUDED,
+  'consonance/tools/jev-judge.js': JEV_EXCLUDED,
+  'consonance/tools/jev-judge.test.js': JEV_EXCLUDED,
+  'consonance/tools/jev-module.test.js': JEV_EXCLUDED,
+  'consonance/tools/jev-room.js': JEV_EXCLUDED,
+  'consonance/tools/jev-room.test.js': JEV_EXCLUDED,
+  'consonance/tools/jev-shadow-runner.js': JEV_EXCLUDED,
+  'consonance/tools/jev-shadow-runner.test.js': JEV_EXCLUDED,
+  'consonance/tools/jev-shadow.js': JEV_EXCLUDED,
+  'consonance/tools/jev-shadow.mutants.js': JEV_EXCLUDED,
+  'consonance/tools/jev-shadow.test.js': JEV_EXCLUDED,
+  'consonance/tools/jev-variants.js': JEV_EXCLUDED,
+  'consonance/tools/jev-variants.test.js': JEV_EXCLUDED,
 };
 
 /* ------------------------------------------------------------------ seeded files
@@ -1756,7 +1788,7 @@ function build(outDir, opts) {
   const id = commitIdentity();
   const gen = generatedFiles(id);
   const staging = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-consumer-'));
-  const report = { staged: 0, excluded: [], missing: [], dangling: 0, identity: 0, machine: 0, fixtures: 0, unportable: [], leaks: [], excludeDrift: [], seedDrift: [], seeded: [], orphaned: [], generated: [], genDrift: [], unresolved: [], unclassified: [], anchorDrift: [], reseeded: 0, reindexed: 0, dewikied: 0, columns: null, commit: id, staging };
+  const report = { forked: 0, git: null, staged: 0, excluded: [], missing: [], dangling: 0, identity: 0, machine: 0, fixtures: 0, unportable: [], leaks: [], excludeDrift: [], seedDrift: [], seeded: [], orphaned: [], generated: [], genDrift: [], unresolved: [], unclassified: [], anchorDrift: [], reseeded: 0, reindexed: 0, dewikied: 0, columns: null, commit: id, staging };
 
   /* THE EXCLUDE LIST IS CHECKED AGAINST THE MANIFEST, IN BOTH DIRECTIONS. An exclusion no rule can
    * reach withholds nothing while reading as though it does; a `UNREACHABLE:` declaration that has
@@ -1858,6 +1890,7 @@ function build(outDir, opts) {
     { const rs = reseed(t.body, f.to);
       if (rs.missing) report.anchorDrift.push({ rel: f.to, why: 'SEED.md no longer contains the sentence this generator anchors its one added sentence to. The transform did not fire, and a transform that quietly does nothing is the inert guard this file has found twice. Re-anchor it or drop it — do not leave it unable to fire.' });
       t.body = rs.body; report.reseeded += rs.n; }
+    if (FORK_HOOK.apply) { const fk = FORK_HOOK.apply(t.body, f.to, kind) || {}; if (typeof fk.body !== 'string') throw new Error('FORK_HOOK.apply returned no body for ' + f.to); t.body = fk.body; report.forked += fk.n || 0; }
     if (t.fixture) report.fixtures++;
     report.dangling += t.dangling;
     report.identity += t.identity;
@@ -2092,6 +2125,14 @@ function build(outDir, opts) {
   }
   if (opts.dry) { report.wrote = null; return report; }
 
+  /* D273 lap 2 (pane B, 2026-10-08): THE OUTPUT IS A FRESH-HISTORY GIT REPOSITORY (the plan's ruling; journal/2026-09-03.md §2: fresh history, no history
+   * surgery). A directory that already holds a history is REFUSED before anything is written: committing a new generation on top of an old one is a
+   * history, and fresh means fresh. `noGit` writes the tree alone (a scratch look). */
+  if (!opts.noGit && fs.existsSync(path.join(outDir, '.git'))) {
+    report.refused = outDir + ' already holds a git history; the output is a FRESH-history repository, so generate into an empty directory';
+    return report;
+  }
+
   /* Atomic-ish: the destination is only touched once staging is clean. */
   fs.mkdirSync(outDir, { recursive: true });
   const copyTree = (from, to) => {
@@ -2103,7 +2144,23 @@ function build(outDir, opts) {
   };
   copyTree(staging, outDir);
   report.wrote = outDir;
+  if (!opts.noGit) report.git = commitFresh(outDir, report.commit);
   return report;
+}
+
+/* One commit, a neutral author (never a person's name or address: the history is what gets pushed), dated to the source commit so two generations
+ * of one commit are the same commit. NO REMOTE, and remote.pushDefault = no_push, so a bare `git push` goes nowhere until someone adds a remote on
+ * purpose (the plan: any consumer checkout's push stays no_push). */
+function commitFresh(dir, commit) {
+  const { execFileSync } = require('child_process');
+  const g = (args, env) => execFileSync('git', args, { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, ...env } }).trim();
+  const who = { GIT_AUTHOR_NAME: 'consonance-generator', GIT_AUTHOR_EMAIL: 'generator@consonance.invalid', GIT_COMMITTER_NAME: 'consonance-generator', GIT_COMMITTER_EMAIL: 'generator@consonance.invalid' };
+  const when = commit && commit.at ? { GIT_AUTHOR_DATE: commit.at, GIT_COMMITTER_DATE: commit.at } : {};
+  g(['init', '-q', '-b', 'main']);
+  g(['config', 'remote.pushDefault', 'no_push']);
+  g(['add', '-A']);
+  g(['commit', '-q', '-m', 'Consonance' + (commit && commit.sha ? ' (generated from ' + commit.sha.slice(0, 12) + ')' : '')], { ...who, ...when });
+  return { sha: g(['rev-parse', 'HEAD']), files: g(['ls-files']).split(/\r?\n/).filter(Boolean).length };
 }
 
 /** `--verify-cutoff <consumer-checkout>` — C's §5 check (b), the strong half.
@@ -2310,4 +2367,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, STAYS_PRIVATE, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, depath, repath, desync, reseed, reindex, dewiki, SEED_ANCHOR, SEED_SENTENCE, JOURNAL_SEED, renderCutoff, verifyCutoff, renderStatusDoc, generatedFiles, commitIdentity, build };
+module.exports = { FORK_HOOK, commitFresh, MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, STAYS_PRIVATE, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, depath, repath, desync, reseed, reindex, dewiki, SEED_ANCHOR, SEED_SENTENCE, JOURNAL_SEED, renderCutoff, verifyCutoff, renderStatusDoc, generatedFiles, commitIdentity, build };

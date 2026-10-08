@@ -1426,8 +1426,10 @@ function main(argv, out = console.log, err = console.error) {
   const ledger = i >= 0 ? argv[i + 1] : undefined;
   if (argv.includes('--replay')) return replay({ ledger }, out);
   const r = line({ ledger });
+  // D273 lap 2: the reason for a silence goes to stderr whether or not --why was given (still accepted). Run by a person it said nothing at all, which the
+  // parity cold sweep scores MUTE; both pulse callers read stdout only, so the pulse is unchanged
   if (r.text) out(r.text);
-  else if (argv.includes('--why')) err('chain-status: silent — ' + r.why);
+  else err('chain-status: silent — ' + r.why);
   return 0;
 }
 
