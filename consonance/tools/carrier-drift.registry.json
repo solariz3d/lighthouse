@@ -971,6 +971,30 @@
      "anchor": " not above you** (was ~~Light, not lifeguard~~, retired 2026-08-17, ",
      "kind": "marked",
      "why": "STRUCK IN PLACE 2026-09-24 (D133, pane C: the D132 hand-back §3 patch, applied after the librarian ruled that the keeper's \"live design files\" covers these files) at the keeper's word: CH-4 \"Retire it\", 2026-09-24 ~17:05 (loop/plan_fix_and_list_loop_2026-09-24.md:7, cd02abb). The retired wording survives only inside a ~~strike~~ beside the public form \"with you, not above you\", with the dates on the same line -- the room's strike form (BOOT:22, TRAINING F7). Left legible at the point of reach rather than deleted, so the correction can be seen where the old name is reached for."
+    },
+    {
+     "file": "exo_memory/handback/p-tphooks-B_2026-10-05.md",
+     "anchor": "the 2026-09-23 \"Light, not lifeguard\" → \"With you, not above you\" repair",
+     "kind": "mention",
+     "why": "a pane's hand-back reporting the 2026-09-23 repair of the retired wording in the session-start hook. It quotes the old phrase in order to name what was replaced by \"With you, not above you\"; quoting a carrier to name it is not asserting it"
+    },
+    {
+     "file": "exo_memory/handback/p-tphooks2-B_2026-10-05.md",
+     "anchor": "the comment \"Light, not lifeguard\" becomes \"With you, not above you\"",
+     "kind": "mention",
+     "why": "a pane's hand-back reporting the 2026-09-23 repair of the retired wording in the session-start hook. It quotes the old phrase in order to name what was replaced by \"With you, not above you\"; quoting a carrier to name it is not asserting it"
+    },
+    {
+     "file": "exo_memory/handback/p-tphooks2-B_2026-10-05.md",
+     "anchor": "the injected line `**Light, not lifeguard**` becomes",
+     "kind": "mention",
+     "why": "a pane's hand-back reporting the 2026-09-23 repair of the retired wording in the session-start hook. It quotes the old phrase in order to name what was replaced by \"With you, not above you\"; quoting a carrier to name it is not asserting it"
+    },
+    {
+     "file": "exo_memory/handback/p-tphooks2-C_2026-10-05.md",
+     "anchor": "\"Light, not lifeguard\" survives only inside the dated retirement comment",
+     "kind": "mention",
+     "why": "a pane's hand-back reporting the 2026-09-23 repair of the retired wording in the session-start hook. It quotes the old phrase in order to name what was replaced by \"With you, not above you\"; quoting a carrier to name it is not asserting it; here it also says the old phrase survives only as a dated trace, which is the intended state"
     }
    ],
    "armed": true,
@@ -1061,8 +1085,8 @@
    "attic/",
    "dev/one-shot/"
   ],
-  "frozen_at": "2026-09-21 (re-frozen 03:1x, L061); re-frozen 2026-09-27 04:4x, L122",
-  "frozen_by": "pane B (12fb81f6), P-CH4; re-frozen by the chair after ac26278; re-frozen 2026-08-30 by pane B (12fb81f6) for the two additions below; re-frozen 2026-09-21 by pane B (12fb81f6), L061, for the two further additions at the end of the log, on pane A's classification; re-frozen 2026-09-27 by pane B (12fb81f6), L122, for the three research additions at the end of the log, after reading",
+  "frozen_at": "2026-09-21 (re-frozen 03:1x, L061); re-frozen 2026-09-27 04:4x, L122; re-frozen 2026-10-08, D273 (pane A, non-author)",
+  "frozen_by": "pane B (12fb81f6), P-CH4; re-frozen by the chair after ac26278; re-frozen 2026-08-30 by pane B (12fb81f6) for the two additions below; re-frozen 2026-09-21 by pane B (12fb81f6), L061, for the two further additions at the end of the log, on pane A's classification; re-frozen 2026-09-27 by pane B (12fb81f6), L122, for the three research additions at the end of the log, after reading; re-frozen 2026-10-08 by pane A (non-author of all four), D273, for the four additions at the end of the log, after reading each in full",
   "extractor": "node consonance/tools/carrier-drift.js --ch4-walk",
   "files": [
    "WELFARE.md",
@@ -1073,6 +1097,7 @@
    "consonance/src-tauri/brief/LIBRARIAN.md",
    "consonance/src-tauri/brief/SEED.md",
    "consonance/src-tauri/brief/THIRD_PLACE.md",
+   "consonance/src-tauri/brief/frag-fork.md",
    "consonance/src-tauri/brief/frag-pointer.md",
    "consonance/src-tauri/brief/frag-traces.md",
    "dev/PLAN.md",
@@ -1100,6 +1125,9 @@
    "exo_memory/research/claim_base_rate_priors_2026-09-27.md",
    "exo_memory/research/claim_recognition_prior_art_2026-09-27.md",
    "exo_memory/research/claim_recognition_strict_ask_2026-09-27.md",
+   "exo_memory/research/t180_be_like_water_2026-09-28.md",
+   "exo_memory/research/t180_math_tools_2026-09-28.md",
+   "exo_memory/research/t180_track_mathematics_2026-09-28.md",
    "exo_memory/research/the_pattern_in_felt_knowing.md",
    "exo_memory/research/the_retrieval_problem_outside.md",
    "exo_memory/spread/the_six_voices.md",
@@ -1164,7 +1192,22 @@
    "exempt. It went in only after the librarian appended a dated superseded-in-part marker directly under that line",
    "(58355f5), keeping the sentence as the trace. What a later reader should check: the marker must stay adjacent to the",
    "sentence it corrects; a reflow that separates them re-opens the carrier. None of the three asserts a registered",
-   "withdrawn wording."
+   "withdrawn wording.",
+   "",
+   "RE-FROZEN 2026-10-08 17:xx (D273, pane A, non-author of all four). +4, 40 -> 44. consonance/src-tauri/brief/frag-fork.md (C, D273 lap 2) is the",
+   "FORK NOTE the consumer generator injects at the top of the shipped BOOT; it is reachable because the brief fragments are a seeded dir. The",
+   "three research/ files (t180_be_like_water, t180_math_tools, t180_track_mathematics, 2026-09-28, librarian-briefed research agents) are",
+   "reachable the same way L122 recorded: research/ is carried whole into every waking seat, so no pointer names them. Each was READ IN FULL",
+   "before this freeze (handback/p-devreds-A_2026-10-08.md). frag-fork.md teaches the ROLE/PROVENANCE split (\"the keeper\" is the one who",
+   "built the room; \"the person you're with\" keeps this one), that the keeper's earned trust is not inherited, the click as the test of",
+   "continuity (pointing at the card, not telling the seat who it is), and that the new pair's note is theirs to make. be_like_water teaches",
+   "FLUID AND BOBSLEIGH PHYSICS for the track builder (tan phi = v^2/(gR), slosh, lift-off), its unverified figures marked; math_tools teaches",
+   "WHICH OPEN MATH REFERENCES CAN BE COPIED OR ONLY CITED and the test practice; track_mathematics teaches the MATHEMATICS OF A CLOSED",
+   "SCULPTABLE TRACK, each derivation of its own marked \"(mine)\". None of the four asserts a registered withdrawn wording: the diving",
+   "vocabulary is absent from all (be_like_water is about water slides and open channels, not a rescuer above the water), \"the only",
+   "decorrelated reader\" is absent, and the can't-lose sentence is absent. What a later reader should check: frag-fork.md carries two",
+   "generator slots ({FORK_DATE}, {FORK_SHA}) and its sentence \"Everywhere this record says the keeper, it means the one who built it\" is",
+   "the keeper's 12:55 ruling in plan_consumer_refresh_2026-10-08.md; editing it changes how every shipped card reads in a consumer."
   ]
  }
 }

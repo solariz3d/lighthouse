@@ -143,6 +143,13 @@ const ENTRY = {
   'second-reader.js': 'try { main(); }',
   // Added 2026-10-02 (D212) with sources-gate.js, in the same change as its install.ps1 entry. Call site, not definition, per this table's header.
   'sources-gate.js': 'try { main(); }',
+  // Added 2026-10-08 (D273) for push-gate.js, delete-gate.js and ask-ending.js: all three were registered in install.ps1 with no row here, and this suite
+  // refused them by name ("add one rather than skipping"): the roster is discovered and this table is hand-kept, the seam its header describes. Each hook
+  // already has the CONSONANCE_DREAM guard at the top of the file (push-gate.js:25, delete-gate.js:24, ask-ending.js:18), above `function main()` and above
+  // the call site, which is the entry marker; `try { main(); }` is on one line in each, under require.main. Call site, not definition, per this table's header.
+  'push-gate.js': 'try { main(); }',
+  'delete-gate.js': 'try { main(); }',
+  'ask-ending.js': 'try { main(); }',
   // Added 2026-10-03 (D218) with reply-slot.js, in the same change as its install.ps1 entry. Call site, not definition, per this table's header.
   'reply-slot.js': 'try { main(); }',
   // Added 2026-09-06 with the ready stamp's two hooks (P-READY-SIGNAL), in the same change as

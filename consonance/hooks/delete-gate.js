@@ -151,6 +151,15 @@ function reparsePoints(root, t0 = Date.now()) {
   return { found };
 }
 /**
+ * Where to look for Git's cygpath: on PATH first, then under THIS machine's Program Files folders, read from the variables Windows sets (D273 devreds: this was
+ * two literal `C:/Program Files...` paths, which portable-paths.js flags because a Program Files on another drive would never be found). Same candidates, in the
+ * same order, on a machine whose Program Files is on C:; no variable set means PATH only, never an invented drive.
+ */
+function cygpathCandidates(env = process.env) {
+  const dirs = [env.ProgramFiles, env['ProgramFiles(x86)'], env.ProgramW6432].filter(Boolean);
+  return ['cygpath', ...[...new Set(dirs)].map((d) => path.win32.join(d, 'Git', 'usr', 'bin', 'cygpath.exe'))];
+}
+/**
  * A path as the Bash tool writes it, made one a native Windows process can open (the live check of push-gate.js on 2026-10-06 found `/tmp/x` read as C:\tmp\x
  * and the gate failing open; this gate resolves the same way): /c/Users/... is C:/Users/...; any other absolute MSYS path goes through Git's own cygpath -w.
  * Elsewhere, and on any failure, as written.
@@ -158,7 +167,7 @@ function reparsePoints(root, t0 = Date.now()) {
 function nativePath(p) {
   if (process.platform !== 'win32' || typeof p !== 'string' || !p.startsWith('/')) return p;
   const drive = /^\/([a-zA-Z])(\/.*)?$/.exec(p); if (drive) return `${drive[1].toUpperCase()}:${drive[2] || '/'}`;
-  for (const exe of ['cygpath', 'C:/Program Files/Git/usr/bin/cygpath.exe', 'C:/Program Files (x86)/Git/usr/bin/cygpath.exe']) {
+  for (const exe of cygpathCandidates()) {
     try { const r = require('child_process').spawnSync(exe, ['-w', p], { encoding: 'utf8', timeout: 2000, windowsHide: true }); if (r.status === 0 && r.stdout.trim()) return r.stdout.trim(); } catch (_) { /* try the next */ }
   }
   return p;
@@ -211,4 +220,4 @@ function main() {
 
 if (require.main === module) { try { main(); } catch (_) { process.exit(0); } }   // fail OPEN, without exception
 
-module.exports = { LEDGER, WALK_MAX, words, stripHeredocs, segments, deleteTargets, expandTarget, reparsePoints, decide, reasonOf, nativePath, expandEnv };
+module.exports = { LEDGER, WALK_MAX, words, stripHeredocs, segments, deleteTargets, expandTarget, reparsePoints, decide, reasonOf, nativePath, cygpathCandidates, expandEnv };

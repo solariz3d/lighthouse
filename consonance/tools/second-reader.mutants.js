@@ -82,7 +82,7 @@ function run(dir) {
 }
 
 function main() {
-  require(path.join(REPO, 'consonance', 'tools', 'heavy-run.js')).hold({ cmd: 'second-reader.mutants' });   // ONE HEAVY RUNNER PER TREE
+  require('./heavy-run.js').hold({ cmd: 'second-reader.mutants' });   // ONE HEAVY RUNNER PER TREE
   const onlyAt = process.argv.indexOf('--only'), only = onlyAt > 0 ? Number(process.argv[onlyAt + 1]) : null;
   const read = (f) => fs.readFileSync(path.join(HERE, f), 'utf8').replace(/\r\n/g, '\n');
   const control = (() => { const d = tree(); try { return run(d); } finally { fs.rmSync(d, { recursive: true, force: true }); } })();

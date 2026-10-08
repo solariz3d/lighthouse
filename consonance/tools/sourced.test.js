@@ -111,3 +111,65 @@ test('a real transcript produces a non-zero denominator', () => {
   const r = s(found);
   assert.ok(r.total > 0, 'zero value-claims over a live session means the scanner died silently');
 });
+
+// D273 (devreds): the reader no longer holds a transcript as ONE string. The live chair session passed V8's string limit (0x1fffffe8 = 536,870,888 bytes; it was
+// 539,727,123) and the row above died with ERR_STRING_TOO_LONG on exactly the sessions this tool exists to measure. The rows below prove the chunked reader on
+// small files, where a whole-file read is still possible to compare against: every chunk size, including ones that cut a multi-byte character and a line in half.
+function wholeFileTurns(file) {   // the previous implementation, kept here as the oracle
+  const out = []; let pending = null;
+  for (const line of fs.readFileSync(file, 'utf8').split(/\r?\n/)) {
+    if (!line.trim()) continue;
+    let r; try { r = JSON.parse(line); } catch { continue; }
+    if (r.type === 'user') { if (pending) out.push(pending); pending = null; continue; }
+    if (r.type !== 'assistant') continue;
+    const c = (r.message || {}).content; if (!Array.isArray(c)) continue;
+    if (!pending) pending = { ts: r.timestamp, text: '', tools: [] };
+    for (const b of c) { if (b.type === 'text') pending.text += '\n' + b.text; if (b.type === 'tool_use') pending.tools.push(b.name); }
+  }
+  if (pending) out.push(pending); return out;
+}
+const scratchFile = (bytes) => { const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sourced-chunk-')), f = path.join(dir, 't.jsonl'); fs.writeFileSync(f, bytes); return { f, done: () => fs.rmSync(dir, { recursive: true, force: true }) }; };
+
+test('turns() agrees with a whole-file read at every chunk size, including sizes that split a multi-byte character, a line, and a CRLF', () => {
+  const { turns } = require('./sourced.js');
+  const rec = (o) => JSON.stringify(o);
+  const lines = [
+    rec({ type: 'user', message: { content: 'go' } }),
+    rec({ type: 'assistant', timestamp: 't1', message: { content: [{ type: 'text', text: 'the port 4242 is é — “quoted” 🙂 live' }, { type: 'tool_use', name: 'Bash' }] } }),
+    '',
+    'this line is not JSON at all',
+    rec({ type: 'assistant', timestamp: 't2', message: { content: [{ type: 'text', text: 'x'.repeat(5000) + ' holds 12 files' }] } }),
+    rec({ type: 'user', message: { content: 'next' } }),
+    rec({ type: 'assistant', timestamp: 't3', message: { content: [{ type: 'text', text: 'last v1.2.3 line, no newline after it' }] } }),
+  ];
+  const body = lines.map((l, i) => l + (i % 2 ? '\r\n' : '\n')).join('').replace(/\r?\n$/, '');   // mixed endings, none after the last line
+  const t = scratchFile(body);
+  try {
+    const want = wholeFileTurns(t.f);
+    assert.strictEqual(want.length, 2, 'the oracle sees two turns: the first merges the two assistant records before the next user record');
+    assert.ok(want[0].text.includes('🙂') && want[0].text.includes('é'), 'and its multi-byte text survived');
+    const sizes = [...Array.from({ length: 48 }, (_, i) => i + 1), 63, 64, 65, 127, 128, 129, 4096, 1 << 20];   // every small size: some cut a multi-byte character, some leave stale bytes after a short last read
+    for (const chunk of sizes) assert.deepStrictEqual(require('./sourced.js').turns(t.f, chunk), want, 'chunk ' + chunk);
+    assert.deepStrictEqual(turns(t.f), want, 'and the default chunk size');
+  } finally { t.done(); }
+});
+
+test('an empty file, a file of blank lines, and a single line longer than the chunk all read without throwing', () => {
+  const { turns, eachLine } = require('./sourced.js');
+  const a = scratchFile(''), b = scratchFile('\n\n  \n'), long = 'y'.repeat(100000), c = scratchFile(JSON.stringify({ type: 'assistant', timestamp: 'tl', message: { content: [{ type: 'text', text: long + ' port 8080' }] } }));
+  try {
+    assert.deepStrictEqual(turns(a.f, 16), []); assert.deepStrictEqual(turns(b.f, 16), []);
+    const got = turns(c.f, 4096); assert.strictEqual(got.length, 1); assert.ok(got[0].text.length > 100000, 'a 100 KB line crossing 25 chunks arrives whole');
+    const seen = []; eachLine(c.f, (l) => seen.push(l.length), 4096); assert.strictEqual(seen.length, 1, 'one line, handed over once');
+  } finally { a.done(); b.done(); c.done(); }
+});
+
+test('eachLine() hands over exactly the lines of the file: no phantom empty line from the stale bytes after a short last read, none after a final newline', () => {
+  const { eachLine } = require('./sourced.js');
+  const lines = (text, chunk) => { const t = scratchFile(text); try { const got = []; eachLine(t.f, (l) => got.push(l), chunk); return got; } finally { t.done(); } };
+  // chunk 5: the second read leaves 'bbb\n' behind the one byte the last read returns, so a search of the whole buffer would find a newline that is not in the file
+  assert.deepStrictEqual(lines('aaaa\nbbbb\nc', 5), ['aaaa', 'bbbb', 'c']);
+  assert.deepStrictEqual(lines('aaaa\nbbbb\n', 5), ['aaaa', 'bbbb']);
+  assert.deepStrictEqual(lines('aaaa\nbbbb\nc', 4096), ['aaaa', 'bbbb', 'c']);
+  assert.deepStrictEqual(lines('', 5), []);
+});

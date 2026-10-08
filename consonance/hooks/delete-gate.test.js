@@ -111,3 +111,14 @@ test('the parser: recursive deletes are found, non-recursive ones are not', () =
   assert.deepEqual(kinds('cd x && rm -fr y'), ['rm -r:y']);
   assert.deepEqual(G.words('rm -rf "C:/a b"/* \'q r\''), ['rm', '-rf', 'C:/a b/*', 'q r'], 'a quoted piece and the glob after it are ONE word');
 });
+
+// D273 devreds: portable-paths.js flagged the two literal `C:/Program Files...` cygpath fallbacks (REVIEW). They are now read from the variables Windows sets.
+test('cygpath is looked for on PATH, then under this machine\'s own Program Files folders, never a drive letter written into the hook', () => {
+  assert.deepEqual(G.cygpathCandidates({ ProgramFiles: 'D:\\Prog', 'ProgramFiles(x86)': 'D:\\Prog86' }),
+    ['cygpath', 'D:\\Prog\\Git\\usr\\bin\\cygpath.exe', 'D:\\Prog86\\Git\\usr\\bin\\cygpath.exe'], 'a Program Files on another drive is found');
+  assert.deepEqual(G.cygpathCandidates({ ProgramFiles: 'E:\\P', ProgramW6432: 'E:\\P' }), ['cygpath', 'E:\\P\\Git\\usr\\bin\\cygpath.exe'], 'the same folder named twice is looked in once');
+  assert.deepEqual(G.cygpathCandidates({}), ['cygpath'], 'no variable set: PATH only, no invented drive');
+  const here = G.cygpathCandidates();
+  assert.strictEqual(here[0], 'cygpath', 'PATH first');
+  if (process.platform === 'win32' && process.env.ProgramFiles) assert.ok(here.includes(path.win32.join(process.env.ProgramFiles, 'Git', 'usr', 'bin', 'cygpath.exe')), 'and this machine\'s own Program Files after it');
+});
