@@ -1,0 +1,103 @@
+[31m✖ row 1: save, then a fresh shell opens the track: undo walks the same steps back, and redo returns [90m(10.0342ms)[39m[39m
+[31m✖ row 2: a mismatched sidecar is dropped silently; a corrupt one opens the track with no history and says so once; a missing one, or a host without the calls, is no news [90m(3.9569ms)[39m[39m
+[31m✖ row 3: the cap holds: the last 200 steps of the past, and the 200 nearest of the future [90m(5508.9268ms)[39m[39m
+[31m✖ row 4: the track file is byte-identical with and without the feature, and is written before its sidecar; a sidecar that cannot be written never fails the save [90m(4.7083ms)[39m[39m
+[31m✖ row 5: the autosave keeps its history: Restore after a crash can undo; a damaged history in it restores the track without one and says so [90m(2.4917ms)[39m[39m
+[31m✖ row 6: a second Save replaces the sidecar; Save As leaves the first name's alone; the undo of an edit made after the open is on top of the restored history [90m(1.2542ms)[39m[39m
+[34mℹ tests 6[39m
+[34mℹ suites 0[39m
+[34mℹ pass 0[39m
+[34mℹ fail 6[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 5626.5103[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\core-undo-persist.test.js:41:1
+[31m✖ row 1: save, then a fresh shell opens the track: undo walks the same steps back, and redo returns [90m(10.0342ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the sidecar is written beside the track, under the track's stored name
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-undo-wt\[39mapp\test\core-undo-persist.test.js:46:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-undo-persist.test.js:58:1
+[31m✖ row 2: a mismatched sidecar is dropped silently; a corrupt one opens the track with no history and says so once; a missing one, or a host without the calls, is no news [90m(3.9569ms)[39m[39m
+  SyntaxError: "undefined" is not valid JSON
+      at JSON.parse (<anonymous>)
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-undo-wt\[39mapp\test\core-undo-persist.test.js:67:23[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at app\test\core-undo-persist.test.js:84:1
+[31m✖ row 3: the cap holds: the last 200 steps of the past, and the 200 nearest of the future [90m(5508.9268ms)[39m[39m
+  SyntaxError: "undefined" is not valid JSON
+      at JSON.parse (<anonymous>)
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-undo-wt\[39mapp\test\core-undo-persist.test.js:86:43[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at app\test\core-undo-persist.test.js:97:1
+[31m✖ row 4: the track file is byte-identical with and without the feature, and is written before its sidecar; a sidecar that cannot be written never fails the save [90m(4.7083ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the track first, then its history
+  [32m+ actual[39m [31m- expected[39m
+  
+  [39m  [
+  [39m    'doc:eq-t',
+  [31m-[39m   'undo:eq-t'
+  [39m  ]
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-undo-wt\[39mapp\test\core-undo-persist.test.js:101:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [32m'doc:eq-t'[39m ],
+    expected: [ [32m'doc:eq-t'[39m, [32m'undo:eq-t'[39m ],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-undo-persist.test.js:110:1
+[31m✖ row 5: the autosave keeps its history: Restore after a crash can undo; a damaged history in it restores the track without one and says so [90m(2.4917ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the history came with it
+  [32m+ actual[39m [31m- expected[39m
+  
+  [39m  {
+  [39m    future: 0,
+  [32m+[39m   past: 0
+  [31m-[39m   past: 4
+  [39m  }
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-undo-wt\[39mapp\test\core-undo-persist.test.js:115:92[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: { past: [33m0[39m, future: [33m0[39m },
+    expected: { past: [33m4[39m, future: [33m0[39m },
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-undo-persist.test.js:127:1
+[31m✖ row 6: a second Save replaces the sidecar; Save As leaves the first name's alone; the undo of an edit made after the open is on top of the restored history [90m(1.2542ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: replaced
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-undo-wt\[39mapp\test\core-undo-persist.test.js:129:57[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [90mundefined[39m,
+    expected: [90mundefined[39m,
+    operator: [32m'notStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }

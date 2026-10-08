@@ -1,0 +1,30 @@
+﻿=== consonance/hooks/reply-slot.test.js  [ℹ pass 34 ℹ fail 1]
+  ✖ PLAN: the plan the hook cites exists (3.031ms)
+=== consonance/hooks/sources-gate.test.js  [ℹ pass 55 ℹ fail 1]
+  ✖ PLAN: the plan the hook cites exists (4.0387ms)
+=== consonance/hooks/second-reader.test.js  [ℹ pass 28 ℹ fail 1]
+  ✖ QS: the question sent is the plan's registered text, VERBATIM (compared with the plan file) (0.3748ms)
+=== consonance/tools/ask.test.js  [ℹ pass 38 ℹ fail 4]
+  ✖ D091 · on the store as shipped at 915209a, ASK-009 parses OPEN and ASK-008 keeps its own ANSWERED status (0.2847ms)
+  ✖ D091 · the store as shipped at 915209a is the verbatim fixture, unedited (2.2521ms)
+  ✖ the reader does not touch the REAL store file, not even to append nothing (0.1275ms)
+  ✖ the shipped ASK.md parses, is non-empty, and every open ask clears the fact floor (1.1352ms)
+=== consonance/tools/commit-gate.test.js  [ℹ pass 23 ℹ fail 4]
+  ✖ ANCHOR: the real packet that caused the outage parses its 7 owned paths (0.3549ms)
+  ✖ parsePacket reads a REAL packet: addressee, owned paths, hand-back (0.385ms)
+  ✖ REPLAY — e6215a8's four captured paths, against tonight's real packets (2.5869ms)
+  ✖ the shipped githooks/pre-commit runs commit-gate.js (0.3232ms)
+=== consonance/tools/contamination.test.js  [ℹ pass 0 ℹ fail 1]
+  ✖ consonance\tools\contamination.test.js (78.564ms)
+=== consonance/tools/tj1-k-render.test.js  [ℹ pass 0 ℹ fail 1]
+  ✖ consonance\tools\tj1-k-render.test.js (55.5456ms)
+=== consonance/tools/librarian-cite.test.js  [ℹ pass 22 ℹ fail 1]
+  ✖ the real notes directory resolves citations against the real masters (1.5154ms)
+=== consonance/tools/pair-ledger.test.js  [ℹ pass 13 ℹ fail 1]
+  ✖ the REAL seed ledger verifies against the tree: 16 pairs, every quote walks (0.6525ms)
+=== consonance/tools/forget-rate.test.js  [ℹ pass 0 ℹ fail 1]
+  ✖ consonance\tools\forget-rate.test.js (6700.2194ms)
+=== consonance/tools/shelf-tier.test.js  [ℹ pass 7 ℹ fail 1]
+  ✖ the split is worth making — RECORD really is the larger half (16.6893ms)
+=== dev/shell/hooks/l2-overseer-worker.test.js  [ℹ pass 0 ℹ fail 1]
+  ✖ dev\shell\hooks\l2-overseer-worker.test.js (42.1348ms)

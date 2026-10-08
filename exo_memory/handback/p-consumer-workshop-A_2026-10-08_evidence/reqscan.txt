@@ -1,0 +1,11 @@
+﻿{
+ "unresolvedInShippedCode": [
+  {
+   "file": "consonance/tools/guard-census.js",
+   "isTest": false,
+   "require": "./ui/fake.js"
+  }
+ ],
+ "unresolvedInTests": 2
+}
+

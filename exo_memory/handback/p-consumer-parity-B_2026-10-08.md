@@ -151,3 +151,157 @@ home and data. Nothing was written outside them.
 
 SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_consumer_refresh_2026-10-08.md · C:\Users\nname\Desktop\lighthouse\exo_memory\loop\consumer_parity_2026-09-04.md
 NEXT: chair re-plan D273 from §6 when this is read
+
+---
+
+# Lap 2 (pane B, 2026-10-08 15:5x): the generator and the manifest, with A's workshop ruling folded in
+
+**Branch `b-gen-lap2` in my lighthouse worktree `C:\Users\nname\Desktop\worktrees\b-d273-src`, from `ea4f5bcf`. Four commits, by named paths, not pushed:**
+- `d01955a4`: fresh-history git output; `state-manifest.json` and the root `README.md` ship; the 15 `consonance/tools/jev-*` files are excluded; ferry, board-audit and chain-status fixed; FORK hook point.
+- `8c0797fc`: A's ruling. `githooks/pre-commit` and the six composer screens ship, the screens as a scanned `screen` kind; contamination and tj1-k-render excluded; the WORKSHOP declarations.
+- `4c9adb78`: an existing row, amended BY NAME (below).
+- `ff0b96fe`: dedangle no longer leaves a link pointing at prose.
+
+Every generated tree is a scratch directory, a git repo with no remote and `remote.pushDefault = no_push`. Nothing went to `solariz3d/consonance`.
+
+## The verdict
+    THE TRIPLE      P = 10      M = 0      B = 0          (lap 1: 32, 1, 1)
+    THE GUARD       I = S − G = 155 − 113 = 42           (lap 1: 154 − 121 = 33)
+    RUST            1 parity break                        (lap 1: 24)
+Measured on the final generation from `ff0b96fe`, from a clean tree (`gen.json`: staged 367, leaks 0, excluded 36, screens 6, declared JS 16 / Rust 12,
+dirty false; generated commit `102d5ebb`). The P list from `ff0b96fe` is identical to the one from `8c0797fc`; the source JS suite was run at `8c0797fc`
+(147 green, 6 red: lap 1's 5 shared reds plus `gen-consumer.test.js`, fixed by `4c9adb78`, see "Corrections"). I grew because the 7 Jev and 2 run2
+test files are excluded by ruling (`d273/lap2b/I.txt`).
+
+## P, diffed against lap 1's member list (the registered measurement)
+- **New members: 0.**
+- **Cleared: 22.** reply-slot, second-reader, sources-gate, ask, commit-gate, librarian-cite, pair-ledger, forget-rate, shelf-tier, l2-overseer-worker
+  (declared rows, A); attached (git output); contamination, tj1-k-render (excluded, A); jev-judge, jev-module, jev-shadow-runner, jev-variants
+  (excluded, ruling 2); ledger-union, state-manifest, state-sync (state-manifest.json ships); state-block (cleared by the git output); about-readme (the
+  root README ships).
+- **Still P: 10**, every one already on lap 1's list. By first cause, each run alone in the final generated tree (`d273/lap2c/classify.out`):
+  - **Need the room's record or its history, even in a git repo (5): candidates for A's workshop class, not ruled yet.**
+    - `corpus-age`: "attic is empty", "nothing in loop/ is referenced".
+    - `corrections-gate`: its three RED/GREEN cases need correction commits.
+    - `librarian-notes`: "exo_memory/librarian/ is missing".
+    - `second-vantage`: "repo has a parent commit to pin"; a fresh history has one commit.
+    - `shelf-recursion`: "no nested .md files exist".
+  - **Product or generator questions (5):**
+    - `gen-brief-gate`: gen-brief REFUSES the shipped `exo_memory/BOOT.md`, "the installer build will fail". The shipped BOOT is C's fork material
+      this lap, so I left it alone.
+    - `sessionstart-state`: "the live generator must not be reporting FAILED".
+    - `usage`: deep-equal mismatches, not looked into.
+    - `third-place-gate`: the pulse text differs.
+    - `gen-consumer.build`: passes alone (exit 0) and is red inside the suite. Not resolved.
+
+## M = 0, B = 0: the cold sweep, CONSONANCE_DATA = an empty directory
+| tool | rc | bytes | stack frames | lap 1 | now |
+|---|---|---|---|---|---|
+| `chain-status.js` | 0 | 192 | 0 | MUTE | SPEAKS: "chain-status: silent — no ledger at <empty dir>\lap.jsonl" |
+| `board-audit.js` | 1 | 269 | 0 | FALSE-COLD (read the keeper's board) | SPEAKS: "board-audit: no board at <empty dir>\board.jsonl …"; reads nothing else |
+| `ferry.js --due` | 0 | 103 | 0 | BROKEN (`cmd.exe ENOENT`) | SPEAKS: lists the generated repo's own commit as never ferried |
+| `carrier-drift.js` | 1 | 4185 | 0 | SPEAKS | unchanged |
+
+## Rust: 24 → 1
+`cargo test --no-fail-fast` in the final generated tree: bin **968 passed / 0 failed / 15 ignored** (the 11 declared plus 4 already ignored in source);
+`arch_test` 11 / **1 failed** / 1 ignored (the declared one).
+- All 11 composer/ready tests pass on the scrubbed screens, and the six screens equal A's acceptance hashes (`sha256sum` printed at generation).
+- The 1 left is `every_relative_link_in_the_docs_exists_in_a_fresh_clone`, with **7 dead links, all ship-or-relink decisions**:
+  - in the root `README.md`: `jev/README.md` (×2; jev/ is excluded by ruling, so the README needs a relink in source), `METHOD.md`, `INSTRUMENTS.md`,
+    `dev/SPINE.md`;
+  - in `consonance/README.md`: `AUTONOMY.md` and `../dev/dream/dream_cycle.ps1`, A's line 50.
+  - Before `ff0b96fe` it listed 20. The other 13 were the generator's own defect: dedangle rewrote a link's target to prose and kept the link
+    syntax, so the README linked to "(a registration in this line of record)". Fixed: such a link becomes its text followed by the prose.
+
+## What changed, by file (all tests first, red on the unchanged code)
+- **gen-consumer.js:**
+  - **Git output:** `commitFresh()`: `git init -b main`, one commit by `consonance-generator <generator@consonance.invalid>`, dated to the source
+    commit, no remote, `remote.pushDefault = no_push`. A directory that already holds a history is refused before anything is written.
+  - **MANIFEST:** adds `state-manifest.json`, the root `README.md`, `githooks/pre-commit` (LF; `100644` in the source index too, so there was no exec
+    bit to keep) and the screens (`kind: 'screen'`).
+  - **The screens:** `descreen()` is A's same-length latin1 map. `scan()` then reads the scrubbed text, so anything the map misses refuses the build,
+    and `fixtureKind()` is `'whole'` for the screens directory.
+  - **EXCLUDE:** adds the Jev family (15) and the run2 pair with their tests (4).
+  - **WORKSHOP:**
+    - A's 15 JS rows: `{ skip: "WORKSHOP-BOUND: why" }` in node:test files, and a printing wrapper in the two own-runner files.
+    - A's 12 Rust tests: `#[ignore = "WORKSHOP-BOUND: why"]`.
+    - One more JS row, `jev-flags.test.js` "L105 PARITY …", which compares with the now-excluded `jev-room.js`, labelled `EXCLUDED-WITH-JEV`.
+    - An anchor not found exactly once, or a declared file that does not ship, refuses the build. Applied to the OUTPUT only, so the source suite
+      keeps running every declared row.
+  - **`FORK_HOOK.apply`:** C's hook point. Not wired: no line from C has arrived.
+  - **dedangle:** the link pre-pass described above.
+- **ferry.js, ferry-watch.js:** both defaulted to `C:\Consonance\lighthouse`, which **exists on neither machine**: ferry was broken on D too, and the
+  suite stayed green only because its tests set `FERRY_REPO`.
+  - ferry.js now uses `FERRY_REPO`, else its own checkout.
+  - The installed hook uses `FERRY_REPO`, else `~/.consonance.json` `room_path`; with neither, it stays silent.
+  - Both find the ledger as `<data dir>/ferry.jsonl`, the data dir taken the app's way (`CONSONANCE_DATA`, then `data_dir`, then `~/.consonance`).
+  - On D, `data_dir` = `C:\Consonance\data`, so the ledger path is unchanged here.
+  - `ferry-watch.test.js` is new; the hook had no test.
+- **board-audit.js:** the same data-dir resolution; a missing board is said in words, exit 1.
+- **chain-status.js:** the CLI says why it is silent, on stderr. Stdout, which both pulse hooks read (they read stdout only, checked), is unchanged.
+
+**Tests, green under the lock:**
+
+| file | passing |
+|---|---|
+| gen-consumer | 72/72 (clean and dirty tree) |
+| fixture-scope | 7/7 |
+| gen-consumer.build | 7 pass / 4 skipped (its launch probe is off by default) |
+| chain-status | 147/147 |
+| board-audit | 8/8 |
+| ferry | 21/21 |
+| ferry-watch | 3/3 |
+
+**Amended BY NAME (rule changed), each with its comment:**
+- `chain-status.test.js` "reader: WITHOUT a ledger it prints nothing, writes no stderr, and exits 0".
+- `chain-status.test.js` "a ledger with chain rows and NOTHING unwitnessed still exits 0 in silence".
+- `gen-consumer.test.js` "L038/A · a dirty tree is REFUSED…": its override build now uses its own directory.
+
+## A's mechanism: adopted, with one difference
+- **node:test rows and Rust:** A's mechanism exactly (a skip option in the output; an injected `#[ignore]`).
+- **The two own-runner files (forget-rate, l2-overseer-worker):** a generator-side rewrite instead of A's source-header marker. Every declaration
+  then lives in ONE list beside EXCLUDE, with the same two-way drift refusal, and no test file changes in the source (I own neither file).
+- **A's anti-masking condition (declared only while green in source):** not enforced by the generator, which cannot run tests. The parity run checks
+  it: none of the declared rows' files is red in the source suite.
+- **A's optional source splits (the arch master-pointer test, the second-reader QS row):** not made; they are source edits outside my files.
+
+## Corrections (mine)
+- **The midpoint parity at `d01955a4` (P = 23) was not a clean window.** My uncommitted A-input rows were in the worktree while the source suite ran
+  (it showed `gen-consumer.test.js` red). It is reported only as a midpoint; the verdict above is from committed trees.
+- **`gen-consumer.test.js` was red in the source suite at `8c0797fc`** (70 of 71). The L038/A row generates twice into one directory; on a CLEAN tree
+  the first write now makes a git history, so the second was refused by my own fresh-history rule. It passed in my earlier runs only because my
+  worktree was dirty then. Fixed in `4c9adb78`, run green on both a dirty and a clean tree.
+- **Three times this lap a heredoc collapsed my `\\` into `\`.**
+  - Two test strings and a RegExp in gen-consumer.test.js: caught before any run.
+  - The ferry.test path regex: weaker than intended, found by checking it against the old ferry.js.
+  - A planted test leak: the scan had exempted it as a SYNTHETIC test path, so I switched it to an identity leak.
+  - Backslash files are now written with Write/Edit only.
+- A ferry-watch row first passed on base vacuously (no repo, so silence proved nothing). It now asserts the hook speaks before asserting it is silenced.
+- **My own script bugs,** caught by `node --check` or by the first run:
+  - a misplaced `]` in the WORKSHOP table;
+  - an apostrophe-unsafe single-quoted skip reason, switched to JSON double quotes;
+  - a node:test row check that expected the call to vanish, when it is kept with the skip option.
+- **Two runs outside the lock:** one light single-file `node --test` of jev-flags in the generated tree, and the dry-run checks (no tests).
+
+## Not mine to decide: for the librarian and the keeper
+1. **Ship or relink the 7 dead links:**
+   - `dev/dream/dream_cycle.ps1` and `consonance/AUTONOMY.md` (A line 50: A would ship AUTONOMY.md);
+   - `METHOD.md`, `INSTRUMENTS.md`, `dev/SPINE.md` (lighthouse root docs the root README links);
+   - `jev/README.md` ×2 (jev/ is excluded, so the root README needs a relink in source).
+2. **The ASK channel** (A line 77): `ask.js` and `ask-surface` ship with no store. ASK is addressed to "the keeper"; whether a new user gets one is the
+   keeper's call.
+3. **The five record-shaped P members** above (corpus-age, corrections-gate, librarian-notes, second-vantage, shelf-recursion) need A's ruling,
+   workshop or product, before a declaration.
+4. **`gen-brief` refuses the shipped BOOT** ("the installer build will fail"). That is the shipped BOOT, i.e. C's fork lap, and the installer path.
+5. **E's area:**
+   - `install.ps1` registers `hooks/jev-flags.js` with Jev retired.
+   - `consonance/README.md` still has a Jev section describing tools that no longer ship.
+6. **C:** `FORK_HOOK.apply` is the hook point; its one require/call line goes in when C's module lands.
+
+## Leftovers (mine, all scratch)
+- Generated trees: `b-d273-gen` (lap 1), `b-d273-gen2`, `b-d273-gen3`, `b-d273-gen4` (the final one).
+- `b-d273-src` is on `b-gen-lap2` at `ff0b96fe`, clean.
+- In my scratchpad `d273/`: `lap2/`, `lap2b/`, `lap2c/` (the logs) and three target dirs.
+
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_consumer_refresh_2026-10-08.md · C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-consumer-workshop-A_2026-10-08.md
+NEXT: chair land b-gen-lap2 (d01955a4..ff0b96fe) and rule the six decisions above when this is read

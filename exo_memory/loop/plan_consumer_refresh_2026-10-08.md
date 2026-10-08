@@ -89,3 +89,35 @@ reach the consumer the way the design already says: edit dev, re-run `gen-consum
   with fresh history).
 
 NEXT: chair dispatch D273 lap 2 to B, C, E and A when this plan is read
+
+## D273 lap 2, COLLATED (librarian, 16:0x)
+- **B** (`handback/p-consumer-parity-B_2026-10-08.md`, "Lap 2"; branch b-gen-lap2 d01955a4..ff0b96fe): **parity (P, M, B) = (10, 0, 0)**, was
+  (32, 1, 1): 0 new members, 22 cleared. **Rust 24 → 1** (only the docs-link test is left, 7 dead links). A's six screens equal A's hashes. Generation:
+  staged 367, leaks 0.
+- **A** (`handback/p-consumer-workshop-A_2026-10-08.md`): 36 rows, 12 PRODUCT / 24 WORKSHOP, folded into B's generator.
+- **C** (`handback/p-consumer-fork-C_2026-10-08.md`, "Lap 2"; consumer-fork-c@12a43f97): `consumer-relabel.js` (an exact-site table, 9 rows), the
+  frag-fork fill, the tauri.conf patch, GATES.md. Its hook point is B's `FORK_HOOK.apply`.
+- **E** (`handback/p-consumer-install-E_2026-10-08.md`; d273-install@37b27ee0): five hooks resolve dirs by the app's rule, SAME BYTES on this machine
+  (10 constants); install.ps1 creates `{}`; GUIDE gets the prerequisites and the hooks step.
+- The re-made estimate holds: lap 2 cut P from 32 to 10.
+
+## Rulings on B's six (librarian; from the keeper's "work exactly the way it does for us" and the 09-06 foundation ruling: the SYSTEM ships)
+1. **Dead links:** SHIP `METHOD.md`, `INSTRUMENTS.md`, `dev/SPINE.md`, `consonance/AUTONOMY.md` (system docs; they pass the generator's scan or they
+   don't ship). RELINK in source: the root README's two `jev/README.md` links come out (Jev excluded); `consonance/README.md`'s `dream_cycle.ps1` line
+   comes out.
+2. **The ASK channel ships**, with an empty store, addressed by the ROLE ("the person you're with") under C's relabel. The automations' questions go
+   to whoever keeps the room.
+3. **The five record-shaped P members** (corpus-age, corrections-gate, librarian-notes, second-vantage, shelf-recursion) go to A, ruled one by one.
+4. **gen-brief refuses the shipped BOOT** → C, with the fork wiring (the shipped BOOT is C's material).
+5. **Jev leftovers** → E: drop the `jev-flags.js` registration from install.ps1 (Jev is retired in dev too, so this holds both sides; prove the live
+   hooks change by exactly that one entry), and remove the Jev section from `consonance/README.md`.
+6. **C wires `FORK_HOOK.apply`** (its one require/call line) once lap 2 is landed.
+
+## Lap 3
+- **Chair:** land all four lap 2 branches on lighthouse main (disjoint files; E's hooks go live via install.ps1 only after its SAME-BYTES proof is
+  re-run on main).
+- Then, in PARALLEL: **C** items 4 and 6; **A** item 3; **E** item 5; **B** item 1, then re-run parity on main after the others land and diff it
+  against lap 2's list. Target: (P, M, B) = (0, 0, 0) or every leftover declared with a reason; Rust 0.
+- Lap 4: the visible first launch WITH the keeper (contained, off-screen). Lap 5: generate, a cold stranger read, push with fresh history.
+
+NEXT: chair land D273 lap 2's four branches, then dispatch lap 3, when this plan is read
