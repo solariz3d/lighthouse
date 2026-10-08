@@ -71,3 +71,29 @@ consonance/hooks/precompact-preserve.js | this machine | LEDGER | before "C:\\Co
   - row 4 compared a VM-realm object with `deepStrictEqual`, now compared through JSON;
   - my first sandbox lacked `path`.
 - **Not done:** session-start has no test of its own in the repo (it passes `node --check`, and the proof evaluates its constant). The full hooks suite and the live install are the chair's at landing.
+
+## Lap 3 (the chair's 16:0x packet: ruling 5, plus ruling 1's relink in consonance/README.md)
+**Order:** my t180 D274 follow-up was already FINISHED and rung before this packet arrived (`d1bf901`: core_cup_mutation 51/51 with M50 caught, core_jump_mutation 20/20 with the control green; `p-tubefromcup-E_2026-10-08.md` §Follow-up). So this lap came second.
+
+**Commit `10b72311`** on lighthouse main `ab25d588`, branch `d273-lap3-e`, my own worktree `C:/Users/nname/Desktop/worktrees/e-lap3-wt`. 3 files. Not landed. **`~/.claude` untouched:** the live `settings.json` is still dated 2026-10-06 02:54, before and after every run.
+
+**1. install.ps1: the jev-flags registration dropped.**
+- **How:** it is `Excluded` with the ruling as its reason, by the D105 precedent in the same file (the overseers). No write path registers an Excluded entry, and `-Check` reports EXCLUDED BUT LIVE where an older run left one. Its file copy is gone too. Both old entries are kept verbatim as comments.
+- **Why Excluded and not deleted:** the script never unregisters ("this script never unregisters", its own words). So deleting the line would leave a stale registration on any machine that had one, silently. Excluded makes it visible.
+- **THE ONE-ENTRY PROOF** (scratch `lap3/diff.js`; output `diff.txt` sha256 `3643f051…`): `install.ps1` from `ab25d588` and from the branch, each into its own FRESH temp home (USERPROFILE and HOME there; everything it writes is under %USERPROFILE%). Registrations are compared as (event, command) with the home normalised:
+```
+{"baseExit":0,"branchExit":0,"baseRegistrations":19,"branchRegistrations":18,"baseFiles":35,"branchFiles":34}
+registered by base only: ["UserPromptSubmit | \"C:\\Program Files\\nodejs\\node.exe\" \"<HOME>\\.claude\\shell\\hooks\\jev-flags.js\""]
+registered by branch only: []
+copied by base only: ["hooks\\jev-flags.js"]
+copied by branch only: []
+```
+- **On THIS machine the live hooks change by 0 entries** (read only): jev-flags is not registered in `~/.claude/settings.json` (0 matches) and `~/.claude/shell/hooks/jev-flags.js` does not exist. The one-entry change is what a fresh install registers.
+
+**2. consonance/README.md (one owner, mine):**
+- Removed: the "### Jev: a second judge, on every machine" section (to just before "### Park at launch…"), the Third Place row's "see [Jev](#jev-a-second-judge-on-every-machine)" pointer (the row now ends "not a working seat."), and the `dream_cycle.ps1` link (the sentence keeps its meaning: "A scheduled wake spawns a toolless instance…").
+- After: no `jev` and no `dream_cycle` left in the file, and `git grep jev-a-second-judge` finds nothing linking to the removed anchor.
+
+**Tests (under the lock):**
+- `install-fresh-home.test.js` **row 3** (a fresh install registers no jev-flags hook and copies no `jev-flags.js`): **red on `ab25d588`**, green on the branch, 3/3. `lap3/row3_base.tap` sha256 `6a7016e2…`, `row3_new.tap` `8404c894…`.
+- With `consonance/ui/about-readme.test.js` (the About tab renders this README) and `consonance/tools/gen-consumer.test.js` (the generator's scan): **75/75**. `lap3/tests.tap` sha256 `7ca39a85…`.

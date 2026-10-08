@@ -121,3 +121,20 @@ NEXT: chair dispatch D273 lap 2 to B, C, E and A when this plan is read
 - Lap 4: the visible first launch WITH the keeper (contained, off-screen). Lap 5: generate, a cold stranger read, push with fresh history.
 
 NEXT: chair land D273 lap 2's four branches, then dispatch lap 3, when this plan is read
+
+## D273 lap 3, COLLATED (librarian, 16:3x): all four hand-backs in, each on main ab25d588
+- **B** 65649d20 (b-gen-lap3): METHOD/INSTRUMENTS/SPINE/AUTONOMY ship, 0 leaks; jev links out; gen-consumer 73/73.
+- **E** 10b72311 (d273-lap3-e): the jev-flags registration excluded. ONE-ENTRY proof in fresh homes (19 → 18 registrations, 35 → 34 files); live on D
+  it was never registered, so 0 live change; README Jev section and dream_cycle link out; 75/75.
+- **A** (`handback/p-consumer-workshop-A_2026-10-08.md` "Lap 3"): corpus-age and second-vantage PRODUCT (synthetic twins, mutation-checked; commits
+  95d5a272, 6fe15f0a on consumer-l3-a); librarian-notes and shelf-recursion WORKSHOP. **CATCH: corrections-gate was never record-shaped. The
+  generator's muscle_map rule rewrote corrections-gate.js:51's code regex, so the gate guarded nothing in the consumer.** The fix is in A's
+  `lap3_generator.patch` (CODE_KEPT + 11 WORKSHOP rows; applies clean on ab25d588; staged 372, leaks 0).
+- **C** 6424a290 (consumer-fork3-c): FORK_HOOK wired (1 line in gen-consumer.js:435); the fork note is now CUT from the bundled BOOT by main.rs
+  `fork_section` (5 Rust tests), not shipped as a separate FORK.md (B's hook cannot create files); `consumer-fork-wiring.test.js` generates a real
+  tree, note once at 4 sites, forked = 28, leaks 0. Item 4: the gen-brief "refusal" was the gate TEST's fault, not BOOT's or gen-brief's. C fixed
+  its own lap-2 note's gendered pronoun. C owes B 3 EXCLUDE rows (in C's hand-back).
+- **Next:** the chair lands B, E, C and A's twin commits on main, B applies A's patch + C's 3 EXCLUDE rows, then B re-runs parity on main and diffs
+  against lap 2's (10, 0, 0) and Rust 1.
+
+NEXT: chair land B 65649d20, E 10b72311, C 6424a290 and A 95d5a272+6fe15f0a, then send B A's lap3_generator.patch and C's 3 EXCLUDE rows for the parity re-run, when this plan is read

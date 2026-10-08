@@ -1,0 +1,8 @@
+﻿UNMUTATED: exit 0 (GREEN)
+S1 a DISAGREE surfaces without the claim-time check (moved is never set): exit 1 CAUGHT by rows 1
+S2 an unrebuildable claim-time tree lets the DISAGREE through: exit 1 CAUGHT by rows 3
+S3 the claim-time worktree is never removed: exit 1 CAUGHT by rows 5
+S4 the claim-time reader is handed the CURRENT tree: exit 1 CAUGHT by rows 1,5
+S5 equal heads still run the world check: exit 1 CAUGHT by rows 4
+all mutants caught
+

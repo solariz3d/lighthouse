@@ -1,0 +1,61 @@
+diff --git a/consonance/tools/gen-consumer.js b/consonance/tools/gen-consumer.js
+index bafbeea4..a934e000 100644
+--- a/consonance/tools/gen-consumer.js
++++ b/consonance/tools/gen-consumer.js
+@@ -479,6 +479,24 @@ const WORKSHOP = {
+     'consonance/tools/librarian-cite.test.js': [["test('the real notes directory resolves citations against the real masters', ", 'needs dated librarian notes a new room has not written yet']],
+     'consonance/tools/pair-ledger.test.js': [["test('the REAL seed ledger verifies against the tree: 16 pairs, every quote walks', ", 'the seed pairs quote the room\'s own journal and files']],
+     'consonance/tools/forget-rate.test.js': [["test('exo_memory/ has lost from the reading path ONLY the acknowledged departures (all-time)', ", 'reads the room\'s git history of exo_memory; a fresh history has no departures']],
++    /* D273 lap 3 (A): the five record-shaped members. corpus-age and second-vantage are PRODUCT instruments whose real-corpus rows are declared here and are
++     * proved in the consumer by their synthetic twins (corpus-age.synthetic.test.js, second-vantage.history.test.js); librarian-notes and shelf-recursion declare the
++     * rows that assert this room's populated record. corrections-gate is NOT here: its rows were red because the rewrite corrupted its regex (see CODE_KEPT). */
++    'consonance/tools/corpus-age.test.js': [
++      ["test('attic/ is excluded from the carried corpus — law 3, in both places', ", 'needs this room\'s attic/; corpus-age.synthetic.test.js row 1 proves it on a built corpus'],
++      ["test('referenced files are never proposed, whatever their age', ", 'needs this room\'s loop/ with referenced files; corpus-age.synthetic.test.js row 3'],
++      ["test('the batched age map returns exactly what the per-file git log returned', ", 'needs this room\'s git history under loop/; corpus-age.synthetic.test.js row 7'],
++      ["test('the by-name exclusions match the ones the shelf actually drops', ", 'asserts files under this room\'s loop/run2/cells/; corpus-age.synthetic.test.js rows 1 and 8 hold both halves']],
++    'consonance/tools/librarian-notes.test.js': [
++      ["test('the notes directory exists in the repo and is not empty', ", 'asserts this room\'s dated librarian notes exist'],
++      ["test('the notes are actually tracked by git — the whole point of the move', ", 'asserts this room\'s librarian notes are tracked']],
++    'consonance/tools/second-vantage.test.js': [
++      ["test('heads differ: claim-time AGREE means WORLD-MOVED, no surface', ", 'pins HEAD~1 of this room\'s history; a consumer is one fresh commit; second-vantage.history.test.js rows 1 and 3'],
++      ["test('heads differ: DISAGREE in both trees surfaces', ", 'pins HEAD~1 of this room\'s history; second-vantage.history.test.js row 2']],
++    'consonance/tools/shelf-recursion.test.js': [
++      ["test('the fixture is real — there ARE nested .md files, or this whole suite proves nothing', ", 'needs this room\'s nested registrations; corpus-age.synthetic.test.js row 2 builds its own'],
++      ["test('the corpus total is non-zero and counts more than the flat read did', ", 'needs this room\'s loop/; corpus-age.synthetic.test.js row 1'],
++      ["test(\"review()'s OWN rel resolves — not just the walk's\", ", 'needs this room\'s nested loop/ files; corpus-age.synthetic.test.js row 2']],
+     'consonance/tools/shelf-tier.test.js': [["test('the split is worth making — RECORD really is the larger half', ", 'measures the room\'s record against its system; the consumer inverts that by ruling']],
+     'dev/shell/hooks/l2-overseer-worker.test.js': [["t('the prompt no longer teaches the struck test (registry id cant-lose-handle-2026-08-29)', ", 'the carrier-drift registry ships SEEDED empty by ruling']],
+   },
+@@ -1560,6 +1578,23 @@ const SEED_ANCHOR = 'right now the record is nearly empty — that is not a defi
+ const SEED_SENTENCE = ' Your journal is empty; the keeper\'s is in `exo_memory/inheritance/`, kept under that name '
+   + 'because it is someone else\'s nights and not your memory.';
+ 
++/* CODE_KEPT (D273 lap 3, A): a code line whose token IS the code, which dedangle() rewrote as if it were prose. consonance/tools/corrections-gate.js:51 is
++ * `const GUARDED = [/muscle_map\.md$/i];`; the bare-token rule turned it into `/this line of record\.md$/i`, a regex that matches nothing, and the gate
++ * guarded nothing (3 of its 6 self-built-repo rows red in the consumer, green once the line is restored). ANCHORED, like reseed(): the rewritten line must be
++ * found exactly once or the build says so. */
++const CODE_KEPT = {
++  'consonance/tools/corrections-gate.js': {
++    from: 'const GUARDED = [/this line of record\\.md$/i];',
++    to: 'const GUARDED = [/muscle_map\\.md$/i];',
++  },
++};
++function keepCode(body, rel) {
++  const k = CODE_KEPT[rel];
++  if (!k) return { body, n: 0, missing: false };
++  if (body.split(k.from).length - 1 !== 1) return { body, n: 0, missing: true };
++  return { body: body.replace(k.from, () => k.to), n: 1, missing: false };
++}
++
+ function reseed(body, rel) {
+   if (!/(^|\/)SEED\.md$/.test(rel)) return { body, n: 0, missing: false };
+   if (!body.includes(SEED_ANCHOR)) return { body, n: 0, missing: true };
+@@ -2027,6 +2062,7 @@ function build(outDir, opts) {
+     { const dw = declareWorkshop(t.body, f.to); t.body = dw.body;
+       for (const a of dw.missing) report.declareDrift.push({ rel: f.to, why: 'a WORKSHOP-BOUND declaration found its anchor ' + (dw.body.split(a).length - 1) + ' times, not once: ' + a });
+       if (WORKSHOP.js[f.to]) report.declared.js += dw.n; else if (WORKSHOP.rust[f.to]) report.declared.rust += dw.n; }
++    { const kc = keepCode(t.body, f.to); if (kc.missing) report.anchorDrift.push({ rel: f.to, why: 'a CODE_KEPT line was not found exactly once' }); t.body = kc.body; }
+     if (FORK_HOOK.apply) { const fk = FORK_HOOK.apply(t.body, f.to, kind) || {}; if (typeof fk.body !== 'string') throw new Error('FORK_HOOK.apply returned no body for ' + f.to); t.body = fk.body; report.forked += fk.n || 0; }
+     if (t.fixture) report.fixtures++;
+     report.dangling += t.dangling;

@@ -305,3 +305,36 @@ test files are excluded by ruling (`d273/lap2b/I.txt`).
 
 SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_consumer_refresh_2026-10-08.md · C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-consumer-workshop-A_2026-10-08.md
 NEXT: chair land b-gen-lap2 (d01955a4..ff0b96fe) and rule the six decisions above when this is read
+
+---
+
+# Lap 3 (pane B, 2026-10-08 16:2x): item 1 committed; items 2 and 3 wait on A, C and E
+
+**Commit `65649d20`** on branch `b-gen-lap3`, worktree `C:\Users\nname\Desktop\worktrees\b-d273-lap3`, from lighthouse main `ab25d588`. Three named
+paths, not pushed.
+
+## Item 1: the librarian's ruling 1
+- **SHIP:** `METHOD.md`, `INSTRUMENTS.md`, `dev/SPINE.md`, `consonance/AUTONOMY.md`, four `kind: 'prose'` MANIFEST lines. All four pass the scan:
+  a dry run gives staged 374, **leaks 0**, not refused.
+- **RELINK in source:** the root README's two `jev/README.md` links (`README.md:109`, `:268`) come out. Each keeps the path as code text, "in the
+  development tree", because the dev repo still has the page. Both edits are outside the About block (`:11`–`:83`), and `ui/about-readme.test.js` passes.
+- **Not touched:** `consonance/README.md` (E's), and the generator's `FORK_HOOK` point (C's line goes there).
+- **Tests:**
+  - New row: "D273 lap 3: METHOD.md, INSTRUMENTS.md, dev/SPINE.md and consonance/AUTONOMY.md ship through the scan, and the README links no
+    excluded jev/README.md".
+  - Red on `ab25d588`: the new row failed, 72 others passed.
+  - Green, under the lock: gen-consumer **73/73**, about-readme 1/1.
+- **What it should clear:** five of lap 2's seven dead links in `arch_test::every_relative_link…`. The other two are E's (`AUTONOMY.md` now ships,
+  so that link resolves; the `dream_cycle.ps1` line is E's to remove from `consonance/README.md`). That is a prediction, measured in item 3.
+
+## Items 2 and 3: pending
+- **Item 2:** A's lines for the five record-shaped members (corpus-age, corrections-gate, librarian-notes, second-vantage, shelf-recursion) are not
+  here yet. They fold into `WORKSHOP` (or ship a fixture) when A hands them over.
+- **Item 3:** the parity re-run on main, diffed against lap 2's member list (`d273/lap2c/Plist.txt`, the 10), once C, A and E land.
+- **Registered before the run:** the target is (P, M, B) = (0, 0, 0), or every leftover declared with a reason, and Rust 0 (the docs-link test green).
+  - Not met if any lap-2 member is still red undeclared after A's lines land.
+  - Not met if a member is new.
+  - Not met if the docs-link test lists any link.
+
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_consumer_refresh_2026-10-08.md
+NEXT: B parity re-run on main and diff against lap 2's list when C, A and E have landed
