@@ -59,6 +59,12 @@ struct Config {
     ambient_label: String,
     #[serde(default)]
     ambient_tz: String,
+    // D273, THE USB MODE (the keeper, 2026-10-08 17:16: "it shouldnt come like how consonance is for us bc most people wont do that, it should be an
+    // option in the settings that should be enabled first"): moving seats between computers with a USB drive. OFF on a fresh install AND when the key is
+    // absent; only a JSON `true` turns it on, and ON is exactly the behaviour from before it existed. OFF: no launch sync (sync_at_launch), no stick waiter
+    // (start_exit_waiter), no stick at close (leave_run, so no Leave screen), and stick_state says it is off.
+    #[serde(default)]
+    usb_mode: bool,
 }
 
 fn home() -> String {
@@ -116,6 +122,10 @@ fn parse_config(s: &str) -> (Config, Vec<String>) {
             bad.push((*k).to_string());
         }
     }
+    // D273: usb_mode is a boolean; anything else present is named (and reads as OFF, the safe side)
+    if matches!(v.get("usb_mode"), Some(x) if !x.is_boolean()) {
+        bad.push("usb_mode".to_string());
+    }
     let cfg = Config {
         room_path: stringish(&v, "room_path"),
         instances_dir: stringish(&v, "instances_dir"),
@@ -124,6 +134,7 @@ fn parse_config(s: &str) -> (Config, Vec<String>) {
         ambient_lon: stringish(&v, "ambient_lon"),
         ambient_label: stringish(&v, "ambient_label"),
         ambient_tz: stringish(&v, "ambient_tz"),
+        usb_mode: matches!(v.get("usb_mode"), Some(serde_json::Value::Bool(true))),
     };
     (cfg, bad)
 }
@@ -156,6 +167,13 @@ fn get_state() -> Config {
     }
     cfg
 }
+
+/// D273: is the USB mode on? Read from ~/.consonance.json each time (cheap, and a Settings change needs no restart to be seen by the next close).
+fn usb_mode_on() -> bool {
+    get_state().usb_mode
+}
+/// The reason every USB path gives when the mode is off (plog lines and the launch verdict).
+const USB_OFF_WHY: &str = "the USB mode is off (Settings: \"Move seats between computers with a USB drive\")";
 
 #[tauri::command]
 fn save_config(cfg: Config) {
@@ -12038,6 +12056,9 @@ fn fixed_id_seats() -> Vec<(String, String, String)> {
 /// whole packet: the offsets defect was a READ before the RESOLVE, and a pull that lands after the
 /// first read would be the same hazard with a network in it.
 fn sync_at_launch() -> (sync_launch::Verdict, Vec<sync_launch::RetireOutcome>) {
+    if !usb_mode_on() { // D273 usb: OFF, no launch sync at all; Standalone is the verdict that changes nothing
+        return (sync_launch::Verdict::Standalone { why: USB_OFF_WHY.to_string() }, Vec::new()); // D273 usb
+    } // D273 usb
     let data = data_dir();
     // The tool is A's and lives in the checkout. No checkout (an installed consumer build) means
     // no sync at all — stated as a limit rather than left to be discovered: a packaged Consonance
@@ -12740,6 +12761,10 @@ fn app_started_at() -> &'static str {
 }
 
 fn start_exit_waiter() {
+    if !usb_mode_on() { // D273 usb: OFF, no waiter (nothing exports to a stick when this app exits)
+        plog(&format!("STICK WAITER not started — {USB_OFF_WHY}")); // D273 usb
+        return; // D273 usb
+    } // D273 usb
     let Some(script) = repo_root().map(|r| r.join("dev").join("stick-waiter.js")).filter(|p| p.is_file()) else {
         plog("STICK WAITER not started — dev/stick-waiter.js is not on disk in this checkout; nothing will export to a stick when this app exits");
         return;
@@ -12799,6 +12824,10 @@ fn start_jev_shadow() {
 /// What the setup window opens on. Cheap: no process, one small file read.
 #[tauri::command]
 fn stick_state() -> serde_json::Value {
+    if !usb_mode_on() { // D273 usb: OFF, no stick checks: the window's keys, all empty (stick.js opens only when `held`)
+        let ro = LAUNCH_VERDICT.lock().unwrap().as_ref().map(|v| v.is_read_only()).unwrap_or(false); // D273 usb
+        return serde_json::json!({ "usb_mode": false, "held": false, "read_only": ro, "stick": "none", "folders": [], "handshake": { "state": "absent" }, "result": null, "applier_on_disk": false }); // D273 usb
+    } // D273 usb
     let data = data_dir();
     let arrival = STICK_ARRIVAL.lock().unwrap().clone();
     let verdict_read_only = LAUNCH_VERDICT.lock().unwrap().as_ref().map(|v| v.is_read_only()).unwrap_or(false);
@@ -13135,7 +13164,7 @@ fn leave_run(app: &AppHandle, b: LeaveBounds) {
     ));
 
     // 2 · FIND THE STICK, then 3–5 · SAVE AND WRITE THE RESULT.
-    let find = sync_launch::find_stick(&volume_roots());
+    let find = if usb_mode_on() { sync_launch::find_stick(&volume_roots()) } else { sync_launch::StickFind::None }; // D273 usb: OFF, no stick at close
     let data = data_dir();
     let now = || chrono::Utc::now().to_rfc3339_opts(chrono::SecondsFormat::Millis, true);
     let mut export = |folder: &Path| {
@@ -20951,5 +20980,82 @@ mod gates_doc_tests {
         let fallback = "consonance/GATES.md (in the Consonance repository)";
         assert_eq!(gates_doc_from(None, |_: &Path| true), fallback);
         assert_eq!(gates_doc_from(Some(Path::new("C:/r")), |_: &Path| false), fallback, "a missing file is not named as if it were there");
+    }
+}
+
+/// D273, THE USB MODE (the keeper, 2026-10-08 17:16: "it should be an option in the settings that should be enabled first"): moving seats between
+/// computers with a USB drive is OFF on a fresh install and ON only when ~/.consonance.json says `"usb_mode": true`. ON is exactly the behaviour
+/// from before it existed; OFF runs none of the four stick paths.
+#[cfg(test)]
+mod usb_mode_tests {
+    use super::*;
+
+    fn body_of(src: &str, sig: &str) -> String {
+        let after = src.split(sig).nth(1).unwrap_or_else(|| panic!("no {sig} — re-point this test"));
+        after[..after.find("\n}\n").expect("no end of function")].to_string()
+    }
+    fn src() -> String {
+        fs::read_to_string("src/main.rs").expect("read own source")
+    }
+
+    /// Row 1: a fresh config (no key) is OFF, and so is anything that is not a JSON `true`; a wrong-typed value is NAMED, not swallowed.
+    #[test]
+    fn a_fresh_config_is_off_and_only_a_json_true_turns_it_on() {
+        assert!(!Config::default().usb_mode, "the default is on");
+        let (c, bad) = parse_config(r#"{"data_dir":"C:/d"}"#);
+        assert!(!c.usb_mode && bad.is_empty(), "a config without the key is not off, or complained");
+        let (c, bad) = parse_config(r#"{"usb_mode":true}"#);
+        assert!(c.usb_mode && bad.is_empty(), "true does not turn it on");
+        let (c, _) = parse_config(r#"{"usb_mode":false}"#);
+        assert!(!c.usb_mode);
+        for wrong in [r#"{"usb_mode":"true"}"#, r#"{"usb_mode":1}"#, r#"{"usb_mode":[true]}"#] {
+            let (c, bad) = parse_config(wrong);
+            assert!(!c.usb_mode, "{wrong} turned it on");
+            assert!(bad.iter().any(|b| b == "usb_mode"), "{wrong} was not named: {bad:?}");
+        }
+    }
+
+    /// Row 2: the setting PERSISTS: what save_config writes (the whole Config) carries it, and reads back the same.
+    #[test]
+    fn the_setting_persists_through_a_save() {
+        let on = Config { usb_mode: true, data_dir: r"C:\d".into(), ..Config::default() };
+        let written = serde_json::to_string_pretty(&on).unwrap();
+        assert!(written.contains("\"usb_mode\": true"), "a save drops the setting: {written}");
+        let (back, bad) = parse_config(&written);
+        assert!(back.usb_mode && bad.is_empty() && back.data_dir == r"C:\d");
+        let off = serde_json::to_string_pretty(&Config::default()).unwrap();
+        assert!(off.contains("\"usb_mode\": false"));
+    }
+
+    /// Row 3: OFF runs none of the four paths. Each one asks the mode first and returns (or finds no stick) before anything of today's runs:
+    /// the launch sync (Standalone, the verdict that changes nothing), the stick waiter, the stick at close (no stick → no Leave screen), stick_state.
+    #[test]
+    fn off_runs_none_of_the_four_paths() {
+        let s = src();
+        let sync = body_of(&s, concat!("fn sync_at_", "launch() -> "));
+        assert!(sync.trim_start_matches(|c: char| c != '\n').trim_start().starts_with("if !usb_mode_on() {"), "the launch sync does not ask the mode first");
+        assert!(sync.contains("Verdict::Standalone { why: USB_OFF_WHY.to_string() }, Vec::new())"), "OFF is not the verdict that changes nothing");
+        let waiter = body_of(&s, concat!("fn start_exit_", "waiter() {"));
+        assert!(waiter.trim_start().starts_with("if !usb_mode_on() {") && waiter.contains("return; // D273 usb"), "the stick waiter does not stop when off");
+        let leave = body_of(&s, concat!("fn leave_", "run("));
+        assert!(leave.contains("let find = if usb_mode_on() { sync_launch::find_stick(&volume_roots()) } else { sync_launch::StickFind::None };"), "the close looks for a stick when off");
+        assert_eq!(leave.matches(concat!("find_", "stick(")).count(), 1, "another stick look in the close");
+        let state = body_of(&s, concat!("fn stick_", "state() -> "));
+        assert!(state.trim_start_matches(|c: char| c != '\n').trim_start().starts_with("if !usb_mode_on() {") && state.contains("\"usb_mode\": false, \"held\": false"), "stick_state checks the stick when off");
+        // and the waiter's CALL stays unconditional at launch (L059 §3): the gate is inside the function, not around the call
+        assert!(s.contains(concat!("            start_exit", "_waiter();\n")), "the waiter's call moved into a branch");   // split, or this line is a second match for the count in stick_wiring_tests
+    }
+
+    /// Row 4: ON is today. Every line of the four bodies that names the mode carries the `D273 usb` tag, so taking the tagged lines out (and, in
+    /// leave_run, reading the `if` as its ON arm) leaves exactly the code from before: the ON-equals-today proof in the hand-back diffs that against c6d46629.
+    #[test]
+    fn every_mode_line_is_tagged_so_on_is_todays_code() {
+        let s = src();
+        for sig in [concat!("fn sync_at_", "launch() -> "), concat!("fn start_exit_", "waiter() {"), concat!("fn leave_", "run("), concat!("fn stick_", "state() -> ")] {
+            let body = body_of(&s, sig);
+            for line in body.lines().filter(|l| l.contains("usb_mode") || l.contains("USB_OFF_WHY") || (sig.contains("leave_") && l.contains("StickFind::None"))) {
+                assert!(line.contains("D273 usb"), "{sig}: an untagged mode line: {line}");
+            }
+        }
     }
 }

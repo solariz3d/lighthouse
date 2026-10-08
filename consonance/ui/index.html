@@ -267,6 +267,10 @@
         </div>
         <span class="settingsnote">Private: stored only on this machine, visible only to you and your own instances — never sent anywhere. Blank = Greenwich, the prime meridian — the honest "no location set", never somebody else’s sky.</span>
       </div>
+      <div class="field">
+        <label><input type="checkbox" id="usbmode" style="width:auto;" /> Move seats between computers with a USB drive</label>
+        <span class="settingsnote">Off unless you turn it on. When on, closing Consonance saves your seats to a USB drive and the next launch picks them up from it, so you can carry them to another computer. A drive counts when it holds a <code>consonance-transfer</code> folder (with its <code>MANIFEST.json</code>) at its top level or one folder down; Consonance only looks as it starts and as it closes. Takes effect at the next launch.</span>
+      </div>
       <div class="row">
         <button id="savesettings" class="btn accent">Save settings</button>
         <span class="settingsnote">Blank = built-in default. Applies to new spawns immediately; restart for full effect.</span>
