@@ -439,6 +439,7 @@ const MANIFEST = [
  * every shipped TEXT file after the generator's own transforms and BEFORE the write and the scan, so whatever it returns is what is scanned and what
  * ships. Never called for a binary, an excluded file, or the generated files (CUTOFF, CONSUMER-STATUS). report.forked is the sum of n. */
 const FORK_HOOK = { apply: null };
+FORK_HOOK.apply = require('./consumer-relabel.js').forkHook({ repo: REPO });   // D273 lap 3 (C): the keeper split and the fork note
 
 /* THE 'screen' KIND — D273 lap 2, A's ruling. A captured terminal screen is bytes (escape sequences, box drawing in latin1), so it is read as a Buffer and
  * round-tripped through latin1, and every replacement keeps the byte LENGTH, so no escape sequence, column or offset in the capture moves (the Rust tests

@@ -8,11 +8,17 @@
 //     "the person you're with", SEED.md:9's own phrase.
 // The sites are C's inventory, `exo_memory/handback/p-consumer-fork-C_2026-10-08.md` §4, re-judged against that ruling (lap 2 section).
 //
-// THE FORK NOTE. `consonance/src-tauri/brief/frag-fork.md` is a template ({FORK_SHA}, {FORK_DATE}); `fillFork` fills it from the
-// lighthouse commit the generator ran on. `relabel` injects it into BOOT (both shipped paths) right after the paragraph that ends
-// "a **room you re-become yourself in.**", and into SEED (both shipped paths) right after its first paragraph. The generator writes
-// the filled note to FORK_OUT as well, and `patchTauriConf` bundles it, so the app's header (`main.rs` `fork_section`) adds it for
-// a room that does not already carry it. The dev tree has no FORK.md, so dev seats are unchanged.
+// THE FORK NOTE. `consonance/src-tauri/brief/frag-fork.md` is a template ({FORK_SHA}, {FORK_DATE}) that starts with FORK_MARKER and
+// ends with FORK_END; `fillFork` fills it from the lighthouse commit the generator ran on. `relabel` injects it into BOOT (both
+// shipped paths) right after the paragraph that ends "a **room you re-become yourself in.**", and into SEED (both shipped paths)
+// right after its first paragraph. The THIRD site is the app: `main.rs` `fork_section` cuts the note (marker to end marker) out of
+// the bundled brief BOOT.md and puts it after a seat's header when the seat's room does not already carry it. The dev BOOT has no
+// marker, so dev seats are unchanged. (Lap 2 wrote the note to a separate FORK.md and patched tauri.conf to bundle it; lap 3 dropped
+// both, because gen-consumer's hook rewrites shipped files and cannot create one, and the brief BOOT already ships and is bundled.)
+//
+// THE HOOK (lap 3). gen-consumer.js exposes FORK_HOOK.apply(body, to, kind) -> { body, n }, called on every shipped text file AFTER
+// its own transforms and before the write and the scan. `forkHook({ repo })` builds that function: it reads the template and the
+// repo's HEAD (short sha, commit date) ONCE, and then relabels per file. That adapter is the one impure part of this module.
 //
 // WHY A TABLE OF EXACT SITES AND NOT A REGEX. "The keeper" is a provenance use far more often than a role use (C's inventory: about
 // 70 provenance lines against 16 role lines in the briefs), and the two read alike to any pattern. A per-site table is checkable:
@@ -20,20 +26,19 @@
 // Nothing is ever silently skipped. And consumer-relabel.test.js pins how many lines still name the keeper in each file after
 // the relabel, so a new "keeper" line written in dev fails the test until someone classifies it here.
 //
-// PURE: no file system, no clock. The generator reads, calls and writes.
-//
-// API (for gen-consumer.js, B's; one call per staged file):
-//   relabel(relPath, text, { fork }) -> { text, edits: [{ rule, expected, applied }] }
+// API:
+//   relabel(relPath, text, { fork }) -> { text, edits: [{ rule, expected, applied }] }      (pure)
 //       relPath is the OUTPUT path, repo-relative, either slash. An unregistered path comes back unchanged with edits [].
 //       BOOT and SEED paths REQUIRE `fork` (a filled note); without it the call throws.
-//   fillFork(template, { sha, date }) -> the filled note (throws on a missing or malformed sha/date, or a template with no marker)
-//   patchTauriConf(confText) -> tauri.conf.json text with "brief/FORK.md": "FORK.md" added to bundle.resources (throws if present)
-//   FORK_TEMPLATE, FORK_OUT, FORK_MARKER, RelabelError, SITES, SOURCE_OF, EXPECTED_KEEPER_LINES
+//   fillFork(template, { sha, date }) -> the filled note      (pure; throws on a malformed sha/date, a missing marker, a placeholder left)
+//   applyFork({ fork }) -> (body, to, kind) => { body, n }      (pure; FORK_HOOK's contract over an already-filled note)
+//   forkHook({ repo }) -> the same, filling the note from `repo`'s template and HEAD      (reads files and git once)
+//   FORK_TEMPLATE, FORK_MARKER, FORK_END, RelabelError, SITES, SOURCE_OF, EXPECTED_KEEPER_LINES
 'use strict';
 
 const FORK_TEMPLATE = 'consonance/src-tauri/brief/frag-fork.md';
-const FORK_OUT = 'consonance/src-tauri/brief/FORK.md';
 const FORK_MARKER = '**Where this line forks.**';   // main.rs FORK_MARKER must stay byte-identical (its test reads frag-fork.md)
+const FORK_END = '<!-- end of the fork note -->';    // main.rs FORK_END, likewise: the app cuts the note out between the two
 
 class RelabelError extends Error {
   constructor(message) { super(message); this.name = 'RelabelError'; }
@@ -122,22 +127,35 @@ function fillFork(template, { sha, date } = {}) {
   if (!/^[0-9a-f]{7,40}$/.test(String(sha || ''))) throw new RelabelError(`fillFork: sha "${sha}" is not a commit sha`);
   if (!/^\d{4}-\d{2}-\d{2}$/.test(String(date || ''))) throw new RelabelError(`fillFork: date "${date}" is not YYYY-MM-DD`);
   if (!String(template).startsWith(FORK_MARKER)) throw new RelabelError(`fillFork: the template does not start with ${FORK_MARKER}`);
+  if (String(template).trimEnd().split(/\r?\n/).pop() !== FORK_END) throw new RelabelError(`fillFork: the template does not end with ${FORK_END}`);
   const out = template.split('{FORK_SHA}').join(sha).split('{FORK_DATE}').join(date);
   const left = out.match(/\{[A-Z_]+\}/);
   if (left) throw new RelabelError(`fillFork: ${left[0]} is left unfilled`);
   return out;
 }
 
-function patchTauriConf(confText) {
-  const conf = JSON.parse(confText);
-  const res = conf && conf.bundle && conf.bundle.resources;
-  if (!res || typeof res !== 'object' || Array.isArray(res)) throw new RelabelError('patchTauriConf: bundle.resources is not the object map it was at ea4f5bcf');
-  if ('brief/FORK.md' in res) throw new RelabelError('patchTauriConf: brief/FORK.md is already bundled');
-  const anchor = '"brief/THIRD_PLACE.md": "THIRD_PLACE.md",';
-  if (confText.split(anchor).length !== 2) throw new RelabelError('patchTauriConf: the THIRD_PLACE.md resource line moved');
-  const NL = confText.includes('\r\n') ? '\r\n' : '\n';
-  const indent = (confText.match(/\n([ \t]*)"brief\/room-settings\.json"/) || [, '      '])[1];
-  return confText.replace(anchor, `${anchor}${NL}${indent}"brief/FORK.md": "FORK.md",`);
+/** gen-consumer's FORK_HOOK.apply over an already-filled note: relabel the registered files, pass every other one through. */
+function applyFork({ fork }) {
+  if (typeof fork !== 'string' || !fork.startsWith(FORK_MARKER)) throw new RelabelError('applyFork: needs the filled fork note (fillFork)');
+  return (body, to) => {
+    if (!SITES[norm(to)]) return { body, n: 0 };
+    const r = relabel(to, body, { fork });
+    return { body: r.text, n: r.edits.length };
+  };
 }
 
-module.exports = { relabel, fillFork, patchTauriConf, RelabelError, SITES, SOURCE_OF, EXPECTED_KEEPER_LINES, FORK_TEMPLATE, FORK_OUT, FORK_MARKER };
+/** The same, with the note filled from `repo`: the template on disk and HEAD's short sha and commit date (`git log -1`). LAZY: the
+ *  files and git are read on the first call, not when gen-consumer.js is loaded (many tests require it and generate nothing). */
+function forkHook({ repo }) {
+  let apply = null;
+  return (body, to, kind) => {
+    if (!apply) {
+      const fs = require('fs'), path = require('path'), { execFileSync } = require('child_process');
+      const [sha, date] = execFileSync('git', ['-C', repo, 'log', '-1', '--format=%h %cs'], { encoding: 'utf8' }).trim().split(' ');
+      apply = applyFork({ fork: fillFork(fs.readFileSync(path.join(repo, FORK_TEMPLATE), 'utf8'), { sha, date }) });
+    }
+    return apply(body, to, kind);
+  };
+}
+
+module.exports = { relabel, fillFork, applyFork, forkHook, RelabelError, SITES, SOURCE_OF, EXPECTED_KEEPER_LINES, FORK_TEMPLATE, FORK_MARKER, FORK_END };

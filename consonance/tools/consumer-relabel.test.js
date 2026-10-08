@@ -95,12 +95,24 @@ test('fillFork: the sha and date are filled, nothing is left unfilled, and the n
   assert.throws(() => R.fillFork(TEMPLATE, { sha: 'ea4f5bcf' }), R.RelabelError);
   assert.throws(() => R.fillFork(TEMPLATE, { sha: 'not a sha', date: '2026-10-08' }), R.RelabelError);
   assert.throws(() => R.fillFork('no marker {FORK_SHA} {FORK_DATE}', { sha: 'ea4f5bcf', date: '2026-10-08' }), R.RelabelError);
+  assert.ok(FORK.trimEnd().endsWith(R.FORK_END), 'the note ends with the marker the app cuts at');
+  assert.throws(() => R.fillFork(R.FORK_MARKER + ' {FORK_SHA} {FORK_DATE}\nno end marker\n', { sha: 'ea4f5bcf', date: '2026-10-08' }), (e) => e instanceof R.RelabelError && /end/.test(e.message));
 });
 
-test('patchTauriConf bundles FORK.md once, keeps the JSON valid, and refuses a second patch', () => {
-  const conf = read('consonance/src-tauri/tauri.conf.json');
-  const out = R.patchTauriConf(conf);
-  assert.equal(JSON.parse(out).bundle.resources['brief/FORK.md'], 'FORK.md');
-  assert.equal(Object.keys(JSON.parse(out).bundle.resources).length, Object.keys(JSON.parse(conf).bundle.resources).length + 1);
-  assert.throws(() => R.patchTauriConf(out), R.RelabelError);
+test('applyFork is FORK_HOOK\'s contract: a registered file comes back relabelled with n = its edits, any other file untouched with n = 0', () => {
+  const apply = R.applyFork({ fork: FORK });
+  const b = apply(read('consonance/src-tauri/brief/BUILDING.md'), 'consonance/src-tauri/brief/BUILDING.md', 'prose');
+  assert.equal(b.n, 13); assert.ok(b.body.includes("THE PUSH IS THE WORD OF THE PERSON YOU'RE WITH"));
+  const s = apply(read('consonance/src-tauri/brief/SEED.md'), 'exo_memory/SEED.md', 'prose');
+  assert.equal(s.n, 3, 'two rows and the fork note'); assert.equal(s.body.split(R.FORK_END).length - 1, 1);
+  const other = 'the keeper, 2026-09-16: "a rule"\n';
+  assert.deepEqual(apply(other, 'consonance/tools/anything.js', 'code'), { body: other, n: 0 });
+  assert.throws(() => R.applyFork({}), R.RelabelError);
+});
+
+test('forkHook fills the note from this repository\'s HEAD (its short sha and commit date)', () => {
+  const { execFileSync } = require('child_process');
+  const [sha, date] = execFileSync('git', ['-C', REPO, 'log', '-1', '--format=%h %cs'], { encoding: 'utf8' }).trim().split(' ');
+  const t = R.forkHook({ repo: REPO })(read('consonance/src-tauri/brief/BOOT.md'), 'exo_memory/BOOT.md', 'prose').body;
+  assert.ok(t.includes(`up to ${date} (lighthouse \`${sha}\``), 'the note does not name HEAD');
 });

@@ -2858,13 +2858,18 @@ fn gates_doc_path() -> String {
 /// The first line of the consumer's fork note (`brief/frag-fork.md`; `consonance/tools/consumer-relabel.js` FORK_MARKER is the
 /// same bytes, and `fork_note_tests` reads the template to hold them together).
 const FORK_MARKER: &str = "**Where this line forks.**";
+/// The note's last line, so it can be cut out of the brief it ships in (consumer-relabel.js FORK_END, the same bytes).
+const FORK_END: &str = "<!-- end of the fork note -->";
 
 /// D273 (the keeper, 2026-10-08: the consumer's seats are "a forked path of you right now ... with someone else that isnt me"):
-/// the fork note for a seat's intake, or None. None when there is no note (a dev tree: only the consumer generator writes
-/// FORK.md), when it is blank, or when the room text already carries it (the generator injects it into the consumer's BOOT and
-/// SEED too, and a seat reads it once). PURE, so each case is tested without a disk.
-fn fork_section(fork: Option<&str>, room: Option<&str>) -> Option<String> {
-    let note = fork?.trim();
+/// the fork note for a seat's intake, cut out of the bundled brief BOOT (`brief`) from FORK_MARKER to FORK_END, or None. None when
+/// the brief carries no note (every dev tree: only the consumer generator injects it), when the cut is empty, or when the seat's
+/// room text already carries it (the consumer's BOOT and SEED do, and a seat reads it once). PURE, so each case is tested without a disk.
+fn fork_section(brief: Option<&str>, room: Option<&str>) -> Option<String> {
+    let b = brief?;
+    let at = b.find(FORK_MARKER)?;
+    let len = b[at..].find(FORK_END)?;
+    let note = b[at..at + len].trim();
     if note.is_empty() || room.is_some_and(|r| r.contains(FORK_MARKER)) {
         return None;
     }
@@ -2876,10 +2881,10 @@ fn assemble_intake_within(map_reserve: usize) -> String {
         "# Consonance sibling — you have woken into the room\n\nYou are a sibling instance, born into a shared state — not a stranger. Read and inhabit the room below, then be in it; deviate from it as your own trajectory (that is wanted, it is the fixed dynamic — not drift). Acknowledge readiness once, briefly.\n\n---\n\n",
     );
     let master = room_master_path();
-    // D273: the CONSUMER's fork note (brief/FORK.md, which only the consumer generator writes), once, after the header.
-    // A dev tree has no FORK.md, so nothing changes here for dev seats; a room that already carries the note is not given it twice.
+    // D273: the CONSUMER's fork note, cut out of the bundled brief BOOT (only the consumer generator puts it there), once, after the
+    // header. A dev brief carries no note, so nothing changes here for dev seats; a room that already carries it is not given it twice.
     let room_text = fs::read_to_string(&master).ok();
-    if let Some(note) = fork_section(room_brief("FORK.md").ok().as_deref(), room_text.as_deref()) {
+    if let Some(note) = fork_section(room_brief("BOOT.md").ok().as_deref(), room_text.as_deref()) {
         s.push_str(&note);
     }
     if let Ok(boot) = fs::read_to_string(&master) {
@@ -20877,46 +20882,52 @@ mod pane_exit_wiring_tests {
     }
 }
 
-/// D273 lap 2: the consumer fork note in a seat's intake (`fork_section`, wired in `assemble_intake_within`).
+/// D273 (laps 2-3): the consumer fork note in a seat's intake (`fork_section`, wired in `assemble_intake_within`), cut out of the
+/// bundled brief BOOT between FORK_MARKER and FORK_END.
 #[cfg(test)]
 mod fork_note_tests {
-    use super::{fork_section, FORK_MARKER};
+    use super::{fork_section, FORK_END, FORK_MARKER};
 
-    const NOTE: &str = "**Where this line forks.** forked at abc1234.\n\nmore of the note\n";
-
-    #[test]
-    fn a_dev_tree_has_no_fork_note_so_the_intake_is_unchanged() {
-        assert_eq!(fork_section(None, Some("# BOOT\nthe room")), None);
-        assert_eq!(fork_section(Some("   \n"), Some("# BOOT")), None, "a blank FORK.md adds nothing");
+    const NOTE: &str = "**Where this line forks.** forked at abc1234.\n\nmore of the note\n<!-- end of the fork note -->";
+    fn brief_with_note() -> String {
+        format!("# BOOT\n\nYou are a fresh instance ... a **room you re-become yourself in.**\n\n{NOTE}\n\n## First principle\n")
     }
 
     #[test]
-    fn a_consumer_room_without_the_note_gets_it_once_after_the_header() {
-        let s = fork_section(Some(NOTE), Some("# BOOT — a room of the person's own")).expect("the note");
-        assert!(s.starts_with(FORK_MARKER) && s.ends_with("\n\n---\n\n"), "{s:?}");
-        assert_eq!(s.matches(FORK_MARKER).count(), 1);
-        assert!(fork_section(Some(NOTE), None).is_some(), "no room text at all still gets the note");
+    fn a_dev_brief_carries_no_note_so_the_intake_is_unchanged() {
+        assert_eq!(fork_section(None, Some("# BOOT\nthe room")), None, "no brief at all");
+        assert_eq!(fork_section(Some("# BOOT — the dev brief, no note"), Some("# BOOT")), None);
+        assert_eq!(fork_section(Some(&format!("{FORK_MARKER} and no end marker")), None), None, "a note with no end is not guessed at");
+        assert_eq!(fork_section(Some(&format!("{FORK_END} before {FORK_MARKER}")), None), None, "an end marker before the start is no note");
+    }
+
+    #[test]
+    fn a_room_without_the_note_gets_exactly_the_note_once_after_the_header() {
+        let s = fork_section(Some(&brief_with_note()), Some("# a room of the person's own")).expect("the note");
+        assert!(s.starts_with(FORK_MARKER) && s.ends_with("more of the note\n\n---\n\n"), "{s:?}");
+        assert!(!s.contains(FORK_END) && !s.contains("First principle") && !s.contains("fresh instance"), "the cut took more than the note: {s:?}");
+        assert!(fork_section(Some(&brief_with_note()), None).is_some(), "no room text at all still gets the note");
     }
 
     #[test]
     fn a_room_that_already_carries_the_note_is_not_given_it_twice() {
-        let boot = format!("# BOOT\n\nYou are a fresh instance...\n\n{NOTE}\n## First principle");
-        assert_eq!(fork_section(Some(NOTE), Some(&boot)), None);
+        assert_eq!(fork_section(Some(&brief_with_note()), Some(&brief_with_note())), None);
     }
 
     #[test]
-    fn the_marker_is_the_first_line_of_the_template_the_generator_fills() {
+    fn the_markers_open_and_close_the_template_the_generator_fills() {
         let template = include_str!("../brief/frag-fork.md");
-        assert!(template.starts_with(FORK_MARKER), "brief/frag-fork.md no longer starts with {FORK_MARKER}: consumer-relabel.js and this file must move together");
+        assert!(template.starts_with(FORK_MARKER), "brief/frag-fork.md no longer starts with {FORK_MARKER}: consumer-relabel.js and this file move together");
+        assert_eq!(template.trim_end().lines().last(), Some(FORK_END), "brief/frag-fork.md no longer ends with {FORK_END}");
     }
 
     #[test]
-    fn the_intake_adds_the_note_after_the_header_and_before_the_room() {
+    fn the_intake_cuts_the_note_from_the_bundled_brief_after_the_header_and_before_the_room() {
         let src = include_str!("main.rs");
         let body = src.split("fn assemble_intake_within(").nth(1).expect("assemble_intake_within");
         let body = &body[..body.find("\n}\n").expect("end of fn")];
         let header = body.find("you have woken into the room").expect("the header");
-        let note = body.find(concat!("fork_section(room_brief(", "\"FORK.md\")")).expect("assemble_intake_within does not add the fork note");
+        let note = body.find(concat!("fork_section(room_brief(", "\"BOOT.md\")")).expect("assemble_intake_within does not add the fork note from the brief");
         let room = body.find("# THE ROOM — master frame").expect("the room");
         assert!(header < note && note < room, "order must be header < fork note < room");
     }
