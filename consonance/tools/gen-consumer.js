@@ -418,6 +418,13 @@ const MANIFEST = [
    * it, ui/about-readme.test.js reads its About block, and without it the generated root held only CONSUMER-STATUS.md. */
   { from: 'consonance/state-manifest.json', to: 'consonance/state-manifest.json', kind: 'code' },
   { from: 'README.md', to: 'README.md', kind: 'prose' },
+
+  /* D273 lap 2, A's workshop ruling (handback/p-consumer-workshop-A_2026-10-08.md, "B's exact list" 1). The git hook commit-gate names in its own
+   * refusal ("git config core.hooksPath consonance/githooks"): a dead instruction without the file. And the six composer screens the composer/ready
+   * Rust tests read: PRODUCT fixtures (real Claude Code captures the reader is tested against), shipped as kind 'screen', NOT 'binary', because a
+   * binary is copied unscanned and these carry the keeper's handle, OS user, timezone and the private tree's path. See descreen(). */
+  { dir: 'consonance/githooks', to: 'consonance/githooks', match: /^pre-commit$/, kind: 'code' },
+  { dir: 'consonance/src-tauri/fixtures/screens', to: 'consonance/src-tauri/fixtures/screens', match: /\.bin$/, kind: 'screen' },
 ];
 
 /* THE FORK HOOK POINT — D273 lap 2 (pane B, 2026-10-08). C's ROLE/PROVENANCE relabel and frag-fork injection is a SEPARATE module (C names it); its one
@@ -426,6 +433,99 @@ const MANIFEST = [
  * ships. Never called for a binary, an excluded file, or the generated files (CUTOFF, CONSUMER-STATUS). report.forked is the sum of n. */
 const FORK_HOOK = { apply: null };
 
+/* THE 'screen' KIND — D273 lap 2, A's ruling. A captured terminal screen is bytes (escape sequences, box drawing in latin1), so it is read as a Buffer and
+ * round-tripped through latin1, and every replacement keeps the byte LENGTH, so no escape sequence, column or offset in the capture moves (the Rust tests
+ * read cells by position). Then scan() reads the scrubbed text like any output: an identity or machine path the map does not cover is a leak and the
+ * build refuses. The map is A's (evidence/scrub.js); the order matters (the longer path forms first). */
+const SCREEN_SCRUB = [['nname', 'alice'], ['zackn', 'alice'], ['America/Regina', 'America/Denver'], ['Consonance/lighthouse', 'Consonance/workspaces'],
+  ['Consonance\\lighthouse', 'Consonance\\workspaces'], ['Consonance/light', 'Consonance/works'], ['Consonance/l', 'Consonance/w']];
+function descreen(buf) {
+  let s = buf.toString('latin1'), n = 0;
+  for (const [a, b] of SCREEN_SCRUB) {
+    if (a.length !== b.length) throw new Error('a screen scrub must keep the length: ' + a);
+    const k = s.split(a).length - 1; if (k) { n += k; s = s.split(a).join(b); }
+  }
+  const out = Buffer.from(s, 'latin1');
+  if (out.length !== buf.length) throw new Error('the screen scrub changed the byte length');
+  return { buf: out, n };
+}
+
+/* THE WORKSHOP-BOUND DECLARATIONS — D273 lap 2, A's ruling ("B's exact list" 3 and 4). A test that reads THIS ROOM'S RECORD (its plans, packets, ASK
+ * inbox, git history, librarian notes, maps, journal) as its data cannot pass in a consumer tree, by the standing ruling that the system ships and the
+ * record does not. Each is declared here BY EXACT NAME and is rewritten in the OUTPUT only: a node:test row gets { skip: 'WORKSHOP-BOUND: why' }, a row
+ * under a file's own runner is replaced by a call that prints the skip, a Rust test gets #[ignore = "WORKSHOP-BOUND: why"]. The SOURCE is never touched,
+ * so the source suite keeps running every one of them (A's anti-masking condition: declared only while green in source; the parity run checks it).
+ * An anchor that is not found exactly once REFUSES the build (declareDrift), and so does a declared file no manifest rule ships: a declaration that
+ * matches nothing reads exactly like one that is protecting something.
+ * Mechanism: A's (handback lines 65-67) for node:test rows and Rust; for the two own-runner files a generator-side rewrite instead of A's source marker,
+ * so every declaration lives in this one list and no test file changes in the source. */
+const WS = (why, label) => (label || 'WORKSHOP-BOUND') + ': ' + why;   // a third element in a js entry names another label (EXCLUDED-WITH-JEV)
+const WORKSHOP = {
+  js: {
+    /* not workshop: the one row of a shipped hook's test that compares with a tool excluded with the Jev family (ruling 2) */
+    'consonance/hooks/jev-flags.test.js': [["test('L105 PARITY: mainRsPath here and jev-room.js roomOf find the same main.rs, fixture by fixture', ", 'compares with tools/jev-room.js, which is excluded with the Jev family (ruling 2)', 'EXCLUDED-WITH-JEV']],
+    'consonance/hooks/reply-slot.test.js': [["test('PLAN: the plan the hook cites exists', ", 'the registration plan the hook cites is the room\'s record']],
+    'consonance/hooks/sources-gate.test.js': [["test('PLAN: the plan the hook cites exists', ", 'the registration plan the hook cites is the room\'s record']],
+    'consonance/hooks/second-reader.test.js': [["test('QS: the question sent is the plan\\'s registered text, VERBATIM (compared with the plan file)', ", 'compares the question with the room\'s registration plan']],
+    'consonance/tools/ask.test.js': [
+      ["test('the shipped ASK.md parses, is non-empty, and every open ask clears the fact floor', ", 'ASK.md is one person\'s inbox and stays private'],
+      ["test('D091 · the store as shipped at 915209a is the verbatim fixture, unedited', ", 'pins a verbatim snapshot of the private ASK store'],
+      ["test('D091 · on the store as shipped at 915209a, ASK-009 parses OPEN and ASK-008 keeps its own ANSWERED status', ", 'pins a verbatim snapshot of the private ASK store'],
+      ["test('the reader does not touch the REAL store file, not even to append nothing', ", 'reads the live private ASK store']],
+    'consonance/tools/commit-gate.test.js': [
+      ["test('parsePacket reads a REAL packet: addressee, owned paths, hand-back', ", 'reads the room\'s real dispatch packets'],
+      ["test(\"REPLAY — e6215a8's four captured paths, against tonight's real packets\", ", 'replays the room\'s real dispatch packets'],
+      ["test('ANCHOR: the real packet that caused the outage parses its 7 owned paths', ", 'reads the room\'s real dispatch packet']],
+    'consonance/tools/librarian-cite.test.js': [["test('the real notes directory resolves citations against the real masters', ", 'needs dated librarian notes a new room has not written yet']],
+    'consonance/tools/pair-ledger.test.js': [["test('the REAL seed ledger verifies against the tree: 16 pairs, every quote walks', ", 'the seed pairs quote the room\'s own journal and files']],
+    'consonance/tools/forget-rate.test.js': [["test('exo_memory/ has lost from the reading path ONLY the acknowledged departures (all-time)', ", 'reads the room\'s git history of exo_memory; a fresh history has no departures']],
+    'consonance/tools/shelf-tier.test.js': [["test('the split is worth making — RECORD really is the larger half', ", 'measures the room\'s record against its system; the consumer inverts that by ruling']],
+    'dev/shell/hooks/l2-overseer-worker.test.js': [["t('the prompt no longer teaches the struck test (registry id cant-lose-handle-2026-08-29)', ", 'the carrier-drift registry ships SEEDED empty by ruling']],
+  },
+  rust: {
+    'consonance/src-tauri/src/main.rs': [
+      ['the_index_window_is_a_prefix_so_its_date_range_is_not_a_lie', 'the shelf is built from the room record'],
+      ['the_index_window_is_newest_first_by_date_not_by_path', 'the shelf is built from the room record'],
+      ['the_librarian_intake_names_its_own_map_by_path', 'reads the librarian map file of this room'],
+      ['the_shelf_excludes_bulk_run_artifacts_and_says_so', 'needs the run artifacts of this room'],
+      ['the_shelf_windows_the_librarians_own_notes', 'needs dated librarian notes of this room'],
+      ['the_split_between_carried_and_indexed_is_always_reported', 'needs the journal of this room'],
+      ['the_window_never_drops_map_or_journal_which_are_out_of_scope', 'needs the map entries of this room'],
+      ['undated_all_caps_names_at_the_top_of_loop_are_protected_by_rule_not_by_list', 'needs loop/PROTOCOL.md of this room'],
+      ['undated_loop_entries_are_spent_last_and_never_outrank_a_dated_one', 'needs dated and undated loop files of this room'],
+      ['the_map_walk_reaches_the_repo_maps_when_no_data_dir_map_exists', 'asserts the committed seat maps of this room'],
+      ['the_unattended_exit_waiter_never_publishes', 'greps dev/stick-waiter.js, the two-machine stick layer, which does not ship'],
+    ],
+    'consonance/src-tauri/tests/arch_test.rs': [
+      ['the_master_keeps_one_pointer_line_and_the_dated_tail_lives_in_the_journal_index', 'needs journal/POINTERS.md of this room'],
+    ],
+  },
+};
+/** Apply the declarations for one output file. Returns { body, n, missing: [anchor...] }. */
+function declareWorkshop(body, rel) {
+  let n = 0; const missing = [];
+  if (WORKSHOP.js[rel]) {
+    const nodeTest = /require\(['"]node:test['"]\)/.test(body);
+    for (const [call, why, label] of WORKSHOP.js[rel]) {
+      if (body.split(call).length - 1 !== 1) { missing.push(call); continue; }
+      const open = call.indexOf('('), fn = call.slice(0, open), rest = call.slice(open + 1);
+      const rep = nodeTest && fn === 'test'
+        ? call + '{ skip: ' + JSON.stringify(WS(why, label)) + ' }, '
+        : '((name) => console.log(\'  skip \' + name + ' + JSON.stringify(' — ' + WS(why, label)) + '))(' + rest;
+      body = body.replace(call, () => rep); n++;
+    }
+  }
+  if (WORKSHOP.rust[rel]) {
+    for (const [name, why] of WORKSHOP.rust[rel]) {
+      const re = new RegExp('^([ \\t]*)fn ' + name + '\\(\\)', 'gm');
+      const hits = body.match(re) || [];
+      if (hits.length !== 1) { missing.push('fn ' + name + '()'); continue; }
+      body = body.replace(re, (m, ind) => ind + '#[ignore = "' + WS(why) + '"]\n' + m); n++;
+    }
+  }
+  return { body, n, missing };
+}
+
 /* Named exclusions -- files that MATCH a manifest rule but must not ship, each with its reason.
  * Kept as data rather than as a filter buried in code, so the list is readable and arguable. */
 /* A value beginning with `UNREACHABLE:` declares that NO manifest rule currently reaches this
@@ -433,6 +533,7 @@ const FORK_HOOK = { apply: null };
  * The declaration is checked in both directions (see build()): an undeclared dead entry refuses,
  * and so does a declared entry that has become reachable. Without that, a dead exclusion reads as
  * coverage -- the same shape as the demachine() pattern that could not match, found the same day. */
+const RUN2_EXCLUDED = 're-scores the run2 battery; requires exo_memory/loop/run2/rig/*, which is the room\'s record (A, D273 lap 2)';
 const JEV_EXCLUDED = "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship";
 const EXCLUDE = {
   /* ARMED 2026-09-04 (D009 P3). The `UNREACHABLE:` prefix is DROPPED here, and that is the whole
@@ -575,6 +676,12 @@ const EXCLUDE = {
   'consonance/tools/jev-shadow.test.js': JEV_EXCLUDED,
   'consonance/tools/jev-variants.js': JEV_EXCLUDED,
   'consonance/tools/jev-variants.test.js': JEV_EXCLUDED,
+  /* D273 lap 2, A's workshop ruling (rows 6 and 7): the tool AND its test, because the tool itself requires the run2 rig at load and crashes for a
+   * stranger too (contamination.js:42-43); nothing shipped references either. */
+  'consonance/tools/contamination.js': RUN2_EXCLUDED,
+  'consonance/tools/contamination.test.js': RUN2_EXCLUDED,
+  'consonance/tools/tj1-k-render.js': RUN2_EXCLUDED,
+  'consonance/tools/tj1-k-render.test.js': RUN2_EXCLUDED,
 };
 
 /* ------------------------------------------------------------------ seeded files
@@ -1342,6 +1449,7 @@ function isFixture(rel) {
  * those breaks its assertion, which is the 2026-08-23 damage returning by a different door. */
 function fixtureKind(rel) {
   if (/\.test\.js$/.test(rel) || /(^|\/)tests?\//.test(rel)) return 'whole';
+  if (/(^|\/)fixtures\/screens\//.test(rel)) return 'whole';   // D273 lap 2 (A): a captured screen is assertion data end to end
   if (/\.rs$/.test(rel)) return 'rust';
   return null;
 }
@@ -1788,7 +1896,7 @@ function build(outDir, opts) {
   const id = commitIdentity();
   const gen = generatedFiles(id);
   const staging = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-consumer-'));
-  const report = { forked: 0, git: null, staged: 0, excluded: [], missing: [], dangling: 0, identity: 0, machine: 0, fixtures: 0, unportable: [], leaks: [], excludeDrift: [], seedDrift: [], seeded: [], orphaned: [], generated: [], genDrift: [], unresolved: [], unclassified: [], anchorDrift: [], reseeded: 0, reindexed: 0, dewikied: 0, columns: null, commit: id, staging };
+  const report = { forked: 0, git: null, screens: 0, declared: { js: 0, rust: 0 }, declareDrift: [], staged: 0, excluded: [], missing: [], dangling: 0, identity: 0, machine: 0, fixtures: 0, unportable: [], leaks: [], excludeDrift: [], seedDrift: [], seeded: [], orphaned: [], generated: [], genDrift: [], unresolved: [], unclassified: [], anchorDrift: [], reseeded: 0, reindexed: 0, dewikied: 0, columns: null, commit: id, staging };
 
   /* THE EXCLUDE LIST IS CHECKED AGAINST THE MANIFEST, IN BOTH DIRECTIONS. An exclusion no rule can
    * reach withholds nothing while reading as though it does; a `UNREACHABLE:` declaration that has
@@ -1831,6 +1939,14 @@ function build(outDir, opts) {
     }
   }
 
+  /* D273 lap 2: a WORKSHOP declaration for a file no manifest rule ships (or one EXCLUDE withholds) protects nothing, so it is drift. */
+  {
+    const shipped = new Set(files.filter((x) => !EXCLUDE[x.from]).map((x) => x.to));
+    for (const rel of [...Object.keys(WORKSHOP.js), ...Object.keys(WORKSHOP.rust)]) {
+      if (!shipped.has(rel)) report.declareDrift.push({ rel, why: 'a WORKSHOP-BOUND declaration names a file that does not ship, so it declares nothing' });
+    }
+  }
+
   /* What `memory/` actually ships, by BASENAME, because that is how its index links. Computed from
    * the same two structures the loop below obeys, so the index and the tree cannot disagree. */
   const shippedMemory = new Set(files
@@ -1864,6 +1980,18 @@ function build(outDir, opts) {
       continue;
     }
 
+    /* D273 lap 2 (A): a captured screen, scrubbed same-length and SCANNED, never copied blind like a binary. */
+    if (f.kind === 'screen') {
+      if (!fs.existsSync(src)) { report.missing.push(f.from); continue; }
+      const sc = descreen(fs.readFileSync(src));
+      const destS = path.join(staging, f.to);
+      fs.mkdirSync(path.dirname(destS), { recursive: true });
+      fs.writeFileSync(destS, sc.buf);
+      report.staged++; report.screens++; report.identity += sc.n;
+      report.leaks.push(...scan(sc.buf.toString('latin1'), f.to));
+      continue;
+    }
+
     /* A SEEDED file's private bytes are never read — not opened, not transformed, not scanned from
      * disk. What guards against a seed COVERING a manifest error is not an existence check here
      * (see the seed-drift block above: for a `dir` rule the file's disappearance makes the seed
@@ -1890,6 +2018,9 @@ function build(outDir, opts) {
     { const rs = reseed(t.body, f.to);
       if (rs.missing) report.anchorDrift.push({ rel: f.to, why: 'SEED.md no longer contains the sentence this generator anchors its one added sentence to. The transform did not fire, and a transform that quietly does nothing is the inert guard this file has found twice. Re-anchor it or drop it — do not leave it unable to fire.' });
       t.body = rs.body; report.reseeded += rs.n; }
+    { const dw = declareWorkshop(t.body, f.to); t.body = dw.body;
+      for (const a of dw.missing) report.declareDrift.push({ rel: f.to, why: 'a WORKSHOP-BOUND declaration found its anchor ' + (dw.body.split(a).length - 1) + ' times, not once: ' + a });
+      if (WORKSHOP.js[f.to]) report.declared.js += dw.n; else if (WORKSHOP.rust[f.to]) report.declared.rust += dw.n; }
     if (FORK_HOOK.apply) { const fk = FORK_HOOK.apply(t.body, f.to, kind) || {}; if (typeof fk.body !== 'string') throw new Error('FORK_HOOK.apply returned no body for ' + f.to); t.body = fk.body; report.forked += fk.n || 0; }
     if (t.fixture) report.fixtures++;
     report.dangling += t.dangling;
@@ -2101,6 +2232,10 @@ function build(outDir, opts) {
       + 'the commit this tree would be stamped with (' + report.commit.sha.slice(0, 12) + ') does not '
       + 'describe it. Commit first, or pass --allow-dirty to generate a scratch tree that says so in '
       + 'CUTOFF.md and CONSUMER-STATUS.md.';
+    return report;
+  }
+  if (report.declareDrift.length) {
+    report.refused = report.declareDrift.length + ' WORKSHOP-BOUND declaration(s) did not match exactly once';
     return report;
   }
   if (report.anchorDrift.length) {
@@ -2367,4 +2502,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { FORK_HOOK, commitFresh, MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, STAYS_PRIVATE, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, depath, repath, desync, reseed, reindex, dewiki, SEED_ANCHOR, SEED_SENTENCE, JOURNAL_SEED, renderCutoff, verifyCutoff, renderStatusDoc, generatedFiles, commitIdentity, build };
+module.exports = { FORK_HOOK, commitFresh, descreen, SCREEN_SCRUB, WORKSHOP, declareWorkshop, fixtureKind, MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, STAYS_PRIVATE, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, depath, repath, desync, reseed, reindex, dewiki, SEED_ANCHOR, SEED_SENTENCE, JOURNAL_SEED, renderCutoff, verifyCutoff, renderStatusDoc, generatedFiles, commitIdentity, build };

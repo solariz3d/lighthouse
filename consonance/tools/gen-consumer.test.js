@@ -1264,7 +1264,7 @@ test('D273: the FORK hook point sees every text file once with (body, to, kind),
     G.FORK_HOOK.apply = (body, rel, kind) => { seen.push([rel, kind]); return { body, n: 0 }; };
     const r = G.build('', { dry: true, allowDirty: true });
     try {
-      const text = G.collect().filter((f) => !G.EXCLUDE[f.from] && f.kind !== 'binary').length;
+      const text = G.collect().filter((f) => !G.EXCLUDE[f.from] && f.kind !== 'binary' && f.kind !== 'screen').length;   // a screen is bytes, like a binary
       assert.strictEqual(seen.length, text, 'the hook did not see each shipped text file once');
       assert.ok(!seen.some(([rel]) => /\.(png|ico)$/.test(rel)), 'a binary reached the hook');
     } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
@@ -1274,4 +1274,93 @@ test('D273: the FORK hook point sees every text file once with (body, to, kind),
     try { assert.ok(bad.leaks.some((l) => l.rel === 'exo_memory/SEED.md'), 'a leak the hook added was not scanned'); }
     finally { try { fs.rmSync(bad.staging, { recursive: true, force: true }); } catch (_) {} }
   } finally { G.FORK_HOOK.apply = prev; }
+});
+
+/* D273 lap 2, A's workshop ruling folded in (handback/p-consumer-workshop-A_2026-10-08.md, "B's exact list"): ship githooks/pre-commit; ship the six
+ * composer screens as a SCANNED 'screen' kind (same-length latin1 scrub), never 'binary', which copies unscanned; exclude contamination and tj1-k-render
+ * with their tests; declare 15 JS rows and 12 Rust tests WORKSHOP-BOUND in the OUTPUT only, the source untouched so the source suite still runs them. */
+const crypto = require('node:crypto');
+const SCREENS = 'consonance/src-tauri/fixtures/screens/';
+// A's acceptance hashes, evidence/scrubbed_screens.sha256 (sha256 of the scrubbed bytes, lengths unchanged)
+const SCREEN_SHA = {
+  'composer_empty_2026-09-19.bin': '4cca6b606b8a5f090562b31ff4052375822dffe617f54c64c420b9392871db4f',
+  'composer_empty_reads_busy_2026-09-09.bin': '07dd5a69bc1c8183f71ca70aeae1741f6f112953f52741d5edb233ca75ddecc9',
+  'composer_has_pasted_text_2026-09-19.bin': 'ad26f7c3fa27599a6c7b14b9d67d4fa7469e0289d9d262c546d492372c1b5f2f',
+  'composer_placeholder_reads_as_text_2026-09-19.bin': '709ffcab1ebf813c383381c38c21293b80acf08edc9ce2fd330b3134cbc778ba',
+  'composer_slash_command_reads_empty_2026-09-09.bin': '256716215475dae2130b28017519718fd8d4dfccf56b801f215a8c4afdded268',
+  'composer_unreadable_trust_dialog_2026-09-19.bin': 'cc48696508251201f930ccf28daa29507aa99fe5e28619ff2137124d3f87db85',
+};
+const dryStaged = () => G.build('', { dry: true, allowDirty: true });
+
+test('D273/A: the six composer screens ship SCRUBBED, byte for byte A\'s acceptance hashes, each the length of its source', () => {
+  const r = dryStaged();
+  try {
+    assert.ok(!r.refused, r.refused);
+    for (const [name, sha] of Object.entries(SCREEN_SHA)) {
+      const out = fs.readFileSync(path.join(r.staging, SCREENS + name)), src = fs.readFileSync(path.join(REPO, SCREENS + name));
+      assert.strictEqual(out.length, src.length, name + ' changed length');
+      assert.strictEqual(crypto.createHash('sha256').update(out).digest('hex'), sha, name + ' is not A\'s scrubbed bytes');
+    }
+    assert.deepStrictEqual(r.leaks.filter((l) => l.rel.startsWith(SCREENS)), [], 'a screen shipped a leak');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273/A: a screen is a WHOLE fixture, scrubbed same-length, and what the scrub cannot remove is a leak the scan reports', () => {
+  assert.strictEqual(G.fixtureKind(SCREENS + 'x.bin'), 'whole');
+  const raw = Buffer.from('cwd C:\\Consonance\\lighthouse user zackn tz America/Regina', 'latin1');
+  const s = G.descreen(raw);
+  assert.strictEqual(s.buf.length, raw.length, 'the scrub moved a byte');
+  assert.strictEqual(s.buf.toString('latin1'), 'cwd C:\\Consonance\\workspaces user alice tz America/Denver');
+  const left = G.descreen(Buffer.from('the handle solariz3d is not in the scrub map', 'latin1'));
+  assert.ok(G.scan(left.buf.toString('latin1'), SCREENS + 't.bin').some((l) => l.cls === 'IDENTITY'), 'an unscrubbed identity in a screen would ship unseen');
+});
+
+test('D273/A: githooks/pre-commit ships, LF, as the shell script commit-gate names', () => {
+  const r = dryStaged();
+  try {
+    const t = fs.readFileSync(path.join(r.staging, 'consonance/githooks/pre-commit'), 'utf8');
+    assert.match(t, /^#!\/bin\/sh/); assert.ok(!t.includes('\r'), 'CRLF in a sh script'); assert.match(t, /commit-gate\.js/);
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273/A: contamination and tj1-k-render do not ship, with their tests, each saying why', () => {
+  for (const n of ['contamination.js', 'contamination.test.js', 'tj1-k-render.js', 'tj1-k-render.test.js']) {
+    assert.ok(G.collect().some((f) => f.from === 'consonance/tools/' + n), n + ' is reached by no rule, so the exclusion proves nothing');
+    assert.match(G.EXCLUDE['consonance/tools/' + n] || '', /run2/, n + ' ships or has no reason');
+  }
+});
+
+test('D273/A: the declared JS rows (15 of A + 1 Jev) and 12 Rust tests are declared in the OUTPUT, and plain in the SOURCE so the source suite still runs them', () => {
+  const r = dryStaged();
+  try {
+    assert.ok(!r.refused, r.refused);
+    let js = 0, rs = 0;
+    for (const [rel, rows] of Object.entries(G.WORKSHOP.js)) {
+      const out = fs.readFileSync(path.join(r.staging, rel), 'utf8'), src = fs.readFileSync(path.join(REPO, rel), 'utf8');
+      for (const [call] of rows) {
+        assert.strictEqual(src.split(call).length - 1, 1, rel + ': the source no longer holds ' + call);
+        assert.ok(!src.includes('WORKSHOP-BOUND'), rel + ': the declaration leaked into the source');
+        // a node:test row keeps its call with the skip option inserted after it; an own-runner row's call is replaced by the printing wrapper
+        const left = out.split(call).length - 1;
+        assert.ok(left === 0 || (left === 1 && out.includes(call + '{ skip: "')), rel + ': the row still runs in the output: ' + call);
+        js++;
+      }
+      assert.strictEqual((out.match(/(WORKSHOP-BOUND|EXCLUDED-WITH-JEV): /g) || []).length, rows.length, rel + ': declared rows do not match the declarations');
+    }
+    for (const [rel, names] of Object.entries(G.WORKSHOP.rust)) {
+      const out = fs.readFileSync(path.join(r.staging, rel), 'utf8');
+      for (const [name] of names) { assert.match(out, new RegExp('#\\[ignore = "WORKSHOP-BOUND: [^"]+"\\]\\s*\\n\\s*fn ' + name + '\\(\\)'), rel + ': ' + name); rs++; }
+    }
+    // A's 15 workshop rows, plus jev-flags' one row that compares with the excluded jev-room.js (labelled EXCLUDED-WITH-JEV, not workshop)
+    assert.deepStrictEqual([js, rs], [16, 12]);
+    assert.deepStrictEqual([r.declared.js, r.declared.rust], [16, 12]);
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273/A: a declaration whose anchor is gone is REFUSED, not silently skipped', () => {
+  const d = G.declareWorkshop('test(\'a renamed row\', () => {});\n', 'consonance/hooks/reply-slot.test.js');
+  assert.deepStrictEqual(d.missing.length, 1, 'a declaration that matched nothing was not reported');
+  const ok = G.declareWorkshop("const test = require('node:test');\ntest('PLAN: the plan the hook cites exists', () => { x(); });\n", 'consonance/hooks/reply-slot.test.js');
+  assert.deepStrictEqual([ok.missing, ok.n], [[], 1]);
+  assert.match(ok.body, /test\('PLAN: the plan the hook cites exists', \{ skip: "WORKSHOP-BOUND: [^"]+" \}, \(\) =>/);
 });
