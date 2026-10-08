@@ -1444,3 +1444,28 @@ test('D273 lap 3: dev/shell/install-fresh-home.test.js ships beside the install.
   assert.ok(G.collect().some((x) => x.from === 'dev/shell/install.ps1'), 'control: install.ps1 ships');
   assert.ok(G.collect().some((x) => x.from === 'dev/shell/install-fresh-home.test.js' && !G.EXCLUDE[x.from]), 'the test of a shipped installer does not ship');
 });
+
+test('D273 lap 3: decoordinate swaps America/Regina for a zone that keeps the CLOCK (UTC-6, no daylight time), so time-keyed fixtures keep their meaning', () => {
+  /* Found by the lap-3 parity: usage.test.js ("America/Regina (UTC-6, no daylight time), so every boundary below is exact") and third-place-gate.test.js
+   * (the pulse "Mon, 10/05/2026, 11:00 AM" byte for byte) were red ONLY in the consumer, because decoordinate turned the keeper's zone into
+   * America/New_York (UTC-5, with daylight time) inside their fixtures. The location still goes; the clock stays. */
+  const out = G.decoordinate("const TZ = 'America/Regina';").body;
+  const zone = (out.match(/'([A-Za-z_]+\/[A-Za-z_]+)'/) || [])[1];
+  assert.ok(zone && zone !== 'America/Regina', 'the keeper\'s zone still ships: ' + out);
+  for (const ms of [Date.UTC(2026, 0, 5, 17, 0), Date.UTC(2026, 6, 5, 17, 0), Date.UTC(2026, 9, 5, 5, 30)]) {
+    const at = (tz) => new Date(ms).toLocaleString('en-US', { timeZone: tz });
+    assert.strictEqual(at(zone), at('America/Regina'), zone + ' renders a different clock than America/Regina at ' + new Date(ms).toISOString());
+  }
+});
+
+test('D273 lap 3: the OS-user rule does not eat a "\\n" escape followed by name = (it broke gen-consumer.build.test.js\'s control crate), and still takes every real path', () => {
+  /* Found by the lap-3 parity: in the consumer, gen-consumer.build.test.js's control crate '[package]\nname = "linksnot"' had become
+   * '[package]\other = "linksnot"' ("\n" + "name" reads as "nname" to /\bnname\b/), so cargo refused the TOML and the oracle test failed there only. */
+  const crate = "'[package]\\nname = \"linksnot\"\\nversion = \"0.0.0\"\\n'";
+  for (const fn of [G.deidentifyTokens, G.deidentify]) assert.strictEqual(fn(crate).body, crate, (fn.name) + ' rewrote a TOML key after a \\n escape');
+  assert.deepStrictEqual(G.scan(crate + '\n', 'consonance/tools/x.test.js').filter((l) => l.cls === 'IDENTITY'), [], 'the scan reads the escape as the OS user');
+  for (const leak of ['C:\\\\Users\\\\nname\\\\Desktop', 'C:\\Users\\nname\\Desktop', 'C:/Users/nname/x', 'user nname here', 'home\\nname']) {
+    assert.ok(!/\bnname\b/.test(G.deidentifyTokens(leak).body), 'a real OS-user path survived deidentifyTokens: ' + leak);
+    assert.ok(!/\bnname\b/.test(G.deidentify(leak).body), 'a real OS-user path survived deidentify: ' + leak);
+  }
+});

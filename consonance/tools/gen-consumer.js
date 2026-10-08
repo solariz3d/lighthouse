@@ -1034,6 +1034,11 @@ function generatedFiles(id) {
  *
  * These run over the OUTPUT. Anything that survives here stops the build.
  */
+/* THE OS USER, but not a "\n" escape followed by a TOML/INI key "name =" (D273 lap 3, pane B). /\bnname\b/ read '[package]\nname = "x"' as the
+ * user name ("\n" + "name"), so gen-consumer.build.test.js's control crate became '\other = "x"' in the consumer and cargo refused it. Skipped only
+ * when BOTH a backslash precedes it and "=" follows it: a real path written with single backslashes in prose (C:\Users\nname\...) is still taken
+ * and still scanned. One regex for the scan and the three rewrites, so they cannot disagree. */
+const NNAME_RE = /(?<!\\)\bnname\b|\bnname\b(?!\s*=)/g;
 const LEAKS = [
   { cls: 'IDENTITY', pat: /solariz3d/gi, why: 'the keeper\'s public handle' },
   { cls: 'IDENTITY', pat: /trynabemlgzn/gi, why: 'the keeper\'s email' },
@@ -1062,7 +1067,7 @@ const LEAKS = [
    * sentence and every path shape around it stay. The one fixture site is a detector's corpus line
    * whose assertion keys on 'Get some sleep', not on the name; checked before adding the rule. */
   { cls: 'IDENTITY', pat: /\bzach\b/gi, why: 'the keeper\'s given name -- prose, so no handle or path pattern reaches it' },
-  { cls: 'IDENTITY', pat: /\bnname\b/g, why: 'the desktop machine\'s OS user name' },
+  { cls: 'IDENTITY', pat: NNAME_RE, why: 'the desktop machine\'s OS user name' },
   { cls: 'RECORD', pat: /\bChrysos\b/g, why: "a name from this record; to a stranger it reads as the product's name" },
   /* The keeper's coordinates and city. 2026-08-22 measured this class at 16 files and found 5
    * real after false positives -- the survey matched audio fixture frequencies. Anchored on the
@@ -1306,7 +1311,7 @@ function depath(rel) {
     .replace(/solariz3d/gi, 'the-keeper')
     .replace(/trynabemlgzn/gi, 'the-keeper')
     .replace(/\bzackn\b/gi, 'user')
-    .replace(/\bnname\b/g, 'other');
+    .replace(NNAME_RE, 'other');
 }
 
 /** The other half of `depath()`: a REFERENCE to a renamed file, inside a shipped document.
@@ -1358,7 +1363,7 @@ function deidentify(body) {
   rep(/C:\/Users\/zackn/gi, '%USERPROFILE%');
   rep(/\bzackn\b/gi, 'user');
   rep(/\bzach\b/gi, 'the keeper');
-  rep(/\bnname\b/g, 'other');
+  rep(NNAME_RE, 'other');
   rep(/C:\\{1,4}Consonance\\{1,4}lighthouse/gi, '%CONSONANCE_HOME%');
   rep(/C:\/Consonance\/lighthouse/gi, '%CONSONANCE_HOME%');
   return { body, n };
@@ -1512,7 +1517,7 @@ function deidentifyTokens(body) {
   rep(/\bzackn\b/gi, 'user');
   /* nname is the desktop machine's OS user and appears in 9 shipped files as a foreign-path
    * fixture. Same treatment: the token goes, the path shape stays. */
-  rep(/\bnname\b/g, 'other');
+  rep(NNAME_RE, 'other');
   rep(/\bzach\b/gi, 'the keeper');
   return { body, n };
 }
@@ -1527,7 +1532,10 @@ function decoordinate(body) {
   rep(/-104\.6189/g, '-65.4321');
   rep(/104\.6189/g, '65.4321');
   rep(/Regina,\s*Saskatchewan/g, 'Example City');
-  rep(/America\/Regina/g, 'America/New_York');
+  /* D273 lap 3 (pane B): a zone that keeps the CLOCK. America/Regina is UTC-6 with no daylight time all year, and so is America/Costa_Rica; it was
+   * America/New_York (UTC-5, with daylight time), which silently changed what time-keyed fixtures assert: usage.test.js ("UTC-6, no daylight time,
+   * so every boundary below is exact") and third-place-gate.test.js (the pulse's "11:00 AM") were red only in the consumer. The location still goes. */
+  rep(/America\/Regina/g, 'America/Costa_Rica');
   /* THE HOSTNAME, SUBSTITUTED RATHER THAN EXEMPTED, and placed in this function because it is the
    * one transform that runs on prose AND fixtures both. A hostname is a VALUE, like a latitude:
    * swapping a value for a value changes nothing structural, and the fixture that needs it parses

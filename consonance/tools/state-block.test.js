@@ -392,3 +392,19 @@ test('every rendered trigger is a when -> target pair', () => {
   assert.ok(rows.length >= 10, 'expected the trigger rows, got ' + rows.length);
   for (const r of rows) assert.match(r, /\S+ -> \S+/, 'row is not a pair: ' + r);
 });
+
+test('D273 lap 3: a fresh history with NO origin/main is said in words, not FAILED (a stranger\'s first checkout is exactly that)', () => {
+  /* Found by the lap-3 consumer parity: the generated tree is a fresh-history repository with no remote, and the REPO section printed
+   * "FAILED: git rev-list did not run here", so sessionstart-state.test.js ("the live generator must not be reporting FAILED") was red only there,
+   * and every session start of a new user would have carried a FAILED line. A real git failure still prints FAILED (the empty-directory row above). */
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sb-fresh-'));
+  try {
+    const g = (args) => cp.execFileSync('git', args, { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+    g(['init', '-q', '-b', 'main']); fs.writeFileSync(path.join(dir, 'a.txt'), 'a\n'); g(['add', '.']);
+    cp.execFileSync('git', ['commit', '-q', '-m', 'first'], { cwd: dir, env: { ...process.env, GIT_AUTHOR_NAME: 't', GIT_AUTHOR_EMAIL: 't@t', GIT_COMMITTER_NAME: 't', GIT_COMMITTER_EMAIL: 't@t' } });
+    const out = cp.execFileSync(process.execPath, [path.join(__dirname, 'state-block.js')], { env: { ...process.env, STATE_BLOCK_REPO: dir }, encoding: 'utf8' });
+    const repoBlock = out.slice(out.indexOf('REPO'), out.indexOf('JOURNAL'));
+    assert.doesNotMatch(repoBlock, /FAILED/, 'a fresh history reported a failure:\n' + repoBlock);
+    assert.match(repoBlock, /no origin\/main/, 'the missing upstream is not named:\n' + repoBlock);
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});

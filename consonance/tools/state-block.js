@@ -73,13 +73,18 @@ function sh(cmd, args, cwd = REPO) {
 function repoSection() {
   const head = sh('git', ['log', '-1', '--format=%h %s']);
   const dirty = sh('git', ['status', '--porcelain']);
-  const unpushed = sh('git', ['rev-list', '--count', 'origin/main..HEAD']);
+  // D273 lap 3 (pane B): a fresh history with no origin/main (a stranger's first checkout, the generated consumer) is a STATE, said in words; FAILED
+  // stays for git itself failing (not a repository at all), which the empty-directory test pins at exactly three FAILED lines
+  const isRepo = sh('git', ['rev-parse', '--git-dir']) !== null;
+  const hasUpstream = isRepo && sh('git', ['rev-parse', '--verify', '--quiet', 'origin/main']) !== null;
+  const unpushed = hasUpstream ? sh('git', ['rev-list', '--count', 'origin/main..HEAD']) : null;
   const lines = [];
   if (head === null) lines.push('FAILED: git log did not run here');
   else lines.push('HEAD ' + head);
   if (dirty === null) lines.push('FAILED: git status did not run here');
   else lines.push('working tree ' + (dirty ? dirty.split('\n').length + ' file(s) modified' : 'clean'));
-  if (unpushed === null) lines.push('FAILED: git rev-list did not run here');
+  if (isRepo && !hasUpstream) lines.push('no origin/main here yet (a history with no remote): nothing to count as unpushed');
+  else if (unpushed === null) lines.push('FAILED: git rev-list did not run here');
   else lines.push(unpushed + ' commit(s) unpushed');
   return { title: 'repo', cmd: 'git log -1 --format="%h %s"; git status --short', lines };
 }
