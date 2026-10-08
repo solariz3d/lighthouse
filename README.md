@@ -105,8 +105,8 @@ That opens the app. `cargo tauri build` makes a standalone program instead.
 - Sessions you have used are sent a short "keep warm" message after 50 idle minutes. That stops their conversation
   falling out of the prompt cache, and it does use your Claude usage.
 - Jev, the second-look judge, was retired on 2026-09-27 at the author's word, and the app no longer starts it from the
-  next rebuild on. While it ran, it sent the turns it judged to an outside service, which its own page states plainly:
-  [`jev/README.md`](jev/README.md). Why it was retired:
+  next rebuild on. While it ran, it sent the turns it judged to an outside service, which its own page states plainly
+  (`jev/README.md`, in the development tree; the consumer copy does not carry Jev). Why it was retired:
   [`exo_memory/loop/plan_jev_off_2026-09-27.md`](exo_memory/loop/plan_jev_off_2026-09-27.md).
 
 ## How it works
@@ -265,7 +265,7 @@ measured on its first 56 turns: blind readers confirmed **8 of the 30 turns it f
 turns it called clean** (it also answered "can't judge" on 6). The readers were AI sessions from this same project and had been measured as **lenient** —
 fresh outside readers flagged about three times as many turns — so some unconfirmed marks may be the readers' leniency,
 not Jev's error; that split has not been measured. So a mark is an invitation to reread, not a finding
-([`jev/README.md`](jev/README.md)).
+(`jev/README.md`, in the development tree).
 
 **Its "stranger installs it from the README" test is NOT YET PASS.** The README and the install mechanism both pass
 when followed literally, but no real Claude Code session has yet shown a mark on a stranger's install

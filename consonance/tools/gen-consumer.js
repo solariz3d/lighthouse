@@ -425,6 +425,13 @@ const MANIFEST = [
    * binary is copied unscanned and these carry the keeper's handle, OS user, timezone and the private tree's path. See descreen(). */
   { dir: 'consonance/githooks', to: 'consonance/githooks', match: /^pre-commit$/, kind: 'code' },
   { dir: 'consonance/src-tauri/fixtures/screens', to: 'consonance/src-tauri/fixtures/screens', match: /\.bin$/, kind: 'screen' },
+
+  /* D273 lap 3, the librarian's ruling 1 (loop/plan_consumer_refresh_2026-10-08.md): the system docs the two READMEs link, which the lap-2 tree did
+   * not carry (arch_test::every_relative_link_in_the_docs_exists_in_a_fresh_clone named them). They ship through the scan like any prose, or not at all. */
+  { from: 'METHOD.md', to: 'METHOD.md', kind: 'prose' },
+  { from: 'INSTRUMENTS.md', to: 'INSTRUMENTS.md', kind: 'prose' },
+  { from: 'dev/SPINE.md', to: 'dev/SPINE.md', kind: 'prose' },
+  { from: 'consonance/AUTONOMY.md', to: 'consonance/AUTONOMY.md', kind: 'prose' },
 ];
 
 /* THE FORK HOOK POINT — D273 lap 2 (pane B, 2026-10-08). C's ROLE/PROVENANCE relabel and frag-fork injection is a SEPARATE module (C names it); its one

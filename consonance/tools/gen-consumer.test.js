@@ -1381,3 +1381,17 @@ test('D273: a markdown LINK whose target is a record path becomes its text and t
   assert.strictEqual(n, 4);
   assert.doesNotMatch(body, /\]\(a (registration|hand-back|map entry|librarian entry) in this line of record\)/);
 });
+
+test('D273 lap 3: METHOD.md, INSTRUMENTS.md, dev/SPINE.md and consonance/AUTONOMY.md ship through the scan, and the README links no excluded jev/README.md', () => {
+  /* The librarian's ruling 1 on B's lap-2 list (loop/plan_consumer_refresh_2026-10-08.md): ship the four system docs the READMEs link (they pass the
+   * generator's scan or they don't ship); the root README's two jev/README.md links come out in source, since jev/ is excluded. */
+  const r = G.build('', { dry: true, allowDirty: true });
+  try {
+    assert.ok(!r.refused, r.refused);
+    for (const rel of ['METHOD.md', 'INSTRUMENTS.md', 'dev/SPINE.md', 'consonance/AUTONOMY.md']) {
+      assert.ok(fs.existsSync(path.join(r.staging, rel)), rel + ' did not ship');
+      assert.deepStrictEqual(r.leaks.filter((l) => l.rel === rel), [], rel + ' shipped a leak');
+    }
+    assert.doesNotMatch(fs.readFileSync(path.join(r.staging, 'README.md'), 'utf8'), /\]\((\.\.\/)*jev\//, 'the README links into the excluded jev/');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
