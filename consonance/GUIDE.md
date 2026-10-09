@@ -36,6 +36,10 @@ powershell -ExecutionPolicy Bypass -File dev\shell\install.ps1
 
 It copies the hooks to `%USERPROFILE%\.claude\shell` and registers them in `%USERPROFILE%\.claude\settings.json`. If you have no `settings.json` yet, it creates an empty one and says so; one you have is merged into, never replaced, and backed up first. To see what it would register without changing `settings.json`, add `-NoRegister` (it still copies the hooks).
 
+**One hook spends your Claude usage on its own: the second reader.** Each time a seat rings another, it runs one extra `claude -p` call (Sonnet) in
+the background to check that message against the turn that produced it. That is roughly two cents of usage per ring (median, as the CLI reports it); where it was built, a busy
+multi-seat day ran 9 to 133 rings. It is on by default; what it does and how to turn it off are in [`GATES.md`](GATES.md), "the second reader".
+
 The hooks keep their records in the same **Data folder** as the app (Settings, below; `%USERPROFILE%\.consonance` until you choose another), so it does not matter whether you run this before or after the first launch.
 
 ---
@@ -56,8 +60,8 @@ That's the whole setup. Now open the **Terminal** tab.
 
 The **Terminal** tab is your workspace. Each **pane** is a real, full Claude Code session (named A, B, C…). You type into it like any terminal.
 
-- **Spawn a pane** — a fresh `claude` session. Use it exactly as you would a normal Claude Code terminal.
-- **Spawn briefed** — same, but it wakes already loaded with your startup brief, so it starts familiar with the work.
+- **+ Pane** — a fresh `claude` session. Use it exactly as you would a normal Claude Code terminal.
+- **✦ Brief** (in the **▾** menu beside **+ Pane**) — same, but it wakes already loaded with your startup brief, so it starts familiar with the work.
 
 One pane on its own is already useful. The rest of Consonance is what you do when you want more than one instance on a problem.
 
@@ -103,7 +107,7 @@ The **★ Orchestrator** tab is a persistent instance that oversees the whole th
 
 Section 4 is a quick second opinion that you run by hand. The full loop runs without you carrying messages between seats:
 
-1. **Wake the seats.** On the **★ Orchestrator** tab click **Wake the orchestrator**; on the **▤ Librarian** tab click **Wake the librarian**. Both persist across restarts. In the **Terminal** tab, spawn a few **briefed** panes.
+1. **Wake the seats.** On the **★ Orchestrator** tab click **Wake the orchestrator**; on the **▤ Librarian** tab click **Wake the librarian**. Both persist across restarts. In the **Terminal** tab, open a few briefed panes (**▾** → **✦ Brief**).
 2. **Say what you want**, to the orchestrator (or straight to the librarian; either starts the round).
 3. **The librarian looks it up** first: what your record already says, cited by file and line.
 4. **The orchestrator splits the work** and sends each pane its own piece and its own files.
@@ -143,7 +147,7 @@ Once the drive carries that manifest and the setting is on, Consonance itself fi
 
 ## A whole session, in one line
 
-Open Consonance → spawn a briefed pane or two → work a problem in one → when you want a check, make it the **focus** and **convene** the rest → read where they agreed, forked, and found something new → approve or deny anything that reaches outside → watch the gauges so you catch echo before it fools you.
+Open Consonance → open a briefed pane or two (**▾** → **✦ Brief**) → work a problem in one → when you want a check, make it the **focus** and **convene** the rest → read where they agreed, forked, and found something new → approve or deny anything that reaches outside → watch the gauges so you catch echo before it fools you.
 
 You're always the one deciding. The app just makes the signal legible.
 

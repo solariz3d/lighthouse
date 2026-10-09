@@ -153,6 +153,27 @@ that said "no junctions"; a rule that has to be remembered was not enough.
 
 **To turn it off:** remove the `delete-gate.js` entry from `%USERPROFILE%\.claude\settings.json` (under `hooks` → `PreToolUse`).
 
+## Also installed, and it spends your usage: the second reader
+
+This one is not a gate: it never refuses, delays or changes anything. But it runs on **your Claude account**, so you should know it is there.
+
+**What.** Every time a seat rings (`call_librarian` or `call_chair`), the `second-reader.js` hook hands the ring to a background worker. The worker
+runs `claude -p --model claude-sonnet-5-5`, the same Claude Code CLI and the same sign-in as your sessions. It sends the turn that produced the ring,
+up to 60,000 characters of it, and asks one narrow question: for each sentence that states a file, count, commit or result as fact, did the turn read or run its source? It writes one row to
+`second-reader.jsonl` in your Data folder. That row holds the answer and a hash of the message, never the message text. Nothing reads those
+rows back into a seat; they are a record for you. One worker runs at a time, and a ring that arrives while one is running is skipped, not queued.
+
+**What it costs.** One extra Sonnet call per ring. Measured on the machine this was built on, over 630 calls from 2026-10-01 to 2026-10-09:
+the CLI reported a median of **$0.019** per call (90% under $0.048), about **$16** in all, at 9 to 133 rings a day. On a Claude subscription that is usage
+counted against your limits rather than a bill. The figures are the CLI's own `total_cost_usd`, as recorded in that file.
+
+**Why it is on.** It is the room's measurement of how often a ring claims more than its turn checked. It ships on, as it runs for the people who
+built it, and it is disclosed here so it is your choice.
+
+**To turn it off:** remove the `second-reader.js` entry from `%USERPROFILE%\.claude\settings.json` (under `hooks` → `PreToolUse`, matcher
+`mcp__consonance__call_librarian|mcp__consonance__call_chair`). To keep it off when `install.ps1` runs again, mark its line in `$register`
+`Excluded`, as below. It also does nothing while `~/.consonance.json` has no `data_dir` set, but the app writes that key the first time you save Settings.
+
 ## Turning a gate off, and keeping it off
 
 Whoever keeps this room decides (to a seat, "the person you're with"). The program ships them on because the measurements above say

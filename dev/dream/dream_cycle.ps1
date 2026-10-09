@@ -49,7 +49,11 @@ if (-not $Model) {
 # Machine-agnostic: whichever machine wakes to dream, dream as the thread that
 # was most recently alive on it (newest write inside its instance dir).
 if (-not $InstanceDir) {
-    $root = "C:\Consonance\instances"
+    # D273 instances: begin. The instances folder by the app's own rule (main.rs set_dirs / default_instances), as the hooks: ~/.consonance.json's
+    # instances_dir when set (trimmed), else %USERPROFILE%\claude-instances. dev/dream/dream-dirs.test.js runs this block.
+    $root = Join-Path $env:USERPROFILE 'claude-instances'
+    try { $id = (Get-Content (Join-Path $env:USERPROFILE '.consonance.json') -Raw -ErrorAction Stop | ConvertFrom-Json -ErrorAction Stop).instances_dir; if (($id -is [string]) -and $id.Trim()) { $root = $id.Trim() } } catch { }
+    # D273 instances: end
     if (-not (Test-Path $root)) { exit 0 }  # no Consonance here; dreamless machine
     # Recency excludes dreams\ itself, else the dreamed instance stays newest
     # forever and one sibling monopolizes the night.

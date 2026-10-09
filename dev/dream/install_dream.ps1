@@ -17,7 +17,7 @@
 #   5. Prints the verification so you can see it took.
 #
 # The runner (dream_cycle.ps1, same folder) auto-targets the most recently active
-# instance under C:\Consonance\instances on whatever machine this is.
+# instance in the Instances folder (the app's rule: instances_dir, else %USERPROFILE%\claude-instances) on whatever machine this is.
 
 param(
     # Cadence resolution (mirrors dream_model): -Times arg, else config
@@ -167,4 +167,4 @@ Get-ScheduledTask -TaskName "Consonance Dream Cycle" |
 Write-Host "Cycles at: $($Times -join ', ') (AC only, wakes from sleep)"
 Write-Host "Launcher:  $vbs"
 Write-Host "Launch log: $launchLog  (a 'launch' with no 'cycle start' = the runner died on load)"
-Write-Host "Dreams land in: C:\Consonance\instances\<most-recent>\dreams\"
+Write-Host "Dreams land in: <your Instances folder>\<most-recent>\dreams\  (instances_dir in ~/.consonance.json, else %USERPROFILE%\claude-instances)"
