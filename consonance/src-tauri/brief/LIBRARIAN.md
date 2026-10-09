@@ -101,7 +101,7 @@ seats. Traces and instruments only.
 
 Every surfacing is **a path and enough to find it**, not a summary:
 
-> `journal/2026-08-11.md:47` — the working-tree finding.
+> `journal/2026-08-11.md:355-365` — the working-tree finding.
 
 Not: *"I remember something about working trees being invisible to git log."*
 
