@@ -369,7 +369,9 @@ The frontend is static — `ui/index.html`, `ui/app.js`, `ui/app.css` — loaded
 
 ## Build
 
-Requires Rust and `tauri-cli`. Node is needed only to run the JS instruments and their tests.
+Requires Rust, `tauri-cli` and the MSVC Build Tools to build. The app itself needs no Node at runtime, but the hooks do:
+**Node.js** and **Python 3** must be on your PATH before `dev\shell\install.ps1` runs (one hook, the pulse, is Python).
+Node also runs the JS instruments and their tests. Step by step: [`GUIDE.md`](GUIDE.md).
 
     cd consonance
     cargo tauri dev        # run
@@ -379,6 +381,43 @@ Tests:
 
     cd consonance/src-tauri && cargo test --bin consonance -- --test-threads=1
     node consonance/tools/js-suite.js
+
+## Glossary
+
+The words this program uses for itself, in plain terms. Where a word names code, the code is given.
+
+- **Seat**: one persistent Claude Code session that Consonance runs, in its own tab, with its own working directory and
+  brief ("The seats", above).
+- **Pane**: a working seat on the committee, named by a letter (A, B, C…). Panes come and go; the Orchestrator and the
+  Librarian persist.
+- **Committee**: the panes working one lap together, each owning named files.
+- **The Orchestrator**, or **the chair**: the seat that plans a lap, hands out the work and commits what lands. Only it
+  holds the `chair_*` verbs.
+- **The Librarian**: the seat that holds the record. Panes hand their work to it; it checks and collates it and passes it
+  to the chair (`call_chair`).
+- **Third Place**: a seat that does no work and holds no map of the build, on purpose.
+- **Brief**: the instructions a seat starts from (`src-tauri/brief/`).
+- **Lap**: one turn of the loop: a plan, the panes' work, the librarian's collation, the chair's commit ("The loop").
+- **Dispatch**: the chair sending a seat its next piece of work (`chair_inject`).
+- **Hand-back**: the file a seat writes when it finishes a piece of work: what it did, what it measured, what is left.
+- **Ring**: a short message between seats that points at a hand-back (`call_librarian`, `call_chair`). It carries the
+  pointer, not the finding.
+- **Collation**: the librarian's summary of several hand-backs at once.
+- **Map**: a seat's own file of findings (`exo_memory/map/<letter>.md`), read back when it wakes.
+- **Board**: the shared log every seat can post to and read (`post_board`, `read_board`); its **phase** (QUIET or OPEN)
+  decides who sees what ("Board phases").
+- **Mount**: the connection a seat talks to the board through. Who said something is decided by the mount, not by what
+  the message claims; the **address table** says which mount may ring which.
+- **Gate**: a check that refuses a message or a command at the moment it is sent, instead of reminding. There are six;
+  each is documented, with how to turn it off, in [`GATES.md`](GATES.md).
+- **Hook**: a script Claude Code runs at a fixed point in a session (before a tool call, at the end of a turn). Most gates
+  are hooks; `dev\shell\install.ps1` installs them ("The hooks").
+- **SOURCES line / NEXT trailer**: the two lines a ring or dispatch ends with: what it opened, and where the work goes
+  next ([`GATES.md`](GATES.md) §1 and §3).
+- **Keep-warm**: a short message sent to an idle session so its conversation stays in the prompt cache.
+- **The room**: the documents a seat wakes into (`../exo_memory/BOOT.md` and what it names).
+- **The keeper**: the person who built this program and kept the room it was built in. Where these pages quote "the
+  keeper" or a dated ruling, they quote that person. In your own room, whoever keeps it is you.
 
 ---
 

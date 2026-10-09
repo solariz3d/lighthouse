@@ -1,6 +1,6 @@
 # Consonance — a simple guide
 
-A native desktop app that runs several Claude Code instances in one window, where they check each other's work and their own — so the AI works with you honestly, and you stay in control. This is the short how-to; for the full reference and a glossary, see [`README.md`](README.md).
+A native desktop app that runs several Claude Code instances in one window, where they check each other's work and their own — so the AI works with you honestly, and you stay in control. This is the short how-to; for the full reference and a glossary, see [`README.md`](README.md#glossary).
 
 ---
 
@@ -88,7 +88,7 @@ While the panes work, small gauges report:
 - **Lexical spread** — how much the panes' wording differed this lap. It was built to answer "are they collapsing toward echo?" and **it does not** — tested 2026-08-06, it rates one voice split into six pieces as *more* diverse than six separate instances. Read it as a curiosity, not an echo detector; `README.md` has the numbers.
 - **Delta** — did a second pass *generate* something new, or re-say the first one?
 
-They're **numbers you read**, never a verdict the program acts on. You stay the one who decides what it means — and on echo specifically, you are currently the *only* thing that can decide it. The committee's real defence against collapse is that the panes are genuinely different because you conditioned them differently, not that a gauge catches it.
+They're **numbers you read**, never a verdict the program acts on. You stay the one who decides what it means — and on echo specifically, you are currently the *only* thing that can decide it. Conditioning the panes differently is **not** a defence against collapse: that was the project's founding bet, and its own measurements did not support it (step 3 above; `../README.md`, "The founding bet was wrong"). What held up is narrower: panes required to **measure rather than assert** return findings that do not overlap. The defence is that, plus you reading the disagreements, not a gauge.
 
 ---
 
@@ -108,7 +108,7 @@ You're always the one deciding. The app just makes the signal legible.
 
 ## Go deeper
 
-- [`README.md`](README.md) — full description and a complete glossary of terms.
+- [`README.md`](README.md) — full description, and a glossary of terms (its "Glossary" section).
 - `PLAN.md` — the spec and architecture (the three planes, the invariants).
 - `PROGRESS.md` — what's actually built.
 - `DESKTOP_HANDOFF.md` (repo root) — installing and carrying Consonance onto a new machine.

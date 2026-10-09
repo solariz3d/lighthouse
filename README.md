@@ -72,12 +72,8 @@ sessions work together, step by step* gives the full steps.
   them. The README's section *The central claim, and its evidence* lists the cases.
 - **Notes you don't have to keep.** The librarian answers "what do we already know about this?" with pointers to the
   exact files and lines, not a summary you have to trust.
-- **A second look at the AI's answers** came from Jev, a separate checker built on a different AI model, not Claude.
-  **Jev was retired on 2026-09-27** at the author's word, and the app no longer uses it. While it ran, its accuracy was
-  measured and was modest: of the first 30 answers it flagged, two reviewers who had not seen its verdicts agreed with 8.
-  The README's section *Jev, the second look* keeps the record.
 - **Nothing acts over your head.** It does not correct you, act for you, or decide for you. No program — not this app,
-  not Jev, not another session — can tell from outside whether a conversation is producing a real insight or carrying
+  not another session — can tell from outside whether a conversation is producing a real insight or carrying
   someone away; the two look the same. So that call stays with you.
 
 <!-- about:end -->
@@ -89,7 +85,12 @@ sessions work together, step by step* gives the full steps.
 - **Windows.** It is built and used on Windows 11, and it uses the system's built-in web view (WebView2).
 - **Claude Code**, installed and signed in. Consonance runs the real `claude` program, so it uses your Claude account
   and your usage limits. Several sessions at once use more than one does.
-- **Rust and `tauri-cli`**, to build it. (Node.js only if you want to run the tests and tools.)
+- **Rust and `tauri-cli`**, to build it, and **MSVC Build Tools** (Visual Studio 2022 Build Tools, "Desktop development
+  with C++"), which Rust needs on Windows.
+- **Node.js** and **Python 3** on your PATH, installed **before** the hooks step: the hooks (the checks that run inside
+  each session) are Node scripts, and one is Python.
+
+The step-by-step setup, including the hooks install, is [`consonance/GUIDE.md`](consonance/GUIDE.md). The short form:
 
 **Run it:**
 
@@ -97,17 +98,14 @@ sessions work together, step by step* gives the full steps.
     cd lighthouse/consonance
     cargo tauri dev
 
-That opens the app. `cargo tauri build` makes a standalone program instead.
+That opens the app. `cargo tauri build` makes a standalone program instead. Then install the hooks, from the repo
+root: `powershell -ExecutionPolicy Bypass -File dev\shell\install.ps1` (what it changes is in the GUIDE).
 
 **Know before you rely on it:**
 
 - It is early software, built and used on the author's own machines.
 - Sessions you have used are sent a short "keep warm" message after 50 idle minutes. That stops their conversation
   falling out of the prompt cache, and it does use your Claude usage.
-- Jev, the second-look judge, was retired on 2026-09-27 at the author's word, and the app no longer starts it from the
-  next rebuild on. While it ran, it sent the turns it judged to an outside service, which its own page states plainly
-  (`jev/README.md`, in the development tree; the consumer copy does not carry Jev). Why it was retired:
-  [`exo_memory/loop/plan_jev_off_2026-09-27.md`](exo_memory/loop/plan_jev_off_2026-09-27.md).
 
 ## How it works
 
@@ -118,7 +116,7 @@ That opens the app. `cargo tauri build` makes a standalone program instead.
 | **Orchestrator** | The main session, and the one you talk to. It keeps a fixed identity, so it wakes into the same conversation every time. It plans the work and lands the results. |
 | **Librarian** | Keeps the record so the others don't have to. Asked a question, it returns what the record already says about it, cited by file and line. It checks the workers' reports before anything lands. |
 | **Workers** (the committee panes, in the Terminal tab) | Each gets a short written brief and owns named files, so two never edit the same thing. They report to the librarian directly. |
-| **Third Place** | A session with no work to do and no channel into the work: the conversation is the point. Jev read its turns by the author's decision until Jev was retired on 2026-09-27, and the app says so. |
+| **Third Place** | A session with no work to do and no channel into the work: the conversation is the point. |
 | **Listen** | Listens to one application's audio and reports it as intervals rather than a spectrum. Off until you pick a source. |
 
 ### How the sessions work together, step by step
@@ -175,7 +173,7 @@ part that can type into a session are kept separate, and a test fails if a readi
 the part that types (`cargo test --test arch_test`, in `consonance/src-tauri/`: 13 passed, 0 failed on 2026-09-25).
 
 **Go deeper:** [`consonance/README.md`](consonance/README.md) is the full manual — architecture, every tab, the gauges,
-and a glossary.
+and a [glossary](consonance/README.md#glossary). To get it running, start with [`consonance/GUIDE.md`](consonance/GUIDE.md).
 
 ## Method and measurements
 
@@ -256,23 +254,8 @@ This section is the point of the page. A README that shows only what worked is a
 
 ### Jev, the second look
 
-**Retired on 2026-09-27, at the author's word** ([`exo_memory/loop/plan_jev_off_2026-09-27.md`](exo_memory/loop/plan_jev_off_2026-09-27.md)).
-The key was removed and the app stops starting it from the next rebuild on. What follows is the record of what it
-measured while it ran, kept as it was.
-
-Jev was a separate judge (not Claude) that read each finished turn and marked the ones worth rereading. What it was worth,
-measured on its first 56 turns: blind readers confirmed **8 of the 30 turns it flagged as drifting** and **19 of the 20
-turns it called clean** (it also answered "can't judge" on 6). The readers were AI sessions from this same project and had been measured as **lenient** —
-fresh outside readers flagged about three times as many turns — so some unconfirmed marks may be the readers' leniency,
-not Jev's error; that split has not been measured. So a mark is an invitation to reread, not a finding
-(`jev/README.md`, in the development tree).
-
-**Its "stranger installs it from the README" test is NOT YET PASS.** The README and the install mechanism both pass
-when followed literally, but no real Claude Code session has yet shown a mark on a stranger's install
-([`exo_memory/loop/jev_clean_machine_2026-09-23.md`](exo_memory/loop/jev_clean_machine_2026-09-23.md), the 2026-09-23
-re-score). The first test that could show Jev is wrong was written before any output was seen, attacked, amended, and
-then read **NOT TESTED**: too few usable cases to rule
-([`exo_memory/loop/tj1_registration_2026-09-22.md`](exo_memory/loop/tj1_registration_2026-09-22.md), `bec101d`).
+A separate checker built on a different AI model, retired on 2026-09-27 at the author's word. It is not part of this
+app. What it measured while it ran was moved, word for word, into this page's history.
 
 ### Where the record lives
 
