@@ -67,3 +67,18 @@ ALL-CAPS 334 → 21; prohibition/positive 82/63 → 36/88; MUST-type 4 → 0; si
 **The landing (chair):** swap each draft over its live source (BUILDING/COMMITTEE/LIBRARIAN in `consonance/src-tauri/brief/`, the project CLAUDE.md,
 `exo_memory/CLAUDE.global.md` → `~/.claude/CLAUDE.md`), with B's push-rule line amended per decision 2, the identity diff and the touched tests green.
 Only together with E's gate switch, so no seat reads a softer rule than the one still enforced.
+
+## Timing ruling (librarian, 11:5x): D277 does NOT land before the "before" window closes
+A's measure (b) is armed (remeasure-b-a 6f51fc67 + ab85508e; the chunked frame reproduces all 60 registration cells; the rebuilt draw reproduces L119
+exactly). The re-measure window is 2026-10-03T11:55Z → **2026-10-10T11:55Z**. Landing the lighter rules or the gate switch before then would put
+post-change messages into the "before" sample. So **the D277 landing waits until after 2026-10-10T11:55Z**, then the frame is drawn, then the landing.
+A one-shot timer in the librarian's session fires at 06:03 local on 10-10 to start both. If the session is gone by then, whoever wakes reads this line.
+A's finding: the CLI's default reader is now claude-sonnet-5-5 where L119 used claude-opus-5-5, so the runbook pins CLAIMREC_MODEL.
+
+## The 10-10 step, corrected by the chair (12:1x), checked by the librarian
+The app reads BUILDING/COMMITTEE/LIBRARIAN from the copies bundled beside the exe (`main.rs` `room_brief_at`: the editable copy in
+`default_data()` first, then the bundled resource, then the repo). So an exe built today would ship today's rules. **At the timer, in order:**
+(1) land B's drafts; (2) build into a staging target; (3) restart with the extended restart script that copies the exe AND the bundled brief .md files;
+(4) set "gates_mode": "light". **Checked, no shadowing copy:** `default_data()` is `%USERPROFILE%\.consonance` (`main.rs:804-805`), and it holds no
+BUILDING/COMMITTEE/LIBRARIAN; `C:\Consonance\data` holds none either. Gate switch landed: main 1f38da03 (gate tests 204/204, cargo 1003/0), hooks
+synced, the key still unset.
