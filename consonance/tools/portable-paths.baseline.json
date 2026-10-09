@@ -2,7 +2,7 @@
   "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
-    "BENIGN-TEST": 340,
+    "BENIGN-TEST": 343,
     "BENIGN-FIXTURE": 9,
     "REVIEW": 15,
     "DISGUISED": 15,
@@ -173,6 +173,27 @@
       "verdict": "BENIGN-TEST",
       "text": "const PANE_CWD = 'C:\\\\panes\\\\sibling-test';",
       "key": "consonance/hooks/findings-return.test.js\u0000const PANE_CWD = 'C:\\\\panes\\\\sibling-test';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/gate-mode.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(G.gatesModeFrom(JSON.stringify({ data_dir: 'C:/d' })), 'strict');",
+      "key": "consonance/hooks/gate-mode.test.js\u0000assert.strictEqual(G.gatesModeFrom(JSON.stringify({ data_dir: 'C:/d' })), 'strict');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/gate-mode.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const REPLY = 'Done at C:/work/zzz.md, 3 of 5.';",
+      "key": "consonance/hooks/gate-mode.test.js\u0000const REPLY = 'Done at C:/work/zzz.md, 3 of 5.';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/gate-mode.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "done('Read', { file_path: 'C:\\\\Users\\\\x\\\\repo\\\\exo_memory\\\\loop\\\\plan.md' }, 'text'),",
+      "key": "consonance/hooks/gate-mode.test.js\u0000done('Read', { file_path: 'C:\\\\Users\\\\x\\\\repo\\\\exo_memory\\\\loop\\\\plan.md' }, 'text'),\u0000#1"
     },
     {
       "file": "consonance/hooks/precompact-preserve.test.js",

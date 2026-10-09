@@ -13,7 +13,7 @@ const R = require('./reply-slot.js');
 const done = (name, input, result = 'ok') => ({ name, input, done: true, isError: false, result });
 const CALLS = [
   done('Bash', { command: 'cd /c/Users/x/repo && git log --oneline -1 main' }, 'abc123 msg'),
-  done('Bash', { command: "node -e \"const r=require('fs').readFileSync('C:/Consonance/data/sources-gate.jsonl','utf8')\"" }, '{"deny":30}'),
+  done('Bash', { command: "node -e \"const r=require('fs').readFileSync('data/sources-gate.jsonl','utf8')\"" }, '{"deny":30}'),
   done('WebSearch', { query: 'claude code hooks systemMessage stop' }, 'results'),
   done('WebFetch', { url: 'https://code.claude.com/docs/en/hooks' }, 'page'),
   done('Read', { file_path: 'C:\\Users\\x\\repo\\exo_memory\\loop\\plan.md' }, 'text'),
