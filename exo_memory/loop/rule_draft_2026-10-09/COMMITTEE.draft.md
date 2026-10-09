@@ -95,9 +95,9 @@ librarian (two doors, 2026-09-02, `0714963`, `c177984`), and once a lap is open 
   Why: every commit is authored `solariz3d` and `Co-Authored-By` names the model, not the thread; the body is the only
   attribution surface that works (cycle 8 F2, `muscle_map.md`).
 - The keeper's standing authorisation: in this room, committing by named paths in your own worktree is authorised on
-  every lap. Pushing is not: a push needs the keeper's word, for that push, and the chair carries it (`BUILDING.md`).
-  Why: *"no unattended process publishes — a human, awake, saying yes"* (`journal/2026-07-28.md:189`). Committing is not
-  publishing.
+  every lap. Pushing is the chair's: work that passes the work checks and the credential scan is pushed without asking each
+  time (`BUILDING.md`, "Pushing and publishing").
+  Why: the keeper's standing permissions; the push one is decision 2 of 2026-10-09 (`exo_memory/loop/plan_lighten_the_load_2026-10-09.md`, "The keeper's decisions on B's drafts", decision 2).
 - Refer to a credential by its name or length, never its value, in a hand-back, a commit, a board post or a reply.
   Why: the source repository is public (`BUILDING.md`, "Dev and consumer: the port rule") and `gh` is authenticated machine-wide, so a quoted
   key is a published key.
@@ -214,4 +214,5 @@ because it reads like corroboration.
    the keeper. The chair half lives in `BUILDING.md`.
 5. Committing at all (Claude Code's tool text, "commit or push only when the user asks", against the room). The
    keeper's standing authorisation, stated above, is the answer: committing by named paths in your own worktree is
-   authorised on every lap; pushing is not, and still needs his word. `BUILDING.md` and the global instructions point here.
+   authorised on every lap; pushing follows his standing permission (the chair pushes what passes the work checks and the
+   credential scan, without asking each time). `BUILDING.md` and the global instructions point here.

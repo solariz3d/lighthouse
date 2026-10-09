@@ -54,3 +54,8 @@ and instrument, `:64-68` the two seats, `:95-96` the corollary, `:165-175` the r
 - "Leave Third Place files unread" is in the style guide's keep list but in neither COMMITTEE nor BUILDING; it was not added here. Its present home
   should be checked at collation (it may live in BOOT, the fork fragment, or the seat instructions).
 - No rule in the original was found WRONG on this machine. No FACT-FIX was needed in this file.
+
+## Second commit: the keeper's decisions of 2026-10-09 (pane B)
+| where | outcome | flag | note |
+|---|---|---|---|
+| standing authorisation rule; contradiction 5 | pushing is the chair's, under the standing permission | KEEPER DECISION 2 | |

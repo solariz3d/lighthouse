@@ -103,3 +103,12 @@ except item 6's collation amendment 462-484, which moves to LIBRARIAN).
 - Pushes to the source repository: COMMITTEE rule 3 says no seat pushes (seal-row exception), while the chair's auto-memory
   `push-correct-work-dont-hold.md` records the keeper on 2026-09-27 ("nah push all the work that is correct"), and the board on
   2026-10-09 has the lighthouse push waiting on the keeper. The draft points source pushes to COMMITTEE and does not decide this.
+
+## Second commit: the keeper's decisions of 2026-10-09 (pane B)
+| where | outcome | flag | note |
+|---|---|---|---|
+| "Pushing and publishing" | the per-push rule and the seal-row exception replaced by the standing permission; work checks for a push named | KEEPER DECISION 2 | the open question it carried is answered |
+| port rule (00:54 quote, "only when the keeper says") | quote kept as a dated trace, marked superseded for pushes; rule now "passes the consumer's work checks" | KEEPER DECISION 2 | |
+| the procedure, steps 4-5 | "stop and wait for the keeper" became "confirm the consumer's work checks, then push and post the checks"; "keep step 5 manual" became "push only what passed step 4" | KEEPER DECISION 2 | disarm-at-rest kept: it guards against an accidental push |
+| the consumer falsifier | "no board row quoting the keeper's word" became "no board row naming the checks it passed" | KEEPER DECISION 2 | |
+| ask lists, contradiction 3 and 5 text | pushes and releases removed from the keeper-owned calls; contradiction 5 states the standing permission | KEEPER DECISION 2 | |

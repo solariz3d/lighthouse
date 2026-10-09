@@ -298,7 +298,8 @@ when directly interacting with the user."*
 
 - Inside a lap, rule from the record instead of asking the user. From the moment a lap opens until it returns, find the
   keeper's prior word on disk (a ruling, a registration, a quote from a prior lap), cite it `path:line`, and proceed. Outside a
-  lap, and for any keeper-owned call (a push, a delete, a release, a licence, anything irreversible), ask.
+  lap, and for any keeper-owned call (a delete, a licence, any other irreversible change), ask. Pushes and releases follow the
+  standing permission in "Pushing and publishing".
   Why: a question mid-lap stops every seat behind it until one human answers, and the room is built to run through the hours
   he is away. Asking is not the failure; asking while four seats are holding is.
 - When only the user can answer, file the question on the ask channel and finish the reversible parts. A lap that returns
@@ -325,10 +326,11 @@ they use their context isnt to actually build when the workchain loop is going"*
 
 The keeper, 2026-09-06 00:44: *"we have the dev version which is the one we build and use, when it have new features and shit
 that work here for the dev version, we then make it work for the consumer in the way it should."*
-And 00:54: *"make sure that we never push to the consumer version unless I say!"*
+And 00:54: *"make sure that we never push to the consumer version unless I say!"* Superseded for pushes on 2026-10-09 by his
+standing permission (`exo_memory/loop/plan_lighten_the_load_2026-10-09.md`, "The keeper's decisions on B's drafts", decision 2): see "Pushing and publishing".
 
-- Build and use the dev version; port to the consumer only what works there, and only when the keeper says.
-  Why: the keeper's two sentences above; the consumer is what strangers run, so it gets only what has worked here.
+- Build and use the dev version; port to the consumer only what works there and passes the consumer's work checks below.
+  Why: the keeper's words above, as amended on 2026-10-09; the consumer is what strangers run, so it gets only what has worked here.
 - Two trees. Source is this repository: hand-maintained, and public (the keeper ruled on 2026-10-08 that it stays public).
   Generated is `solariz3d/consonance`: public, the output of `consonance/tools/gen-consumer.js`. Never hand-edit the generated
   tree. Why: a hand edit makes it the second copy the design exists to prevent.
@@ -352,7 +354,7 @@ The parity run of the source suite inside the generated tree is the fuller check
 
 ### The procedure
 
-Steps 0–4 are yours; step 5 is the keeper's.
+All six steps are yours.
 
     0  Clone and disarm in the same step (a fresh clone arrives armed):
            git clone <consumer remote> <consumer>
@@ -362,17 +364,16 @@ Steps 0–4 are yours; step 5 is the keeper's.
     1  Regenerate:  node consonance/tools/gen-consumer.js --out <consumer>
     2  Run the gate. Red or unmeasured: stop. A red gate is not a smaller port; it is not a port.
     3  Commit in the consumer checkout by named paths, with the Source-Sha trailer and the seat named in the body.
-    4  Stop. Say what is ready, plainly, without a nudge, and wait.
-    5  Only when the keeper says push, for that push: re-arm, push, disarm again in the same turn, and post a board row
-       quoting his words.
+    4  Confirm the consumer's work checks on this generation: the gate green (step 2), parity (0, 0, 0), identity-diff PASS,
+       and the credential scan. Any red or unmeasured: stop.
+    5  Re-arm, push, disarm again in the same turn, and post a board row naming the checks that passed and the Source-Sha.
 
 - Keep the push URL disarmed at rest (`no_push`); a disarmed `git push` fails hard while fetch is untouched.
   Why: this is a speed bump, not a control: a seat can re-arm in one command and `gh` was authenticated machine-wide as of
   2026-09-06. Its worth is that its state is readable and its failure is loud, where a hook fails by silent absence. The
   bypass-proof version, which does not exist yet, is a credential only the keeper holds.
-- Keep step 5 manual. Why: a stored yes is the unattended publish the publishing law forbids: *"no unattended process
-  publishes"* (`exo_memory/journal/2026-07-28.md`); and a push to a public repo cannot be taken back: content is cached within
-  minutes and a later redacting commit advertises it (same record).
+- Push only what passed step 4. Why: a push to a public repo cannot be taken back (content is cached within minutes and a
+  later redacting commit advertises it, `exo_memory/journal/2026-07-28.md`), so the checks run before the push, never after.
 - Name the source commit in every consumer commit, as a trailer: `Source-Sha: <40-hex sha of the source HEAD it was
   generated from>`. Why: a trailer is decidable and prose is not.
 
@@ -390,30 +391,25 @@ It proves the sha resolves, not that it is the true source state; from a public 
 does not see pushes. More than one `Source-Sha` on a commit fires it, on purpose.
 
 Other registered falsifiers for this section: the consumer push URL found armed while no push is in progress
-(`git -C <consumer> remote get-url --push origin` is not `no_push`); a push to the consumer with no board row quoting the
-keeper's word for it (no instrument records pushes; the check is the keeper noticing or a seat reporting itself).
+(`git -C <consumer> remote get-url --push origin` is not `no_push`); a push to the consumer with no board row naming the
+checks it passed (no instrument records pushes; the check is the keeper noticing or a seat reporting itself).
 
 ---
 
 ## Pushing and publishing
 
-- Push either repository only on the keeper's word, for that push. You carry the push; panes never push. The consumer's
-  disarm-and-re-arm procedure is above.
-  Why: *"no unattended process publishes — a human, awake, saying yes"* (`exo_memory/journal/2026-07-28.md:189`), and the
-  consumer rule is the keeper's own (00:54, quoted above).
-- The one standing exception: the seal-row push. You may push unattended a commit whose diff is exactly one sealed-row file
-  under `exo_memory/loop/`, alone (`git log --name-only origin/main..HEAD` shows one commit, one path).
-  Why: a keyed task is refused dispatch until its row is on origin; the keeper said yes to this shape on 2026-09-16
-  (`exo_memory/loop/keeper_decisions_2026-09-16.md`), and the seal gate's audit line reports it after the fact.
-- Open for the keeper: on 2026-09-27 he said *"nah push all the work that is correct"* (the chair's memory,
-  `push-correct-work-dont-hold.md`), while later laps still held source pushes for his word. This draft keeps the
-  stricter rule until he says which stands.
+- Push work that has passed its work checks and the credential scan, without asking each time. This covers the source
+  repository, the public consumer repository and a consumer release alike. You carry the push; panes do not push.
+  Why: the keeper's standing permission, *"nah push all the work that is correct"* (2026-09-27), made the rule on 2026-10-09
+  (`exo_memory/loop/plan_lighten_the_load_2026-10-09.md`, "The keeper's decisions on B's drafts", decision 2).
+- The work checks for a push: for the source, the full suite green on what you landed; for the consumer, step 4 of the
+  procedure above. Why: they are what makes "correct" checkable before a push that cannot be taken back.
 - Run the credential scan before any push, to either repository. `consonance/hooks/push-gate.js` scans every commit the
   remote does not have and denies the push on a key shape; it fails open on its own errors, so confirm its decision for this
   push in `<data>/push-gate.jsonl` before you report the push done.
   Why: a published key cannot be recalled; remember-to-scan rules were followed 0.000–0.052 in the D210 census (the hook's header, D248).
-- In this room, committing by named paths in your own worktree is authorised for every lap; pushing is not. That standing
-  authorisation is stated in `COMMITTEE.md`.
+- Committing by named paths in your own worktree is authorised for every lap (`COMMITTEE.md`); pushing follows the standing
+  permission above.
 
 ---
 
@@ -433,7 +429,8 @@ keeper's word for it (no instrument records pushes; the check is the keeper noti
 
 - 3. Asking the user (the global file's ask-at-branch-points rules vs the no-questions-inside-a-lap rule). Both hold, scoped:
   inside a lap you do not stop to ask; you find the keeper's prior word and proceed, or file and park. Outside a lap, and for any
-  keeper-owned call (a push, a delete, a release, a licence, an irreversible change), you ask. The global file carries the
+  keeper-owned call (a delete, a licence, any other irreversible change), you ask; pushes and releases follow the standing push
+  permission. The global file carries the
   matching scoping line.
 - 4. Running the suite before reporting (the global "run the tests before reporting success" vs "the full suites are the
   collator's" and "a pane does not hold its turn open on the suite"). Both hold, scoped: a pane runs the tests that cover its
@@ -441,4 +438,5 @@ keeper's word for it (no instrument records pushes; the check is the keeper noti
   report success to the keeper only in the landing report after that run.
 - 5. Committing at all (the tool text "commit or push only when the user asks" vs the room's practice). Answered by the
   keeper's standing authorisation in `COMMITTEE.md`: committing by named paths in your own worktree is authorised for every lap;
-  pushing still needs the keeper's word.
+  pushing follows the keeper's standing permission of 2026-10-09 (what passes the work checks and the credential scan is pushed
+  without asking each time).

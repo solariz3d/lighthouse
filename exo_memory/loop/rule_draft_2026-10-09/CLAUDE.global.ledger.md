@@ -28,3 +28,9 @@ Original read whole at `C:\Users\nname\.claude\CLAUDE.md` (not edited). It has n
 | (new) | scoping section | added "Inside the committee room" (3 bullets, one shared why) and "Contradictions resolved" | CONTRADICTION 3, 4, 5 | Per STYLE.md, the global file carries the scoping; the rules themselves live in `BUILDING.md` and `COMMITTEE.md`. |
 
 Unsure: the "Inside the committee room" section has three bullets with one shared why rather than a why each; they are pointers to the canonical homes, so I kept them as one scoped unit. STYLE.md said "ONE line"; the task brief asked for one short section; I followed the brief.
+
+## Second commit: the keeper's decisions of 2026-10-09 (pane B)
+| where | outcome | flag | note |
+|---|---|---|---|
+| "Inside the committee room" | committing and pushing under the standing permissions; pushes and releases off the ask list | KEEPER DECISION 2 | |
+| "Inside the committee room" | each of the three scopings has its own why (they shared one) | KEEPER DECISION 3 | 52 rule bullets, 52 why lines |

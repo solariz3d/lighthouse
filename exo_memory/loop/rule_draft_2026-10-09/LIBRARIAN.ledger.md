@@ -66,3 +66,8 @@ No chair rule needed moving to `BUILDING.md` beyond the two pointers kept (check
 | BUILDING:569-588 (item 3) | rule (the map's contents) | moved here from BUILDING, rewritten | none | the chair's half (guess first, inquiry verbatim, plan against the map, a row per lap) stays in BUILDING |
 | BUILDING:601-618 | rule (door two: ring the inquiry before the map) | moved here from BUILDING, rewritten | none | the keeper's quoted design kept as the cited authority (`0714963`) |
 | LIBRARIAN draft :102, :109 | pointers | re-pointed from BUILDING "what a hand-back owes" items 6/7 to `COMMITTEE.md` "The hand-back" | none | those items moved to COMMITTEE in the BUILDING pass |
+
+## Second commit: the keeper's decisions of 2026-10-09 (pane B)
+| where | outcome | flag | note |
+|---|---|---|---|
+| commit-your-notes rule | "leave pushing to the keeper's word" became "leave pushing to the chair" | KEEPER DECISION 2 | |

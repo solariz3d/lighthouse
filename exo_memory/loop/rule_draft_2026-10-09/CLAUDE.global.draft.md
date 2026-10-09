@@ -140,13 +140,16 @@ These rules apply in every project: the committee room, the track builder, the t
 
 In the committee room (the Consonance / lighthouse repository), the room's briefs decide three things this file states generally:
 
-- Asking the user: inside a lap the chair proceeds on the keeper's prior word instead of stopping to ask; outside a lap, and for any keeper-owned call (a push, a delete, a release, a licence, an irreversible change), ask. See `BUILDING.md`.
+- Asking the user: inside a lap the chair proceeds on the keeper's prior word instead of stopping to ask; outside a lap, and for any keeper-owned call (a delete, a licence, any other irreversible change), ask. Pushes and releases follow the standing permission below. See `BUILDING.md`.
+  Why: a question mid-lap parks every seat behind it until one person answers, and the room is built to run while he is away.
 - When the full suite runs: a pane runs the tests that cover its change, under the heavy-run lock, before it hands back; the collator runs the full suite before it lands or reports success to the keeper. See `COMMITTEE.md` and `BUILDING.md`.
-- Committing: committing by named paths in your own worktree is standing-authorised by the keeper for every lap; pushing is not, and still needs the keeper's word. See `COMMITTEE.md`.
-  Why: the room runs many seats in parallel on one keeper's standing instructions; these scopings are how the general rules above apply there.
+  Why: concurrent full suites on one machine starve every seat, and the landing report is the success report that counts.
+- Committing and pushing: committing by named paths in your own worktree is standing-authorised by the keeper for every lap, and work that passes the work checks and the credential scan is pushed without asking each time. See `COMMITTEE.md` and `BUILDING.md`.
+  Why: the keeper's standing permissions (the push one decided 2026-10-09); the work checks, not a per-push yes, are what make a push safe.
 
 ## Contradictions resolved
 
 - 3, asking the user (this file's "ask first" and "ask at branch points" against `BUILDING.md`'s proceed-on-the-keeper's-prior-word): both stand, scoped by "Inside the committee room" above.
 - 4, running the suite before reporting (this file's first testing rule against `BUILDING.md`'s collator runs the full suite): both stand, scoped; in the room "before reporting success" means before the landing report.
-- 5, committing at all (Claude Code's tool text "commit or push only when the user asks" against the room's practice): answered by the keeper's standing authorisation to commit by named paths in your own worktree; pushing still needs his word.
+- 5, committing at all (Claude Code's tool text "commit or push only when the user asks" against the room's practice): answered by the keeper's standing authorisations: commit by named paths in your own worktree, and push what passes the work
+  checks and the credential scan.

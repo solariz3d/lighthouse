@@ -66,10 +66,26 @@ before any push; no junction in a handed-over worktree; never quoting a credenti
   Third Place path anywhere in the drafts. No test touches these files (they are under `exo_memory/loop/`, outside the wake set and the
   generator's manifest).
 
-## Open for the keeper
-- **Source pushes.** His 2026-09-27 "nah push all the work that is correct" (the chair's memory) against later laps holding pushes for his word.
-  The draft keeps the stricter rule until he says.
-- **Whether the global file's +38% (a why on every rule) is worth it.**
+## Open for the keeper: answered 2026-10-09 11:5x, applied in the second commit
+His decisions are at `exo_memory/loop/plan_lighten_the_load_2026-10-09.md`, "The keeper's decisions on B's drafts".
+- **Decision 2, pushes: the standing permission replaces the stricter rule in every draft where it appeared** (BUILDING, COMMITTEE, LIBRARIAN,
+  global). Work that passes the work checks and the credential scan is pushed without asking each time.
+  - It covers the source repository, the public consumer repository and a consumer release under the same rule.
+  - My view, asked for: the consumer needs no different rule, because it already has the strongest work checks. BUILDING's procedure, step 4,
+    names them for a push: the gate green, parity (0, 0, 0), identity-diff PASS on that generation, and the credential scan. A red or
+    unmeasured check stops the push.
+  - The seal-row exception is dropped, since the permission includes it. The disarm-at-rest push URL is kept, because it guards against an
+    accidental push, not a deliberate one.
+  - Pushes and releases left the "ask first" lists. The keeper's 09-06 consumer quote stays as a dated trace, marked superseded for pushes.
+- **Decision 3, the global file:** it keeps a why on every rule. All 52 rule bullets carry one, including the three committee-room scopings,
+  which had shared one why in the first commit.
+
+## Before → after, as committed now (second commit, after the decisions)
+Lines 1,334 → 770. Bytes 114,232 → 74,167. RULE blocks 145 → 122. Prohibition/positive 82/63 → 37/85. No-why 109 → 19. MUST-type 4 → 0. ALL-CAPS
+334 → 22. Bold 293 → 23. The global file is 8,878 → 12,669 B (+43%).
+
+Same command as before; output in `…_evidence/measure_after_decisions.tsv`. carrier-drift is still GREEN. The first commit's figures (lines → 768,
+ALL-CAPS → 21, global +38%) are superseded by these.
 
 ## Corrections (mine)
 - **The packet asked for drafts "beside the originals".** I put them in one folder instead, because a `.draft.md` in `brief/` turns
