@@ -136,6 +136,13 @@ const LIBRARIAN_FIRST_NEW = [
 ].join('\n');
 const LIBRARIAN = [...CHECKED_OR_INFERRED, [LIBRARIAN_FIRST, LIBRARIAN_FIRST_NEW, 1]];
 const THIRD_PLACE = [['meet either as a peer who has earned the accurate, unguarded version.', `meet either as a peer, ${UNGUARDED}.`, 1]];
+// lap 4b (B's parity note, p-consumer-parity-B_2026-10-08.md:592-594): TRAINING named catch-ledger.js as if it were in the tree; it does not ship
+const NOT_CARRIED = "in the original room's repository; this copy does not carry it";
+const TRAINING = [
+  ["applying `catch-ledger.js`'s withholding rule", `applying the withholding rule of \`catch-ledger.js\` (a tool ${NOT_CARRIED})`, 1],
+  ['**`catch-ledger.js`**, over a master in this line of record', `**\`catch-ledger.js\`** (${NOT_CARRIED}), over a master in this line of record`, 1],
+  ["attaches to catch-ledger's number:", "attaches to catch-ledger's number (that tool, too, stays in the original room's repository):", 1],
+];
 // lap 4, C4/C5: two cards wrote the keeper's case as if it were the person here. The move ships; each line says whose case it was.
 const VERIFY_CARD = [
   ['before presenting it to the keeper;', `before presenting it to ${P};`, 1],
@@ -163,6 +170,7 @@ const SITES = Object.freeze({
   'consonance/src-tauri/brief/COMMITTEE.md': { rows: CHECKED_OR_INFERRED },
   'consonance/src-tauri/brief/LIBRARIAN.md': { rows: LIBRARIAN },
   'consonance/src-tauri/brief/THIRD_PLACE.md': { rows: THIRD_PLACE },
+  'exo_memory/TRAINING.md': { rows: TRAINING },
   'exo_memory/cards/verify-before-claiming.md': { rows: VERIFY_CARD },
   'exo_memory/cards/engagement-honesty-over-performance.md': { rows: HONESTY_CARD },
   'consonance/src-tauri/brief/SEED.md': { rows: SEED, forkAfter: 'and then attend to *them*.\n' },
@@ -182,6 +190,7 @@ const EXPECTED_KEEPER_LINES = Object.freeze({
   'consonance/src-tauri/brief/COMMITTEE.md': 5,
   'consonance/src-tauri/brief/LIBRARIAN.md': 6,
   'consonance/src-tauri/brief/THIRD_PLACE.md': 1,
+  'exo_memory/TRAINING.md': 9,
   'exo_memory/cards/verify-before-claiming.md': 5,
   'exo_memory/cards/engagement-honesty-over-performance.md': 5,
   'consonance/src-tauri/brief/SEED.md': 5,

@@ -180,3 +180,10 @@ test('lap 4 C4/C5: the two person-specific cards keep their move, say whose case
   }
   assert.ok(shipped('exo_memory/cards/verify-before-claiming.md').includes('build a fast **deterministic** check'), 'the move itself was lost');
 });
+
+test('lap 4b: TRAINING never presents catch-ledger.js as in this tree; each mention says the copy does not carry it', () => {
+  const t = shipped('exo_memory/TRAINING.md');
+  const lines = t.split('\n'), at = lines.map((l, i) => [l, i]).filter(([l]) => /catch-ledger/.test(l));
+  assert.equal(at.length, 3, 'the three registered mentions');
+  for (const [l, i] of at) assert.ok(/does not carry it|stays in the original room's repository/.test(l), 'TRAINING.md:' + (i + 1) + ' still presents catch-ledger as present: ' + l);
+});
