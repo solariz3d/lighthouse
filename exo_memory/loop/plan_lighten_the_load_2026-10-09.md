@@ -44,3 +44,26 @@ gets measurably MORE wrong. A slower lap alone is not a revert; more wrong is.
   then score H3, and only after that does the consumer get regenerated from it.
 
 NEXT: chair dispatch D277 parts 1, 2 and 4 now (C, E, A) and part 3 to B when C's census is in, when this plan is read
+
+## Amendment, registered BEFORE any switch flips (librarian, 11:4x), from A's baseline (`loop/lighten_baseline_2026-10-09.md`)
+- **(a) gets a measure that works under WARN.** With no refusal there is no refusal → re-send pair, so E's method has no "after". Replaced, both sides
+  measured the same way: **(a′) specificity density**, meaning per hand-off message (rings, dispatches, replies to the keeper), the count of specifics
+  (figures with a unit, `path:line`, shas, digests, quoted commands) per 1,000 characters, before vs after. Plus **(a″)**, under WARN, the share of
+  warned messages that the seat revised, and of those, blur vs fix, by E's labels. H3 predicts (a′) does not fall.
+- **(b) is armed.** E rebuilds the sample draw script, which is not in the repo, and fixes `frame.js`, which reads the chair's 549 MB transcript as zero
+  (the V8 string limit, the same failure A chunked in `sourced` and `session-end`). That is done and committed BEFORE 2026-10-10T11:55Z, when the
+  window closes. Then E builds the frame and B + C verify blind, as the 10-03 registration says, and the librarian scores. That is the "before" number
+  for H3.
+- **(d) is UNMEASURED**, named as such: there is no instrument that counts composition misses. H3 is scored on (a′), (a″), (b) and (c) only.
+
+## The keeper's decisions on B's drafts (2026-10-09 11:5x)
+B's drafts: branch b-rule-draft 1cff0c86, `exo_memory/loop/rule_draft_2026-10-09/` (lines 1,334 → 768; bytes 114,232 → 73,431; no-why 109 → 20;
+ALL-CAPS 334 → 21; prohibition/positive 82/63 → 36/88; MUST-type 4 → 0; six contradictions resolved).
+1. **GO LIVE**, with E's gate switch when it is ready. A week live, then re-measure (a′), (a″), (b), (c) against A's frozen baseline; REVERT if (b) is worse
+   than the pre-gate 4.9% beyond its interval.
+2. **PUSHES: standing permission.** Work that passes the work checks and the credential scan is pushed without asking each time (the keeper's 09-27
+   "push all the work that is correct", now the rule). The draft's stricter push rule is replaced with this.
+3. **The global CLAUDE.md keeps a why on every rule** (+38% bytes). It applies to every project, and the keeper chose it explicitly.
+**The landing (chair):** swap each draft over its live source (BUILDING/COMMITTEE/LIBRARIAN in `consonance/src-tauri/brief/`, the project CLAUDE.md,
+`exo_memory/CLAUDE.global.md` → `~/.claude/CLAUDE.md`), with B's push-rule line amended per decision 2, the identity diff and the touched tests green.
+Only together with E's gate switch, so no seat reads a softer rule than the one still enforced.

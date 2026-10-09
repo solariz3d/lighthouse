@@ -1,0 +1,172 @@
+# raw measurement output of loop_friction_A.js on C:/Consonance/data/lap.jsonl
+rows 2655; chain rows 1913; laps with chain rows 273; rounds 666; closed cycles with a dispatch 275
+first row 2026-08-24T07:23:59.643Z  last row 2026-10-09T17:27:07.367Z
+C1 2026-10-02T19:58:12.000Z (first sources-gate.jsonl row)  C2 2026-10-03T12:02:32.000Z (reply slot live, commit 783d5905)
+
+## ITEM 3a - rounds (dispatched run -> next chain row), by era, minutes
+before: rounds 430; E1 n=430 median 14.4 (IQR 6.0-30.5) min; E2(handbacks-in recorded) n=98 median 20.3 (IQR 10.5-41.3) min
+transition: rounds 23; E1 n=23 median 4.6 (IQR 3.0-9.4) min; E2(handbacks-in recorded) n=0
+after: rounds 213; E1 n=211 median 11.9 (IQR 4.0-40.6) min; E2(handbacks-in recorded) n=0
+
+E1 target row type, by era (count of rounds):
+before: {"map/chair":3,"return-leg/librarian":1,"handbacks-in/chair":23,"working/panes":6,"handbacks-in/librarian":69,"filed/chair":104,"filed/none":18,"return-leg/chair":21,"working/chair":184,"filed/panes":1}
+transition: {"working/chair":22,"working/panes":1}
+after: {"working/chair":208,"filed/librarian":3,"null":2}
+E1 median after - before = -2.5 min; bootstrap 95% [-6.5, 3.7]
+E2 median after - before = -20.3 min; bootstrap 95% [n/a]
+
+## ITEM 3b - per pane: SINGLE-pane rounds only (the cleanest per-pane read), E1 and E2, by era
+pane A:
+  before: E1 n=59 median 9.8 (IQR 4.2-20.6) min; E2 n=8 median 11.4 (IQR 9.3-14.3) min
+  transition: E1 n=6 median 12.4 (IQR 5.4-17.3) min; E2 n=0
+  after: E1 n=31 median 13.5 (IQR 4.3-46.1) min; E2 n=0
+pane B:
+  before: E1 n=56 median 12.5 (IQR 5.9-27.4) min; E2 n=13 median 11.5 (IQR 6.0-17.4) min
+  transition: E1 n=6 median 6.5 (IQR 4.7-8.8) min; E2 n=0
+  after: E1 n=47 median 8.0 (IQR 4.0-32.0) min; E2 n=0
+pane C:
+  before: E1 n=46 median 12.5 (IQR 6.5-22.6) min; E2 n=9 median 12.6 (IQR 6.5-22.8) min
+  transition: E1 n=0; E2 n=0
+  after: E1 n=25 median 17.4 (IQR 5.6-37.6) min; E2 n=0
+pane E:
+  before: E1 n=47 median 10.7 (IQR 5.8-23.1) min; E2 n=7 median 15.4 (IQR 6.4-23.9) min
+  transition: E1 n=3 median 3.6 (IQR 2.2-5.1) min; E2 n=0
+  after: E1 n=28 median 13.0 (IQR 5.7-49.2) min; E2 n=0
+pane J:
+  before: E1 n=1 median 31.4 (IQR 31.4-31.4) min; E2 n=1 median 31.4 (IQR 31.4-31.4) min
+  transition: E1 n=0; E2 n=0
+  after: E1 n=0; E2 n=0
+pane K:
+  before: E1 n=2 median 40.9 (IQR 38.9-42.9) min; E2 n=2 median 40.9 (IQR 38.9-42.9) min
+  transition: E1 n=0; E2 n=0
+  after: E1 n=0; E2 n=0
+pane L:
+  before: E1 n=1 median 15.8 (IQR 15.8-15.8) min; E2 n=1 median 15.8 (IQR 15.8-15.8) min
+  transition: E1 n=0; E2 n=0
+  after: E1 n=0; E2 n=0
+
+## ITEM 3c - per pane: ANY round the pane was in (co-dispatch included), E1, by era
+pane A: before n=203 median 13.6 (IQR 6.4-30.5) min | transition n=14 median 4.1 (IQR 2.0-13.8) min | after n=84 median 11.4 (IQR 3.2-39.3) min
+pane B: before n=148 median 14.6 (IQR 7.5-34.5) min | transition n=9 median 5.0 (IQR 4.2-8.0) min | after n=103 median 10.8 (IQR 3.9-36.8) min
+pane C: before n=176 median 15.1 (IQR 7.0-31.8) min | transition n=4 median 3.4 (IQR 1.4-7.6) min | after n=74 median 13.1 (IQR 4.4-41.1) min
+pane E: before n=172 median 18.2 (IQR 6.5-38.6) min | transition n=7 median 2.5 (IQR 0.7-3.8) min | after n=80 median 13.0 (IQR 3.9-44.5) min
+pane K: before n=5 median 44.8 (IQR 41.9-68.2) min | transition n=0 | after n=0
+
+## ITEM 3d - weekly medians of E1 (week starts Monday UTC), all rounds, with n and the share of rounds that were multi-pane
+2026-08-24  rounds   7  E1 median 12.3  multi-pane share 0%
+2026-08-31  rounds  30  E1 median 41.7  multi-pane share 30%
+2026-09-07  rounds  16  E1 median 32.6  multi-pane share 44%
+2026-09-14  rounds 105  E1 median 13.3  multi-pane share 54%
+2026-09-21  rounds 167  E1 median 10.3  multi-pane share 42%
+2026-09-28  rounds 173  E1 median 11.7  multi-pane share 43%
+2026-10-05  rounds 168  E1 median 11.8  multi-pane share 40%
+
+## ITEM 3e - cycles (first dispatch -> filed), by era of the first dispatch
+before: n=237 median 30.3 (IQR 11.5-71.5) min
+transition: n=5 median 36.3 (IQR 28.7-37.3) min
+after: n=33 median 123.7 (IQR 41.3-286.4) min
+cycle median after - before = 93.4 min; bootstrap 95% [43.0, 144.2]
+cycle size by era (rounds per cycle, median / mean): before 1.0/1.8 | transition 3.0/4.4 | after 4.0/6.4
+
+## H2 - single-pane vs split cycles, merge included (dispatch -> filed)
+
+### ALL ERAS: 275 closed cycles
+no lettered pane (dispatch named a non-pane seat only): n=20 median 61.7 (IQR 29.0-403.0) min; tail(last panes-round -> filed) n=20 median 31.3 (IQR 7.3-98.1) min; rounds/cycle median 1.0
+single (one pane for the whole cycle): n=86 median 14.6 (IQR 5.6-30.3) min; tail(last panes-round -> filed) n=86 median 0.0 (IQR 0.0-0.5) min; rounds/cycle median 1.0
+serial (one pane per round, 2+ different panes over the cycle): n=34 median 32.7 (IQR 13.9-77.4) min; tail(last panes-round -> filed) n=34 median 0.1 (IQR 0.0-0.3) min; rounds/cycle median 2.5
+split=2 (some round had 2 panes): n=69 median 48.6 (IQR 19.0-117.5) min; tail(last panes-round -> filed) n=69 median 0.0 (IQR 0.0-0.9) min; rounds/cycle median 1.0
+split>=3 (some round had 3+ panes): n=66 median 62.7 (IQR 31.1-242.7) min; tail(last panes-round -> filed) n=66 median 0.0 (IQR 0.0-0.4) min; rounds/cycle median 2.0
+H2 test (all strata pooled): split(maxK>=2) n=135 median 55.0 (IQR 22.3-138.1) min vs single n=86 median 14.6 (IQR 5.6-30.3) min: median diff 40.3 min; bootstrap 95% [24.8, 60.9]
+                           split(maxK>=3) n=66 median 62.7 (IQR 31.1-242.7) min vs single: median diff 48.0 min; bootstrap 95% [25.1, 98.3]
+stratified by size proxy = rounds per cycle (the only size the ledger records):
+  1 round: split n=61 median 31.4 (IQR 12.2-59.4) min | single n=76 median 12.8 (IQR 5.2-22.7) min | serial n=0 | split-single median diff 18.5 [95% 7.6, 30.0]
+  2-3 rounds: split n=39 median 55.0 (IQR 21.2-119.5) min | single n=10 median 35.6 (IQR 17.4-60.8) min | serial n=27 median 26.3 (IQR 12.6-50.1) min | split-single median diff 19.4 [95% -22.1, 57.3]
+  4+ rounds: split n=35 median 191.2 (IQR 92.1-423.9) min | single n=0 | serial n=7 median 76.1 (IQR 37.7-90.3) min | split-single median diff n/a
+
+### BEFORE the paperwork gates: 237 closed cycles
+no lettered pane (dispatch named a non-pane seat only): n=20 median 61.7 (IQR 29.0-403.0) min; tail(last panes-round -> filed) n=20 median 31.3 (IQR 7.3-98.1) min; rounds/cycle median 1.0
+single (one pane for the whole cycle): n=80 median 15.3 (IQR 5.7-30.4) min; tail(last panes-round -> filed) n=80 median 0.0 (IQR 0.0-0.6) min; rounds/cycle median 1.0
+serial (one pane per round, 2+ different panes over the cycle): n=23 median 21.5 (IQR 11.4-50.1) min; tail(last panes-round -> filed) n=23 median 0.0 (IQR 0.0-0.3) min; rounds/cycle median 2.0
+split=2 (some round had 2 panes): n=60 median 41.3 (IQR 15.7-94.5) min; tail(last panes-round -> filed) n=60 median 0.0 (IQR 0.0-1.0) min; rounds/cycle median 1.0
+split>=3 (some round had 3+ panes): n=54 median 51.8 (IQR 24.0-128.3) min; tail(last panes-round -> filed) n=54 median 0.0 (IQR 0.0-0.1) min; rounds/cycle median 2.0
+H2 test (all strata pooled): split(maxK>=2) n=114 median 42.8 (IQR 19.6-117.2) min vs single n=80 median 15.3 (IQR 5.7-30.4) min: median diff 27.5 min; bootstrap 95% [17.4, 43.1]
+                           split(maxK>=3) n=54 median 51.8 (IQR 24.0-128.3) min vs single: median diff 36.5 min; bootstrap 95% [17.7, 68.7]
+stratified by size proxy = rounds per cycle (the only size the ledger records):
+  1 round: split n=61 median 31.4 (IQR 12.2-59.4) min | single n=70 median 13.2 (IQR 5.3-23.3) min | serial n=0 | split-single median diff 18.1 [95% 7.2, 29.4]
+  2-3 rounds: split n=36 median 52.3 (IQR 21.2-117.8) min | single n=10 median 35.6 (IQR 17.4-60.8) min | serial n=20 median 19.9 (IQR 10.8-43.5) min | split-single median diff 16.8 [95% -21.9, 61.2]
+  4+ rounds: split n=17 median 185.1 (IQR 85.6-410.0) min | single n=0 | serial n=3 median 77.9 (IQR 77.0-90.3) min | split-single median diff n/a
+
+### AFTER the paperwork gates: 33 closed cycles
+no lettered pane (dispatch named a non-pane seat only): n=0; tail(last panes-round -> filed) n=0; rounds/cycle median n/a
+single (one pane for the whole cycle): n=5 median 9.8 (IQR 3.8-20.5) min; tail(last panes-round -> filed) n=5 median 0.0 (IQR 0.0-0.1) min; rounds/cycle median 1.0
+serial (one pane per round, 2+ different panes over the cycle): n=8 median 113.0 (IQR 40.8-146.0) min; tail(last panes-round -> filed) n=8 median 0.2 (IQR 0.1-0.4) min; rounds/cycle median 3.0
+split=2 (some round had 2 panes): n=9 median 99.3 (IQR 91.2-132.5) min; tail(last panes-round -> filed) n=9 median 0.2 (IQR 0.1-0.3) min; rounds/cycle median 5.0
+split>=3 (some round had 3+ panes): n=11 median 409.3 (IQR 238.8-1046.7) min; tail(last panes-round -> filed) n=11 median 0.2 (IQR 0.2-0.6) min; rounds/cycle median 13.0
+H2 test (all strata pooled): split(maxK>=2) n=20 median 233.8 (IQR 96.1-416.4) min vs single n=5 median 9.8 (IQR 3.8-20.5) min: median diff 224.0 min; bootstrap 95% [85.4, 392.9]
+                           split(maxK>=3) n=11 median 409.3 (IQR 238.8-1046.7) min vs single: median diff 399.5 min; bootstrap 95% [181.4, 1166.6]
+stratified by size proxy = rounds per cycle (the only size the ledger records):
+  1 round: split n=0 | single n=5 median 9.8 (IQR 3.8-20.5) min | serial n=0 | split-single median diff n/a
+  2-3 rounds: split n=3 median 65.5 (IQR 42.7-176.0) min | single n=0 | serial n=5 median 133.6 (IQR 92.4-143.2) min | split-single median diff n/a
+  4+ rounds: split n=17 median 276.3 (IQR 99.3-437.8) min | single n=0 | serial n=3 median 46.7 (IQR 30.5-100.5) min | split-single median diff n/a
+
+## H2 - the merge alone: tail = (chair takes the chain back after the LAST panes round) -> filed
+no lettered pane (dispatch named a non-pane seat only): n=20 median 31.3 (IQR 7.3-98.1) min
+single (one pane for the whole cycle): n=86 median 0.0 (IQR 0.0-0.5) min
+serial (one pane per round, 2+ different panes over the cycle): n=34 median 0.1 (IQR 0.0-0.3) min
+split=2 (some round had 2 panes): n=69 median 0.0 (IQR 0.0-0.9) min
+split>=3 (some round had 3+ panes): n=66 median 0.0 (IQR 0.0-0.4) min
+
+## Who closes the cycle (holder on the filed row), by class: {"no lettered pane (dispatch named a non-pane seat only)":{"chair":14,"none":6},"single (one pane for the whole cycle)":{"chair":57,"none":23,"librarian":5,"panes":1},"serial (one pane per round, 2+ different panes over the cycle)":{"none":6,"chair":22,"librarian":6},"split=2 (some round had 2 panes)":{"none":29,"chair":34,"librarian":6},"split>=3 (some round had 3+ panes)":{"chair":36,"none":18,"librarian":12}}
+
+## Hours the cycles span in the data, by class (is a cycle one task? duration > 8h):
+no lettered pane (dispatch named a non-pane seat only): cycles over 8h 5 of 20
+single (one pane for the whole cycle): cycles over 8h 0 of 86
+serial (one pane per round, 2+ different panes over the cycle): cycles over 8h 1 of 34
+split=2 (some round had 2 panes): cycles over 8h 6 of 69
+split>=3 (some round had 3+ panes): cycles over 8h 9 of 66
+
+## E3 - dispatch -> last hand-back (board.jsonl committee posts, chain-status's rule). board committee posts read 565 (unparseable lines skipped: 1)
+before: rounds with panes 407; E3 n=43 median 16.5 (IQR 8.0-23.4) min; censored (a pane had not posted by the round's end) 364
+transition: rounds with panes 23; E3 n=0; censored (a pane had not posted by the round's end) 23
+after: rounds with panes 213; E3 n=0; censored (a pane had not posted by the round's end) 213
+E3 median after - before = -16.5 min; bootstrap 95% [n/a]
+
+E3 per pane, SINGLE-pane rounds:
+pane A: before n=0 | transition n=0 | after n=0
+pane B: before n=8 median 23.4 (IQR 17.2-45.2) min | transition n=0 | after n=0
+pane C: before n=28 median 13.2 (IQR 7.7-20.5) min | transition n=0 | after n=0
+pane E: before n=2 median 7.9 (IQR 7.9-8.0) min | transition n=0 | after n=0
+
+## ROUND TIME BY NUMBER OF PANES DISPATCHED IN THE ROUND (K) - the elapsed price of adding a pane to one round
+ALL ERAS:
+  K=1: E1 n=358 median 11.2 (IQR 4.9-26.6) min | E3 n=40 median 14.8 (IQR 8.0-22.4) min | E3 censored 319
+  K=2: E1 n=176 median 15.8 (IQR 5.2-41.1) min | E3 n=3 median 30.8 (IQR 25.1-65.7) min | E3 censored 173
+  K=3: E1 n=55 median 13.3 (IQR 7.0-33.5) min | E3 n=0 | E3 censored 56
+  K=4: E1 n=51 median 16.5 (IQR 8.4-37.6) min | E3 n=0 | E3 censored 51
+BEFORE:
+  K=1: E1 n=212 median 11.8 (IQR 5.3-23.5) min | E3 n=40 median 14.8 (IQR 8.0-22.4) min | E3 censored 172
+  K=2: E1 n=123 median 17.9 (IQR 6.5-42.8) min | E3 n=3 median 30.8 (IQR 25.1-65.7) min | E3 censored 120
+  K=3: E1 n=38 median 21.8 (IQR 9.5-33.8) min | E3 n=0 | E3 censored 38
+  K=4: E1 n=33 median 17.5 (IQR 8.9-37.5) min | E3 n=0 | E3 censored 33
+AFTER:
+  K=1: E1 n=131 median 11.4 (IQR 4.2-41.2) min | E3 n=0 | E3 censored 132
+  K=2: E1 n=48 median 15.6 (IQR 3.4-36.0) min | E3 n=0 | E3 censored 48
+  K=3: E1 n=14 median 11.5 (IQR 3.8-37.6) min | E3 n=0 | E3 censored 15
+  K=4: E1 n=18 median 12.4 (IQR 3.7-34.5) min | E3 n=0 | E3 censored 18
+E3 ratio to K=1 (all eras): K=2 2.1x, K=3 0.0x, K=4 0.0x  (serial work by K single panes would be ~K x, ASSUMING equal-size parts - which the ledger cannot confirm)
+
+## SENSITIVITY - "before" = only the 14 days before the SOURCES gate (2026-09-18 .. 10-02), vs after
+E1: before14 n=316 median 11.5 (IQR 5.2-25.7) min | after n=211 median 11.9 (IQR 4.0-40.6) min | diff 0.4 [95% -3.7, 6.3]
+E3: before14 n=36 median 16.0 (IQR 7.6-23.2) min | after n=0 | diff -16.0 [95% n/a]
+multi-pane share of rounds: before14 43% | after 38%
+panes per round, mean: before14 1.66 | after 1.62
+rounds per day: before14 22.6 | after 34.2
+
+## BASELINE - ledger cut at 2026-10-09T17:27:07.367Z (the newest row); every window ends there
+since the reply slot went live (C2): rounds 213; E1 n=211 median 11.9 (IQR 4.0-40.6) min; mean panes/round 1.62; multi-pane share 38%; rounds/day 34.2; share of E1 over 60 min 13%
+last 7 days: rounds 239; E1 n=237 median 10.3 (IQR 4.0-37.3) min; mean panes/round 1.60; multi-pane share 38%; rounds/day 34.1; share of E1 over 60 min 11%
+last 3 days: rounds 91; E1 n=89 median 9.3 (IQR 2.6-31.8) min; mean panes/round 1.95; multi-pane share 52%; rounds/day 30.3; share of E1 over 60 min 10%
+last 24 hours: rounds 34; E1 n=32 median 11.8 (IQR 6.7-26.9) min; mean panes/round 2.68; multi-pane share 82%; rounds/day 34.0; share of E1 over 60 min 3%
+
+## E1 vs E3 on the 43 rounds that have both: E1 - E3 n=43 median 2.0 (IQR 0.7-8.8) min; E1 earlier than E3 in 3; E1 within 2 min of E3 in 19
+last letter-attributed committee post on the board: 2026-09-28T17:57:59.905Z; last handbacks-in row in lap.jsonl: 2026-09-28T14:25:37.526Z

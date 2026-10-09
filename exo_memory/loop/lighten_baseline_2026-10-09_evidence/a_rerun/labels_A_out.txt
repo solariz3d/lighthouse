@@ -1,0 +1,66 @@
+{
+ "sources": {
+  "recoveredPairs": 131,
+  "probes": 4,
+  "pairsExProbes": 127,
+  "contentChanged": 42,
+  "contentChangedPct": 33.1,
+  "claimDrop": 13,
+  "claimFix": 4,
+  "claimPct": 13.4,
+  "labels": {
+   "PROBE": 4,
+   "META": 3,
+   "CLAIM-FIX": 4,
+   "ADD": 8,
+   "CLAIM-DROP": 13,
+   "WORDING": 4,
+   "POINTER": 8,
+   "CITE": 2
+  }
+ },
+ "reply": {
+  "recoveredPairs": 35,
+  "probes": 0,
+  "pairsExProbes": 35,
+  "contentChanged": 24,
+  "contentChangedPct": 68.6,
+  "claimDrop": 6,
+  "claimFix": 4,
+  "claimPct": 28.6,
+  "labels": {
+   "CLAIM-FIX": 4,
+   "CLAIM-DROP": 6,
+   "META": 8,
+   "POINTER": 2,
+   "WORDING": 4
+  }
+ },
+ "trailer": {
+  "recoveredPairs": 43,
+  "probes": 3,
+  "pairsExProbes": 40,
+  "contentChanged": 12,
+  "contentChangedPct": 30,
+  "claimDrop": 2,
+  "claimFix": 0,
+  "claimPct": 5,
+  "labels": {
+   "PROBE": 3,
+   "ADD": 2,
+   "META": 2,
+   "FORMAT": 2,
+   "WORDING": 4,
+   "CLAIM-DROP": 2
+  }
+ },
+ "pooled": {
+  "pairsExProbes": 202,
+  "contentChanged": 78,
+  "contentChangedPct": 38.6,
+  "claimDrop": 21,
+  "claimFix": 8,
+  "claimPct": 14.4,
+  "claimFixPct": 4
+ }
+}
