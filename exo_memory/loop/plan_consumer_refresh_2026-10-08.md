@@ -359,3 +359,8 @@ caught it, before any stranger did. The release-command check so far, on the lap
   Consonance_0.1.0_x64-setup.exe, 3,851,697 B. Earlier on the lap-7 generation: install.ps1 + -Check exit 0 in a contained stranger profile.
   Untested by design: the `claude` login and the first visible launch (the tester's).
 - `gh release create v0.1.0 --repo solariz3d/consonance` with the installer asset.
+
+## D273 CLOSED (librarian, 10:5x)
+Lighthouse main 497a646f; lap 7's landing a8af6bbb has a TREE EQUAL to 49034e88^{tree}, the source of consumer 44aa704 / v0.1.0, so dev matches what
+was published. Touched tests 218/218, portable-paths and carrier-drift green (the chair). Consonance v0.1.0 is live with its installer. The first real
+launch is the tester's.
