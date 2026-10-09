@@ -18,7 +18,8 @@ const vm = require('vm');
 const { spawnSync } = require('child_process');
 
 const REPO = path.join(__dirname, '..', '..');
-const HOOKS = ['dev/shell/hooks/session-start.js', 'consonance/hooks/sessionstart-state.js', 'consonance/hooks/findings-return.js', 'consonance/hooks/sourced-stop.js', 'consonance/hooks/precompact-preserve.js'];
+const HOOKS = ['dev/shell/hooks/session-start.js', 'consonance/hooks/sessionstart-state.js', 'consonance/hooks/findings-return.js', 'consonance/hooks/sourced-stop.js', 'consonance/hooks/precompact-preserve.js',
+  'consonance/hooks/blind.js'];   // D273 lap 5 (cold read 2, B9): blind.js joined with the same block, verbatim; the block's own comment lists the first five
 const text = (h) => fs.readFileSync(path.join(REPO, h), 'utf8').replace(/\r\n/g, '\n');
 const blockOf = (t) => { const a = t.indexOf('// D273 dirs: begin'), b = t.indexOf('// D273 dirs: end'); return a < 0 || b < 0 ? null : t.slice(a, b + '// D273 dirs: end'.length); };
 /** consonanceDir from a hook's own block, run with this env (no hook body runs). */
@@ -53,6 +54,8 @@ test('row 4: the env overrides each hook had still win over the rule', () => {
   const h = home();
   assert.strictEqual(run(HOOKS[1], ['DATA'], { USERPROFILE: h, CONSONANCE_DATA: 'E:\\ov' }).DATA, 'E:\\ov');
   assert.strictEqual(run(HOOKS[4], ['DATA'], { USERPROFILE: h, CONSONANCE_DATA: 'E:\\ov' }).DATA, 'E:\\ov');
+  assert.strictEqual(run(HOOKS[5], ['DATA'], { USERPROFILE: h, CONSONANCE_DATA: 'E:\\ov' }).DATA, 'E:\\ov');
+  assert.strictEqual(run(HOOKS[5], ['DATA'], { USERPROFILE: h }).DATA, `${h}\\.consonance`, 'blind.js without the override: the app\'s default, never C:\\Consonance');
   assert.deepStrictEqual(run(HOOKS[2], ['DATA', 'RETURNS', 'STATEDIR'], { USERPROFILE: h, VANTAGE_DATA: 'E:\\v', RETURN_LEDGER: 'E:\\r.jsonl', RETURN_STATE_DIR: 'E:\\s' }), { DATA: 'E:\\v', RETURNS: 'E:\\r.jsonl', STATEDIR: 'E:\\s' });
   assert.strictEqual(run(HOOKS[3], ['LEDGER'], { USERPROFILE: h, SOURCED_LEDGER: 'E:\\l.jsonl' }).LEDGER, 'E:\\l.jsonl');
   // and without them, RETURNS stays out from under VANTAGE_DATA, as it always was

@@ -13,6 +13,7 @@ You'll need:
 - The **Claude Code CLI** (`claude`) on your PATH — Consonance runs *real* `claude` sessions, not an imitation
 - **Node.js** on your PATH — the hooks (the checks that run inside each session) are Node scripts
 - **Python 3** — a real `python.exe` on your PATH or in `%LOCALAPPDATA%\Programs\Python`, not the Microsoft Store stub; one hook (the pulse) is Python
+- **Git** on your PATH — to clone the repo, and because the launch shortcut and the USB scripts below run `git pull`
 
 Install Node and Python **before** the hooks step below: the installer writes the path it finds into each hook, and finds nothing if they are not there yet.
 
@@ -43,7 +44,7 @@ The hooks keep their records in the same **Data folder** as the app (Settings, b
 
 The first time it opens, you land on the **Settings** tab. Point it at three things:
 
-- **Startup brief** — the file a new instance reads when it wakes, so it arrives already familiar with your work instead of blank. Start with the example the repo ships (`exo_memory/BOOT.md`) or your own.
+- **Startup brief** — the file a new instance reads when it wakes, so it arrives already familiar with your work instead of blank. Use the one the repo ships, `exo_memory\BOOT.md` in your clone, and make it your own by editing that file. **Keep the setting pointing at `<your clone>\exo_memory\BOOT.md`:** Consonance and its scripts find your clone *from this path* (two folders up), so a brief saved anywhere else leaves the seats' maps, the USB scripts and the hooks that look for the repo unable to find it.
 - **Instances folder** — where each instance's working directory lives.
 - **Data folder** — where Consonance keeps its shared log and notes.
 
@@ -95,6 +96,48 @@ They're **numbers you read**, never a verdict the program acts on. You stay the 
 ## 7. The Orchestrator
 
 The **★ Orchestrator** tab is a persistent instance that oversees the whole thing *with* you. It wakes into the same conversation across restarts (not a fresh stranger each launch), watches the other instances, and is where you talk to Consonance across days. Think of it as the one you keep working with, while individual panes come and go.
+
+---
+
+## 8. The full loop — orchestrator, librarian, panes
+
+Section 4 is a quick second opinion that you run by hand. The full loop runs without you carrying messages between seats:
+
+1. **Wake the seats.** On the **★ Orchestrator** tab click **Wake the orchestrator**; on the **▤ Librarian** tab click **Wake the librarian**. Both persist across restarts. In the **Terminal** tab, spawn a few **briefed** panes.
+2. **Say what you want**, to the orchestrator (or straight to the librarian; either starts the round).
+3. **The librarian looks it up** first: what your record already says, cited by file and line.
+4. **The orchestrator splits the work** and sends each pane its own piece and its own files.
+5. **Each pane writes a hand-back file** and rings the librarian with a pointer to it. The librarian checks it against the files it cites, then passes it to the orchestrator, which commits the result. Then the next round starts on its own.
+
+You are asked only for decisions, never to relay. The words (seat, ring, hand-back, dispatch) are in the [glossary](README.md#glossary), and the checks that refuse a ring or a dispatch that skips a step are in [`GATES.md`](GATES.md).
+
+---
+
+## Optional: a Desktop shortcut
+
+`consonance\launch.ps1` opens the app and rebuilds it first when the source has changed since the last build (it uses `cargo` at `%USERPROFILE%\.cargo\bin\cargo.exe`). `consonance\launch.vbs` runs it with no console window. Nothing creates the shortcut for you; this does, from the repo root in PowerShell:
+
+```powershell
+$s = (New-Object -ComObject WScript.Shell).CreateShortcut((Join-Path ([Environment]::GetFolderPath('Desktop')) 'Consonance.lnk'))
+$s.TargetPath = 'wscript.exe'; $s.Arguments = '"' + (Resolve-Path 'consonance\launch.vbs') + '"'; $s.Save()
+```
+
+If your copy has no `launch.vbs`, point the shortcut at `powershell.exe` with the arguments `-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "<repo>\consonance\launch.ps1"` instead. A console may flash for a moment.
+
+---
+
+## Optional: move seats with a USB drive
+
+If you use Consonance on two computers, a USB drive can carry every seat's conversation from one to the other, so each seat continues as the same conversation rather than starting again.
+
+**On both computers:** the same clone of the repo (kept current with `git pull`), Node.js, and the Startup brief set as in section 2.
+
+1. **Turn it on.** Settings → tick **Move seats between computers with a USB drive**, then restart Consonance. It is off until you do.
+2. **Put the two scripts on the drive.** Copy `dev\LEAVING.ps1` and `dev\ARRIVING.ps1` from your clone to the top of the drive (or into one folder on it). They treat the folder they sit in as the drive.
+3. **Leaving a computer:** run `powershell -ExecutionPolicy Bypass -File <drive>\LEAVING.ps1`. Add `-DryRun` first to see what it would carry; nothing is written then. **The first run is what prepares the drive:** it writes the `consonance-transfer\MANIFEST.json` folder that Consonance recognises the drive by, and carries each conversation whole, which can be hundreds of megabytes. Later runs carry only what is new.
+4. **Arriving at the other computer**, with Consonance closed: run `powershell -ExecutionPolicy Bypass -File <drive>\ARRIVING.ps1` (again, `-DryRun` first if you like). It runs `git pull`, brings the conversations in, and starts Consonance if it finds a built `consonance\src-tauri\target\release\consonance.exe` (otherwise start it yourself). Each seat should then say RESUMED in `persist.log` in your Data folder.
+
+Once the drive carries that manifest and the setting is on, Consonance itself finds the drive: it brings seats in when it starts and saves to the drive when you close it.
 
 ---
 

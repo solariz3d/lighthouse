@@ -11,6 +11,11 @@ in the public lighthouse repository):
 - the **5 ungated rules that had to fire mid-sentence** — like "give the source of every number" — had a median of **0.276**, and
   the two about numbers sat at **0.010** and **0.041**.
 
+**Where they apply.** The five hook gates are Claude Code hooks registered in `%USERPROFILE%\.claude\settings.json`, which every Claude Code
+session on your machine reads, inside Consonance or not. The SOURCES gate, the reply slot and the dispatch gate only ever act on Consonance's own
+verbs and seats, so outside Consonance they do nothing. **The push gate and the delete gate are machine-wide:** they check every `git push` and every
+recursive delete that any Claude Code session runs, in any project.
+
 Every gate **fails open on its own error** (a broken hook never traps a seat) and never reads or logs a secret. The SOURCES gate and
 the reply slot check only that a source was OPENED in this turn — never whether it backs the claim. That part stays with the seat,
 and with you.
@@ -71,8 +76,9 @@ the seat's next reply ends the turn either way.
 **How to answer it** (the seat does, not you): open the source and send the reply again ending with the Sources line; or drop the
 claim; or end with `Sources: none`.
 
-**To turn it off:** set `SHADOW = true` in `consonance/hooks/reply-slot.js` (it then only writes down what it would have blocked),
-or remove the `reply-slot.js` entry from `%USERPROFILE%\.claude\settings.json` (under `hooks` → `Stop`).
+**To turn it off:** set `SHADOW = true` in `consonance/hooks/reply-slot.js` (it then only writes down what it would have blocked)
+and re-install it (below: the running copy is the installed one), or remove the `reply-slot.js` entry from `%USERPROFILE%\.claude\settings.json`
+(under `hooks` → `Stop`).
 
 ## 3. The NEXT trailer — every seat names where the work goes next
 
@@ -106,7 +112,9 @@ unchecked claim sent this way once produced a wrong ruling in the seat that rece
 measured as ignored, while a question that waits for an answer was acted on 60 of 60 times.
 
 **What you will see:** `UNCITED DISPATCH — This dispatch to that seat cites no commit and no repo path, so it carries a DESCRIPTION
-rather than an object. …`. By default it is shown as a warning (`print`); with `CONSONANCE_GATE_MODE=ask` set, it stops and asks.
+rather than an object. …`. By default it is shown as a warning (`print`); with `CONSONANCE_GATE_MODE=ask` set, it stops and asks. The
+hook reads that variable from the session's environment, and the app does not set it, so set it as a Windows user environment variable
+(`setx CONSONANCE_GATE_MODE ask`) and restart Consonance, whose seats then inherit it.
 Under Claude Code's bypass-permissions mode an "ask" cannot stop anything, so there it is a warning either way.
 
 **How to answer it:** commit or save the thing first and cite it (a commit, or `path/to/file`), or add `[interrupt]` if the
@@ -153,3 +161,7 @@ they work. If one fires wrongly, that is a bug report with the refusal text atta
 For the five hook gates (1, 2, 4, 5 and 6), removing the entry from `settings.json` turns the gate off at once. Running
 `dev\shell\install.ps1` again would put it back; to keep it off, mark its line in that script's `$register` list `Excluded`, with
 your reason (the script never registers an `Excluded` entry). The NEXT trailer (3) is part of the app and changes only with the code.
+
+**Editing a hook in the repo changes nothing on its own.** Claude Code runs the copies `install.ps1` put under `%USERPROFILE%\.claude\shell\`
+(most in its `hooks\` folder), not the files in your clone. After editing one, re-install it:
+`powershell -ExecutionPolicy Bypass -File dev\shell\install.ps1 -Only reply-slot.js` (the file's name), or a bare run for all of them.

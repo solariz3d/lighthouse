@@ -6,7 +6,7 @@
 they check each other's work instead of echoing one voice.**
 
 **To try it:** you need Windows, [Claude Code](https://docs.anthropic.com/en/docs/claude-code) signed in to a Claude
-account, and Rust to build the app. The steps are in [Try it](#try-it), three commands.
+account, Git, and Rust to build the app. The steps are in [Try it](#try-it): clone, build, and install the hooks.
 
 <!-- about:begin — the About tab in the app is this block, word for word. Edit it here; the app's copy is checked
      against it by consonance/ui/about-readme.test.js (see "Keeping the About tab in step" at the end of this page). -->
@@ -89,6 +89,7 @@ sessions work together, step by step* gives the full steps.
   with C++"), which Rust needs on Windows.
 - **Node.js** and **Python 3** on your PATH, installed **before** the hooks step: the hooks (the checks that run inside
   each session) are Node scripts, and one is Python.
+- **Git** on your PATH, to clone, and because the launch shortcut and the USB scripts run `git pull`.
 
 The step-by-step setup, including the hooks install, is [`consonance/GUIDE.md`](consonance/GUIDE.md). The short form:
 

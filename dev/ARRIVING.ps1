@@ -21,6 +21,11 @@ param([switch]$DryRun)
 $ErrorActionPreference = 'Stop'
 
 $stick = $PSScriptRoot
+# D273 data: begin. The data folder by the app's own rule (main.rs set_dirs / default_data), the same as the hooks (consonance/hooks/dirs.test.js):
+# ~/.consonance.json's data_dir when set (trimmed), else %USERPROFILE%\.consonance. dev/stick-dirs.test.js runs this block.
+$data = Join-Path $env:USERPROFILE '.consonance'
+try { $dd = (Get-Content (Join-Path $env:USERPROFILE '.consonance.json') -Raw -ErrorAction Stop | ConvertFrom-Json -ErrorAction Stop).data_dir; if (($dd -is [string]) -and $dd.Trim()) { $data = $dd.Trim() } } catch { }
+# D273 data: end
 # D273 lap 4 (pane B): the repo is the one ~/.consonance.json's room_path sits in (<repo>\exo_memory\BOOT.md), found the way the app finds it.
 # It used to be a list of this room's two checkout paths, which meant nothing on anyone else's machine.
 $repo = $null
@@ -134,7 +139,7 @@ $exe = Join-Path $repo 'consonance\src-tauri\target\release\consonance.exe'
 if (Test-Path $exe) {
   Write-Host "[arriving] launching Consonance ..."
   Start-Process -FilePath $exe -WorkingDirectory (Split-Path -Parent $exe) | Out-Null
-  Write-Host "[arriving] done. Every seat should say RESUMED in C:\Consonance\data\persist.log."
+  Write-Host "[arriving] done. Every seat should say RESUMED in $(Join-Path $data 'persist.log')."
   # 6. the reminder that does the work: a window that waits for Consonance to close, then exports
   $onExit = Join-Path $stick 'ON-EXIT.ps1'
   if (Test-Path $onExit) {

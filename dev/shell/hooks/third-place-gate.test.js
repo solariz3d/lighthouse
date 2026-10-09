@@ -48,7 +48,8 @@ function install(hooksDir) {   // hooksDir: where the five hooks are taken from 
   mk(path.join(repo, 'consonance', 'tools', 'chain-status.js'), "console.log('chain: STUB D999 DISPATCHED · holder panes');\n");
   mk(path.join(repo, 'consonance', 'tools', 'state-block.js'), "console.log('REPO  HEAD stub1234 dirty 3 files (STATE BLOCK STUB)');\n");
   mk(path.join(repo, 'consonance', 'tools', 'ask.js'), "console.log('ASK-999 stub question for the keeper, 3 days old');\n");
-  mk(path.join(home, 'Desktop', 'lighthouse', 'exo_memory', 'loop', 'checkpoint.py'), "console.log('# Checkpoint STUB (dirty files: a.js b.js)');\n");   // run by the fake `py`, which is node
+  // D273 lap 5 (E): precompact.js finds the checkpoint in room_path's repo (the app's rule), no longer at %USERPROFILE%\Desktop\lighthouse, so the stub moves with it
+  mk(path.join(repo, 'exo_memory', 'loop', 'checkpoint.py'), "console.log('# Checkpoint STUB (dirty files: a.js b.js)');\n");   // run by the fake `py`, which is node
   cp(process.execPath, path.join(root, 'bin', 'py.exe'));
   mk(path.join(home, '.consonance.json'), JSON.stringify({ room_path: path.join(repo, 'exo_memory', 'BOOT.md'), ambient_lat: '50.4452', ambient_lon: '-104.6189', ambient_label: 'Regina, SK', ambient_tz: 'America/Regina' }));
   mk(path.join(root, 'fixed-clock.js'), `const R = Date, F = ${FIXED}; class FD extends R { constructor(...a) { if (a.length) super(...a); else super(F); } static now() { return F; } } global.Date = FD;\n`);
