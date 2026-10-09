@@ -88,3 +88,38 @@ test('on a REAL generation: one planted edit in a shipped card adds exactly one 
     assert.equal(cli.status, 1, cli.stderr); assert.match(cli.stdout, /no-floor-no-ceiling\.md:4 \+ A line no generator step writes\./);
   } finally { fs.rmSync(out, { recursive: true, force: true }); }
 });
+
+/* D273 lap 5 (pane B). C4 made the first MANIFEST rule whose `to` differs from its `from` for a wake file (the keeper's two record files ship in
+ * exo_memory/inheritance/, which a seat is not carried whole), and A2 made CONSUMER-STATUS.md ship only when measured. The parity run at 5d087a64
+ * read both as differences: the moved files as "the generated tree does not have it", and the generated-from commit as unknown. */
+const fakeTrees = (withMoved) => {
+  const repo = fs.mkdtempSync(path.join(os.tmpdir(), 'identity-diff-repo-')), gen = fs.mkdtempSync(path.join(os.tmpdir(), 'identity-diff-gen-'));
+  const put = (root, rel, text) => { fs.mkdirSync(path.dirname(path.join(root, rel)), { recursive: true }); fs.writeFileSync(path.join(root, rel), text); };
+  put(repo, 'exo_memory/cards/c.md', 'card\n'); put(gen, 'exo_memory/cards/c.md', 'card\n');
+  put(repo, 'exo_memory/record/x.md', 'record\n');
+  if (withMoved) put(gen, 'exo_memory/inheritance/x.md', 'record\n');
+  put(gen, 'exo_memory/CUTOFF.md', '# CUTOFF\n\nGenerated from the keeper\'s public record at commit ' + '`' + 'abcdef1234567' + '`' + ' (github.com/solariz3d/lighthouse).\n');
+  const fakeG = { collect: () => [{ from: 'exo_memory/cards/c.md', to: 'exo_memory/cards/c.md', kind: 'binary' }, { from: 'exo_memory/record/x.md', to: 'exo_memory/inheritance/x.md', kind: 'prose' }],
+    EXCLUDE: {}, SEEDED: {}, STAYS_PRIVATE: {}, shippedSets: () => ({ shippedMemory: new Set(), shippedCards: new Set() }), isFixture: () => false };
+  return { repo, gen, fakeG, done: () => { fs.rmSync(repo, { recursive: true, force: true }); fs.rmSync(gen, { recursive: true, force: true }); } };
+};
+
+test('D273 lap 5: a wake file the MANIFEST MOVES out of the wake set is reported absent with where it went; one that did not arrive is still unregistered', () => {
+  const t = fakeTrees(true);
+  try {
+    const r = D.run({ gen: t.gen, repo: t.repo, G: t.fakeG });
+    assert.deepEqual(r.unregistered, [], 'a moved file read as missing');
+    assert.ok(r.absent.some((a) => a.rel === 'exo_memory/record/x.md' && /exo_memory\/inheritance\/x\.md/.test(a.why)), JSON.stringify(r.absent));
+  } finally { t.done(); }
+  const m = fakeTrees(false);
+  try {
+    const r = D.run({ gen: m.gen, repo: m.repo, G: m.fakeG });
+    assert.deepEqual(r.unregistered.map((u) => u.rel), ['exo_memory/record/x.md'], 'a moved file that never arrived passed');
+  } finally { m.done(); }
+});
+
+test('D273 lap 5: the generated-from commit is read from exo_memory/CUTOFF.md when CONSUMER-STATUS.md does not ship (unmeasured)', () => {
+  const t = fakeTrees(true);
+  try { assert.equal(D.run({ gen: t.gen, repo: t.repo, G: t.fakeG }).generatedFrom, 'abcdef1234567'); }
+  finally { t.done(); }
+});

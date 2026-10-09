@@ -134,6 +134,8 @@ function run({ gen, repo = REPO, G = require('./gen-consumer.js') }) {
   const byTo = new Map(files.map((f) => [f.to, f]));
   const result = { ok: true, files: 0, unregistered: [], registered: {}, absent: [], master: null, generatedFrom: null, head: null };
   try { result.generatedFrom = (fs.readFileSync(path.join(gen, 'CONSUMER-STATUS.md'), 'utf8').match(/GENERATED-FROM:\s*([0-9a-f]{7,40})/) || [])[1] || null; } catch (_) { /* reported as unknown */ }
+  // D273 lap 5 (A2): CONSUMER-STATUS.md ships only MEASURED; CUTOFF.md ships in every generation and names the commit
+  if (!result.generatedFrom) try { result.generatedFrom = (fs.readFileSync(path.join(gen, 'exo_memory', 'CUTOFF.md'), 'utf8').match(/at commit \x60([0-9a-f]{7,40})\x60/) || [])[1] || null; } catch (_) { /* reported as unknown */ }
   try { result.head = require('child_process').execFileSync('git', ['-C', repo, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(); } catch (_) { /* no git */ }
 
   const genWake = walk(gen).filter(isWake);
@@ -158,6 +160,8 @@ function run({ gen, repo = REPO, G = require('./gen-consumer.js') }) {
     const f = fromSet.get(rel);
     const why = (f && EXCLUDE[f.from]) || STAYS[rel] || STAYS[path.basename(rel)] || STAYS[rel.split('/').slice(-2, -1)[0]];
     if (why) result.absent.push({ rel, why: (f && EXCLUDE[f.from] ? 'EXCLUDE: ' : 'STAYS_PRIVATE: ') + why });
+    // D273 lap 5 (C4): a rule that MOVES a wake file out of the wake set (record/ -> inheritance/) ships it under its `to`; it is not missing
+    else if (f && f.to !== rel && fs.existsSync(path.join(gen, f.to))) result.absent.push({ rel, why: 'MOVED: ships as ' + f.to + ', outside the wake set' });
     else if (f) result.unregistered.push({ rel, op: '-', line: 0, text: '(the whole file)', why: 'a MANIFEST rule reaches this dev wake file and the generated tree does not have it' });
     else result.unregistered.push({ rel, op: '-', line: 0, text: '(the whole file)', why: 'a dev wake file no MANIFEST rule ships and neither EXCLUDE nor STAYS_PRIVATE names' });
   }

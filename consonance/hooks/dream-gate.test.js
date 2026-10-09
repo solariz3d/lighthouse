@@ -73,6 +73,7 @@ function manifestHooks() {
   while ((m = re.exec(src)) !== null) {
     const line = m[0];
     const rel = m[1];
+    if (/^\s*#/.test(line)) continue;          // a COMMENTED entry: retired and kept verbatim (jev-flags.js, :148), installed by nothing (D273 lap 5)
     if (/\\lib\\/i.test(rel)) continue;        // path-declared library (dev\shell\lib\ambient.js)
     if (/\bLib\s*=\s*\$true\b/i.test(line)) continue; // field-declared library (blind.js)
     out.push(rel);
@@ -107,6 +108,16 @@ t('the manifest yields the hooks, and enough of them to be a real check', () => 
       throw new Error(`${known} not discovered — a silent miss reopens the hole this closes`);
     }
   }
+});
+
+// Added 2026-10-09 (D273 lap 5, pane B). install.ps1 keeps a retired entry as a COMMENT, verbatim (jev-flags.js at :148, ruling 5), and the
+// line regex read it as a live hook. In the dev tree the file is still there, so this suite ran a hook nothing installs; in the consumer
+// tree, where it does not ship, the suite crashed (B's parity run at 5d087a64).
+t('a commented-out manifest line (a retired entry kept verbatim) is not a hook', () => {
+  const commented = [...fs.readFileSync(INSTALL, 'utf8').matchAll(/^\s*#.*From\s*=\s*'([^']+)'/gm)].map((c) => c[1]);
+  if (!commented.length) throw new Error('no commented manifest line found: this row checks nothing (jev-flags.js was one at :148)');
+  const live = commented.filter((rel) => HOOKS.includes(rel));
+  if (live.length) throw new Error(`discovered from a commented line, though nothing installs it: ${live.join(', ')}`);
 });
 
 // The entry call each hook's guard must precede — the point where work actually begins.

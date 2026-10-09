@@ -32,8 +32,11 @@ const OUT = path.join(REPO, 'consonance', 'src-tauri', 'brief', 'BOOT.md');
  * the person's own room (the planted-leak probes below do, and restore it). Run as it was in a generated tree, this file reported the
  * missing script as "gen-brief REFUSED ... the installer build will fail" (B's parity, lap 1). So in a consumer tree, CONSUMER-STATUS.md
  * at its root, which only gen-consumer writes, the generator's rows are skipped BY NAME and the properties the generator guards are
- * checked on the shipped files themselves (the last row). In the dev tree every row runs exactly as before. */
-const CONSUMER = fs.existsSync(path.join(REPO, 'CONSUMER-STATUS.md'));
+ * checked on the shipped files themselves (the last row). In the dev tree every row runs exactly as before.
+ * AMENDED 2026-10-09 (D273 lap 5, pane B): cold read 2's A2 made CONSUMER-STATUS.md ship only when MEASURED, so an unmeasured generation
+ * read as the dev tree here and failed on the missing script (B's parity at 5d087a64). exo_memory/CUTOFF.md is also written only by
+ * gen-consumer, and in every generation; either marks a consumer tree. */
+const CONSUMER = fs.existsSync(path.join(REPO, 'CONSUMER-STATUS.md')) || fs.existsSync(path.join(REPO, 'exo_memory', 'CUTOFF.md'));
 const DEV_ONLY = CONSUMER && 'a consumer tree: gen-brief.ps1 (the master BOOT -> the shipped brief) is the dev tree\'s tool and does not ship here; the last row checks the shipped brief itself';
 
 function runGenBrief() {

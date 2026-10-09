@@ -545,6 +545,20 @@ const WORKSHOP = {
       ["test(\"review()'s OWN rel resolves — not just the walk's\", ", 'needs this room\'s nested loop/ files; corpus-age.synthetic.test.js row 2']],
     'consonance/tools/shelf-tier.test.js': [["test('the split is worth making — RECORD really is the larger half', ", 'measures the room\'s record against its system; the consumer inverts that by ruling']],
     'dev/shell/hooks/l2-overseer-worker.test.js': [["t('the prompt no longer teaches the struck test (registry id cant-lose-handle-2026-08-29)', ", 'the carrier-drift registry ships SEEDED empty by ruling']],
+    /* D273 lap 5 (pane B): these ten rows were red in the source suite too until lap 5's main (6d12f9fa), so the parity count could not see them; with the source
+     * green they are the only carrier-drift reds in the consumer. Each reads the room's own registry (shipped SEEDED empty) or its git history, which a
+     * fresh one-commit history does not have; the file's other rows build their own registries and trees and still run. */
+    'consonance/tools/carrier-drift.test.js': [
+      ["test('THE BAR, half one: the shipped registry is GREEN against the working tree', ", 'the carrier-drift registry ships SEEDED empty by ruling'],
+      ["test('THE BAR, half two: the same registry is RED against the tree at ' + PREFIX, ", 'checks out 21d5453^ of the room\'s git history; a consumer is one fresh commit'],
+      ["test('THE COMPARISON: the registered sweep misses the carrier this tool finds', ", 'greps 21d5453^ of the room\'s git history; a consumer is one fresh commit'],
+      ["test('CH-4 IS A LABEL, NOT A FILTER: a carrier OUTSIDE the reachable set is still red', ", 'the carrier-drift registry ships SEEDED empty by ruling'],
+      ["test('the shipped frozen CH-4 list still matches a live walk — the registry is self-consistent', ", 'the carrier-drift registry ships SEEDED empty by ruling'],
+      ["test('a file that becomes instruction-reachable and is not frozen is RED, not silently absorbed', ", 'the carrier-drift registry ships SEEDED empty by ruling'],
+      ["test('a frozen file the walk no longer reaches is RED — a removed pointer is a real change', ", 'the carrier-drift registry ships SEEDED empty by ruling'],
+      ["test('MUTATION over the REAL tree: the shipped cant-lose entry is ARMED and green; break its marker and it fires, disarm it and the same findings go PENDING', ", 'the carrier-drift registry ships SEEDED empty by ruling'],
+      ["test('the shipped cant-lose census is COMPLETE — every occurrence in every carrier is accounted', ", 'the carrier-drift registry ships SEEDED empty by ruling'],
+      ["test(\"THE MAP'S ENUMERATION WAS THE CH-4 SUBSET: registering only those five leaves the rest unaccounted\", ", 'reads the registry at 325fb03^ of the room\'s git history; a consumer is one fresh commit']],
   },
   rust: {
     'consonance/src-tauri/src/main.rs': [

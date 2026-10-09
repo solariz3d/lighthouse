@@ -1369,8 +1369,10 @@ test('D273/A: the declared JS rows (26 of A + 1 Jev) and 12 Rust tests are decla
     // D273 lap 4 AMENDED BY NAME (pane B): + front-door-links.test.js's evidence row (E's test; its GATES.md evidence links name files of the keeper's
     // record, which the consumer does not carry by ruling), 28 in all. The count follows the declarations.
     // D273 lap 5 AMENDED BY NAME (pane B): jev-flags.test.js no longer ships (B7), so its one EXCLUDED-WITH-JEV declaration goes with it: 27.
-    assert.deepStrictEqual([js, rs], [27, 12]);
-    assert.deepStrictEqual([r.declared.js, r.declared.rust], [27, 12]);
+    // D273 lap 5 AMENDED AGAIN (pane B): + carrier-drift.test.js's ten rows that read the room's registry or history (the file was red in the source
+    // too until 6d12f9fa, which hid them from the parity count): 37.
+    assert.deepStrictEqual([js, rs], [37, 12]);
+    assert.deepStrictEqual([r.declared.js, r.declared.rust], [37, 12]);
   } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
 });
 
