@@ -340,6 +340,8 @@ const MANIFEST = [
   { from: 'dev/ARRIVING.ps1', to: 'dev/ARRIVING.ps1', kind: 'code' },
   { from: 'dev/ON-EXIT.ps1', to: 'dev/ON-EXIT.ps1', kind: 'code' },
   { from: 'consonance/launch.ps1', to: 'consonance/launch.ps1', kind: 'code' },
+  // D273 lap 5 (E's input): the launch shortcut runs launch.vbs, which starts launch.ps1 hidden from beside itself (no machine path in it)
+  { from: 'consonance/launch.vbs', to: 'consonance/launch.vbs', kind: 'code' },
   { from: 'dev/stick-apply.test.js', to: 'dev/stick-apply.test.js', kind: 'code' },
   { from: 'dev/stick-waiter.test.js', to: 'dev/stick-waiter.test.js', kind: 'code' },
   { from: 'dev/tail-carry.test.js', to: 'dev/tail-carry.test.js', kind: 'code' },

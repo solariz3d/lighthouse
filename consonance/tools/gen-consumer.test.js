@@ -1707,3 +1707,18 @@ test('D273 lap 5 (A9): CUTOFF.md calls the source record PUBLIC (the keeper, 202
   assert.doesNotMatch(doc, /private/i, 'CUTOFF still calls the record private');
   assert.match(doc, /github\.com\/solariz3d\/lighthouse/, 'CUTOFF does not say where the public record is');
 });
+
+test('D273 lap 5 (E): both launch files ship, launch.vbs beside launch.ps1, scanned, and launch.vbs finds launch.ps1 beside itself (no machine path)', () => {
+  /* E's lap 5 GUIDE documents the launch shortcut, which runs launch.vbs (it starts launch.ps1 hidden); only launch.ps1 was on a manifest line. */
+  const r = lap5();
+  try {
+    assert.ok(!r.refused, r.refused);
+    for (const rel of ['consonance/launch.ps1', 'consonance/launch.vbs']) {
+      assert.ok(fs.existsSync(path.join(r.staging, rel)), rel + ' did not ship');
+      assert.deepStrictEqual(r.leaks.filter((l) => l.rel === rel), [], rel + ' shipped a leak');
+    }
+    const vbs = fs.readFileSync(path.join(r.staging, 'consonance/launch.vbs'), 'utf8');
+    assert.match(vbs, /BuildPath\(scriptDir, "launch\.ps1"\)/, 'launch.vbs no longer finds launch.ps1 beside itself');
+    assert.doesNotMatch(vbs, /[A-Za-z]:\\/, 'launch.vbs carries an absolute machine path');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
