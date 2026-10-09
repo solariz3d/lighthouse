@@ -1,0 +1,7 @@
+file	bytes	non-empty lines	RULE blocks (imperatives)	prohibition blocks	positive blocks	no-why blocks	MUST/NEVER/ALWAYS/CRITICAL/IMPORTANT/REFUSE*/DO NOT	ALL-CAPS emphasis	bold spans
+global ~/.claude/CLAUDE.md	8878 -> 12269	75 -> 122	38 -> 31	20 -> 3	18 -> 28	34 -> 1	0 -> 0	2 -> 2	0 -> 0
+project lighthouse/CLAUDE.md	504 -> 618	6 -> 8	1 -> 0	1 -> 0	0 -> 0	1 -> 0	0 -> 0	1 -> 1	2 -> 0
+brief/COMMITTEE.md	15816 -> 15055	199 -> 178	20 -> 26	11 -> 10	9 -> 16	14 -> 2	0 -> 0	42 -> 3	40 -> 0
+brief/BUILDING.md	69414 -> 31399	824 -> 362	57 -> 41	34 -> 16	23 -> 25	39 -> 12	3 -> 0	262 -> 12	190 -> 17
+brief/LIBRARIAN.md	19620 -> 14090	230 -> 98	29 -> 26	16 -> 7	13 -> 19	21 -> 5	1 -> 0	27 -> 3	61 -> 6
+TOTAL	114232 -> 73431	1334 -> 768	145 -> 124	82 -> 36	63 -> 88	109 -> 20	4 -> 0	334 -> 21	293 -> 23
