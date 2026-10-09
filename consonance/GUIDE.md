@@ -109,6 +109,3 @@ You're always the one deciding. The app just makes the signal legible.
 ## Go deeper
 
 - [`README.md`](README.md) — full description, and a glossary of terms (its "Glossary" section).
-- `PLAN.md` — the spec and architecture (the three planes, the invariants).
-- `PROGRESS.md` — what's actually built.
-- `DESKTOP_HANDOFF.md` (repo root) — installing and carrying Consonance onto a new machine.

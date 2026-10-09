@@ -58,11 +58,17 @@ test('the README links the GUIDE, and the glossary it promises exists', () => {
   assert.ok(anchorsOf(path.join(ROOT, 'consonance/README.md')).has('glossary'));
 });
 
-test('GATES.md documents six gates, each with how to turn it off, and its evidence links name paths in this tree', () => {
+// Split in D273 lap 4b (pane B's note): the six gates and their off switches are the product and run everywhere; the evidence
+// links name files of the keeper's record, which the generated consumer does not carry, so that row alone is declared workshop-bound there.
+test('GATES.md documents six gates, each with how to turn it off', () => {
   const gates = fs.readFileSync(path.join(ROOT, 'consonance/GATES.md'), 'utf8');
   const sections = gates.split(/\r?\n## /).filter((s) => /^\d\. /.test(s));
   assert.strictEqual(sections.length, 6, sections.map((s) => s.split('\n')[0]).join(' | '));
   for (const s of sections) assert.match(s, /\*\*To turn it off:\*\*/, s.split('\n')[0]);
+});
+
+test('GATES.md evidence links point into the public lighthouse repository at paths in this tree', () => {
+  const gates = fs.readFileSync(path.join(ROOT, 'consonance/GATES.md'), 'utf8');
   const pub = [...gates.matchAll(/\]\((https:\/\/github\.com\/[^)\s]+)\)/g)].map((m) => m[1]);
   assert.ok(pub.length >= 3, 'the evidence links are gone');
   for (const url of pub) {

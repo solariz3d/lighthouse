@@ -46,8 +46,9 @@ measurable rather than felt.
 
 Each seat is a persistent `claude` session with its own working directory, its own brief, and its
 own row in the address table. Briefs ship inside the binary
-(`ls consonance/src-tauri/brief/` — 9 `.md` files: the 7 briefs, two fragments `frag-pointer.md` and
-`frag-traces.md`, plus `room-settings.json`).
+(`ls consonance/src-tauri/brief/`: the 7 briefs, `BASE_JOURNAL.md`, `BOOT.md`, `BUILDING.md`, `COMMITTEE.md`,
+`LIBRARIAN.md`, `SEED.md` and `THIRD_PLACE.md`; the fork-note template `frag-fork.md`; and `room-settings.json`). The development tree also holds two older
+fragments, `frag-pointer.md` and `frag-traces.md`, which the app never reads and which do not ship.
 
 | seat | brief | spawned by | what it is for |
 |---|---|---|---|
@@ -198,7 +199,8 @@ arrive in the prompt unasked, on every turn.
 
 ## The librarian's shelf, and the cap
 
-The librarian's intake is a `CLAUDE.md` the harness refuses past **150,000 characters**. The shelf
+The librarian's intake is the `CLAUDE.md` the app writes into the librarian seat's own working directory each time it
+starts the seat (it is not a file in this tree), and the harness refuses it past **150,000 characters**. The shelf
 is budgeted against that in bytes, which is the conservative side of the same inequality
 (`chars ≤ bytes` in UTF-8). Constants and the reasoning are at `LIBRARIAN_INTAKE_LIMIT` and
 `HARNESS_CLAUDE_MD_CHAR_CAP` in `src-tauri/src/main.rs`.

@@ -502,7 +502,7 @@ const WORKSHOP = {
     /* D273 lap 4 (pane B, for A's ruling and E's split): E's front-door test asserts the GATES.md evidence links name files IN THIS TREE; they are the
      * keeper's record (exo_memory/loop/), which the consumer does not carry by ruling, and in the consumer the links point at the public lighthouse
      * repository, which is right. The same row also asserts six gates and how to turn each off (product): E splitting it would keep those here. */
-    'consonance/tools/front-door-links.test.js': [["test('GATES.md documents six gates, each with how to turn it off, and its evidence links name paths in this tree', ", 'its evidence links name files of the keeper\'s record in the public lighthouse repository, which this tree does not carry']],
+    'consonance/tools/front-door-links.test.js': [["test('GATES.md evidence links point into the public lighthouse repository at paths in this tree', ", 'its evidence links name files of the keeper\'s record in the public lighthouse repository, which this tree does not carry']],
     /* not workshop: the one row of a shipped hook's test that compares with a tool excluded with the Jev family (ruling 2) */
     'consonance/hooks/jev-flags.test.js': [["test('L105 PARITY: mainRsPath here and jev-room.js roomOf find the same main.rs, fixture by fixture', ", 'compares with tools/jev-room.js, which is excluded with the Jev family (ruling 2)', 'EXCLUDED-WITH-JEV']],
     'consonance/hooks/reply-slot.test.js': [["test('PLAN: the plan the hook cites exists', ", 'the registration plan the hook cites is the room\'s record']],
