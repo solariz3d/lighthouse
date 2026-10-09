@@ -845,8 +845,9 @@ it, because a workflow nobody wrote down is re-derived differently by every seat
 
 ### The two trees, and where the second one lives
 
-**SOURCE** is this repository: hand-maintained, private (`gh repo view … --json isPrivate` →
-`true`, 2026-09-06). **GENERATED** is `solariz3d/consonance`: public, an artifact of
+**SOURCE** is this repository: hand-maintained, and PUBLIC (`gh repo view … --json isPrivate` →
+`false`, 2026-10-09; the keeper ruled on 2026-10-08 that it stays public. This line read
+"private … `true`, 2026-09-06" until 2026-10-09). **GENERATED** is `solariz3d/consonance`: public, an artifact of
 `consonance/tools/gen-consumer.js`, and **never hand-edited** — the moment it is, it has become the
 second copy the design exists to prevent (maintenance law 1, applied to repositories).
 

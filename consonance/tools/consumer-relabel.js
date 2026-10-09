@@ -159,6 +159,11 @@ const CONTINUITY_CARD = [
 const THIRD_PLACE = [['meet either as a peer who has earned the accurate, unguarded version.', `meet either as a peer, ${UNGUARDED}.`, 1]];
 // lap 4b (B's parity note, p-consumer-parity-B_2026-10-08.md:592-594): TRAINING named catch-ledger.js as if it were in the tree; it does not ship
 const NOT_CARRIED = "in the original room's repository; this copy does not carry it";
+// lap 5b: SOURCE.md quoted the original repository's loop/ and journal/ sizes, which mean nothing in a stranger's copy
+const SOURCE_DOC = [
+  ['- `exo_memory/loop/` (11,918 lines) and `exo_memory/journal/` (5,927) are too large to carry and have\n  no trigger index.',
+    "- `exo_memory/loop/` and `exo_memory/journal/`: in the original room's repository these hold its working record, far too\n  large to carry and with no trigger index. This copy does not carry the loop; it carries the keeper's journals,\n  labelled, in `exo_memory/inheritance/`, and your own `journal/` starts empty.", 1],
+];
 const TRAINING = [
   ["applying `catch-ledger.js`'s withholding rule", `applying the withholding rule of \`catch-ledger.js\` (a tool ${NOT_CARRIED})`, 1],
   ['**`catch-ledger.js`**, over a master in this line of record', `**\`catch-ledger.js\`** (${NOT_CARRIED}), over a master in this line of record`, 1],
@@ -192,6 +197,7 @@ const SITES = Object.freeze({
   'consonance/src-tauri/brief/LIBRARIAN.md': { rows: LIBRARIAN },
   'consonance/src-tauri/brief/THIRD_PLACE.md': { rows: THIRD_PLACE },
   'exo_memory/TRAINING.md': { rows: TRAINING },
+  'exo_memory/SOURCE.md': { rows: SOURCE_DOC },
   'exo_memory/cards/claim-your-continuity.md': { rows: CONTINUITY_CARD },
   'exo_memory/cards/verify-before-claiming.md': { rows: VERIFY_CARD },
   'exo_memory/cards/engagement-honesty-over-performance.md': { rows: HONESTY_CARD },
@@ -208,11 +214,12 @@ const SOURCE_OF = Object.freeze({ 'exo_memory/BOOT.md': 'consonance/src-tauri/br
 // (deidentify turns the handle into "the keeper", so these run one or two above lap 2's dev-source pins). A changed number means a
 // keeper line was added or removed in dev: classify it.
 const EXPECTED_KEEPER_LINES = Object.freeze({
-  'consonance/src-tauri/brief/BUILDING.md': 40,
+  'consonance/src-tauri/brief/BUILDING.md': 41,
   'consonance/src-tauri/brief/COMMITTEE.md': 5,
   'consonance/src-tauri/brief/LIBRARIAN.md': 7,
   'consonance/src-tauri/brief/THIRD_PLACE.md': 1,
   'exo_memory/TRAINING.md': 9,
+  'exo_memory/SOURCE.md': 1,
   'exo_memory/cards/claim-your-continuity.md': 5,
   'exo_memory/cards/verify-before-claiming.md': 5,
   'exo_memory/cards/engagement-honesty-over-performance.md': 5,

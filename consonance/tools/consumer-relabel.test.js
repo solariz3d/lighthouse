@@ -218,3 +218,14 @@ test('lap 5 B6: BOOT no longer cites TRAINING.md (TRAINING\'s own rule)', () => 
   const t = shipped('exo_memory/BOOT.md');
   assert.ok(!t.includes('`TRAINING.md:133`') && t.includes('in the training curriculum, and in five others'));
 });
+
+test('lap 5b: SOURCE.md says where the loop and the journals are, not their sizes in the original repository', () => {
+  const t = shipped('exo_memory/SOURCE.md');
+  assert.ok(!/11,918 lines|\(5,927\)/.test(t), 'the original repository\'s sizes survived');
+  assert.ok(t.includes("This copy does not carry the loop; it carries the keeper's journals,\n  labelled, in `exo_memory/inheritance/`"));
+});
+
+test('lap 5b: BUILDING says SOURCE is public (fixed in source: lighthouse IS public, the keeper\'s 2026-10-08 ruling)', () => {
+  const t = shipped('consonance/src-tauri/brief/BUILDING.md');
+  assert.ok(t.includes('hand-maintained, and PUBLIC') && !/hand-maintained, private/.test(t));
+});
