@@ -3675,12 +3675,42 @@ enum TrailerDecision {
     Refuse { reply: String, audit: String },
 }
 
+/// D277 part 2: the paperwork gates' ONE switch, `gates_mode` in ~/.consonance.json. Absent, unreadable, not JSON, or anything but "light"
+/// (trimmed, any case) is `Strict`, today's behaviour. The hooks read the same key (`consonance/hooks/sources-gate.js` `gatesModeFrom`).
+pub fn gates_mode_from(raw: &str) -> crate::trailer::GateMode {
+    use crate::trailer::GateMode;
+    match serde_json::from_str::<serde_json::Value>(raw.trim_start_matches('\u{feff}')) {
+        Ok(v) => match v.get("gates_mode").and_then(|m| m.as_str()) {
+            Some(m) if m.trim().eq_ignore_ascii_case("light") => GateMode::Light,
+            _ => GateMode::Strict,
+        },
+        Err(_) => GateMode::Strict,
+    }
+}
+fn gates_mode_at(path: &std::path::Path) -> crate::trailer::GateMode {
+    std::fs::read_to_string(path).map(|s| gates_mode_from(&s)).unwrap_or(crate::trailer::GateMode::Strict)
+}
+// Under `cargo test` the live ~/.consonance.json is NOT read, so the suite never depends on the keeper's switch; a test sets the mode it means
+// (TEST_GATES_MODE, Strict by default). The file read itself is tested through `gates_mode_at` on temp files.
+#[cfg(test)]
+thread_local! { static TEST_GATES_MODE: std::cell::Cell<crate::trailer::GateMode> = const { std::cell::Cell::new(crate::trailer::GateMode::Strict) }; }
+fn gates_mode() -> crate::trailer::GateMode {
+    #[cfg(test)]
+    {
+        TEST_GATES_MODE.with(|m| m.get())
+    }
+    #[cfg(not(test))]
+    {
+        gates_mode_at(&std::path::PathBuf::from(std::env::var("USERPROFILE").unwrap_or_else(|_| ".".into())).join(".consonance.json"))
+    }
+}
+
 /// Check `text`'s trailer and decide, on `trailer::policy(verb)`. A compliant message is delivered unchanged with no
 /// board line. `verb_name` is how the audit line names the call (e.g. `chair_inject -> B`, `call_librarian from A`).
 fn trailer_gate(verb: crate::trailer::Verb, verb_name: &str, text: &str) -> TrailerDecision {
     // L084: `check_for`, not `check` — the verb decides whether the collation's `OUTPUT → NEXT:` line is owed
     // (call_chair only). For call_librarian and chair_inject it returns exactly what `check` did.
-    use crate::trailer::{check_for, delivered_with_warning, policy, refusal_text, Action};
+    use crate::trailer::{check_for, delivered_with_warning, policy, policy_in, refusal_text, Action, GateMode};
     let why = match check_for(verb, text) {
         Ok(_) => return TrailerDecision::Deliver { text: text.to_string(), audit: None },
         Err(why) => why,
@@ -3696,11 +3726,19 @@ fn trailer_gate(verb: crate::trailer::Verb, verb_name: &str, text: &str) -> Trai
         .trim_start_matches("refused by the NEXT-trailer gate: ")
         .trim_end_matches('.')
         .to_string();
-    match policy(verb) {
+    // D277 part 2: the mode decides; in Strict, `policy_in` is `policy` exactly. A Light delivery that Strict would have refused says so on its
+    // board line, so the refusals the switch turned into warnings can still be counted.
+    let mode = gates_mode();
+    let softened = mode == GateMode::Light && policy(verb) == Action::Refuse;
+    match policy_in(verb, mode) {
         Action::Refuse => TrailerDecision::Refuse { audit: format!("{verb_name} REFUSED BY THE NEXT-TRAILER GATE: {missing}"), reply },
         Action::WarnAndDeliver => TrailerDecision::Deliver {
             text: delivered_with_warning(text, why),
-            audit: Some(format!("{verb_name} DELIVERED WITHOUT A NEXT TRAILER: {missing}")),
+            audit: Some(if softened {
+                format!("{verb_name} DELIVERED WITHOUT A NEXT TRAILER (gates_mode light; strict would refuse): {missing}")
+            } else {
+                format!("{verb_name} DELIVERED WITHOUT A NEXT TRAILER: {missing}")
+            }),
         },
     }
 }
@@ -3731,6 +3769,60 @@ mod trailer_gate_tests {
     const WITH: &str = "Hand-back: exo_memory/handback/x.md\n\nNEXT: librarian collate it when all four are in";
     // A's real ring from chunk 1, verbatim: a pointer and no trailer.
     const WITHOUT: &str = "[pane:A] P-STICK-APPLIER-ZOMBIE (D066, chunk 1), on D. Pointer: exo_memory/handback/p-stick-zombie-A_2026-09-16.md";
+
+    // ── D277 part 2: the switch ──────────────────────────────────────────────────────────────────────────────────
+
+    fn with_mode<T>(m: crate::trailer::GateMode, f: impl FnOnce() -> T) -> T {
+        TEST_GATES_MODE.with(|c| c.set(m));
+        let out = f();
+        TEST_GATES_MODE.with(|c| c.set(crate::trailer::GateMode::Strict));
+        out
+    }
+
+    #[test]
+    fn d277_the_switch_reads_only_light_as_light() {
+        use crate::trailer::GateMode::{Light, Strict};
+        for raw in ["", "{ not json", "{}", r#"{"data_dir":"some/data"}"#, r#"{"gates_mode":"strict"}"#, r#"{"gates_mode":"lite"}"#, r#"{"gates_mode":true}"#, r#"{"gates_mode":["light"]}"#] {
+            assert_eq!(gates_mode_from(raw), Strict, "{raw}");
+        }
+        for raw in [r#"{"gates_mode":"light"}"#, r#"{"gates_mode":" Light "}"#, "\u{feff}{\"gates_mode\":\"LIGHT\"}"] {
+            assert_eq!(gates_mode_from(raw), Light, "{raw}");
+        }
+        let d = std::env::temp_dir().join(format!("gates-mode-{}", std::process::id()));
+        let _ = std::fs::create_dir_all(&d);
+        let p = d.join(".consonance.json");
+        let _ = std::fs::remove_file(&p);
+        assert_eq!(gates_mode_at(&p), Strict, "a missing file is strict");
+        std::fs::write(&p, r#"{"gates_mode":"light","data_dir":"some/data"}"#).unwrap();
+        assert_eq!(gates_mode_at(&p), Light);
+        let _ = std::fs::remove_file(&p);
+    }
+
+    #[test]
+    fn d277_strict_mode_refuses_exactly_as_today() {
+        let got = with_mode(crate::trailer::GateMode::Strict, || (trailer_gate(Verb::ChairInject, "chair_inject -> B", WITHOUT), trailer_gate(Verb::CallChair, "call_chair", WITHOUT)));
+        assert!(matches!(got.0, TrailerDecision::Refuse { .. }), "{:?}", got.0);
+        assert!(matches!(got.1, TrailerDecision::Refuse { .. }), "{:?}", got.1);
+    }
+
+    #[test]
+    fn d277_light_mode_delivers_with_the_warning_and_marks_the_board_line() {
+        for (verb, name) in [(Verb::ChairInject, "chair_inject -> B"), (Verb::CallChair, "call_chair")] {
+            match with_mode(crate::trailer::GateMode::Light, || trailer_gate(verb, name, WITHOUT)) {
+                TrailerDecision::Deliver { text, audit: Some(audit) } => {
+                    assert!(text.starts_with(WITHOUT), "the message is delivered whole: {text}");
+                    assert!(text.len() > WITHOUT.len(), "with the warning appended");
+                    assert!(audit.contains("DELIVERED WITHOUT A NEXT TRAILER (gates_mode light; strict would refuse)"), "{audit}");
+                }
+                other => panic!("{name}: not delivered in light mode: {other:?}"),
+            }
+        }
+        // call_librarian already warned in strict; in light its board line is the same as today's
+        match with_mode(crate::trailer::GateMode::Light, || trailer_gate(Verb::CallLibrarian, "call_librarian from A", WITHOUT)) {
+            TrailerDecision::Deliver { audit: Some(audit), .. } => assert!(audit.starts_with("call_librarian from A DELIVERED WITHOUT A NEXT TRAILER: "), "{audit}"),
+            other => panic!("call_librarian: {other:?}"),
+        }
+    }
 
     // ── the three behaviours, by calling the decision ────────────────────────────────────────────────────────────
 

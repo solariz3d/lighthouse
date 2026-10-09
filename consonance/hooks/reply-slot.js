@@ -63,7 +63,9 @@ function dataDir() {
   } catch (_) { /* no config: no data dir: nothing is logged */ }
   return null;
 }
-function record(dir, row) { try { fs.appendFileSync(path.join(dir, LEDGER), JSON.stringify({ ts: new Date().toISOString(), ...row }) + '\n'); return true; } catch (_) { return false; } }
+// D277 part 2: { mode: 'light' } while gates_mode is light, so every row of a light room says so; EMPTY when strict, so a strict row is today's row byte for byte.
+let MODE_FIELDS = {};
+function record(dir, row) { try { fs.appendFileSync(path.join(dir, LEDGER), JSON.stringify({ ts: new Date().toISOString(), ...row, ...MODE_FIELDS }) + '\n'); return true; } catch (_) { return false; } }
 
 // ------------------------------------------------------------------ who
 
@@ -173,7 +175,7 @@ function slotOf(reply) {
  * The whole decision, no I/O. Returns { kind, wouldBlock, tokens, items, unmatched, none, nCalls, output }.
  * `output` is null unless live is true AND the verdict is a block AND stop_hook_active is false: then it is the Stop block JSON. In shadow it is always null.
  */
-function verdict({ reply, entries, stopHookActive, live = false, seat = null, gates = 'consonance/GATES.md' }) {
+function verdict({ reply, entries, stopHookActive, live = false, seat = null, gates = 'consonance/GATES.md', mode = 'strict' }) {
   const r = { kind: '', prompt: null, wouldBlock: false, tokens: [], items: [], unmatched: [], none: false, nCalls: 0, output: null };
   if (stopHookActive) { r.kind = 'skip-active'; return r; }   // THE LOOP GUARD: a Stop hook has already run this turn; do nothing
   const text = String(reply == null ? '' : reply);
@@ -192,7 +194,7 @@ function verdict({ reply, entries, stopHookActive, live = false, seat = null, ga
   else if (slot.none) r.kind = 'pass-none';
   else if (!slot.items.length) r.kind = 'would-block-empty';
   else {
-    r.unmatched = slot.items.filter((it) => !G.itemMatches(it, calls, ''));
+    r.unmatched = slot.items.filter((it) => !G.itemMatches(it, calls, '', mode));
     r.kind = r.unmatched.length ? 'would-block-unmatched' : 'pass-matched';
   }
   r.wouldBlock = r.kind.startsWith('would-block');
@@ -200,6 +202,9 @@ function verdict({ reply, entries, stopHookActive, live = false, seat = null, ga
     const named = r.unmatched.length ? ' These Sources items match nothing you opened or ran in this turn: ' + r.unmatched.map((u) => '"' + clip(u, 120) + '"').join(' ; ') + '.' : '';
     const why = r.kind === 'would-block-missing' ? 'does not END with a Sources: line' : r.kind === 'would-block-empty' ? 'ends with an EMPTY Sources: line' : 'ends with a Sources: line some of whose items you did not open or run';
     const shown = r.tokens.slice(0, 6).map((t) => t.kind + ' ' + clip(String(t.text).replace(/`/g, "'"), 60)).join(' ; ') + (r.tokens.length > 6 ? ' ; and ' + (r.tokens.length - 6) + ' more' : '');
+    // D277 part 2: gates_mode "light" WARNS instead of blocking. Same verdict, same ledger row; the Stop hook shows the text to the person and the turn ends.
+    // (`warn`, not `output`: output stays the block, so the ledger's `blocked: !!v.output` stays true to what happened.)
+    if (mode === 'light') { r.warn = { systemMessage: 'REPLY SLOT (warning only, gates_mode light): it names ' + shown + ', and ' + why + ' whose items were opened or run in this turn.' + named }; return r; }
     r.output = { decision: 'block', reason: 'REPLY SLOT: this reply names ' + shown + ' and ' + why + ' whose items you opened or ran in THIS turn (a figure carried from the prompt or an earlier turn counts as unbacked).' + named + ' Fix it now, in this turn, in one of two ways: (1) OPEN the source first (Read / Grep, or run the command), then send the reply again ending with a final line `Sources: <path> · \`<command>\`` that lists only what you opened or ran this turn (repo-relative or C:\\... paths); or (2) drop the claim from the reply, or end with `Sources: none` if it states nothing checkable. This hook blocks once per turn: your next reply ends the turn. How this works and why: ' + gates + ', section 2 (the reply slot).' };
   }
   return r;
@@ -224,12 +229,16 @@ function main() {
   let entries;
   try { entries = payload.stop_hook_active ? [] : G.readTurnEntries(payload.transcript_path); }
   catch (e) { log({ kind: 'error', replySha, error: 'transcript: ' + String((e && e.message) || e).slice(0, 80) }); return process.exit(0); }
+  const mode = G.gatesMode ? G.gatesMode() : 'strict';
+  if (mode === 'light') MODE_FIELDS = { mode };
   let v;
-  try { v = verdict({ reply, entries, stopHookActive: !!payload.stop_hook_active, live: !SHADOW, seat, gates: G.gatesDoc ? G.gatesDoc() : undefined }); }
+  try { v = verdict({ reply, entries, stopHookActive: !!payload.stop_hook_active, live: !SHADOW, seat, gates: G.gatesDoc ? G.gatesDoc() : undefined, mode }); }
   catch (e) { log({ kind: 'error', replySha, error: 'verdict: ' + String((e && e.message) || e).slice(0, 80) }); return process.exit(0); }
   const logged = log({ kind: v.kind, prompt: v.prompt, wouldBlock: v.wouldBlock, blocked: !!v.output, replySha, replyChars: reply.length, tokenKinds: [...new Set(v.tokens.map((t) => t.kind))], tokens: v.tokens, nSources: v.items.length, none: v.none, unmatched: v.unmatched.slice(0, 12).map((x) => clip(G.scrub(x), 200)), nCalls: v.nCalls });
   if (v.output && logged) {   // D220: block only AFTER the row is on disk (the sources gate's rule): no data dir or an unwritable ledger means the stop proceeds
     process.stdout.write(JSON.stringify(v.output), () => process.exit(0)); setTimeout(() => process.exit(0), 1000).unref(); return; }
+  if (v.warn) {   // D277 part 2, light: a warning shown to the person; it does not block, so the turn ends as it would have
+    process.stdout.write(JSON.stringify(v.warn), () => process.exit(0)); setTimeout(() => process.exit(0), 1000).unref(); return; }
   return process.exit(0);
 }
 

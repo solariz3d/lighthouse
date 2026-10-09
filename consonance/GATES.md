@@ -179,6 +179,16 @@ built it, and it is disclosed here so it is your choice.
 Whoever keeps this room decides (to a seat, "the person you're with"). The program ships them on because the measurements above say
 they work. If one fires wrongly, that is a bug report with the refusal text attached, not a reason to write around it.
 
+**A lighter mode, one switch for three gates.** Set `"gates_mode": "light"` in `%USERPROFILE%\.consonance.json` (absent, or anything
+else, is today's strict mode). In light mode the SOURCES gate (1) accepts an item that matches what actually ran or was fetched: a command
+quoted with its `cd … &&`, a command named by its program and a file it touched, a search query or a URL prefix. It still refuses an item
+nothing in the turn touched, and a missing or empty line. The reply slot (2) and the NEXT trailer (3) warn and let the message through
+instead of refusing it. Each still writes its row to the same ledger: the SOURCES and reply-slot rows of a light room carry
+`"mode": "light"`, and a trailer warning that strict mode would have refused says `gates_mode light`. Why: measured on this
+program's own record, 4.0% of re-sends after a refusal fixed a claim, while 10.0% removed or blurred one
+(`exo_memory/loop/loop_friction_measure_2026-10-09.md` in the lighthouse repository).
+The hooks read the key each time they run; the trailer gate is in the app, which also reads it on each message.
+
 For the five hook gates (1, 2, 4, 5 and 6), removing the entry from `settings.json` turns the gate off at once. Running
 `dev\shell\install.ps1` again would put it back; to keep it off, mark its line in that script's `$register` list `Excluded`, with
 your reason (the script never registers an `Excluded` entry). The NEXT trailer (3) is part of the app and changes only with the code.

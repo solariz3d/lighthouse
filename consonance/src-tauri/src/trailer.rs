@@ -211,6 +211,23 @@ pub fn policy(verb: Verb) -> Action {
     }
 }
 
+/// D277 part 2: the paperwork gates' ONE switch, `gates_mode` in ~/.consonance.json (read in `mcp.rs`, since this file stays standalone).
+/// `Strict` is today's behaviour; `Light` makes this gate warn and deliver on every verb. Why: D276
+/// (`exo_memory/loop/loop_friction_measure_2026-10-09.md`) measured 40 trailer refusals, of which 2 re-sends changed a claim and none fixed one.
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+pub enum GateMode {
+    Strict,
+    Light,
+}
+
+/// The action under a mode. `Strict` is `policy` exactly, so a strict room behaves as it did before the switch existed.
+pub fn policy_in(verb: Verb, mode: GateMode) -> Action {
+    match mode {
+        GateMode::Strict => policy(verb),
+        GateMode::Light => Action::WarnAndDeliver,
+    }
+}
+
 fn section(verb: Verb) -> &'static str {
     match verb {
         Verb::ChairInject => "WHAT A DISPATCH OWES",
@@ -579,6 +596,28 @@ mod tests {
             let at = r.find(&format!("How this gate works and why: {GATES_DOC}, section 3 (the NEXT trailer).")).unwrap_or_else(|| panic!("no pointer: {r}"));
             assert!(at < r.find("Nothing was delivered").unwrap(), "the pointer must come before the returned message: {r}");
             assert_eq!(r.matches(GATES_DOC).count(), 1, "{r}");
+        }
+    }
+}
+
+/// D277 part 2: the switch's two modes. Strict is `policy` exactly, verb by verb; Light delivers with a warning on every verb.
+#[cfg(test)]
+mod gate_mode_tests {
+    use super::*;
+
+    #[test]
+    fn strict_is_todays_policy_on_every_verb() {
+        for v in [Verb::ChairInject, Verb::CallChair, Verb::CallLibrarian] {
+            assert_eq!(policy_in(v, GateMode::Strict), policy(v), "{v:?}");
+        }
+        assert_eq!(policy_in(Verb::ChairInject, GateMode::Strict), Action::Refuse);
+        assert_eq!(policy_in(Verb::CallChair, GateMode::Strict), Action::Refuse);
+    }
+
+    #[test]
+    fn light_warns_and_delivers_on_every_verb() {
+        for v in [Verb::ChairInject, Verb::CallChair, Verb::CallLibrarian] {
+            assert_eq!(policy_in(v, GateMode::Light), Action::WarnAndDeliver, "{v:?}");
         }
     }
 }
