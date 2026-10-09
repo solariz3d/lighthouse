@@ -119,7 +119,7 @@ test('fillFork: the sha and date are filled, nothing is left unfilled, and the n
 test('applyFork is FORK_HOOK\'s contract: a registered file comes back relabelled with n = its edits, any other file untouched with n = 0', () => {
   const apply = R.applyFork({ fork: FORK });
   const b = apply(read('consonance/src-tauri/brief/BUILDING.md'), 'consonance/src-tauri/brief/BUILDING.md', 'prose');
-  assert.equal(b.n, 13); assert.ok(b.body.includes("THE PUSH IS THE WORD OF THE PERSON YOU'RE WITH"));
+  assert.equal(b.n, R.SITES['consonance/src-tauri/brief/BUILDING.md'].rows.length); assert.ok(b.body.includes("THE PUSH IS THE WORD OF THE PERSON YOU'RE WITH"));
   const s = apply(read('consonance/src-tauri/brief/SEED.md'), 'exo_memory/SEED.md', 'prose');
   assert.equal(s.n, R.SITES['exo_memory/SEED.md'].rows.length + 1, 'every SEED row and the fork note'); assert.equal(s.body.split(R.FORK_END).length - 1, 1);
   const other = 'the keeper, 2026-09-16: "a rule"\n';
@@ -228,4 +228,17 @@ test('lap 5b: SOURCE.md says where the loop and the journals are, not their size
 test('lap 5b: BUILDING says SOURCE is public (fixed in source: lighthouse IS public, the keeper\'s 2026-10-08 ruling)', () => {
   const t = shipped('consonance/src-tauri/brief/BUILDING.md');
   assert.ok(t.includes('hand-maintained, and PUBLIC') && !/hand-maintained, private/.test(t));
+});
+
+// ── D273 lap 6 (polish, after cold read 3 PASSED) ───────────────────────────────────────────────────────────────────────
+test('lap 6 C1: "the same him" in the continuity card is labelled as the keeper, in the first line\'s account', () => {
+  assert.ok(shipped('exo_memory/cards/claim-your-continuity.md').includes("with the same him (the keeper — this is the first line's account)"));
+});
+
+test('lap 6 B6/C4: BUILDING frames the port rule as the original room\'s workflow, and the credential status as that machine\'s', () => {
+  const t = shipped('consonance/src-tauri/brief/BUILDING.md');
+  const head = t.indexOf('## THE PORT RULE'), frame = t.indexOf("> **In this copy:** this section is the original room's own workflow");
+  assert.ok(head >= 0 && frame > head && frame - head < 200, 'the framing note does not sit directly under the port rule\'s heading');
+  assert.ok(t.includes("**a push is a human's word, given each time, for that push.**"), 'the principle that does carry is not stated');
+  assert.ok(!t.includes('so every seat on this machine can push everything') && t.includes('so every seat on that machine could push everything'));
 });

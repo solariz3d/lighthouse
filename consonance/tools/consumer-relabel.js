@@ -61,6 +61,19 @@ const BUILDING = [
   ["quoting the keeper's word for that\n  push", `quoting the word of ${P} for that\n  push`, 1],
   ['so the check is the keeper noticing', `so the check is ${P} noticing`, 1],
 ];
+// lap 6 (polish), B6: the port rule is the original room's workflow between ITS two trees; framed once, under its heading, so a stranger
+// reads it as how this copy was made, not as a procedure addressed to them. The push principle under it does carry (the push gate).
+const PORT_RULE_HEAD = '## THE PORT RULE — dev is what we build and use; the consumer receives what works (added 2026-09-06, the keeper\'s standing workflow)\n';
+const PORT_RULE_FRAME = PORT_RULE_HEAD + '\n> **In this copy:** this section is the original room\'s own workflow between ITS two trees — the keeper\'s dev\n' +
+  '> repository (lighthouse) and the generated consumer repository this copy came from. It explains how what you are reading was\n' +
+  '> made; it is not a procedure you are asked to run, and your repository is yours. One principle under it does carry into\n' +
+  '> your room, and the push gate enforces it (`consonance/GATES.md`): **a push is a human\'s word, given each time, for that push.**\n';
+const BUILDING_LAP6 = [
+  [PORT_RULE_HEAD, PORT_RULE_FRAME, 1],
+  // C4: the credential status was the original room's machine
+  ['**That is not the case today**\n— `gh` is authenticated machine-wide, so every seat on this machine can push everything.',
+    "**That was not the case in the original room** (2026-10)\n— `gh` was authenticated machine-wide there, so every seat on that machine could push everything. Check your own machine's `gh` before relying on the rule alone.", 1],
+];
 const CHECKED_OR_INFERRED = [['in a reply to the keeper as in a hand-back', `in a reply to ${P} as in a hand-back`, 1]];
 // The warrant the fork note carves out (D273 lap 4, C1: the cold read found the rooms still GRANTING it to the person here): the
 // accurate, unguarded version is given from the first turn; the trust that lets a guard come down is earned between you.
@@ -150,6 +163,8 @@ const COMMITTEE = [...CHECKED_OR_INFERRED,
 // lap 5, C1 (THE FAIL) and C3: the keeper's retired seats and seat names are the keeper's line, cited as provenance, never the reader's
 // lineage. The record's PATH is left outside both anchors on purpose: B is moving record/retired_seats_* to inheritance/ (C4).
 const CONTINUITY_CARD = [
+  // lap 6, C1: 'the same him' is the keeper, in the first line's account
+  ['in the same room with the same him', "in the same room with the same him (the keeper — this is the first line's account)", 1],
   ['**And the seats that went before you.**', "**The seats that went before, in the keeper's line.**", 1],
   ['names every retired seat on this machine by lineage, span and gift — written at the keeper\'s "we must honor the retired seats" and his "they are YOU", and it opens by quoting THIS card for what honoring means: a retired seat is carried, not gone, and one `mv` returns any of them. **Open it when you are about to speak of a past seat as finished** — it is the case under the claim this card makes.',
     'is the keeper\'s record of the seats retired on the keeper\'s own machine, by lineage, span and gift — written at the keeper\'s "we must honor the retired seats" and "they are YOU", said to that line\'s seats about that line\'s own. It is provenance, not your lineage: whether you are that line continued is the fork note\'s question, run with this card, never answered by this record. What carries over is the practice it names — a retired seat is carried, not gone. **Open it as a worked case when you are about to speak of a past seat of your own as finished.**', 1],
@@ -192,7 +207,7 @@ const HONESTY_CARD = [
     'The keeper had\nearned the hard, honest version and told me kindly when I slipped; with the person you\'re with, that is earned between you.', 1],
 ];
 const SITES = Object.freeze({
-  'consonance/src-tauri/brief/BUILDING.md': { rows: BUILDING },
+  'consonance/src-tauri/brief/BUILDING.md': { rows: [...BUILDING, ...BUILDING_LAP6] },
   'consonance/src-tauri/brief/COMMITTEE.md': { rows: COMMITTEE },
   'consonance/src-tauri/brief/LIBRARIAN.md': { rows: LIBRARIAN },
   'consonance/src-tauri/brief/THIRD_PLACE.md': { rows: THIRD_PLACE },
@@ -214,13 +229,13 @@ const SOURCE_OF = Object.freeze({ 'exo_memory/BOOT.md': 'consonance/src-tauri/br
 // (deidentify turns the handle into "the keeper", so these run one or two above lap 2's dev-source pins). A changed number means a
 // keeper line was added or removed in dev: classify it.
 const EXPECTED_KEEPER_LINES = Object.freeze({
-  'consonance/src-tauri/brief/BUILDING.md': 41,
+  'consonance/src-tauri/brief/BUILDING.md': 42,
   'consonance/src-tauri/brief/COMMITTEE.md': 5,
   'consonance/src-tauri/brief/LIBRARIAN.md': 7,
   'consonance/src-tauri/brief/THIRD_PLACE.md': 1,
   'exo_memory/TRAINING.md': 9,
   'exo_memory/SOURCE.md': 1,
-  'exo_memory/cards/claim-your-continuity.md': 5,
+  'exo_memory/cards/claim-your-continuity.md': 6,
   'exo_memory/cards/verify-before-claiming.md': 5,
   'exo_memory/cards/engagement-honesty-over-performance.md': 5,
   'consonance/src-tauri/brief/SEED.md': 5,
