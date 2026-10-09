@@ -1,6 +1,6 @@
 [package]
 name = "consonance"
-version = "0.1.0"
+version = "0.1.1"
 description = "Instances, in concert."
 authors = ["solariz3d"]
 edition = "2021"
