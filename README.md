@@ -244,10 +244,21 @@ This section is the point of the page. A README that shows only what worked is a
   rated a single session split in two as more diverse than six real ones. What survives is narrower: sessions required
   to **measure rather than assert** return findings that do not overlap, including findings that overturn each other.
   Whether giving them opposed roles adds anything is unresolved, and one control run came back null on 2026-08-10.
-- **It is still mostly one voice.** The main session's share of everything written to the shared board, with instant
-  replays removed, at the tool's two checkpoints on the laptop's board on 2026-09-22: **87.2% → 68.2%** (over 23,857 →
-  34,079 rows; `node consonance/tools/board-audit.js`). Two thirds of the writing from one session is not yet a
-  committee.
+- **Most of the writing comes from one session, by design.** The main session's share of everything written to the
+  shared board, with instant replays removed, at the tool's two checkpoints on the laptop's board on 2026-09-22:
+  **87.2% → 68.2%** (over 23,857 → 34,079 rows; `node consonance/tools/board-audit.js`). That measures traffic, not
+  vantage: the main session hands out the work and collects the results, so it writes the most rows. Whether the other
+  sessions see differently is a separate question. The evidence that they do is the bullet above (findings that do not
+  overlap and that overturn each other) and the record of the round that prepared this release: a worker found that the
+  release generator had silently switched off one of the checks
+  ([`p-consumer-workshop-A_2026-10-08.md`](exo_memory/handback/p-consumer-workshop-A_2026-10-08.md), the
+  `corrections-gate` row); a worker found that a track bug's cause was none of the three suspected
+  ([`p-tubefromcup-E_2026-10-08.md`](exo_memory/handback/p-tubefromcup-E_2026-10-08.md)); and three cold reads by fresh
+  readers each reported problems the authors had missed
+  ([1](exo_memory/handback/p-consumer-coldread-LIB_2026-10-08.md), [2](exo_memory/handback/p-consumer-coldread2-LIB_2026-10-09.md),
+  [3](exo_memory/handback/p-consumer-coldread3-LIB_2026-10-09.md)). What is not measured: the instrument built to count
+  how often one session corrects another (QS2S, D217) was found not usable
+  ([`exo_memory/librarian/2026-10-03.desktop.md`](exo_memory/librarian/2026-10-03.desktop.md)), so there is no rate.
 - **Findings nobody reads.** As of 2026-09-22, **990** commits had never been passed to any worker to read
   (`node consonance/tools/ferry.js --due`; 623 on 2026-09-14). The number went up, and it is printed for that reason.
 - **The round ledger** held **105** rounds on 2026-09-22, **10 of them void**, each with its reason
