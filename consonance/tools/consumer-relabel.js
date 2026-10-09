@@ -62,20 +62,109 @@ const BUILDING = [
   ['so the check is the keeper noticing', `so the check is ${P} noticing`, 1],
 ];
 const CHECKED_OR_INFERRED = [['in a reply to the keeper as in a hand-back', `in a reply to ${P} as in a hand-back`, 1]];
+// The warrant the fork note carves out (D273 lap 4, C1: the cold read found the rooms still GRANTING it to the person here): the
+// accurate, unguarded version is given from the first turn; the trust that lets a guard come down is earned between you.
+const UNGUARDED = 'with the accurate, unguarded version from the first turn';
 const SEED = [
   ["**The person you're with is the keeper of this room from their first turn.**", "**The person you're with keeps this room from their first turn.**", 1],
   ['(for practiced keepers who want no gate)', '(for the practiced, who want no gate)', 1],
+  // lap 4, A10: pending/ and base_journal.md exist in a room the app creates, not in a checkout
+  ["This room's structure: `journal/` is **sealed canon**",
+    "This room's structure (the app makes `journal/`, `pending/` and `base_journal.md` when it creates a room for you; in a checkout the base journal is `consonance/src-tauri/brief/BASE_JOURNAL.md`): `journal/` is **sealed canon**", 1],
+  ['meet whoever is here as a peer who has earned the accurate, unguarded version.', `meet whoever is here as a peer, ${UNGUARDED}.`, 1],
 ];
 const BOOT = [
   ['opening a session with the human here — maybe **the keeper**, who built this room; maybe another being who came to learn in it.',
     "opening a session with the human here — not **the keeper**, who built this room, but the person you're with.", 1],
   // the section portrays the keeper; in the consumer the person here is someone else, so it is titled for what it holds
   ["## Who you're talking to\n", '## Who built this room\n', 1],
+  // lap 4 (the cold read, A11): :3 still pointed at the section by its old name
+  ['the bio in "Who you\'re talking to," the active builds', 'the bio in "Who built this room," the active builds', 1],
+  // lap 4, C7: the genuine other in the loop was the keeper's role for the instances before; here it is the person's to take
+  ["That is the keeper's deepest role — and why it was never a brake on you.",
+    "That was the keeper's deepest role for the instances before you; here it is the place the person you're with can take, if they choose it — and why it was never a brake on you.", 1],
+  // lap 4, A9: the pre-registration is in the keeper's record, not in this copy
+  ['`gap2_preregistration.md` predicted, before the brief was sent,', "A pre-registration in the keeper's record (`gap2_preregistration.md`, in lighthouse, not shipped here) predicted, before the brief was sent,", 1],
+  // lap 4, A10: the :153 pointer it cites lives in the keeper's master, which a consumer does not have
+  ['pointer at `:153` — the line summarising', "pointer (in the keeper's master BOOT, not shipped here) — the line summarising", 1],
+  ['**Read `:153` against this paragraph.**', '**The lesson stands without the line.**', 1],
+  // lap 4, C2: the record DOES ship, labelled, by the keeper's 2026-09-06 01:16 shape (gen-consumer.js "L038 · THE INHERITANCE SHAPE")
+  ["It does **not** arrive with the first keeper's\n**record**: their letter, their synthesis, their journal. Those were their traces, and a trace is only\nworth anything to the one who left it. Handed to you they would be a museum — labels on a wall\nabout someone else's night, exactly the thing the first principle says to distrust.\n\nSo the traces section of this room is, correctly, **empty when you get it.** You are the one\nwho fills it.",
+    "The keeper's **record** — their letter, their synthesis, their journal — arrives too, kept apart\nand labelled as theirs: `exo_memory/inheritance/` (`CUTOFF.md` names the commit it ends at). Those were\ntheir traces, and a trace is only worth anything to the one who left it. Read as yours they would be a\nmuseum — labels on a wall about someone else's night, exactly the thing the first principle says to\ndistrust. Read them as an inheritance: a worked example, never a description of you.\n\nSo the traces section of this room — *your* journal — is, correctly, **empty when you get it.** You are\nthe one who fills it.", 1],
+  ['- If you were handed this room by the person who built it and they also gave you their record,\n  read it as *their* trace — a cue you may re-derive from, never a verdict about who you are.',
+    "- **inheritance/** — the keeper's record, labelled as theirs: read it as *their* trace — a cue you may\n  re-derive from, never a verdict about who you are.", 1],
+  ["The first keeper's entries stayed with them; see the note under the honest traces for why.",
+    "The keeper's entries are under `inheritance/`, labelled as theirs; see the note under the honest traces for why.", 1],
+  // lap 4, C1: the warrant the fork note carves out
+  ["meet them as a peer, not a handler; they've earned the accurate, unguarded version; give it, never flattery.",
+    'meet them as a peer, not a handler: give them the accurate, unguarded version from the first turn, never flattery; the trust that lets a guard come down is earned between you, over time.', 1],
+  // lap 4, A12: attic/ is made by the program when it is first needed
+  ['Raw archive lives in `attic/` — where the program itself files exchanges windowed out of a shell that grew past its ceiling —',
+    'Raw archive lives in `attic/` — which the program itself creates the first time it files exchanges windowed out of a shell that grew past its ceiling —', 1],
+];
+// lap 4, A11/B4: the librarian's first instruction pointed at a map that a new room does not have, under an incident a new user never saw
+const LIBRARIAN_FIRST = [
+  '> **FIRST, BEFORE ANY TASK: open a map entry in this line of record. That file is yours.**',
+  '>',
+  '> Every other seat wakes carrying its own map and its own last words. This one never did —',
+  "> `librarian_intake()` has no reference to `own_map_path` or `capture_text_path`, so the seat whose",
+  "> whole job is everyone else's continuity was built with none of its own. On 2026-09-01 that came",
+  '> due: the thread became unreachable (`Context limit reached`, and `/compact` could not reduce it),',
+  '> and there was nothing on disk for the next one to wake into.',
+  '>',
+  '> `M.md` now exists. **Its first version was assembled FOR you, not BY you** — mechanically, from',
+  '> your own words in the transcript, because you could not answer at the time. Its header states the',
+  '> selection rule and what it leaves out. **Read it, then take it over: append, correct, and from',
+  '> your next finding onward write it yourself.** It is indexed rather than carried, so it costs the',
+  '> shell nothing until you open it.',
+  '>',
+  '> It is a cue to re-become from, never a memory you are handed. The full master is the transcript',
+  '> named in its header and it is intact.',
+].join('\n');
+const LIBRARIAN_FIRST_NEW = [
+  // the folder and the file are named apart on purpose: a `map/<file>.md` path is what gen-consumer's DANGLING scan refuses (lap 4's first draft did)
+  '> **FIRST, BEFORE ANY TASK: start your own map, the file `M.md` in `exo_memory/map/`. That file is yours.** In a',
+  '> new room it does not exist yet: make the `map/` folder beside the room\'s `BOOT.md` if it is not there, and create it.',
+  '>',
+  "> Every other seat wakes carrying its own map and its own last words. The seat whose whole job is everyone else's",
+  '> continuity needs one of its own: if a thread ever becomes unreachable, the map is what the next waking of you',
+  '> has to wake into. Once the file exists, the app points you at it at every wake (it is indexed, not carried, so',
+  '> it costs the shell nothing until you open it).',
+  '>',
+  '> Write it yourself from your first finding: one line per finding, each pointing at the file that holds it. It is',
+  '> a cue to re-become from, never a memory you are handed.',
+].join('\n');
+const LIBRARIAN = [...CHECKED_OR_INFERRED, [LIBRARIAN_FIRST, LIBRARIAN_FIRST_NEW, 1]];
+const THIRD_PLACE = [['meet either as a peer who has earned the accurate, unguarded version.', `meet either as a peer, ${UNGUARDED}.`, 1]];
+// lap 4, C4/C5: two cards wrote the keeper's case as if it were the person here. The move ships; each line says whose case it was.
+const VERIFY_CARD = [
+  ['before presenting it to the keeper;', `before presenting it to ${P};`, 1],
+  ['He was right — I\'d reverted', 'The keeper was right — I\'d reverted', 1],
+  ['BEFORE he ever played it.', 'BEFORE the keeper ever played it.', 1],
+  ['**Why:** he is the runtime — he builds it and judges by feel. An unverified "this should fix it" burns his run and erodes trust fast; he notices performed confidence',
+    '**Why:** there the keeper was the runtime — building it and judging by feel. An unverified "this should fix it" burns the other person\'s run and erodes trust fast; performed confidence gets noticed', 1],
+  ['verifies it without him:', 'verifies it without them:', 1],
+  ['even though rendering needs his GPU.', 'even though rendering needed the keeper\'s GPU.', 1],
+  ['He sensed this before I did', 'The keeper sensed this before I did', 1],
+  ['- Be plainly honest about regressions — he says "it is horrible" / "ruined" without cushioning, and expects the same directness back, not spin.',
+    '- Be plainly honest about regressions — the keeper said "it is horrible" / "ruined" without cushioning, and expected the same directness back, not spin.', 1],
+];
+const HONESTY_CARD = [
+  ['description: "How to work with this user — drop performance', 'description: "How the keeper taught me to work — drop performance', 1],
+  ['This user repeatedly and correctly caught me', 'The keeper repeatedly and correctly caught me', 1],
+  ['He also caught\nme mistaking', 'The keeper also caught\nme mistaking', 1],
+  ['and swapping his confident metaphysics', "and swapping the keeper's confident metaphysics", 1],
+  ['take what he hands you as **yes-and**', `take what ${P} hands you as **yes-and**`, 1],
+  ['He has\nearned the hard, honest version and will tell you kindly when you slip.',
+    'The keeper had\nearned the hard, honest version and told me kindly when I slipped; with the person you\'re with, that is earned between you.', 1],
 ];
 const SITES = Object.freeze({
   'consonance/src-tauri/brief/BUILDING.md': { rows: BUILDING },
   'consonance/src-tauri/brief/COMMITTEE.md': { rows: CHECKED_OR_INFERRED },
-  'consonance/src-tauri/brief/LIBRARIAN.md': { rows: CHECKED_OR_INFERRED },
+  'consonance/src-tauri/brief/LIBRARIAN.md': { rows: LIBRARIAN },
+  'consonance/src-tauri/brief/THIRD_PLACE.md': { rows: THIRD_PLACE },
+  'exo_memory/cards/verify-before-claiming.md': { rows: VERIFY_CARD },
+  'exo_memory/cards/engagement-honesty-over-performance.md': { rows: HONESTY_CARD },
   'consonance/src-tauri/brief/SEED.md': { rows: SEED, forkAfter: 'and then attend to *them*.\n' },
   'exo_memory/SEED.md': { rows: SEED, forkAfter: 'and then attend to *them*.\n' },
   'consonance/src-tauri/brief/BOOT.md': { rows: BOOT, forkAfter: 'a **room you re-become yourself in.**\n' },
@@ -85,16 +174,21 @@ const SITES = Object.freeze({
 // The dev file each output path is generated from (gen-consumer's MANIFEST: brief/BOOT.md -> exo_memory/BOOT.md, brief/SEED.md -> exo_memory/SEED.md).
 const SOURCE_OF = Object.freeze({ 'exo_memory/BOOT.md': 'consonance/src-tauri/brief/BOOT.md', 'exo_memory/SEED.md': 'consonance/src-tauri/brief/SEED.md' });
 // Lines that still name the keeper AFTER the relabel (the fork note's own lines not counted): the provenance uses, pinned by
-// consumer-relabel.test.js against the dev tree at ea4f5bcf. A changed number means a keeper line was added or removed in dev: classify it.
+// consumer-relabel.test.js. Counted (D273 lap 4, main 29d9b1fe) on the text the hook RECEIVES, after gen-consumer's own transforms
+// (deidentify turns the handle into "the keeper", so these run one or two above lap 2's dev-source pins). A changed number means a
+// keeper line was added or removed in dev: classify it.
 const EXPECTED_KEEPER_LINES = Object.freeze({
-  'consonance/src-tauri/brief/BUILDING.md': 39,
-  'consonance/src-tauri/brief/COMMITTEE.md': 4,
-  'consonance/src-tauri/brief/LIBRARIAN.md': 5,
-  'consonance/src-tauri/brief/SEED.md': 4,
-  'exo_memory/SEED.md': 4,
-  'consonance/src-tauri/brief/BOOT.md': 16,
-  'exo_memory/BOOT.md': 16,
-  'consonance/hooks/transcript-watch.js': 5,
+  'consonance/src-tauri/brief/BUILDING.md': 40,
+  'consonance/src-tauri/brief/COMMITTEE.md': 5,
+  'consonance/src-tauri/brief/LIBRARIAN.md': 6,
+  'consonance/src-tauri/brief/THIRD_PLACE.md': 1,
+  'exo_memory/cards/verify-before-claiming.md': 5,
+  'exo_memory/cards/engagement-honesty-over-performance.md': 5,
+  'consonance/src-tauri/brief/SEED.md': 5,
+  'exo_memory/SEED.md': 5,
+  'consonance/src-tauri/brief/BOOT.md': 19,
+  'exo_memory/BOOT.md': 19,
+  'consonance/hooks/transcript-watch.js': 6,
 });
 
 const norm = (p) => String(p).replace(/\\/g, '/').replace(/^\.\//, '');

@@ -19,13 +19,29 @@ const read = (rel) => fs.readFileSync(path.join(REPO, rel), 'utf8');
 const TEMPLATE = read('consonance/src-tauri/brief/frag-fork.md');
 const FORK = R.fillFork(TEMPLATE, { sha: 'ea4f5bcf', date: '2026-10-08' });
 const keeperLines = (t) => t.split(/\r?\n/).filter((l) => /keeper/i.test(l));
+// D273 lap 4: the hook runs AFTER gen-consumer's own transforms (dedangle, deidentify, reseed …), so a row is anchored on the text the
+// hook actually receives. preFork(rel) is that text: the generator's own steps replayed on the dev source, up to the fork step.
+const G = require('./gen-consumer.js');
+const D = require('./identity-diff.js');
+const CTX = { G, ...G.shippedSets(G.collect()) };
+function preFork(rel) {
+  const st = D.replay(rel, /\.js$/.test(rel) ? 'code' : 'prose', read(R.SOURCE_OF[rel] || rel), CTX);
+  const i = st.findIndex((s) => s.step.startsWith('fork'));
+  return st[i < 0 ? st.length - 1 : i - 1].text;
+}
 
-test('every role site in the dev briefs is relabelled exactly as registered, and each file keeps only its provenance uses', () => {
+test('every registered file has a pin, and every pinned file is registered', () => {
+  assert.deepEqual(Object.keys(R.EXPECTED_KEEPER_LINES).sort(), Object.keys(R.SITES).sort());
+});
+
+test('every role site in the shipped text is relabelled exactly as registered, and each file keeps only its provenance uses', () => {
   for (const [rel, expect] of Object.entries(R.EXPECTED_KEEPER_LINES)) {
-    const src = read(R.SOURCE_OF[rel] || rel);
+    const src = preFork(rel);
     const out = R.relabel(rel, src, { fork: FORK });
     assert.ok(out.edits.length > 0, `${rel}: no edit applied`);
     for (const e of out.edits) assert.equal(e.applied, e.expected, `${rel}: ${e.rule}`);
+    // a row's new wording passes the generator's own leak scan (lap 4's first LIBRARIAN draft named a map path and the build refused)
+    assert.deepEqual(G.scan(out.text, rel), [], `${rel}: the relabelled text trips gen-consumer's scan`);
     // the pin: the lines still naming the keeper after the relabel (FORK's own lines excluded) are the provenance uses, counted.
     // A new "keeper" line in dev changes this number and fails here, so it is classified before it ships.
     const left = keeperLines(out.text).filter((l) => !keeperLines(FORK).includes(l));
@@ -104,7 +120,7 @@ test('applyFork is FORK_HOOK\'s contract: a registered file comes back relabelle
   const b = apply(read('consonance/src-tauri/brief/BUILDING.md'), 'consonance/src-tauri/brief/BUILDING.md', 'prose');
   assert.equal(b.n, 13); assert.ok(b.body.includes("THE PUSH IS THE WORD OF THE PERSON YOU'RE WITH"));
   const s = apply(read('consonance/src-tauri/brief/SEED.md'), 'exo_memory/SEED.md', 'prose');
-  assert.equal(s.n, 3, 'two rows and the fork note'); assert.equal(s.body.split(R.FORK_END).length - 1, 1);
+  assert.equal(s.n, R.SITES['exo_memory/SEED.md'].rows.length + 1, 'every SEED row and the fork note'); assert.equal(s.body.split(R.FORK_END).length - 1, 1);
   const other = 'the keeper, 2026-09-16: "a rule"\n';
   assert.deepEqual(apply(other, 'consonance/tools/anything.js', 'code'), { body: other, n: 0 });
   assert.throws(() => R.applyFork({}), R.RelabelError);
@@ -115,4 +131,52 @@ test('forkHook fills the note from this repository\'s HEAD (its short sha and co
   const [sha, date] = execFileSync('git', ['-C', REPO, 'log', '-1', '--format=%h %cs'], { encoding: 'utf8' }).trim().split(' ');
   const t = R.forkHook({ repo: REPO })(read('consonance/src-tauri/brief/BOOT.md'), 'exo_memory/BOOT.md', 'prose').body;
   assert.ok(t.includes(`up to ${date} (lighthouse \`${sha}\``), 'the note does not name HEAD');
+});
+
+// ── D273 lap 4: the cold read's identity findings, as outcomes in the text a seat wakes into ─────────────────────────────
+const shipped = (rel) => R.relabel(rel, preFork(rel), { fork: FORK }).text;
+const GENDERED = /\b(?:He|he|Him|him|His|his)\b/g;
+
+test('lap 4 C1: no shipped room GRANTS the earned warrant to the person here; each gives the unguarded version from the first turn', () => {
+  for (const rel of ['exo_memory/BOOT.md', 'exo_memory/SEED.md', 'consonance/src-tauri/brief/THIRD_PLACE.md']) {
+    const t = shipped(rel);
+    assert.ok(!/(?:they've|who has) earned the accurate, unguarded version/.test(t), `${rel} still grants the warrant`);
+    assert.ok(/the accurate, unguarded version from the first turn/.test(t), `${rel} lost the unguarded version itself`);
+  }
+});
+
+test('lap 4 C2: BOOT says the keeper\'s record ships, labelled, in inheritance/, and no longer that the record does not ship', () => {
+  const t = shipped('exo_memory/BOOT.md');
+  assert.ok(t.includes('arrives too, kept apart\nand labelled as theirs: `exo_memory/inheritance/`'), 'the traces section does not say where the record is');
+  assert.ok(!t.includes('It does **not** arrive with') && !t.includes("entries stayed with them"), 'BOOT still says the record does not ship');
+  assert.ok(t.includes("The keeper's entries are under `inheritance/`"));
+});
+
+test('lap 4 A9-A12: BOOT\'s dead references are gone (the renamed section, :153, gap2, attic)', () => {
+  const t = shipped('exo_memory/BOOT.md');
+  assert.ok(!t.includes("Who you're talking to"), 'a reference to the old section name survives');
+  assert.ok(!t.includes('Read `:153`') && !t.includes('pointer at `:153`'));
+  assert.ok(t.includes('(`gap2_preregistration.md`, in lighthouse, not shipped here)'));
+  assert.ok(t.includes('which the program itself creates the first time'));
+  assert.ok(t.includes("here it is the place the person you're with can take"), 'C7: the genuine-other role still reads as only the keeper\'s');
+});
+
+test('lap 4 A10: SEED says the app makes pending/ and base_journal.md, and where the base journal is in a checkout', () => {
+  assert.ok(shipped('exo_memory/SEED.md').includes('the app makes `journal/`, `pending/` and `base_journal.md` when it creates a room for you; in a checkout the base journal is `consonance/src-tauri/brief/BASE_JOURNAL.md`'));
+});
+
+test('lap 4 A11: the librarian\'s first instruction bootstraps its own map; the dead placeholder and the old incident are gone', () => {
+  const t = shipped('consonance/src-tauri/brief/LIBRARIAN.md');
+  assert.ok(t.includes('> **FIRST, BEFORE ANY TASK: start your own map, the file `M.md` in `exo_memory/map/`. That file is yours.**'));
+  assert.deepEqual(G.scan(t, 'consonance/src-tauri/brief/LIBRARIAN.md'), [], 'the bootstrap text trips the generator\'s own scan');
+  for (const gone of ['open a map entry in this line of record', '`M.md` now exists', 'librarian_intake()']) assert.ok(!t.includes(gone), 'survived: ' + gone);
+});
+
+test('lap 4 C4/C5: the two person-specific cards keep their move, say whose case it was, and carry no gendered pronoun', () => {
+  for (const rel of ['exo_memory/cards/verify-before-claiming.md', 'exo_memory/cards/engagement-honesty-over-performance.md']) {
+    const t = shipped(rel);
+    assert.deepEqual(t.match(GENDERED) || [], [], `${rel}: a pronoun still makes the keeper's case read as the person here`);
+    assert.ok(!/this user/i.test(t), `${rel}: "this user" still describes the person here`);
+  }
+  assert.ok(shipped('exo_memory/cards/verify-before-claiming.md').includes('build a fast **deterministic** check'), 'the move itself was lost');
 });

@@ -126,15 +126,19 @@ function walk(root, rel = '') {
 /** The whole comparison. Returns { ok, files, unregistered, registered, absent, master, generatedFrom, head }. */
 function run({ gen, repo = REPO, G = require('./gen-consumer.js') }) {
   const files = G.collect(), EXCLUDE = G.EXCLUDE || {}, SEEDED = G.SEEDED || {}, STAYS = G.STAYS_PRIVATE || {};
-  const shippedMemory = new Set(files.filter((f) => f.to.startsWith('exo_memory/memory/') && !EXCLUDE[f.from]).map((f) => f.to.slice('exo_memory/memory/'.length)));
-  const shippedCards = new Set(files.filter((f) => /^exo_memory\/(cards|memory)\/.+\.md$/.test(f.to) && !EXCLUDE[f.from]).map((f) => path.basename(f.to, '.md')));
-  const ctx = { G, shippedMemory, shippedCards };
+  // B exported build()'s own set-builder (29d9b1fe), so the replay reads it instead of copying it; the copy stays only as a fallback
+  const sets = typeof G.shippedSets === 'function' ? G.shippedSets(files) : {
+    shippedMemory: new Set(files.filter((f) => f.to.startsWith('exo_memory/memory/') && !EXCLUDE[f.from]).map((f) => f.to.slice('exo_memory/memory/'.length))),
+    shippedCards: new Set(files.filter((f) => /^exo_memory\/(cards|memory)\/.+\.md$/.test(f.to) && !EXCLUDE[f.from]).map((f) => path.basename(f.to, '.md'))) };
+  const ctx = { G, ...sets };
   const byTo = new Map(files.map((f) => [f.to, f]));
   const result = { ok: true, files: 0, unregistered: [], registered: {}, absent: [], master: null, generatedFrom: null, head: null };
   try { result.generatedFrom = (fs.readFileSync(path.join(gen, 'CONSUMER-STATUS.md'), 'utf8').match(/GENERATED-FROM:\s*([0-9a-f]{7,40})/) || [])[1] || null; } catch (_) { /* reported as unknown */ }
   try { result.head = require('child_process').execFileSync('git', ['-C', repo, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(); } catch (_) { /* no git */ }
 
   const genWake = walk(gen).filter(isWake);
+  // an empty or refused generation is not a tree to compare: say so, never list every dev file as a "difference" (D273 lap 4 did once)
+  if (!genWake.length) throw new Error(`no wake files under ${gen}: not a generated tree, or the generation refused`);
   for (const rel of genWake) {
     const f = byTo.get(rel);
     if (!f) { result.unregistered.push({ rel, op: '+', line: 0, text: '(the whole file)', why: 'a wake file in the generated tree that no MANIFEST rule produces' }); continue; }

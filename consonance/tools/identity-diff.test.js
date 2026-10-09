@@ -61,6 +61,15 @@ test('the wake set: briefs, cards, record/, GATES.md and hook files are in; test
     'consonance/src-tauri/brief/frag-fork.md', 'consonance/src-tauri/brief/frag-traces.md']) assert.ok(!D.isWake(rel), rel + ' (a fragment is a template injected into BOOT/SEED, compared where it lands)');
 });
 
+test('an empty or refused generation is refused as a comparison (exit 2), never reported as a diff of every dev file', () => {
+  const empty = fs.mkdtempSync(path.join(os.tmpdir(), 'identity-diff-empty-'));
+  try {
+    assert.throws(() => D.run({ gen: empty }), /no wake files/);
+    const cli = spawnSync(process.execPath, [path.join(__dirname, 'identity-diff.js'), '--gen', empty], { encoding: 'utf8' });
+    assert.equal(cli.status, 2, cli.stdout + cli.stderr);
+  } finally { fs.rmSync(empty, { recursive: true, force: true }); }
+});
+
 test('on a REAL generation: one planted edit in a shipped card adds exactly one unregistered line, named path:line, and the CLI exits 1', () => {
   const out = fs.mkdtempSync(path.join(os.tmpdir(), 'identity-diff-real-'));
   try {
