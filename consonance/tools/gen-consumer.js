@@ -232,6 +232,8 @@ const MANIFEST = [
   { dir: 'consonance/src-tauri/tests', to: 'consonance/src-tauri/tests', match: /\.(rs|jsonl)$/, kind: 'code' },
   { dir: 'consonance/src-tauri/capabilities', to: 'consonance/src-tauri/capabilities', match: /\.json$/, kind: 'code' },
   { dir: 'consonance/src-tauri/icons', to: 'consonance/src-tauri/icons', match: /\.(png|ico|icns)$/, kind: 'binary' },
+  // D273 lap 7: the NSIS images tauri.conf.json references (headerImage, sidebarImage); kind 'image' copies byte for byte AND scans
+  { dir: 'consonance/src-tauri/installer', to: 'consonance/src-tauri/installer', match: /\.bmp$/, kind: 'image' },
   /* tauri.conf.json's bundle.resources declares these by path. The first generated tree shipped
    * 3 of them and the build script stopped at `resource path brief\room-settings.json doesn't
    * exist`. A declared resource that is absent is not a warning -- it fails the build. */
@@ -1802,6 +1804,46 @@ function noteNotShipped(body, rel) {
   return { body, n, missing };
 }
 
+/* D273 lap 7 (the release build found a gap): an image the bundler embeds is scanned before it ships, the way the screens are. */
+const scanImage = (buf, rel) => scan(buf.toString('latin1'), rel);
+
+/* WHAT tauri.conf.json MAKES THE BUNDLER RESOLVE (D273 lap 7, pane B). The published consumer compiled and then failed `cargo tauri build` at the
+ * NSIS step: installer/header.bmp was referenced and never shipped, and no check here bundles. So the generated config is READ, not listed:
+ * build.frontendDist; bundle.resources (array entries, or an object's KEYS, which are sources; its values are destinations inside the bundle);
+ * bundle.icon; and ANY other string under bundle that looks like a path (a slash, or a file extension), so a field nobody listed yet (an nsis
+ * license, a template, a sidecar) cannot slip past. Paths resolve from consonance/src-tauri/; a glob's last segment must match at least one file. */
+const TAURI_DIR = 'consonance/src-tauri';
+const PATHISH = /[\/\\]|\.(ico|icns|bmp|png|jpe?g|svg|gif|rtf|txt|md|json|html?|js|css|nsh|nsi|wxs|xml|pem|cer|exe|dll|ttf|otf|woff2?)$/i;
+function tauriRefs(conf) {
+  const out = [], isUrl = (s) => /^[a-z][a-z0-9+.-]*:\/\//i.test(s);
+  const fd = conf && conf.build && conf.build.frontendDist;
+  if (typeof fd === 'string' && !isUrl(fd)) out.push({ field: 'build.frontendDist', path: fd });
+  const b = (conf && conf.bundle) || {};
+  if (Array.isArray(b.resources)) b.resources.forEach((p, i) => typeof p === 'string' && out.push({ field: 'bundle.resources[' + i + ']', path: p }));
+  else if (b.resources && typeof b.resources === 'object') for (const k of Object.keys(b.resources)) out.push({ field: 'bundle.resources', path: k });
+  const walk = (v, at) => {
+    if (typeof v === 'string') { if (PATHISH.test(v) && !isUrl(v)) out.push({ field: at, path: v }); return; }
+    if (Array.isArray(v)) { v.forEach((x, i) => walk(x, at + '[' + i + ']')); return; }
+    if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) if (!(at === 'bundle' && k === 'resources')) walk(x, at + '.' + k);
+  };
+  walk(b, 'bundle');
+  return out;
+}
+function tauriMissing(root) {
+  const confPath = path.join(root, TAURI_DIR, 'tauri.conf.json');
+  if (!fs.existsSync(confPath)) return [{ field: 'tauri.conf.json', path: TAURI_DIR + '/tauri.conf.json' }];
+  const base = path.join(root, TAURI_DIR), missing = [];
+  for (const ref of tauriRefs(JSON.parse(fs.readFileSync(confPath, 'utf8')))) {
+    const abs = path.resolve(base, ref.path);
+    if (/[*?]/.test(path.basename(abs))) {
+      const re = new RegExp('^' + path.basename(abs).replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*').replace(/\?/g, '.') + '$');
+      let hit = false; try { hit = fs.readdirSync(path.dirname(abs)).some((n) => re.test(n)); } catch (_) { hit = false; }
+      if (!hit) missing.push(ref);
+    } else if (!fs.existsSync(abs)) missing.push(ref);
+  }
+  return missing;
+}
+
 /* LEGAL TEXTS, VERBATIM (D273 lap 6, the keeper's MIT choice, via the librarian). A licence must ship exactly as written: the handle rewrite
  * (deidentify) would turn its copyright line into "Copyright (c) 2026 the keeper", which names no legal person. So a file here is copied byte for
  * byte, and the scan still runs over every line EXCEPT the one registered holder line, which must appear exactly once (else anchorDrift). Any other
@@ -2280,6 +2322,17 @@ function build(outDir, opts) {
       continue;
     }
 
+    /* D273 lap 7: an IMAGE is copied byte for byte like a binary, but SCANNED (latin1, as the screens are); a hit refuses, nothing is scrubbed. */
+    if (f.kind === 'image') {
+      if (!fs.existsSync(src)) { report.missing.push(f.from); continue; }
+      const buf = fs.readFileSync(src), destI = path.join(staging, f.to);
+      fs.mkdirSync(path.dirname(destI), { recursive: true });
+      fs.writeFileSync(destI, buf);
+      report.staged++;
+      report.leaks.push(...scanImage(buf, f.to));
+      continue;
+    }
+
     /* D273 lap 2 (A): a captured screen, scrubbed same-length and SCANNED, never copied blind like a binary. */
     if (f.kind === 'screen') {
       if (!fs.existsSync(src)) { report.missing.push(f.from); continue; }
@@ -2561,6 +2614,13 @@ function build(outDir, opts) {
     report.refused = report.leaks.length + ' leak(s) survived the transformations';
     return report;
   }
+  /* D273 lap 7: what the bundler will resolve, read from the GENERATED tauri.conf.json, must exist in the generated tree (cargo test never bundles). */
+  report.tauriMissing = tauriMissing(staging);
+  if (report.tauriMissing.length) {
+    report.refused = 'tauri.conf.json references ' + report.tauriMissing.length + ' path(s) the generated tree does not have: '
+      + report.tauriMissing.map((m) => m.field + ' ' + m.path).join(', ') + ' (`cargo tauri build` would fail)';
+    return report;
+  }
   if (opts.dry) { report.wrote = null; return report; }
 
   /* D273 lap 2 (pane B, 2026-10-08): THE OUTPUT IS A FRESH-HISTORY GIT REPOSITORY (the plan's ruling; journal/2026-09-03.md §2: fresh history, no history
@@ -2820,4 +2880,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { LEGAL_VERBATIM, scanLegal, SHIPS_FROM_PRIVATE, HANDLE_RE, FORK_HOOK, commitFresh, shippedSets, descreen, SCREEN_SCRUB, WORKSHOP, declareWorkshop, fixtureKind, MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, STAYS_PRIVATE, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, depath, repath, desync, reseed, reindex, dewiki, SEED_ANCHOR, SEED_SENTENCE, JOURNAL_SEED, renderCutoff, verifyCutoff, renderStatusDoc, generatedFiles, commitIdentity, build };
+module.exports = { tauriRefs, tauriMissing, scanImage, LEGAL_VERBATIM, scanLegal, SHIPS_FROM_PRIVATE, HANDLE_RE, FORK_HOOK, commitFresh, shippedSets, descreen, SCREEN_SCRUB, WORKSHOP, declareWorkshop, fixtureKind, MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, STAYS_PRIVATE, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, depath, repath, desync, reseed, reindex, dewiki, SEED_ANCHOR, SEED_SENTENCE, JOURNAL_SEED, renderCutoff, verifyCutoff, renderStatusDoc, generatedFiles, commitIdentity, build };

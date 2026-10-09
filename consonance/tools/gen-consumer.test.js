@@ -1282,7 +1282,8 @@ test('D273: the FORK hook point sees every text file once with (body, to, kind),
     const r = G.build('', { dry: true, allowDirty: true });
     try {
       // D273 lap 6 AMENDED BY NAME (pane B): a 'legal' file (LICENSE, LEGAL_VERBATIM) ships verbatim, so it never reaches the relabel hook either
-      const text = G.collect().filter((f) => !G.EXCLUDE[f.from] && f.kind !== 'binary' && f.kind !== 'screen' && f.kind !== 'legal').length;   // a screen is bytes, like a binary
+      // D273 lap 7 AMENDED BY NAME (pane B): an 'image' (the NSIS bitmaps) is bytes too, copied and scanned, never relabelled
+      const text = G.collect().filter((f) => !G.EXCLUDE[f.from] && f.kind !== 'binary' && f.kind !== 'screen' && f.kind !== 'legal' && f.kind !== 'image').length;   // a screen is bytes, like a binary
       assert.strictEqual(seen.length, text, 'the hook did not see each shipped text file once');
       assert.ok(!seen.some(([rel]) => /\.(png|ico)$/.test(rel)), 'a binary reached the hook');
     } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
@@ -1814,4 +1815,50 @@ test('D273 lap 6 (LICENSE): the exemption is the ONE registered copyright line; 
   const extra = G.scanLegal('MIT License\n\nCopyright (c) 2026 solariz3d\n\nQuestions go to solariz3d.\n', 'LICENSE');
   assert.ok(extra.leaks.some((l) => l.cls === 'IDENTITY'), 'a second handle in LICENSE passed: ' + JSON.stringify(extra.leaks));
   assert.strictEqual(G.scanLegal('MIT License\n\nCopyright (c) 2026 someone else\n', 'LICENSE').missing, true, 'a LICENSE without the registered line was not reported');
+});
+
+
+/* ============================================================ D273 LAP 7 (pane B): the release build found a gap
+ * plan_consumer_refresh_2026-10-08.md "The release build found a gap": `cargo tauri build` on the published consumer failed at the NSIS bundle
+ * (installer/header.bmp missing). Parity runs `cargo test`, never a bundle, so nothing here had looked at what tauri.conf.json references. */
+
+test('D273 lap 7: the NSIS installer images ship byte for byte, SCANNED (kind image), and the build is not refused', () => {
+  const r = lap5();
+  try {
+    assert.ok(!r.refused, r.refused);
+    for (const n of ['header.bmp', 'sidebar.bmp']) {
+      const rel = 'consonance/src-tauri/installer/' + n;
+      assert.ok(fs.existsSync(path.join(r.staging, rel)), rel + ' did not ship; tauri.conf.json nsis references it');
+      assert.ok(fs.readFileSync(path.join(r.staging, rel)).equals(fs.readFileSync(path.join(REPO, rel))), rel + ' is not byte for byte');
+    }
+    assert.ok(G.collect().filter((f) => f.from.startsWith('consonance/src-tauri/installer/')).every((f) => f.kind === 'image'), 'the installer images are not the scanned image kind');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+  // an image kind is scanned: a planted identity string in the bytes is a leak, not a blind copy
+  assert.ok(G.scanImage(Buffer.concat([Buffer.from('BM'), Buffer.from(' solariz3d ', 'latin1')]), 'consonance/src-tauri/installer/x.bmp').some((l) => l.cls === 'IDENTITY'), 'an image is copied without a scan');
+});
+
+test('D273 lap 7 GUARD: every path the GENERATED tauri.conf.json references (frontendDist, resources, icons, nsis images, any other path-valued field) exists in the generated tree', () => {
+  const r = lap5();
+  try {
+    assert.ok(!r.refused, r.refused);
+    const confPath = path.join(r.staging, 'consonance/src-tauri/tauri.conf.json');
+    const refs = G.tauriRefs(JSON.parse(fs.readFileSync(confPath, 'utf8')));
+    for (const want of ['installer/header.bmp', 'installer/sidebar.bmp', 'icons/icon.ico', '../ui', 'brief/BOOT.md', '../../exo_memory/cards/*.md'])
+      assert.ok(refs.some((x) => x.path === want), 'tauriRefs does not read ' + want + ': ' + JSON.stringify(refs.map((x) => x.path)));
+    assert.ok(!refs.some((x) => /^(BOOT|SEED)\.md$|^cards\/$/.test(x.path)), 'a resource DESTINATION was read as a source path');
+    assert.deepStrictEqual(G.tauriMissing(r.staging), [], 'the generated tree misses a path its tauri.conf.json references');
+    fs.rmSync(path.join(r.staging, 'consonance/src-tauri/installer/header.bmp'));
+    assert.deepStrictEqual(G.tauriMissing(r.staging).map((m) => m.path), ['installer/header.bmp'], 'a removed nsis image was not reported');
+    const conf = JSON.parse(fs.readFileSync(confPath, 'utf8')); conf.bundle.windows.nsis.license = 'installer/LICENSE.rtf';   // a field nobody listed yet
+    fs.writeFileSync(confPath, JSON.stringify(conf));
+    assert.ok(G.tauriMissing(r.staging).some((m) => m.path === 'installer/LICENSE.rtf'), 'a new path-valued field slipped past the guard');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+  // and the BUILD refuses on it: drop the installer rule and generate
+  const prev = G.MANIFEST.slice();
+  try {
+    for (let i = G.MANIFEST.length - 1; i >= 0; i--) if ((G.MANIFEST[i].dir || G.MANIFEST[i].from || '').startsWith('consonance/src-tauri/installer')) G.MANIFEST.splice(i, 1);
+    const bad = lap5();
+    try { assert.match(String(bad.refused), /tauri\.conf\.json references/, 'the build did not refuse a missing tauri.conf.json reference: ' + bad.refused); }
+    finally { try { if (bad.staging) fs.rmSync(bad.staging, { recursive: true, force: true }); } catch (_) {} }
+  } finally { G.MANIFEST.length = 0; G.MANIFEST.push(...prev); }
 });
