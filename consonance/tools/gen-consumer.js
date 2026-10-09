@@ -1100,10 +1100,43 @@ function commitIdentity() {
 /* D273 lap 5 (cold read 2, A2): CONSUMER-STATUS.md said "UNMEASURED … nothing here is known to work" and named a gate the consumer cannot run, so
  * it now ships ONLY with a measurement of this very commit: { sha, at, parity: { P, M, B }, rust, identity, coldRead } (gen-consumer.js --measured
  * <file.json>, or opts.measured). build() refuses a measurement of another commit. With none, the file is not written. */
+/* THE CONSUMER'S OWN .gitattributes (D273 lap 7, pane B, the chair's add). The published consumer c298a5b shipped none, and its first commit ran
+ * under a global core.autocrlf=true, which took the raw .bin screen captures for text and stripped their CRs (composer_empty: 1,280 B -> 1,252);
+ * any stranger with autocrlf=true breaks the composer/ready Rust tests the same way on checkout. This is lighthouse's eol pin, binary list and two
+ * screen rules, with the WHY cut to what a stranger needs; lighthouse's merge=union section (our two machines' shared notes) is left out. */
+const CONSUMER_GITATTRIBUTES = [
+  '# Line endings, pinned, so the bytes on disk do not depend on your git settings.',
+  '#',
+  '# Without this, core.autocrlf=true (a common Windows default) converts text files on checkout and can strip the',
+  '# carriage returns out of raw terminal captures on commit. Every tool here (node, PowerShell, Rust, Python) reads LF.',
+  '',
+  '* text=auto eol=lf',
+  '',
+  '# Binary: never line-ending-converted, never diffed as text. Listed, not left to git\'s guess.',
+  '*.png binary',
+  '*.bmp binary',
+  '*.ico binary',
+  '*.exe binary',
+  '*.dll binary',
+  '*.pdf binary',
+  '*.zip binary',
+  '*.woff binary',
+  '*.woff2 binary',
+  '*.ttf binary',
+  '',
+  '# Raw terminal captures (the composer/ready test fixtures). They contain no NUL byte, so git\'s heuristic calls',
+  '# them text and would strip their CRs; the tests compare them byte for byte. Two rules, because the next capture',
+  '# format must not depend on its extension.',
+  '*.bin binary',
+  'consonance/src-tauri/fixtures/screens/** binary',
+  '',
+].join('\n');
+
 function generatedFiles(id, measured) {
   const out = {
     'exo_memory/CUTOFF.md': renderCutoff(id.sha, id.at, id.dirty),
     'exo_memory/journal/README.md': JOURNAL_SEED,
+    '.gitattributes': CONSUMER_GITATTRIBUTES,
   };
   if (measured) out['CONSUMER-STATUS.md'] = renderStatusDoc({ measured: true, sha: id.sha, at: measured.at, dirty: id.dirty, changes: id.changes,
     js: measured.js || [], rust: measured.rustList || [], parity: measured.parity, rustBreaks: measured.rust, identity: measured.identity, coldRead: measured.coldRead });
@@ -2235,7 +2268,7 @@ function build(outDir, opts) {
   }
   const gen = generatedFiles(id, opts.measured || null);
   const staging = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-consumer-'));
-  const report = { forked: 0, git: null, screens: 0, declared: { js: 0, rust: 0 }, declareDrift: [], staged: 0, excluded: [], missing: [], dangling: 0, identity: 0, machine: 0, fixtures: 0, unportable: [], leaks: [], excludeDrift: [], seedDrift: [], seeded: [], orphaned: [], generated: [], genDrift: [], unresolved: [], unclassified: [], anchorDrift: [], reseeded: 0, reindexed: 0, dewikied: 0, columns: null, commit: id, staging };
+  const report = { exact: [], bytesDrift: [], forked: 0, git: null, screens: 0, declared: { js: 0, rust: 0 }, declareDrift: [], staged: 0, excluded: [], missing: [], dangling: 0, identity: 0, machine: 0, fixtures: 0, unportable: [], leaks: [], excludeDrift: [], seedDrift: [], seeded: [], orphaned: [], generated: [], genDrift: [], unresolved: [], unclassified: [], anchorDrift: [], reseeded: 0, reindexed: 0, dewikied: 0, columns: null, commit: id, staging };
 
   /* THE EXCLUDE LIST IS CHECKED AGAINST THE MANIFEST, IN BOTH DIRECTIONS. An exclusion no rule can
    * reach withholds nothing while reading as though it does; a `UNREACHABLE:` declaration that has
@@ -2310,7 +2343,7 @@ function build(outDir, opts) {
       const destB = path.join(staging, f.to);
       fs.mkdirSync(path.dirname(destB), { recursive: true });
       fs.copyFileSync(src, destB);
-      report.staged++;
+      report.staged++; report.exact.push(f.to);
       continue;
     }
 
@@ -2321,7 +2354,7 @@ function build(outDir, opts) {
       const buf = fs.readFileSync(src), destL = path.join(staging, f.to);
       fs.mkdirSync(path.dirname(destL), { recursive: true });
       fs.writeFileSync(destL, buf);
-      report.staged++;
+      report.staged++; report.exact.push(f.to);
       const lg = scanLegal(buf.toString('utf8'), f.to, f.from);
       if (lg.missing) report.anchorDrift.push({ rel: f.to, why: 'the registered LEGAL_VERBATIM holder line was not found exactly once: ' + LEGAL_VERBATIM[f.from].line });
       report.leaks.push(...lg.leaks);
@@ -2334,7 +2367,7 @@ function build(outDir, opts) {
       const buf = fs.readFileSync(src), destI = path.join(staging, f.to);
       fs.mkdirSync(path.dirname(destI), { recursive: true });
       fs.writeFileSync(destI, buf);
-      report.staged++;
+      report.staged++; report.exact.push(f.to);
       report.leaks.push(...scanImage(buf, f.to));
       continue;
     }
@@ -2346,7 +2379,7 @@ function build(outDir, opts) {
       const destS = path.join(staging, f.to);
       fs.mkdirSync(path.dirname(destS), { recursive: true });
       fs.writeFileSync(destS, sc.buf);
-      report.staged++; report.screens++; report.identity += sc.n;
+      report.staged++; report.exact.push(f.to); report.screens++; report.identity += sc.n;
       report.leaks.push(...scan(sc.buf.toString('latin1'), f.to));
       continue;
     }
@@ -2393,6 +2426,7 @@ function build(outDir, opts) {
     fs.mkdirSync(path.dirname(dest), { recursive: true });
     fs.writeFileSync(dest, t.body);
     report.staged++;
+    if (/(^|\/)fixtures\//.test(f.to)) report.exact.push(f.to);   // D273 lap 7: a fixture is compared byte for byte after the commit
 
     /* Scanning the OUTPUT is the whole point: a rule that failed to fire is invisible from the
      * input side, and the input is what a person reasons about when they write the rule. */
@@ -2648,8 +2682,29 @@ function build(outDir, opts) {
   };
   copyTree(staging, outDir);
   report.wrote = outDir;
-  if (!opts.noGit) report.git = commitFresh(outDir, report.commit);
+  if (!opts.noGit) {
+    report.git = commitFresh(outDir, report.commit);
+    /* D273 lap 7: what was COMMITTED must be what was written, for every byte-exact file (binary, screen, image, legal, and anything under a fixtures/
+     * folder). A converted blob reads clean in `git status`, which compares normalised bytes; only cat-file sees it. The tree is already written, so
+     * the refusal says so: do not push it. */
+    report.bytesDrift = verifyCommitted(outDir, report.exact);
+    if (report.bytesDrift.length)
+      report.refused = report.bytesDrift.length + ' byte-exact file(s) differ between the working tree and the committed HEAD ('
+        + report.bytesDrift.map((m) => m.rel + ' ' + m.disk + ' B -> ' + m.blob + ' B').join(', ') + '); the repository at ' + outDir + ' is WRONG: do not push it';
+  }
   return report;
+}
+
+/** D273 lap 7: each rel's blob at HEAD against its bytes on disk. Returns [{ rel, disk, blob }] for every one that differs (blob -1 = not committed). */
+function verifyCommitted(dir, rels) {
+  const { execFileSync } = require('child_process'), out = [];
+  for (const rel of rels || []) {
+    const disk = fs.readFileSync(path.join(dir, rel));
+    let blob = null;
+    try { blob = execFileSync('git', ['-C', dir, 'cat-file', 'blob', 'HEAD:' + rel], { maxBuffer: 1 << 28, stdio: ['ignore', 'pipe', 'ignore'] }); } catch (_) { blob = null; }
+    if (!blob || !blob.equals(disk)) out.push({ rel, disk: disk.length, blob: blob ? blob.length : -1 });
+  }
+  return out;
 }
 
 /* One commit, a neutral author (never a person's name or address: the history is what gets pushed), dated to the source commit so two generations
@@ -2669,7 +2724,8 @@ function shippedSets(files) {
 
 function commitFresh(dir, commit) {
   const { execFileSync } = require('child_process');
-  const g = (args, env) => execFileSync('git', args, { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, ...env } }).trim();
+  // D273 lap 7: core.autocrlf OFF for every call, per command and never global; the published c298a5b was committed under a global autocrlf=true
+  const g = (args, env) => execFileSync('git', ['-c', 'core.autocrlf=false', ...args], { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, ...env } }).trim();
   const who = { GIT_AUTHOR_NAME: 'consonance-generator', GIT_AUTHOR_EMAIL: 'generator@consonance.invalid', GIT_COMMITTER_NAME: 'consonance-generator', GIT_COMMITTER_EMAIL: 'generator@consonance.invalid' };
   const when = commit && commit.at ? { GIT_AUTHOR_DATE: commit.at, GIT_COMMITTER_DATE: commit.at } : {};
   g(['init', '-q', '-b', 'main']);
@@ -2886,4 +2942,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { tauriRefs, tauriMissing, scanImage, LEGAL_VERBATIM, scanLegal, SHIPS_FROM_PRIVATE, HANDLE_RE, FORK_HOOK, commitFresh, shippedSets, descreen, SCREEN_SCRUB, WORKSHOP, declareWorkshop, fixtureKind, MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, STAYS_PRIVATE, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, depath, repath, desync, reseed, reindex, dewiki, SEED_ANCHOR, SEED_SENTENCE, JOURNAL_SEED, renderCutoff, verifyCutoff, renderStatusDoc, generatedFiles, commitIdentity, build };
+module.exports = { verifyCommitted, CONSUMER_GITATTRIBUTES, tauriRefs, tauriMissing, scanImage, LEGAL_VERBATIM, scanLegal, SHIPS_FROM_PRIVATE, HANDLE_RE, FORK_HOOK, commitFresh, shippedSets, descreen, SCREEN_SCRUB, WORKSHOP, declareWorkshop, fixtureKind, MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, STAYS_PRIVATE, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, depath, repath, desync, reseed, reindex, dewiki, SEED_ANCHOR, SEED_SENTENCE, JOURNAL_SEED, renderCutoff, verifyCutoff, renderStatusDoc, generatedFiles, commitIdentity, build };

@@ -1863,3 +1863,57 @@ test('D273 lap 7 GUARD: every path the GENERATED tauri.conf.json references (fro
     finally { try { if (bad.staging) fs.rmSync(bad.staging, { recursive: true, force: true }); } catch (_) {} }
   } finally { G.MANIFEST.length = 0; G.MANIFEST.push(...prev); }
 });
+
+
+/* D273 lap 7, the chair's add (pane B): the PUBLISHED consumer c298a5b carried CORRUPTED screen fixtures. Its first commit ran under a global
+ * core.autocrlf=true, which took the .bin captures for text and stripped their CRs; the consumer shipped no .gitattributes. Simulated here with
+ * GIT_CONFIG_GLOBAL pointed at a temp file, never the real global config. */
+const withAutocrlf = (fn) => {
+  const cfgDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-crlf-cfg-')), cfg = path.join(cfgDir, 'gitconfig');
+  fs.writeFileSync(cfg, '[core]\n\tautocrlf = true\n');
+  const prev = process.env.GIT_CONFIG_GLOBAL; process.env.GIT_CONFIG_GLOBAL = cfg;
+  try { return fn(); } finally { if (prev === undefined) delete process.env.GIT_CONFIG_GLOBAL; else process.env.GIT_CONFIG_GLOBAL = prev; fs.rmSync(cfgDir, { recursive: true, force: true }); }
+};
+const headBlob = (dir, rel) => require('child_process').execFileSync('git', ['-C', dir, 'cat-file', 'blob', 'HEAD:' + rel], { maxBuffer: 1 << 26 });
+
+test('D273 lap 7 (CRLF): under a global core.autocrlf=true the generated repo\'s HEAD carries every screen fixture byte for byte', () => {
+  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-crlf-out-'));
+  try {
+    withAutocrlf(() => {
+      const b = G.build(out, { allowDirty: true });
+      assert.ok(!b.refused, 'refused: ' + b.refused);
+      const screens = G.collect().filter((f) => f.from.startsWith('consonance/src-tauri/fixtures/screens/'));
+      assert.ok(screens.length >= 6, 'only ' + screens.length + ' screens reached');
+      let crs = 0;
+      for (const f of screens) {
+        const disk = fs.readFileSync(path.join(out, f.to)), blob = headBlob(out, f.to);
+        crs += disk.filter((c) => c === 13).length;
+        assert.ok(blob.equals(disk), f.to + ': HEAD blob ' + blob.length + ' B != written ' + disk.length + ' B (CRs stripped on commit)');
+      }
+      assert.ok(crs > 0, 'no screen carries a CR, so this row proves nothing');
+    });
+  } finally { fs.rmSync(out, { recursive: true, force: true }); }
+});
+
+test('D273 lap 7 (CRLF) GUARD: verifyCommitted reports a byte-exact file whose HEAD blob differs, as a commit under autocrlf=true makes it', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-crlf-repo-'));
+  try {
+    withAutocrlf(() => {
+      fs.writeFileSync(path.join(dir, 'cap.bin'), Buffer.from('line one\r\nline two\r\n', 'latin1'));
+      const g = (a) => require('child_process').execFileSync('git', a, { cwd: dir, stdio: 'ignore', env: { ...process.env, GIT_AUTHOR_NAME: 't', GIT_AUTHOR_EMAIL: 't@t.invalid', GIT_COMMITTER_NAME: 't', GIT_COMMITTER_EMAIL: 't@t.invalid' } });
+      g(['init', '-q']); g(['add', '-A']); g(['commit', '-q', '-m', 'x']);
+    });
+    assert.deepStrictEqual(G.verifyCommitted(dir, ['cap.bin']).map((m) => m.rel), ['cap.bin'], 'a CR-stripped blob was not reported');
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
+test('D273 lap 7 (CRLF): the consumer ships its own .gitattributes: eol pinned, the binary list, *.bin and screens/** binary, and none of our two-machine merge rules', () => {
+  const r = lap5();
+  try {
+    assert.ok(!r.refused, r.refused);
+    const ga = fs.readFileSync(path.join(r.staging, '.gitattributes'), 'utf8');
+    for (const rule of ['* text=auto eol=lf', '*.bin binary', 'consonance/src-tauri/fixtures/screens/** binary', '*.png binary', '*.bmp binary', '*.ico binary'])
+      assert.ok(ga.split('\n').includes(rule), '.gitattributes lacks the rule: ' + rule);
+    assert.doesNotMatch(ga, /merge=union/, 'the two-machine merge=union rules shipped');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
