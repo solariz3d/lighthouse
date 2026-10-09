@@ -390,6 +390,12 @@ function checkStatusDoc(text) {
 /* D273 lap 4 (the cold read's A15): kept identical to gen-consumer.js's (the drift guard renders both). */
 const GATE_LINE = 'GATE: in the source repository this tree was generated from: node consonance/tools/gen-consumer.build.test.js --gate'
   + ' (this tree does not carry the generator it drives)\n';
+/* D273 lap 5 (A2): kept identical to gen-consumer.js's MEASURED_LINES (the drift guard renders both). */
+const MEASURED_LINES = (o) => (o.parity ? 'PARITY: (P, M, B) = (' + o.parity.P + ', ' + o.parity.M + ', ' + o.parity.B + ')\n' : '')
+  + (o.rustBreaks != null ? 'RUST: ' + o.rustBreaks + ' parity break(s)\n' : '')
+  + (o.identity ? 'IDENTITY-DIFF: ' + o.identity + '\n' : '')
+  + (o.coldRead ? 'COLD READ: ' + o.coldRead + '\n' : '')
+  + (o.parity || o.rustBreaks != null || o.identity || o.coldRead ? '\n' : '');
 function renderStatusDoc(o) {
   const sec = (head, members) => '## ' + head + '\n\n'
     + (members.length ? members.map((m) => '- ' + m).join('\n') : '(none)') + '\n';
@@ -402,7 +408,8 @@ function renderStatusDoc(o) {
   return '# CONSUMER-STATUS\n\nSTATE: MEASURED\nGENERATED-FROM: ' + o.sha + '\n'
     + GATE_LINE
     + 'MEASURED-AT: ' + o.at + '\n\n'
-    + 'This repository is generated from a private working tree and IS INCOMPLETE ON PURPOSE.\n'
+    + MEASURED_LINES(o)
+    + 'This repository is generated from the keeper\'s public working tree and IS INCOMPLETE ON PURPOSE.\n'
     + 'Everything below fails in THIS tree and is named so you can see what you have got, rather\n'
     + 'than discovering it one file at a time.\n\n'
     + sec('JS tests that fail in this tree', o.js || [])

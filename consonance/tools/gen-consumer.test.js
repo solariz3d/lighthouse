@@ -972,7 +972,8 @@ test('L038/A · a dirty tree is REFUSED, because the sha it would stamp is not e
   const ok = G.build(out2, { allowDirty: true });
   assert.ok(!ok.refused, '--allow-dirty did not lift the refusal: ' + ok.refused);
   assert.match(fs.readFileSync(path.join(out2, 'exo_memory', 'CUTOFF.md'), 'utf8'),
-    reallyDirty ? /THIS PROVENANCE IS NOT EARNED/ : /Generated from the private record at commit/,
+    // D273 lap 5 AMENDED BY NAME (pane B): "the private record" became "the keeper's public record" (the cold read's A9; the keeper ruled lighthouse public, 10-08)
+    reallyDirty ? /THIS PROVENANCE IS NOT EARNED/ : /Generated from the keeper's public record at commit/,
     'the written CUTOFF does not describe the state it was generated in');
   if (ok.staging) { try { fs.rmSync(ok.staging, { recursive: true, force: true }); } catch (_) {} }
   fs.rmSync(out, { recursive: true, force: true });
@@ -1225,8 +1226,10 @@ test('D273: the Jev tool family does not ship (retired, D164): every consonance/
   assert.ok(jev.length >= 10, 'the manifest no longer reaches the Jev tools, so this guard proves nothing: ' + jev.length);
   assert.deepStrictEqual(jev.filter((r) => !G.EXCLUDE[r]), [], 'a Jev tool ships');
   for (const r of jev) assert.match(G.EXCLUDE[r], /Jev|D164/, r + ' is excluded without saying why');
-  assert.ok(G.collect().some((f) => f.from === 'consonance/hooks/jev-flags.js') && !G.EXCLUDE['consonance/hooks/jev-flags.js'],
-    'install.ps1 registers hooks/jev-flags.js, so withholding it would break the install');
+  // D273 lap 5 AMENDED BY NAME (pane B): this asserted hooks/jev-flags.js still ships, "because install.ps1 registers it". E's lap 3 (c0748da9) stopped
+  // install.ps1 registering and copying it, and the cold read's B7 excludes it; the row now asserts it is excluded (and the D273 lap 5 B7 row checks the reason).
+  assert.ok(G.collect().some((f) => f.from === 'consonance/hooks/jev-flags.js') && G.EXCLUDE['consonance/hooks/jev-flags.js'],
+    'hooks/jev-flags.js still ships, though install.ps1 no longer registers it and Jev is retired');
 });
 
 test('D273: consonance/state-manifest.json and the root README.md ship, and the README keeps the About block the app checks', () => {
@@ -1365,8 +1368,9 @@ test('D273/A: the declared JS rows (26 of A + 1 Jev) and 12 Rust tests are decla
     // A's 15 lap-2 rows and 11 lap-3 rows, plus jev-flags' one row that compares with the excluded jev-room.js (labelled EXCLUDED-WITH-JEV, not workshop).
     // D273 lap 4 AMENDED BY NAME (pane B): + front-door-links.test.js's evidence row (E's test; its GATES.md evidence links name files of the keeper's
     // record, which the consumer does not carry by ruling), 28 in all. The count follows the declarations.
-    assert.deepStrictEqual([js, rs], [28, 12]);
-    assert.deepStrictEqual([r.declared.js, r.declared.rust], [28, 12]);
+    // D273 lap 5 AMENDED BY NAME (pane B): jev-flags.test.js no longer ships (B7), so its one EXCLUDED-WITH-JEV declaration goes with it: 27.
+    assert.deepStrictEqual([js, rs], [27, 12]);
+    assert.deepStrictEqual([r.declared.js, r.declared.rust], [27, 12]);
   } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
 });
 
@@ -1624,4 +1628,82 @@ test('D273 lap 4 (C, the cold read C3/C4): a new user\'s memory starts blank: th
     assert.deepStrictEqual(idx.split('\n').filter((l) => /^\s*-\s*\[/.test(l)), [], 'the shipped index still lists entries');
     assert.ok(fs.existsSync(path.join(r.staging, 'exo_memory', 'cards', 'never-pathologize-the-user.md')), 'the general form of the excluded card does not ship');
   } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+
+/* ============================================================ D273 LAP 5 (pane B): cold read 2's generator items
+ * handback/p-consumer-coldread2-LIB_2026-10-09.md (A2, A3, A7, A9, B7, C4) and loop/plan_consumer_refresh_2026-10-08.md "Cold read 2, IN". */
+const lap5 = (opts = {}) => G.build('', { dry: true, allowDirty: true, ...opts });
+const PUB = 'https://github.com/solariz3d/lighthouse';
+
+test('D273 lap 5 (C4): the keeper\'s two record files ship in inheritance/, not record/, and no shipped text points at their old place', () => {
+  const r = lap5();
+  try {
+    assert.ok(!r.refused, r.refused);
+    for (const n of ['retired_seats_2026-09-11.md', 'third_place_prehistory_2026-08-30.md']) {
+      assert.ok(fs.existsSync(path.join(r.staging, 'exo_memory', 'inheritance', n)), n + ' is not in inheritance/');
+      assert.ok(!fs.existsSync(path.join(r.staging, 'exo_memory', 'record', n)), n + ' still ships in record/ (carried whole as SYSTEM)');
+    }
+    const stale = walkText(r.staging).filter((p) => /record\/(retired_seats_|third_place_prehistory_)/.test(fs.readFileSync(p, 'utf8')));
+    assert.deepStrictEqual(stale.map((p) => path.relative(r.staging, p)), [], 'a shipped file still points at record/ for them');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273 lap 5 (A2): CONSUMER-STATUS.md ships only MEASURED (parity, identity-diff, cold read), for this commit; unmeasured it does not ship', () => {
+  const r = lap5();
+  try { assert.ok(!fs.existsSync(path.join(r.staging, 'CONSUMER-STATUS.md')), 'an UNMEASURED status still ships'); }
+  finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+  const sha = G.commitIdentity().sha;
+  const measured = { sha, at: '2026-10-09T04:00:00-06:00', parity: { P: 0, M: 0, B: 0 }, rust: 0, identity: 'PASS, 73 wake files, 0 unregistered', coldRead: 'cold read 2: FAIL on identity (C1)' };
+  const m = lap5({ measured });
+  try {
+    assert.ok(!m.refused, m.refused);
+    const doc = fs.readFileSync(path.join(m.staging, 'CONSUMER-STATUS.md'), 'utf8');
+    assert.match(doc, /^STATE: MEASURED$/m); assert.match(doc, new RegExp('^GENERATED-FROM: ' + sha + '$', 'm'));
+    assert.match(doc, /PARITY: \(P, M, B\) = \(0, 0, 0\)/); assert.match(doc, /RUST: 0/); assert.match(doc, /IDENTITY-DIFF: PASS, 73 wake files/); assert.match(doc, /COLD READ: cold read 2: FAIL/);
+  } finally { try { fs.rmSync(m.staging, { recursive: true, force: true }); } catch (_) {} }
+  const bad = lap5({ measured: { ...measured, sha: '0'.repeat(40) } });
+  try { assert.match(String(bad.refused), /measured/, 'a measurement of another commit was accepted: ' + bad.refused); }
+  finally { try { if (bad.staging) fs.rmSync(bad.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273 lap 5 (A3): a record link and a commit sha that are on the PUBLIC lighthouse main become links there; anything not public stays as it was', () => {
+  const t = G.transform('Report: [`exo_memory/loop/night_report_2026-09-19.md`](exo_memory/loop/night_report_2026-09-19.md) (`1768ea4`).\n', 'prose').body;
+  assert.ok(t.includes('](' + PUB + '/blob/main/exo_memory/loop/night_report_2026-09-19.md)'), t);
+  assert.ok(t.includes('](' + PUB + '/commit/1768ea4)'), t);
+  assert.doesNotMatch(t, /a registration in this line of record/, 'a public record file was turned into a placeholder: ' + t);
+  const absent = G.transform('see [plan](exo_memory/loop/plan_nowhere_2026-10-01.md) and (`0000000`).\n', 'prose').body;
+  assert.strictEqual(absent, 'see plan (a registration in this line of record) and (`0000000`).\n', 'a non-public target was linked anyway');
+  assert.strictEqual(G.transform("const s = `(`1768ea4`)`;\n", 'code').body, "const s = `(`1768ea4`)`;\n", 'code was rewritten (a backtick in a template literal would break it)');
+  const r = lap5();
+  try {
+    const readme = fs.readFileSync(path.join(r.staging, 'README.md'), 'utf8');
+    assert.ok(!/^\s*-\s*a (registration|hand-back|map entry|librarian entry) in this line of record/m.test(readme), 'a bullet is still only a placeholder');
+    for (const sha of ['1768ea4', 'fbe5549', 'b35507c']) assert.ok(readme.includes(PUB + '/commit/' + sha), sha + ' is not linked in the README');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273 lap 5 (A7): the dead targets resolve or become prose: COMMITTEE\'s memory/ note, SPINE\'s dev/PLAN.md, dev/shell/README\'s dev/dream/, the card\'s Third Place entry', () => {
+  const r = lap5();
+  try {
+    const read = (rel) => fs.readFileSync(path.join(r.staging, rel), 'utf8');
+    assert.ok(read('consonance/src-tauri/brief/COMMITTEE.md').includes(PUB + '/blob/main/exo_memory/memory/split-the-work-with-the-panes.md'), 'COMMITTEE.md still cites an absent memory/ file');
+    assert.ok(read('dev/SPINE.md').includes(PUB + '/blob/main/dev/PLAN.md'), 'SPINE.md still cites the absent dev/PLAN.md');
+    assert.ok(read('dev/shell/README.md').includes(PUB + '/tree/main/dev/dream'), 'dev/shell/README.md still cites the absent dev/dream/');
+    const card = read('exo_memory/cards/claim-your-continuity.md');
+    assert.doesNotMatch(card, /third_place\/2026-09-09\.md/, 'the card still cites a Third Place file a consumer does not have');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273 lap 5 (B7): hooks/jev-flags.js and its test do not ship (install.ps1 no longer registers it; Jev retired)', () => {
+  for (const rel of ['consonance/hooks/jev-flags.js', 'consonance/hooks/jev-flags.test.js']) {
+    assert.ok(G.collect().some((x) => x.from === rel), rel + ' is reached by no rule, so the exclusion proves nothing');
+    assert.match(G.EXCLUDE[rel] || '', /Jev|D164/, rel + ' ships, or its reason does not say why');
+  }
+});
+
+test('D273 lap 5 (A9): CUTOFF.md calls the source record PUBLIC (the keeper, 2026-10-08), never private', () => {
+  const doc = G.renderCutoff('a'.repeat(40), '2026-10-09T04:00:00-06:00', false);
+  assert.doesNotMatch(doc, /private/i, 'CUTOFF still calls the record private');
+  assert.match(doc, /github\.com\/solariz3d\/lighthouse/, 'CUTOFF does not say where the public record is');
 });

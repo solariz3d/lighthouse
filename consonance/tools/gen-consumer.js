@@ -103,7 +103,11 @@ const MANIFEST = [
    * INSTRUMENTS (cards, spread/, research/)'. Only .md ships; the _ingest_*.py helpers do not. */
   { dir: 'exo_memory/spread', to: 'exo_memory/spread', match: /\.md$/, kind: 'prose' },
   { dir: 'exo_memory/research', to: 'exo_memory/research', match: /\.md$/, kind: 'prose' },
-  { dir: 'exo_memory/record', to: 'exo_memory/record', match: /\.md$/, kind: 'prose' },
+  /* D273 lap 5 (cold read 2, C4): record/ is carried whole as SYSTEM (LIBRARIAN.md), and two of its files are the keeper's RECORD: the retired
+   * seats of his machine and the Third Place's prehistory "as the keeper told it". They ship in inheritance/, where the keeper's record lives; every
+   * shipped reference to their old place is re-pointed by dedangle(). */
+  { dir: 'exo_memory/record', to: 'exo_memory/record', match: /^(?!retired_seats_|third_place_prehistory_).+\.md$/, kind: 'prose' },
+  { dir: 'exo_memory/record', to: 'exo_memory/inheritance', match: /^(?:retired_seats_|third_place_prehistory_).+\.md$/, kind: 'prose' },
 
   // The method. This is the half the keeper chose to ship: a discipline with no instrument does
   // not happen -- attic/ went untouched for two months until corpus-age.js existed.
@@ -503,8 +507,7 @@ const WORKSHOP = {
      * keeper's record (exo_memory/loop/), which the consumer does not carry by ruling, and in the consumer the links point at the public lighthouse
      * repository, which is right. The same row also asserts six gates and how to turn each off (product): E splitting it would keep those here. */
     'consonance/tools/front-door-links.test.js': [["test('GATES.md evidence links point into the public lighthouse repository at paths in this tree', ", 'its evidence links name files of the keeper\'s record in the public lighthouse repository, which this tree does not carry']],
-    /* not workshop: the one row of a shipped hook's test that compares with a tool excluded with the Jev family (ruling 2) */
-    'consonance/hooks/jev-flags.test.js': [["test('L105 PARITY: mainRsPath here and jev-room.js roomOf find the same main.rs, fixture by fixture', ", 'compares with tools/jev-room.js, which is excluded with the Jev family (ruling 2)', 'EXCLUDED-WITH-JEV']],
+    // D273 lap 5: jev-flags.test.js's one EXCLUDED-WITH-JEV row went with the file (B7: the hook and its test are excluded now)
     'consonance/hooks/reply-slot.test.js': [["test('PLAN: the plan the hook cites exists', ", 'the registration plan the hook cites is the room\'s record']],
     'consonance/hooks/sources-gate.test.js': [["test('PLAN: the plan the hook cites exists', ", 'the registration plan the hook cites is the room\'s record']],
     'consonance/hooks/second-reader.test.js': [["test('QS: the question sent is the plan\\'s registered text, VERBATIM (compared with the plan file)', ", 'compares the question with the room\'s registration plan']],
@@ -726,6 +729,9 @@ const EXCLUDE = {
    * Ruling (2) of loop/plan_consumer_refresh_2026-10-08.md: "jev/ is EXCLUDED with its tests (Jev is off since D164)". jev/ itself is reached by no
    * manifest rule; these are the tools under consonance/tools that ARE the Jev client and its tests. hooks/jev-flags.js still ships: install.ps1
    * registers it, and withholding it would make every install report the file ABSENT FROM REPO (E owns install.ps1). */
+  /* D273 lap 5 (cold read 2, B7): the Jev hook too. E's lap 3 (c0748da9) stopped install.ps1 registering and copying it, so nothing runs it. */
+  'consonance/hooks/jev-flags.js': JEV_EXCLUDED,
+  'consonance/hooks/jev-flags.test.js': JEV_EXCLUDED,
   'consonance/tools/jev-ask.js': JEV_EXCLUDED,
   'consonance/tools/jev-ask.mutants.js': JEV_EXCLUDED,
   'consonance/tools/jev-ask.test.js': JEV_EXCLUDED,
@@ -960,7 +966,7 @@ function renderCutoff(sha, commitIso, dirty) {
       '> tree unless it is run with `--allow-dirty`, and that flag is what put this block here.',
     ]
     : [
-      'Generated from the private record at commit `' + sha + '`, dated ' + commitIso + '.',
+      'Generated from the keeper\'s public record at commit `' + sha + '` (github.com/solariz3d/lighthouse), dated ' + commitIso + '.',
     ];
   return ['# CUTOFF', ''].concat(head, [
     '',
@@ -1005,6 +1011,12 @@ function renderCutoff(sha, commitIso, dirty) {
 /* D273 lap 4 (the cold read's A15): the gate drives gen-consumer.js, which this tree does not carry, so the line says where it runs. */
 const GATE_LINE = 'GATE: in the source repository this tree was generated from: node consonance/tools/gen-consumer.build.test.js --gate'
   + ' (this tree does not carry the generator it drives)\n';
+/* D273 lap 5 (A2): the measured state a reader can check, when it is given; kept identical to the build test's renderer (the drift guard renders both). */
+const MEASURED_LINES = (o) => (o.parity ? 'PARITY: (P, M, B) = (' + o.parity.P + ', ' + o.parity.M + ', ' + o.parity.B + ')\n' : '')
+  + (o.rustBreaks != null ? 'RUST: ' + o.rustBreaks + ' parity break(s)\n' : '')
+  + (o.identity ? 'IDENTITY-DIFF: ' + o.identity + '\n' : '')
+  + (o.coldRead ? 'COLD READ: ' + o.coldRead + '\n' : '')
+  + (o.parity || o.rustBreaks != null || o.identity || o.coldRead ? '\n' : '');
 function renderStatusDoc(o) {
   const prov = o.dirty
     ? 'PROVENANCE: UNEARNED — generated from a working tree with ' + o.changes + ' uncommitted\n'
@@ -1021,7 +1033,8 @@ function renderStatusDoc(o) {
   return '# CONSUMER-STATUS\n\nSTATE: MEASURED\nGENERATED-FROM: ' + o.sha + '\n'
     + GATE_LINE
     + 'MEASURED-AT: ' + o.at + '\n' + prov + '\n'
-    + 'This repository is generated from a private working tree and IS INCOMPLETE ON PURPOSE.\n'
+    + MEASURED_LINES(o)
+    + 'This repository is generated from the keeper\'s public working tree and IS INCOMPLETE ON PURPOSE.\n'
     + 'Everything below fails in THIS tree and is named so you can see what you have got, rather\n'
     + 'than discovering it one file at a time.\n\n'
     + sec('JS tests that fail in this tree', o.js || [])
@@ -1063,12 +1076,17 @@ function commitIdentity() {
 }
 
 /** path -> body. Built per run, because two of the three need the commit. */
-function generatedFiles(id) {
-  return {
+/* D273 lap 5 (cold read 2, A2): CONSUMER-STATUS.md said "UNMEASURED … nothing here is known to work" and named a gate the consumer cannot run, so
+ * it now ships ONLY with a measurement of this very commit: { sha, at, parity: { P, M, B }, rust, identity, coldRead } (gen-consumer.js --measured
+ * <file.json>, or opts.measured). build() refuses a measurement of another commit. With none, the file is not written. */
+function generatedFiles(id, measured) {
+  const out = {
     'exo_memory/CUTOFF.md': renderCutoff(id.sha, id.at, id.dirty),
     'exo_memory/journal/README.md': JOURNAL_SEED,
-    'CONSUMER-STATUS.md': renderStatusDoc({ measured: false, sha: id.sha, dirty: id.dirty, changes: id.changes }),
   };
+  if (measured) out['CONSUMER-STATUS.md'] = renderStatusDoc({ measured: true, sha: id.sha, at: measured.at, dirty: id.dirty, changes: id.changes,
+    js: measured.js || [], rust: measured.rustList || [], parity: measured.parity, rustBreaks: measured.rust, identity: measured.identity, coldRead: measured.coldRead });
+  return out;
 }
 
 /* ------------------------------------------------------------------ leak classes
@@ -1260,9 +1278,64 @@ const SYNTHETIC = [/C:[\\/]{1,4}notes/i, /C:[\\/]{1,4}x[\\/]/i, /Users[\\/]{1,4}
 /** Rewrite a dangling citation so the PROSE survives and the dead pointer does not.
  *  `exo_memory/journal/2026-08-17.md:1209` -> `the record, 2026-08-17`
  *  The comment explaining why code is the way it is is worth keeping; the path is not. */
+/* PUBLIC LINKS (D273 lap 5, cold read 2's A3 and A7, pane B). The keeper ruled the source repository PUBLIC (2026-10-08), so a citation of a record
+ * file or a commit the consumer does not carry can point THERE instead of becoming a placeholder: a markdown link into exo_memory/(loop|map|handback|
+ * librarian|memory)/, a backticked commit sha, a backticked excluded memory/ entry, and the two dev/ targets the cold read named. ONLY what is on the
+ * public main (git cat-file against origin/main in this repository; nothing else counts), and ONLY in prose (.md): a backtick inserted into code
+ * could end a template literal. Anything not public is left to dedangle() as before. A link whose text is the path itself gets the file name as its
+ * text, so dedangle's path rules do not rewrite the text of a working link. */
+const PUBLIC_REPO = 'https://github.com/solariz3d/lighthouse';
+const PUBLIC_DEV = ['dev/PLAN.md', 'dev/dream/'];
+const publicCache = new Map();
+function onPublic(spec) {
+  if (publicCache.has(spec)) return publicCache.get(spec);
+  let t = null;
+  try { t = require('child_process').execFileSync('git', ['-C', REPO, 'cat-file', '-t', spec], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch (_) { t = null; }
+  publicCache.set(spec, t); return t;
+}
+const commitCache = new Map();   // one git call per distinct sha, per process: a whole generation cites hundreds of them
+const publicCommit = (sha) => {
+  if (commitCache.has(sha)) return commitCache.get(sha);
+  let ok = false;
+  try { if (onPublic(sha) === 'commit') { require('child_process').execFileSync('git', ['-C', REPO, 'merge-base', '--is-ancestor', sha, 'origin/main'], { stdio: 'ignore' }); ok = true; } } catch (_) { ok = false; }
+  commitCache.set(sha, ok); return ok;
+};
+function publicLinks(body) {
+  let n = 0;
+  body = body.replace(/\[([^\]\n]+)\]\((?:\.\.\/)*(?:exo_memory\/)?(loop|map|handback|librarian|memory)\/([A-Za-z0-9_.-]+\.md)(?::[\d-]+)?\)/g, (m, text, dir, file) => {
+    const rel = 'exo_memory/' + dir + '/' + file;
+    if (dir === 'memory' && file === 'MEMORY.md') return m;
+    if (onPublic('origin/main:' + rel) !== 'blob') return m;
+    n++;
+    const isPath = /^`?(?:\.\.\/)*(?:exo_memory\/)?(?:loop|map|handback|librarian|memory)\/[A-Za-z0-9_.-]+\.md(?::[\d-]+)?`?$/.test(text.trim());
+    return '[' + (isPath ? '`' + file + '`' : text) + '](' + PUBLIC_REPO + '/blob/main/' + rel + ')';
+  });
+  body = body.replace(/(^|[^\[\w])`([0-9a-f]{7,12})`(?!\])/g, (m, pre, sha) => {
+    if (!publicCommit(sha)) return m;
+    n++; return pre + '[`' + sha + '`](' + PUBLIC_REPO + '/commit/' + sha + ')';
+  });
+  body = body.replace(/(^|[^\[\w])`((?:exo_memory\/)?memory\/(?!MEMORY\.md)[A-Za-z0-9_.-]+\.md)`/g, (m, pre, p) => {
+    const rel = p.startsWith('exo_memory/') ? p : 'exo_memory/' + p;
+    if (!EXCLUDE[rel] || onPublic('origin/main:' + rel) !== 'blob') return m;
+    n++; return pre + '[`' + p + '`](' + PUBLIC_REPO + '/blob/main/' + rel + ')';
+  });
+  for (const p of PUBLIC_DEV) {
+    const dir = p.endsWith('/'), spec = 'origin/main:' + p.replace(/\/$/, '');
+    body = body.replace(new RegExp('(^|[^\\[\\w])`' + p.replace(/[.\/]/g, '\\$&') + '`', 'g'), (m, pre) => {
+      if (onPublic(spec) !== (dir ? 'tree' : 'blob')) return m;
+      n++; return pre + '[`' + p + '`](' + PUBLIC_REPO + (dir ? '/tree/main/' : '/blob/main/') + p.replace(/\/$/, '') + ')';
+    });
+  }
+  return { body, n };
+}
+
 function dedangle(body) {
   let n = 0;
   const bump = () => { n++; };
+  /* D273 lap 5 (cold read 2): C4's two keeper-record files ship in inheritance/ now, so a reference to their old place is re-pointed; and a Third
+   * Place entry (never in this tree, and never linked) becomes prose (A7). */
+  body = body.replace(/(?:exo_memory\/)?record\/((?:retired_seats_|third_place_prehistory_)[A-Za-z0-9_.-]*\.md)/g, (m, f) => { bump(); return 'exo_memory/inheritance/' + f; });
+  body = body.replace(/`?(?:exo_memory\/)?third_place\/[A-Za-z0-9_.-]+\.md(?::[\d-]+)?`?/g, () => { bump(); return 'a Third Place entry in the keeper\'s record'; });
   /* D273 lap 2 (pane B, 2026-10-08): a markdown LINK whose target is a record path that never ships becomes its text followed by the prose, so the
    * output never links to a sentence. Without this pass the rules below rewrote only the TARGET, leaving [text](a registration in this line of record):
    * the root README carried 13 of them, found by arch_test::every_relative_link_in_the_docs_exists_in_a_fresh_clone. */
@@ -1649,6 +1722,7 @@ function transform(body, kind) {
     const d = demachine(c.body);
     return { body: d.body, dangling: 0, identity: b.n + c.n, machine: d.n, fixture: true };
   }
+  if (kind === 'prose') { const pl = publicLinks(body); body = pl.body; }   // D273 lap 5: A3/A7, before dedangle
   const a = dedangle(body);
   const b = deidentify(a.body);
   const c = demachine(b.body);
@@ -2054,7 +2128,10 @@ function collect() {
 function build(outDir, opts) {
   const files = collect();
   const id = commitIdentity();
-  const gen = generatedFiles(id);
+  if (opts.measured && opts.measured.sha !== id.sha) {
+    return { refused: 'the measured state is of commit ' + opts.measured.sha + ', not of the commit this generation is from, ' + id.sha + '; measure this commit, then generate', staging: null, commit: id };
+  }
+  const gen = generatedFiles(id, opts.measured || null);
   const staging = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-consumer-'));
   const report = { forked: 0, git: null, screens: 0, declared: { js: 0, rust: 0 }, declareDrift: [], staged: 0, excluded: [], missing: [], dangling: 0, identity: 0, machine: 0, fixtures: 0, unportable: [], leaks: [], excludeDrift: [], seedDrift: [], seeded: [], orphaned: [], generated: [], genDrift: [], unresolved: [], unclassified: [], anchorDrift: [], reseeded: 0, reindexed: 0, dewikied: 0, columns: null, commit: id, staging };
 
@@ -2536,7 +2613,10 @@ function main() {
     process.exit(2);
   }
 
-  const r = build(outDir || '', { dry, allowDirty });
+  const measuredFile = arg('--measured');
+  let measured = null;
+  if (measuredFile) { try { measured = JSON.parse(fs.readFileSync(measuredFile, 'utf8')); } catch (e) { console.error('gen-consumer: --measured ' + measuredFile + ': ' + e.message); process.exit(2); } }
+  const r = build(outDir || '', { dry, allowDirty, measured });
 
   if (json) { console.log(JSON.stringify(r, null, 2)); process.exit(r.refused ? 1 : 0); }
 
