@@ -36,3 +36,17 @@ catches. The paperwork gates also teach defensive writing (hand-backs growing "d
   they give both sides: whether the gates made the room less wrong, and what they cost.
 
 NEXT: chair dispatch D276 to E when this plan is read
+
+## RE-SPLIT (librarian, 11:1x): the keeper caught it. One pane for five independent measurements was MY plan's error
+The keeper, 11:14: "sometimes you only dispatch to the orch and the orch picks a single instance for a task, instead of breaking up the task into chunks
+to then be recompiled after … does that end up creating more work to do than it saves us … look at what is working now … the orch only dispatched one
+pane". The plan above said "Pane E" for items 1–5, so the chair did as written. Items 1–5 are independent, so they run in PARALLEL and the librarian merges:
+- **E:** items 1 + 2 (per-gate refusal → re-send, the CONTENT-change share, the time per refusal). E built the gate instruments.
+- **A:** item 3, lap speed before vs after the gates, **plus the keeper's new question H2: do single-pane laps take longer end to end than split ones,
+  counting the merge?** From `lap.jsonl` (which panes each lap dispatched, dispatch → last hand-back, collation time). Name the confounders (size, kind).
+- **C:** item 4, the defensive-text trend in `exo_memory/handback/` by date (no verdict on any seat).
+- **B:** item 5, what the WORK checks caught against what the PAPERWORK gates caught, since 2026-10-08, from the record.
+**H2, registered with its falsifier:** a task with ≥ 3 independent parts finishes sooner split across panes (including the merge) than on one pane.
+FALSE if, among comparable multi-part laps in `lap.jsonl`, split laps' median dispatch → close is NOT shorter than single-pane laps'. A standing
+planning rule follows if it holds: **the plan names the parts; independent parts go to separate panes by default; one pane only when the parts depend on
+each other or the whole is small.**

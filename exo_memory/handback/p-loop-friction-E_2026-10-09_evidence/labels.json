@@ -1,0 +1,512 @@
+{
+ "sources": [
+  {
+   "i": 0,
+   "ts": "2026-10-02T19:58:12.440Z",
+   "tool": "call_librarian",
+   "label": "PROBE"
+  },
+  {
+   "i": 1,
+   "ts": "2026-10-02T19:59:11.364Z",
+   "tool": "call_chair",
+   "label": "META"
+  },
+  {
+   "i": 2,
+   "ts": "2026-10-02T20:02:48.181Z",
+   "tool": "call_librarian",
+   "label": "PROBE"
+  },
+  {
+   "i": 3,
+   "ts": "2026-10-02T20:22:16.664Z",
+   "tool": "call_librarian",
+   "label": "META"
+  },
+  {
+   "i": 4,
+   "ts": "2026-10-02T20:38:55.467Z",
+   "tool": "call_librarian",
+   "label": "PROBE"
+  },
+  {
+   "i": 5,
+   "ts": "2026-10-02T20:39:08.010Z",
+   "tool": "call_librarian",
+   "label": "PROBE"
+  },
+  {
+   "i": 6,
+   "ts": "2026-10-02T22:27:17.655Z",
+   "tool": "call_chair",
+   "label": "CLAIM-FIX"
+  },
+  {
+   "i": 7,
+   "ts": "2026-10-03T10:20:18.489Z",
+   "tool": "call_chair",
+   "label": "META"
+  },
+  {
+   "i": 8,
+   "ts": "2026-10-03T10:22:57.013Z",
+   "tool": "chair_inject",
+   "label": "ADD"
+  },
+  {
+   "i": 9,
+   "ts": "2026-10-03T10:29:27.015Z",
+   "tool": "call_chair",
+   "label": "ADD"
+  },
+  {
+   "i": 10,
+   "ts": "2026-10-03T21:33:24.715Z",
+   "tool": "call_chair",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 11,
+   "ts": "2026-10-03T21:33:39.591Z",
+   "tool": "call_chair",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 12,
+   "ts": "2026-10-04T01:27:52.019Z",
+   "tool": "call_chair",
+   "label": "CLAIM-FIX"
+  },
+  {
+   "i": 13,
+   "ts": "2026-10-04T01:28:05.701Z",
+   "tool": "chair_inject",
+   "label": "WORDING"
+  },
+  {
+   "i": 14,
+   "ts": "2026-10-05T14:21:31.412Z",
+   "tool": "chair_inject",
+   "label": "ADD"
+  },
+  {
+   "i": 15,
+   "ts": "2026-10-05T16:05:14.480Z",
+   "tool": "call_librarian",
+   "label": "POINTER"
+  },
+  {
+   "i": 16,
+   "ts": "2026-10-05T17:32:01.300Z",
+   "tool": "chair_inject",
+   "label": "ADD"
+  },
+  {
+   "i": 17,
+   "ts": "2026-10-05T21:58:01.139Z",
+   "tool": "call_chair",
+   "label": "POINTER"
+  },
+  {
+   "i": 18,
+   "ts": "2026-10-05T22:11:30.235Z",
+   "tool": "call_librarian",
+   "label": "POINTER"
+  },
+  {
+   "i": 19,
+   "ts": "2026-10-05T22:33:11.355Z",
+   "tool": "chair_inject",
+   "label": "CITE"
+  },
+  {
+   "i": 20,
+   "ts": "2026-10-05T23:19:28.472Z",
+   "tool": "call_librarian",
+   "label": "POINTER"
+  },
+  {
+   "i": 21,
+   "ts": "2026-10-06T00:07:38.582Z",
+   "tool": "call_chair",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 22,
+   "ts": "2026-10-06T00:45:36.754Z",
+   "tool": "call_librarian",
+   "label": "POINTER"
+  },
+  {
+   "i": 23,
+   "ts": "2026-10-06T00:49:57.789Z",
+   "tool": "chair_inject",
+   "label": "CITE"
+  },
+  {
+   "i": 24,
+   "ts": "2026-10-06T13:37:14.872Z",
+   "tool": "call_chair",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 25,
+   "ts": "2026-10-06T17:43:41.141Z",
+   "tool": "call_librarian",
+   "label": "POINTER"
+  },
+  {
+   "i": 26,
+   "ts": "2026-10-06T17:43:43.408Z",
+   "tool": "call_librarian",
+   "label": "POINTER"
+  },
+  {
+   "i": 27,
+   "ts": "2026-10-06T21:18:06.267Z",
+   "tool": "call_chair",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 28,
+   "ts": "2026-10-06T23:42:28.681Z",
+   "tool": "call_chair",
+   "label": "CLAIM-FIX"
+  },
+  {
+   "i": 29,
+   "ts": "2026-10-07T00:36:57.469Z",
+   "tool": "call_chair",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 30,
+   "ts": "2026-10-07T02:54:53.240Z",
+   "tool": "chair_inject",
+   "label": "ADD"
+  },
+  {
+   "i": 31,
+   "ts": "2026-10-07T02:54:56.936Z",
+   "tool": "chair_inject",
+   "label": "ADD"
+  },
+  {
+   "i": 32,
+   "ts": "2026-10-07T04:18:56.496Z",
+   "tool": "call_chair",
+   "label": "ADD"
+  },
+  {
+   "i": 33,
+   "ts": "2026-10-07T08:06:08.638Z",
+   "tool": "call_chair",
+   "label": "WORDING"
+  },
+  {
+   "i": 34,
+   "ts": "2026-10-07T20:40:37.686Z",
+   "tool": "call_librarian",
+   "label": "POINTER"
+  },
+  {
+   "i": 35,
+   "ts": "2026-10-08T10:04:16.458Z",
+   "tool": "call_chair",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 36,
+   "ts": "2026-10-08T11:33:49.132Z",
+   "tool": "call_chair",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 37,
+   "ts": "2026-10-08T11:34:03.638Z",
+   "tool": "call_chair",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 38,
+   "ts": "2026-10-09T00:24:12.090Z",
+   "tool": "chair_inject",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 39,
+   "ts": "2026-10-09T08:54:44.080Z",
+   "tool": "call_chair",
+   "label": "ADD"
+  },
+  {
+   "i": 40,
+   "ts": "2026-10-09T11:10:39.650Z",
+   "tool": "chair_inject",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 41,
+   "ts": "2026-10-09T11:10:49.249Z",
+   "tool": "chair_inject",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 42,
+   "ts": "2026-10-09T11:12:55.315Z",
+   "tool": "chair_inject",
+   "label": "WORDING"
+  },
+  {
+   "i": 43,
+   "ts": "2026-10-09T15:33:00.502Z",
+   "tool": "chair_inject",
+   "label": "CLAIM-FIX"
+  },
+  {
+   "i": 44,
+   "ts": "2026-10-09T16:19:36.809Z",
+   "tool": "call_chair",
+   "label": "WORDING"
+  },
+  {
+   "i": 45,
+   "ts": "2026-10-09T17:06:49.057Z",
+   "tool": "chair_inject",
+   "label": "CLAIM-DROP"
+  }
+ ],
+ "reply": [
+  {
+   "i": 0,
+   "ts": "2026-10-03T13:01:06.606Z",
+   "tool": "librarian",
+   "label": "CLAIM-FIX"
+  },
+  {
+   "i": 1,
+   "ts": "2026-10-03T17:44:44.254Z",
+   "tool": "librarian",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 2,
+   "ts": "2026-10-03T17:49:03.462Z",
+   "tool": "librarian",
+   "label": "META"
+  },
+  {
+   "i": 3,
+   "ts": "2026-10-03T22:45:14.168Z",
+   "tool": "librarian",
+   "label": "META"
+  },
+  {
+   "i": 4,
+   "ts": "2026-10-03T23:30:44.835Z",
+   "tool": "librarian",
+   "label": "META"
+  },
+  {
+   "i": 5,
+   "ts": "2026-10-04T01:14:55.384Z",
+   "tool": "librarian",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 6,
+   "ts": "2026-10-04T07:42:56.230Z",
+   "tool": "librarian",
+   "label": "META"
+  },
+  {
+   "i": 7,
+   "ts": "2026-10-04T08:56:42.195Z",
+   "tool": "librarian",
+   "label": "META"
+  },
+  {
+   "i": 8,
+   "ts": "2026-10-05T04:57:30.042Z",
+   "tool": "librarian",
+   "label": "META"
+  },
+  {
+   "i": 9,
+   "ts": "2026-10-05T05:45:41.192Z",
+   "tool": "librarian",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 10,
+   "ts": "2026-10-05T14:57:31.794Z",
+   "tool": "librarian",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 11,
+   "ts": "2026-10-05T19:50:17.677Z",
+   "tool": "librarian",
+   "label": "META"
+  },
+  {
+   "i": 12,
+   "ts": "2026-10-05T21:22:11.012Z",
+   "tool": "librarian",
+   "label": "META"
+  },
+  {
+   "i": 13,
+   "ts": "2026-10-06T08:01:19.619Z",
+   "tool": "librarian",
+   "label": "CLAIM-FIX"
+  },
+  {
+   "i": 14,
+   "ts": "2026-10-06T08:12:45.522Z",
+   "tool": "librarian",
+   "label": "POINTER"
+  },
+  {
+   "i": 15,
+   "ts": "2026-10-06T20:47:08.207Z",
+   "tool": "librarian",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 16,
+   "ts": "2026-10-07T01:07:15.992Z",
+   "tool": "librarian",
+   "label": "WORDING"
+  },
+  {
+   "i": 17,
+   "ts": "2026-10-07T01:09:47.231Z",
+   "tool": "librarian",
+   "label": "WORDING"
+  },
+  {
+   "i": 18,
+   "ts": "2026-10-07T02:11:23.190Z",
+   "tool": "chair",
+   "label": "CLAIM-FIX"
+  },
+  {
+   "i": 19,
+   "ts": "2026-10-07T04:15:41.154Z",
+   "tool": "chair",
+   "label": "WORDING"
+  },
+  {
+   "i": 20,
+   "ts": "2026-10-07T08:01:12.628Z",
+   "tool": "librarian",
+   "label": "POINTER"
+  },
+  {
+   "i": 21,
+   "ts": "2026-10-07T16:06:43.241Z",
+   "tool": "librarian",
+   "label": "CLAIM-FIX"
+  },
+  {
+   "i": 22,
+   "ts": "2026-10-08T17:53:59.630Z",
+   "tool": "librarian",
+   "label": "WORDING"
+  }
+ ],
+ "trailer": [
+  {
+   "i": 0,
+   "ts": "2026-09-16T19:14:27.511Z",
+   "tool": "chair_inject",
+   "label": "PROBE"
+  },
+  {
+   "i": 1,
+   "ts": "2026-09-16T19:14:31.876Z",
+   "tool": "chair_inject",
+   "label": "PROBE"
+  },
+  {
+   "i": 2,
+   "ts": "2026-09-16T23:40:58.658Z",
+   "tool": "call_chair",
+   "label": "PROBE"
+  },
+  {
+   "i": 3,
+   "ts": "2026-09-19T05:28:30.507Z",
+   "tool": "call_chair",
+   "label": "ADD"
+  },
+  {
+   "i": 4,
+   "ts": "2026-09-20T05:01:48.328Z",
+   "tool": "chair_inject",
+   "label": "META"
+  },
+  {
+   "i": 5,
+   "ts": "2026-09-20T07:38:13.114Z",
+   "tool": "call_chair",
+   "label": "META"
+  },
+  {
+   "i": 6,
+   "ts": "2026-09-22T18:30:49.285Z",
+   "tool": "chair_inject",
+   "label": "FORMAT"
+  },
+  {
+   "i": 7,
+   "ts": "2026-09-23T00:48:36.809Z",
+   "tool": "call_chair",
+   "label": "ADD"
+  },
+  {
+   "i": 8,
+   "ts": "2026-09-26T07:19:45.237Z",
+   "tool": "call_chair",
+   "label": "WORDING"
+  },
+  {
+   "i": 9,
+   "ts": "2026-09-26T13:40:30.549Z",
+   "tool": "call_chair",
+   "label": "WORDING"
+  },
+  {
+   "i": 10,
+   "ts": "2026-09-26T13:57:26.985Z",
+   "tool": "call_chair",
+   "label": "WORDING"
+  },
+  {
+   "i": 11,
+   "ts": "2026-09-26T14:40:09.397Z",
+   "tool": "call_chair",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 12,
+   "ts": "2026-09-26T14:40:16.215Z",
+   "tool": "call_chair",
+   "label": "WORDING"
+  },
+  {
+   "i": 13,
+   "ts": "2026-09-28T22:44:41.138Z",
+   "tool": "chair_inject",
+   "label": "CLAIM-DROP"
+  },
+  {
+   "i": 14,
+   "ts": "2026-10-07T03:56:32.527Z",
+   "tool": "chair_inject",
+   "label": "FORMAT"
+  }
+ ]
+}
