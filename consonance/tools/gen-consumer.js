@@ -537,6 +537,12 @@ const WORKSHOP = {
       ["test('the corpus total is non-zero and counts more than the flat read did', ", 'needs this room\'s loop/; corpus-age.synthetic.test.js row 1'],
       ["test(\"review()'s OWN rel resolves — not just the walk's\", ", 'needs this room\'s nested loop/ files; corpus-age.synthetic.test.js row 2']],
     'consonance/tools/shelf-tier.test.js': [["test('the split is worth making — RECORD really is the larger half', ", 'measures the room\'s record against its system; the consumer inverts that by ruling']],
+    /* D273 lap 7 (pane B): both rows read the COMMITTED baseline, which EXCLUDE withholds by ruling (this machine's own path register). They were red in
+     * the source too until main fixed its baseline (b95767dc), which hid them from the parity count. A consumer-generated baseline is the better end state
+     * (a stranger's ratchet would work); routed, not built here. The file's other 41 rows build their own trees and run. */
+    'consonance/tools/portable-paths.test.js': [
+      ["test('the green line says how many baselined sites are FATAL — exempted is not fixed', ", 'reads the committed path baseline, which is this machine\'s register and does not ship (EXCLUDE)'],
+      ["test('the real repo is green against its committed baseline', ", 'reads the committed path baseline, which is this machine\'s register and does not ship (EXCLUDE)']],
     'dev/shell/hooks/l2-overseer-worker.test.js': [["t('the prompt no longer teaches the struck test (registry id cant-lose-handle-2026-08-29)', ", 'the carrier-drift registry ships SEEDED empty by ruling']],
     /* D273 lap 5 (pane B): these ten rows were red in the source suite too until lap 5's main (6d12f9fa), so the parity count could not see them; with the source
      * green they are the only carrier-drift reds in the consumer. Each reads the room's own registry (shipped SEEDED empty) or its git history, which a
