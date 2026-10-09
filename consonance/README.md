@@ -187,9 +187,9 @@ including the big one — it detects asserted *wording* and is blind to *omissio
 
 ## The hooks
 
-22 non-test `.js` files under [`hooks/`](hooks/): `blind.js` is a library, `second-reader-worker.js` is the worker the second-reader hook starts, and the rest are hooks.
+22 non-test `.js` files under [`hooks/`](hooks/) (21 in a generated copy, which leaves out the retired `jev-flags.js`): `blind.js` is a library, `second-reader-worker.js` is the worker the second-reader hook starts, and the rest are hooks.
 [`../dev/shell/install.ps1`](../dev/shell/install.ps1) copies 18 of the 22 and lists the other 4 as **unmanaged**, each with its reason: `ask-surface.js`, `baton-wake-stop.js` and
-`live-mirror-stop.js` wait on a decision, and `jev-flags.js` is retired. It makes 22 registration entries in all (some are marked Excluded). Its own census
+`live-mirror-stop.js` wait on a decision, and `jev-flags.js` is retired (a generated copy does not carry it). It makes 22 registration entries in all (some are marked Excluded). Its own census
 (`files 34`, `registrations 22`) is printed by the `derive.ps1` snippet in [`hooks/README.md`](hooks/README.md):
 
     ls consonance/hooks/*.js | grep -v '\.test\.js' | wc -l                       # 22

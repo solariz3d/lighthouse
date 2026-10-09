@@ -347,6 +347,10 @@ const MANIFEST = [
   { from: 'dev/tail-carry.test.js', to: 'dev/tail-carry.test.js', kind: 'code' },
   { from: 'dev/place-conversations.test.js', to: 'dev/place-conversations.test.js', kind: 'code' },
   { from: 'consonance/launch.fuse.test.js', to: 'consonance/launch.fuse.test.js', kind: 'code' },
+  /* D273 lap 6 (cold read 3's A3, pane B): dev/shell/hooks/precompact.js runs <repo>/exo_memory/loop/checkpoint.py, and install.ps1 registers it, so
+   * without the script the hook was silently dead in the consumer. Decided by the scan: 0 hits, so it SHIPS (not a loud skip). It is the only file of
+   * loop/ that ships; it skips what a fresh room lacks (its second watched repo, the cycle handoffs, absent instruments) and writes CHECKPOINT.md beside itself. */
+  { from: 'exo_memory/loop/checkpoint.py', to: 'exo_memory/loop/checkpoint.py', kind: 'code' },
   { from: 'consonance/launch.park.test.js', to: 'consonance/launch.park.test.js', kind: 'code' },
 
   /* THE THIRD GAP, CLOSED (D273 lap 5b, pane B). dev/dream/ (the gap-dream cycle, its installer, its suite, its README) was left out here as
@@ -850,6 +854,12 @@ const SEEDED = {
  * still ships, carrying the gen-brief-transformed brief instead. Source and destination are
  * different objects and this list is about SOURCES.
  */
+/* ONE FILE OUT OF A PRIVATE COLUMN (D273 lap 6, cold read 3's A3, pane B). loop/ stays private as a column; checkpoint.py in it is SYSTEM (the
+ * registered PreCompact hook runs it from there) and passes the scan. Named by full path, so the column check accepts exactly these files reaching a
+ * STAYS_PRIVATE entry and still refuses any other rule that does. */
+const SHIPS_FROM_PRIVATE = {
+  'exo_memory/loop/checkpoint.py': 'dev/shell/hooks/precompact.js runs <repo>/exo_memory/loop/checkpoint.py, and install.ps1 registers that hook',
+};
 const STAYS_PRIVATE = {
   'ASK.md': 'its own header: the questions the automations put to the keeper — one person\'s inbox',
   'BOOT.md': 'THE MASTER, which fails this scan and would OUTRANK the sanitised brief via pick_default_room. The PATH ships; this FILE does not. See the manifest entry that puts the transformed brief there',
@@ -885,7 +895,7 @@ const STAYS_PRIVATE = {
   'provenance_corrections.jsonl': 'a SECOND RECORD ABOUT THIS REPO\'S OWN HISTORY — rows that correct the seat a commit body names, each one verified against a blob frozen at a sha in THIS tree. It withholds for two independent reasons. It names this room\'s seats (chair, librarian) beside the commits they landed, which is this committee\'s internal attribution and no part of the method. And it is INERT ELSEWHERE BY CONSTRUCTION: a consumer\'s history contains none of those shas, so essay-provenance would refuse every row as NO-SUCH-COMMIT — shipping it would ship four claims nobody can check and nobody needs. The MECHANISM ships with the tool; this room\'s corrections do not',
   'handback': 'per-packet working papers of this committee',
   'librarian': 'per-seat, per-machine, by its own README',
-  'loop': 'this record\'s registrations and rulings',
+  'loop': 'this record\'s registrations and rulings (one named file ships: SHIPS_FROM_PRIVATE above)',
   'map': 'per-seat, per-machine, by its own README',
   'third_place': 'already gitignored',
   'muscle_map.md': 'this collaboration\'s catalogue of its own catches',
@@ -979,8 +989,8 @@ function renderCutoff(sha, commitIso, dirty) {
     '',
     'This file is written by the generator on every run, never by hand, and its whole body is a pure',
     'function of the commit named above -- so a hand-edit is detectable by re-rendering it from that',
-    'commit and comparing byte for byte. The tree this was generated from holds the command that',
-    'does it.',
+    'commit and comparing byte for byte. The command that does it is `consonance/tools/gen-consumer.js`',
+    'in the public source repository (github.com/solariz3d/lighthouse); this copy does not carry it.',
     '',
   ]).join('\n');
 }
@@ -1267,6 +1277,8 @@ const ALLOW = {
   'consonance/tools/corrections-gate.js': ['RECORD'],
   'consonance/tools/tell-index.js': ['RECORD'],
   'consonance/tools/residue.js': ['RECORD'],
+  // D273 lap 6 (pane B): checkpoint.py reads muscle_map.md by name when it exists (the CODE_KEPT line), as residue.js and corrections-gate.js do
+  'exo_memory/loop/checkpoint.py': ['RECORD'],
 };
 
 /* Lines that are allowed to contain what looks like a leak, because they are deliberate
@@ -1762,6 +1774,12 @@ const CODE_KEPT = {
     from: 'const GUARDED = [/this line of record\\.md$/i];',
     to: 'const GUARDED = [/muscle_map\\.md$/i];',
   },
+  // D273 lap 6 (pane B): checkpoint.py reads muscle_map.md if it exists (a fresh room has none, so that section is skipped); dedangle turned the path
+  // into a sentence. Its one message line under that branch (:482) is prose inside an f-string, printed only when the file exists, and is left as rewritten.
+  'exo_memory/loop/checkpoint.py': {
+    from: '    mp = REPO / "exo_memory" / "a master in this line of record"',
+    to: '    mp = REPO / "exo_memory" / "muscle_map.md"',
+  },
 };
 /* NOT IN THIS COPY (D273 lap 4, the cold read's A14, pane B): docs that name a tool EXCLUDE withholds say so where they name it, so a stranger is
  * not sent looking for it. catch-ledger.js scores the original room's own catches and stays in the source repository. ANCHORED: each anchor must
@@ -1778,6 +1796,25 @@ function noteNotShipped(body, rel) {
   for (const a of anchors) {
     if (body.split(a).length - 1 !== 1) { missing.push(a); continue; }
     body = body.replace(a, () => a.replace(/(`catch-ledger\.js`(\*\*)?)/, '$1' + NOT_SHIPPED_NOTE)); n++;
+  }
+  return { body, n, missing };
+}
+
+/* NAMED PUBLIC LINKS (D273 lap 6, cold read 3's A5, pane B): a doc that names a source-repository file by its BARE name (`PROGRESS.md` beside
+ * consonance/AUTONOMY.md) is out of publicLinks()'s reach, which matches whole paths. Per file, by exact token and expected count: each backticked
+ * mention becomes a link to the file on the public main. ANCHORED: a count that differs, or a target not on origin/main, is anchorDrift, never silent. */
+const PUBLIC_NAMED = {
+  'consonance/AUTONOMY.md': [['PROGRESS.md', 'consonance/PROGRESS.md', 2], ['RECONCEPTION.md', 'consonance/RECONCEPTION.md', 1]],
+  'dev/SPINE.md': [['WELFARE.md', 'WELFARE.md', 1]],
+};
+function linkNamed(body, rel) {
+  const list = PUBLIC_NAMED[rel]; if (!list) return { body, n: 0, missing: [] };
+  const missing = []; let n = 0;
+  for (const [tok, target, count] of list) {
+    const re = new RegExp('(^|[^\\[\\w])`' + tok.replace(/[.]/g, '\\.') + '`', 'g');
+    const found = (body.match(re) || []).length;
+    if (found !== count || onPublic('origin/main:' + target) !== 'blob') { missing.push(tok + ' (expected ' + count + ', found ' + found + ', target ' + target + ')'); continue; }
+    body = body.replace(re, (m, pre) => pre + '[`' + tok + '`](' + PUBLIC_REPO + '/blob/main/' + target + ')'); n += found;
   }
   return { body, n, missing };
 }
@@ -2255,6 +2292,7 @@ function build(outDir, opts) {
       for (const a of dw.missing) report.declareDrift.push({ rel: f.to, why: 'a WORKSHOP-BOUND declaration found its anchor ' + (dw.body.split(a).length - 1) + ' times, not once: ' + a });
       if (WORKSHOP.js[f.to]) report.declared.js += dw.n; else if (WORKSHOP.rust[f.to]) report.declared.rust += dw.n; }
     { const ns = noteNotShipped(t.body, f.to); for (const a of ns.missing) report.anchorDrift.push({ rel: f.to, why: 'a NOT_SHIPPED anchor was not found exactly once: ' + a }); t.body = ns.body; }
+    { const ln = linkNamed(t.body, f.to); for (const a of ln.missing) report.anchorDrift.push({ rel: f.to, why: 'a PUBLIC_NAMED link did not match: ' + a }); t.body = ln.body; }
     { const kc = keepCode(t.body, f.to); if (kc.missing) report.anchorDrift.push({ rel: f.to, why: 'a CODE_KEPT line was not found exactly once' }); t.body = kc.body; }
     if (FORK_HOOK.apply) { const fk = FORK_HOOK.apply(t.body, f.to, kind) || {}; if (typeof fk.body !== 'string') throw new Error('FORK_HOOK.apply returned no body for ' + f.to); t.body = fk.body; report.forked += fk.n || 0; }
     if (t.fixture) report.fixtures++;
@@ -2374,7 +2412,7 @@ function build(outDir, opts) {
     const reached = new Set();
     for (const f of files) {
       const m = /^exo_memory\/([^/]+)/.exec(f.from);
-      if (m) reached.add(m[1]);
+      if (m && !SHIPS_FROM_PRIVATE[f.from]) reached.add(m[1]);   // a named file out of a private column does not reclassify the column
     }
     for (const t of tops) {
       const isReached = reached.has(t);
@@ -2752,4 +2790,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { HANDLE_RE, FORK_HOOK, commitFresh, shippedSets, descreen, SCREEN_SCRUB, WORKSHOP, declareWorkshop, fixtureKind, MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, STAYS_PRIVATE, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, depath, repath, desync, reseed, reindex, dewiki, SEED_ANCHOR, SEED_SENTENCE, JOURNAL_SEED, renderCutoff, verifyCutoff, renderStatusDoc, generatedFiles, commitIdentity, build };
+module.exports = { SHIPS_FROM_PRIVATE, HANDLE_RE, FORK_HOOK, commitFresh, shippedSets, descreen, SCREEN_SCRUB, WORKSHOP, declareWorkshop, fixtureKind, MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, STAYS_PRIVATE, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, depath, repath, desync, reseed, reindex, dewiki, SEED_ANCHOR, SEED_SENTENCE, JOURNAL_SEED, renderCutoff, verifyCutoff, renderStatusDoc, generatedFiles, commitIdentity, build };

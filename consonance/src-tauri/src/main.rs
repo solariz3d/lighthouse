@@ -2920,8 +2920,8 @@ fn gates_doc_path() -> String {
     gates_doc_from(repo_root().as_deref(), |p| p.is_file())
 }
 
-/// The first line of the consumer's fork note (`brief/frag-fork.md`; `consonance/tools/consumer-relabel.js` FORK_MARKER is the
-/// same bytes, and `fork_note_tests` reads the template to hold them together).
+/// The first line of the consumer's fork note (`brief/frag-fork.md`; FORK_MARKER in `consonance/tools/consumer-relabel.js` (in the source repository,
+/// which generates the consumer tree) is the same bytes, and `fork_note_tests` reads the template to hold them together).
 const FORK_MARKER: &str = "**Where this line forks.**";
 /// The note's last line, so it can be cut out of the brief it ships in (consumer-relabel.js FORK_END, the same bytes).
 const FORK_END: &str = "<!-- end of the fork note -->";

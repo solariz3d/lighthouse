@@ -697,9 +697,15 @@ test('L038 · the CUTOFF is a pure function of the commit, and a hand-edit is de
 test('L038 · every exo_memory/ entry is in exactly one column', () => {
   const tops = fs.readdirSync(path.join(REPO, 'exo_memory')).sort();
   const reached = new Set();
+  // D273 lap 6 AMENDED BY NAME (pane B): one named FILE may ship out of a private column (G.SHIPS_FROM_PRIVATE: loop/checkpoint.py, which the
+  // registered PreCompact hook runs), without moving the column. Every such entry must exist and sit under a STAYS_PRIVATE column, or it is no exception.
+  for (const [rel] of Object.entries(G.SHIPS_FROM_PRIVATE)) {
+    assert.ok(fs.existsSync(path.join(REPO, rel)), rel + ' is named in SHIPS_FROM_PRIVATE and does not exist');
+    assert.ok(Object.prototype.hasOwnProperty.call(G.STAYS_PRIVATE, rel.split('/')[1]), rel + ' is named in SHIPS_FROM_PRIVATE but its column is not private');
+  }
   for (const f of G.collect()) {
     const m = /^exo_memory\/([^/]+)/.exec(f.from);
-    if (m) reached.add(m[1]);
+    if (m && !G.SHIPS_FROM_PRIVATE[f.from]) reached.add(m[1]);
   }
   for (const t of tops) {
     const inShips = reached.has(t);
@@ -1742,5 +1748,50 @@ test('D273 lap 5b: dev/dream/ ships as system (librarian ruling): its four files
     // the folder's one scan hit, fixed AT THE SOURCE: dream_cycle.test.js:23 cited muscle_map.md, the keeper's record, which a consumer does not carry
     assert.deepStrictEqual((r.unportable || []).filter((u) => u.rel.startsWith('dev/dream/')), [], 'dev/dream/ cites a file the consumer does not have');
     assert.match(fs.readFileSync(path.join(r.staging, 'dev/dream/dream_cycle.ps1'), 'utf8'), /\$env:CONSONANCE_DREAM\s*=\s*"1"/, 'the shipped runner does not set CONSONANCE_DREAM');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+
+/* ============================================================ D273 LAP 6 POLISH (pane B): cold read 3's A3, A4, A5
+ * handback/p-consumer-coldread3-LIB_2026-10-09.md section A, and plan_consumer_refresh_2026-10-08.md "lap 6 POLISH". */
+
+test('D273 lap 6 (A3): the PreCompact hook finds its script: exo_memory/loop/checkpoint.py ships (the scan passes it), so the registered hook is not silently dead', () => {
+  const r = lap5();
+  try {
+    assert.ok(!r.refused, r.refused);
+    const rel = 'exo_memory/loop/checkpoint.py';
+    assert.ok(fs.existsSync(path.join(r.staging, rel)), rel + ' did not ship; dev/shell/hooks/precompact.js runs it from <repo>/exo_memory/loop/');
+    assert.deepStrictEqual(r.leaks.filter((l) => l.rel === rel), [], rel + ' shipped a leak');
+    assert.match(fs.readFileSync(path.join(r.staging, 'dev/shell/hooks/precompact.js'), 'utf8'), /path\.join\(REPO, "exo_memory", "loop", "checkpoint\.py"\)/, 'the hook no longer names the script it runs');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273 lap 6 (A4): what the docs say about jev-flags.js is true in a generated copy: not "in the repo", and the README hook count matches the tree', () => {
+  const r = lap5();
+  try {
+    assert.ok(!r.refused, r.refused);
+    assert.ok(!fs.existsSync(path.join(r.staging, 'consonance/hooks/jev-flags.js')));
+    const inst = fs.readFileSync(path.join(r.staging, 'dev/shell/install.ps1'), 'utf8'), readme = fs.readFileSync(path.join(r.staging, 'consonance/README.md'), 'utf8');
+    assert.doesNotMatch(inst, /The file stays in the repo as the record/, 'install.ps1 says the excluded jev-flags.js is in this repo');
+    assert.match(inst, /jev-flags[\s\S]{0,400}a generated copy does not carry it/, 'install.ps1 does not say a generated copy lacks jev-flags.js');
+    const n = fs.readdirSync(path.join(r.staging, 'consonance/hooks')).filter((f) => /\.js$/.test(f) && !/\.(test|mutants)\.js$/.test(f)).length;
+    assert.match(readme, new RegExp('\\(' + n + ' in a generated copy'), 'the README hook count is not stated for a generated copy, which has ' + n);
+    assert.match(readme, /`jev-flags\.js` is retired \(a generated copy does not carry it\)/, 'README:192 does not say a generated copy lacks jev-flags.js');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273 lap 6 (A5): the unshipped names the cold read listed are linked to the public record or say where they live', () => {
+  const r = lap5();
+  try {
+    assert.ok(!r.refused, r.refused);
+    const read = (rel) => fs.readFileSync(path.join(r.staging, rel), 'utf8');
+    const aut = read('consonance/AUTONOMY.md');
+    assert.strictEqual(aut.split('(' + PUB + '/blob/main/consonance/PROGRESS.md)').length - 1, 2, 'AUTONOMY.md:5,96 PROGRESS.md is not linked twice');
+    assert.ok(aut.includes('(' + PUB + '/blob/main/consonance/RECONCEPTION.md)'), 'AUTONOMY.md:5 RECONCEPTION.md is not linked');
+    assert.ok(read('dev/SPINE.md').includes('[`WELFARE.md`](' + PUB + '/blob/main/WELFARE.md)'), 'SPINE.md:81 WELFARE.md is not linked');
+    const cut = read('exo_memory/CUTOFF.md');
+    assert.doesNotMatch(cut, /The tree this was generated from holds the command/, 'CUTOFF still points at a tree the reader does not have');
+    assert.ok(cut.includes('`consonance/tools/gen-consumer.js`') && cut.includes('public source repository (github.com/solariz3d/lighthouse)'), 'CUTOFF does not say where the command is');
+    assert.match(read('consonance/src-tauri/src/main.rs'), /consumer-relabel\.js`? \(in the source repository/, 'main.rs names consumer-relabel.js as if it were in this tree');
   } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
 });
