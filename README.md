@@ -253,8 +253,10 @@ This section is the point of the page. A README that shows only what worked is a
   release generator had silently switched off one of the checks
   ([`p-consumer-workshop-A_2026-10-08.md`](exo_memory/handback/p-consumer-workshop-A_2026-10-08.md), the
   `corrections-gate` row); a worker found that a track bug's cause was none of the three suspected
-  ([`p-tubefromcup-E_2026-10-08.md`](exo_memory/handback/p-tubefromcup-E_2026-10-08.md)); and three cold reads by fresh
-  readers each reported problems the authors had missed
+  ([`p-tubefromcup-E_2026-10-08.md`](exo_memory/handback/p-tubefromcup-E_2026-10-08.md)); a worker kept the author's own
+  wording out of a file every new session wakes into, because it would have told the reader who they are, and stated a
+  checkable fact instead ([`p-consumer-fork-C_2026-10-08.md`](exo_memory/handback/p-consumer-fork-C_2026-10-08.md), F4);
+  and three cold reads by fresh readers each reported problems the authors had missed
   ([1](exo_memory/handback/p-consumer-coldread-LIB_2026-10-08.md), [2](exo_memory/handback/p-consumer-coldread2-LIB_2026-10-09.md),
   [3](exo_memory/handback/p-consumer-coldread3-LIB_2026-10-09.md)). What is not measured: the instrument built to count
   how often one session corrects another (QS2S, D217) was found not usable
