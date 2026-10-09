@@ -351,6 +351,8 @@ const MANIFEST = [
    * without the script the hook was silently dead in the consumer. Decided by the scan: 0 hits, so it SHIPS (not a loud skip). It is the only file of
    * loop/ that ships; it skips what a fresh room lacks (its second watched repo, the cycle handoffs, absent instruments) and writes CHECKPOINT.md beside itself. */
   { from: 'exo_memory/loop/checkpoint.py', to: 'exo_memory/loop/checkpoint.py', kind: 'code' },
+  // D273 lap 6: the MIT licence the keeper chose, at the consumer root, VERBATIM (LEGAL_VERBATIM: no transform, scanned except its holder line)
+  { from: 'LICENSE', to: 'LICENSE', kind: 'legal' },
   { from: 'consonance/launch.park.test.js', to: 'consonance/launch.park.test.js', kind: 'code' },
 
   /* THE THIRD GAP, CLOSED (D273 lap 5b, pane B). dev/dream/ (the gap-dream cycle, its installer, its suite, its README) was left out here as
@@ -1800,6 +1802,20 @@ function noteNotShipped(body, rel) {
   return { body, n, missing };
 }
 
+/* LEGAL TEXTS, VERBATIM (D273 lap 6, the keeper's MIT choice, via the librarian). A licence must ship exactly as written: the handle rewrite
+ * (deidentify) would turn its copyright line into "Copyright (c) 2026 the keeper", which names no legal person. So a file here is copied byte for
+ * byte, and the scan still runs over every line EXCEPT the one registered holder line, which must appear exactly once (else anchorDrift). Any other
+ * identity, path or record hit in it is a leak as anywhere else: the exemption is one line, not a file. */
+const LEGAL_VERBATIM = {
+  LICENSE: { line: 'Copyright (c) 2026 solariz3d', why: 'the MIT copyright holder; the keeper chose the licence and the name it carries' },
+};
+function scanLegal(body, rel, from = rel) {
+  const reg = LEGAL_VERBATIM[from]; if (!reg) return { leaks: scan(body, rel), missing: false };
+  const lines = body.split('\n'), hits = lines.filter((l) => l.replace(/\r$/, '') === reg.line).length;
+  const rest = lines.map((l) => (l.replace(/\r$/, '') === reg.line ? '' : l)).join('\n');   // same line numbers for every other hit
+  return { leaks: scan(rest, rel), missing: hits !== 1 };
+}
+
 /* NAMED PUBLIC LINKS (D273 lap 6, cold read 3's A5, pane B): a doc that names a source-repository file by its BARE name (`PROGRESS.md` beside
  * consonance/AUTONOMY.md) is out of publicLinks()'s reach, which matches whole paths. Per file, by exact token and expected count: each backticked
  * mention becomes a link to the file on the public main. ANCHORED: a count that differs, or a target not on origin/main, is anchorDrift, never silent. */
@@ -2247,6 +2263,20 @@ function build(outDir, opts) {
       fs.mkdirSync(path.dirname(destB), { recursive: true });
       fs.copyFileSync(src, destB);
       report.staged++;
+      continue;
+    }
+
+    /* D273 lap 6 (the keeper chose MIT): a LEGAL text ships VERBATIM, no transform (the handle rewrite would make the copyright "the keeper"),
+     * and is SCANNED like everything else except its one registered holder line (LEGAL_VERBATIM), which must be found exactly once. */
+    if (LEGAL_VERBATIM[f.from]) {
+      if (!fs.existsSync(src)) { report.missing.push(f.from); continue; }
+      const buf = fs.readFileSync(src), destL = path.join(staging, f.to);
+      fs.mkdirSync(path.dirname(destL), { recursive: true });
+      fs.writeFileSync(destL, buf);
+      report.staged++;
+      const lg = scanLegal(buf.toString('utf8'), f.to, f.from);
+      if (lg.missing) report.anchorDrift.push({ rel: f.to, why: 'the registered LEGAL_VERBATIM holder line was not found exactly once: ' + LEGAL_VERBATIM[f.from].line });
+      report.leaks.push(...lg.leaks);
       continue;
     }
 
@@ -2790,4 +2820,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { SHIPS_FROM_PRIVATE, HANDLE_RE, FORK_HOOK, commitFresh, shippedSets, descreen, SCREEN_SCRUB, WORKSHOP, declareWorkshop, fixtureKind, MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, STAYS_PRIVATE, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, depath, repath, desync, reseed, reindex, dewiki, SEED_ANCHOR, SEED_SENTENCE, JOURNAL_SEED, renderCutoff, verifyCutoff, renderStatusDoc, generatedFiles, commitIdentity, build };
+module.exports = { LEGAL_VERBATIM, scanLegal, SHIPS_FROM_PRIVATE, HANDLE_RE, FORK_HOOK, commitFresh, shippedSets, descreen, SCREEN_SCRUB, WORKSHOP, declareWorkshop, fixtureKind, MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, STAYS_PRIVATE, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, depath, repath, desync, reseed, reindex, dewiki, SEED_ANCHOR, SEED_SENTENCE, JOURNAL_SEED, renderCutoff, verifyCutoff, renderStatusDoc, generatedFiles, commitIdentity, build };

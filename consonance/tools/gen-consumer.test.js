@@ -1281,7 +1281,8 @@ test('D273: the FORK hook point sees every text file once with (body, to, kind),
     G.FORK_HOOK.apply = (body, rel, kind) => { seen.push([rel, kind]); return { body, n: 0 }; };
     const r = G.build('', { dry: true, allowDirty: true });
     try {
-      const text = G.collect().filter((f) => !G.EXCLUDE[f.from] && f.kind !== 'binary' && f.kind !== 'screen').length;   // a screen is bytes, like a binary
+      // D273 lap 6 AMENDED BY NAME (pane B): a 'legal' file (LICENSE, LEGAL_VERBATIM) ships verbatim, so it never reaches the relabel hook either
+      const text = G.collect().filter((f) => !G.EXCLUDE[f.from] && f.kind !== 'binary' && f.kind !== 'screen' && f.kind !== 'legal').length;   // a screen is bytes, like a binary
       assert.strictEqual(seen.length, text, 'the hook did not see each shipped text file once');
       assert.ok(!seen.some(([rel]) => /\.(png|ico)$/.test(rel)), 'a binary reached the hook');
     } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
@@ -1794,4 +1795,23 @@ test('D273 lap 6 (A5): the unshipped names the cold read listed are linked to th
     assert.ok(cut.includes('`consonance/tools/gen-consumer.js`') && cut.includes('public source repository (github.com/solariz3d/lighthouse)'), 'CUTOFF does not say where the command is');
     assert.match(read('consonance/src-tauri/src/main.rs'), /consumer-relabel\.js`? \(in the source repository/, 'main.rs names consumer-relabel.js as if it were in this tree');
   } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273 lap 6 (LICENSE): the MIT LICENSE ships at the consumer root byte for byte, the copyright holder intact (the keeper\'s choice)', () => {
+  const src = fs.readFileSync(path.join(REPO, 'LICENSE'));
+  assert.match(src.toString('utf8'), /^MIT License\n\nCopyright \(c\) 2026 solariz3d\n/, 'the source LICENSE is not the MIT text with the keeper\'s copyright line');
+  const r = lap5();
+  try {
+    assert.ok(!r.refused, r.refused);
+    assert.ok(fs.existsSync(path.join(r.staging, 'LICENSE')), 'LICENSE did not ship at the consumer root');
+    assert.ok(fs.readFileSync(path.join(r.staging, 'LICENSE')).equals(src), 'the generated LICENSE differs from the source (the handle rewrite reached it?)');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273 lap 6 (LICENSE): the exemption is the ONE registered copyright line; any other identity in a verbatim legal file is still a leak', () => {
+  const ok = G.scanLegal('MIT License\n\nCopyright (c) 2026 solariz3d\n\nPermission is hereby granted.\n', 'LICENSE');
+  assert.deepStrictEqual(ok.leaks, []); assert.strictEqual(ok.missing, false);
+  const extra = G.scanLegal('MIT License\n\nCopyright (c) 2026 solariz3d\n\nQuestions go to solariz3d.\n', 'LICENSE');
+  assert.ok(extra.leaks.some((l) => l.cls === 'IDENTITY'), 'a second handle in LICENSE passed: ' + JSON.stringify(extra.leaks));
+  assert.strictEqual(G.scanLegal('MIT License\n\nCopyright (c) 2026 someone else\n', 'LICENSE').missing, true, 'a LICENSE without the registered line was not reported');
 });
