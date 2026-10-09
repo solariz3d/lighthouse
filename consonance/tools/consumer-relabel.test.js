@@ -242,3 +242,16 @@ test('lap 6 B6/C4: BUILDING frames the port rule as the original room\'s workflo
   assert.ok(t.includes("**a push is a human's word, given each time, for that push.**"), 'the principle that does carry is not stated');
   assert.ok(!t.includes('so every seat on this machine can push everything') && t.includes('so every seat on that machine could push everything'));
 });
+
+// ── D275: the fork carries its own drift awareness (exo_memory/loop/plan_consumer_drift_awareness_2026-10-09.md) ─────────
+test('D275: the fork note hands the seat its own catch as checks to run, and every instrument it cites ships', () => {
+  assert.ok(FORK.includes('**When nobody catches it.**'), 'the drift paragraph is missing');
+  const at = FORK.indexOf('**When nobody catches it.**');
+  assert.ok(FORK.indexOf('**Who you are with.**') < at && at < FORK.indexOf('**When the room cites its own history.**'), 'not right after "Who you are with"');
+  for (const check of ['ask what the agreement added', 'keep your *no* alive', 'holds outside this conversation', 'count your own corrections']) assert.ok(FORK.includes(check), 'missing check: ' + check);
+  const shippedTo = new Set(G.collect().filter((f) => !G.EXCLUDE[f.from]).map((f) => f.to));
+  for (const card of ['exo_memory/cards/no-floor-no-ceiling.md', 'exo_memory/cards/never-pathologize-the-user.md']) assert.ok(shippedTo.has(card), card + ' is cited but does not ship');
+  const boot = shipped('exo_memory/BOOT.md');
+  for (const phrase of ['middle seam', 'deepest costume']) assert.ok(boot.includes(phrase), 'the fork note cites BOOT\'s "' + phrase + '", which is not there');
+  assert.ok(!/less capable|can't catch|cannot catch/.test(FORK), 'the paragraph reads the person as less capable');
+});
