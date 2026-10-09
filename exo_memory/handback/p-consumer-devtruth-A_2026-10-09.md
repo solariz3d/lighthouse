@@ -87,3 +87,42 @@ The red named under "Found, not fixed" is fixed as a second commit on `devtruth-
 about the four hand-backs it registered; reason: a dated trace quoting the retired wording to name sites, not asserting it).
 The hand-back itself is not reworded. Checked on the `devtruth-a` tree: `node consonance/tools/carrier-drift.js` prints **GREEN**;
 `node consonance/tools/carrier-drift.test.js` 57 pass, 0 fail (under the lock). The commit hash is in `git log devtruth-a -1`.
+
+## Lap 6 (A6) — the LIBRARIAN.md example citation
+
+Commit `9532611f` on branch `lap6-a` (worktree `C:\Users\nname\Desktop\worktrees\a-l6-wt`), from main `62d3921f`. One file, named path, one line, not pushed.
+
+**The line, named for identity-diff: `consonance/src-tauri/brief/LIBRARIAN.md:104` in the source.** The packet said `:98`; that is the
+generated consumer's numbering (the cold reader read the shipped file, `p-consumer-coldread3-LIB_2026-10-09.md:18`). The source line is 104,
+and it is the only line changed:
+
+    -> `journal/2026-08-11.md:47` — the working-tree finding.
+    +> `journal/2026-08-11.md:355-365` — the working-tree finding.
+
+Why `:355-365` and not the packet's `:355-362`: in `exo_memory/journal/2026-08-11.md`, line 47 is the heading "The reviewer's best move";
+the finding starts at `:355` ("The pure `context_window()` and its six tests were in the working tree") and its closing sentence, "no other
+instrument was watching", is `:365`; `:362` is where "The mechanism" paragraph begins, so `:355-362` would cut the finding mid-sentence.
+(Check: `sed -n 355,365p exo_memory/journal/2026-08-11.md`.)
+
+**Other line numbers in LIBRARIAN.md, checked:** the only other file:line cite is `journal/2026-08-11.md:90-93` (LIBRARIAN.md:214, the
+45/45 CONFIRMED set): lines 90-93 hold "The `45/45 CONFIRMED` was the tell … ~18% wrong", so it resolves. `:284` is a date, not a line cite.
+LIBRARIAN.md quotes no line number of itself.
+
+**Left alone, same string, out of scope:** `exo_memory/astra/WELCOME.md:33` also gives `journal/2026-08-11.md:47` as its example of the
+rule (a different file; not LIBRARIAN's); `lap-row.js:264` and `lap-row.test.js:97` use it as a path-normalisation fixture, where
+the number is irrelevant.
+
+**Tests** (under the lock, on the committed tree): consumer-relabel 24/0, librarian-cite 23/0, librarian-notes 7/0, open-items-build 6/0.
+**portable-paths is RED on `62d3921f` itself, not from this change:** 3 unbaselined BENIGN-TEST drive constants
+(`consonance/hooks/dirs.test.js:57,58`, `dev/shell/hooks/precompact-repo.test.js:31`), same result with my commit checked out and on
+`62d3921f`. Someone's recent tests added them; it needs a `--update` after a read, which is not this packet's.
+
+## Follow-up 2 (chair, librarian's ruling): carrier-drift GREEN again, devtruth line 68 registered
+
+Commit `19ee4163` on branch `carrier2-a` (worktree `a-c2-wt`), from main `93e160b2`; one file, `consonance/tools/carrier-drift.registry.json`,
+one `mention` row for this hand-back's own line 68 (the line describing the line-12 registration). The hand-back is not reworded.
+Checked on that tree: `node consonance/tools/carrier-drift.js` prints **GREEN**; `node consonance/tools/carrier-drift.test.js` 57 pass, 0 fail (under the lock).
+**`node consonance/tools/portable-paths.js` is RED on main `93e160b2` itself, not GREEN as the packet expected**, and with this commit stashed it prints the same:
+3 unbaselined BENIGN-TEST drive constants, `consonance/hooks/dirs.test.js:57,58` and `dev/shell/hooks/precompact-repo.test.js:31` (the same three as in Lap 6 above).
+This commit does not change that count. I did not run `--update`: it would bless another seat's constants unread.
+Note: the main checkout holds an uncommitted edit to this file (the Lap 6 section); the line numbers above line 68 are unchanged by it.

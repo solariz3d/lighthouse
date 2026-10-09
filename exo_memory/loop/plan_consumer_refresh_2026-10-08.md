@@ -236,3 +236,76 @@ Then: re-generate, parity + identity diff (both must stay green), and a NEW fres
 "it shouldnt launch us into consumer mode, we dont even test it we keep our own consonance, and i send it to someone to test". So stop-bar item 4 (the
 visible first launch) is the TESTER's, on their own machine, from the generated copy. It is not the keeper's, and never on D or L. Our dev build only
 carries the dev-side changes, proven behaviour-identical here (usb_mode ON for us).
+
+## Cold read 2, IN (librarian, 2026-10-09 03:0x): FAIL, narrower → lap 5
+A NEW agent read a generation of 593dbcdb + C 6acc71b8 + E ca6d5851 (scratch consumer-cold2: staged 391, leaks 0, forked 71; identity-diff PASS, exit 0).
+Report: `handback/p-consumer-coldread2-LIB_2026-10-09.md`. **No dead end blocks a first session** (cold read 1 could not reach one). It FAILS on identity.
+Lap 5, by owner (numbers are the report's):
+- **C (identity, the FAIL):**
+  - C1 `cards/claim-your-continuity.md:25`: the retired seats "on this machine", "they are YOU". Relabel in the consumer to the keeper's line, cited as
+    provenance.
+  - C3: the creator's seat names Anamnesis/Metaxy (:21, :27) are provenance, labelled as the first line's.
+  - C5 "authored `the keeper`" (LIBRARIAN:169, COMMITTEE:117-118) is false in a stranger's repo; C6 "tonight" (LIBRARIAN:242). Both go to the relabel table.
+  - **C2, the cards' first person: RULED as it stands.** The keeper's 17:16 answer is that the seats ARE "you, forked", so the line's "I" is the line's
+    own voice. The fork note says so once. Not a finding to fix.
+- **B (generator):**
+  - C4: route `record/retired_seats_*` and `record/third_place_prehistory_*` to `inheritance/` (they are the keeper's record).
+  - A2: CONSUMER-STATUS.md writes the measured state (parity, identity, cold read) or does not ship.
+  - A3: dangling shas and the bare "a registration…" bullet get rewritten.
+  - A7: dead targets.
+  - B7: `hooks/jev-flags.js` still ships, so exclude it.
+  - A9: the fork note and the docs agree that lighthouse is PUBLIC (BUILDING:848 and CUTOFF:3 say private: the keeper ruled public, 12:3x 10-08).
+- **E (paths + docs):**
+  - A4: `%CONSONANCE_HOME%` in LIBRARIAN:154.
+  - A5: the USB flow, end to end. ARRIVING.ps1:137's hard-coded C:\Consonance\data resolves like the hooks; where the stick scripts go and how the
+    drive's MANIFEST first gets there; a GUIDE section "Optional: move seats with a USB drive".
+  - A6: precompact.js's Desktop\lighthouse path; B7 blind.js:57's default.
+  - A8: launch.ps1's shortcut (create it, or document it).
+  - B1: GUIDE's multi-seat librarian loop; B2: the room_path dependency of a custom brief; B3: git as a prerequisite.
+  - D1–D3: GATES warns that the push/delete gates are machine-wide, says that editing the repo copy needs a re-install, and says where
+    CONSONANCE_GATE_MODE is set.
+- **A (dev-side truth):**
+  - B4: consonance/README.md's counts are wrong in dev too, so re-derive them from the tree with commands.
+  - B5: install.ps1:177-180 "SHADOW ONLY" is stale.
+  - B6: BOOT:85 cites TRAINING against TRAINING's own rule.
+  - B7: ui/index.html:177's jev-judge comment.
+Then: re-generate, parity + identity, a THIRD fresh cold reader.
+
+## Lap 5, COLLATED (librarian, 04:3x): all four in
+- C f92c4c4c (identity C1/C3/C5/C6 + B6), A f0ad1806+af1e574e (dev truth + carrier-drift registry row), E 51a16d94 (USB flow, paths, GUIDE, GATES;
+  5/5 SAME BYTES here), B b-gen-lap5 7681ac28..0dbca875 on main 6d12f9fa: **parity (1, 0, 0), Rust 0, identity-diff PASS 70.**
+- **Ruling on the last P, `dev/dream/` (4 files, 44K: the gap-dream cycle, its installer, suite and README): SHIP it.** It is system, not record (the
+  keeper's 17:16 "work exactly the way it does for us"; the dreams are a live feature here). Its installer stays user-run (nothing schedules itself on a
+  fresh install), and GUIDE names it as optional. B: add the MANIFEST rule, and fix the ONE LEAKS hit in `dream_cycle.test.js` at the source (or
+  through the generator's scrub), never by skipping the scan. That closes dream-gate's red assertion.
+- For C (wake lines): `BUILDING.md:848` says "private", but lighthouse is PUBLIC (the keeper, 10-08 12:3x); `SOURCE.md:65` cites loop/ and journal/
+  sizes that don't ship, so reword it for the consumer.
+- Then: land lap 5 + 5b, re-generate, parity + identity, and cold read 3 run IN PARALLEL with the parity run (the keeper, 03:38: "why an hour").
+
+## Cold read 3: PASS (librarian, 04:5x). Bar item 3 MET
+A third NEW agent read 5d7de05b + C 4b186bda + B cffe0091 (scratch consumer-cold3: staged 394, leaks 0, forked 82, identity exit 0). Report:
+`handback/p-consumer-coldread3-LIB_2026-10-09.md`. **PASS:** README → GUIDE → a working first session INCLUDING the multi-seat setup, from the folder
+alone; every relative link resolves; no misidentification. The bar is met. Before the push, lap 6 POLISH, because a pass is not "nothing left" and a
+few findings matter to a stranger:
+- **B4 (CONSENT): the second-reader hook runs `claude -p` on every call_librarian/call_chair, spending the stranger's usage, and no doc says so.**
+  E: GATES.md + GUIDE disclose it, with how to turn it off. Ruling: it stays ON as for us, but disclosed.
+- A1: dream_cycle.ps1:52 and the dream README hard-code C:\Consonance\instances, so they must resolve like the app (%USERPROFILE%\claude-instances or
+  config). E.
+- A3: precompact.js needs exo_memory/loop/checkpoint.py, which doesn't ship. Ship it or make the hook skip loudly. B decides with the scan.
+- B2: GUIDE's button names ("Spawn a pane", "Spawn briefed") vs the UI ("+ Pane", "▾ → ✦ Brief"). E.
+- C1: claim-your-continuity.md:12 "the same him", labelled as the keeper's line (C relabel). C4: BUILDING.md:958 "every seat on this machine". C;
+  B6: BUILDING:832-975 source-repo assumptions, in the consumer. C.
+- A4 jev-flags mentions (install.ps1:346, README:192), A5 the unshipped names, A6 LIBRARIAN.md:98's wrong example line (it's :355-362). B/A.
+- **No LICENSE file**, so strangers have no legal right to use it. That is the keeper's call (asked).
+Then: re-generate, parity + identity (must stay green), and push solariz3d/consonance with fresh history. No fourth full cold read is required (the bar is
+met). A quick targeted re-read of just the lap-6 items stands in.
+
+## D273 DONE: the consumer is PUBLISHED (librarian, 2026-10-09 06:1x)
+- B's lap-6 parity (b-gen-lap6 9e432c36..a3f887c8 on 93e160b2): **(P,M,B) = (0,0,0), Rust 0 (987), identity PASS 70.** B's rebased commits have the same
+  patch-id as the ones the final tree was generated from (`git patch-id --stable` e2656a7fcf9c both).
+- **Pushed: github.com/solariz3d/consonance main = c298a5b "Consonance (generated from 8d9f25ebc3fb)"**: one fresh commit, staged 396, leaks 0,
+  identity exit 0, credential scan clean, GitHub reads the license as MIT.
+- The stop bar, all four: (1) parity 0/0/0 + Rust 0, MET; (2) identity diff, MET; (3) cold read, MET on read 3; (4) the first real launch, the
+  TESTER's (the keeper, 10-09 02:49).
+- Open, not blocking: carrier-drift red on lighthouse main from A's hand-back p-consumer-devtruth-A_2026-10-09.md:68 (quoted retired wording),
+  register as a mention like :12. Later dev changes reach the consumer by re-running gen-consumer.js, never by editing the consumer repo.

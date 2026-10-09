@@ -604,3 +604,211 @@ Generation from `bd861f8e`, a clean tree: staged 390, leaks 0, excluded 44, decl
 
 SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-consumer-coldread-LIB_2026-10-08.md · C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-consumer-fork-C_2026-10-08.md
 NEXT: chair land b-gen-lap4 (2a42f248..bd861f8e, on main d4166304) when this is read; route the E and C lines above
+
+
+# Lap 5 (pane B, 2026-10-09 04:3x): cold read 2's generator items, E's launch.vbs, and the parity they exposed
+
+**Branch `b-gen-lap5`, worktree `C:\Users\nname\Desktop\worktrees\b-d273-lap5`.** It is rebased onto main `6d12f9fa` (A's and E's lap 5), and main has not
+moved since. Three commits, named paths, not pushed:
+- `7681ac28`: cold read 2's items C4, A2, A3/A7, B7, A9 (plan lines 251-257; `handback/p-consumer-coldread2-LIB_2026-10-09.md`).
+- `5d087a64`: E's input; `consonance/launch.vbs` ships beside `launch.ps1`.
+- `0dbca875`: the parity run at `5d087a64` read P = 3 and identity-diff RED. All four causes are lap 5's own, made or exposed; fixed below.
+
+## The verdict
+    THE TRIPLE      P = 1       M = 0       B = 0          (the 1 is dream-gate, already declared open in the generator; see below)
+    THE GUARD       I = S − G = 167 − 126 = 41             (lap 4: 164 − 125 = 39)
+    RUST            0 parity breaks
+    IDENTITY-DIFF   PASS — 70 wake files compared; 0 unregistered difference(s), exit 0; generated from 0dbca875 = this repo
+Generation from `0dbca875`, a clean tree: staged 390, leaks 0, excluded 46, declared JS 37 / Rust 12, forked 81; generated commit `42d9f62`, no remote,
+at `C:\Users\nname\Desktop\worktrees\b-d273-gen13`. No CONSUMER-STATUS.md (unmeasured, by A2).
+
+| run | result |
+|---|---|
+| source `js-suite` | 164 green · 1 failed (of 167): portable-paths |
+| generated `js-suite` | 122 green · 2 failed (of 126): portable-paths, dream-gate |
+| generated `cargo test` | bin **987 / 0** / 15 ignored, `arch_test` **12 / 0** / 1 ignored; exit 0 |
+| cold sweep, `CONSONANCE_DATA` = an empty directory | chain-status rc 0, 528 B; board-audit rc 1, 604 B; ferry rc 0, 438 B; carrier-drift rc 1, 4,522 B; **0 stack frames each, so M = 0, B = 0** |
+
+- **The source went from 5 reds to 1 on main `6d12f9fa`** (dream-gate, carrier-drift, heavy-run and sourced are green there). The reds those four had been
+  sharing with the consumer had been hiding consumer-only reds, so this run is the first that could see them.
+- **P = 1: `dream-gate`, row "the runner sets the variable it asks the hooks to honour"**, ENOENT on `dev/dream/dream_cycle.ps1`. This is the gap that
+  `gen-consumer.js:352-374` already records as **"Declared, not fixed"**: whether `dev/dream/` (4 files) ships is a keeper-shaped decision ("absent means
+  undecided under an allow-list, and an EXCLUDE entry would assert a decision nobody has made"). I did NOT declare it WORKSHOP-BOUND. That would read as
+  "this is the record", and it would mask the open question. **For the chair: ship `dev/dream/` (that comment measured all four files clean except one hit in
+  `dream_cycle.test.js`), or rule it out.** Either way, P goes to 0.
+- Logs: `d273/lap5c/` (the first run, at `5d087a64`: `d273/lap5/`).
+
+## What was done (test first each time: red, then green)
+- **C4:** the keeper's two record files (`retired_seats_2026-09-11.md`, `third_place_prehistory_2026-08-30.md`) ship in `exo_memory/inheritance/`, not
+  `record/`, so a seat no longer carries them whole. The `record/` rule matches `/^(?!retired_seats_|third_place_prehistory_).+\.md$/`, a new rule moves
+  the two, and `dedangle` re-points any `record/…` mention of them to `inheritance/`. It composes with C's lap 5 anchors: forked 81, no throw.
+- **A2:** CONSUMER-STATUS.md ships ONLY when measured: `build(out, { measured })`, or `--measured <file.json>`, with
+  `{sha, at, parity:{P,M,B}, rust, identity, coldRead}`. `build()` refuses a measurement whose sha is not this commit's. `MEASURED_LINES` is identical
+  in both renderers (`gen-consumer.js`, `gen-consumer.build.test.js`).
+- **A3/A7:** `publicLinks()` (prose only, before `dedangle`) links record paths (`loop|map|handback|librarian|memory`) to
+  `github.com/solariz3d/lighthouse/blob/main/…`. It links backticked shas to `/commit/<sha>`, **only when they are on `origin/main`**
+  (`git cat-file` / `merge-base --is-ancestor`, cached). The excluded `memory/` notes, `dev/PLAN.md` and the `dev/dream/` tree are linked the same way.
+  A `third_place` path becomes the prose "a Third Place entry in the keeper's record". Anything not public keeps the old placeholder.
+- **B7:** `hooks/jev-flags.js` and its test are excluded (`JEV_EXCLUDED`), and the jev-flags WORKSHOP entry was removed.
+- **A9:** CUTOFF reads "Generated from the keeper's public record at commit `<sha>` (github.com/solariz3d/lighthouse)".
+- **launch.vbs (E):** a manifest line; it finds `launch.ps1` beside itself (`BuildPath(scriptDir, "launch.ps1")`), carries no machine path, and ships
+  unchanged.
+- **`0dbca875`, what the parity run found (each one lap 5's own):**
+  - **dream-gate crashed:** its roster parser read `install.ps1:148`, a COMMENTED retired entry (`jev-flags.js`, kept verbatim by ruling 5), as a live
+    hook. In dev it ran a hook nothing installs; in the consumer, after B7, it hit a missing module. Commented lines are now skipped. A new row (red
+    first: "discovered from a commented line… jev-flags.js") checks every commented `From =` line.
+  - **gen-brief-gate:** C's consumer detector was `CONSUMER-STATUS.md`, which A2 made conditional. I had not traced its readers. `exo_memory/CUTOFF.md`
+    (generator-written, in every generation) now also marks a consumer tree; the constant is amended with a dated comment.
+  - **identity-diff:** it read generated-from only from CONSUMER-STATUS.md (now with a CUTOFF.md fallback), and read C4's two MOVED files as "the
+    generated tree does not have it". A rule's `to` that exists in the generated tree is now reported absent, as "MOVED: ships as … outside the wake
+    set"; a moved file that never arrived stays unregistered. Two rows, red first, on synthetic trees.
+  - **carrier-drift:** 10 rows read the room's registry (shipped SEEDED empty) or its git history (`21d5453^`, `325fb03^`). They are declared
+    WORKSHOP-BOUND by exact name (green in source, A's anti-masking condition). The file's 47 other rows still run in the consumer.
+
+**Amended BY NAME (rule changed), each with its comment:** the lap-2 Jev row (jev-flags is excluded now); the declared count, 28 → 27 (B7) → **37**
+(carrier-drift); the L038 dirty-tree regex (the CUTOFF wording).
+
+**Tests, green under the lock at `0dbca875`:** gen-consumer + fixture-scope **96/96**; identity-diff **9/9**; dream-gate **72/0**; gen-brief-gate
+**7 + 1 skip**; carrier-drift **57/57**. Red first, logged: `d273/lap5-red.out` (6 new rows and 2 amended), `d273/vbs-red.out`,
+`d273/lap5b/red-*.out` (3 rows).
+
+## For C (wake material, so the lines rather than an edit)
+- `consonance/src-tauri/brief/BUILDING.md:848`: "SOURCE is this repository: hand-maintained, private (`gh repo view … --json isPrivate` →". The
+  same "private repo" wording is at `:866`, `:968`, `:989`, `:994` and `:1003`. The keeper ruled lighthouse public (A9).
+- `exo_memory/SOURCE.md:65`: "`exo_memory/loop/` (11,918 lines) and `exo_memory/journal/` (5,927) are too large to carry". Neither ships in the consumer.
+
+## Corrections (mine)
+- **W1: A2 broke two readers I had not traced.** `gen-brief-gate.test.js:36` and `identity-diff.js:136` both keyed on CONSUMER-STATUS.md. My row
+  for A2 tested only that the file is conditional. Caught by the parity run, fixed in `0dbca875`.
+- **W2: B7 exposed dream-gate's comment-blind parser.** The B7 row checked only the exclusion, not who still names the file.
+- `${}` inside a `String.raw` template broke an edit script; I fixed it with a narrower escape. A `\'` was lost in a plain template literal; fixed with Edit.
+- I left the `jev-flags.test.js` WORKSHOP entry behind, which caused a `declareDrift` refusal; removed.
+- `publicCommit` had no cache: the gen-consumer suite took 293 s, and about 83 s with the cache.
+- The build-gate test showed 6 pass / 5 skip when cargo was not on PATH; it is 7 / 4 with it.
+- I stopped my own superseded parity run `b3nnq96uo` (it was replaced after `launch.vbs`).
+
+
+# Lap 5b (pane B, 2026-10-09 05:0x): dev/dream/ ships, its scan hit fixed at the source; parity (0, 0, 0)
+
+**Branch `b-gen-lap5b`, worktree `C:\Users\nname\Desktop\worktrees\b-d273-lap5b`, from main `5d7de05b` (main has not moved).** One commit, named paths,
+not pushed: **`cffe0091`**. I rang the librarian as soon as it landed, so cold read 3 could run in parallel with this parity run.
+
+## The verdict: parity holds
+    THE TRIPLE      P = 0       M = 0       B = 0          (lap 5: 1, 0, 0)
+    THE GUARD       I = S − G = 167 − 127 = 40             (lap 5: 41; dream_cycle.test.js now ships)
+    RUST            0 parity breaks
+    IDENTITY-DIFF   PASS — 70 wake files compared; 0 unregistered difference(s), exit 0; generated from cffe0091 = this repo
+Generation from `cffe0091`, a clean tree: staged 394 (+4), leaks 0, excluded 46, declared JS 37 / Rust 12, forked 81; generated commit `c32b559`, no
+remote, at `C:\Users\nname\Desktop\worktrees\b-d273-gen14`.
+
+| run | result |
+|---|---|
+| source `js-suite` | 164 green · 1 failed (of 167): portable-paths |
+| generated `js-suite` | 124 green · 1 failed (of 127): portable-paths, the same file, so shared and not P |
+| generated `cargo test` | bin **987 / 0** / 15 ignored, `arch_test` **12 / 0** / 1 ignored; exit 0 |
+| cold sweep, `CONSONANCE_DATA` = an empty directory | chain-status rc 0, 528 B; board-audit rc 1, 604 B; ferry rc 0, 438 B; carrier-drift rc 1, 4,522 B; **0 stack frames each** |
+
+Logs: `d273/lap5e/`.
+
+## What was done (red, then green)
+- **dev/dream/ ships as system** (the librarian's ruling, plan "Lap 5, COLLATED"): four MANIFEST lines, `README.md` (prose), `dream_cycle.ps1`,
+  `install_dream.ps1` and `dream_cycle.test.js` (code). The "THIRD GAP" comment that kept the folder out as undecided is replaced by the ruling. The
+  installer stays user-run; nothing schedules itself. The three non-test files ship byte-identical. dream-gate's last red assertion is gone.
+- **The scan hit, fixed AT THE SOURCE.** At this commit no LEAKS pattern refused any of the four files; the one hit the old comment measured is, today,
+  the build's `unportable` entry: `dev/dream/dream_cycle.test.js:23` cited `muscle_map.md` (the keeper's record; a fixture keeps its references, so it
+  would ship pointing nowhere). The comment now states the invariant itself: "mention-vs-use (a comment MENTIONS a behaviour, only the code USES it) is
+  a sealed invariant of this project". Comment only; no scan skipped or exempted; dream_cycle 7/7 in dev.
+- **`PUBLIC_DEV` drops `dev/dream/`** (my lap 5 linked it to the public repo while it was absent). It is a local target now.
+- **Rows:** NEW, "dev/dream/ ships as system…": the four files ship, no leak, no unportable reference, and the runner sets `CONSONANCE_DREAM`.
+  **AMENDED BY NAME**, the A7 row: `dev/shell/README.md` must name `` `dev/dream/` ``, the folder must ship, and no public link. Both red on the base
+  (`d273/lap5d/red.out`: fail 2); the unportable assertion's red is the pre-edit build, which listed the entry.
+
+**Tests, green under the lock at `cffe0091`:** gen-consumer + fixture-scope **97/97**; dream_cycle **7/7**; dream-gate **72/0**; identity-diff **9/9**;
+build gate **7 pass / 4 skip** (cargo on PATH).
+
+## For E (GUIDE, if wanted)
+The ruling says GUIDE names the dream as optional. A line, for E's wording: "Optional: the gap-dream (`dev/dream/`). It runs only after you run
+`dev/dream/install_dream.ps1` yourself; nothing schedules it on install." I did not check GUIDE's current text for an existing mention.
+
+## Corrections (mine)
+- None in this lap's code. A note on the packet's premise: "the one LEAKS hit" no longer reproduces as a LEAKS refusal; it was the unportable reference
+  above (the old comment did not say which pattern it hit). I fixed that one.
+
+
+# Lap 6 (pane B, 2026-10-09 06:1x): polish A3, A4, A5 + the MIT LICENSE; parity (0, 0, 0)
+
+**Branch `b-gen-lap6`, worktree `C:\Users\nname\Desktop\worktrees\b-d273-lap6`.** It started from main `62d3921f` and was **rebased onto main `93e160b2`**
+(cold reads 2/3 and A's hand-back landed, plus A6's LIBRARIAN.md line). Two commits, named paths, not pushed:
+- `9e432c36` (was `b5de5c8b`): cold read 3's A3, A4, A5.
+- `a3f887c8` (was `58771b96`): the MIT LICENSE, at the root and the consumer root, verbatim.
+
+## The verdict: parity holds on the rebased tip
+    THE TRIPLE      P = 0       M = 0       B = 0
+    THE GUARD       I = S − G = 167 − 127 = 40             (lap 5b: 40)
+    RUST            0 parity breaks
+    IDENTITY-DIFF   PASS — 70 wake files compared; 0 unregistered difference(s), exit 0; generated from a3f887c8 = this repo
+Generation from `a3f887c8`, a clean tree: staged 396 (+2: checkpoint.py, LICENSE), leaks 0, excluded 46, declared JS 37 / Rust 12, forked 82; generated
+commit `da5c8d2`, no remote, at `C:\Users\nname\Desktop\worktrees\b-d273-gen17`. `cmp LICENSE <gen>/LICENSE`: identical.
+
+| run | result |
+|---|---|
+| gen-consumer + fixture-scope + identity-diff tests (first step of the same hold) | **111 / 111** |
+| source `js-suite` | 163 green · 2 failed (of 167): portable-paths, **carrier-drift** (see below) |
+| generated `js-suite` | 124 green · 1 failed (of 127): portable-paths, shared |
+| generated `cargo test` | bin **987 / 0** / 15 ignored, `arch_test` **12 / 0** / 1 ignored; exit 0 |
+| cold sweep, `CONSONANCE_DATA` = an empty directory | chain-status rc 0, 528 B; board-audit rc 1, 604 B; ferry rc 0, 438 B; carrier-drift rc 1, 4,522 B; **0 stack frames each** |
+
+The same run before the rebase (`58771b96` on `62d3921f`, `d273/lap6q/`) also gave (0, 0, 0), with the source at 164 · 1 (portable-paths only). Logs: `d273/lap6r/`.
+
+**MAIN `93e160b2` IS RED ON carrier-drift, and it is not this branch.** `carrier-drift.js`'s scan on a clean detached checkout of `93e160b2` gives one
+finding: `UNACCOUNTED exo_memory/handback/p-consumer-devtruth-A_2026-10-09.md:68` (A's hand-back quotes a retired wording while listing where it sits;
+it landed in `2df7e713`). Two rows go red in the source: "THE BAR, half one" and "MUTATION over the REAL tree". **For A or the librarian:** mark the site
+(or reword line 68). This matters for my lap 5 declarations. Those two rows are among the ten I declared WORKSHOP-BOUND on condition they are green in
+source (A's anti-masking condition). The declaration does not hide this, because the source suite runs them and is red. But the condition is not met
+until line 68 is accounted for. Not touched by me (A's file).
+
+## What was done (red, then green)
+- **A3, decided by the scan: `exo_memory/loop/checkpoint.py` SHIPS** (0 hits after transform), so the PreCompact hook that `install.ps1` registers is no
+  longer silently dead.
+  - **Checked by running it:** I ran the generated `precompact.js` against a staged tree, with a temp `USERPROFILE` whose `.consonance.json`
+    `room_path` points there. rc 0, stderr empty, `CHECKPOINT.md` written beside the script.
+  - **loop/ stays private as a column.** `SHIPS_FROM_PRIVATE` names that one file by full path. The column check, and the L038 row (amended BY
+    NAME), accept exactly that and still refuse any other rule reaching a private column.
+  - **One judgement call, stated:** `dedangle` turned `REPO / "exo_memory" / "muscle_map.md"` (`:217`) into a sentence. `CODE_KEPT` restores the
+    line, and `ALLOW` gives the file RECORD. That is exactly how `residue.js` and `corrections-gate.js` already ship. The alternative was to ship a
+    path that can never match, even if a consumer later writes that file. The f-string message under that branch (`:482`) is left as rewritten; it
+    prints only when the file exists.
+- **A4:** `install.ps1:345` now says "stays in the source repository … (a generated copy does not carry it)". `README.md:192` says the same. I also took
+  `README.md:189`, same error, adjacent: "22 non-test .js files" now adds "(21 in a generated copy, which leaves out the retired jev-flags.js)". The row
+  counts the generated `hooks/` and requires that number in the README.
+- **A5:**
+  - `PUBLIC_NAMED` (per file, by exact token AND expected count; a mismatch or a non-public target is anchorDrift) links AUTONOMY's `PROGRESS.md`
+    (×2) and `RECONCEPTION.md`, and SPINE's `WELFARE.md`, to the public main.
+  - CUTOFF now says "The command that does it is `consonance/tools/gen-consumer.js` in the public source repository (github.com/solariz3d/lighthouse);
+    this copy does not carry it."
+  - The `main.rs` comment at the fork marker says `consumer-relabel.js` is in the source repository (comment only; cargo green in source, bin 998/0).
+- **LICENSE (the keeper's MIT choice):**
+  - None existed (worktree, `git ls-files`, `origin/main`). It is the standard MIT text, "Copyright (c) 2026 solariz3d".
+  - MANIFEST `{ from: 'LICENSE', to: 'LICENSE', kind: 'legal' }`. `LEGAL_VERBATIM` registers its ONE holder line: the file is copied byte for byte,
+    never through deidentify or the relabel hook. `scanLegal` scans every other line, and the registered line must appear exactly once (else
+    anchorDrift).
+  - Rows: the generated LICENSE `.equals()` the source; a second handle in a legal file is still an IDENTITY leak; a LICENSE without the registered line
+    is reported.
+  - The FORK hook row is amended BY NAME (a `legal` file never reaches the hook, like binary and screen).
+
+**Red first:** `d273/lap6/red.out` (A3, A4, A5: fail 3) and `d273/lap6/lic-red.out` (LICENSE: fail 2). **Amended BY NAME:** L038 columns (SHIPS_FROM_PRIVATE);
+the FORK hook row (legal). **Green under the lock:** gen-consumer + fixture-scope 102/102, then 111/111 with identity-diff on the rebased tip;
+identity-diff + front-door-links + consumer-relabel 37/37; build gate 7 pass / 4 skip; source cargo bin 998/0.
+
+## Corrections (mine)
+- **W1:** my first LICENSE row spelled the keeper's email local part in a test string. I replaced it with a second handle before any commit.
+- **W2:** `git commit -- LICENSE` on an untracked file failed (pathspec), and the generator correctly refused the dirty tree. Fixed with `git add LICENSE`.
+- **W3:** my own A5 row expected the CUTOFF words in the opposite order from what I wrote. I fixed the row (it was unlanded and mine), not the text.
+- I stopped my own parity run `bkw2m4szf` when the LICENSE was added; `heavy-run` then reported its lock as stale and took it over. No stray processes
+  (checked).
+- Heredocs ate backslashes twice in edit scripts; redone with Edit.
+
+## Leftovers
+- `C:\Users\nname\AppData\Local\Temp\gen-consumer-Ui2piO` and `scratchpad/d273/lap6/home/`: a dry-build staging tree and the temp home for the hook run.
+  The safety check refused my scripted removal of the first (its path came from a command substitution). Safe to delete.
+- Generated trees `b-d273-gen13` … `gen17` (no remote, `pushDefault = no_push`).
