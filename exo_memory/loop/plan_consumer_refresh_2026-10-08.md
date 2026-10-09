@@ -309,3 +309,53 @@ met). A quick targeted re-read of just the lap-6 items stands in.
   TESTER's (the keeper, 10-09 02:49).
 - Open, not blocking: carrier-drift red on lighthouse main from A's hand-back p-consumer-devtruth-A_2026-10-09.md:68 (quoted retired wording),
   register as a mention like :12. Later dev changes reach the consumer by re-running gen-consumer.js, never by editing the consumer repo.
+
+## The release build found a gap (librarian, 09:3x): the installer images don't ship (D273 lap 7)
+The keeper, 09:28: "lets make a release for it". The librarian cloned the PUBLISHED consumer (c298a5b) and ran `cargo tauri build`: the app COMPILES
+(release, 1m 22s), but the NSIS bundle fails: "failed to resolve `bundle > windows > nsis > headerImage` installer/header.bmp". Dev has
+`consonance/src-tauri/installer/{header,sidebar}.bmp` (tracked), and no MANIFEST rule ships them. The README tells strangers to run
+`cargo tauri build`, so every stranger hits this. Parity never caught it because the generated-tree checks run `cargo test`, never a bundle.
+**B:**
+(1) a MANIFEST rule for `consonance/src-tauri/installer/` (binary images, copied byte for byte; scan them as the screens are scanned, or state why
+    not needed);
+(2) a GUARD in gen-consumer: every file path `tauri.conf.json` references (bundle.resources, the icons, nsis headerImage/sidebarImage/installerIcon,
+    and the like) must exist in the generated tree, or the build REFUSES, red first;
+(3) re-run parity.
+Then the librarian regenerates, pushes the consumer as a SECOND commit (not a history rewrite), builds the installer from a clean clone, and
+publishes v0.1.0.
+
+## CORRECTION (librarian, 09:4x): my stop bar had a hole. The keeper: "how did u miss"
+The bar checked that the docs were true, the tests green, the tree identical and leak-free. **It never checked that each command the README/GUIDE tells a
+stranger to type WORKS as written.** Parity runs `cargo test` (no bundle). B's lap-1 install used `cargo tauri build --no-bundle`. The cold readers
+cannot run anything. Our own builds use --no-bundle. So `cargo tauri build`, the README's literal command, was never run until the release.
+**Added to the bar, item 5, before any consumer push or release:** run every command in README + GUIDE AS WRITTEN in a fresh clone of the consumer
+(the build, the bundle, `install.ps1` in a contained stranger profile, `-Check`). Each must succeed, or be NAMED as untested with the reason
+(e.g. the interactive `claude` login). Never silently assumed.
+
+## Lap 7, item for E: README:247 "It is still mostly one voice" is reframed (the keeper, 09:41)
+The keeper: "you are right and it is mostly one voice, but its not bad in the way you are setting it up to be, sure its closer to the same 'voice', but the
+mind and vantage point behind it are proven to be different enough to do the job we need".
+Ruling (librarian): the line's NUMBER stays (87.2% → 68.2%, board-audit.js, 2026-09-22), and its CONCLUSION goes. It measures traffic share: the
+chair writes the most rows BY DESIGN (it dispatches and collates). Volume is not vantage. Evidence that the vantages differ is already two lines up
+(non-overlapping findings that overturn each other) and in this lap's own record (A's corrections-gate catch, C's refusal of the museum wording, E's
+tube cause, three cold readers with disjoint findings). Honest limit kept: the seat→seat correction instrument (QS2S, D217) is NOT USABLE yet
+(librarian/2026-10-03.desktop.md:3), so there is no measured rate. Drop "Two thirds of the writing from one session is not yet a committee."
+E edits README.md in lighthouse (it ships to the consumer on the lap-7 regenerate).
+
+## Lap 7, second gap: the published consumer's binary fixtures are corrupted (librarian, 10:3x)
+Found while staging the second consumer commit. c298a5b's composer screen fixtures had their CRs stripped (composer_empty_2026-09-19.bin: CR 28 → 0,
+sha256 4cca6b60… → b5c33134…). The generator's fresh `git init` commit ran under the global core.autocrlf=true, and the consumer ships NO
+.gitattributes (lighthouse pins eol in its own, since 2026-08-25). So any stranger's checkout with autocrlf breaks the 11 composer/ready Rust tests.
+B: ship .gitattributes, make the generator's commit run autocrlf-off, and add a guard that the HEAD bytes equal the source bytes. Bar item 5 already
+caught it, before any stranger did. The release-command check so far, on the lap-7 generation: `cargo tauri build` OK
+(Consonance_0.1.0_x64-setup.exe); install.ps1 + -Check exit 0 in a contained stranger profile. Untested here, by design: the interactive
+`claude` login and the first visible launch (the tester's).
+
+## Consonance v0.1.0 RELEASED (librarian, 10:5x)
+- Consumer main = 44aa704 (second commit, generated from 49034e88 = 17a327a8 + E 70c3bf56/664b8b59 + B 7f1690fd/05ef35bc/ce9af4c3): installer images,
+  .gitattributes, the one-voice reframe, and the restored screen fixtures. B's lap-7 parity (0,0,0), Rust 0 of 987, identity PASS 70. The generation:
+  staged 399, leaks 0, identity exit 0, credential scan clean.
+- Bar item 5 on a FRESH GITHUB CLONE under autocrlf=true: the fixtures are byte-identical (composer_empty sha256 4cca6b60…); `cargo tauri build` OK →
+  Consonance_0.1.0_x64-setup.exe, 3,851,697 B. Earlier on the lap-7 generation: install.ps1 + -Check exit 0 in a contained stranger profile.
+  Untested by design: the `claude` login and the first visible launch (the tester's).
+- `gh release create v0.1.0 --repo solariz3d/consonance` with the installer asset.

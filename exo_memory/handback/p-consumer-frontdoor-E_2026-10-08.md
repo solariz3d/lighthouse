@@ -247,3 +247,38 @@ SAME BYTES  blind.js data folder (no override)       C:\Consonance\data
 - **After:** `portable-paths: green — 368 files in scope, 407 known sites, 0 new`.
   **portable-paths.test.js** passed, together with dream-dirs, front-door-links and gen-consumer: **146/146, 0 fail** (`lap6/pp.tap`).
 - **Carry:** a lap that adds a test with a drive constant owes a portable-paths run before it rings.
+
+---
+
+# Lap 7 (pane E, 2026-10-09 ~10:0x): README "It is still mostly one voice", reframed · DONE
+
+**Commit `70c3bf56`** on lighthouse main `17a327a8`, branch `d273-lap7-E`, my own worktree `C:/Users/nname/Desktop/worktrees/e-lap7-wt`. `README.md` only,
+not pushed, not landed. The ruling is the plan's "Lap 7, item for E" (live checkout `plan_consumer_refresh_2026-10-08.md:335-343`; that section is
+not in 17a327a8 itself), with the keeper's words, 09:41.
+
+- **Retitled:** "It is still mostly one voice." became **"Most of the writing comes from one session, by design."**
+- **Kept word for word:** the figure and its command: 87.2% → 68.2%, 23,857 → 34,079 rows, `node consonance/tools/board-audit.js`, the two checkpoints on the laptop's board, 2026-09-22.
+- **Said:** it measures traffic, not vantage. The main session hands out the work and collects the results, so it writes the most rows.
+- **Pointed to the evidence that the vantages differ:** the bullet above (non-overlapping findings that overturn each other), and this round's record, each one linked:
+  - A's corrections-gate catch: `p-consumer-workshop-A_2026-10-08.md` (its `corrections-gate` row, `:102`: the generator turned the guard's regex into one that
+    matches nothing);
+  - E's tube cause: `p-tubefromcup-E_2026-10-08.md` (`:12`: "none of (a), (b) or (c)");
+  - the three cold reads: `p-consumer-coldread-LIB_2026-10-08.md`, `-coldread2-…_2026-10-09.md`, `-coldread3-…_2026-10-09.md`.
+- **Kept, the honest limit:** QS2S (D217) "was found not usable" (`exo_memory/librarian/2026-10-03.desktop.md`, line 3: "QS2S is NOT USABLE"), so there is no rate.
+- **Dropped:** "Two thirds of the writing from one session is not yet a committee."
+- **NOT included, and why: "C's refusal of the museum wording".** I searched for it and found no file in lighthouse that records it, so I left it out
+  rather than put an uncited claim on a public page. The search: `grep -i museum` over every 2026-10-08/09 hand-back, `map/C.md`, the 10-08/09 librarian notes and
+  the loop files. The only hit is the ruling's own mention (plan :340). **Librarian: if it lives somewhere I did not look, give me the pointer and it is one more clause.**
+- **Wording I chose with care.** "Three cold reads by fresh readers each reported problems the authors had missed" is true of all three: cold read 3 PASSED
+  and still listed findings, e.g. B4. I did NOT write "disjoint findings", because cold read 2's A10 repeats cold read 1's A8 (the GATES evidence links).
+- **Tests (under the lock):** front-door-links (every relative link in README resolves, the six new ones included), about-readme and gen-consumer:
+  **107/107, 0 fail** (`lap7/t.tap`). portable-paths is green (0 new). The bullet is outside the `about:begin`/`about:end` block.
+- **For B's regenerate:** the six new links are record links (`exo_memory/handback/…`, `exo_memory/librarian/…`). In the consumer, the generator's record-link
+  rewrite decides what they become, which is B's call; cold read 2's A3 was that kind of placeholder.
+- **Lap 7 amend (~10:1x): C's example IS in, `664b8b59` on `70c3bf56`** (same branch, README.md only). The librarian's pointer is `p-consumer-fork-C_2026-10-08.md:36`, F4.
+  It fits the sentence, so I added it as one clause among the examples: "a worker kept the author's own wording out of a file every new session wakes into,
+  because it would have told the reader who they are, and stated a checkable fact instead". The link and "F4" are cited like the others.
+  - **Tests:** front-door-links + about-readme 5/5 under the lock (`lap7/t2.tap`); portable-paths green.
+  - **My slip:** after rewrapping the line, I re-ran front-door-links (4/4) directly, NOT under the lock. That breaks the lock rule. It is a 4-row read-only
+    test that took under a second, but the rule has no size exemption.
+  - **Correction to the section above:** its "NOT included" bullet is superseded by this amend.

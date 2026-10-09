@@ -812,3 +812,78 @@ identity-diff + front-door-links + consumer-relabel 37/37; build gate 7 pass / 4
 - `C:\Users\nname\AppData\Local\Temp\gen-consumer-Ui2piO` and `scratchpad/d273/lap6/home/`: a dry-build staging tree and the temp home for the hook run.
   The safety check refused my scripted removal of the first (its path came from a command substitution). Safe to delete.
 - Generated trees `b-d273-gen13` … `gen17` (no remote, `pushDefault = no_push`).
+
+
+# Lap 7 (pane B, 2026-10-09 10:4x): the release gaps (installer images, a tauri.conf guard, CRLF-safe commits); parity (0, 0, 0), and the installer builds
+
+**Branch `b-gen-lap7`, worktree `C:\Users\nname\Desktop\worktrees\b-d273-lap7`, from main `17a327a8` (main has not moved).** Three commits, named
+paths, not pushed:
+- `7f1690fd`: the NSIS installer images ship (kind `image`, scanned), and the tauri.conf.json reference guard.
+- `05ef35bc`: portable-paths' two committed-baseline rows are declared WORKSHOP-BOUND (the parity at `7f1690fd` read P = 1).
+- `ce9af4c3`: the chair's add: a consumer `.gitattributes`, commits with `core.autocrlf=false`, and the committed-bytes guard.
+
+## The verdict: parity holds, both suites fully green, the installer builds
+    THE TRIPLE      P = 0       M = 0       B = 0
+    THE GUARD       I = S − G = 168 − 127 = 41
+    RUST            0 parity breaks
+    IDENTITY-DIFF   PASS — 70 wake files compared; 0 unregistered difference(s), exit 0; generated from ce9af4c3 = this repo
+    BUNDLE          `cargo tauri build` in the GENERATED tree: Consonance_0.1.0_x64-setup.exe, 3,852,709 B, exit 0
+Generation from `ce9af4c3`, a clean tree: staged 399, leaks 0, excluded 46, declared JS 39 / Rust 12, forked 85, tauriMissing [], exact 13,
+bytesDrift []; generated commit `a18c259`, no remote, at `C:\Users\nname\Desktop\worktrees\b-d273-gen20`; `git status` there: 0 lines.
+
+| run | result |
+|---|---|
+| source `js-suite` | **166 green · 0 failed** (of 168; +1 canary, +1 NOT-RUN, as before) |
+| generated `js-suite` | **125 green · 0 failed** (of 127) |
+| generated `cargo test` | bin **987 / 0** / 15 ignored, `arch_test` **12 / 0** / 1 ignored; exit 0 |
+| generated portable-paths / carrier-drift | 41 pass + 2 declared / 47 pass + 10 declared; 0 fail |
+| cold sweep, `CONSONANCE_DATA` = an empty directory | chain-status rc 0, 528 B; board-audit rc 1, 604 B; ferry rc 0, 438 B; carrier-drift rc 1, 4,522 B; **0 stack frames each** |
+| `cargo tauri build`, generated tree (CARGO_TARGET_DIR in my scratchpad) | **bundle built**, exit 0 (first build at `7f1690fd`: 94.7 s; this one 30.3 s, cached) |
+
+Logs: `d273/lap7c/` (and `lap7p/`, the run at `7f1690fd`).
+
+## What was done (red, then green)
+- **The installer images.** `consonance/src-tauri/installer/*.bmp` ships as a new kind, **`image`**: copied byte for byte like `binary`, but **scanned**
+  (latin1, as the screens are; a hit refuses, nothing is scrubbed). Both scan clean (0 hits each: header.bmp 34,254 B, sidebar.bmp 206,038 B).
+- **The tauri.conf.json GUARD.**
+  - `tauriRefs()` reads the **generated** config: `build.frontendDist`; `bundle.resources` (array entries, or an object's KEYS: sources, never
+    the destinations); `bundle.icon`; and **any other path-like string under `bundle`** (a slash or a file extension), so a field nobody listed yet
+    is caught.
+  - `tauriMissing()` resolves each from `consonance/src-tauri/`; a glob must match at least one file. The build **refuses** on any miss.
+  - Today it reads 23 references (frontendDist, 15 resources, 4 icons, 3 nsis paths), 0 missing.
+  - The rows prove it: a removed `header.bmp` is reported; a planted `nsis.license` (a field nobody listed) is reported; dropping the installer rule
+    makes `build()` refuse with "tauri.conf.json references …".
+- **portable-paths (P = 1 at `7f1690fd`, `05ef35bc`).** "No baseline" in the consumer. Its two committed-baseline rows read
+  `portable-paths.baseline.json`, which EXCLUDE withholds by ruling (this machine's path register). They were red in the source too, until E's
+  `b95767dc` fixed the source baseline (verified: `b95767dc` is after `93e160b2` and in `17a327a8`, the only commit on those files in that range).
+  They are declared WORKSHOP-BOUND by exact name; the file's other 41 rows run in the consumer. Declared count amended BY NAME: 37 → 39.
+  **Routed, not built:** a consumer-GENERATED baseline (from the generated tree's own sites, 353 today, 37 non-benign, all already shipped) would
+  give a stranger a working ratchet, where today they have none.
+- **CRLF (the chair's add, `ce9af4c3`).**
+  - **The consumer `.gitattributes`**, my choice over lighthouse's file as-is. It has lighthouse's `* text=auto eol=lf`, its binary list, `*.bin binary`
+    and `consonance/src-tauri/fixtures/screens/** binary`, with the WHY cut to what a stranger needs. The `merge=union` section (our two machines'
+    shared notes, and a runbook path) is left out. It ships as a GENERATED file beside CUTOFF, so it cannot drift from a hand copy.
+  - **`commitFresh`** passes `-c core.autocrlf=false` on every git call (per command, never global).
+  - **The committed-bytes guard.** `verifyCommitted()` checks every byte-exact file the build wrote (binary, screen, image, legal, anything under a
+    `fixtures/` folder: 13 today) against its blob at HEAD (`git cat-file`), and the build refuses on any difference. The refusal says the written
+    repository must not be pushed (the tree is already on disk by then).
+  - **Red first, under `GIT_CONFIG_GLOBAL` pointing at a temp file with `autocrlf = true`** (never the real global; on this machine it is unset).
+    The base reproduced the published corruption exactly: `composer_empty_2026-09-19.bin` was 1,280 B written and **1,252 B in HEAD** (28 CRs).
+    Green now.
+  - **From the stranger's side:** a `git clone` of `b-d273-gen20` under `autocrlf=true` gives all 6 screens byte-identical, with composer_empty's 28 CRs.
+- **Amended BY NAME:** the FORK hook row (an `image` never reaches the relabel hook, like binary, screen and legal); the declared count (39).
+
+**Tests, green under the lock at `ce9af4c3`:** gen-consumer + fixture-scope **107/107**; identity-diff + front-door-links + consumer-relabel **39/39**;
+build gate **7 pass / 4 skip**; and before the CRLF commit, portable-paths 43/43 and carrier-drift 57/57 in the source. Red first, logged:
+`d273/lap7/red.out` (2), `d273/lap7/crlf-red.out` (3).
+
+## Corrections (mine)
+- **W1:** the first parity (`7f1690fd`) was not (0, 0, 0). portable-paths had turned consumer-only because the source went green. Fixed in `05ef35bc`,
+  re-run.
+- Heredocs ate backslashes twice more (the installer rule's `/\.bmp$/` and the fixtures regex). Both were caught by reading the line back and fixed with Edit.
+- A stray `cp -r` in a probe command copied `b-d273-gen18` to `/tmp/x`; removed.
+- I stopped two superseded parity runs of my own (`b8tuk55ve` when the CRLF item arrived; `bkw2m4szf` in lap 6). `heavy-run` reported each lock stale
+  and took it over.
+
+## Leftovers
+- Generated trees `b-d273-gen18` … `gen20`; the bundle build's target at `scratchpad/d273/target-bundle/` (holds the setup.exe).
