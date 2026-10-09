@@ -1513,10 +1513,16 @@ test('D273: shippedSets() is exported and is what build() uses, so identity-diff
 const lap4 = () => G.build('', { dry: true, allowDirty: true });
 const walkText = (root) => { const out = []; const w = (d) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) w(p); else if (!/\.(bin|png|ico|lock)$/.test(e.name)) out.push(p); } }; w(root); return out; };
 
-test('D273 lap 4 (A1, A2): the repo URL is github.com/solariz3d/consonance, no generated URL holds a space, and the clone folder is consonance', () => {
-  assert.strictEqual(G.deidentify('see github.com/solariz3d/lighthouse and solariz3d alone').body, 'see github.com/solariz3d/consonance and the keeper alone');
-  assert.strictEqual(G.deidentifyTokens('https://github.com/solariz3d/lighthouse.git').body, 'https://github.com/solariz3d/consonance.git');
-  assert.deepStrictEqual(G.scan('git clone https://github.com/solariz3d/consonance.git\n', 'README.md').filter((l) => l.cls === 'IDENTITY'), [], 'the consumer repo URL reads as a leak');
+// REVISED within lap 4 (the chair, from E's front-door hand-back): the root cause is the handle rule rewriting the handle INSIDE the URL. github.com/solariz3d/<repo>
+// URLs are exempt and survive intact (lighthouse carries the evidence GATES.md links to; consonance is the consumer), rather than being rewritten to consonance.
+// Only the README's own clone instructions become the consumer's: `git clone …/solariz3d/consonance.git` and `cd consonance/consonance` (A2).
+test('D273 lap 4 (A1, A2): github.com/solariz3d/<repo> URLs survive intact, no generated URL holds a space, and the clone instructions are the consumer\'s', () => {
+  assert.strictEqual(G.deidentify('see github.com/solariz3d/lighthouse and solariz3d alone').body, 'see github.com/solariz3d/lighthouse and the keeper alone');
+  assert.strictEqual(G.deidentifyTokens('https://github.com/solariz3d/lighthouse/blob/main/x.md').body, 'https://github.com/solariz3d/lighthouse/blob/main/x.md');
+  assert.strictEqual(G.deidentify('https://github.com/solariz3d/consonance').body, 'https://github.com/solariz3d/consonance');
+  for (const u of ['git clone https://github.com/solariz3d/consonance.git\n', 'see https://github.com/solariz3d/lighthouse/blob/main/x.md\n']) {
+    assert.deepStrictEqual(G.scan(u, 'README.md').filter((l) => l.cls === 'IDENTITY'), [], 'a github.com/solariz3d/<repo> URL reads as a leak: ' + u);
+  }
   assert.ok(G.scan('the handle solariz3d alone\n', 'README.md').some((l) => l.cls === 'IDENTITY'), 'the bare handle is no longer caught');
   const r = lap4();
   try {
@@ -1529,6 +1535,7 @@ test('D273 lap 4 (A1, A2): the repo URL is github.com/solariz3d/consonance, no g
     const readme = fs.readFileSync(path.join(r.staging, 'README.md'), 'utf8');
     assert.match(readme, /git clone https:\/\/github\.com\/solariz3d\/consonance\.git/);
     assert.match(readme, /cd consonance\/consonance/); assert.doesNotMatch(readme, /cd lighthouse\//, 'the clone folder is still called lighthouse');
+    assert.match(readme, /\(https:\/\/github\.com\/solariz3d\/lighthouse\)/, 'the README\'s link to the lighthouse repository did not survive intact');
   } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
 });
 

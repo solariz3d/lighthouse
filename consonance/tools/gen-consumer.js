@@ -1075,17 +1075,21 @@ function generatedFiles(id) {
  * user name ("\n" + "name"), so gen-consumer.build.test.js's control crate became '\other = "x"' in the consumer and cargo refused it. Skipped only
  * when BOTH a backslash precedes it and "=" follows it: a real path written with single backslashes in prose (C:\Users\nname\...) is still taken
  * and still scanned. One regex for the scan and the three rewrites, so they cannot disagree. */
-/* THE CONSUMER'S OWN NAMES (D273 lap 4, the cold read's A1/A2, pane B). The identity rule turned the repo URL github.com/solariz3d/lighthouse
- * into "github.com/the keeper/lighthouse": a link and a git clone with a space in them. The consumer IS github.com/solariz3d/consonance, so that
- * URL is rewritten to it FIRST, and the handle rule and the scan skip exactly "solariz3d/consonance" (every other use of the handle is still taken).
- * Its clone folder is "consonance", so "cd lighthouse/consonance" becomes "cd consonance/consonance". And the app id: tauri.conf's
- * "com.solariz3d.consonance" was already "com.consonance.app" (destructure), but stick-waiter.js's single-quoted copy became
- * 'com.the keeper.consonance'; every spelling now becomes com.consonance.app, so the notices register the id the bundle carries. */
-const HANDLE_RE = /solariz3d(?!\/consonance\b)/gi;
+/* THE PUBLIC REPOSITORY URLS, AND THE CONSUMER'S OWN NAMES (D273 lap 4, the cold read's A1/A2, pane B).
+ * ROOT CAUSE of A1 (E's front-door hand-back): the handle rule rewrote the handle INSIDE github.com/solariz3d/<repo> URLs, giving
+ * "github.com/the keeper/lighthouse", a link and a git clone with a space in them. A public repository URL is a reference, not a leak: HANDLE_RE,
+ * used by the scan and both identity rewrites, skips the handle exactly where it sits in "github.com/solariz3d/<repo>", so
+ * github.com/solariz3d/lighthouse (where the evidence GATES.md cites lives) and github.com/solariz3d/consonance survive intact; every other use
+ * of the handle is still taken and still scanned. REGISTERED: it is this constant, exported, so identity-diff's replay of deidentify() counts it.
+ * consumerNames() then makes the README's OWN clone instructions the consumer's (A2): `git clone …/solariz3d/lighthouse.git` becomes
+ * `…/solariz3d/consonance.git` and `cd lighthouse/consonance` becomes `cd consonance/consonance` (the clone folder, then the app's folder).
+ * And the app id: tauri.conf's "com.solariz3d.consonance" was already "com.consonance.app" (destructure), but stick-waiter.js's single-quoted
+ * copy became 'com.the keeper.consonance'; every spelling now becomes com.consonance.app, so the notices register the id the bundle carries. */
+const HANDLE_RE = /(?<!github\.com\/)solariz3d|solariz3d(?!\/[A-Za-z0-9_.-])/gi;
 function consumerNames(body) {
   let n = 0;
   const rep = (re, to) => { body = body.replace(re, () => { n++; return to; }); };
-  rep(/github\.com\/solariz3d\/lighthouse\b/gi, 'github.com/solariz3d/consonance');
+  rep(/\bgit clone https:\/\/github\.com\/solariz3d\/lighthouse\.git\b/g, 'git clone https://github.com/solariz3d/consonance.git');
   rep(/\bcd lighthouse\/consonance\b/g, 'cd consonance/consonance');
   rep(/\bcom\.solariz3d\.consonance\b/g, 'com.consonance.app');
   return { body, n };
@@ -2662,4 +2666,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { FORK_HOOK, commitFresh, shippedSets, descreen, SCREEN_SCRUB, WORKSHOP, declareWorkshop, fixtureKind, MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, STAYS_PRIVATE, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, depath, repath, desync, reseed, reindex, dewiki, SEED_ANCHOR, SEED_SENTENCE, JOURNAL_SEED, renderCutoff, verifyCutoff, renderStatusDoc, generatedFiles, commitIdentity, build };
+module.exports = { HANDLE_RE, FORK_HOOK, commitFresh, shippedSets, descreen, SCREEN_SCRUB, WORKSHOP, declareWorkshop, fixtureKind, MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, STAYS_PRIVATE, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, depath, repath, desync, reseed, reindex, dewiki, SEED_ANCHOR, SEED_SENTENCE, JOURNAL_SEED, renderCutoff, verifyCutoff, renderStatusDoc, generatedFiles, commitIdentity, build };
