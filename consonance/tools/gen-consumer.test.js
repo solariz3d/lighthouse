@@ -1362,9 +1362,11 @@ test('D273/A: the declared JS rows (26 of A + 1 Jev) and 12 Rust tests are decla
       const out = fs.readFileSync(path.join(r.staging, rel), 'utf8');
       for (const [name] of names) { assert.match(out, new RegExp('#\\[ignore = "WORKSHOP-BOUND: [^"]+"\\]\\s*\\n\\s*fn ' + name + '\\(\\)'), rel + ': ' + name); rs++; }
     }
-    // A's 15 lap-2 rows and 11 lap-3 rows, plus jev-flags' one row that compares with the excluded jev-room.js (labelled EXCLUDED-WITH-JEV, not workshop)
-    assert.deepStrictEqual([js, rs], [27, 12]);
-    assert.deepStrictEqual([r.declared.js, r.declared.rust], [27, 12]);
+    // A's 15 lap-2 rows and 11 lap-3 rows, plus jev-flags' one row that compares with the excluded jev-room.js (labelled EXCLUDED-WITH-JEV, not workshop).
+    // D273 lap 4 AMENDED BY NAME (pane B): + front-door-links.test.js's evidence row (E's test; its GATES.md evidence links name files of the keeper's
+    // record, which the consumer does not carry by ruling), 28 in all. The count follows the declarations.
+    assert.deepStrictEqual([js, rs], [28, 12]);
+    assert.deepStrictEqual([r.declared.js, r.declared.rust], [28, 12]);
   } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
 });
 
@@ -1587,7 +1589,9 @@ test('D273 lap 4 (A14): the docs that name catch-ledger.js say this copy does no
   const r = lap4();
   try {
     assert.ok(!r.refused, r.refused);
-    for (const rel of ['consonance/tools/README.md', 'exo_memory/TRAINING.md']) {
+    // TRAINING.md is wake material: identity-diff counted the note there as UNREGISTERED (no registered step makes it), so its catch-ledger lines are
+    // C's relabel table's to change, not this rewrite's. tools/README.md is not a wake file.
+    for (const rel of ['consonance/tools/README.md']) {
       const t = fs.readFileSync(path.join(r.staging, rel), 'utf8');
       assert.ok(t.includes('catch-ledger.js'), 'control: ' + rel + ' names catch-ledger.js');
       assert.match(t, /not carry it|not in this copy/, rel + ' presents catch-ledger.js as if it were here');
