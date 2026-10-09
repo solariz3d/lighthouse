@@ -338,3 +338,269 @@ paths, not pushed.
 
 SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_consumer_refresh_2026-10-08.md
 NEXT: B parity re-run on main and diff against lap 2's list when C, A and E have landed
+
+---
+
+# Lap 3 parity (pane B, 2026-10-08 17:3x): (P, M, B) = (0, 0, 0), Rust 0
+
+**Branch `b-gen-lap3p`, worktree `C:\Users\nname\Desktop\worktrees\b-d273-lap3p`, from lighthouse main `8d06859c`. Three commits, named paths, not pushed:**
+- `1f3da88d`: A's patch, C's three EXCLUDE rows, two rows amended BY NAME.
+- `f83d13cd`: two manifest gaps the parity run found.
+- `ff02c1dd`: the last four consumer-only reds (three causes).
+
+## The verdict (registered in the "Lap 3" section before the run)
+    THE TRIPLE      P = 0       M = 0       B = 0         (lap 2: 10, 0, 0)
+    THE GUARD       I = S − G = 161 − 117 = 44
+    RUST            0 parity breaks                       (lap 2: 1)
+**The target is met.** Every lap-2 member is cleared, there are no new members, and the docs-link test is green.
+
+Measured on the generation from `ff02c1dd`, a clean tree (`gen.json`: staged 376, leaks 0, excluded 39, screens 6, declared JS 27 / Rust 12, forked 28;
+generated commit `46616cd3`, no remote).
+
+| run | result |
+|---|---|
+| source `js-suite` | 153 green · 6 failed · 1 canary · 1 not-run (of 161) |
+| generated `js-suite` | 109 green · 6 failed · 1 canary · 1 not-run (of 117) |
+| generated `cargo test` | bin **977 passed / 0 failed** / 15 ignored (11 declared + 4 ignored in source too); `arch_test` **12 / 0** / 1 ignored (declared); exit 0 |
+| source `cargo test` | exit 0 |
+
+- **The generated tree's 6 reds are exactly the source's 6**, so they are shared, not P: `hooks/dream-gate`, `tools/carrier-drift`, `tools/heavy-run`
+  (it ran while another seat held the lock), `tools/portable-paths`, `tools/sourced`, and **`tools/install-only` (red in source since E's lap-3
+  landing; not mine, flagged for E)**.
+- **Cold sweep, `CONSONANCE_DATA` = an empty directory:** chain-status rc 0, 194 bytes; board-audit rc 1, 271 bytes ("no board at …"); ferry --due
+  rc 0, 105 bytes; carrier-drift rc 1, 4187 bytes. **0 stack frames in each.** Logs: `d273/lap3z/`.
+
+## P, diffed against lap 2's member list (`d273/lap2c/Plist.txt`, the 10)
+| lap-2 member | cleared by |
+|---|---|
+| corpus-age, librarian-notes, second-vantage, shelf-recursion | A's declared rows (A's patch), proved by A's synthetic twins |
+| corrections-gate | A's catch: `CODE_KEPT` restores `GUARDED = [/muscle_map\.md$/i]`, which dedangle had rewritten into a regex matching nothing; B's row compares the generated gate with the source by behaviour |
+| gen-brief-gate | C's lap-3 landing (`6424a290`) |
+| usage, third-place-gate | decoordinate now maps America/Regina to America/Costa_Rica (UTC-6, no daylight time, the same clock all year) instead of America/New_York, which had changed what their time assertions meant |
+| gen-consumer.build | the OS-user rule no longer reads the control crate's `'[package]\nname = …'` as "nname" (it had written `'\other = …'`, which cargo refused). One regex, `NNAME_RE`, skips a match only when a backslash precedes it AND `=` follows it, for the scan and the three rewrites. Real paths with single or double backslashes are still taken; the new row checks both |
+| sessionstart-state | `state-block.js` said "FAILED: git rev-list did not run here" in any history without `origin/main`, i.e. a stranger's first checkout. It now says so in words; FAILED stays for git itself failing (the empty-directory row still sees exactly three) |
+
+## What was asked and done
+1. **A's patch** (`lap3_generator.patch`), applied as given: 11 WORKSHOP rows and `CODE_KEPT`.
+   - **The test asked for:** a new row in gen-consumer.test.js loads `GUARDED` from the source and from the GENERATED `corrections-gate.js` and checks
+     both match the same six paths. It was red before the patch ("the generated gate guards a different set of files").
+2. **C's three EXCLUDE rows**, with C's reason strings. The new row checks each is reached and withheld; it was red before.
+3. **Parity re-run:** above.
+
+## What the run found beyond the list, all fixed test-first (red, then green)
+- **Two manifest gaps (`f83d13cd`):**
+  - `consonance/src-tauri/brief/frag-fork.md`: C's fork-note template. `main.rs`'s fork test `include_str!`s it, so the generated tree's tests did
+    not compile (cargo exit 101, "couldn't read src\../brief/frag-fork.md"). It ships byte for byte, pinned by a row.
+  - `dev/shell/install-fresh-home.test.js`: E's test of the shipped `install.ps1`. It was in I; it ships now and passes in the generated tree.
+- **The three causes in `ff02c1dd`** (table above). `state-block.js` / `state-block.test.js` are outside gen-consumer, and no seat named them this lap.
+  The change is one line of logic, and this machine's own REPO line is unchanged ("268 commit(s) unpushed").
+
+**Amended BY NAME (rule changed by A's declarations), each with its comment:**
+- gen-consumer.test.js "the declared JS rows (15 of A + 1 Jev) …": now 26 of A + 1, 27 in all.
+- fixture-scope "the 2026-08-23 casualties survive the REAL build byte-intact": each file is now compared with its source plus only the
+  generator's own declarations (`second-vantage.test.js` carries two). Any other transform still fails it, and its isFixture mutation proof still holds.
+
+**Tests, green under the lock at `ff02c1dd`:**
+
+| file | passing |
+|---|---|
+| gen-consumer | 79/79 |
+| fixture-scope | 7/7 |
+| gen-consumer.build | 7 pass / 4 skipped (its launch probe is off by default) |
+| state-block | 24/24 |
+| corrections-gate (at `1f3da88d`) | 6/6 |
+
+## Corrections (mine)
+- **A `\n` inside a `String.raw` test name became a real newline in the name.** Caught in the red listing; fixed to `\\n` before the green run.
+- **My script for the nname fix threw on its second step, after it had already written the generator change.** The generator edit was correct,
+  checked by direct calls and a dry run (0 leaks); the rename was redone with Edit.
+- **The midpoint parity at `1f3da88d` (P = 4) could not run cargo in the generated tree** (the frag-fork gap). The Rust result above is from `ff02c1dd`.
+- **This lap I measured the build test from the wrong directory.** My lap-2 classify ran it from the repo root, where its oracle row passes;
+  js-suite runs each file from its own folder, where that row runs. So lap 2's "passes alone, red in the suite" was a cwd difference, not flakiness.
+
+## For the librarian and E
+- `tools/install-only.test.js` is red in source at `8d06859c` (shared, so it does not count toward P). It is E's install area.
+- The 6 shared reds are source-side workshop debt; parity does not count them.
+- Lap 4 (the visible first launch with the keeper) and lap 5 (generate, cold read, push) are next by the plan. The generated tree from `ff02c1dd` is
+  `C:\Users\nname\Desktop\worktrees\b-d273-gen7` (a no-remote repo, `pushDefault no_push`).
+
+## Leftovers (mine, all scratch)
+- Generated trees `b-d273-gen5` to `b-d273-gen7`.
+- Worktrees `b-d273-lap3` (item 1, landed) and `b-d273-lap3p` (this, clean at `ff02c1dd`).
+- Logs: `d273/lap3/`, `lap3f/`, `lap3z/`.
+
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-consumer-fork-C_2026-10-08.md · C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-consumer-workshop-A_2026-10-08.md
+NEXT: chair land b-gen-lap3p (1f3da88d..ff02c1dd) when this is read
+
+---
+
+# GATES row (pane B, 2026-10-08 17:5x)
+
+**Commit `e8d168d0`** on branch `b-gen-gates`, worktree `C:\Users\nname\Desktop\worktrees\b-d273-gates`, from lighthouse main `5623199c`. Two named
+paths (`gen-consumer.js`, `gen-consumer.test.js`), not pushed.
+
+## What changed
+1. **`consonance/GATES.md` ships**, as one `kind: 'prose'` MANIFEST row. It was ruled to ship in lap 2 and the row never landed, so in the consumer
+   every refusal of sources-gate and the reply slot pointed at a missing file. C's identity-diff found it.
+   - **The new row checks:** the file ships, with no leak; and the GENERATED `sources-gate.js`'s own `gatesDocFrom()`, given the generated tree's
+     `exo_memory/BOOT.md`, resolves the refusal pointer to the shipped `consonance/GATES.md`.
+   - **Its control:** both hooks still name GATES.md.
+2. **EXCLUDE:** `consonance/tools/identity-diff.js` and `identity-diff.test.js`. Like consumer-relabel, they replay gen-consumer.js against the dev
+   tree, and neither ships.
+3. **C's optional item 3, done because it was small:**
+   - `shippedSets(files)` is exported and `build()` uses it; a row checks its card set equals `build()`'s `linkTargets`.
+   - identity-diff can now read the two sets instead of copying `build()`'s expressions. Switching it over is C's file.
+
+**Tests:**
+- Red first: the 3 new rows failed, 79 others passed.
+- Green under the lock:
+
+  | file | passing |
+  |---|---|
+  | gen-consumer | 82/82 |
+  | fixture-scope | 7/7 |
+  | gen-consumer.build | 7 pass / 4 skipped (its launch probe is off by default) |
+  | identity-diff | 6/6 |
+
+## Parity holds: (P, M, B) = (0, 0, 0), Rust 0
+On the generation from `e8d168d0`, a clean tree (`gen.json`: staged 377, leaks 0, excluded 41, declared JS 27 / Rust 12; generated commit `3f6ced46`,
+no remote). GATES.md ships at 4,862 bytes. S = 162, G = 117, I = 45 (I grew by the 2 identity-diff files excluded here).
+
+| run | result |
+|---|---|
+| source `js-suite` | 154 green · 6 failed (of 162) |
+| generated `js-suite` | 109 green · 6 failed (of 117) |
+| generated `cargo test` | bin **977 / 0** / 15 ignored, `arch_test` **12 / 0** / 1 ignored; exit 0 |
+
+- The generated tree's 6 reds are exactly the source's 6, so they are shared and **P = 0**: dream-gate, carrier-drift, heavy-run, install-only,
+  portable-paths, sourced.
+- Cold sweep, `CONSONANCE_DATA` = an empty directory: chain-status rc 0, 194 bytes; board-audit rc 1, 271 bytes; ferry rc 0, 105 bytes; carrier-drift
+  rc 1, 4,187 bytes. **0 stack frames in each, so M = 0 and B = 0.**
+- **C's identity-diff on this tree** (`node consonance/tools/identity-diff.js --gen <the generated tree>`): **"PASS — 76 wake files compared; 0
+  unregistered difference(s)"**, exit 0. The plan's next step (C re-runs it on main, target exit 0) is predicted to pass. 76 = C's 75 + GATES.md.
+- Logs: `d273/gates/`.
+
+## Leftovers
+- Generated tree `b-d273-gen8`.
+- Worktree `b-d273-gates`, clean at `e8d168d0`.
+
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-consumer-fork-C_2026-10-08.md
+NEXT: chair land b-gen-gates (e8d168d0) when this is read; then C re-runs identity-diff on main, target exit 0
+
+---
+
+# Lap 4 (pane B, 2026-10-08 19:1x): the cold read's generator items, plus C's rows and the A1 root cause
+
+**Branch `b-gen-lap4`, worktree `C:\Users\nname\Desktop\worktrees\b-d273-lap4`.** Started from main `29d9b1fe` and **rebased onto main `d4166304`**
+(C's and E's lap 4). Four commits, named paths, not pushed:
+- `2a42f248`: A1/A2, A4, A13, A14, A15.
+- `b8a1668e`: C's three EXCLUDE rows.
+- `4fa81cd2`: A1 revised at the root.
+- `bd861f8e`: front-door-links' evidence row declared; the TRAINING.md note handed to C.
+
+## The verdict: parity holds
+    THE TRIPLE      P = 0       M = 0       B = 0
+    THE GUARD       I = S − G = 164 − 125 = 39          (lap 3 parity: 161 − 117 = 44; the six stick/launch tests now ship)
+    RUST            0 parity breaks
+    IDENTITY-DIFF   PASS — 73 wake files compared; 0 unregistered difference(s), exit 0
+Generation from `bd861f8e`, a clean tree: staged 390, leaks 0, excluded 44, declared JS 28 / Rust 12, forked 68; generated commit `fb3de377`, no remote.
+
+| run | result |
+|---|---|
+| source `js-suite` | 157 green · 5 failed (of 164) |
+| generated `js-suite` | 118 green · 5 failed (of 125) |
+| generated `cargo test` | bin **987 / 0** / 15 ignored, `arch_test` **12 / 0** / 1 ignored; exit 0 |
+
+- The generated tree's 5 reds are exactly the source's 5: dream-gate, carrier-drift, heavy-run, portable-paths, sourced. (`install-only` went green on
+  main with E's merge fix.)
+- Cold sweep, `CONSONANCE_DATA` = an empty directory: all four tools speak, with 0 stack frames each.
+- Logs: `d273/lap4z/`.
+
+## What was done, by finding (test first each time: red, then green)
+- **A1/A2, the repo URL and the clone folder. Revised at the root, per the chair's second input.**
+  - **Root cause:** the handle rule (`rep(/solariz3d/gi, …)`) rewrote the handle INSIDE URLs.
+  - **The fix:** `HANDLE_RE`, used by the scan and both identity rewrites, skips the handle exactly where it sits in `github.com/solariz3d/<repo>`.
+    `github.com/solariz3d/lighthouse` (where E's GATES.md evidence links point) and `github.com/solariz3d/consonance` therefore survive intact, and
+    every other use of the handle is still taken.
+  - It is exported, so identity-diff's replay counts it (identity-diff passes).
+  - `consumerNames()` makes only the README's own clone instructions the consumer's: `git clone https://github.com/solariz3d/consonance.git`, then
+    `cd consonance/consonance`.
+  - **This replaced my first version (in `2a42f248`), which rewrote every lighthouse URL to consonance.**
+  - **The test:** no generated `github.com/<owner>/` URL holds a space; both repos survive `deidentify`; the README keeps its lighthouse link.
+  - **Not covered:** a bare non-URL mention such as `gh repo view solariz3d/lighthouse` still becomes "the keeper/lighthouse". It is not a URL, so
+    it is left alone.
+- **The app id** (found on the way): every `com.solariz3d.consonance` becomes `com.consonance.app`. `stick-waiter.js`'s single-quoted copy had become
+  `'com.the keeper.consonance'`; it now matches the id `tauri.conf.json` carries, which a row checks.
+- **A4, the doubled placeholders:** when a link's TEXT is the record path itself, the prose is written once. The row checks both forms and sweeps the
+  tree for "(a … in this line of record) (a … in this line of record)".
+- **A13, the USB mode ships, scanned:**
+  - The files: `dev/stick-apply.js`, `stick-waiter.js`, `tail-carry.js`, `place-conversations.js` (tail-carry requires it), `LEAVING.ps1`,
+    `ARRIVING.ps1`, `ON-EXIT.ps1`, `consonance/launch.ps1`, and the six tests (stick-apply, stick-waiter, tail-carry, place-conversations,
+    launch.fuse, launch.park). All pass the scan and pass in the generated tree.
+  - **Source edits:** `LEAVING.ps1` and `ARRIVING.ps1` looked for the repo in a list of this room's two checkout paths, which the generator could only
+    turn into a `%CONSONANCE_HOME%` placeholder. They now take it from `~/.consonance.json`'s `room_path`, as the app does. That is checked by
+    PowerShell's own parser, plus a run of the lookup:
+    - on this machine → `C:\Users\nname\Desktop\lighthouse`, the same as before;
+    - with a temp config → that checkout.
+  - `launch.ps1`'s one "OneDrive" comment is reworded (the scan refuses it).
+- **A14, catch-ledger.js and resonance:**
+  - `NOT_SHIPPED`, an anchored named rewrite: where `consonance/tools/README.md` names catch-ledger.js, the consumer copy says the original room's
+    repository carries it.
+  - `tools/README.md:7` now says `resonance/atoms.jsonl` is in the data folder (a source edit, true in dev too).
+  - **TRAINING.md came OUT of `NOT_SHIPPED`:** identity-diff counted that note as unregistered, because TRAINING.md is wake material and no
+    registered step changed it. Its lines are C's (below).
+- **A15, CONSUMER-STATUS:** the GATE line says the gate runs in the source repository, which carries the generator it drives. Both renderers changed
+  identically, and the drift guard still passes.
+- **C's three EXCLUDE rows, verbatim:** `memory/split-the-work-with-the-panes.md`, `memory/frozen-is-not-dead.md`,
+  `cards/dont-offer-rest-assume-momentum.md`. The new row checks that a generated `memory/` holds only `MEMORY.md`, with no entries. `inheritance/`
+  keeps shipping, untouched.
+- **E's new `front-door-links.test.js`** was red only in the consumer. Its row "GATES.md documents six gates, each with how to turn it off, and its
+  evidence links name paths in this tree" asserts that the evidence files exist in the tree, and they are the keeper's record. **Declared
+  WORKSHOP-BOUND, for A's ruling.** E splitting the row would keep its product assertions (six gates, how to turn each off) running in the consumer.
+
+**Amended BY NAME (rule changed), each with its comment:**
+- `L038 · memory/ ships exactly the six…`: now pins `[MEMORY.md]`.
+- The `L038` wiki-link row's set assertion: it used `frozen-is-not-dead` as its memory-only example; it now asserts the same set on `shippedSets()`
+  with a synthetic card.
+- The declared-rows count: now 28.
+
+**Revised (this lap's own rows, not yet landed):** the A1/A2 row, and the A14 row, which no longer expects the TRAINING note.
+
+**Tests, green under the lock at `bd861f8e`:**
+
+| file | passing |
+|---|---|
+| gen-consumer | 89/89 |
+| fixture-scope | 7/7 |
+| gen-consumer.build | 7 pass / 4 skipped |
+| identity-diff + front-door-links + consumer-relabel | 27/27 |
+| the six stick/launch test files (in source) | 22/22 |
+
+## For E: exact lines (E owns these files; for links, the lines rather than an edit)
+- **`consonance/GUIDE.md:112-114`** names `PLAN.md`, `PROGRESS.md`, `DESKTOP_HANDOFF.md`.
+  - **My call: they do NOT ship.** All three fail the generator's scan: `consonance/PLAN.md` MACHINE 3, `consonance/PROGRESS.md` MACHINE 1,
+    `DESKTOP_HANDOFF.md` MACHINE 2. By the ruling, a doc ships only if it passes the scan.
+  - PROGRESS.md was last touched 2026-07-27, and DESKTOP_HANDOFF.md is this room's machine-carry note. So **E drops the three lines.**
+- **`consonance/README.md:49-50`** says brief/ holds "9 `.md` files … two fragments `frag-pointer.md` and `frag-traces.md`". Neither ships, and the
+  app never reads either (`grep frag-pointer main.rs` = 0); brief/ ships `frag-fork.md`. Correct the count and the names.
+- **`consonance/README.md:201`**: "The librarian's intake is a `CLAUDE.md`…". There is no `CLAUDE.md` in the tree; it is the file the app writes into
+  each seat's directory. Say so.
+- **`README.md:109`, `:268`**: the `jev/README.md` mentions (code text since lap 3; the cold read's A5 reads them as dead). Drop or keep as E sees fit.
+- **`front-door-links.test.js`**: split the evidence row (see above).
+- **E's USB-mode setting** (`p-usbmode-E`): the stick scripts now ship, so the setting has something to run in the consumer.
+
+## For C
+- **`exo_memory/TRAINING.md:90`, `:92`, `:101`** still present `catch-ledger.js` as if it were in the tree, and it does not ship. It is wake material:
+  a relabel site in C's table (e.g. "(in the original room's repository; this copy does not carry it)"), so identity-diff counts it.
+
+## Corrections (mine)
+- **A1's first version was wrong for E's evidence links.** Rewriting every lighthouse URL to consonance would have pointed GATES.md's evidence at the
+  wrong repository. Revised at the root, per the chair's input, in `4fa81cd2`.
+- **C's rows went in before their test** (my order slip). I saved them as a patch, reverted, ran the row red, and re-applied.
+- **I stopped two parity runs** whose tree was superseded mid-lap (`bubtuxra3`, `bcg0iico3`). Each left a stale lock, which the next holder took over;
+  no orphan process was left (checked).
+- **One build-gate run showed 6 pass / 5 skipped:** I hadn't put cargo on PATH for that step. Re-run with it: 7 / 4.
+- **A backtick inside my row-writing template ended it early.** `node --check` caught it before anything was written.
+
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-consumer-coldread-LIB_2026-10-08.md · C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-consumer-fork-C_2026-10-08.md
+NEXT: chair land b-gen-lap4 (2a42f248..bd861f8e, on main d4166304) when this is read; route the E and C lines above

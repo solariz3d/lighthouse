@@ -1,0 +1,12 @@
+﻿UNMUTATED (all rows incl. the 560 MB ones): exit 0 (GREEN)
+E1 the newline is searched in the whole buffer (stale bytes past the read): exit 1 CAUGHT by rows 2b: 
+E2 the last line without a newline is dropped: exit 1 CAUGHT by rows 2: t 2b: 
+E3 reading never stops at the first human line: exit 1 CAUGHT by rows 3: i
+E4 the unfinished tail is aliased, not copied: exit 1 CAUGHT by rows 2: t
+E5 a split line is decoded piece by piece: exit 1 CAUGHT by rows 2: t
+E6 the whole file is read again as one string: exit 1 CAUGHT by rows 3: i
+E7 the dream anti-instruction no longer ends the search: exit 1 CAUGHT by rows 1: t 1e: 
+E8 tag machinery is no longer skipped: exit 1 CAUGHT by rows 1: t 1e:  2: t
+E9 a missing file throws out of the hook: exit 0 (GREEN)
+SURVIVED/ERROR: E9 a missing file throws out of the hook
+

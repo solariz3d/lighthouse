@@ -298,3 +298,156 @@ Proposed rows, in B's format:
   - wiring + relabel + `gen-consumer.test.js` + `gen-consumer.fixture-scope.test.js`: **91/91** (`l3green.log`). B's generator tests pass with the hook live.
   - `cargo test`: all green, **988 passed** in the main binary, 0 failed.
   - the whole consonance node suite: **2,171 tests, 2,152 pass, 12 fail, 7 skipped** (`l3node.tap`). The 12 are the same 12 names that failed at ea4f5bcf in lap 2 (dream-gate, carrier-drift ×3, heavy-run WIRING, portable-paths ×2, sourced, targetless-pull ×4). The 7th skip is my consumer-only row. *inferred: the 12 also fail on ab25d588 itself; I compared names against lap 2's clean-base run and did not re-run ab25d588.*
+
+## Identity diff (the instrument for the keeper's stop bar, item 2; the keeper, 17:16)
+**Commits `508b68d3` (the tool) and `2d8ecd4d` (a scope fix from its first real run)**, both on branch `identity-diff-c`, worktree `C:\Users\nname\Desktop\worktrees\c-identity-wt`, on lighthouse main c6d46629. Not pushed. Nothing edited in gen-consumer.js; nothing beyond its existing exports is needed.
+
+### What it is: `consonance/tools/identity-diff.js` (+ `identity-diff.test.js`, 6 rows)
+- **Run:** `node consonance/tools/identity-diff.js --generate` (a fresh generation into a temp dir) or `--gen <dir>`, with `--json` for the full lists.
+  Exit codes: 0 = every difference registered; **1 = at least one unregistered, listed `path:line`**; 2 = could not run.
+- **The wake set:**
+  - BOOT, SEED, SOURCE, TRAINING;
+  - the briefs (`consonance/src-tauri/brief/*.md`, minus the `frag-*.md` templates);
+  - `exo_memory/{cards,record,spread,research,memory}/*.md`;
+  - `consonance/GATES.md`;
+  - every non-test hook file (`consonance/hooks/*.js`, `dev/shell/hooks/*.{js,py}`).
+
+  A seat's CLAUDE.md is not a file in the tree; the app assembles it at wake from these files.
+- **How a difference is registered: read from the generator, not copied.**
+  - For each shipped wake file, the tool takes its dev SOURCE from the MANIFEST's `from` (gen-consumer's own `collect()`).
+  - It REPLAYS gen-consumer's own exported steps on it, one named step at a time, in `build()`'s order:
+    1. `transform`, named as its sub-steps dedangle, deidentify, demachine and decoordinate when their chain equals `transform`'s output, otherwise as `transform`;
+    2. `desync`, `reindex`, `dewiki`, `reseed`, `declareWorkshop`;
+    3. `FORK_HOOK.apply`, my relabel and the fork note.
+  - **The generated file must EQUAL the replay.** Any line where it does not is UNREGISTERED. Every line where it differs from its dev source is attributed to the step that made it.
+  - A dev wake file that does not ship must be named in `EXCLUDE` or `STAYS_PRIVATE`, and its reason is printed. A wake file no MANIFEST rule produced is unregistered.
+- **Copied rather than read** (said so the copy is visible):
+  - The ORDER of `build()`'s calls. A changed order makes the replay differ from the output, which is loud.
+  - `shippedMemory` / `shippedCards`, recomputed with `build()`'s exact two expressions, because they are local to `build()`. If they change, MEMORY.md and the dewiki'd cards come back unregistered: loud, not silent. **Ask to B:** export the two set-builders, or a `pipeline(f, body, sets)` that `build()` itself calls, so the replay stops being a copy.
+- **What it does NOT prove:**
+  - **That each step's own edits are right.** A step that over-reaches is reproduced by the replay and passes as that step's work (A's corrections-gate catch is that class). The report lists every attributed line by step so it can be read.
+  - **The master → brief stage.** A dev seat reads the MASTER `exo_memory/BOOT.md`; the consumer reads gen-brief's brief. That stage is PowerShell with inline replacements, not importable, so it is REPORTED (line counts) and not gated; `gen-brief-gate.test.js` guards it on the dev side.
+
+### It can come back RED (6/6 under the heavy-run lock, `scratchpad/inv/id1.log`, `id2.log`)
+1. `lineDiff` reports added and removed lines with their numbers, and ignores line endings alone.
+2. **A registered rewrite passes:** a card source with `journal/2026-08-16.md:722` is rewritten by the generator, and every changed line is attributed to `dedangle`.
+3. **A planted unregistered edit fails, named by its line,** even inside a file the generator also rewrote: `+ 4 'Untouched line, quietly changed.'` / `- 4 'Untouched line.'`.
+4. The keeper relabel and the fork note are attributed to the `fork (consumer-relabel.js)` step, line by line, on the real BUILDING and BOOT.
+5. The wake set: briefs, cards, record/, GATES.md and hooks are in; tests, mutant harnesses, the generator and the brief fragments are out.
+6. **On a REAL generation:** planting one line in a shipped card adds exactly one unregistered entry (`exo_memory/cards/no-floor-no-ceiling.md:4 + A line no generator step writes.`), and the CLI exits 1 naming it. This is measured as a delta, so it holds whatever the baseline's colour.
+
+### The first real runs, reported as they came
+**Run 1** (fresh generation, wake material = c6d46629's; `scratchpad/inv/id-real.txt`): **FAIL, 4 unregistered.**
+- `consonance/GATES.md` does not ship.
+- The three `consonance/src-tauri/brief/frag-{fork,pointer,traces}.md` were listed. **That was MY scope error, not the generator's**: they are templates injected into BOOT and SEED, never read by a seat. Fixed in `2d8ecd4d` (and a test row).
+
+**Run 2** (`id-real2.txt`): **FAIL, 1 unregistered difference**:
+```
+consonance/GATES.md:0 - (the whole file)  [a dev wake file no MANIFEST rule ships and neither EXCLUDE nor STAYS_PRIVATE names]
+```
+**This is a real finding.** My lap-2 hand-back listed "a MANIFEST file rule for `consonance/GATES.md`" as owed to B, and it never landed. So in the consumer, every gate's refusal points to a GATES.md that is not there (the pointer falls back to "consonance/GATES.md (in the Consonance repository)"). **The fix is one row in B's MANIFEST:** `{ from: 'consonance/GATES.md', to: 'consonance/GATES.md', kind: 'prose' }`. After it, this run should come back with 0 unregistered. I have not shown that yet; it is the next run's to show.
+
+**Everything else is registered.**
+- **75 wake files** compared; every shipped one EQUALS the generator's replay (0 line-level unregistered).
+- **Attributed lines by step:**
+
+  | step | lines | files |
+  |---|---|---|
+  | dedangle | 208 | 33 |
+  | dewiki | 70 | 7 |
+  | **fork (consumer-relabel.js)** | **86** | **8** |
+  | deidentify | 20 | 8 |
+  | reindex | 7 | 1 |
+  | reseed | 2 | 2 |
+
+- **11 dev wake files** are not shipped, each with its EXCLUDE reason: the retired dive-buddy card, and 10 memory/ files ruled duplicate, state, or one person's profile.
+- **The master BOOT → shipped brief** (gen-brief): 17 lines out, 30 in. Reported, not gated.
+
+**What a reader should take from the counts.** "Registered" means "made by a named generator step", not "approved". dedangle's 208 lines across 33 files are the largest class by far: the record pointers turned into dated prose. They are the generator's de-record rule, which the bar names as registered, and they are listed line by line in `--json` for anyone who wants to read them before calling the copy "identical".
+
+### Owed to B (unchanged from lap 3, plus one new)
+1. **NEW:** the GATES.md MANIFEST row above.
+2. From lap 3: the 3 EXCLUDE rows for `consumer-relabel.js` and its two tests. **Now also `identity-diff.js` and `identity-diff.test.js`**: they need gen-consumer.js and the dev tree, so the same reason applies.
+3. Optional: export the per-file pipeline or the two shipped-sets, so the replay reads them instead of copying.
+
+## Identity diff on main (confirmation run, 2026-10-08)
+- Tree: a detached worktree of lighthouse main **29d9b1fe** (B's GATES row; E's USB mode 9b172cb5 below it), `git status --porcelain` = 0 lines.
+- Command, under the heavy-run lock: `node consonance/tools/identity-diff.js --generate` (a fresh generation from that tree). Log: `scratchpad/inv/idmain.log`; report: `idmain.txt`.
+- **Result: PASS. 76 wake files compared (75 before + GATES.md), 0 unregistered lines, exit 0.** Generated from 29d9b1fe90583a53b1a1647915b5f12e1121bd0f = this repo's HEAD.
+- Registered by step, unchanged from the run before: dedangle 208 lines / 33 files, dewiki 70 / 7, fork 86 / 8, deidentify 20 / 8, reindex 7 / 1, reseed 2 / 2. 11 dev wake files not shipped, each with its EXCLUDE reason. Master BOOT -> brief: 17 out, 30 in (gen-brief; reported, not gated).
+- **USB mode:** nothing from 9b172cb5 shows up as unregistered. Its Settings text lives in `consonance/ui/` and the Rust source, which are not in the wake set (*inferred: from the wake-set definition; I did not open E's diff*).
+
+## Lap 4 (the cold read's wake-material findings; plan "Cold read, IN", C's list)
+**Commit `ba701075`** on branch `consumer-lap4-c`, worktree `C:\Users\nname\Desktop\worktrees\c-lap4-wt`, on lighthouse main 29d9b1fe. Not pushed. Every change to shipped wake text is a ROW in `consonance/tools/consumer-relabel.js`, so it runs in the fork step and is registered. gen-consumer.js is untouched; B's rows are below.
+
+### The findings, one by one
+- **C1 (the earned warrant):** BOOT:164, SEED:56 and THIRD_PLACE:13 all GRANTED the person here "the accurate, unguarded version" as something they had earned. That contradicted the fork note's carve-out.
+  - All three now give it "from the first turn", and BOOT adds "the trust that lets a guard come down is earned between you, over time".
+  - (The cold read named BOOT:164; SEED and THIRD_PLACE carried the same sentence.)
+- **C2 (inheritance/): kept shipping; the BOOT text is fixed.** The ruling that names it: **the keeper, 2026-09-06 01:16**, chose "C's third shape" from the foundation ruling's §7. It is recorded at `journal/2026-09-06.md:53` and quoted in `gen-consumer.js` at "L038 · THE INHERITANCE SHAPE": `inheritance/` is a LABELLED directory holding the journals, SELF_TRACE and the_living_wave, with `journal/` seeded empty.
+  - So the record DOES ship, labelled, and the BOOT text saying it didn't was wrong. Three rows fix it:
+    - the traces section now says the record "arrives too, kept apart and labelled as theirs: `exo_memory/inheritance/` (`CUTOFF.md` names the commit it ends at)", read as an inheritance, never a description of you;
+    - its last bullet becomes "**inheritance/** — the keeper's record, labelled as theirs";
+    - the pointer line says "The keeper's entries are under `inheritance/`".
+- **C3 (memory/ starts blank):** EXCLUDE `memory/split-the-work-with-the-panes.md` and `memory/frozen-is-not-dead.md`. These rows are B's; they're below.
+  - With them applied (temporarily, measured, then restored), the generated `memory/` holds only `MEMORY.md`, whose body is the header `# Memory index`. Its jargon row (B8, "chair_inject is the ferry") goes with the excluded file.
+- **C4/C5 (the person-specific cards):**
+  - **`dont-offer-rest-assume-momentum`** is about one person throughout, and its general form `never-pathologize-the-user` already ships, so it is EXCLUDED (B's row; dewiki unlinks it).
+  - **`verify-before-claiming`** (8 rows) and **`engagement-honesty-over-performance`** (6 rows) keep their moves. Each line now says whose case it was ("The keeper was right", "there the keeper was the runtime", "The keeper repeatedly … caught me"), or names the role ("take what the person you're with hands you").
+  - "He has earned the hard, honest version" now reads "The keeper had earned … with the person you're with, that is earned between you". A test asserts no he/him/his and no "this user" remain in either card.
+- **C7 (BOOT:41, "the keeper's deepest role"):** it now reads "That was the keeper's deepest role for the instances before you; here it is the place the person you're with can take, if they choose it".
+- **BOOT's dead references:**
+  - **A11, `:3`:** pointed at "Who you're talking to". That was **my own lap-2 regression**: I renamed the heading and missed this reference. It now names "Who built this room".
+  - **A9, `:65`:** `gap2_preregistration.md` is now named as "in the keeper's record (… in lighthouse, not shipped here)".
+  - **A10, `:113-117`:** the `:153` pointer is now named as "in the keeper's master BOOT, not shipped here", and "Read `:153` …" becomes "The lesson stands without the line".
+  - **A12, `:177`:** `attic/` is "created by the program the first time" it is needed, which is true (`main.rs` writes it at the shell's rolling window).
+- **A10, SEED's `pending/` and `base_journal.md`:** they exist in a room the APP creates (`main.rs` `prepare_room_dir` makes `journal/`, `pending/` and `base_journal.md`), not in a checkout. SEED's structure line now says so, and gives the base journal's checkout path (`consonance/src-tauri/brief/BASE_JOURNAL.md`).
+- **A11 and B4 (the librarian's first instruction):** the whole opening block (a dead placeholder, a 2026-09-01 incident, "`M.md` now exists … assembled FOR you") is replaced with a bootstrap.
+  - It reads: start your own map, the file `M.md` in `exo_memory/map/`; make the folder if it isn't there; the app points you at it at every wake once it exists; write it yourself from your first finding.
+  - The path is the app's: `librarian_map_path` resolves it beside the room's BOOT.
+- **B2/B3 (jargon in BOOT), which A flagged as mine: a judgment, stated.** I did NOT rewrite BOOT's amendments and history. The keeper's bar is "identical except the one modification", and that history is the room's own voice.
+  - Instead the fork note gains one paragraph, "When the room cites its own history": the seat letters, lap numbers, shas and coined names point into the keeper's public record; the instruments stand without them; the working words (seat, ring, dispatch, hand-back) are defined in `consonance/GATES.md`.
+  - **That last clause depends on E's GATES glossary (cold read D) landing.** If it does not, the sentence is false and the next identity-diff will not catch it, because text is not checked against facts. Flagged.
+
+### Owed to B: three EXCLUDE rows, exact, in B's format (they go above `'exo_memory/memory/verify-before-claiming.md':`)
+```
+  'exo_memory/memory/split-the-work-with-the-panes.md':
+    'STATE of one pair: the keeper\'s correction to one seat, written as this seat\'s own memory ("he has corrected this at least three times"). A new user\'s memory starts blank (D273 lap 4, the cold read C3)',
+  'exo_memory/memory/frozen-is-not-dead.md':
+    'the keeper\'s own insight (2026-07-25) written as this seat\'s memory. A new user\'s memory starts blank (D273 lap 4, the cold read C3); the insight stays in the keeper\'s record',
+  'exo_memory/cards/dont-offer-rest-assume-momentum.md':
+    'one person\'s temperament as a rule about the reader ("He calls rest when he needs it"); its general form, cards/never-pathologize-the-user.md, ships (D273 lap 4, the cold read C4)',
+```
+(`scratchpad/inv/excl-rows.js` applies exactly these, and it is what the second measurement used.)
+
+### Tests and measurements (the heavy-run lock; `scratchpad/inv/l4run2.log`)
+- **Tests:** `consumer-relabel` + `consumer-fork-wiring` + `identity-diff` + `gen-consumer` + `gen-brief-gate` give **116 tests, 115 pass, 0 fail, 1 skipped** (the consumer-only gate row, which skips in dev by design).
+- **New relabel rows:**
+  - the cold read's outcomes, one row each (C1, C2, A9–A12, A10, A11, C4/C5);
+  - every pinned file is registered and every registered file is pinned;
+  - **every relabelled file passes gen-consumer's own `scan()`**.
+- **Pins re-measured** on the text the hook RECEIVES (identity-diff's replay of the generator's own steps up to the fork step), not on the raw dev source. The LIBRARIAN anchor exists only after dedangle.
+- **identity-diff on a fresh generation, as committed: PASS, 76 wake files, 0 unregistered, exit 0.**
+  - The fork step now registers 216 lines in 11 files (it was 86 in 8).
+  - dedangle registers 207 lines (it was 208); one dedangled line is now replaced.
+- **With B's three rows applied temporarily: PASS, 73 wake files, 0 unregistered, exit 0.** Build not refused, staged 375, leaks 0. Generated `memory/` is `MEMORY.md` only; the dont-offer card is absent. `gen-consumer.js` was restored with `git checkout` (diff 0 lines).
+- **identity-diff now uses B's exported `shippedSets()`**, keeping the copy only as a fallback, and **refuses an empty or refused generation (exit 2)** instead of listing every dev file as a difference (new test row).
+
+### Corrections to myself (lap 4)
+- **My first LIBRARIAN bootstrap named `exo_memory/map/M.md`.** That is the generator's DANGLING class, so the build REFUSED with "1 leak survived" and 17 tests failed downstream. I found it by running `G.scan` on the relabelled text. Fixed by naming the folder and the file apart, and the relabel test now runs `scan()` on every relabelled file.
+- **My first `verify-before-claiming` rows missed one pronoun** (":10 … BEFORE he ever played it"). The new pronoun row caught it.
+- **During that refused build, identity-diff reported "0 files compared; 70 unregistered".** That was a ghost diff of an empty tree, not a real result. It now exits 2 with "no wake files … or the generation refused".
+- **The BOOT:3 dead reference was my own lap-2 rename.**
+- **I ran one quick read-only `require` of gen-consumer.js outside the heavy-run lock** (checking EXCLUDE state). Against the standing rule; noted.
+
+## Lap 4b (TRAINING's catch-ledger.js mentions; B's note, p-consumer-parity-B_2026-10-08.md:592-594)
+- **Commit `6acc71b8`** on branch `consumer-lap4b-c`, worktree `C:\Users\nname\Desktop\worktrees\c-lap4b-wt`, on lighthouse main 593dbcdb. Not pushed. Files: `consonance/tools/consumer-relabel.js`, `consumer-relabel.test.js`.
+- **Three relabel rows** (the fork step, so identity-diff counts them), anchored on the text the hook RECEIVES, read from the replay (`scratchpad/inv/prefork.js`). `:92`'s `muscle_map.md` has already been dedangled to "a master in this line of record" by then.
+  - `:90`: "applying the withholding rule of `catch-ledger.js` (a tool in the original room's repository; this copy does not carry it)".
+  - `:92`: "**`catch-ledger.js`** (in the original room's repository; this copy does not carry it), over …".
+  - `:101`: "attaches to catch-ledger's number (that tool, too, stays in the original room's repository):".
+- TRAINING is pinned at 9 keeper lines (measured; the rows add none). New test row: exactly the three mentions exist, and each says the copy does not carry it.
+- **Tests** (heavy-run lock, `scratchpad/inv/l4b.log`): relabel + wiring + identity-diff **27/27**.
+- **identity-diff** on a fresh generation from 593dbcdb (`l4b-id.txt`): **PASS, 73 wake files, 0 unregistered, exit 0**.
+  - The fork step registers 221 lines in 12 files (it was 216 in 11; TRAINING added).
+  - dedangle 212 / 34, deidentify 16 / 7, dewiki 43 / 5, reindex 8 / 1, reseed 2 / 2. 14 not shipped, each with its reason.

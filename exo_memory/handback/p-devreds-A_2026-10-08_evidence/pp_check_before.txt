@@ -1,0 +1,155 @@
+﻿portable-paths: RED — 49 machine-specific path(s) not in the baseline
+System.Management.Automation.RemoteException
+  DRIVE  BENIGN-TEST
+    consonance/hooks/ask-ending.test.js:22
+    const payload = raw !== null ? raw : JSON.stringify({ session_id: 's', transcript_path: tr, cwd: 'C:/x/myproject', hook_event_name: 'Stop', 
+  DRIVE  BENIGN-TEST
+    consonance/hooks/ask-ending.test.js:54
+    const missing = run([], { raw: JSON.stringify({ transcript_path: 'C:/no/such/file.jsonl' }) }); assert.equal(missing.code, 0); assert.equal(
+  DRIVE  REVIEW
+    consonance/hooks/delete-gate.js:161
+    for (const exe of ['cygpath', 'C:/Program Files/Git/usr/bin/cygpath.exe', 'C:/Program Files (x86)/Git/usr/bin/cygpath.exe']) {
+  DRIVE  BENIGN-TEST
+    consonance/hooks/delete-gate.test.js:112
+    assert.deepEqual(G.words('rm -rf "C:/a b"/* \'q r\''), ['rm', '-rf', 'C:/a b/*', 'q r'], 'a quoted piece and the glob after it are ONE word'
+  DRIVE  BENIGN-TEST
+    consonance/hooks/dirs.test.js:28
+    test('row 1: one rule — the D273 block is the same text in all five hooks, and none still names C:\\Consonance', () => {
+  DRIVE  BENIGN-TEST
+    consonance/hooks/dirs.test.js:32
+    for (const h of HOOKS) assert.ok(!/['"]C:(\\\\|\/)Consonance|path\.join\('C:'/.test(text(h).replace(/^\s*(\/\/|\*).*$/gm, '')), `${h} names 
+  DRIVE  BENIGN-TEST
+    consonance/hooks/dirs.test.js:43
+    const named = home({ '.consonance.json': '\uFEFF' + JSON.stringify({ data_dir: ' D:\\X\\data ', instances_dir: 'D:\\X\\inst' }) });
+  DRIVE  BENIGN-TEST
+    consonance/hooks/dirs.test.js:44
+    for (const h of HOOKS) { const f = resolver(h, { USERPROFILE: named }); assert.strictEqual(f('data_dir', '.consonance'), 'D:\\X\\data', h); 
+  DRIVE  BENIGN-TEST
+    consonance/hooks/dirs.test.js:54
+    assert.strictEqual(run(HOOKS[1], ['DATA'], { USERPROFILE: h, CONSONANCE_DATA: 'E:\\ov' }).DATA, 'E:\\ov');
+  DRIVE  BENIGN-TEST
+    consonance/hooks/dirs.test.js:55
+    assert.strictEqual(run(HOOKS[4], ['DATA'], { USERPROFILE: h, CONSONANCE_DATA: 'E:\\ov' }).DATA, 'E:\\ov');
+  DRIVE  BENIGN-TEST
+    consonance/hooks/dirs.test.js:56
+    assert.deepStrictEqual(run(HOOKS[2], ['DATA', 'RETURNS', 'STATEDIR'], { USERPROFILE: h, VANTAGE_DATA: 'E:\\v', RETURN_LEDGER: 'E:\\r.jsonl',
+  DRIVE  BENIGN-TEST
+    consonance/hooks/dirs.test.js:57
+    assert.strictEqual(run(HOOKS[3], ['LEDGER'], { USERPROFILE: h, SOURCED_LEDGER: 'E:\\l.jsonl' }).LEDGER, 'E:\\l.jsonl');
+  DRIVE  BENIGN-TEST
+    consonance/hooks/dirs.test.js:59
+    assert.strictEqual(run(HOOKS[2], ['DATA', 'RETURNS'], { USERPROFILE: h, VANTAGE_DATA: 'E:\\v' }).RETURNS, `${h}\\.consonance\\return_ledger.
+  DRIVE  BENIGN-TEST
+    consonance/hooks/dirs.test.js:63
+    test('row 5: a real hook in a stranger\'s home (sourced-stop, no override) writes its ledger under THAT home, never C:\\Consonance', () => {
+  DRIVE  BENIGN-TEST
+    consonance/hooks/precompact-preserve.test.js:144
+    const TP = [String.raw`C:\Consonance\instances\third-place`, 'C:\\Consonance\\instances\\third-place\\', 'C:/Consonance/instances/third-plac
+  DRIVE  BENIGN-TEST
+    consonance/hooks/precompact-preserve.test.js:145
+    'c:/consonance/instances/third-place/', String.raw`C:\Consonance\instances\third-place\.`];
+  DRIVE  BENIGN-TEST
+    consonance/hooks/precompact-preserve.test.js:146
+    const BUILD = [String.raw`C:\Consonance\instances\main`, String.raw`C:\Consonance\instances\librarian`, String.raw`C:\Consonance\instances\s
+  DRIVE  BENIGN-TEST
+    consonance/hooks/precompact-preserve.test.js:147
+    String.raw`C:\Consonance\instances\third-placement`, String.raw`C:\Consonance\instances\third_place`, String.raw`C:\x\my third-place`, 'thir
+  DRIVE  REVIEW
+    consonance/hooks/push-gate.js:66
+    for (const exe of ['cygpath', 'C:/Program Files/Git/usr/bin/cygpath.exe', 'C:/Program Files (x86)/Git/usr/bin/cygpath.exe']) {
+  DRIVE  BENIGN-TEST
+    consonance/hooks/push-gate.test.js:90
+    assert.equal(G.nativePath('C:/already/native'), 'C:/already/native');
+  DRIVE  BENIGN-TEST
+    consonance/hooks/push-gate.test.js:140
+    assert.deepEqual(G.pushTargets('git -C "C:/a b" push origin main', 'C:/x'), [{ dir: path.resolve('C:/a b'), remote: 'origin', src: 'main', d
+  DRIVE  BENIGN-TEST
+    consonance/hooks/push-gate.test.js:141
+    assert.deepEqual(G.pushTargets('echo done; git -c core.x=1 push', 'C:/x'), [{ dir: path.resolve('C:/x'), remote: null, src: null, deleting: 
+  DRIVE  BENIGN-TEST
+    consonance/hooks/push-gate.test.js:142
+    assert.deepEqual(G.pushTargets('git push backup +topic:main', 'C:/x').map((t) => [t.remote, t.src]), [['backup', 'topic']]);
+  DRIVE  BENIGN-TEST
+    consonance/hooks/push-gate.test.js:143
+    assert.equal(G.pushTargets('git push origin :old', 'C:/x')[0].deleting, true, 'a delete of a remote ref sends nothing of ours');
+  DRIVE  BENIGN-FIXTURE
+    consonance/hooks/reply-slot.js:203
+    r.output = { decision: 'block', reason: 'REPLY SLOT: this reply names ' + shown + ' and ' + why + ' whose items you opened or ran in THIS tu
+  DRIVE  BENIGN-TEST
+    consonance/hooks/reply-slot.test.js:318
+    const t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md'));
+  DRIVE  BENIGN-TEST
+    consonance/hooks/reply-slot.test.js:319
+    const given = R.verdict({ reply: 'Done at C:/work/zzz.md, 3 of 5.', entries: t, stopHookActive: false, live: true, seat: 'librarian', gates:
+  DRIVE  BENIGN-TEST
+    consonance/hooks/reply-slot.test.js:320
+    assert.ok(given.output && given.output.reason.endsWith('How this works and why: C:/repo/consonance/GATES.md, section 2 (the reply slot).'), 
+  DRIVE  BENIGN-TEST
+    consonance/hooks/reply-slot.test.js:321
+    const dflt = R.verdict({ reply: 'Done at C:/work/zzz.md, 3 of 5.', entries: t, stopHookActive: false, live: true, seat: 'librarian' });
+  DRIVE  BENIGN-TEST
+    consonance/hooks/sources-gate.test.js:560
+    const p = 'C:/repo/consonance/GATES.md';
+  DRIVE  BENIGN-TEST
+    consonance/hooks/sources-gate.test.js:561
+    for (const text of ['no sources line here', 'x\nSOURCES:\nNEXT: librarian x when y', 'x\nSOURCES: C:/never/opened.md\nNEXT: librarian x when
+  DRIVE  BENIGN-TEST
+    consonance/hooks/sources-gate.test.js:562
+    const d = G.decide(text, [], 'C:/work', 'L.jsonl', 'abc', 'ring', p);
+  DRIVE  BENIGN-TEST
+    consonance/hooks/sources-gate.test.js:566
+    assert.ok(G.decide('no sources line here', [], 'C:/work').reason.includes(G.GATES_REL), 'the default names the repo-relative file');
+  DRIVE  BENIGN-TEST
+    consonance/hooks/sources-gate.test.js:567
+    assert.strictEqual(G.decide('x\nSOURCES: none (no state claims)', [], 'C:/work', 'L', 'a', 'ring', p).reason, '');
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:20944
+    let repo = PathBuf::from("C:/r");
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:20953
+    assert_eq!(gates_doc_from(Some(Path::new("C:/r")), |_: &Path| false), fallback, "a missing file is not named as if it were there");
+  DRIVE  BENIGN-TEST
+    consonance/tools/gen-consumer.test.js:1315
+    const raw = Buffer.from('cwd C:\\Consonance\\lighthouse user zackn tz America/Regina', 'latin1');
+  DRIVE  BENIGN-TEST
+    consonance/tools/gen-consumer.test.js:1318
+    assert.strictEqual(s.buf.toString('latin1'), 'cwd C:\\Consonance\\workspaces user alice tz America/Denver');
+  DRIVE  BENIGN-TEST
+    consonance/tools/gen-consumer.test.js:1467
+    for (const leak of ['C:\\\\Users\\\\nname\\\\Desktop', 'C:\\Users\\nname\\Desktop', 'C:/Users/nname/x', 'user nname here', 'home\\nname']) {
+  DRIVE  BENIGN-TEST
+    dev/shell/hooks/third-place-gate.test.js:22
+    tp: 'C:\\Consonance\\instances\\third-place', tpSlash: 'C:\\Consonance\\instances\\third-place\\', tpSlash2: 'C:\\Consonance\\instances\\thi
+  DRIVE  BENIGN-TEST
+    dev/shell/hooks/third-place-gate.test.js:23
+    main: 'C:\\Consonance\\instances\\main', librarian: 'C:\\Consonance\\instances\\librarian', pane: 'C:\\Consonance\\instances\\sibling-0845a8
+  DRIVE  BENIGN-TEST
+    dev/shell/hooks/third-place-gate.test.js:24
+    tpPrefix: 'C:\\Consonance\\instances\\third-place-x', tpGlued: 'C:\\Consonance\\instances\\notthird-place', tpSub: 'C:\\Consonance\\instance
+  DRIVE  BENIGN-TEST
+    dev/shell/hooks/third-place-gate.test.js:29
+    tpDot: 'C:\\Consonance\\instances\\third-place\\.', tpDotFwd: 'C:/Consonance/instances/third-place/./', tpDotDot: 'C:\\Consonance\\instances
+  DRIVE  BENIGN-TEST
+    dev/shell/hooks/third-place-gate.test.js:30
+    tpSubUp: 'C:\\Consonance\\instances\\third-place\\sub\\..',
+  DRIVE  BENIGN-TEST
+    dev/shell/hooks/third-place-gate.test.js:31
+    lkPlacement: 'C:\\Consonance\\instances\\third-placement', lkOldUnder: 'C:\\x\\third_place_old', lkUnderscore: 'C:\\Consonance\\instances\\t
+  DRIVE  BENIGN-TEST
+    dev/shell/hooks/third-place-gate.test.js:32
+    lkBak: 'C:\\Consonance\\instances\\third-place.bak', lkTwo: 'C:\\Consonance\\instances\\third-place2', lkSpace: 'C:\\Consonance\\instances\\
+  DRIVE  BENIGN-TEST
+    dev/shell/hooks/third-place-gate.test.js:33
+    lkDashPrefix: 'C:\\Consonance\\instances\\x-third-place', lkDotDotOut: 'C:\\Consonance\\instances\\third-place\\..\\main', lkRelative: 'thir
+  DRIVE  FATAL-TEST-READ
+    dev/shell/hooks/third-place-gate.test.js:44
+    mk(path.join(shell, 'digests', '2026-10-04.md'), '# 2026-10-04 Digest\n\n## 12 sessions\n\n### C:\\Consonance\\instances\\main\n- 01:00:00 U
+  DRIVE  BENIGN-TEST
+    dev/shell/hooks/third-place-gate.test.js:105
+    assert.match(s, /## Recent session digests\n### 2026-10-04\n# 2026-10-04 Digest\n\n## 12 sessions\n\n### C:\\Consonance\\instances\\main\n- 
+System.Management.Automation.RemoteException
+For code: resolve it the way the peer hooks already do — env override, then
+~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+See consonance/hooks/transcript-watch.js dataDir() for the shape.
+If the site is genuinely benign (a fixture, a test constant), run --update and
+let the baseline diff carry the argument.

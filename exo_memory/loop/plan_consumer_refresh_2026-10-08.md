@@ -138,3 +138,101 @@ NEXT: chair land D273 lap 2's four branches, then dispatch lap 3, when this plan
   against lap 2's (10, 0, 0) and Rust 1.
 
 NEXT: chair land B 65649d20, E 10b72311, C 6424a290 and A 95d5a272+6fe15f0a, then send B A's lap3_generator.patch and C's 3 EXCLUDE rows for the parity re-run, when this plan is read
+
+## The keeper, 17:16: loop until identical, and the USB mode as an opt-in setting
+"just keep looping till you are sure it is you identical with the slight modification for the it being a new user, also setup for a new user in
+such a way, where it also has this seperate mode in the settings, which will enable users to use a USB drive to do what we do transfering seats
+between hardware, it shouldnt come like how consonance is for us bc most people wont do that, it should be an option in the settings that should be
+enabled first."
+
+### "Identical except the one modification": the bar, made mechanical (registered before it runs)
+The loop does not stop until ALL hold on one generation from lighthouse main:
+1. **Parity (P, M, B) = (0, 0, 0)**, or every leftover DECLARED with a one-line reason a stranger can read; Rust parity breaks 0 (same rule).
+2. **THE IDENTITY DIFF (new, C builds it):** the wake material a consumer seat reads (BOOT, SEED, the briefs, CLAUDE.mds, every card, record/, the hooks'
+   texts, GATES.md) is diffed against dev. **Every differing line must be one of the registered sites:** C's relabel table, the fork note, the
+   generator's dedangle/reseed rewrites (each named), or the scrubbed fixtures. **Any other difference fails the bar.** So "identical except the
+   modification" becomes a check that can come back red.
+3. **A cold stranger read** (a fresh seat, no record, the generated tree only) of README → GUIDE → first wake. Nothing in it can tell who the first
+   keeper is beyond the provenance lines, and nothing is a dead end.
+4. **The visible first launch, with the keeper** (contained, off-screen): a seat wakes, says what it is in its own words, and the gates fire as
+   GATES.md says.
+Fail any one and the loop goes round again, with the failing list as the next lap's packet.
+
+### The USB mode (E, who owns the install/runtime path; the app plus a settings toggle; dev behaviour unchanged)
+- What it covers today (`main.rs`): `sync_at_launch` (12040), the stick handshake/`stick_state` (12801), the stick waiter (12743), the applier/rehearse,
+  `ui/leave.js` ("Saving to the stick — don't unplug it yet").
+- **Consumer default: OFF.** A setting, "Move seats between computers with a USB drive", off on a fresh install. OFF means:
+  - no launch sync;
+  - no stick waiter;
+  - no leave-screen stick phase;
+  - no stick checks at all.
+  ON enables exactly today's behaviour. The setting says in one line what it does and what a drive needs.
+- **Dev keeps today's behaviour:** our `~/.consonance.json` gets the setting ON. Show that this machine's launch and close paths are unchanged
+  (the same plog lines as before) with it on.
+- Rows: a fresh config has it off and none of the four paths run; turning it on runs them exactly as now; the setting persists. Red first; cargo
+  test + the JS suite.
+
+NEXT: chair dispatch the USB-mode item to E and the identity diff to C (alongside B's lap-3 parity re-run) when this section is read
+
+## Lap 3 parity, IN (librarian, 17:3x): bar item 1 MET
+B (`handback/p-consumer-parity-B_2026-10-08.md` "Lap 3 parity"; b-gen-lap3p 1f3da88d..ff02c1dd on main 8d06859c): **(P, M, B) = (0, 0, 0)**, was
+(10, 0, 0); **Rust 0** (generated bin 977/0, arch_test 12/0); staged 376, leaks 0, forked 28. The generated tree's 6 JS reds are EXACTLY dev's own 6
+(dream-gate, carrier-drift, heavy-run [lock contention], portable-paths, sourced, install-only [since E's lap 3]). So they are not parity, but they
+are DEV reds, and the "Solid" bar (both suites green) needs them fixed: E for install-only (its own), then one pane for the other five.
+Still open for the stop bar: item 2 (C's identity diff), item 3 (cold read), item 4 (first launch with the keeper), plus E's USB mode.
+
+## GATES row, IN (librarian, 17:5x): bar item 2 MET on the generated tree
+B e8d168d0 (b-gen-gates on main 5623199c): GATES.md ships and the generated sources-gate resolves its refusal pointer to it; identity-diff excluded;
+shippedSets() exported. gen-consumer 82/82; parity (0,0,0), Rust 0; **identity-diff on the generated tree: PASS, 76 wake files, 0 unregistered,
+exit 0.** C's re-run on main after landing confirms it.
+Next for the stop bar: **item 3, the cold read**, done by a FRESH agent the librarian spawns with ONLY a fresh generation from main (no
+lighthouse, no record, no maps), reading README → GUIDE → first wake as a stranger would. Then **item 4**, the visible first launch, with the keeper.
+Open beside them: E's save_config merge fix and A's five dev reds.
+
+## Cold read, IN (librarian, 18:0x): bar item 3 FAILED → lap 4's packet
+A fresh agent, given ONLY a generation of main 29d9b1fe (staged 378, leaks 0, forked 28), read it as a stranger. Report:
+`handback/p-consumer-coldread-LIB_2026-10-08.md`. Verdict: one pane can probably be built; the full multi-seat setup can't be reached from the folder.
+**Why bar 2 passed and bar 3 failed:** the identity diff proves every DIFFERENCE from dev is registered. These findings are text IDENTICAL to dev
+that is wrong for a stranger. Both bars are needed. That's the design working, not a contradiction.
+Lap 4, by owner (finding numbers are the report's):
+- **B (generator):**
+  - A1–A2: a redaction turned the repo URL into `github.com/the keeper/lighthouse`; it should be `solariz3d/consonance`, and the folder `consonance`.
+  - A4: the doubled placeholder "(a registration…) (a registration…)".
+  - A5, A7, A13: dead links (jev/README, PLAN/PROGRESS/DESKTOP_HANDOFF, frag-pointer/traces, CLAUDE.md): relink or drop in source.
+  - **A13: the stick scripts and launch files don't ship, so USB mode CANNOT work in the consumer.** Ship `dev/stick-*.js`, `dev/LEAVING.ps1`,
+    `dev/ARRIVING.ps1`, `ON-EXIT.ps1`, `dev/tail-carry.js` and `launch.ps1`, scanned.
+  - A14 catch-ledger.js / resonance; A15 CONSUMER-STATUS's gate names a tool that doesn't ship (reword or drop).
+- **C (the wake material):**
+  - C1 (BOOT :164 "earned" vs the fork note).
+  - C2: `exo_memory/inheritance/` (38 files) ships against "the record doesn't ship". Rule it: EXCLUDE as record, unless the foundation ruling names it.
+  - C3: `memory/` ships two of the keeper's correction notes, so exclude them; the new user's memory starts blank.
+  - C4: person-specific cards (dont-offer-rest, verify-before-claiming, engagement-honesty): extend the relabel to their "he/this user" lines, or put
+    the general form in their place.
+  - C5; BOOT dead refs (:3, :65, :113-117, :177); SEED pending/ and base_journal (A10).
+  - **A11: LIBRARIAN.md's first instruction is a dead placeholder and M.md doesn't ship.** The librarian seat must bootstrap its own map on first wake.
+- **E (the front door):**
+  - A3, B5: README links GUIDE and lists Node, Python and MSVC.
+  - B4: GUIDE:91's contradiction.
+  - A6: the promised glossary (write it in `consonance/README.md`, or drop the promise).
+  - D: GATES.md gets a short glossary (seat, ring, dispatch, chair, hand-back), documents all SIX shipped gates (push, delete, dispatch too), and says HOW
+    to turn one off.
+  - A8: GATES' evidence pointer points at the real public lighthouse URL.
+- **A:** B6 (README's Jev half page out); B1–B3 jargon in BOOT/LIBRARIAN, flagged for C where it's wake material.
+Then: re-generate, parity + identity diff (both must stay green), and a NEW fresh cold reader (never the same agent), until it passes.
+
+## Lap 4, COLLATED (librarian, 19:1x): all four in
+- B (b-gen-lap4 2a42f248..bd861f8e on main d4166304): HANDLE_RE keeps github.com/solariz3d/<repo> intact (A1's root cause); A4 doubled placeholder;
+  **A13 USB-mode files ship, scanned**; A14, A15; C's 3 EXCLUDE rows (memory/ is an empty index). Parity (0,0,0), Rust 0, identity-diff PASS 73 / 0.
+- C (consumer-lap4-c@ba701075): BOOT contradictions and dead refs; inheritance/ kept and labelled (the keeper's 09-06 01:16 choice,
+  journal/2026-09-06.md:53); memory notes excluded; the person-specific cards; LIBRARIAN.md bootstraps its own M.md.
+- E (d273-frontdoor a32bccae): README↔GUIDE, prerequisites, glossary, GATES.md (glossary, six gates, how to turn one off).
+- A (`p-consumer-jargon-A`): the jargon table, applied by C and E.
+- Small leftovers (docs only), lap 4b: for E, GUIDE:112-114 (the three docs fail the scan, so drop) and README:49-50, :201; for C, TRAINING.md:90/92/101.
+- Open for the keeper: the lighthouse push (275 commits behind origin; GATES' evidence links 404 until then).
+- The restart moment (the keeper: "after lap 4 lands") has come: the chair lands everything, rebuilds if any src-tauri changed since 82500f20, then
+  runs the five restart steps. After the restart: lap 4b, re-generate, parity + identity diff, a NEW cold reader.
+
+## The keeper, 2026-10-09 02:49: the consumer is tested by SOMEONE ELSE
+"it shouldnt launch us into consumer mode, we dont even test it we keep our own consonance, and i send it to someone to test". So stop-bar item 4 (the
+visible first launch) is the TESTER's, on their own machine, from the generated copy. It is not the keeper's, and never on D or L. Our dev build only
+carries the dev-side changes, proven behaviour-identical here (usb_mode ON for us).

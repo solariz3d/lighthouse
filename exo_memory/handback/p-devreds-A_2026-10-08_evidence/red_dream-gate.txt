@@ -1,0 +1,104 @@
+  ok  the manifest yields the hooks, and enough of them to be a real check
+  ok  ready-stop.js: the guard is in the source
+  ok  ready-stop.js: the guard precedes the entry point
+  ok  ready-stop.js: speaks without the variable, silent with it
+  ok  ready-prompt.js: the guard is in the source
+  ok  ready-prompt.js: the guard precedes the entry point
+  ok  ready-prompt.js: speaks without the variable, silent with it
+  ok  session-start.js: the guard is in the source
+  ok  session-start.js: the guard precedes the entry point
+  ok  session-start.js: speaks without the variable, silent with it
+  ok  userprompt-submit.js: the guard is in the source
+  ok  userprompt-submit.js: the guard precedes the entry point
+  ok  userprompt-submit.js: speaks without the variable, silent with it
+  ok  stop.js: the guard is in the source
+  ok  stop.js: the guard precedes the entry point
+  ok  stop.js: speaks without the variable, silent with it
+  ok  session-end.js: the guard is in the source
+  ok  session-end.js: the guard precedes the entry point
+  ok  session-end.js: speaks without the variable, silent with it
+  ok  precompact.js: the guard is in the source
+  ok  precompact.js: the guard precedes the entry point
+  ok  precompact.js: speaks without the variable, silent with it
+  ok  l2-overseer.js: the guard is in the source
+  ok  l2-overseer.js: the guard precedes the entry point
+  ok  l2-overseer.js: speaks without the variable, silent with it
+  ok  l3-overseer.js: the guard is in the source
+  ok  l3-overseer.js: the guard precedes the entry point
+  ok  l3-overseer.js: speaks without the variable, silent with it
+  ok  sessionstart-ambient.js: the guard is in the source
+  ok  sessionstart-ambient.js: the guard precedes the entry point
+  ok  sessionstart-ambient.js: speaks without the variable, silent with it
+  ok  userprompt_pulse.py: the guard is in the source
+  ok  userprompt_pulse.py: the guard precedes the entry point
+  ok  userprompt_pulse.py: speaks without the variable, silent with it
+  ok  board-digest.js: the guard is in the source
+  ok  board-digest.js: the guard precedes the entry point
+  ok  board-digest.js: speaks without the variable, silent with it
+  ok  transcript-watch.js: the guard is in the source
+  ok  transcript-watch.js: the guard precedes the entry point
+  ok  transcript-watch.js: speaks without the variable, silent with it
+  ok  dream-watch.js: the guard is in the source
+  ok  dream-watch.js: the guard precedes the entry point
+  ok  ferry-watch.js: the guard is in the source
+  ok  ferry-watch.js: the guard precedes the entry point
+  ok  sourced-stop.js: the guard is in the source
+  ok  sourced-stop.js: the guard precedes the entry point
+  ok  findings-return.js: the guard is in the source
+  ok  findings-return.js: the guard precedes the entry point
+  ok  jev-flags.js: the guard is in the source
+  ok  jev-flags.js: the guard precedes the entry point
+  ok  precompact-preserve.js: the guard is in the source
+  ok  precompact-preserve.js: the guard precedes the entry point
+  ok  precompact-preserve.js: speaks without the variable, silent with it
+  ok  sessionstart-state.js: the guard is in the source
+  ok  sessionstart-state.js: the guard precedes the entry point
+  ok  dispatch-gate.js: the guard is in the source
+  ok  dispatch-gate.js: the guard precedes the entry point
+  ok  carrier-drift-watch.js: the guard is in the source
+  ok  carrier-drift-watch.js: the guard precedes the entry point
+  ok  carrier-drift-watch.js: speaks without the variable, silent with it
+  ok  second-reader.js: the guard is in the source
+  ok  second-reader.js: the guard precedes the entry point
+  ok  sources-gate.js: the guard is in the source
+  ok  sources-gate.js: the guard precedes the entry point
+  ok  reply-slot.js: the guard is in the source
+  ok  reply-slot.js: the guard precedes the entry point
+  ok  push-gate.js: the guard is in the source
+FAIL  push-gate.js: the guard precedes the entry point
+  ok  delete-gate.js: the guard is in the source
+FAIL  delete-gate.js: the guard precedes the entry point
+  ok  ask-ending.js: the guard is in the source
+FAIL  ask-ending.js: the guard precedes the entry point
+  ok  the runner sets the variable it asks the hooks to honour
+
+  NOT BEHAVIOURALLY PROVEN (13/28): dream-watch.js, ferry-watch.js, sourced-stop.js, findings-return.js, jev-flags.js, sessionstart-state.js, dispatch-gate.js, second-reader.js, sources-gate.js, reply-slot.js, push-gate.js, delete-gate.js, ask-ending.js
+  These are silent in this fixture with OR without the variable — they need a board.jsonl
+  and a Main capture that this suite has no hermetic seam for, so their emit path is never
+  reached and a green spawn would measure nothing. Covered by lexical + placement only,
+  which is weaker. Give either hook a CONSONANCE_DATA seam (dream-watch.js:256 is the
+  pattern) and it promotes itself here with no edit to this file.
+
+dream-gate: 70 passed, 3 failed
+  FAIL  push-gate.js: the guard precedes the entry point — no entry marker registered for push-gate.js — add one rather than skipping
+  FAIL  delete-gate.js: the guard precedes the entry point — no entry marker registered for delete-gate.js — add one rather than skipping
+  FAIL  ask-ending.js: the guard precedes the entry point — no entry marker registered for ask-ending.js — add one rather than skipping
+[31m✖ dream-gate.test.js [90m(9003.9364ms)[39m[39m
+[34mℹ tests 1[39m
+[34mℹ suites 0[39m
+[34mℹ pass 0[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 9007.975[39m
+
+[31m✖ failing tests:[39m
+
+test at dream-gate.test.js:1:1
+[31m✖ dream-gate.test.js [90m(9003.9364ms)[39m[39m
+  [32m'test failed'[39m
+
+--- stderr ---
+
+--- exit 1

@@ -1,0 +1,9 @@
+﻿UNMUTATED: exit 0 (GREEN)
+Z1 the newline is searched in the whole buffer (stale bytes past the read): exit 1 CAUGHT by 1 row(s)
+Z2 the last line without a newline is dropped: exit 1 CAUGHT by 3 row(s)
+Z3 a line split across chunks keeps only its first piece: exit 1 CAUGHT by 1 row(s)
+Z4 the unfinished tail is aliased, not copied (overwritten by the next read): exit 1 CAUGHT by 2 row(s)
+Z5 a line split across chunks is decoded piece by piece (a character cut in half): exit 1 CAUGHT by 1 row(s)
+Z6 CRLF is not tolerated (a trailing \r reaches JSON.parse as a non-space): exit 1 CAUGHT by 1 row(s)
+all mutants caught
+

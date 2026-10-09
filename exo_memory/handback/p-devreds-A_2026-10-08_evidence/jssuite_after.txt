@@ -1,0 +1,192 @@
+﻿node : heavy-run: waiting on 0c0c0c0a pid 11972 (chair land-gates js+cargo, since 2026-10-08T23:53:24.216Z)
+At line:1 char:584
++ ... jssuite_after.txt'; node consonance/tools/js-suite.js *> $out; "exit= ...
++                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (heavy-run: wait...T23:53:24.216Z):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ ok    consonance\hooks\ask-ending.test.js
+ ok    consonance\hooks\baton-wake-stop.test.js
+ ok    consonance\hooks\blind.test.js
+ ok    consonance\hooks\board-digest.test.js
+ ok    consonance\hooks\carrier-drift-watch.test.js
+ ok    consonance\hooks\delete-gate.test.js
+ ok    consonance\hooks\dirs.test.js
+ ok    consonance\hooks\dispatch-gate.test.js
+ ok    consonance\hooks\dream-gate.test.js
+ ok    consonance\hooks\dream-watch.test.js
+ ok    consonance\hooks\ferry-watch.test.js
+ ok    consonance\hooks\findings-return.test.js
+ ok    consonance\hooks\jev-flags.test.js
+ ok    consonance\hooks\live-mirror-stop.test.js
+ ok    consonance\hooks\precompact-preserve.test.js
+ ok    consonance\hooks\push-gate.test.js
+ ok    consonance\hooks\reply-slot.test.js
+ ok    consonance\hooks\second-reader.test.js
+ ok    consonance\hooks\sessionstart-state.test.js
+ ok    consonance\hooks\sourced-stop.test.js
+ ok    consonance\hooks\sources-gate.test.js
+ ok    consonance\hooks\transcript-watch.test.js
+ ok    consonance\launch.fuse.test.js
+ ok    consonance\launch.park.test.js
+NOTRUN  consonance\tools\actors.evidence.test.js
+ ok    consonance\tools\actors.test.js
+ ok    consonance\tools\agreement-spread.test.js
+ ok    consonance\tools\ambient-default-claim.test.js
+ ok    consonance\tools\ask.test.js
+ ok    consonance\tools\attached.test.js
+ ok    consonance\tools\balance-check.test.js
+ ok    consonance\tools\baton-wake.test.js
+ ok    consonance\tools\board-audit.test.js
+ ok    consonance\tools\board-bursts.test.js
+ ok    consonance\tools\board-compact.test.js
+ ok    consonance\tools\boundary-check.artifacts.test.js
+ ok    consonance\tools\boundary-check.test.js
+ ok    consonance\tools\boundary-reminder.test.js
+ ok    consonance\tools\carrier-drift.test.js
+ ok    consonance\tools\catch-ledger.test.js
+ ok    consonance\tools\chain-status.test.js
+ ok    consonance\tools\cite-check.test.js
+ ok    consonance\tools\close.test.js
+ ok    consonance\tools\commit-gate.test.js
+ ok    consonance\tools\consumer-fork-wiring.test.js
+ ok    consonance\tools\consumer-relabel.test.js
+ ok    consonance\tools\contamination.test.js
+ ok    consonance\tools\corpus-age.synthetic.test.js
+ ok    consonance\tools\corpus-age.test.js
+ ok    consonance\tools\corrections-gate.test.js
+ ok    consonance\tools\coupling-test.test.js
+ ok    consonance\tools\curate.test.js
+ ok    consonance\tools\deference-unit.test.js
+ ok    consonance\tools\essay-provenance.test.js
+ ok    consonance\tools\ferry.test.js
+ ok    consonance\tools\forget-rate.test.js
+ ok    consonance\tools\gen-brief-gate.test.js
+ ok    consonance\tools\gen-consumer.build.test.js
+ ok    consonance\tools\gen-consumer.fixture-scope.test.js
+ ok    consonance\tools\gen-consumer.test.js
+ ok    consonance\tools\groove.test.js
+ ok    consonance\tools\guard-census.test.js
+ ok    consonance\tools\head-watch.test.js
+ ok    consonance\tools\heavy-run.test.js
+ ok    consonance\tools\imprint-measure.test.js
+FAIL   consonance\tools\install-only.test.js  (exit 1)
+ ok    consonance\tools\jev-ask.test.js
+ ok    consonance\tools\jev-judge.test.js
+ ok    consonance\tools\jev-module.test.js
+ ok    consonance\tools\jev-room.test.js
+ ok    consonance\tools\jev-shadow-runner.test.js
+ ok    consonance\tools\jev-shadow.test.js
+ ok    consonance\tools\jev-variants.test.js
+ ok    consonance\tools\js-suite.test.js
+ ok    consonance\tools\lap-row.test.js
+ ok    consonance\tools\ledger-union.test.js
+ ok    consonance\tools\librarian-cite.test.js
+ ok    consonance\tools\librarian-notes.test.js
+ ok    consonance\tools\librarian-route.test.js
+ ok    consonance\tools\live-follow.test.js
+ ok    consonance\tools\live-host.test.js
+ ok    consonance\tools\memory-sweep.test.js
+ ok    consonance\tools\mutant-harness.test.js
+ ok    consonance\tools\offramp-check.test.js
+ ok    consonance\tools\open-items-build.test.js
+ ok    consonance\tools\order-parameter.test.js
+ ok    consonance\tools\pair-ledger.test.js
+ ok    consonance\tools\portable-paths.test.js
+ ok    consonance\tools\prompt-events.test.js
+ ok    consonance\tools\pulse-degrade.test.js
+ ok    consonance\tools\raise-target.test.js
+ ok    consonance\tools\read-ledger.test.js
+ ok    consonance\tools\replay-check.test.js
+ ok    consonance\tools\residue.test.js
+ ok    consonance\tools\root1-score.test.js
+ ok    consonance\tools\second-vantage.history.test.js
+ ok    consonance\tools\second-vantage.test.js
+ ok    consonance\tools\seed-status.test.js
+ ok    consonance\tools\shelf-recursion.test.js
+ ok    consonance\tools\shelf-tier.test.js
+ ok    consonance\tools\sourced.test.js
+ ok    consonance\tools\stamp.test.js
+ ok    consonance\tools\state-block.test.js
+ ok    consonance\tools\state-manifest.test.js
+ ok    consonance\tools\state-sync.test.js
+ ok    consonance\tools\swell-head.test.js
+canary  consonance\tools\targetless-pull.test.js  (exit 1)
+ ok    consonance\tools\tell-index.test.js
+ ok    consonance\tools\text-census.test.js
+ ok    consonance\tools\tj1-k-render.test.js
+ ok    consonance\tools\trip-check.test.js
+ ok    consonance\tools\universe-print.test.js
+ ok    consonance\tools\usage.test.js
+ ok    consonance\tools\vantage-disposition.test.js
+ ok    consonance\tools\vantage-sealed-scope.test.js
+ ok    consonance\tools\vicsek-phi.test.js
+ ok    consonance\tools\whats-live.test.js
+ ok    consonance\ui\about-readme.test.js
+ ok    consonance\ui\chain-indicator.test.js
+ ok    consonance\ui\gate-card-routing.test.js
+ ok    consonance\ui\leave.test.js
+ ok    consonance\ui\librarian-wiring.test.js
+ ok    consonance\ui\pane-reopen.test.js
+ ok    consonance\ui\scripts-load.test.js
+ ok    consonance\ui\stick.test.js
+ ok    consonance\ui\third-place-wiring.test.js
+ ok    dev\diversity\phase-window.test.js
+ ok    dev\diversity\redact.test.js
+ ok    dev\diversity\s40-strip.test.js
+ ok    dev\diversity\score-portable.test.js
+ ok    dev\dream\dream_cycle.test.js
+ ok    dev\headwatch\install_headwatch.test.js
+ ok    dev\place-conversations.test.js
+ ok    dev\shell\hooks\l2-overseer-worker.test.js
+ ok    dev\shell\hooks\shell-dir-seam.test.js
+ ok    dev\shell\hooks\third-place-gate.test.js
+ ok    dev\shell\hooks\userprompt-submit.test.js
+ ok    dev\shell\hooks\userprompt_pulse.test.js
+ ok    dev\shell\install-fresh-home.test.js
+ ok    dev\shell\lib\ready.test.js
+ ok    dev\stick-apply.test.js
+ ok    dev\stick-waiter.test.js
+ ok    dev\tail-carry.test.js
+ ok    dev\vantage\install_vantage.test.js
+ ok    exo_memory\loop\claimrec\asof.test.js
+ ok    exo_memory\loop\claimrec\claimrec.test.js
+ ok    exo_memory\loop\claimrec\score_q3.test.js
+ ok    exo_memory\loop\claimrec\units.test.js
+ ok    exo_memory\loop\d121_relay\harness.test.js
+ ok    exo_memory\loop\run2\rig\score.test.js
+ ok    jev\test\ask.test.js
+ ok    jev\test\config.test.js
+ ok    jev\test\install.test.js
+ ok    jev\test\isolation.test.js
+ ok    jev\test\jev-flags.test.js
+ ok    jev\test\jev-report.test.js
+ ok    jev\test\judge.test.js
+ ok    jev\test\prompt.parity.test.js
+ ok    jev\test\prompt.paths.test.js
+ ok    jev\test\prompt.test.js
+ ok    jev\test\readme.test.js
+
+js-suite: 158 green · 1 failed · 0 crashed · 0 silent · 1 canary · 0 sang · 1 not-run · 0 class-error  (of 161)
+
+universe: 161 test files discovered · 160 ran assertions to a summary · 1 declared NOT-RUN · 0 neither
+  rule: every discovered file runs unconditionally, EXCEPT a file whose header declares
+        `JS-SUITE: MACHINE-BOUND` — that file runs only where its own corpus gate says its
+        universe is present, and must print NOT-RUN with a reason everywhere else.
+        `neither` is crashed-before-its-summary or silent: those did NOT run, and are
+        counted apart from NOT-RUN because declining is a decision and dying is not.
+
+FAILED: consonance\tools\install-only.test.js
+    ok   D218: on a home that already has Stop hooks, the reply slot is APPENDED to Stop once, every other Stop hook and every other event is byte-identical, and a second run changes nothing
+    ok   D218: a fresh machine gets reply-slot.js and sources-gate.js in the SAME directory (the hook requires the gate beside it), each byte-identical to the repo's
+  
+  43 passed, 3 failed
+
+canary (declared EXPECTED-RED, still red — not counted as a failure): consonance\tools\targetless-pull.test.js
+
+NOT-RUN (declared MACHINE-BOUND, universe absent here): consonance\tools\actors.evidence.test.js
+  reason:   persist.log under C:\Consonance\data begins its letter history at 1784993504 (2026-07-25T15:31:44.000Z), not at actors.js's LETTER_BIRTH 1785057198 (2026-07-26T09:13:18.000Z). A different letter history OR a damaged one; this gate cannot tell those apart, which is what home= is for
+  universe: C:\Consonance\data — 7/7 pre-letter ids on the board · 13 letter assignments in persist.log · rule: a board carrying every id in actors.js's PRE_LETTER table, plus a persist.log with at least one letter assignment whose earliest is actors.js's LETTER_BIRTH
+  forced:   with JS_SUITE_UNIVERSE=force it exits 1 and reaches a summary — checked, so a NOT-RUN cannot be hiding a green.
+  This file was NOT verified on this machine. A red under force here would be
+  indistinguishable from a foreign corpus, so nothing about its health is claimed.
