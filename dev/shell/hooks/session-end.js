@@ -59,19 +59,49 @@ function todayYMD() {
   return `${yy}-${mm}-${dd}`;
 }
 
+/**
+ * The lines of a file, one at a time, WITHOUT ever holding the whole file as one string; `fn(line)` returns true to STOP reading.
+ *
+ * D273 (devreds, the same repair as tools/sourced.js): firstHumanLine used to be `fs.readFileSync(path, 'utf8').split('\n')` inside a silent catch. V8's longest string is
+ * 0x1fffffe8 = 536,870,888 bytes, a long session's transcript passes it (the chair's was 539,727,123), the read threw, the catch swallowed it, and the opening line came
+ * back null for exactly the longest sessions. Lines are cut on the 0x0A byte BEFORE decoding, so a multi-byte character split across two chunks is never decoded in halves;
+ * a trailing \r is whitespace to JSON.parse; a line that cannot be made a string is skipped, as an unparseable line always was. Self-contained on purpose: each installed
+ * hook stands alone. `chunkBytes` is a parameter only so a test can put every boundary inside a character and a line.
+ */
+function eachLine(file, fn, chunkBytes = 1024 * 1024) {
+  const fd = fs.openSync(file, 'r');
+  try {
+    const buf = Buffer.allocUnsafe(chunkBytes);
+    let carry = [], stop = false;
+    const emit = (bytes) => { let text; try { text = bytes.toString('utf8'); } catch (e) { return; } if (fn(text) === true) stop = true; };
+    for (let n; !stop && (n = fs.readSync(fd, buf, 0, chunkBytes, null)) > 0;) {
+      const view = buf.subarray(0, n);
+      let start = 0;
+      while (!stop) {
+        const nl = view.indexOf(0x0a, start);
+        if (nl < 0) { if (start < n) carry.push(Buffer.from(view.subarray(start))); break; }
+        carry.push(view.subarray(start, nl));
+        emit(carry.length === 1 ? carry[0] : Buffer.concat(carry)); carry = [];
+        start = nl + 1;
+      }
+    }
+    if (!stop && carry.length) emit(Buffer.concat(carry));
+  } finally { fs.closeSync(fd); }
+}
+
 // Pull the first genuine human line from a session transcript (JSONL).
 // Skips tag-wrapped machinery (<local-command-caveat>, <command-name>,
 // system reminders) and the dream anti-instruction. Returns null if the
-// session never had a human say anything real.
-function firstHumanLine(transcriptPath) {
+// session never had a human say anything real. Reads in chunks and stops at that line.
+function firstHumanLine(transcriptPath, chunkBytes) {
   try {
     if (!transcriptPath || !fs.existsSync(transcriptPath)) return null;
-    const lines = fs.readFileSync(transcriptPath, 'utf8').split('\n');
-    for (const line of lines) {
-      if (!line.trim()) continue;
+    let found = null;
+    eachLine(transcriptPath, (line) => {
+      if (!line.trim()) return false;
       let ev;
-      try { ev = JSON.parse(line); } catch (e) { continue; }
-      if (ev.type !== 'user' || !ev.message) continue;
+      try { ev = JSON.parse(line); } catch (e) { return false; }
+      if (ev.type !== 'user' || !ev.message) return false;
       let text = '';
       const c = ev.message.content;
       if (typeof c === 'string') text = c;
@@ -81,14 +111,16 @@ function firstHumanLine(transcriptPath) {
         }
       }
       text = (text || '').trim();
-      if (!text) continue;
-      if (text.startsWith('<')) continue;                      // tag machinery
-      if (text.startsWith('This is a gap-dream cycle')) return null; // never eat the weld
-      if (/^Caveat:/.test(text)) continue;
+      if (!text) return false;
+      if (text.startsWith('<')) return false;                  // tag machinery
+      if (text.startsWith('This is a gap-dream cycle')) return true; // never eat the weld: stop, with nothing found
+      if (/^Caveat:/.test(text)) return false;
       const flat = text.replace(/\s+/g, ' ');
-      return flat.length > 160 ? flat.slice(0, 160) + '...' : flat;
-    }
-  } catch (e) { /* silent */ }
+      found = flat.length > 160 ? flat.slice(0, 160) + '...' : flat;
+      return true;
+    }, chunkBytes);
+    return found;
+  } catch (e) { /* silent: teardown is never blocked; the reader above no longer fails on size */ }
   return null;
 }
 
@@ -217,4 +249,6 @@ function main() {
   process.stdout.write('{}');
 }
 
-main();
+// D273: run only as the hook (`node session-end.js`), so a test can load firstHumanLine without reading stdin or writing a digest.
+if (require.main === module) main();
+module.exports = { firstHumanLine, eachLine };
