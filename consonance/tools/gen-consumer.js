@@ -685,6 +685,12 @@ const EXCLUDE = {
     'RETIRED VOCABULARY — retired 2026-07-12, re-retired 2026-08-17. Cut from memory/ at 03:13 while cards/ went on shipping it; this is the carrier, and cutting the copy without the carrier is the failure the room already measured at five weeks',
   'exo_memory/memory/claim-your-continuity.md':
     'DUPLICATE — cards/ is the master (keeper, 03:56). And DIVERGENT rather than merely duplicated: 2,068 B here against 5,125 in cards/, two different documents under one name. The master ships; the two are reconciled by an APPEND to cards/ in the private tree, not by this line choosing a winner',
+  'exo_memory/memory/split-the-work-with-the-panes.md':
+    'STATE of one pair: the keeper\'s correction to one seat, written as this seat\'s own memory ("he has corrected this at least three times"). A new user\'s memory starts blank (D273 lap 4, the cold read C3)',
+  'exo_memory/memory/frozen-is-not-dead.md':
+    'the keeper\'s own insight (2026-07-25) written as this seat\'s memory. A new user\'s memory starts blank (D273 lap 4, the cold read C3); the insight stays in the keeper\'s record',
+  'exo_memory/cards/dont-offer-rest-assume-momentum.md':
+    'one person\'s temperament as a rule about the reader ("He calls rest when he needs it"); its general form, cards/never-pathologize-the-user.md, ships (D273 lap 4, the cold read C4)',
   'exo_memory/memory/verify-before-claiming.md':
     'DUPLICATE — cards/ is the master. Also divergent (2,207 here, 2,145 in cards/); same append, same reason as above',
   'exo_memory/memory/engagement-honesty-over-performance.md':

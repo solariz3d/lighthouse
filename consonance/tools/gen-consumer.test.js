@@ -1015,6 +1015,9 @@ test('L038/A · an overridden stamp is legible as one, in both documents', () =>
 
 // ── L038 · THE memory/ CUT — the keeper, 2026-09-06 03:13 ───────────────────────────────────────
 
+// D273 lap 4 AMENDED THIS ROW BY NAME (pane B, 2026-10-08): the list it pins changed. The cold read's C3 (C's rows, handback/p-consumer-fork-C_2026-10-08.md)
+// withholds the last two memory/ files, frozen-is-not-dead.md and split-the-work-with-the-panes.md (the keeper's insight and corrections written as the
+// seat's own memory), so memory/ now ships only its index, which reindex() leaves empty. The guard's job (a new card goes RED) is unchanged.
 test('L038 · memory/ ships exactly the six, and a new card goes RED rather than shipping', () => {
   /* THE GUARD THAT WOULD HAVE CAUGHT THE ONE THE CUT MISSED. The keeper named 11 of the 12 files in
    * memory/; `signal-and-606-night.md` appeared in no list. Under a `dir` rule an unnamed file
@@ -1028,9 +1031,7 @@ test('L038 · memory/ ships exactly the six, and a new card goes RED rather than
    * cut kept six; four of those six also lived in `cards/`, so a consumer was getting two copies of
    * four instruments under one name each. `memory/` now ships only what is UNIQUE to it. */
   const KEEPER_SHIPS = [
-    'MEMORY.md',                                  // the index, filtered by reindex()
-    'frozen-is-not-dead.md',
-    'split-the-work-with-the-panes.md',
+    'MEMORY.md',                                  // the index, filtered by reindex(): empty since D273 lap 4 (C3)
   ].sort();
   const shipped = G.collect()
     .filter((f) => f.to.startsWith('exo_memory/memory/') && !G.EXCLUDE[f.from])
@@ -1171,7 +1172,9 @@ test('L038 · no [[wiki-link]] in the produced tree points at a card that is not
    * shipped card links to a memory-only card yet, so cards/-only and cards+memory produce the same
    * bytes and no output test can separate them. It is still the wrong set, and it goes wrong the
    * first time anyone links to frozen-is-not-dead. Assert the SET. */
-  assert.ok(r.linkTargets.includes('frozen-is-not-dead'),
+  // D273 lap 4 AMENDED BY NAME (pane B): this asserted r.linkTargets.includes('frozen-is-not-dead'), the one memory/-only card, which C3 now withholds,
+  // so no memory/-only card ships to test with. The same set is asserted on shippedSets(), the function build() uses, with a synthetic memory/ card.
+  assert.ok(G.shippedSets([{ from: 'exo_memory/memory/x-only.md', to: 'exo_memory/memory/x-only.md' }]).shippedCards.has('x-only'),
     'the wiki-link resolution set does not cover memory/-only cards, so a future link to one would '
     + 'be silently deleted rather than kept');
   assert.ok(r.linkTargets.includes('never-pathologize-the-user'), 'nor cards/');
@@ -1593,4 +1596,21 @@ test('D273 lap 4 (A15): CONSUMER-STATUS\'s GATE line says the gate runs in the s
     assert.match(gate, /source repository/, 'the GATE line names a command as if it ran here: ' + gate);
     assert.match(gate, /gen-consumer\.build\.test\.js --gate/, 'the GATE line no longer names the command');
   }
+});
+
+test('D273 lap 4 (C, the cold read C3/C4): a new user\'s memory starts blank: the generated memory/ holds only MEMORY.md, with no entries', () => {
+  /* C's three rows (handback/p-consumer-fork-C_2026-10-08.md, "Owed to B"): split-the-work-with-the-panes.md and frozen-is-not-dead.md shipped the
+   * keeper's corrections and insight written as the seat's own memory, and cards/dont-offer-rest-assume-momentum.md one person's temperament as a
+   * rule (its general form, never-pathologize-the-user.md, ships). The index is filtered to what ships (reindex), so it must come out empty. */
+  for (const rel of ['exo_memory/memory/split-the-work-with-the-panes.md', 'exo_memory/memory/frozen-is-not-dead.md', 'exo_memory/cards/dont-offer-rest-assume-momentum.md']) {
+    assert.match(G.EXCLUDE[rel] || '', /D273 lap 4, the cold read C[34]/, rel + ' ships, or its reason is not C\'s');
+  }
+  const r = G.build('', { dry: true, allowDirty: true });
+  try {
+    assert.ok(!r.refused, r.refused);
+    assert.deepStrictEqual(fs.readdirSync(path.join(r.staging, 'exo_memory', 'memory')), ['MEMORY.md'], 'memory/ ships more than its index');
+    const idx = fs.readFileSync(path.join(r.staging, 'exo_memory', 'memory', 'MEMORY.md'), 'utf8');
+    assert.deepStrictEqual(idx.split('\n').filter((l) => /^\s*-\s*\[/.test(l)), [], 'the shipped index still lists entries');
+    assert.ok(fs.existsSync(path.join(r.staging, 'exo_memory', 'cards', 'never-pathologize-the-user.md')), 'the general form of the excluded card does not ship');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
 });
