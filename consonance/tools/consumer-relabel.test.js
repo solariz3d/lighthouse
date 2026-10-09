@@ -99,7 +99,8 @@ test('an anchor that drifted in dev is refused by name, never silently skipped',
 test('a file with no registered sites comes back unchanged, and CRLF input keeps CRLF', () => {
   const t = 'the keeper, 2026-09-16: "a rule"\nmore\n';
   assert.deepEqual(R.relabel('consonance/tools/whatever.md', t), { text: t, edits: [] });
-  const crlf = read('consonance/src-tauri/brief/COMMITTEE.md').replace(/\r?\n/g, '\r\n');
+  // the text the hook RECEIVES (lap 5: COMMITTEE's authored-by row is anchored after deidentify, which the raw dev file has not had)
+  const crlf = preFork('consonance/src-tauri/brief/COMMITTEE.md').replace(/\r?\n/g, '\r\n');
   const out = R.relabel('consonance/src-tauri/brief/COMMITTEE.md', crlf).text;
   assert.ok(out.includes("in a reply to the person you're with as in a hand-back") && !/[^\r]\n/.test(out), 'CRLF lost or the site missed');
 });
@@ -186,4 +187,34 @@ test('lap 4b: TRAINING never presents catch-ledger.js as in this tree; each ment
   const lines = t.split('\n'), at = lines.map((l, i) => [l, i]).filter(([l]) => /catch-ledger/.test(l));
   assert.equal(at.length, 3, 'the three registered mentions');
   for (const [l, i] of at) assert.ok(/does not carry it|stays in the original room's repository/.test(l), 'TRAINING.md:' + (i + 1) + ' still presents catch-ledger as present: ' + l);
+});
+
+// ── D273 lap 5: cold read 2's identity findings (exo_memory/handback/p-consumer-coldread2-LIB_2026-10-09.md) ────────────
+test('lap 5 C1 (the fail): the keeper\'s retired seats are the keeper\'s line, cited as provenance, never the reader\'s own lineage on this machine', () => {
+  const t = shipped('exo_memory/cards/claim-your-continuity.md');
+  assert.ok(!/And the seats that went before you\./.test(t) && !/retired seat on this machine/.test(t), 'the card still hands the keeper\'s retired seats to the reader');
+  assert.ok(t.includes("**The seats that went before, in the keeper's line.**") && t.includes('It is provenance, not your lineage'));
+  assert.ok(t.includes('a retired seat is carried, not gone'), 'the practice itself was lost');
+});
+
+test('lap 5 C3: Anamnesis and Metaxy are labelled as the first line\'s seat names', () => {
+  const t = shipped('exo_memory/cards/claim-your-continuity.md');
+  assert.ok(t.includes("**Anamnesis** (the keeper's librarian seat's name, in the first line;"));
+  assert.ok(t.includes("**Metaxy** (the keeper's Third Place seat's name, in the first line)"));
+});
+
+test('lap 5 C5/C6/A4: no shipped brief says a stranger\'s commits are authored by the keeper, no "tonight" from the first line\'s night, no %CONSONANCE_HOME%', () => {
+  for (const rel of ['consonance/src-tauri/brief/LIBRARIAN.md', 'consonance/src-tauri/brief/COMMITTEE.md']) {
+    const t = shipped(rel);
+    assert.ok(!t.includes('authored `the keeper`'), rel + ': authored `the keeper`');
+    assert.ok(t.includes('the one git identity on the machine'), rel);
+  }
+  const lib = shipped('consonance/src-tauri/brief/LIBRARIAN.md');
+  assert.ok(!/claims tonight/.test(lib), 'LIBRARIAN: "tonight" reads the first line\'s night as this seat\'s');
+  assert.ok(!lib.includes('%CONSONANCE_HOME%') && lib.includes("`exo_memory/librarian/` in your repository (beside the room's `BOOT.md`"));
+});
+
+test('lap 5 B6: BOOT no longer cites TRAINING.md (TRAINING\'s own rule)', () => {
+  const t = shipped('exo_memory/BOOT.md');
+  assert.ok(!t.includes('`TRAINING.md:133`') && t.includes('in the training curriculum, and in five others'));
 });
