@@ -1503,3 +1503,94 @@ test('D273: shippedSets() is exported and is what build() uses, so identity-diff
   try { assert.deepStrictEqual([...s.shippedCards].sort(), r.linkTargets, 'build() uses a different card set'); }
   finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
 });
+
+
+/* ============================================================ D273 LAP 4 (pane B): the cold read's generator items
+ * handback/p-consumer-coldread-LIB_2026-10-08.md (A1, A2, A4, A13, A14, A15) and loop/plan_consumer_refresh_2026-10-08.md "Cold read, IN". */
+const lap4 = () => G.build('', { dry: true, allowDirty: true });
+const walkText = (root) => { const out = []; const w = (d) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) w(p); else if (!/\.(bin|png|ico|lock)$/.test(e.name)) out.push(p); } }; w(root); return out; };
+
+test('D273 lap 4 (A1, A2): the repo URL is github.com/solariz3d/consonance, no generated URL holds a space, and the clone folder is consonance', () => {
+  assert.strictEqual(G.deidentify('see github.com/solariz3d/lighthouse and solariz3d alone').body, 'see github.com/solariz3d/consonance and the keeper alone');
+  assert.strictEqual(G.deidentifyTokens('https://github.com/solariz3d/lighthouse.git').body, 'https://github.com/solariz3d/consonance.git');
+  assert.deepStrictEqual(G.scan('git clone https://github.com/solariz3d/consonance.git\n', 'README.md').filter((l) => l.cls === 'IDENTITY'), [], 'the consumer repo URL reads as a leak');
+  assert.ok(G.scan('the handle solariz3d alone\n', 'README.md').some((l) => l.cls === 'IDENTITY'), 'the bare handle is no longer caught');
+  const r = lap4();
+  try {
+    const bad = [];
+    for (const p of walkText(r.staging)) {
+      const t = fs.readFileSync(p, 'utf8');
+      for (const m of t.matchAll(/github\.com\/([^\s/)\]"'<>]+)(\s+[^\s/)\]"'<>]+)?\//g)) if (m[2]) bad.push(path.relative(r.staging, p) + ': ' + m[0]);
+    }
+    assert.deepStrictEqual(bad, [], 'a generated URL holds a space');
+    const readme = fs.readFileSync(path.join(r.staging, 'README.md'), 'utf8');
+    assert.match(readme, /git clone https:\/\/github\.com\/solariz3d\/consonance\.git/);
+    assert.match(readme, /cd consonance\/consonance/); assert.doesNotMatch(readme, /cd lighthouse\//, 'the clone folder is still called lighthouse');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273 lap 4: the app id com.solariz3d.consonance becomes com.consonance.app everywhere it ships, so stick-waiter registers the id tauri.conf carries', () => {
+  assert.strictEqual(G.deidentify("const APP_ID = 'com.solariz3d.consonance';").body, "const APP_ID = 'com.consonance.app';");
+  const r = lap4();
+  try {
+    const conf = JSON.parse(fs.readFileSync(path.join(r.staging, 'consonance/src-tauri/tauri.conf.json'), 'utf8'));
+    const waiter = fs.readFileSync(path.join(r.staging, 'dev/stick-waiter.js'), 'utf8');
+    assert.ok(waiter.includes("const APP_ID = '" + conf.identifier + "';"), 'stick-waiter registers another id than the bundle: ' + conf.identifier);
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273 lap 4 (A4): a link whose TEXT is the record path becomes the prose ONCE, never "(a registration…) (a registration…)"', () => {
+  for (const s of ['[`exo_memory/loop/plan_x_2026-10-01.md`](exo_memory/loop/plan_x_2026-10-01.md)', '[exo_memory/loop/plan_x_2026-10-01.md](exo_memory/loop/plan_x_2026-10-01.md)']) {
+    assert.strictEqual(G.dedangle('see ' + s + '.').body, 'see a registration in this line of record.', s);
+  }
+  const r = lap4();
+  try {
+    const doubled = [];
+    for (const p of walkText(r.staging)) {
+      const t = fs.readFileSync(p, 'utf8');
+      if (/in this line of record\)? \(a (registration|hand-back|map entry|librarian entry) in this line of record/.test(t)) doubled.push(path.relative(r.staging, p));
+    }
+    assert.deepStrictEqual(doubled, [], 'a placeholder is still doubled');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273 lap 4 (A13): the USB mode ships, scanned: the stick scripts, launch.ps1 and their tests, finding the repo the way the app does', () => {
+  const ship = ['dev/stick-apply.js', 'dev/stick-waiter.js', 'dev/tail-carry.js', 'dev/place-conversations.js', 'dev/LEAVING.ps1', 'dev/ARRIVING.ps1', 'dev/ON-EXIT.ps1',
+    'consonance/launch.ps1', 'dev/stick-apply.test.js', 'dev/stick-waiter.test.js', 'dev/tail-carry.test.js', 'dev/place-conversations.test.js',
+    'consonance/launch.fuse.test.js', 'consonance/launch.park.test.js'];
+  const r = lap4();
+  try {
+    assert.ok(!r.refused, r.refused);
+    for (const rel of ship) {
+      assert.ok(fs.existsSync(path.join(r.staging, rel)), rel + ' did not ship');
+      assert.deepStrictEqual(r.leaks.filter((l) => l.rel === rel), [], rel + ' shipped a leak');
+    }
+    for (const rel of ['dev/LEAVING.ps1', 'dev/ARRIVING.ps1']) {
+      const out = fs.readFileSync(path.join(r.staging, rel), 'utf8');
+      assert.ok(!out.includes('%CONSONANCE_HOME%') && !/Users\\other/.test(out), rel + ' ships a machine path the generator could only placeholder');
+      assert.match(fs.readFileSync(path.join(REPO, rel), 'utf8'), /\.consonance\.json/, rel + ' does not find the repo through ~/.consonance.json');
+    }
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273 lap 4 (A14): the docs that name catch-ledger.js say this copy does not carry it; tools/README names resonance/atoms.jsonl as the data folder\'s', () => {
+  const r = lap4();
+  try {
+    assert.ok(!r.refused, r.refused);
+    for (const rel of ['consonance/tools/README.md', 'exo_memory/TRAINING.md']) {
+      const t = fs.readFileSync(path.join(r.staging, rel), 'utf8');
+      assert.ok(t.includes('catch-ledger.js'), 'control: ' + rel + ' names catch-ledger.js');
+      assert.match(t, /not carry it|not in this copy/, rel + ' presents catch-ledger.js as if it were here');
+    }
+    assert.match(fs.readFileSync(path.join(r.staging, 'consonance/tools/README.md'), 'utf8'), /resonance\/atoms\.jsonl\x60 in the data folder/);
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273 lap 4 (A15): CONSUMER-STATUS\'s GATE line says the gate runs in the source repository, which carries the generator this tree lacks', () => {
+  for (const measured of [false, true]) {
+    const doc = G.renderStatusDoc({ measured, sha: 'f21dbc9', at: 'now', js: [], rust: [] });
+    const gate = (doc.match(/^GATE:.*$/m) || [''])[0];
+    assert.match(gate, /source repository/, 'the GATE line names a command as if it ran here: ' + gate);
+    assert.match(gate, /gen-consumer\.build\.test\.js --gate/, 'the GATE line no longer names the command');
+  }
+});

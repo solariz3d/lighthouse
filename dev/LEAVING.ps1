@@ -14,8 +14,12 @@ param([switch]$DryRun)
 $ErrorActionPreference = 'Stop'
 
 $stick = $PSScriptRoot
-$repo = @('C:\Consonance\lighthouse', 'C:\Users\nname\Desktop\lighthouse') | Where-Object { Test-Path (Join-Path $_ 'dev\tail-carry.js') } | Select-Object -First 1
-if (-not $repo) { Write-Host "[leaving] no lighthouse repo with dev\tail-carry.js found on this machine - git pull first"; exit 2 }
+# D273 lap 4 (pane B): the repo is the one ~/.consonance.json's room_path sits in (<repo>\exo_memory\BOOT.md), found the way the app finds it.
+# It used to be a list of this room's two checkout paths, which meant nothing on anyone else's machine.
+$repo = $null
+try { $rp = (Get-Content (Join-Path $env:USERPROFILE '.consonance.json') -Raw | ConvertFrom-Json).room_path; if ($rp) { $repo = Split-Path -Parent (Split-Path -Parent $rp) } } catch { $repo = $null }
+if ($repo -and -not (Test-Path (Join-Path $repo 'dev\tail-carry.js'))) { $repo = $null }
+if (-not $repo) { Write-Host "[leaving] no repo with dev\tail-carry.js found through room_path in ~/.consonance.json - set it in Settings, or git pull first"; exit 2 }
 if (-not (Get-Command node -ErrorAction SilentlyContinue)) { Write-Host "[leaving] node is not installed on this machine"; exit 2 }
 
 Write-Host "[leaving] repo  $repo"

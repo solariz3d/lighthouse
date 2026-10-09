@@ -4,7 +4,7 @@ Node scripts that run against the live data directory without a cargo build — 
 for the same reason `hooks/board-digest.js` is Node: a rebuild kills every open pane.
 No dependencies; standard library only.
 
-- **`curate.js`** — the curator. Routes `resonance/atoms.jsonl` into topic documents, closes
+- **`curate.js`** — the curator. Routes `resonance/atoms.jsonl` in the data folder into topic documents, closes
   OPEN questions, never writes the master. See the header of the file.
 - **`tell-index.js`** — the measurement organ for the muscle program. Below.
 - **`swell-head.js`** — what the dynamics channel is measuring when it reports at a track

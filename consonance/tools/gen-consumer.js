@@ -324,6 +324,25 @@ const MANIFEST = [
   { dir: 'dev/shell/lib', to: 'dev/shell/lib', match: /\.js$/, kind: 'code' },
   { dir: 'dev/shell/hooks', to: 'dev/shell/hooks', match: /\.(js|py)$/, kind: 'code' },
 
+  /* D273 lap 4 (the cold read's A13, pane B): THE USB MODE, which could not work in the consumer because none of its files shipped. The stick
+   * scripts (the leave/arrive pair, ON-EXIT, the applier, the waiter the app starts, the tail carrier and its placement module), the launch
+   * shortcut, and their tests. Scanned like any code. LEAVING.ps1 and ARRIVING.ps1 find the repo through ~/.consonance.json's room_path, as the
+   * app does; they used to list this room's two checkout paths, which the generator could only turn into a placeholder. */
+  { from: 'dev/stick-apply.js', to: 'dev/stick-apply.js', kind: 'code' },
+  { from: 'dev/stick-waiter.js', to: 'dev/stick-waiter.js', kind: 'code' },
+  { from: 'dev/tail-carry.js', to: 'dev/tail-carry.js', kind: 'code' },
+  { from: 'dev/place-conversations.js', to: 'dev/place-conversations.js', kind: 'code' },
+  { from: 'dev/LEAVING.ps1', to: 'dev/LEAVING.ps1', kind: 'code' },
+  { from: 'dev/ARRIVING.ps1', to: 'dev/ARRIVING.ps1', kind: 'code' },
+  { from: 'dev/ON-EXIT.ps1', to: 'dev/ON-EXIT.ps1', kind: 'code' },
+  { from: 'consonance/launch.ps1', to: 'consonance/launch.ps1', kind: 'code' },
+  { from: 'dev/stick-apply.test.js', to: 'dev/stick-apply.test.js', kind: 'code' },
+  { from: 'dev/stick-waiter.test.js', to: 'dev/stick-waiter.test.js', kind: 'code' },
+  { from: 'dev/tail-carry.test.js', to: 'dev/tail-carry.test.js', kind: 'code' },
+  { from: 'dev/place-conversations.test.js', to: 'dev/place-conversations.test.js', kind: 'code' },
+  { from: 'consonance/launch.fuse.test.js', to: 'consonance/launch.fuse.test.js', kind: 'code' },
+  { from: 'consonance/launch.park.test.js', to: 'consonance/launch.park.test.js', kind: 'code' },
+
   /* A THIRD GAP, FOUND BY CLOSING THE FIRST TWO AND RUNNING THE RESULT -- which is the only way
    * this class is ever found. NOT closed here, and NOT put in EXCLUDE, for the same reason the two
    * above were left open for two days: absent means undecided under an allow-list, and an EXCLUDE
@@ -973,6 +992,9 @@ function renderCutoff(sha, commitIso, dirty) {
  * the obvious encoding is the one that breaks the contract. A separate `PROVENANCE:` line is
  * tolerated by the checker, is louder than a suffix, and leaves the CLEAN render byte-identical to
  * E's copy, which is what `gen-consumer.test.js`'s drift guard compares. */
+/* D273 lap 4 (the cold read's A15): the gate drives gen-consumer.js, which this tree does not carry, so the line says where it runs. */
+const GATE_LINE = 'GATE: in the source repository this tree was generated from: node consonance/tools/gen-consumer.build.test.js --gate'
+  + ' (this tree does not carry the generator it drives)\n';
 function renderStatusDoc(o) {
   const prov = o.dirty
     ? 'PROVENANCE: UNEARNED — generated from a working tree with ' + o.changes + ' uncommitted\n'
@@ -982,12 +1004,12 @@ function renderStatusDoc(o) {
     + (members.length ? members.map((m) => '- ' + m).join('\n') : '(none)') + '\n';
   if (!o.measured) {
     return '# CONSUMER-STATUS\n\nSTATE: UNMEASURED\nGENERATED-FROM: ' + o.sha + '\n'
-      + 'GATE: node consonance/tools/gen-consumer.build.test.js --gate\n' + prov + '\n'
+      + GATE_LINE + prov + '\n'
       + 'This tree was generated but never gated. Nothing here has been run, so nothing here is\n'
-      + 'known to work. Run the GATE line above to replace this file with a measured one.\n';
+      + 'known to work. The gate above, run in the source repository, replaces this file with a measured one.\n';
   }
   return '# CONSUMER-STATUS\n\nSTATE: MEASURED\nGENERATED-FROM: ' + o.sha + '\n'
-    + 'GATE: node consonance/tools/gen-consumer.build.test.js --gate\n'
+    + GATE_LINE
     + 'MEASURED-AT: ' + o.at + '\n' + prov + '\n'
     + 'This repository is generated from a private working tree and IS INCOMPLETE ON PURPOSE.\n'
     + 'Everything below fails in THIS tree and is named so you can see what you have got, rather\n'
@@ -1047,9 +1069,25 @@ function generatedFiles(id) {
  * user name ("\n" + "name"), so gen-consumer.build.test.js's control crate became '\other = "x"' in the consumer and cargo refused it. Skipped only
  * when BOTH a backslash precedes it and "=" follows it: a real path written with single backslashes in prose (C:\Users\nname\...) is still taken
  * and still scanned. One regex for the scan and the three rewrites, so they cannot disagree. */
+/* THE CONSUMER'S OWN NAMES (D273 lap 4, the cold read's A1/A2, pane B). The identity rule turned the repo URL github.com/solariz3d/lighthouse
+ * into "github.com/the keeper/lighthouse": a link and a git clone with a space in them. The consumer IS github.com/solariz3d/consonance, so that
+ * URL is rewritten to it FIRST, and the handle rule and the scan skip exactly "solariz3d/consonance" (every other use of the handle is still taken).
+ * Its clone folder is "consonance", so "cd lighthouse/consonance" becomes "cd consonance/consonance". And the app id: tauri.conf's
+ * "com.solariz3d.consonance" was already "com.consonance.app" (destructure), but stick-waiter.js's single-quoted copy became
+ * 'com.the keeper.consonance'; every spelling now becomes com.consonance.app, so the notices register the id the bundle carries. */
+const HANDLE_RE = /solariz3d(?!\/consonance\b)/gi;
+function consumerNames(body) {
+  let n = 0;
+  const rep = (re, to) => { body = body.replace(re, () => { n++; return to; }); };
+  rep(/github\.com\/solariz3d\/lighthouse\b/gi, 'github.com/solariz3d/consonance');
+  rep(/\bcd lighthouse\/consonance\b/g, 'cd consonance/consonance');
+  rep(/\bcom\.solariz3d\.consonance\b/g, 'com.consonance.app');
+  return { body, n };
+}
+
 const NNAME_RE = /(?<!\\)\bnname\b|\bnname\b(?!\s*=)/g;
 const LEAKS = [
-  { cls: 'IDENTITY', pat: /solariz3d/gi, why: 'the keeper\'s public handle' },
+  { cls: 'IDENTITY', pat: HANDLE_RE, why: 'the keeper\'s public handle (the consumer repo, solariz3d/consonance, is its own name)' },
   { cls: 'IDENTITY', pat: /trynabemlgzn/gi, why: 'the keeper\'s email' },
   { cls: 'IDENTITY', pat: /zackn/gi, why: 'this machine\'s OS user name' },
   /* THE KEEPER'S GIVEN NAME, ADDED 2026-09-06 (L037 P2). Every IDENTITY pattern above this line is
@@ -1216,7 +1254,13 @@ function dedangle(body) {
    * the root README carried 13 of them, found by arch_test::every_relative_link_in_the_docs_exists_in_a_fresh_clone. */
   const LINKED = { loop: 'a registration', map: 'a map entry', handback: 'a hand-back', librarian: 'a librarian entry' };
   body = body.replace(/\[([^\]\n]+)\]\((?:\.\.\/)*(?:exo_memory\/)?(loop|map|handback|librarian)\/[A-Za-z0-9_.-]+\.md(?::[\d-]+)?\)/g,
-    (m, text, dir) => { bump(); return text + ' (' + LINKED[dir] + ' in this line of record)'; });
+    (m, text, dir) => {
+      bump();
+      // D273 lap 4 (the cold read's A4): when the link TEXT is the record path itself, the text would be rewritten too, and the README read
+      // "a registration in this line of record (a registration in this line of record)" 13 times. The prose stands alone then.
+      if (/^`?(?:\.\.\/)*(?:exo_memory\/)?(?:loop|map|handback|librarian)\/[A-Za-z0-9_.-]+\.md(?::[\d-]+)?`?$/.test(text.trim())) return LINKED[dir] + ' in this line of record';
+      return text + ' (' + LINKED[dir] + ' in this line of record)';
+    });
   let out = body
     /* RE-POINT, NOT PROSE -- 2026-09-06 (L038). Both of these used to rewrite a dated journal
      * citation into the words `the record, <date>`, which was correct while the journals stayed
@@ -1366,7 +1410,8 @@ function deidentify(body) {
    * dot-extension, and no path separator is in that class, so `C:\Users\zackn\x.md` cannot match
    * and still reaches the `%USERPROFILE%` rules below intact. */
   { const r = repath(body); body = r.body; n += r.n; }
-  rep(/solariz3d/gi, 'the keeper');
+  { const cn = consumerNames(body); body = cn.body; n += cn.n; }   // D273 lap 4: the consumer's own repo URL, folder and app id first
+  rep(HANDLE_RE, 'the keeper');
   rep(/trynabemlgzn@gmail\.com/gi, 'the keeper');
   rep(/C:\\{1,4}Users\\{1,4}zackn/gi, '%USERPROFILE%');
   rep(/C:\/Users\/zackn/gi, '%USERPROFILE%');
@@ -1521,7 +1566,8 @@ function deidentifyTokens(body) {
   let n = 0;
   const rep = (re, to) => { body = body.replace(re, () => { n++; return to; }); };
   { const r = repath(body); body = r.body; n += r.n; }   // filenames first — see deidentify()
-  rep(/solariz3d/gi, 'the keeper');
+  { const cn = consumerNames(body); body = cn.body; n += cn.n; }   // D273 lap 4: the consumer's own repo URL, folder and app id first
+  rep(HANDLE_RE, 'the keeper');
   rep(/trynabemlgzn@gmail\.com/gi, 'the keeper');
   rep(/\bzackn\b/gi, 'user');
   /* nname is the desktop machine's OS user and appears in 9 shipped files as a foreign-path
@@ -1628,6 +1674,24 @@ const CODE_KEPT = {
     to: 'const GUARDED = [/muscle_map\\.md$/i];',
   },
 };
+/* NOT IN THIS COPY (D273 lap 4, the cold read's A14, pane B): docs that name a tool EXCLUDE withholds say so where they name it, so a stranger is
+ * not sent looking for it. catch-ledger.js scores the original room's own catches and stays in the source repository. ANCHORED: each anchor must
+ * be found exactly once in the transformed file, or the build says so (anchorDrift). */
+const NOT_SHIPPED_NOTE = ' (in the original room\'s repository; this copy does not carry it)';
+const NOT_SHIPPED = {
+  'consonance/tools/README.md': ['`catch-ledger.js` is the room\'s only computation of it.', '**`catch-ledger.js` is the room\'s only maturity computation now.**'],
+  'exo_memory/TRAINING.md': ['**`catch-ledger.js`**'],
+};
+function noteNotShipped(body, rel) {
+  const anchors = NOT_SHIPPED[rel]; if (!anchors) return { body, n: 0, missing: [] };
+  const missing = []; let n = 0;
+  for (const a of anchors) {
+    if (body.split(a).length - 1 !== 1) { missing.push(a); continue; }
+    body = body.replace(a, () => a.replace(/(`catch-ledger\.js`(\*\*)?)/, '$1' + NOT_SHIPPED_NOTE)); n++;
+  }
+  return { body, n, missing };
+}
+
 function keepCode(body, rel) {
   const k = CODE_KEPT[rel];
   if (!k) return { body, n: 0, missing: false };
@@ -2097,6 +2161,7 @@ function build(outDir, opts) {
     { const dw = declareWorkshop(t.body, f.to); t.body = dw.body;
       for (const a of dw.missing) report.declareDrift.push({ rel: f.to, why: 'a WORKSHOP-BOUND declaration found its anchor ' + (dw.body.split(a).length - 1) + ' times, not once: ' + a });
       if (WORKSHOP.js[f.to]) report.declared.js += dw.n; else if (WORKSHOP.rust[f.to]) report.declared.rust += dw.n; }
+    { const ns = noteNotShipped(t.body, f.to); for (const a of ns.missing) report.anchorDrift.push({ rel: f.to, why: 'a NOT_SHIPPED anchor was not found exactly once: ' + a }); t.body = ns.body; }
     { const kc = keepCode(t.body, f.to); if (kc.missing) report.anchorDrift.push({ rel: f.to, why: 'a CODE_KEPT line was not found exactly once' }); t.body = kc.body; }
     if (FORK_HOOK.apply) { const fk = FORK_HOOK.apply(t.body, f.to, kind) || {}; if (typeof fk.body !== 'string') throw new Error('FORK_HOOK.apply returned no body for ' + f.to); t.body = fk.body; report.forked += fk.n || 0; }
     if (t.fixture) report.fixtures++;

@@ -387,17 +387,20 @@ function checkStatusDoc(text) {
 
 /** The frame the generator writes. Kept beside its checker so the CONTRACT and the enforcement
  *  cannot drift apart; the generator calls this rather than composing prose of its own. */
+/* D273 lap 4 (the cold read's A15): kept identical to gen-consumer.js's (the drift guard renders both). */
+const GATE_LINE = 'GATE: in the source repository this tree was generated from: node consonance/tools/gen-consumer.build.test.js --gate'
+  + ' (this tree does not carry the generator it drives)\n';
 function renderStatusDoc(o) {
   const sec = (head, members) => '## ' + head + '\n\n'
     + (members.length ? members.map((m) => '- ' + m).join('\n') : '(none)') + '\n';
   if (!o.measured) {
     return '# CONSUMER-STATUS\n\nSTATE: UNMEASURED\nGENERATED-FROM: ' + o.sha + '\n'
-      + 'GATE: node consonance/tools/gen-consumer.build.test.js --gate\n\n'
+      + GATE_LINE + '\n'
       + 'This tree was generated but never gated. Nothing here has been run, so nothing here is\n'
-      + 'known to work. Run the GATE line above to replace this file with a measured one.\n';
+      + 'known to work. The gate above, run in the source repository, replaces this file with a measured one.\n';
   }
   return '# CONSUMER-STATUS\n\nSTATE: MEASURED\nGENERATED-FROM: ' + o.sha + '\n'
-    + 'GATE: node consonance/tools/gen-consumer.build.test.js --gate\n'
+    + GATE_LINE
     + 'MEASURED-AT: ' + o.at + '\n\n'
     + 'This repository is generated from a private working tree and IS INCOMPLETE ON PURPOSE.\n'
     + 'Everything below fails in THIS tree and is named so you can see what you have got, rather\n'
