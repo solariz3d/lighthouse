@@ -1691,7 +1691,11 @@ test('D273 lap 5 (A7): the dead targets resolve or become prose: COMMITTEE\'s me
     const read = (rel) => fs.readFileSync(path.join(r.staging, rel), 'utf8');
     assert.ok(read('consonance/src-tauri/brief/COMMITTEE.md').includes(PUB + '/blob/main/exo_memory/memory/split-the-work-with-the-panes.md'), 'COMMITTEE.md still cites an absent memory/ file');
     assert.ok(read('dev/SPINE.md').includes(PUB + '/blob/main/dev/PLAN.md'), 'SPINE.md still cites the absent dev/PLAN.md');
-    assert.ok(read('dev/shell/README.md').includes(PUB + '/tree/main/dev/dream'), 'dev/shell/README.md still cites the absent dev/dream/');
+    // D273 lap 5b AMENDED BY NAME (pane B): the librarian ruled dev/dream/ SHIPS as system (plan "Lap 5, COLLATED"), so the README's mention is a local
+    // target again: it must name `dev/dream/`, the folder must be in the tree, and it must not be sent to the public repository.
+    assert.ok(read('dev/shell/README.md').includes('`dev/dream/`'), 'dev/shell/README.md no longer names dev/dream/');
+    assert.ok(!read('dev/shell/README.md').includes(PUB + '/tree/main/dev/dream'), 'dev/shell/README.md sends a shipped folder to the public repository');
+    assert.ok(fs.existsSync(path.join(r.staging, 'dev', 'dream', 'dream_cycle.ps1')), 'dev/dream/ is cited but does not ship');
     const card = read('exo_memory/cards/claim-your-continuity.md');
     assert.doesNotMatch(card, /third_place\/2026-09-09\.md/, 'the card still cites a Third Place file a consumer does not have');
   } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
@@ -1722,5 +1726,21 @@ test('D273 lap 5 (E): both launch files ship, launch.vbs beside launch.ps1, scan
     const vbs = fs.readFileSync(path.join(r.staging, 'consonance/launch.vbs'), 'utf8');
     assert.match(vbs, /BuildPath\(scriptDir, "launch\.ps1"\)/, 'launch.vbs no longer finds launch.ps1 beside itself');
     assert.doesNotMatch(vbs, /[A-Za-z]:\\/, 'launch.vbs carries an absolute machine path');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D273 lap 5b: dev/dream/ ships as system (librarian ruling): its four files, scanned with no leak, and the runner sets the variable dream-gate checks', () => {
+  /* plan "Lap 5, COLLATED": the gap-dream is a live feature, not record; its installer stays user-run (nothing schedules itself on a fresh install).
+   * dream-gate.test.js ships and reads dev/dream/dream_cycle.ps1, so without it the consumer had one red assertion (B's lap 5 parity, P = 1). */
+  const r = lap5();
+  try {
+    assert.ok(!r.refused, r.refused);
+    for (const rel of ['dev/dream/README.md', 'dev/dream/dream_cycle.ps1', 'dev/dream/dream_cycle.test.js', 'dev/dream/install_dream.ps1']) {
+      assert.ok(fs.existsSync(path.join(r.staging, rel)), rel + ' did not ship');
+      assert.deepStrictEqual(r.leaks.filter((l) => l.rel === rel), [], rel + ' shipped a leak');
+    }
+    // the folder's one scan hit, fixed AT THE SOURCE: dream_cycle.test.js:23 cited muscle_map.md, the keeper's record, which a consumer does not carry
+    assert.deepStrictEqual((r.unportable || []).filter((u) => u.rel.startsWith('dev/dream/')), [], 'dev/dream/ cites a file the consumer does not have');
+    assert.match(fs.readFileSync(path.join(r.staging, 'dev/dream/dream_cycle.ps1'), 'utf8'), /\$env:CONSONANCE_DREAM\s*=\s*"1"/, 'the shipped runner does not set CONSONANCE_DREAM');
   } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
 });

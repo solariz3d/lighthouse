@@ -20,8 +20,8 @@
 //
 // Comments are stripped before every lexical assertion. This file's own subject is a guard
 // whose comment contradicted its code, so reading the comments as evidence would be the exact
-// error under test — and mention-vs-use is a sealed invariant in muscle_map.md, assumed here
-// rather than rediscovered.
+// error under test — and mention-vs-use (a comment MENTIONS a behaviour, only the code USES it) is
+// a sealed invariant of this project, assumed here rather than rediscovered.
 //
 //   node dev/dream/dream_cycle.test.js
 

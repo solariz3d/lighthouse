@@ -349,29 +349,14 @@ const MANIFEST = [
   { from: 'consonance/launch.fuse.test.js', to: 'consonance/launch.fuse.test.js', kind: 'code' },
   { from: 'consonance/launch.park.test.js', to: 'consonance/launch.park.test.js', kind: 'code' },
 
-  /* A THIRD GAP, FOUND BY CLOSING THE FIRST TWO AND RUNNING THE RESULT -- which is the only way
-   * this class is ever found. NOT closed here, and NOT put in EXCLUDE, for the same reason the two
-   * above were left open for two days: absent means undecided under an allow-list, and an EXCLUDE
-   * entry would assert a decision nobody has made.
-   *
-   *     dev/dream/dream_cycle.ps1
-   *
-   * `consonance/hooks/dream-gate.test.js` SHIPS and reads it. Before this edit that suite died at
-   * its `:65` on a missing `install.ps1` and never reached the line; now it runs 51 assertions and
-   * fails exactly one -- `the runner sets the variable it asks the hooks to honour` -- with ENOENT
-   * on this path. So closing one manifest gap did not create a new failure; it EXPOSED one that
-   * the earlier crash was hiding, which is the whole argument for shipping a test that fails
-   * honestly over shipping a tree where it cannot start.
-   *
-   * WHY A SEAT DID NOT JUST ADD THE LINE. `dev/dream/` is a subsystem (4 files, 44K: the cycle, its
-   * installer, its suite, its README), not a file the dev-shell layer left behind. Whether the
-   * gap-dream ships is the same shape of question as 'does the dev-shell hook layer ship', and that
-   * one was answered by the keeper on 2026-09-06 rather than by a manifest patch on its way past.
-   * Measured while ruling it, so the next reader does not have to: all four files are clean of
-   * every LEAKS pattern except one hit in `dream_cycle.test.js`.
-   *
-   * THE HONEST STATE OF THE GENERATED TREE, therefore: one shipped test has one red assertion
-   * naming one absent file. Declared, not fixed. */
+  /* THE THIRD GAP, CLOSED (D273 lap 5b, pane B). dev/dream/ (the gap-dream cycle, its installer, its suite, its README) was left out here as
+   * undecided: "absent means undecided under an allow-list". The librarian ruled it SYSTEM (plan_consumer_refresh_2026-10-08.md "Lap 5, COLLATED",
+   * after the keeper's "work exactly the way it does for us"): it ships, and its installer stays user-run, so nothing schedules itself on a fresh
+   * install. consonance/hooks/dream-gate.test.js ships and reads dev/dream/dream_cycle.ps1; with the folder here, its one red assertion is gone. */
+  { from: 'dev/dream/README.md', to: 'dev/dream/README.md', kind: 'prose' },
+  { from: 'dev/dream/dream_cycle.ps1', to: 'dev/dream/dream_cycle.ps1', kind: 'code' },
+  { from: 'dev/dream/install_dream.ps1', to: 'dev/dream/install_dream.ps1', kind: 'code' },
+  { from: 'dev/dream/dream_cycle.test.js', to: 'dev/dream/dream_cycle.test.js', kind: 'code' },
 
   /* STILL OPEN, and it belongs to whoever owns `consonance/README.md` rather than to this file:
    * that file's `:170` says the hooks under `consonance/hooks/` are "installed by
@@ -1301,7 +1286,7 @@ const SYNTHETIC = [/C:[\\/]{1,4}notes/i, /C:[\\/]{1,4}x[\\/]/i, /Users[\\/]{1,4}
  * could end a template literal. Anything not public is left to dedangle() as before. A link whose text is the path itself gets the file name as its
  * text, so dedangle's path rules do not rewrite the text of a working link. */
 const PUBLIC_REPO = 'https://github.com/solariz3d/lighthouse';
-const PUBLIC_DEV = ['dev/PLAN.md', 'dev/dream/'];
+const PUBLIC_DEV = ['dev/PLAN.md'];   // D273 lap 5b: dev/dream/ ships now (the librarian's ruling), so it is a local target, not a public link
 const publicCache = new Map();
 function onPublic(spec) {
   if (publicCache.has(spec)) return publicCache.get(spec);
