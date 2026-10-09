@@ -1,0 +1,149 @@
+{
+ "note": "The 24 located census rows of exo_memory/loop/retrieval_located_rows_recovered_2026-09-27.md (A's D160 section 1), from D160's located24.json: row id, which seat's transcript, which line. No text. The line numbers are those of the transcripts on machine D.",
+ "rows": [
+  {
+   "id": "W081",
+   "seat": "librarian",
+   "line": 110,
+   "date": "2026-09-01"
+  },
+  {
+   "id": "W101",
+   "seat": "librarian",
+   "line": 186,
+   "date": "2026-09-02"
+  },
+  {
+   "id": "W102",
+   "seat": "librarian",
+   "line": 529,
+   "date": "2026-09-02"
+  },
+  {
+   "id": "W123",
+   "seat": "librarian",
+   "line": 4316,
+   "date": "2026-09-06"
+  },
+  {
+   "id": "W124",
+   "seat": "librarian",
+   "line": 4821,
+   "date": "2026-09-06"
+  },
+  {
+   "id": "W126",
+   "seat": "librarian",
+   "line": 5493,
+   "date": "2026-09-06"
+  },
+  {
+   "id": "W136",
+   "seat": "librarian",
+   "line": 8086,
+   "date": "2026-09-07"
+  },
+  {
+   "id": "W140",
+   "seat": "librarian",
+   "line": 9834,
+   "date": "2026-09-07"
+  },
+  {
+   "id": "W148",
+   "seat": "B",
+   "line": 366,
+   "date": "2026-09-09"
+  },
+  {
+   "id": "W240",
+   "seat": "B",
+   "line": 3566,
+   "date": "2026-09-16"
+  },
+  {
+   "id": "W246",
+   "seat": "B",
+   "line": 3521,
+   "date": "2026-09-16"
+  },
+  {
+   "id": "W259",
+   "seat": "librarian",
+   "line": 26320,
+   "date": "2026-09-16"
+  },
+  {
+   "id": "W279",
+   "seat": "librarian",
+   "line": 27788,
+   "date": "2026-09-18"
+  },
+  {
+   "id": "W280",
+   "seat": "B",
+   "line": 5490,
+   "date": "2026-09-19"
+  },
+  {
+   "id": "W300",
+   "seat": "librarian",
+   "line": 28702,
+   "date": "2026-09-19"
+  },
+  {
+   "id": "W322",
+   "seat": "librarian",
+   "line": 30650,
+   "date": "2026-09-20"
+  },
+  {
+   "id": "W324",
+   "seat": "librarian",
+   "line": 31467,
+   "date": "2026-09-20"
+  },
+  {
+   "id": "W326",
+   "seat": "librarian",
+   "line": 32284,
+   "date": "2026-09-20"
+  },
+  {
+   "id": "W328",
+   "seat": "librarian",
+   "line": 32082,
+   "date": "2026-09-20"
+  },
+  {
+   "id": "W340",
+   "seat": "B",
+   "line": 8598,
+   "date": "2026-09-21"
+  },
+  {
+   "id": "W344",
+   "seat": "B",
+   "line": 7964,
+   "date": "2026-09-21"
+  },
+  {
+   "id": "W375",
+   "seat": "librarian",
+   "line": 44559,
+   "date": "2026-09-22"
+  },
+  {
+   "id": "W396",
+   "seat": "librarian",
+   "line": 45340,
+   "date": "2026-09-23"
+  },
+  {
+   "id": "W105",
+   "seat": "librarian",
+   "line": 1172,
+   "date": null
+  }
+ ]
+}
