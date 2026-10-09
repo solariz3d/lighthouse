@@ -995,6 +995,12 @@
      "anchor": "\"Light, not lifeguard\" survives only inside the dated retirement comment",
      "kind": "mention",
      "why": "a pane's hand-back reporting the 2026-09-23 repair of the retired wording in the session-start hook. It quotes the old phrase in order to name what was replaced by \"With you, not above you\"; quoting a carrier to name it is not asserting it; here it also says the old phrase survives only as a dated trace, which is the intended state"
+    },
+    {
+     "file": "exo_memory/handback/p-devreds-A_2026-10-08.md",
+     "anchor": "each quoting \"Light, not lifeguard\" while reporting its repair",
+     "kind": "mention",
+     "why": "a pane's dev-suite hand-back, a dated trace (not reworded, per the 2026-08-17 precedent), listing the four hand-back sites it registered for this same retired wording. It quotes the old phrase in order to name those sites; quoting a carrier to name it is not asserting it. Registered 2026-10-09 at the chair's request (the librarian's ruling), after carrier-drift went RED on main a19c876d because this line was never registered"
     }
    ],
    "armed": true,
