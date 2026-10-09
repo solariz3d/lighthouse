@@ -147,16 +147,20 @@ readable and panes can catch each other. `chair_phase` moves it.
 
 ## The instruments
 
-71 non-test tools under [`tools/`](tools/). 66 have a `.test.js` beside them and four also carry a `.mutants.js`. **Five have
-no test of their own**: `curate.js`, `dispatch-gate-report.js`, `l039-power.js`, `open-items.js`, `pane-status.js`.
+79 non-test tools under [`tools/`](tools/). 74 have a `.test.js` beside them and five also carry a `.mutants.js` beside them; there are 9
+`.mutants.js` files in all, and four of them (`reply-slot`, `second-reader`, `sources-gate`, `union-at-launch`) sit beside no tool of their name. **Five have
+no test of their own**: `dispatch-gate-report.js`, `l039-power.js`, `open-items.js`, `pane-status.js`, `reply-slot-replay.js`.
 
-    ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js' | wc -l   # 71
-    ls consonance/tools/*.test.js | wc -l                                            # 82
-    ls consonance/tools/*.mutants.js | wc -l                                         # 4
+    ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js' | wc -l   # 79
+    ls consonance/tools/*.test.js | wc -l                                            # 95 (74 beside a tool; 21 with no tool of their name)
+    ls consonance/tools/*.mutants.js | wc -l                                         # 9
     for f in $(ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js'); do
       [ -f "${f%.js}.test.js" ] || echo "$f"; done                                  # the five
+    for f in $(ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js'); do
+      [ -f "${f%.js}.mutants.js" ] && echo "$f"; done | wc -l                       # 5 with a .mutants.js beside them
+    for f in consonance/tools/*.mutants.js; do [ -f "${f%.mutants.js}.js" ] || echo "$f"; done   # the four with no tool
 
-Three of the 71 are shapes **wired to nothing**, and each says so in its own header. That was a decision priced in
+Three of the 79 are shapes **wired to nothing**, and each says so in its own header. That was a decision priced in
 a registration, not an omission: `live-host.js`, `vantage-disposition.js`, `vantage-sealed-scope.js`
 (`grep -l "WIRED TO NOTHING" consonance/tools/*.js | grep -v '\.test\.js'`).
 
@@ -183,10 +187,15 @@ including the big one — it detects asserted *wording* and is blind to *omissio
 
 ## The hooks
 
-14 non-test `.js` files under [`hooks/`](hooks/) — 13 hooks and `blind.js`, a library — installed by
-[`../dev/shell/install.ps1`](../dev/shell/install.ps1):
+22 non-test `.js` files under [`hooks/`](hooks/): `blind.js` is a library, `second-reader-worker.js` is the worker the second-reader hook starts, and the rest are hooks.
+[`../dev/shell/install.ps1`](../dev/shell/install.ps1) copies 18 of the 22 and lists the other 4 as **unmanaged**, each with its reason: `ask-surface.js`, `baton-wake-stop.js` and
+`live-mirror-stop.js` wait on a decision, and `jev-flags.js` is retired. It makes 22 registration entries in all (some are marked Excluded). Its own census
+(`files 34`, `registrations 22`) is printed by the `derive.ps1` snippet in [`hooks/README.md`](hooks/README.md):
 
-    ls consonance/hooks/*.js | grep -v '\.test\.js' | wc -l     # 14
+    ls consonance/hooks/*.js | grep -v '\.test\.js' | wc -l                       # 22
+    grep -c "^ *@{ From = 'consonance.hooks" dev/shell/install.ps1                  # 18 copied
+    grep -c "^ *@{ Src = 'consonance.hooks" dev/shell/install.ps1                   # 4 unmanaged
+    grep -c "^ *@{ Event = " dev/shell/install.ps1                                  # 22 registration entries
 
 They exist because of one measurement, which is in [`AUTONOMY.md`](AUTONOMY.md) (the roster and the design
 argument are in [`hooks/README.md`](hooks/README.md)): over six
@@ -218,7 +227,7 @@ The shelf header always reports the split, including the case where the budget s
 
 **Run the Rust suite serialized.** It has a ~10% flake in parallel
 (`dirs_guard_tests::a_panicking_writer_still_puts_dirs_back`, 6 of 60 parallel runs, 0 of 40
-serialized), so a parallel figure is a ~90% statement:
+serialized; one machine, one night: `exo_memory/handback/p-lib-cap_2026-09-02.md`), so a parallel figure is a ~90% statement:
 
     cargo test --bin consonance -- --test-threads=1
 
@@ -286,15 +295,15 @@ Four additions. Each is described as it stands in the source tree; see the note 
 
 ### Keep-warm: activated seats are pinged at 50 minutes idle
 
-The block starts at `src-tauri/src/main.rs:10168` (`1e47264`, L067; `0f40a0c`, L070).
+The block starts at `src-tauri/src/main.rs:11001` (`// ── KEEP-WARM (L067, pane E)`; `1e47264`, L067; `0f40a0c`, L070). Line numbers in this section are as of the last check; the command at its end prints them again.
 
 - A seat or pane **activated this session**, meaning one that has had at least one request since the app started, is
-  sent `[keep-warm, from the chair — not the keeper] Reply with exactly: ok` (`KEEP_WARM_TEXT`, `:10200`). This happens
-  once 50 minutes have passed since its last request started (`KEEP_WARM_AFTER`, `:10194`).
-- The check runs every 60 s (`KEEP_WARM_TICK`, `:10195`; `fn keep_warm_tick`, `:10472`).
-- A seat that was never spoken to this session is left alone. It waits to be spoken to (`:10352`).
-- The ping goes through `gate_or_queue` (`:10542`, the function at `:9604`), the same gate as every other delivery.
-- `fn keep_warm_decision` (`:10317`) skips a seat in each of these cases, and says why:
+  sent `[keep-warm, from the chair — not the keeper] Reply with exactly: ok` (`KEEP_WARM_TEXT`, `:11054`). This happens
+  once 50 minutes have passed since its last request started (`KEEP_WARM_AFTER`, `:11027`).
+- The check runs every 60 s (`KEEP_WARM_TICK`, `:11028`; `fn keep_warm_tick`, `:11411`).
+- A seat that was never spoken to this session is left alone. It waits to be spoken to (`:11207`).
+- The ping goes through `gate_or_queue` (`:11508`, in `fn keep_warm_send`, `:11507`; the function at `:10361`), the same gate as every other delivery.
+- `fn keep_warm_decision` (`:11171`) skips a seat in each of these cases, and says why:
   - it is switched off;
   - a turn is running, or its idle signal is stale;
   - **its composer is not empty, so it never types over the keeper**;
@@ -302,14 +311,18 @@ The block starts at `src-tauri/src/main.rs:10168` (`1e47264`, L067; `0f40a0c`, L
   - it was not activated;
   - it has been under 50 minutes since its last request;
   - it was pinged under 50 minutes ago and has not answered yet.
-- **The per-seat off switch** is `<data_dir>/keep-warm-off.json`, a JSON list of pane ids (`:10427`).
-- A seat that should have been pinged and was not gets a board row (`chair_audit`, `:10534`) naming the last skip
-  reason (`fn keep_warm_missed`, `:10409`).
+- **The per-seat off switch** is `<data_dir>/keep-warm-off.json`, a JSON list of pane ids (`fn keep_warm_off_path`, `:11356`).
+- A seat that should have been pinged and was not gets a board row (`chair_audit`, `:11488`) naming the last skip
+  reason (`fn keep_warm_missed`, `:11267`).
+
+The line numbers above, as printed by:
+
+    grep -nE 'KEEP-WARM \(L067|const KEEP_WARM_(TEXT|AFTER|TICK)|^fn (keep_warm_(tick|decision|missed|off_path|send)|gate_or_queue)|not activated this session' consonance/src-tauri/src/main.rs
 
 ### Park at launch: uncommitted work is stashed, not a reason to skip the pull
 
-The launch shortcut runs `launch.ps1`, which pulls before opening. The block is at `:239-264` and `:356-374` (`68bc625`,
-L073), and every rule is pinned by `consonance/launch.park.test.js`.
+The launch shortcut runs `launch.ps1`, which pulls before opening. The rules are the comment at `launch.ps1:365-383` and `Update-FromOrigin` at `:410-561`, called at `:562` (`68bc625`,
+L073), and every rule is pinned by `consonance/launch.park.test.js` (`grep -nE "PARK, DON'T REFUSE|^function Update-FromOrigin|^Update-FromOrigin" consonance/launch.ps1`).
 
 - **Before:** tracked uncommitted changes made the launch refuse the pull. On 2026-09-22 at 00:35 a launch skipped 66
   commits and opened an older tree.
@@ -324,7 +337,7 @@ L073), and every rule is pinned by `consonance/launch.park.test.js`.
 
 ### Install stops before it writes; append-only ledgers only fast-forward; `ledger-union.js`
 
-`tools/state-sync.js` installs the other machine's state set (`installTree`, `:1175`).
+`tools/state-sync.js` installs the other machine's state set (`installTree`, `:1371`).
 
 **Why it changed:** an append-only ledger used to be *replaced* on install. The rows this machine had written since
 the last publish moved to `attic/pre-sync-*` and left the live file.
@@ -334,16 +347,17 @@ the last publish moved to `attic/pre-sync-*` and left the live file.
   only grow. There are 11: board, lap, precompact, sessionstart-state, sourced_ledger, carrier-drift, ferry,
   read_ledger, return_ledger, vantage_findings and resonance/atoms. `dispatch-gate.jsonl` is deliberately unmarked,
   because its quarantine rewrites it (`b40c8d8`, L074).
-- **Comparison is row for row, not byte for byte** (`appendOnlyCompare`, `:1151`).
+- **Comparison is row for row, not byte for byte** (`appendOnlyCompare`, `:1347`).
 - **Stop before write** (`6b9699b`, L070).
   - Every ledger is checked **before the first byte**.
-  - If any would lose rows, the whole install is refused and **nothing is written**: no file, no attic copy (`:1195-1211`).
+  - If any would lose rows, the whole install is refused and **nothing is written**: no file, no attic copy (`:1386-1476`).
   - The refused rows are named.
-  - A re-check runs right before each write (`:1257`).
+  - A re-check runs right before each write (`:1527`).
 
 Check which files are marked:
 
     grep -c '"install": "fast-forward"' consonance/state-manifest.json        # 11
+    grep -nE '^function (installTree|appendOnlyCompare)|judged FIRST|THE RE-CHECK' consonance/tools/state-sync.js   # the lines above
 
 **`tools/ledger-union.js`** (L070–L076) recovers rows that the old replace-on-install had displaced.
 - It unions the live file with every `attic/pre-sync-*` copy and with the state set's copy.

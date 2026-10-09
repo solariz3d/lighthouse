@@ -99,8 +99,8 @@ $reg | ForEach-Object { "  {0,-16} {1}" -f $_.Event, $_.Rel }
 Against the script as it stands, that prints:
 
 ```
-files          24   (dev\shell 13, consonance\hooks 11, declared libraries 5, held 1)
-registrations  13   events: SessionStart, UserPromptSubmit, Stop, SessionEnd, PreCompact, PreToolUse
+files          34   (dev\shell 16, consonance\hooks 18, declared libraries 7, held 0)
+registrations  22   events: SessionStart, UserPromptSubmit, Stop, SessionEnd, PreCompact, PreToolUse
 ```
 
 **If it disagrees with those numbers, the command is right and this paragraph is stale.** It parses
@@ -115,7 +115,7 @@ Three states a file in this directory can be in, and all three are normal:
 | copied, **not** registered | the installer places it; something else fires it, or nobody has wired it yet |
 | **not in the installer's list** | present here, installed by nothing — a hook you must wire yourself, or one that is not finished |
 
-As the script stands, `ask-surface.js` and `baton-wake-stop.js` are in the third state, and
+As the script stands, `ask-surface.js`, `baton-wake-stop.js` and `live-mirror-stop.js` are in the third state (so is `jev-flags.js`, retired: its registration and copy were dropped on 2026-10-08), and
 `blind.js` is a library — copied because another hook requires it, never registered. Do not trust
 that sentence either: the `$files` and `$reg` lists the command above prints are what decide it, and
 `install.ps1 -Check` reports the state of every managed file on the machine you run it on.

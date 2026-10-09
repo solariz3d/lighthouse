@@ -174,9 +174,9 @@ $files = @(
   # on the same two hand-back verbs that DENIES a ring with no SOURCES: line or an item no call of this turn backs, fails open, logs every decision. Plan:
   # exo_memory/loop/plan_sources_gate_d212_2026-10-02.md. Install it with -Only sources-gate.js.
   @{ From = 'consonance\hooks\sources-gate.js';            To = 'hooks\sources-gate.js' }
-  # Added 2026-10-03 (D218, the keeper: "lets finish it all") with its registration below, same commit, same reason as the entries above. THE REPLY SLOT, in SHADOW: a Stop hook for the
-  # librarian and chair sessions only that LOGS what it would block (a reply to the keeper that names a path/sha/count/percentage/version and does not end with a Sources: line the turn
-  # backs) and NEVER blocks. It requires ./sources-gate.js, so it installs into the SAME directory. Plan: exo_memory/loop/plan_finish_retrieval_2026-10-03.md. Install with -Only reply-slot.js.
+  # Added 2026-10-03 (D218, the keeper: "lets finish it all") with its registration below, same commit, same reason as the entries above. THE REPLY SLOT, LIVE since D220 (built in SHADOW at D218; SHADOW = false in
+  # reply-slot.js): a Stop hook for the librarian and chair sessions only that BLOCKS the stop, once per turn, on a reply to the keeper that names a path/sha/count/percentage/version and does
+  # not end with a Sources: line the turn backs; it fails open on any error. It requires ./sources-gate.js, so it installs into the SAME directory. Plan: exo_memory/loop/plan_finish_retrieval_2026-10-03.md. Install with -Only reply-slot.js.
   @{ From = 'consonance\hooks\reply-slot.js';              To = 'hooks\reply-slot.js' }
   # Added 2026-10-06 (D248; C's CLAUDE.md audit, p-claudemd-C_2026-10-06.md "GATES"; the keeper delegated, the librarian ruled) with their registrations below, same
   # commit. GLOBAL gates, every seat and every project: G1 PUSH-GATE denies a `git push` whose diff ADDS a credential-shaped line (file and line named, never the
@@ -293,7 +293,7 @@ $register = @(
   # are exact names). It allows at once and writes nothing to stdout; it must never fire on any other tool call.
   @{ Event = 'PreToolUse';       Rel = 'hooks\second-reader.js';      Runner = 'node';
      Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair' }
-  # The reply slot (D218), SHADOW ONLY: a Stop hook, no matcher. It is silent on every path (no output, exit 0) and ignores every session that is not the librarian or the chair.
+  # The reply slot (D218; LIVE since D220): a Stop hook, no matcher. It ignores every session that is not the librarian or the chair; for those it blocks a stop, once per turn, on an unbacked reply (see its entry above).
   @{ Event = 'Stop';             Rel = 'hooks\reply-slot.js';        Runner = 'node' }
   # The SOURCES gate (D212; D215 added chair_inject, the chair's DISPATCHES). It was on the second reader's matcher and so in its group; it now has its OWN matcher (the two hand-back
   # verbs plus chair_inject) and so its own group, and the second reader's matcher is UNCHANGED. Hooks run in parallel; this is the only one that can deny.
