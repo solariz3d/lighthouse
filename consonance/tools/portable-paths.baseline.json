@@ -2,13 +2,13 @@
   "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
-    "BENIGN-TEST": 332,
-    "FATAL-DEFAULT": 14,
+    "BENIGN-TEST": 340,
     "BENIGN-FIXTURE": 9,
-    "REVIEW": 16,
+    "REVIEW": 15,
     "DISGUISED": 15,
-    "BENIGN-MESSAGE": 5,
+    "BENIGN-MESSAGE": 4,
     "FATAL-USER": 7,
+    "FATAL-DEFAULT": 13,
     "FATAL-TEST-READ": 2,
     "FATAL-SHIPPED-INSTRUCTION": 2
   },
@@ -26,13 +26,6 @@
       "verdict": "BENIGN-TEST",
       "text": "const payload = raw !== null ? raw : JSON.stringify({ session_id: 's', transcript_path: tr, cwd: 'C:/x/myproject', hook_event_name: 'Stop', stop_hook_active: false });",
       "key": "consonance/hooks/ask-ending.test.js\u0000const payload = raw !== null ? raw : JSON.stringify({ session_id: 's', transcript_path: tr, cwd: 'C:/x/myproject', hook_event_name: 'Stop', stop_hook_active: false });\u0000#1"
-    },
-    {
-      "file": "consonance/hooks/blind.js",
-      "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "const DATA = process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data';",
-      "key": "consonance/hooks/blind.js\u0000const DATA = process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data';\u0000#1"
     },
     {
       "file": "consonance/hooks/delete-gate.test.js",
@@ -96,6 +89,20 @@
       "verdict": "BENIGN-TEST",
       "text": "assert.strictEqual(run(HOOKS[4], ['DATA'], { USERPROFILE: h, CONSONANCE_DATA: 'E:\\\\ov' }).DATA, 'E:\\\\ov');",
       "key": "consonance/hooks/dirs.test.js\u0000assert.strictEqual(run(HOOKS[4], ['DATA'], { USERPROFILE: h, CONSONANCE_DATA: 'E:\\\\ov' }).DATA, 'E:\\\\ov');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(run(HOOKS[5], ['DATA'], { USERPROFILE: h }).DATA, `${h}\\\\.consonance`, 'blind.js without the override: the app\\'s default, never C:\\\\Consonance');",
+      "key": "consonance/hooks/dirs.test.js\u0000assert.strictEqual(run(HOOKS[5], ['DATA'], { USERPROFILE: h }).DATA, `${h}\\\\.consonance`, 'blind.js without the override: the app\\'s default, never C:\\\\Consonance');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(run(HOOKS[5], ['DATA'], { USERPROFILE: h, CONSONANCE_DATA: 'E:\\\\ov' }).DATA, 'E:\\\\ov');",
+      "key": "consonance/hooks/dirs.test.js\u0000assert.strictEqual(run(HOOKS[5], ['DATA'], { USERPROFILE: h, CONSONANCE_DATA: 'E:\\\\ov' }).DATA, 'E:\\\\ov');\u0000#1"
     },
     {
       "file": "consonance/hooks/dirs.test.js",
@@ -2612,18 +2619,39 @@
       "key": "desktop-install.ps1\u0000if (-not (Test-Path \"$repo\\exo_memory\\BOOT.md\")) { $repo = \"$env:USERPROFILE\\OneDrive\\Desktop\\projects\\lighthouse\" }\u0000#1"
     },
     {
-      "file": "dev/dream/dream_cycle.ps1",
+      "file": "dev/dream/dream-dirs.test.js",
       "detector": "DRIVE",
-      "verdict": "REVIEW",
-      "text": "$root = \"C:\\Consonance\\instances\"",
-      "key": "dev/dream/dream_cycle.ps1\u0000$root = \"C:\\Consonance\\instances\"\u0000#1"
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(!/C:\\\\Consonance/i.test(t.split('\\n').filter((l) => !/^\\s*#/.test(l)).join('\\n')), 'no C:\\\\Consonance outside comments');",
+      "key": "dev/dream/dream-dirs.test.js\u0000assert.ok(!/C:\\\\Consonance/i.test(t.split('\\n').filter((l) => !/^\\s*#/.test(l)).join('\\n')), 'no C:\\\\Consonance outside comments');\u0000#1"
     },
     {
-      "file": "dev/dream/install_dream.ps1",
+      "file": "dev/dream/dream-dirs.test.js",
       "detector": "DRIVE",
-      "verdict": "BENIGN-MESSAGE",
-      "text": "Write-Host \"Dreams land in: C:\\Consonance\\instances\\<most-recent>\\dreams\\\"",
-      "key": "dev/dream/install_dream.ps1\u0000Write-Host \"Dreams land in: C:\\Consonance\\instances\\<most-recent>\\dreams\\\"\u0000#1"
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(resolve(named), 'D:\\\\X\\\\inst');",
+      "key": "dev/dream/dream-dirs.test.js\u0000assert.strictEqual(resolve(named), 'D:\\\\X\\\\inst');\u0000#1"
+    },
+    {
+      "file": "dev/dream/dream-dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const named = home('\\uFEFF' + JSON.stringify({ instances_dir: ' D:\\\\X\\\\inst ', dream_model: 'm' }));",
+      "key": "dev/dream/dream-dirs.test.js\u0000const named = home('\\uFEFF' + JSON.stringify({ instances_dir: ' D:\\\\X\\\\inst ', dream_model: 'm' }));\u0000#1"
+    },
+    {
+      "file": "dev/dream/dream-dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const PS = path.join(process.env.SystemRoot || 'C:\\\\Windows', 'System32', 'WindowsPowerShell', 'v1.0', 'powershell.exe');",
+      "key": "dev/dream/dream-dirs.test.js\u0000const PS = path.join(process.env.SystemRoot || 'C:\\\\Windows', 'System32', 'WindowsPowerShell', 'v1.0', 'powershell.exe');\u0000#1"
+    },
+    {
+      "file": "dev/dream/dream-dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "test('row 1: the D273 instances block is in dream_cycle.ps1, and its code names no C:\\\\Consonance path', () => {",
+      "key": "dev/dream/dream-dirs.test.js\u0000test('row 1: the D273 instances block is in dream_cycle.ps1, and its code names no C:\\\\Consonance path', () => {\u0000#1"
     },
     {
       "file": "dev/headwatch/install_headwatch.ps1",
@@ -2652,6 +2680,13 @@
       "verdict": "DISGUISED",
       "text": "const LIGHTHOUSE_WELFARE = path.join(os.homedir(), 'Desktop', 'lighthouse', 'WELFARE.md');",
       "key": "dev/shell/hooks/l3-overseer-worker.js\u0000const LIGHTHOUSE_WELFARE = path.join(os.homedir(), 'Desktop', 'lighthouse', 'WELFARE.md');\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/precompact-repo.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "input: JSON.stringify({ hook_event_name: 'PreCompact', trigger: 'manual', cwd: 'C:\\\\somewhere\\\\main' }), encoding: 'utf8', timeout: 20000, cwd: w.root,",
+      "key": "dev/shell/hooks/precompact-repo.test.js\u0000input: JSON.stringify({ hook_event_name: 'PreCompact', trigger: 'manual', cwd: 'C:\\\\somewhere\\\\main' }), encoding: 'utf8', timeout: 20000, cwd: w.root,\u0000#1"
     },
     {
       "file": "dev/shell/hooks/third-place-gate.test.js",
