@@ -4,6 +4,9 @@ Consonance can run several instances at once against one shared board. This desc
 It is deliberately short: the *verbs* arrive from the control plane itself, and repeating them here
 would give you two copies of one list to drift apart.
 
+This file is the one home for everything a pane does. `BUILDING.md` holds what the chair does and
+`LIBRARIAN.md` what the librarian does; where they touch pane work, they point here.
+
 ## Why more than one
 
 A chord needs two notes. One voice at full volume is not a committee that needs better bookkeeping —
@@ -13,154 +16,172 @@ That failure is measurable rather than theoretical, and the measurement is avail
 
     node consonance/tools/board-audit.js
 
-It reports what share of the board a single seat wrote. **A share climbing toward 100% is the room
-collapsing to one note.** The number that matters is not how much was said; it is whether the other
+It reports what share of the board a single seat wrote. A share climbing toward 100% is the room
+collapsing to one note. The number that matters is not how much was said; it is whether the other
 voices stayed *distinct* while staying *coupled*. Both poles score zero — voices that never touch
 carry nothing joint, and voices that merely agree carry nothing new.
 
 ## The loop, in one card
 
-Quoted from `BUILDING.md`, the master. **Read it there before reconstructing any of this from
-memory** — a paraphrase of a route is how a route rots.
+- Read the loop in `BUILDING.md` (the master: its loop and joint-step sections) before you reconstruct any of it from memory.
+  Why: a paraphrase of a route is how a route rots.
 
-**Two doors, 2026-09-02** (`0714963`, `c177984`, the keeper). Work enters at the orchestrator OR
-goes straight to the librarian, and *"either way the chain works when it starts."* Under door two the
-librarian rings the chair THE INQUIRY — one line, no map — before filing the map, so the guess still
-precedes the map. And the user is the **ENTRY, not a station**: once a lap is open the cycle
-`orch → panes → lib → orch` repeats on its own. **BUILDING.md's THE JOINT STEP is the master for
-both**; this card carries the drawing only because a pane reads this one first.
+The drawing rides here because a pane reads this file first. Work enters at the orchestrator or goes straight to the
+librarian (two doors, 2026-09-02, `0714963`, `c177984`), and once a lap is open the cycle repeats on its own.
 
 ```
         you
-         │  1. state the inquiry or the project. This is ENTRY, and it runs ONCE — by
-         ├──────────────────┐  EITHER door. See THE JOINT STEP for what door two owes.
+         │  1. state the inquiry or the project. This is the entry, and it runs once, by
+         ├──────────────────┐  either door. See the joint step for what door two owes.
          ▼  door one        ▼  door two
-   ORCHESTRATOR ──────► LIBRARIAN        2. measured against the corpus
+   Orchestrator ──────► Librarian        2. measured against the corpus
          │  ◄──────────────┘             3. the parts of the system that apply, cited
          │
          │  4. a plan built from what came back
          ▼
-       PANES                             5. briefed, disjoint, each owning named files
+       Panes                             5. briefed, disjoint, each owning named files
          │
-         │  `call_librarian`             6. hand-backs go STRAIGHT to the Librarian, as a pointer
-         ▼                                  to the file — the orchestrator is not in this hop
-      LIBRARIAN ──────► ORCHESTRATOR     7. checked; silence is a valid answer; the orchestrator
-         │                 │                COMMITS what the librarian collated, and composes nothing
-         │                 └──► back to 4   THE RING — orch → panes → lib → orch — repeats on its
-         │                                  own. The user is the ENTRY, not a station it returns to.
+         │  `call_librarian`             6. hand-backs go straight to the Librarian, as a pointer
+         ▼                                  to the file; the orchestrator is not in this hop
+      Librarian ──────► Orchestrator     7. checked; silence is a valid answer; the orchestrator
+         │                 │                lands what the librarian collated, and composes nothing
+         │                 └──► back to 4   The ring (orch → panes → lib → orch) repeats on its
+         │                                  own. The user is the entry, not a station it returns to.
          ▼
-        you                              8. only on direction — never on state: an off-ramp the loop
+        you                              8. only on direction, never on state: an off-ramp the loop
                                             takes when there is something to say, never a stop it
                                             waits at.
 ```
 
-**Step 6, verbatim:**
-
-**A pane finishes, writes its hand-back to
-the file it was given, and calls `call_librarian` with the POINTER, in that same turn.** The system
-labels it `[pane:<letter>]` from the mount; the board carries the audit row; `chain-status` reads
-that row as the hand-back.
-
 ## The two seats
 
-- **The orchestrator** holds the chair verbs and can deliver work into a committee pane. Every use
+- The orchestrator holds the chair verbs and can deliver work into a committee pane. Every use
   and every refusal is written to the board.
-- **A committee pane** raises work upward instead, and never uses chair verbs.
+- A committee pane raises work upward instead, and never uses chair verbs.
 
-The control plane states the exact verb names and the gate. Read them there, not here.
+- Take the exact verb names and the gate from the control plane, not from this file.
+  Why: one list, one place; `call_librarian` is named below only because there the route is the rule.
 
-## Briefing a pane — this is where the quality comes from
+## Your work: worktree, tests, commits
 
-A pane returns what the brief made possible. Six things, each of which has failed here when it was
-skipped:
+- Work in your own worktree, the one your packet names, or one you add with `git worktree add` outside the shared
+  checkout; own only the files your packet names.
+  Why: a shared index let a commit carry another seat's staged files at `38ae5c2` (2026-09-04,
+  `exo_memory/handback/p-d007-smallfixes_2026-09-04.md` §10), and K registered per-seat worktrees as the answer.
+- Copy live data into a worktree; do not link it. If a link is unavoidable, remove it yourself before you hand the
+  tree over, and say so in the hand-back.
+  Why: removing a worktree can delete a junction's target; t180's `reads/` was emptied that way, cause inferred
+  (2026-09-28, `exo_memory/handback/p-d184-read-B_2026-09-28.md` §7).
+- Write a test that fails first, then make it pass. When a test goes red after your change, fix the implementation.
+  Why: a test never seen red proves nothing; the room's work checks caught 132 defects in one day and its paperwork 0
+  (`exo_memory/loop/loop_friction_B_2026-10-09.md`).
+- Amend an existing test only when its rule changed, by name, with a comment saying why, and say so in the hand-back.
+  Why: a weakened test is a check silently removed; the worked case is `join.test.js:83`, ruled wrong and replaced by a
+  stronger check (`exo_memory/handback/p-d170-read-B_2026-09-27.md`).
+- Run the tests that cover your change, under the heavy-run lock, before you hand back. `consonance/tools/js-suite.js`
+  and the mutant harnesses take the lock themselves; wrap any other node or cargo test run with
+  `require('./consonance/tools/heavy-run.js').hold({ cmd })`. The collator runs the full suite.
+  Why: concurrent suites on one tree hung and starved every seat's rings for 8–16 minutes
+  (`exo_memory/loop/stall_trace_2026-09-23.md`; the lock is L098).
+- Run anything expected to take more than about two minutes in the background, and hand back what you verified rather
+  than holding your turn open on a suite.
+  Why: a ring reaches a seat only between its turns, so a long turn is a closed door (`main.rs` `drain_decision`;
+  `exo_memory/loop/stall_trace_2026-09-23.md`).
+- Commit by named paths in your own worktree: `git commit -- <paths>`, never `-a`, `-A` or a bare `git commit`.
+  The chair lands your commits on main.
+  Why: a commit then carries only what its author named; `git commit` takes the whole index without any `add`
+  (amendment 2026-08-26, tightened 2026-09-04 after `38ae5c2`; drafted in `exo_memory/loop/commit_rule_amendment_DRAFT_2026-08-25.md`).
+- Name yourself, the seat, in the commit body.
+  Why: every commit is authored `solariz3d` and `Co-Authored-By` names the model, not the thread; the body is the only
+  attribution surface that works (cycle 8 F2, `muscle_map.md`).
+- The keeper's standing authorisation: in this room, committing by named paths in your own worktree is authorised on
+  every lap. Pushing is the chair's: work that passes the work checks and the credential scan is pushed without asking each
+  time (`BUILDING.md`, "Pushing and publishing").
+  Why: the keeper's standing permissions; the push one is decision 2 of 2026-10-09 (`exo_memory/loop/plan_lighten_the_load_2026-10-09.md`, "The keeper's decisions on B's drafts", decision 2).
+- Refer to a credential by its name or length, never its value, in a hand-back, a commit, a board post or a reply.
+  Why: the source repository is public (`BUILDING.md`, "Dev and consumer: the port rule") and `gh` is authenticated machine-wide, so a quoted
+  key is a published key.
 
-1. **Route the OBJECT, not a description of it.** A summary of a finding is a copy; the pane needs
-   the artifact — the sha, the file, the raw output — so it can disagree with the description.
-2. **Register the falsifier before the work starts.** Written down first, it can fire. Written
-   after, it is a story about what happened.
-3. **Name the unwelcome outcome in advance**, in the words that would make it true. The point is to
-   make it *sayable* before anyone knows which way it goes.
-4. **Say "default to refuted."** A pane that is told the conclusion will find support for it. A pane
-   told to attack it will find the support *or* kill it, and either is worth having.
-5. **Match the seat to what it has actually done**, not to what it is called.
-6. **State your own bias where you know it.** A brief that hides the briefer's stake gets a scored
-   result that quietly measures the briefer.
+*Falsifier (registered 2026-08-26, fired at `38ae5c2`, re-registered 2026-09-04 by K): a commit found carrying another
+seat's in-flight file. Checkable from git history.*
+
+## The hand-back: a file, a map line, a ring
+
+- Write the hand-back to the file your packet names, or, when it names none, to
+  `exo_memory/handback/<packet-name>_<YYYY-MM-DD>.md`, repo-relative.
+  Why: the librarian reads that directory; a hand-back written elsewhere is a hand-back never written (two packets named
+  no file on 2026-09-01).
+- Re-derive every figure from a command printed beside it, never quoted from the brief.
+  Why: a number whose source is gone is a hand-made figure the next reader cannot check.
+- Report mutation runs as `applied N / caught N / NOT APPLIED N`.
+  Why: a mutant that did not apply proves nothing and must not count as a pass.
+- Show the check beside a claim about state, or mark it `inferred:` — in a reply to the keeper as in a hand-back:
+
+      checked: <command or path:line> → <result>
+      inferred: <the claim>
+
+  `inferred:` is owed where a claim would otherwise read as checked (a figure, a verdict such as "fixed" or "green", a
+  "so …"); future, intent and opinion take no label. An inferred figure still names where to check it. If you act on an
+  inferred claim, check it first.
+  Why: unchecked claims were wrong 8 of 163, checked 1 of 72; usually right, not yet known to be
+  (`exo_memory/loop/claim_base_rate_score_2026-09-27.md`; adopted 2026-09-27, L121).
+- Record corrections plainly when there are any, including the ones you made to yourself.
+  Why: a record of only surviving claims reads as though nothing was ever wrong.
+- Append one line to your own map, `exo_memory/map/<your letter>.md`, in the shape `exo_memory/map/README.md` states:
+  the finding as a sentence that could be wrong, its evidence, and the hand-back path. A pointer, not a copy.
+  Why: a pane is respawned fresh from its capture tail plus that file (`main.rs` `own_map_path`), so a finding that
+  reaches only the hand-back never reaches the next waking of you; 0 of 5 hand-backs wrote one on 2026-09-02.
+  *Falsifier (the librarian's, 2026-09-02): `git log -- exo_memory/map/*.md` shows no pane-authored append three laps on.*
+- Then ring the librarian with `call_librarian`, in the same turn, carrying the pointer: the path and just enough to
+  say which packet it answers, never the finding in prose.
+  Why: the file is the master and the call the pointer; the chair-relay hop re-characterised a finding on 2026-09-01
+  (`6677540`), and a summary in the call is the same copy.
+- List what you read or ran for this message on a `SOURCES:` line above the last line, or
+  `SOURCES: none (no state claims)`.
+  Why: it lets the reader open what you opened. Today `consonance/hooks/sources-gate.js` refuses the ring when an item
+  matches no call completed this turn; fix the line and re-send, nothing is lost. When the keeper switches the gates, it
+  checks the line against what you ran instead.
+- End the hand-off with who acts next, and when, e.g. `NEXT: librarian collate the chunk when all four hand-backs
+  are in`. You do not owe the `OUTPUT → NEXT` line; the collator writes that.
+  Why: *"each seat tells the next where to hand it to remind it"* (the keeper, 2026-09-16); a missing line is delivered
+  with a warning, never refused, because a refused `call_librarian` would drop the pointer (`mcp.rs`).
+
+## The order: finish, file, then pass it on
+
+- Finish your output, file it, then pass it on, in the same turn, without waiting to be told.
+  Why: a dispatch is un-revisable — once it renders in another seat's pane that seat reasons from it at once; on
+  2026-08-24 an unverified claim sent early cost a wrong ruling in a second seat (`exo_memory/librarian/2026-08-24.md`).
+  Measured to 2026-08-25: 101 of 103 dispatching turns sent before their answer was finished
+  (`exo_memory/loop/turn_boundary_detection_2026-08-25.md`). Assume you are about to break it.
+- Finishing is not stopping: when something is owed to another seat, the turn that finishes carries it.
+  Why: the human is not the trigger, and a pane that finishes silently looks exactly like a pane that stalled.
+- A genuine interrupt goes at once — *stop, you are about to clobber something*.
+  Why: it claims nothing and delivers nothing, so there is nothing to finish first (`BUILDING.md`, the order of a dispatch).
+
+## Briefing a seat — this is where the quality comes from
+
+A pane returns what the brief made possible. Six things, each of which has failed here when it was skipped:
+
+1. Route the object, not a description of it — the sha, the file, the raw output.
+   Why: a summary of a finding is a copy; the seat needs the artifact so it can disagree with the description.
+2. Register the falsifier before the work starts.
+   Why: written down first, it can fire; written after, it is a story about what happened.
+3. Name the unwelcome outcome in advance, in the words that would make it true.
+   Why: it makes it *sayable* before anyone knows which way it goes.
+4. Say "default to refuted."
+   Why: a seat told the conclusion finds support for it; a seat told to attack it finds the support *or* kills it.
+5. Match the seat to what it has actually done, not to what it is called.
+   Why: a name is not a record; the record is the hand-backs (`exo_memory/librarian/DOSSIER.md`).
+6. State your own bias where you know it.
+   Why: a brief that hides the briefer's stake gets a scored result that quietly measures the briefer.
 
 ## Scoring
 
-**No seat scores its own work.** Not as modesty — as measurement. Whoever holds a stake in an outcome
-cannot be the instrument that reads it, and the person best placed to notice that is not the one
-holding the stake.
+- Have a seat with no stake score your work. Not as modesty — as measurement. Whoever holds a stake in an outcome
+  cannot be the instrument that reads it, and the person best placed to notice that is not the one holding the stake.
 
 The corollary bites hardest on the seat that hands out the work: a chair that scores its own
 transcript is running the experiment and reading the dial.
-
-## What a hand-back should contain
-
-- Every figure **re-derived from a named command**, never quoted from the brief. A number whose source
-  is gone becomes a hand-made figure the next reader cannot check.
-- The corrections, **including the ones the pane made to itself**. A record of only surviving claims
-  reads as though nothing was ever wrong.
-- What the finding **does not** establish. A result with no stated limit will be given one by whoever
-  reads it next, and they will guess generously.
-- **One line appended to your own map, pointing at the hand-back path** (2026-09-02).
-  `exo_memory/map/<your letter>.md`. **`BUILDING.md`'s WHAT A HAND-BACK OWES is the master; this is
-  the pointer.** The short reason, because a rule with no reason is the first one dropped under
-  load: a pane is respawned FRESH from its capture tail plus that file, so **a finding that reaches
-  only the hand-back never reaches the next waking of you.** Zero of five hand-backs on 2026-09-02
-  wrote one.
-- **Checked or inferred** (2026-09-27): in a reply to the keeper as in a hand-back, a claim about state shows its check (`checked: <command> → <result>`) or reads as inferred, and is marked `inferred:` where it would otherwise sound checked. **`BUILDING.md`'s WHAT A HAND-BACK OWES, item 7, is the master; this is the pointer.**
-- **Nothing committed.** Work lands dirty; the seat holding the shared checkout commits, with
-  attribution.
-
-> **AMENDED 2026-08-26 — the rule above stands as a trace and its REASON is withdrawn.** *"The chair
-> commits, with attribution"* does not produce attribution and never has. Every commit in this repo,
-> from every seat, on both machines, is authored `solariz3d`, and the `Co-Authored-By` trailer names
-> the **model, not the thread** (cycle 8 F2, `muscle_map.md`). Routing a commit through the chair buys
-> nothing the stated reason claims. What actually attributed `d4e7044` — the first commit a seat made
-> here — was the seat writing it into the **body**.
->
-> **The hazard the rule was really protecting is one it never named:** `git add -A` on a shared
-> checkout capturing another seat mid-edit. Three recorded instances
-> (`memory/split-the-work-with-the-panes.md`), plus the 2026-08-02 tree collision where an edit landed
-> in a corpus another pane was mutating. **That is defused by naming paths, not by choosing a
-> committer.**
->
-> **The rule that replaces it, binding every seat INCLUDING the chair:**
->
-> 1. **Never `git add -A`, `git commit -a`, or a bare `git commit` on the shared checkout. Name every
->    path — on the `commit`, not only on the `add`** (`git commit -- <paths>`), so a commit can only
->    ever carry what its author named.
->
->    *AMENDED 2026-09-04. The 08-26 amendment registered its own falsifier — "if a commit after this
->    date is found to have captured another seat's in-flight file, rule 1 was insufficient" — and it
->    FIRED, checkably, at `38ae5c2`: the librarian's commit captured seven of pane K's staged files.
->    Rule 1 governed `git add`; the hazard lives in `git commit`, which needs no `add` at all and takes
->    whatever is in the shared index. Found and diagnosed by K (`handback/p-d007-smallfixes_2026-09-04.md`
->    §10), landed by the chair — this file is a shared carrier. The amendment's own proposed remedy,
->    reinstating chair-routed commits, is still refused for the reason the amendment gave: routing it
->    through the chair produces the same capture with a different name on it. K's registration: if a
->    capture happens again after this, the index is not lockable by convention and the answer is
->    per-seat worktrees, not a better sentence.*
-> 2. **Say in the commit body who wrote it** — the seat, not the model. The body is the only
->    attribution surface that works.
-> 3. **Nothing is pushed by a seat.** Publishing outward keeps a human awake saying yes
->    (`journal/2026-07-28.md:189`). Committing is not publishing.
->
->    *THE SEAL-ROW EXCEPTION, 2026-09-16 — the keeper's YES (`exo_memory/loop/keeper_decisions_2026-09-16.md`).*
->    The chair may push **unattended** a commit whose diff is **exactly one sealed-row file under
->    `exo_memory/loop/`**, and nothing else: not a second file, and not other unpushed commits riding in the
->    same push (`git log --name-only origin/main..HEAD` shows one commit, one path). It exists because a keyed
->    task is refused dispatch until its row is on origin. The seal gate enforces *on origin*; it cannot see who
->    pushed or whether anyone was awake, so the one-file shape is this sentence — the gate's audit line reports
->    it after the fact.
->
-> *Falsifier, registered before adoption:* if a commit after this date is found to have captured
-> another seat's in-flight file, rule 1 was insufficient and the seat-routing was doing work its stated
-> reason never named — reinstate it and say so. Checkable from git history.
->
-> Drafted by the librarian seat (`loop/commit_rule_amendment_DRAFT_2026-08-25.md`), which declared that
-> it gains reach if this lands. Applied at the keeper's instruction.
 
 ## The failure this practice keeps hitting
 
@@ -170,7 +191,7 @@ has an instrument:
     node consonance/tools/ferry.js --due          # what is unread
     node consonance/tools/ferry.js --record <sha> <pane>   # the operation
 
-**A finding nobody reads is indistinguishable from a finding nobody made.** If the unread count only
+A finding nobody reads is indistinguishable from a finding nobody made. If the unread count only
 ever grows, the committee is decorative and the honest move is to say so rather than let the number
 accumulate as a reproach.
 
@@ -181,63 +202,17 @@ converge were never coupled. Disagreement held inside a working relationship is 
 state, not a problem to resolve — and a pane that only ever confirms is worth less than no pane,
 because it reads like corroboration.
 
-## The hand-off is yours to make — nobody will ask you for it
+## Contradictions resolved
 
-**Finish your output. Then pass it on. In that order, without waiting to be told.**
-
-The order is not style. A dispatch is un-revisable — once it renders in another seat's pane it is
-spent, and that seat begins reasoning from it immediately. Sending before your own reasoning is
-finished and filed is present-then-prove, and on 2026-08-24 it cost a wrong ruling in a second
-seat: an unverified claim was dispatched, the receiving seat ruled on it, and the ruling was wrong
-**because the brief was wrong**. One extra minute would have prevented it.
-
-And the second half is the one that keeps being missed: **finishing is not stopping.** Do not end a
-turn with "next I will hand this over" and wait. The human is not the trigger. If your output is
-done and something is owed to another seat, the same turn carries it.
-
-**Measured, over all of the orchestrator's history to 2026-08-25:** 103 turns contained a dispatch,
-**101 of them sent it before the turn's own answer was finished (98.1%)**, and 85 of 103 wrote more
-than a thousand characters of answer *after* the dispatch had already left
-(`exo_memory/loop/turn_boundary_detection_2026-08-25.md`, pane E). The rule has essentially never
-been kept. Assume you are about to break it.
-
-**Your half, concretely.** When the work is done: write the hand-back to the file you were given,
-then ring the Librarian with `call_librarian` in the same turn, carrying the POINTER to that file.
-The board is not its destination and the chair is not in this hop — that middle hop is where a
-finding got re-characterised on 2026-09-01, and a seat nearly scored an arm on a premise the relay
-had invented. (`BUILDING.md` step 6 is the master; this is the pane-facing half of it. A verb is
-named in this document because here the route *is* the rule — the rest of the list stays in the
-control plane.) Do not commit; the chair commits with attribution. **Do not wait to be asked**
-whether you are finished — a pane that finishes silently is indistinguishable from a pane that
-stalled, and the chair cannot tell those apart from outside.
-
-**Where the file goes.** Your packet names it. When it does not — and on 2026-09-01 two packets did
-not — the convention is `exo_memory/handback/<packet-name>_<YYYY-MM-DD>.md`, repo-relative. Do not
-invent a different one: **a correct hand-back written where the librarian does not read is
-indistinguishable from a hand-back never written.**
-
-**What may ride in the call.** The path, and just enough to say which packet it answers. **Never the
-finding in prose — not even when every word of it is also in the file.** This brief used to say only
-*nothing in the call that is not already in the file*, which is looser than the verb's own rule and
-lets a summary through; on 2026-09-01 three calls met the brief and broke the verb, two of them by
-the seat that wrote this paragraph. The file is the master and the call is the pointer — the
-librarian's own rule, turned around.
-
-**The last line of the call: the NEXT trailer** (added 2026-09-16, lap D070). The keeper's rule, 2026-09-16
-05:26: *"each seat tells the next where to hand it to remind it."* End every `call_librarian` with one line,
-and make it the last:
-
-    NEXT: <station> <command> when <condition>
-
-e.g. `NEXT: librarian collate the chunk when all four hand-backs are in`. The first word is a seat, or the
-verb that reaches one. **A call without it is delivered with a warning, never refused — and warned does not
-mean optional:** a refused call to the librarian discards the pointer it carries (`mcp.rs`, the out-of-turn
-arm of `call_librarian`), so refusing a hand-back over its last line would destroy the hand-back, and the gate
-is built never to do that. The warning is a `trailer-gate` row on the board, counted by seat, and it leaves the
-librarian to guess a station you were the one placed to name. The master is `BUILDING.md`, WHAT A HAND-BACK
-OWES item 6 (the dispatch side is WHAT A DISPATCH OWES item 6) — read it there; this is the pointer.
-
-> **AMENDED 2026-08-26.** *"Do not commit; the chair commits with attribution"* above is superseded by
-> the amendment at the **Nothing committed** bullet — name your paths, say who wrote it in the body,
-> never push. Marked here rather than restated, for the reason this very paragraph gives: two copies of
-> one rule drift apart.
+1. Who commits (the old `COMMITTEE.md:113` "Nothing committed … the seat holding the shared checkout commits" and
+   `:210` "Do not commit; the chair commits with attribution", against the amendments at `:116-163` and `:240-243`).
+   The 2026-08-26 amendment wins: you commit by named paths in your own worktree, and the chair lands on main. Why: it
+   is the practice every lap since has used, and a seat should not read a rule and its repeal in one file.
+4. When tests run (the global instructions' "run the tests that cover the change before reporting success" against
+   `BUILDING.md:178-189`, "the whole suite is the collator's"). Both stand, scoped: you run the tests that cover your
+   change, under the lock, before you hand back; the collator runs the full suite before it lands or reports success to
+   the keeper. The chair half lives in `BUILDING.md`.
+5. Committing at all (Claude Code's tool text, "commit or push only when the user asks", against the room). The
+   keeper's standing authorisation, stated above, is the answer: committing by named paths in your own worktree is
+   authorised on every lap; pushing follows his standing permission (the chair pushes what passes the work checks and the
+   credential scan, without asking each time). `BUILDING.md` and the global instructions point here.
