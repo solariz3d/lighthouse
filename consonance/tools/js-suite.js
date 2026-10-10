@@ -143,6 +143,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
+const scratch = require('./scratch.js');
 
 // JS_SUITE_ROOT exists so this runner can be pointed at a fixture tree and tested like anything
 // else. A test runner that is itself untested is the oldest version of the vacuity problem here.
@@ -277,7 +278,7 @@ const THIS_MACHINE = machineTag();
 // A fresh empty directory per probe, so the deny is a real absence rather than a flag the file is
 // trusted to honour.
 function emptyDir() {
-  return fs.mkdtempSync(path.join(os.tmpdir(), 'js-suite-deny-'));
+  return scratch.mkdtemp('js-suite-deny-');
 }
 
 // The two lines a MACHINE-BOUND file speaks to the runner. Matched on OUTPUT, not on source, so
@@ -289,18 +290,25 @@ function emptyDir() {
 const NOT_RUN_LINE = /^[ \t]*JS-SUITE:[ \t]*NOT-RUN\b[ \t]*(?:[-–—:]+[ \t]*)?(.*)$/m;
 const UNIVERSE_LINE = /^[ \t]*JS-SUITE:[ \t]*UNIVERSE\b[ \t]*(?:[-–—:]+[ \t]*)?(.*)$/m;
 
+// D287 part 1: EACH test file gets its own TEMP/TMP/TMPDIR, a fresh folder under the scratch root, removed in a `finally` whether the file passed,
+// failed, crashed or timed out. That one move reaches every creator under the file that uses os.tmpdir(), including the ones nobody has looked at,
+// because the test files cannot be trusted to remove their own folders (they leaked ~260,000 of them). A file killed by TIMEOUT_MS leaves nothing
+// either: the folder belongs to this runner, not to the child.
 function runFile(f, extraEnv) {
   let code = 0, out = '', err = '';
+  const tmp = scratch.mkdtemp('js-suite-tmp-');
   try {
     out = execFileSync(process.execPath, [f], {
       cwd: path.dirname(f), encoding: 'utf8', timeout: TIMEOUT_MS,
       stdio: ['ignore', 'pipe', 'pipe'],
-      env: extraEnv ? { ...process.env, ...extraEnv } : process.env,
+      env: { ...process.env, ...scratch.tempEnv(tmp), ...(extraEnv || {}) },
     });
   } catch (e) {
     code = e.status === undefined || e.status === null ? 'timeout/signal' : e.status;
     out = e.stdout || '';
     err = e.stderr || '';
+  } finally {
+    try { scratch.rm(tmp); } catch (_) { /* a folder still held open: the exit hook and the janitor try again */ }
   }
   const clean = stripAnsi(out);
   // node:test prints pass and fail on separate lines, so "nothing ran" there is pass 0 AND fail 0.

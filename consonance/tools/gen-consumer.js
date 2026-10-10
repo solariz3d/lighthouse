@@ -80,6 +80,7 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const scratch = require('./scratch.js');
 
 const REPO = path.resolve(__dirname, '..', '..');
 const EXO = path.join(REPO, 'exo_memory');
@@ -2260,14 +2261,22 @@ function collect() {
 
 /* ------------------------------------------------------------------ build */
 
+/* D287 part 1: the staging folder is removed when build() THROWS. It used to be left in %TEMP% on any throw (and, from the CLI, on every
+ * run: 3,837 trees, ~21 GB, since 09-03). The report still carries `staging` for callers that read it; the CLI removes it (below). */
 function build(outDir, opts) {
+  let made = null;
+  try { return buildStaged(outDir, opts, (d) => { made = d; return d; }); }
+  catch (e) { if (made) { try { scratch.rm(made); } catch (_) { /* the janitor takes what is left */ } } throw e; }
+}
+
+function buildStaged(outDir, opts, track) {
   const files = collect();
   const id = commitIdentity();
   if (opts.measured && opts.measured.sha !== id.sha) {
     return { refused: 'the measured state is of commit ' + opts.measured.sha + ', not of the commit this generation is from, ' + id.sha + '; measure this commit, then generate', staging: null, commit: id };
   }
   const gen = generatedFiles(id, opts.measured || null);
-  const staging = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-consumer-'));
+  const staging = track(scratch.mkdtemp('gen-consumer-'));
   const report = { exact: [], bytesDrift: [], forked: 0, git: null, screens: 0, declared: { js: 0, rust: 0 }, declareDrift: [], staged: 0, excluded: [], missing: [], dangling: 0, identity: 0, machine: 0, fixtures: 0, unportable: [], leaks: [], excludeDrift: [], seedDrift: [], seeded: [], orphaned: [], generated: [], genDrift: [], unresolved: [], unclassified: [], anchorDrift: [], reseeded: 0, reindexed: 0, dewikied: 0, columns: null, commit: id, staging };
 
   /* THE EXCLUDE LIST IS CHECKED AGAINST THE MANIFEST, IN BOTH DIRECTIONS. An exclusion no rule can
@@ -2808,6 +2817,9 @@ function main() {
   let measured = null;
   if (measuredFile) { try { measured = JSON.parse(fs.readFileSync(measuredFile, 'utf8')); } catch (e) { console.error('gen-consumer: --measured ' + measuredFile + ': ' + e.message); process.exit(2); } }
   const r = build(outDir || '', { dry, allowDirty, measured });
+  /* D287 part 1: the staging tree is a scratch copy, removed as soon as the build is done (it is also removed at process exit). --keep-staging keeps it. */
+  const keepStaging = argv.includes('--keep-staging');
+  if (r.staging) { if (keepStaging) scratch.keep(r.staging); else scratch.rm(r.staging); }
 
   if (json) { console.log(JSON.stringify(r, null, 2)); process.exit(r.refused ? 1 : 0); }
 
@@ -2922,8 +2934,8 @@ function main() {
   }
   if (r.refused) {
     console.log('  REFUSED: ' + r.refused);
-    console.log('  Nothing was written to the destination. Staging kept for inspection:');
-    console.log('    ' + r.staging);
+    console.log('  Nothing was written to the destination. ' + (keepStaging ? 'Staging kept for inspection (--keep-staging):' : 'Staging removed; --keep-staging keeps it.'));
+    if (keepStaging) console.log('    ' + r.staging);
     console.log('');
     process.exit(1);
   }
