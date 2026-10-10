@@ -1,0 +1,49 @@
+the free view inherits pitch -11.31° from the build view
+[32m✔ W+D: diagonal, EXACTLY (W + D)/√2 in direction, and 1.0× a straight line in speed (measured) [90m(5.318ms)[39m[39m
+[32m✔ W+D on a view pitched down 40°: still 1.0× (forward follows the pitch, right stays horizontal, so they are perpendicular) [90m(2.0297ms)[39m[39m
+[32m✔ A+W, S+D, S+A (each diagonal): 1.0× straight [90m(2.9035ms)[39m[39m
+[32m✔ W+S: the newer (S) wins, no stand-still; S+W: W wins [90m(3.6402ms)[39m[39m
+[32m✔ A+D and Q+E (the other two axes, both keys): the newer wins, no stand-still [90m(6.9256ms)[39m[39m
+[32m✔ W+D+S: S (newer on forward/back) with D, diagonal at 1.0×; release S → W+D; release D → W [90m(3.376ms)[39m[39m
+[32m✔ press/release orders: D, W, release D → W straight; W, D, release W → D straight; W, S, D, release S → W+D [90m(3.3845ms)[39m[39m
+[32m✔ the handover on release: W held, S pressed (S wins), S released → W resumes (the older key comes back) [90m(1.7105ms)[39m[39m
+[32m✔ auto-repeat mid-combo: W, S held (S wins); W auto-repeats ×5: S still wins (a repeat keeps its place) [90m(0.8997ms)[39m[39m
+[32m✔ auto-repeat mid-combo: W+D held, both auto-repeating, interleaved: still the same diagonal at 1.0× [90m(1.2787ms)[39m[39m
+[32m✔ blur with W+D+S held: everything stops, and after focus returns only NEW presses move [90m(0.9374ms)[39m[39m
+[32m✔ Esc in a text field while W is held (pressed in the view): the field lets go of focus, W keeps flying; W released in the field stops it [90m(1.2509ms)[39m[39m
+[32m✔ Enter in a text field while W+D are held: W+D keep flying at 1.0×; D typed INTO the field is not a move key [90m(1.6209ms)[39m[39m
+[32m✔ two keys pressed in the SAME frame (W and D between frames): the first frame after is already the diagonal [90m(1.1566ms)[39m[39m
+[32m✔ W and S in the SAME frame: event order decides (the later wins), both orders [90m(1.8425ms)[39m[39m
+[32m✔ Shift ramp on a diagonal: every frame of W+D+Shift moves exactly as far as W+Shift (8 frames, through the ×4→×20 ramp) [90m(3.1836ms)[39m[39m
+[31m✖ RULED: W+E on a view pitched p, measured, equals √(2 + 2·sin p)/√2 of a straight line (≈0.54× at −45°), at 0°, −22°, −45°, −60°, −89° [90m(4.4603ms)[39m[39m
+[34mℹ tests 17[39m
+[34mℹ suites 0[39m
+[34mℹ pass 16[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 111.4369[39m
+
+[31m✖ failing tests:[39m
+
+test at d188probes.test.js:137:1
+[31m✖ RULED: W+E on a view pitched p, measured, equals √(2 + 2·sin p)/√2 of a straight line (≈0.54× at −45°), at 0°, −22°, −45°, −60°, −89° [90m(4.4603ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: -22°: 1.0000× (formula 0.7908)
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\[39md188probes.test.js:143:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+[lockedD.js] exit 1 in 0 s

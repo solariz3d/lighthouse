@@ -1,0 +1,233 @@
+TAP version 13
+# Subtest: control: the unmutated temp copy passes every test file the mutants use
+ok 1 - control: the unmutated temp copy passes every test file the mutants use
+  ---
+  duration_ms: 22972.167
+  type: 'test'
+  ...
+# Subtest: mutation K1 the columns outside the window are not fixed: applied, and caught by "row 1: a close confined to the LAST piece…"
+ok 2 - mutation K1 the columns outside the window are not fixed: applied, and caught by "row 1: a close confined to the LAST piece…"
+  ---
+  duration_ms: 1320.0867
+  type: 'test'
+  ...
+# Subtest: mutation K2 the pieces outside the window are recomputed, not kept: applied, and caught by "row 1: a close confined to the LAST piece…"
+ok 3 - mutation K2 the pieces outside the window are recomputed, not kept: applied, and caught by "row 1: a close confined to the LAST piece…"
+  ---
+  duration_ms: 3671.6089
+  type: 'test'
+  ...
+# Subtest: mutation K3 a local close that does not close is handed back, not refused: applied, and caught by "row 3: a window that cannot close the loop…"
+ok 4 - mutation K3 a local close that does not close is handed back, not refused: applied, and caught by "row 3: a window that cannot close the loop…"
+  ---
+  duration_ms: 3972.2614
+  type: 'test'
+  ...
+# Subtest: mutation K4 the roll-rate bar is not read: applied, and caught by "row 4: a local close may not push the window past the roll-rate bar…"
+ok 5 - mutation K4 the roll-rate bar is not read: applied, and caught by "row 4: a local close may not push the window past the roll-rate bar…"
+  ---
+  duration_ms: 3894.3706
+  type: 'test'
+  ...
+# Subtest: mutation K5 the window is not named for a person: applied, and caught by "row 1: a close confined to the LAST piece…"
+ok 6 - mutation K5 the window is not named for a person: applied, and caught by "row 1: a close confined to the LAST piece…"
+  ---
+  duration_ms: 3771.8452
+  type: 'test'
+  ...
+# Subtest: mutation K6 the default window ignores the fraction (the last piece only): applied, and caught by "row 2: the default window…"
+ok 7 - mutation K6 the default window ignores the fraction (the last piece only): applied, and caught by "row 2: the default window…"
+  ---
+  duration_ms: 3697.0364
+  type: 'test'
+  ...
+# Subtest: mutation K7 an empty window is accepted: applied, and caught by "row 5: a window with no road piece…"
+ok 8 - mutation K7 an empty window is accepted: applied, and caught by "row 5: a window with no road piece…"
+  ---
+  duration_ms: 3650.1897
+  type: 'test'
+  ...
+# Subtest: mutation A1 the app close is the whole-lap close again: applied, and caught by "row 1: Close PROPOSES…"
+ok 9 - mutation A1 the app close is the whole-lap close again: applied, and caught by "row 1: Close PROPOSES…"
+  ---
+  duration_ms: 15915.5394
+  type: 'test'
+  ...
+# Subtest: mutation A2 an edit keeps a stale preview: applied, and caught by "row 2: Cancel drops the preview…"
+ok 10 - mutation A2 an edit keeps a stale preview: applied, and caught by "row 2: Cancel drops the preview…"
+  ---
+  duration_ms: 18483.6685
+  type: 'test'
+  ...
+# Subtest: mutation A3 the overlap check has no mesh self-check (no folds): applied, and caught by "row 4: the preview's OVERLAP CHECK…"
+ok 11 - mutation A3 the overlap check has no mesh self-check (no folds): applied, and caught by "row 4: the preview's OVERLAP CHECK…"
+  ---
+  duration_ms: 14575.8399
+  type: 'test'
+  ...
+# Subtest: mutation A4 the overlap check is skipped: applied, and caught by "row 4: the preview's OVERLAP CHECK…"
+ok 12 - mutation A4 the overlap check is skipped: applied, and caught by "row 4: the preview's OVERLAP CHECK…"
+  ---
+  duration_ms: 5392.1158
+  type: 'test'
+  ...
+# Subtest: mutation A5 Apply commits the base, not the proposal: applied, and caught by "row 1: Close PROPOSES…"
+ok 13 - mutation A5 Apply commits the base, not the proposal: applied, and caught by "row 1: Close PROPOSES…"
+  ---
+  duration_ms: 11135.2034
+  type: 'test'
+  ...
+# Subtest: mutation A6 the refused export keeps the export's own message (ids): applied, and caught by "row 6: a refused export names EVERY red…"
+ok 14 - mutation A6 the refused export keeps the export's own message (ids): applied, and caught by "row 6: a refused export names EVERY red…"
+  ---
+  duration_ms: 14491.2175
+  type: 'test'
+  ...
+# Subtest: mutation A9 Apply writes no copy from before the close: applied, and caught by "row 7: Apply writes the copy from BEFORE the close…"
+ok 15 - mutation A9 Apply writes no copy from before the close: applied, and caught by "row 7: Apply writes the copy from BEFORE the close…"
+  ---
+  duration_ms: 11337.6268
+  type: 'test'
+  ...
+# Subtest: mutation A11 an edit during the copy still gets the stale close committed: applied, and caught by "row 7: Apply writes the copy from BEFORE the close…"
+ok 16 - mutation A11 an edit during the copy still gets the stale close committed: applied, and caught by "row 7: Apply writes the copy from BEFORE the close…"
+  ---
+  duration_ms: 14626.0673
+  type: 'test'
+  ...
+# Subtest: mutation A10 a failed backup still closes: applied, and caught by "row 7: Apply writes the copy from BEFORE the close…"
+ok 17 - mutation A10 a failed backup still closes: applied, and caught by "row 7: Apply writes the copy from BEFORE the close…"
+  ---
+  duration_ms: 12396.5121
+  type: 'test'
+  ...
+# Subtest: mutation A7 the proposal is not drawn as a ghost: applied, and caught by "row 5: the preview shows the proposal as a GHOST…"
+ok 18 - mutation A7 the proposal is not drawn as a ghost: applied, and caught by "row 5: the preview shows the proposal as a GHOST…"
+  ---
+  duration_ms: 14423.6191
+  type: 'test'
+  ...
+# Subtest: mutation A8 focus looks from the station, not at it: applied, and caught by "row 5: the preview shows the proposal as a GHOST…"
+ok 19 - mutation A8 focus looks from the station, not at it: applied, and caught by "row 5: the preview shows the proposal as a GHOST…"
+  ---
+  duration_ms: 14519.1623
+  type: 'test'
+  ...
+# Subtest: mutation G1 a ray red on an overlap keeps its own words: applied, and caught by "the overlap is ONE group…"
+ok 20 - mutation G1 a ray red on an overlap keeps its own words: applied, and caught by "the overlap is ONE group…"
+  ---
+  duration_ms: 188.5632
+  type: 'test'
+  ...
+# Subtest: mutation G2 every ray red is called an overlap: applied, and caught by "a downforce-ray-gap with NO overlap near it…"
+ok 21 - mutation G2 every ray red is called an overlap: applied, and caught by "a downforce-ray-gap with NO overlap near it…"
+  ---
+  duration_ms: 184.2479
+  type: 'test'
+  ...
+# Subtest: mutation G3 the text names only the first place of a group: applied, and caught by "groupsText names one line per PLACE…"
+ok 22 - mutation G3 the text names only the first place of a group: applied, and caught by "groupsText names one line per PLACE…"
+  ---
+  duration_ms: 196.1837
+  type: 'test'
+  ...
+# Subtest: mutation G6 places are never merged: applied, and caught by "D248: overlapping reds on one piece are ONE place…"
+ok 23 - mutation G6 places are never merged: applied, and caught by "D248: overlapping reds on one piece are ONE place…"
+  ---
+  duration_ms: 191.2716
+  type: 'test'
+  ...
+# Subtest: mutation G7 places merge across pieces: applied, and caught by "D248: TOUCHING reds merge…"
+ok 24 - mutation G7 places merge across pieces: applied, and caught by "D248: TOUCHING reds merge…"
+  ---
+  duration_ms: 183.1572
+  type: 'test'
+  ...
+# Subtest: mutation G10 places merge only on the same STARTING piece (the rule the real window caught): applied, and caught by "D248: a red inside a place that spans two pieces…"
+ok 25 - mutation G10 places merge only on the same STARTING piece (the rule the real window caught): applied, and caught by "D248: a red inside a place that spans two pieces…"
+  ---
+  duration_ms: 182.1407
+  type: 'test'
+  ...
+# Subtest: mutation G8 touching reds do not merge (no tolerance): applied, and caught by "D248: TOUCHING reds merge…"
+ok 26 - mutation G8 touching reds do not merge (no tolerance): applied, and caught by "D248: TOUCHING reds merge…"
+  ---
+  duration_ms: 179.7784
+  type: 'test'
+  ...
+# Subtest: mutation G9 the count is of reds, not places: applied, and caught by "D248: overlapping reds on one piece are ONE place…"
+ok 27 - mutation G9 the count is of reds, not places: applied, and caught by "D248: overlapping reds on one piece are ONE place…"
+  ---
+  duration_ms: 186.0001
+  type: 'test'
+  ...
+# Subtest: mutation G4 the piece is read at the range's end: applied, and caught by "where: s in km and the piece…"
+ok 28 - mutation G4 the piece is read at the range's end: applied, and caught by "where: s in km and the piece…"
+  ---
+  duration_ms: 185.2085
+  type: 'test'
+  ...
+# Subtest: mutation G5 s past the lap does not wrap: applied, and caught by "pieceAt wraps…"
+ok 29 - mutation G5 s past the lap does not wrap: applied, and caught by "pieceAt wraps…"
+  ---
+  duration_ms: 181.5313
+  type: 'test'
+  ...
+# Subtest: mutation L1 every piece is labelled again: applied, and caught by "the labels on the track…"
+ok 30 - mutation L1 every piece is labelled again: applied, and caught by "the labels on the track…"
+  ---
+  duration_ms: 4649.4556
+  type: 'test'
+  ...
+# Subtest: mutation L2 the hovered piece is never labelled: applied, and caught by "the labels on the track…"
+ok 31 - mutation L2 the hovered piece is never labelled: applied, and caught by "the labels on the track…"
+  ---
+  duration_ms: 4553.9837
+  type: 'test'
+  ...
+# Subtest: mutation L3 a still pointer is not asked again after the track changes: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+ok 32 - mutation L3 a still pointer is not asked again after the track changes: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+  ---
+  duration_ms: 4636.3998
+  type: 'test'
+  ...
+# Subtest: mutation U1 Undo shows the head only (the bug): applied, and caught by "D242 item 7…"
+ok 33 - mutation U1 Undo shows the head only (the bug): applied, and caught by "D242 item 7…"
+  ---
+  duration_ms: 4577.4853
+  type: 'test'
+  ...
+# Subtest: mutation U2 the ticks are not put back: applied, and caught by "D242 item 7…"
+ok 34 - mutation U2 the ticks are not put back: applied, and caught by "D242 item 7…"
+  ---
+  duration_ms: 4602.031
+  type: 'test'
+  ...
+# Subtest: mutation S1 Straight does not tick turn "at start": applied, and caught by "D242: after a 30°/100m turn, Straight…"
+ok 35 - mutation S1 Straight does not tick turn "at start": applied, and caught by "D242: after a 30°/100m turn, Straight…"
+  ---
+  duration_ms: 4577.7472
+  type: 'test'
+  ...
+# Subtest: mutation S2 Straight leaves the boxes ticked: applied, and caught by "D242: after a 30°/100m turn, Straight…"
+ok 36 - mutation S2 Straight leaves the boxes ticked: applied, and caught by "D242: after a 30°/100m turn, Straight…"
+  ---
+  duration_ms: 4571.9029
+  type: 'test'
+  ...
+# Subtest: mutation S3 the straight hint never shows: applied, and caught by "D242: after a 30°/100m turn, Straight…"
+ok 37 - mutation S3 the straight hint never shows: applied, and caught by "D242: after a 30°/100m turn, Straight…"
+  ---
+  duration_ms: 4582.6298
+  type: 'test'
+  ...
+1..37
+# tests 37
+# suites 0
+# pass 37
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 232911.985
+

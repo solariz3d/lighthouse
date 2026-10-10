@@ -1,0 +1,45 @@
+[32m✔ control: the unmutated temp copy passes every test file the mutants use [90m(22986.546ms)[39m[39m
+[32m✔ mutation K1 the columns outside the window are not fixed: applied, and caught by "row 1: a close confined to the LAST piece…" [90m(1237.8305ms)[39m[39m
+[32m✔ mutation K2 the pieces outside the window are recomputed, not kept: applied, and caught by "row 1: a close confined to the LAST piece…" [90m(3699.9947ms)[39m[39m
+[32m✔ mutation K3 a local close that does not close is handed back, not refused: applied, and caught by "row 3: a window that cannot close the loop…" [90m(3747.5682ms)[39m[39m
+[32m✔ mutation K4 the roll-rate bar is not read: applied, and caught by "row 4: a local close may not push the window past the roll-rate bar…" [90m(3671.3986ms)[39m[39m
+[32m✔ mutation K5 the window is not named for a person: applied, and caught by "row 1: a close confined to the LAST piece…" [90m(3806.3764ms)[39m[39m
+[32m✔ mutation K6 the default window ignores the fraction (the last piece only): applied, and caught by "row 2: the default window…" [90m(3995.8882ms)[39m[39m
+[32m✔ mutation K7 an empty window is accepted: applied, and caught by "row 5: a window with no road piece…" [90m(3892.0998ms)[39m[39m
+[32m✔ mutation A1 the app close is the whole-lap close again: applied, and caught by "row 1: Close PROPOSES…" [90m(16029.4619ms)[39m[39m
+[32m✔ mutation A2 an edit keeps a stale preview: applied, and caught by "row 2: Cancel drops the preview…" [90m(18972.6508ms)[39m[39m
+[32m✔ mutation A3 the overlap check has no mesh self-check (no folds): applied, and caught by "row 4: the preview's OVERLAP CHECK…" [90m(17047.6434ms)[39m[39m
+[32m✔ mutation A4 the overlap check is skipped: applied, and caught by "row 4: the preview's OVERLAP CHECK…" [90m(5825.0455ms)[39m[39m
+[32m✔ mutation A5 Apply commits the base, not the proposal: applied, and caught by "row 1: Close PROPOSES…" [90m(12998.9602ms)[39m[39m
+[32m✔ mutation A6 the refused export keeps the export's own message (ids): applied, and caught by "row 6: a refused export names EVERY red…" [90m(17046.9426ms)[39m[39m
+[32m✔ mutation A9 Apply writes no copy from before the close: applied, and caught by "row 7: Apply writes the copy from BEFORE the close…" [90m(12591.3279ms)[39m[39m
+[32m✔ mutation A11 an edit during the copy still gets the stale close committed: applied, and caught by "row 7: Apply writes the copy from BEFORE the close…" [90m(14609.8771ms)[39m[39m
+[32m✔ mutation A10 a failed backup still closes: applied, and caught by "row 7: Apply writes the copy from BEFORE the close…" [90m(14843.5981ms)[39m[39m
+[32m✔ mutation A7 the proposal is not drawn as a ghost: applied, and caught by "row 5: the preview shows the proposal as a GHOST…" [90m(17030.9421ms)[39m[39m
+[32m✔ mutation A8 focus looks from the station, not at it: applied, and caught by "row 5: the preview shows the proposal as a GHOST…" [90m(15053.5288ms)[39m[39m
+[32m✔ mutation G1 a ray red on an overlap keeps its own words: applied, and caught by "the overlap is ONE group…" [90m(203.8337ms)[39m[39m
+[32m✔ mutation G2 every ray red is called an overlap: applied, and caught by "a downforce-ray-gap with NO overlap near it…" [90m(190.6461ms)[39m[39m
+[32m✔ mutation G3 the text names only the first place of a group: applied, and caught by "groupsText names one line per PLACE…" [90m(201.5889ms)[39m[39m
+[32m✔ mutation G6 places are never merged: applied, and caught by "D248: overlapping reds on one piece are ONE place…" [90m(192.1526ms)[39m[39m
+[32m✔ mutation G7 places merge across pieces: applied, and caught by "D248: TOUCHING reds merge…" [90m(193.3432ms)[39m[39m
+[32m✔ mutation G10 places merge only on the same STARTING piece (the rule the real window caught): applied, and caught by "D248: a red inside a place that spans two pieces…" [90m(209.5341ms)[39m[39m
+[32m✔ mutation G8 touching reds do not merge (no tolerance): applied, and caught by "D248: TOUCHING reds merge…" [90m(193.5426ms)[39m[39m
+[32m✔ mutation G9 the count is of reds, not places: applied, and caught by "D248: overlapping reds on one piece are ONE place…" [90m(201.167ms)[39m[39m
+[32m✔ mutation G4 the piece is read at the range's end: applied, and caught by "where: s in km and the piece…" [90m(202.0024ms)[39m[39m
+[32m✔ mutation G5 s past the lap does not wrap: applied, and caught by "pieceAt wraps…" [90m(195.8299ms)[39m[39m
+[32m✔ mutation L1 every piece is labelled again: applied, and caught by "the labels on the track…" [90m(4719.6456ms)[39m[39m
+[32m✔ mutation L2 the hovered piece is never labelled: applied, and caught by "the labels on the track…" [90m(4659.4651ms)[39m[39m
+[32m✔ mutation L3 a still pointer is not asked again after the track changes: applied, and caught by "the labels follow a path the preview extends IN PLACE…" [90m(4711.4361ms)[39m[39m
+[32m✔ mutation U1 Undo shows the head only (the bug): applied, and caught by "D242 item 7…" [90m(4706.5782ms)[39m[39m
+[32m✔ mutation U2 the ticks are not put back: applied, and caught by "D242 item 7…" [90m(5068.7847ms)[39m[39m
+[32m✔ mutation S1 Straight does not tick turn "at start": applied, and caught by "D242: after a 30°/100m turn, Straight…" [90m(6207.8578ms)[39m[39m
+[32m✔ mutation S2 Straight leaves the boxes ticked: applied, and caught by "D242: after a 30°/100m turn, Straight…" [90m(5610.0151ms)[39m[39m
+[32m✔ mutation S3 the straight hint never shows: applied, and caught by "D242: after a 30°/100m turn, Straight…" [90m(5348.3382ms)[39m[39m
+[34mℹ tests 37[39m
+[34mℹ suites 0[39m
+[34mℹ pass 37[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 252171.1611[39m

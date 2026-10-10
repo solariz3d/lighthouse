@@ -1,0 +1,51 @@
+   Compiling consonance v0.1.0 (C:\Users\nname\Desktop\lighthouse\consonance\src-tauri)
+warning: unused import: `HashMap`
+     --> src\main.rs:13921:28
+      |
+13921 |     use std::collections::{HashMap, HashSet};
+      |                            ^^^^^^^
+      |
+      = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+error[E0425]: cannot find function `ring_reply` in this scope
+     --> src\main.rs:20517:20
+      |
+20517 |         assert_eq!(ring_reply("Main", Receipt::Received), "delivered to Main (rendered in its pane — not proof it was read)");
+      |                    ^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `ring_reply` in this scope
+     --> src\main.rs:20519:13
+      |
+20519 |             ring_reply("the librarian", Receipt::Received),
+      |             ^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `ring_reply` in this scope
+     --> src\main.rs:20528:25
+      |
+20528 |                 let s = ring_reply(dest, r);
+      |                         ^^^^^^^^^^ not found in this scope
+
+warning: unused variable: `ratio`
+    --> src\cochlea.rs:3004:13
+     |
+3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
+     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `sr`
+    --> src\cochlea.rs:3157:13
+     |
+3157 |         let sr = 46.875;
+     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
+
+warning: unused variable: `rows`
+     --> src\main.rs:14179:14
+      |
+14179 |         let (rows, flags) = render(&format!("❯ {msg}"));
+      |              ^^^^ help: if this is intentional, prefix it with an underscore: `_rows`
+
+For more information about this error, try `rustc --explain E0425`.
+warning: `consonance` (bin "consonance" test) generated 4 warnings
+error: could not compile `consonance` (bin "consonance" test) due to 3 previous errors; 4 warnings emitted
+EXIT 101

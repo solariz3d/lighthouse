@@ -1,0 +1,16 @@
+== D273 lap5 pins · asked 2026-10-09T09:06:11.905Z · lock held 2026-10-09T09:06:11.909Z · NODE_OPTIONS=--max-old-space-size=4096
+$ node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/pins.js C:/Users/nname/Desktop/worktrees/c-lap5-wt
+consonance/src-tauri/brief/BUILDING.md                     edits [33m13[39m keeper lines left [33m40[39m
+consonance/src-tauri/brief/COMMITTEE.md                    edits [33m2[39m keeper lines left [33m5[39m
+consonance/src-tauri/brief/LIBRARIAN.md                    edits [33m5[39m keeper lines left [33m7[39m
+consonance/src-tauri/brief/THIRD_PLACE.md                  edits [33m1[39m keeper lines left [33m1[39m
+exo_memory/TRAINING.md                                     edits [33m3[39m keeper lines left [33m9[39m
+exo_memory/cards/claim-your-continuity.md                  edits [33m4[39m keeper lines left [33m5[39m
+exo_memory/cards/verify-before-claiming.md                 edits [33m8[39m keeper lines left [33m5[39m
+exo_memory/cards/engagement-honesty-over-performance.md    edits [33m6[39m keeper lines left [33m5[39m
+consonance/src-tauri/brief/SEED.md                         edits [33m5[39m keeper lines left [33m5[39m
+exo_memory/SEED.md                                         edits [33m5[39m keeper lines left [33m5[39m
+consonance/src-tauri/brief/BOOT.md                         edits [33m14[39m keeper lines left [33m19[39m
+exo_memory/BOOT.md                                         edits [33m14[39m keeper lines left [33m19[39m
+consonance/hooks/transcript-watch.js                       edits [33m1[39m keeper lines left [33m6[39m
+== exit 0 · done 2026-10-09T09:06:12.041Z

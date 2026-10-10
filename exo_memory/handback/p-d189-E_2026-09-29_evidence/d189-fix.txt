@@ -1,0 +1,17 @@
+W+E at −89°: 3.000000 m; dot with the heading 0.999962; vertical 2.62e-2 m
+W+E direction swing per 1° of pitch, −80…−89°: at most 0.50°
+[32m✔ every one of the 26 key combinations moves 1.0× a straight line, in METRES, at pitches −89° … +89° (through the keys) [90m(268.4559ms)[39m[39m
+[32m✔ W+E at −89°: 3.0 m a frame (was 0.037 m), sliding along the view HEADING, level [90m(1.064ms)[39m[39m
+[32m✔ Shift ramp still applies: at −60°, W+E+Shift moves exactly as far as W+Shift every frame for 8 frames (×4 → ×20) [90m(1.6042ms)[39m[39m
+[32m✔ zero input is zero: no key held → no move; move(0,0,0) is a no-op; W+S released → still [90m(0.8011ms)[39m[39m
+[32m✔ the direction near the cancel is CONTINUOUS: W+E from −80° to −89° in 1° steps turns by less than 20° per degree of pitch [90m(6.5663ms)[39m[39m
+[34mℹ tests 5[39m
+[34mℹ suites 0[39m
+[34mℹ pass 5[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 462.4693[39m
+
+[lockedD.js] exit 0 in 0 s

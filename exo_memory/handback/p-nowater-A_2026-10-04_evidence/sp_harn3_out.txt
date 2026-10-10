@@ -1,0 +1,7 @@
+app/test/mutation.test.js: exit 0 tests 99 pass 99 fail 0 NOT APPLIED 0 NOT CAUGHT/SURVIVED 0
+app/test/core-mutation.test.js: exit 0 tests 60 pass 60 fail 0 NOT APPLIED 0 NOT CAUGHT/SURVIVED 0
+app/test/core-xsec-mutation.test.js: exit 0 tests 31 pass 31 fail 0 NOT APPLIED 0 NOT CAUGHT/SURVIVED 0
+test/core_chord_mutation.test.js: exit 0 tests 16 pass 16 fail 0 NOT APPLIED 0 NOT CAUGHT/SURVIVED 0
+test/core_cup_mutation.test.js: exit 0 tests 51 pass 51 fail 0 NOT APPLIED 0 NOT CAUGHT/SURVIVED 0
+test/core_xsec_mutation.test.js: exit 0 tests 60 pass 60 fail 0 NOT APPLIED 0 NOT CAUGHT/SURVIVED 0
+test/core_water_mutation.test.js: exit 0 tests 20 pass 20 fail 0 NOT APPLIED 0 NOT CAUGHT/SURVIVED 0

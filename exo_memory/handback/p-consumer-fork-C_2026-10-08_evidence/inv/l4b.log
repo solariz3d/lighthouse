@@ -1,0 +1,8 @@
+== D273 lap4b C verify · asked 2026-10-09T08:54:23.131Z · lock held 2026-10-09T08:54:23.135Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd C:/Users/nname/Desktop/worktrees/c-lap4b-wt && node --test --test-concurrency=1 consonance/tools/consumer-relabel.test.js consonance/tools/consumer-fork-wiring.test.js consonance/tools/identity-diff.test.js 2>&1 | grep -E 'ℹ (tests|pass|fail|skipped)|✖ [a-zA-Z]|AssertionError|RelabelError' | head -12; node consonance/tools/identity-diff.js --generate > C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/l4b-id.txt 2>&1; echo identity-diff exit $?
+[34mℹ tests 27[39m
+[34mℹ pass 27[39m
+[34mℹ fail 0[39m
+[34mℹ skipped 0[39m
+identity-diff exit 0
+== exit 0 · done 2026-10-09T08:54:37.866Z

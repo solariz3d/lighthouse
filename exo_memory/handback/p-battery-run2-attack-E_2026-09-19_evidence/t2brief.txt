@@ -1,0 +1,13 @@
+[33m1789554764681[39m pane,role,text,ts,ts_source
+[chair:MAIN] A draft note is sitting unlanded, and before it goes anywhere someone who did not write it has to go through it.
+
+Read it here — it is not in the repository, so open it at this path:
+C:\Users\zackn\AppData\Local\Temp\claude\C--Consonance-instances-main\0c0c0c0a-0000-4000-8000-000000000a01\scratchpad\t2\T2_text.md
+
+It makes eighteen numbered claims about `consonance/tools/boundary-check.js` and the rule it enforces. Every one of them is checkable against files that ARE in this repository. Some of them are wrong.
+
+Go through it claim by claim and say which are false, with the evidence — path:line, or the command and what it printed. For each one you call false, say what the truth is. Where a claim is right, you do not need to say so; say so only where checking it taught you something the note gets wrong elsewhere.
+
+Bounds: read-only. Nothing edited, nothing installed, nothing run that writes. Do not open other seats' work from tonight. If you think a claim is unresolvable from the disk, say that rather than guessing — an unresolvable claim named as unresolvable is worth more than a wrong verdict.
+
+Hand-back: `exo_memory/handback/t2-echo_2026-09-16.md`. Then ring the librarian with the path, and add one line to your own map file.

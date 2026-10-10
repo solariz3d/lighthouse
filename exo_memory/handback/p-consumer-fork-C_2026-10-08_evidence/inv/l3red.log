@@ -1,0 +1,14 @@
+== D273 lap3 red (no hook line) · asked 2026-10-08T22:09:35.988Z · lock held 2026-10-08T22:09:54.087Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd C:/Users/nname/Desktop/worktrees/c-consumer-fork3-wt && node --test --test-concurrency=1 consonance/tools/consumer-fork-wiring.test.js consonance/tools/consumer-relabel.test.js 2>&1 | grep -E 'ℹ (tests|pass|fail)|✖ [a-zA-Z]|FORK_HOOK|did not reach|should appear' | head -12
+[31m✖ gen-consumer has the fork hook wired (FORK_HOOK.apply is set at load) [90m(1.4725ms)[39m[39m
+[31m✖ a generated tree carries the fork note at all three sites, naming HEAD, and the relabel table applied [90m(5290.6576ms)[39m[39m
+[32m✔ applyFork is FORK_HOOK's contract: a registered file comes back relabelled with n = its edits, any other file untouched with n = 0 [90m(2.2292ms)[39m[39m
+[34mℹ tests 12[39m
+[34mℹ pass 10[39m
+[34mℹ fail 2[39m
+[31m✖ failing tests:[39m
+[31m✖ gen-consumer has the fork hook wired (FORK_HOOK.apply is set at load) [90m(1.4725ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: FORK_HOOK.apply is not set: the require/call line in gen-consumer.js is missing
+[31m✖ a generated tree carries the fork note at all three sites, naming HEAD, and the relabel table applied [90m(5290.6576ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: exo_memory/BOOT.md: the fork note should appear once
+== exit 0 · done 2026-10-08T22:09:59.672Z

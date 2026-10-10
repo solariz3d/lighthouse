@@ -1,0 +1,66 @@
+[32m✔ control: the unmutated temp copy passes every core-shell test [90m(25872.8219ms)[39m[39m
+[32m✔ mutation R1 the sign of an angle flipped: applied, and caught by "the strings…" [90m(27968.5348ms)[39m[39m
+[32m✔ mutation R2 zero is signed: applied, and caught by "the strings…" [90m(28482.4326ms)[39m[39m
+[32m✔ mutation R3 bank shown as its end value, not the change: applied, and caught by "the strings…" [90m(28302.384ms)[39m[39m
+[32m✔ mutation R4 rounding without the binary guard: applied, and caught by "the strings…" [90m(27462.1198ms)[39m[39m
+[32m✔ mutation R5 the head keep-out ignored: applied, and caught by "the layout…" [90m(27683.1095ms)[39m[39m
+[32m✔ mutation R6 labels may overlap: applied, and caught by "the layout…" [90m(26979.5461ms)[39m[39m
+[32m✔ mutation R7 anchors cached by the path object: applied, and caught by "the labels follow a path the preview extends IN PLACE…" [90m(26472.9542ms)[39m[39m
+[32m✔ mutation R8 the layer is not put back in the page: applied, and caught by "the labels follow a path the preview extends IN PLACE…" [90m(24712.6913ms)[39m[39m
+[32m✔ mutation R11 a label never slides off its piece's middle: applied, and caught by "a piece whose middle is behind the camera…" [90m(24705.3018ms)[39m[39m
+[32m✔ mutation R13 the head's label may be culled: applied, and caught by "the layout: the head's own label is never culled…" [90m(24466.7218ms)[39m[39m
+[32m✔ mutation R14 a head piece with nothing on screen has no label: applied, and caught by "the head's own piece is labelled even when none of it is on screen…" [90m(25006.3082ms)[39m[39m
+[32m✔ mutation R15 the road bleeds through the label: applied, and caught by "the label box holds only…" [90m(24948.6403ms)[39m[39m
+[32m✔ mutation R16 the label box has a border and round corners again: applied, and caught by "the label box holds only…" [90m(26108.631ms)[39m[39m
+[32m✔ mutation R17 the head's fallback place may cover the head: applied, and caught by "the layout: the head's own label is never culled…" [90m(25654.8979ms)[39m[39m
+[32m✔ mutation R12 no ring clears a large head keep-out: applied, and caught by "the layout: a label anchored on a large head keep-out…" [90m(25413.5017ms)[39m[39m
+[32m✔ mutation R9 the panel readout waits for the next state change: applied, and caught by "the panel shows the ghost…" [90m(22785.5978ms)[39m[39m
+[32m✔ mutation R10 the ghost readout is the LAST placed piece, not the candidate: applied, and caught by "the panel shows the ghost…" [90m(22903.2544ms)[39m[39m
+[32m✔ mutation U1 the cup field is not sent to the core: applied, and caught by "extendOptions: the cup field is the target c…" [90m(23633.9051ms)[39m[39m
+[32m✔ mutation U2 the cup is sent in radians: applied, and caught by "extendOptions: the cup field is the target c…" [90m(24592.9179ms)[39m[39m
+[32m✔ mutation U3 the panel clamps the cup, hiding the core guard: applied, and caught by "extendOptions: the cup field is the target c…" [90m(23691.0261ms)[39m[39m
+[32m✔ mutation U4 the cup cell shows the typed target, not the document: applied, and caught by "the readout shows cup from → to…" [90m(22403.2757ms)[39m[39m
+[32m✔ mutation U5 (K7-4) the cup cell wired to the bank values: applied, and caught by "the readout shows cup from → to…" [90m(22200.2946ms)[39m[39m
+[32m✔ mutation U6 (K7-3) the cup shown in radians: applied, and caught by "the readout shows cup from → to…" [90m(22112.0692ms)[39m[39m
+[32m✔ mutation U7 the cup field does not redraw the readout: applied, and caught by "the cup cell follows the cup field…" [90m(22511.4969ms)[39m[39m
+[32m✔ mutation U8 the brush has no cup channel: applied, and caught by "the brush's channel list gains cup…" [90m(22950.5711ms)[39m[39m
+[32m✔ mutation U9 the cup field is not on the panel: applied, and caught by "the Extend panel has a "cup °" field…" [90m(22385.1608ms)[39m[39m
+[32m✔ mutation C1 a brush frame builds on the last frame, not the drag's base: applied, and caught by "the rate brush…" [90m(21965.5173ms)[39m[39m
+[32m✔ mutation C2 the drag never ends in the history: applied, and caught by "the rate brush…" [90m(21936.3849ms)[39m[39m
+[32m✔ mutation C3 the local brush is not the default: applied, and caught by "the local (height / sideways) brush…" [90m(7198.6673ms)[39m[39m
+[32m✔ mutation C20 sideways is sent as a hill: applied, and caught by "the local (height / sideways) brush…" [90m(22018.0391ms)[39m[39m
+[32m✔ mutation C21 with E's brush, every channel is sent as rate: applied, and caught by "with E's brush, the rate brush goes through it…" [90m(24522.9754ms)[39m[39m
+[32m✔ mutation C4 a second close runs again: applied, and caught by "close: one click…" [90m(24893.8407ms)[39m[39m
+[32m✔ mutation C5 the heading brush may open a closed loop: applied, and caught by "close: one click…" [90m(25720.1959ms)[39m[39m
+[32m✔ mutation C6 an edit keeps the old water: applied, and caught by "a successful edit retires the water…" [90m(25811.6267ms)[39m[39m
+[32m✔ mutation C7 export runs on an open track: applied, and caught by "export: an open track is refused…" [90m(23939.358ms)[39m[39m
+[32m✔ mutation C8 the list shows the piece builder's tracks too: applied, and caught by "save and open use their own prefix…" [90m(25088.5222ms)[39m[39m
+[32m✔ mutation C9 the water runs on across a jump's flight: applied, and caught by "water stops at a jump…" [90m(26076.8858ms)[39m[39m
+[32m✔ mutation C10 a spill names the wrong edge: applied, and caught by "redText…" [90m(25323.9655ms)[39m[39m
+[32m✔ mutation C11 a shock is drawn nowhere: applied, and caught by "water: poured over a window…" [90m(25012.2596ms)[39m[39m
+[32m✔ mutation C12 turn is degrees per metre, not per 100 m: applied, and caught by "extendOptions…" [90m(25313.63ms)[39m[39m
+[32m✔ mutation C13 the overlay draws points, not line pairs: applied, and caught by "water: poured over a window…" [90m(24667.7813ms)[39m[39m
+[32m✔ mutation C14 the pick takes the farthest station: applied, and caught by "the pick…" [90m(28646.0821ms)[39m[39m
+[32m✔ mutation C15 the pick sees through the back of the camera: applied, and caught by "the pick…" [90m(29562.5671ms)[39m[39m
+[32m✔ mutation C16 the ghost is not what extend builds: applied, and caught by "the ghost of an extension…" [90m(29495.0651ms)[39m[39m
+[32m✔ mutation C17 export goes to the word exporter: applied, and caught by "export: an open track is refused…" [90m(24818.9727ms)[39m[39m
+[32m✔ mutation C18 the close does not go round the user's straights: applied, and caught by "close: one click…" [90m(21103.7579ms)[39m[39m
+[32m✔ mutation C19 the export is handed no start layout: applied, and caught by "export: an open track is refused…" [90m(25619.1295ms)[39m[39m
+[32m✔ mutation C22 the widened radius is not shown: applied, and caught by "a brush E widened says so…" [90m(24690.8576ms)[39m[39m
+[32m✔ mutation L1 the track model ignores the lift: applied, and caught by "the track model draws the LIFTED road…" [90m(24669.7649ms)[39m[39m
+[32m✔ mutation L2 a lift-only change is taken as the same track: applied, and caught by "the track model draws the LIFTED road…" [90m(24578.0599ms)[39m[39m
+[32m✔ mutation L3 the mesh is not keyed by the lift: applied, and caught by "the track model draws the LIFTED road…" [90m(24519.846ms)[39m[39m
+[32m✔ mutation L4 the export does not lift the path: applied, and caught by "the export lifts the path…" [90m(24974.9492ms)[39m[39m
+[32m✔ mutation C23 the radiusUsed E reports is not read: applied, and caught by "landed core: a narrow brush…" [90m(24049.0849ms)[39m[39m
+[32m✔ mutation C24 sharp is never passed to E: applied, and caught by "the sharp opt-in…" [90m(24676.7853ms)[39m[39m
+[32m✔ mutation P1 the export starts at the origin: applied, and caught by "a lap that starts pitched…" [90m(23174.0972ms)[39m[39m
+[32m✔ mutation P2 the preview starts at the origin: applied, and caught by "a lap that starts pitched…" [90m(23121.5278ms)[39m[39m
+[32m✔ mutation P3 the shell does not hand on the start: applied, and caught by "a lap that starts pitched…" [90m(23776.4298ms)[39m[39m
+[34mℹ tests 58[39m
+[34mℹ suites 0[39m
+[34mℹ pass 58[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 1423445.1017[39m

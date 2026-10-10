@@ -1,0 +1,6 @@
+== D273 identity-diff test · asked 2026-10-08T23:21:07.346Z · lock held 2026-10-08T23:27:48.122Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd C:/Users/nname/Desktop/worktrees/c-identity-wt && node --test --test-concurrency=1 consonance/tools/identity-diff.test.js 2>&1 | grep -E 'ℹ (tests|pass|fail)|✖ [a-zA-Z]|Assertion|Error|expected|actual|\+ |\- ' | head -40
+[34mℹ tests 6[39m
+[34mℹ pass 6[39m
+[34mℹ fail 0[39m
+== exit 0 · done 2026-10-08T23:27:53.333Z

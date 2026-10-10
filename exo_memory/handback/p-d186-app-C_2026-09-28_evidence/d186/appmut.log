@@ -1,0 +1,73 @@
+== D186 app mutation.test.js alone (P1 re-pointed) · asked 2026-09-28T21:31:14.830Z · lock held 2026-09-28T21:31:14.834Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd /c/Users/nname/AppData/Local/Temp/c-d186-wt && node --test --test-concurrency=4 app/test/mutation.test.js
+[32m✔ control: the unmutated temp copy passes every test the mutants are run against [90m(13994.7406ms)[39m[39m
+[32m✔ mutation A1 the build view looks backward: applied, and caught by "build view (default)…" [90m(13978.7397ms)[39m[39m
+[32m✔ mutation A2 the build key does nothing from free mode: applied, and caught by "the build view is ONE key away…" [90m(13944.8083ms)[39m[39m
+[32m✔ mutation A3 the switch key skips a mode: applied, and caught by "the switch key walks…" [90m(13968.0736ms)[39m[39m
+[32m✔ mutation A4 chase ignores its lag (sits on the head): applied, and caught by "chase: 25 m behind…" [90m(13698.6315ms)[39m[39m
+[32m✔ mutation A5 chase lifts along world up, not the road's up: applied, and caught by "chase through a loop-the-loop…" [90m(13545.9176ms)[39m[39m
+[32m✔ mutation A6 overhead's loop fallback is a fixed north: applied, and caught by "overhead: inside a loop…" [90m(14019.7397ms)[39m[39m
+[32m✔ mutation A7 free mode follows the head like the build view: applied, and caught by "after an append…" [90m(13971.8962ms)[39m[39m
+[32m✔ mutation A8 entering free does not take over the view: applied, and caught by "entering free keeps the view…" [90m(13906.3782ms)[39m[39m
+[32m✔ mutation A9 the shown pose snaps instead of easing: applied, and caught by "the shown pose eases…" [90m(13738.9795ms)[39m[39m
+[32m✔ mutation A10 the renderer re-uploads every array every frame: applied, and caught by "renderer: every array is uploaded once…" [90m(13773.5896ms)[39m[39m
+[32m✔ mutation A11 the renderer never deletes a stale buffer: applied, and caught by "renderer: after a sculpt…" [90m(13781.9088ms)[39m[39m
+[32m✔ mutation A12 batches copy the arrays (a sculpt re-uploads everything): applied, and caught by "renderer: after a sculpt…" [90m(13800.3418ms)[39m[39m
+[32m✔ mutation A13 the track model never extends (always a full build): applied, and caught by "track model: append…" [90m(14286.3033ms)[39m[39m
+[32m✔ mutation A14 the model matrix transposed: applied, and caught by "batches: the node matrix…" [90m(13833.574ms)[39m[39m
+[32m✔ mutation A15 the backing store ignores devicePixelRatio: applied, and caught by "DPR: the backing store is the css size…" [90m(13865.1827ms)[39m[39m
+[32m✔ mutation A16 the size cap drops the aspect (one side clamped alone): applied, and caught by "DPR edges…" [90m(13891.696ms)[39m[39m
+[32m✔ mutation A17 Ctrl/Alt/Meta ignored by keyAction: applied, and caught by "keys: Ctrl, Alt or Meta…" [90m(13940.8784ms)[39m[39m
+[32m✔ mutation A18 the frame loop passes no modifiers (Ctrl+C cycles the camera): applied, and caught by "keys in the frame loop…" [90m(13901.4833ms)[39m[39m
+[32m✔ mutation A19 a failed mount is swallowed: applied, and caught by "mount failure…" [90m(13885.9728ms)[39m[39m
+[32m✔ mutation A20 the probe skips the perspective divide: applied, and caught by "probe: the head lands in the middle…" [90m(13875.1274ms)[39m[39m
+[32m✔ mutation A21 the judge accepts a view with nothing drawn: applied, and caught by "judge: each failure…" [90m(13983.3912ms)[39m[39m
+[32m✔ mutation A22 the judge never checks DPR: applied, and caught by "judge: each failure…" [90m(13829.725ms)[39m[39m
+[32m✔ mutation B1 no key light (only ambient and fill): applied, and caught by "light: a floor and a vertical wall…" [90m(13940.7978ms)[39m[39m
+[32m✔ mutation B2 one-sided light (an overhang goes dark): applied, and caught by "light: two-sided…" [90m(13832.2973ms)[39m[39m
+[32m✔ mutation B3 the shader key strength drifts from look.js: applied, and caught by "light: the fragment shader carries…" [90m(13794.5566ms)[39m[39m
+[32m✔ mutation B4 the edge lines one vertex in from the edges: applied, and caught by "edge lines: through the two edge vertices…" [90m(13770.3284ms)[39m[39m
+[32m✔ mutation B5 the lines not lifted off the surface (they would z-fight): applied, and caught by "edge lines: through the two edge vertices…" [90m(13703.9754ms)[39m[39m
+[32m✔ mutation B6 no ties across the road: applied, and caught by "edge lines: a tie across the road…" [90m(14013.2428ms)[39m[39m
+[32m✔ mutation B7 the overhead fit ignores the aspect: applied, and caught by "overhead fit (aspect 0.6)…" [90m(13867.8411ms)[39m[39m
+[32m✔ mutation B8 the overhead fit measures from the box bottom (the top is clipped): applied, and caught by "overhead fit…" [90m(13904.9902ms)[39m[39m
+[32m✔ mutation B9 the world box takes one corner of each local box: applied, and caught by "overhead fit…" [90m(14149.9629ms)[39m[39m
+[32m✔ mutation B10 the ghost is built on the live path (no copy): applied, and caught by "ghost: the ghost of a segment tail…" [90m(13833.1034ms)[39m[39m
+[32m✔ mutation B11 placing the word does not retire its ghost: applied, and caught by "preview: showGhost draws the ghost…" [90m(13784.6783ms)[39m[39m
+[32m✔ mutation B12 the candidate ignores the font picker: applied, and caught by "ghost through A…" [90m(13712.4947ms)[39m[39m
+[32m✔ mutation B13 the grid floats above y = 0: applied, and caught by "grid: every vertex at y = 0…" [90m(13679.329ms)[39m[39m
+[32m✔ mutation B14 the ghost is never drawn: applied, and caught by "preview: showGhost draws the ghost…" [90m(13862.6759ms)[39m[39m
+[32m✔ mutation B16 the head marker does not grow with distance (a speck from overhead): applied, and caught by "head marker: it grows…" [90m(13695.2819ms)[39m[39m
+[32m✔ mutation B15 the head marker is never drawn: applied, and caught by "preview: a frame draws the grid and the head marker…" [90m(13803.1088ms)[39m[39m
+[32m✔ mutation P1 a sculpt re-places the path but keeps the old mesh: applied, and caught by "soak:…" [90m(13809.6601ms)[39m[39m
+[32m✔ mutation P2 every change rebuilds the whole track (no per-cell reuse): applied, and caught by "per-cell rebuild: a length sculpt…" [90m(13767.6188ms)[39m[39m
+[32m✔ mutation P3 the preview reaches for the native side: applied, and caught by "no mesh over IPC: app/preview and app/camera…" [90m(14077.324ms)[39m[39m
+[32m✔ mutation T1 the editor ignores the value it is given: applied, and caught by "editor: an accepted edit changes the canonical text…" [90m(13964.8911ms)[39m[39m
+[32m✔ mutation T2 the panel never calls onChange: applied, and caught by "panel: an accepted edit calls onChange…" [90m(13814.7928ms)[39m[39m
+[32m✔ mutation L1 ksAmbient is read from ksDiffuse: applied, and caught by "mapping: ksAmbient, ksDiffuse…" [90m(13832.0949ms)[39m[39m
+[32m✔ mutation L2 a missing property reads 1, not 0: applied, and caught by "mapping: a property the material lacks reads 0…" [90m(13840.921ms)[39m[39m
+[32m✔ mutation L3 the multilayer R and G scales are swapped: applied, and caught by "mapping: ksMultilayer takes…" [90m(13733.3093ms)[39m[39m
+[32m✔ mutation L4 ksPerPixelNM falls to ksPerPixel: applied, and caught by "mapping: the shader picks the program…" [90m(13947.0585ms)[39m[39m
+[32m✔ mutation L5 the renderer never sets ksSpecular: applied, and caught by "renderer: an AC material…" [90m(14478.5079ms)[39m[39m
+[32m✔ mutation L6 every sampler gets the white texel: applied, and caught by "renderer: a named texture is uploaded…" [90m(13797.7617ms)[39m[39m
+[32m✔ mutation L7 the multilayer scales never reach the shader: applied, and caught by "renderer: the multilayer scales…" [90m(13757.3805ms)[39m[39m
+[32m✔ mutation L8 textures are never deleted: applied, and caught by "renderer: a texture no longer drawn…" [90m(13877.9822ms)[39m[39m
+[32m✔ mutation L9 a shader loses a uniform declaration: applied, and caught by "shaders: every uniform the renderer sets…" [90m(13782.6038ms)[39m[39m
+[32m✔ mutation L10 an untextured set slot replaces the exported material: applied, and caught by "textured: an untextured floor…" [90m(13856.8465ms)[39m[39m
+[32m✔ mutation L11 the set is ignored: applied, and caught by "textured: a word whose floor names…" [90m(13936.857ms)[39m[39m
+[32m✔ mutation L12 textures are keyed by name, not by the kn5 file: applied, and caught by "textured: the preview's texels…" [90m(13916.358ms)[39m[39m
+[32m✔ mutation L13 the default look is the word colours: applied, and caught by "preview: the AC look is the default…" [90m(13991.9987ms)[39m[39m
+[32m✔ mutation L14 setTextureSet drops the set: applied, and caught by "preview: a texture set with a made floor…" [90m(13743.447ms)[39m[39m
+[32m✔ mutation L15 a property is read from the wrong material: applied, and caught by "list: every mesh the preview draws is in the kn5…" [90m(13862.3829ms)[39m[39m
+[32m✔ mutation L16 L does not change the look (the colour per word is unreachable): applied, and caught by "preview: L toggles the look…" [90m(13885.3022ms)[39m[39m
+[32m✔ mutation L17 the ties never fade (they hatch the road dark at a distance): applied, and caught by "renderer: the ties fade out…" [90m(14051.694ms)[39m[39m
+[32m✔ mutation L18 the canvas is cleared to the fog colour again: applied, and caught by "renderer: the canvas is cleared to CLEAR…" [90m(13734.1615ms)[39m[39m
+[34mℹ tests 62[39m
+[34mℹ suites 0[39m
+[34mℹ pass 62[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 860286.1148[39m
+== exit 0 · done 2026-09-28T21:45:35.177Z

@@ -1,0 +1,4 @@
+test/*.test.js: tests 837 · pass 831 · fail 0 · todo 6
+app/test/*.test.js: tests 390 · pass 389 · fail 0 · todo 1
+
+[locked.js] exit 0 in 744 s

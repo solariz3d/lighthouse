@@ -1,0 +1,24 @@
+== D277margin C: generate + dump intakes · asked 2026-10-10T18:07:29.612Z · lock held 2026-10-10T18:07:29.648Z · NODE_OPTIONS=--max-old-space-size=4096
+$ bash /c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d277margin/dump.sh
+gen-rc=0
+d046cbb Consonance (generated from e9488fc55a7e)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1015 filtered out; finished in 3.82s
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1015 filtered out; finished in 0.14s
+/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d277margin/dump-gen:
+total 444
+drwxr-xr-x 1 nname 197609      0 Oct 10 12:09 .
+drwxr-xr-x 1 nname 197609      0 Oct 10 12:09 ..
+-rw-r--r-- 1 nname 197609 102019 Oct 10 12:09 librarian.light.md
+-rw-r--r-- 1 nname 197609 141114 Oct 10 12:09 librarian.strict.md
+-rw-r--r-- 1 nname 197609  94752 Oct 10 12:09 pane-C.light.md
+-rw-r--r-- 1 nname 197609 104975 Oct 10 12:09 pane-C.strict.md
+
+/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d277margin/dump-src:
+total 440
+drwxr-xr-x 1 nname 197609      0 Oct 10 12:08 .
+drwxr-xr-x 1 nname 197609      0 Oct 10 12:09 ..
+-rw-r--r-- 1 nname 197609 104732 Oct 10 12:08 librarian.light.md
+-rw-r--r-- 1 nname 197609 141218 Oct 10 12:08 librarian.strict.md
+-rw-r--r-- 1 nname 197609  89026 Oct 10 12:08 pane-C.light.md
+-rw-r--r-- 1 nname 197609 104755 Oct 10 12:08 pane-C.strict.md
+== exit 0 · done 2026-10-10T18:09:49.424Z

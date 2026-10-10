@@ -1,0 +1,3 @@
+const fs=require('fs'),path=require('path');const W=process.argv[2];const R=require(path.join(W,'consonance/tools/consumer-relabel.js'));
+const T=fs.readFileSync(path.join(W,R.FORK_TEMPLATE),'utf8');const F=R.fillFork(T,{sha:'ea4f5bcf',date:'2026-10-08'});const kl=t=>t.split(/\r?\n/).filter(l=>/keeper/i.test(l));
+for(const rel of Object.keys(R.SITES)){const src=fs.readFileSync(path.join(W,R.SOURCE_OF[rel]||rel),'utf8');try{const o=R.relabel(rel,src,{fork:F});const left=kl(o.text).filter(l=>!kl(F).includes(l));console.log(rel,'before',kl(src).length,'after',left.length,'edits',o.edits.length);}catch(e){console.log(rel,'ERR',e.message)}}

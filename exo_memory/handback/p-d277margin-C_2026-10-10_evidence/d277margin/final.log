@@ -1,0 +1,101 @@
+== D277margin C: gen3 + intake_light + isolated mutants · asked 2026-10-10T18:25:52.688Z · lock held 2026-10-10T18:25:52.729Z · NODE_OPTIONS=--max-old-space-size=4096
+$ bash /c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d277margin/final.sh
+gen3-rc=0
+c5006d0 Consonance (generated from b59f01d6dac5)
+=== intake_light, c-d277margin-wt
+test intake_light_tests::dump_intakes_for_measure ... ignored
+test intake_light_tests::light_caps_hold_whatever_the_brief_frees_and_strict_is_unchanged ... ok
+test intake_light_tests::the_switch_is_the_gates_key_and_absent_is_strict ... ok
+test intake_light_tests::light_the_shelf_carries_a_fixed_set_and_never_backfills ... ok
+test intake_light_tests::key_absent_the_librarian_intake_is_todays ... ok
+LIBRARIAN INTAKE strict 141218 B, light 104732 B
+LIBRARIAN DROP index 40799 B, bodies 0 B; light-only 2645 B
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... ok
+test intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists ... ok
+PANE INTAKE strict 104755 B, light 89026 B
+PANE DROP memory 10793 B, pointer 570 B, optional growth 0 B
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... ok
+test intake_light_tests::key_absent_the_pane_intake_is_todays ... ok
+test result: ok. 8 passed; 0 failed; 1 ignored; 0 measured; 1007 filtered out; finished in 2.19s
+=== intake_light, c-d277margin-gen3
+test intake_light_tests::dump_intakes_for_measure ... ignored
+test intake_light_tests::light_caps_hold_whatever_the_brief_frees_and_strict_is_unchanged ... ok
+test intake_light_tests::the_switch_is_the_gates_key_and_absent_is_strict ... ok
+test intake_light_tests::light_the_shelf_carries_a_fixed_set_and_never_backfills ... ok
+test intake_light_tests::key_absent_the_librarian_intake_is_todays ... ok
+LIBRARIAN INTAKE strict 141114 B, light 102034 B
+LIBRARIAN DROP index 1642 B, bodies 38913 B; light-only 0 B
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... ok
+test intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists ... ok
+test intake_light_tests::key_absent_the_pane_intake_is_todays ... ok
+PANE INTAKE strict 104975 B, light 94752 B
+PANE DROP memory 10793 B, pointer 570 B, optional growth 0 B
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... ok
+test result: ok. 8 passed; 0 failed; 1 ignored; 0 measured; 1007 filtered out; finished in 0.48s
+=== BASELINE source: coarse checks off, no mutant ( 1 file changed, 4 insertions(+), 4 deletions(-))
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... ok
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... ok
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 1014 filtered out; finished in 1.36s
+restored: 0 dirty
+=== P1 source (coarse off): light memory takes the strict branch ( 1 file changed, 5 insertions(+), 5 deletions(-))
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... ok
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... FAILED
+thread 'intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room' (23596) panicked at src\main.rs:8271:9:
+light 99249 B is not strict 104755 B less its memory section (10793 B), plus the pointer (0 B) and the optional briefs' growth (0 B)
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 1014 filtered out; finished in 1.24s
+restored: 0 dirty
+=== P2 source (coarse off): light memory adds the strict fallback beside the pointer ( 1 file changed, 5 insertions(+), 4 deletions(-))
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... ok
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... FAILED
+thread 'intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room' (23712) panicked at src\main.rs:8272:9:
+light 99818 B is not strict 104755 B less its memory section (10793 B), plus the pointer (569 B) and the optional briefs' growth (0 B)
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 1014 filtered out; finished in 1.39s
+restored: 0 dirty
+=== L1 source (coarse off): the light librarian shelf is the strict walk ( 1 file changed, 5 insertions(+), 5 deletions(-))
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... FAILED
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... ok
+thread 'intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room' (26612) panicked at src\main.rs:8229:9:
+light 141218 B is not strict 141218 B less its index (40799 B) and the bodies light drops (0 B), plus light's own notes (0 B) and shelf apparatus (<= 6000 B)
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 1014 filtered out; finished in 1.49s
+restored: 0 dirty
+=== L2 source (coarse off): the light shelf carries every room file ( 1 file changed, 5 insertions(+), 5 deletions(-))
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... FAILED
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... ok
+thread 'intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room' (19560) panicked at src\main.rs:8229:9:
+light 25716756 B is not strict 141218 B less its index (40799 B) and the bodies light drops (0 B), plus light's own notes (2508793 B) and shelf apparatus (<= 6000 B)
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 1014 filtered out; finished in 3.34s
+restored: 0 dirty
+=== BASELINE generated: coarse checks off, no mutant ( 1 file changed, 4 insertions(+), 4 deletions(-))
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... ok
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... ok
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 1014 filtered out; finished in 0.06s
+restored: 0 dirty
+=== P1 generated (coarse off): light memory takes the strict branch ( 1 file changed, 5 insertions(+), 5 deletions(-))
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... ok
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... FAILED
+thread 'intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room' (8532) panicked at src\main.rs:8272:9:
+light 104975 B is not strict 104975 B less its memory section (10793 B), plus the pointer (0 B) and the optional briefs' growth (0 B)
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 1014 filtered out; finished in 0.05s
+restored: 0 dirty
+=== P2 generated (coarse off): light memory adds the strict fallback beside the pointer ( 1 file changed, 5 insertions(+), 4 deletions(-))
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... ok
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... FAILED
+thread 'intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room' (7788) panicked at src\main.rs:8273:9:
+light 105544 B is not strict 104975 B less its memory section (10793 B), plus the pointer (569 B) and the optional briefs' growth (0 B)
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 1014 filtered out; finished in 0.06s
+restored: 0 dirty
+=== L1 generated (coarse off): the light librarian shelf is the strict walk ( 1 file changed, 5 insertions(+), 5 deletions(-))
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... FAILED
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... ok
+thread 'intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room' (23540) panicked at src\main.rs:8223:17:
+light still carries `CUTOFF.md`, which strict carries and light drops
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 1014 filtered out; finished in 0.05s
+restored: 0 dirty
+=== L2 generated (coarse off): the light shelf carries every room file ( 1 file changed, 5 insertions(+), 5 deletions(-))
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... FAILED
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... ok
+thread 'intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room' (30788) panicked at src\main.rs:8223:17:
+light still carries `CUTOFF.md`, which strict carries and light drops
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 1014 filtered out; finished in 0.05s
+restored: 0 dirty
+== exit 0 · done 2026-10-10T18:28:28.647Z

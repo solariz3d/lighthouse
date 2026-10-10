@@ -1,0 +1,44 @@
+  ok   RED FIRST: syncing ONE file does not register the hooks the keeper excluded
+  ok   RED FIRST: a BARE run honours the exclusion too — the operator is not the control
+  ok   MUTANT 1 — an -Only that filters nothing registers everything, and test 1 catches it
+  ok   MUTANT 2 — drop the Excluded guard and the 2026-09-07 defect returns, and test 2 catches it
+  ok   -Only with a name the manifest does not carry REFUSES and writes nothing
+  ok   -Only is REFUSED with -Check: a report over a subset reads as a report
+  ok   re-pointing sourced-stop.js does not take ready-stop.js with it
+  ok   POSITIVE CONTROL: a fresh install of this repo, checked immediately, is GREEN
+  ok   an installable hook on no manifest entry turns -Check RED and is NAMED
+  ok   a hook declared deliberately unmanaged prints its REASON and is not red
+  ok   an EXCLUDED hook that is live anyway is RED — the ruling is checked, not assumed
+  ok   ON D (D105), both overseers live are EXCLUDED BUT LIVE — the D answer is withdrawn, -Check is RED
+  ok   ON D (D105), both overseers ABSENT are EXCLUDED BY RULING, correctly absent, and -Check is GREEN
+  ok   ON D, stop.js live is STILL EXCLUDED BUT LIVE — the answer named the overseers, not stop.js
+  ok   WHICH PYTHON: with Python39 and Python314 installed, the installer picks Python314 (numeric, not string)
+  ok   WHICH PYTHON: a bare Python3 (no minor digits) counts as 0 and loses to Python39
+  ok   WHICH PYTHON: a single install is still found — the sort changes the ORDER, never the reach
+  ok   D205 RED FIRST: a FRESH PreToolUse whose first entry carries a Matcher yields exactly ONE group (the matcher group), not a stray empty one
+  ok   D205 RED FIRST: an UNMATCHED PreToolUse entry registered AFTER a matcher group lands in a group with NO matcher, never in the matcher group
+  ok   D205: an UNMATCHED entry registered BEFORE the matcher entry gets its matcher-less group, the matcher group stays pure, and there is no third group
+  ok   D205: re-running adds nothing: the file is identical after a second run (no growth, no new empty group)
+  ok   D205 RED FIRST: a stray EMPTY group left by the old installer (the state on D) is removed by the next run, and nothing else changes: the matcher group and every other event are identical
+  ok   D205: an empty group on an event this run does NOT register for is left alone (it prunes only what it touched)
+  ok   D205: a group that holds a real hook is never pruned, even one with no matcher (a hook this script does not manage stays)
+  ok   D205: an unmatched entry joins an EXISTING matcher-less group on its event (it does not make a second one)
+  ok   D205 MUTANT 1: the placeholder group is seeded for EVERY new event again (with the prune off, so the seeding fix is what is measured), and the fresh-PreToolUse test catches it
+  ok   D205 MUTANT 2: an unmatched entry goes to the LAST group again, and the unmatched-after test catches it
+  ok   D205 MUTANT 3: no matcher-less group is made when none exists, and the unmatched-after test catches it
+  ok   D205 MUTANT 4: the prune never removes anything, and the stray-group test catches it
+  ok   D205 MUTANT 5: a prune is not counted as a change, so a run that only prunes writes nothing, and the stray-group test catches it
+  ok   D205 MUTANT 6: the prune reaches events this run did not register for, and the untouched-event test catches it
+  ok   D205 MUTANT 7: the prune removes a group that holds a hook, and the foreign-hook test catches it
+
+32 passed, 0 failed
+[32m✔ consonance\tools\install-only.test.js [90m(24901.8254ms)[39m[39m
+[34mℹ tests 1[39m
+[34mℹ suites 0[39m
+[34mℹ pass 1[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 24906.2985[39m
+exit 0

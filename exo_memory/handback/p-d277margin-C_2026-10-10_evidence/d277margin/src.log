@@ -1,0 +1,37 @@
+== D277margin C: intake_light source + old-gen red · asked 2026-10-10T18:20:25.070Z · lock held 2026-10-10T18:20:25.126Z · NODE_OPTIONS=--max-old-space-size=4096
+$ bash /c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d277margin/src.sh
+--- source, the fix
+     --> src\main.rs:14672:28
+    --> src\cochlea.rs:3004:13
+    --> src\cochlea.rs:3157:13
+     --> src\main.rs:14930:14
+   --> src\main.rs:509:4
+   --> src\mcp.rs:338:5
+test intake_light_tests::dump_intakes_for_measure ... ignored
+test intake_light_tests::the_switch_is_the_gates_key_and_absent_is_strict ... ok
+test intake_light_tests::light_caps_hold_whatever_the_brief_frees_and_strict_is_unchanged ... ok
+test intake_light_tests::light_the_shelf_carries_a_fixed_set_and_never_backfills ... ok
+test intake_light_tests::key_absent_the_librarian_intake_is_todays ... ok
+test intake_light_tests::key_absent_the_pane_intake_is_todays ... ok
+test intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists ... ok
+LIBRARIAN INTAKE strict 141218 B, light 104732 B
+LIBRARIAN DROP index 40799 B, bodies 0 B; light-only 2645 B
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... ok
+PANE INTAKE strict 104755 B, light 89026 B
+PANE DROP memory 10793 B, pointer 570 B, optional growth 0 B
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... ok
+test result: ok. 8 passed; 0 failed; 1 ignored; 0 measured; 1007 filtered out; finished in 6.68s
+--- generated from e9488fc5 (the old test): B's red
+test intake_light_tests::dump_intakes_for_measure ... ignored
+test intake_light_tests::light_caps_hold_whatever_the_brief_frees_and_strict_is_unchanged ... ok
+test intake_light_tests::the_switch_is_the_gates_key_and_absent_is_strict ... ok
+test intake_light_tests::light_the_shelf_carries_a_fixed_set_and_never_backfills ... ok
+test intake_light_tests::key_absent_the_librarian_intake_is_todays ... ok
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... ok
+test intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists ... ok
+test intake_light_tests::key_absent_the_pane_intake_is_todays ... ok
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... FAILED
+thread 'intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room' (30996) panicked at src\main.rs:8210:9:
+light 94752 B is not ~14 KB+ under strict 104975 B
+test result: FAILED. 7 passed; 1 failed; 1 ignored; 0 measured; 1007 filtered out; finished in 0.06s
+== exit 0 · done 2026-10-10T18:20:45.449Z

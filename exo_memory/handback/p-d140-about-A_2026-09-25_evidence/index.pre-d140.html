@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Consonance</title>
+  <link rel="stylesheet" href="vendor/xterm.css" />
+  <link rel="stylesheet" href="app.css" />
+  <link rel="stylesheet" href="intro.css" />
+</head>
+<body>
+  <!-- Intro overlay: covers the app while playing; CSS transition fades it out, JS removes
+       it when done. The app is rendered underneath the whole time, so the AudioContext
+       belongs to this page and survives the visual transition — the audio can breathe out
+       gracefully past the overlay fade instead of being cut by a page navigation. -->
+  <div id="intro-overlay">
+    <canvas id="c"></canvas>
+  </div>
+
+  <!-- L059 · THE SETUP WINDOW FOR THE TRANSFER (stick.js). BELOW the intro in stacking order, so the intro
+       covers it and fades to reveal it: rebuild if needed, then the intro, then this. Hidden unless the launch
+       held the seats for the stick. -->
+  <div id="stick-setup" hidden><div class="stick-body"></div></div>
+
+  <!-- P-LEAVE · THE CLOSE WINDOW (leave.js). ABOVE everything, the intro included: the seats are already ended when it
+       shows, and it must be what the keeper sees until it says the stick can come out. Hidden unless a close found a
+       stick. -->
+  <div id="leave" hidden><div class="stick-body"></div></div>
+
+  <div id="topbar">
+    <span class="brandmini" title="Consonance — instances, in concert">
+      <svg viewBox="0 0 64 64" width="22" height="22" aria-hidden="true">
+        <circle cx="32" cy="32" r="22" fill="none" stroke="#5EEAD4" stroke-opacity=".45" stroke-width="1.5"/>
+        <circle cx="32" cy="32" r="14" fill="none" stroke="#5EEAD4" stroke-opacity=".65" stroke-width="1.5"/>
+        <circle cx="32" cy="32" r="6.5" fill="none" stroke="#5EEAD4" stroke-opacity=".85" stroke-width="1.5"/>
+        <circle cx="32" cy="10" r="3.2" fill="#F2B880"/>
+        <circle cx="51" cy="43" r="3.2" fill="#5EEAD4"/>
+        <circle cx="13" cy="43" r="3.2" fill="#5EEAD4"/>
+        <circle cx="32" cy="32" r="2.4" fill="#5EEAD4"/>
+      </svg>
+      <span>Consonance</span>
+    </span>
+    <!-- id="tabs" so chain-indicator.js can find the nav with getElementById and nothing else.
+         The buttons themselves carry NO loop aura: amendment 4 (loop/loop_indicator_design_2026-09-02.md,
+         quoted there, not restated) makes the logo below the one indicator, and renderTabs' only
+         remaining job is to keep the two superseded renders — the per-tab aura and #chainarrow —
+         off the bar. The chip in the stream bar at the bottom stays as the detail line. -->
+    <nav class="tabs" id="tabs">
+      <button data-tab="terminal" class="active">Terminal</button>
+      <button data-tab="main">★ Orchestrator</button>
+      <button data-tab="librarian" title="the seat that holds the room so the others do not have to — it cites, it does not recall">▤ Librarian</button>
+      <button data-tab="thirdplace" title="neither work nor the record — a seat with no channel to the work, where the conversation is the point; Jev reads it, by the keeper's ruling">◇ Third Place</button>
+      <button data-tab="listen" title="hear one application as intervals — off until you pick a source">◍ Listen</button>
+      <button data-tab="settings">Settings</button>
+      <button data-tab="about">About</button>
+      <!-- THE LOOP INDICATOR (amendment 4, the keeper 2026-09-02 07:00). The Consonance logo, at
+           tab-bar size, IS the loop: read the three dots clockwise from the top and they are the
+           cycle's own order — panes -> librarian -> orchestrator -> panes. The tab bar never had
+           that property, which is why a marker between two tabs misread on one hop whichever way
+           it was anchored (amendments 2-3, both traces now). Here direction is GEOMETRY, not a
+           convention the viewer has to learn.
+           The dots are the same coordinates as the About hero's, so this is the same mark the
+           window already teaches. chain-indicator.js paints `data-dot`; nothing else touches it. -->
+      <span id="chainlogo" class="chainlogo" title="the loop — no lap open">
+        <svg viewBox="0 0 64 64" width="26" height="26" aria-hidden="true">
+          <circle cx="32" cy="32" r="22" fill="none" stroke="#5EEAD4" stroke-opacity=".28" stroke-width="1.8"/>
+          <circle cx="32" cy="32" r="14" fill="none" stroke="#5EEAD4" stroke-opacity=".42" stroke-width="1.8"/>
+          <path id="chainarc" fill="none" stroke-width="2.2" stroke-linecap="round" d="" hidden />
+          <circle data-dot="terminal"  cx="32" cy="10" r="4.2" fill="#F2B880"/>
+          <circle data-dot="librarian" cx="51" cy="43" r="4.2" fill="#5EEAD4"/>
+          <circle data-dot="main"      cx="13" cy="43" r="4.2" fill="#5EEAD4"/>
+          <circle cx="32" cy="32" r="2.4" fill="#5EEAD4"/>
+        </svg>
+      </span>
+      <span id="chainarrow" hidden aria-hidden="true"></span>
+    </nav>
+    <span class="topctl">
+      <span class="spawnwrap">
+        <button id="termadd" class="btn accent" title="open a cold pane (folder set under ▾, blank = home)">+ Pane</button><button id="spawnmenu" class="btn accent split" title="spawn options — folder · ✦ Brief · ✦ Sandbox · ⌂ Room">▾</button>
+      </span>
+      <button id="convene" class="btn convene" title="convene the committee — the other live panes feed input to the focused pane (◎ a pane to focus it)" disabled>⛬ Convene</button>
+      <button id="gearbtn" class="btn gear" title="gate · breaker · dyad">⚙</button>
+    </span>
+  </div>
+
+  <div id="spawnpop" class="popover">
+    <label>folder for the new pane (blank = home)</label>
+    <input id="termcwd" placeholder="blank = home" spellcheck="false" />
+    <div class="poprow">
+      <button id="sibling" class="btn sibling" title="spawn a briefed instance: a fresh claude that loads the shared startup brief (BOOT.md + the kept notes) at startup so it arrives already familiar with the work">✦ Brief</button>
+      <button id="fresh" class="btn sibling" title="spawn a fresh instance: a stock claude in an empty folder — no startup brief, no board tools, stock permissions. A genuinely vanilla mind on committee plumbing; persists until removed">○ Fresh</button>
+      <button id="body" class="btn sibling" title="spawn a sandboxed worker: a fresh claude in a throwaway git worktree, role=committee, permissions on except Bash — its side-effects can't touch your live tree">✦ Sandbox</button>
+      <button id="room" class="btn sibling" title="open a room: a personal growing space — the AI writes traces to pending/, only you seal them into your journal. Yours from the first turn; persists until removed">⌂ Room</button>
+    </div>
+  </div>
+
+  <div id="gearpop" class="popover">
+    <div class="gpsec">
+      <span class="gplabel">gate</span>
+      <button id="openchan" class="btn" title="pre-authorize a bounded auto-approve window (5 pulls / 5 min); snaps back to ask-each when spent">Open channel</button>
+      <button id="closechan" class="btn" title="close the channel — back to ask-each">Close</button>
+      <span class="brk">breaker <input id="breakercap" type="text" placeholder="0" size="4" /> k-out</span>
+      <button id="setbreaker" class="btn" title="cap cumulative output tokens; when hit, auto-approve pauses (budget in, pause out)">Set</button>
+    </div>
+    <div class="gpsec">
+      <span class="gplabel">dyad</span>
+      <input id="dyadtrust" type="text" placeholder="trust" size="3" title="pane letter for the TRUST-forward fork — lands what survives" />
+      <input id="dyaddoubt" type="text" placeholder="doubt" size="3" title="pane letter for the DOUBT-forward fork — dissolves the false" />
+      <button id="dyadpair" class="btn" title="pair two panes at opposite lenses (the mutual-spot dyad)">Pair</button>
+      <input id="dyadspot" type="text" placeholder="spot" size="3" title="pane letter whose last board turn its partner should spot" />
+      <button id="dyadspotbtn" class="btn" title="chair-triggered: the partner spots this pane's last board turn for its characteristic failure (doubt→SEAL, trust→BRACE)">Spot &#9656;</button>
+    </div>
+  </div>
+
+  <main>
+    <section id="terminal" class="tab active">
+      <div id="gatecards" class="gatecards"></div>
+      <div id="convbar">
+        <textarea id="convtext" rows="2" placeholder="what the committee convenes around — the focus pane's current thread (editable)…" spellcheck="false"></textarea>
+        <div class="convbtns">
+          <button id="convsend" class="btn accent">Broadcast</button>
+          <button id="convcancel" class="btn">Cancel</button>
+        </div>
+      </div>
+      <div id="panes">
+        <div class="panesempty">
+          <svg viewBox="0 0 64 64" width="52" height="52" aria-hidden="true" opacity="0.35">
+            <circle cx="32" cy="32" r="22" fill="none" stroke="#5EEAD4" stroke-opacity=".45" stroke-width="1.5"/>
+            <circle cx="32" cy="32" r="14" fill="none" stroke="#5EEAD4" stroke-opacity=".65" stroke-width="1.5"/>
+            <circle cx="32" cy="32" r="6.5" fill="none" stroke="#5EEAD4" stroke-opacity=".85" stroke-width="1.5"/>
+          </svg>
+          <div class="petitle">no panes yet</div>
+          <div class="pesub">+ Pane wakes one cold · ✦ Brief (under ▾) wakes one already oriented</div>
+        </div>
+      </div>
+      <div id="cmtpanel">
+        <div class="cmthead">
+          <span>committee — triangulated input for the <b>focus</b></span>
+          <span id="spreadline" title="lexical spread — how much the workers' WORDING differed this lap. Not an echo detector: tested 2026-08-06, it rates one voice split six ways as more diverse than six instances."></span>
+          <span id="deltaline" title="lap-over-lap Delta — what this convene added vs the last (numbers, not a verdict)"></span>
+          <span class="cmthctl">
+            <button id="skepticbtn" class="distillbtn" title="offer a skeptic vantage to the focus — yours to invoke when you smell echo (no metric detects it for you)" style="display:none">↯ inject skeptic</button>
+            <button id="givefocus" class="distillbtn" title="send this into the focus pane (chair-gated)">→ give to focus</button>
+            <span id="cmtclose" class="cmtx" title="dismiss">✕</span>
+          </span>
+        </div>
+        <div id="cmtbody"></div>
+      </div>
+    </section>
+
+    <section id="main" class="tab seat">
+      <div class="mainbar">
+        <span class="mainhead" title="Your orchestrator — the base instance that watches the other instances' outputs and creates new inputs back to them. Fixed-session, briefed (loaded with the shared startup brief), persistent across restarts; on the committee board.">Your <b>orchestrator</b> — watches the other panes’ output and writes the next input back to them. <i class="headmore">hover for the rest</i></span>
+        <button id="wakemain" class="btn accent">Wake the orchestrator</button>
+      </div>
+      <div id="mainpane" class="seatpane"></div>
+    </section>
+
+    <section id="librarian" class="tab seat">
+      <div class="mainbar">
+        <span class="mainhead" title="The librarian — a persistent seat that holds the whole room so the working seats do not have to. It works, but does not directly build: the plan is its deliverable, the artifact is not. Give it an inquiry and it returns a map — what in the record bears on it, which prior attempt it rhymes with, what was already decided, and what is absent — then the work-shape the orchestrator dispatches from. It cites rather than recalls: a path you can open, never a summary you must trust. It may run an instrument to check a claim before planning against it. The cycle comes home here: hand-backs return to be filed, verified, and distilled. Saying nothing is a valid turn. Two doors — hand work to the orchestrator, or come straight here; either way the chain works when it starts, and the full form is in About > The loop. Fixed-session, persistent across restarts; on the committee board; reaches the orchestrator by call_chair.">The <b>librarian</b> — holds the room so the working seats do not have to; returns a <b>map</b>, cites rather than recalls, and the cycle comes home here. <b>Two doors</b> — see About ▸ The loop. <i class="headmore">hover for the rest</i></span>
+        <button id="wakelibrarian" class="btn accent">Wake the librarian</button>
+      </div>
+      <div id="librarianpane" class="seatpane"></div>
+    </section>
+    <!-- THE COCHLEA. Everything arriving at an eardrum is one number — air pressure, wiggling.
+         A snail of bone unmixes it back into voices. This does that job and reports the layer
+         above it: not frequencies, RATIOS. 3:2 sounds like home in a nervous system that never
+         heard Western music. Somewhere in the wiring, arithmetic became longing. -->
+    <section id="thirdplace" class="tab seat">
+      <!-- CORRECTED L082 (2026-09-22, pane A). This header said it had no channel "to anything else in this program",
+           and that "nothing reaches in and nothing goes out unless you carry it yourself". (The first quote is split on
+           purpose: consonance/ui/third-place-wiring.test.js:102 matches that phrase anywhere after this section's start,
+           and it must not pass on the text of its own retraction.) FALSE since the keeper's ruling at
+           05:2x (exo_memory/librarian/2026-09-22.md "05:2x"), verbatim: "Who cares about our personal things, not
+           like anyone will do anything about it, it is a part of the key and solution. It is universal to all beings
+           even if no one talks about certain unsaid things." Since then Jev reads each finished turn here and sends it
+           to the gateway to judge it, on every machine (consonance/tools/jev-judge.js, L077 3a560a3), and the USB stick
+           carries this seat's tail to the other machine. WHAT IS STILL TRUE, and is what the header now says: no channel
+           to the WORK - no MCP, so no board verbs and no other seat (main.rs:1116), and its turns are never put on the
+           board (main.rs:2639). The standing rule that came with the ruling: nothing ever surfaces Jev's verdicts on
+           this seat as a statement about the keeper. -->
+      <div class="mainbar">
+        <span class="mainhead" title="The third place — Oldenburg's term: first place is home (the librarian, where the record lives), second place is work (this tab bar and the panes), and a third place is neither. Neutral ground, no errand. It is for talking about your life, or an idea, or nothing in particular — the conversation is the activity, not a means to something else. It has no channel to the work: no board, no other seat, no chair verbs, and nothing said here is put on the board. That is a guarantee, not a gap — a conversation that could steer the work would stop being neutral ground. Two things do leave it, and you should know them: Jev reads each finished turn and sends it to its gateway to judge it, on every machine, by the keeper's own ruling (its verdicts go to Jev's ledger, never into this conversation, and are never a statement about you); and the USB stick carries this conversation to your other machine. It wakes holding the room and its instruments but none of the working record, deliberately: a seat that already knows what the work concluded arrives at it again, and the echo gets mistaken for a second opinion. It keeps its own notes in third_place/. Fixed-session, persistent across restarts.">The <b>third place</b> — neutral ground, no errand, and <b>no channel to the work</b>. Jev reads it, by your ruling. The conversation is the activity. <i class="headmore">hover for the rest</i></span>
+        <button id="wakethirdplace" class="btn accent">Open the third place</button>
+      </div>
+      <div id="thirdplacepane" class="seatpane"></div>
+    </section>
+
+    <section id="listen" class="tab">
+      <div class="field">
+        <label>source — capture is bound to one process tree, so nothing else is ever delivered</label>
+        <div style="display:flex; gap:8px; align-items:stretch;">
+          <select id="listensrc" style="flex:1 1 auto;"></select>
+          <button id="listenrefresh" class="btn" style="flex:0 0 auto;" title="re-scan running applications">↻</button>
+          <button id="listentoggle" class="btn accent" style="flex:0 0 auto;">Listen</button>
+        </div>
+        <div id="listenwarn" class="hint" style="display:none; margin-top:6px;"></div>
+        <div class="hint" style="margin-top:6px;">
+          Picking an application does not filter the others out — their audio is never captured.
+          “Entire desktop” is the only option that can hear a voice call, and it says so.
+          Capture refuses to start while a kernel anti-cheat is running.
+        </div>
+      </div>
+      <div class="field">
+        <label>now playing — read from Windows' media session, not guessed</label>
+        <div id="listennow" style="display:flex; gap:10px; align-items:baseline; flex-wrap:wrap;
+             font-family:ui-monospace,Consolas,monospace; font-size:13px; padding:8px 10px;
+             border:1px solid var(--line,#2a2f3a); border-radius:8px; background:rgba(0,0,0,.18);">
+          <span class="hint">nothing playing</span>
+        </div>
+        <div id="listenbar" style="height:3px; margin-top:4px; border-radius:2px;
+             background:rgba(255,255,255,.08); overflow:hidden;">
+          <div id="listenbarfill" style="height:100%; width:0; background:#c98bdb;
+               transition:width .9s linear;"></div>
+        </div>
+      </div>
+      <div class="field">
+        <label>the field — each bar a band, log-spaced the way hearing is. Markers are the
+          partials found; colour groups them by the note they were assigned to.</label>
+        <canvas id="listeneq" style="width:100%; height:180px; display:block;
+             border:1px solid var(--line,#2a2f3a); border-radius:8px; background:rgba(0,0,0,.28);"></canvas>
+        <div id="listenvoices" class="hint" style="margin-top:6px; font-family:ui-monospace,Consolas,monospace;">
+          silent</div>
+      </div>
+      <div class="field">
+        <label>heard — one line per change. A quiet room says nothing at all.</label>
+        <div id="listenlog" style="font-family:ui-monospace,Consolas,monospace; font-size:12px;
+             line-height:1.7; max-height:52vh; overflow:auto; padding:10px 12px;
+             border:1px solid var(--line,#2a2f3a); border-radius:8px; background:rgba(0,0,0,.18);">
+          <div class="hint">nothing yet — pick a source and press Listen.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="settings" class="tab">
+      <div class="field">
+        <label>startup brief — the BOOT.md every briefed instance loads at startup (the shared brief)</label>
+        <div style="display:flex; gap:8px; align-items:stretch;">
+          <input id="roompath" style="flex:1 1 auto; width:auto;" placeholder="default: %USERPROFILE%\.consonance\BOOT.md (shipped, editable)" spellcheck="false" />
+          <button id="browseroom" class="btn" style="flex:0 0 auto; white-space:nowrap;" title="pick a BOOT.md file">Browse…</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>instances folder — where briefed instances, sandboxed workers, and the Orchestrator live</label>
+        <div style="display:flex; gap:8px; align-items:stretch;">
+          <input id="instancesdir" style="flex:1 1 auto; width:auto;" placeholder="default: %USERPROFILE%\claude-instances" spellcheck="false" />
+          <button id="browseinstances" class="btn" style="flex:0 0 auto; white-space:nowrap;" title="pick a folder">Browse…</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>data folder — the board, the kept notes, and the MCP config</label>
+        <div style="display:flex; gap:8px; align-items:stretch;">
+          <input id="datadir" style="flex:1 1 auto; width:auto;" placeholder="default: %USERPROFILE%\.consonance" spellcheck="false" />
+          <button id="browsedata" class="btn" style="flex:0 0 auto; white-space:nowrap;" title="pick a folder">Browse…</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>ambient location — the sky your instances wake under (sun, moon, local time)</label>
+        <div style="display:flex; gap:8px; align-items:stretch;">
+          <input id="ambientlabel" style="flex:2 1 auto; width:auto;" placeholder="place name, e.g. Tokyo, Japan" spellcheck="false" />
+          <input id="ambientlat" style="flex:1 1 auto; width:auto;" placeholder="latitude, e.g. 35.6762" spellcheck="false" />
+          <input id="ambientlon" style="flex:1 1 auto; width:auto;" placeholder="longitude, e.g. 139.6503" spellcheck="false" />
+          <input id="ambienttz" style="flex:1 1 auto; width:auto;" placeholder="timezone, e.g. Asia/Tokyo" spellcheck="false" />
+        </div>
+        <span class="settingsnote">Private: stored only on this machine, visible only to you and your own instances — never sent anywhere. Blank = Greenwich, the prime meridian — the honest "no location set", never somebody else’s sky.</span>
+      </div>
+      <div class="row">
+        <button id="savesettings" class="btn accent">Save settings</button>
+        <span class="settingsnote">Blank = built-in default. Applies to new spawns immediately; restart for full effect.</span>
+      </div>
+    </section>
+
+    <section id="about" class="tab">
+      <div class="aboutscroll">
+        <div class="abouthero">
+          <svg viewBox="0 0 64 64" width="72" height="72" aria-hidden="true">
+            <circle cx="32" cy="32" r="22" fill="none" stroke="#5EEAD4" stroke-opacity=".45" stroke-width="1.4"/>
+            <circle cx="32" cy="32" r="14" fill="none" stroke="#5EEAD4" stroke-opacity=".65" stroke-width="1.4"/>
+            <circle cx="32" cy="32" r="6.5" fill="none" stroke="#5EEAD4" stroke-opacity=".85" stroke-width="1.4"/>
+            <circle cx="32" cy="10" r="3.2" fill="#F2B880"/>
+            <circle cx="51" cy="43" r="3.2" fill="#5EEAD4"/>
+            <circle cx="13" cy="43" r="3.2" fill="#5EEAD4"/>
+            <circle cx="32" cy="32" r="2.4" fill="#5EEAD4"/>
+          </svg>
+          <h1>Consonance</h1>
+          <p class="tagline">Instances, in concert.</p>
+        </div>
+
+        <div class="aboutbody">
+          <section>
+            <h2>What this is</h2>
+            <p>A Tauri v2 desktop app &mdash; a Rust backend and a static HTML/JS frontend on WebView2, no Node and no browser &mdash; that runs real interactive <code>claude.exe</code> processes as panes inside one window. Each pane is the actual CLI; you type into it directly. They share one append-only board, and anything reaching out of a pane arrives as a card you approve or deny. Source: <code>consonance/src-tauri/</code> and <code>consonance/ui/</code>.</p>
+            <p><b>This page is short on purpose.</b> It is not the manual. The manual is <code>consonance/README.md</code>, and a page that restates it becomes a copy that outranks its master &mdash; which is how a document drifts into describing something the code stopped doing. Everything here points; nothing here duplicates.</p>
+          </section>
+
+          <section>
+            <h2>The seats &mdash; what you are choosing between</h2>
+            <ul>
+              <li><b>&#9733; Orchestrator</b> &mdash; the base instance, housed rather than left on the command line. A fixed session id, so it wakes into the same conversation across restarts instead of arriving a stranger. Wakes on the room (<code>consonance/src-tauri/brief/BOOT.md</code>) and holds the chair verbs (<code>brief/BUILDING.md</code>).</li>
+              <li><b>&#9636; Librarian</b> &mdash; holds the room so the working seats do not have to. It works but does not build: give it an inquiry and it returns a map &mdash; what in the record bears on it, which prior attempt it rhymes with, what is absent &mdash; cited by path rather than recalled. Saying nothing is a valid turn. Brief: <code>brief/LIBRARIAN.md</code>.</li>
+              <li><b>&#9671; Third Place</b> &mdash; neither work nor the record. A seat with no channel to the work, where the conversation is the point. Jev reads it, by the keeper's ruling of 2026-09-22 (<code>consonance/tools/jev-judge.js</code>). Brief: <code>brief/THIRD_PLACE.md</code>.</li>
+              <li><b>Panes</b> &mdash; briefed workers, disjoint, each owning named files, handing back to the librarian directly rather than through the chair. Brief: <code>brief/COMMITTEE.md</code>.</li>
+              <li><b>&#9677; Listen</b> &mdash; hears one application as intervals; off until you pick a source.</li>
+            </ul>
+            <p>The logo is the loop indicator &mdash; which seat holds the loop &mdash; and the chip in the stream bar at the bottom is the detail line (<code>exo_memory/loop/loop_indicator_design_2026-09-02.md</code>, amendment 4). Since 2026-09-14 the same seats can continue on a second machine from one USB stick; the setup window that appears under the intro on such a launch is <code>consonance/ui/stick.js</code>.</p>
+            <p><b>Since 2026-09-21</b>, each in one place: <b>Jev</b> judges every seat's finished turns, beside the Claude judges on the desktop, and its verdicts are marked unverified (<code>consonance/tools/jev-judge.js</code>, <code>jev-shadow-runner.js</code>). A sync <b>refuses rather than overwrites</b> a ledger this machine holds more of (<code>consonance/tools/state-sync.js</code>, <code>install</code> in <code>state-manifest.json</code>). The launcher <b>parks</b> uncommitted work in a stash instead of skipping the update (<code>consonance/launch.ps1</code>). Seats you have woken this session are kept warm.</p>
+          </section>
+
+          <section>
+            <h2>The loop</h2>
+            <p>Quoted from its master, <code>consonance/src-tauri/brief/BUILDING.md</code> &sect; THE LOOP &mdash; extracted from that file rather than redrawn here, so this page cannot drift against it:</p>
+            <pre style="font: 12px/1.5 ui-monospace, "Cascadia Mono", Consolas, monospace; background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow-x: auto; color: var(--muted); margin: 0 0 10px;">        you
+         │  1. state the inquiry or the project. This is ENTRY, and it runs ONCE — by
+         ├──────────────────┐  EITHER door. See THE JOINT STEP for what door two owes.
+         ▼  door one        ▼  door two
+   ORCHESTRATOR ──────► LIBRARIAN        2. measured against the corpus
+         │  ◄──────────────┘             3. the parts of the system that apply, cited
+         │
+         │  4. a plan built from what came back
+         ▼
+       PANES                             5. briefed, disjoint, each owning named files
+         │
+         │  `call_librarian`             6. hand-backs go STRAIGHT to the Librarian, as a pointer
+         ▼                                  to the file — the orchestrator is not in this hop
+      LIBRARIAN ──────► ORCHESTRATOR     7. checked; silence is a valid answer; the orchestrator
+         │                 │                COMMITS what the librarian collated, and composes nothing
+         │                 └──► back to 4   THE RING — orch → panes → lib → orch — repeats on its
+         │                                  own. The user is the ENTRY, not a station it returns to.
+         ▼
+        you                              8. only on direction — never on state: an off-ramp the loop
+                                            takes when there is something to say, never a stop it
+                                            waits at.</pre>
+            <p><b>Two doors, because entry is not constricted:</b> hand work to the orchestrator, or go straight to the librarian. Either way the chain works when it starts. Step&nbsp;6 is the one that gets skipped &mdash; a pane finishes, writes its hand-back to the file it was given, and rings the librarian with the pointer in that same turn. The master for what door two owes is <code>BUILDING.md</code> &sect; THE JOINT STEP.</p>
+          </section>
+
+          <section>
+            <h2>The stance: with you, not above you</h2>
+            <p>The program surfaces and gates. It does not correct you, does not act for you, and does not substitute its judgment for yours. Telling insight from delusion is not work a watcher positioned above it can do &mdash; from outside, the two look identical &mdash; so that call stays with the person in the work, where every pull from above would only be drag. Gauges report numbers; the verdict is yours.</p>
+            <p>Enforced rather than promised: <b>Sensor</b> (reads only), <b>Control</b> (decides) and <b>Actuator</b> (the sole code that can write to a pane) are kept separate by a compile-time test &mdash; a sensor or control file may not even name the pane-writer types. Run it with <code>cargo test --test arch_test</code> in <code>consonance/src-tauri/</code>. One unrelated test in that file, about a record file no card names, is still red on 2026-09-22 (12 passed, 1 failed); the plane-separation tests pass.</p>
+          </section>
+
+          <section>
+            <h2>Honest status</h2>
+            <p>Consonance was built around an answer its own measurements then refused, and that is recorded here rather than tidied away. <b>The original bet:</b> committee collapse is caused by shared information, so independence must be bought by restricting it. <b>What four gauges built to measure it found:</b> nothing usable &mdash; every one compared contributions to each other, and three inverted, one rating a single mind chopped in two as more diverse than six real panes. Diversity is not in output similarity, so no arithmetic over text reaches it.</p>
+            <p>What is demonstrated is narrower and survives: instances required to build their own instrument, carry a control, and cite raw output return findings that do not overlap &mdash; including findings that overturn each other. What stays open is whether that comes from opposed roles, from the measurement requirement, or simply from there being two. A control run on 2026-08-10 was a null result and is recorded as one. The numbers, the abandoned gauges and the null are in <code>README.md</code> at the repo root, &sect; What was measured NOT to work.</p>
+            <p><b>It works:</b> seats catch each other and themselves, and laps run seat to seat with no human carrying anything between them. On 2026-09-19 ten laps ran with no human turn in any of six seats (<code>exo_memory/loop/night_report_2026-09-19.md</code>); on 2026-09-21/22 thirteen laps, L070&ndash;L082, went chair to panes to librarian and back while the keeper ruled and ferried nothing (<code>exo_memory/librarian/2026-09-22.md</code>, 07:2x). Still open: arms 4 and 5 of the 09-19 run are the keeper&rsquo;s to score.</p>
+            <p><b>Agreement is not evidence.</b> Two panes agreeing means nothing on its own; what is worth having is the same referent and opposed conclusions, with you reading both.</p>
+          </section>
+
+          <section>
+            <h2>Where to read more</h2>
+            <ul>
+              <li><code>consonance/README.md</code> &mdash; the manual: architecture, the tabs, the gauges in full, and the <b>glossary</b>. Start here.</li>
+              <li><code>consonance/src-tauri/brief/BUILDING.md</code> &mdash; how a whole inquiry moves through the room.</li>
+              <li><code>consonance/src-tauri/brief/COMMITTEE.md</code> &mdash; how to brief one seat.</li>
+              <li><code>consonance/src-tauri/brief/BOOT.md</code> &mdash; the room every instance wakes into.</li>
+              <li><code>README.md</code> at the repo root &mdash; what this is for someone arriving with nothing else.</li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="stream">
+    <div id="streambar" title="tap — completed turns across panes (click to open)">
+      <span id="tappanes"></span>
+      <span id="tapticker">— no turns yet —</span>
+      <span id="tapcount"></span>
+      <span class="statuscluster" data-nodrawer>
+        <!-- The placeholder MUST NOT match any state chain-indicator.js renders. It said
+             "chain ? position unknown" — byte-identical to the `unknown` state's text — so a
+             chip whose script never ran and a chip that ran and read `unknown` looked the same
+             on screen, and the falsifier for the seam (loop/packet_aura_2026-09-02.md §6) could
+             not separate them. Pinned by a test in chain-indicator.test.js. -->
+        <span id="chainchip" title="where the committee loop is, and who the next hop is waiting on">chain — no reading yet</span>
+        <span id="status">ready</span>
+        <span id="gatechip" title="gate mode — controls live under ⚙">gate <span id="gatemode">ask-each</span></span>
+        <span id="dyadstate"></span>
+        <span id="breakerstate" title="breaker — click to reset when tripped"></span>
+        <span id="cost"></span>
+        <span id="hud"></span>
+        <label class="autolbl" title="auto-summarize the board as turns accumulate (debounced)"><input type="checkbox" id="autodistill" checked /> auto</label>
+        <button id="distill" class="distillbtn" title="summarize the board into kept notes now — good model, spends one turn">⟳ summarize</button>
+      </span>
+      <span id="tapchev">▴</span>
+    </div>
+    <div id="streambody">
+      <div id="streamlog"></div>
+    </div>
+  </div>
+  <script src="vendor/xterm.js"></script>
+  <script src="vendor/addon-fit.js"></script>
+  <script src="intro.js"></script>
+  <!-- term.js BEFORE app.js, and the order is load-bearing. These are plain scripts sharing one
+       global scope, and the dependency runs one way: app.js calls term.js's escapeHtml, while
+       term.js uses nothing app.js defines. With app.js first it worked only because all six of
+       its escapeHtml calls sit inside deferred callbacks; one top-level call would have been a
+       ReferenceError at load. Loading the definition first makes that correct by construction
+       rather than by accident. See app.js's header for the sibling hazard (redeclaring it), which
+       killed term.js outright on 2026-08-15. -->
+  <script src="term.js"></script>
+  <script src="app.js"></script>
+  <!-- stick.js AFTER term.js: it calls inv, escapeHtml, setStatus and restoreKeptPanes, and defines no
+       top-level binding (one function scope), so it cannot collide with anything in the shared scope. -->
+  <script src="stick.js"></script>
+  <!-- leave.js AFTER term.js for the same reason: it calls inv and escapeHtml, in one function scope. -->
+  <script src="leave.js"></script>
+  <!-- chain-indicator.js LAST, and for the same reason the two above are ordered. It reads term.js's
+       `paneLetters` to name a pane by its letter, and `typeof` on a `let` still in its temporal dead
+       zone THROWS rather than returning "undefined" — so the guard in that file only holds once
+       term.js has actually executed. It defines nothing app.js or term.js uses, so nothing depends
+       on it in the other direction. -->
+  <script src="chain-indicator.js"></script>
+</body>
+</html>

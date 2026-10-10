@@ -1,0 +1,38 @@
+[32m✔ MATCHER: the registered matcher (install.ps1) is exactly the two hand-back tools, in the docs' exact-name syntax [90m(2.026ms)[39m[39m
+[32m✔ MATCHER: the hook acts only on the two tools: every other tool name is a silent no-op (no worker, no row, no output) [90m(557.6446ms)[39m[39m
+[32m✔ ALLOW IS IMMEDIATE: a ring on either tool returns in well under 1.5 s with exit 0 and NO output (no deny, no ask) while a slow worker is still running; the worker still runs, once [90m(7202.5473ms)[39m[39m
+[32m✔ NEVER BLOCKS: no input the hook is given makes it print a decision or exit non-zero [90m(270.7799ms)[39m[39m
+[32m✔ FAIL OPEN: an unwritable data dir, an unresolvable one, and a missing worker all still allow, with no output [90m(105.4953ms)[39m[39m
+[32m✔ FAIL OPEN: a worker that dies at once leaves a lock that the NEXT ring finds dead (pid gone) and replaces: a ring is not skipped forever [90m(100.1656ms)[39m[39m
+[32m✔ FAIL OPEN: a message with no text writes a skipped-no-text row and nothing else [90m(27.0694ms)[39m[39m
+[32m✔ LOCK: a live lock gives skipped-busy (a row, no worker, no queue) [90m(339.2099ms)[39m[39m
+[32m✔ LOCK: a lock whose pid is dead, or older than 180 s, is stale and is replaced [90m(107.2335ms)[39m[39m
+[32m✔ LOCK: an unreadable lock file is stale [90m(53.1828ms)[39m[39m
+[32m✔ LOCK: two rings at the same instant start exactly ONE worker; the other is skipped-busy [90m(1582.1583ms)[39m[39m
+[32m✔ LOCK: acquire is exclusive, release removes only the holder's own lock [90m(6.0431ms)[39m[39m
+[32m✔ REENTRANCY: the hook exits at once, silently, with no worker and no row, when CONSONANCE_SECOND_READER_RUN=1 (the worker's own environment) [90m(338.9164ms)[39m[39m
+[32m✔ REENTRANCY: the worker the hook starts carries CONSONANCE_SECOND_READER_RUN=1 [90m(55.2936ms)[39m[39m
+[32m✔ REENTRANCY: the model child is started with --safe-mode (no hooks), --strict-mcp-config and no --mcp-config (no MCP servers), --tools "" and the guard variable; never --bare (it ignores the subscription login) [90m(3.9305ms)[39m[39m
+[32m✔ DREAM GATE: with CONSONANCE_DREAM set the hook does nothing at all [90m(331.3449ms)[39m[39m
+[32m✔ QS: the question sent is the plan's registered text, VERBATIM (compared with the plan file) [90m(0.8039ms)[39m[39m
+[32m✔ TURN: only the tool calls and results after the seat's LAST prompt, in order; the ring's own call and earlier turns are left out; a tool-result user message is not a prompt [90m(0.3608ms)[39m[39m
+[32m✔ TURN: a user message that carries a tool result AND a text block (a reminder riding with it) is still the harness answering a call, not the seat prompt [90m(0.1437ms)[39m[39m
+[32m✔ TURN: results are clipped and the whole is bounded (calls are always kept, the oldest results are reduced first) [90m(0.389ms)[39m[39m
+[32m✔ ROW: a good answer writes ONE ok row with the plan's fields, the tokens, the model, and the ring's sha; the message text is NOT in the log [90m(4.2366ms)[39m[39m
+[32m✔ ROW: a flag quote that is not in the message is dropped (counted, not stored), an empty list is a normal answer, and at most 20 flags are kept [90m(5.5262ms)[39m[39m
+[32m✔ ROW: a code-fenced answer and one with prose around the JSON are read; a CLI reply with is_error is an error row [90m(5.5871ms)[39m[39m
+[32m✔ ERRORS: no transcript, a non-zero exit, bad JSON, no flags array, a spawn that throws, and a spawn error each give ONE error row (status error) and release the lock [90m(14.0872ms)[39m[39m
+[32m✔ ERRORS: a model that never answers is killed at the timeout, gives an error row "timeout", and the lock is released [90m(63.7206ms)[39m[39m
+[32m✔ ERRORS: the REAL worker process, started the way the hook starts it with a job whose transcript is missing, writes the error row, releases the lock and exits 0 (no model call is reached) [90m(59.2337ms)[39m[39m
+[32m✔ SECRET SCAN: scrub removes sk-or-, sk-ant-, vck_ (and the other named shapes) from anything it is given [90m(0.1828ms)[39m[39m
+[32m✔ SECRET SCAN: a key in the message never reaches the model, the stored flags, or an error row [90m(4.4371ms)[39m[39m
+[32m✔ SECRET SCAN: the hook's own rows (skipped-busy) carry the ring's sha and length class only: no text, no key [90m(29.1417ms)[39m[39m
+[34mℹ tests 29[39m
+[34mℹ suites 0[39m
+[34mℹ pass 29[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 11328.5814[39m
+exit 0

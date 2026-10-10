@@ -1,0 +1,233 @@
+W+E at −89°: 0.037024 m; dot with the heading 0.999962; vertical 3.23e-4 m
+W+E direction swing per 1° of pitch, −80…−89°: at most 0.50°
+[31m✖ every one of the 26 key combinations moves 1.0× a straight line, in METRES, at pitches −89° … +89° (through the keys) [90m(257.4805ms)[39m[39m
+[31m✖ W+E at −89°: 3.0 m a frame (was 0.037 m), sliding along the view HEADING, level [90m(0.8059ms)[39m[39m
+[31m✖ Shift ramp still applies: at −60°, W+E+Shift moves exactly as far as W+Shift every frame for 8 frames (×4 → ×20) [90m(0.8602ms)[39m[39m
+[32m✔ zero input is zero: no key held → no move; move(0,0,0) is a no-op; W+S released → still [90m(0.6215ms)[39m[39m
+[32m✔ the direction near the cancel is CONTINUOUS: W+E from −80° to −89° in 1° steps turns by less than 20° per degree of pitch [90m(4.1661ms)[39m[39m
+[34mℹ tests 5[39m
+[34mℹ suites 0[39m
+[34mℹ pass 2[39m
+[34mℹ fail 3[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 460.5944[39m
+
+[31m✖ failing tests:[39m
+
+test at d189probes.test.js:47:1
+[31m✖ every one of the 26 key combinations moves 1.0× a straight line, in METRES, at pitches −89° … +89° (through the keys) [90m(257.4805ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m [
+  [32m+[39m   '-89° w+e: 0.012341×',
+  [32m+[39m   '-89° w+q: 1.414160×',
+  [32m+[39m   '-89° w+d+e: 0.577438×',
+  [32m+[39m   '-89° w+d+q: 1.290955×',
+  [32m+[39m   '-89° w+a+e: 0.577438×',
+  [32m+[39m   '-89° w+a+q: 1.290955×',
+  [32m+[39m   '-89° s+e: 1.414160×',
+  [32m+[39m   '-89° s+q: 0.012341×',
+  [32m+[39m   '-89° s+d+e: 1.290955×',
+  [32m+[39m   '-89° s+d+q: 0.577438×',
+  [32m+[39m   '-89° s+a+e: 1.290955×',
+  [32m+[39m   '-89° s+a+q: 0.577438×',
+  [32m+[39m   '-75° w+e: 0.184592×',
+  [32m+[39m   '-75° w+q: 1.402115×',
+  [32m+[39m   '-75° w+d+e: 0.596699×',
+  [32m+[39m   '-75° w+d+q: 1.282166×',
+  [32m+[39m   '-75° w+a+e: 0.596699×',
+  [32m+[39m   '-75° w+a+q: 1.282166×',
+  [32m+[39m   '-75° s+e: 1.402115×',
+  [32m+[39m   '-75° s+q: 0.184592×',
+  [32m+[39m   '-75° s+d+e: 1.282166×',
+  [32m+[39m   '-75° s+d+q: 0.596699×',
+  [32m+[39m   '-75° s+a+e: 1.282166×',
+  [32m+[39m   '-75° s+a+q: 0.596699×',
+  [32m+[39m   '-60° w+e: 0.366025×',
+  [32m+[39m   '-60° w+q: 1.366025×',
+  [32m+[39m   '-60° w+d+e: 0.650115×',
+  [32m+[39m   '-60° w+d+q: 1.255926×',
+  [32m+[39m   '-60° w+a+e: 0.650115×',
+  [32m+[39m   '-60° w+a+q: 1.255926×',
+  [32m+[39m   '-60° s+e: 1.366025×',
+  [32m+[39m   '-60° s+q: 0.366025×',
+  [32m+[39m   '-60° s+d+e: 1.255926×',
+  [32m+[39m   '-60° s+d+q: 0.650115×',
+  [32m+[39m   '-60° s+a+e: 1.255926×',
+  [32m+[39m   '-60° s+a+q: 0.650115×',
+  [32m+[39m   '-45° w+e: 0.541196×',
+  [32m+[39m   '-45° w+q: 1.306563×',
+  [32m+[39m   '-45° w+d+e: 0.727046×',
+  [32m+[39m   '-45° w+d+q: 1.213015×',
+  [32m+[39m   '-45° w+a+e: 0.727046×',
+  [32m+[39m   '-45° w+a+q: 1.213015×',
+  [32m+[39m   '-45° s+e: 1.306563×',
+  [32m+[39m   '-45° s+q: 0.541196×',
+  [32m+[39m   '-45° s+d+e: 1.213015×',
+  [32m+[39m   '-45° s+d+q: 0.727046×',
+  [32m+[39m   '-45° s+a+e: 1.213015×',
+  [32m+[39m   '-45° s+a+q: 0.727046×',
+  [32m+[39m   '-22° w+e: 0.790818×',
+  [32m+[39m   '-22° w+q: 1.172436×',
+  [32m+[39m   '-22° w+d+e: 0.866177×',
+  [32m+[39m   '-22° w+d+q: 1.117917×',
+  [32m+[39m   '-22° w+a+e: 0.866177×',
+  [32m+[39m   '-22° w+a+q: 1.117917×',
+  [32m+[39m   '-22° s+e: 1.172436×',
+  [32m+[39m   '-22° s+q: 0.790818×',
+  [32m+[39m   '-22° s+d+e: 1.117917×',
+  [32m+[39m   '-22° s+d+q: 0.866177×',
+  [32m+[39m   '-22° s+a+e: 1.117917×',
+  [32m+[39m   '-22° s+a+q: 0.866177×',
+  [32m+[39m   '-11.31° w+e: 0.896595×',
+  [32m+[39m   '-11.31° w+q: 1.093671×',
+  [32m+[39m   '-11.31° w+d+e: 0.932339×',
+  [32m+[39m   '-11.31° w+d+q: 1.063365×',
+  [32m+[39m   '-11.31° w+a+e: 0.932339×',
+  [32m+[39m   '-11.31° w+a+q: 1.063365×',
+  [32m+[39m   '-11.31° s+e: 1.093671×',
+  [32m+[39m   '-11.31° s+q: 0.896595×',
+  [32m+[39m   '-11.31° s+d+e: 1.063365×',
+  [32m+[39m   '-11.31° s+d+q: 0.932339×',
+  [32m+[39m   '-11.31° s+a+e: 1.063365×',
+  [32m+[39m   '-11.31° s+a+q: 0.932339×',
+  [32m+[39m   '22° w+e: 1.172436×',
+  [32m+[39m   '22° w+q: 0.790818×',
+  [32m+[39m   '22° w+d+e: 1.117917×',
+  [32m+[39m   '22° w+d+q: 0.866177×',
+  [32m+[39m   '22° w+a+e: 1.117917×',
+  [32m+[39m   '22° w+a+q: 0.866177×',
+  [32m+[39m   '22° s+e: 0.790818×',
+  [32m+[39m   '22° s+q: 1.172436×',
+  [32m+[39m   '22° s+d+e: 0.866177×',
+  [32m+[39m   '22° s+d+q: 1.117917×',
+  [32m+[39m   '22° s+a+e: 0.866177×',
+  [32m+[39m   '22° s+a+q: 1.117917×',
+  [32m+[39m   '45° w+e: 1.306563×',
+  [32m+[39m   '45° w+q: 0.541196×',
+  [32m+[39m   '45° w+d+e: 1.213015×',
+  [32m+[39m   '45° w+d+q: 0.727046×',
+  [32m+[39m   '45° w+a+e: 1.213015×',
+  [32m+[39m   '45° w+a+q: 0.727046×',
+  [32m+[39m   '45° s+e: 0.541196×',
+  [32m+[39m   '45° s+q: 1.306563×',
+  [32m+[39m   '45° s+d+e: 0.727046×',
+  [32m+[39m   '45° s+d+q: 1.213015×',
+  [32m+[39m   '45° s+a+e: 0.727046×',
+  [32m+[39m   '45° s+a+q: 1.213015×',
+  [32m+[39m   '60° w+e: 1.366025×',
+  [32m+[39m   '60° w+q: 0.366025×',
+  [32m+[39m   '60° w+d+e: 1.255926×',
+  [32m+[39m   '60° w+d+q: 0.650115×',
+  [32m+[39m   '60° w+a+e: 1.255926×',
+  [32m+[39m   '60° w+a+q: 0.650115×',
+  [32m+[39m   '60° s+e: 0.366025×',
+  [32m+[39m   '60° s+q: 1.366025×',
+  [32m+[39m   '60° s+d+e: 0.650115×',
+  [32m+[39m   '60° s+d+q: 1.255926×',
+  [32m+[39m   '60° s+a+e: 0.650115×',
+  [32m+[39m   '60° s+a+q: 1.255926×',
+  [32m+[39m   '89° w+e: 1.414160×',
+  [32m+[39m   '89° w+q: 0.012341×',
+  [32m+[39m   '89° w+d+e: 1.290955×',
+  [32m+[39m   '89° w+d+q: 0.577438×',
+  [32m+[39m   '89° w+a+e: 1.290955×',
+  [32m+[39m   '89° w+a+q: 0.577438×',
+  [32m+[39m   '89° s+e: 0.012341×',
+  [32m+[39m   '89° s+q: 1.414160×',
+  [32m+[39m   '89° s+d+e: 0.577438×',
+  [32m+[39m   '89° s+d+q: 1.290955×',
+  [32m+[39m   '89° s+a+e: 0.577438×',
+  [32m+[39m   '89° s+a+q: 1.290955×'
+  [32m+[39m ]
+  [31m-[39m []
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\[39md189probes.test.js:54:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.start (node:internal/test_runner/test:1015:17)[39m
+  [90m    at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [
+      [32m'-89° w+e: 0.012341×'[39m,      [32m'-89° w+q: 1.414160×'[39m,      [32m'-89° w+d+e: 0.577438×'[39m,
+      [32m'-89° w+d+q: 1.290955×'[39m,    [32m'-89° w+a+e: 0.577438×'[39m,    [32m'-89° w+a+q: 1.290955×'[39m,
+      [32m'-89° s+e: 1.414160×'[39m,      [32m'-89° s+q: 0.012341×'[39m,      [32m'-89° s+d+e: 1.290955×'[39m,
+      [32m'-89° s+d+q: 0.577438×'[39m,    [32m'-89° s+a+e: 1.290955×'[39m,    [32m'-89° s+a+q: 0.577438×'[39m,
+      [32m'-75° w+e: 0.184592×'[39m,      [32m'-75° w+q: 1.402115×'[39m,      [32m'-75° w+d+e: 0.596699×'[39m,
+      [32m'-75° w+d+q: 1.282166×'[39m,    [32m'-75° w+a+e: 0.596699×'[39m,    [32m'-75° w+a+q: 1.282166×'[39m,
+      [32m'-75° s+e: 1.402115×'[39m,      [32m'-75° s+q: 0.184592×'[39m,      [32m'-75° s+d+e: 1.282166×'[39m,
+      [32m'-75° s+d+q: 0.596699×'[39m,    [32m'-75° s+a+e: 1.282166×'[39m,    [32m'-75° s+a+q: 0.596699×'[39m,
+      [32m'-60° w+e: 0.366025×'[39m,      [32m'-60° w+q: 1.366025×'[39m,      [32m'-60° w+d+e: 0.650115×'[39m,
+      [32m'-60° w+d+q: 1.255926×'[39m,    [32m'-60° w+a+e: 0.650115×'[39m,    [32m'-60° w+a+q: 1.255926×'[39m,
+      [32m'-60° s+e: 1.366025×'[39m,      [32m'-60° s+q: 0.366025×'[39m,      [32m'-60° s+d+e: 1.255926×'[39m,
+      [32m'-60° s+d+q: 0.650115×'[39m,    [32m'-60° s+a+e: 1.255926×'[39m,    [32m'-60° s+a+q: 0.650115×'[39m,
+      [32m'-45° w+e: 0.541196×'[39m,      [32m'-45° w+q: 1.306563×'[39m,      [32m'-45° w+d+e: 0.727046×'[39m,
+      [32m'-45° w+d+q: 1.213015×'[39m,    [32m'-45° w+a+e: 0.727046×'[39m,    [32m'-45° w+a+q: 1.213015×'[39m,
+      [32m'-45° s+e: 1.306563×'[39m,      [32m'-45° s+q: 0.541196×'[39m,      [32m'-45° s+d+e: 1.213015×'[39m,
+      [32m'-45° s+d+q: 0.727046×'[39m,    [32m'-45° s+a+e: 1.213015×'[39m,    [32m'-45° s+a+q: 0.727046×'[39m,
+      [32m'-22° w+e: 0.790818×'[39m,      [32m'-22° w+q: 1.172436×'[39m,      [32m'-22° w+d+e: 0.866177×'[39m,
+      [32m'-22° w+d+q: 1.117917×'[39m,    [32m'-22° w+a+e: 0.866177×'[39m,    [32m'-22° w+a+q: 1.117917×'[39m,
+      [32m'-22° s+e: 1.172436×'[39m,      [32m'-22° s+q: 0.790818×'[39m,      [32m'-22° s+d+e: 1.117917×'[39m,
+      [32m'-22° s+d+q: 0.866177×'[39m,    [32m'-22° s+a+e: 1.117917×'[39m,    [32m'-22° s+a+q: 0.866177×'[39m,
+      [32m'-11.31° w+e: 0.896595×'[39m,   [32m'-11.31° w+q: 1.093671×'[39m,   [32m'-11.31° w+d+e: 0.932339×'[39m,
+      [32m'-11.31° w+d+q: 1.063365×'[39m, [32m'-11.31° w+a+e: 0.932339×'[39m, [32m'-11.31° w+a+q: 1.063365×'[39m,
+      [32m'-11.31° s+e: 1.093671×'[39m,   [32m'-11.31° s+q: 0.896595×'[39m,   [32m'-11.31° s+d+e: 1.063365×'[39m,
+      [32m'-11.31° s+d+q: 0.932339×'[39m, [32m'-11.31° s+a+e: 1.063365×'[39m, [32m'-11.31° s+a+q: 0.932339×'[39m,
+      [32m'22° w+e: 1.172436×'[39m,       [32m'22° w+q: 0.790818×'[39m,       [32m'22° w+d+e: 1.117917×'[39m,
+      [32m'22° w+d+q: 0.866177×'[39m,     [32m'22° w+a+e: 1.117917×'[39m,     [32m'22° w+a+q: 0.866177×'[39m,
+      [32m'22° s+e: 0.790818×'[39m,       [32m'22° s+q: 1.172436×'[39m,       [32m'22° s+d+e: 0.866177×'[39m,
+      [32m'22° s+d+q: 1.117917×'[39m,     [32m'22° s+a+e: 0.866177×'[39m,     [32m'22° s+a+q: 1.117917×'[39m,
+      [32m'45° w+e: 1.306563×'[39m,       [32m'45° w+q: 0.541196×'[39m,       [32m'45° w+d+e: 1.213015×'[39m,
+      [32m'45° w+d+q: 0.727046×'[39m,     [32m'45° w+a+e: 1.213015×'[39m,     [32m'45° w+a+q: 0.727046×'[39m,
+      [32m'45° s+e: 0.541196×'[39m,       [32m'45° s+q: 1.306563×'[39m,       [32m'45° s+d+e: 0.727046×'[39m,
+      [32m'45° s+d+q: 1.213015×'[39m,     [32m'45° s+a+e: 0.727046×'[39m,     [32m'45° s+a+q: 1.213015×'[39m,
+      [32m'60° w+e: 1.366025×'[39m,       [32m'60° w+q: 0.366025×'[39m,       [32m'60° w+d+e: 1.255926×'[39m,
+      [32m'60° w+d+q: 0.650115×'[39m,
+      ... 20 more items
+    ],
+    expected: [],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at d189probes.test.js:56:1
+[31m✖ W+E at −89°: 3.0 m a frame (was 0.037 m), sliding along the view HEADING, level [90m(0.8059ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: 0.037023554562992424 m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\[39md189probes.test.js:60:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at d189probes.test.js:62:1
+[31m✖ Shift ramp still applies: at −60°, W+E+Shift moves exactly as far as W+Shift every frame for 8 frames (×4 → ×20) [90m(0.8602ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: frame 0: 0.36602540378443854
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\[39md189probes.test.js:67:84[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+[lockedD.js] exit 1 in 0 s

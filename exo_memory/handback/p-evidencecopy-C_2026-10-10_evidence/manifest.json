@@ -1,0 +1,3114 @@
+{
+ "summary": {
+  "scratchpadsOnDisk": 936,
+  "citations": 669,
+  "handbacksCiting": 255,
+  "filesCopied": 307,
+  "bytesCopied": 6211891,
+  "alreadyThere": 0,
+  "conflicts": 0,
+  "evidenceFolders": 138,
+  "skipped": 1,
+  "missing": 288,
+  "citedDirectories": 75,
+  "ambiguous": 2,
+  "dry": false
+ },
+ "copied": [
+  {
+   "handback": "p-address-refusal-pointer-A_2026-09-19.md",
+   "cited": "scratchpad/address_pointer_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\address_pointer_mutants.js",
+   "dest": "exo_memory/handback/p-address-refusal-pointer-A_2026-09-19_evidence/address_pointer_mutants.js",
+   "size": 5418,
+   "sha256": "43700266e438092d2ccaef92264fc766aa2650a54813c1b520d860ab6706d3c9",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-ask-unreadable-E_2026-09-20.md",
+   "cited": "scratchpad/askmut/rows.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\askmut\\rows.js",
+   "dest": "exo_memory/handback/p-ask-unreadable-E_2026-09-20_evidence/askmut/rows.js",
+   "size": 2410,
+   "sha256": "3b1c39d810da5c47148e65c5aa9e98ad94281a8de63aa942b5ab47542140fe7e",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-ask-unreadable-E_2026-09-20.md",
+   "cited": "scratchpad/askmut/score.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\askmut\\score.js",
+   "dest": "exo_memory/handback/p-ask-unreadable-E_2026-09-20_evidence/askmut/score.js",
+   "size": 1636,
+   "sha256": "422fd1ec33a8964230f9f758ec5ee9e750de7eac716f519389c0d367c4f9d0c0",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-battery-run2-attack-E_2026-09-19.md",
+   "cited": "scratchpad/t2brief.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\t2brief.txt",
+   "dest": "exo_memory/handback/p-battery-run2-attack-E_2026-09-19_evidence/t2brief.txt",
+   "size": 1318,
+   "sha256": "c2551c3d5ba67d7b7ec4b93ebb7560df13e46051712e8a014c9b2c45f7c7ae6a",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-battery-run2-attack-E_2026-09-19.md",
+   "cited": "scratchpad/attack/scan.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\attack\\scan.js",
+   "dest": "exo_memory/handback/p-battery-run2-attack-E_2026-09-19_evidence/attack/scan.js",
+   "size": 5611,
+   "sha256": "799e888af15878749abbf7b2ff1b87883b52438f36c9e9360e835ea606a9b4ab",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-chunk3-B_2026-10-03.md",
+   "cited": "scratchpad/c3/pick.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\c3\\pick.js",
+   "dest": "exo_memory/handback/p-chunk3-B_2026-10-03_evidence/c3/pick.js",
+   "size": 5195,
+   "sha256": "c9f3005b86959eca9ec6d578e11289bf8e63d1d7fb3690147383e6feaed22403",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-close-B_2026-10-04.md",
+   "cited": "scratchpad/close/lprobe.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\close\\lprobe.js",
+   "dest": "exo_memory/handback/p-close-B_2026-10-04_evidence/close/lprobe.js",
+   "size": 4328,
+   "sha256": "425cf8a69a0d073ff4f7594d75a867196ffa20e8a0071d552b9895961350f32f",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-close-B_2026-10-04.md",
+   "cited": "scratchpad/close/undoprobe.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\close\\undoprobe.js",
+   "dest": "exo_memory/handback/p-close-B_2026-10-04_evidence/close/undoprobe.js",
+   "size": 6871,
+   "sha256": "3505f594418e2103bf3a97ae5f3fec3a0420bb222eba44e56f64beb8db25182f",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-close-B_2026-10-04.md",
+   "cited": "scratchpad/d195/serial-shim.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d195\\serial-shim.js",
+   "dest": "exo_memory/handback/p-close-B_2026-10-04_evidence/d195/serial-shim.js",
+   "size": 1170,
+   "sha256": "1743310b86ae710c59ea3e11410c9006ab918330b40fbc04ea34e8248f914a9c",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-close-B_2026-10-04.md",
+   "cited": "scratchpad/close/run7.out",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\close\\run7.out",
+   "dest": "exo_memory/handback/p-close-B_2026-10-04_evidence/close/run7.out",
+   "size": 2764,
+   "sha256": "928b5bac7e2e5fdae020827319b4d91c40c3335e45cf1c9b8ccae5fb7676ba7e",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-composer-tristate-E_2026-09-19.md",
+   "cited": "scratchpad/mut/print_rows.rs",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\mut\\print_rows.rs",
+   "dest": "exo_memory/handback/p-composer-tristate-E_2026-09-19_evidence/mut/print_rows.rs",
+   "size": 1263,
+   "sha256": "97a80e31331303d1df88738d5c102e1a00a1c04cafbdf291f72c82f6e10fead4",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-composer-tristate-E_2026-09-19.md",
+   "cited": "scratchpad/mut/mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\mut\\mutants.js",
+   "dest": "exo_memory/handback/p-composer-tristate-E_2026-09-19_evidence/mut/mutants.js",
+   "size": 6154,
+   "sha256": "2aad5a156c126fafac39308823eeaf0b8946fa22fed65942844756a9536a875e",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-consumer-devtruth-A_2026-10-09.md",
+   "cited": "scratchpad/dt/verify.sh",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\dt\\verify.sh",
+   "dest": "exo_memory/handback/p-consumer-devtruth-A_2026-10-09_evidence/dt/verify.sh",
+   "size": 3769,
+   "sha256": "e26c4c7f7d1c7ec2f18440c2d16d622446cc4ecc077f72d5a93e911643d2d678",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-consumer-fork-C_2026-10-08.md",
+   "cited": "scratchpad/inv/count.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\count.js",
+   "dest": "exo_memory/handback/p-consumer-fork-C_2026-10-08_evidence/inv/count.js",
+   "size": 644,
+   "sha256": "07c1867094cc6009f6ec2c4681ccaf9df1395f8557cc5f62a7f22e53c853e4ea",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-consumer-fork-C_2026-10-08.md",
+   "cited": "scratchpad/inv/l3red.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\l3red.log",
+   "dest": "exo_memory/handback/p-consumer-fork-C_2026-10-08_evidence/inv/l3red.log",
+   "size": 1424,
+   "sha256": "70759359a4e6868f0f7392c0536e2508e014a99378df8723352125e38af97382",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-consumer-fork-C_2026-10-08.md",
+   "cited": "scratchpad/inv/gen3.sh",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\gen3.sh",
+   "dest": "exo_memory/handback/p-consumer-fork-C_2026-10-08_evidence/inv/gen3.sh",
+   "size": 2161,
+   "sha256": "6f768f233f30eb563c9b330a114afce5398aa37d443bc59596729b81af7e3716",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-consumer-fork-C_2026-10-08.md",
+   "cited": "scratchpad/inv/id1.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\id1.log",
+   "dest": "exo_memory/handback/p-consumer-fork-C_2026-10-08_evidence/inv/id1.log",
+   "size": 478,
+   "sha256": "e9bb8c2ffb68f5d25a17604ac83642b7168ccc9175da8ba815abc8b2711190c8",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-consumer-fork-C_2026-10-08.md",
+   "cited": "scratchpad/inv/id-real.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\id-real.txt",
+   "dest": "exo_memory/handback/p-consumer-fork-C_2026-10-08_evidence/inv/id-real.txt",
+   "size": 3343,
+   "sha256": "9d29c2fb07a968264169de34932d6f2eb0ee5310e98b554f451a420176941d1b",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-consumer-fork-C_2026-10-08.md",
+   "cited": "scratchpad/inv/idmain.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\idmain.log",
+   "dest": "exo_memory/handback/p-consumer-fork-C_2026-10-08_evidence/inv/idmain.log",
+   "size": 534,
+   "sha256": "425efc18e2d3b26ba67eddf7f55a6c038677ef9fe56d671f2b6d18a3364579a1",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-consumer-fork-C_2026-10-08.md",
+   "cited": "scratchpad/inv/excl-rows.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\excl-rows.js",
+   "dest": "exo_memory/handback/p-consumer-fork-C_2026-10-08_evidence/inv/excl-rows.js",
+   "size": 1501,
+   "sha256": "45157e0143c0e74cd0e9998533f05c1d09db5106cfab7baae16f15bec568b8d9",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-consumer-fork-C_2026-10-08.md",
+   "cited": "scratchpad/inv/l4run2.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\l4run2.log",
+   "dest": "exo_memory/handback/p-consumer-fork-C_2026-10-08_evidence/inv/l4run2.log",
+   "size": 2523,
+   "sha256": "92df96bbf20a37d529c171044dee8f6015a219ee63596aba16ce7eaef89cd18a",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-consumer-fork-C_2026-10-08.md",
+   "cited": "scratchpad/inv/prefork.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\prefork.js",
+   "dest": "exo_memory/handback/p-consumer-fork-C_2026-10-08_evidence/inv/prefork.js",
+   "size": 872,
+   "sha256": "3ad9bc82674deb618bc9055923fd2a05d417161cda30f3867e2cf799f73f7d9c",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-consumer-fork-C_2026-10-08.md",
+   "cited": "scratchpad/inv/l4b.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\l4b.log",
+   "dest": "exo_memory/handback/p-consumer-fork-C_2026-10-08_evidence/inv/l4b.log",
+   "size": 833,
+   "sha256": "20e1e0d9b426dab5ede02a04ada610e7ae676453c145d5724cab81582d7cbb1f",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-consumer-fork-C_2026-10-08.md",
+   "cited": "scratchpad/inv/pregrep.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\pregrep.js",
+   "dest": "exo_memory/handback/p-consumer-fork-C_2026-10-08_evidence/inv/pregrep.js",
+   "size": 823,
+   "sha256": "3eba9e0c11e1776df0fd3fea02352a420d5875ecb693767897836494f3c291ac",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-consumer-fork-C_2026-10-08.md",
+   "cited": "scratchpad/inv/l5run.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\l5run.log",
+   "dest": "exo_memory/handback/p-consumer-fork-C_2026-10-08_evidence/inv/l5run.log",
+   "size": 2986,
+   "sha256": "bfb7fc8c34e9ba89a54fd9b49533864909b042dd2e9ef9c5c0ba28b629f25edf",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-consumer-fork-C_2026-10-08.md",
+   "cited": "scratchpad/inv/l5-pins.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\l5-pins.log",
+   "dest": "exo_memory/handback/p-consumer-fork-C_2026-10-08_evidence/inv/l5-pins.log",
+   "size": 1764,
+   "sha256": "63a1f1c85c0958699aa96ead79e0f55e304e1e62f1521bfc22015d27746ba57d",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-consumer-fork-C_2026-10-08.md",
+   "cited": "scratchpad/inv/l5b.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\l5b.log",
+   "dest": "exo_memory/handback/p-consumer-fork-C_2026-10-08_evidence/inv/l5b.log",
+   "size": 2303,
+   "sha256": "0c61d18c244cc2e00f1b0ceca22bedefbf6dbfdcb1dcc7d8f38cc71ec7ba2f89",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-consumer-fork-C_2026-10-08.md",
+   "cited": "scratchpad/inv/l6-pins.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\l6-pins.log",
+   "dest": "exo_memory/handback/p-consumer-fork-C_2026-10-08_evidence/inv/l6-pins.log",
+   "size": 1871,
+   "sha256": "db0b7e078b8e8195c919c7cc1b7d0ff839176dd48eb2e5212a4180c19a7ba85b",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d096-boottail-C_2026-09-21.md",
+   "cited": "scratchpad/d096/move.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d096\\move.js",
+   "dest": "exo_memory/handback/p-d096-boottail-C_2026-09-21_evidence/d096/move.js",
+   "size": 2645,
+   "sha256": "6c6dc871040d831cd3de04636857447cf2c68dd656a5f7887875fd287b282407",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d096-boottail-C_2026-09-21.md",
+   "cited": "scratchpad/d096/genbrief.sh",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d096\\genbrief.sh",
+   "dest": "exo_memory/handback/p-d096-boottail-C_2026-09-21_evidence/d096/genbrief.sh",
+   "size": 1120,
+   "sha256": "64a956fca6393c815a65114d631bdf982f90540fdf3d0351b1776190f1ed390b",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d096-boottail-C_2026-09-21.md",
+   "cited": "scratchpad/d096/mutants.sh",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d096\\mutants.sh",
+   "dest": "exo_memory/handback/p-d096-boottail-C_2026-09-21_evidence/d096/mutants.sh",
+   "size": 2381,
+   "sha256": "02c616a20464268c4850fafba9d6dc1fba471dffde932985877aafb3729a66d5",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d098-dataseam-C_2026-09-21.md",
+   "cited": "scratchpad/d098/mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d098\\mutants.js",
+   "dest": "exo_memory/handback/p-d098-dataseam-C_2026-09-21_evidence/d098/mutants.js",
+   "size": 3928,
+   "sha256": "872b444ab01e298c856b7bbc6f975910d03bac020fc1c9c10c3f0a599cd9d787",
+   "how": "seat C's scratchpad (of 2 matches)",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d098-keepwarm-E_2026-09-21.md",
+   "cited": "scratchpad/d098/mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d098\\mutants.js",
+   "dest": "exo_memory/handback/p-d098-keepwarm-E_2026-09-21_evidence/07b8a48f/d098/mutants.js",
+   "size": 2774,
+   "sha256": "40bb0899d18bdce79623e04b7e7d833246466361d73196197fc259b80d5fe20b",
+   "how": "AMBIGUOUS: 2 matches, each copied under its project",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d098-keepwarm-E_2026-09-21.md",
+   "cited": "scratchpad/d098/mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d098\\mutants.js",
+   "dest": "exo_memory/handback/p-d098-keepwarm-E_2026-09-21_evidence/0845a868/d098/mutants.js",
+   "size": 3928,
+   "sha256": "872b444ab01e298c856b7bbc6f975910d03bac020fc1c9c10c3f0a599cd9d787",
+   "how": "AMBIGUOUS: 2 matches, each copied under its project",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d100-vantagecell-E_2026-09-21.md",
+   "cited": "scratchpad/d100/mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d100\\mutants.js",
+   "dest": "exo_memory/handback/p-d100-vantagecell-E_2026-09-21_evidence/d100/mutants.js",
+   "size": 2350,
+   "sha256": "0c8e9278de15fba523a1377a86d2af85cf19f3ec43f39f81878aae0e1db00c56",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d103-shadow-C_2026-09-21.md",
+   "cited": "scratchpad/d103/fidelity.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d103\\fidelity.js",
+   "dest": "exo_memory/handback/p-d103-shadow-C_2026-09-21_evidence/d103/fidelity.js",
+   "size": 4170,
+   "sha256": "ac37fd5702b5750ef3bffd8863bbe00d3d62216c521b9d175aeed778fdfb8994",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d103-shadow-C_2026-09-21.md",
+   "cited": "scratchpad/d103/mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d103\\mutants.js",
+   "dest": "exo_memory/handback/p-d103-shadow-C_2026-09-21_evidence/d103/mutants.js",
+   "size": 4982,
+   "sha256": "1d75357b4d69199baa1b3298543a5bdbbbf767911f05aaa29849982743197191",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d123-flags-readme-E_2026-09-23.md",
+   "cited": "scratchpad/d123/mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d123\\mutants.js",
+   "dest": "exo_memory/handback/p-d123-flags-readme-E_2026-09-23_evidence/d123/mutants.js",
+   "size": 5277,
+   "sha256": "8e8eb84c019c72112db89a9fede0095dded687ed50009d00e71531aa0bf62669",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d130-blind-E_2026-09-24.md",
+   "cited": "scratchpad/d130/mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d130\\mutants.js",
+   "dest": "exo_memory/handback/p-d130-blind-E_2026-09-24_evidence/d130/mutants.js",
+   "size": 5577,
+   "sha256": "2174cfa0dd55008dc0d872f1a945c8bb50dc4531a839adcc9acec134595231f5",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d133-publishclose-A_2026-09-24.md",
+   "cited": "scratchpad/d133-close-mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d133-close-mutants.js",
+   "dest": "exo_memory/handback/p-d133-publishclose-A_2026-09-24_evidence/d133-close-mutants.js",
+   "size": 3103,
+   "sha256": "ce73db26fa1c12c8bcb020672493a5af28fdc3c706732e178f29af3e090d7ba1",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d133-publishclose-A_2026-09-24.md",
+   "cited": "scratchpad/heavy-cargo.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\heavy-cargo.js",
+   "dest": "exo_memory/handback/p-d133-publishclose-A_2026-09-24_evidence/heavy-cargo.js",
+   "size": 792,
+   "sha256": "2f2c8b1803b0873b8ca78a895e21872aa75cee03a534b65d83ccffc04faec034",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d133-publishclose-A_2026-09-24.md",
+   "cited": "scratchpad/main.pre-d133.rs",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\main.pre-d133.rs",
+   "dest": "exo_memory/handback/p-d133-publishclose-A_2026-09-24_evidence/main.pre-d133.rs",
+   "size": 1123848,
+   "sha256": "82f4059e2ba37ce529870b8cc17004692c743d98c565d170d04a8bb7a7e962af",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d133-publishclose-A_2026-09-24.md",
+   "cited": "scratchpad/close.pre-d133.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\close.pre-d133.js",
+   "dest": "exo_memory/handback/p-d133-publishclose-A_2026-09-24_evidence/close.pre-d133.js",
+   "size": 19524,
+   "sha256": "7162e7d2b20cc0abe53722fbecf2540de0737280fa703d2a6c4ca2f0dd1c3cbf",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d134-leave-E_2026-09-24.md",
+   "cited": "scratchpad/d134/mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d134\\mutants.js",
+   "dest": "exo_memory/handback/p-d134-leave-E_2026-09-24_evidence/d134/mutants.js",
+   "size": 4577,
+   "sha256": "d9e209b4d30d2f42b85987aab1d3f97299b6ad92edb50d4d91723e0e66c014c0",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d137-stall-A_2026-09-24.md",
+   "cited": "scratchpad/cargo-d137-red.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\cargo-d137-red.log",
+   "dest": "exo_memory/handback/p-d137-stall-A_2026-09-24_evidence/cargo-d137-red.log",
+   "size": 2091,
+   "sha256": "81ed1114f32d5ab842238f4ce224e72b48fc4e51297861c7139f60921093b30c",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d137-stall-A_2026-09-24.md",
+   "cited": "scratchpad/heavy-cargo.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\heavy-cargo.js",
+   "dest": "exo_memory/handback/p-d137-stall-A_2026-09-24_evidence/heavy-cargo.js",
+   "size": 792,
+   "sha256": "2f2c8b1803b0873b8ca78a895e21872aa75cee03a534b65d83ccffc04faec034",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d137-stall-A_2026-09-24.md",
+   "cited": "scratchpad/d137-mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d137-mutants.js",
+   "dest": "exo_memory/handback/p-d137-stall-A_2026-09-24_evidence/d137-mutants.js",
+   "size": 4009,
+   "sha256": "1dcee61d9c1a897f2e7302d3180def4011fd47f12a057bf9c8d0077ef5bcfb55",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d140-about-A_2026-09-25.md",
+   "cited": "scratchpad/index.pre-d140.html",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\index.pre-d140.html",
+   "dest": "exo_memory/handback/p-d140-about-A_2026-09-25_evidence/index.pre-d140.html",
+   "size": 35662,
+   "sha256": "a03e59e6ecf8c5a439485a13caeda60799d82adb1ecb17c7d9caa09c3384cfe4",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d140-about-A_2026-09-25.md",
+   "cited": "scratchpad/d140-render.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d140-render.js",
+   "dest": "exo_memory/handback/p-d140-about-A_2026-09-25_evidence/d140-render.js",
+   "size": 3699,
+   "sha256": "d295f1529cd12e6cfdbe7009d1cc697889e35e2a74249622b9ff23bd0efb63e1",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d140-about-A_2026-09-25.md",
+   "cited": "scratchpad/d140-mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d140-mutants.js",
+   "dest": "exo_memory/handback/p-d140-about-A_2026-09-25_evidence/d140-mutants.js",
+   "size": 4602,
+   "sha256": "d5ec61c951c39b841ed2d4685bc63a1abda2a40f7da2db2bde2d6bb424db2aab",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d142-about-A_2026-09-25.md",
+   "cited": "scratchpad/index.pre-d142.html",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\index.pre-d142.html",
+   "dest": "exo_memory/handback/p-d142-about-A_2026-09-25_evidence/index.pre-d142.html",
+   "size": 32948,
+   "sha256": "f7b709a7ec3755ea1466f10b79c39b89dc5ba04c79e789955e27d06a42f66894",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d142-about-A_2026-09-25.md",
+   "cited": "scratchpad/lap-row.pre-d142.test.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\lap-row.pre-d142.test.js",
+   "dest": "exo_memory/handback/p-d142-about-A_2026-09-25_evidence/lap-row.pre-d142.test.js",
+   "size": 119252,
+   "sha256": "d9ba8927fc8aac10e26b237a6e368df6b54aaff6bd4568821a654cd2840308e0",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d142-about-A_2026-09-25.md",
+   "cited": "scratchpad/d140-render.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d140-render.js",
+   "dest": "exo_memory/handback/p-d142-about-A_2026-09-25_evidence/d140-render.js",
+   "size": 3699,
+   "sha256": "d295f1529cd12e6cfdbe7009d1cc697889e35e2a74249622b9ff23bd0efb63e1",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d142-about-A_2026-09-25.md",
+   "cited": "scratchpad/d142-splice.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d142-splice.js",
+   "dest": "exo_memory/handback/p-d142-about-A_2026-09-25_evidence/d142-splice.js",
+   "size": 1927,
+   "sha256": "c267966f8426068c894749245bd0480b3a148d3a7a2ba04432b0a105ac6588e8",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d142-about-A_2026-09-25.md",
+   "cited": "scratchpad/d140-mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d140-mutants.js",
+   "dest": "exo_memory/handback/p-d142-about-A_2026-09-25_evidence/d140-mutants.js",
+   "size": 4602,
+   "sha256": "d5ec61c951c39b841ed2d4685bc63a1abda2a40f7da2db2bde2d6bb424db2aab",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d143-deadpane-A_2026-09-25.md",
+   "cited": "scratchpad/main.pre-d143.rs",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\main.pre-d143.rs",
+   "dest": "exo_memory/handback/p-d143-deadpane-A_2026-09-25_evidence/main.pre-d143.rs",
+   "size": 1148075,
+   "sha256": "d3f33187cad2db54473504799a1cd57bcaa3af9d0eac83c0cdaacb7d7bd00724",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d143-deadpane-A_2026-09-25.md",
+   "cited": "scratchpad/term.head.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\term.head.js",
+   "dest": "exo_memory/handback/p-d143-deadpane-A_2026-09-25_evidence/term.head.js",
+   "size": 58865,
+   "sha256": "08075e6a13bf7eeb6fdb99785829ce6766fc41ba62e450ada9c26833b5ae42b2",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d143-deadpane-A_2026-09-25.md",
+   "cited": "scratchpad/cargo-d143-red.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\cargo-d143-red.log",
+   "dest": "exo_memory/handback/p-d143-deadpane-A_2026-09-25_evidence/cargo-d143-red.log",
+   "size": 4799,
+   "sha256": "1f9ef91cc55432210812e087e37be98d21883e692004d88e554eafb3515123b0",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d143-deadpane-A_2026-09-25.md",
+   "cited": "scratchpad/heavy-cargo.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\heavy-cargo.js",
+   "dest": "exo_memory/handback/p-d143-deadpane-A_2026-09-25_evidence/heavy-cargo.js",
+   "size": 792,
+   "sha256": "2f2c8b1803b0873b8ca78a895e21872aa75cee03a534b65d83ccffc04faec034",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d143-deadpane-A_2026-09-25.md",
+   "cited": "scratchpad/d143-js-mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d143-js-mutants.js",
+   "dest": "exo_memory/handback/p-d143-deadpane-A_2026-09-25_evidence/d143-js-mutants.js",
+   "size": 2832,
+   "sha256": "c2f56eb2e3005d8ff67a22c29febff03c412d195fb47b8d1fc7b41a6132309b3",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d143-deadpane-A_2026-09-25.md",
+   "cited": "scratchpad/d143-rs-mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d143-rs-mutants.js",
+   "dest": "exo_memory/handback/p-d143-deadpane-A_2026-09-25_evidence/d143-rs-mutants.js",
+   "size": 5148,
+   "sha256": "0b6bb137303510000d512ff92b5f57e3c3366d19edba697add9cf9e2da68a57d",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d164-census-E_2026-09-27.md",
+   "cited": "scratchpad/d164/histscan.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d164\\histscan.js",
+   "dest": "exo_memory/handback/p-d164-census-E_2026-09-27_evidence/d164/histscan.js",
+   "size": 2142,
+   "sha256": "f2f0bb7abba927197a967b2f10feaaafdab828c1867894a4d40965d08db8778d",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d164-spawn-A_2026-09-27.md",
+   "cited": "scratchpad/heavy-cargo.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\heavy-cargo.js",
+   "dest": "exo_memory/handback/p-d164-spawn-A_2026-09-27_evidence/heavy-cargo.js",
+   "size": 792,
+   "sha256": "2f2c8b1803b0873b8ca78a895e21872aa75cee03a534b65d83ccffc04faec034",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d164-spawn-A_2026-09-27.md",
+   "cited": "scratchpad/d164-mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d164-mutants.js",
+   "dest": "exo_memory/handback/p-d164-spawn-A_2026-09-27_evidence/d164-mutants.js",
+   "size": 4453,
+   "sha256": "95428a46107836f5906686cb4436833f994d01393b4b6644c1df8a59ae031a1c",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d165-export-E_2026-09-27.md",
+   "cited": "scratchpad/d165/mutate.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d165\\mutate.js",
+   "dest": "exo_memory/handback/p-d165-export-E_2026-09-27_evidence/d165/mutate.js",
+   "size": 6211,
+   "sha256": "af36e3689cfef3ca2e420aacf7464db2af0d8e5a2432eb67dc54be373b751496",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d165-kn5write-A_2026-09-27.md",
+   "cited": "scratchpad/d165/measure_kn5.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d165\\measure_kn5.js",
+   "dest": "exo_memory/handback/p-d165-kn5write-A_2026-09-27_evidence/d165/measure_kn5.js",
+   "size": 5104,
+   "sha256": "cac419e626ed4530284a37847831cca0a1093bb80603c3fa59684a9c84483e21",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d165-kn5write-A_2026-09-27.md",
+   "cited": "scratchpad/d165/mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d165\\mutants.js",
+   "dest": "exo_memory/handback/p-d165-kn5write-A_2026-09-27_evidence/d165/mutants.js",
+   "size": 3452,
+   "sha256": "71eaa3eb60c0bb5d710ecee3a144be35f1adc5e989212a36839aa0d2245f85e1",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d166-ailine-A_2026-09-27.md",
+   "cited": "scratchpad/d165/measure_ai.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d165\\measure_ai.js",
+   "dest": "exo_memory/handback/p-d166-ailine-A_2026-09-27_evidence/d165/measure_ai.js",
+   "size": 3574,
+   "sha256": "61cd15f0214c1200d8dc19ba4c20cede8442a75bdb3a1d2a7e79cc8848532dc9",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d166-ailine-A_2026-09-27.md",
+   "cited": "scratchpad/d165/ai_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d165\\ai_mutants.js",
+   "dest": "exo_memory/handback/p-d166-ailine-A_2026-09-27_evidence/d165/ai_mutants.js",
+   "size": 4515,
+   "sha256": "0f7e401bd83fdf48dd6d5f8a6cb8ad56ad2d9bd9923c875f635a6667c62d7108",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d166-launch-E_2026-09-27.md",
+   "cited": "scratchpad/d166/mutate.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d166\\mutate.js",
+   "dest": "exo_memory/handback/p-d166-launch-E_2026-09-27_evidence/d166/mutate.js",
+   "size": 3859,
+   "sha256": "f3066951f45c31d97c9ee65dfe1c6c86c8961ee4692cfbf22626d58b26b3524a",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d166-launch-E_2026-09-27.md",
+   "cited": "scratchpad/d166/hashes.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d166\\hashes.js",
+   "dest": "exo_memory/handback/p-d166-launch-E_2026-09-27_evidence/d166/hashes.js",
+   "size": 888,
+   "sha256": "31fa356e12888224f9ff3e2432b31595e17c7668b5aebf11b19ab540490a9bbe",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d166-model-A_2026-09-27.md",
+   "cited": "scratchpad/d165/doc_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d165\\doc_mutants.js",
+   "dest": "exo_memory/handback/p-d166-model-A_2026-09-27_evidence/d165/doc_mutants.js",
+   "size": 8968,
+   "sha256": "e943ad270f57e6140e8fa91c7271ecfd36075fee0465660937ba4cf9ac40eda3",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d166-validate-E_2026-09-27.md",
+   "cited": "scratchpad/d166/hashes.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d166\\hashes.js",
+   "dest": "exo_memory/handback/p-d166-validate-E_2026-09-27_evidence/d166/hashes.js",
+   "size": 888,
+   "sha256": "31fa356e12888224f9ff3e2432b31595e17c7668b5aebf11b19ab540490a9bbe",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d166-validate-E_2026-09-27.md",
+   "cited": "scratchpad/d166v/mutate.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d166v\\mutate.js",
+   "dest": "exo_memory/handback/p-d166-validate-E_2026-09-27_evidence/d166v/mutate.js",
+   "size": 8510,
+   "sha256": "486ff24bbc79e92937e9519ba0b4ec1c6211312b98f51e692bea70538bc82872",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d167-export-E_2026-09-27.md",
+   "cited": "scratchpad/d166v/mutate_bounds.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d166v\\mutate_bounds.js",
+   "dest": "exo_memory/handback/p-d167-export-E_2026-09-27_evidence/d166v/mutate_bounds.js",
+   "size": 3867,
+   "sha256": "8c3be064ae86f3902b118df1440f68dac53375d5963618128684dd9a28aca0a2",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d167-export-E_2026-09-27.md",
+   "cited": "scratchpad/d166v/mutate.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d166v\\mutate.js",
+   "dest": "exo_memory/handback/p-d167-export-E_2026-09-27_evidence/d166v/mutate.js",
+   "size": 8510,
+   "sha256": "486ff24bbc79e92937e9519ba0b4ec1c6211312b98f51e692bea70538bc82872",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d167-ramp-connector-A_2026-09-27.md",
+   "cited": "scratchpad/d165/conn_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d165\\conn_mutants.js",
+   "dest": "exo_memory/handback/p-d167-ramp-connector-A_2026-09-27_evidence/d165/conn_mutants.js",
+   "size": 4415,
+   "sha256": "834f6a795b10bbd5447915340e1568b44c001a294cafdc71489f9bf587e5dcab",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d167-ramp-connector-A_2026-09-27.md",
+   "cited": "scratchpad/d165/doc_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d165\\doc_mutants.js",
+   "dest": "exo_memory/handback/p-d167-ramp-connector-A_2026-09-27_evidence/d165/doc_mutants.js",
+   "size": 8968,
+   "sha256": "e943ad270f57e6140e8fa91c7271ecfd36075fee0465660937ba4cf9ac40eda3",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d168-colour-handles-E_2026-09-27.md",
+   "cited": "scratchpad/d168/mutate_app.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d168\\mutate_app.js",
+   "dest": "exo_memory/handback/p-d168-colour-handles-E_2026-09-27_evidence/d168/mutate_app.js",
+   "size": 8385,
+   "sha256": "004d7cfbdb4622635a2efc51ab31127f65115b6ecff167c857472c0ae171feb2",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d168-shell-A_2026-09-27.md",
+   "cited": "scratchpad/d165/edge_dom.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d165\\edge_dom.js",
+   "dest": "exo_memory/handback/p-d168-shell-A_2026-09-27_evidence/d165/edge_dom.js",
+   "size": 5655,
+   "sha256": "364c35c0093f3c383065ff266e606ddd2c6d703613d35dc387a96b3fd8e1854a",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d168-shell-A_2026-09-27.md",
+   "cited": "scratchpad/d165/app_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d165\\app_mutants.js",
+   "dest": "exo_memory/handback/p-d168-shell-A_2026-09-27_evidence/d165/app_mutants.js",
+   "size": 5716,
+   "sha256": "1a2be94c1c39b22593d4d918bfdd4bfebe7cc0733fff2fae111ddd58ae1b2b29",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d169-fixes-export-A_2026-09-27.md",
+   "cited": "scratchpad/d165/edge_dom.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d165\\edge_dom.js",
+   "dest": "exo_memory/handback/p-d169-fixes-export-A_2026-09-27_evidence/d165/edge_dom.js",
+   "size": 5655,
+   "sha256": "364c35c0093f3c383065ff266e606ddd2c6d703613d35dc387a96b3fd8e1854a",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d169-fixes-export-A_2026-09-27.md",
+   "cited": "scratchpad/d165/d169_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d165\\d169_mutants.js",
+   "dest": "exo_memory/handback/p-d169-fixes-export-A_2026-09-27_evidence/d165/d169_mutants.js",
+   "size": 9697,
+   "sha256": "73bd0c004d62ae9b3055f9942a8c1a2463cb0a5b7dac67984a6704d674c150ab",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d169-loads-E_2026-09-27.md",
+   "cited": "scratchpad/d169/mutate_speed.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d169\\mutate_speed.js",
+   "dest": "exo_memory/handback/p-d169-loads-E_2026-09-27_evidence/d169/mutate_speed.js",
+   "size": 5524,
+   "sha256": "6fbf3a7c9663bf43bec3a20b308fd706c678058c3143d1a52d37a6218b9167df",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d169-loads-E_2026-09-27.md",
+   "cited": "scratchpad/d168/mutate_app.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d168\\mutate_app.js",
+   "dest": "exo_memory/handback/p-d169-loads-E_2026-09-27_evidence/d168/mutate_app.js",
+   "size": 8385,
+   "sha256": "004d7cfbdb4622635a2efc51ab31127f65115b6ecff167c857472c0ae171feb2",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d170-jumps-graph-E_2026-09-27.md",
+   "cited": "scratchpad/d170/mutate_d170.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d170\\mutate_d170.js",
+   "dest": "exo_memory/handback/p-d170-jumps-graph-E_2026-09-27_evidence/d170/mutate_d170.js",
+   "size": 5688,
+   "sha256": "0e6c6e58db98cffe41ebe66c631fd3ded0bef146e748bfb4ca6ff367a0dce4eb",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d170-ramp-e2e-A_2026-09-27.md",
+   "cited": "scratchpad/d165/d170_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d165\\d170_mutants.js",
+   "dest": "exo_memory/handback/p-d170-ramp-e2e-A_2026-09-27_evidence/d165/d170_mutants.js",
+   "size": 5218,
+   "sha256": "56d6af5a58e6e83f67d7b379069cd0ede0cabf09ac6ca6d75fa5ea272f0abbe1",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d170-ramp-e2e-A_2026-09-27.md",
+   "cited": "scratchpad/d165/edge_dom.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d165\\edge_dom.js",
+   "dest": "exo_memory/handback/p-d170-ramp-e2e-A_2026-09-27_evidence/d165/edge_dom.js",
+   "size": 5655,
+   "sha256": "364c35c0093f3c383065ff266e606ddd2c6d703613d35dc387a96b3fd8e1854a",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d171-markers-E_2026-09-27.md",
+   "cited": "scratchpad/d171/mutate_markers.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d171\\mutate_markers.js",
+   "dest": "exo_memory/handback/p-d171-markers-E_2026-09-27_evidence/d171/mutate_markers.js",
+   "size": 9380,
+   "sha256": "1802a8f49585f3efb754499bd1f8c1524d2a69d37a8efa38aef324b92f7fa3e3",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d172-read-B_2026-09-27.md",
+   "cited": "scratchpad/d172/mixed.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d172\\mixed.js",
+   "dest": "exo_memory/handback/p-d172-read-B_2026-09-27_evidence/d172/mixed.js",
+   "size": 3789,
+   "sha256": "60115f7aa508750e02091d1aa484d7206604371ccd6822494dc2987607d7e6b3",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d172-read-B_2026-09-27.md",
+   "cited": "scratchpad/d172/probe_tex.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d172\\probe_tex.js",
+   "dest": "exo_memory/handback/p-d172-read-B_2026-09-27_evidence/d172/probe_tex.js",
+   "size": 6300,
+   "sha256": "5afef48e39d4b48b2bdc471168233c9e461c7f5b8a4236f8afe430e6eb4e69c3",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d172-read-widened-B-SUPERSEDED_2026-09-27.md",
+   "cited": "scratchpad/d174/probe_pit.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d174\\probe_pit.js",
+   "dest": "exo_memory/handback/p-d172-read-widened-B-SUPERSEDED_2026-09-27_evidence/d174/probe_pit.js",
+   "size": 6744,
+   "sha256": "25726278fafd819b334b72a193939d6c9997a392a8c85402cd49e13651479da2",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d172-textures-A_2026-09-27.md",
+   "cited": "scratchpad/d172/locked_suite.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d172\\locked_suite.js",
+   "dest": "exo_memory/handback/p-d172-textures-A_2026-09-27_evidence/d172/locked_suite.js",
+   "size": 638,
+   "sha256": "60831beeb19c542227f2a5989dd054fcea08eca0e97e30b9b55a84fca2de3b4f",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d172-textures-A_2026-09-27.md",
+   "cited": "scratchpad/d172/d172_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d172\\d172_mutants.js",
+   "dest": "exo_memory/handback/p-d172-textures-A_2026-09-27_evidence/d172/d172_mutants.js",
+   "size": 9616,
+   "sha256": "5d9c4463c367ecf19b2186cdbea9adfde014f05e7f342bff7d25c2c5378772bf",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d174-pitlane-A_2026-09-27.md",
+   "cited": "scratchpad/d172/locked_suite.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d172\\locked_suite.js",
+   "dest": "exo_memory/handback/p-d174-pitlane-A_2026-09-27_evidence/d172/locked_suite.js",
+   "size": 638,
+   "sha256": "60831beeb19c542227f2a5989dd054fcea08eca0e97e30b9b55a84fca2de3b4f",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d174-pitlane-A_2026-09-27.md",
+   "cited": "scratchpad/d172/d174_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d172\\d174_mutants.js",
+   "dest": "exo_memory/handback/p-d174-pitlane-A_2026-09-27_evidence/d172/d174_mutants.js",
+   "size": 6864,
+   "sha256": "236280d577194311aedacd752470476e5bcd5f2607e1be2a60704953e9e002ee",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d175-phrasebook-readme-E_2026-09-27.md",
+   "cited": "scratchpad/heavy-suite.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\heavy-suite.js",
+   "dest": "exo_memory/handback/p-d175-phrasebook-readme-E_2026-09-27_evidence/heavy-suite.js",
+   "size": 1547,
+   "sha256": "fa1097702ce96990ce7db6bdfa5540e14d52798184eaaebe0d80fe0d037f681a",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d175-phrasebook-readme-E_2026-09-27.md",
+   "cited": "scratchpad/d175/mutate_phrasebook.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d175\\mutate_phrasebook.js",
+   "dest": "exo_memory/handback/p-d175-phrasebook-readme-E_2026-09-27_evidence/d175/mutate_phrasebook.js",
+   "size": 4984,
+   "sha256": "c090b031885a4497812b6f03b48fd892aa074006a9c3b24ef9b5f79eae143db7",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d175-texwire-A_2026-09-27.md",
+   "cited": "scratchpad/d172/texmem.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d172\\texmem.js",
+   "dest": "exo_memory/handback/p-d175-texwire-A_2026-09-27_evidence/d172/texmem.js",
+   "size": 2315,
+   "sha256": "a7b2c4c1e9e61c6e225f3ec3ae9ed30e234e00cccdcdb068f15ba892c1e82601",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d175-texwire-A_2026-09-27.md",
+   "cited": "scratchpad/d172/d175_list.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d172\\d175_list.js",
+   "dest": "exo_memory/handback/p-d175-texwire-A_2026-09-27_evidence/d172/d175_list.js",
+   "size": 3998,
+   "sha256": "17f74ead683632d66e04b07efb97f0dcf2e02dd5cb4d5ae9a88e561f433afca5",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d175-texwire-A_2026-09-27.md",
+   "cited": "scratchpad/d172/locked_suite.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d172\\locked_suite.js",
+   "dest": "exo_memory/handback/p-d175-texwire-A_2026-09-27_evidence/d172/locked_suite.js",
+   "size": 638,
+   "sha256": "60831beeb19c542227f2a5989dd054fcea08eca0e97e30b9b55a84fca2de3b4f",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d176-share-install-A_2026-09-27.md",
+   "cited": "scratchpad/d172/d176_rust_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d172\\d176_rust_mutants.js",
+   "dest": "exo_memory/handback/p-d176-share-install-A_2026-09-27_evidence/d172/d176_rust_mutants.js",
+   "size": 3962,
+   "sha256": "9005cc548415f488aa25514ca06493cdd67a82481f8da20900f93fe24c04181c",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d176-share-install-A_2026-09-27.md",
+   "cited": "scratchpad/d172/locked_suite.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d172\\locked_suite.js",
+   "dest": "exo_memory/handback/p-d176-share-install-A_2026-09-27_evidence/d172/locked_suite.js",
+   "size": 638,
+   "sha256": "60831beeb19c542227f2a5989dd054fcea08eca0e97e30b9b55a84fca2de3b4f",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d178-release-A_2026-09-27.md",
+   "cited": "scratchpad/d178/soak_op71.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d178\\soak_op71.js",
+   "dest": "exo_memory/handback/p-d178-release-A_2026-09-27_evidence/d178/soak_op71.js",
+   "size": 2110,
+   "sha256": "a0f4c6c354377a1659266bc804e33c4773bf4de43ef509e8c1dfa067f2595c32",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d178-release-A_2026-09-27.md",
+   "cited": "scratchpad/d178/build_release.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d178\\build_release.js",
+   "dest": "exo_memory/handback/p-d178-release-A_2026-09-27_evidence/d178/build_release.js",
+   "size": 1393,
+   "sha256": "a05d9b00b911d83a26558e9891b1930cbabc779a4cbb40b344c4fda0e209c682",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d178-release-A_2026-09-27.md",
+   "cited": "scratchpad/d172/locked_suite.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d172\\locked_suite.js",
+   "dest": "exo_memory/handback/p-d178-release-A_2026-09-27_evidence/d172/locked_suite.js",
+   "size": 638,
+   "sha256": "60831beeb19c542227f2a5989dd054fcea08eca0e97e30b9b55a84fca2de3b4f",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d179-soakfix-A_2026-09-27.md",
+   "cited": "scratchpad/d178/cdp_commands.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d178\\cdp_commands.js",
+   "dest": "exo_memory/handback/p-d179-soakfix-A_2026-09-27_evidence/d178/cdp_commands.js",
+   "size": 4489,
+   "sha256": "1c47fceeca18b1b3c652c0949b94de49b698ec9139b92187106651c490fec164",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d179-soakfix-A_2026-09-27.md",
+   "cited": "scratchpad/d178/soak_seeds.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d178\\soak_seeds.js",
+   "dest": "exo_memory/handback/p-d179-soakfix-A_2026-09-27_evidence/d178/soak_seeds.js",
+   "size": 2107,
+   "sha256": "3431925fd0a9c2a7fb8c4d51bebd215e8a9dbd94310a4ed6a079ae1ff07a62da",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d179-soakfix-A_2026-09-27.md",
+   "cited": "scratchpad/d178/soak_capture.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d178\\soak_capture.js",
+   "dest": "exo_memory/handback/p-d179-soakfix-A_2026-09-27_evidence/d178/soak_capture.js",
+   "size": 2016,
+   "sha256": "d50b26d8c22a243e2cf843405cf26eccd157d8259da3a6012e72b0721cde336e",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d180-release-docs-A_2026-09-27.md",
+   "cited": "scratchpad/d180/make_changelog.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d180\\make_changelog.js",
+   "dest": "exo_memory/handback/p-d180-release-docs-A_2026-09-27_evidence/d180/make_changelog.js",
+   "size": 6042,
+   "sha256": "8eaee0719cf6827b8b21a73e0dcc09c1eeffe5e78d94cad0a92cc657ae3ddb5e",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d180-release-docs-A_2026-09-27.md",
+   "cited": "scratchpad/d180/shot.ps1",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d180\\shot.ps1",
+   "dest": "exo_memory/handback/p-d180-release-docs-A_2026-09-27_evidence/d180/shot.ps1",
+   "size": 1026,
+   "sha256": "5ab0e25c4e18a2c1a7a89bca032593408f4917f0b8c58426283398cd8eb26f39",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d180-release-docs-A_2026-09-27.md",
+   "cited": "scratchpad/d180/d180_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d180\\d180_mutants.js",
+   "dest": "exo_memory/handback/p-d180-release-docs-A_2026-09-27_evidence/d180/d180_mutants.js",
+   "size": 5325,
+   "sha256": "ea6f350e725fdcca29d40e92130d09a9ffecf292403d7896b49e4fe3be4fa1e7",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d180-release-docs-A_2026-09-27.md",
+   "cited": "scratchpad/d172/locked_cargo.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d172\\locked_cargo.js",
+   "dest": "exo_memory/handback/p-d180-release-docs-A_2026-09-27_evidence/d172/locked_cargo.js",
+   "size": 927,
+   "sha256": "569bf33ed9122daf14edade4a953490fdcc34c6290d571d09205958652c94f24",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d181-final-read-B_2026-09-27.md",
+   "cited": "scratchpad/d181/readme_fix.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d181\\readme_fix.js",
+   "dest": "exo_memory/handback/p-d181-final-read-B_2026-09-27_evidence/d181/readme_fix.js",
+   "size": 2660,
+   "sha256": "ad6a2dd22437516717164a5b2ca8b42b7b071c5aabc09d604c19a4e2ada1e4ad",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d181-final-read-B_2026-09-27.md",
+   "cited": "scratchpad/d181/changelog_fix.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d181\\changelog_fix.js",
+   "dest": "exo_memory/handback/p-d181-final-read-B_2026-09-27_evidence/d181/changelog_fix.js",
+   "size": 3939,
+   "sha256": "e6114a4694d5b0e9e8d755f1205554be6a3213bb8cb748aa2ada5a34a555e5e7",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d181-installer-A_2026-09-27.md",
+   "cited": "scratchpad/d181/locked_d181.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d181\\locked_d181.js",
+   "dest": "exo_memory/handback/p-d181-installer-A_2026-09-27_evidence/d181/locked_d181.js",
+   "size": 3326,
+   "sha256": "25d0012685744b622b978b23b2b6e8ae95128faa02427290586dd06249c5dbfb",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d181-installer-A_2026-09-27.md",
+   "cited": "scratchpad/d181/locked_session.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d181\\locked_session.js",
+   "dest": "exo_memory/handback/p-d181-installer-A_2026-09-27_evidence/d181/locked_session.js",
+   "size": 5782,
+   "sha256": "ab3e60a703733196ed2504ed76517f409b587d77f18bd4550272b358c4c6d160",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d182-ripple-E_2026-09-28.md",
+   "cited": "scratchpad/locked.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\locked.js",
+   "dest": "exo_memory/handback/p-d182-ripple-E_2026-09-28_evidence/locked.js",
+   "size": 885,
+   "sha256": "ab3647592b8cb08507fef0028a79adcda9754c8d40650517f42bb16379d2577f",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d182-ripple-E_2026-09-28.md",
+   "cited": "scratchpad/ripple-watch.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\ripple-watch.js",
+   "dest": "exo_memory/handback/p-d182-ripple-E_2026-09-28_evidence/ripple-watch.js",
+   "size": 2072,
+   "sha256": "1faabc043bd33e3b4d572e46e7fcc91bf5235a432735ee14392e696c5345aab9",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d182-ripple-E_2026-09-28.md",
+   "cited": "scratchpad/ripple-run1.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\ripple-run1.txt",
+   "dest": "exo_memory/handback/p-d182-ripple-E_2026-09-28_evidence/ripple-run1.txt",
+   "size": 78896,
+   "sha256": "4e68c7054398de39a1def10d331a67f115c107802cf021e19be13e0f45035577",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d182-ripple-E_2026-09-28.md",
+   "cited": "scratchpad/jd.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\jd.js",
+   "dest": "exo_memory/handback/p-d182-ripple-E_2026-09-28_evidence/jd.js",
+   "size": 979,
+   "sha256": "5a50ee57739b6e8899611d8cbb73fecd06e7d1fd184f57ec401a671117644576",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d182-ripple-E_2026-09-28.md",
+   "cited": "scratchpad/vj1.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\vj1.txt",
+   "dest": "exo_memory/handback/p-d182-ripple-E_2026-09-28_evidence/vj1.txt",
+   "size": 3651,
+   "sha256": "9c268d13f13d1e827e392a1ebf0b26787e51e280a6ad098e79be8b43b3c326d5",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d182-ripple-E_2026-09-28.md",
+   "cited": "scratchpad/ripple-run4-base.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\ripple-run4-base.txt",
+   "dest": "exo_memory/handback/p-d182-ripple-E_2026-09-28_evidence/ripple-run4-base.txt",
+   "size": 26343,
+   "sha256": "4a08810967386621e5555dc613336b0b54ed13dca7747cfa764bb741ac72fb89",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d182-walltests-E_2026-09-28.md",
+   "cited": "scratchpad/locked.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\locked.js",
+   "dest": "exo_memory/handback/p-d182-walltests-E_2026-09-28_evidence/locked.js",
+   "size": 885,
+   "sha256": "ab3647592b8cb08507fef0028a79adcda9754c8d40650517f42bb16379d2577f",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d182-walltests-E_2026-09-28.md",
+   "cited": "scratchpad/walls-run1.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\walls-run1.txt",
+   "dest": "exo_memory/handback/p-d182-walltests-E_2026-09-28_evidence/walls-run1.txt",
+   "size": 15977,
+   "sha256": "64bfdfafcc4c006c8a5bb634b78af260c3098fa3d71e0a589b70cc735b0fe014",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d184-references-C_2026-09-28.md",
+   "cited": "scratchpad/d184/evals3.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d184\\evals3.log",
+   "dest": "exo_memory/handback/p-d184-references-C_2026-09-28_evidence/d184/evals3.log",
+   "size": 8272,
+   "sha256": "07a647574f1222e28e3e1d3333a97b696cb47ffc12c5880e6eab832276372301",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d184-references-C_2026-09-28.md",
+   "cited": "scratchpad/d184/evals4.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d184\\evals4.log",
+   "dest": "exo_memory/handback/p-d184-references-C_2026-09-28_evidence/d184/evals4.log",
+   "size": 8386,
+   "sha256": "22cac1af18d3223f47a4416d29e52fe29184cb3456cadaa920de6cdac3067b40",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d185-reg-B_2026-09-28.md",
+   "cited": "scratchpad/d185run.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d185run.js",
+   "dest": "exo_memory/handback/p-d185-reg-B_2026-09-28_evidence/d185run.js",
+   "size": 795,
+   "sha256": "e7d916eb610801502435051db5b85e844aa2afe084641590a4f86d6769ca876f",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d185-sculpt-close-E_2026-09-28.md",
+   "cited": "scratchpad/d185/pdftxt.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d185\\pdftxt.js",
+   "dest": "exo_memory/handback/p-d185-sculpt-close-E_2026-09-28_evidence/d185/pdftxt.js",
+   "size": 946,
+   "sha256": "4e1d7242ac2d4eae32bba420ffbb32374c0414f8c469f0865f5f9f31495712d3",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d185-sculpt-close-E_2026-09-28.md",
+   "cited": "scratchpad/d185/mutate.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d185\\mutate.js",
+   "dest": "exo_memory/handback/p-d185-sculpt-close-E_2026-09-28_evidence/d185/mutate.js",
+   "size": 4232,
+   "sha256": "dfd96e0d95e69d754fca90161f9a193f9ca62d46a085c5cb1b77b39dfb874adc",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d185-water-C_2026-09-28.md",
+   "cited": "scratchpad/d185/report5.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d185\\report5.js",
+   "dest": "exo_memory/handback/p-d185-water-C_2026-09-28_evidence/d185/report5.js",
+   "size": 1532,
+   "sha256": "b65f9717fe31d43a8ccf77cbfc41ffcd219f62b0652f6048df970f71973424f1",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d186-app-C_2026-09-28.md",
+   "cited": "scratchpad/d186/bench6.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d186\\bench6.js",
+   "dest": "exo_memory/handback/p-d186-app-C_2026-09-28_evidence/d186/bench6.js",
+   "size": 3820,
+   "sha256": "2f7bbe4d03045d654eacc9afd2c904b527cbb4e60b46e5263278679d1ed13742",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d186-app-C_2026-09-28.md",
+   "cited": "scratchpad/d186/shots.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d186\\shots.js",
+   "dest": "exo_memory/handback/p-d186-app-C_2026-09-28_evidence/d186/shots.js",
+   "size": 12771,
+   "sha256": "24edfb5ed1202da885a31112b85bca77cd8c9ad60b9e8fe9c4f8ba9a04b57d3b",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d186-app-C_2026-09-28.md",
+   "cited": "scratchpad/d186/t1.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d186\\t1.js",
+   "dest": "exo_memory/handback/p-d186-app-C_2026-09-28_evidence/d186/t1.js",
+   "size": 7994,
+   "sha256": "f984b7dc549b06cad965a8f9ce6131af95437af3be97c7e223e27a8d860d179b",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d186-app-C_2026-09-28.md",
+   "cited": "scratchpad/d186/appmut.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d186\\appmut.log",
+   "dest": "exo_memory/handback/p-d186-app-C_2026-09-28_evidence/d186/appmut.log",
+   "size": 9893,
+   "sha256": "a6142c320ebe346a0747dc9e529d409d80e1bb956dfe866398dbfc1b61a3939b",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d186-brush-E_2026-09-28.md",
+   "cited": "scratchpad/d186/probe.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d186\\probe.js",
+   "dest": "exo_memory/handback/p-d186-brush-E_2026-09-28_evidence/d186/probe.js",
+   "size": 2707,
+   "sha256": "10d05269a04341197accbd424331e612edc7e5527ff5bf9a91e5fb419ebec1e6",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d186-brush-E_2026-09-28.md",
+   "cited": "scratchpad/d186/proto.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d186\\proto.js",
+   "dest": "exo_memory/handback/p-d186-brush-E_2026-09-28_evidence/07b8a48f/d186/proto.js",
+   "size": 2444,
+   "sha256": "a384bff600418c8d10f431f457d44599e5e0a12fab4ded4aa4aa1aef012284bf",
+   "how": "AMBIGUOUS: 2 matches, each copied under its project",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d186-brush-E_2026-09-28.md",
+   "cited": "scratchpad/d186/proto.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d186\\proto.js",
+   "dest": "exo_memory/handback/p-d186-brush-E_2026-09-28_evidence/0845a868/d186/proto.js",
+   "size": 1948,
+   "sha256": "ec38e490443178273c1b2d527cb99a35f20226fb21c023e38e9f0c6bb60fe5d5",
+   "how": "AMBIGUOUS: 2 matches, each copied under its project",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d186-brush-E_2026-09-28.md",
+   "cited": "scratchpad/d186/hilltest.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d186\\hilltest.js",
+   "dest": "exo_memory/handback/p-d186-brush-E_2026-09-28_evidence/d186/hilltest.js",
+   "size": 4279,
+   "sha256": "1695983e1249b8dbacb533416aa214f25b3ed1c02aa580dfd34bdf87f2c0ac34",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d186-brush-E_2026-09-28.md",
+   "cited": "scratchpad/d186/compare.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d186\\compare.js",
+   "dest": "exo_memory/handback/p-d186-brush-E_2026-09-28_evidence/d186/compare.js",
+   "size": 4401,
+   "sha256": "583e48fa6af7a448542efa30f9941426970330e191b69cd1c7621f8072d99322",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d186-brush-E_2026-09-28.md",
+   "cited": "scratchpad/d186/mutate186.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d186\\mutate186.js",
+   "dest": "exo_memory/handback/p-d186-brush-E_2026-09-28_evidence/d186/mutate186.js",
+   "size": 3799,
+   "sha256": "d7cb5c0be66492fa5a1b20d0f994010d7f32b67fe7ca4aec62565f36bba7f4c2",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d186-brush-E_2026-09-28.md",
+   "cited": "scratchpad/d186/spill.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d186\\spill.js",
+   "dest": "exo_memory/handback/p-d186-brush-E_2026-09-28_evidence/d186/spill.js",
+   "size": 3386,
+   "sha256": "498053da3488d40ce9eaed65773abc5c7752424d47fe8cee0a85b868f28fb3c7",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d187-B_2026-09-29.md",
+   "cited": "scratchpad/d187/locked.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d187\\locked.js",
+   "dest": "exo_memory/handback/p-d187-B_2026-09-29_evidence/d187/locked.js",
+   "size": 387,
+   "sha256": "c92c0382c7c541c076aa9d3fa5b0b8257b7c7550988a6da5e5d2b093a82236d0",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d187-B_2026-09-29.md",
+   "cited": "scratchpad/d187/score.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d187\\score.js",
+   "dest": "exo_memory/handback/p-d187-B_2026-09-29_evidence/d187/score.js",
+   "size": 33991,
+   "sha256": "0190a73cc1668156e5dd851c7bec108f335d4f0eb0a8e18d0543280dcbf41be7",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d187-B_2026-09-29.md",
+   "cited": "scratchpad/d187/m6flight.test.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d187\\m6flight.test.js",
+   "dest": "exo_memory/handback/p-d187-B_2026-09-29_evidence/d187/m6flight.test.js",
+   "size": 4180,
+   "sha256": "a06f65528997f461598140c71e333dfb692a3614db6d86fc78405998da81e2b7",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d187-B_2026-09-29.md",
+   "cited": "scratchpad/d187/vary-e.test.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d187\\vary-e.test.js",
+   "dest": "exo_memory/handback/p-d187-B_2026-09-29_evidence/d187/vary-e.test.js",
+   "size": 7217,
+   "sha256": "904ec53926af9f131a7bc89c09429616a21e79071b75193c40dd0338f3fcdc29",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d187-B_2026-09-29.md",
+   "cited": "scratchpad/d187/suite.out",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d187\\suite.out",
+   "dest": "exo_memory/handback/p-d187-B_2026-09-29_evidence/d187/suite.out",
+   "size": 225205,
+   "sha256": "d1f57f86f0a990d659dde92ab86db3d68887eafb95d617745c866f091fe580fb",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d187-C_2026-09-29.md",
+   "cited": "scratchpad/lockrun.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\lockrun.js",
+   "dest": "exo_memory/handback/p-d187-C_2026-09-29_evidence/lockrun.js",
+   "size": 1537,
+   "sha256": "efe6a2f901c6396355a59225720960e7ebf6712189c113853f76c67a97f53f57",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d187-C_2026-09-29.md",
+   "cited": "scratchpad/d187/m5.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d187\\m5.js",
+   "dest": "exo_memory/handback/p-d187-C_2026-09-29_evidence/d187/m5.js",
+   "size": 13381,
+   "sha256": "7081dedc5ce9833230f5f13c7a9d6f908c53b698d701ca34c63bea2e2dc9910a",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d187-C_2026-09-29.md",
+   "cited": "scratchpad/d187/png.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d187\\png.js",
+   "dest": "exo_memory/handback/p-d187-C_2026-09-29_evidence/d187/png.js",
+   "size": 4798,
+   "sha256": "9a5e0cb3ff9b9f33070e28f9aac825ddd84ea741312835cb17f2bf2e2a930030",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d187-E_2026-09-29.md",
+   "cited": "scratchpad/lockedD.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\lockedD.js",
+   "dest": "exo_memory/handback/p-d187-E_2026-09-29_evidence/lockedD.js",
+   "size": 938,
+   "sha256": "2db7195de90192175b48d677d952971cb3a45efa39e8da9aed5aaebb1815e459",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d187-E_2026-09-29.md",
+   "cited": "scratchpad/d187-red.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d187-red.txt",
+   "dest": "exo_memory/handback/p-d187-E_2026-09-29_evidence/d187-red.txt",
+   "size": 10740,
+   "sha256": "c17eeeffe71b724831bc2dd6f46b73810ca59f4121c8bdb5bccd631cdaf8ac77",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d187-E_2026-09-29.md",
+   "cited": "scratchpad/d187-green.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d187-green.txt",
+   "dest": "exo_memory/handback/p-d187-E_2026-09-29_evidence/d187-green.txt",
+   "size": 25844,
+   "sha256": "40ee2cf4a2e7b22930e1ec785d29bf6445880a2fb33f58e9fb52f123648b2be6",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d187-E_2026-09-29.md",
+   "cited": "scratchpad/d187-mut.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d187-mut.txt",
+   "dest": "exo_memory/handback/p-d187-E_2026-09-29_evidence/d187-mut.txt",
+   "size": 911,
+   "sha256": "39a8c070762d8d16413db5862149daa0e2f25f6f380e989e121c9aa4ddaad1cf",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d188-E_2026-09-29.md",
+   "cited": "scratchpad/d188probes.test.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d188probes.test.js",
+   "dest": "exo_memory/handback/p-d188-E_2026-09-29_evidence/d188probes.test.js",
+   "size": 11320,
+   "sha256": "be02a5ac1f1c9a6bf8046d4e981316ea1d01410be2a5a557798c47e8e292fe0a",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d188-E_2026-09-29.md",
+   "cited": "scratchpad/lockedD.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\lockedD.js",
+   "dest": "exo_memory/handback/p-d188-E_2026-09-29_evidence/lockedD.js",
+   "size": 938,
+   "sha256": "2db7195de90192175b48d677d952971cb3a45efa39e8da9aed5aaebb1815e459",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d188-E_2026-09-29.md",
+   "cited": "scratchpad/d188-probes.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d188-probes.txt",
+   "dest": "exo_memory/handback/p-d188-E_2026-09-29_evidence/d188-probes.txt",
+   "size": 2780,
+   "sha256": "627df926ebdb1ebf65464fad6b343f630aceba2832710e098247d9a3c1550755",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d188-E_2026-09-29.md",
+   "cited": "scratchpad/d188-probes-red.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d188-probes-red.txt",
+   "dest": "exo_memory/handback/p-d188-E_2026-09-29_evidence/d188-probes-red.txt",
+   "size": 6038,
+   "sha256": "b0bbea4ecd6581fcf88781060636a25ad60cb2b7c9091a33f7e1aca4bca9bc27",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d188-E_2026-09-29.md",
+   "cited": "scratchpad/d188-mut.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d188-mut.txt",
+   "dest": "exo_memory/handback/p-d188-E_2026-09-29_evidence/d188-mut.txt",
+   "size": 15550,
+   "sha256": "fbde0b94d2d091aa342e9d8610e036bfb62c2aec313a9ebdc55d48ea86ec0910",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d189-E_2026-09-29.md",
+   "cited": "scratchpad/d189probes.test.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d189probes.test.js",
+   "dest": "exo_memory/handback/p-d189-E_2026-09-29_evidence/d189probes.test.js",
+   "size": 6626,
+   "sha256": "4903e8d71ce2d472c524cfb9e8c8744dcaa49d3a986b65c515c5bf787e6b3a4c",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d189-E_2026-09-29.md",
+   "cited": "scratchpad/d189-fix.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d189-fix.txt",
+   "dest": "exo_memory/handback/p-d189-E_2026-09-29_evidence/d189-fix.txt",
+   "size": 1095,
+   "sha256": "a90db3d02015fc371f90ce6f90eea3c85f76f5d30147e494a2f080b5d770e2ee",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d189-E_2026-09-29.md",
+   "cited": "scratchpad/d189-red.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d189-red.txt",
+   "dest": "exo_memory/handback/p-d189-E_2026-09-29_evidence/d189-red.txt",
+   "size": 13580,
+   "sha256": "5fdeaed5313fdff7d8d7819fa407ed1db362f8a42129baec24f2231f59da1ec7",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d189-E_2026-09-29.md",
+   "cited": "scratchpad/d189-d188.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d189-d188.txt",
+   "dest": "exo_memory/handback/p-d189-E_2026-09-29_evidence/d189-d188.txt",
+   "size": 3867,
+   "sha256": "d792d7c3790f7db946ebe3be59169d4ef32b4b5aec2daaffaf460abc90dba29a",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d189-E_2026-09-29.md",
+   "cited": "scratchpad/d189-a.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d189-a.txt",
+   "dest": "exo_memory/handback/p-d189-E_2026-09-29_evidence/d189-a.txt",
+   "size": 12017,
+   "sha256": "52fb87ec561a21f20bdf8db3919eb68423401529144e5f2e86a0e52e22ded113",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d190-A-r2_2026-09-29.md",
+   "cited": "scratchpad/d190/probe_r.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d190\\probe_r.js",
+   "dest": "exo_memory/handback/p-d190-A-r2_2026-09-29_evidence/d190/probe_r.js",
+   "size": 3583,
+   "sha256": "4e61c6c66d46a62e94a2765100bd6d1877b975c617fd8e4e2e9ade102ee324fe",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d190-A-r3_2026-09-29.md",
+   "cited": "scratchpad/d190/p3.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d190\\p3.js",
+   "dest": "exo_memory/handback/p-d190-A-r3_2026-09-29_evidence/d190/p3.js",
+   "size": 2113,
+   "sha256": "a2c30752d1ad3bd506976fc0fc4870f235284a737714110a98f16e55429e3848",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d190-A-r3_2026-09-29.md",
+   "cited": "scratchpad/d190/locked_run.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d190\\locked_run.js",
+   "dest": "exo_memory/handback/p-d190-A-r3_2026-09-29_evidence/d190/locked_run.js",
+   "size": 405,
+   "sha256": "123fe569123ae4522f89767c1b61559bb899568abbcc9876121b42453b617c6b",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d190-B-r2_2026-09-29.md",
+   "cited": "scratchpad/d190/locked.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d190\\locked.js",
+   "dest": "exo_memory/handback/p-d190-B-r2_2026-09-29_evidence/d190/locked.js",
+   "size": 387,
+   "sha256": "4fea95aa1f6c3e6af3411bb1b900ad689741e28afb428b10e137773e03c54eec",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d190-B-r3_2026-09-29.md",
+   "cited": "scratchpad/d190/locked.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d190\\locked.js",
+   "dest": "exo_memory/handback/p-d190-B-r3_2026-09-29_evidence/d190/locked.js",
+   "size": 387,
+   "sha256": "4fea95aa1f6c3e6af3411bb1b900ad689741e28afb428b10e137773e03c54eec",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d190-B_2026-09-29.md",
+   "cited": "scratchpad/d190/locked.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d190\\locked.js",
+   "dest": "exo_memory/handback/p-d190-B_2026-09-29_evidence/d190/locked.js",
+   "size": 387,
+   "sha256": "4fea95aa1f6c3e6af3411bb1b900ad689741e28afb428b10e137773e03c54eec",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d190-B_2026-09-29.md",
+   "cited": "scratchpad/d190/bprobe.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d190\\bprobe.js",
+   "dest": "exo_memory/handback/p-d190-B_2026-09-29_evidence/d190/bprobe.js",
+   "size": 15793,
+   "sha256": "b5643b6b7479a5c592cb4bc49a22c40b565e28ce290cc64f63a3fd378e34b8c7",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d190-B_2026-09-29.md",
+   "cited": "scratchpad/d190/ui-realcore.test.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d190\\ui-realcore.test.js",
+   "dest": "exo_memory/handback/p-d190-B_2026-09-29_evidence/d190/ui-realcore.test.js",
+   "size": 8049,
+   "sha256": "b4e88fb9107d5f3faf200a1adcd2fe89db562e43dec2e10d1605113ee620a84d",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d190-B_2026-09-29.md",
+   "cited": "scratchpad/d190/plants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d190\\plants.js",
+   "dest": "exo_memory/handback/p-d190-B_2026-09-29_evidence/d190/plants.js",
+   "size": 6633,
+   "sha256": "25389fd38c964a79663ef24313cf52a14704bd2864ee091a13a65b46c853c8ed",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d190-B_2026-09-29.md",
+   "cited": "scratchpad/d190/g.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d190\\g.js",
+   "dest": "exo_memory/handback/p-d190-B_2026-09-29_evidence/d190/g.js",
+   "size": 10698,
+   "sha256": "0bb6e1be61364322e106e7444c6fa6d99951467f1367445e47c8d7d11143d090",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d190-B_2026-09-29.md",
+   "cited": "scratchpad/d190/suite.out",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d190\\suite.out",
+   "dest": "exo_memory/handback/p-d190-B_2026-09-29_evidence/d190/suite.out",
+   "size": 247185,
+   "sha256": "614ef3788204c2b75808fed957e1e8c82eff6447a99b56a5a7eec3de30e28911",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d190-C_2026-09-29.md",
+   "cited": "scratchpad/lockrun.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\lockrun.js",
+   "dest": "exo_memory/handback/p-d190-C_2026-09-29_evidence/lockrun.js",
+   "size": 1537,
+   "sha256": "efe6a2f901c6396355a59225720960e7ebf6712189c113853f76c67a97f53f57",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d190-C_2026-09-29.md",
+   "cited": "scratchpad/d190/t3.out",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d190\\t3.out",
+   "dest": "exo_memory/handback/p-d190-C_2026-09-29_evidence/d190/t3.out",
+   "size": 6244,
+   "sha256": "a1f4ed0b64f02ec356a7c9a2fe7d8e6222873ca0c8ed9e6015ae5a617c926d46",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d190-C_2026-09-29.md",
+   "cited": "scratchpad/d190/mut3.out",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d190\\mut3.out",
+   "dest": "exo_memory/handback/p-d190-C_2026-09-29_evidence/d190/mut3.out",
+   "size": 8687,
+   "sha256": "e376b83a0d17901117e0680d1ea9e1bd3debc1f7f8295612f0b67b05a90b9043",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d191-A_2026-09-29.md",
+   "cited": "scratchpad/d190/locked_run.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d190\\locked_run.js",
+   "dest": "exo_memory/handback/p-d191-A_2026-09-29_evidence/d190/locked_run.js",
+   "size": 405,
+   "sha256": "123fe569123ae4522f89767c1b61559bb899568abbcc9876121b42453b617c6b",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d192-A_2026-09-30.md",
+   "cited": "scratchpad/d192/realclose.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d192\\realclose.js",
+   "dest": "exo_memory/handback/p-d192-A_2026-09-30_evidence/d192/realclose.js",
+   "size": 8585,
+   "sha256": "0ee06fdc9c125cbf84c3f9b94cfafd9f0ac7caaa36683130046d862168625268",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d193-C_2026-09-30.md",
+   "cited": "scratchpad/lockrun.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\lockrun.js",
+   "dest": "exo_memory/handback/p-d193-C_2026-09-30_evidence/lockrun.js",
+   "size": 1537,
+   "sha256": "efe6a2f901c6396355a59225720960e7ebf6712189c113853f76c67a97f53f57",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d193-C_2026-09-30.md",
+   "cited": "scratchpad/d193/t2.out",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d193\\t2.out",
+   "dest": "exo_memory/handback/p-d193-C_2026-09-30_evidence/d193/t2.out",
+   "size": 6976,
+   "sha256": "38622407eb5a8eaa195068672d4f4b0aaa9ab66e6b51ef8ba7450cfda32af6cf",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d193-C_2026-09-30.md",
+   "cited": "scratchpad/d193/mutcheck.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d193\\mutcheck.js",
+   "dest": "exo_memory/handback/p-d193-C_2026-09-30_evidence/d193/mutcheck.js",
+   "size": 999,
+   "sha256": "3c642e8496449cf9a9990f21780f22d541922debf5d5226b055b7160cfc44840",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d194a-C_2026-09-30.md",
+   "cited": "scratchpad/d194/green.out",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d194\\green.out",
+   "dest": "exo_memory/handback/p-d194a-C_2026-09-30_evidence/d194/green.out",
+   "size": 7692,
+   "sha256": "03785c8a861e8d6240f5eb6c9bfdf2fc8dd86b01e89be7eaeabf9b4339617ff5",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d194a-C_2026-09-30.md",
+   "cited": "scratchpad/d194/red.out",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d194\\red.out",
+   "dest": "exo_memory/handback/p-d194a-C_2026-09-30_evidence/d194/red.out",
+   "size": 7574,
+   "sha256": "986bcc47ce9d6eca039c7a1f8df83b472dc0af9eb9b2d37df45d1d4726c2d573",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d194a-C_2026-09-30.md",
+   "cited": "scratchpad/d194/mutcheck.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d194\\mutcheck.js",
+   "dest": "exo_memory/handback/p-d194a-C_2026-09-30_evidence/d194/mutcheck.js",
+   "size": 999,
+   "sha256": "6e6d01c48d016c2dcd3269a25343d14fc1babee6d6cf557a12062650184d7118",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d195-A_2026-09-30.md",
+   "cited": "scratchpad/d195/probe1.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d195\\probe1.js",
+   "dest": "exo_memory/handback/p-d195-A_2026-09-30_evidence/d195/probe1.js",
+   "size": 1645,
+   "sha256": "d8d9f617f50655be565af588f57e1b15bd6e6780709d8b40d5fc2556b3e3a7aa",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d195-A_2026-09-30.md",
+   "cited": "scratchpad/d195/probe5.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d195\\probe5.js",
+   "dest": "exo_memory/handback/p-d195-A_2026-09-30_evidence/d195/probe5.js",
+   "size": 1364,
+   "sha256": "d63eedf6b66999ea864bf61d72a82db6327134889e21958214ae534dc2f78d97",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d195-A_2026-09-30.md",
+   "cited": "scratchpad/d195/golden.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d195\\golden.js",
+   "dest": "exo_memory/handback/p-d195-A_2026-09-30_evidence/d195/golden.js",
+   "size": 564,
+   "sha256": "70d66bf8df64c5b92d9d07d245e5cf9531689d7c4f9b27b6ba5de9abee9fc28f",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d195-B-lag_2026-09-30.md",
+   "cited": "scratchpad/d195/locked.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d195\\locked.js",
+   "dest": "exo_memory/handback/p-d195-B-lag_2026-09-30_evidence/d195/locked.js",
+   "size": 387,
+   "sha256": "b20fc4d3dbfd6bfb02468fcb8e51a370cca3d8bd48d6b4037b4717302726bfb4",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d195-B-lag_2026-09-30.md",
+   "cited": "scratchpad/d195/lag.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d195\\lag.js",
+   "dest": "exo_memory/handback/p-d195-B-lag_2026-09-30_evidence/d195/lag.js",
+   "size": 7661,
+   "sha256": "4ee132ef1c9355e0cd8e7dd08c5cc54495172e301e2ec3ee42e580e271aeae15",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d195-B-lag_2026-09-30.md",
+   "cited": "scratchpad/d195/vary.test.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d195\\vary.test.js",
+   "dest": "exo_memory/handback/p-d195-B-lag_2026-09-30_evidence/d195/vary.test.js",
+   "size": 6234,
+   "sha256": "2073635b8595f36ddffdb90899fcea336c15b2c97f388bdb47298102c8eac9ab",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d195-B_2026-09-30.md",
+   "cited": "scratchpad/d195/locked.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d195\\locked.js",
+   "dest": "exo_memory/handback/p-d195-B_2026-09-30_evidence/d195/locked.js",
+   "size": 387,
+   "sha256": "b20fc4d3dbfd6bfb02468fcb8e51a370cca3d8bd48d6b4037b4717302726bfb4",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d195-C_2026-09-30.md",
+   "cited": "scratchpad/d195/t1.out",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d195\\t1.out",
+   "dest": "exo_memory/handback/p-d195-C_2026-09-30_evidence/d195/t1.out",
+   "size": 8192,
+   "sha256": "a8407d3574399d53fc1ac550a969ec24832b3bda4f6976c35ec78a7360d56814",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d195-C_2026-09-30.md",
+   "cited": "scratchpad/d195/mut.out",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d195\\mut.out",
+   "dest": "exo_memory/handback/p-d195-C_2026-09-30_evidence/d195/mut.out",
+   "size": 10832,
+   "sha256": "13d173c86581973156f4696baee6cc368849b0d8dcbe2ff838f828fb44f5677f",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d196-A_2026-09-30.md",
+   "cited": "scratchpad/d195/measure.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d195\\measure.js",
+   "dest": "exo_memory/handback/p-d196-A_2026-09-30_evidence/d195/measure.js",
+   "size": 3143,
+   "sha256": "bd417860c2ed440a08e1a8ea2620090bf381f657458f331b2b51b2f7bd98d992",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d201-B-read_2026-10-01.md",
+   "cited": "scratchpad/d201/turns.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d201\\turns.js",
+   "dest": "exo_memory/handback/p-d201-B-read_2026-10-01_evidence/d201/turns.js",
+   "size": 3229,
+   "sha256": "b57388d67df0aac370160128a6be6f14d75729f9c50fd856742002f421c54cec",
+   "how": "seat B's scratchpad (of 2 matches)",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d201-C-read_2026-10-01.md",
+   "cited": "scratchpad/d201/turns.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d201\\turns.js",
+   "dest": "exo_memory/handback/p-d201-C-read_2026-10-01_evidence/d201/turns.js",
+   "size": 2497,
+   "sha256": "2f41afdff512826731d0094d0acf693182a64528a41c4c07f4b93573dfb0a8f0",
+   "how": "seat C's scratchpad (of 2 matches)",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d201-C-read_2026-10-01.md",
+   "cited": "scratchpad/d201/dates.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d201\\dates.js",
+   "dest": "exo_memory/handback/p-d201-C-read_2026-10-01_evidence/d201/dates.js",
+   "size": 1107,
+   "sha256": "9f1110c0f3a56124ebbe0698ccb89d7d24fbc2f0e077d1286e9847cbcfd3a909",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d203-B_2026-10-01.md",
+   "cited": "scratchpad/d203/t-sr.out",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d203\\t-sr.out",
+   "dest": "exo_memory/handback/p-d203-B_2026-10-01_evidence/d203/t-sr.out",
+   "size": 4601,
+   "sha256": "d2974604d1b9a40a59c4da5f7a359740d467a485b54139c3fe3be669b49ce6ce",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d205-B_2026-10-01.md",
+   "cited": "scratchpad/d205/fix.out",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d205\\fix.out",
+   "dest": "exo_memory/handback/p-d205-B_2026-10-01_evidence/d205/fix.out",
+   "size": 3811,
+   "sha256": "b577e95c72ebcb70867ca47074b9f610b935067e7cb176e15178c8b506d3f428",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d212-A_2026-10-02.md",
+   "cited": "scratchpad/d212_sdiff.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d212_sdiff.js",
+   "dest": "exo_memory/handback/p-d212-A_2026-10-02_evidence/d212_sdiff.js",
+   "size": 1081,
+   "sha256": "2d3954244b7a5d2cff4e95bf66eeb3eaa95485aafca891c8ce53e535e0888c7e",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d212-A_2026-10-02.md",
+   "cited": "scratchpad/d212_claude_md.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d212_claude_md.js",
+   "dest": "exo_memory/handback/p-d212-A_2026-10-02_evidence/d212_claude_md.js",
+   "size": 1120,
+   "sha256": "16bfe40c2b031c196aa6827abb8279b4fdbc7dc016f20eb742c4ac8386223508",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d212-B_2026-10-02.md",
+   "cited": "scratchpad/d212/t-sg.out",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d212\\t-sg.out",
+   "dest": "exo_memory/handback/p-d212-B_2026-10-02_evidence/d212/t-sg.out",
+   "size": 4940,
+   "sha256": "8d9d86e9dd0229c24d11743f792300d28bdbeeeb4c7157ec449e591bba2c66d1",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d214-A_2026-10-02.md",
+   "cited": "scratchpad/d214_rsmut.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d214_rsmut.js",
+   "dest": "exo_memory/handback/p-d214-A_2026-10-02_evidence/d214_rsmut.js",
+   "size": 3201,
+   "sha256": "3c628dde137ef17087941c8307af2e97ed2c657818ebd71d0115eb35eae3130c",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d215-A_2026-10-02.md",
+   "cited": "scratchpad/d215_sdiff.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d215_sdiff.js",
+   "dest": "exo_memory/handback/p-d215-A_2026-10-02_evidence/d215_sdiff.js",
+   "size": 1744,
+   "sha256": "41609a152b3d90dffc737915fa2ef0e4d81647b3541b8a174958fadc19851939",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d218-A_2026-10-03.md",
+   "cited": "scratchpad/d218_sdiff.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d218_sdiff.js",
+   "dest": "exo_memory/handback/p-d218-A_2026-10-03_evidence/d218_sdiff.js",
+   "size": 1601,
+   "sha256": "1fd0557650e566809c12d8bf6729baa50fc0be3038268008547ad2975a6b7b47",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d218-A_2026-10-03.md",
+   "cited": "scratchpad/d218_smoke.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d218_smoke.js",
+   "dest": "exo_memory/handback/p-d218-A_2026-10-03_evidence/d218_smoke.js",
+   "size": 1423,
+   "sha256": "e41e204ce5de125a465f178404850587eca3a746c239edbb2dcc72aaad4499ef",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d218-A_2026-10-03.md",
+   "cited": "scratchpad/d218b_smoke.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d218b_smoke.js",
+   "dest": "exo_memory/handback/p-d218-A_2026-10-03_evidence/d218b_smoke.js",
+   "size": 1978,
+   "sha256": "01be7e63861ce236b80e641047ca8411d5067ae2b055517aeba18b8d93e73352",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d218-B2_2026-10-03.md",
+   "cited": "scratchpad/d218/t2-rs.out",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d218\\t2-rs.out",
+   "dest": "exo_memory/handback/p-d218-B2_2026-10-03_evidence/d218/t2-rs.out",
+   "size": 5271,
+   "sha256": "ed032c79259c2e1a4986ea2776ba45e80ab6990cb9c5e9c6d0c853f8553f89fa",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d220-A-live_2026-10-03.md",
+   "cited": "scratchpad/d220b_smoke.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d220b_smoke.js",
+   "dest": "exo_memory/handback/p-d220-A-live_2026-10-03_evidence/d220b_smoke.js",
+   "size": 2043,
+   "sha256": "160a50566d7287f21a288b85f0204c0de4a26e06b9f99ce4cf70032259fbf0a5",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d220-A_2026-10-03.md",
+   "cited": "scratchpad/d220_run.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d220_run.js",
+   "dest": "exo_memory/handback/p-d220-A_2026-10-03_evidence/d220_run.js",
+   "size": 603,
+   "sha256": "9d3f8b58fb8af543e62731b0f42ec7bc931e586737bc7ad2adc209a56a0f4bc8",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d220-B-live_2026-10-03.md",
+   "cited": "scratchpad/d220/t3-rs.out",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d220\\t3-rs.out",
+   "dest": "exo_memory/handback/p-d220-B-live_2026-10-03_evidence/d220/t3-rs.out",
+   "size": 6108,
+   "sha256": "54d43a3b8713954a964136b7ebff4015e427c65ea955e9c2fd82d85a359c7fb3",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d222-B_2026-10-03.md",
+   "cited": "scratchpad/d222/weldgap.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d222\\weldgap.js",
+   "dest": "exo_memory/handback/p-d222-B_2026-10-03_evidence/d222/weldgap.js",
+   "size": 4613,
+   "sha256": "4d03201a788dfc79d40b6ad3461e0e55af0999bb286066ab62672fcecd7e8115",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d222-B_2026-10-03.md",
+   "cited": "scratchpad/d222/kn5measure.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d222\\kn5measure.js",
+   "dest": "exo_memory/handback/p-d222-B_2026-10-03_evidence/d222/kn5measure.js",
+   "size": 3696,
+   "sha256": "4dba72ffac1071cc99aa8ff5d0ee7a53b43f80ab95026db2aeaf00b8714c95cc",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d222-B_2026-10-03.md",
+   "cited": "scratchpad/d195/serial-shim.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d195\\serial-shim.js",
+   "dest": "exo_memory/handback/p-d222-B_2026-10-03_evidence/d195/serial-shim.js",
+   "size": 1170,
+   "sha256": "1743310b86ae710c59ea3e11410c9006ab918330b40fbc04ea34e8248f914a9c",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d224-A_2026-10-03.md",
+   "cited": "scratchpad/d224_window.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d224_window.js",
+   "dest": "exo_memory/handback/p-d224-A_2026-10-03_evidence/d224_window.js",
+   "size": 10043,
+   "sha256": "9c3f927a89f7a89958ea9e91a8361028e44866e4c2d4c5bdfaff3cf900aa959c",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d277fix-C_2026-10-10.md",
+   "cited": "scratchpad/lockrun.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\lockrun.js",
+   "dest": "exo_memory/handback/p-d277fix-C_2026-10-10_evidence/lockrun.js",
+   "size": 1537,
+   "sha256": "efe6a2f901c6396355a59225720960e7ebf6712189c113853f76c67a97f53f57",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d277fix-C_2026-10-10.md",
+   "cited": "scratchpad/d277fix/src.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d277fix\\src.log",
+   "dest": "exo_memory/handback/p-d277fix-C_2026-10-10_evidence/d277fix/src.log",
+   "size": 3454,
+   "sha256": "a73ebc15e09c53d3d8f8f96f2f81c3d3601c0303972883ac76be642e20435276",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d277fix-C_2026-10-10.md",
+   "cited": "scratchpad/d277fix/gen.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d277fix\\gen.log",
+   "dest": "exo_memory/handback/p-d277fix-C_2026-10-10_evidence/d277fix/gen.log",
+   "size": 2117,
+   "sha256": "58d002bf292b3dbf4fa58f30e2790bfe78ed675ee04ed24fbe111b529ed97b2a",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d277fix-C_2026-10-10.md",
+   "cited": "scratchpad/d277fix/mut.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d277fix\\mut.log",
+   "dest": "exo_memory/handback/p-d277fix-C_2026-10-10_evidence/d277fix/mut.log",
+   "size": 5501,
+   "sha256": "dbefd7abab187285883a85c5b5175b95ff39766b5f5c2ccc6335bcc163240d39",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d277margin-C_2026-10-10.md",
+   "cited": "scratchpad/d277margin/sec.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d277margin\\sec.js",
+   "dest": "exo_memory/handback/p-d277margin-C_2026-10-10_evidence/d277margin/sec.js",
+   "size": 664,
+   "sha256": "b79f2d95ee49842f8e4b37a5710a275a98bdee5123414e32eb069befb5b0eef3",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d277margin-C_2026-10-10.md",
+   "cited": "scratchpad/lockrun.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\lockrun.js",
+   "dest": "exo_memory/handback/p-d277margin-C_2026-10-10_evidence/lockrun.js",
+   "size": 1537,
+   "sha256": "efe6a2f901c6396355a59225720960e7ebf6712189c113853f76c67a97f53f57",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d277margin-C_2026-10-10.md",
+   "cited": "scratchpad/d277margin/dump.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d277margin\\dump.log",
+   "dest": "exo_memory/handback/p-d277margin-C_2026-10-10_evidence/d277margin/dump.log",
+   "size": 1635,
+   "sha256": "207c0c1f5f04bc5ddb771f3e2463fc2bdce411d7c7650029d6cd525410e2064f",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d277margin-C_2026-10-10.md",
+   "cited": "scratchpad/d277margin/src.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d277margin\\src.log",
+   "dest": "exo_memory/handback/p-d277margin-C_2026-10-10_evidence/d277margin/src.log",
+   "size": 2717,
+   "sha256": "7a22f6477ba6a4b9abc90e0b41b7bb4c72b7171ea8714490d06c4b5ae31579af",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d277margin-C_2026-10-10.md",
+   "cited": "scratchpad/d277margin/mut.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d277margin\\mut.log",
+   "dest": "exo_memory/handback/p-d277margin-C_2026-10-10_evidence/d277margin/mut.log",
+   "size": 7815,
+   "sha256": "66e85b18e5fb2389449a3e5e44da4032cd2956cf663522b67eb68952b20ce200",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d277margin-C_2026-10-10.md",
+   "cited": "scratchpad/d277margin/iso.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d277margin\\iso.log",
+   "dest": "exo_memory/handback/p-d277margin-C_2026-10-10_evidence/d277margin/iso.log",
+   "size": 6712,
+   "sha256": "773c95a0b47f7e4fc9a7b1f0f9317690e4b54a51b3a0744cb6182c284bc134c5",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d277margin-C_2026-10-10.md",
+   "cited": "scratchpad/d277margin/final.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d277margin\\final.log",
+   "dest": "exo_memory/handback/p-d277margin-C_2026-10-10_evidence/d277margin/final.log",
+   "size": 9162,
+   "sha256": "c5f7ea9ecb0ee43bcd4f31d37f4fc59dda76eb43608ba59d167a07c836893104",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d277parity-B_2026-10-10.md",
+   "cited": "scratchpad/d273/run.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d273\\run.js",
+   "dest": "exo_memory/handback/p-d277parity-B_2026-10-10_evidence/d273/run.js",
+   "size": 1120,
+   "sha256": "1018d83b7f693d5f46a2e79223dc9ba5d732b990a0c42cc8fad55b918fe7c23d",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-d277parity2-B_2026-10-10.md",
+   "cited": "scratchpad/d273/run.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d273\\run.js",
+   "dest": "exo_memory/handback/p-d277parity2-B_2026-10-10_evidence/d273/run.js",
+   "size": 1120,
+   "sha256": "1018d83b7f693d5f46a2e79223dc9ba5d732b990a0c42cc8fad55b918fe7c23d",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-dark-B_2026-10-04.md",
+   "cited": "scratchpad/dark/nodes.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\dark\\nodes.js",
+   "dest": "exo_memory/handback/p-dark-B_2026-10-04_evidence/dark/nodes.js",
+   "size": 3996,
+   "sha256": "e5d9de5609e0cb54d797ff7b8036aa25555b61fabe897e2f909d4cbe91d3a98f",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-diverged-A_2026-09-14.md",
+   "cited": "scratchpad/one_mutant.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\one_mutant.js",
+   "dest": "exo_memory/handback/p-diverged-A_2026-09-14_evidence/one_mutant.js",
+   "size": 2226,
+   "sha256": "38e3f0fb485fc090be93fd68bb81c02b191dec7bc89453f6ad23ea0069923f46",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-drift-awareness-C_2026-10-09.md",
+   "cited": "scratchpad/inv/d275.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\d275.log",
+   "dest": "exo_memory/handback/p-drift-awareness-C_2026-10-09_evidence/inv/d275.log",
+   "size": 1076,
+   "sha256": "e9fed8270dc1767f5fa41fef885d84e1ef0b64aaf2cd3ffa49d2dc2a7f1c3dfd",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-drift-awareness-C_2026-10-09.md",
+   "cited": "scratchpad/inv/d275-id.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\d275-id.txt",
+   "dest": "exo_memory/handback/p-drift-awareness-C_2026-10-09_evidence/inv/d275-id.txt",
+   "size": 3872,
+   "sha256": "664289bc8211c8450100b8c8cc359e972fb51e96c6a7e7d28cc9924a58c58022",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-flake-C_2026-10-06.md",
+   "cited": "scratchpad/full1ff.tap",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b\\scratchpad\\full1ff.tap",
+   "dest": "exo_memory/handback/p-flake-C_2026-10-06_evidence/full1ff.tap",
+   "size": 562433,
+   "sha256": "aa70915e40c3e502374c256b142cef3f0e052fd278d1ba2ce97b70bb8cb333e7",
+   "how": "only match; in ANOTHER seat's scratchpad",
+   "state": "copied"
+  },
+  {
+   "handback": "p-freejump-ui-A_2026-10-06.md",
+   "cited": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b\\scratchpad\\mutcc1-core-close-mutation.test.js.tap",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b\\scratchpad\\mutcc1-core-close-mutation.test.js.tap",
+   "dest": "exo_memory/handback/p-freejump-ui-A_2026-10-06_evidence/mutcc1-core-close-mutation.test.js.tap",
+   "size": 11428,
+   "sha256": "7cd488d806666b6a3d8fe7d1c0489397461a1a40f73e7efc096796d6a843d378",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-freejump-ui-A_2026-10-06.md",
+   "cited": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\a4_harness.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\a4_harness.txt",
+   "dest": "exo_memory/handback/p-freejump-ui-A_2026-10-06_evidence/a4_harness.txt",
+   "size": 5947,
+   "sha256": "fc106f1ddb7f9ea9a6e42832523e55545222ef18d54e16ea0d67c37d77db5317",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-freejump-ui-A_2026-10-06.md",
+   "cited": "scratchpad/fj/anchors2.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\fj\\anchors2.js",
+   "dest": "exo_memory/handback/p-freejump-ui-A_2026-10-06_evidence/fj/anchors2.js",
+   "size": 1631,
+   "sha256": "44bed64edff6f6d47af6ee830b7d0cc97bcd2852777e64b4815561858a0ada0b",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-grid3d-B_2026-10-04.md",
+   "cited": "scratchpad/grid3d/probe.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\grid3d\\probe.js",
+   "dest": "exo_memory/handback/p-grid3d-B_2026-10-04_evidence/grid3d/probe.js",
+   "size": 4419,
+   "sha256": "f766d5cfd3cbf9c52badf3ac0af233fd48aedd17702bd7688690ff19d7c1a87f",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-grip-ui-A_2026-10-06.md",
+   "cited": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b\\scratchpad\\full1a7.tap",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b\\scratchpad\\full1a7.tap",
+   "dest": "exo_memory/handback/p-grip-ui-A_2026-10-06_evidence/full1a7.tap",
+   "size": 575236,
+   "sha256": "e993b6a8b1015cd96ade1ed89fd508dda020f52368f8c5385591e3e0d11b2491",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-grip-ui-A_2026-10-06.md",
+   "cited": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d263_full.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\d263_full.txt",
+   "dest": "exo_memory/handback/p-grip-ui-A_2026-10-06_evidence/d263_full.txt",
+   "size": 296634,
+   "sha256": "8ff4fd6bba3d81d6b75a23a2c731d9faf999ebd3f316f54c5282c32de315f332",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-harness-audit-E_2026-09-20.md",
+   "cited": "scratchpad/ctrl_leave.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\ctrl_leave.js",
+   "dest": "exo_memory/handback/p-harness-audit-E_2026-09-20_evidence/ctrl_leave.js",
+   "size": 6671,
+   "sha256": "a2bf3154eac53204815ce9494f5b20a07e42d76f0f46f8ebe68aac76e962d318",
+   "how": "only match; in ANOTHER seat's scratchpad",
+   "state": "copied"
+  },
+  {
+   "handback": "p-harness-audit-E_2026-09-20.md",
+   "cited": "scratchpad/redact_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\redact_mutants.js",
+   "dest": "exo_memory/handback/p-harness-audit-E_2026-09-20_evidence/redact_mutants.js",
+   "size": 6618,
+   "sha256": "83b5c09366f5bbd5d273539b683510c90b4769f0d404362c0698cda3e4c5ff44",
+   "how": "only match; in ANOTHER seat's scratchpad",
+   "state": "copied"
+  },
+  {
+   "handback": "p-harness-audit-E_2026-09-20.md",
+   "cited": "scratchpad/nul/stick_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\nul\\stick_mutants.js",
+   "dest": "exo_memory/handback/p-harness-audit-E_2026-09-20_evidence/nul_dir/stick_mutants.js",
+   "size": 3271,
+   "sha256": "c119ba7b8fbcec91ac4c3b86feb256836e955eb1c86f3054c621fe19b47a514c",
+   "how": "only match; in ANOTHER seat's scratchpad",
+   "state": "copied"
+  },
+  {
+   "handback": "p-harness-audit-E_2026-09-20.md",
+   "cited": "scratchpad/stick-apply.mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\stick-apply.mutants.js",
+   "dest": "exo_memory/handback/p-harness-audit-E_2026-09-20_evidence/stick-apply.mutants.js",
+   "size": 7191,
+   "sha256": "a3af41c9d3a70531929f95ae306a206644fba5fde240b36f8810f6aec6725ecd",
+   "how": "only match; in ANOTHER seat's scratchpad",
+   "state": "copied"
+  },
+  {
+   "handback": "p-harness-audit-E_2026-09-20.md",
+   "cited": "scratchpad/ready/rows.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\ready\\rows.js",
+   "dest": "exo_memory/handback/p-harness-audit-E_2026-09-20_evidence/ready/rows.js",
+   "size": 1640,
+   "sha256": "06bb9b159bad7e8484fed5fad715b46dd3e29cd06873536fd5c0d9cc28451504",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-harness-audit-E_2026-09-20.md",
+   "cited": "scratchpad/portable/mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\portable\\mutants.js",
+   "dest": "exo_memory/handback/p-harness-audit-E_2026-09-20_evidence/portable/mutants.js",
+   "size": 3235,
+   "sha256": "bdedddbdbbe4c1deb6bb2bcd14eb45702048e23c52adfe274e4079861ede61cf",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-harness-audit-E_2026-09-20.md",
+   "cited": "scratchpad/ready/mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\ready\\mutants.js",
+   "dest": "exo_memory/handback/p-harness-audit-E_2026-09-20_evidence/ready/mutants.js",
+   "size": 2758,
+   "sha256": "09f3d9ec4f8c7c2d7bcc1172e4370a08bcf22c76eea69be1538c9bf953d24b8e",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-leave-A_2026-09-14.md",
+   "cited": "scratchpad/leave_red_behaviour.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\leave_red_behaviour.js",
+   "dest": "exo_memory/handback/p-leave-A_2026-09-14_evidence/leave_red_behaviour.js",
+   "size": 1754,
+   "sha256": "bc76eafdf145b37c5eb500a67dd28688bca1377cb1efc4ed1202f533c2334238",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-leave-A_2026-09-14.md",
+   "cited": "scratchpad/ctrl_leave.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\ctrl_leave.js",
+   "dest": "exo_memory/handback/p-leave-A_2026-09-14_evidence/ctrl_leave.js",
+   "size": 6671,
+   "sha256": "a2bf3154eac53204815ce9494f5b20a07e42d76f0f46f8ebe68aac76e962d318",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-leave-A_2026-09-14.md",
+   "cited": "scratchpad/leave_real_wait.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\leave_real_wait.js",
+   "dest": "exo_memory/handback/p-leave-A_2026-09-14_evidence/leave_real_wait.js",
+   "size": 2633,
+   "sha256": "eac8526aa4f98a2ecab91b5e61cec91d274be61807b4f37bf914e0c5eadc6b6e",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-leave2-A_2026-09-15.md",
+   "cited": "scratchpad/leave2_js_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\leave2_js_mutants.js",
+   "dest": "exo_memory/handback/p-leave2-A_2026-09-15_evidence/leave2_js_mutants.js",
+   "size": 5910,
+   "sha256": "135b794db46e3a145d53da6eed4b9eef6bcbacf2421cb0ad534cb9d124856d11",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-leave2-A_2026-09-15.md",
+   "cited": "scratchpad/leave2_rust_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\leave2_rust_mutants.js",
+   "dest": "exo_memory/handback/p-leave2-A_2026-09-15_evidence/leave2_rust_mutants.js",
+   "size": 5799,
+   "sha256": "5b5d1650acf07eb69685524d4aabc07395746d21257f3aff98eb6a42811dec2b",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-leave3-A_2026-09-15.md",
+   "cited": "scratchpad/bar_cargo.sh",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\bar_cargo.sh",
+   "dest": "exo_memory/handback/p-leave3-A_2026-09-15_evidence/bar_cargo.sh",
+   "size": 677,
+   "sha256": "04521ba8b076eda2fe8cccb2f13829f44c3922e4eb74d16e4d150f7f26dafc44",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-leave3-A_2026-09-15.md",
+   "cited": "scratchpad/leave3_rust_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\leave3_rust_mutants.js",
+   "dest": "exo_memory/handback/p-leave3-A_2026-09-15_evidence/leave3_rust_mutants.js",
+   "size": 8939,
+   "sha256": "cad9c022c11ea27599b9be5875802e1fa498afdb1ecb7f34419fd1b90cb5952d",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-leave3-b7-A_2026-09-16.md",
+   "cited": "scratchpad/bar_cargo.sh",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\bar_cargo.sh",
+   "dest": "exo_memory/handback/p-leave3-b7-A_2026-09-16_evidence/bar_cargo.sh",
+   "size": 677,
+   "sha256": "04521ba8b076eda2fe8cccb2f13829f44c3922e4eb74d16e4d150f7f26dafc44",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-leave3-fixes-A_2026-09-16.md",
+   "cited": "scratchpad/bar_cargo.sh",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\bar_cargo.sh",
+   "dest": "exo_memory/handback/p-leave3-fixes-A_2026-09-16_evidence/bar_cargo.sh",
+   "size": 677,
+   "sha256": "04521ba8b076eda2fe8cccb2f13829f44c3922e4eb74d16e4d150f7f26dafc44",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-loop-friction-C_2026-10-09.md",
+   "cited": "scratchpad/inv/defensive.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\defensive.js",
+   "dest": "exo_memory/handback/p-loop-friction-C_2026-10-09_evidence/inv/defensive.js",
+   "size": 5453,
+   "sha256": "d500c31cdbbe890cb555c1bfcf5270c3c8200daf462144b52b5fd31f5b62be56",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-loop-friction-C_2026-10-09.md",
+   "cited": "scratchpad/inv/defheads.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\inv\\defheads.js",
+   "dest": "exo_memory/handback/p-loop-friction-C_2026-10-09_evidence/inv/defheads.js",
+   "size": 1464,
+   "sha256": "43abeea475137fc31713dd621c72d2fcad23bf75c944a55b736ddf51ed819fef",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-mirror-B_2026-10-04.md",
+   "cited": "scratchpad/mirror/stale2.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\mirror\\stale2.js",
+   "dest": "exo_memory/handback/p-mirror-B_2026-10-04_evidence/mirror/stale2.js",
+   "size": 3083,
+   "sha256": "05e9acd7fb81e6386bc95ea67e5dcab305c83421b2a05a7067c57e7e53fca859",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-mirror-B_2026-10-04.md",
+   "cited": "scratchpad/mirror/exact.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\mirror\\exact.js",
+   "dest": "exo_memory/handback/p-mirror-B_2026-10-04_evidence/mirror/exact.js",
+   "size": 4937,
+   "sha256": "4ea4b2b306edf3a8c6def96816ab12618841d2e676088d841b01ce0579142055",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-nowater-A_2026-10-04.md",
+   "cited": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\sp_harn3_out.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\sp_harn3_out.txt",
+   "dest": "exo_memory/handback/p-nowater-A_2026-10-04_evidence/sp_harn3_out.txt",
+   "size": 698,
+   "sha256": "17c0fb845a16466463e8e7aec1f4e760b60123bc292171b6cd9bc644a68fa9d5",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-nul-repairs-B_2026-09-16.md",
+   "cited": "scratchpad/escape_probe.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\escape_probe.txt",
+   "dest": "exo_memory/handback/p-nul-repairs-B_2026-09-16_evidence/escape_probe.txt",
+   "size": 25,
+   "sha256": "0add8a432227245b6592c5c8a41bb3e7473db76ebe7037428eb8ce0e111e25e9",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-nul-repairs-B_2026-09-16.md",
+   "cited": "scratchpad/nul/repair.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\nul\\repair.js",
+   "dest": "exo_memory/handback/p-nul-repairs-B_2026-09-16_evidence/nul_dir/repair.js",
+   "size": 1491,
+   "sha256": "18330f6fd2f16e7ec56c7c52b408acf2e84a831a6f15a0733a70c99ebac49cf9",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-nul-repairs-B_2026-09-16.md",
+   "cited": "scratchpad/nul/prove.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\nul\\prove.js",
+   "dest": "exo_memory/handback/p-nul-repairs-B_2026-09-16_evidence/nul_dir/prove.js",
+   "size": 5513,
+   "sha256": "e3a7a4eb0b91b54ce7d23ede8aa0692a562b4d7259d78895821d6bc571932d86",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-nul-repairs-B_2026-09-16.md",
+   "cited": "scratchpad/nul/stick_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\nul\\stick_mutants.js",
+   "dest": "exo_memory/handback/p-nul-repairs-B_2026-09-16_evidence/nul_dir/stick_mutants.js",
+   "size": 3271,
+   "sha256": "c119ba7b8fbcec91ac4c3b86feb256836e955eb1c86f3054c621fe19b47a514c",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-openexport-E_2026-10-05.md",
+   "cited": "scratchpad/openexp/tests.txt",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\openexp\\tests.txt",
+   "dest": "exo_memory/handback/p-openexport-E_2026-10-05_evidence/openexp/tests.txt",
+   "size": 504,
+   "sha256": "8448296fa8005906069b68ff4e79ef6ebcb0a05a1bc4fc066065306863f87e4f",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-openexport-E_2026-10-05.md",
+   "cited": "scratchpad\\openexp\\testexport.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\openexp\\testexport.js",
+   "dest": "exo_memory/handback/p-openexport-E_2026-10-05_evidence/openexp/testexport.js",
+   "size": 1567,
+   "sha256": "29bb9774ad006ec63951b9e51326c86e2ce721f36a570b266ee20127068c1e93",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-pieces-ui-C_2026-10-05.md",
+   "cited": "scratchpad/pui/pui_window.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\pui\\pui_window.js",
+   "dest": "exo_memory/handback/p-pieces-ui-C_2026-10-05_evidence/pui/pui_window.js",
+   "size": 20257,
+   "sha256": "78437177584857633f12031e5f007c7983f4522c8c659ea1d2a3a95c2f14596c",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-pieces-ui-C_2026-10-05.md",
+   "cited": "scratchpad/pui/win/window_report.json",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\pui\\win\\window_report.json",
+   "dest": "exo_memory/handback/p-pieces-ui-C_2026-10-05_evidence/pui/win/window_report.json",
+   "size": 4228,
+   "sha256": "e46574d0ff4ac8dd54598bcc13ee2a87a24ac68cf1c07652bef0f9b0b5f7224c",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-pitbalance-B_2026-10-10.md",
+   "cited": "scratchpad/d273/run.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d273\\run.js",
+   "dest": "exo_memory/handback/p-pitbalance-B_2026-10-10_evidence/d273/run.js",
+   "size": 1120,
+   "sha256": "1018d83b7f693d5f46a2e79223dc9ba5d732b990a0c42cc8fad55b918fe7c23d",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-r1-items-E_2026-09-28.md",
+   "cited": "scratchpad/r1-suite2.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\r1-suite2.log",
+   "dest": "exo_memory/handback/p-r1-items-E_2026-09-28_evidence/r1-suite2.log",
+   "size": 149,
+   "sha256": "158349a1fffb701834b59ecfd9660a4f27845f064e4a244544a598315bfea985",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-ready-not-the-child-E_2026-09-19.md",
+   "cited": "scratchpad/ready/rows.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\ready\\rows.js",
+   "dest": "exo_memory/handback/p-ready-not-the-child-E_2026-09-19_evidence/ready/rows.js",
+   "size": 1640,
+   "sha256": "06bb9b159bad7e8484fed5fad715b46dd3e29cd06873536fd5c0d9cc28451504",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-ready-not-the-child-E_2026-09-19.md",
+   "cited": "scratchpad/ready/mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\ready\\mutants.js",
+   "dest": "exo_memory/handback/p-ready-not-the-child-E_2026-09-19_evidence/ready/mutants.js",
+   "size": 2758,
+   "sha256": "09f3d9ec4f8c7c2d7bcc1172e4370a08bcf22c76eea69be1538c9bf953d24b8e",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-refusal-keeps-pointer-A_2026-09-19.md",
+   "cited": "scratchpad/refusal_pointer_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\refusal_pointer_mutants.js",
+   "dest": "exo_memory/handback/p-refusal-keeps-pointer-A_2026-09-19_evidence/refusal_pointer_mutants.js",
+   "size": 5546,
+   "sha256": "9815792500054895139be8e1ae2851afabb8ff32ed876fac71f4ffdcea98990b",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-refused-B_2026-10-04.md",
+   "cited": "scratchpad/refused/plants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\refused\\plants.js",
+   "dest": "exo_memory/handback/p-refused-B_2026-10-04_evidence/refused/plants.js",
+   "size": 4563,
+   "sha256": "43ce3b627374e91ce29c77994380f38367f7f431e40243cb588f8c92dc5e0720",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-release030-C_2026-10-07.md",
+   "cited": "scratchpad/rel/run1.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\rel\\run1.log",
+   "dest": "exo_memory/handback/p-release030-C_2026-10-07_evidence/rel/run1.log",
+   "size": 974,
+   "sha256": "c3f1900434d78e8bed6bebea1e63e6add3c8d758f70c3795aeb40b89a9d00761",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-release030-C_2026-10-07.md",
+   "cited": "scratchpad/rel/run2.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\rel\\run2.log",
+   "dest": "exo_memory/handback/p-release030-C_2026-10-07_evidence/rel/run2.log",
+   "size": 771,
+   "sha256": "7211a995be2fe31ddf283fe2cf7f5c2fb52be941b621757748a4b002af2fc3d3",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-release030-C_2026-10-07.md",
+   "cited": "scratchpad/rel/run3.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\rel\\run3.log",
+   "dest": "exo_memory/handback/p-release030-C_2026-10-07_evidence/rel/run3.log",
+   "size": 1160,
+   "sha256": "4f0161bb28bfcc104350c9eefc4872374bdeaeae422afc3012c81d14555f8a9d",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-release030-C_2026-10-07.md",
+   "cited": "scratchpad/rel/run4.log",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\rel\\run4.log",
+   "dest": "exo_memory/handback/p-release030-C_2026-10-07_evidence/rel/run4.log",
+   "size": 1155,
+   "sha256": "026046ad62da1d710c9d8433e1c31d732da2324d6b0b972e1b7825ab978fb565",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-scorer-into-repo-E_2026-09-19.md",
+   "cited": "scratchpad/carry/carry.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\carry\\carry.js",
+   "dest": "exo_memory/handback/p-scorer-into-repo-E_2026-09-19_evidence/carry/carry.js",
+   "size": 3214,
+   "sha256": "fb626c94e5d56c95271314061611fb231b67c8cd6781cb434362cf4d7c5bdd45",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-scorer-portable-E_2026-09-19.md",
+   "cited": "scratchpad/portable/make.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\portable\\make.js",
+   "dest": "exo_memory/handback/p-scorer-portable-E_2026-09-19_evidence/portable/make.js",
+   "size": 2428,
+   "sha256": "1db5fce77b3c89e3c27e7e16c4c949bfc6f54e4285cb0f08d2c3681667b65569",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-scorer-portable-E_2026-09-19.md",
+   "cited": "scratchpad/portable/mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\portable\\mutants.js",
+   "dest": "exo_memory/handback/p-scorer-portable-E_2026-09-19_evidence/portable/mutants.js",
+   "size": 3235,
+   "sha256": "bdedddbdbbe4c1deb6bb2bcd14eb45702048e23c52adfe274e4079861ede61cf",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-scroll-B_2026-10-04.md",
+   "cited": "scratchpad/scroll/probe.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\scroll\\probe.js",
+   "dest": "exo_memory/handback/p-scroll-B_2026-10-04_evidence/scroll/probe.js",
+   "size": 5901,
+   "sha256": "09890790f9cc00613aa91c89315932ffd7b1a0d149833d1f25f913629f57eeac",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-seal-gate-build-A_2026-09-16.md",
+   "cited": "scratchpad/sniffer_measure.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\sniffer_measure.js",
+   "dest": "exo_memory/handback/p-seal-gate-build-A_2026-09-16_evidence/sniffer_measure.js",
+   "size": 1808,
+   "sha256": "fd14cad023162307dc2cb2056c55e085b14742a5a3994e8d528d3e72cd886453",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-seal-gate-build-A_2026-09-16.md",
+   "cited": "scratchpad/seal_patch.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\seal_patch.js",
+   "dest": "exo_memory/handback/p-seal-gate-build-A_2026-09-16_evidence/seal_patch.js",
+   "size": 6123,
+   "sha256": "2e567f120b5d30d57e457605e3fa25d34cc59ed4fbf924ff3479acc8dd9b7ac5",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-seal-gate-build-A_2026-09-16.md",
+   "cited": "scratchpad/seal_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\seal_mutants.js",
+   "dest": "exo_memory/handback/p-seal-gate-build-A_2026-09-16_evidence/seal_mutants.js",
+   "size": 7632,
+   "sha256": "d79490ff5378a7e580c2bd2397cdb19e5236cd4b6a80bcb8395c5f04ebfac902",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-second-instance-text-A_2026-09-18.md",
+   "cited": "scratchpad/second_instance_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\second_instance_mutants.js",
+   "dest": "exo_memory/handback/p-second-instance-text-A_2026-09-18_evidence/second_instance_mutants.js",
+   "size": 5995,
+   "sha256": "180bfc08e55bf448c12db1486d866b745cf2db4de2963a301b963cf035d44599",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-speed-B_2026-10-04.md",
+   "cited": "scratchpad/speed/b-scenarios.test.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\speed\\b-scenarios.test.js",
+   "dest": "exo_memory/handback/p-speed-B_2026-10-04_evidence/speed/b-scenarios.test.js",
+   "size": 10223,
+   "sha256": "96c1b95d95de6a2c506a99a1d0e2bdb119132cbb0d22ee8696f96382860bec49",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-speed2-B_2026-10-04.md",
+   "cited": "scratchpad/speed2/b-reuse.test.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\speed2\\b-reuse.test.js",
+   "dest": "exo_memory/handback/p-speed2-B_2026-10-04_evidence/speed2/b-reuse.test.js",
+   "size": 9690,
+   "sha256": "d8d5aa944778e68cc1d97317aff638ea0409d108d2852aac2a5a4eae7e5fb108",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-speed2-B_2026-10-04.md",
+   "cited": "scratchpad/speed2/mem.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\speed2\\mem.js",
+   "dest": "exo_memory/handback/p-speed2-B_2026-10-04_evidence/speed2/mem.js",
+   "size": 2011,
+   "sha256": "e646b3a8092ab880d2a5404b53971512deba7575a2d47f127ab5a6d452af7bea",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-step1-m-E_2026-09-19.md",
+   "cited": "scratchpad/step1/make.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\step1\\make.js",
+   "dest": "exo_memory/handback/p-step1-m-E_2026-09-19_evidence/step1/make.js",
+   "size": 8706,
+   "sha256": "c6da6347ff07758d9ac114bae4e1223f51e547416d1c4200ecc6a9bf4ba0bab3",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-step1-m-E_2026-09-19.md",
+   "cited": "scratchpad/step1/precheck.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\step1\\precheck.js",
+   "dest": "exo_memory/handback/p-step1-m-E_2026-09-19_evidence/step1/precheck.js",
+   "size": 2994,
+   "sha256": "e6542355ad863edfae9a3d9c1a5a130f9c20144d063e65ef1ee07ff06fda9b45",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-step1-m-E_2026-09-19.md",
+   "cited": "scratchpad/step1/table.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\step1\\table.js",
+   "dest": "exo_memory/handback/p-step1-m-E_2026-09-19_evidence/step1/table.js",
+   "size": 3099,
+   "sha256": "eeff0f635beb0ce154a3d0a95fbdc301b18c9bb5a1a5805adda0e223b2739ecb",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-stick-zombie-A_2026-09-16.md",
+   "cited": "scratchpad/probe_measure.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\probe_measure.js",
+   "dest": "exo_memory/handback/p-stick-zombie-A_2026-09-16_evidence/probe_measure.js",
+   "size": 868,
+   "sha256": "742ce705e0563602aed5814a55732ae3d0fadf7d2019eab1f9d2ce3ce781e97b",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-stick-zombie-A_2026-09-16.md",
+   "cited": "scratchpad/stick-apply.mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\stick-apply.mutants.js",
+   "dest": "exo_memory/handback/p-stick-zombie-A_2026-09-16_evidence/stick-apply.mutants.js",
+   "size": 7191,
+   "sha256": "a3af41c9d3a70531929f95ae306a206644fba5fde240b36f8810f6aec6725ecd",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-stress-E_2026-10-05.md",
+   "cited": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\stress\\ledger.jsonl",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\stress\\ledger.jsonl",
+   "dest": "exo_memory/handback/p-stress-E_2026-10-05_evidence/stress/ledger.jsonl",
+   "size": 425484,
+   "sha256": "974a5a1784203aafd65cc7a1e02b1c7e1e7f3a2628685230a055899662838385",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-tex-B_2026-10-04.md",
+   "cited": "scratchpad/tex/plants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\tex\\plants.js",
+   "dest": "exo_memory/handback/p-tex-B_2026-10-04_evidence/tex/plants.js",
+   "size": 3175,
+   "sha256": "ae7b46c8dfd7d31dfe884eec3d5555d77d505be39002dfe20c01c63737a05109",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-tex-B_2026-10-04.md",
+   "cited": "scratchpad/tex/bytes.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\tex\\bytes.js",
+   "dest": "exo_memory/handback/p-tex-B_2026-10-04_evidence/tex/bytes.js",
+   "size": 3345,
+   "sha256": "61d99204d177595bbced743d807ae7d5ca480256982eeb9c9e1f9491c1092a1a",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-tubeexp-B_2026-10-03.md",
+   "cited": "scratchpad/tubeexp/plants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\tubeexp\\plants.js",
+   "dest": "exo_memory/handback/p-tubeexp-B_2026-10-03_evidence/tubeexp/plants.js",
+   "size": 3590,
+   "sha256": "4c86fe2054264dec9f702476d079a3174654c1ce16a1861afcca1051f5e90cc8",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-tubeexp-B_2026-10-03.md",
+   "cited": "scratchpad/tubeexp/anchors.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\tubeexp\\anchors.js",
+   "dest": "exo_memory/handback/p-tubeexp-B_2026-10-03_evidence/tubeexp/anchors.js",
+   "size": 1388,
+   "sha256": "859ea9d78490f09a5a293c477473921c61200ea7a2a2f189764751348cf80187",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-turnby-E_2026-10-09.md",
+   "cited": "scratchpad/turnby/tt3.t180track",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\turnby\\tt3.t180track",
+   "dest": "exo_memory/handback/p-turnby-E_2026-10-09_evidence/turnby/tt3.t180track",
+   "size": 12408,
+   "sha256": "44d3e93570f3ed28ba34da9dff7720b0647ee6b48bde5add1bd03b340e4f9d93",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-verify-B_2026-10-10.md",
+   "cited": "scratchpad/d273/run.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\d273\\run.js",
+   "dest": "exo_memory/handback/p-verify-B_2026-10-10_evidence/d273/run.js",
+   "size": 1120,
+   "sha256": "1018d83b7f693d5f46a2e79223dc9ba5d732b990a0c42cc8fad55b918fe7c23d",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-wpre-B_2026-10-04.md",
+   "cited": "scratchpad/wpre/probe.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\wpre\\probe.js",
+   "dest": "exo_memory/handback/p-wpre-B_2026-10-04_evidence/wpre/probe.js",
+   "size": 3171,
+   "sha256": "79e7f293184797c88ba42bd4371bd927e731ab288b19826240d29e16f881de0c",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "p-wpre-B_2026-10-04.md",
+   "cited": "scratchpad/wpre/skips.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\\scratchpad\\wpre\\skips.js",
+   "dest": "exo_memory/handback/p-wpre-B_2026-10-04_evidence/wpre/skips.js",
+   "size": 2439,
+   "sha256": "94acef0c455e7bf757eca3286ecde70bbb5812fc1643df65828d11734f9ab07a",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "step0-redact-A_2026-09-15.md",
+   "cited": "scratchpad/redact_mutants.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\redact_mutants.js",
+   "dest": "exo_memory/handback/step0-redact-A_2026-09-15_evidence/redact_mutants.js",
+   "size": 6618,
+   "sha256": "83b5c09366f5bbd5d273539b683510c90b4769f0d404362c0698cda3e4c5ff44",
+   "how": "only match",
+   "state": "copied"
+  },
+  {
+   "handback": "step0-redact-A_2026-09-15.md",
+   "cited": "scratchpad/redact_cost.js",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\redact_cost.js",
+   "dest": "exo_memory/handback/step0-redact-A_2026-09-15_evidence/redact_cost.js",
+   "size": 3959,
+   "sha256": "4243f250ccadcbc27e67d01ba4ce77478acc16cd4d132c6f26e179c0270c27a2",
+   "how": "only match",
+   "state": "copied"
+  }
+ ],
+ "skipped": [
+  {
+   "handback": "p-composer-tristate-E_2026-09-19.md",
+   "src": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\vtdump\\target\\release\\scan.exe",
+   "why": "inside a cargo target / generated tree"
+  }
+ ],
+ "ambiguous": [
+  {
+   "handback": "p-d098-keepwarm-E_2026-09-21.md",
+   "cited": "scratchpad/d098/mutants.js",
+   "resolved": [
+    "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d098\\mutants.js",
+    "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d098\\mutants.js"
+   ]
+  },
+  {
+   "handback": "p-d186-brush-E_2026-09-28.md",
+   "cited": "scratchpad/d186/proto.js",
+   "resolved": [
+    "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d186\\proto.js",
+    "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d186\\proto.js"
+   ]
+  }
+ ]
+}

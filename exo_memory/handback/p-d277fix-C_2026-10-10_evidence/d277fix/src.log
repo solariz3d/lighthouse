@@ -1,0 +1,67 @@
+== D277fix C: cargo intake_light (source) · asked 2026-10-10T17:36:56.737Z · lock held 2026-10-10T17:36:56.771Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd /c/Users/nname/Desktop/worktrees/c-d277fix-wt && CARGO_TARGET_DIR=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d277fix/target ~/.cargo/bin/cargo.exe test --manifest-path consonance/src-tauri/Cargo.toml --bin consonance intake_light 2>&1 | grep -v '^ *Compiling'
+warning: unused import: `HashMap`
+     --> src\main.rs:14600:28
+      |
+14600 |     use std::collections::{HashMap, HashSet};
+      |                            ^^^^^^^
+      |
+      = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `ratio`
+    --> src\cochlea.rs:3004:13
+     |
+3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
+     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `sr`
+    --> src\cochlea.rs:3157:13
+     |
+3157 |         let sr = 46.875;
+     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
+
+warning: unused variable: `rows`
+     --> src\main.rs:14858:14
+      |
+14858 |         let (rows, flags) = render(&format!("❯ {msg}"));
+      |              ^^^^ help: if this is intentional, prefix it with an underscore: `_rows`
+
+warning: function `sysdrive` is never used
+   --> src\main.rs:509:4
+    |
+509 | fn sysdrive() -> String {
+    |    ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `tool_router` is never read
+   --> src\mcp.rs:338:5
+    |
+291 | pub struct ConsonanceMcp {
+    |            ------------- field in this struct
+...
+338 |     tool_router: ToolRouter<ConsonanceMcp>,
+    |     ^^^^^^^^^^^
+    |
+    = note: `ConsonanceMcp` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: `consonance` (bin "consonance" test) generated 6 warnings (run `cargo fix --bin "consonance" -p consonance --tests` to apply 4 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 49.76s
+     Running unittests src\main.rs (C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d277fix/target\debug\deps\consonance-1fac528b6fcd74f5.exe)
+
+running 9 tests
+test intake_light_tests::dump_intakes_for_measure ... ignored
+test intake_light_tests::light_caps_hold_whatever_the_brief_frees_and_strict_is_unchanged ... ok
+test intake_light_tests::the_switch_is_the_gates_key_and_absent_is_strict ... ok
+test intake_light_tests::light_the_shelf_carries_a_fixed_set_and_never_backfills ... ok
+test intake_light_tests::key_absent_the_librarian_intake_is_todays ... ok
+test intake_light_tests::key_absent_the_pane_intake_is_todays ... ok
+test intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists ... ok
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... ok
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... ok
+
+test result: ok. 8 passed; 0 failed; 1 ignored; 0 measured; 1007 filtered out; finished in 3.87s
+
+== exit 0 · done 2026-10-10T17:37:51.073Z

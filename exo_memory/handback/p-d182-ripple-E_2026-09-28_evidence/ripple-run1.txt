@@ -1,0 +1,949 @@
+[32m✔ no handles until exactly one placed word is selected [90m(8.8056ms)[39m[39m
+[31m✖ through the shell: a drag clamps at the bound, and the whole drag is one undo step [90m(28.2218ms)[39m[39m
+[32m✔ pastRed (Alt) goes through the bound and shows red [90m(6.5125ms)[39m[39m
+[32m✔ a value the document refuses is stopped at the last value it accepts, and the reason is the document's own [90m(66.4057ms)[39m[39m
+[32m✔ one drag at a time [90m(109.0274ms)[39m[39m
+[32m✔ cancel through the shell puts the value back (the shell has no cancel, so one no-op undo entry remains: a named seam) [90m(3.5928ms)[39m[39m
+[32m✔ on a word already red there is no bound to stop at, so the document's own refusal stops the drag, through the shell [90m(2.1885ms)[39m[39m
+[32m✔ why no handles show, in words: nothing selected, several words, or a starter phrase (D177 window pass) [90m(2.4135ms)[39m[39m
+[32m✔ the sculpt set is the plan's list: length, curvature and ramps, pitch, bank, width, wall height, ψ, font transition [90m(2.5389ms)[39m[39m
+[31m✖ a handle clamps at its bound: dragged far past 50° of bank, it stops exactly at the bound, and names the limit [90m(20.5912ms)[39m[39m
+[32m✔ inside the bound the drag follows the pointer; one quantum past the bound would be red [90m(16.1952ms)[39m[39m
+[31m✖ the bound holds on the low side too [90m(7.3823ms)[39m[39m
+[32m✔ pastRed lets the drag through the bound and shows red, for a user who will fix a neighbour next [90m(7.055ms)[39m[39m
+[32m✔ amber never blocks: past the amber bound the drag goes on and the handle shows amber [90m(188.4198ms)[39m[39m
+[32m✔ a whole drag is ONE undo entry, and undo returns the document from before the drag [90m(1.978ms)[39m[39m
+[32m✔ a cancelled drag adds no entry and leaves the document as it was [90m(3.6253ms)[39m[39m
+[31m✖ bank on a middle word is refused by the document (ROLL_STEP): the drag cannot move it, and says why [90m(3.2099ms)[39m[39m
+[32m✔ a word that is already red has no clean range: the drag moves freely and shows red [90m(4.1513ms)[39m[39m
+[31m✖ handlesOf gives each handle A's value, unit and range with E's bounds [90m(1.5977ms)[39m[39m
+[32m✔ property (the preview's SHARED path): after every random edit the result equals a full validate exactly [90m(5490.6631ms)[39m[39m
+[32m✔ property (the controller's own path): after every random edit the result equals a full validate exactly [90m(6555.8801ms)[39m[39m
+[32m✔ the property test reaches STACKED road: the edits lay road over road, and it still equals a full validate [90m(13196.4535ms)[39m[39m
+[32m✔ a STALE shared path (built for another document) is not used: the controller grows its own, and stays exact [90m(61.5945ms)[39m[39m
+[32m✔ a shared path the preview REBUILT (a new object) is viewed afresh, never spliced onto the old view [90m(58.0766ms)[39m[39m
+[32m✔ a drag held OPEN on a mid-track word: every tick is windowed and exact where settled, and ending it equals a full validate [90m(4776.1365ms)[39m[39m
+[32m✔ never a stale "clean": a settled station stacked on road that the drag moved shows RED during the drag, and the moved road shows PENDING [90m(8631.9823ms)[39m[39m
+[32m✔ a windowed result revalidated from BEYOND its pending start still finishes the whole track exactly [90m(13.321ms)[39m[39m
+[32m✔ the panel says what is pending: the load graph shades it to the track end, the summary counts no deferred jump as waiting [90m(81.5761ms)[39m[39m
+[32m✔ the window ends at the second word after the dragged one; none when that is past the end [90m(0.5372ms)[39m[39m
+[32m✔ the preview's 0.5 m path viewed at 2 m IS buildPath at 2 m, value for value; grown in place, the view follows it exactly [90m(89.0522ms)[39m[39m
+[32m✔ a path that cannot be viewed exactly is refused (null), so the controller grows its own [90m(15.4134ms)[39m[39m
+[32m✔ the station-pair stacking check finds exactly what measuring every surface point finds, on tracks that stack [90m(4715.4749ms)[39m[39m
+[32m✔ the stacking check on a CLOSED loop: the start and end are one pass (s wraps), exactly as measuring every point [90m(55146.6719ms)[39m[39m
+[32m✔ on a level straight at a constant speed only gravity acts: each line reads fN = cos ψ and fLat = sign(u)·sin ψ [90m(2.771ms)[39m[39m
+[32m✔ a closed loop: every drag tick defers the lap, and ending the drag proves it, equal to a full validate's lap [90m(66852.5384ms)[39m[39m
+[32m✔ lapOf proves a deferred lap exactly as an undeferred validate does, and returns any other lap unchanged [90m(59374.3951ms)[39m[39m
+[32m✔ rangeLevels gives every station the level rangeLevel gives it, ranges touching, nested and out of order [90m(9.9516ms)[39m[39m
+[32m✔ the default jump at the default design speed (460 km/h, FINDINGS.md:476) is clean: no red, both landings caught [90m(37.1632ms)[39m[39m
+[32m✔ resolve with no speed given sizes the ramp for the same default, so every caller agrees (the export, the connector) [90m(5.8372ms)[39m[39m
+[31m✖ the slider swept over its whole range (50–764 km/h, its own step of 5): clean wherever the car clears the gap, and nowhere else [90m(669.9461ms)[39m[39m
+[31m✖ a jump sculpted past what the car can clear is red, and says so: the landings that miss, the heaviest fall [90m(6.664ms)[39m[39m
+[32m✔ the ramp resize is DERIVED: no undo step, the document unchanged, and the same speed gives the same ramp again [90m(14.1541ms)[39m[39m
+[32m✔ a CLOSED loop keeps its ramps at the default when the slider moves, so it stays closed [90m(48880.6812ms)[39m[39m
+[32m✔ resolve itself refuses a design speed that is not a positive number (a named ResolveError), and takes null as the default [90m(2.8266ms)[39m[39m
+[32m✔ a design speed that is not a positive number is refused with a message, and changes nothing [90m(10.0249ms)[39m[39m
+[32m✔ a document with one jump counts 1 jump, even while the jump is the open head and waits for its landing [90m(80.3346ms)[39m[39m
+[32m✔ a pending jump is still counted: a jump placed first (no take-off road) is 1 jump, 1 waiting [90m(7.0089ms)[39m[39m
+[32m✔ the load graph is hidden (no model) while there is no speed, so no empty grey bar [90m(7.4478ms)[39m[39m
+[32m✔ with a design speed the graph is drawn: one point per station, the hardest line's load, the car's two limits [90m(6.3648ms)[39m[39m
+[32m✔ the graph takes the HARDEST line at every station, wherever across the road it is (a right turn: the left wall) [90m(9.3204ms)[39m[39m
+[32m✔ the graph shades the red and amber stretches behind the curve [90m(25.5671ms)[39m[39m
+[32m✔ through the shell: the head is red exactly when it is the flight of a jump; landing road clears it [90m(7.6112ms)[39m[39m
+[32m✔ jump arcs: a jump whose landing lip is behind its take-off lip draws no arc, and nothing throws [90m(13.0502ms)[39m[39m
+[32m✔ the first word builds and colours the whole track (full), and an empty document shows nothing [90m(27.861ms)[39m[39m
+[32m✔ placing at the head is an APPEND: extendPath, revalidate, only the new span re-coloured, and equal to a full run [90m(28.0865ms)[39m[39m
+[32m✔ a drag on an earlier word is a SCULPT from that word, and still equals a full run [90m(39.0902ms)[39m[39m
+[32m✔ removing the head, and undo, take the full route and still equal a full run [90m(26.1033ms)[39m[39m
+[32m✔ the CSP switch re-validates for vanilla AC: a 60° wall turns red, and back [90m(15.0163ms)[39m[39m
+[32m✔ a jump placed at the open head is drawn once it has landing road (its own ramp, or the next word) [90m(10.0672ms)[39m[39m
+[32m✔ changes arriving before the scheduled update are coalesced into one update [90m(10.6453ms)[39m[39m
+[32m✔ E's panels load through A's webview loader (app/lib/cjs.js), and each exports mount(root, shell) [90m(48.9468ms)[39m[39m
+[32m✔ the picker starts at the FINDINGS default, 460 km/h (FINDINGS.md:476), read from the car, not typed here [90m(2.5218ms)[39m[39m
+[32m✔ the picker holds to its range: 50 km/h up to the lap sim's 764 km/h cap (FINDINGS.md:484) [90m(0.2701ms)[39m[39m
+[32m✔ off is no design speed; a value that is not a number is refused loudly; onChange fires only on a change [90m(0.4569ms)[39m[39m
+[32m✔ with the picker's default, a track built through the shell HAS loads now (it had none in D168) [90m(34.6591ms)[39m[39m
+[32m✔ with the picker off, an open track built through the shell claims no load at all [90m(6.3471ms)[39m[39m
+[31m✖ a faster design speed turns a tight curve amber (above the proven 90 g), and a slower one takes it away again [90m(23.9271ms)[39m[39m
+[32m✔ with the picker off (no loads anywhere), a geometry red still colours the live map, station by station along the path [90m(14.0241ms)[39m[39m
+[32m✔ load → colour: below the 20 g suspension stop is clear, and exactly 20 g is info [90m(1.961ms)[39m[39m
+[32m✔ load → colour: exactly the proven 90 g is still info, and anything above it is amber [90m(0.1299ms)[39m[39m
+[32m✔ load → colour: a load no matter how high is amber, never red (FINDINGS.md:116-118 withdrew the 60 g red) [90m(0.0889ms)[39m[39m
+[32m✔ load → colour: a negative load (pulled off the surface) is clear here; it is the lap proof's, not a colour [90m(0.0959ms)[39m[39m
+[32m✔ load → colour reads the car it is given, not constants [90m(0.1343ms)[39m[39m
+[32m✔ the palette has one colour per level, red and amber distinct, and pending unlike clear [90m(0.1265ms)[39m[39m
+[31m✖ on a real result, a line is amber by load exactly where validation lists load-above-proven [90m(31.8674ms)[39m[39m
+[32m✔ a red range colours every station inside it, both ends included, none outside, even with NO speed model (no load lines) [90m(6.9592ms)[39m[39m
+[32m✔ an amber range that is not a load (a seam past the proven envelope) colours its stations amber; red still wins over it [90m(0.7119ms)[39m[39m
+[32m✔ levelAt: the last station at or before s, the nearest line in u, the first station before the start [90m(0.3846ms)[39m[39m
+[32m✔ an open track colours: no lap while open, and no red at the open head [90m(6.6562ms)[39m[39m
+[32m✔ an append re-colours only the new span: earlier stations are kept as the same objects, and the map equals a full re-colour [90m(30.9198ms)[39m[39m
+[32m✔ re-colour also rebuilds an OLD station when a new red reaches back over it (e.g. new road stacked on old) [90m(0.7795ms)[39m[39m
+[32m✔ the landing arcs are src/validate/jumps.js flights: every point is flightY from the lip, at validation's speed and θ [90m(18.2672ms)[39m[39m
+[31m✖ each caught arc ends exactly at validation's touchdown x, and the landing zone spans both touchdowns [90m(6.3853ms)[39m[39m
+[31m✖ a landing the flight misses has no touchdown and no zone [90m(8.1485ms)[39m[39m
+[32m✔ with no speed model, each landing is drawn at its own minimum speed, which just clears the landing lip [90m(6.7501ms)[39m[39m
+[32m✔ a jump still waiting for its landing at the open head is not drawn [90m(3.9845ms)[39m[39m
+[32m✔ every red and amber reason has plain words; the list line shows them, and its tooltip keeps the rule and source [90m(1.0956ms)[39m[39m
+[32m✔ the lap, a stopped handle and a refusal read as plain words too [90m(0.4991ms)[39m[39m
+[32m✔ the five slots, in §5b's order [90m(1.4978ms)[39m[39m
+[32m✔ a word with no overrides takes its font's defaults for every slot [90m(1.5355ms)[39m[39m
+[32m✔ a word overrides one slot's texture and tiling; the other slots keep the font's [90m(0.6548ms)[39m[39m
+[32m✔ texture overrides are canonical in the text, and round-trip byte-exact [90m(1.72ms)[39m[39m
+[32m✔ the document is schema 2 or later (textures arrived in 2), and writes the schema it is [90m(0.1967ms)[39m[39m
+[32m✔ a schema-1 document migrates: it loads as the current schema with no overrides, and resolves to the same track [90m(1.2873ms)[39m[39m
+[32m✔ a schema newer than the builder reads is refused as written by a newer builder, and schema 0 as unknown [90m(0.594ms)[39m[39m
+[32m✔ an unknown slot, an unknown setting, and an out-of-range value are refused by name [90m(0.3548ms)[39m[39m
+[32m✔ a jump has no surface, so it takes no texture overrides (its landing ramp wears the take-off road's) [90m(0.417ms)[39m[39m
+[32m✔ sculpting a texture is one undo step, and undo is byte-identical [90m(0.561ms)[39m[39m
+[32m✔ a schema-1 piece library migrates too: its pieces' words get no overrides, and placing one works [90m(5.0965ms)[39m[39m
+[32m✔ a file whose word carries bad textures is refused on load, not only on edit [90m(0.5228ms)[39m[39m
+[32m✔ texture lengths in a file are snapped to the length quantum on load [90m(0.2412ms)[39m[39m
+[31m✖ a textured floor reaches the kn5: its word's road cells wear the set's floor material, and the DDS is embedded [90m(69.418ms)[39m[39m
+[31m✖ the material the preview draws for a word is the one the kn5 carries for it (the preview's own rule) [90m(23.1579ms)[39m[39m
+[31m✖ an untextured set changes nothing: the kn5 is byte-identical to an export without a set [90m(16.5046ms)[39m[39m
+[31m✖ only the materials a textured cell uses are added: the set's untextured slots do not reach the kn5 [90m(14.331ms)[39m[39m
+[32m✔ surfaces.ini, T-180 (the default): the block AND one extended-0 surface, on SURFACE_0 keyed PIT [90m(2.1875ms)[39m[39m
+[32m✔ surfaces.ini, "T-180 track" off: neither the block nor the switch [90m(0.4412ms)[39m[39m
+[32m✔ the soft-road control keeps the switch and differs from the T-180 file by the block alone [90m(0.373ms)[39m[39m
+[31m✖ export with "T-180 track" on (the default): the folder has both, and the CSP-only warning is in the warnings [90m(48296.0383ms)[39m[39m
+[31m✖ export with "T-180 track" off: neither is written, and no CSP-only warning [90m(3039.0325ms)[39m[39m
+[31m✖ export both variants: both carry the switch, and only the block differs [90m(3535.7915ms)[39m[39m
+[32m✔ the soft-road control is refused with "T-180 track" off (it has nothing to control for) [90m(7.7298ms)[39m[39m
+[32m✔ the platform test's two variants both set the switch, and differ by the block alone [90m(4600.0733ms)[39m[39m
+[31m✖ the exported width is non-empty, parses as metres, and is the road's width from the document within 0.5 m [90m(51011.3568ms)[39m[39m
+[32m✔ the width is the MEDIAN by length, not the mean: one short wide stretch does not move it [90m(0.8455ms)[39m[39m
+[32m✔ the platform test writes its fixed width, 26 m (2·WF + 2·LW) [90m(4282.4731ms)[39m[39m
+[31m✖ the sample exports: the kn5 reads back through tools/kn5.cjs with every AC_ marker [90m(4441.9393ms)[39m[39m
+[31m✖ ui_track.json pitboxes equals the AC_PIT_n count in the written kn5 [90m(0.2611ms)[39m[39m
+[31m✖ the folder holds every file of a track, and nothing it did not list [90m(0.4038ms)[39m[39m
+[31m✖ the AI line runs the whole loop: its length is the path length within 0.5% (tolerance stated before the run) [90m(0.8399ms)[39m[39m
+[31m✖ the AI line runs at the design speed when every word has one (200 km/h here) [90m(0.1501ms)[39m[39m
+[31m✖ the markers stand on the start straight, pole nearest the line; the hotlap starts the run-up to the design speed [90m(0.6869ms)[39m[39m
+[32m✔ a red document is refused, the reason named, and nothing written (the 60° bowl walls, for vanilla AC) [90m(3465.0662ms)[39m[39m
+[31m✖ a lap the proof fails is refused: a jump taken below the speed its 6.3 g landing needs, each failing point named [90m(73271.9006ms)[39m[39m
+[32m✔ an empty document is refused and nothing written [90m(3.0851ms)[39m[39m
+[32m✔ an open track is refused: an AC lap and the AI line need a closed loop [90m(2.178ms)[39m[39m
+[31m✖ an amber document exports, and the amber is in the warnings with its source (745 km/h through the 50 m tight) [90m(4109.2365ms)[39m[39m
+[31m✖ both variants: the same kn5 bytes, the soft-collision block only in the first, and the noblock red said [90m(3935.641ms)[39m[39m
+[31m✖ only block is written by default [90m(1.0819ms)[39m[39m
+[31m✖ a folder this builder did not write is refused, untouched [90m(3620.6172ms)[39m[39m
+[31m✖ turning the self-check off is said in the warnings [90m(3076.8213ms)[39m[39m
+[31m✖ the CLI writes the folder from a document file, and refuses an empty one with exit 1 [90m(4289.4752ms)[39m[39m
+[31m✖ with the self-check on (the default), the sample exports [90m(3910.9326ms)[39m[39m
+[31m✖ the §5c marker checks guard the output: markers 3 m above the road (band 1–2 m) are refused, nothing written [90m(3434.8227ms)[39m[39m
+[31m✖ a grid longer than the longest straight is refused with the lengths named [90m(3243.1939ms)[39m[39m
+[32m✔ one station per s: the closed loop does not repeat s = 0 at its end [90m(4.5426ms)[39m[39m
+[32m✔ length (a tight word): the shortest clean length, and one millimetre shorter is red (a fold or seam) [90m(3907.4024ms)[39m[39m
+[32m✔ curvature (turn): swinging a tight word past its bound lays the track over itself (stacked), one quantum on [90m(2430.2377ms)[39m[39m
+[31m✖ ramps (easeIn): a longer ramp tightens the body of a short tight word until it folds [90m(58.3734ms)[39m[39m
+[32m✔ pitch (climb): a short climbing half-pipe folds its walls when their height passes the vertical radius [90m(4574.9989ms)[39m[39m
+[31m✖ bank (roll at the head) for a non-CSP export: exactly 50° either way (ARCHITECTURE.md:87) [90m(4.31ms)[39m[39m
+[32m✔ bank on a CSP export has no red limit: the bound is the document range, and it says so [90m(96.1781ms)[39m[39m
+[31m✖ width (a wall-ride): widened past its bound, the two sides of the U-turn stack; at the bound it is clean [90m(71.0147ms)[39m[39m
+[31m✖ wall height (a wall-ride): raised past its bound it turns red; at the bound it is clean [90m(60.3087ms)[39m[39m
+[32m✔ ψ for a non-CSP export: a half-pipe wall is clean at 50° and red one thousandth of a degree past it [90m(124.2799ms)[39m[39m
+[32m✔ where no limit binds, the bound is the document range; where the document refuses a value, it says why [90m(185.851ms)[39m[39m
+[32m✔ a word that is already red has no clean range to report (null bounds, "red-now") [90m(3.5027ms)[39m[39m
+[32m✔ amber is reported inside the red bounds: amberMax ≤ max, and a faster word meets amber before red [90m(123.9776ms)[39m[39m
+[31m✖ A's handleInfo hook takes these bounds as its physics (src/doc/library.js handleInfo(doc, id, boundsFn)) [90m(12.244ms)[39m[39m
+[31m✖ scope: on a track already red elsewhere, a clean word is still bounded by ITS OWN stretch, not pinned by the other red [90m(3.2104ms)[39m[39m
+[32m✔ an unbroken road has no gap: its outer edges and its two ends are not gaps [90m(73.9105ms)[39m[39m
+[32m✔ a 0.3 m slit across the road is a gap, at its s, narrower than the ray's reach [90m(115.9005ms)[39m[39m
+[32m✔ a 0.2 m tear ALONG the road (two pieces side by side) is a gap [90m(45.8885ms)[39m[39m
+[32m✔ an opening wider than the ray reaches (a 5 m flight) is not a ray gap: that is a jump's business [90m(34.0478ms)[39m[39m
+[32m✔ road 0.7 m BELOW the far side of a slit is beyond the ray (0.4 m up, 1 m long: 0.6 m down): not a gap [90m(55.3873ms)[39m[39m
+[32m✔ triangles that face along the road (a seam's zip fan in the cross-section plane) are neither gap edges nor road [90m(26.217ms)[39m[39m
+[32m✔ validate: a slit in the built road is RED "downforce-ray-gap", in plain words, with its source [90m(42.9546ms)[39m[39m
+[32m✔ validate: without the built road the check is listed as not done, never passed silently [90m(2.4077ms)[39m[39m
+[32m✔ validate: every checked jump notes the downforce step at its lip and its landing [90m(5.5528ms)[39m[39m
+[32m✔ two pieces whose shared row lies 0.2 mm apart ACROSS a 5 mm rounding boundary are welded, not a gap [90m(29.2702ms)[39m[39m
+[34mℹ tests 160[39m
+[34mℹ suites 0[39m
+[34mℹ pass 119[39m
+[34mℹ fail 41[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 225572.4401[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\handles-panel.test.js:26:1
+[31m✖ through the shell: a drag clamps at the bound, and the whole drag is one undo step [90m(28.2218ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  [32m+ actual[39m [31m- expected[39m
+  
+  [39m  [
+  [32m+[39m   false,
+  [32m+[39m   3
+  [31m-[39m   true,
+  [31m-[39m   null
+  [39m  ]
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mapp\test\handles-panel.test.js:34:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [33mfalse[39m, [33m3[39m ],
+    expected: [ [33mtrue[39m, [1mnull[22m ],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\handles.test.js:26:1
+[31m✖ a handle clamps at its bound: dragged far past 50° of bank, it stops exactly at the bound, and names the limit [90m(20.5912ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  [32m+ actual[39m [31m- expected[39m
+  
+  [39m  [
+  [32m+[39m   2,
+  [32m+[39m   false,
+  [32m+[39m   'red'
+  [31m-[39m   null,
+  [31m-[39m   true,
+  [31m-[39m   'clean'
+  [39m  ]
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mapp\test\handles.test.js:30:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [33m2[39m, [33mfalse[39m, [32m'red'[39m ],
+    expected: [ [1mnull[22m, [33mtrue[39m, [32m'clean'[39m ],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\handles.test.js:45:1
+[31m✖ the bound holds on the low side too [90m(7.3823ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  
+  -2 !== null
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mapp\test\handles.test.js:47:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m-2[39m,
+    expected: [1mnull[22m,
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\handles.test.js:86:1
+[31m✖ bank on a middle word is refused by the document (ROLL_STEP): the drag cannot move it, and says why [90m(3.2099ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  [32mactual[39m [31mexpected[39m
+  
+  [39m'[39m[39mr[39m[39me[39m[31mf[39m[31mu[39m[31ms[39m[31me[39m[39md[39m[32m-[39m[32mn[39m[32mo[39m[32mw[39m[39m'[39m
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mapp\test\handles.test.js:89:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'red-now'[39m,
+    expected: [32m'refused'[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\handles.test.js:102:1
+[31m✖ handlesOf gives each handle A's value, unit and range with E's bounds [90m(1.5977ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  [32m+ actual[39m [31m- expected[39m
+  
+  [39m  [
+  [39m    0,
+  [39m    'rad',
+  [32m+[39m   false
+  [31m-[39m   true
+  [39m  ]
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mapp\test\handles.test.js:106:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [33m0[39m, [32m'rad'[39m, [33mfalse[39m ],
+    expected: [ [33m0[39m, [32m'rad'[39m, [33mtrue[39m ],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\validate-ui-jumpdefault.test.js:48:1
+[31m✖ the slider swept over its whole range (50–764 km/h, its own step of 5): clean wherever the car clears the gap, and nowhere else [90m(669.9461ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: red at a speed where the car clears the gap
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m [
+  [32m+[39m   '755 km/h: landing-misses-zone',
+  [32m+[39m   '760 km/h: landing-misses-zone',
+  [32m+[39m   '764 km/h: landing-misses-zone'
+  [32m+[39m ]
+  [31m-[39m []
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mapp\test\validate-ui-jumpdefault.test.js:65:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [32m'755 km/h: landing-misses-zone'[39m, [32m'760 km/h: landing-misses-zone'[39m, [32m'764 km/h: landing-misses-zone'[39m ],
+    expected: [],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\validate-ui-jumpdefault.test.js:69:1
+[31m✖ a jump sculpted past what the car can clear is red, and says so: the landings that miss, the heaviest fall [90m(6.664ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: []
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mapp\test\validate-ui-jumpdefault.test.js:77:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m0[39m,
+    expected: [33m1[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\validate-ui-speed.test.js:52:1
+[31m✖ a faster design speed turns a tight curve amber (above the proven 90 g), and a slower one takes it away again [90m(23.9271ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: clean at 200 km/h
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mapp\test\validate-ui-speed.test.js:56:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\validate-ui.test.js:52:1
+[31m✖ on a real result, a line is amber by load exactly where validation lists load-above-proven [90m(31.8674ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  3 !== 2
+  
+      at [90mC:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mapp\test\validate-ui.test.js:58:138
+      at Array.forEach (<anonymous>)
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mapp\test\validate-ui.test.js:57:41[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m3[39m,
+    expected: [33m2[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\validate-ui.test.js:137:1
+[31m✖ each caught arc ends exactly at validation's touchdown x, and the landing zone spans both touchdowns [90m(6.3853ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: [{"g":3.2,"minSpeed":85.76606721608675,"clear":true,"x":96.21324119369248,"caught":true},{"g":6.3,"minSpeed":120.34021460010801,"clear":false,"x":null,"caught":false}]
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mapp\test\validate-ui.test.js:140:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\validate-ui.test.js:146:1
+[31m✖ a landing the flight misses has no touchdown and no zone [90m(8.1485ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  [32m+ actual[39m [31m- expected[39m
+  
+  [39m  [
+  [31m-[39m   true,
+  [39m    false,
+  [32m+[39m   false
+  [39m  ]
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mapp\test\validate-ui.test.js:151:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [33mfalse[39m, [33mfalse[39m ],
+    expected: [ [33mtrue[39m, [33mfalse[39m ],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\export-textures.test.js:29:1
+[31m✖ a textured floor reaches the kn5: its word's road cells wear the set's floor material, and the DDS is embedded [90m(69.418ms)[39m[39m
+  Error [ExportError]: NOT_CLOSED: buildPath: closed loop does not close (position 3.97e+1 m, tangent 1.19e-1)
+      at buildExport [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:146:82[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export-textures.test.js:30:71[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.start (node:internal/test_runner/test:1015:17)[39m
+  [90m    at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)[39m {
+    code: [32m'NOT_CLOSED'[39m
+  }
+
+test at test\export-textures.test.js:40:1
+[31m✖ the material the preview draws for a word is the one the kn5 carries for it (the preview's own rule) [90m(23.1579ms)[39m[39m
+  Error [ExportError]: NOT_CLOSED: buildPath: closed loop does not close (position 3.97e+1 m, tangent 1.19e-1)
+      at buildExport [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:146:82[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export-textures.test.js:41:71[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m {
+    code: [32m'NOT_CLOSED'[39m
+  }
+
+test at test\export-textures.test.js:50:1
+[31m✖ an untextured set changes nothing: the kn5 is byte-identical to an export without a set [90m(16.5046ms)[39m[39m
+  Error [ExportError]: NOT_CLOSED: buildPath: closed loop does not close (position 3.97e+1 m, tangent 1.19e-1)
+      at buildExport [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:146:82[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export-textures.test.js:52:25[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'NOT_CLOSED'[39m
+  }
+
+test at test\export-textures.test.js:54:1
+[31m✖ only the materials a textured cell uses are added: the set's untextured slots do not reach the kn5 [90m(14.331ms)[39m[39m
+  Error [ExportError]: NOT_CLOSED: buildPath: closed loop does not close (position 3.97e+1 m, tangent 1.19e-1)
+      at buildExport [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:146:82[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export-textures.test.js:55:75[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'NOT_CLOSED'[39m
+  }
+
+test at test\export_csp.test.js:53:1
+[31m✖ export with "T-180 track" on (the default): the folder has both, and the CSP-only warning is in the warnings [90m(48296.0383ms)[39m[39m
+  Error [ExportError]: RED: validation is red, nothing written: fold at s 111.0–121.0 m (ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces))
+      at buildExport [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:167:25[90m)[39m
+      at exportTrack [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:263:13[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_csp.test.js:54:13[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'RED'[39m,
+    red: [ { s0: [33m111[39m, s1: [33m121[39m, u: [33m23.5[39m, reason: [32m'fold'[39m, source: [32m'ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces)'[39m, worst: [33m0.029137125529002716[39m } ]
+  }
+
+test at test\export_csp.test.js:60:1
+[31m✖ export with "T-180 track" off: neither is written, and no CSP-only warning [90m(3039.0325ms)[39m[39m
+  Error [ExportError]: RED: validation is red, nothing written: fold at s 111.0–121.0 m (ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces))
+      at buildExport [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:167:25[90m)[39m
+      at exportTrack [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:263:13[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_csp.test.js:61:13[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'RED'[39m,
+    red: [ { s0: [33m111[39m, s1: [33m121[39m, u: [33m23.5[39m, reason: [32m'fold'[39m, source: [32m'ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces)'[39m, worst: [33m0.029137125529002716[39m } ]
+  }
+
+test at test\export_csp.test.js:66:1
+[31m✖ export both variants: both carry the switch, and only the block differs [90m(3535.7915ms)[39m[39m
+  Error [ExportError]: RED: validation is red, nothing written: fold at s 111.0–121.0 m (ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces))
+      at buildExport [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:167:25[90m)[39m
+      at exportTrack [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:263:13[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_csp.test.js:67:13[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'RED'[39m,
+    red: [ { s0: [33m111[39m, s1: [33m121[39m, u: [33m23.5[39m, reason: [32m'fold'[39m, source: [32m'ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces)'[39m, worst: [33m0.029137125529002716[39m } ]
+  }
+
+test at test\export_width.test.js:21:1
+[31m✖ the exported width is non-empty, parses as metres, and is the road's width from the document within 0.5 m [90m(51011.3568ms)[39m[39m
+  Error [ExportError]: RED: validation is red, nothing written: fold at s 111.0–121.0 m (ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces))
+      at buildExport [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:167:25[90m)[39m
+      at exportTrack [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:263:13[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_width.test.js:26:13[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.start (node:internal/test_runner/test:1015:17)[39m
+  [90m    at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)[39m {
+    code: [32m'RED'[39m,
+    red: [ { s0: [33m111[39m, s1: [33m121[39m, u: [33m23.5[39m, reason: [32m'fold'[39m, source: [32m'ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces)'[39m, worst: [33m0.029137125529002716[39m } ]
+  }
+
+test at test\export_words.test.js:40:1
+[31m✖ the sample exports: the kn5 reads back through tools/kn5.cjs with every AC_ marker [90m(4441.9393ms)[39m[39m
+  Error [ExportError]: RED: validation is red, nothing written: fold at s 111.0–121.0 m (ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces))
+      at buildExport [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:167:25[90m)[39m
+      at exportTrack [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:263:13[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:42:22[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.start (node:internal/test_runner/test:1015:17)[39m
+  [90m    at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)[39m {
+    code: [32m'RED'[39m,
+    red: [ { s0: [33m111[39m, s1: [33m121[39m, u: [33m23.5[39m, reason: [32m'fold'[39m, source: [32m'ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces)'[39m, worst: [33m0.029137125529002716[39m } ]
+  }
+
+test at test\export_words.test.js:52:1
+[31m✖ ui_track.json pitboxes equals the AC_PIT_n count in the written kn5 [90m(0.2611ms)[39m[39m
+  TypeError: Cannot read properties of undefined (reading 'r')
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:53:20[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m
+
+test at test\export_words.test.js:59:1
+[31m✖ the folder holds every file of a track, and nothing it did not list [90m(0.4038ms)[39m[39m
+  TypeError: Cannot read properties of undefined (reading 'r')
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:60:20[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at test\export_words.test.js:68:1
+[31m✖ the AI line runs the whole loop: its length is the path length within 0.5% (tolerance stated before the run) [90m(0.8399ms)[39m[39m
+  TypeError: Cannot read properties of undefined (reading 'r')
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:69:60[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at test\export_words.test.js:74:1
+[31m✖ the AI line runs at the design speed when every word has one (200 km/h here) [90m(0.1501ms)[39m[39m
+  TypeError: Cannot read properties of undefined (reading 'r')
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:75:60[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at test\export_words.test.js:82:1
+[31m✖ the markers stand on the start straight, pole nearest the line; the hotlap starts the run-up to the design speed [90m(0.6869ms)[39m[39m
+  TypeError: Cannot read properties of undefined (reading 'r')
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:85:39[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at test\export_words.test.js:105:1
+[31m✖ a lap the proof fails is refused: a jump taken below the speed its 6.3 g landing needs, each failing point named [90m(73271.9006ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  ExportError: RED: validation is red, nothing written: landing-misses-zone at s 96.0–177.0 m (ARCHITECTURE.md:75-78 (the landing ramp must catch both landings)); lap-proof [jump-not-caught-3.2g at s 96.0 m, jump-not-caught-6.3g at s 96.0 m] at s 96.0–96.0 m (ARCHITECTURE.md:88-89)
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:112:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: ExportError: RED: validation is red, nothing written: landing-misses-zone at s 96.0–177.0 m (ARCHITECTURE.md:75-78 (the landing ramp must catch both landings)); lap-proof [jump-not-caught-3.2g at s 96.0 m, jump-not-caught-6.3g at s 96.0 m] at s 96.0–96.0 m (ARCHITECTURE.md:88-89)
+        at buildExport [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:167:25[90m)[39m
+        at exportTrack [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:263:13[90m)[39m
+        at [90mC:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:112:23
+    [90m    at getActual (node:assert:611:5)[39m
+    [90m    at ok.throws (node:assert:759:24)[39m
+        at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:112:10[90m)[39m
+    [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+    [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+    [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+    [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m,
+    operator: [32m'throws'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\export_words.test.js:131:1
+[31m✖ an amber document exports, and the amber is in the warnings with its source (745 km/h through the 50 m tight) [90m(4109.2365ms)[39m[39m
+  Error [ExportError]: RED: validation is red, nothing written: fold at s 111.0–121.0 m (ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces))
+      at buildExport [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:167:25[90m)[39m
+      at exportTrack [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:263:13[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:132:13[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'RED'[39m,
+    red: [ { s0: [33m111[39m, s1: [33m121[39m, u: [33m23.5[39m, reason: [32m'fold'[39m, source: [32m'ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces)'[39m, worst: [33m0.029137125529002716[39m } ]
+  }
+
+test at test\export_words.test.js:136:1
+[31m✖ both variants: the same kn5 bytes, the soft-collision block only in the first, and the noblock red said [90m(3935.641ms)[39m[39m
+  Error [ExportError]: RED: validation is red, nothing written: fold at s 111.0–121.0 m (ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces))
+      at buildExport [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:167:25[90m)[39m
+      at exportTrack [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:263:13[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:138:13[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'RED'[39m,
+    red: [ { s0: [33m111[39m, s1: [33m121[39m, u: [33m23.5[39m, reason: [32m'fold'[39m, source: [32m'ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces)'[39m, worst: [33m0.029137125529002716[39m } ]
+  }
+
+test at test\export_words.test.js:147:1
+[31m✖ only block is written by default [90m(1.0819ms)[39m[39m
+  TypeError: Cannot read properties of undefined (reading 'r')
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:148:33[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at test\export_words.test.js:152:1
+[31m✖ a folder this builder did not write is refused, untouched [90m(3620.6172ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  ExportError: RED: validation is red, nothing written: fold at s 111.0–121.0 m (ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces))
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:155:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: ExportError: RED: validation is red, nothing written: fold at s 111.0–121.0 m (ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces))
+        at buildExport [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:167:25[90m)[39m
+        at exportTrack [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:263:13[90m)[39m
+        at [90mC:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:155:23
+    [90m    at getActual (node:assert:611:5)[39m
+    [90m    at ok.throws (node:assert:759:24)[39m
+        at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:155:10[90m)[39m
+    [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+    [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+    [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+    [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m,
+    operator: [32m'throws'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\export_words.test.js:159:1
+[31m✖ turning the self-check off is said in the warnings [90m(3076.8213ms)[39m[39m
+  Error [ExportError]: RED: validation is red, nothing written: fold at s 111.0–121.0 m (ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces))
+      at buildExport [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:167:25[90m)[39m
+      at exportTrack [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:263:13[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:161:13[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'RED'[39m,
+    red: [ { s0: [33m111[39m, s1: [33m121[39m, u: [33m23.5[39m, reason: [32m'fold'[39m, source: [32m'ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces)'[39m, worst: [33m0.029137125529002716[39m } ]
+  }
+
+test at test\export_words.test.js:165:1
+[31m✖ the CLI writes the folder from a document file, and refuses an empty one with exit 1 [90m(4289.4752ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: export_words: RED: validation is red, nothing written: fold at s 111.0–121.0 m (ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces))
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:169:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m1[39m,
+    expected: [33m0[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\export_words.test.js:178:1
+[31m✖ with the self-check on (the default), the sample exports [90m(3910.9326ms)[39m[39m
+  Error [ExportError]: RED: validation is red, nothing written: fold at s 111.0–121.0 m (ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces))
+      at buildExport [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:167:25[90m)[39m
+      at exportTrack [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:263:13[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:179:13[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'RED'[39m,
+    red: [ { s0: [33m111[39m, s1: [33m121[39m, u: [33m23.5[39m, reason: [32m'fold'[39m, source: [32m'ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces)'[39m, worst: [33m0.029137125529002716[39m } ]
+  }
+
+test at test\export_words.test.js:186:1
+[31m✖ the §5c marker checks guard the output: markers 3 m above the road (band 1–2 m) are refused, nothing written [90m(3434.8227ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  ExportError: RED: validation is red, nothing written: fold at s 111.0–121.0 m (ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces))
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:188:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: ExportError: RED: validation is red, nothing written: fold at s 111.0–121.0 m (ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces))
+        at buildExport [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:167:25[90m)[39m
+        at exportTrack [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:263:13[90m)[39m
+        at [90mC:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:188:23
+    [90m    at getActual (node:assert:611:5)[39m
+    [90m    at ok.throws (node:assert:759:24)[39m
+        at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:188:10[90m)[39m
+    [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+    [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+    [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+    [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m,
+    operator: [32m'throws'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\export_words.test.js:194:1
+[31m✖ a grid longer than the longest straight is refused with the lengths named [90m(3243.1939ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  ExportError: RED: validation is red, nothing written: fold at s 111.0–121.0 m (ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces))
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:196:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: ExportError: RED: validation is red, nothing written: fold at s 111.0–121.0 m (ARCHITECTURE.md:57, :84; FINDINGS.md:110 (flipped road pieces))
+        at buildExport [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:167:25[90m)[39m
+        at exportTrack [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39msrc\export\fromwords.js:263:13[90m)[39m
+        at [90mC:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:196:23
+    [90m    at getActual (node:assert:611:5)[39m
+    [90m    at ok.throws (node:assert:759:24)[39m
+        at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\export_words.test.js:196:10[90m)[39m
+    [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+    [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+    [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+    [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m,
+    operator: [32m'throws'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\validate_bounds.test.js:43:1
+[31m✖ ramps (easeIn): a longer ramp tightens the body of a short tight word until it folds [90m(58.3734ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: easeIn max: expected a red limit, got {"kind":"red-now"}
+  
+  'red-now' !== 'red'
+  
+      at edgeHolds [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\validate_bounds.test.js:18:10[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\validate_bounds.test.js:46:13[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'red-now'[39m,
+    expected: [32m'red'[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\validate_bounds.test.js:55:1
+[31m✖ bank (roll at the head) for a non-CSP export: exactly 50° either way (ARCHITECTURE.md:87) [90m(4.31ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: roll1 max: expected a red limit, got {"kind":"red-now"}
+  
+  'red-now' !== 'red'
+  
+      at edgeHolds [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\validate_bounds.test.js:18:10[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\validate_bounds.test.js:59:61[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'red-now'[39m,
+    expected: [32m'red'[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\validate_bounds.test.js:71:1
+[31m✖ width (a wall-ride): widened past its bound, the two sides of the U-turn stack; at the bound it is clean [90m(71.0147ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: width max: expected a red limit, got {"kind":"range"}
+  
+  'range' !== 'red'
+  
+      at edgeHolds [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\validate_bounds.test.js:18:10[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\validate_bounds.test.js:74:26[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'range'[39m,
+    expected: [32m'red'[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\validate_bounds.test.js:77:1
+[31m✖ wall height (a wall-ride): raised past its bound it turns red; at the bound it is clean [90m(60.3087ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: wall max: expected a red limit, got {"kind":"range"}
+  
+  'range' !== 'red'
+  
+      at edgeHolds [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\validate_bounds.test.js:18:10[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\validate_bounds.test.js:80:3[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'range'[39m,
+    expected: [32m'red'[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\validate_bounds.test.js:116:1
+[31m✖ A's handleInfo hook takes these bounds as its physics (src/doc/library.js handleInfo(doc, id, boundsFn)) [90m(12.244ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(info.physics && info.physics.roll1 && Math.abs(info.physics.roll1.max - 50 * DEG) < 2e-5)
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\validate_bounds.test.js:120:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\validate_bounds.test.js:123:1
+[31m✖ scope: on a track already red elsewhere, a clean word is still bounded by ITS OWN stretch, not pinned by the other red [90m(3.2104ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\ripple\[39mtest\validate_bounds.test.js:129:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mtrue[39m,
+    expected: [33mfalse[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }

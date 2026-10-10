@@ -1,0 +1,192 @@
+[32m✔ build view (default): the geometry's own head camera, 15 m behind along T and 6 m up along U, looking along T [90m(3.2132ms)[39m[39m
+[32m✔ overhead: 80 m straight up, the growth direction up the screen [90m(0.9458ms)[39m[39m
+[32m✔ overhead: inside a loop (T vertical) the screen-up stays the loop's heading, level [90m(1.4881ms)[39m[39m
+[32m✔ side: level with the head, 40 m off its right side, 6 m up, looking at the head [90m(0.9797ms)[39m[39m
+[32m✔ chase: 25 m behind the head on the road, 3 m along the road's up, looking toward the head [90m(1.1565ms)[39m[39m
+[32m✔ chase through a loop-the-loop: the eye stays on the drivable side of the road the whole way round [90m(1.8748ms)[39m[39m
+[32m✔ chase on a track shorter than its lag: clamped to the start of the road, still a valid pose [90m(0.1553ms)[39m[39m
+[32m✔ the switch key walks build → overhead → side → chase → free → build [90m(0.8903ms)[39m[39m
+[32m✔ the build view is ONE key away from every mode [90m(0.5433ms)[39m[39m
+[32m✔ other keys change nothing [90m(0.1432ms)[39m[39m
+[32m✔ after an append every follow mode follows the new head; free does not move [90m(3.0148ms)[39m[39m
+[32m✔ entering free keeps the view; it flies and turns only in free mode; pitch stays within ±89° [90m(0.7249ms)[39m[39m
+[32m✔ the shown pose eases toward the exact pose: no snap on a switch, and it converges [90m(1.0702ms)[39m[39m
+[32m✔ edges: a missing head, an unknown mode and a rig without the build view are refused [90m(0.8782ms)[39m[39m
+[32m✔ build view frames a 67 m road: every cross-section point at the head is in view at 16:9, 1:1 and 9:16 [90m(1.1417ms)[39m[39m
+[32m✔ build view: without the road's width, 15 m behind does NOT frame a 67 m road (what the framing fixes) [90m(0.723ms)[39m[39m
+[32m✔ build view: a road narrow enough keeps exactly 15 m behind and 6 m up; the backed-off view keeps the same angle [90m(0.6122ms)[39m[39m
+[32m✔ the preview gives the build view the LAST road piece's span (a jump after it has no profile), and null with no road [90m(7.7042ms)[39m[39m
+[32m✔ the ghost (the first word before anything is placed) carries its segments, so the build view frames it too [90m(5.3223ms)[39m[39m
+[32m✔ free look: a + yaw turns the view right on screen (what was straight ahead slides to the left) [90m(0.5521ms)[39m[39m
+[32m✔ zoom: every follow view comes nearer on + and backs off on −, per view, within its limits [90m(0.3185ms)[39m[39m
+[32m✔ zoom in free mode flies along the view instead [90m(0.2669ms)[39m[39m
+[32m✔ overhead zoomed in (0.05 to 50): the head and the road near it stay in view, on a 300 m straight (the head at the edge of the box: the slide must reach it) [90m(7.0081ms)[39m[39m
+[32m✔ overhead zoomed in (0.05 to 50): the head and the road near it stay in view, on a 400 m arc (box centre off the road) [90m(5.7711ms)[39m[39m
+[32m✔ overhead zoomed in (0.05 to 50): the head and the road near it stay in view, on the closed stadium (box centre in the infield) [90m(30.997ms)[39m[39m
+[32m✔ overhead at zoom 1 and out is unchanged by the head-following: the box centre, the whole track (the D170 fit) [90m(4.5909ms)[39m[39m
+[32m✔ the lens: a notch in narrows the field of view by 1.15, out widens it, clamped to 10°–100°, and the reset returns the default [90m(0.4698ms)[39m[39m
+[32m✔ the lens changes the pose's fov and nothing else, in every view (the eye, the target and up do not move) [90m(0.4291ms)[39m[39m
+[32m✔ light: the floor gets exactly ambient + key·key.y + fill·fill.y [90m(0.5715ms)[39m[39m
+[32m✔ light: a floor and a vertical wall, and a bank toward and away from the key, differ by at least 0.15 [90m(0.1415ms)[39m[39m
+[32m✔ light: two-sided (an overhang facing down is lit like the floor facing up), and never below ambient or above 1 [90m(0.4041ms)[39m[39m
+[32m✔ light: the fragment shader carries look.js's own constants (the test of shade() is a test of the shader) [90m(0.1636ms)[39m[39m
+[32m✔ edge lines: through the two edge vertices and the centre vertex, lifted 3 cm, on the geometry's own surface [90m(38.3728ms)[39m[39m
+[32m✔ edge lines: a tie across the road at least every 10 m of the cell, and none on seams [90m(34.6248ms)[39m[39m
+[32m✔ overhead fit (aspect 1.7): every vertex of the whole track projects inside the view, and the head is in frame [90m(100.4261ms)[39m[39m
+[32m✔ overhead fit (aspect 0.6): every vertex of the whole track projects inside the view, and the head is in frame [90m(91.4019ms)[39m[39m
+[32m✔ ghost: the ghost of a segment tail equals what placing it builds, and the placed track is untouched by the ghost [90m(11.445ms)[39m[39m
+[32m✔ ghost: a candidate that does not extend the placed track is refused; on an empty track the ghost stands alone [90m(5.0144ms)[39m[39m
+[32m✔ ghost through A's real shell: the candidate for a word equals what shell.place() then builds [90m(23.4303ms)[39m[39m
+[32m✔ preview: showGhost draws the ghost, clearGhost removes it, and placing the word retires it [90m(21.284ms)[39m[39m
+[32m✔ preview: a frame draws the grid and the head marker as lines (the grid only with ground: true) [90m(4.5757ms)[39m[39m
+[32m✔ preview: by default there is no ground grid, only the track and the head marker [90m(5.3704ms)[39m[39m
+[32m✔ grid: every vertex at y = 0, covering the track's box, and the spacing widens so a long track stays a few hundred lines [90m(51.1006ms)[39m[39m
+[32m✔ head marker: it grows with the camera distance (2%, never under 3 m), and its ring surrounds the head in the road plane [90m(0.8159ms)[39m[39m
+[32m✔ head marker: a 10 m mast straight up from the head [90m(0.3692ms)[39m[39m
+[32m✔ control: the unmutated temp copy passes every test the mutants are run against [90m(11088.671ms)[39m[39m
+[32m✔ mutation A1 the build view looks backward: applied, and caught by "build view (default)…" [90m(10728.8849ms)[39m[39m
+[32m✔ mutation A2 the build key does nothing from free mode: applied, and caught by "the build view is ONE key away…" [90m(10343.0067ms)[39m[39m
+[32m✔ mutation A3 the switch key skips a mode: applied, and caught by "the switch key walks…" [90m(10290.7021ms)[39m[39m
+[32m✔ mutation A4 chase ignores its lag (sits on the head): applied, and caught by "chase: 25 m behind…" [90m(10331.8817ms)[39m[39m
+[32m✔ mutation A5 chase lifts along world up, not the road's up: applied, and caught by "chase through a loop-the-loop…" [90m(10170.4076ms)[39m[39m
+[32m✔ mutation A6 overhead's loop fallback is a fixed north: applied, and caught by "overhead: inside a loop…" [90m(10263.767ms)[39m[39m
+[32m✔ mutation A7 free mode follows the head like the build view: applied, and caught by "after an append…" [90m(10667.4296ms)[39m[39m
+[32m✔ mutation A8 entering free does not take over the view: applied, and caught by "entering free keeps the view…" [90m(10223.2183ms)[39m[39m
+[32m✔ mutation A9 the shown pose snaps instead of easing: applied, and caught by "the shown pose eases…" [90m(10115.4507ms)[39m[39m
+[32m✔ mutation A10 the renderer re-uploads every array every frame: applied, and caught by "renderer: every array is uploaded once…" [90m(10289.4984ms)[39m[39m
+[32m✔ mutation A11 the renderer never deletes a stale buffer: applied, and caught by "renderer: after a sculpt…" [90m(10138.6875ms)[39m[39m
+[32m✔ mutation A12 batches copy the arrays (a sculpt re-uploads everything): applied, and caught by "renderer: after a sculpt…" [90m(10198.1984ms)[39m[39m
+[32m✔ mutation A13 the track model never extends (always a full build): applied, and caught by "track model: append…" [90m(10179.1207ms)[39m[39m
+[32m✔ mutation A14 the model matrix transposed: applied, and caught by "batches: the node matrix…" [90m(10281.5471ms)[39m[39m
+[32m✔ mutation A15 the backing store ignores devicePixelRatio: applied, and caught by "DPR: the backing store is the css size…" [90m(10185.3361ms)[39m[39m
+[32m✔ mutation A16 the size cap drops the aspect (one side clamped alone): applied, and caught by "DPR edges…" [90m(10650.9878ms)[39m[39m
+[32m✔ mutation A17 Ctrl/Alt/Meta ignored by keyAction: applied, and caught by "keys: Ctrl, Alt or Meta…" [90m(10257.4034ms)[39m[39m
+[32m✔ mutation A18 the frame loop passes no modifiers (Ctrl+C cycles the camera): applied, and caught by "keys in the frame loop…" [90m(10255.972ms)[39m[39m
+[32m✔ mutation A19 a failed mount is swallowed: applied, and caught by "mount failure…" [90m(10252.4517ms)[39m[39m
+[32m✔ mutation A20 the probe skips the perspective divide: applied, and caught by "probe: the head lands in the middle…" [90m(10256.5532ms)[39m[39m
+[32m✔ mutation A21 the judge accepts a view with nothing drawn: applied, and caught by "judge: each failure…" [90m(10229.4886ms)[39m[39m
+[32m✔ mutation A22 the judge never checks DPR: applied, and caught by "judge: each failure…" [90m(10238.133ms)[39m[39m
+[32m✔ mutation B1 no key light (only ambient and fill): applied, and caught by "light: a floor and a vertical wall…" [90m(10226.7734ms)[39m[39m
+[32m✔ mutation B2 one-sided light (an overhang goes dark): applied, and caught by "light: two-sided…" [90m(10196.5504ms)[39m[39m
+[32m✔ mutation B3 the shader key strength drifts from look.js: applied, and caught by "light: the fragment shader carries…" [90m(10325.8954ms)[39m[39m
+[32m✔ mutation B4 the edge lines one vertex in from the edges: applied, and caught by "edge lines: through the two edge vertices…" [90m(10250.5081ms)[39m[39m
+[32m✔ mutation B5 the lines not lifted off the surface (they would z-fight): applied, and caught by "edge lines: through the two edge vertices…" [90m(10314.3032ms)[39m[39m
+[32m✔ mutation B6 no ties across the road: applied, and caught by "edge lines: a tie across the road…" [90m(10236.2075ms)[39m[39m
+[32m✔ mutation B7 the overhead fit ignores the aspect: applied, and caught by "overhead fit (aspect 0.6)…" [90m(10314.0519ms)[39m[39m
+[32m✔ mutation B8 the overhead fit measures from the box bottom (the top is clipped): applied, and caught by "overhead fit…" [90m(10277.1998ms)[39m[39m
+[32m✔ mutation B9 the world box takes one corner of each local box: applied, and caught by "overhead fit…" [90m(10217.6298ms)[39m[39m
+[32m✔ mutation B10 the ghost is built on the live path (no copy): applied, and caught by "ghost: the ghost of a segment tail…" [90m(10541.7177ms)[39m[39m
+[32m✔ mutation B11 placing the word does not retire its ghost: applied, and caught by "preview: showGhost draws the ghost…" [90m(10161.1247ms)[39m[39m
+[32m✔ mutation B12 the candidate ignores the font picker: applied, and caught by "ghost through A…" [90m(10242.3268ms)[39m[39m
+[32m✔ mutation B13 the grid floats above y = 0: applied, and caught by "grid: every vertex at y = 0…" [90m(10214.8877ms)[39m[39m
+[32m✔ mutation B14 the ghost is never drawn: applied, and caught by "preview: showGhost draws the ghost…" [90m(10199.5383ms)[39m[39m
+[32m✔ mutation B16 the head marker does not grow with distance (a speck from overhead): applied, and caught by "head marker: it grows…" [90m(10209.3496ms)[39m[39m
+[32m✔ mutation B15 the head marker is never drawn: applied, and caught by "preview: a frame draws the grid and the head marker…" [90m(10284.6626ms)[39m[39m
+[32m✔ mutation P1 a sculpt re-places the path but keeps the old mesh: applied, and caught by "soak:…" [90m(10242.6505ms)[39m[39m
+[32m✔ mutation P2 every change rebuilds the whole track (no per-cell reuse): applied, and caught by "per-cell rebuild: a length sculpt…" [90m(10355.0444ms)[39m[39m
+[32m✔ mutation P3 the preview reaches for the native side: applied, and caught by "no mesh over IPC: app/preview and app/camera…" [90m(10286.4401ms)[39m[39m
+[32m✔ mutation T1 the editor ignores the value it is given: applied, and caught by "editor: an accepted edit changes the canonical text…" [90m(10288.5622ms)[39m[39m
+[32m✔ mutation T2 the panel never calls onChange: applied, and caught by "panel: an accepted edit calls onChange…" [90m(10296.5976ms)[39m[39m
+[32m✔ mutation L1 ksAmbient is read from ksDiffuse: applied, and caught by "mapping: ksAmbient, ksDiffuse…" [90m(10470.6832ms)[39m[39m
+[32m✔ mutation L2 a missing property reads 1, not 0: applied, and caught by "mapping: a property the material lacks reads 0…" [90m(10229.0748ms)[39m[39m
+[32m✔ mutation L3 the multilayer R and G scales are swapped: applied, and caught by "mapping: ksMultilayer takes…" [90m(10267.0917ms)[39m[39m
+[32m✔ mutation L4 ksPerPixelNM falls to ksPerPixel: applied, and caught by "mapping: the shader picks the program…" [90m(10186.8185ms)[39m[39m
+[32m✔ mutation L5 the renderer never sets ksSpecular: applied, and caught by "renderer: an AC material…" [90m(10195.4357ms)[39m[39m
+[32m✔ mutation L6 every sampler gets the white texel: applied, and caught by "renderer: a named texture is uploaded…" [90m(10247.6615ms)[39m[39m
+[32m✔ mutation L7 the multilayer scales never reach the shader: applied, and caught by "renderer: the multilayer scales…" [90m(10166.0034ms)[39m[39m
+[32m✔ mutation L8 textures are never deleted: applied, and caught by "renderer: a texture no longer drawn…" [90m(10303.6367ms)[39m[39m
+[32m✔ mutation L9 a shader loses a uniform declaration: applied, and caught by "shaders: every uniform the renderer sets…" [90m(10113.1856ms)[39m[39m
+[32m✔ mutation L10 an untextured set slot replaces the exported material: applied, and caught by "textured: an untextured floor…" [90m(10195.4961ms)[39m[39m
+[32m✔ mutation L11 the set is ignored: applied, and caught by "textured: a word whose floor names…" [90m(10316.3722ms)[39m[39m
+[32m✔ mutation L12 textures are keyed by name, not by the kn5 file: applied, and caught by "textured: the preview's texels…" [90m(10329.4433ms)[39m[39m
+[32m✔ mutation L13 the default look is the word colours: applied, and caught by "preview: the AC look is the default…" [90m(10400.69ms)[39m[39m
+[32m✔ mutation L14 setTextureSet drops the set: applied, and caught by "preview: a texture set with a made floor…" [90m(10377.8456ms)[39m[39m
+[32m✔ mutation L15 a property is read from the wrong material: applied, and caught by "list: every mesh the preview draws is in the kn5…" [90m(10433.5127ms)[39m[39m
+[32m✔ mutation L16 L does not change the look (the colour per word is unreachable): applied, and caught by "preview: L toggles the look…" [90m(10321.9059ms)[39m[39m
+[32m✔ mutation L17 the ties never fade (they hatch the road dark at a distance): applied, and caught by "renderer: the ties fade out…" [90m(10187.7591ms)[39m[39m
+[32m✔ mutation L18 the canvas is cleared to the fog colour again: applied, and caught by "renderer: the canvas is cleared to CLEAR…" [90m(10695.925ms)[39m[39m
+[32m✔ mutation N1 every held movement key moves (not only the newest): applied, and caught by "keys: with W and D held only the NEWEST…" [90m(10193.0543ms)[39m[39m
+[32m✔ mutation N2 the OLDEST held movement key moves: applied, and caught by "keys: with W and D held only the NEWEST…" [90m(11417.5972ms)[39m[39m
+[32m✔ mutation N3 a repeated key-down makes the key the newest again: applied, and caught by "a held key that repeats…" [90m(11421.1067ms)[39m[39m
+[32m✔ mutation N4 a key-up lets go of every key: applied, and caught by "releasing the OLDER…" [90m(10944.8698ms)[39m[39m
+[32m✔ mutation N5 the takeover re-fires every frame a key is held (C and B are undone): applied, and caught by "P3: C or B pressed while a movement key is held…" [90m(11831.3986ms)[39m[39m
+[32m✔ mutation N6 the wheel ignores deltaX (Shift+wheel is dead on a device that reports it there): applied, and caught by "P5: Shift+wheel is ×4…" [90m(11515.2919ms)[39m[39m
+[32m✔ mutation N7 the key action is looked up by the physical key name, not fixed at key-down: applied, and caught by "P2: a key that flies by its label…" [90m(11439.4158ms)[39m[39m
+[32m✔ mutation N8 the overhead never slides to the head (a black view on a curved track): applied, and caught by "overhead zoomed in (0.05 to 50)…" [90m(11847.735ms)[39m[39m
+[32m✔ mutation N9 the overhead slides to the head at half the rate: applied, and caught by "overhead zoomed in (0.05 to 50)…" [90m(11969.8302ms)[39m[39m
+[32m✔ mutation N10 the overhead slides past the box centre when zoomed OUT: applied, and caught by "overhead at zoom 1 and out is unchanged…" [90m(11093.9879ms)[39m[39m
+[32m✔ mutation N11 the sprint never ramps (×4 for as long as Shift is held): applied, and caught by "keys: Shift held ramps the speed…" [90m(10729.6855ms)[39m[39m
+[32m✔ mutation N12 the ramp never resets on release (a second press starts at ×20): applied, and caught by "releasing Shift returns to ×1…" [90m(12231.2301ms)[39m[39m
+[32m✔ mutation N13 a blur does not reset the ramp: applied, and caught by "a blur resets the ramp…" [90m(11844.4384ms)[39m[39m
+[32m✔ mutation N14 the ramp is twice too slow (5 s to full): applied, and caught by "the sprint curve…" [90m(12188.2045ms)[39m[39m
+[32m✔ mutation N15 the ramp stops at ×10: applied, and caught by "the sprint curve…" [90m(12122.7267ms)[39m[39m
+[32m✔ mutation N16 Enter blurs a text area too (it is a new line there): applied, and caught by "Enter in a text AREA…" [90m(12208.5364ms)[39m[39m
+[32m✔ mutation N17 Esc does not blur a field: applied, and caught by "Esc in a field lets go…" [90m(12980.4096ms)[39m[39m
+[32m✔ mutation N18 Enter does not blur a field: applied, and caught by "Enter in a text field or a number field…" [90m(12387.2385ms)[39m[39m
+[32m✔ mutation N19 a click on the canvas leaves the field focused: applied, and caught by "a mouse-down on the canvas…" [90m(12023.3865ms)[39m[39m
+[32m✔ mutation N20 a number field swallows the camera keys: applied, and caught by "a NUMBER field lets the camera keys through…" [90m(13335.5823ms)[39m[39m
+[32m✔ mutation N21 a text field lets the camera keys through (typing moves the camera): applied, and caught by "a TEXT field swallows every camera key…" [90m(11692.0284ms)[39m[39m
+[32m✔ mutation N22 Ctrl+wheel dollies instead of zooming the lens: applied, and caught by "Ctrl+wheel is the LENS…" [90m(11982.3165ms)[39m[39m
+[32m✔ mutation N23 the plain wheel is the lens: applied, and caught by "the plain wheel is unchanged…" [90m(12009.356ms)[39m[39m
+[32m✔ mutation N24 the middle click does not reset the lens: applied, and caught by "a middle click resets the lens…" [90m(12093.278ms)[39m[39m
+[32m✔ mutation N25 the HUD never shows the fov: applied, and caught by "the HUD shows the fov…" [90m(12248.0119ms)[39m[39m
+[32m✔ mutation N26 the lens zooms the wrong way: applied, and caught by "the lens: a notch in narrows…" [90m(12637.4585ms)[39m[39m
+[32m✔ mutation N27 the lens is not clamped at 10°: applied, and caught by "the lens: a notch in narrows…" [90m(11966.9508ms)[39m[39m
+[32m✔ mutation N28 the pose ignores the lens: applied, and caught by "the lens changes the pose…" [90m(11709.5619ms)[39m[39m
+[32m✔ batches: the node matrix read column-major (as GL reads it) puts every vertex on the geometry's surface [90m(73.585ms)[39m[39m
+[32m✔ batches: one colour per placed word, alternating along the track; a seam is darker than its piece [90m(20.562ms)[39m[39m
+[32m✔ track model: append → extend, a word edit → sculpt, a removal → full, no change → same; each equals a full build [90m(131.4464ms)[39m[39m
+[32m✔ track model: a document that does not resolve keeps the last good track and marks it stale [90m(6.222ms)[39m[39m
+[32m✔ track model through A's shell: placing words grows the preview by extend, and it equals a full build [90m(31.8421ms)[39m[39m
+[32m✔ renderer: every array is uploaded once; drawing the same batches again uploads nothing [90m(30.306ms)[39m[39m
+[32m✔ renderer: after a sculpt that moves later pieces, only the edited piece and its seams are uploaded; stale buffers are deleted [90m(24.9392ms)[39m[39m
+[32m✔ renderer: a shader that does not compile throws with the compiler's log; a canvas without size is refused [90m(0.2787ms)[39m[39m
+[32m✔ keys: C switches, B is the build view, WASD/QE fly, arrows turn, anything else does nothing [90m(0.3608ms)[39m[39m
+[32m✔ the preview shader sources carry no environment (v1 is the track only): no sky, texture or sampler [90m(0.3199ms)[39m[39m
+[32m✔ keys: a key held when the window loses focus is let go, so the camera stops (the drift) [90m(4.1384ms)[39m[39m
+[32m✔ keys: already in free, a key held when the window loses focus is let go, so the camera stops (V11 of B: 4.5 m of drift at HEAD) [90m(3.2262ms)[39m[39m
+[32m✔ keys: Shift sprints (×4 the distance per frame) [90m(2.9535ms)[39m[39m
+[32m✔ mouse: a right drag looks from the build view (taking it over), a drag right turns right, and keys move at the same time [90m(2.0121ms)[39m[39m
+[32m✔ mouse: the scroll wheel zooms the build view [90m(1.5385ms)[39m[39m
+[32m✔ keys: with W and D held only the NEWEST (D) moves; releasing D hands the movement back to W; releasing W stops [90m(3.4848ms)[39m[39m
+[32m✔ keys: releasing the OLDER of two held movement keys leaves the newest moving [90m(1.6648ms)[39m[39m
+[32m✔ keys: a held key that repeats (auto-repeat key-down) keeps its place, and is not made the newest again [90m(1.6759ms)[39m[39m
+[32m✔ keys: the arrow (look) keys are not movement keys: they turn while the newest movement key flies [90m(1.0491ms)[39m[39m
+[32m✔ P3: C or B pressed while a movement key is held leaves free mode and stays out of it [90m(1.8835ms)[39m[39m
+[32m✔ P3: a NEW movement key-down after C takes the view over again [90m(1.0998ms)[39m[39m
+[32m✔ P5: Shift+wheel is ×4 when the device reports the scroll as deltaX (deltaY 0), not only as deltaY [90m(1.8624ms)[39m[39m
+[32m✔ P2: a key that flies by its label but sits on another physical key (another layout) flies, and lets go by its own code [90m(0.9337ms)[39m[39m
+[32m✔ the sprint curve: ×4 at 0 s, ×20 from 2.5 s, smooth and rising between (1 s is 4 + 16·S(0.4)) [90m(0.1725ms)[39m[39m
+[32m✔ keys: Shift held ramps the speed: ×4 at the press, then along the curve, ×20 at 2.5 s (measured per frame) [90m(1.5181ms)[39m[39m
+[32m✔ keys: releasing Shift returns to ×1, and pressing it again starts at ×4 again [90m(2.4493ms)[39m[39m
+[32m✔ keys: a blur resets the ramp (the key-up never comes), and the next press starts at ×4 [90m(1.9375ms)[39m[39m
+[32m✔ focus: Enter in a text field or a number field lets go of it (and does not touch the camera) [90m(3.8284ms)[39m[39m
+[32m✔ focus: Esc in a field lets go of it, in every kind of field [90m(3.5521ms)[39m[39m
+[32m✔ focus: Enter in a text AREA is a new line, and is left alone [90m(0.9944ms)[39m[39m
+[32m✔ focus: Enter or Esc on the page (no field) does nothing to the camera [90m(0.7969ms)[39m[39m
+[32m✔ focus: a mouse-down on the canvas (either button, or the middle) takes focus off the active field [90m(3.2306ms)[39m[39m
+[32m✔ focus: a mouse-down with nothing focused (the page body, or none) is fine [90m(1.3296ms)[39m[39m
+[32m✔ focus: a NUMBER field lets the camera keys through: W A S D Q E fly, the arrows turn [90m(7.0705ms)[39m[39m
+[32m✔ focus: Shift sprints while a number field has focus [90m(1.4116ms)[39m[39m
+[32m✔ focus: a number field still gets its digits (a digit is not the camera's key, and is not stopped) [90m(1.1928ms)[39m[39m
+[32m✔ focus: a TEXT field swallows every camera key: typing a name never moves the camera [90m(3.1867ms)[39m[39m
+[32m✔ the plain wheel is unchanged: a follow view changes distance, free mode dollies 4 m a notch, and the lens stays [90m(0.5225ms)[39m[39m
+[32m✔ Ctrl+wheel is the LENS, in every view: the fov changes and the eye does not (in and out, stepwise, clamped to 10°–100°) [90m(3.8503ms)[39m[39m
+[32m✔ Ctrl+wheel: Shift makes it 4 notches, and a device that reports deltaX works too [90m(2.5745ms)[39m[39m
+[32m✔ a middle click resets the lens to 60° (and does not start a drag or change the view) [90m(0.5012ms)[39m[39m
+[32m✔ the HUD shows the fov once the lens has moved off 60°, and drops it on the reset [90m(0.7728ms)[39m[39m
+[32m✔ the pick still hits the station under the cursor after the lens changes (the pick reads the drawn pose, fov and all) [90m(1.658ms)[39m[39m
+[32m✔ W1: W held and REPEATING, C pressed: W's next auto-repeats do not take the view back into free [90m(0.9917ms)[39m[39m
+[32m✔ W1: W held and REPEATING, B pressed: W's next auto-repeats do not take the view back into free [90m(0.4955ms)[39m[39m
+[32m✔ W2: a trackpad swipe SIDEWAYS (deltaX only, no Shift: 20 events of 2 px) does not zoom [90m(0.4859ms)[39m[39m
+[32m✔ W2: the same sideways swipe with Ctrl held does not move the LENS either (the lens shares the wheel line) [90m(0.5389ms)[39m[39m
+[34mℹ tests 182[39m
+[34mℹ suites 0[39m
+[34mℹ pass 182[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 971037.7463[39m
+
+[lockedD.js] exit 0 in 971 s

@@ -1,0 +1,47 @@
+[32m✔ minSpeed matches the closed form, worked by hand for a 40 m gap, 7° up, landing 1 m up, at 3.2 g [90m(1.2941ms)[39m[39m
+[32m✔ the harder fall needs the higher speed: minSpeed at 6.3 g = minSpeed at 3.2 g × √(6.3/3.2) [90m(0.1785ms)[39m[39m
+[32m✔ no speed makes a jump whose lip points at or below the landing (D·tanθ ≤ Δh): Infinity [90m(0.2545ms)[39m[39m
+[32m✔ minSpeed refuses a gap that is not positive [90m(0.2814ms)[39m[39m
+[32m✔ flightY: the height at the minimum speed is exactly Δh at D (the flight just reaches the lip) [90m(0.0881ms)[39m[39m
+[32m✔ TWO landings, never one: between the two minimum speeds the clean flight lands and the dive falls short [90m(0.5244ms)[39m[39m
+[32m✔ boundary at each landing: just below its minimum speed it is not clear, just above it is [90m(0.5771ms)[39m[39m
+[32m✔ a landing road too short to catch the long flight: clear, but NOT caught [90m(0.1236ms)[39m[39m
+[32m✔ the touchdown x is where the flight meets the landing road, interpolated [90m(0.1377ms)[39m[39m
+[32m✔ reach: a drop deeper than dist·tan10° + ½·6.5 g·(dist / 375 km/h)² is unreachable (FINDINGS.md:312-313) [90m(0.2006ms)[39m[39m
+[32m✔ validate: a flat 40 m jump reports both landings, the gap and the climb, from the path itself [90m(3.4215ms)[39m[39m
+[32m✔ validate: a jump taken too slowly is not caught, and a closed lap over it fails with the reason [90m(1.7103ms)[39m[39m
+[32m✔ validate: an open head that ends in the air is a pending jump, and the head in the air is red [90m(0.5809ms)[39m[39m
+[32m✔ validate: a gap of 0 (landing lip straight below the take-off lip) is a named RED with its reason and source, and nothing throws [90m(1.465ms)[39m[39m
+[32m✔ validate: a NEGATIVE gap (landing lip 5 m behind the take-off lip) is a named RED with its reason and source, and nothing throws [90m(1.7938ms)[39m[39m
+[32m✔ validate: a closed lap over a jump with no forward gap FAILS with that reason, and is not thrown either [90m(2.4195ms)[39m[39m
+[31m✖ validate: a landing on the jump's own ramp more than 150 m past the lip is found (the search covers the ramp) [90m(14.0786ms)[39m[39m
+[34mℹ tests 17[39m
+[34mℹ suites 0[39m
+[34mℹ pass 16[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 80.8298[39m
+
+[31m✖ failing tests:[39m
+
+test at test\validate_jumps.test.js:157:1
+[31m✖ validate: a landing on the jump's own ramp more than 150 m past the lip is found (the search covers the ramp) [90m(14.0786ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: [{"g":3.2,"minSpeed":85.76606721608674,"clear":true,"x":null,"caught":false},{"g":6.3,"minSpeed":120.340214600108,"clear":true,"x":153.37337742027248,"caught":true}]
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\t180-track-builder\[39mtest\validate_jumps.test.js:166:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+[locked.js] exit 1 in 0 s

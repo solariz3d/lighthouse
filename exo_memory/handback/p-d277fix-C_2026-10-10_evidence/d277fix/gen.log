@@ -1,0 +1,41 @@
+== D277fix C: generate + cargo intake_light (generated) · asked 2026-10-10T17:38:20.345Z · lock held 2026-10-10T17:38:20.377Z · NODE_OPTIONS=--max-old-space-size=4096
+$ bash /c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d277fix/gen.sh
+gen-rc=0
+aad7611 Consonance (generated from 55ed22a1fd74)
+0
+BOOT.md
+CUTOFF.md
+SEED.md
+SOURCE.md
+TRAINING.md
+cards
+inheritance
+journal
+loop
+memory
+record
+research
+spread
+test intake_light_tests::dump_intakes_for_measure ... ignored
+test intake_light_tests::light_caps_hold_whatever_the_brief_frees_and_strict_is_unchanged ... ok
+test intake_light_tests::the_switch_is_the_gates_key_and_absent_is_strict ... ok
+test intake_light_tests::light_the_shelf_carries_a_fixed_set_and_never_backfills ... ok
+test intake_light_tests::key_absent_the_librarian_intake_is_todays ... ok
+test intake_light_tests::key_absent_the_pane_intake_is_todays ... ok
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... ok
+test intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists ... ok
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... ok
+test result: ok. 8 passed; 0 failed; 1 ignored; 0 measured; 1007 filtered out; finished in 0.17s
++ cd /c/Users/nname/Desktop/worktrees/c-d277fix-wt
++ node consonance/tools/gen-consumer.js --out C:/Users/nname/Desktop/worktrees/c-d277fix-gen --json
++ echo gen-rc=0
++ cd /c/Users/nname/Desktop/worktrees/c-d277fix-gen
++ git log -1 '--format=%h %s'
++ git status --short
++ wc -l
++ ls /c/Users/nname/Desktop/worktrees/c-d277fix-gen/exo_memory
++ cd /c/Users/nname/Desktop/worktrees/c-d277fix-gen
++ CARGO_TARGET_DIR=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d277fix/target-gen
++ /c/Users/nname/.cargo/bin/cargo.exe test --manifest-path consonance/src-tauri/Cargo.toml --bin consonance intake_light
++ grep -E '^test |test result|panicked|expected'
+== exit 0 · done 2026-10-10T17:39:22.299Z

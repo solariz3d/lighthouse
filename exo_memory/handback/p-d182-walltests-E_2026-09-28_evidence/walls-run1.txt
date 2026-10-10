@@ -1,0 +1,220 @@
+[32m✔ no handles until exactly one placed word is selected [90m(3.6231ms)[39m[39m
+[31m✖ through the shell: a drag clamps at the bound, and the whole drag is one undo step [90m(99.2016ms)[39m[39m
+[32m✔ pastRed (Alt) goes through the bound and shows red [90m(42.1791ms)[39m[39m
+[32m✔ a value the document refuses is stopped at the last value it accepts, and the reason is the document's own [90m(14.0278ms)[39m[39m
+[32m✔ one drag at a time [90m(40.3955ms)[39m[39m
+[32m✔ cancel through the shell puts the value back (the shell has no cancel, so one no-op undo entry remains: a named seam) [90m(35.4397ms)[39m[39m
+[31m✖ on a word already red there is no bound to stop at, so the document's own refusal stops the drag, through the shell [90m(12.0608ms)[39m[39m
+[32m✔ why no handles show, in words: nothing selected, several words, or a starter phrase (D177 window pass) [90m(1.1578ms)[39m[39m
+[32m✔ the sculpt set is the plan's list: length, curvature and ramps, pitch, bank, width, wall height, ψ, font transition [90m(1.8414ms)[39m[39m
+[31m✖ a handle clamps at its bound: dragged far past 50° of bank, it stops exactly at the bound, and names the limit [90m(115.5022ms)[39m[39m
+[32m✔ inside the bound the drag follows the pointer; one quantum past the bound would be red [90m(67.1482ms)[39m[39m
+[32m✔ the bound holds on the low side too [90m(60.3666ms)[39m[39m
+[32m✔ pastRed lets the drag through the bound and shows red, for a user who will fix a neighbour next [90m(55.4414ms)[39m[39m
+[32m✔ amber never blocks: past the amber bound the drag goes on and the handle shows amber [90m(105.2131ms)[39m[39m
+[32m✔ a whole drag is ONE undo entry, and undo returns the document from before the drag [90m(44.3221ms)[39m[39m
+[32m✔ a cancelled drag adds no entry and leaves the document as it was [90m(33.8698ms)[39m[39m
+[32m✔ bank on a middle word is refused by the document (ROLL_STEP): the drag cannot move it, and says why [90m(3.2035ms)[39m[39m
+[32m✔ a word that is already red has no clean range: the drag moves freely and shows red [90m(2.2652ms)[39m[39m
+[31m✖ handlesOf gives each handle A's value, unit and range with E's bounds [90m(1006.8217ms)[39m[39m
+[32m✔ the default jump at the default design speed (460 km/h, FINDINGS.md:476) is clean: no red, both landings caught [90m(20.007ms)[39m[39m
+[32m✔ resolve with no speed given sizes the ramp for the same default, so every caller agrees (the export, the connector) [90m(3.6034ms)[39m[39m
+[32m✔ the slider swept over its whole range (50–764 km/h, its own step of 5): clean wherever the car clears the gap, and nowhere else [90m(336.6699ms)[39m[39m
+[32m✔ a jump sculpted past what the car can clear is red, and says so: the landings that miss, the heaviest fall [90m(2.4452ms)[39m[39m
+[32m✔ the ramp resize is DERIVED: no undo step, the document unchanged, and the same speed gives the same ramp again [90m(7.1795ms)[39m[39m
+[32m✔ a CLOSED loop keeps its ramps at the default when the slider moves, so it stays closed [90m(11471.369ms)[39m[39m
+[32m✔ resolve itself refuses a design speed that is not a positive number (a named ResolveError), and takes null as the default [90m(1.0249ms)[39m[39m
+[32m✔ a design speed that is not a positive number is refused with a message, and changes nothing [90m(5.5862ms)[39m[39m
+[32m✔ the first word builds and colours the whole track (full), and an empty document shows nothing [90m(12.4656ms)[39m[39m
+[32m✔ placing at the head is an APPEND: extendPath, revalidate, only the new span re-coloured, and equal to a full run [90m(17.4754ms)[39m[39m
+[32m✔ a drag on an earlier word is a SCULPT from that word, and still equals a full run [90m(17.6569ms)[39m[39m
+[32m✔ removing the head, and undo, take the full route and still equal a full run [90m(16.1015ms)[39m[39m
+[31m✖ the CSP switch re-validates for vanilla AC: a 60° wall turns red, and back [90m(7.0923ms)[39m[39m
+[32m✔ a jump placed at the open head is drawn once it has landing road (its own ramp, or the next word) [90m(5.6349ms)[39m[39m
+[32m✔ changes arriving before the scheduled update are coalesced into one update [90m(4.4145ms)[39m[39m
+[32m✔ E's panels load through A's webview loader (app/lib/cjs.js), and each exports mount(root, shell) [90m(22.9494ms)[39m[39m
+[32m✔ the picker starts at the FINDINGS default, 460 km/h (FINDINGS.md:476), read from the car, not typed here [90m(0.9768ms)[39m[39m
+[32m✔ the picker holds to its range: 50 km/h up to the lap sim's 764 km/h cap (FINDINGS.md:484) [90m(0.1097ms)[39m[39m
+[32m✔ off is no design speed; a value that is not a number is refused loudly; onChange fires only on a change [90m(0.249ms)[39m[39m
+[32m✔ with the picker's default, a track built through the shell HAS loads now (it had none in D168) [90m(17.273ms)[39m[39m
+[32m✔ with the picker off, an open track built through the shell claims no load at all [90m(4.4523ms)[39m[39m
+[32m✔ a faster design speed turns a tight curve amber (above the proven 90 g), and a slower one takes it away again [90m(16.4341ms)[39m[39m
+[31m✖ with the picker off (no loads anywhere), a geometry red still colours the live map, station by station along the path [90m(7.0514ms)[39m[39m
+[32m✔ length (a tight word): the shortest clean length, and one millimetre shorter is red (a fold or seam) [90m(1419.988ms)[39m[39m
+[32m✔ curvature (turn): swinging a tight word past its bound lays the track over itself (stacked), one quantum on [90m(113.7767ms)[39m[39m
+[32m✔ ramps (easeIn): a longer ramp tightens the body of a short tight word until it folds [90m(44.4096ms)[39m[39m
+[32m✔ pitch (climb): a short climbing half-pipe folds its walls when their height passes the vertical radius [90m(160.7475ms)[39m[39m
+[31m✖ bank (roll at the head) for a non-CSP export: exactly 50° either way (ARCHITECTURE.md:87) [90m(48.263ms)[39m[39m
+[32m✔ bank on a CSP export has no red limit: the bound is the document range, and it says so [90m(32.2885ms)[39m[39m
+[32m✔ width (a wall-ride): widened past its bound, the two sides of the U-turn stack; at the bound it is clean [90m(163.3817ms)[39m[39m
+[32m✔ wall height (a wall-ride): raised past its bound it turns red; at the bound it is clean [90m(217.6377ms)[39m[39m
+[32m✔ ψ for a non-CSP export: a half-pipe wall is clean at 50° and red one thousandth of a degree past it [90m(36.7885ms)[39m[39m
+[32m✔ where no limit binds, the bound is the document range; where the document refuses a value, it says why [90m(57.0949ms)[39m[39m
+[32m✔ a word that is already red has no clean range to report (null bounds, "red-now") [90m(1.2761ms)[39m[39m
+[32m✔ amber is reported inside the red bounds: amberMax ≤ max, and a faster word meets amber before red [90m(49.6938ms)[39m[39m
+[31m✖ A's handleInfo hook takes these bounds as its physics (src/doc/library.js handleInfo(doc, id, boundsFn)) [90m(26.4197ms)[39m[39m
+[32m✔ scope: on a track already red elsewhere, a clean word is still bounded by ITS OWN stretch, not pinned by the other red [90m(19.055ms)[39m[39m
+[34mℹ tests 56[39m
+[34mℹ suites 0[39m
+[34mℹ pass 48[39m
+[34mℹ fail 8[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 12040.0422[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\handles-panel.test.js:28:1
+[31m✖ through the shell: a drag clamps at the bound, and the whole drag is one undo step [90m(99.2016ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(Math.abs(bounds.max - 50 * DEG) < 2e-5)
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\walls\[39mapp\test\handles-panel.test.js:39:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\handles-panel.test.js:89:1
+[31m✖ on a word already red there is no bound to stop at, so the document's own refusal stops the drag, through the shell [90m(12.0608ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== null
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\walls\[39mapp\test\handles-panel.test.js:95:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m0[39m,
+    expected: [1mnull[22m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\handles.test.js:29:1
+[31m✖ a handle clamps at its bound: dragged far past 50° of bank, it stops exactly at the bound, and names the limit [90m(115.5022ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: 0.8377580409572782
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\walls\[39mapp\test\handles.test.js:34:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\handles.test.js:105:1
+[31m✖ handlesOf gives each handle A's value, unit and range with E's bounds [90m(1006.8217ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  [32m+ actual[39m [31m- expected[39m
+  
+  [39m  [
+  [39m    0,
+  [39m    'rad',
+  [32m+[39m   false
+  [31m-[39m   true
+  [39m  ]
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\walls\[39mapp\test\handles.test.js:109:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [33m0[39m, [32m'rad'[39m, [33mfalse[39m ],
+    expected: [ [33m0[39m, [32m'rad'[39m, [33mtrue[39m ],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\validate-ui-panel.test.js:74:1
+[31m✖ the CSP switch re-validates for vanilla AC: a 60° wall turns red, and back [90m(7.0923ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(ctl.state.result.red.some((r) => r.reason === 'steep-without-raycast'))
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\walls\[39mapp\test\validate-ui-panel.test.js:81:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\validate-ui-speed.test.js:68:1
+[31m✖ with the picker off (no loads anywhere), a geometry red still colours the live map, station by station along the path [90m(7.0514ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(anyLevel(ctl.state.map, LEVEL.RED))
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\walls\[39mapp\test\validate-ui-speed.test.js:78:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\validate_bounds.test.js:58:1
+[31m✖ bank (roll at the head) for a non-CSP export: exactly 50° either way (ARCHITECTURE.md:87) [90m(48.263ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: -0.8377580409572782 0.8377580409572782
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\walls\[39mtest\validate_bounds.test.js:63:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\validate_bounds.test.js:119:1
+[31m✖ A's handleInfo hook takes these bounds as its physics (src/doc/library.js handleInfo(doc, id, boundsFn)) [90m(26.4197ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(info.physics && info.physics.roll1 && Math.abs(info.physics.roll1.max - 50 * DEG) < 2e-5)
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\walls\[39mtest\validate_bounds.test.js:123:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+[locked.js] exit 1 in 12 s
