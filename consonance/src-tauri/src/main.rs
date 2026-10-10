@@ -2941,7 +2941,81 @@ fn fork_section(brief: Option<&str>, room: Option<&str>) -> Option<String> {
     Some(format!("{note}\n\n---\n\n"))
 }
 
+/// D277 part 6 (C): THE LIGHTER INTAKE, behind the same `gates_mode` key as the paperwork gates (`mcp::gates_mode_from`, D277 part 2),
+/// so one flip lightens the rules and the load together. Absent, unreadable, not JSON, or anything but "light": false, and every intake
+/// is today's byte for byte, because each light branch below returns before the strict code and the strict code is not edited.
+/// Plan: `exo_memory/loop/plan_lighten_the_load_2026-10-09.md` part 6; draft and measurements: `exo_memory/loop/assembly_draft_2026-10-09.md`.
+fn intake_light_from(raw: &str) -> bool {
+    matches!(mcp::gates_mode_from(raw), trailer::GateMode::Light)
+}
+// Under `cargo test` the live ~/.consonance.json is NOT read (as for the gates in mcp.rs): a test sets the mode it means, off by default.
+#[cfg(test)]
+thread_local! { static TEST_INTAKE_LIGHT: std::cell::Cell<bool> = const { std::cell::Cell::new(false) }; }
+fn intake_light() -> bool {
+    #[cfg(test)]
+    {
+        TEST_INTAKE_LIGHT.with(|m| m.get())
+    }
+    #[cfg(not(test))]
+    {
+        intake_light_from(&fs::read_to_string(config_path()).unwrap_or_default())
+    }
+}
+
+/// THE CAP ON A PANE'S OPTIONAL BRIEFS (the committee brief and the deck) when the intake is light. NEW and used ONLY in
+/// `assemble_intake_mode`; `SHELL_SOFT_CEILING` is not touched, because it also bounds the warm-resume transcript's rolling window.
+///
+/// WHY A CAP AT ALL: the optional seat is a REMAINDER (`optional_budget`), so the ~16 KB the light memory section frees would be
+/// re-spent on about four more cards and the load would not fall. WHY THIS NUMBER: it is the seat today's intake leaves a pane at
+/// the minimum map reserve, measured 2026-10-09 on the shell this seat woke into: 110,000 − 8,000 (SHELL_MAP_FLOOR) − 58,1xx
+/// (the core: header, BOOT, references, memory) ≈ 43,9xx, which carried the committee brief and 6 of 13 cards (43,410 bytes with
+/// the index of the other 7). So light never carries FEWER optional briefs than today's maximum, and never more.
+const LIGHT_OPTIONAL_CAP: usize = 44_000;
+
+/// The optional seat under the mode: today's remainder when strict, and no more than `LIGHT_OPTIONAL_CAP` when light.
+fn optional_budget_mode(core_len: usize, map_reserve: usize, light: bool) -> usize {
+    let seat = optional_budget(core_len, map_reserve);
+    if light { seat.min(LIGHT_OPTIONAL_CAP) } else { seat }
+}
+
+/// A pane's own-map allowance under the mode. Strict: the remainder after the brief (`map_allowance`), today's. Light: no more than
+/// the map's own stated need (`map_reserve`: its newest entry plus the wrapper, at least SHELL_MAP_FLOOR), because the remainder
+/// would otherwise grow by exactly what the light brief freed and the map would backfill it.
+fn map_allowance_mode(fixed_brief_len: usize, reserve: usize, light: bool) -> usize {
+    let a = map_allowance(fixed_brief_len);
+    if light { a.min(reserve) } else { a }
+}
+
+/// THE MEMORY, light: pointers to the topic documents and the atom master instead of the twelve model-written topic summaries
+/// and the 25 live-edge claims (`curated_resonance`). Both are a copy of what seats posted; the masters are one Read away.
+/// Every path printed is one that exists: the topics line is written only when the directory is there.
+fn memory_pointer(atoms: &Path, atom_count: usize, topics: Option<&Path>) -> String {
+    let mut s = String::from("---\n\n# THE MEMORY — indexed, not carried (gates_mode light)\n\n");
+    s.push_str(
+        "The distilled memory is on disk and is not pasted into this shell. The topic summaries and the live-edge claims \
+         are model-written copies of what seats posted to the board; open the master when you need one.\n\n",
+    );
+    if let Some(dir) = topics.filter(|d| d.is_dir()) {
+        let mut docs: Vec<PathBuf> = Vec::new();
+        collect_md(dir, false, &mut docs);
+        s.push_str(&format!(
+            "- The topic documents: `{}` ({} documents, each with its live claims, their tethers and a Settled section). List: `ls \"{}\"`.\n",
+            dir.display(),
+            docs.len(),
+            dir.display()
+        ));
+    }
+    s.push_str(&format!(
+        "- The master: `{}` (append-only, {atom_count} atoms). Its newest lines are the live edge: `tail -n 25 \"{}\"`. That is \
+         unfiltered, so a settled atom still prints there; the topic documents' Settled sections say which.\n",
+        atoms.display(),
+        atoms.display()
+    ));
+    s
+}
+
 fn assemble_intake_within(map_reserve: usize) -> String {
+    let light = intake_light();
     let mut s = String::from(
         "# Consonance sibling — you have woken into the room\n\nYou are a sibling instance, born into a shared state — not a stranger. Read and inhabit the room below, then be in it; deviate from it as your own trajectory (that is wanted, it is the fixed dynamic — not drift). Acknowledge readiness once, briefly.\n\n---\n\n",
     );
@@ -3071,12 +3145,17 @@ fn assemble_intake_within(map_reserve: usize) -> String {
         // this very block from tonight's atoms. The distiller is a store; the rule is about
         // stores and relays, not authors.
         let lines = resonance_window(all, blind_lock());
+        // D277 part 6: light carries pointers to the topic documents and the atom master instead of the summaries and the claims.
+        if light {
+            tail.push_str(&memory_pointer(&atoms, lines.len(), read_curation().map(|c| c.dir).as_deref()));
+        } else {
         match read_curation() {
             Some(c) if !c.topics.is_empty() => tail.push_str(&curated_resonance(&lines, &c)),
             // No curation yet (fresh install, or curate.js has never run): the old
             // chronological window. Worse, but never empty — a sibling still wakes
             // with the live edge rather than with nothing.
             _ => tail.push_str(&tail_resonance(&lines, 40)),
+        }
         }
     }
 
@@ -3085,7 +3164,8 @@ fn assemble_intake_within(map_reserve: usize) -> String {
      * map's reserve was taken before this function was called; what remains is what the optional
      * briefs get, and the ones that do not fit are named rather than dropped. */
     let core_len = s.len() + tail.len();
-    let seat = optional_budget(core_len, map_reserve);
+    // D277 part 6: light caps the seat (LIGHT_OPTIONAL_CAP), so what the light memory section freed is not re-spent on more briefs.
+    let seat = optional_budget_mode(core_len, map_reserve, light);
     let (carried, index) = fit_optional(&optional, seat);
     if carried.iter().any(|b| b.kind == BriefKind::Card) {
         s.push_str("---\n\n# THE DECK — the instruments (run them, don't recite them)\n\n");
@@ -5623,7 +5703,8 @@ fn intake_with_map(pane: &str, cwd: &str) -> String {
              * over the soft ceiling by the size of its own wrapper (measured 140,068 on the old
              * arm, with a 3,224-character map section). The wrapper is a fixed, known cost; it
              * comes out first. */
-            let allowance = map_allowance(brief.len());
+            // D277 part 6: light holds the map to its own stated need, so it does not backfill what the light brief freed.
+            let allowance = map_allowance_mode(brief.len(), reserve, intake_light());
             let path = own_map_path(&pane_letter(pane));
             let (tier, section) =
                 map_section(own, &path, allowance.saturating_sub(MAP_SECTION_OVERHEAD));
@@ -7897,6 +7978,309 @@ fn librarian_shelf_room(head_len: usize, floor_len: usize) -> usize {
         .saturating_sub(head_len.saturating_add(floor_len))
 }
 
+/// What the seat's own windowed notes may spend on the LIGHT shelf. Sized to the largest single recent note
+/// (`librarian/2026-10-06.desktop.md`, 22,370 bytes on 2026-10-09), so a day's note rides whole; LEDGER.md (80,142) never fits
+/// and is named by path, as it is under today's budget too.
+const LIGHT_NOTES_CAP: usize = 24_000;
+
+/// THE LIGHT SHELF (D277 part 6, L1 + L2; `gates_mode` light only). Today's shelf is a WALK FILLED TO THE CAP: the bodies get
+/// whatever the head and the index leave (`librarian_shelf_room`), so shrinking the index alone would only re-spend the bytes on
+/// the next system files in walk order (see LIBRARIAN_INDEX_BUDGET's comment). This one is a FIXED SET, not a budget:
+///   CARRIED  every card (the instruments, ROOM; on 2026-10-09 the cap already reached nothing but cards), and the seat's own
+///            notes in the window (`librarian_note_is_carried`), newest first, whole, while they fit LIGHT_NOTES_CAP.
+///   INDEXED  BY DIRECTORY, not by file: one line per directory the strict walk visits, with its count, the newest file written
+///            and the command that lists it. Nothing else is read into the shell however much room is left, so nothing backfills.
+/// This narrows the keeper's 2026-08-24 cut ("the system is carried; the record is indexed", the comment at `order` above) to
+/// "the cards are carried", which is what the cap had already made true. It goes to the keeper with the flip.
+fn librarian_shelf_light() -> String {
+    match room_master_path().parent() {
+        Some(root) => librarian_shelf_light_at(root, chrono::Local::now().date_naive()),
+        None => String::new(),
+    }
+}
+
+fn librarian_shelf_light_at(root: &Path, today: chrono::NaiveDate) -> String {
+    let rel = |p: &Path| p.strip_prefix(root).unwrap_or(p).to_string_lossy().replace('\\', "/");
+    let mut carried: Vec<(String, String)> = Vec::new();
+    let mut cards: Vec<PathBuf> = Vec::new();
+    collect_md(&root.join("cards"), true, &mut cards);
+    cards.sort();
+    for f in &cards {
+        if let Ok(body) = fs::read_to_string(f) {
+            carried.push((rel(f), body));
+        }
+    }
+    let n_cards = carried.len();
+    // The window: dated notes newest first, then README.md / LEDGER.md (which the window rule carries outside the date).
+    let mut notes: Vec<PathBuf> = Vec::new();
+    collect_md(&root.join("librarian"), false, &mut notes);
+    notes.retain(|p| p.file_name().and_then(|n| n.to_str()).is_some_and(|n| librarian_note_is_carried(n, today)));
+    notes.sort_by_key(|p| {
+        let name = p.file_name().and_then(|n| n.to_str()).unwrap_or("").to_string();
+        (librarian_note_date(&name).is_none(), std::cmp::Reverse(name))
+    });
+    let (mut spent, mut over): (usize, Vec<(PathBuf, usize)>) = (0, Vec::new());
+    for f in notes {
+        let Ok(body) = fs::read_to_string(&f) else { continue };
+        if spent + body.len() <= LIGHT_NOTES_CAP {
+            spent += body.len();
+            carried.push((rel(&f), body));
+        } else {
+            over.push((f, body.len()));
+        }
+    }
+    let mut s = String::from("\n\n---\n\n# THE SHELF (light: gates_mode light)\n\n");
+    s.push_str(&format!(
+        "{} file(s) carried in full: the {n_cards} cards (the instruments) and {} of your own notes in the window (today and \
+         yesterday, plus README.md and LEDGER.md by the window rule, while they fit {LIGHT_NOTES_CAP} bytes).\n\
+         EVERYTHING ELSE IS INDEXED BY DIRECTORY below, not by file: the record (journal/, loop/, map/) and the other system \
+         tiers alike. Nothing is deleted or truncated; `ls` and `grep` reach every file, and a file you cite is a file you opened.\n\
+         attic/ is excluded on purpose -- raw archive, never a daily cue (law 3).\n",
+        carried.len(),
+        carried.len() - n_cards
+    ));
+    if !over.is_empty() {
+        s.push_str("\nYour notes in the window that did not fit, by path:\n");
+        for (f, n) in &over {
+            s.push_str(&format!("- `{}` ({n} bytes)\n", f.display()));
+        }
+    }
+    s.push_str("\n## BY DIRECTORY -- open these by path\n\n");
+    // The directories the strict walk visits (its `order` table), cards aside: they ride above.
+    for dir in ["", "record", "memory", "librarian", "spread", "research", "map", "journal", "loop"] {
+        let d = if dir.is_empty() { root.to_path_buf() } else { root.join(dir) };
+        if !d.is_dir() { continue; }
+        let mut files: Vec<PathBuf> = Vec::new();
+        collect_md(&d, !dir.is_empty(), &mut files);
+        let newest = files
+            .iter()
+            .filter_map(|f| fs::metadata(f).and_then(|m| m.modified()).ok().map(|t| (t, f)))
+            .max_by_key(|(t, _)| *t)
+            .map(|(_, f)| format!(", newest written `{}`", rel(f)))
+            .unwrap_or_default();
+        s.push_str(&format!(
+            "- `{}` -- {} .md file(s){}{newest}. List: `ls \"{}\"`\n",
+            d.display(),
+            files.len(),
+            if dir.is_empty() { " at the top level (BOOT is above)" } else { "" },
+            d.display()
+        ));
+    }
+    s.push_str(&format!("\nSearch all of it: `grep -rl \"<term>\" \"{}\"`\n", root.display()));
+    for (label, body) in carried {
+        s.push_str(&format!("\n\n## {label}\n\n{body}\n"));
+    }
+    s
+}
+
+/// D277 part 6 (C): the light intake's rows. They read the live room on this machine, as the shelf tests beside them do.
+#[cfg(test)]
+mod intake_light_tests {
+    use super::*;
+
+    /// Sets the test's mode for this thread and puts it back to off on drop, even when an assertion fails.
+    struct Mode;
+    impl Mode {
+        fn light(on: bool) -> Self {
+            TEST_INTAKE_LIGHT.with(|m| m.set(on));
+            Mode
+        }
+    }
+    impl Drop for Mode {
+        fn drop(&mut self) {
+            TEST_INTAKE_LIGHT.with(|m| m.set(false));
+        }
+    }
+
+    /// Every backticked span that is an absolute path (a drive letter or a leading slash). Commands (`ls "..."`) are not paths.
+    fn abs_paths(s: &str) -> Vec<String> {
+        s.split('`')
+            .skip(1)
+            .step_by(2)
+            .filter(|p| {
+                let b = p.as_bytes();
+                (b.len() > 2 && b[0].is_ascii_alphabetic() && b[1] == b':' && (b[2] == b'\\' || b[2] == b'/')) || p.starts_with('/')
+            })
+            .map(String::from)
+            .collect()
+    }
+
+    /// The pane's intake as `intake_with_map` composes it, for pane C's own map, without its letter lookup (which can persist a letter).
+    fn pane_intake(light: bool) -> String {
+        let own = fs::read_to_string(own_map_path("C")).ok();
+        let reserve = map_reserve(own.as_deref());
+        let _m = Mode::light(light);
+        let mut brief = assemble_intake_within(reserve);
+        if let Some(own) = own.as_deref() {
+            let allowance = map_allowance_mode(brief.len(), reserve, light);
+            brief.push_str(&map_section(own, &own_map_path("C"), allowance.saturating_sub(MAP_SECTION_OVERHEAD)).1);
+        }
+        brief
+    }
+
+    fn card_texts() -> Vec<(String, String)> {
+        let root = room_master_path().parent().expect("room root").to_path_buf();
+        let mut cards = Vec::new();
+        collect_md(&root.join("cards"), true, &mut cards);
+        cards.iter().map(|f| (f.display().to_string(), fs::read_to_string(f).expect("card"))).collect()
+    }
+
+    #[test]
+    fn the_switch_is_the_gates_key_and_absent_is_strict() {
+        for raw in ["", "{ not json", "{}", r#"{"data_dir":"x"}"#, r#"{"gates_mode":"strict"}"#, r#"{"gates_mode":"lite"}"#, r#"{"gates_mode":true}"#] {
+            assert!(!intake_light_from(raw), "{raw} must leave the intake as today's");
+        }
+        for raw in [r#"{"gates_mode":"light"}"#, r#"{"gates_mode":" Light "}"#, "\u{feff}{\"gates_mode\":\"LIGHT\"}"] {
+            assert!(intake_light_from(raw), "{raw} is the light key");
+        }
+        let _m = Mode::light(false);
+        assert!(!intake_light(), "off is the default under test");
+    }
+
+    /// Key absent: the librarian's intake is the strict composition exactly, head then the budgeted walk. (The cross-commit
+    /// byte comparison against 9b5f40ba is `dump_intakes_for_measure` below, run on both trees; the hand-back has the result.)
+    #[test]
+    fn key_absent_the_librarian_intake_is_todays() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let _m = Mode::light(false);
+        let head = librarian_intake_head().expect("head");
+        let today = format!("{head}{}", librarian_shelf(head.len()));
+        assert_eq!(librarian_intake().expect("intake"), today);
+    }
+
+    #[test]
+    fn key_absent_the_pane_intake_is_todays() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let _m = Mode::light(false);
+        let i = assemble_intake_within(8_000);
+        assert!(!i.contains("(gates_mode light)"), "a strict intake carries no light section");
+        let curated = data_dir().join("resonance").join("atoms.jsonl").is_file() && read_curation().is_some_and(|c| !c.topics.is_empty());
+        assert!(!curated || i.contains("# THE MEMORY — topic map"), "the strict memory section is gone");
+    }
+
+    /// Light: under the target, with every card and the room still carried, and no per-file index.
+    #[test]
+    fn light_the_librarian_intake_is_under_target_with_the_cards_and_the_room() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let strict = {
+            let _m = Mode::light(false);
+            librarian_intake().expect("intake")
+        };
+        let _m = Mode::light(true);
+        let i = librarian_intake().expect("intake");
+        let boot = fs::read_to_string(room_master_path()).expect("BOOT");
+        eprintln!("LIBRARIAN INTAKE strict {} B, light {} B", strict.len(), i.len());
+        assert_eq!(i.matches(boot.as_str()).count(), 1, "the room rides once, whole");
+        assert!(i.contains("cite, do not recollect"), "the brief rides");
+        for (path, text) in card_texts() {
+            assert!(i.contains(text.as_str()), "card {path} is not carried whole");
+        }
+        assert!(!i.contains("## NOT CARRIED -- open these by path"), "the per-file index is still there");
+        // THE BOUND IS THE STRUCTURE: the head, every card, at most LIGHT_NOTES_CAP of the seat's own notes, and the shelf's own
+        // header and directory lines. Nothing else can ride, whatever is on disk. (Measured 2026-10-09: 110,038 B on today's brief,
+        // README.md riding by the window rule; ~104.5 KB with B's LIBRARIAN draft. The draft's ~102 KB had left README.md out.)
+        let head = librarian_intake_head().expect("head").len();
+        let cards: usize = card_texts().iter().map(|(_, t)| t.len()).sum();
+        assert!(i.len() <= head + cards + LIGHT_NOTES_CAP + 6_000, "light librarian intake is {} B over head {head} + cards {cards} + notes cap", i.len());
+        assert!(i.len() + 25_000 <= strict.len(), "light {} B is not ~25 KB+ under strict {} B", i.len(), strict.len());
+    }
+
+    #[test]
+    fn light_the_pane_intake_is_under_target_with_the_cards_and_the_room() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let strict = pane_intake(false);
+        let light = pane_intake(true);
+        eprintln!("PANE INTAKE strict {} B, light {} B", strict.len(), light.len());
+        let boot = fs::read_to_string(room_master_path()).expect("BOOT");
+        let (body, _) = split_pointer_tail(&boot);
+        assert!(light.contains(body), "the room rides");
+        for (path, text) in card_texts() {
+            if strict.contains(text.as_str()) {
+                assert!(light.contains(text.as_str()), "card {path} rides strict but not light");
+            }
+        }
+        assert!(!light.contains("## The live edge"), "the live-edge claims still ride");
+        assert!(!light.contains("# THE MEMORY — topic map"), "the topic summaries still ride");
+        // ~93 KB was the target with B's COMMITTEE draft (-748 B); on today's brief the same build is ~0.7 KB more.
+        assert!(light.len() <= 95_000, "light pane intake is {} B", light.len());
+        assert!(light.len() + 14_000 <= strict.len(), "light {} B is not ~14 KB+ under strict {} B", light.len(), strict.len());
+    }
+
+    #[test]
+    fn light_every_pointer_resolves_to_a_file_that_exists() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let shelf = librarian_shelf_light();
+        let index = shelf.split("\n\n## cards/").next().unwrap_or("");
+        let atoms = data_dir().join("resonance").join("atoms.jsonl");
+        let topics = read_curation().map(|c| c.dir);
+        let memory = memory_pointer(&atoms, 0, topics.as_deref());
+        let paths: Vec<String> = abs_paths(index).into_iter().chain(abs_paths(&memory)).collect();
+        assert!(paths.len() >= 10, "expected the directory lines and the memory pointers, found {paths:?}");
+        for p in paths {
+            assert!(Path::new(&p).exists(), "pointer `{p}` names nothing on this machine");
+        }
+    }
+
+    /// THE BACKFILL ROW, on a corpus built for it: a 200 KB system file, a record file, an 80 KB LEDGER and a note over the cap.
+    /// None of them is read into the shell however much room is left; the cards and the note that fits are.
+    #[test]
+    fn light_the_shelf_carries_a_fixed_set_and_never_backfills() {
+        let root = std::env::temp_dir().join(format!("light-shelf-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&root);
+        for d in ["cards", "librarian", "record", "loop"] {
+            fs::create_dir_all(root.join(d)).unwrap();
+        }
+        let today = chrono::NaiveDate::from_ymd_opt(2026, 10, 10).unwrap();
+        fs::write(root.join("cards").join("a.md"), "CARD-A body").unwrap();
+        fs::write(root.join("cards").join("b.md"), "CARD-B body").unwrap();
+        fs::write(root.join("librarian").join("2026-10-10.md"), "N".repeat(LIGHT_NOTES_CAP + 1)).unwrap();
+        fs::write(root.join("librarian").join("2026-10-09.md"), "YESTERDAY-NOTE").unwrap();
+        fs::write(root.join("librarian").join("2026-10-01.md"), "OLD-NOTE").unwrap();
+        fs::write(root.join("librarian").join("LEDGER.md"), "L".repeat(80_000)).unwrap();
+        fs::write(root.join("ASK.md"), "SYSTEM-FILE ".repeat(20_000)).unwrap();
+        fs::write(root.join("record").join("r.md"), "RECORD-BODY").unwrap();
+        fs::write(root.join("loop").join("x.md"), "LOOP-BODY").unwrap();
+        let s = librarian_shelf_light_at(&root, today);
+        for carried in ["CARD-A body", "CARD-B body", "YESTERDAY-NOTE"] {
+            assert!(s.contains(carried), "{carried} must ride");
+        }
+        for never in ["SYSTEM-FILE", "RECORD-BODY", "LOOP-BODY", "OLD-NOTE", "NNNNNNNNNN", "LLLLLLLLLL"] {
+            assert!(!s.contains(never), "{never} was read into the light shelf");
+        }
+        assert!(s.contains("2026-10-10.md") && s.contains("LEDGER.md"), "the window notes over the cap are named by path");
+        assert!(s.len() < 6_000, "the light shelf is {} B on a corpus of ~400 KB", s.len());
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn light_caps_hold_whatever_the_brief_frees_and_strict_is_unchanged() {
+        for core in [0usize, 20_000, 40_000, 58_000, 70_000, 200_000] {
+            for reserve in [0usize, 8_000, 36_000] {
+                assert_eq!(optional_budget_mode(core, reserve, false), optional_budget(core, reserve));
+                assert!(optional_budget_mode(core, reserve, true) <= LIGHT_OPTIONAL_CAP);
+                assert_eq!(map_allowance_mode(core, reserve, false), map_allowance(core));
+                assert!(map_allowance_mode(core, reserve, true) <= reserve);
+            }
+        }
+    }
+
+    /// MEASUREMENT, not a gate: writes the strict and light librarian and pane intakes to $INTAKE_DUMP_DIR, so the strict ones can
+    /// be compared byte for byte with the same dump taken on the base tree, and the light ones measured with the census commands.
+    #[test]
+    #[ignore]
+    fn dump_intakes_for_measure() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let out = PathBuf::from(std::env::var("INTAKE_DUMP_DIR").expect("INTAKE_DUMP_DIR"));
+        fs::create_dir_all(&out).unwrap();
+        for light in [false, true] {
+            let _m = Mode::light(light);
+            let tag = if light { "light" } else { "strict" };
+            fs::write(out.join(format!("librarian.{tag}.md")), librarian_intake().expect("intake")).unwrap();
+            fs::write(out.join(format!("pane-C.{tag}.md")), pane_intake(light)).unwrap();
+        }
+    }
+}
+
 /// The Librarian's intake. Its brief FIRST, then the room -- the order matters: this seat needs to
 /// know what it is for before it reads what it is holding, or it starts working on the contents.
 ///
@@ -7906,6 +8290,11 @@ fn librarian_shelf_room(head_len: usize, floor_len: usize) -> usize {
 /// looking like success.
 fn librarian_intake() -> Option<String> {
     let mut s = librarian_intake_head()?;
+    // D277 part 6: the light shelf is a fixed set, not a walk filled to the cap (`librarian_shelf_light`). Strict is untouched below.
+    if intake_light() {
+        s.push_str(&librarian_shelf_light());
+        return Some(s);
+    }
     let head = s.len();
     s.push_str(&librarian_shelf(head));
     Some(s)
