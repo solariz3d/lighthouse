@@ -39,7 +39,7 @@ function install({ config = {}, digests = true, l3 = false, knock = false, extra
   mk(path.join(shell, 'event_log.jsonl'), [LIB, TP].flatMap((cwd) => ['2026-10-09T10:00:00.000Z', '2026-10-09T11:00:00.000Z', '2026-10-09T12:00:00.000Z', '2026-10-09T13:00:00.000Z'].map((t, i) => JSON.stringify({ type: 'session_stop', timestamp: t, cwd, session_id: 'earlier' + i }))).join('\n') + '\n');
   if (l3) mk(path.join(shell, 'l3_overseer.jsonl'), JSON.stringify({ type: 'l3_overseer_verdict', timestamp: new Date(FIXED - 3600e3).toISOString(), trajectory: 'frame-hardening', recommendation: 'watch', specific_observations: 'the same three paragraphs, again, in a row' }) + '\n');
   if (knock) { mk(path.join(shell, 'duration', 'goal-x', 'progress.md'), '[DRIFT-FOUND] a goal fired in the dark\n'); fs.utimesSync(path.join(shell, 'duration', 'goal-x', 'progress.md'), new Date(FIXED - 600e3), new Date(FIXED - 600e3)); }
-  mk(path.join(home, '.consonance.json'), JSON.stringify({ ambient_lat: '50.4452', ambient_lon: '-104.6189', ambient_label: 'Regina, SK', ambient_tz: 'America/Regina', instances_dir: inst, ...config }));
+  mk(path.join(home, '.consonance.json'), JSON.stringify({ ambient_lat: '12.3456', ambient_lon: '-65.4321', ambient_label: 'Regina, SK', ambient_tz: 'America/Costa_Rica', instances_dir: inst, ...config }));
   fs.mkdirSync(inst, { recursive: true });
   mk(path.join(root, 'fixed-clock.js'), `const R = Date, F = ${FIXED}; class FD extends R { constructor(...a) { if (a.length) super(...a); else super(F); } static now() { return F; } } global.Date = FD;\n`);
   for (const [f, text] of Object.entries(extra)) mk(path.join(shell, f), text);
@@ -60,11 +60,11 @@ const roots = [];
 const fresh = (o) => { const e = install(o); roots.push(e.root); return e; };
 test.after(() => { for (const r of roots) try { fs.rmSync(r, { recursive: true, force: true }); } catch (_) { /* temp */ } });
 
-// The unmodified hook's output on THIS fixture (computed at 9b5f40ba before any edit): bytes and sha256 of the whole stdout.
+// The unmodified hook's output on THIS fixture (computed from the hook at 9b5f40ba, before any edit): bytes and sha256 of the whole stdout. The fixture's location is the generator's own neutral value (12.3456 / -65.4321 / America/Costa_Rica), so gen-consumer's decoordinate() has nothing to change in this file and the pin holds in the consumer tree too (D277 parity fix).
 const GOLDEN = {
-  startup: { bytes: 12539, sha: '63d842a4c3575fe38cea6a353f3b0ad9badf3d66b9cdbc5c206a446c941eb9d8' },
-  resume: { bytes: 12539, sha: '63d842a4c3575fe38cea6a353f3b0ad9badf3d66b9cdbc5c206a446c941eb9d8' },
-  compact: { bytes: 12539, sha: '63d842a4c3575fe38cea6a353f3b0ad9badf3d66b9cdbc5c206a446c941eb9d8' },
+  startup: { bytes: 12539, sha: '6e80963bd1e01e094fdd8e14ea57a95c5d93461ea78572fc7d957fe25867fc8f' },
+  resume: { bytes: 12539, sha: '6e80963bd1e01e094fdd8e14ea57a95c5d93461ea78572fc7d957fe25867fc8f' },
+  compact: { bytes: 12539, sha: '6e80963bd1e01e094fdd8e14ea57a95c5d93461ea78572fc7d957fe25867fc8f' },
 };
 if (process.env.GOLDEN_PRINT) {
   const e = fresh();
@@ -77,7 +77,7 @@ test('row 1: the key absent, "strict", a word that is not light, a non-string, u
   for (const s of ['startup', 'resume', 'compact']) { const out = run(e, s, LIB); assert.deepEqual({ bytes: B(out), sha: sha(out) }, GOLDEN[s], `${s}: key absent`); }
   const strictOut = Object.fromEntries(['startup', 'resume', 'compact'].map((s) => [s, run(e, s, LIB)]));
   for (const cfg of [{ gates_mode: 'strict' }, { gates_mode: 'lite' }, { gates_mode: 'warn' }, { gates_mode: true }, { gates_mode: 1 }, { gates_mode: ['light'] }, { gates_mode: null }, { gates_mode: '' }]) {
-    for (const s of ['startup', 'resume', 'compact']) assert.equal(run(e, s, LIB, { rawConfig: JSON.stringify({ ambient_lat: '50.4452', ambient_lon: '-104.6189', ambient_label: 'Regina, SK', ambient_tz: 'America/Regina', ...cfg }) }), strictOut[s], `${JSON.stringify(cfg)} ${s}`);
+    for (const s of ['startup', 'resume', 'compact']) assert.equal(run(e, s, LIB, { rawConfig: JSON.stringify({ ambient_lat: '12.3456', ambient_lon: '-65.4321', ambient_label: 'Regina, SK', ambient_tz: 'America/Costa_Rica', ...cfg }) }), strictOut[s], `${JSON.stringify(cfg)} ${s}`);
   }
   for (const raw of ['{ not json', '', '[]']) assert.equal(run(e, 'startup', LIB, { rawConfig: raw }).length > 0, true, `unreadable config ${JSON.stringify(raw)} still produces output`);
   assert.equal(B(strictOut.startup) > 12000, true, 'control: today\'s startup digest is the 12-13 KB the census measured');
@@ -96,7 +96,7 @@ test('row 2: light, at startup: the digests are counts plus the last three of th
   assert.match(light, new RegExp(`### 2026-10-05\\n${total('2026-10-05')} sessions\\n`), 'the older day: its total'); assert.ok(light.includes(`- ${LIB}: 61\n`) && !light.includes(`- ${LIB}: 61 ·`), 'and counts only');
   assert.doesNotMatch(light, /\n- \d\d:\d\d:\d\d UTC/, 'no timestamp list left'); assert.match(light, /## Recent sessions in C:\\Consonance\\instances\\librarian\n- 2026-10-09T13:00:00\.000Z/, 'the seat\'s own recent sessions stay');
   for (const v of [' light ', 'LIGHT', 'Light']) assert.equal(ctxOf(run(fresh({ config: { gates_mode: v } }), 'startup', LIB)), light, JSON.stringify(v));
-  assert.equal(ctxOf(run(e, 'startup', LIB, { rawConfig: '\uFEFF' + JSON.stringify({ ambient_lat: '50.4452', ambient_lon: '-104.6189', ambient_label: 'Regina, SK', ambient_tz: 'America/Regina', gates_mode: 'light' }) })), light, 'a BOM before the JSON');
+  assert.equal(ctxOf(run(e, 'startup', LIB, { rawConfig: '\uFEFF' + JSON.stringify({ ambient_lat: '12.3456', ambient_lon: '-65.4321', ambient_label: 'Regina, SK', ambient_tz: 'America/Costa_Rica', gates_mode: 'light' }) })), light, 'a BOM before the JSON');
 });
 
 test('row 3: light, on resume and compact (a thread that was never dark): counts only, under a smaller budget', () => {
