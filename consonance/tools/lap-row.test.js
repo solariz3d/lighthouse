@@ -1026,20 +1026,25 @@ test('HOLDER: the usage names the station vocabulary and the pane list', () => {
 test('carrier: BUILDING.md draws BOTH doors and the ring, not just the prose about them', () => {
   const brief = path.join(__dirname, '..', 'src-tauri', 'brief', 'BUILDING.md');
   const src = fs.readFileSync(brief, 'utf8');
-  const diagram = src.slice(src.indexOf('## THE LOOP'));
+  // the heading is "## The loop" since B's draft (it was "## THE LOOP"); a missing heading must FAIL, not slice from -1 (which read an empty drawing)
+  const at = src.indexOf('## The loop');
+  assert.ok(at >= 0, 'BUILDING.md has no "## The loop" heading (reworded by D277 B\'s rule draft (1cff0c86..fe232323); the rule is kept)');
+  const diagram = src.slice(at);
   const drawing = diagram.slice(diagram.indexOf('```') + 3, diagram.indexOf('```', diagram.indexOf('```') + 3));
 
   assert.match(drawing, /door one/, 'the drawing must name door one');
   assert.match(drawing, /door two/, 'the drawing must name door two - you -> LIBRARIAN, the keeper 2026-09-02');
   assert.match(drawing, /\u251c\u2500+\u2510/, 'and DRAW the branch, not only label it');
-  assert.match(drawing, /THE RING/, 'the cycle repeats on its own: orch -> panes -> lib -> orch');
-  assert.match(drawing, /ENTRY, not a station/, 'the user is the entry, not a station the loop returns to');
+  assert.match(drawing, /The ring \(orch \u2192 panes \u2192 lib \u2192 orch\) repeats on its/, 'the cycle repeats on its own: orch -> panes -> lib -> orch (reworded by D277 B\'s rule draft (1cff0c86..fe232323); the rule is kept)');
+  assert.match(drawing, /the entry, not a station/, 'the user is the entry, not a station the loop returns to (reworded by D277 B\'s rule draft (1cff0c86..fe232323); the rule is kept)');
 });
 
 /** The master drawing, from BUILDING.md. Every copy below is compared against this and nothing else. */
 function loopDiagramMaster() {
   const src = fs.readFileSync(path.join(__dirname, '..', 'src-tauri', 'brief', 'BUILDING.md'), 'utf8');
-  const a = src.indexOf('```', src.indexOf('## THE LOOP')) + 3;
+  const h = src.indexOf('## The loop');
+  if (h < 0) throw new Error('BUILDING.md has no "## The loop" heading: the master drawing cannot be found (it read the file\'s first fence by accident while the heading was missing)');
+  const a = src.indexOf('```', h) + 3;
   return src.slice(a, src.indexOf('```', a)).trim();
 }
 

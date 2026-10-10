@@ -1698,7 +1698,10 @@ test('D273 lap 5 (A7): the dead targets resolve or become prose: COMMITTEE\'s me
   const r = lap5();
   try {
     const read = (rel) => fs.readFileSync(path.join(r.staging, rel), 'utf8');
-    assert.ok(read('consonance/src-tauri/brief/COMMITTEE.md').includes(PUB + '/blob/main/exo_memory/memory/split-the-work-with-the-panes.md'), 'COMMITTEE.md still cites an absent memory/ file');
+    // D277 repair: B's rewrite (1cff0c86..fe232323) dropped the memory/ citation from COMMITTEE.md; the rule (no bare citation of a file the consumer
+    // lacks) is kept: every mention of it must be the public URL, and a bare one coming back goes red
+    const committee = read('consonance/src-tauri/brief/COMMITTEE.md'), url = PUB + '/blob/main/exo_memory/memory/split-the-work-with-the-panes.md';
+    assert.ok(!committee.split(url).join('').includes('memory/split-the-work-with-the-panes.md'), 'COMMITTEE.md still cites an absent memory/ file');
     assert.ok(read('dev/SPINE.md').includes(PUB + '/blob/main/dev/PLAN.md'), 'SPINE.md still cites the absent dev/PLAN.md');
     // D273 lap 5b AMENDED BY NAME (pane B): the librarian ruled dev/dream/ SHIPS as system (plan "Lap 5, COLLATED"), so the README's mention is a local
     // target again: it must name `dev/dream/`, the folder must be in the tree, and it must not be sent to the public repository.

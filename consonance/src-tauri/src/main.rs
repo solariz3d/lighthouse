@@ -8171,7 +8171,7 @@ mod intake_light_tests {
         let boot = fs::read_to_string(room_master_path()).expect("BOOT");
         eprintln!("LIBRARIAN INTAKE strict {} B, light {} B", strict.len(), i.len());
         assert_eq!(i.matches(boot.as_str()).count(), 1, "the room rides once, whole");
-        assert!(i.contains("cite, do not recollect"), "the brief rides");
+        assert!(i.contains("Cite, do not recollect"), "the brief rides (reworded by D277 B's rule draft (1cff0c86..fe232323); the rule is kept)");
         for (path, text) in card_texts() {
             assert!(i.contains(text.as_str()), "card {path} is not carried whole");
         }
@@ -15680,8 +15680,8 @@ mod committee_brief_tests {
     fn the_committee_brief_resolves() {
         let b = room_brief("COMMITTEE.md")
             .expect("COMMITTEE.md must resolve; if this fails the intake skips it in SILENCE");
-        assert!(b.contains("Route the OBJECT"), "the brief lost its briefing practice");
-        assert!(b.contains("No seat scores its own work"), "the brief lost the scoring rule");
+        assert!(b.contains("Route the object, not a description of it"), "the brief lost its briefing practice (reworded by D277 B's rule draft (1cff0c86..fe232323); the rule is kept)");
+        assert!(b.contains("Have a seat with no stake score your work"), "the brief lost the scoring rule (reworded by D277 B's rule draft (1cff0c86..fe232323); the rule is kept)");
     }
 
     /// The wiring, not the unit. A pane is briefed by assemble_intake(); a document that resolves
@@ -15692,8 +15692,8 @@ mod committee_brief_tests {
         let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
         let intake = assemble_intake();
         assert!(
-            intake.contains("Route the OBJECT"),
-            "the committee practice never reached the pane intake"
+            intake.contains("Route the object, not a description of it"),
+            "the committee practice never reached the pane intake (reworded by D277 B's rule draft (1cff0c86..fe232323); the rule is kept)"
         );
         assert!(
             intake.contains("A chord needs two notes"),
@@ -15728,9 +15728,11 @@ mod committee_brief_tests {
             "the brief still carries the retired board route"
         );
         let intake = assemble_intake();
+        // the route is ONE sentence: ring the librarian with call_librarian, carrying the pointer. Both on the same line, so the pin goes red if the
+        // sentence is deleted even while "call_librarian" survives elsewhere in the brief (4 occurrences) and "the pointer" in another rule
         assert!(
-            intake.contains("carrying the POINTER to that file"),
-            "the hand-back route never reached the pane intake"
+            intake.lines().any(|l| l.contains("carrying the pointer") && l.contains("call_librarian")),
+            "the hand-back route never reached the pane intake (reworded by D277 B's rule draft (1cff0c86..fe232323); the rule is kept)"
         );
     }
 
@@ -15964,8 +15966,8 @@ mod librarian_tests {
     #[test]
     fn the_intake_carries_the_citation_rule() {
         let i = librarian_intake().expect("LIBRARIAN.md must resolve or the seat must refuse to wake");
-        assert!(i.contains("cite, do not recollect"), "the intake lost its central rule");
-        assert!(i.contains("Saying nothing is a valid turn"), "the intake lost the quiet rule");
+        assert!(i.contains("Cite, do not recollect"), "the intake lost its central rule (reworded by D277 B's rule draft (1cff0c86..fe232323); the rule is kept)");
+        assert!(i.contains("Silence is a valid turn"), "the intake lost the quiet rule (reworded by D277 B's rule draft (1cff0c86..fe232323); the rule is kept)");
     }
 
     /// The brief comes BEFORE the room in the intake. A seat that reads the corpus before it reads
@@ -15973,7 +15975,7 @@ mod librarian_tests {
     #[test]
     fn the_brief_precedes_the_room() {
         let i = librarian_intake().expect("intake must resolve");
-        let brief = i.find("cite, do not recollect").expect("brief missing");
+        let brief = i.find("Cite, do not recollect").expect("brief missing (reworded by D277 B's rule draft (1cff0c86..fe232323); the rule is kept)");
         let room = i.find("# THE ROOM you are holding").expect("room header missing");
         assert!(brief < room, "the brief must be read before the corpus it holds");
     }
@@ -15992,7 +15994,11 @@ mod librarian_tests {
     fn the_intake_states_what_the_seat_must_not_do() {
         let i = librarian_intake().expect("intake must resolve");
         assert!(i.contains("does not directly build"), "the intake must carry the corrected frame: the seat works, it does not directly build (keeper, ccd74fd)");
-        assert!(i.contains("write it down in the turn it forms"), "the intake lost the compaction rule");
+        // one sentence carries the rule (write it down in the turn it forms, as append-only entries): both on the same line, so neither phrase alone passes
+        assert!(
+            i.lines().any(|l| l.contains("in the turn it forms") && l.contains("append-only")),
+            "the intake lost the compaction rule (reworded by D277 B's rule draft (1cff0c86..fe232323); the rule is kept)"
+        );
     }
 }
 
@@ -16045,6 +16051,9 @@ mod shelf_tests {
     /// file in the room was somewhere in the middle of 398 lines.
     #[test]
     fn the_index_window_is_newest_first_by_date_not_by_path() {
+        // D277 repair: this reads the room through the process-global DIRS, which 31 DirsGuard tests repoint at scratch rooms while
+        // holding DIRS_SERIAL; unlocked, a parallel run can read a scratch corpus (red for the chair on land-d277, green alone)
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
         let shelf = corpus_shelf_at(0);
         let newest = newest_dated_index_label().expect("the corpus must hold a dated loop/ file");
         assert!(
@@ -16065,6 +16074,9 @@ mod shelf_tests {
     /// printed a window that had not happened, and looked like the case was handled.
     #[test]
     fn the_header_counts_the_index_window_drop_from_what_was_delivered() {
+        // D277 repair: this reads the room through the process-global DIRS, which 31 DirsGuard tests repoint at scratch rooms while
+        // holding DIRS_SERIAL; unlocked, a parallel run can read a scratch corpus (red for the chair on land-d277, green alone)
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
         // A budget of zero for the index means EVERY index-tier line is dropped, and the header
         // must say so with the real number rather than with the rule's intent.
         let shelf = corpus_shelf_at_with_index(0, 0);
@@ -16114,6 +16126,9 @@ mod shelf_tests {
     /// byte, so the refusal leaves room a later entry would take under first-fit.
     #[test]
     fn the_index_window_is_a_prefix_so_its_date_range_is_not_a_lie() {
+        // D277 repair: this reads the room through the process-global DIRS, which 31 DirsGuard tests repoint at scratch rooms while
+        // holding DIRS_SERIAL; unlocked, a parallel run can read a scratch corpus (red for the chair on land-d277, green alone)
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
         let full = index_lines_of(&corpus_shelf_at_with_index(0, usize::MAX));
         assert!(full.len() > 10, "the corpus must have an index tier to window");
         let mut cum = 0usize;
@@ -16152,6 +16167,9 @@ mod shelf_tests {
     /// unstated one is a bug.
     #[test]
     fn undated_loop_entries_are_spent_last_and_never_outrank_a_dated_one() {
+        // D277 repair: this reads the room through the process-global DIRS, which 31 DirsGuard tests repoint at scratch rooms while
+        // holding DIRS_SERIAL; unlocked, a parallel run can read a scratch corpus (red for the chair on land-d277, green alone)
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
         let split = |s: &str| -> (usize, usize, usize) {
             let (mut dated, mut undated, mut standing) = (0, 0, 0);
             for l in index_lines_of(s).iter().filter(|l| l.starts_with("- loop/")) {
@@ -16181,6 +16199,9 @@ mod shelf_tests {
     /// THE STANDING-INSTRUMENT RULE (the librarian's L062 §10.2) -- a rule, never a list.
     #[test]
     fn undated_all_caps_names_at_the_top_of_loop_are_protected_by_rule_not_by_list() {
+        // D277 repair: this reads the room through the process-global DIRS, which 31 DirsGuard tests repoint at scratch rooms while
+        // holding DIRS_SERIAL; unlocked, a parallel run can read a scratch corpus (red for the chair on land-d277, green alone)
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
         assert!(loop_standing_instrument("loop/PROTOCOL.md"));
         assert!(loop_standing_instrument("loop/ESCALATIONS.md"));
         assert!(!loop_standing_instrument("loop/branch_layer.md"), "lower-case is a working document");
@@ -16214,6 +16235,9 @@ mod shelf_tests {
     /// a flat date order drops the entire journal index before it drops one recent lap note.
     #[test]
     fn the_window_never_drops_map_or_journal_which_are_out_of_scope() {
+        // D277 repair: this reads the room through the process-global DIRS, which 31 DirsGuard tests repoint at scratch rooms while
+        // holding DIRS_SERIAL; unlocked, a parallel run can read a scratch corpus (red for the chair on land-d277, green alone)
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
         let windowed = corpus_shelf_at_with_index(0, 20_000);
         let full = corpus_shelf_at_with_index(0, usize::MAX);
         for pfx in ["- map/", "- journal/"] {
@@ -16228,6 +16252,9 @@ mod shelf_tests {
     /// with room for everything the collapsed line must not appear.
     #[test]
     fn a_generous_index_budget_drops_nothing_and_says_nothing() {
+        // D277 repair: this reads the room through the process-global DIRS, which 31 DirsGuard tests repoint at scratch rooms while
+        // holding DIRS_SERIAL; unlocked, a parallel run can read a scratch corpus (red for the chair on land-d277, green alone)
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
         let shelf = corpus_shelf_at_with_index(0, 10_000_000);
         assert!(!shelf.contains("dropped by the index window"),
             "the window reported a drop it did not make");

@@ -48,7 +48,7 @@ test('the keeper relabel and the fork note are registered under the fork step, l
   const d = D.diffFile({ rel, from: rel, kind: 'prose', source: src, actual: final(rel, 'prose', src), ctx });
   assert.deepEqual(d.unregistered, []);
   const fork = d.registered.filter((r) => r.step === 'fork (consumer-relabel.js)');
-  assert.ok(fork.some((r) => r.op === '+' && r.text.includes("THE PUSH IS THE WORD OF THE PERSON YOU'RE WITH")), 'the relabel is not attributed to the fork step');
+  assert.ok(fork.some((r) => r.op === '+' && r.text.includes("the typing of the person you're with included")), 'the relabel is not attributed to the fork step');   // D277 repair: B's wording
   const boot = 'consonance/src-tauri/brief/BOOT.md', bsrc = fs.readFileSync(path.join(REPO, boot), 'utf8');
   const b = D.diffFile({ rel: boot, from: boot, kind: 'prose', source: bsrc, actual: final(boot, 'prose', bsrc), ctx });
   assert.ok(b.registered.some((r) => r.step === 'fork (consumer-relabel.js)' && r.text.startsWith('**Where this line forks.**')), 'the fork note is not attributed');

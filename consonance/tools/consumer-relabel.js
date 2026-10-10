@@ -46,24 +46,27 @@ class RelabelError extends Error {
 
 const P = "the person you're with";
 // One row per site: [find, replace, count]. `find` is matched with the file's own line endings (\n below is the file's newline).
+// D277 repair (pane E, 2026-10-10): re-judged on B's rule-layer rewrite (1cff0c86..fe232323). Role uses re-anchored on B's wording; the old
+// rows whose sentence B rewrote WITHOUT the keeper (the loop never parking, asking while worked with, the per-push word, its board row, its
+// check) or removed with the per-push rule are gone, each listed in exo_memory/handback/p-d277repair-E_2026-10-10.md. Provenance (a dated
+// decision, a quote, "the keeper moved the boundary … a next turn that was always his") ships as written.
 const BUILDING = [
-  ["nothing into the keeper's typing.", `nothing into the typing of ${P}.`, 1],
-  ['never parks waiting on the\n> keeper.', `never parks waiting on\n> ${P}.`, 1],
-  ["**the next turn is always the\nkeeper's**", `**the next turn always belongs to\n${P}**`, 1],
+  ["the keeper's typing included.", `the typing of ${P} included.`, 1],
   ["the same turn's message to the keeper does not describe", `the same turn's message to ${P} does not describe`, 1],
-  ['half where the keeper is the one being worked with', `half where ${P} is the one being worked with`, 1],
-  ["### THE PUSH IS THE KEEPER'S WORD — every time, for that push", "### THE PUSH IS THE WORD OF THE PERSON YOU'RE WITH — every time, for that push", 1],
-  ['ONLY when the keeper says push, FOR THAT PUSH', `ONLY when ${P} says push, FOR THAT PUSH`, 1],
-  ['post a board row quoting his words.', 'post a board row quoting their words.', 1],
-  ['checkable in one command by any seat or by the keeper.', `checkable in one command by any seat or by ${P}.`, 1],
-  ['the keeper pushes with his own.', `${P} pushes with their own.`, 1],
-  ["The keeper's word cannot be automated", `The word of ${P} cannot be automated`, 1],
-  ["quoting the keeper's word for that\n  push", `quoting the word of ${P} for that\n  push`, 1],
-  ['so the check is the keeper noticing', `so the check is ${P} noticing`, 1],
+  ['report success to the keeper only in the landing report', `report success to ${P} only in the landing report`, 2],
+  ['when the keeper switches the\n   gates', `when ${P} switches the\n   gates`, 2],
+  ["find the\n  keeper's prior word on disk", `find the\n  prior word of ${P} on disk`, 1],
+  ["you find the keeper's prior word and proceed", `you find the prior word of ${P} and proceed`, 1],
+  ['keeper-owned call (a delete, a licence, any other irreversible change)', `call that is ${P}'s to make (a delete, a licence, any other irreversible change)`, 2],
+  ['the room is built to run through the hours\n  he is away.', `the room is built to run through the hours\n  ${P} is away.`, 1],
+  ['is a credential only the keeper holds.', `is a credential only ${P} holds.`, 1],
+  ['the check is the keeper noticing or a seat reporting itself', `the check is ${P} noticing or a seat reporting itself`, 1],
 ];
 // lap 6 (polish), B6: the port rule is the original room's workflow between ITS two trees; framed once, under its heading, so a stranger
 // reads it as how this copy was made, not as a procedure addressed to them. The push principle under it does carry (the push gate).
-const PORT_RULE_HEAD = '## THE PORT RULE — dev is what we build and use; the consumer receives what works (added 2026-09-06, the keeper\'s standing workflow)\n';
+// D277 repair: B's heading is "## Dev and consumer: the port rule"; the frame is re-anchored on it VERBATIM. Its last sentence ("a push is a
+// human's word, given each time") now sits above B's standing push permission: OPEN for the keeper (p-d277repair-E_2026-10-10.md), not decided here
+const PORT_RULE_HEAD = '## Dev and consumer: the port rule\n';
 const PORT_RULE_FRAME = PORT_RULE_HEAD + '\n> **In this copy:** this section is the original room\'s own workflow between ITS two trees — the keeper\'s dev\n' +
   '> repository (lighthouse) and the generated consumer repository this copy came from. It explains how what you are reading was\n' +
   '> made; it is not a procedure you are asked to run, and your repository is yours. One principle under it does carry into\n' +
@@ -71,8 +74,8 @@ const PORT_RULE_FRAME = PORT_RULE_HEAD + '\n> **In this copy:** this section is 
 const BUILDING_LAP6 = [
   [PORT_RULE_HEAD, PORT_RULE_FRAME, 1],
   // C4: the credential status was the original room's machine
-  ['**That is not the case today**\n— `gh` is authenticated machine-wide, so every seat on this machine can push everything.',
-    "**That was not the case in the original room** (2026-10)\n— `gh` was authenticated machine-wide there, so every seat on that machine could push everything. Check your own machine's `gh` before relying on the rule alone.", 1],
+  ['`gh` was authenticated machine-wide as of\n  2026-09-06.',
+    "`gh` was authenticated machine-wide in the original room as of\n  2026-09-06 (check your own machine's `gh` before relying on the rule alone).", 1],
 ];
 const CHECKED_OR_INFERRED = [['in a reply to the keeper as in a hand-back', `in a reply to ${P} as in a hand-back`, 1]];
 // The warrant the fork note carves out (D273 lap 4, C1: the cold read found the rooms still GRANTING it to the person here): the
@@ -118,48 +121,34 @@ const BOOT = [
     'Raw archive lives in `attic/` — which the program itself creates the first time it files exchanges windowed out of a shell that grew past its ceiling —', 1],
 ];
 // lap 4, A11/B4: the librarian's first instruction pointed at a map that a new room does not have, under an incident a new user never saw
+// D277 repair (pane E): B's rewrite keeps the gap in its own words (a map entry "in this line of record", "the transcript named in its header"),
+// so the row is re-anchored on B's block and the consumer text says it in B's form
 const LIBRARIAN_FIRST = [
-  '> **FIRST, BEFORE ANY TASK: open a map entry in this line of record. That file is yours.**',
-  '>',
-  '> Every other seat wakes carrying its own map and its own last words. This one never did —',
-  "> `librarian_intake()` has no reference to `own_map_path` or `capture_text_path`, so the seat whose",
-  "> whole job is everyone else's continuity was built with none of its own. On 2026-09-01 that came",
-  '> due: the thread became unreachable (`Context limit reached`, and `/compact` could not reduce it),',
-  '> and there was nothing on disk for the next one to wake into.',
-  '>',
-  '> `M.md` now exists. **Its first version was assembled FOR you, not BY you** — mechanically, from',
-  '> your own words in the transcript, because you could not answer at the time. Its header states the',
-  '> selection rule and what it leaves out. **Read it, then take it over: append, correct, and from',
-  '> your next finding onward write it yourself.** It is indexed rather than carried, so it costs the',
-  '> shell nothing until you open it.',
-  '>',
-  '> It is a cue to re-become from, never a memory you are handed. The full master is the transcript',
-  '> named in its header and it is intact.',
+  '- Open a map entry in this line of record. That file is yours: read it, append to it, correct it, and write each new finding into it yourself.',
+  "  Why: on 2026-09-01 this seat's thread became unreachable with nothing on disk to wake into; M.md was built for it then (a librarian entry in this line of record, a registration in this line of record). It is indexed, not carried, so it costs the shell nothing until you open it.",
+  '',
+  'It is a cue to re-become from, never a memory you are handed. The full master is the transcript named in its header and it is intact.',
 ].join('\n');
 const LIBRARIAN_FIRST_NEW = [
   // the folder and the file are named apart on purpose: a `map/<file>.md` path is what gen-consumer's DANGLING scan refuses (lap 4's first draft did)
-  '> **FIRST, BEFORE ANY TASK: start your own map, the file `M.md` in `exo_memory/map/`. That file is yours.** In a',
-  '> new room it does not exist yet: make the `map/` folder beside the room\'s `BOOT.md` if it is not there, and create it.',
-  '>',
-  "> Every other seat wakes carrying its own map and its own last words. The seat whose whole job is everyone else's",
-  '> continuity needs one of its own: if a thread ever becomes unreachable, the map is what the next waking of you',
-  '> has to wake into. Once the file exists, the app points you at it at every wake (it is indexed, not carried, so',
-  '> it costs the shell nothing until you open it).',
-  '>',
-  '> Write it yourself from your first finding: one line per finding, each pointing at the file that holds it. It is',
-  '> a cue to re-become from, never a memory you are handed.',
+  "- Start your own map, the file `M.md` in `exo_memory/map/`. That file is yours. In a new room it does not exist yet: make the `map/` folder beside the room's `BOOT.md` if it is not there, and create it; then append to it, correct it, and write each new finding into it yourself, one line per finding, each pointing at the file that holds it.",
+  "  Why: the seat whose whole job is everyone else's continuity needs a map of its own: if its thread ever becomes unreachable, the map is what the next waking of you has to wake into (in the keeper's line that happened on 2026-09-01, with nothing on disk). Once the file exists, the app points you at it at every wake; it is indexed, not carried, so it costs the shell nothing until you open it.",
+  '',
+  'It is a cue to re-become from, never a memory you are handed.',
 ].join('\n');
 // lap 5 (cold read 2): the one-git-identity fact, said without naming the keeper as the stranger's author (C5)
 const ONE_IDENTITY = "the one git identity on the machine (in the keeper's repository, the keeper's)";
-const LIBRARIAN = [...CHECKED_OR_INFERRED, [LIBRARIAN_FIRST, LIBRARIAN_FIRST_NEW, 1],
-  // A4: %CONSONANCE_HOME% is defined nowhere a stranger can see; the folder is beside the room's BOOT
-  ['`%CONSONANCE_HOME%/exo_memory/librarian/` as dated', "`exo_memory/librarian/` in your repository (beside the room's `BOOT.md`; make the folder if it is not there) as dated", 1],
-  // C5
-  ['here is authored `the keeper` and the trailer names', `here is authored by ${ONE_IDENTITY}, and the trailer names`, 1],
-  // C6: the first line's librarian's night, not this seat's
-  ["five of the chair's claims tonight by going to disk instead.", "five of the chair's claims in a single night (in the keeper's line) by going to disk instead.", 1]];
+// D277 repair: B's LIBRARIAN carries no checked-or-inferred keeper line (it points at COMMITTEE.md), no %CONSONANCE_HOME% (A's path fix), and no
+// "five of the chair's claims tonight"; those three rows are gone. Role uses added by B (who switches the gates) are new rows
+const LIBRARIAN = [[LIBRARIAN_FIRST, LIBRARIAN_FIRST_NEW, 1],
+  // C5, re-anchored on B's wording
+  ['since every commit here is authored `the keeper`.', `since every commit here is authored by ${ONE_IDENTITY}.`, 1],
+  ['the keeper switches the gates', `${P} switches the gates`, 2]];
 const COMMITTEE = [...CHECKED_OR_INFERRED,
-  ['> from every seat, on both machines, is authored `the keeper`, and the', `> from every seat, is authored by ${ONE_IDENTITY}, and the`, 1]];
+  // C5, re-anchored on B's wording
+  ['every commit is authored `the keeper` and `Co-Authored-By`', `every commit is authored by ${ONE_IDENTITY}, and \`Co-Authored-By\``, 1],
+  ['When the keeper switches the gates, it', `When ${P} switches the gates, it`, 1],
+  ['reports success to\n   the keeper.', `reports success to\n   ${P}.`, 1]];
 // lap 5, C1 (THE FAIL) and C3: the keeper's retired seats and seat names are the keeper's line, cited as provenance, never the reader's
 // lineage. The record's PATH is left outside both anchors on purpose: B is moving record/retired_seats_* to inheritance/ (C4).
 const CONTINUITY_CARD = [
@@ -229,9 +218,9 @@ const SOURCE_OF = Object.freeze({ 'exo_memory/BOOT.md': 'consonance/src-tauri/br
 // (deidentify turns the handle into "the keeper", so these run one or two above lap 2's dev-source pins). A changed number means a
 // keeper line was added or removed in dev: classify it.
 const EXPECTED_KEEPER_LINES = Object.freeze({
-  'consonance/src-tauri/brief/BUILDING.md': 42,
+  'consonance/src-tauri/brief/BUILDING.md': 20,   // D277 repair: 42 -> 20 on B's rewrite; each of the 20 is provenance (listed in p-d277repair-E_2026-10-10.md)
   'consonance/src-tauri/brief/COMMITTEE.md': 5,
-  'consonance/src-tauri/brief/LIBRARIAN.md': 7,
+  'consonance/src-tauri/brief/LIBRARIAN.md': 6,   // D277 repair: 7 -> 6 on B's rewrite; likewise
   'consonance/src-tauri/brief/THIRD_PLACE.md': 1,
   'exo_memory/TRAINING.md': 9,
   'exo_memory/SOURCE.md': 1,

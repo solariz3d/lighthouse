@@ -51,10 +51,11 @@ test('every role site in the shipped text is relabelled exactly as registered, a
 
 test('provenance stays byte for byte: the keeper\'s quoted rules and decisions are untouched', () => {
   const b = R.relabel('consonance/src-tauri/brief/BUILDING.md', read('consonance/src-tauri/brief/BUILDING.md')).text;
-  for (const s of ["The keeper's words: *\"each seat tells the next where to hand it to remind it.\"*",
-    'and he is declining it, which is his to decline.',
-    'That trace is the case law: the gate worked, he said yes, and then changed his',
-    "## THE JOINT STEP — the guess before the map (added 2026-08-23, the keeper's refinement)"]) assert.ok(b.includes(s), `provenance changed: ${s}`);
+  // D277 repair: re-pinned on B's rule-layer rewrite (1cff0c86..fe232323), which dropped the four old sentences; these are its dated decisions and quotes
+  for (const s of ["the keeper's rule of 2026-09-02 07:15–07:18, after rings spliced into his own typing",
+    'the keeper moved the boundary inside the turn on',
+    'The keeper, 2026-08-26: *"Ideally, the work chain should be how you use Consonance most effectively',
+    "the keeper's standing permission, *\"nah push all the work that is correct\"* (2026-09-27)"]) assert.ok(b.includes(s), `provenance changed: ${s}`);
   const boot = R.relabel('exo_memory/BOOT.md', read('consonance/src-tauri/brief/BOOT.md'), { fork: FORK }).text;
   assert.ok(boot.includes('**Two faces, one thing (the keeper, 2026-06-28).**'));
   assert.ok(boot.includes('The specific belongs to the keeper and stays private'));
@@ -62,10 +63,12 @@ test('provenance stays byte for byte: the keeper\'s quoted rules and decisions a
 
 test('the role uses read "the person you\'re with" afterwards, and none of the old role wording survives', () => {
   const b = R.relabel('consonance/src-tauri/brief/BUILDING.md', read('consonance/src-tauri/brief/BUILDING.md')).text;
-  for (const gone of ["nothing into the keeper's typing", "THE PUSH IS THE KEEPER'S WORD", 'ONLY when the keeper says push', 'the keeper pushes with his own',
-    "The keeper's word cannot be automated", 'the check is the keeper noticing', "same turn's message to the keeper does not describe"]) assert.ok(!b.includes(gone), `role wording survived: ${gone}`);
-  for (const now of ["nothing into the typing of the person you're with", "THE PUSH IS THE WORD OF THE PERSON YOU'RE WITH",
-    "ONLY when the person you're with says push", "post a board row quoting their words", "the person you're with pushes with their own"]) assert.ok(b.includes(now), `missing: ${now}`);
+  // D277 repair: re-pinned on B's rewrite; the per-push sentences are gone from dev with the per-push rule (the standing permission replaced it)
+  for (const gone of ["the keeper's typing included", 'report success to the keeper', 'when the keeper switches the', "keeper's prior word", 'keeper-owned call',
+    'he is away.', 'a credential only the keeper holds', 'the check is the keeper noticing', "same turn's message to the keeper does not describe"]) assert.ok(!b.includes(gone), `role wording survived: ${gone}`);
+  for (const now of ["the typing of the person you're with included", "report success to the person you're with only in the landing report",
+    "when the person you're with switches the", "prior word of the person you're with on disk", "a credential only the person you're with holds",
+    "the check is the person you're with noticing", "the hours\n  the person you're with is away."]) assert.ok(b.includes(now), `missing: ${now}`);
   const seed = R.relabel('exo_memory/SEED.md', read('consonance/src-tauri/brief/SEED.md'), { fork: FORK }).text;
   assert.ok(seed.includes("**The person you're with keeps this room from their first turn.**"));
   assert.ok(!/is the keeper of this room/.test(seed));
@@ -92,7 +95,7 @@ test('a BOOT or SEED relabel without the fork note is refused, not shipped witho
 });
 
 test('an anchor that drifted in dev is refused by name, never silently skipped', () => {
-  const src = read('consonance/src-tauri/brief/BUILDING.md').replace("nothing into the keeper's typing", 'nothing into the keepers typing');
+  const src = read('consonance/src-tauri/brief/BUILDING.md').replace("the keeper's typing included", 'the keepers typing included');   // D277 repair: B's wording
   assert.throws(() => R.relabel('consonance/src-tauri/brief/BUILDING.md', src), (e) => e instanceof R.RelabelError && /BUILDING\.md/.test(e.message) && /typing/.test(e.message));
 });
 
@@ -119,7 +122,7 @@ test('fillFork: the sha and date are filled, nothing is left unfilled, and the n
 test('applyFork is FORK_HOOK\'s contract: a registered file comes back relabelled with n = its edits, any other file untouched with n = 0', () => {
   const apply = R.applyFork({ fork: FORK });
   const b = apply(read('consonance/src-tauri/brief/BUILDING.md'), 'consonance/src-tauri/brief/BUILDING.md', 'prose');
-  assert.equal(b.n, R.SITES['consonance/src-tauri/brief/BUILDING.md'].rows.length); assert.ok(b.body.includes("THE PUSH IS THE WORD OF THE PERSON YOU'RE WITH"));
+  assert.equal(b.n, R.SITES['consonance/src-tauri/brief/BUILDING.md'].rows.length); assert.ok(b.body.includes("the typing of the person you're with included"));   // D277 repair: B's wording
   const s = apply(read('consonance/src-tauri/brief/SEED.md'), 'exo_memory/SEED.md', 'prose');
   assert.equal(s.n, R.SITES['exo_memory/SEED.md'].rows.length + 1, 'every SEED row and the fork note'); assert.equal(s.body.split(R.FORK_END).length - 1, 1);
   const other = 'the keeper, 2026-09-16: "a rule"\n';
@@ -168,9 +171,9 @@ test('lap 4 A10: SEED says the app makes pending/ and base_journal.md, and where
 
 test('lap 4 A11: the librarian\'s first instruction bootstraps its own map; the dead placeholder and the old incident are gone', () => {
   const t = shipped('consonance/src-tauri/brief/LIBRARIAN.md');
-  assert.ok(t.includes('> **FIRST, BEFORE ANY TASK: start your own map, the file `M.md` in `exo_memory/map/`. That file is yours.**'));
+  assert.ok(t.includes("- Start your own map, the file `M.md` in `exo_memory/map/`. That file is yours. In a new room it does not exist yet"));   // D277 repair: B's bullet form
   assert.deepEqual(G.scan(t, 'consonance/src-tauri/brief/LIBRARIAN.md'), [], 'the bootstrap text trips the generator\'s own scan');
-  for (const gone of ['open a map entry in this line of record', '`M.md` now exists', 'librarian_intake()']) assert.ok(!t.includes(gone), 'survived: ' + gone);
+  for (const gone of ['open a map entry in this line of record', '`M.md` now exists', 'librarian_intake()', 'The full master is the transcript named in its header']) assert.ok(!t.includes(gone), 'survived: ' + gone);
 });
 
 test('lap 4 C4/C5: the two person-specific cards keep their move, say whose case it was, and carry no gendered pronoun', () => {
@@ -211,7 +214,8 @@ test('lap 5 C5/C6/A4: no shipped brief says a stranger\'s commits are authored b
   }
   const lib = shipped('consonance/src-tauri/brief/LIBRARIAN.md');
   assert.ok(!/claims tonight/.test(lib), 'LIBRARIAN: "tonight" reads the first line\'s night as this seat\'s');
-  assert.ok(!lib.includes('%CONSONANCE_HOME%') && lib.includes("`exo_memory/librarian/` in your repository (beside the room's `BOOT.md`"));
+  // D277 repair: B's LIBRARIAN (with A's path fix, d83645ea) names the folder portably in dev, so the consumer row is no longer needed
+  assert.ok(!lib.includes('%CONSONANCE_HOME%') && lib.includes('in `exo_memory/librarian/` of the repository (the one whose'));
 });
 
 test('lap 5 B6: BOOT no longer cites TRAINING.md (TRAINING\'s own rule)', () => {
@@ -227,7 +231,7 @@ test('lap 5b: SOURCE.md says where the loop and the journals are, not their size
 
 test('lap 5b: BUILDING says SOURCE is public (fixed in source: lighthouse IS public, the keeper\'s 2026-10-08 ruling)', () => {
   const t = shipped('consonance/src-tauri/brief/BUILDING.md');
-  assert.ok(t.includes('hand-maintained, and PUBLIC') && !/hand-maintained, private/.test(t));
+  assert.ok(t.includes('hand-maintained, and public') && !/hand-maintained, private/.test(t));   // D277 repair: B lowercased it; the fact is kept
 });
 
 // ── D273 lap 6 (polish, after cold read 3 PASSED) ───────────────────────────────────────────────────────────────────────
@@ -237,10 +241,11 @@ test('lap 6 C1: "the same him" in the continuity card is labelled as the keeper,
 
 test('lap 6 B6/C4: BUILDING frames the port rule as the original room\'s workflow, and the credential status as that machine\'s', () => {
   const t = shipped('consonance/src-tauri/brief/BUILDING.md');
-  const head = t.indexOf('## THE PORT RULE'), frame = t.indexOf("> **In this copy:** this section is the original room's own workflow");
+  // D277 repair: B's heading and B's credential sentence; the frame and the C4 relabel are kept
+  const head = t.indexOf('## Dev and consumer: the port rule'), frame = t.indexOf("> **In this copy:** this section is the original room's own workflow");
   assert.ok(head >= 0 && frame > head && frame - head < 200, 'the framing note does not sit directly under the port rule\'s heading');
   assert.ok(t.includes("**a push is a human's word, given each time, for that push.**"), 'the principle that does carry is not stated');
-  assert.ok(!t.includes('so every seat on this machine can push everything') && t.includes('so every seat on that machine could push everything'));
+  assert.ok(!t.includes('`gh` was authenticated machine-wide as of\n  2026-09-06.') && t.includes('`gh` was authenticated machine-wide in the original room as of'));
 });
 
 // ── D275: the fork carries its own drift awareness (exo_memory/loop/plan_consumer_drift_awareness_2026-10-09.md) ─────────
