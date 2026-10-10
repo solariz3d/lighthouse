@@ -161,6 +161,9 @@ const ENTRY = {
   'push-gate.js': 'try { main(); }',
   'delete-gate.js': 'try { main(); }',
   'ask-ending.js': 'try { main(); }',
+  // Added 2026-10-09 (D281) with release-chime.js, in the same change as its install.ps1 entry: the CONSONANCE_DREAM guard is at the top of the file, above `function main()` and above the
+  // call site, which is the entry marker (`try { main(); }` on one line under require.main). Call site, not definition, per this table's header.
+  'release-chime.js': 'try { main(); }',
   // Added 2026-10-03 (D218) with reply-slot.js, in the same change as its install.ps1 entry. Call site, not definition, per this table's header.
   'reply-slot.js': 'try { main(); }',
   // Added 2026-09-06 with the ready stamp's two hooks (P-READY-SIGNAL), in the same change as

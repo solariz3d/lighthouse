@@ -2,7 +2,7 @@
   "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
-    "BENIGN-TEST": 343,
+    "BENIGN-TEST": 350,
     "BENIGN-FIXTURE": 9,
     "REVIEW": 15,
     "DISGUISED": 15,
@@ -285,6 +285,55 @@
       "verdict": "BENIGN-TEST",
       "text": "assert.equal(G.pushTargets('git push origin :old', 'C:/x')[0].deleting, true, 'a delete of a remote ref sends nothing of ours');",
       "key": "consonance/hooks/push-gate.test.js\u0000assert.equal(G.pushTargets('git push origin :old', 'C:/x')[0].deleting, true, 'a delete of a remote ref sends nothing of ours');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/release-chime.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepEqual(C.DEFAULT_SOUNDS.slice(0, 2), ['chimes.wav', 'Windows Notify System Generic.wav']); assert.deepEqual(C.soundCandidates({}, { SystemRoot: 'X:\\\\Win' }).map((f) => f.replace(/\\\\/g, '/')), C.DEFAULT_SOUNDS.map((f) => 'X:/Win/Media/' + f));",
+      "key": "consonance/hooks/release-chime.test.js\u0000assert.deepEqual(C.DEFAULT_SOUNDS.slice(0, 2), ['chimes.wav', 'Windows Notify System Generic.wav']); assert.deepEqual(C.soundCandidates({}, { SystemRoot: 'X:\\\\Win' }).map((f) => f.replace(/\\\\/g, '/')), C.DEFAULT_SOUNDS.map((f) => 'X:/Win/Media/' + f));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/release-chime.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepEqual(C.soundCandidates({ chime_sound: ' C:\\\\s\\\\a.wav ' }, {})[0], 'C:\\\\s\\\\a.wav');",
+      "key": "consonance/hooks/release-chime.test.js\u0000assert.deepEqual(C.soundCandidates({ chime_sound: ' C:\\\\s\\\\a.wav ' }, {})[0], 'C:\\\\s\\\\a.wav');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/release-chime.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const call = (command, resp, tool = 'Bash') => ({ hook_event_name: 'PostToolUse', tool_name: tool, tool_input: { command }, tool_response: resp, cwd: 'C:\\\\somewhere', session_id: 's1' });",
+      "key": "consonance/hooks/release-chime.test.js\u0000const call = (command, resp, tool = 'Bash') => ({ hook_event_name: 'PostToolUse', tool_name: tool, tool_input: { command }, tool_response: resp, cwd: 'C:\\\\somewhere', session_id: 's1' });\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/release-chime.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const cmds = ['git push origin main', 'git -C C:/Users/x/lighthouse push origin main', 'cd /c/repo && git push origin main', 'git push origin HEAD:main', 'git push -u origin main', 'git push', 'git push origin main 2>&1 | tail -3',",
+      "key": "consonance/hooks/release-chime.test.js\u0000const cmds = ['git push origin main', 'git -C C:/Users/x/lighthouse push origin main', 'cd /c/repo && git push origin main', 'git push origin HEAD:main', 'git push -u origin main', 'git push', 'git push origin main 2>&1 | tail -3',\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/release-chime.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "delete process.env.CONSONANCE_DATA; assert.equal(C.dataDir({ data_dir: ' C:\\\\cfg ' }), 'C:\\\\cfg');",
+      "key": "consonance/hooks/release-chime.test.js\u0000delete process.env.CONSONANCE_DATA; assert.equal(C.dataDir({ data_dir: ' C:\\\\cfg ' }), 'C:\\\\cfg');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/release-chime.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "process.env.CONSONANCE_DATA = ' C:\\\\envdata '; assert.equal(C.dataDir({ data_dir: 'C:\\\\cfg' }), 'C:\\\\envdata');",
+      "key": "consonance/hooks/release-chime.test.js\u0000process.env.CONSONANCE_DATA = ' C:\\\\envdata '; assert.equal(C.dataDir({ data_dir: 'C:\\\\cfg' }), 'C:\\\\envdata');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/release-chime.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "process.env.USERPROFILE = 'C:\\\\Users\\\\someone'; assert.equal(C.dataDir({}).replace(/\\\\/g, '/'), 'C:/Users/someone/.consonance');",
+      "key": "consonance/hooks/release-chime.test.js\u0000process.env.USERPROFILE = 'C:\\\\Users\\\\someone'; assert.equal(C.dataDir({}).replace(/\\\\/g, '/'), 'C:/Users/someone/.consonance');\u0000#1"
     },
     {
       "file": "consonance/hooks/reply-slot.js",

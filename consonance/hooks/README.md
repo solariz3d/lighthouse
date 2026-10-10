@@ -41,6 +41,7 @@ description cannot drift from the code without someone editing the code:
 | `push-gate.js` | *"G1, CREDENTIALS BEFORE A PUSH"* — a **gate** (D248): it DENIES a `git push` whose diff adds a credential-shaped line. Global, fails open |
 | `delete-gate.js` | *"G2, JUNCTIONS BEFORE A DELETE"* — a **gate** (D248): it DENIES a recursive delete or `git worktree remove` of a tree holding a junction or symlink. Global, fails open |
 | `ask-ending.js` | *"G3, THE "WANT ME TO…?" ENDING, in SHADOW"* — a Stop-hook sensor (D248): it only logs, never blocks |
+| `release-chime.js` | *"a pleasant chime when a FINAL PRODUCT ships"* — a **PostToolUse** hook (D281) on Bash and PowerShell: plays a built-in Windows sound when a successful `gh release create` or a successful `git push` that updated `main` on t180, consonance or lighthouse; one per 2 minutes; `"chime": false` in `~/.consonance.json` silences it. Prints nothing, never blocks, fails silent |
 
 Every one also has a `.test.js` beside it or is covered by `dream-gate.test.js`; run them with
 `node <file>.test.js`.
@@ -99,8 +100,8 @@ $reg | ForEach-Object { "  {0,-16} {1}" -f $_.Event, $_.Rel }
 Against the script as it stands, that prints:
 
 ```
-files          34   (dev\shell 16, consonance\hooks 18, declared libraries 7, held 0)
-registrations  22   events: SessionStart, UserPromptSubmit, Stop, SessionEnd, PreCompact, PreToolUse
+files          35   (dev\shell 16, consonance\hooks 19, declared libraries 7, held 0)
+registrations  23   events: SessionStart, UserPromptSubmit, Stop, SessionEnd, PreCompact, PreToolUse, PostToolUse
 ```
 
 **If it disagrees with those numbers, the command is right and this paragraph is stale.** It parses

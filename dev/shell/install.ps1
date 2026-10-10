@@ -186,6 +186,11 @@ $files = @(
   @{ From = 'consonance\hooks\push-gate.js';               To = 'hooks\push-gate.js' }
   @{ From = 'consonance\hooks\delete-gate.js';             To = 'hooks\delete-gate.js' }
   @{ From = 'consonance\hooks\ask-ending.js';              To = 'hooks\ask-ending.js' }
+  # Added 2026-10-09 (D281; the keeper: "you ding when the laps are complete, not like one if a new one opens, but when the final product is pushed, you ding through desktop audio even if
+  # minimized something pleasant") with its registration below, same commit. RELEASE-CHIME: a PostToolUse hook on the two shell tools that plays a built-in Windows sound when a
+  # `gh release create` or a `git push` that updated main on t180, consonance or lighthouse SUCCEEDED; one chime per 2 minutes; "chime": false in ~/.consonance.json silences it. It prints
+  # nothing, never blocks and fails silent. A NEW registration (the keeper asked for it). Install with -Only release-chime.js.
+  @{ From = 'consonance\hooks\release-chime.js';           To = 'hooks\release-chime.js' }
 )
 
 # What this script REGISTERS. Only these are ever touched in settings.json; anything else found
@@ -306,6 +311,9 @@ $register = @(
      Matcher = 'Bash|PowerShell' }
   # G3 (D248), SHADOW ONLY: a Stop hook, no matcher. Silent on every path (no output, exit 0); it only writes ask-ending.jsonl.
   @{ Event = 'Stop';             Rel = 'hooks\ask-ending.js';         Runner = 'node' }
+  # RELEASE-CHIME (D281): after a Bash or PowerShell call. Reads the command and what came back, and exits at once unless a release or a push to main really shipped.
+  @{ Event = 'PostToolUse';      Rel = 'hooks\release-chime.js';      Runner = 'node';
+     Matcher = 'Bash|PowerShell' }
 )
 
 # DELIBERATELY UNMANAGED -- the THIRD STATE, named. A file in a manifest source directory that is
