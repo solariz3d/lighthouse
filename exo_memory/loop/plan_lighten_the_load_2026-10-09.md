@@ -82,3 +82,25 @@ The app reads BUILDING/COMMITTEE/LIBRARIAN from the copies bundled beside the ex
 (4) set "gates_mode": "light". **Checked, no shadowing copy:** `default_data()` is `%USERPROFILE%\.consonance` (`main.rs:804-805`), and it holds no
 BUILDING/COMMITTEE/LIBRARIAN; `C:\Consonance\data` holds none either. Gate switch landed: main 1f38da03 (gate tests 204/204, cargo 1003/0), hooks
 synced, the key still unset.
+
+## Gaps the keeper's "did we do everything" exposed (librarian, 18:3x): two more parts, landing WITH the 10-10 change
+The census (`loop/instruction_load_census_2026-10-09.md` §2) measured two loads that B's drafts did not touch, because they are not rule files:
+- **Part 5 (E, who wrote the dirs work in the hooks): the session-start digest.** `session-start.js` injects 12.2–13.5 KB (~3.0–3.4k tokens) per
+  session start; its resume/compact variants are 840 non-empty lines, almost all past-session timestamps, with 0 rules. Trim it to what a waking seat
+  uses (e.g. the last few sessions per seat plus a count), as a draft behind the same switch or landing with it. Measure the bytes before and after.
+- **Part 6 (C, who ran the census): the ASSEMBLED seat files.** `main/CLAUDE.md` ~27.5k tokens, `librarian/CLAUDE.md` ~35.3k, holding 96 / 135 RULE blocks
+  beyond their briefs, because the maps and live-edge claims add imperative-shaped lines. Report what the assembly adds and propose (draft only) what
+  stays indexed rather than carried. The ROOM stays.
+- Both land at the 10-10 timer WITH the rest (never before 2026-10-10T11:55Z, the baseline window), so the "after" measures the whole lighter load.
+- **H2 (split vs single-pane) gets its own lap**, a controlled test: the same kind of multi-part task run both ways, timed end to end including the merge.
+- **Part 5 IN (A, not E: the chair's routing):** startdigest-a 0794577d from main 9b5f40ba, behind the gates_mode switch; held for the 10-10 timer.
+  Startup 13,446 → 1,403 bytes (~3,362 → ~351 tokens); resume/compact 13,446 → 1,116; 840 lines → 31. Key absent: identical output in 12/12. Judged
+  on 1,381 session starts, where no seat ever quoted a digest time back. 24/24 mutants caught. **Noticed:** the newest digest on disk is 2026-10-06, so
+  every start since carries 3-day-old digests. The digest WRITER is stale: a separate follow-up, after 10-10.
+- **Part 6 IN (C):** `loop/assembly_draft_2026-10-09.md` on assembly-c db2d7b04. C corrected its own census inference: main and the librarian carry
+  no maps or live edges. **Structural finding: the librarian and pane intakes are FILLED TO A BUDGET** (librarian 142,000 B via
+  `LIBRARIAN_INTAKE_LIMIT − INTAKE_HEADROOM`; pane 110,000 B via `optional_budget`), so indexing a section alone just lets the next tier backfill.
+  The draft: main indexes nothing (~72.3 KB with B's BUILDING draft); librarian L1+L2 (the path index 40.9 KB → ~1.5 KB, the carried tiers = cards
+  + windowed notes) → ~102 KB; pane P1+P2+P3 (pointers for the topic-map and live-edge text, plus a NEW cap for optional briefs) → ~92.9 KB.
+  **Next (librarian ruling):** C implements L1+L2 and P1–P3 in main.rs, BEHIND `gates_mode: light` (inert while the key is absent, as E's switch
+  is), committed before the 10-10 timer, so it lands and flips with the rest. Red first, cargo test green.

@@ -1,0 +1,743 @@
+{
+ "track": "thunderhead_raceway",
+ "jump_read": {
+  "jump": true,
+  "d": 5048,
+  "gap_m": 173,
+  "drop_m": 23,
+  "from": [
+   -216.2,
+   21.9,
+   500.3
+  ],
+  "to": [
+   -374.7,
+   20.5,
+   427.6
+  ]
+ },
+ "jump_equation": {
+  "s": 5257.478318569754,
+  "gap": 174.3775788339774,
+  "drop": 1.3999999999999986
+ },
+ "from": 5223,
+ "to": 9166,
+ "n": 21,
+ "turns": [
+  {
+   "dir": "R",
+   "from_m": 5459,
+   "to_m": 5523,
+   "arc_m": 64,
+   "angle_deg": -87.8,
+   "Rmin_8m": 11.8,
+   "Rmin_20m": 22.2,
+   "peak_at_m": 5475,
+   "entry_transition_m": 0,
+   "exit_transition_m": 4,
+   "full_curvature_m": 36,
+   "width_m_mean": 23.6,
+   "width_at_peak": 24,
+   "wl_wr_at_peak": [
+    13,
+    10
+   ],
+   "centre_tilt_deg_at_peak": 30.8,
+   "centre_tilt_deg_max": 36.5,
+   "inside_psi_at_peak": [
+    8.4,
+    11.6,
+    19.7,
+    19.7
+   ],
+   "outside_psi_at_peak": [
+    2.8,
+    13.5,
+    18.4,
+    31.8
+   ],
+   "words": "bowl-tightR/up pipe-tightR/up"
+  },
+  {
+   "dir": "R",
+   "from_m": 5623,
+   "to_m": 5682,
+   "arc_m": 59,
+   "angle_deg": -87.9,
+   "Rmin_8m": 11.8,
+   "Rmin_20m": 21.7,
+   "peak_at_m": 5658,
+   "entry_transition_m": 0,
+   "exit_transition_m": 4,
+   "full_curvature_m": 31,
+   "width_m_mean": 23.7,
+   "width_at_peak": 24,
+   "wl_wr_at_peak": [
+    13,
+    10
+   ],
+   "centre_tilt_deg_at_peak": 30.4,
+   "centre_tilt_deg_max": 30.4,
+   "inside_psi_at_peak": [
+    8.2,
+    11.4,
+    19.2,
+    19.2
+   ],
+   "outside_psi_at_peak": [
+    2.8,
+    12.5,
+    16.5,
+    29.5
+   ],
+   "words": "pipe-tightR bowl-tightR"
+  },
+  {
+   "dir": "R",
+   "from_m": 5778,
+   "to_m": 5786,
+   "arc_m": 8,
+   "angle_deg": -31.7,
+   "Rmin_8m": 14.5,
+   "Rmin_20m": 28.8,
+   "peak_at_m": 5782,
+   "entry_transition_m": 0,
+   "exit_transition_m": 0,
+   "full_curvature_m": 4,
+   "width_m_mean": 25,
+   "width_at_peak": 23,
+   "wl_wr_at_peak": [
+    14,
+    8
+   ],
+   "centre_tilt_deg_at_peak": 6.6,
+   "centre_tilt_deg_max": 9.8,
+   "inside_psi_at_peak": [
+    11.9,
+    19.9,
+    22.6,
+    22.6
+   ],
+   "outside_psi_at_peak": [
+    0.5,
+    5.4,
+    14,
+    27.4
+   ],
+   "words": "bowl-straight"
+  },
+  {
+   "dir": "R",
+   "from_m": 5834,
+   "to_m": 5878,
+   "arc_m": 44,
+   "angle_deg": -57.7,
+   "Rmin_8m": 15,
+   "Rmin_20m": 28.2,
+   "peak_at_m": 5842,
+   "entry_transition_m": 0,
+   "exit_transition_m": 20,
+   "full_curvature_m": 4,
+   "width_m_mean": 23.8,
+   "width_at_peak": 25,
+   "wl_wr_at_peak": [
+    14,
+    10
+   ],
+   "centre_tilt_deg_at_peak": 25,
+   "centre_tilt_deg_max": 31.4,
+   "inside_psi_at_peak": [
+    10.2,
+    13.4,
+    21.5,
+    21
+   ],
+   "outside_psi_at_peak": [
+    2.7,
+    9.6,
+    13.5,
+    26.2
+   ],
+   "words": "bowl-tightR/up bowl-tightR"
+  },
+  {
+   "dir": "R",
+   "from_m": 5898,
+   "to_m": 5950,
+   "arc_m": 52,
+   "angle_deg": -41.9,
+   "Rmin_8m": 12,
+   "Rmin_20m": 23.5,
+   "peak_at_m": 5902,
+   "entry_transition_m": 0,
+   "exit_transition_m": 0,
+   "full_curvature_m": 4,
+   "width_m_mean": 23.9,
+   "width_at_peak": 23,
+   "wl_wr_at_peak": [
+    15,
+    7
+   ],
+   "centre_tilt_deg_at_peak": 14.2,
+   "centre_tilt_deg_max": 23.5,
+   "inside_psi_at_peak": [
+    14.9,
+    25.1,
+    22.6,
+    22.8
+   ],
+   "outside_psi_at_peak": [
+    0,
+    4.8,
+    13,
+    27.9
+   ],
+   "words": "bowl-tightR bowl-straight bowl-sweepR"
+  },
+  {
+   "dir": "L",
+   "from_m": 6046,
+   "to_m": 6086,
+   "arc_m": 40,
+   "angle_deg": 74.5,
+   "Rmin_8m": 19.1,
+   "Rmin_20m": 27.4,
+   "peak_at_m": 6066,
+   "entry_transition_m": 16,
+   "exit_transition_m": 20,
+   "full_curvature_m": 4,
+   "width_m_mean": 24.1,
+   "width_at_peak": 23,
+   "wl_wr_at_peak": [
+    10,
+    12
+   ],
+   "centre_tilt_deg_at_peak": 27,
+   "centre_tilt_deg_max": 27.4,
+   "inside_psi_at_peak": [
+    11.5,
+    14.7,
+    22.6,
+    22.7
+   ],
+   "outside_psi_at_peak": [
+    2.7,
+    9.7,
+    14.1,
+    27.6
+   ],
+   "words": "bowl-tightL"
+  },
+  {
+   "dir": "L",
+   "from_m": 6290,
+   "to_m": 6334,
+   "arc_m": 44,
+   "angle_deg": 67.5,
+   "Rmin_8m": 19.2,
+   "Rmin_20m": 28.4,
+   "peak_at_m": 6294,
+   "entry_transition_m": 0,
+   "exit_transition_m": 36,
+   "full_curvature_m": 4,
+   "width_m_mean": 23.8,
+   "width_at_peak": 25,
+   "wl_wr_at_peak": [
+    11,
+    13
+   ],
+   "centre_tilt_deg_at_peak": 24,
+   "centre_tilt_deg_max": 28.1,
+   "inside_psi_at_peak": [
+    11.5,
+    14.2,
+    22.6,
+    21.5
+   ],
+   "outside_psi_at_peak": [
+    2.3,
+    8.8,
+    13.2,
+    26.2
+   ],
+   "words": "bowl-tightL/up bowl-tightL pipe-tightL"
+  },
+  {
+   "dir": "R",
+   "from_m": 6534,
+   "to_m": 6602,
+   "arc_m": 68,
+   "angle_deg": -42.5,
+   "Rmin_8m": 13.2,
+   "Rmin_20m": 25.2,
+   "peak_at_m": 6578,
+   "entry_transition_m": 0,
+   "exit_transition_m": 0,
+   "full_curvature_m": 4,
+   "width_m_mean": 23.3,
+   "width_at_peak": 23,
+   "wl_wr_at_peak": [
+    13,
+    9
+   ],
+   "centre_tilt_deg_at_peak": 30.9,
+   "centre_tilt_deg_max": 34.4,
+   "inside_psi_at_peak": [
+    11.5,
+    19.9,
+    23.2,
+    22.7
+   ],
+   "outside_psi_at_peak": [
+    0.5,
+    9.7,
+    14.2,
+    27.6
+   ],
+   "words": "pipe-sweepR/up pipe-tightR bowl-tightR"
+  },
+  {
+   "dir": "R",
+   "from_m": 6642,
+   "to_m": 6670,
+   "arc_m": 28,
+   "angle_deg": -35.8,
+   "Rmin_8m": 13.3,
+   "Rmin_20m": 25.9,
+   "peak_at_m": 6650,
+   "entry_transition_m": 0,
+   "exit_transition_m": 0,
+   "full_curvature_m": 4,
+   "width_m_mean": 23.9,
+   "width_at_peak": 23,
+   "wl_wr_at_peak": [
+    13,
+    9
+   ],
+   "centre_tilt_deg_at_peak": 25,
+   "centre_tilt_deg_max": 29.6,
+   "inside_psi_at_peak": [
+    11.5,
+    19.5,
+    22.3,
+    22.3
+   ],
+   "outside_psi_at_peak": [
+    0.5,
+    9.7,
+    13.3,
+    27.2
+   ],
+   "words": "bowl-tightR/down"
+  },
+  {
+   "dir": "R",
+   "from_m": 6902,
+   "to_m": 7282,
+   "arc_m": 380,
+   "angle_deg": -343.6,
+   "Rmin_8m": 12.1,
+   "Rmin_20m": 23,
+   "peak_at_m": 7250,
+   "entry_transition_m": 4,
+   "exit_transition_m": 0,
+   "full_curvature_m": 344,
+   "width_m_mean": 23.8,
+   "width_at_peak": 23,
+   "wl_wr_at_peak": [
+    13,
+    9
+   ],
+   "centre_tilt_deg_at_peak": 19.8,
+   "centre_tilt_deg_max": 35.2,
+   "inside_psi_at_peak": [
+    11.5,
+    19.3,
+    22.2,
+    22.2
+   ],
+   "outside_psi_at_peak": [
+    1,
+    9.7,
+    13.4,
+    26.8
+   ],
+   "words": "bowl-tightR pipe-tightR bowl-tightR/down"
+  },
+  {
+   "dir": "R",
+   "from_m": 7422,
+   "to_m": 7438,
+   "arc_m": 16,
+   "angle_deg": -36.8,
+   "Rmin_8m": 16,
+   "Rmin_20m": 24.9,
+   "peak_at_m": 7422,
+   "entry_transition_m": 0,
+   "exit_transition_m": 16,
+   "full_curvature_m": 0,
+   "width_m_mean": 53.6,
+   "width_at_peak": 66,
+   "wl_wr_at_peak": [
+    18,
+    47
+   ],
+   "centre_tilt_deg_at_peak": 1.9,
+   "centre_tilt_deg_max": 16.8,
+   "inside_psi_at_peak": [
+    16,
+    38.5,
+    49.7,
+    60.2
+   ],
+   "outside_psi_at_peak": [
+    6.6,
+    17.9,
+    29.2,
+    29
+   ],
+   "words": "pipe-tightR/up"
+  },
+  {
+   "dir": "L",
+   "from_m": 7442,
+   "to_m": 7506,
+   "arc_m": 64,
+   "angle_deg": 132.5,
+   "Rmin_8m": 11.2,
+   "Rmin_20m": 13.7,
+   "peak_at_m": 7502,
+   "entry_transition_m": 60,
+   "exit_transition_m": 4,
+   "full_curvature_m": 0,
+   "width_m_mean": 36.4,
+   "width_at_peak": 66,
+   "wl_wr_at_peak": [
+    51,
+    14
+   ],
+   "centre_tilt_deg_at_peak": 12.7,
+   "centre_tilt_deg_max": 39.1,
+   "inside_psi_at_peak": [
+    5.9,
+    15.8,
+    26.5,
+    37.5
+   ],
+   "outside_psi_at_peak": [
+    7.5,
+    7.5,
+    7.5,
+    9.8
+   ],
+   "words": "pipe-tightR/up bowl-tightL/up bowl-tightL bowl-tightL/down"
+  },
+  {
+   "dir": "R",
+   "from_m": 7510,
+   "to_m": 7554,
+   "arc_m": 44,
+   "angle_deg": -112.8,
+   "Rmin_8m": 8.2,
+   "Rmin_20m": 12.6,
+   "peak_at_m": 7514,
+   "entry_transition_m": 4,
+   "exit_transition_m": 40,
+   "full_curvature_m": 0,
+   "width_m_mean": 35.2,
+   "width_at_peak": 62,
+   "wl_wr_at_peak": [
+    8,
+    53
+   ],
+   "centre_tilt_deg_at_peak": 11.8,
+   "centre_tilt_deg_max": 38.4,
+   "inside_psi_at_peak": [
+    8.2,
+    27.7,
+    39,
+    50.4
+   ],
+   "outside_psi_at_peak": [
+    6.6,
+    6.9,
+    6.9,
+    6.9
+   ],
+   "words": "bowl-tightL/down bowl-tightR/up bowl-tightR"
+  },
+  {
+   "dir": "L",
+   "from_m": 7558,
+   "to_m": 7578,
+   "arc_m": 20,
+   "angle_deg": 51.1,
+   "Rmin_8m": 13.5,
+   "Rmin_20m": 24.9,
+   "peak_at_m": 7558,
+   "entry_transition_m": 0,
+   "exit_transition_m": 20,
+   "full_curvature_m": 0,
+   "width_m_mean": 44.2,
+   "width_at_peak": 24,
+   "wl_wr_at_peak": [
+    11,
+    12
+   ],
+   "centre_tilt_deg_at_peak": 27.4,
+   "centre_tilt_deg_max": 27.4,
+   "inside_psi_at_peak": [
+    0.9,
+    11.2,
+    11.1,
+    11.3
+   ],
+   "outside_psi_at_peak": [
+    5.4,
+    10.7,
+    21.2,
+    21.9
+   ],
+   "words": "bowl-tightR bowl+-turnL"
+  },
+  {
+   "dir": "R",
+   "from_m": 7582,
+   "to_m": 7606,
+   "arc_m": 24,
+   "angle_deg": -43.5,
+   "Rmin_8m": 21.1,
+   "Rmin_20m": 21.8,
+   "peak_at_m": 7602,
+   "entry_transition_m": 4,
+   "exit_transition_m": 0,
+   "full_curvature_m": 8,
+   "width_m_mean": 26.6,
+   "width_at_peak": 27,
+   "wl_wr_at_peak": [
+    14,
+    12
+   ],
+   "centre_tilt_deg_at_peak": 26.5,
+   "centre_tilt_deg_max": 37.6,
+   "inside_psi_at_peak": [
+    10.9,
+    21.7,
+    22,
+    33.5
+   ],
+   "outside_psi_at_peak": [
+    0.1,
+    10.8,
+    21.3,
+    21.3
+   ],
+   "words": "bowl+-turnL bowl-tightR"
+  },
+  {
+   "dir": "L",
+   "from_m": 7834,
+   "to_m": 7906,
+   "arc_m": 72,
+   "angle_deg": 86.7,
+   "Rmin_8m": 18.1,
+   "Rmin_20m": 33.1,
+   "peak_at_m": 7854,
+   "entry_transition_m": 16,
+   "exit_transition_m": 20,
+   "full_curvature_m": 28,
+   "width_m_mean": 24.3,
+   "width_at_peak": 23,
+   "wl_wr_at_peak": [
+    10,
+    12
+   ],
+   "centre_tilt_deg_at_peak": 35.2,
+   "centre_tilt_deg_max": 41.8,
+   "inside_psi_at_peak": [
+    11.5,
+    15,
+    22.8,
+    23.2
+   ],
+   "outside_psi_at_peak": [
+    0.9,
+    5.1,
+    12.9,
+    27.2
+   ],
+   "words": "bowl-tightL/up pipe-tightL/up"
+  },
+  {
+   "dir": "L",
+   "from_m": 8158,
+   "to_m": 8170,
+   "arc_m": 12,
+   "angle_deg": 31.3,
+   "Rmin_8m": 14.7,
+   "Rmin_20m": 29.2,
+   "peak_at_m": 8162,
+   "entry_transition_m": 0,
+   "exit_transition_m": 0,
+   "full_curvature_m": 4,
+   "width_m_mean": 24.5,
+   "width_at_peak": 23,
+   "wl_wr_at_peak": [
+    8,
+    14
+   ],
+   "centre_tilt_deg_at_peak": 8.8,
+   "centre_tilt_deg_max": 15,
+   "inside_psi_at_peak": [
+    13,
+    20.9,
+    23.2,
+    23.6
+   ],
+   "outside_psi_at_peak": [
+    0.7,
+    5.7,
+    13.5,
+    27.8
+   ],
+   "words": "pipe-turnL"
+  },
+  {
+   "dir": "L",
+   "from_m": 8226,
+   "to_m": 8298,
+   "arc_m": 72,
+   "angle_deg": 90.1,
+   "Rmin_8m": 23.1,
+   "Rmin_20m": 26.1,
+   "peak_at_m": 8238,
+   "entry_transition_m": 12,
+   "exit_transition_m": 44,
+   "full_curvature_m": 4,
+   "width_m_mean": 24.3,
+   "width_at_peak": 25,
+   "wl_wr_at_peak": [
+    11,
+    13
+   ],
+   "centre_tilt_deg_at_peak": 42.3,
+   "centre_tilt_deg_max": 47.5,
+   "inside_psi_at_peak": [
+    11.5,
+    13.7,
+    21.5,
+    21.1
+   ],
+   "outside_psi_at_peak": [
+    1.9,
+    7.9,
+    11.6,
+    25.1
+   ],
+   "words": "bowl-tightL bowl-tightL/down pipe-tightL/down"
+  },
+  {
+   "dir": "L",
+   "from_m": 8422,
+   "to_m": 8474,
+   "arc_m": 52,
+   "angle_deg": 45.4,
+   "Rmin_8m": 20.6,
+   "Rmin_20m": 36.1,
+   "peak_at_m": 8438,
+   "entry_transition_m": 4,
+   "exit_transition_m": 20,
+   "full_curvature_m": 4,
+   "width_m_mean": 24,
+   "width_at_peak": 25,
+   "wl_wr_at_peak": [
+    10,
+    14
+   ],
+   "centre_tilt_deg_at_peak": 34.7,
+   "centre_tilt_deg_max": 36.6,
+   "inside_psi_at_peak": [
+    11.2,
+    14,
+    22,
+    22
+   ],
+   "outside_psi_at_peak": [
+    2.8,
+    9.6,
+    13.5,
+    26.9
+   ],
+   "words": "bowl-tightL pipe-tightL"
+  },
+  {
+   "dir": "L",
+   "from_m": 8546,
+   "to_m": 8650,
+   "arc_m": 104,
+   "angle_deg": 89.2,
+   "Rmin_8m": 20.3,
+   "Rmin_20m": 39.2,
+   "peak_at_m": 8594,
+   "entry_transition_m": 0,
+   "exit_transition_m": 0,
+   "full_curvature_m": 84,
+   "width_m_mean": 25.4,
+   "width_at_peak": 27,
+   "wl_wr_at_peak": [
+    11,
+    15
+   ],
+   "centre_tilt_deg_at_peak": 31.2,
+   "centre_tilt_deg_max": 34.4,
+   "inside_psi_at_peak": [
+    11.4,
+    19.8,
+    23.2,
+    22.6
+   ],
+   "outside_psi_at_peak": [
+    2.6,
+    9.5,
+    13.9,
+    27.3
+   ],
+   "words": "pipe-tightL pipe-tightL/down bowl-tightL/down"
+  },
+  {
+   "dir": "L",
+   "from_m": 8778,
+   "to_m": 8794,
+   "arc_m": 16,
+   "angle_deg": 31.5,
+   "Rmin_8m": 14.5,
+   "Rmin_20m": 28.8,
+   "peak_at_m": 8786,
+   "entry_transition_m": 0,
+   "exit_transition_m": 0,
+   "full_curvature_m": 4,
+   "width_m_mean": 30.2,
+   "width_at_peak": 26,
+   "wl_wr_at_peak": [
+    7,
+    18
+   ],
+   "centre_tilt_deg_at_peak": 8.9,
+   "centre_tilt_deg_max": 18.7,
+   "inside_psi_at_peak": [
+    16.6,
+    24.9,
+    24.3,
+    23.9
+   ],
+   "outside_psi_at_peak": [
+    3,
+    6.6,
+    18.4,
+    21
+   ],
+   "words": "bowl-turnL/down bowl-sweepL/down"
+  }
+ ]
+}

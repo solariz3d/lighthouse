@@ -1,0 +1,54 @@
+# p-heavyrun-A — D283, "heavy-run.js took over a LIVE lock": it did not, and the lock now asks a second witness anyway; seat A, 2026-10-09/10
+
+Lighthouse worktree `C:\Users\nname\Desktop\worktrees\a-hr-wt`, branch `heavyrun-a` from main `28b89a92`. **One commit `7f17a048`**, named paths, local, **not pushed**; the live copy is not swapped (the chair lands it; heavy-run.js is read by path, so landing is the install).
+Files: `consonance/tools/heavy-run.js`, `consonance/tools/heavy-run.test.js` (25 rows: 12 old, 13 new), `consonance/tools/heavy-run.mutants.js` (new), `consonance/README.md` (the mutants-file counts: 10, 6 beside a tool).
+
+## The finding, first
+**The takeover was correct. The holder was not running: the chair had stopped it 1.5 seconds earlier.** Confidence: high on the timeline (it is in the chair's own transcript and the task's own output file); the lock's reading "not running" was true.
+
+| UTC | what | where it is |
+|---|---|---|
+| 01:19:09.517 | C's `t180 C: C asm red` run holds the lock | the first line of the chair's task output: `heavy-run: waiting on 0845a868 pid 29952 (…since 2026-10-10T01:19:09.517Z)` |
+| 01:20:31.118 | the chair's run gets the lock: pid 3828, `chair land-turnby FULL suite incl. harnesses` | `took_over.holder.started` |
+| 01:31:15 … 01:51:20.903 | C waits on pid 3828 (`waiting on 0c0c0c0a pid 3828`), then `gave up after 30m` (exit 3) | C's transcript |
+| 01:51:23 | C retries ("per the rule") | C's transcript |
+| **01:58:50.042** | **the chair calls TaskStop on task `b4gxb533s`, the `land_turnby.js` run** | the chair's transcript, line 98908 |
+| 01:58:50.070 | `Successfully stopped task: b4gxb533s` | same, line 98909 |
+| 01:58:50.101 | **the task's output file is last written, its last line `[killed]`** | `…\0c0c0c0a-…\tasks\b4gxb533s.output`, mtime 2026-10-09 19:58:50.101 −0600 |
+| **01:58:51.590** | **the takeover**: `age_ms` 2,300,472 after the 01:20:31.118 start | the chair's transcript, line 98916 (the `took_over` record it read at 01:59:01.633) |
+
+So: TaskStop at 01:58:50.042, takeover 1.548 s later, by a waiter that polls every 2 s. The "38 min" and "2300 s" the chair quoted are the age of the lock at the moment the chair itself ended the run. What the chair saw as "my run kept producing output until I stopped it" is true, and "stopped it about 02:00Z" was 01:58:50. (The zero-count harness lines are, as the chair found, its own regex bug; they are in that same output file.)
+
+## The three candidates, measured (not guessed)
+- **(a) kill(0) across sessions is not EPERM / cannot see the process: NOT it.** The chair's LIVE holder at 04:19Z (`pid 3124`, `node.exe land_sharp.js`, lock started 04:16:27.379Z), read from MY session, which is another seat's: `process.kill(3124, 0)` no throw (alive); `tasklist /FI "PID eq 3124"` lists `node.exe`; CIM `Win32_Process`: `node.exe ppid=19892 session=1 created=2026-10-09T22:16:27.352-06:00` = 04:16:27.352Z, **27 ms before the lock's `started`**. Script: `probe_pid.js` (scratchpad `hr/`; it takes a pid and prints the three readings).
+- **(b) the pid written is a short-lived wrapper: NOT it.** Reproduced the chair's shape (`hold()` in a node process started with `run_in_background`, then `execSync` of a long child): the lock's pid 17968 is **node's own Windows pid** (CIM: `node.exe holder_like_chair.js`, created 04:20:59.443Z, lock `started` 04:20:59.482Z, +39 ms). The work (child 31956) hangs under `cmd.exe` (ppid 29036) under the holder. The chair's `land_turnby.js` and my `holdrun.js` both call `hold()` in the node that waits on the work, so the pid lives exactly as long as the work.
+- **(c) an MSYS pid against a Windows pid: NOT it.** `process.pid` in a node started from Git Bash is the Windows pid (CIM finds it; MSYS's `$$` is never written).
+- **What a stopped task does (the actual mechanism):** I started that probe as a background task and called TaskStop on it. **Holder 17968 and child 31956 both went dead on all three readings (kill(0) ESRCH; tasklist empty; CIM none), and the lock FILE was left behind with the dead pid** (a hard kill runs no exit handler). So a stopped task takes its whole tree and leaves a stale lock, and the next waiter taking it within a poll or two is exactly right.
+- Gotchas found on the way, for anyone repeating this: Git Bash turns `tasklist /FI …` into `C:/Program Files/Git/FI` (a path), so run it from node or PowerShell; and node's coloured `console.log` of a number puts escape codes in a shell variable.
+
+## What I changed anyway, and why
+The chair's rule is sound and cheap: **no lock younger than the longest known run (1,570 s) should be taken on one liveness read that a second method disagrees with.** Now (`heavy-run.js`):
+- a lock **younger than `YOUNG_MS` (30 min)** is taken only when `pidGone(pid)` also says the holder is gone: on Windows `tasklist /FI "PID eq n" /FO CSV /NH`, a listed row in the PID column means running, no row (exit 0) means gone, a failure, a spawn error or a throw means "cannot tell"; elsewhere `kill(0)` is the whole truth. **Disagreement or "cannot tell": it waits, says so once** (`reads not-running to process.kill(pid, 0) but RUNNING to tasklist; the lock is 5m old, younger than 30m, so it is NOT taken over: waiting`) and asks the second method again at every poll, so a holder that really dies is still taken.
+- a lock with **no readable `started` counts as young** (unknown is the safe side); an **older lock is as before** (kill(0) alone, so a dead holder cannot park everyone for ever).
+- **pid reuse still fails safe:** a recycled pid reads alive on every method, the waiter waits and at the max wait fails loudly naming it. I did not add start-time matching: it would turn that wait into a takeover on a CIM reading, which is the direction the chair asked me not to move.
+- `pidAlive(pid, kill)` and `pidGone(pid, run, platform)` take injectable seams so each branch is a row. Exports add `pidGone`, `YOUNG_MS`.
+- Cost: the second method runs only when kill(0) already says dead on a young lock: rare.
+
+## Rows (`heavy-run.test.js`: 25 pass; 13 new)
+Red first: the claimed false takeover (kill(0) says a 5-minute-old holder is dead, tasklist says running → NOT taken, the disagreement said once with both readings, a loud timeout, the lock untouched). Also: both methods say gone → taken, logged; second method cannot tell → waits; an old lock → taken on kill(0) alone and the second method never asked, **to the millisecond** (30 min exactly is old, 1 ms younger is young); unknown age counts as young (four malformed `started` values); **pid reuse waits** (a lock naming this very process, real methods); **REAL: a live holder in another process is never taken** (real kill(0) and tasklist, the waiter gives up, the holder still runs); **REAL: a holder killed hard leaves its lock and the next runner takes it over, logged, naming the dead pid**; `pidGone` (exact args, pid column not name column, "another pid's row is not this pid", "31240 is not 3124", failures and garbage → null, off Windows it does not even ask); `pidAlive` (EPERM alive, ESRCH/EINVAL/bad pids not); the race put-back; `hold()` exits **3** on a timeout and **2** with no data dir and never runs the work; unreadable locks (fresh waited for, old taken over).
+- **Against the OLD `heavy-run.js` (`28b89a92`): the first 11 new rows are 8 red, 3 green** — the green ones (pid reuse waits, a hard-killed holder is taken over, the race put-back) are the behaviour that was already right, now pinned; the old code failing the second-witness rows is what shows the new rule is new. (The last two rows, the exit codes and the unreadable locks, came from the first mutants run, below.)
+
+## Mutants (`heavy-run.mutants.js`, new, in the pattern of `reply-slot.mutants.js`; WIRING-swept: it takes the lock itself)
+37 mutants on the load-bearing lines: exclusive create, nested token, release, the max wait running anyway, the timeout exit code, kill(0) (EPERM, bad pids), the takeover (never / always / unlogged / unrecorded / set-aside left / race put-back), the young rule (off, boundary inclusive, zero, one minute, unknown age as old, null as gone, answer ignored, said at every poll, readings missing from the log), tasklist (wrong pid, wrong column, status ignored, listed means gone, throw as gone, every platform, not hidden, no timeout), unreadable locks. **First run 31 of 37; I fixed what it showed: two test gaps (the exit codes, unreadable locks: rows added), and one RUNNER bug (a mutant that made the suite hang was scored "survived" because the run printed `NaN`; a hang or crash now counts as caught, with a 90 s limit instead of 10 minutes). Second run: 35 of 37 caught, 0 not applied.** The 2 survivors are redundant checks, not gaps: dropping the alive check in the race put-back only costs one more loop (the discarded lock is dead either way), and `r.error ||` in `pidGone` is covered by `r.status !== 0` (a spawn error has no status).
+- **I ran the mutants runner with a private temp data dir for its own `hold()`**, not the live lock: the chair held the live lock for its harness run, the loop is light (copies and temp locks only) and the live lock was never touched (checked after: still pid 3124's). Say if you want it run behind the live lock instead.
+
+## Guards
+`portable-paths.js` green (0 new), `carrier-drift.js` GREEN. `heavy-run.test.js` 25/0.
+
+## What this does not establish
+- **I did not see pid 3828 itself** (it was killed before I started); the identification of the takeover with the TaskStop rests on the two timestamps 1.5 s apart, the task output ending `[killed]` 31 ms after the stop, and the same mechanism reproduced on a probe. If anything shows output from that node run AFTER 01:58:50.101Z, this reading is wrong and the cause is open; the probes say kill(0) would not be it.
+- It does not say the chair's perception was careless: the lock's message ("not running at 38 min") is the first thing a reader sees, and TaskStop followed by an immediate takeover looks like a live-lock takeover unless you line up the clocks.
+- The second witness protects against a future kill(0) misread (for example a process the caller cannot open that reports ESRCH, which I could not produce); it has not been needed so far.
+- **A real hazard this showed, not fixed:** TaskStop leaves the lock file, and the next waiter takes it at once. That is right when the whole tree dies, as measured here for node + `cmd.exe` + child. A stop that killed only the outer process and left a running child would let a second heavy run start beside it; I did not find that case, but the lock cannot see it (it looks at the holder's pid only).
+
+NEXT: chair land heavyrun-a (7f17a048); nothing to install (heavy-run.js is read by path); decide if a TaskStop should release the lock itself (it cannot today)

@@ -1,0 +1,168 @@
+ℹ K1 every segment counts as constant (no chord is ever drawn): 14 of 15 run tests failed
+ℹ K2 no segment counts as constant (a chord everywhere, even on a constant width): 4 of 4 run tests failed
+ℹ K3 a chord's profile is the one at its START: 7 of 9 run tests failed
+ℹ K4 a chord blends from its END profile (no change across the segment): 7 of 9 run tests failed
+ℹ K5 the segment is not marked as a chord (the readers do not evaluate its blend): 3 of 3 run tests failed
+ℹ K6 a chord's blend runs over twice the segment (its end row is not the end profile): 6 of 6 run tests failed
+ℹ K7 a chord's weight is already 1 at its start: 6 of 6 run tests failed
+ℹ K8 the next piece and a flight take a chord's START as the last profile: 1 of 10 run tests failed
+ℹ K9 a legacy piece's first row for the seam fade is its END: 2 of 6 run tests failed
+ℹ K10 a legacy piece's last row for the seam fade is its START: 1 of 6 run tests failed
+ℹ K11 the same-cross-section tolerance is 10 m (a width change is called constant): 5 of 6 run tests failed
+ℹ K12 readsBlend leaves the chord out (readAt and the joint check take the target for the whole segment): 3 of 3 run tests failed
+ℹ K13 the water does not evaluate a chord's blend: 1 of 3 run tests failed
+ℹ K14 jointSteps looks at cup segments only (a chord joint is not inspected): 1 of 3 run tests failed
+ℹ K15 a constant segment takes the profile at its END, not its middle (today's bytes change): 4 of 4 run tests failed
+ℹ M1 (K1a-1) a cup piece renders the legacy profile (the r cap applies): 1 of 2 run tests failed
+ℹ M2 (K1a-2) only the left edge is cupped: 2 of 2 run tests failed
+ℹ M3 (K1a-3) c is taken as radians: 2 of 2 run tests failed
+ℹ M4 (K2-3) a non-cumulative shape: each quarter's own rise, not the running total: 2 of 2 run tests failed
+ℹ M5 (K2-1) MAX raised to 165: 4 of 7 run tests failed
+ℹ M6 (K2-2) no guard on the document: 3 of 7 run tests failed
+ℹ M7 the fit's ringing is not clamped after the Extend fit: 3 of 7 run tests failed
+ℹ M8 Extend does not refuse a typed cup past 150: 1 of 3 run tests failed
+ℹ M9 Extend does not refuse a first-piece cup past 150: 1 of 1 run tests failed
+ℹ M10 the brush has no cup channel: 1 of 3 run tests failed
+ℹ M10b a cup that ends at a limit is not made flat (the next piece would need a control point past it): 1 of 1 run tests failed
+ℹ M10c the document guard has no tolerance for a solver's float noise at the limit: 1 of 1 run tests failed
+ℹ M29 (R2) no morph: a cup after a legacy piece starts on the cup shape, not the legacy one: 4 of 8 run tests failed
+ℹ M30 (R2) the morph carries no difference (the legacy shape is dropped inside the road): 4 of 8 run tests failed
+ℹ M31 (R2) the morph never fades (the legacy difference stays for the whole piece): 1 of 8 run tests failed
+ℹ M11 (K3-1) c is left out of the joint test between two cup pieces: 1 of 11 run tests failed
+ℹ M12 (K3-2) c is reset after a flight, like the heading rate: 1 of 11 run tests failed
+ℹ M13 (K3-3) c is left out of the closure rows: 1 of 1 run tests failed
+ℹ M14 (K3-4) a legacy piece hands over the family's nominal edge, not the one it renders: 1 of 13 run tests failed
+ℹ M15 the legacy ↔ cup joint is not checked: 1 of 8 run tests failed
+ℹ M16 a piece extended after a cup piece is a legacy piece: 2 of 11 run tests failed
+ℹ M17 (K1b-1) the blend is dropped: each segment steps to its own profile: 12 of 13 run tests failed
+ℹ M18 the weight inversion is wrong (z = y, no Newton polish): 6 of 13 run tests failed
+ℹ M19 a segment where c falls does not swap the pair: 6 of 13 run tests failed
+ℹ M20 a width change is not a chord: the run keeps the start width: 1 of 13 run tests failed
+ℹ M33 (R1) atSegment ignores the distance into the segment: 2 of 2 run tests failed
+ℹ M34 (R1) the marker layout reads segment.profile: 1 of 1 run tests failed
+ℹ M35 (R1) validation reads segment.profile: 1 of 2 run tests failed
+ℹ M36 (R1) the export sections read segment.profile: 1 of 1 run tests failed
+ℹ M37 (R1) the water reads segment.profile: 1 of 1 run tests failed
+ℹ M38 (R1) the camera's span reads segment.profile: 1 of 1 run tests failed
+ℹ M39 (R1) the readers evaluate a word document font-transition blend too (its validation and layout change): 1 of 1 run tests failed
+ℹ M40 (R1) the adapter does not mark a cup segment (the readers then take its target for the whole segment): 1 of 2 run tests failed
+ℹ M41 (R3) no reverse morph: a cup that closes onto a legacy start is drawn to its own shape: 8 of 12 run tests failed
+ℹ M42 (R3) the reverse morph never fades in (the tail keeps the cup shape): 8 of 12 run tests failed
+ℹ M43 (R3) the reverse morph carries no difference (the legacy shape is dropped): 8 of 12 run tests failed
+ℹ M44 (R3) close() does not hold the cup at the legacy start edge: 3 of 12 run tests failed
+ℹ M45 (R3) close() never refuses a seam it cannot fade: 1 of 12 run tests failed
+ℹ M47 (R3) the mirror: a cup START does not fade out of the legacy END: 1 of 12 run tests failed
+ℹ M50 (R3) a cup followed by a legacy piece inside the track is not faded (only the lap seam is): 1 of 12 run tests failed
+ℹ M48 (R3) validation does not red a joint step: 1 of 12 run tests failed
+ℹ M49 (R3) jointSteps ignores the lap seam: 2 of 12 run tests failed
+ℹ M21 a legacy piece is rendered as a cup piece at c = 0: 1 of 4 run tests failed
+ℹ M22 a /2 piece is read as a cup piece: 2 of 4 run tests failed
+ℹ M23 a legacy piece's text carries a c array: 2 of 4 run tests failed
+ℹ M24 (K5-2) the schema is still core/2: 1 of 4 run tests failed
+ℹ M25 a cup brush is allowed to reach a legacy piece: 1 of 1 run tests failed
+ℹ M26 (K6-3) the cup feeds the roll: 2 of 2 run tests failed
+ℹ M27 (K7-1) cupToDeg reads the wrong station of the document: 2 of 2 run tests failed
+ℹ M28 (K7-2) a legacy piece reads the nominal edge (w and r ignored): 1 of 2 run tests failed
+ℹ R2 'start' is the whole piece, not the first span: 9 of 9 run tests failed
+ℹ R3 startRampM is a fixed 20 m even on a short piece: 2 of 5 run tests failed
+ℹ R4 the extra ramp knots are not added: 9 of 14 run tests failed
+ℹ R5 the short-ramp channel is left as the least-squares fit (it rings): 9 of 9 run tests failed
+ℹ R6 the ideal ramp is not compressed (the curve completes later than R): 9 of 9 run tests failed
+ℹ R7 the Greville abscissae are shifted (the hold is not exact and the ramp lags): 1 of 11 run tests failed
+ℹ R8 the joint's first two control points are overwritten too (C1 lost): 13 of 13 run tests failed
+ℹ R9 the range clamp is dropped (a continued slope can carry the ramp past its target): 1 of 10 run tests failed
+ℹ R10 a ramp as long as the piece counts as short (the whole-piece blend is replaced): 1 of 5 run tests failed
+ℹ R11 a channel with no target still gets the ramp treatment: 1 of 5 run tests failed
+ℹ R12 an unknown channel in the map is accepted: 1 of 7 run tests failed
+ℹ R13 a map value longer than the piece is accepted: 1 of 7 run tests failed
+ℹ R14 a map value of zero or less is accepted: 2 of 7 run tests failed
+ℹ R15 the number path no longer refuses a transition past the length: 1 of 13 run tests failed
+ℹ R16 the number path uses a different default (half the piece) for no transition: 3 of 6 run tests failed
+ℹ R17 the ramp control points are not rounded to the channel quantum (the document would not round-trip): 1 of 3 run tests failed
+ℹ W1 normal force: gravity term dropped: caught by TEST 5a (B, sealed) | 06 §8 (cone turning radius) | 06 §8 (crest) | the normal force matches the cone's closed form N = g·cos β + (v_φ²/r)·sin β at EVERY step of a 45° lap, across the closing seam's short span too | ENERGY | ENERGY where the dish DEEPENS over 40 m (a different cross-section at every sample), streams crossing it | a closed loop whose samples stop 20 m short of the seam is closed by the first sample one lap on | a road whose s is NOT arc length (a lifted sample, D186) rides right when its samples carry d1 = dpos/ds and d2; without them it is refused
+ℹ W2 normal force: the cross term not doubled: caught by ENERGY on a TWISTING straight (roll 0 → 0.6 over 120 m), streams crossing it
+ℹ W3 no velocity projection onto the tangent plane: caught by ENERGY | ENERGY on a TWISTING straight (roll 0 → 0.6 over 120 m), streams crossing it
+ℹ W4 RK4: middle stages weighted 1, not 2: caught by TEST 5a (B, sealed) | TEST 5b (B, sealed) | TEST 5b, tighter than the seal (pane C's own bar) | 06 §8 (cone turning radius) | 06 §8 (crest) | ENERGY | ENERGY on a TWISTING straight (roll 0 → 0.6 over 120 m), streams crossing it | ENERGY where the dish DEEPENS over 40 m (a different cross-section at every sample), streams crossing it | a closed loop whose samples stop 20 m short of the seam is closed by the first sample one lap on | a road whose s is NOT arc length (a lifted sample, D186) rides right when its samples carry d1 = dpos/ds and d2; without them it is refused
+ℹ W5 spill: the −u lip never checked: caught by TEST 5b (B, sealed) | TEST 5b, tighter than the seal (pane C's own bar)
+ℹ W6 spill: the +u lip never checked: caught by 06 §8 (cone, too slow)
+ℹ W7 lift-off never flagged: caught by 06 §8 (crest) | a cross-section that STEPS between two samples is a real kink in the surface, and the water reads it (lift-off at the step), never smooths it away | a road whose s is NOT arc length (a lifted sample, D186) rides right when its samples carry d1 = dpos/ds and d2; without them it is refused
+ℹ W8 shock never flagged: caught by SHOCK
+ℹ W9 quintic Hermite: a basis coefficient off: caught by TEST 5a (B, sealed) | 06 §8 (crest) | the normal force matches the cone's closed form N = g·cos β + (v_φ²/r)·sin β at EVERY step of a 45° lap, across the closing seam's short span too | a closed loop whose samples stop 20 m short of the seam is closed by the first sample one lap on | a road whose s is NOT arc length (a lifted sample, D186) rides right when its samples carry d1 = dpos/ds and d2; without them it is refused
+ℹ W10 frame slope: equal-spacing central difference: caught by the normal force matches the cone's closed form N = g·cos β + (v_φ²/r)·sin β at EVERY step of a 45° lap, across the closing seam's short span too | a closed loop whose samples stop 20 m short of the seam is closed by the first sample one lap on
+ℹ W11 profile: Y′ without the side's sign: caught by ENERGY | a cross-section that STEPS between two samples is a real kink in the surface, and the water reads it (lift-off at the step), never smooths it away | ENERGY where the dish DEEPENS over 40 m (a different cross-section at every sample), streams crossing it
+ℹ W12 profile blend: no s-derivative: caught by ENERGY where the dish DEEPENS over 40 m (a different cross-section at every sample), streams crossing it
+ℹ W13 spill located at the step's end, not inside it: caught by TEST 5b, tighter than the seal (pane C's own bar)
+ℹ W14 projection: Gauss–Newton step reversed: caught by TEST 5a (B, sealed) | TEST 5b (B, sealed) | TEST 5b, tighter than the seal (pane C's own bar) | 06 §8 (cone, too slow) | 06 §8 (cone turning radius) | 06 §8 (crest) | the normal force matches the cone's closed form N = g·cos β + (v_φ²/r)·sin β at EVERY step of a 45° lap, across the closing seam's short span too | SHOCK | ENERGY | a cross-section that STEPS between two samples is a real kink in the surface, and the water reads it (lift-off at the step), never smooths it away | ENERGY where the dish DEEPENS over 40 m (a different cross-section at every sample), streams crossing it | a closed loop whose samples stop 20 m short of the seam is closed by the first sample one lap on | a road whose s is NOT arc length (a lifted sample, D186) rides right when its samples carry d1 = dpos/ds and d2; without them it is refused
+ℹ W15 energy instrument reads nothing: caught by ENERGY
+ℹ W16 the pos′ = T refusal disabled: caught by a road whose s is NOT arc length (a lifted sample, D186) rides right when its samples carry d1 = dpos/ds and d2; without them it is refused | refused loudly
+ℹ W18 the pos′ = T check without the h²/12 correction: caught by a closed loop whose samples stop 20 m short of the seam is closed by the first sample one lap on
+ℹ W19 a lifted sample's d1 ignored: caught by a road whose s is NOT arc length (a lifted sample, D186) rides right when its samples carry d1 = dpos/ds and d2; without them it is refused
+ℹ W17 closed seam: the wrap sample not appended: caught by a closed loop whose samples stop 20 m short of the seam is closed by the first sample one lap on
+ℹ KE1-1 G = t (the slice is a kink): 1 of 2 run tests failed
+ℹ KE1-2 the edge term is signed by the side (right side −e): 1 of 1 run tests failed
+ℹ KE1-3 e is taken as radians: 1 of 1 run tests failed
+ℹ KE1-4 four intervals for the outer zone: 1 of 1 run tests failed
+ℹ KE1-5 the slice is placed at the full width, not the half-width (the edge is never reached): 1 of 1 run tests failed
+ℹ KE2-1 the cap is applied to e alone, not the total: 1 of 1 run tests failed
+ℹ KE2-2 no guard on the edge in the document: 1 of 1 run tests failed
+ℹ KE2-3 s has no lower bound: 1 of 1 run tests failed
+ℹ KE2-4 e may be negative (a lip): 1 of 1 run tests failed
+ℹ KE2-5 extend does not refuse a target the cap cannot hold: 1 of 1 run tests failed
+ℹ KE2-6 the fit's ringing is not clamped (e): 1 of 1 run tests failed
+ℹ KE2-7 a legacy piece's total cap ignores its own edge angle (e alone against 150): 1 of 1 run tests failed
+ℹ KE3-3 the schema is still /3: 1 of 2 run tests failed
+ℹ KE3-4 every piece's text carries e, s and t: 1 of 1 run tests failed
+ℹ KE3-5 a /3 file is not read: 1 of 1 run tests failed
+ℹ KE3-6 a text with an edge array is not read as an edge piece: 1 of 1 run tests failed
+ℹ KE4-1 e is left out of the joint test: 1 of 1 run tests failed
+ℹ KE4-2 e is reset after a flight, like the heading rate: 1 of 1 run tests failed
+ℹ KE4-3 one blend start for the whole piece (the cup's run trick on a moving slice): 2 of 2 run tests failed
+ℹ KE4-4 no blend: one profile per segment (the stair-step): 1 of 1 run tests failed
+ℹ KE4-5 the mesh ignores the piece's shared row grid (each segment samples its own rows: a zip inside the piece): 1 of 1 run tests failed
+ℹ KE4-6 the chords do not share one fraction array: 1 of 1 run tests failed
+ℹ KE5-1 the csp-off steep check is dropped: 4 of 4 run tests failed
+ℹ KE6-2 e is fed into the roll: 1 of 2 run tests failed
+ℹ KE7-1 edgeToDeg reads the start of the piece: 1 of 1 run tests failed
+ℹ KE7-3 a plain piece reads the wrong default slice: 1 of 1 run tests failed
+ℹ KT1-1 the tube's edge angle is t, not t/2: 1 of 1 run tests failed
+ℹ KT1-2 a tube HELD in the slot is not refused: 1 of 1 run tests failed
+ℹ KT1-3 the closure is 20 mm short of closing: 1 of 1 run tests failed
+ℹ KT1-4 the slot formula has no factor 2: 1 of 1 run tests failed
+ℹ KT1-5 a sweep past 360 is accepted: 1 of 1 run tests failed
+ℹ KT2-1 no morph into a tube from another kind (a zip with no fade): 1 of 1 run tests failed
+ℹ KT3-1 CUP_MAX is applied to an open tube's t/2 + e: 1 of 1 run tests failed
+ℹ KT3-2 a closed tube takes an edge: 1 of 1 run tests failed
+ℹ KT4-1 a cup and a tube are allowed together (extend): 1 of 1 run tests failed
+ℹ KT4-2 a tube starts at the wrong edge after another kind (t = edge, not 2·edge): 1 of 1 run tests failed
+ℹ KT4-4 endState reports t at a non-tube head (twice the edge, the internal value leaks): 1 of 1 run tests failed
+ℹ KT4-5 a tube after another kind starts from the head's t (0), not from tNext: 2 of 2 run tests failed
+ℹ KT4-3 a cup after a closed tube is not refused by name: 1 of 1 run tests failed
+ℹ KS2-1 the roll stays the per-segment smoothstep under a heartline: 1 of 1 run tests failed
+ℹ KS2-2 the heartline is a constant per segment (a step between segments): 1 of 2 run tests failed
+ℹ KS2-3 a closed tube carries heartline 0: 1 of 1 run tests failed
+ℹ KS2-4 the heartline ramp starts at 180 (a step where a tube hands over to a cup): 1 of 2 run tests failed
+ℹ KS2-5 water over a heartline is an anonymous throw: 1 of 1 run tests failed
+ℹ KS3-1 the roll rate is read over a 0.5 m chord: 1 of 1 run tests failed
+ℹ KS3-2 the bar is raised to 2.0: 1 of 1 run tests failed
+ℹ KS3-3 the gravity-frame φ′ is read instead of the frame-intrinsic rate (blind on a climbing turn at constant bank): 1 of 1 run tests failed
+ℹ KS3-4 the amber bar is dropped: 1 of 1 run tests failed
+ℹ KS3-5 the roll rate is never checked: 1 of 1 run tests failed
+ℹ KS4-1 the spiral's curvature is not given to the validator (kvec of the integrated curve): 1 of 1 run tests failed
+ℹ KS4-2 a lifted sample keeps only its own fields (spread of a view): 2 of 2 run tests failed
+ℹ KV1 tube-too-narrow is never raised: 1 of 1 run tests failed
+ℹ KV2 the narrowest tube bar is 5 m: 1 of 1 run tests failed
+ℹ KV2b the narrowest tube bar is the old 9.43 (the eye on the ceiling): 1 of 1 run tests failed
+ℹ KV3 edge-past-cap is never raised: 1 of 1 run tests failed
+ℹ KC1 close does not refuse a seam that joins a tube to another kind: 1 of 1 run tests failed
+ℹ KC2 close does not refuse an edge active at one end only: 1 of 1 run tests failed
+ℹ KC3 close moves e (it joins e at a seam where only one end has it): 1 of 1 run tests failed
+ℹ KB1 an e brush may reach a piece without an edge: 1 of 1 run tests failed
+ℹ sample track: 662 characters of code for 2306 of canonical text
+ℹ tests 2673
+ℹ suites 0
+ℹ pass 2658
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 8
+ℹ todo 7
+ℹ duration_ms 1570295.2613

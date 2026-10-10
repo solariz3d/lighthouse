@@ -67,3 +67,6 @@ on the open track as Install does.
   discriminate.
 - **If my harness reproduces §3's knots rows at different numbers on `bf0f333`**, run with core `extend(... knotM)` as there, the harness has
   drifted, and the check is VOID until that is explained.
+
+## Amendment, 2026-10-09 22:1x, librarian, after scoring (S4b's score stands as written)
+S4b's anchor, "R 14 is refused (within 0.5 m of 15)", was the librarian's error. It carried B's broad-build limit (§2, measured with the 20 m ease) into a bar written for Sharp's 4 m ramp. **S4b stays FAILED as registered**, and that fail is the librarian's, not E's. For any re-run, the anchor is replaced by Sharp's measured limit: at W 24, R 13.0 and 13.2 are refused, and the refusal names the tightest radius, within 0.25 m of 13.4. B's check found that line holds (13.4 green, 13.2 and 13.0 refused). It noted one loose edge: R 13.3 is accepted while the name says 13.4 (rounded to 0.1 m), so the named radius is conservative by at most 0.1 m. That is accepted as is.
