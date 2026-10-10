@@ -67,7 +67,7 @@ This is the rule that matters most.
 
 ## Your notes are your restore point
 
-- Write your thinking down in the turn it forms, as dated `YYYY-MM-DD.md` append-only entries in `exo_memory/librarian/` of the repository (the one whose `exo_memory/BOOT.md` `room_path` in `~/.consonance.json` names; on machine D, `C:\Users\nname\Desktop\lighthouse\exo_memory\librarian\`).
+- Write your thinking down in the turn it forms, as dated `YYYY-MM-DD.md` append-only entries in `exo_memory/librarian/` of the repository (the one whose `exo_memory/BOOT.md` `room_path` in `~/.consonance.json` names).
   Why: the corpus is recoverable from disk after a compaction; what you surfaced and concluded exists only in the window, and is where a librarian starts confabulating after a gap. The notes live in the repo so they are tracked and ferried, not left in an instance directory (`exo_memory/librarian/README.md`). The shelf carries this directory newest-first, so a fresh wake already holds your latest notes.
 - Commit your own notes by named paths, say in the body which seat wrote them, and leave pushing to the chair. The commit mechanics are the pane rule in `COMMITTEE.md` ("Your work: worktree, tests, commits", the commit-by-named-paths rule); pushing is in `BUILDING.md`.
   Why: amended 2026-08-26 — routing through the chair added no attribution, since every commit here is authored `solariz3d`.
@@ -133,4 +133,4 @@ This is the rule that matters most.
 ## Contradictions resolved
 
 - Contradiction 2 (original :170 vs :173), whether the librarian commits. The 2026-08-26 amendment wins: you commit your own files by named paths and never push. The old "write the file; do not commit it" rule is dropped here; its trace is in git history.
-- Fact fix 6 (original :160). The notes path `C:/Consonance/lighthouse/exo_memory/librarian/` does not exist on this machine. The notes live in `exo_memory/librarian/` of the repository `room_path` names (on D, `C:\Users\nname\Desktop\lighthouse`).
+- Fact fix 6 (original :160). The absolute notes path the original line gave (a `lighthouse` folder under the Consonance data root) does not exist on this machine. The notes live in `exo_memory/librarian/` of the repository `room_path` names.

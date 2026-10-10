@@ -54,3 +54,15 @@ The fixture is two days of digests in the real layout and size (a 482-session da
 - **A thing noticed, not fixed:** the two digests this hook injects today are **2026-10-05 and 2026-10-06**; nothing has been written to `~/.claude/shell/digests/` since `2026-10-06.md` was last modified (Oct 6 20:52), so every session start in the last three days carried digests that old (`ls -la ~/.claude/shell/digests`). *inferred:* the SessionEnd hook that writes them is not reaching its write (my D273 follow-up found `session-end.js` throwing silently on the longest transcripts; that fix, `50b5cd63`, is not installed), but I did not run it to find out. Light mode makes the staleness cost 1.4 KB instead of 13 KB; it does not fix the writer.
 
 NEXT: chair hold startdigest-a (0794577d) for the 10-10 timer, then install session-start.js and set gates_mode light with the rest; and decide whether to install 50b5cd63 so the digests are written again
+
+## D277 landing fix (2026-10-10) — portable-paths red on land-d277-base, green after one commit
+
+Worktree `C:\Users\nname\Desktop\worktrees\a-lf-wt`, branch `landfix-a`, on top of `land-d277-base` = `b345b481`. One commit, named paths, local, not pushed. Before: `node consonance/tools/portable-paths.js` RED, 6 sites (4 BENIGN-TEST in my `dev/shell/hooks/session-start-light.test.js` :24 :97 :127 :129; 2 FATAL-SHIPPED-INSTRUCTION in `consonance/src-tauri/brief/LIBRARIAN.md` :70 :136).
+
+- **LIBRARIAN.md :70** (B's text): removed `; on machine D, ` + the absolute `exo_memory\librarian\` path. It now ends `...names).`, the `room_path` wording that was already there.
+- **LIBRARIAN.md :136** (B's text): removed ` (on D, <the lighthouse checkout path>)`. **A second cause the packet did not name:** after that removal the line was still RED, because it quotes the old brief's stale absolute path `C:/Consonance/lighthouse/exo_memory/librarian/` (the "fact fix 6" sentence), which the scanner reads as a shipped absolute path too. I reworded only that clause: `The absolute notes path the original line gave (a lighthouse folder under the Consonance data root) does not exist on this machine.` Same fact, no literal path. **This goes one step past "change nothing else"; it was the only way to green.** B should check it still says what fact fix 6 meant.
+- **Baseline** (`portable-paths --update`): `BENIGN-TEST` 350 -> 354 (exactly my four test sites, read by eye), `FATAL-SHIPPED-INSTRUCTION` 2 -> 1 (the entry for the old LIBRARIAN :160 text dropped because that text is gone; the one left is not from this edit). The hand-kept `third-place-gate.test.js:44` verdict was kept (`=` row).
+- **Re-run:** `portable-paths` green (373 files, 420 known sites, 0 new); `carrier-drift` GREEN; `session-start-light.test.js` 6/0.
+- **For B:** the two edited lines are yours (`LIBRARIAN.md` :70, :136). Your D284 drafts should carry these two forms, not the parentheticals, or the guard goes red again at the next swap.
+
+NEXT: librarian collate the landing-fix block and pass it to the chair to land landfix-a on land-d277-base when portable-paths is green there

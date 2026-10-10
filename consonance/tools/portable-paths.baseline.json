@@ -2,7 +2,7 @@
   "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
-    "BENIGN-TEST": 350,
+    "BENIGN-TEST": 354,
     "BENIGN-FIXTURE": 9,
     "REVIEW": 15,
     "DISGUISED": 15,
@@ -10,7 +10,7 @@
     "FATAL-USER": 7,
     "FATAL-DEFAULT": 13,
     "FATAL-TEST-READ": 2,
-    "FATAL-SHIPPED-INSTRUCTION": 2
+    "FATAL-SHIPPED-INSTRUCTION": 1
   },
   "sites": [
     {
@@ -1370,13 +1370,6 @@
       "verdict": "BENIGN-MESSAGE",
       "text": "Write-Host ' Main should resume its real thread at C:\\Consonance\\instances\\main' -ForegroundColor DarkGray",
       "key": "consonance/restore-main.ps1\u0000Write-Host ' Main should resume its real thread at C:\\Consonance\\instances\\main' -ForegroundColor DarkGray\u0000#1"
-    },
-    {
-      "file": "consonance/src-tauri/brief/LIBRARIAN.md",
-      "detector": "DRIVE",
-      "verdict": "FATAL-SHIPPED-INSTRUCTION",
-      "text": "`C:/Consonance/lighthouse/exo_memory/librarian/` as dated `YYYY-MM-DD.md` append-only entries, in the",
-      "key": "consonance/src-tauri/brief/LIBRARIAN.md\u0000`C:/Consonance/lighthouse/exo_memory/librarian/` as dated `YYYY-MM-DD.md` append-only entries, in the\u0000#1"
     },
     {
       "file": "consonance/src-tauri/gen-deck.ps1",
@@ -2757,6 +2750,34 @@
       "verdict": "BENIGN-TEST",
       "text": "input: JSON.stringify({ hook_event_name: 'PreCompact', trigger: 'manual', cwd: 'C:\\\\somewhere\\\\main' }), encoding: 'utf8', timeout: 20000, cwd: w.root,",
       "key": "dev/shell/hooks/precompact-repo.test.js\u0000input: JSON.stringify({ hook_event_name: 'PreCompact', trigger: 'manual', cwd: 'C:\\\\somewhere\\\\main' }), encoding: 'utf8', timeout: 20000, cwd: w.root,\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/session-start-light.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.doesNotMatch(light, /\\n- \\d\\d:\\d\\d:\\d\\d UTC/, 'no timestamp list left'); assert.match(light, /## Recent sessions in C:\\\\Consonance\\\\instances\\\\librarian\\n- 2026-10-09T13:00:00\\.000Z/, 'the seat\\'s own recent sessions stay');",
+      "key": "dev/shell/hooks/session-start-light.test.js\u0000assert.doesNotMatch(light, /\\n- \\d\\d:\\d\\d:\\d\\d UTC/, 'no timestamp list left'); assert.match(light, /## Recent sessions in C:\\\\Consonance\\\\instances\\\\librarian\\n- 2026-10-09T13:00:00\\.000Z/, 'the seat\\'s own recent sessions stay');\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/session-start-light.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const CWDS = ['third-place', 'librarian', 'main', 'sibling-5bf9d657', 'sibling-3d57124e', 'sibling-0845a868', 'sibling-07b8a48f', 'sibling-a80a1c20'].map((n) => 'C:\\\\Consonance\\\\instances\\\\' + n);",
+      "key": "dev/shell/hooks/session-start-light.test.js\u0000const CWDS = ['third-place', 'librarian', 'main', 'sibling-5bf9d657', 'sibling-3d57124e', 'sibling-0845a868', 'sibling-07b8a48f', 'sibling-a80a1c20'].map((n) => 'C:\\\\Consonance\\\\instances\\\\' + n);\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/session-start-light.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const [name, text] of [['no groups', '# 2026-10-06 Digest\\n\\n## 12 sessions\\n'], ['junk', 'x'.repeat(400) + '\\n\\u0000\\n'], ['empty', ''], ['text lines', '# 2026-10-06 Digest\\n\\n## 3 sessions\\n\\n### C:\\\\x\\\\y\\n- 01:02:03 UTC — a first line of text\\n- 02:03:04 UTC — another\\n- 03:04:05 UTC\\n']]) {",
+      "key": "dev/shell/hooks/session-start-light.test.js\u0000for (const [name, text] of [['no groups', '# 2026-10-06 Digest\\n\\n## 12 sessions\\n'], ['junk', 'x'.repeat(400) + '\\n\\u0000\\n'], ['empty', ''], ['text lines', '# 2026-10-06 Digest\\n\\n## 3 sessions\\n\\n### C:\\\\x\\\\y\\n- 01:02:03 UTC — a first line of text\\n- 02:03:04 UTC — another\\n- 03:04:05 UTC\\n']]) {\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/session-start-light.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "if (name === 'text lines') { assert.ok(light.includes('- C:\\\\x\\\\y: 3 · last 03:04:05, 02:03:04, 01:02:03 UTC'), 'a line with text after the time still counts, the text is dropped'); assert.doesNotMatch(light, /a first line of text/); }",
+      "key": "dev/shell/hooks/session-start-light.test.js\u0000if (name === 'text lines') { assert.ok(light.includes('- C:\\\\x\\\\y: 3 · last 03:04:05, 02:03:04, 01:02:03 UTC'), 'a line with text after the time still counts, the text is dropped'); assert.doesNotMatch(light, /a first line of text/); }\u0000#1"
     },
     {
       "file": "dev/shell/hooks/third-place-gate.test.js",
