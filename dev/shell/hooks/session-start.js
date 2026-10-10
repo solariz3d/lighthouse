@@ -241,6 +241,37 @@ function getKnocks(since) {
   return notes;
 }
 
+// D277 part 5 (plan: exo_memory/loop/plan_lighten_the_load_2026-10-09.md): the digests behind ONE switch, `gates_mode` in ~/.consonance.json, the switch of the three paperwork gates.
+// Absent, unreadable, or anything but "light" (trimmed, any case) is "strict": TODAY's output, byte for byte (dev/shell/hooks/session-start-light.test.js pins it by sha256).
+// "light": the digests are what a waking seat has been seen to use. Measured by reading 1,381 session starts of the six committee seats (exo_memory/loop/startdigest_evidence/):
+// not one quoted a digest time or a listed session time back in 1,360 sessions that did anything, and the digest-word hits were other digests (the board's, the pulse's, a sha). So
+// each day keeps its total and, per folder, the session count; the newest day also keeps the last three start times, unless this is a thread that was never dark (resume, compact).
+// gatesModeFrom is the master's text (consonance/hooks/sources-gate.js): keep them the same.
+function gatesModeFrom(raw) {
+  try {
+    const v = (JSON.parse(String(raw == null ? '' : raw).replace(/^\uFEFF/, '')) || {}).gates_mode;
+    return typeof v === 'string' && v.trim().toLowerCase() === 'light' ? 'light' : 'strict';
+  } catch (_) { return 'strict'; }
+}
+function gatesMode() {
+  try { return gatesModeFrom(fs.readFileSync(path.join(process.env.USERPROFILE || os.homedir(), '.consonance.json'), 'utf8')); } catch (_) { return 'strict'; }
+}
+/** The light form of ONE day's digest, or null when it cannot be read (then the caller keeps the digest as it is: a parse failure hides nothing).
+ *  Layout (dev/shell/hooks/session-end.js): "## N sessions", then per folder "### <cwd>" and one "- HH:MM:SS UTC[ — text]" line per session. */
+function lightDigest(content, withTimes) {
+  const total = /^## (\d+) sessions\s*$/m.exec(content), groups = [];
+  for (const line of String(content).split(/\r?\n/)) {
+    const g = /^### (.+?)\s*$/.exec(line);
+    if (g) { groups.push({ cwd: g[1], n: 0, times: [] }); continue; }
+    if (!groups.length || !/^- /.test(line)) continue;
+    const grp = groups[groups.length - 1], t = /^- ([0-9]{2}:[0-9]{2}:[0-9]{2}) UTC\b/.exec(line);   // (the digits are spelled out: the portable-paths guard misreads the short form as a drive path)
+    grp.n++; if (t) grp.times.push(t[1]);
+  }
+  if (!total || !groups.length) return null;
+  const rows = groups.map((g) => `- ${g.cwd}: ${g.n}${withTimes && g.times.length ? ` · last ${g.times.slice(-3).reverse().join(', ')} UTC` : ''}`);
+  return [`${total[1]} sessions`, ...rows].join('\n');
+}
+
 function buildContext(meta) {
   const sections = [];
 
@@ -316,11 +347,12 @@ function buildContext(meta) {
   const digests = isThirdPlaceCwd(meta.cwd) ? [] : getRecentDigests(2);
   if (digests.length > 0) {
     sections.push('## Recent session digests');
-    for (const d of digests) {
+    const light = gatesMode() === 'light';   // D277 part 5: see lightDigest
+    digests.forEach((d, i) => {
       sections.push(`### ${d.date}`);
-      sections.push(d.content);
+      sections.push((light && lightDigest(d.content, i === 0 && !continuing)) || d.content);
       sections.push('');
-    }
+    });
   }
 
   if (meta.cwd) {

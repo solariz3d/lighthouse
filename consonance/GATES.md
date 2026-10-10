@@ -188,6 +188,10 @@ instead of refusing it. Each still writes its row to the same ledger: the SOURCE
 program's own record, 4.0% of re-sends after a refusal fixed a claim, while 10.0% removed or blurred one
 (`exo_memory/loop/loop_friction_measure_2026-10-09.md` in the lighthouse repository).
 The hooks read the key each time they run; the trailer gate is in the app, which also reads it on each message.
+The same key also lightens the session-start digest (`dev/shell/hooks/session-start.js`): in light mode each of the two recent days keeps
+its session total and one count per folder, the newest day also keeps the last three start times, and a resumed or compacted thread
+keeps counts only (about 13.4 KB becomes about 1.4 KB at startup and 1.1 KB on resume or compact, measured on this room's own digests).
+The ambient block, the seat's own recent sessions, the L3 notices and the night table are not touched.
 
 For the five hook gates (1, 2, 4, 5 and 6), removing the entry from `settings.json` turns the gate off at once. Running
 `dev\shell\install.ps1` again would put it back; to keep it off, mark its line in that script's `$register` list `Excluded`, with
