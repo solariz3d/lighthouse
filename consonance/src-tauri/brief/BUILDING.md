@@ -184,7 +184,7 @@ twice in a row: the chair re-ran the suite one second after the first run was st
 happen? … Every time something like this happens we need to trace the source."*
 - **Any command expected to take more than ~2 minutes runs in the background** (`run_in_background`), in every seat.
 - **The whole js-suite and full `cargo test` are the COLLATOR's** (the librarian's), run in the background before a
-  landing ring. **Heavy runs take `<data>/heavy-run.lock`** (`consonance/tools/heavy-run.js`, L098), so a second runner
+  landing ring. **Heavy runs take `<data>/heavy-run.lock`** (`consonance/tools/heavy-run.js`, L098; two slots by default, one run per tree (`CONSONANCE_HEAVY_SLOTS=1` = one machine-wide)), so a second runner
   waits and names the holder instead of racing.
 - **A pane hands back what it verified and does not hold its turn open waiting on the suite.** The collator runs it.
 - **The chair lands, or dispatches, and then ends its turn.** It never chains landing, suite, re-suite and dispatch in one
