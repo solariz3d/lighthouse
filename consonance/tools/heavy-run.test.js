@@ -129,11 +129,11 @@ test('no data dir is a REFUSAL, never a run without the lock', () => {
   assert.throws(() => H.acquire({ cmd: 'x', dataDir: null, env: {} }), /no data dir/);
 });
 
-test('the lock holds {pid, seat, cmd, started} (and the token)', () => {
+test('the lock holds {pid, seat, cmd, started} (and the token, and since D286 the tree)', () => {
   const d = tmp();
   const h = H.acquire({ cmd: 'trip-check.mutants', dataDir: d, env: { CONSONANCE_PANE: '0845a868-38f2' } });
   const l = readLock(d);
-  assert.deepStrictEqual(Object.keys(l).sort(), ['cmd', 'pid', 'seat', 'started', 'token']);
+  assert.deepStrictEqual(Object.keys(l).sort(), ['cmd', 'pid', 'seat', 'started', 'token', 'tree']);   // D286: the tree joined the record
   assert.strictEqual(l.seat, '0845a868');
   assert.strictEqual(l.cmd, 'trip-check.mutants');
   h.release();
@@ -315,4 +315,168 @@ test('WIRING (a source sweep): js-suite and every *.mutants.js and mutant-harnes
     'js-suite takes it only for the real tree — a fixture run is not a heavy run');
   assert.match(fs.readFileSync(path.join(__dirname, 'mutant-harness.js'), 'utf8'), /if \(!argv\.includes\('--audit'\)\) require\('\.\/heavy-run\.js'\)\.hold/,
     '--audit runs the gates only and does not take it');
+});
+
+// ---- D286 (the keeper, 09:38: "multiple heavy runs at once"): TWO SLOTS, ONE PER TREE ----
+// The lock existed so seats do not read each other's half-written files IN ONE CHECKOUT. A t180 landing has no business waiting on a lighthouse cargo run in another worktree. So the lock has
+// slots (default 2: heavy-run.lock and heavy-run.2.lock), each lock records its TREE, and a runner whose tree already holds a slot waits whatever slot is free. Trees are injected here
+// (`tree:`) where a real checkout is not the point; the rows that run real processes use real temp git repos.
+const slot2 = (d) => path.join(d, 'heavy-run.2.lock');
+const readFile = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
+const liveAcq = (d, tr, extra = {}) => H.acquire({ cmd: `run-${tr}`, dataDir: d, env: {}, tree: tr, slots: 2, alive: () => true, log: () => {}, ...extra });
+function waitFail(d, tr, extra = {}) {   // a runner that must NOT get a slot: fake clock; returns the timeout error (fails the row if it got in)
+  let t = 0; const logs = [];
+  let h;
+  try { h = liveAcq(d, tr, { maxWaitMs: 500, pollMs: 100, now: () => t, sleep: (ms) => { t += ms; }, log: (s) => logs.push(s), ...extra }); }
+  catch (e) { if (e.code !== 'HEAVY_RUN_TIMEOUT') throw e; e.logs = logs; return e; }
+  h.release(); assert.fail(`${tr} got slot ${h.slot} but should have waited`);
+}
+
+test('D286 (RED FIRST) two runners on DIFFERENT trees both run: slots 1 and 2, each lock names its tree', () => {
+  const d = tmp();
+  const a = liveAcq(d, '/t/a'), b = liveAcq(d, '/t/b');
+  assert.strictEqual(a.slot, 1); assert.strictEqual(b.slot, 2);
+  assert.strictEqual(readLock(d).tree, '/t/a'); assert.strictEqual(readFile(slot2(d)).tree, '/t/b');
+  assert.notStrictEqual(readLock(d).token, readFile(slot2(d)).token);
+  a.release(); assert.ok(!fs.existsSync(lockOf(d)) && fs.existsSync(slot2(d)), 'release frees only its own slot');
+  b.release(); assert.deepStrictEqual(fs.readdirSync(d), []);
+});
+
+test('D286 two runners on the SAME tree: the second waits, though slot 2 is free, and names the first', () => {
+  const d = tmp(); const a = liveAcq(d, '/t/a');
+  const e = waitFail(d, '/t/a');
+  assert.match(e.message, /gave up after .* pid \d+ \(run-\/t\/a, since /); assert.strictEqual(e.holders.length, 1);
+  assert.ok(!fs.existsSync(slot2(d)), 'it did not take the free slot');
+  assert.match(e.logs[0], /^heavy-run: waiting on .*run-\/t\/a.* — it holds this tree/);
+  a.release();
+});
+
+test('D286 the same tree waits WHICHEVER slot holds it (the holder is in slot 2, slot 1 is free)', () => {
+  const d = tmp(); const x = liveAcq(d, '/t/x'); const a = liveAcq(d, '/t/a'); x.release();   // slot 1 free, slot 2 holds /t/a
+  assert.strictEqual(a.slot, 2); assert.ok(!fs.existsSync(lockOf(d)));
+  waitFail(d, '/t/a'); assert.ok(!fs.existsSync(lockOf(d)), 'it did not take the free slot 1');
+  const c = liveAcq(d, '/t/c'); assert.strictEqual(c.slot, 1, 'a different tree takes the free slot'); c.release(); a.release();
+});
+
+test('D286 a THIRD runner with both slots held waits and names BOTH holders', () => {
+  const d = tmp(); const a = liveAcq(d, '/t/a'), b = liveAcq(d, '/t/b');
+  const e = waitFail(d, '/t/c');
+  assert.strictEqual(e.holders.length, 2);
+  assert.match(e.message, /run-\/t\/a.* and .*run-\/t\/b.* still hold the slots/);
+  assert.match(e.logs[0], /run-\/t\/a.* and .*run-\/t\/b.* — all 2 slots are held/);
+  assert.ok(fs.existsSync(lockOf(d)) && fs.existsSync(slot2(d)), 'both holders untouched');
+  const e2 = waitFail(d, '/t/a');   // the same tree as one of them: it is waiting on THAT one, and says so (not on both)
+  assert.strictEqual(e2.holders.length, 1); assert.match(e2.message, /run-\/t\/a/); assert.doesNotMatch(e2.message, /run-\/t\/b/);
+  a.release(); b.release();
+});
+
+test('D286 SLOTS=1 is today\'s lock: a different tree WAITS, the second slot file is never made, and a live holder in slot 2 (someone with more slots) also blocks', () => {
+  const d = tmp(); const a = liveAcq(d, '/t/a', { slots: 1 });
+  waitFail(d, '/t/b', { slots: 1 }); assert.ok(!fs.existsSync(slot2(d)));
+  a.release();
+  const two = liveAcq(d, '/t/two', { slots: 2 }); const one = liveAcq(d, '/t/b', { slots: 2 }); two.release();   // slot 2 holds /t/b, slot 1 is free
+  const e = waitFail(d, '/t/other', { slots: 1 }); assert.match(e.message, /run-\/t\/b/); assert.ok(!fs.existsSync(lockOf(d)), 'slot 1 stayed free: one slot never runs beside any live holder');
+  one.release();
+});
+
+test('D286 a DEAD holder in slot 2 is taken over and logged, and the new lock in slot 2 records whom it replaced', () => {
+  const d = tmp(); const a = liveAcq(d, '/t/a');
+  fs.writeFileSync(slot2(d), JSON.stringify({ pid: 424242, seat: 'bbbb2222', cmd: 'close.mutants', tree: '/t/b', started: new Date(Date.now() - 90 * 60000).toISOString(), token: 'old' }));
+  const logs = [];
+  const b = liveAcq(d, '/t/b', { alive: (p) => p !== 424242, log: (s) => logs.push(s) });
+  assert.strictEqual(b.slot, 2);
+  assert.match(logs.join('\n'), /took over a stale lock — bbbb2222 pid 424242 \(close\.mutants, since .*\) is not running; it was 90m old \(slot 2\)/);
+  const l = readFile(slot2(d)); assert.strictEqual(l.took_over.holder.pid, 424242); assert.strictEqual(l.pid, process.pid);
+  assert.strictEqual(readLock(d).tree, '/t/a', 'slot 1 untouched');
+  assert.deepStrictEqual(fs.readdirSync(d).sort(), ['heavy-run.2.lock', 'heavy-run.lock'], 'the lock set aside is not left behind');
+  a.release(); b.release();
+});
+
+test('D286 D283\'s second witness applies PER SLOT: a young slot-2 lock whose holder kill(0) calls dead but tasklist calls RUNNING is not taken', () => {
+  const d = tmp(); const a = liveAcq(d, '/t/a');
+  fs.writeFileSync(slot2(d), JSON.stringify({ pid: 424242, seat: 'eeee5555', cmd: 'chair', tree: '/t/b', started: new Date(Date.now() - 5 * 60000).toISOString(), token: 'T2' }));
+  const e = waitFail(d, '/t/c', { alive: (p) => p !== 424242, confirmGone: () => false });
+  assert.match(e.logs.join('\n'), /NOT taken over/); assert.strictEqual(readFile(slot2(d)).token, 'T2', 'untouched');
+  a.release();
+});
+
+test('D286 a NESTED run re-enters its own slot, slot 2 as well as slot 1, and releases nothing', () => {
+  const d = tmp(); const x = liveAcq(d, '/t/x'); const env = {};
+  const outer = liveAcq(d, '/t/b', { env });
+  assert.strictEqual(outer.slot, 2); assert.ok(env[H.TOKEN_ENV]);
+  const inner = H.acquire({ cmd: 'child', dataDir: d, env: { ...env }, tree: '/t/b', maxWaitMs: 0, alive: () => true });
+  assert.strictEqual(inner.reentrant, true); assert.strictEqual(inner.slot, 2); inner.release();
+  assert.ok(fs.existsSync(slot2(d)), 'the nested run did not free the outer lock');
+  outer.release(); x.release();
+});
+
+test('D286 a lock from before D286 (no tree recorded) blocks every tree: unknown is the safe side', () => {
+  const d = tmp(); fs.writeFileSync(lockOf(d), JSON.stringify({ pid: 777, seat: 'cccc3333', cmd: 'old runner', started: '2026-10-10T09:00:00.000Z', token: 'legacy' }));
+  const e = waitFail(d, '/t/anything'); assert.match(e.message, /cccc3333 pid 777/); assert.ok(!fs.existsSync(slot2(d)));
+});
+
+test('D286 a RACE between two runners of one tree that claim different free slots in the same instant: the later one sees the earlier and backs off, so only one runs', () => {
+  const d = tmp();
+  const rival = { pid: 999, seat: 'rrrr0000', cmd: 'the rival', tree: '/t/a', started: new Date().toISOString(), token: 'RIVAL' };
+  let fired = 0;
+  // the instant after this runner writes slot 1, the rival (same tree) writes slot 2: exactly the interleaving a look-before-claiming cannot see
+  const e = waitFail(d, '/t/a', { onClaim: () => { if (!fired++) fs.writeFileSync(slot2(d), JSON.stringify(rival)); } });
+  assert.ok(!fs.existsSync(lockOf(d)), 'it removed its own claim when it saw the rival');
+  assert.strictEqual(readFile(slot2(d)).token, 'RIVAL', 'and left the rival\'s alone');
+  assert.match(e.message, /rrrr0000 pid 999/);
+});
+
+test('D286 slot count: the option and CONSONANCE_HEAVY_SLOTS; a typo is the default 2 (it must not switch the lock off); file names heavy-run.lock, heavy-run.2.lock, heavy-run.3.lock', () => {
+  assert.strictEqual(H.slotCount(undefined), 2); assert.strictEqual(H.slotCount(''), 2);
+  assert.strictEqual(H.slotCount('1'), 1); assert.strictEqual(H.slotCount(3), 3); assert.strictEqual(H.slotCount('4'), 4);
+  for (const bad of ['0', '-1', '1.5', 'two', 'NaN', '99', null]) assert.strictEqual(H.slotCount(bad), 2, String(bad));
+  assert.strictEqual(path.basename(H.slotFile('/d', 1)), 'heavy-run.lock'); assert.strictEqual(path.basename(H.slotFile('/d', 2)), 'heavy-run.2.lock'); assert.strictEqual(path.basename(H.slotFile('/d', 3)), 'heavy-run.3.lock');
+  const d = tmp(); const hs = [1, 2, 3].map((i) => liveAcq(d, `/t/${i}`, { slots: 3 }));
+  assert.deepStrictEqual(hs.map((h) => h.slot), [1, 2, 3]); assert.ok(fs.existsSync(path.join(d, 'heavy-run.3.lock')));
+  const e = waitFail(d, '/t/4', { slots: 3 }); assert.strictEqual(e.holders.length, 3);
+  hs.forEach((h) => h.release());
+});
+
+test('D286 resolveTree: a git checkout is its top level (one tree from any subfolder), another checkout is another tree, and a cwd outside git is the one shared non-git bucket', () => {
+  const mk = () => { const g = tmp(); assert.strictEqual(spawnSync('git', ['init', '-q'], { cwd: g }).status, 0); fs.mkdirSync(path.join(g, 'sub')); return g; };
+  const g1 = mk(), g2 = mk(), plain = tmp(), plain2 = tmp();
+  const t1 = H.resolveTree(g1);
+  assert.strictEqual(H.resolveTree(path.join(g1, 'sub')), t1, 'a subfolder is the same tree');
+  assert.notStrictEqual(H.resolveTree(g2), t1);
+  assert.strictEqual(H.resolveTree(plain), H.NON_GIT_TREE); assert.strictEqual(H.resolveTree(plain2), H.NON_GIT_TREE);
+  assert.strictEqual(H.resolveTree(plain, () => { throw new Error('no git'); }), H.NON_GIT_TREE, 'git missing: the shared bucket');
+  const says = (out, platform) => H.resolveTree(plain, () => ({ status: 0, stdout: out + '\n' }), platform);
+  assert.strictEqual(says('/Repo/Tree', 'win32'), says('/REPO/tree', 'win32'), 'on Windows the case does not make two trees');
+  assert.strictEqual(says('/Repo/Tree', 'win32'), path.resolve('/Repo/Tree').toLowerCase());
+  assert.strictEqual(H.resolveTree(plain, () => ({ status: 128, stdout: 'fatal: not a git repository\n' })), H.NON_GIT_TREE, 'a failed git call is not a tree');
+  assert.strictEqual(H.resolveTree(plain, () => ({ status: 0, stdout: '/work/tree\n' }), 'linux'), path.resolve('/work/tree'), 'off Windows the case is kept');
+});
+
+test('D286 REAL processes: two runners in two different git checkouts hold the lock AT THE SAME TIME; two in one checkout do not', async () => {
+  const mk = () => { const g = tmp(); spawnSync('git', ['init', '-q'], { cwd: g }); return g; };
+  const g1 = mk(), g2 = mk(), d = tmp();
+  const run = (cwd, cmd, ms) => spawn(process.execPath, ['-e', `const H=require(${JSON.stringify(HELPER)});H.hold({cmd:${JSON.stringify(cmd)},pollMs:50});console.log('HELD '+Date.now());setTimeout(()=>{},${ms})`], { cwd, env: cleanEnv({ CONSONANCE_DATA: d, CONSONANCE_HEAVY_SLOTS: '' }), stdio: ['ignore', 'pipe', 'pipe'] });
+  const a = run(g1, 'in-g1', 2500), b = run(g2, 'in-g2', 2500);
+  const da = done(a), db = done(b);
+  await until(() => fs.existsSync(lockOf(d)) && fs.existsSync(slot2(d)), 15000);
+  assert.deepStrictEqual([readLock(d).cmd, readFile(slot2(d)).cmd].sort(), ['in-g1', 'in-g2'], 'both are running at once');
+  const ra = await da, rb = await db; assert.strictEqual(ra.code, 0, ra.err); assert.strictEqual(rb.code, 0, rb.err);
+  assert.deepStrictEqual(fs.readdirSync(d), [], 'both released');
+  // the same checkout: serial
+  const c = run(g1, 'first-g1', 1500); const dc = done(c);
+  await until(() => fs.existsSync(lockOf(d)) || fs.existsSync(slot2(d)), 15000);
+  const second = run(g1, 'second-g1', 100); const dsec = done(second);
+  const rs = await dsec, rc = await dc;
+  const held = (r) => Number((r.out.match(/HELD (\d+)/) || [])[1]);
+  assert.match(rs.err, /waiting on .*first-g1/, rs.err);
+  assert.ok(held(rs) >= held(rc) + 1000, `the second ran only after the first let go (${held(rs) - held(rc)} ms later)`);
+});
+
+test('D286 the claim is EXCLUSIVE: a rival that takes the slot between this runner\'s look and its claim is never overwritten; the runner waits for it', () => {
+  const d = tmp();
+  const rival = { pid: 999, seat: 'rrrr0000', cmd: 'the rival', tree: '/t/a', started: new Date().toISOString(), token: 'RIVAL' };
+  let fired = 0;
+  const e = waitFail(d, '/t/a', { beforeClaim: ({ file }) => { if (!fired++) fs.writeFileSync(file, JSON.stringify(rival)); } });
+  assert.strictEqual(readLock(d).token, 'RIVAL', 'the rival\'s lock is intact');
+  assert.match(e.message, /rrrr0000 pid 999/);
 });
