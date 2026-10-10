@@ -120,7 +120,7 @@ named files. Panes follow `COMMITTEE.md` for worktrees and commits.
   Why: a ring reaches a seat only between its turns (`main.rs` `drain_decision`), so a long turn is a closed door; on
   2026-09-23 a foreground suite hung and every ring waited 8–16 minutes, twice (`exo_memory/loop/stall_trace_2026-09-23.md`).
 - The whole js-suite and the full `cargo test` belong to the collator (the librarian), run in the background under the
-  heavy-run lock (`consonance/tools/heavy-run.js`, `<data>/heavy-run.lock`) before the landing ring. Land only after that run is
+  heavy-run lock (`consonance/tools/heavy-run.js`, `<data>/heavy-run.lock`; two slots by default, one run per tree, `CONSONANCE_HEAVY_SLOTS=1` = one machine-wide) before the landing ring. Land only after that run is
   green, and report success to the keeper only in the landing report that follows it.
   Why: two suites racing one tree is what hung on 2026-09-23 (same record); the full run is the check before anything is called
   done. See contradiction 4 below.

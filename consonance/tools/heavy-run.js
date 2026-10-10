@@ -11,6 +11,15 @@
 // then ~/.consonance.json data_dir) — holding {pid, seat, cmd, started, token}. It is created EXCLUSIVELY ('wx'), so two
 // runners can never both hold it. `seat` is the first 8 of CONSONANCE_PANE (the pane's session id), or 'terminal'.
 //
+// D286 (the keeper, 2026-10-10 09:38: "multiple heavy runs at once"): TWO SLOTS, ONE PER TREE. The lock exists because seats read each other's half-written files IN ONE CHECKOUT, so it
+// only has to serialise within a tree; one machine-wide file made a t180 landing wait on a lighthouse run in another worktree. There are now N slots (default 2; CONSONANCE_HEAVY_SLOTS, 1..8,
+// else the default: a typo must not switch the lock off): <data>/heavy-run.lock, heavy-run.2.lock, ... Each lock records its TREE (`git rev-parse --show-toplevel` of the cwd, lower-cased on
+// Windows; a cwd outside git, or where git cannot run, is the ONE shared bucket "(not in a git tree)", so such runs serialise with each other and run beside a run in a real tree). A runner
+// whose tree already holds a slot WAITS, whichever slot is free; a lock with no tree recorded (written before D286) blocks every tree. With ONE slot every live lock blocks: today's behaviour.
+// The slot scan looks at every slot file (to 8) even when this runner may claim fewer. Two runners of one tree can claim different free slots in the same instant, so after writing its claim a runner
+// looks once more and backs off (removes its own claim, tries again after a jitter) if a blocking lock is there: the one that proceeds is the one that saw nobody. The takeover rules below are
+// applied PER SLOT, unchanged. A runner waiting with every slot held names every holder; one held up by its own tree names that holder.
+//
 // A SECOND RUNNER WAITS and says whom it waits on — `heavy-run: waiting on <seat> pid <pid> (<cmd>, since <t>)` — once at
 // once, then once a minute, polling every 2 s.
 //
@@ -52,7 +61,10 @@ const crypto = require('crypto');
 const { spawnSync } = require('child_process');
 const { dataDir: manifestDataDir } = require('./state-manifest.js');
 
-const LOCK_NAME = 'heavy-run.lock';
+const LOCK_NAME = 'heavy-run.lock';   // slot 1; slot k is heavy-run.k.lock (D286)
+const DEFAULT_SLOTS = 2;
+const MAX_SLOTS = 8;
+const NON_GIT_TREE = '(not in a git tree)';
 const TOKEN_ENV = 'CONSONANCE_HEAVY_RUN_TOKEN';
 const MAX_WAIT_MS = 30 * 60 * 1000;
 const POLL_MS = 2000;
@@ -82,51 +94,55 @@ function readLock(file) {
 const describe = (h) => `${h.seat || '?'} pid ${h.pid} (${h.cmd || '?'}, since ${h.started || '?'})`;
 const mins = (ms) => `${Math.round(ms / 60000)}m`;
 
+const slotFile = (dir, k) => path.join(dir, k === 1 ? LOCK_NAME : `heavy-run.${k}.lock`);
+/** The slot count: the `slots` option, else CONSONANCE_HEAVY_SLOTS, else DEFAULT_SLOTS. Anything that is not a whole number from 1 to MAX_SLOTS is the default (a typo must not switch the lock off). */
+function slotCount(raw) {
+  if (raw === undefined || raw === null || raw === '') return DEFAULT_SLOTS;
+  const n = Number(raw);
+  return Number.isInteger(n) && n >= 1 && n <= MAX_SLOTS ? n : DEFAULT_SLOTS;
+}
+/** D286: the tree a run belongs to — `git rev-parse --show-toplevel` of the cwd, lower-cased on Windows (git prints C:/ and the OS may say c:\). A cwd that is not in a git tree (or where git cannot
+ *  run) is NON_GIT_TREE: ONE shared bucket, so non-git runs serialise with each other (unknown is the safe side) and still run beside a run in a real tree. */
+function resolveTree(cwd = process.cwd(), run = spawnSync, platform = process.platform) {
+  let r; try { r = run('git', ['rev-parse', '--show-toplevel'], { cwd, encoding: 'utf8', timeout: 8000, windowsHide: true }); } catch (_) { return NON_GIT_TREE; }
+  const top = r && !r.error && r.status === 0 && typeof r.stdout === 'string' ? r.stdout.trim() : '';
+  if (!top) return NON_GIT_TREE;
+  const p = path.resolve(top);
+  return platform === 'win32' ? p.toLowerCase() : p;
+}
+
 function acquire({
-  cmd, dataDir, env = process.env,
+  cmd, dataDir, env = process.env, slots, tree, onClaim, beforeClaim,
   maxWaitMs = Number(process.env.CONSONANCE_HEAVY_WAIT_MS) || MAX_WAIT_MS, pollMs = POLL_MS,
   alive = pidAlive, confirmGone = pidGone, log = (s) => process.stderr.write(s + '\n'), now = () => Date.now(), sleep = sleepSync,
 } = {}) {
   const dir = dataDir === undefined ? manifestDataDir() : dataDir;
   if (!dir) throw Object.assign(new Error('heavy-run: no data dir (CONSONANCE_DATA unset and ~/.consonance.json has no data_dir) — refusing to run without the lock'), { code: 'HEAVY_RUN_NO_DATA' });
-  const file = path.join(dir, LOCK_NAME);
+  const n = slotCount(slots !== undefined ? slots : process.env.CONSONANCE_HEAVY_SLOTS);
 
-  const current = readLock(file);
-  if (current && env[TOKEN_ENV] && current.token === env[TOKEN_ENV]) {
-    return { file, reentrant: true, holder: current, release() {} };
+  // A nested run carries the token of the lock it runs under, in whichever slot that lock is.
+  if (env[TOKEN_ENV]) {
+    for (let k = 1; k <= MAX_SLOTS; k++) {
+      const file = slotFile(dir, k), current = readLock(file);
+      if (current && current.token === env[TOKEN_ENV]) return { file, slot: k, reentrant: true, holder: current, release() {} };
+    }
   }
 
+  const myTree = tree !== undefined ? tree : resolveTree();
   const token = crypto.randomUUID();
   const t0 = now();
   let said = -Infinity;
   let tookOver = null;
   const disagreed = new Set();   // tokens whose liveness disagreement has been said once
-  for (;;) {
-    const rec = { pid: process.pid, seat: seatName(env), cmd, started: new Date(now()).toISOString(), token };
-    if (tookOver) rec.took_over = tookOver;
-    try {
-      const fd = fs.openSync(file, 'wx');
-      try { fs.writeSync(fd, JSON.stringify(rec)); } finally { fs.closeSync(fd); }
-      env[TOKEN_ENV] = token;
-      let released = false;
-      return {
-        file, reentrant: false, holder: rec,
-        release() {
-          if (released) return;
-          released = true;
-          const cur = readLock(file);
-          if (cur && cur.token === token) { try { fs.unlinkSync(file); } catch (_) { /* already gone */ } }
-          if (env[TOKEN_ENV] === token) delete env[TOKEN_ENV];
-        },
-      };
-    } catch (e) { if (e.code !== 'EEXIST') throw e; }
+  // Does a lock held by `h` forbid me to run? Always with ONE slot (today's machine-wide lock); else when it is in my tree, or records none (a lock from before D286: unknown is the safe side).
+  const blocks = (h) => n === 1 || !h.tree || h.tree === myTree;
 
-    const h = readLock(file);
-    if (h === null) continue;                                     // released between the open and the read
+  // D283's judgement of one lock file, unchanged: true = the lock was STALE and has been taken out of the way (the slot is free now), false = it is live.
+  function takeIfStale(file, k, h) {
     let stale = false;
     if (h.unreadable) {
       let age = 0;
-      try { age = now() - fs.statSync(file).mtimeMs; } catch (_) { continue; }
+      try { age = now() - fs.statSync(file).mtimeMs; } catch (_) { return true; }
       stale = age > UNREADABLE_GRACE_MS;
     } else {
       stale = !alive(h.pid);
@@ -144,28 +160,83 @@ function acquire({
         }
       }
     }
-    if (stale) {
-      const aside = `${file}.stale-${process.pid}-${now()}`;
-      try { fs.renameSync(file, aside); } catch (e) { if (e.code === 'ENOENT') continue; throw e; }
-      const moved = readLock(aside);
-      if (moved && !moved.unreadable && moved.token !== h.token && alive(moved.pid)) {
-        // A race: between our read and our rename another runner took the lock. Put ITS lock back; linkSync fails
-        // rather than overwrite, so a lock created meanwhile is never clobbered either.
-        try { fs.linkSync(aside, file); } catch (_) { /* a newer lock is already there */ }
-        try { fs.unlinkSync(aside); } catch (_) {}
-        continue;
-      }
+    if (!stale) return false;
+    const aside = `${file}.stale-${process.pid}-${now()}`;
+    try { fs.renameSync(file, aside); } catch (e) { if (e.code === 'ENOENT') return true; throw e; }
+    const moved = readLock(aside);
+    if (moved && !moved.unreadable && moved.token !== h.token && alive(moved.pid)) {
+      // A race: between our read and our rename another runner took the lock. Put ITS lock back; linkSync fails
+      // rather than overwrite, so a lock created meanwhile is never clobbered either.
+      try { fs.linkSync(aside, file); } catch (_) { /* a newer lock is already there */ }
       try { fs.unlinkSync(aside); } catch (_) {}
-      const age = h.started ? now() - Date.parse(h.started) : null;
-      tookOver = { holder: { pid: h.pid ?? null, seat: h.seat ?? null, cmd: h.cmd ?? null, started: h.started ?? null }, age_ms: Number.isFinite(age) ? age : null };
-      log(`heavy-run: took over a stale lock — ${h.unreadable ? `an unreadable lock (${h.unreadable})` : describe(h)} is not running; it was ${Number.isFinite(age) ? mins(age) : 'an unknown age'} old`);
+      return false;
+    }
+    try { fs.unlinkSync(aside); } catch (_) {}
+    const age = h.started ? now() - Date.parse(h.started) : null;
+    tookOver = { holder: { pid: h.pid ?? null, seat: h.seat ?? null, cmd: h.cmd ?? null, started: h.started ?? null }, age_ms: Number.isFinite(age) ? age : null };
+    log(`heavy-run: took over a stale lock — ${h.unreadable ? `an unreadable lock (${h.unreadable})` : describe(h)} is not running; it was ${Number.isFinite(age) ? mins(age) : 'an unknown age'} old (slot ${k})`);
+    return true;
+  }
+
+  for (;;) {
+    // Look at every slot — the ones above n too: a runner told to use fewer slots still honours a holder in another.
+    const live = [], free = [];
+    for (let k = 1; k <= MAX_SLOTS; k++) {
+      const file = slotFile(dir, k), h = readLock(file);
+      if (h === null) { if (k <= n) free.push(k); continue; }
+      if (takeIfStale(file, k, h)) { if (k <= n) free.push(k); continue; }
+      live.push({ k, file, h });
+    }
+    const blockers = live.filter((x) => blocks(x.h));
+    if (blockers.length === 0 && free.length) {
+      const k = free[0], file = slotFile(dir, k);
+      const rec = { pid: process.pid, seat: seatName(env), cmd, tree: myTree, started: new Date(now()).toISOString(), token };
+      if (tookOver) rec.took_over = tookOver;
+      if (beforeClaim) beforeClaim({ slot: k, file });   // a seam for the tests: the instant between looking and claiming
+      let fd;
+      try { fd = fs.openSync(file, 'wx'); } catch (e) { if (e.code === 'EEXIST') continue; throw e; }
+      try { fs.writeSync(fd, JSON.stringify(rec)); } finally { fs.closeSync(fd); }
+      if (onClaim) onClaim({ slot: k, file });
+      // Two runners of one tree can each claim a DIFFERENT free slot in the same instant. Look again: whoever finds another lock that blocks it backs off, so the one that
+      // proceeds is the one that saw nobody, and any later claimer sees it (that claimer's look comes after its own write, which comes after the earlier one's look).
+      let clash = false;
+      for (let j = 1; j <= MAX_SLOTS && !clash; j++) {
+        if (j === k) continue;
+        const o = readLock(slotFile(dir, j));
+        if (o && o.token !== token && blocks(o)) clash = true;
+      }
+      if (!clash) {
+        env[TOKEN_ENV] = token;
+        let released = false;
+        return {
+          file, slot: k, reentrant: false, holder: rec,
+          release() {
+            if (released) return;
+            released = true;
+            const cur = readLock(file);
+            if (cur && cur.token === token) { try { fs.unlinkSync(file); } catch (_) { /* already gone */ } }
+            if (env[TOKEN_ENV] === token) delete env[TOKEN_ENV];
+          },
+        };
+      }
+      const cur = readLock(file);
+      if (cur && cur.token === token) { try { fs.unlinkSync(file); } catch (_) {} }
+      sleep(Math.floor(Math.random() * pollMs));
       continue;
     }
+
+    // Wait. Name what holds us: the locks that block us if there are any (the same tree), else every holder (all slots taken).
+    const heldBy = blockers.length ? blockers : live;
+    const named = heldBy.map((x) => x.h);
     const waited = now() - t0;
     if (waited >= maxWaitMs) {
-      throw Object.assign(new Error(`heavy-run: gave up after ${mins(waited)} — ${describe(h)} still holds ${file}. Not running anyway: two heavy runs in one tree make both readings meaningless. Wait for it, or ask that seat.`), { code: 'HEAVY_RUN_TIMEOUT', holder: h });
+      const many = named.length > 1;
+      throw Object.assign(new Error(`heavy-run: gave up after ${mins(waited)} — ${many ? `${named.map(describe).join(' and ')} still hold the slots` : `${describe(named[0])} still holds ${heldBy[0].file}`}. Not running anyway: two heavy runs in one tree make both readings meaningless. Wait for ${many ? 'them' : 'it'}, or ask ${many ? 'those seats' : 'that seat'}.`), { code: 'HEAVY_RUN_TIMEOUT', holder: named[0], holders: named });
     }
-    if (now() - said >= SAY_EVERY_MS) { log(`heavy-run: waiting on ${describe(h)}`); said = now(); }
+    if (now() - said >= SAY_EVERY_MS) {
+      log(`heavy-run: waiting on ${named.map(describe).join(' and ')}${blockers.length ? (n === 1 ? ' — one heavy run at a time' : ' — it holds this tree') : ` — all ${n} slots are held`}`);
+      said = now();
+    }
     sleep(pollMs);
   }
 }
@@ -189,4 +260,4 @@ function hold(opts = {}) {
   return h;
 }
 
-module.exports = { acquire, hold, pidAlive, pidGone, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS };
+module.exports = { acquire, hold, pidAlive, pidGone, slotCount, slotFile, resolveTree, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE };

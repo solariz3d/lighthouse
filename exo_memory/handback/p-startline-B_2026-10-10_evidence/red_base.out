@@ -1,0 +1,63 @@
+=== node --max-old-space-size=4096 --test --test-concurrency=1 app/test/core-startline-creep.test.js
+=== cwd C:/Users/nname/Desktop/worktrees/b-startline-wt
+=== env {}
+[32m✔ a hand-placed line (along 100 on a 400 m first piece) does not move when a Straight, a broad turn, Turn by and Sharp are added [90m(250.4876ms)[39m[39m
+[31m✖ the automatic line on an open track stays put when a Straight is added to the straight it is on (the keeper's case: it followed the head) [90m(29.7604ms)[39m[39m
+[31m✖ the automatic line stays put through a broad turn, Turn by and Sharp: none of them makes a longer straight [90m(15.9241ms)[39m[39m
+[32m✔ the automatic line moves when a genuinely longer straight is added, and the panel still says the start is automatic [90m(24.8139ms)[39m[39m
+[31m✖ save, reopen, append: neither the hand-placed nor the automatic line moves [90m(31.2022ms)[39m[39m
+[32m✔ a CLOSED lap keeps its automatic start where it was: 15 m before the end of the longest straight run (the export of a finished track is unchanged) [90m(186.8622ms)[39m[39m
+[34mℹ tests 6[39m
+[34mℹ suites 0[39m
+[34mℹ pass 3[39m
+[34mℹ fail 3[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 626.1845[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\core-startline-creep.test.js:50:1
+[31m✖ the automatic line on an open track stays put when a Straight is added to the straight it is on (the keeper's case: it followed the head) [90m(29.7604ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: after a Straight the automatic line moved 200.000 m (from {"word":"p1","along":385} to {"word":"p2","along":185})
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\b-startline-wt\[39mapp\test\core-startline-creep.test.js:56:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-startline-creep.test.js:60:1
+[31m✖ the automatic line stays put through a broad turn, Turn by and Sharp: none of them makes a longer straight [90m(15.9241ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: after Straight the automatic line moved 200.000 m (now {"word":"p2","along":185})
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\b-startline-wt\[39mapp\test\core-startline-creep.test.js:65:12[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-startline-creep.test.js:81:1
+[31m✖ save, reopen, append: neither the hand-placed nor the automatic line moves [90m(31.2022ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: automatic: after reopen and a Straight the line moved 200.000 m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\b-startline-wt\[39mapp\test\core-startline-creep.test.js:93:12[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+=== exit 1 signal null error  0.7s

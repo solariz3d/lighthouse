@@ -1,0 +1,36 @@
+== (a) automatic + pit lane
+{"step":"start","pieces":1,"shown":{"mid":[0,3.105,385],"word":"p1","along":385},"auto":{"word":"p1","along":385}}
+{"step":"Straight","pieces":2,"shown":{"mid":[0,3.105,585],"word":"p2","along":185},"auto":{"word":"p2","along":185}}
+{"step":"broad turn","pieces":3,"shown":{"mid":[0,3.105,607],"word":"p3","along":7},"auto":{"word":"p3","along":7}}
+{"step":"Turn by","pieces":4,"shown":{"mid":[0,3.105,607],"word":"p3","along":7},"auto":{"word":"p3","along":7}}
+{"step":"Sharp","pieces":6,"shown":{"mid":[0,3.105,607],"word":"p3","along":7},"auto":{"word":"p3","along":7}}
+== (a') automatic, no pit lane (export only)
+{"step":"start","pieces":1,"shown":null,"auto":{"word":"p1","along":385}}
+{"step":"Straight","pieces":2,"shown":null,"auto":{"word":"p2","along":185}}
+{"step":"broad turn","pieces":3,"shown":null,"auto":{"word":"p3","along":7}}
+{"step":"Turn by","pieces":4,"shown":null,"auto":{"word":"p3","along":7}}
+{"step":"Sharp","pieces":6,"shown":null,"auto":{"word":"p3","along":7}}
+== (b) hand-placed along 100
+{"step":"start","pieces":1,"shown":{"mid":[0,3.105,100],"word":"p1","along":100}}
+{"step":"Straight","pieces":2,"shown":{"mid":[0,3.105,100],"word":"p1","along":100}}
+{"step":"broad turn","pieces":3,"shown":{"mid":[0,3.105,100],"word":"p1","along":100}}
+{"step":"Turn by","pieces":4,"shown":{"mid":[0,3.105,100],"word":"p1","along":100}}
+{"step":"Sharp","pieces":6,"shown":{"mid":[0,3.105,100],"word":"p1","along":100}}
+== autosave-doc.t180track spawns=false pitLane=true
+{"step":"before","pieces":3,"shown":{"mid":[0,3.853,1985],"word":"p3","along":485},"auto":{"word":"p3","along":485}}
+{"step":"+Straight","pieces":4,"shown":{"mid":[0,3.853,2185],"word":"p4","along":185},"auto":{"word":"p4","along":185}}
+== eq-FINAL TEST.t180track spawns=false pitLane=false
+{"step":"before","pieces":6,"shown":null,"auto":{"word":"p5","along":137}}
+{"step":"+Straight","pieces":7,"shown":null,"auto":{"word":"p5","along":137}}
+== eq-FIRST TRACK.t180track spawns=false pitLane=false
+{"step":"before","pieces":23,"shown":null,"auto":{"word":"p13","along":485}}
+{"step":"+Straight","pieces":24,"shown":null,"auto":{"word":"p13","along":485}}
+== eq-HUMP BUG.t180track spawns=false pitLane=false
+{"step":"before","pieces":3,"shown":null,"auto":{"word":"p2","along":137}}
+{"step":"+Straight","pieces":4,"shown":null,"auto":{"word":"p2","along":137}}
+== eq-TEST TRACK 3.t180track spawns=false pitLane=false
+{"step":"before","pieces":7,"shown":null,"auto":{"word":"p3","along":127}}
+{"step":"+Straight","pieces":8,"shown":null,"auto":{"word":"p3","along":127}}
+== eq-TRACK 2.t180track spawns=true pitLane=true
+{"step":"before","pieces":24,"shown":{"mid":[0,3.628,858],"word":"p1","along":858}}
+{"step":"+Straight","pieces":25,"shown":{"mid":[0,3.628,858],"word":"p1","along":858}}

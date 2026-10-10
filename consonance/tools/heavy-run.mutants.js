@@ -19,10 +19,10 @@ const SRC = 'heavy-run.js', SUITE = 'heavy-run.test.js';
 const MUTANTS = [
   // ---- the lock itself ----
   ['lock: created with "w", not exclusively ("wx"): two runners can both hold it', SRC, "fs.openSync(file, 'wx')", "fs.openSync(file, 'w')"],
-  ['nested: any token is a pass, not only the current holder\'s', SRC, 'if (current && env[TOKEN_ENV] && current.token === env[TOKEN_ENV]) {', 'if (current && env[TOKEN_ENV]) {'],
-  ['release: removes a lock that is not its own', SRC, 'if (cur && cur.token === token) {', 'if (cur) {'],
+  ['nested: any token is a pass, not only the current holder\'s', SRC, 'if (current && current.token === env[TOKEN_ENV]) return', 'if (current) return'],
+  ['release: removes a lock that is not its own', SRC, 'if (cur && cur.token === token) { try { fs.unlinkSync(file); } catch (_) { /* already gone */ }', 'if (cur) { try { fs.unlinkSync(file); } catch (_) { /* already gone */ }'],
   ['release: not on exit or error', SRC, "  process.on('exit', () => h.release());\n", ''],
-  ['the max wait RUNS ANYWAY instead of failing loudly', SRC, 'throw Object.assign(new Error(`heavy-run: gave up after', 'if (true) return { file, reentrant: false, holder: h, release() {} }; throw Object.assign(new Error(`heavy-run: gave up after'],
+  ['the max wait RUNS ANYWAY instead of failing loudly', SRC, 'throw Object.assign(new Error(`heavy-run: gave up after', 'if (true) return { file: heldBy[0].file, slot: 0, reentrant: false, holder: named[0], release() {} }; throw Object.assign(new Error(`heavy-run: gave up after'],
   ['the exit code of a timeout is not 3', SRC, "process.exit(e.code === 'HEAVY_RUN_TIMEOUT' ? 3 : 2);", 'process.exit(2);'],
   // ---- kill(0) ----
   ['pidAlive: EPERM reads as dead', SRC, "return e.code === 'EPERM';", 'return false;'],
@@ -33,7 +33,7 @@ const MUTANTS = [
   ['takeover: every holder is taken (stale is always true)', SRC, '      stale = !alive(h.pid);\n', '      stale = true;\n'],
   ['takeover: the takeover is not logged', SRC, "log(`heavy-run: took over a stale lock", "void (`heavy-run: took over a stale lock"],
   ['takeover: whom it replaced is not recorded', SRC, 'if (tookOver) rec.took_over = tookOver;', ''],
-  ['takeover: the set-aside file is left behind', SRC, "      try { fs.unlinkSync(aside); } catch (_) {}\n      const age = h.started", '      const age = h.started'],
+  ['takeover: the set-aside file is left behind', SRC, "    try { fs.unlinkSync(aside); } catch (_) {}\n    const age = h.started", '    const age = h.started'],
   ['race: a live lock caught by the rename is not put back', SRC, "try { fs.linkSync(aside, file); } catch (_) { /* a newer lock is already there */ }", ''],
   ['race: the put-back does not check that the moved lock is alive', SRC, 'if (moved && !moved.unreadable && moved.token !== h.token && alive(moved.pid)) {', 'if (moved && !moved.unreadable && moved.token !== h.token) {'],
   // ---- D283: a young lock needs a second witness ----
@@ -55,8 +55,35 @@ const MUTANTS = [
   ['tasklist: "listed" means gone', SRC, 'return !listed;', 'return listed;'],
   ['tasklist: a throw while asking is read as gone', SRC, '} catch (_) { return null; }\n  if (!r || r.error', '} catch (_) { return true; }\n  if (!r || r.error'],
   ['tasklist: asked on every platform', SRC, "if (platform !== 'win32') return true;", ''],
-  ['tasklist: not hidden', SRC, "timeout: 8000, windowsHide: true }", 'timeout: 8000 }'],
-  ['tasklist: no timeout', SRC, "timeout: 8000, windowsHide: true }", 'windowsHide: true }'],
+  ['tasklist: not hidden', SRC, "'/NH'], { encoding: 'utf8', timeout: 8000, windowsHide: true }", "'/NH'], { encoding: 'utf8', timeout: 8000 }"],
+  ['tasklist: no timeout', SRC, "'/NH'], { encoding: 'utf8', timeout: 8000, windowsHide: true }", "'/NH'], { encoding: 'utf8', windowsHide: true }"],
+  // ---- D286: slots, one per tree ----
+  ['slots: the default is one (today\'s machine-wide lock)', SRC, 'const DEFAULT_SLOTS = 2;', 'const DEFAULT_SLOTS = 1;'],
+  ['slots: slot 2 is the same file as slot 1', SRC, 'k === 1 ? LOCK_NAME : `heavy-run.${k}.lock`', 'LOCK_NAME'],
+  ['slots: a count of zero is accepted', SRC, 'Number.isInteger(n) && n >= 1 &&', 'Number.isInteger(n) && n >= 0 &&'],
+  ['slots: any whole count is accepted (no ceiling)', SRC, 'n >= 1 && n <= MAX_SLOTS ?', 'n >= 1 ?'],
+  ['slots: a fractional count is accepted', SRC, 'return Number.isInteger(n) && n >=', 'return n >='],
+  ['slots: a slot beyond the count can be claimed', SRC, 'if (h === null) { if (k <= n) free.push(k); continue; }', 'if (h === null) { free.push(k); continue; }'],
+  ['slots: only the slots up to the count are looked at (a holder in a higher one is invisible)', SRC, "const file = slotFile(dir, k), h = readLock(file);\n      if (h === null)", "if (k > n) continue;\n      const file = slotFile(dir, k), h = readLock(file);\n      if (h === null)"],
+  ['tree: every lock blocks (no parallel runs)', SRC, 'const blocks = (h) => n === 1 || !h.tree || h.tree === myTree;', 'const blocks = (h) => true;'],
+  ['tree: no lock blocks but a full house (two runs in one tree)', SRC, 'const blocks = (h) => n === 1 || !h.tree || h.tree === myTree;', 'const blocks = (h) => n === 1;'],
+  ['tree: a lock with no tree recorded does not block', SRC, 'const blocks = (h) => n === 1 || !h.tree ||', 'const blocks = (h) => n === 1 ||'],
+  ['tree: with one slot a different tree runs beside the holder', SRC, 'const blocks = (h) => n === 1 || !h.tree ||', 'const blocks = (h) => !h.tree ||'],
+  ['tree: the lock does not record its tree', SRC, 'cmd, tree: myTree, started', 'cmd, started'],
+  ['tree: the cwd is not asked, every runner is the same tree', SRC, 'const myTree = tree !== undefined ? tree : resolveTree();', 'const myTree = tree !== undefined ? tree : NON_GIT_TREE;'],
+  ['tree: the Windows case is kept (two spellings of one folder are two trees)', SRC, "platform === 'win32' ? p.toLowerCase() : p", 'p'],
+  ['tree: a failed git call is read as a tree', SRC, "r && !r.error && r.status === 0 && typeof r.stdout", "r && !r.error && typeof r.stdout"],
+  ['tree: git failing to run is not the shared bucket', SRC, "} catch (_) { return NON_GIT_TREE; }", "} catch (_) { return process.cwd(); }"],
+  ['tree: a subfolder is its own tree (cwd, not the top level)', SRC, "const top = r && !r.error && r.status === 0 && typeof r.stdout === 'string' ? r.stdout.trim() : '';", "const top = r && !r.error && r.status === 0 && typeof r.stdout === 'string' ? cwd : '';"],
+  ['wait: names only the first holder', SRC, 'const named = heldBy.map((x) => x.h);', 'const named = heldBy.map((x) => x.h).slice(0, 1);'],
+  ['wait: names every holder even when one tree is the reason', SRC, 'const heldBy = blockers.length ? blockers : live;', 'const heldBy = live;'],
+  ['wait: the waiting line does not say why', SRC, "' — it holds this tree'", "''"],
+  ['claim: the second look for a rival is off (two of one tree run)', SRC, 'if (o && o.token !== token && blocks(o)) clash = true;', ''],
+  ['claim: the backing-off runner leaves its own claim behind', SRC, "if (cur && cur.token === token) { try { fs.unlinkSync(file); } catch (_) {} }\n      sleep(Math.floor", "sleep(Math.floor"],
+  ['claim: the second look takes ANY lock as a rival, even another tree\'s', SRC, 'if (o && o.token !== token && blocks(o)) clash = true;', 'if (o && o.token !== token) clash = true;'],
+  ['nested: only slot 1 is searched for the run\'s own token', SRC, "for (let k = 1; k <= MAX_SLOTS; k++) {\n      const file = slotFile(dir, k), current", "for (let k = 1; k <= 1; k++) {\n      const file = slotFile(dir, k), current"],
+  ['takeover: only a dead holder in slot 1 is taken', SRC, 'if (takeIfStale(file, k, h)) {', 'if (k === 1 && takeIfStale(file, k, h)) {'],
+  ['takeover: the log does not name the slot', SRC, ' (slot ${k})`);', '`);'],
   // ---- unreadable locks ----
   ['unreadable: a lock being written this instant is taken at once', SRC, 'stale = age > UNREADABLE_GRACE_MS;', 'stale = true;'],
   ['unreadable: an old unreadable lock is never taken', SRC, 'stale = age > UNREADABLE_GRACE_MS;', 'stale = false;'],
@@ -71,6 +98,7 @@ function tree() {
 }
 function run(dir) {
   const env = { ...process.env }; for (const k of Object.keys(env)) if (/^CONSONANCE_/.test(k)) delete env[k];
+  env.CONSONANCE_HEAVY_WAIT_MS = '30000';   // D286: a mutant that parks the suite's real child runners must not leave them waiting the default 30 minutes after the 90 s stop
   const r = spawnSync(process.execPath, ['--test', '--test-concurrency=1', path.join(dir, 'tools', SUITE)], { encoding: 'utf8', env, timeout: 90 * 1000 });   // the unmutated suite takes seconds: a mutant that makes it hang (a waiter that never takes a dead lock) is stopped here
   const o = (r.stdout + r.stderr).replace(/\x1b\[[0-9;]*m/g, ''), n = (k) => Number((o.match(new RegExp(`^ℹ ${k} (\\d+)`, 'm')) || [])[1]);
   return { pass: n('pass'), fail: n('fail'), hung: r.status === null || !Number.isFinite(n('pass')) };
