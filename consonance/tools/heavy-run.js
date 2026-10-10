@@ -25,6 +25,14 @@
 // and recorded in the new lock as `took_over`. There is no separate log file: a new file in the data dir is UNPLACED at
 // close until the manifest names it, and the lock itself already needs that row (see the hand-back). Liveness is the
 // codebase's own idiom (ledger-union.js :293, head-watch.js, close.mutants.js): process.kill(pid, 0), EPERM = alive.
+// D283 (the chair, 2026-10-10: "C's run took over my LIVE lock"): checked, and the takeover was RIGHT. The chair's own TaskStop on its land_turnby run is in its
+// transcript at 01:58:50.042Z; the takeover's age_ms was 2,300,472 on a lock started 01:20:31.118Z, i.e. 01:58:51.590Z, 1.5 s later, from a waiter that polls every 2 s. A
+// stopped background task takes its whole tree with it (holder, cmd.exe, child: all three read dead by kill(0), tasklist and CIM) and leaves the lock file behind, so
+// "a stale lock, taken over at once" is what TaskStop produces. Cross-session kill(0) works: the chair's live holder, read from another seat's session, was alive by all
+// three methods, and its CIM creation time matched the lock's started to 27 ms. BUT a lock this young deserves a second witness before it is taken, so it now is:
+//   - a lock YOUNGER than YOUNG_MS (30 min: the longest known full run is 1,570 s) is taken only when pidGone(pid) (tasklist on Windows) ALSO says the holder is gone;
+//     if the two disagree, or the second cannot tell, it waits and says so once. A lock with no readable `started` counts as young (unknown is the safe side). An older
+//     lock is as before: kill(0) alone.
 // A pid the OS has since REUSED reads alive — the waiter then waits and, at the max wait, fails loudly naming it, which
 // is the safe direction. The takeover moves the stale file aside with an atomic rename; if a race moved a LIVE lock
 // instead, it is put back with linkSync, which cannot overwrite, and the waiter keeps waiting.
@@ -41,6 +49,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { spawnSync } = require('child_process');
 const { dataDir: manifestDataDir } = require('./state-manifest.js');
 
 const LOCK_NAME = 'heavy-run.lock';
@@ -48,12 +57,23 @@ const TOKEN_ENV = 'CONSONANCE_HEAVY_RUN_TOKEN';
 const MAX_WAIT_MS = 30 * 60 * 1000;
 const POLL_MS = 2000;
 const SAY_EVERY_MS = 60 * 1000;
+const YOUNG_MS = 30 * 60 * 1000;         // D283: a lock younger than this is taken only when a SECOND method also says its holder is gone (the full suite took 1,570 s)
 const UNREADABLE_GRACE_MS = 10 * 1000;   // a lock being written this instant reads empty; only an OLD unreadable one is stale
 
-function pidAlive(pid) {
+function pidAlive(pid, kill = process.kill.bind(process)) {
   if (!Number.isInteger(pid) || pid <= 0) return false;
-  try { process.kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; }
+  try { kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; }
 }
+/** The SECOND witness (D283): true = the pid is gone, false = a process with that pid is listed, null = cannot tell. On Windows it asks `tasklist /FI "PID eq n"`, which
+ *  is the OS's own process list and does not depend on what kill(0) is allowed to open; elsewhere kill(0) is the whole truth, so there is nothing to add (true). */
+function pidGone(pid, run = spawnSync, platform = process.platform) {
+  if (platform !== 'win32') return true;
+  let r; try { r = run('tasklist', ['/FI', `PID eq ${pid}`, '/FO', 'CSV', '/NH'], { encoding: 'utf8', timeout: 8000, windowsHide: true }); } catch (_) { return null; }
+  if (!r || r.error || r.status !== 0 || typeof r.stdout !== 'string') return null;
+  const listed = r.stdout.split(/\r?\n/).some((line) => { const c = line.match(/"[^"]*"/g); return !!c && c.length >= 2 && Number(c[1].slice(1, -1)) === pid; });
+  return !listed;
+}
+const ageOf = (h, t) => { const s = Date.parse(h && h.started); return Number.isFinite(s) ? t - s : null; };
 function seatName(env) { const p = String(env.CONSONANCE_PANE || '').trim(); return p ? p.slice(0, 8) : 'terminal'; }
 function sleepSync(ms) { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms); }
 function readLock(file) {
@@ -65,7 +85,7 @@ const mins = (ms) => `${Math.round(ms / 60000)}m`;
 function acquire({
   cmd, dataDir, env = process.env,
   maxWaitMs = Number(process.env.CONSONANCE_HEAVY_WAIT_MS) || MAX_WAIT_MS, pollMs = POLL_MS,
-  alive = pidAlive, log = (s) => process.stderr.write(s + '\n'), now = () => Date.now(), sleep = sleepSync,
+  alive = pidAlive, confirmGone = pidGone, log = (s) => process.stderr.write(s + '\n'), now = () => Date.now(), sleep = sleepSync,
 } = {}) {
   const dir = dataDir === undefined ? manifestDataDir() : dataDir;
   if (!dir) throw Object.assign(new Error('heavy-run: no data dir (CONSONANCE_DATA unset and ~/.consonance.json has no data_dir) — refusing to run without the lock'), { code: 'HEAVY_RUN_NO_DATA' });
@@ -80,6 +100,7 @@ function acquire({
   const t0 = now();
   let said = -Infinity;
   let tookOver = null;
+  const disagreed = new Set();   // tokens whose liveness disagreement has been said once
   for (;;) {
     const rec = { pid: process.pid, seat: seatName(env), cmd, started: new Date(now()).toISOString(), token };
     if (tookOver) rec.took_over = tookOver;
@@ -107,7 +128,22 @@ function acquire({
       let age = 0;
       try { age = now() - fs.statSync(file).mtimeMs; } catch (_) { continue; }
       stale = age > UNREADABLE_GRACE_MS;
-    } else stale = !alive(h.pid);
+    } else {
+      stale = !alive(h.pid);
+      if (stale) {   // D283: a young lock needs a second witness (see the header)
+        const age = ageOf(h, now());
+        if (age === null || age < YOUNG_MS) {
+          const second = confirmGone(h.pid);
+          if (second !== true) {
+            stale = false;
+            if (!disagreed.has(h.token)) {
+              disagreed.add(h.token);
+              log(`heavy-run: ${describe(h)} reads not-running to process.kill(pid, 0) but ${second === false ? 'RUNNING to tasklist' : 'tasklist could not confirm it'}; the lock is ${age === null ? 'of unknown age' : mins(age) + ' old'}, younger than ${mins(YOUNG_MS)}, so it is NOT taken over: waiting`);
+            }
+          }
+        }
+      }
+    }
     if (stale) {
       const aside = `${file}.stale-${process.pid}-${now()}`;
       try { fs.renameSync(file, aside); } catch (e) { if (e.code === 'ENOENT') continue; throw e; }
@@ -153,4 +189,4 @@ function hold(opts = {}) {
   return h;
 }
 
-module.exports = { acquire, hold, pidAlive, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS };
+module.exports = { acquire, hold, pidAlive, pidGone, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS };

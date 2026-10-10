@@ -147,17 +147,17 @@ readable and panes can catch each other. `chair_phase` moves it.
 
 ## The instruments
 
-79 non-test tools under [`tools/`](tools/). 74 have a `.test.js` beside them and five also carry a `.mutants.js` beside them; there are 9
+79 non-test tools under [`tools/`](tools/). 74 have a `.test.js` beside them and six also carry a `.mutants.js` beside them; there are 10
 `.mutants.js` files in all, and four of them (`reply-slot`, `second-reader`, `sources-gate`, `union-at-launch`) sit beside no tool of their name. **Five have
 no test of their own**: `dispatch-gate-report.js`, `l039-power.js`, `open-items.js`, `pane-status.js`, `reply-slot-replay.js`.
 
     ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js' | wc -l   # 79
     ls consonance/tools/*.test.js | wc -l                                            # 95 (74 beside a tool; 21 with no tool of their name)
-    ls consonance/tools/*.mutants.js | wc -l                                         # 9
+    ls consonance/tools/*.mutants.js | wc -l                                         # 10
     for f in $(ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js'); do
       [ -f "${f%.js}.test.js" ] || echo "$f"; done                                  # the five
     for f in $(ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js'); do
-      [ -f "${f%.js}.mutants.js" ] && echo "$f"; done | wc -l                       # 5 with a .mutants.js beside them
+      [ -f "${f%.js}.mutants.js" ] && echo "$f"; done | wc -l                       # 6 with a .mutants.js beside them
     for f in consonance/tools/*.mutants.js; do [ -f "${f%.mutants.js}.js" ] || echo "$f"; done   # the four with no tool
 
 Three of the 79 are shapes **wired to nothing**, and each says so in its own header. That was a decision priced in

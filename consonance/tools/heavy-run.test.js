@@ -148,6 +148,162 @@ test('pidAlive: this process is alive; a pid that does not exist is not', () => 
   assert.strictEqual(H.pidAlive('x'), false);
 });
 
+// ---- D283 (the chair, 2026-10-10): a young lock needs a SECOND witness before it is taken ----
+// The incident: the chair's run held the lock, the chair TaskStop-ped it at 01:58:50.042Z, and a waiter took the lock at 01:58:51.590Z (age_ms 2,300,472). That takeover was RIGHT: a stopped
+// task takes its whole tree and leaves the lock file. The chair read it as a live lock taken by mistake, and asked that no lock younger than the longest known run (1,570 s) ever be taken on
+// ONE liveness read that a second method disagrees with. These rows pin that, with the readings injected where a real process cannot be made to disagree with itself.
+const mark = () => Date.now();
+const lockAt = (d, minutesAgo, extra = {}) => fs.writeFileSync(lockOf(d), JSON.stringify({ pid: 424242, seat: 'eeee5555', cmd: 'chair land-turnby (probe)', started: new Date(mark() - minutesAgo * 60000).toISOString(), token: 'T1', ...extra }));
+function attempt(d, opts = {}) {   // acquire with a fake clock that the sleeps advance; returns { h } or { err }, and every log line
+  let t = 0; const base = mark(), logs = [], calls = { alive: 0, gone: 0 };
+  const alive = opts.alive || (() => true), gone = opts.gone || (() => true);
+  try {
+    const h = H.acquire({ cmd: 'x', dataDir: d, env: {}, maxWaitMs: opts.maxWaitMs ?? 1000, pollMs: 100, now: () => base + t, sleep: (ms) => { t += ms; }, log: (s) => logs.push(s), alive: (p) => { calls.alive++; return alive(p); }, confirmGone: (p) => { calls.gone++; return gone(p); } });
+    return { h, logs, calls };
+  } catch (e) { return { err: e, logs, calls }; }
+}
+
+test('D283 (RED FIRST) the claimed false takeover: kill(0) reads a 5-minute-old holder dead, tasklist reads it RUNNING: the lock is NOT taken, the disagreement is said once with both readings, and at the max wait it fails loudly', () => {
+  const d = tmp(); lockAt(d, 5);
+  const r = attempt(d, { alive: () => false, gone: () => false });
+  assert.ok(r.err, 'it did not take the lock'); assert.strictEqual(r.err.code, 'HEAVY_RUN_TIMEOUT');
+  assert.strictEqual(readLock(d).token, 'T1', 'the lock is untouched');
+  const says = r.logs.filter((l) => /NOT taken over/.test(l));
+  assert.strictEqual(says.length, 1, 'said once, not at every poll: ' + r.logs.join(' | '));
+  assert.match(says[0], /eeee5555 pid 424242 \(chair land-turnby \(probe\), since .*\) reads not-running to process\.kill\(pid, 0\) but RUNNING to tasklist; the lock is 5m old, younger than 30m/);
+  assert.ok(r.calls.gone >= 2, 'it asked the second method again at every poll (a holder that dies later is still taken)');
+});
+
+test('D283 a young lock whose holder BOTH methods say is gone IS taken over, and logged (a TaskStop leaves exactly this)', () => {
+  const d = tmp(); lockAt(d, 38);   // 38 minutes: the incident's age
+  // a younger one too: 5 minutes
+  for (const minutes of [5, 0.05]) {
+    lockAt(d, minutes);
+    const r = attempt(d, { alive: () => false, gone: () => true });
+    assert.ok(r.h, `${minutes} min old, both agree gone: taken (${r.err && r.err.message})`);
+    assert.match(r.logs.join('\n'), /took over a stale lock — eeee5555 pid 424242 \(chair land-turnby \(probe\), since .*\) is not running/);
+    assert.strictEqual(readLock(d).took_over.holder.pid, 424242); assert.strictEqual(r.calls.gone, 1, 'one extra read');
+    r.h.release(); assert.deepStrictEqual(fs.readdirSync(d), []);
+  }
+});
+
+test('D283 a young lock the second method CANNOT judge (null) is not taken: unknown is the safe side; it waits and fails loudly', () => {
+  const d = tmp(); lockAt(d, 10);
+  const r = attempt(d, { alive: () => false, gone: () => null });
+  assert.ok(r.err && r.err.code === 'HEAVY_RUN_TIMEOUT'); assert.strictEqual(readLock(d).token, 'T1');
+  assert.match(r.logs.join('\n'), /reads not-running to process\.kill\(pid, 0\) but tasklist could not confirm it/);
+});
+
+test('D283 an OLD lock (30 minutes or more) is taken on kill(0) alone: the second method is never asked; to the millisecond', () => {
+  const d = tmp();
+  for (const [ms, old] of [[H.YOUNG_MS, true], [H.YOUNG_MS + 1, true], [H.YOUNG_MS - 1, false], [H.YOUNG_MS - 60000, false]]) {
+    fs.writeFileSync(lockOf(d), JSON.stringify({ pid: 424242, seat: 'eeee5555', cmd: 'old', started: new Date(Date.now() - ms).toISOString(), token: 'T1' }));
+    // the clock is fixed so the age is exact
+    const base = Date.parse(JSON.parse(fs.readFileSync(lockOf(d), 'utf8')).started) + ms; let asked = 0; const logs = [];
+    let h, err; try { h = H.acquire({ cmd: 'x', dataDir: d, env: {}, maxWaitMs: 0, pollMs: 10, now: () => base, sleep: () => {}, log: (s) => logs.push(s), alive: () => false, confirmGone: () => { asked++; return false; } }); } catch (e) { err = e; }
+    if (old) { assert.ok(h, `${ms} ms old is old enough (${err && err.message})`); assert.strictEqual(asked, 0, 'the second method is not asked of an old lock'); h.release(); }
+    else { assert.ok(err, `${ms} ms old is still young`); assert.strictEqual(asked, 1); fs.rmSync(lockOf(d), { force: true }); }
+  }
+});
+
+test('D283 a lock whose age cannot be read (no started, or junk) counts as YOUNG: the second witness is asked', () => {
+  for (const started of [undefined, 'not a date', null, '']) {
+    const d = tmp(); fs.writeFileSync(lockOf(d), JSON.stringify({ pid: 424242, seat: 'eeee5555', cmd: 'x', token: 'T1', ...(started !== undefined ? { started } : {}) }));
+    const r = attempt(d, { alive: () => false, gone: () => false });
+    assert.ok(r.err, JSON.stringify(started)); assert.strictEqual(r.calls.gone > 0, true); assert.match(r.logs.join('\n'), /of unknown age/);
+  }
+});
+
+test('D283 PID REUSE fails safe: a lock whose pid is now some OTHER live process reads alive on every method, so the waiter waits and gives up loudly (real methods)', () => {
+  const d = tmp(); lockAt(d, 8, { pid: process.pid, token: 'reused' });   // this test process stands in for "whatever now owns that pid"
+  let t = 0; const base = mark();
+  assert.throws(() => H.acquire({ cmd: 'x', dataDir: d, env: {}, maxWaitMs: 1500, pollMs: 100, now: () => base + t, sleep: (ms) => { t += ms; }, log: () => {} }), (e) => e.code === 'HEAVY_RUN_TIMEOUT');
+  assert.strictEqual(readLock(d).token, 'reused');
+});
+
+test('D283 REAL: a live holder in another process is never taken: the real kill(0) and the real tasklist both say running, the waiter gives up, the lock is untouched and the holder still runs', async () => {
+  const d = tmp(); const holder = child(d, 'js-suite (a long real run)', 'setTimeout(()=>{},20000)', 'ffff6666-holder');
+  try {
+    await until(() => fs.existsSync(lockOf(d)));
+    assert.strictEqual(readLock(d).pid, holder.pid, 'the lock names the holder\'s own pid, which lives as long as its work');
+    assert.strictEqual(H.pidAlive(holder.pid), true); assert.strictEqual(H.pidGone(holder.pid), process.platform === 'win32' ? false : true, 'tasklist lists it (off Windows kill(0) is the whole truth)');
+    const t0 = Date.now();
+    assert.throws(() => H.acquire({ cmd: 'x', dataDir: d, env: {}, maxWaitMs: 1200, pollMs: 100, log: () => {} }), (e) => e.code === 'HEAVY_RUN_TIMEOUT' && /ffff6666/.test(e.message));
+    assert.ok(Date.now() - t0 >= 1100);
+    assert.strictEqual(readLock(d).token, JSON.parse(fs.readFileSync(lockOf(d), 'utf8')).token); assert.strictEqual(H.pidAlive(holder.pid), true);
+  } finally { holder.kill('SIGKILL'); await done(holder); }
+});
+
+test('D283 REAL: a holder killed HARD (as a stopped task is) leaves its lock, and the next runner takes it over at once, logged, naming the dead pid (real kill(0) and real tasklist)', async () => {
+  const d = tmp(); const holder = child(d, 'chair land-turnby (killed)', 'setTimeout(()=>{},60000)', 'aaaa7777-killed');
+  await until(() => fs.existsSync(lockOf(d)));
+  const pid = holder.pid; holder.kill('SIGKILL'); await done(holder);
+  assert.ok(fs.existsSync(lockOf(d)), 'a hard kill runs no exit handler: the lock file is left behind');
+  await until(() => H.pidAlive(pid) === false, 5000);
+  const logs = [];
+  const h = H.acquire({ cmd: 'next', dataDir: d, env: {}, maxWaitMs: 5000, pollMs: 50, log: (s) => logs.push(s) });
+  assert.match(logs.join('\n'), new RegExp(`took over a stale lock — aaaa7777 pid ${pid} \\(chair land-turnby \\(killed\\)`));
+  assert.strictEqual(readLock(d).took_over.holder.pid, pid);
+  h.release();
+});
+
+test('D283 pidGone: tasklist is asked for exactly that pid; a listed row means running; no row (exit 0) means gone; a failure, an error or garbage means "cannot tell"; off Windows kill(0) is the whole truth', () => {
+  const calls = []; const mk = (r) => (cmd, args, o) => { calls.push({ cmd, args, o }); return r; };
+  const row = (pid) => `"node.exe","${pid}","Console","1","45,052 K"\r\n`;
+  assert.strictEqual(H.pidGone(3124, mk({ status: 0, stdout: row(3124) }), 'win32'), false);
+  assert.deepStrictEqual(calls[0].args, ['/FI', 'PID eq 3124', '/FO', 'CSV', '/NH']); assert.strictEqual(calls[0].cmd, 'tasklist'); assert.strictEqual(calls[0].o.windowsHide, true); assert.ok(calls[0].o.timeout > 0);
+  assert.strictEqual(H.pidGone(3124, mk({ status: 0, stdout: 'INFO: No tasks are running which match the specified criteria.\r\n' }), 'win32'), true);
+  assert.strictEqual(H.pidGone(3124, mk({ status: 0, stdout: '' }), 'win32'), true, 'a localized "no tasks" message is not matched by words');
+  assert.strictEqual(H.pidGone(3124, mk({ status: 0, stdout: row(3125) }), 'win32'), true, 'a row for ANOTHER pid is not this pid');
+  assert.strictEqual(H.pidGone(3124, mk({ status: 0, stdout: row(31240) + row(3124) }), 'win32'), false, 'the pid is matched whole, in the pid column');
+  assert.strictEqual(H.pidGone(3124, mk({ status: 0, stdout: '"3124","x","y","1","1 K"\r\n' }), 'win32'), true, 'a 3124 in the NAME column is not the pid column');
+  for (const bad of [{ status: 1, stdout: row(3124) }, { status: null, stdout: '', error: new Error('ENOENT') }, { status: 0, stdout: null }, null, undefined]) assert.strictEqual(H.pidGone(3124, mk(bad), 'win32'), null, JSON.stringify(bad));
+  assert.strictEqual(H.pidGone(3124, () => { throw new Error('spawn blew up'); }, 'win32'), null, 'a throw is "cannot tell"');
+  const n = calls.length; assert.strictEqual(H.pidGone(3124, mk({ status: 0, stdout: '' }), 'linux'), true); assert.strictEqual(calls.length, n, 'off Windows it does not even ask');
+  assert.strictEqual(H.pidGone(process.pid), process.platform === 'win32' ? false : true); assert.strictEqual(H.pidGone(0x7ffffff0), true, 'a pid that cannot exist is gone');
+});
+
+test('D283 pidAlive: EPERM is alive (not allowed to touch it is not dead); ESRCH, any other error and a bad pid are not', () => {
+  const thrower = (code) => () => { const e = new Error(code); e.code = code; throw e; };
+  assert.strictEqual(H.pidAlive(10, () => {}), true); assert.strictEqual(H.pidAlive(10, thrower('EPERM')), true);
+  assert.strictEqual(H.pidAlive(10, thrower('ESRCH')), false); assert.strictEqual(H.pidAlive(10, thrower('EINVAL')), false);
+  for (const bad of [0, -1, 1.5, '10', NaN, null, undefined]) assert.strictEqual(H.pidAlive(bad, () => {}), false, String(bad));
+});
+
+test('D283 a race: a LIVE lock created between the read and the takeover is put back, not clobbered, and the waiter keeps waiting', () => {
+  const d = tmp(); lockAt(d, 3, { pid: 111, token: 'T1' });
+  const mine = { pid: 222, seat: 'gggg8888', cmd: 'the racer', started: new Date(mark()).toISOString(), token: 'T2' };
+  let t = 0; const base = mark(); let swapped = false;
+  const alive = (p) => { if (p === 111 && !swapped) { swapped = true; fs.writeFileSync(lockOf(d), JSON.stringify(mine)); return false; } return p === 222; };   // the holder reads dead; meanwhile another runner took the lock
+  assert.throws(() => H.acquire({ cmd: 'x', dataDir: d, env: {}, maxWaitMs: 500, pollMs: 100, now: () => base + t, sleep: (ms) => { t += ms; }, log: () => {}, alive, confirmGone: () => true }), (e) => e.code === 'HEAVY_RUN_TIMEOUT' && /gggg8888 pid 222/.test(e.message));
+  assert.deepStrictEqual(readLock(d), mine, 'the racer\'s lock was put back exactly');
+  assert.deepStrictEqual(fs.readdirSync(d), ['heavy-run.lock'], 'and nothing is left set aside');
+});
+
+test('D283 hold() exits 3 when the max wait runs out behind a live holder (loudly, naming it) and 2 when there is no data dir; it never runs the work', async () => {
+  const d = tmp(); const holder = child(d, 'a long real run', 'setTimeout(()=>{},20000)', 'hhhh9999-holder');
+  try {
+    await until(() => fs.existsSync(lockOf(d)));
+    const waiter = spawn(process.execPath, ['-e', `const H=require(${JSON.stringify(HELPER)});H.hold({cmd:'waiter',pollMs:50});console.log('RAN')`], { env: cleanEnv({ CONSONANCE_DATA: d, CONSONANCE_HEAVY_WAIT_MS: '700' }), stdio: ['ignore', 'pipe', 'pipe'] });
+    const r = await done(waiter);
+    assert.strictEqual(r.code, 3, r.err); assert.doesNotMatch(r.out, /RAN/, 'the work never started'); assert.match(r.err, /gave up after .* hhhh9999 pid \d+ \(a long real run/);
+  } finally { holder.kill('SIGKILL'); await done(holder); }
+  const noDir = spawn(process.execPath, ['-e', `require(${JSON.stringify(HELPER)}).hold({cmd:'x',dataDir:null});console.log('RAN')`], { env: cleanEnv({}), stdio: ['ignore', 'pipe', 'pipe'] });
+  const r2 = await done(noDir); assert.strictEqual(r2.code, 2, r2.err); assert.doesNotMatch(r2.out, /RAN/); assert.match(r2.err, /no data dir/);
+});
+
+test('D283 an UNREADABLE lock: one written this instant (younger than the grace) is waited for; an old one is taken over and logged as unreadable', () => {
+  const fresh = tmp(); fs.writeFileSync(lockOf(fresh), '{ half written');
+  let t = 0; const base = Date.now();
+  assert.throws(() => H.acquire({ cmd: 'x', dataDir: fresh, env: {}, maxWaitMs: 500, pollMs: 100, now: () => base + t, sleep: (ms) => { t += ms; }, log: () => {} }), (e) => e.code === 'HEAVY_RUN_TIMEOUT', 'a fresh unreadable lock is not taken');
+  assert.strictEqual(fs.readFileSync(lockOf(fresh), 'utf8'), '{ half written');
+  const old = tmp(); fs.writeFileSync(lockOf(old), 'junk'); const past = new Date(Date.now() - 60000); fs.utimesSync(lockOf(old), past, past);
+  const logs = [];
+  const h = H.acquire({ cmd: 'x', dataDir: old, env: {}, maxWaitMs: 500, pollMs: 100, log: (s) => logs.push(s) });
+  assert.match(logs.join('\n'), /took over a stale lock — an unreadable lock \(.*\) is not running/); assert.strictEqual(h.holder.took_over.holder.pid, null);
+  h.release();
+});
+
 test('WIRING (a source sweep): js-suite and every *.mutants.js and mutant-harness.js take the lock through this helper', () => {
   const wired = ['js-suite.js', 'mutant-harness.js', ...fs.readdirSync(__dirname).filter((f) => f.endsWith('.mutants.js'))];
   assert.ok(wired.length >= 8, `found ${wired.length}`);
