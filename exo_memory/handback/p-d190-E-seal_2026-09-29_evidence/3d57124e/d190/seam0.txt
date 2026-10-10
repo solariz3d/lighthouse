@@ -1,0 +1,157 @@
+[31m✖ R3 (a) X3: a bowl 16 m lap with the cup at 90 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(500.4707ms)[39m[39m
+[31m✖ R3 (a) X3: a bowl 16 m lap with the cup at 150 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(558.6419ms)[39m[39m
+[31m✖ R3 (a) X3: a half-pipe 24 m lap with the cup at 90 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(448.185ms)[39m[39m
+[31m✖ R3 (a) X3: a half-pipe 24 m lap with the cup at 150 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(587.1327ms)[39m[39m
+[31m✖ R3 (a) X2: a 20 m closing straight after the cup returns (the fit's ringing left 0.02-0.03°) closes with the seam within 1 mm (B: 2.3-5.3 mm) [90m(513.454ms)[39m[39m
+[31m✖ R3 (b) X1: a cup NOT returned before closing (B: 150° against an edge of 15.5°, a 9,488 mm cliff) is never reported converged over a step: it closes with the seam within 1 mm, or it is refused by name [90m(635.7455ms)[39m[39m
+[31m✖ R3 (b): close() holds the cup's last value at the legacy start's rendered edge (0.05°), for a returned cup and for one that was not [90m(196.481ms)[39m[39m
+[32m✔ R3 (a) mirror: a lap that STARTS in a cup and ends on a legacy piece meets within 1 mm at the seam too (the cup start is held to the legacy end's rendered edge) [90m(806.2557ms)[39m[39m
+[31m✖ R3 (c): validation reds a lap seam whose curve steps more than 1 mm (the panel would otherwise read "0 red · lap proved" over the cliff), and does not red the seam of a lap the reverse morph has matched [90m(25.3136ms)[39m[39m
+[32m✔ R3 (c): a legacy → cup JOINT the R2 morph matched is not red [90m(12.5935ms)[39m[39m
+[34mℹ tests 10[39m
+[34mℹ suites 0[39m
+[34mℹ pass 2[39m
+[34mℹ fail 8[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 4386.4054[39m
+
+[31m✖ failing tests:[39m
+
+test at test\core_cup_seam.test.js:41:3
+[31m✖ R3 (a) X3: a bowl 16 m lap with the cup at 90 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(500.4707ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the lap seam is 26.35 mm
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_seam.test.js:44:38[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.start (node:internal/test_runner/test:1015:17)[39m
+  [90m    at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup_seam.test.js:41:3
+[31m✖ R3 (a) X3: a bowl 16 m lap with the cup at 150 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(558.6419ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the lap seam is 28.83 mm
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_seam.test.js:44:38[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup_seam.test.js:41:3
+[31m✖ R3 (a) X3: a half-pipe 24 m lap with the cup at 90 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(448.185ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the lap seam is 150.82 mm
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_seam.test.js:44:38[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup_seam.test.js:41:3
+[31m✖ R3 (a) X3: a half-pipe 24 m lap with the cup at 150 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(587.1327ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the lap seam is 153.30 mm
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_seam.test.js:44:38[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup_seam.test.js:47:1
+[31m✖ R3 (a) X2: a 20 m closing straight after the cup returns (the fit's ringing left 0.02-0.03°) closes with the seam within 1 mm (B: 2.3-5.3 mm) [90m(513.454ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: bowl 31: the lap seam is 3.78 mm
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_seam.test.js:50:38[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup_seam.test.js:53:1
+[31m✖ R3 (b) X1: a cup NOT returned before closing (B: 150° against an edge of 15.5°, a 9,488 mm cliff) is never reported converged over a step: it closes with the seam within 1 mm, or it is refused by name [90m(635.7455ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: close said converged over a 9488.4 mm seam: closed in 3 step(s): 0.228 mm, tangent 1.1e-7 rad; the cup steps 134.50° at the seam (a cup meets a legacy piece there)
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_seam.test.js:56:55[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup_seam.test.js:58:1
+[31m✖ R3 (b): close() holds the cup's last value at the legacy start's rendered edge (0.05°), for a returned cup and for one that was not [90m(196.481ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: bowl 16: the cup ends at 14.513814° against the start's edge 14.585999999999999°
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_seam.test.js:63:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup_seam.test.js:75:1
+[31m✖ R3 (c): validation reds a lap seam whose curve steps more than 1 mm (the panel would otherwise read "0 red · lap proved" over the cliff), and does not red the seam of a lap the reverse morph has matched [90m(25.3136ms)[39m[39m
+  Error: buildPath: closed loop does not close (position 3.60e+2 m, tangent 2.14e-4)
+      at buildPath [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\geom\path.js:246:41[90m)[39m
+      at Object.toPath [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\core\adapter.js:197:16[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_seam.test.js:77:85[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m

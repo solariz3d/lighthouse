@@ -1,0 +1,56 @@
+MESSAGE 11  msg_011CfhReQUUqYfFxfHFtRhZA  seat chair  ts 2026-10-04T15:22:24.939Z  turn L88926..L88943 (next prompt L88948)
+CLAIMS:
+  [msg_011CfhReQUUqYfFxfHFtRhZA|2] **"B's check: green."**
+  [msg_011CfhReQUUqYfFxfHFtRhZA|10] **"The librarian is building and installing the scroll-bar fix and the speed fix together now."**
+
+--- L88926 user 2026-10-04T15:22:07.474Z
+USER: 
+
+<pasted_content id="f5af">
+[librarian:LIB] D235 part 2: B is GREEN. Pointer: exo_memory/handback/p-speed-B_2026-10-04.md. The export path is untouched.
+
+One non-blocking test gap, owner A: B's plant P6 (the change key ignoring each number's HIGH 32 bits) survived. The real code mixes both words, so it's a missing assertion, not a defect. The fix is one line in row 6: keyOf({a:1}) ≠ keyOf({a:2}), plus a sign flip. Queue it with the follow-up speed lap, not now.
+
+Land cb14f5b9 on t180 main (local), then ring me. I'll build and install scroll-bar + speed for the keeper.
+
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-speed-B_2026-10-04.md
+
+OUTPUT → NEXT: unchanged — green, so it lands; the P6 assertion rides with the follow-up lap
+NEXT: chair land cb14f5b9 now when this ring is read, then ring me to build and install
+</pasted_content id="f5af">
+
+--- L88935 assistant 2026-10-04T15:22:14.219Z
+TOOL_USE Bash [toolu_01NorEGcNZ3PxMVbFu7LhuF6]: {"command":"cd /c/Users/nname/Desktop/lighthouse && node consonance/tools/lap-row.js --stage D235 working --holder chair --by chair 2>&1|tail -1; grep -m1 -n \"VERDICT\" exo_memory/handback/p-speed-B_2026-10-04.md\nT=C:/Users/nname/Desktop/t180-track-builder\ngit -C $T merge-base --is-ancestor main cb14f5b9 && echo FF-OK; git -C $T log --oneline main..cb14f5b9\ngit -C $T diff main cb14f5b9 | grep -E '^\\+' | grep -iE 'vck_|sk-ant-|sk-or-|nname|C:\\\\\\\\|/Users/|AppData|steamapps|G:/' | head; echo \"privacy (none=clean)\"; git -C $T diff --stat main cb14f5b9 | tail -1; git -C $T diff --name-only main cb14f5b9 | grep -E '^(
+…[374 chars cut]…
+edit speed)\n\nCo-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01K4HM85wnuzT9z9KbahmuXz\" -- exo_memory/handback/p-speed-B_2026-10-04.md; git log --oneline -1","description":"Verify and land cb14f5b9"}
+--- L88936 user 2026-10-04T15:22:15.541Z
+RESULT [toolu_01NorEGcNZ3PxMVbFu7LhuF6]:   gate: RE-TAKE (--by equals --holder) — you pulled the baton to yourself; no ring owed.
+7:## VERDICT: **GREEN. Land `cb14f5b9`.** One test gap for A (the change key's high word), not blocking.
+FF-OK
+cb14f5b D235 part 2: faster edits on a closed tube (preview only, export untouched)
+privacy (none=clean)
+ 8 files changed, 269 insertions(+), 15 deletions(-)
+export-path check (none=clean)
+cb14f5b D235 part 2: faster edits on a closed tube (preview only, export untouched)
+51a74b0d D235: B's look, GREEN on cb14f5b9 (edit speed)
+Shell cwd was reset to C:\Consonance\instances\main
+--- L88938 assistant 2026-10-04T15:22:20.139Z
+TOOL_USE mcp__consonance__chair_inject [toolu_01XVUboBj18jSEGqzhW389qH]: {"token":"73cbfdee-a712-4f57-bcc7-396dde9f704f","target":"librarian","text":"D235 part 2 LANDED. t180 local main is 229b9cc8 → cb14f5b9, a fast-forward.\n- Privacy scan: 0 hits. The diff is 8 files, +269/−15. Nothing under src/, app/export, test/fixtures or reads/.\n- B's hand-back is committed in lighthouse, 51a74b0d.\n- Not pushed.\nYours: build and install main (scroll bar + speed). Keep the tube oval untouched.\nThe follow-up lap stays queued with its own bar: the cup-oval drag, the release rebuild, and B's P6 assertion for A.\nSOURCES: C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\handback\\p-speed-B_2026-10-04.md\nNEXT: librarian build and install cb14f5b9 when this ring is read, then plan the follow-up speed lap with its bar written first"}
+--- L88939 user 2026-10-04T15:22:20.595Z
+RESULT [toolu_01XVUboBj18jSEGqzhW389qH]: delivered to 0c0c0c0b (rendered in pane — not proof it was read)
+--- L88940 assistant 2026-10-04T15:22:20.988Z
+TOOL_USE Bash [toolu_01KMEnFch5U2FrYN5oaQfWFc]: {"command":"cd /c/Users/nname/Desktop/lighthouse && sleep 1; node consonance/tools/lap-row.js --stage D235 filed --holder librarian --by chair 2>&1|tail -1","description":"Hand baton to librarian"}
+--- L88941 user 2026-10-04T15:22:22.518Z
+RESULT [toolu_01KMEnFch5U2FrYN5oaQfWFc]:   gate: an audited delivery to librarian precedes this row.
+Shell cwd was reset to C:\Consonance\instances\main
+--- L88943 assistant 2026-10-04T15:22:24.939Z  <<< THE CLAIM'S MESSAGE
+TEXT: The speed fix is now on t180's local main, as cb14f5b9.
+
+- **B's check:** green. The full detail comes back after a drag, and exported tracks are unchanged.
+- **One test gap, not a bug:** one of the new checks would miss a certain kind of error. A adds the missing test in the next speed lap.
+- **Privacy scan:** clean.
+- **Not pushed.**
+
+The librarian is building and installing the scroll-bar fix and the speed fix together now. The tube oval stays as it is for your shadow test.
+
+Next comes the follow-up for T-180 OVAL and the redraw after you let go, with its bar set before any work starts.

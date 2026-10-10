@@ -1,0 +1,7 @@
+=== node --max-old-space-size=4096 C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d277v/startpos.js
+=== cwd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d277v
+=== env {}
+closed [33mfalse[39m pieces [33m46[39m road length (segments) 15260.0
+{"version":1,"height":1.5,"gateInsetM":0.5,"line":{"word":"p1","along":999},"grid":{"pattern":"2-staggered","count":4,"poleBackM":10,"rowGapM":16,"colGapM":6,"edits":{}},"pits":{"at":{"word":"p1","along":957},"count":2,"spacingM":8,"u":0,"lane":null},"hotlap":{"speedKmh":null},"sectors":[]}
+
+=== exit 0 signal null error  0.4s

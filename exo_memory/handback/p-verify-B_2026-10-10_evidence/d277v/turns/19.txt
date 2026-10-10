@@ -1,0 +1,90 @@
+MESSAGE 19  msg_011CfjGnq2nTDXgSVQ861EoP  seat A  ts 2026-10-05T14:47:34.110Z  turn L63379..L63402 (next prompt L63443)
+CLAIMS:
+  [msg_011CfjGnq2nTDXgSVQ861EoP|6] **"a plain numeric integral of the stored piece (midpoint rule, 40,000 steps)"**: compare this against the `numeric` helper. It uses `(i + 0.5)` and `n = 40000`, which looks consistent, but it is still a claim.
+  [msg_011CfjGnq2nTDXgSVQ861EoP|7] **`D.channelAt(P, ch, s).v`**: check that `D.channelAt` exists, takes `(piece, channel, arcLength)`, and returns an object with `.v`.
+  [msg_011CfjGnq2nTDXgSVQ861EoP|12] **`< 1e-4`** tolerances against the integral: check that the implementation's own integration agrees with a 40k-step midpoint sum to within 1e-4°.
+
+--- L63379 user 2026-10-05T14:43:13.348Z
+USER: <task-notification>
+<task-id>b0lihrzb8</task-id>
+<tool-use-id>toolu_019PQVKVKzWSaHQuPU4NaqcV</tool-use-id>
+<output-file>C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\tasks\b0lihrzb8.output</output-file>
+<status>completed</status>
+<summary>Background command "cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad &amp;&amp; cat &gt; sp_pc1.txt &lt;&lt;'EOF'
+@@FILE C:/Users/nname/Desktop/worktrees/a-pieces-wt/src/core/piece.js
+@@OLD
+  for (const k of Object.keys(piece)) if (!TOP_KEYS.includes(k)) bad('BAD_PIECE_FIELD', `unknown field "${k}" (a /1 piece has ${TOP_KEYS.join(', ')}): refused rather than dropped on the next save`);
+  if (piece.schema !== SCHEMA) bad('BAD_PIECE_SCHEMA', `schema must be ${SCHEMA}, got ${JSON.stringify(piece.schema)}${typeof piece.schema === 'string' &amp;&amp; /^t180b\.core\//.test(piece.schema) ? ' (that is a whole track, not a piece)' : typeof piece.schema === 'string' &amp;&amp; /^t180b\.piece\//.test(piece.schema) ? ' (a newer piece needs a newer builder)' : ''}`);
+@@NEW
+  if (piece.schema !== SCHEMA) bad('BAD_PIECE_SCHEMA', `schema must be ${SCHEMA}, got ${JSON.stringify(piece.schema)}${typeof piece.schema === 'string' &amp;&amp; /^t180b\.core\//.test(piece.schema) ? ' (that is a whole track, not a piece)' : typeof piece.schema === 'string' &amp;&amp; /^t180b\.piece\//.test(piece.schema) ? ' (a newer piece needs a newer builder)' : ''}`);
+  for (const k of Object.keys(piece)) if (!TOP_KEYS.includes(k)) bad('BAD_PIECE_FIELD', `unknown field "${k}" (a /1 piece has ${TOP_KEYS.join(', ')}): refused rather than dropped on the next save`);
+@@END
+EOF
+node blockpatch.js sp_pc1.txt 2&gt;&amp;1 | grep -av "Warn\|trace" | cut -c1-120
+cat &gt; sp2/pc_smoke.js &lt;&lt;'EOF'
+require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({ cmd: 'A D240 smoke' });
+const T = 'C:/Users/nname/Desktop/worktrees/a-pieces-wt/';
+const D = require(T + 'src/core/document.js'), { extend } = req
+…[297 chars cut]…
+rgets: { kh: 1 / R } });
+d = extend(d, { length: 60, transition: 40, targets: { kh: 0 } });
+const r = close(d, { edited: [0] }); const H = r.doc; console.log('closed', r.converged, H.pieces.length);
+// save pieces 1..n-1, insert onto a doc holding only piece 0
+const run = P.saveRun(H, 1, H.pieces.length - 1, { name: 'rest of the lap' }); console.log('summary', JSON.stringify(P.summary(run)));
+const txt = P.serialize(run); console.log('text', txt.length, 'roundtrip', P.serialize(P.parse(txt)) === txt);
+let base = D.createDoc('lap', { start: H.start }); base = { ...base, pieces: [H.pieces[0]], nextId: 2 };
+const ins = P.insert(base, P.parse(txt)); const T2 = { ...ins, closed: true, name: H.name };
+console.log('same doc text:', D.serialize(T2) === D.serialize(H));
+EOF
+node sp2/pc_smoke.js 2&gt;&amp;1 | grep -av "Warn\|trace\|heavy-run"" completed (exit code 0)</summary>
+</task-notification>
+--- L63381 assistant 2026-10-05T14:43:16.621Z
+TOOL_USE Read [toolu_01YSCEHzTcMdYp88toc2Dd2a]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\tasks\\b0lihrzb8.output"}
+--- L63382 user 2026-10-05T14:43:16.647Z
+RESULT [toolu_01YSCEHzTcMdYp88toc2Dd2a]: 1	C:/Users/nname/Desktop/worktrees/a-pieces-wt/src/core/piece.js [33m1[39m edits
+2	closed [33mtrue[39m [33m6[39m
+3	summary {"pieces":5,"roads":5,"flights":0,"kind":"legacy","lengthM":1190.9732,"turnDeg":360.0001260258422,"climbDeg":0}
+4	text [33m3102[39m roundtrip [33mtrue[39m
+5	same doc text: [33mtrue[39m
+6	
+7	[exited with code 0]
+8	
+--- L63385 assistant 2026-10-05T14:43:18.674Z
+TEXT: The smoke run works on the first try: the re-inserted lap is the same document text, the run's summary reads a 360° turn, and the text round-trips. Now the full test file.
+--- L63386 assistant 2026-10-05T14:43:21.325Z
+TOOL_USE Bash [toolu_01EdJzPBJ1CgUxrK4BQHmFCC]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-pieces-wt && node -e \"\nrequire('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({cmd:'A D240 core_piece tests'});\nconst r=require('child_process').spawnSync(process.execPath,['--max-old-space-size=4096','--test','--test-concurrency=1','test/core_piece.test.js'],{encoding:'utf8',maxBuffer:1<<27,env:{...process.env,FORCE_COLOR:'0'}});\nconst t=r.stdout+r.stderr;require('fs').writeFileSync('C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/piece_run1.txt',t);console.log('exit',r.status);console.log(t.split('\\n').filter(l=>/^ℹ (tests|pass|fail)|^✖|^✔|AssertionError|^  Error|expected|actual/.test(l)).join('\\n').slice(0,7000));\" 2>&1 | grep -av \"Warn\\|heavy-run\" | cut -c1-330","timeout":900000}
+--- L63393 user 2026-10-05T14:45:29.380Z
+RESULT [toolu_01EdJzPBJ1CgUxrK4BQHmFCC]: exit [33m1[39m
+✖ row 1: the relative form: a state is its change from the run's start (first point 0) plus the start, a rate is as the document holds it, and putting them back is EXACT, on real adjusted laps of all three kinds (274.502ms)
+✖ row 1b: the text is canonical: a stable key order, one piece to a line, a final newline; parse(serialize(p)) is p and serialize of it is the same text; the piece is frozen (78.8072ms)
+✔ row 2 (REQUIRED, legacy): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice (8487.9534ms)
+✖ row 2 (REQUIRED, cup): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice (2459.283ms)
+✖ row 2 (REQUIRED, tube): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice (8544.0811ms)
+✔ row 2b: put where the run does NOT already start (a different head) the export of the result is still the document's own: it exports, and builds the same as the same document made by hand would (153.1704ms)
+✖ row 3: at a DIFFERENT head the run continues from it: the document accepts it, the joint's values and slopes meet, the change across the run is the saved one, and the rates after the first span are the saved ones (505.5482ms)
+✔ row 3b: it can be added again and again: a s
+…[4581 chars cut]…
+ image of the original's (x flips; height, distance along and the bank's size do not), with a bank, a hill and a swerve in it; and at a head it is still a valid track (5040.0888ms)
+  Error [CoreError]: BAD_PIECE_FIELD: piece 0: unknown field "cup" in a road piece (a cup, edge or tube is carried by its channel arrays)
+✖ row 7: NO PIECE MAKES A DOCUMENT THE DOCUMENT WOULD REFUSE: every kind of run against every kind of head either goes in as a valid track or is refused by a CoreError, never a crash and never a bad document (170.1854ms)
+  Error [CoreError]: BAD_PIECE_FIELD: piece 0: unknown field "cup" in a road piece (a cup, edge or tube is carried by its channel arrays)
+✖ row 8:
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63397 assistant 2026-10-05T14:45:44.049Z
+TOOL_USE Bash [toolu_01JjZdUFWxrqmvJ1SWJJc7rT]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sp_pc3.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-pieces-wt/src/core/piece.js\n@@OLD\nconst ROAD_KEYS = Object.freeze(['type', 'length', 'family', 'knots', 'channels']), FLIGHT_KEYS = Object.freeze(['type', 'gap', 'drop', 'land']);\n@@NEW\n// the cup, edge and tube flags are IMPLIED by the channel arrays in the text (as in a document's); a piece object may carry them (checkPiece's own output does), if they agree with the arrays\nconst ROAD_KEYS = Object.freeze
+…[1392 chars cut]…
+n2.txt',t);console.log('exit',r.status);console.log(t.split('\\n').filter(l=>/^ℹ (tests|pass|fail)|^✖ row|^  (Assertion)?Error|^  [A-Za-z]*Error|expected|actual/.test(l)).join('\\n').slice(0,6000));\" 2>&1 | grep -av \"Warn\\|heavy-run\" | cut -c1-360","timeout":900000}
+--- L63398 user 2026-10-05T14:47:26.279Z
+RESULT [toolu_01JjZdUFWxrqmvJ1SWJJc7rT]: C:/Users/nname/Desktop/worktrees/a-pieces-wt/src/core/piece.js [33m2[39m edits
+exit [33m1[39m
+✖ row 9: ranges, names, limits and the summary a library list shows (219.6612ms)
+ℹ tests 18
+ℹ pass 17
+ℹ fail 1
+✖ row 9: ranges, names, limits and the summary a library list shows (219.6612ms)
+  AssertionError [ERR_ASSERTION]: {"pieces":1,"roads":1,"flights":0,"kind":"legacy","lengthM":300,"turnDeg":2.6449946305116963,"climbDeg":5.570878668818411}
+    actual: false,
+    expected: true,
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63402 assistant 2026-10-05T14:47:41.141Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_01RgA8hE79Fz8a5ZWYdLpcZJ]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sp_pc4.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-pieces-wt/test/core_piece.test.js\n@@OLD\n  assert.ok(Math.abs(s1.turnDeg - 90) < 1e-3 && Math.abs(s1.climbDeg) < 1e-6 && Math.abs(s1.lengthM - Q) < 1e-3, JSON.stringify(s1));\n  assert.ok(Math.abs(s2.climbDeg - (300 / 3000) * (180 / Math.PI)) < 1e-3 && s2.kind === 'legacy', JSON.stringify(s2)); assert.equal(s3.pieces, 2); assert.equal(s3.roads, 2); assert.equal(s3.flights, 0);\n@@NEW\n  assert.ok(Math.abs(s1.turnDeg - 90) < 1e-3 && Math.abs(s1.climbDeg) < 1e-6 && Math.abs(s1.lengthM - Q) < 1e-3, JSON.stringify(s1));\n  // the second piece starts from the first one's end (C1), so its rates are not constants: checked against a plain numeric integral of the stored piece (midpoint rule, 40,000 steps), written out here\n  const numeric = (P, ch) => { let sum = 0; const n = 40000; for (let i = 0; i < n; i++) sum += D.channelAt(P, ch, ((i + 0.5) * P.length) / n).v * (P.length / n); return (sum * 180) / Math.PI; };\n  assert.ok(Math.abs(s2.turnDeg - numeric(d.pieces[1], 'kh')) < 1e-4 && Math.abs(s2.climbDeg - numeric(d.pieces[1], 'kv')) < 1e-4 && s2.kind === 'legacy' && Math.abs(s2.climbDeg) > 1, JSON.stringify(s2));\n  assert.equal(s3.pieces, 2); assert.equal(s3.roads, 2); assert.equal(s3.flights, 0); assert.ok(Math.abs(s3.turnDeg - (s1.turnDeg + s2.turnDeg)) < 1e-9 && Math.abs(s3.lengthM - (s1.lengthM + s2.lengthM)) < 1e-9, 'a run adds up');\n@@END\nEOF\nnode blockpatch.js sp_pc4.txt 2>&1 | grep -av \"Warn\\|trace\" | cut -c1-120; cd C:/Users/nname/Desktop/worktrees/a-pieces-wt && node -e \"\nrequire('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({cmd:'A D240 core_piece tests (3)'});\nconst r=require('child_process').spawnSync(process.execPath,['--max-old-space-size=4096','--test','--test-concurrency=1','test/core_piece.test.js'],{encoding:'utf8',maxBuffer:1<<27,env:{...process.env,FORCE_COLOR:'0'}});\nconst t=r.stdout+r.stderr;require('fs').writeFileSync('C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/piece_run3.txt',t);console.log('exit',r.status);console.log(t.split('\\n').filter(l=>/^ℹ (tests|pass|fail)|^✖ row|AssertionError|expected|actual/.test(l)).join('\\n').slice(0,3000));\" 2>&1 | grep -av \"Warn\\|heavy-run\" | cut -c1-300","timeout":900000}

@@ -1,0 +1,9 @@
+== D273 lap3 green (hook wired) · asked 2026-10-08T22:10:39.908Z · lock held 2026-10-08T22:10:39.913Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd C:/Users/nname/Desktop/worktrees/c-consumer-fork3-wt && node --test --test-concurrency=1 consonance/tools/consumer-fork-wiring.test.js consonance/tools/consumer-relabel.test.js consonance/tools/gen-consumer.test.js consonance/tools/gen-consumer.fixture-scope.test.js 2>&1 | grep -E 'ℹ (tests|pass|fail|skipped|todo)|✖ [a-zA-Z]|AssertionError|Error:' | head -20; cd consonance/src-tauri && mkdir -p dist && /c/Users/nname/.cargo/bin/cargo.exe test --bin consonance fork_note 2>&1 | grep -E 'test result|FAILED|panicked|^error' | head
+[34mℹ tests 91[39m
+[34mℹ pass 91[39m
+[34mℹ fail 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 987 filtered out; finished in 0.00s
+== exit 0 · done 2026-10-08T22:13:37.010Z

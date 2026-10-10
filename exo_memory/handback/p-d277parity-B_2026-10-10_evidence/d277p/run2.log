@@ -1,0 +1,3 @@
+light-gen: exit 1 1.7s
+light-src: exit 0 3.0s
+cargo-src-light: exit 0 30.1s

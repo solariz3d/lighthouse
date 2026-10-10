@@ -1,0 +1,931 @@
+[32m✔ mapping: ksAmbient, ksDiffuse, ksSpecular, ksSpecularEXP, ksEmissive and ksAlphaRef become the uniforms, value for value [90m(0.9606ms)[39m[39m
+[32m✔ mapping: a property the material lacks reads 0, as actools GetPropertyValue*ByName does [90m(0.096ms)[39m[39m
+[32m✔ mapping: txDiffuse is the texture the material's sampler names [90m(0.0988ms)[39m[39m
+[32m✔ mapping: ksPerPixelNM takes txNormal and nmObjectSpace [90m(0.1659ms)[39m[39m
+[32m✔ mapping: ksMultilayer takes the mask, the four detail textures and their scales, and magicMult [90m(0.2123ms)[39m[39m
+[32m✔ mapping: the shader picks the program the way actools MaterialsProviderDark does [90m(0.1014ms)[39m[39m
+[32m✔ mapping: a material without a shader is refused [90m(0.2238ms)[39m[39m
+[32m✔ light: one sun, stated: 14:00, 42° up, and toSun is a unit vector at that elevation [90m(0.071ms)[39m[39m
+[32m✔ shade: a white surface facing the sun, seen from the sun, is tx·(Ambient·ambient + Diffuse·sun) + Specular·sun [90m(0.2144ms)[39m[39m
+[32m✔ shade: a surface facing away from the sun gets ambient only (no diffuse, no specular) [90m(0.1345ms)[39m[39m
+[32m✔ shaders: every uniform the renderer sets is declared in each program it sets it for [90m(0.5064ms)[39m[39m
+[32m✔ shaders: the three programs are the three the packet names, and each fragment shader has a precision [90m(0.1484ms)[39m[39m
+[32m✔ shaders: the ported file carries the Ms-PL notice, and the licence text sits beside it [90m(0.7472ms)[39m[39m
+[32m✔ renderer: an AC material's properties reach the shader as the mapped uniforms [90m(1.0969ms)[39m[39m
+[32m✔ renderer: the multilayer scales and magicMult reach the shader [90m(0.2896ms)[39m[39m
+[32m✔ renderer: a named texture is uploaded at its size and bound to its sampler; an absent one gets a 1×1 white texel [90m(0.2864ms)[39m[39m
+[32m✔ renderer: a texture no longer drawn is deleted after the frame, like a buffer [90m(0.2839ms)[39m[39m
+[32m✔ renderer: look "words" draws the per-word colours even when materials are given [90m(0.1961ms)[39m[39m
+[32m✔ renderer: an unknown look is refused [90m(0.1612ms)[39m[39m
+[32m✔ renderer: a batch with no material is refused, not drawn in some default [90m(0.2099ms)[39m[39m
+[32m✔ list: every mesh the preview draws is in the kn5, under the same name, with the same material [90m(14045.0225ms)[39m[39m
+[32m✔ list: each material the preview draws equals the kn5's, property for property at float32, sampler for sampler [90m(0.2753ms)[39m[39m
+[32m✔ list: the textures the preview draws equal the kn5's (none today: the export writes no texture yet) [90m(0.0681ms)[39m[39m
+[33m⚠ list: the preview's material and texture list EQUALS the kn5's [90m(1.0517ms)[39m # the preview does not draw the start and grid paint (t180b_paint, PAINT_* meshes) or the closing seam the export builds (D177 §3)[39m
+[32m✔ textured: a word whose floor names a made texture is drawn with the set's material; the others keep the scene's [90m(71.6116ms)[39m[39m
+[32m✔ textured: the textured material the preview draws equals the one the set writes into the kn5 [90m(4.8183ms)[39m[39m
+[32m✔ textured: the preview's texels are the kn5's DDS level 0, byte for byte [90m(4.7518ms)[39m[39m
+[32m✔ textured: an untextured floor in a set still draws the scene's material, not the set's untextured one the export does not write [90m(1.9536ms)[39m[39m
+[32m✔ preview: the AC look is the default: every placed batch is drawn with its exported material [90m(4.8245ms)[39m[39m
+[32m✔ preview: a texture set with a made floor texture is uploaded at its size and drawn [90m(2.6232ms)[39m[39m
+[32m✔ preview: L toggles the look between the AC shaders and the colour per word (ARCHITECTURE §4 feedback layer), and the HUD says which [90m(3.3391ms)[39m[39m
+[32m✔ renderer: the ties fade out between TIE_FADE's distances, with blending; the edges do not fade [90m(0.7658ms)[39m[39m
+[32m✔ renderer: the canvas is cleared to CLEAR, darker than the fog colour (the fog colour is the look and is unchanged) [90m(0.6332ms)[39m[39m
+[32m✔ build view (default): the geometry's own head camera, 15 m behind along T and 6 m up along U, looking along T [90m(3.0936ms)[39m[39m
+[32m✔ overhead: 80 m straight up, the growth direction up the screen [90m(0.9611ms)[39m[39m
+[32m✔ overhead: inside a loop (T vertical) the screen-up stays the loop's heading, level [90m(2.097ms)[39m[39m
+[32m✔ side: level with the head, 40 m off its right side, 6 m up, looking at the head [90m(1.2843ms)[39m[39m
+[32m✔ chase: 25 m behind the head on the road, 3 m along the road's up, looking toward the head [90m(1.121ms)[39m[39m
+[32m✔ chase through a loop-the-loop: the eye stays on the drivable side of the road the whole way round [90m(2.0401ms)[39m[39m
+[32m✔ chase on a track shorter than its lag: clamped to the start of the road, still a valid pose [90m(0.1736ms)[39m[39m
+[32m✔ the switch key walks build → overhead → side → chase → free → build [90m(0.6405ms)[39m[39m
+[32m✔ the build view is ONE key away from every mode [90m(0.5778ms)[39m[39m
+[32m✔ other keys change nothing [90m(0.1269ms)[39m[39m
+[32m✔ after an append every follow mode follows the new head; free does not move [90m(3.3917ms)[39m[39m
+[32m✔ entering free keeps the view; it flies and turns only in free mode; pitch stays within ±89° [90m(0.8456ms)[39m[39m
+[32m✔ the shown pose eases toward the exact pose: no snap on a switch, and it converges [90m(0.8999ms)[39m[39m
+[32m✔ edges: a missing head, an unknown mode and a rig without the build view are refused [90m(0.6676ms)[39m[39m
+[32m✔ build view frames a 67 m road: every cross-section point at the head is in view at 16:9, 1:1 and 9:16 [90m(1.2238ms)[39m[39m
+[32m✔ build view: without the road's width, 15 m behind does NOT frame a 67 m road (what the framing fixes) [90m(0.6936ms)[39m[39m
+[32m✔ build view: a road narrow enough keeps exactly 15 m behind and 6 m up; the backed-off view keeps the same angle [90m(0.8092ms)[39m[39m
+[32m✔ the preview gives the build view the LAST road piece's span (a jump after it has no profile), and null with no road [90m(7.9597ms)[39m[39m
+[32m✔ the ghost (the first word before anything is placed) carries its segments, so the build view frames it too [90m(5.4726ms)[39m[39m
+[32m✔ free look: a + yaw turns the view right on screen (what was straight ahead slides to the left) [90m(0.9706ms)[39m[39m
+[32m✔ zoom: every follow view comes nearer on + and backs off on −, per view, within its limits [90m(0.5549ms)[39m[39m
+[32m✔ zoom in free mode flies along the view instead [90m(0.5171ms)[39m[39m
+[32m✔ overhead zoomed in (0.05 to 50): the head and the road near it stay in view, on a 300 m straight (the head at the edge of the box: the slide must reach it) [90m(6.7489ms)[39m[39m
+[32m✔ overhead zoomed in (0.05 to 50): the head and the road near it stay in view, on a 400 m arc (box centre off the road) [90m(5.5109ms)[39m[39m
+[32m✔ overhead zoomed in (0.05 to 50): the head and the road near it stay in view, on the closed stadium (box centre in the infield) [90m(34.9152ms)[39m[39m
+[32m✔ overhead at zoom 1 and out is unchanged by the head-following: the box centre, the whole track (the D170 fit) [90m(3.9434ms)[39m[39m
+[32m✔ the lens: a notch in narrows the field of view by 1.15, out widens it, clamped to 10°–100°, and the reset returns the default [90m(0.2252ms)[39m[39m
+[32m✔ the lens changes the pose's fov and nothing else, in every view (the eye, the target and up do not move) [90m(0.6829ms)[39m[39m
+[32m✔ free.move moves EXACTLY hypot(fwd, right, up) metres, along d·fwd + r·right + U·up, at every pitch and for every combination of axes [90m(148.6666ms)[39m[39m
+[32m✔ W+E looking almost straight down (−89°, where forward and up nearly cancel) does not stop: it goes 1.0× along the part that does not cancel, the heading [90m(0.3428ms)[39m[39m
+[32m✔ a single-axis move is unchanged (backward is along −d), and a zero move is a no-op (no NaN) [90m(0.3154ms)[39m[39m
+[32m✔ REPRODUCER (the page as it was): close in core (a fresh start) closes [90m(1.2884ms)[39m[39m
+[32m✔ the window closes, destroyed exactly once: close in core (a fresh start) [90m(0.2432ms)[39m[39m
+[32m✔ REPRODUCER (the page as it was): close in pieces closes [90m(0.0767ms)[39m[39m
+[32m✔ the window closes, destroyed exactly once: close in pieces [90m(0.1086ms)[39m[39m
+[32m✔ REPRODUCER (the page as it was): close after switching pieces -> core is TRAPPED: the X does nothing [90m(0.0702ms)[39m[39m
+[32m✔ the window closes, destroyed exactly once: close after switching pieces -> core [90m(0.0578ms)[39m[39m
+[32m✔ REPRODUCER (the page as it was): close after switching core -> pieces closes [90m(0.0948ms)[39m[39m
+[32m✔ the window closes, destroyed exactly once: close after switching core -> pieces [90m(0.0866ms)[39m[39m
+[32m✔ REPRODUCER (the page as it was): close after core -> pieces -> core -> pieces -> core is TRAPPED: the X does nothing [90m(0.0828ms)[39m[39m
+[32m✔ the window closes, destroyed exactly once: close after core -> pieces -> core -> pieces -> core [90m(0.2309ms)[39m[39m
+[32m✔ REPRODUCER (the page as it was): close in pieces with a failing autosave is TRAPPED: the X does nothing [90m(0.2563ms)[39m[39m
+[32m✔ the window closes, destroyed exactly once: close in pieces with a failing autosave [90m(0.0945ms)[39m[39m
+[32m✔ REPRODUCER (the page as it was): close in core after a pieces page whose autosave fails is TRAPPED: the X does nothing [90m(0.4336ms)[39m[39m
+[32m✔ the window closes, destroyed exactly once: close in core after a pieces page whose autosave fails [90m(0.0359ms)[39m[39m
+[32m✔ the pieces cleanup RUNS on close, before the window is destroyed (the autosave is flushed or cleared first) [90m(0.4095ms)[39m[39m
+[32m✔ core has nothing to clean up: the handler destroys straight away [90m(0.0714ms)[39m[39m
+[32m✔ a cleanup that throws is logged and the window still closes [90m(0.1418ms)[39m[39m
+[32m✔ a cleanup that HANGS cannot hold the window: it closes after the timeout [90m(49.7469ms)[39m[39m
+[32m✔ a destroy() that fails is logged, never thrown out of the handler [90m(0.3113ms)[39m[39m
+[32m✔ the handler prevents the wrapper's own destroy (it destroys once, itself), and tolerates an event with no preventDefault [90m(0.1788ms)[39m[39m
+[32m✔ installCloseHandler off Tauri (no window, or no onCloseRequested) registers nothing and does not throw [90m(0.0448ms)[39m[39m
+[32m✔ the cleanup is read at CLOSE time: a mode that sets it after registration is honoured, and a mode that clears it is too [90m(0.0914ms)[39m[39m
+[32m✔ app/index.html registers the close handler BEFORE the mode branch, so both builders have it [90m(0.0462ms)[39m[39m
+[32m✔ app/index.html has ONE close registration path (the closer, and a bare destroy-only fallback): the old pieces-only listener is gone [90m(0.0547ms)[39m[39m
+[32m✔ the strings: one decimal, the unit written, a sign on angles, 0.0° bare, half away from zero, no wrap [90m(1.1143ms)[39m[39m
+[32m✔ the layout: never over the head's keep-out, never two labels overlapping, the priority one placed first, a crowded one culled [90m(1.7064ms)[39m[39m
+[32m✔ the layout: a label anchored on a large head keep-out is placed clear of it, not culled [90m(0.1185ms)[39m[39m
+[32m✔ the layout: the head's own label is never culled, even where no ring around its anchor fits; it stays clear of the head [90m(0.637ms)[39m[39m
+[32m✔ a piece whose middle is behind the camera is labelled on the part of it that is in view [90m(52.4801ms)[39m[39m
+[32m✔ the head's own piece is labelled even when none of it is on screen (the camera looks ahead, past the head) [90m(18.9919ms)[39m[39m
+[32m✔ the label box holds only an opaque background and its text: no border, square corners, contrast ≥ 4.5 : 1 [90m(5.5698ms)[39m[39m
+[32m✔ the shell's readouts are A's, once per document; the ghost's strings are the placed piece's strings [90m(7.9588ms)[39m[39m
+[32m✔ the panel shows the ghost's four numbers, and they follow every field inside its input handler (no timer, no frame) [90m(23.6523ms)[39m[39m
+[32m✔ the panel: a field set extend refuses shows — (and says why in the title); a closed loop shows —; after Extend the ghost is the NEXT piece [90m(8.4285ms)[39m[39m
+[32m✔ the labels on the track: one per road piece, the text A's numbers, clear of the head; a flight and an empty track draw none and throw nothing [90m(44.0597ms)[39m[39m
+[32m✔ the head's own piece is labelled in the build view, where its middle is behind the camera [90m(15.6948ms)[39m[39m
+[32m✔ the labels follow a path the preview extends IN PLACE, and survive the preview clearing #preview after they mounted [90m(144.8504ms)[39m[39m
+[32m✔ extendOptions: the cup field is the target c, in DEGREES, typed as it is (0 is a target; empty continues; never clamped here) [90m(0.1819ms)[39m[39m
+[32m✔ the Extend panel has a "cup °" field beside bank, 0 to 150, and Extend hands its value to the core as c [90m(4.7571ms)[39m[39m
+[32m✔ the readout shows cup from → to: the DOCUMENT's values with the bank cell's rounding, never the typed target, never bank's [90m(9.5233ms)[39m[39m
+[32m✔ the cup cell follows the cup field inside its input handler, and a cup the core refuses shows — and says why [90m(7.2306ms)[39m[39m
+[32m✔ the brush's channel list gains cup (channel c), with a drag rate in degrees [90m(0.2966ms)[39m[39m
+[32m✔ on an EMPTY track the fields show the first piece's start (level, straight, the bowl's 31 m and the edge it renders), not blanks [90m(1.302ms)[39m[39m
+[32m✔ after Extend, Undo and Redo the fields show the head's END state in their own units (°/100m, °, m) [90m(11.0386ms)[39m[39m
+[32m✔ on OPENING a saved track the fields show its head [90m(2.0832ms)[39m[39m
+[32m✔ a CHANGED value is a target in the core's units; a value typed back to exactly what was shown is untouched again [90m(15.1491ms)[39m[39m
+[32m✔ a field left as shown builds the SAME piece, ghost and readout as a blank, even where turn and bank are still changing at the head; a literal target would not [90m(19.7941ms)[39m[39m
+[32m✔ the first piece is the typed WIDTH along its whole length, from s = 0 (no bottleneck); untyped channels keep their default start [90m(6.6779ms)[39m[39m
+[32m✔ the first piece is the typed BANK, TURN and CLIMB from s = 0 [90m(6.6115ms)[39m[39m
+[32m✔ a typed CUP makes the first piece a cup piece from its start, and the rendered edge equals c on both sides from s = 0 (seal row 1) [90m(5.4584ms)[39m[39m
+[32m✔ the SECOND piece is unchanged: it starts where the first ends and ramps to its target, exactly as before [90m(13.5046ms)[39m[39m
+[32m✔ a lap whose first piece was typed (width 40, cup 30) closes, and exports through the app's route with no red (csp on) [90m(2483.5076ms)[39m[39m
+[32m✔ the core loads through the WEBVIEW's loader with the node shim, builds the same track as node's, and is refused without the shim [90m(56.0187ms)[39m[39m
+[32m✔ extend: a piece is added at the head, the segments are the adapter's, and undo / redo walk it back and forth exactly [90m(12.4373ms)[39m[39m
+[32m✔ the ghost of an extension is exactly what the click then builds [90m(6.7002ms)[39m[39m
+[32m✔ extendOptions: empty fields continue; turn and climb are degrees per 100 m, bank degrees, width metres [90m(0.1506ms)[39m[39m
+[32m✔ a failed extend changes nothing and says why [90m(1.2114ms)[39m[39m
+[32m✔ the rate brush: one drag is one undo step, every frame applies the WHOLE delta to the drag's base, and undo restores the track exactly [90m(32.0981ms)[39m[39m
+[32m✔ the local (height / sideways) brush: refused by name while E's brush is not in the build; E's hill and swerve when it is [90m(11.4597ms)[39m[39m
+[32m✔ with E's brush, the rate brush goes through it: kh and kv as its rate mode, bank, width and rise as its value mode [90m(9.5297ms)[39m[39m
+[32m✔ a brush E widened says so, with the radius it really used (the chair's ruling 2: always shown) [90m(9.2882ms)[39m[39m
+[32m✔ the sharp opt-in reaches E's brush only when asked; the default is off (the chair's ruling 2: widen by default) [90m(13.2501ms)[39m[39m
+[32m✔ E's refusal (a hill with no offset channel yet) is the message, and nothing changes [90m(4.8223ms)[39m[39m
+[32m✔ close: one click closes the lap; extending a closed loop is refused; the rate brush on heading refuses to open it [90m(274.2314ms)[39m[39m
+[32m✔ water: poured over a window of the preview's path, every stream drawn and every red in plain words [90m(332.3279ms)[39m[39m
+[32m✔ a successful edit retires the water (it was poured on the old track) [90m(52.155ms)[39m[39m
+[32m✔ water stops at a jump's flight and says so (the flight is not modelled) [90m(0.2481ms)[39m[39m
+[32m✔ redText: each red in plain words, with where it is [90m(0.2678ms)[39m[39m
+[32m✔ export: an open track is refused before anything runs; a closed lap goes through the SAME exporter and its files are written [90m(1880.3271ms)[39m[39m
+[32m✔ save and open use their own prefix, so the piece builder's tracks are neither listed nor opened here [90m(3.4303ms)[39m[39m
+[32m✔ openExample refuses files that are not a fit and a read, and changes nothing [90m(1.0381ms)[39m[39m
+[32m✔ the track model draws the LIFTED road, re-meshes a lift-only change to exactly a full build, and keeps the lift through an extend [90m(201.0523ms)[39m[39m
+[32m✔ the export lifts the path before it meshes it (meta.liftPath), so an exported hill is in the kn5 [90m(3622.7731ms)[39m[39m
+[32m✔ landed core: a 1 m hill brushed in the app is in the preview's path and the export's; the water answers in words, never throws [90m(23435.2797ms)[39m[39m
+[32m✔ landed core: a narrow brush that E widened says so, with the radius it used (E reports radiusUsed) [90m(4617.5342ms)[39m[39m
+[32m✔ a lap that starts pitched, turned and off the origin: the preview starts and ends where the adapter does, and it closes and exports [90m(1970.0211ms)[39m[39m
+[32m✔ the pick: the station under a canvas point, as the renderer projects it; nothing when the point is off the track [90m(5.2549ms)[39m[39m
+[32m✔ Export shows the CSP-only warning in its message, and the exported surfaces.ini carries the switch [90m(14160.3317ms)[39m[39m
+[32m✔ no file of the app turns the self-check off, and the page has no toggle for it [90m(9.757ms)[39m[39m
+[32m✔ asking the exporter to skip the check does nothing: exportTrack never receives a selfCheck, so it runs on [90m(0.5659ms)[39m[39m
+[32m✔ export writes the track folder into the picked folder, and its kn5 reads back through tools/kn5.cjs [90m(826.6275ms)[39m[39m
+[32m✔ the app's export is node's export: the same kn5, AI line and text files byte for byte, and the same pixels [90m(1422.9562ms)[39m[39m
+[32m✔ a red track is refused, nothing is written, and the reds are shown with their sources [90m(19256.8979ms)[39m[39m
+[32m✔ an open track is refused with the model's reason, and nothing is written [90m(0.8998ms)[39m[39m
+[32m✔ the AC guard: inside content\tracks only t180b_* folders; content\tracks itself and folders elsewhere are fine [90m(0.2476ms)[39m[39m
+[32m✔ an export into another track's folder in an AC install is refused before anything runs or is written [90m(0.4559ms)[39m[39m
+[32m✔ the shim's sha256 and deflate are node's: the same digest, and a stream node inflates back to the input [90m(16.8251ms)[39m[39m
+[32m✔ the shim's Buffer reads and writes like node's for every call the exporter makes [90m(0.2841ms)[39m[39m
+[32m✔ the app's exporter writes a textured floor into the kn5 it hands the native side [90m(1355.9409ms)[39m[39m
+[32m✔ a track saved under a name exports as t180b_<that name>, not as the name it was started with [90m(671.6228ms)[39m[39m
+[32m✔ light: the floor gets exactly ambient + key·key.y + fill·fill.y [90m(0.6923ms)[39m[39m
+[32m✔ light: a floor and a vertical wall, and a bank toward and away from the key, differ by at least 0.15 [90m(0.1519ms)[39m[39m
+[32m✔ light: two-sided (an overhang facing down is lit like the floor facing up), and never below ambient or above 1 [90m(0.3808ms)[39m[39m
+[32m✔ light: the fragment shader carries look.js's own constants (the test of shade() is a test of the shader) [90m(0.1ms)[39m[39m
+[32m✔ edge lines: through the two edge vertices and the centre vertex, lifted 3 cm, on the geometry's own surface [90m(43.6202ms)[39m[39m
+[32m✔ edge lines: a tie across the road at least every 10 m of the cell, and none on seams [90m(46.5151ms)[39m[39m
+[32m✔ overhead fit (aspect 1.7): every vertex of the whole track projects inside the view, and the head is in frame [90m(108.4996ms)[39m[39m
+[32m✔ overhead fit (aspect 0.6): every vertex of the whole track projects inside the view, and the head is in frame [90m(75.1682ms)[39m[39m
+[32m✔ ghost: the ghost of a segment tail equals what placing it builds, and the placed track is untouched by the ghost [90m(16.0437ms)[39m[39m
+[32m✔ ghost: a candidate that does not extend the placed track is refused; on an empty track the ghost stands alone [90m(5.4135ms)[39m[39m
+[32m✔ ghost through A's real shell: the candidate for a word equals what shell.place() then builds [90m(21.8417ms)[39m[39m
+[32m✔ preview: showGhost draws the ghost, clearGhost removes it, and placing the word retires it [90m(28.0089ms)[39m[39m
+[32m✔ preview: a frame draws the grid and the head marker as lines (the grid only with ground: true) [90m(9.1414ms)[39m[39m
+[32m✔ preview: by default there is no ground grid, only the track and the head marker [90m(7.244ms)[39m[39m
+[32m✔ grid: every vertex at y = 0, covering the track's box, and the spacing widens so a long track stays a few hundred lines [90m(56.7748ms)[39m[39m
+[32m✔ head marker: it grows with the camera distance (2%, never under 3 m), and its ring surrounds the head in the road plane [90m(0.4424ms)[39m[39m
+[32m✔ head marker: a 10 m mast straight up from the head [90m(0.3355ms)[39m[39m
+[32m✔ batches: the node matrix read column-major (as GL reads it) puts every vertex on the geometry's surface [90m(52.4093ms)[39m[39m
+[32m✔ batches: one colour per placed word, alternating along the track; a seam is darker than its piece [90m(16.7349ms)[39m[39m
+[32m✔ track model: append → extend, a word edit → sculpt, a removal → full, no change → same; each equals a full build [90m(99.2891ms)[39m[39m
+[32m✔ track model: a document that does not resolve keeps the last good track and marks it stale [90m(4.0109ms)[39m[39m
+[32m✔ track model through A's shell: placing words grows the preview by extend, and it equals a full build [90m(24.0501ms)[39m[39m
+[32m✔ renderer: every array is uploaded once; drawing the same batches again uploads nothing [90m(13.9216ms)[39m[39m
+[32m✔ renderer: after a sculpt that moves later pieces, only the edited piece and its seams are uploaded; stale buffers are deleted [90m(21.6357ms)[39m[39m
+[32m✔ renderer: a shader that does not compile throws with the compiler's log; a canvas without size is refused [90m(0.2004ms)[39m[39m
+[32m✔ keys: C switches, B is the build view, WASD/QE fly, arrows turn, anything else does nothing [90m(0.1824ms)[39m[39m
+[32m✔ the preview shader sources carry no environment (v1 is the track only): no sky, texture or sampler [90m(0.1588ms)[39m[39m
+[32m✔ keys: a key held when the window loses focus is let go, so the camera stops (the drift) [90m(3.4706ms)[39m[39m
+[32m✔ keys: already in free, a key held when the window loses focus is let go, so the camera stops (V11 of B: 4.5 m of drift at HEAD) [90m(1.4693ms)[39m[39m
+[32m✔ keys: Shift sprints (×4 the distance per frame) [90m(1.8342ms)[39m[39m
+[32m✔ mouse: a right drag looks from the build view (taking it over), a drag right turns right, and keys move at the same time [90m(1.1189ms)[39m[39m
+[32m✔ mouse: the scroll wheel zooms the build view [90m(1.0045ms)[39m[39m
+[32m✔ keys: W then D goes diagonally: both axes at once, the same 3 m a frame as a straight line (1.0×, not √2) [90m(2.533ms)[39m[39m
+[32m✔ keys: D then W is the same diagonal (the order across axes does not matter) [90m(1.7482ms)[39m[39m
+[32m✔ keys: three axes at once (W, D and E) move along the sum W + D + up at 1.0× in METRES (D189: the world displacement is normalised, not the input) [90m(4.0499ms)[39m[39m
+[32m✔ keys: D and E (right and up are perpendicular) go at 1.0× too: (D + up) / √2, 3 m a frame [90m(1.9371ms)[39m[39m
+[32m✔ keys: releasing one key of a diagonal leaves a straight line on the other, and releasing both stops [90m(1.8688ms)[39m[39m
+[32m✔ keys: on one axis the NEWER key wins (w then s), and on its release the w takes over [90m(1.804ms)[39m[39m
+[32m✔ keys: on one axis the NEWER key wins (s then w), and on its release the s takes over [90m(1.7982ms)[39m[39m
+[32m✔ keys: on one axis the NEWER key wins (d then a), and on its release the d takes over [90m(3.0059ms)[39m[39m
+[32m✔ keys: on one axis the NEWER key wins (a then d), and on its release the a takes over [90m(2.0984ms)[39m[39m
+[32m✔ keys: on one axis the NEWER key wins (e then q), and on its release the e takes over [90m(2.1051ms)[39m[39m
+[32m✔ keys: on one axis the NEWER key wins (q then e), and on its release the q takes over [90m(1.9569ms)[39m[39m
+[32m✔ keys: releasing the OLDER key of an axis leaves the newer moving [90m(2.5847ms)[39m[39m
+[32m✔ keys: an axis with both keys held still combines with another axis: W, S (newer) and D go along (D − W) / √2, and on S released (W + D) / √2 [90m(2.0938ms)[39m[39m
+[32m✔ keys: a held key that repeats (auto-repeat key-down) keeps its place: with W, S (newer) held a repeat of W does not make W the newer [90m(1.4192ms)[39m[39m
+[32m✔ keys: Shift multiplies the diagonal as it does a straight line: ×4 at the press, so 12 m a frame, not 12·√2 [90m(0.7449ms)[39m[39m
+[32m✔ keys: a blur lets go of a diagonal (both keys), so the camera stops [90m(0.6991ms)[39m[39m
+[32m✔ keys: the arrow (look) keys are not movement keys: they turn while the movement keys fly [90m(0.8334ms)[39m[39m
+[32m✔ P3: C or B pressed while a movement key is held leaves free mode and stays out of it [90m(2.0134ms)[39m[39m
+[32m✔ P3: a NEW movement key-down after C takes the view over again [90m(0.8303ms)[39m[39m
+[32m✔ P5: Shift+wheel is ×4 when the device reports the scroll as deltaX (deltaY 0), not only as deltaY [90m(1.1344ms)[39m[39m
+[32m✔ P2: a key that flies by its label but sits on another physical key (another layout) flies, and lets go by its own code [90m(0.6502ms)[39m[39m
+[32m✔ the sprint curve: ×4 at 0 s, ×20 from 2.5 s, smooth and rising between (1 s is 4 + 16·S(0.4)) [90m(0.2447ms)[39m[39m
+[32m✔ keys: Shift held ramps the speed: ×4 at the press, then along the curve, ×20 at 2.5 s (measured per frame) [90m(1.8055ms)[39m[39m
+[32m✔ keys: releasing Shift returns to ×1, and pressing it again starts at ×4 again [90m(1.6192ms)[39m[39m
+[32m✔ keys: a blur resets the ramp (the key-up never comes), and the next press starts at ×4 [90m(1.1049ms)[39m[39m
+[32m✔ focus: Enter in a text field or a number field lets go of it (and does not touch the camera) [90m(2.1522ms)[39m[39m
+[32m✔ focus: Esc in a field lets go of it, in every kind of field [90m(2.4739ms)[39m[39m
+[32m✔ focus: Enter in a text AREA is a new line, and is left alone [90m(0.6369ms)[39m[39m
+[32m✔ focus: Enter or Esc on the page (no field) does nothing to the camera [90m(0.6943ms)[39m[39m
+[32m✔ focus: a mouse-down on the canvas (either button, or the middle) takes focus off the active field [90m(2.7543ms)[39m[39m
+[32m✔ focus: a mouse-down with nothing focused (the page body, or none) is fine [90m(1.0798ms)[39m[39m
+[32m✔ focus: a NUMBER field lets the camera keys through: W A S D Q E fly, the arrows turn [90m(5.5101ms)[39m[39m
+[32m✔ focus: Shift sprints while a number field has focus [90m(1.1829ms)[39m[39m
+[32m✔ focus: a number field still gets its digits (a digit is not the camera's key, and is not stopped) [90m(1.5643ms)[39m[39m
+[32m✔ focus: a TEXT field swallows every camera key: typing a name never moves the camera [90m(3.2065ms)[39m[39m
+[32m✔ the plain wheel is unchanged: a follow view changes distance, free mode dollies 4 m a notch, and the lens stays [90m(0.7069ms)[39m[39m
+[32m✔ Ctrl+wheel is the LENS, in every view: the fov changes and the eye does not (in and out, stepwise, clamped to 10°–100°) [90m(4.9984ms)[39m[39m
+[32m✔ Ctrl+wheel: Shift makes it 4 notches, and a device that reports deltaX works too [90m(1.9688ms)[39m[39m
+[32m✔ a middle click resets the lens to 60° (and does not start a drag or change the view) [90m(0.5678ms)[39m[39m
+[32m✔ the HUD shows the fov once the lens has moved off 60°, and drops it on the reset [90m(0.8618ms)[39m[39m
+[32m✔ the pick still hits the station under the cursor after the lens changes (the pick reads the drawn pose, fov and all) [90m(1.6104ms)[39m[39m
+[32m✔ W1: W held and REPEATING, C pressed: W's next auto-repeats do not take the view back into free [90m(0.8526ms)[39m[39m
+[32m✔ W1: W held and REPEATING, B pressed: W's next auto-repeats do not take the view back into free [90m(0.5684ms)[39m[39m
+[32m✔ W2: a trackpad swipe SIDEWAYS (deltaX only, no Shift: 20 events of 2 px) does not zoom [90m(0.8553ms)[39m[39m
+[32m✔ W2: the same sideways swipe with Ctrl held does not move the LENS either (the lens shares the wheel line) [90m(0.6826ms)[39m[39m
+[32m✔ property (the preview's SHARED path): after every random edit the result equals a full validate exactly [90m(1196.7564ms)[39m[39m
+[32m✔ property (the controller's own path): after every random edit the result equals a full validate exactly [90m(986.2316ms)[39m[39m
+[32m✔ the property test reaches STACKED road: the edits lay road over road, and it still equals a full validate [90m(744.6588ms)[39m[39m
+[32m✔ a STALE shared path (built for another document) is not used: the controller grows its own, and stays exact [90m(11.0837ms)[39m[39m
+[32m✔ a shared path the preview REBUILT (a new object) is viewed afresh, never spliced onto the old view [90m(12.038ms)[39m[39m
+[32m✔ a drag held OPEN on a mid-track word: every tick is windowed and exact where settled, and ending it equals a full validate [90m(447.7041ms)[39m[39m
+[32m✔ never a stale "clean": a settled station stacked on road that the drag moved shows RED during the drag, and the moved road shows PENDING [90m(536.3923ms)[39m[39m
+[32m✔ a windowed result revalidated from BEYOND its pending start still finishes the whole track exactly [90m(6.4699ms)[39m[39m
+[32m✔ the panel says what is pending: the load graph shades it to the track end, the summary counts no deferred jump as waiting [90m(23.9643ms)[39m[39m
+[32m✔ the window ends at the second word after the dragged one; none when that is past the end [90m(0.3397ms)[39m[39m
+[32m✔ the preview's 0.5 m path viewed at 2 m IS buildPath at 2 m, value for value; grown in place, the view follows it exactly [90m(30.0755ms)[39m[39m
+[32m✔ a path that cannot be viewed exactly is refused (null), so the controller grows its own [90m(2.9179ms)[39m[39m
+[32m✔ the station-pair stacking check finds exactly what measuring every surface point finds, on tracks that stack [90m(998.6241ms)[39m[39m
+[32m✔ the stacking check on a CLOSED loop: the start and end are one pass (s wraps), exactly as measuring every point [90m(15470.1774ms)[39m[39m
+[32m✔ on a level straight at a constant speed only gravity acts: each line reads fN = cos ψ and fLat = sign(u)·sin ψ [90m(2.2394ms)[39m[39m
+[32m✔ a closed loop: every drag tick defers the lap, and ending the drag proves it, equal to a full validate's lap [90m(15461.3384ms)[39m[39m
+[32m✔ lapOf proves a deferred lap exactly as an undeferred validate does, and returns any other lap unchanged [90m(14238.9134ms)[39m[39m
+[32m✔ rangeLevels gives every station the level rangeLevel gives it, ranges touching, nested and out of order [90m(2.6056ms)[39m[39m
+[32m✔ the default jump at the default design speed (460 km/h, FINDINGS.md:476) is clean: no red, both landings caught [90m(15.8991ms)[39m[39m
+[32m✔ resolve with no speed given sizes the ramp for the same default, so every caller agrees (the export, the connector) [90m(2.6286ms)[39m[39m
+[32m✔ the slider swept over its whole range (50–764 km/h, its own step of 5): clean wherever the car clears the gap, and nowhere else [90m(319.9784ms)[39m[39m
+[32m✔ a jump sculpted past what the car can clear is red, and says so: the landings that miss, the heaviest fall [90m(2.6716ms)[39m[39m
+[32m✔ the ramp resize is DERIVED: no undo step, the document unchanged, and the same speed gives the same ramp again [90m(6.3445ms)[39m[39m
+[32m✔ a CLOSED loop keeps its ramps at the default when the slider moves, so it stays closed [90m(15452.2413ms)[39m[39m
+[32m✔ resolve itself refuses a design speed that is not a positive number (a named ResolveError), and takes null as the default [90m(1.0396ms)[39m[39m
+[32m✔ a design speed that is not a positive number is refused with a message, and changes nothing [90m(3.2305ms)[39m[39m
+[32m✔ a document with one jump counts 1 jump, even while the jump is the open head and waits for its landing [90m(21.3282ms)[39m[39m
+[32m✔ a pending jump is still counted: a jump placed first (no take-off road) is 1 jump, 1 waiting [90m(1.5161ms)[39m[39m
+[32m✔ the load graph is hidden (no model) while there is no speed, so no empty grey bar [90m(4.2959ms)[39m[39m
+[32m✔ with a design speed the graph is drawn: one point per station, the hardest line's load, the car's two limits [90m(4.6252ms)[39m[39m
+[32m✔ the graph takes the HARDEST line at every station, wherever across the road it is (a right turn: the left wall) [90m(6.219ms)[39m[39m
+[32m✔ the graph shades the red and amber stretches behind the curve [90m(9.411ms)[39m[39m
+[32m✔ through the shell: the head is red exactly when it is the flight of a jump; landing road clears it [90m(5.9059ms)[39m[39m
+[32m✔ jump arcs: a jump whose landing lip is behind its take-off lip draws no arc, and nothing throws [90m(4.4084ms)[39m[39m
+[32m✔ the first word builds and colours the whole track (full), and an empty document shows nothing [90m(11.2695ms)[39m[39m
+[32m✔ placing at the head is an APPEND: extendPath, revalidate, only the new span re-coloured, and equal to a full run [90m(11.7713ms)[39m[39m
+[32m✔ a drag on an earlier word is a SCULPT from that word, and still equals a full run [90m(15.2932ms)[39m[39m
+[32m✔ removing the head, and undo, take the full route and still equal a full run [90m(14.9585ms)[39m[39m
+[32m✔ the CSP switch re-validates for vanilla AC: a 60° wall turns red, and back [90m(9.0677ms)[39m[39m
+[32m✔ a jump placed at the open head is drawn once it has landing road (its own ramp, or the next word) [90m(5.4845ms)[39m[39m
+[32m✔ changes arriving before the scheduled update are coalesced into one update [90m(5.5257ms)[39m[39m
+[32m✔ E's panels load through A's webview loader (app/lib/cjs.js), and each exports mount(root, shell) [90m(15.2185ms)[39m[39m
+[32m✔ the picker starts at the FINDINGS default, 460 km/h (FINDINGS.md:476), read from the car, not typed here [90m(0.856ms)[39m[39m
+[32m✔ the picker holds to its range: 50 km/h up to the lap sim's 764 km/h cap (FINDINGS.md:484) [90m(0.1155ms)[39m[39m
+[32m✔ off is no design speed; a value that is not a number is refused loudly; onChange fires only on a change [90m(0.4678ms)[39m[39m
+[32m✔ with the picker's default, a track built through the shell HAS loads now (it had none in D168) [90m(14.1513ms)[39m[39m
+[32m✔ with the picker off, an open track built through the shell claims no load at all [90m(3.999ms)[39m[39m
+[32m✔ a faster design speed turns a tight curve amber (above the proven 90 g), and a slower one takes it away again [90m(11.3924ms)[39m[39m
+[32m✔ with the picker off (no loads anywhere), a geometry red still colours the live map, station by station along the path [90m(3.1244ms)[39m[39m
+[32m✔ load → colour: below the 20 g suspension stop is clear, and exactly 20 g is info [90m(1.0156ms)[39m[39m
+[32m✔ load → colour: exactly the proven 90 g is still info, and anything above it is amber [90m(0.0952ms)[39m[39m
+[32m✔ load → colour: a load no matter how high is amber, never red (FINDINGS.md:116-118 withdrew the 60 g red) [90m(0.0476ms)[39m[39m
+[32m✔ load → colour: a negative load (pulled off the surface) is clear here; it is the lap proof's, not a colour [90m(0.0951ms)[39m[39m
+[32m✔ load → colour reads the car it is given, not constants [90m(0.1107ms)[39m[39m
+[32m✔ the palette has one colour per level, red and amber distinct, and pending unlike clear [90m(0.085ms)[39m[39m
+[32m✔ on a real result, a line is amber by load exactly where validation lists load-above-proven [90m(10.8634ms)[39m[39m
+[32m✔ a red range colours every station inside it, both ends included, none outside, even with NO speed model (no load lines) [90m(4.5776ms)[39m[39m
+[32m✔ an amber range that is not a load (a seam past the proven envelope) colours its stations amber; red still wins over it [90m(0.1831ms)[39m[39m
+[32m✔ levelAt: the last station at or before s, the nearest line in u, the first station before the start [90m(0.2244ms)[39m[39m
+[32m✔ an open track colours: no lap while open, and no red at the open head [90m(6.0982ms)[39m[39m
+[32m✔ an append re-colours only the new span: earlier stations are kept as the same objects, and the map equals a full re-colour [90m(17.4921ms)[39m[39m
+[32m✔ re-colour also rebuilds an OLD station when a new red reaches back over it (e.g. new road stacked on old) [90m(0.2537ms)[39m[39m
+[32m✔ the landing arcs are src/validate/jumps.js flights: every point is flightY from the lip, at validation's speed and θ [90m(11.2114ms)[39m[39m
+[32m✔ each caught arc ends exactly at validation's touchdown x, and the landing zone spans both touchdowns [90m(2.286ms)[39m[39m
+[32m✔ a landing the flight misses has no touchdown and no zone [90m(1.2908ms)[39m[39m
+[32m✔ with no speed model, each landing is drawn at its own minimum speed, which just clears the landing lip [90m(1.7843ms)[39m[39m
+[32m✔ a jump still waiting for its landing at the open head is not drawn [90m(1.4417ms)[39m[39m
+[32m✔ every red and amber reason has plain words; the list line shows them, and its tooltip keeps the rule and source [90m(0.7913ms)[39m[39m
+[32m✔ the lap, a stopped handle and a refusal read as plain words too [90m(0.3598ms)[39m[39m
+[32m✔ the samples carry exactly the fields src/geom's own buildPath emits, from the document's start pose [90m(27.5501ms)[39m[39m
+[32m✔ at the family's own rate the core's cross-section IS fonts.js's (ref 09 §3), and a lower rate lowers the rim [90m(0.8126ms)[39m[39m
+[32m✔ the samples' roll is within the smoothstep bound of the φ channel (ref 09 §5), and 2 m chords move the line under 1 cm over 530 m against 0.25 m chords (the stated deviation, measured) [90m(60.8948ms)[39m[39m
+[32m✔ a flight becomes the old jump: its gap solved, its landing ramp sized by validation, and the road after it continuous [90m(27.0188ms)[39m[39m
+[32m✔ the mesh is built from the adapter's output by the unchanged geometry core, with no folds on a gentle track [90m(105.4777ms)[39m[39m
+[32m✔ an empty track, or a bad step, is refused by name [90m(0.5946ms)[39m[39m
+[32m✔ 1 · constant width and r (or an r that does not bind the cap): case 0 draws exactly the segments it drew at b7c7676, byte for byte [90m(9.4339ms)[39m[39m
+[32m✔ 1 · constant width and r (or an r that does not bind the cap): case 1 draws exactly the segments it drew at b7c7676, byte for byte [90m(7.0924ms)[39m[39m
+[32m✔ 1 · constant width and r (or an r that does not bind the cap): case 2 draws exactly the segments it drew at b7c7676, byte for byte [90m(2.8874ms)[39m[39m
+[32m✔ 1 · constant width and r (or an r that does not bind the cap): case 3 draws exactly the segments it drew at b7c7676, byte for byte [90m(2.8929ms)[39m[39m
+[32m✔ 2 · a whole-piece width ramp (31 → 12 over 100 m): the width steps between segments are gone (was 0.57 m) and the mesh rows meet within 1 mm inside the piece and at both joints [90m(125.9867ms)[39m[39m
+[32m✔ 2 · a binding r changing (a narrow half-pipe whose rise rate is brushed): rows meet within 1 mm [90m(163.3082ms)[39m[39m
+[32m✔ 3 · w 31 → 12 with the ramp 'start' on a 100 m piece after a straight: the joint into it is within 1 mm (was 262 mm for 31 → 12 on 100 m) and the steps between segments are gone (was 4.8 m) [90m(56.8768ms)[39m[39m
+[32m✔ 3 · w 12 → 31 with the ramp 'start' on a 100 m piece after a straight: the joint into it is within 1 mm (was 262 mm for 31 → 12 on 100 m) and the steps between segments are gone (was 4.8 m) [90m(50.7702ms)[39m[39m
+[32m✔ 3 · w 31 → 12 with the ramp 'start' on a 45 m piece after a straight: the joint into it is within 1 mm (was 262 mm for 31 → 12 on 100 m) and the steps between segments are gone (was 4.8 m) [90m(54.3857ms)[39m[39m
+[32m✔ 3 · w 31 → 20 with the ramp 'start' on a 100 m piece after a straight: the joint into it is within 1 mm (was 262 mm for 31 → 12 on 100 m) and the steps between segments are gone (was 4.8 m) [90m(64.3404ms)[39m[39m
+[32m✔ 4 · readAt of a chord gives the profile at its START at d = 0 and at its END at d = its length; a segment with no chord is its own profile [90m(2.9661ms)[39m[39m
+[32m✔ 4 · the water (profilerOf) reads a chord's blend, and a word document's font-transition blend (no chord, no cup) as its own profile [90m(3.7432ms)[39m[39m
+[32m✔ 4 · validation reads the road as drawn: the wall constants at a chord's start are its start profile's (no steep-without-raycast red at 35° walls that are not there) [90m(15.2122ms)[39m[39m
+[32m✔ 5 · a cup after a legacy piece that is still ramping at its end: the legacy chord's last row is the join, the joint is within 1 mm [90m(217.1347ms)[39m[39m
+[32m✔ 5 · a lap whose legacy START has a width ramp and whose last piece is a cup: close() converges and the lap seam meets within 1 mm [90m(683.2182ms)[39m[39m
+[32m✔ 5 · a cup after a legacy piece that ENDS ON A WIDTH SLOPE (a hand-built linear width: 0.1 m/m at the joint): the join is the chord END row, the joint is within 1 mm [90m(229.628ms)[39m[39m
+[32m✔ 5 · a lap that STARTS in a cup and ENDS on a legacy piece that is still narrowing (31 → 12 over its last 40 m): the lap seam and every joint meet within 1 mm [90m(1368.7656ms)[39m[39m
+[32m✔ 5 · a cup after a legacy piece whose last segment is still widening (0.25 m/m, r = 2 binds the cap): the cup's first row IS the chord's END row (0 mm, a mutant that takes the start row gives 18 mm) [90m(1.7516ms)[39m[39m
+[32m✔ 5 · a closed lap whose cup START follows a legacy END that is still widening fast in its last segment: the seam rows are the same cross-section (0 mm; a mutant that takes the start row gives 64 mm) [90m(2.1766ms)[39m[39m
+[32m✔ test 4, track 0 (11 pieces, 4100 m, ε 0.00570491696708): one call closes it [90m(45.8862ms)[39m[39m
+[32m✔ test 4, track 1 (10 pieces, 3685 m, ε -0.0841972072609): one call closes it [90m(42.7952ms)[39m[39m
+[32m✔ test 4, track 2 (9 pieces, 3270 m, ε -0.0402413592674): one call closes it [90m(33.5923ms)[39m[39m
+[32m✔ test 4, track 3 (7 pieces, 3042 m, ε -0.0690124160144): one call closes it [90m(31.7115ms)[39m[39m
+[32m✔ test 4, track 4 (6 pieces, 2419 m, ε -0.00323135023937): one call closes it [90m(21.6351ms)[39m[39m
+[32m✔ test 4, track 5 (12 pieces, 4723 m, ε -0.065869737044): one call closes it [90m(52.3091ms)[39m[39m
+[32m✔ test 4, track 6 (9 pieces, 2773 m, ε 0.075068023568): one call closes it [90m(36.0094ms)[39m[39m
+[32m✔ test 4, track 7 (9 pieces, 3916 m, ε -0.0348630782217): one call closes it [90m(56.1207ms)[39m[39m
+[32m✔ test 4, track 8 (8 pieces, 2717 m, ε 0.0987024823669): one call closes it [90m(34.1754ms)[39m[39m
+[32m✔ test 4, track 9 (7 pieces, 2519 m, ε -0.0799730329309): one call closes it [90m(32.8073ms)[39m[39m
+[32m✔ test 4, track 10 (6 pieces, 2235 m, ε -0.025086999312): one call closes it [90m(23.5831ms)[39m[39m
+[32m✔ test 4, track 11 (10 pieces, 3974 m, ε -0.00568767194636): one call closes it [90m(40.1382ms)[39m[39m
+[32m✔ test 4, track 12 (6 pieces, 2264 m, ε -0.055765911378): one call closes it [90m(32.7173ms)[39m[39m
+[32m✔ test 4, track 13 (8 pieces, 3594 m, ε 0.0442057050765): one call closes it [90m(56.1015ms)[39m[39m
+[32m✔ test 4, track 14 (6 pieces, 1914 m, ε 0.0142437375616): one call closes it [90m(27.6029ms)[39m[39m
+[32m✔ test 4, track 15 (9 pieces, 2362 m, ε -0.0745127643459): one call closes it [90m(21.2748ms)[39m[39m
+[32m✔ test 4, track 16 (7 pieces, 2498 m, ε 0.0869582034647): one call closes it [90m(28.8645ms)[39m[39m
+[32m✔ test 4, track 17 (8 pieces, 3177 m, ε -0.00734682576731): one call closes it [90m(39.0695ms)[39m[39m
+[32m✔ test 4, track 18 (9 pieces, 3486 m, ε -0.0384539657272): one call closes it [90m(38.9249ms)[39m[39m
+[32m✔ test 4, track 19 (7 pieces, 2735 m, ε -0.0382748652715): one call closes it [90m(31.4281ms)[39m[39m
+[32m✔ close REPORTS a closure it did not reach: one step on the hardest track says NOT CLOSED and leaves closed false [90m(200.9344ms)[39m[39m
+[32m✔ the input document is not changed (it is frozen, and deep-equal afterwards) [90m(514.9892ms)[39m[39m
+[32m✔ a lap that already closes (a full circle, R = 200 m) is left where it is: no steps [90m(143.8795ms)[39m[39m
+[32m✔ the position Jacobian predicts the adapter: bumping one interior control point moves the end as J says (relative 5e-4) [90m(290.2451ms)[39m[39m
+[32m✔ the seam is a joint like any other: after the close it passes the document’s own C1 joint check, last piece into first [90m(0.8889ms)[39m[39m
+[32m✔ with no stretch protected (every weight 1) close still closes, seam included [90m(626.7189ms)[39m[39m
+[32m✔ a track with a jump is refused, by name (not built in this version) [90m(3.7743ms)[39m[39m
+[32m✔ row 1a: a cup profile has edge ψ = c on both sides, every family, width and c, and never less than the wall before it (ψ non-decreasing outward) [90m(1.8529ms)[39m[39m
+[32m✔ row 2 (i): the walls do not meet at c = 150: each tip stays off the centreline by at least 5% of the half-width, on every family and width [90m(0.3154ms)[39m[39m
+[32m✔ row 1a: a cup piece's road carries the cup profile at its c: the r cap does NOT apply (bowl 12 m at c = 90 is 90°, not the capped edge) [90m(8.8208ms)[39m[39m
+[32m✔ row 1b (default): a bowl cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(163.0545ms)[39m[39m
+[32m✔ row 1b (default): a bowl cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(155.3607ms)[39m[39m
+[32m✔ row 1b (default): a half-pipe cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(107.7103ms)[39m[39m
+[32m✔ row 1b (default): a half-pipe cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(155.3714ms)[39m[39m
+[32m✔ row 1b (cupLocal): a bowl cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(89.0256ms)[39m[39m
+[32m✔ row 1b (cupLocal): a bowl cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(118.0741ms)[39m[39m
+[32m✔ row 1b (cupLocal): a half-pipe cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(94.7259ms)[39m[39m
+[32m✔ row 1b (cupLocal): a half-pipe cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(136.0296ms)[39m[39m
+[32m✔ cupLocal (the option): a seam zip where c changes and NONE where it is held: the last 100 m of a 400 m piece has none (the default scheme has none anywhere inside the piece) [90m(153.6195ms)[39m[39m
+[32m✔ the cupLocal option keeps segment.profile LOCAL (its edge is c at the end of the segment within 0.05 deg), and the default does NOT (its profile is the widest of the run, the target of the blend): the readers evaluate the blend (test/core_cup_readers.test.js) [90m(5.1655ms)[39m[39m
+[32m✔ row 1b: a bowl cup ramp to 90° over 100 m never changes faster than c between rows, and no row is outside c's range [90m(238.2738ms)[39m[39m
+[32m✔ row 1b: a half-pipe cup ramp to 90° over 100 m never changes faster than c between rows, and no row is outside c's range [90m(229.5684ms)[39m[39m
+[32m✔ R1 (B score): a bowl cup ramp to 90 deg over 40 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(23.1857ms)[39m[39m
+[32m✔ R1 (B score): a bowl cup ramp to 90 deg over 40 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(109.3644ms)[39m[39m
+[32m✔ R1 (B score): a bowl cup ramp to 150 deg over 40 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(32.8712ms)[39m[39m
+[32m✔ R1 (B score): a bowl cup ramp to 150 deg over 40 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(126.5653ms)[39m[39m
+[32m✔ R1 (B score): a half-pipe cup ramp to 150 deg over 40 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(35.4731ms)[39m[39m
+[32m✔ R1 (B score): a half-pipe cup ramp to 150 deg over 40 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(142.1263ms)[39m[39m
+[32m✔ R1 (B score): a bowl cup ramp to 90 deg over 100 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(52.2718ms)[39m[39m
+[32m✔ R1 (B score): a bowl cup ramp to 90 deg over 100 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(127.5088ms)[39m[39m
+[32m✔ R1 (B score): a half-pipe cup ramp to 150 deg over 100 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(74.4577ms)[39m[39m
+[32m✔ R1 (B score): a half-pipe cup ramp to 150 deg over 100 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(206.2318ms)[39m[39m
+[32m✔ row 1b PLANTED K1b-1: today's adapter (one profile per 2 m, no blend) on the bowl ramp to 90° over 40 m is CAUGHT by the same check (a step of about 5.6°, seams inside) [90m(83.8848ms)[39m[39m
+[32m✔ row 1b (default): a cup that also changes width (a chord per segment) still follows c and the width along the road (a seam zip per segment is the stated cost) [90m(86.3705ms)[39m[39m
+[32m✔ row 1b (cupLocal): a cup that also changes width (a chord per segment) still follows c and the width along the road (a seam zip per segment is the stated cost) [90m(87.3286ms)[39m[39m
+[32m✔ row 2 (ii): a document with a cup control point outside [0, 150] is refused by name, in checkDoc and in parse [90m(1.5658ms)[39m[39m
+[32m✔ row 2 (iii): extend refuses a typed cup outside [0, 150] by name, and the fit's ringing never leaves the document past 150 (30 m piece, 10 m transition: 174.65° before the guard) [90m(2.7187ms)[39m[39m
+[32m✔ row 2 (iii): a cup that reaches a limit (150 or 0) ends flat, so the piece after it continues C1 inside [0, 150], and a lap held at 150 closes (a solver's float noise on a control point at the limit is not a violation) [90m(246.9848ms)[39m[39m
+[32m✔ row 2 (iv): a channel curve stays within the range of its control points (the convex hull, ref 03 §1b), for a cup piece with knots [90m(4.2901ms)[39m[39m
+[32m✔ row 2 PLANTED K2-1: a cup of 165° on a bowl would have its walls cross: its tip is past the centreline, and the document guard refuses 165 (so the guard, not the export, is what stops it) [90m(0.5319ms)[39m[39m
+[32m✔ row 2 (iii): a cup brush that would push c past 150 (or below 0) is refused by name, and one inside the range works [90m(10.6243ms)[39m[39m
+[32m✔ row 5e: a cup brush that reaches a LEGACY piece is refused by name; on a cup piece it leaves the road far from the window bit for bit [90m(19.76ms)[39m[39m
+[32m✔ row 3 (i): c is a joint channel: a cup step of 5° (or a kink of the slope) between two cup pieces is refused JOINT (planted K3-1: c left out of the joint test) [90m(0.9449ms)[39m[39m
+[32m✔ row 3 (ii): c is CARRIED through a flight, like bank, width and rise (planted K3-2: reset like the heading rate) [90m(3.163ms)[39m[39m
+[32m✔ row 3 (iii): a closed lap of cup pieces closes with c(L) = c(0) and c'(L) = c'(0) (planted K3-3: c left out of the seam rows) [90m(236.8311ms)[39m[39m
+[32m✔ row 3 (iv): legacy → cup: a cup that follows a legacy piece starts at the edge that piece RENDERS (11.679° on a 12 m bowl, not the nominal 15.5°); a cup that starts at the nominal edge is refused JOINT (planted K3-4) [90m(3.0929ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a bowl road 12 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(73.853ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a half-pipe road 24 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(71.6299ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a bowl road 18 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(60.8691ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a flat road 20 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(59.1144ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a bowl road 31 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(57.4847ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a half-pipe road 31.5 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(76.4569ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a flat road 45 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(66.9413ms)[39m[39m
+[32m✔ R2: past the joint's morph the road is the pure cup shape (ψ at every quarter is c·Fᵢ/F_edge within 0.01°), and the edge stays c through it [90m(3.6119ms)[39m[39m
+[32m✔ row 5 (amended D196): a /2 file loads as LEGACY pieces (no cup flag, no c in the canonical text), a constant segment renders through profileAt with no blend and no new key, a changing one is a chord, and it saves as /3 [90m(3.6849ms)[39m[39m
+[32m✔ row 5c / 5d: extending a legacy piece with NO cup typed makes a legacy piece (nothing changes for a user who never types one); with a cup target it starts at the rendered edge [90m(1.7956ms)[39m[39m
+[32m✔ row 5b: a cup document round-trips through /3 text (serialize, parse, serialize) [90m(3.9839ms)[39m[39m
+[32m✔ row 6: bank 30° + cup 60° at a level straight station: the left edge's surface is at 90° to gravity, the right at 30°, the centre at 30°, bankG 30° (and the mirror for −30°) [90m(9.9152ms)[39m[39m
+[32m✔ row 6: typing a cup changes none of turn, climb, bank or pitch in the readout, and not one number of the centreline (planted K6-3: a cup that feeds the bank) [90m(10.0247ms)[39m[39m
+[32m✔ row 7: cupFromDeg / cupToDeg are c(0) and c(L) of a cup piece, the rendered edge of a legacy piece (profileAt at each end), and carried through a flight; the ghost equals the placed piece [90m(1.2073ms)[39m[39m
+[32m✔ row 7 PLANTED K7-1: cupToDeg is the DOCUMENT's c, not the typed target: a brush near the piece's end moves it [90m(3.2511ms)[39m[39m
+[32m✔ knot insertion keeps a cup piece's c curve and its cup flag (Boehm on the c channel) [90m(3.1619ms)[39m[39m
+[32m✔ row 4 (i): a closed bowl lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(4405.502ms)[39m[39m
+[32m✔ row 4 (i): a closed bowl lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(7657.1557ms)[39m[39m
+[32m✔ row 4 (i): a closed half-pipe lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(5323.5734ms)[39m[39m
+[32m✔ row 4 (i): a closed half-pipe lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(7791.6812ms)[39m[39m
+[32m✔ row 4 (i): a closed flat lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(4759.8981ms)[39m[39m
+[32m✔ row 4 (i): a closed flat lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(7856.0744ms)[39m[39m
+[32m✔ row 4 (ii): the same bowl lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(4567.0076ms)[39m[39m
+[32m✔ row 4 (ii): the same half-pipe lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(4638.2697ms)[39m[39m
+[32m✔ row 4 (ii): the same flat lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(4516.3352ms)[39m[39m
+[32m✔ row 4 (iii): a start straight cupped to 150° is refused by NAME at the grid (too narrow for a two-column grid), not by a crash [90m(247.6409ms)[39m[39m
+[32m✔ row 4 / row 2: a bowl cup of 165° (walls crossed) is refused at the DOCUMENT by name, so the export's incidental raygap red is never what stops it [90m(0.876ms)[39m[39m
+[32m✔ the fixture kit is the seal's: fixtures.js and manifest.json carry the sha256 the seal registered (and the D196 amendment record is the one registered) [90m(1.4689ms)[39m[39m
+[32m✔ row 5a (amended D196): against the SEAL's manifest (c964c2d) exactly F4, F6 and F8 differ, in segs and mesh only (the path is byte-identical), and the six others are identical [90m(4498.5024ms)[39m[39m
+[32m✔ row 5a (amended D196): against the D196 baseline every fixture renders identically: "0 of 9 differ" [90m(4639.3884ms)[39m[39m
+[32m✔ row 5b: each fixture parsed, saved as /3 text and read again renders to the same digests (the /3 round trip), and its text is /3 [90m(4470.1793ms)[39m[39m
+[32m✔ row 5 CONTROL: the check has teeth: a manifest with one digest altered reads "1 of 9 differ", and a changed fixture file is reported as changed [90m(9206.0935ms)[39m[39m
+[32m✔ D196 amendment record: every changed fixture keeps its path digest, its segs and mesh digests moved, and the measure shows the steps gone [90m(0.2901ms)[39m[39m
+[32m✔ atSegment: the profile at d = 0 is the blend's `from`, at the segment's end the mix at its end weight, and a segment with no blend is its own profile [90m(18.9661ms)[39m[39m
+[32m✔ a word document font-transition blend is NOT evaluated by the readers, only a cup: readAt gives the own profile for a blended segment without the cup mark (the paused piece builder validation, layout and export read as before) [90m(0.367ms)[39m[39m
+[32m✔ atSegment lands on the document's c along the ramp: the edge of the cross-section at a station is c(s) within 0.05° (a reader that took segment.profile would read the run's widest, 90°, at the start) [90m(12.3648ms)[39m[39m
+[32m✔ marker layout: a straight running into a cupped turn keeps the width of the straight (the grid is not refused as "too narrow" by the turn's 150° target) [90m(16.9873ms)[39m[39m
+[32m✔ validation: with csp off the first steep-without-raycast red is where the wall PASSES 50° (c(s) = 50, about 47 m into a 100 m ramp), not at the ramp's start (the run's widest, 90°) [90m(31.7029ms)[39m[39m
+[32m✔ export sections: the section at a station is the road as drawn there (its maxPsi is c(s)), not the run's widest [90m(37.1045ms)[39m[39m
+[32m✔ water: the profile under a sample is the road as drawn there (the edge is c(s)), and a segment without a blend still gives its own profile object [90m(7.0794ms)[39m[39m
+[32m✔ camera: the width at the head is the last segment's cross-section at the head (a cup brushed down at its end reads the lowered c, not the run's widest) [90m(9.5307ms)[39m[39m
+[32m✔ R3 (a) X3: a bowl 16 m lap with the cup at 90 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(702.2445ms)[39m[39m
+[32m✔ R3 (a) X3: a bowl 16 m lap with the cup at 150 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(710.2783ms)[39m[39m
+[32m✔ R3 (a) X3: a half-pipe 24 m lap with the cup at 90 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(634.7819ms)[39m[39m
+[32m✔ R3 (a) X3: a half-pipe 24 m lap with the cup at 150 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(915.9282ms)[39m[39m
+[32m✔ R3 (a) X2: a 20 m closing straight after the cup returns (the fit's ringing left 0.02-0.03°) closes with the seam within 1 mm (B: 2.3-5.3 mm) [90m(2709.245ms)[39m[39m
+[32m✔ R3 (b) X1: a cup NOT returned before closing (B: 150° against an edge of 15.5°, a 9,488 mm cliff) is never reported converged over a step: it closes with the seam within 1 mm, or it is refused by name [90m(852.1605ms)[39m[39m
+[32m✔ R3 (b): close() holds the cup's last value at the legacy start's rendered edge (0.05°), for a returned cup and for one that was not [90m(732.0239ms)[39m[39m
+[32m✔ R3 (a) mirror: a lap that STARTS in a cup and ends on a legacy piece meets within 1 mm at the lap seam, and so does the cup -> legacy joint inside it (B-class step: 148 mm half-pipe 24, 23 mm bowl 16 before) [90m(1017.1655ms)[39m[39m
+[32m✔ R3 (b): a closing cup piece too short to fade (8 m, straight after a legacy piece) is REFUSED by name with the seam real step (B: 148.2 mm half-pipe 24, 23.2 mm bowl 16), never closed over it; at 12 m it closes and the seam is matched [90m(1632.923ms)[39m[39m
+[32m✔ R3 (c): validation reds a lap seam whose curve steps more than 1 mm (drawn with the local scheme, which has no reverse morph: the panel would otherwise read "0 red · lap proved" over the cliff), and does not red the same lap drawn by default [90m(352.447ms)[39m[39m
+[32m✔ R3 (c): the panel has words for the joint-step red (labels reasonText) [90m(1.2833ms)[39m[39m
+[32m✔ R3 (c): a legacy → cup JOINT the R2 morph matched is not red [90m(10.4162ms)[39m[39m
+[32m✔ a clamped cubic starts at P0 with slope 3(P1 − P0)/t4 (ref 09 §1), against a finite difference [90m(3.0759ms)[39m[39m
+[32m✔ a piece placed after another starts at its end value AND slope in every channel (C1 joints, so the line is G2) [90m(3.3699ms)[39m[39m
+[32m✔ a joint that is not C1 is refused by name (JOINT) [90m(2.1256ms)[39m[39m
+[32m✔ checkDoc REFUSES a hand-built document with a broken joint, by the name JOINT (a κh step, a bank tear, a slope kink) [90m(0.3124ms)[39m[39m
+[32m✔ a flight must follow road; the road after it starts level (κh = κv = 0), the rest carried [90m(1.4087ms)[39m[39m
+[32m✔ load then save is byte-exact, and a value finer than its quantum is snapped as it enters [90m(2.4958ms)[39m[39m
+[32m✔ the same document serialises to the same bytes whatever order its keys were in [90m(0.5565ms)[39m[39m
+[32m✔ a piece whose keys come in another order (as another module may build it) still serialises canonically [90m(0.3228ms)[39m[39m
+[32m✔ a file of a different schema version is refused, saying a newer file needs a newer builder [90m(0.1211ms)[39m[39m
+[32m✔ undo is the document history: undo and redo are byte-identical, and a whole drag is one entry [90m(0.8417ms)[39m[39m
+[32m✔ a fitted channel holds its start exactly and reproduces a cubic polynomial (ref 03 §2: the cubic lies in the spline space) [90m(0.5716ms)[39m[39m
+[32m✔ a circle's position fit loads as κh = 1/R, κv = 0 and no bank (ref 09 §4) [90m(10.9278ms)[39m[39m
+[32m✔ a helix loads with κv = 0 at its constant pitch, and κh = cos p / R (the heading turns about WORLD up) [90m(6.91ms)[39m[39m
+[90m﹣ a real track from reads/ opens as a LOCAL example (skipped where reads/ has no position fit) [90m(0.3424ms)[39m # no local position fit of Serpents Spiral in reads/ (other authors' tracks stay local)[39m
+[32m✔ 2a: a 50 m circle turning left, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(28.4492ms)[39m[39m
+[32m✔ 2a: a 50 m circle turning right, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(11.5836ms)[39m[39m
+[32m✔ 2a: a 200 m circle turning left, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(11.8569ms)[39m[39m
+[32m✔ 2a: a 200 m circle turning right, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(15.2556ms)[39m[39m
+[32m✔ 2a: a 1000 m circle turning left, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(18.2197ms)[39m[39m
+[32m✔ 2a: a 1000 m circle turning right, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(8.7773ms)[39m[39m
+[32m✔ 2b: a clothoid (κ = s/A², A² = 80,000 m², to 1/200) turning left, extended 200 m with no handle, keeps growing at 1/A² [90m(7.2495ms)[39m[39m
+[32m✔ 2b: a clothoid (κ = s/A², A² = 80,000 m², to 1/200) turning right, extended 200 m with no handle, keeps growing at 1/A² [90m(8.2442ms)[39m[39m
+[32m✔ a handle target is reached at the transition with zero channel slope, and the start still holds value and slope (ref 09 §2) [90m(1.8721ms)[39m[39m
+[32m✔ extend refuses a closed track, a bad length and an unknown channel, by name [90m(2.0987ms)[39m[39m
+[32m✔ Boehm's rule is exact: inserting knots (first span, last span, uneven spacing) leaves each channel unchanged to float rounding at 3,001 samples [90m(22.156ms)[39m[39m
+[32m✔ inserting knots leaves every channel unchanged at dense samples: within half the channel's quantisation step (the three new points are quantised), and bit for bit outside the new knot's span and the two either side [90m(24.8216ms)[39m[39m
+[32m✔ refineKnots cuts every span over [a, b] to ≤ maxSpan, and leaves the spans outside it with the same knots [90m(1.3351ms)[39m[39m
+[32m✔ knots inserted in a LATER piece's first span keep its joint C1 (the document checks every joint) [90m(1.0443ms)[39m[39m
+[32m✔ the new knots serialise canonically (ascending, byte-exact on reload), and undo removes them [90m(1.5317ms)[39m[39m
+[32m✔ refusals by name: a knot already there, outside the piece, a flight, a span under 1 cm [90m(0.6316ms)[39m[39m
+[32m✔ after refining, the r = 20 m kh brush at 25% stays C2 at its ASKED edges s₀ ± 20 (a D185 miss) [90m(120.167ms)[39m[39m
+[32m✔ after refining, the r = 20 m kh brush at 75% stays C2 at its ASKED edges s₀ ± 20 (a D185 miss) [90m(124.5641ms)[39m[39m
+[32m✔ after refining, the r = 20 m kv brush at 25% stays C2 at its ASKED edges s₀ ± 20 (a D185 miss) [90m(101.0772ms)[39m[39m
+[32m✔ refining first does not move the track: the refined base's path is within 1 mm of the unrefined one [90m(55.9471ms)[39m[39m
+[32m✔ a 5 m hill on a level straight: grade = h′ and |κ| = |h″|/(1 + h′²)^{3/2} at every sample (ref 09 §7, the plane-graph curvature of ref 02 §1) [90m(27.9387ms)[39m[39m
+[32m✔ outside the hill NOTHING changes: every sample is the SAME object (bit for bit), and the path length is the base's [90m(22.4352ms)[39m[39m
+[32m✔ the frame is RECOMPUTED, not shifted: T, L, U orthonormal, the roll about T kept, and bankG and grade read from the new frame [90m(14.0854ms)[39m[39m
+[32m✔ a swerve (l) on a CURVED base: the exact κ̃ agrees with a finite difference of the lifted tangent (the R′ and R″ terms, ref 09 §7) [90m(54.1858ms)[39m[39m
+[32m✔ the mesh closes every segment on a LIFTED end sample (path.segEnd), and the build head is the lifted last sample [90m(86.6903ms)[39m[39m
+[32m✔ h and l serialise canonically, undo removes a hill, and a core/1 file opens with both at zero [90m(2.8369ms)[39m[39m
+[32m✔ checkDoc: an offset channel of the wrong length is refused; offsets must fade to 0 before a jump (FLIGHT_OFFSET) and start at 0 after it [90m(1.4729ms)[39m[39m
+[32m✔ with no offset set anywhere the adapter returns the geometry's own path object untouched [90m(6.7077ms)[39m[39m
+[32m✔ 1 · a number (or no) transition is unchanged: case 0 serialises exactly as it did at 4ccdd58 [90m(4.9603ms)[39m[39m
+[32m✔ 1 · a number (or no) transition is unchanged: case 1 serialises exactly as it did at 4ccdd58 [90m(1.5828ms)[39m[39m
+[32m✔ 1 · a number (or no) transition is unchanged: case 2 serialises exactly as it did at 4ccdd58 [90m(2.539ms)[39m[39m
+[32m✔ 1 · a number (or no) transition is unchanged: case 3 serialises exactly as it did at 4ccdd58 [90m(2.0303ms)[39m[39m
+[32m✔ 1 · a number (or no) transition is unchanged: case 4 serialises exactly as it did at 4ccdd58 [90m(0.8067ms)[39m[39m
+[32m✔ 1 · a number (or no) transition is unchanged: case 5 serialises exactly as it did at 4ccdd58 [90m(1.187ms)[39m[39m
+[32m✔ 2/3 · w 31 → 12 on a 100 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [12, 31] [90m(6.6136ms)[39m[39m
+[32m✔ 2/3 · w 12 → 31 on a 100 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [12, 31] [90m(4.5799ms)[39m[39m
+[32m✔ 2/3 · w 31 → 8 on a 200 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [8, 31] [90m(7.0083ms)[39m[39m
+[32m✔ 2/3 · w 31 → 12 on a 45 m piece with the ramp 'start': it reaches the target by R = 15 m and holds exactly, and never leaves [12, 31] [90m(1.732ms)[39m[39m
+[32m✔ 2/3 · w 20 → 8 on a 60 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [8, 20] [90m(1.7428ms)[39m[39m
+[32m✔ 2/3 · w 31 → 12 on a 30 m piece with the ramp 'start': it reaches the target by R = 15 m and holds exactly, and never leaves [12, 31] [90m(0.8434ms)[39m[39m
+[32m✔ 2/3 · w 31 → 31.5 on a 100 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [31, 31.5] [90m(2.6292ms)[39m[39m
+[32m✔ 2/3 · w 12 → 30 on a 25 m piece with the ramp 'start': it reaches the target by R = 12.5 m and holds exactly, and never leaves [12, 30] [90m(1.3784ms)[39m[39m
+[32m✔ 2 · an explicit number of metres in the map is the ramp: w reaches the target by 30 m and holds [90m(1.8955ms)[39m[39m
+[32m✔ 2/3 · the same holds for the bank (phi) and the cup (c): a short ramp reaches its target and never leaves the range [90m(4.942ms)[39m[39m
+[32m✔ 3 · a joint that carries a slope on w (0.5 m/m, a target just below the joint value: the ideal ramp rises past the joint's own first two points): C1 at the joint, and no control point outside the range of start, target and those two [90m(2.7209ms)[39m[39m
+[32m✔ 2 · the ramp SHAPE: the curve stays within 15% of the change of the smooth ramp it is built from (Bloss over R/2), measured 11.9% (the price of building from control points, ref 09 §9) [90m(5.5968ms)[39m[39m
+[32m✔ 5 · a ramped piece is stored on the channel quantum (every control point is a multiple of it), so the document round-trips byte for byte [90m(1.1609ms)[39m[39m
+[32m✔ 4 · a channel not in the map keeps the whole-piece blend: phi follows the number-transition document within 0.1% of its change [90m(1.409ms)[39m[39m
+[32m✔ 4 · a map naming only a channel with no target changes nothing: the document equals the number-transition one [90m(0.7487ms)[39m[39m
+[32m✔ 4 · 'start' on a piece no longer than one span is the whole-piece blend (nothing to ramp inside the piece) [90m(0.5463ms)[39m[39m
+[32m✔ 4 · startRampM is the first knot span: 20 m for a long piece, the piece for a short one, and follows knotM [90m(0.6597ms)[39m[39m
+[32m✔ 4 · the extra knots: RAMP_KNOTS subdivisions of the ramp, strictly increasing, inside the piece, and the even knots they would crowd are dropped [90m(0.1237ms)[39m[39m
+[32m✔ 5 · joints are C1 into the ramped piece, out of it (a piece after the hold), and the document validates [90m(2.0699ms)[39m[39m
+[32m✔ 5 · a lap with ramped pieces still closes (the close reads the same control points) [90m(353.5195ms)[39m[39m
+[32m✔ 6 · a map with an unknown channel is refused by name (BAD_TRANSITION) [90m(0.6007ms)[39m[39m
+[32m✔ 6 · a map with zero is refused by name (BAD_TRANSITION) [90m(0.3028ms)[39m[39m
+[32m✔ 6 · a map with negative is refused by name (BAD_TRANSITION) [90m(0.191ms)[39m[39m
+[32m✔ 6 · a map with longer than the piece is refused by name (BAD_TRANSITION) [90m(1.2317ms)[39m[39m
+[32m✔ 6 · a map with not a number is refused by name (BAD_TRANSITION) [90m(0.2938ms)[39m[39m
+[32m✔ 6 · a map with a string that is not start is refused by name (BAD_TRANSITION) [90m(0.2149ms)[39m[39m
+[32m✔ 6 · a number transition is still checked as before: 0 and a value past the length are refused [90m(0.758ms)[39m[39m
+[32m✔ a constant-κ piece turns κ·L exactly (ref 09 §8) [90m(5.3007ms)[39m[39m
+[32m✔ a Bloss ramp 0 → T turns T·L/2 (∫₀¹ 3u² − 2u³ = ½; ref 09 §8, ref 02 §4) [90m(2.9108ms)[39m[39m
+[32m✔ a flat piece climbs 0, and its pitch stays where it was [90m(1.4574ms)[39m[39m
+[32m✔ a bank ramp reports its two ends (from 0° to 20°) [90m(0.9138ms)[39m[39m
+[32m✔ the extend candidate's readout (the ghost) equals the placed piece's readout after placing [90m(1.9398ms)[39m[39m
+[32m✔ edge cases, refused by name: an empty track, an index out of range; a candidate on an empty track reads the first piece [90m(0.8277ms)[39m[39m
+[32m✔ the integral is exact: it agrees with an independent composite Simpson rule (20,000 panels) on a curving channel [90m(12.8082ms)[39m[39m
+[32m✔ pitch accumulates across pieces, and a flight sets it to its landing pitch (turn 0, climb = land − take-off, length = what the adapter builds) [90m(5.8311ms)[39m[39m
+[32m✔ the geometry the adapter draws integrates by the trapezoid at 2 m: its end heading is within 1e-6 rad of the exact readout (the stated difference, measured) [90m(11.0451ms)[39m[39m
+[32m✔ a hill that fades inside the piece leaves its effective turn and climb unchanged, and makes the road longer [90m(13.2605ms)[39m[39m
+[32m✔ the road length over a hill agrees with the lifted path's own chords at 0.1 m (to 1 mm) [90m(38.1218ms)[39m[39m
+[32m✔ a hill still rising at the piece's end changes the effective end pitch by atan(h′) on a level straight [90m(5.5516ms)[39m[39m
+[32m✔ with no h or l anywhere, a piece reports offsets: null [90m(0.5679ms)[39m[39m
+[32m✔ test 3: brush kh +0.002 at 25% (s₀ 1025 m), r 20 m: bit for bit outside, no kink [90m(173.6583ms)[39m[39m
+[32m✔ test 3: brush kh +0.002 at 25% (s₀ 1025 m), r 100 m: bit for bit outside, no kink [90m(150.7281ms)[39m[39m
+[32m✔ test 3: brush kh +0.002 at 50% (s₀ 2050 m), r 20 m: bit for bit outside, no kink [90m(136.7396ms)[39m[39m
+[32m✔ test 3: brush kh +0.002 at 50% (s₀ 2050 m), r 100 m: bit for bit outside, no kink [90m(166.3458ms)[39m[39m
+[32m✔ test 3: brush kh +0.002 at 75% (s₀ 3075 m), r 20 m: bit for bit outside, no kink [90m(148.4639ms)[39m[39m
+[32m✔ test 3: brush kh +0.002 at 75% (s₀ 3075 m), r 100 m: bit for bit outside, no kink [90m(160.8334ms)[39m[39m
+[32m✔ test 3: brush kv +0.001 at 25% (s₀ 1025 m), r 20 m: bit for bit outside, no kink [90m(152.0676ms)[39m[39m
+[32m✔ test 3: brush kv +0.001 at 25% (s₀ 1025 m), r 100 m: bit for bit outside, no kink [90m(142.0171ms)[39m[39m
+[32m✔ test 3: brush kv +0.001 at 50% (s₀ 2050 m), r 20 m: bit for bit outside, no kink [90m(147.7764ms)[39m[39m
+[32m✔ test 3: brush kv +0.001 at 50% (s₀ 2050 m), r 100 m: bit for bit outside, no kink [90m(146.9539ms)[39m[39m
+[32m✔ test 3: brush kv +0.001 at 75% (s₀ 3075 m), r 20 m: bit for bit outside, no kink [90m(141.6366ms)[39m[39m
+[32m✔ test 3: brush kv +0.001 at 75% (s₀ 3075 m), r 100 m: bit for bit outside, no kink [90m(139.8807ms)[39m[39m
+[32m✔ test 3: brush phi +0.17453292519943295 at 25% (s₀ 1025 m), r 20 m: bit for bit outside, no kink [90m(158.2622ms)[39m[39m
+[32m✔ test 3: brush phi +0.17453292519943295 at 25% (s₀ 1025 m), r 100 m: bit for bit outside, no kink [90m(143.0777ms)[39m[39m
+[32m✔ test 3: brush phi +0.17453292519943295 at 50% (s₀ 2050 m), r 20 m: bit for bit outside, no kink [90m(147.6419ms)[39m[39m
+[32m✔ test 3: brush phi +0.17453292519943295 at 50% (s₀ 2050 m), r 100 m: bit for bit outside, no kink [90m(157.0022ms)[39m[39m
+[32m✔ test 3: brush phi +0.17453292519943295 at 75% (s₀ 3075 m), r 20 m: bit for bit outside, no kink [90m(141.8953ms)[39m[39m
+[32m✔ test 3: brush phi +0.17453292519943295 at 75% (s₀ 3075 m), r 100 m: bit for bit outside, no kink [90m(139.1412ms)[39m[39m
+[32m✔ test 3: brush w +5 at 25% (s₀ 1025 m), r 20 m: bit for bit outside, no kink [90m(148.7612ms)[39m[39m
+[32m✔ test 3: brush w +5 at 25% (s₀ 1025 m), r 100 m: bit for bit outside, no kink [90m(181.5308ms)[39m[39m
+[32m✔ test 3: brush w +5 at 50% (s₀ 2050 m), r 20 m: bit for bit outside, no kink [90m(195.6189ms)[39m[39m
+[32m✔ test 3: brush w +5 at 50% (s₀ 2050 m), r 100 m: bit for bit outside, no kink [90m(193.736ms)[39m[39m
+[32m✔ test 3: brush w +5 at 75% (s₀ 3075 m), r 20 m: bit for bit outside, no kink [90m(185.5912ms)[39m[39m
+[32m✔ test 3: brush w +5 at 75% (s₀ 3075 m), r 100 m: bit for bit outside, no kink [90m(190.2803ms)[39m[39m
+[32m✔ test 3: brush r +0.5 at 25% (s₀ 1025 m), r 20 m: bit for bit outside, no kink [90m(174.8685ms)[39m[39m
+[32m✔ test 3: brush r +0.5 at 25% (s₀ 1025 m), r 100 m: bit for bit outside, no kink [90m(186.2756ms)[39m[39m
+[32m✔ test 3: brush r +0.5 at 50% (s₀ 2050 m), r 20 m: bit for bit outside, no kink [90m(179.6249ms)[39m[39m
+[32m✔ test 3: brush r +0.5 at 50% (s₀ 2050 m), r 100 m: bit for bit outside, no kink [90m(184.2776ms)[39m[39m
+[32m✔ test 3: brush r +0.5 at 75% (s₀ 3075 m), r 20 m: bit for bit outside, no kink [90m(173.488ms)[39m[39m
+[32m✔ test 3: brush r +0.5 at 75% (s₀ 3075 m), r 100 m: bit for bit outside, no kink [90m(164.3447ms)[39m[39m
+[32m✔ ref 10 §1: the smootherstep is 0, ½, 1 at 0, ½, 1, and its falloff is 1 at the centre and 0 at the edge and beyond [90m(0.7513ms)[39m[39m
+[32m✔ a brush never reaches a control point whose support leaves the window (the rule, on a bare knot vector) [90m(0.1881ms)[39m[39m
+[32m✔ a brush smaller than 3 knot spans is widened to 3 of the spans UNDER it, and says so [90m(26.9493ms)[39m[39m
+[32m✔ the joints stay C1: a brush across a joint passes the document's own joint check, and the input is untouched [90m(32.8014ms)[39m[39m
+[32m✔ an unknown channel and a bad brush are refused by name [90m(0.4914ms)[39m[39m
+[90m﹣ the default brush is a HILL, and while the document has no height channel it is refused by name (never faked through the rate) [90m(1.1337ms)[39m # the offset channels are in: the hill tests below run instead[39m
+[32m✔ a value brush (bank) leaves every sample past W⁺ bit for bit, and calls no close [90m(118.6128ms)[39m[39m
+[32m✔ a RATE brush must be asked for: a heading-rate channel under the hill or value mode is refused [90m(0.4558ms)[39m[39m
+[32m✔ a RATE brush on an OPEN track changes the track downstream and does not close it [90m(109.4396ms)[39m[39m
+[32m✔ a RATE brush on a CLOSED track re-closes it, with the brushed stretch protected [90m(472.1245ms)[39m[39m
+[32m✔ a RATE brush has no kink at its edges: κ_new − κ_old steps no more at the edges than inside [90m(111.0976ms)[39m[39m
+[32m✔ a hill of 5 m, r 20 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked [90m(25601.6178ms)[39m[39m
+[32m✔ a hill of 5 m, r 100 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked [90m(46668.6157ms)[39m[39m
+[32m✔ a hill of -5 m, r 20 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked [90m(19791.7801ms)[39m[39m
+[32m✔ a hill of -5 m, r 100 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked [90m(34797.1183ms)[39m[39m
+[32m✔ a swerve of 3 m, r 20 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked [90m(19481.5649ms)[39m[39m
+[32m✔ a swerve of 3 m, r 100 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked [90m(34750.6933ms)[39m[39m
+[32m✔ a SHARP brush (refine first) acts at the asked radius, and costs what the hand-back says: it is opt-in [90m(78.4066ms)[39m[39m
+[32m✔ a SHARP rate brush on kh at 25%, r 20 m (a D185 miss): C2 at s₀ ± 20 on κ_new − κ_old, at the asked radius [90m(153.06ms)[39m[39m
+[32m✔ a SHARP rate brush on kh at 75%, r 20 m (a D185 miss): C2 at s₀ ± 20 on κ_new − κ_old, at the asked radius [90m(165.577ms)[39m[39m
+[32m✔ a SHARP rate brush on kv at 25%, r 20 m (a D185 miss): C2 at s₀ ± 20 on κ_new − κ_old, at the asked radius [90m(157.6885ms)[39m[39m
+[32m✔ a refinement ALONE leaves the curve unchanged up to its stored step: every channel within 2 of its quanta, everywhere (1.69 measured) [90m(6.2425ms)[39m[39m
+[32m✔ undo removes both the brush and its knots: one commit, one undo, the document as it was [90m(49.2265ms)[39m[39m
+[32m✔ a SHARP phi brush, r 20 m: outside W⁺ every channel moves under half a quantum and the track past it under 0.1 mm, as declared [90m(280.8437ms)[39m[39m
+[32m✔ a SHARP w brush, r 20 m: outside W⁺ every channel moves under half a quantum and the track past it under 0.1 mm, as declared [90m(268.5847ms)[39m[39m
+[32m✔ a SHARP h brush, r 20 m: outside W⁺ every channel moves under half a quantum and the track past it under 0.1 mm, as declared [90m(292.4675ms)[39m[39m
+[32m✔ the brush always reports the radius it used (the default widens, and says how far) [90m(41.8891ms)[39m[39m
+[32m✔ TEST 5a (B, sealed): balanced 45° ring at v = √(gR tan θ): the centre rides one height, none spills or lifts, ranges and energy as registered [90m(764.3491ms)[39m[39m
+[32m✔ TEST 5b (B, sealed): the same v on a 10° ring: every stream spills over the OUTER lip, RED, within ±5% / ±5 m of the theory [90m(65.6434ms)[39m[39m
+[32m✔ TEST 5b, tighter than the seal (pane C's own bar): each spill station within 0.1 m of B's sealed theory, located INSIDE the step [90m(60.7074ms)[39m[39m
+[32m✔ 06 §8 (cone, too slow): on a 45° ring at the balance speed of 400 m the centre stream slides down and spills over the INNER lip, as the turning radius predicts [90m(34.7493ms)[39m[39m
+[32m✔ 06 §8 (cone turning radius): on a 45° ring at the balance speed of 495 m, each stream swings between its start and the radius energy + angular momentum give [90m(401.3287ms)[39m[39m
+[32m✔ 06 §8 (crest): over a vertical crest of radius 50 m the stream lifts off where cos p = (v0²/R + 2g·cos p0)/(3g), RED [90m(13.0823ms)[39m[39m
+[32m✔ the normal force matches the cone's closed form N = g·cos β + (v_φ²/r)·sin β at EVERY step of a 45° lap, across the closing seam's short span too [90m(274.6321ms)[39m[39m
+[32m✔ SHOCK: two streams angled toward each other on a flat straight cross at s = gap/(2·tan a), RED; parallel streams do not [90m(85.3969ms)[39m[39m
+[32m✔ ENERGY: on a banked ring whose dish deepens and widens smoothly around the lap (a different cross-section at every sample), a lap conserves ½v² + g·y within 0.5% [90m(638.4109ms)[39m[39m
+[32m✔ a cross-section that STEPS between two samples is a real kink in the surface, and the water reads it (lift-off at the step), never smooths it away [90m(108.4473ms)[39m[39m
+[32m✔ ENERGY on a TWISTING straight (roll 0 → 0.6 over 120 m), streams crossing it: drift ≤ 1e-5 (the cross term S_su at work) [90m(27.0632ms)[39m[39m
+[32m✔ ENERGY where the dish DEEPENS over 40 m (a different cross-section at every sample), streams crossing it: drift ≤ 1e-4 (the blend's s-derivatives at work) [90m(57.7206ms)[39m[39m
+[32m✔ a closed loop whose samples stop 20 m short of the seam is closed by the first sample one lap on: the centre rides one height, N as the cone says [90m(116.6161ms)[39m[39m
+[32m✔ an open road's end stops the water as "end", not red [90m(13.2259ms)[39m[39m
+[32m✔ a road whose s is NOT arc length (a lifted sample, D186) rides right when its samples carry d1 = dpos/ds and d2; without them it is refused [90m(8.4347ms)[39m[39m
+[32m✔ refused loudly: no speed, zero speed, no profile, no streams, and samples whose pos is not ∫T ds (a heartline offset) [90m(0.9929ms)[39m[39m
+[32m✔ TEST 5a through the core: the balanced 45° ring, as B sealed it [90m(856.861ms)[39m[39m
+[32m✔ TEST 5b through the core: the 10° ring spills every stream over the OUTER lip, RED, within ±5% / ±5 m [90m(150.0975ms)[39m[39m
+[32m✔ a new document has no pit lane, and writes pitLane: null in its canonical text [90m(0.9078ms)[39m[39m
+[32m✔ a pit lane round-trips byte-exact, in canonical key order whatever order it was written in [90m(1.5956ms)[39m[39m
+[32m✔ lane lengths are snapped to 0.1 mm and its speed to 0.01 km/h, on edit and on load [90m(0.6567ms)[39m[39m
+[32m✔ setting, sculpting and removing the lane are one undo step each, and undo is byte-identical [90m(0.5399ms)[39m[39m
+[32m✔ missing keys take the defaults; a bad side, anchor, range or key is refused by name [90m(0.9455ms)[39m[39m
+[32m✔ a phrase word can anchor the lane (w2/1) [90m(0.3645ms)[39m[39m
+[32m✔ removing the word a lane is anchored to is not blocked: the document keeps the lane, the geometry refuses it [90m(0.4463ms)[39m[39m
+[32m✔ a schema-2 document migrates to schema 3 with no pit lane, and resolves to the same track [90m(1.192ms)[39m[39m
+[32m✔ a schema-1 document migrates all the way (1 -> 2 -> 3) [90m(0.3044ms)[39m[39m
+[32m✔ a schema-3 document without pitLane, or a schema-2 one with it, is refused [90m(0.381ms)[39m[39m
+[32m✔ a project of two layouts round-trips byte-exact, and each layout's text is its document's own [90m(0.7932ms)[39m[39m
+[32m✔ layout names are AC folder names and unique; a missing layout is named [90m(0.3096ms)[39m[39m
+[32m✔ a project's layouts migrate like documents [90m(0.2002ms)[39m[39m
+[32m✔ a project layout entry with any key but layout and doc is refused [90m(0.1793ms)[39m[39m
+[32m✔ a pit lane reaches the export: its cells in the kn5, the pit boxes on it, the self-check ON [90m(624.6276ms)[39m[39m
+[32m✔ two layouts export to two layout sets in one folder, as AC lays layouts out [90m(929.6555ms)[39m[39m
+[32m✔ one red layout writes nothing at all, and a folder the builder did not write is refused untouched [90m(1228.4378ms)[39m[39m
+[32m✔ a lane laid across another pass of the road is RED: the lane's findings refuse the export [90m(432.7772ms)[39m[39m
+[32m✔ a textured floor reaches the kn5: its word's road cells wear the set's floor material, and the DDS is embedded [90m(483.4584ms)[39m[39m
+[32m✔ the material the preview draws for a word is the one the kn5 carries for it (the preview's own rule) [90m(381.3045ms)[39m[39m
+[32m✔ an untextured set changes nothing: the kn5 is byte-identical to an export without a set [90m(629.6618ms)[39m[39m
+[32m✔ only the materials a textured cell uses are added: the set's untextured slots do not reach the kn5 [90m(541.0678ms)[39m[39m
+[32m✔ surfaces.ini, T-180 (the default): the block AND one extended-0 surface, on SURFACE_0 keyed PIT [90m(0.6133ms)[39m[39m
+[32m✔ surfaces.ini, "T-180 track" off: neither the block nor the switch [90m(0.1134ms)[39m[39m
+[32m✔ the soft-road control keeps the switch and differs from the T-180 file by the block alone [90m(0.0872ms)[39m[39m
+[32m✔ export with "T-180 track" on (the default): the folder has both, and the CSP-only warning is in the warnings [90m(13663.9732ms)[39m[39m
+[32m✔ export with "T-180 track" off: neither is written, and no CSP-only warning [90m(1540.8728ms)[39m[39m
+[32m✔ export both variants: both carry the switch, and only the block differs [90m(1521.6739ms)[39m[39m
+[32m✔ the soft-road control is refused with "T-180 track" off (it has nothing to control for) [90m(1.0325ms)[39m[39m
+[32m✔ the platform test's two variants both set the switch, and differ by the block alone [90m(1195.5093ms)[39m[39m
+[32m✔ the exported width is non-empty, parses as metres, and is the road's width from the document within 0.5 m [90m(13866.8032ms)[39m[39m
+[32m✔ the width is the MEDIAN by length, not the mean: one short wide stretch does not move it [90m(0.185ms)[39m[39m
+[32m✔ the platform test writes its fixed width, 26 m (2·WF + 2·LW) [90m(1085.7728ms)[39m[39m
+[32m✔ the sample exports: the kn5 reads back through tools/kn5.cjs with every AC_ marker [90m(1647.085ms)[39m[39m
+[32m✔ ui_track.json pitboxes equals the AC_PIT_n count in the written kn5 [90m(5.4672ms)[39m[39m
+[32m✔ the folder holds every file of a track, and nothing it did not list [90m(0.6235ms)[39m[39m
+[32m✔ the AI line runs the whole loop: its length is the path length within 0.5% (tolerance stated before the run) [90m(0.9765ms)[39m[39m
+[32m✔ the AI line runs at the design speed when every word has one (200 km/h here) [90m(1.051ms)[39m[39m
+[32m✔ the markers stand on the start straight, pole nearest the line; the hotlap starts the run-up to the design speed [90m(0.6384ms)[39m[39m
+[32m✔ a red document is refused, the reason named, and nothing written (the 60° bowl walls, for vanilla AC) [90m(1283.5678ms)[39m[39m
+[32m✔ a lap the proof fails is refused: a jump taken below the speed its 6.3 g landing needs, each failing point named [90m(19146.4876ms)[39m[39m
+[32m✔ an empty document is refused and nothing written [90m(0.7167ms)[39m[39m
+[32m✔ an open track is refused: an AC lap and the AI line need a closed loop [90m(0.7745ms)[39m[39m
+[32m✔ an amber document exports, and the amber is in the warnings with its source (745 km/h through the 50 m tight) [90m(1517.1558ms)[39m[39m
+[32m✔ both variants: the same kn5 bytes, the soft-collision block only in the first, and the noblock red said [90m(1424.0611ms)[39m[39m
+[32m✔ only block is written by default [90m(0.1494ms)[39m[39m
+[32m✔ a folder this builder did not write is refused, untouched [90m(1381.2328ms)[39m[39m
+[32m✔ turning the self-check off is said in the warnings [90m(1110.4615ms)[39m[39m
+[32m✔ the CLI writes the folder from a document file, and refuses an empty one with exit 1 [90m(1467.7483ms)[39m[39m
+[32m✔ with the self-check on (the default), the sample exports [90m(1437.1993ms)[39m[39m
+[32m✔ the §5c marker checks guard the output: markers 3 m above the road (band 1–2 m) are refused, nothing written [90m(1236.9243ms)[39m[39m
+[32m✔ a grid longer than the longest straight is refused with the lengths named [90m(1206.8931ms)[39m[39m
+[32m✔ one station per s: the closed loop does not repeat s = 0 at its end [90m(2.3958ms)[39m[39m
+[32m✔ G1 at both joins, on a straight: the inner edge is the road's edge, and runs along it [90m(29.8442ms)[39m[39m
+[32m✔ no step at the joins, on a straight: the lane mesh's join rows lie on the road, in its plane, facing its way [90m(32.3561ms)[39m[39m
+[32m✔ G1 at both joins, leaving on a straight and rejoining in a turn: the inner edge is the road's edge, and runs along it [90m(15.6009ms)[39m[39m
+[32m✔ no step at the joins, leaving on a straight and rejoining in a turn: the lane mesh's join rows lie on the road, in its plane, facing its way [90m(35.8204ms)[39m[39m
+[32m✔ the lane runs offsetM beyond the road's edge between its eases, and its s is its own arc length [90m(9.7034ms)[39m[39m
+[32m✔ E's pit boxes sit on the lane: on its surface, beyond the road's edge, and pass §5c's checks [90m(15.2323ms)[39m[39m
+[32m✔ the self-check stays ON beside the road: a lane 0.3 m off a turn is tested, and clear; without the join exemption the joins show [90m(408.6234ms)[39m[39m
+[32m✔ a lane is refused by name: a missing anchor, backwards, too short for its eases, a walled edge [90m(10.8115ms)[39m[39m
+[32m✔ chord error: every profile vertex track stays within the stated bound, measured on a 5× finer path [90m(113.0516ms)[39m[39m
+[32m✔ cells: no cell at or over 65,536 vertices, even when a fine profile forces splitting [90m(1091.8417ms)[39m[39m
+[32m✔ fold check: a crafted fold fires (a 5 m radius turn under a 13 m half-width road), on the inside edge only [90m(1.3132ms)[39m[39m
+[32m✔ fold check: a proper track reports no folds [90m(53.6987ms)[39m[39m
+[32m✔ ψ past 90°: the wall-ride edge at 110° has the right normal (cos ψ·U − sin ψ·L), faces down, and the winding agrees [90m(11.3872ms)[39m[39m
+[32m✔ scene: T1 shape, passes validateScene, and src/export/kn5write.js writes it unchanged; vertices are cell-relative [90m(97.1614ms)[39m[39m
+[32m✔ gap: a jump gap gets no surface, and splits the road into separate cells [90m(2.4565ms)[39m[39m
+[32m✔ edge: a straight flat road meshes with every normal straight up [90m(1.4223ms)[39m[39m
+[32m✔ a lane off the measured bowl's right edge: G1 and no step at both joins, level along the run [90m(18.3438ms)[39m[39m
+[32m✔ a lane off the measured half-pipe's left edge: G1 and no step at both joins, level along the run [90m(8.9901ms)[39m[39m
+[32m✔ a lane is refused off an edge steeper than 35° (the reader's lip), and taken at 30.6° (the half-pipe) [90m(15.6909ms)[39m[39m
+[32m✔ a lane off a 33 m bowl, rejoining in a tight banked -30°: G1, and the mesh join rows in the edge's own plane [90m(24.5246ms)[39m[39m
+[32m✔ the good scene passes every §5c check [90m(2.8274ms)[39m[39m
+[32m✔ race direction comes from the grid, back slot to pole [90m(6.3121ms)[39m[39m
+[32m✔ start line behind the grid fires start-ahead-of-grid [90m(0.7546ms)[39m[39m
+[32m✔ grid numbered the wrong way (pole at the back) fires start-ahead-of-grid [90m(0.2917ms)[39m[39m
+[32m✔ a grid slot ahead of the slot numbered before it fires start-ahead-of-grid, even with the line ahead of all [90m(0.2018ms)[39m[39m
+[32m✔ swapped L and R gates fire gate-orientation [90m(0.1879ms)[39m[39m
+[32m✔ a marker 5 m up fires height-and-heading [90m(0.1827ms)[39m[39m
+[32m✔ a marker 0.3 m up (below the 1 m floor) fires height-and-heading [90m(0.2116ms)[39m[39m
+[32m✔ a grid slot pointing backwards fires height-and-heading [90m(0.3091ms)[39m[39m
+[32m✔ a marker pointing into the road fires height-and-heading [90m(0.3245ms)[39m[39m
+[32m✔ a marker off the road fires height-and-heading and slots [90m(0.7025ms)[39m[39m
+[32m✔ a marker straight above a shared triangle edge is ON the road [90m(0.2282ms)[39m[39m
+[32m✔ a marker straight above the road's outer edge is on the road [90m(0.1275ms)[39m[39m
+[32m✔ a marker over a WALL mesh only counts as off the road [90m(0.0895ms)[39m[39m
+[32m✔ a grid slot inside another fires slots [90m(0.1177ms)[39m[39m
+[32m✔ a pit box inside another fires slots [90m(0.1246ms)[39m[39m
+[32m✔ a wrong pit count fires pit-count [90m(0.1286ms)[39m[39m
+[32m✔ a gap in the pit numbering fires pit-count [90m(0.1332ms)[39m[39m
+[32m✔ no pit markers fires pit-count [90m(0.1055ms)[39m[39m
+[32m✔ no gate fails the checks that need one, with the reason [90m(0.2078ms)[39m[39m
+[32m✔ countPits counts AC_PIT_n markers only [90m(0.0765ms)[39m[39m
+[32m✔ a nested dummy gets its parent transform (world = local × parent) [90m(0.315ms)[39m[39m
+[32m✔ a custom layout (a 3-abreast grid of 6, 3 pit boxes, sectors) is what the kn5 carries, and pitboxes counts it [90m(766.3101ms)[39m[39m
+[32m✔ the paint is written into the kn5 as visual meshes, one per mark, none of them physics [90m(628.5316ms)[39m[39m
+[32m✔ a red layout refuses the export, names the check, and writes nothing [90m(528.3398ms)[39m[39m
+[32m✔ a layout whose word is gone refuses the export: anchors [90m(505.1658ms)[39m[39m
+[32m✔ with a lane, the pit boxes are placed along the LANE from its `along`, on its surface, and pass the checks [90m(4.6664ms)[39m[39m
+[32m✔ the pit count still matches on a lane, and a lane too short for its boxes is off the road (red) [90m(2.8412ms)[39m[39m
+[32m✔ the pit box paint is laid on the lane, centred on each box [90m(0.6981ms)[39m[39m
+[32m✔ without a lane the boxes stay on the main road at the layout's `at` [90m(1.0546ms)[39m[39m
+[32m✔ the markers stay on the road after an UPSTREAM word is edited: they move with their words, same (along, u, h) [90m(22.6811ms)[39m[39m
+[32m✔ editing the anchor word itself keeps the marker at the same distance into it, clamped to the word [90m(6.5743ms)[39m[39m
+[32m✔ markers on a BANKED floor stand h along the rolled normal, not world up, and pass the checks [90m(5.5434ms)[39m[39m
+[32m✔ on a half-pipe the start gates sit on the walls' edges, standing off the WALL along its normal [90m(3.0657ms)[39m[39m
+[32m✔ the grid is numbered from pole: AC_START_0 nearest the line, each slot at or behind the one before [90m(3.1746ms)[39m[39m
+[32m✔ the grid order records the race direction: back slot to pole runs along +s, and every marker faces it [90m(2.451ms)[39m[39m
+[32m✔ the patterns: 2 staggered, 2 abreast, 3 abreast (Aurora), with their spacing [90m(0.3823ms)[39m[39m
+[32m✔ a slot edit moves that slot only (editable slot by slot) [90m(0.1739ms)[39m[39m
+[32m✔ the hotlap starts the run-up that reaches the design speed at the line (measured thrust, FINDINGS.md:494) [90m(3.4113ms)[39m[39m
+[32m✔ on an open track too short for the run-up, the hotlap is at the start, and says the speed it will reach (amber) [90m(2.4879ms)[39m[39m
+[32m✔ sectors 1 and 2 are gates across the road like the start, L left of R [90m(2.4506ms)[39m[39m
+[32m✔ red check: the start line ahead of the grid (a slot past the line, then a slot numbered out of order) [90m(3.0092ms)[39m[39m
+[32m✔ red check: L and R gates the right way round (swapped: fires; as placed: clear) [90m(1.7838ms)[39m[39m
+[32m✔ red check: 1–2 m above the surface (3 m and 0.5 m fire, 1 m and 2 m clear) and along the road [90m(4.1987ms)[39m[39m
+[32m✔ red check: no marker inside another's slot, and none off the road [90m(3.7536ms)[39m[39m
+[32m✔ red check: the pit count (none: fires; placed ≠ asked: fires; as laid out: clear) [90m(3.3164ms)[39m[39m
+[32m✔ red check: a marker whose word is gone [90m(1.4155ms)[39m[39m
+[32m✔ the paint and the markers agree: every mark comes from a marker, at its (s, u), on the surface [90m(3.4366ms)[39m[39m
+[32m✔ the start/finish line wraps the whole cross-section, up a half-pipe's walls [90m(1.8286ms)[39m[39m
+[32m✔ inside a font transition a marker sits on the BLENDED surface the mesh builds, not the new font's [90m(2.7633ms)[39m[39m
+[32m✔ between stations on a banking turn the marker's axes are still an orthonormal frame (a valid kn5 matrix) [90m(3.8958ms)[39m[39m
+[32m✔ a marker between stations is interpolated along the road, not snapped to the station before [90m(0.4205ms)[39m[39m
+[32m✔ a marker over a jump's flight is red, off the road (no surface under it) [90m(2.1552ms)[39m[39m
+[32m✔ the default layout refuses a grid longer than the longest straight (NO_START_STRAIGHT), with the lengths [90m(1.6171ms)[39m[39m
+[32m✔ a pit box that cannot be placed (off the track's start) is red on its own, nothing else overlapping [90m(2.386ms)[39m[39m
+[32m✔ calibration: a car at rest-like speed on a flat straight reads fN = 1 g and nothing else (FINDINGS.md:31-32) [90m(3.4795ms)[39m[39m
+[32m✔ a flat left turn: the floor centre reads 1 g into the road and v²/(R·g) across, toward the inside [90m(0.9556ms)[39m[39m
+[32m✔ each lateral line has its own radius: the inside edge of a turn loads harder than the centre, v²κ/(1−κ·o) [90m(0.9493ms)[39m[39m
+[32m✔ a wall past vertical on the outside of a turn takes the turn's load INTO its surface [90m(0.9375ms)[39m[39m
+[32m✔ a vertical loop: at the top the load is v²/R − g, so below √(gR) the car leaves the surface [90m(3.2891ms)[39m[39m
+[32m✔ load above the proven 90 g is AMBER, with its FINDINGS source; at or below it is not (FINDINGS.md:105, :112-113) [90m(1.7169ms)[39m[39m
+[32m✔ the withdrawn 60 g red line does not come back: 70 g is neither red nor amber (FINDINGS.md:116-118) [90m(0.4167ms)[39m[39m
+[32m✔ the 20 g suspension stop is INFORMATION, from 20 g on, never red or amber (FINDINGS.md:103-104) [90m(0.7594ms)[39m[39m
+[32m✔ the good paths carry NO red at all [90m(1.3953ms)[39m[39m
+[32m✔ fold: a profile wider than the turn radius folds on the inside (1 − κ·q ≤ 0), and is red [90m(0.4507ms)[39m[39m
+[32m✔ folds and self-intersections handed over by buildMesh become red; without them self-intersection is NOT CHECKED [90m(0.7819ms)[39m[39m
+[32m✔ gap-in-road: a gap that is not a jump is red; a jump gap is not; the open head is exempt [90m(1.038ms)[39m[39m
+[32m✔ gap-in-road: two road stations further apart than their s says (a hole in a road word) are red [90m(0.2792ms)[39m[39m
+[32m✔ missing-soft-collision is red only when the export turns the block off (FINDINGS.md:89) [90m(0.226ms)[39m[39m
+[32m✔ wall-ride-from-wall-object: a wall-ride whose surface is WALL is red; the same wall-ride as ROAD is not [90m(0.484ms)[39m[39m
+[32m✔ steep-without-raycast: above 50° is red only for a non-CSP export; 49° is quiet; CSP (the default) is quiet [90m(0.3989ms)[39m[39m
+[32m✔ stacked-within-2m: a second pass 1.5 m above the first is red; 2.5 m above is not; one pass is never stacked [90m(8.1126ms)[39m[39m
+[32m✔ seam-past-envelope is AMBER past 5.9° between neighbouring stations (FINDINGS.md:24), quiet at 5° [90m(2.6768ms)[39m[39m
+[32m✔ every red and amber carries a source (INTERFACES §3: "A red or amber with no source is a bug") [90m(1.0295ms)[39m[39m
+[32m✔ lap: an open path has no lap proof yet; a closed one without a speed model says so instead of inventing one [90m(1.5545ms)[39m[39m
+[32m✔ lap sim: full throttle at car.accel, gravity along T, capped at the 764 km/h of FINDINGS.md:484 [90m(5.7645ms)[39m[39m
+[32m✔ lap: a closed loop driven fast enough proves out, with a lap time [90m(0.547ms)[39m[39m
+[32m✔ MACH6 defaults are the FINDINGS numbers (a changed number must fail here, beside its citation) [90m(0.1059ms)[39m[39m
+[32m✔ the along-track term: accelerating at a on the flat reads fAlong = a/g (the dv/dt·T of the specific force) [90m(1.9343ms)[39m[39m
+[32m✔ fold boundary: an inside edge exactly AT the turn radius (1 − κ·q = 0) is a fold, as ARCHITECTURE.md:57 says "≤ 0" [90m(0.2562ms)[39m[39m
+[32m✔ length (a tight word): the shortest clean length, and one millimetre shorter is red (a fold or seam) [90m(1064.853ms)[39m[39m
+[32m✔ curvature (turn): swinging a tight word past its bound lays the track over itself (stacked), one quantum on [90m(122.0565ms)[39m[39m
+[32m✔ ramps (easeIn): a longer ramp tightens the body of a short tight word until it folds [90m(36.6886ms)[39m[39m
+[32m✔ pitch (climb): a short climbing half-pipe folds its walls when their height passes the vertical radius [90m(150.8956ms)[39m[39m
+[32m✔ bank (roll at the head) for a non-CSP export: exactly 50° either way (ARCHITECTURE.md:87) [90m(50.0564ms)[39m[39m
+[32m✔ bank on a CSP export has no red limit: the bound is the document range, and it says so [90m(33.6002ms)[39m[39m
+[32m✔ width (a wall-ride): widened past its bound, the two sides of the U-turn stack; at the bound it is clean [90m(183.7498ms)[39m[39m
+[32m✔ wall height (a wall-ride): raised past its bound it turns red; at the bound it is clean [90m(276.4801ms)[39m[39m
+[32m✔ ψ for a non-CSP export: a half-pipe wall is clean at 50° and red one thousandth of a degree past it [90m(41.7112ms)[39m[39m
+[32m✔ where no limit binds, the bound is the document range; where the document refuses a value, it says why [90m(58.6051ms)[39m[39m
+[32m✔ a word that is already red has no clean range to report (null bounds, "red-now") [90m(1.6252ms)[39m[39m
+[32m✔ amber is reported inside the red bounds: amberMax ≤ max, and a faster word meets amber before red [90m(46.0622ms)[39m[39m
+[32m✔ A's handleInfo hook takes these bounds as its physics (src/doc/library.js handleInfo(doc, id, boundsFn)) [90m(26.4889ms)[39m[39m
+[32m✔ scope: on a track already red elsewhere, a clean word is still bounded by ITS OWN stretch, not pinned by the other red [90m(20.5041ms)[39m[39m
+[32m✔ an open track whose head is the flight of a jump is RED, head-in-the-air, with its ARCHITECTURE source [90m(11.6536ms)[39m[39m
+[32m✔ with the landing ramp the jump word will carry, the same track is clean: the head sits on road [90m(5.2019ms)[39m[39m
+[32m✔ the ramp's size puts BOTH landings in the zone: each touchdown lies on the ramp, as validation (jumps.js) finds it [90m(3.5321ms)[39m[39m
+[32m✔ a ramp too short for the clean-flight landing is RED: landing-misses-zone, the heaviest missed fall named [90m(3.1879ms)[39m[39m
+[32m✔ too slow for the override-dive landing (6.3 g needs more speed than it has): red, 6.3 g named [90m(1.8957ms)[39m[39m
+[32m✔ with no speed at all nothing about a landing is claimed (no landing red), while the floating head is still red [90m(3.0216ms)[39m[39m
+[32m✔ a CLOSED loop has no head: a loop that closes through a flight is not head-in-the-air [90m(2.1461ms)[39m[39m
+[32m✔ landingRamp refuses what it cannot size: no gap, no speed [90m(0.4284ms)[39m[39m
+[32m✔ validation measures a jump from its LIP: the gap it checks is the jump's own gap, at any station step [90m(6.0976ms)[39m[39m
+[32m✔ an OPEN track: no lap result, only the reason, and no red at the open end [90m(4.3564ms)[39m[39m
+[32m✔ an OPEN track whose head is a gap (mid-build): no gap-in-road red, the jump is pending, and the head in the air is red [90m(0.9678ms)[39m[39m
+[32m✔ append a straight after a straight: revalidate equals a full validate [90m(2.3361ms)[39m[39m
+[32m✔ append a turn (new loads, a new along-track term at the join): revalidate equals a full validate [90m(2.1483ms)[39m[39m
+[32m✔ append the landing after a pending jump: the jump resolves with both landings, and equals a full validate [90m(3.3188ms)[39m[39m
+[32m✔ append after a NON-jump gap at the head: the old head loses its exemption and turns red, as in a full validate [90m(1.2403ms)[39m[39m
+[32m✔ a new piece laid 1.5 m over the old road turns the OLD road red too, exactly as a full validate does [90m(8.1836ms)[39m[39m
+[32m✔ append with the lap sim as the speed model (no design speeds): equals a full validate [90m(3.9724ms)[39m[39m
+[32m✔ only what the append affects is recomputed: early stations are CARRIED (the same objects), the rest is new [90m(1.655ms)[39m[39m
+[32m✔ closing the loop re-validates everything (the closing twist moves every frame) and gives the lap result [90m(4.5223ms)[39m[39m
+[32m✔ a speed-model change (a word without a design speed appended) re-validates everything [90m(2.2676ms)[39m[39m
+[32m✔ revalidate without a previous result is a full validate [90m(0.6486ms)[39m[39m
+[32m✔ an EDIT of the head piece (not only an append): a stack the old piece made is dropped, as in a full validate [90m(10.552ms)[39m[39m
+[32m✔ closing the loop when the closing twist MOVED the earlier frames: revalidate still equals a full validate [90m(3.6932ms)[39m[39m
+[32m✔ stacked: each station keeps its DEEPEST overlap, whatever order the points are visited in [90m(2.2189ms)[39m[39m
+[32m✔ ranges: the same findings in any order give the same ranges (a total order, so full and incremental agree) [90m(0.1834ms)[39m[39m
+[32m✔ an EDIT that removes the deepest stack keeps the shallower OLD one: those stations are re-derived, not dropped [90m(14.8275ms)[39m[39m
+[32m✔ minSpeed matches the closed form, worked by hand for a 40 m gap, 7° up, landing 1 m up, at 3.2 g [90m(0.7577ms)[39m[39m
+[32m✔ the harder fall needs the higher speed: minSpeed at 6.3 g = minSpeed at 3.2 g × √(6.3/3.2) [90m(0.0979ms)[39m[39m
+[32m✔ no speed makes a jump whose lip points at or below the landing (D·tanθ ≤ Δh): Infinity [90m(0.078ms)[39m[39m
+[32m✔ minSpeed refuses a gap that is not positive [90m(0.2544ms)[39m[39m
+[32m✔ flightY: the height at the minimum speed is exactly Δh at D (the flight just reaches the lip) [90m(0.1492ms)[39m[39m
+[32m✔ TWO landings, never one: between the two minimum speeds the clean flight lands and the dive falls short [90m(0.6859ms)[39m[39m
+[32m✔ boundary at each landing: just below its minimum speed it is not clear, just above it is [90m(0.6981ms)[39m[39m
+[32m✔ a landing road too short to catch the long flight: clear, but NOT caught [90m(0.1248ms)[39m[39m
+[32m✔ the touchdown x is where the flight meets the landing road, interpolated [90m(0.2098ms)[39m[39m
+[32m✔ reach: a drop deeper than dist·tan10° + ½·6.5 g·(dist / 375 km/h)² is unreachable (FINDINGS.md:312-313) [90m(0.2519ms)[39m[39m
+[32m✔ validate: a flat 40 m jump reports both landings, the gap and the climb, from the path itself [90m(3.9768ms)[39m[39m
+[32m✔ validate: a jump taken too slowly is not caught, and a closed lap over it fails with the reason [90m(2.1184ms)[39m[39m
+[32m✔ validate: an open head that ends in the air is a pending jump, and the head in the air is red [90m(0.6304ms)[39m[39m
+[32m✔ validate: a gap of 0 (landing lip straight below the take-off lip) is a named RED with its reason and source, and nothing throws [90m(1.7218ms)[39m[39m
+[32m✔ validate: a NEGATIVE gap (landing lip 5 m behind the take-off lip) is a named RED with its reason and source, and nothing throws [90m(2.1856ms)[39m[39m
+[32m✔ validate: a closed lap over a jump with no forward gap FAILS with that reason, and is not thrown either [90m(2.1826ms)[39m[39m
+[32m✔ validate: a landing on the jump's own ramp more than 150 m past the lip is found (the search covers the ramp) [90m(23.2494ms)[39m[39m
+[32m✔ an unbroken road has no gap: its outer edges and its two ends are not gaps [90m(23.0584ms)[39m[39m
+[32m✔ a 0.3 m slit across the road is a gap, at its s, narrower than the ray's reach [90m(20.2396ms)[39m[39m
+[32m✔ a 0.2 m tear ALONG the road (two pieces side by side) is a gap [90m(19.7104ms)[39m[39m
+[32m✔ an opening wider than the ray reaches (a 5 m flight) is not a ray gap: that is a jump's business [90m(11.1221ms)[39m[39m
+[32m✔ road 0.7 m BELOW the far side of a slit is beyond the ray (0.4 m up, 1 m long: 0.6 m down): not a gap [90m(12.7339ms)[39m[39m
+[32m✔ triangles that face along the road (a seam's zip fan in the cross-section plane) are neither gap edges nor road [90m(9.2168ms)[39m[39m
+[32m✔ validate: a slit in the built road is RED "downforce-ray-gap", in plain words, with its source [90m(12.2333ms)[39m[39m
+[32m✔ validate: without the built road the check is listed as not done, never passed silently [90m(0.5599ms)[39m[39m
+[32m✔ validate: every checked jump notes the downforce step at its lip and its landing [90m(1.7389ms)[39m[39m
+[32m✔ two pieces whose shared row lies 0.2 mm apart ACROSS a 5 mm rounding boundary are welded, not a gap [90m(9.3382ms)[39m[39m
+[32m✔ with a design speed from the picker, a word with no speed of its own gets loads: 1 + v²/(gR) at the loop's bottom [90m(4.5994ms)[39m[39m
+[32m✔ boundary, the suspension stop (FINDINGS.md:103-104): just under 20 g is not flagged, just over is information [90m(3.6425ms)[39m[39m
+[32m✔ boundary, the proven load (FINDINGS.md:105): just under 90 g is not amber, just over 90 g is amber [90m(2.4505ms)[39m[39m
+[32m✔ a load is never red, however high: the 60 g red was withdrawn (FINDINGS.md:116-118) [90m(0.9162ms)[39m[39m
+[32m✔ a word's own speed wins over the picker's; the picker fills only the words without one [90m(1.3914ms)[39m[39m
+[32m✔ without a speed (no word speed, no picker speed) an OPEN track claims no load, even though the car can accelerate [90m(0.9545ms)[39m[39m
+[32m✔ a speed of 0 or less from the picker is no speed [90m(1.433ms)[39m[39m
+[32m✔ on a CLOSED track with no speed anywhere, the lap proof now runs, on the ghost lap at the measured acceleration [90m(2.9141ms)[39m[39m
+[32m✔ the ghost lap speeds up by the measured table (FINDINGS.md:494) and holds the 764 km/h cap (FINDINGS.md:484) [90m(19.8052ms)[39m[39m
+[32m✔ the ghost lap reads the table at its CURRENT speed: at racing speed it pushes less than from a standstill [90m(59.7329ms)[39m[39m
+[32m✔ accelAt reads the table: its points exactly, linear between them, the ends held beyond, a number as itself [90m(0.2124ms)[39m[39m
+[32m✔ a ghost lap asked for by the caller (its own car.accel) runs on an open path too, as it did before [90m(0.6347ms)[39m[39m
+[32m✔ changing the picker's speed re-validates everything, never carrying loads computed at the old speed [90m(2.0504ms)[39m[39m
+[34mℹ tests 840[39m
+[34mℹ suites 0[39m
+[34mℹ pass 837[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 2[39m
+[34mℹ todo 1[39m
+[34mℹ duration_ms 270285.0226[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\aclook.test.js:193:1
+[33m⚠ list: the preview's material and texture list EQUALS the kn5's [90m(1.0517ms)[39m # the preview does not draw the start and grid paint (t180b_paint, PAINT_* meshes) or the closing seam the export builds (D177 §3)[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  [32m+ actual[39m [31m- expected[39m
+  ... Skipped lines
+  
+  [39m  [
+  [39m    [
+  [31m-[39m     't180b_paint',
+  [39m      't180b_road'
+  [39m    ],
+  [39m    [
+  [32m+[39m     '1ROAD_seam_w1_in',
+  [39m      '1ROAD_w1_body_0',
+  [39m      '1ROAD_w1_in_0',
+  [39m      '1ROAD_w1_out_0',
+  [39m      '1ROAD_w2_body_0',
+  [39m      '1ROAD_w2_in_0',
+  [34m...[39m
+  [39m      '1ROAD_w8_out_0',
+  [32m+[39m     'PAINT_GRID_0',
+  [32m+[39m     'PAINT_GRID_1',
+  [32m+[39m     'PAINT_GRID_2',
+  [32m+[39m     'PAINT_GRID_3',
+  [32m+[39m     'PAINT_PIT_0',
+  [32m+[39m     'PAINT_PIT_1',
+  [32m+[39m     'PAINT_START_LINE'
+  [39m    ]
+  [39m  ]
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d195-wt\[39mapp\test\aclook.test.js:195:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [
+      [ [32m't180b_road'[39m ],
+      [
+        [32m'1ROAD_seam_w1_in'[39m, [32m'1ROAD_w1_body_0'[39m,
+        [32m'1ROAD_w1_in_0'[39m,    [32m'1ROAD_w1_out_0'[39m,
+        [32m'1ROAD_w2_body_0'[39m,  [32m'1ROAD_w2_in_0'[39m,
+        [32m'1ROAD_w2_out_0'[39m,   [32m'1ROAD_w3_body_0'[39m,
+        [32m'1ROAD_w3_in_0'[39m,    [32m'1ROAD_w3_out_0'[39m,
+        [32m'1ROAD_w4_body_0'[39m,  [32m'1ROAD_w4_in_0'[39m,
+        [32m'1ROAD_w4_out_0'[39m,   [32m'1ROAD_w5_body_0'[39m,
+        [32m'1ROAD_w5_in_0'[39m,    [32m'1ROAD_w5_out_0'[39m,
+        [32m'1ROAD_w6_body_0'[39m,  [32m'1ROAD_w6_in_0'[39m,
+        [32m'1ROAD_w6_out_0'[39m,   [32m'1ROAD_w7_body_0'[39m,
+        [32m'1ROAD_w7_in_0'[39m,    [32m'1ROAD_w7_out_0'[39m,
+        [32m'1ROAD_w8_body_0'[39m,  [32m'1ROAD_w8_in_0'[39m,
+        [32m'1ROAD_w8_out_0'[39m,   [32m'PAINT_GRID_0'[39m,
+        [32m'PAINT_GRID_1'[39m,     [32m'PAINT_GRID_2'[39m,
+        [32m'PAINT_GRID_3'[39m,     [32m'PAINT_PIT_0'[39m,
+        [32m'PAINT_PIT_1'[39m,      [32m'PAINT_START_LINE'[39m
+      ]
+    ],
+    expected: [
+      [ [32m't180b_paint'[39m, [32m't180b_road'[39m ],
+      [
+        [32m'1ROAD_w1_body_0'[39m, [32m'1ROAD_w1_in_0'[39m,
+        [32m'1ROAD_w1_out_0'[39m,  [32m'1ROAD_w2_body_0'[39m,
+        [32m'1ROAD_w2_in_0'[39m,   [32m'1ROAD_w2_out_0'[39m,
+        [32m'1ROAD_w3_body_0'[39m, [32m'1ROAD_w3_in_0'[39m,
+        [32m'1ROAD_w3_out_0'[39m,  [32m'1ROAD_w4_body_0'[39m,
+        [32m'1ROAD_w4_in_0'[39m,   [32m'1ROAD_w4_out_0'[39m,
+        [32m'1ROAD_w5_body_0'[39m, [32m'1ROAD_w5_in_0'[39m,
+        [32m'1ROAD_w5_out_0'[39m,  [32m'1ROAD_w6_body_0'[39m,
+        [32m'1ROAD_w6_in_0'[39m,   [32m'1ROAD_w6_out_0'[39m,
+        [32m'1ROAD_w7_body_0'[39m, [32m'1ROAD_w7_in_0'[39m,
+        [32m'1ROAD_w7_out_0'[39m,  [32m'1ROAD_w8_body_0'[39m,
+        [32m'1ROAD_w8_in_0'[39m,   [32m'1ROAD_w8_out_0'[39m
+      ]
+    ],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }

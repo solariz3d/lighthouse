@@ -1,0 +1,64 @@
+MESSAGE 52  msg_011CfnVYMyV78Ap7i49xdmSX  seat librarian  ts 2026-10-07T07:36:38.855Z  turn L81093..L81138 (next prompt L81143)
+CLAIMS:
+  [msg_011CfnVYMyV78Ap7i49xdmSX|6] **"pick your AC `content\tracks` folder"**: confirm this is the right folder to choose (versus the AC root or something else) given how the export builds its output path.
+  [msg_011CfnVYMyV78Ap7i49xdmSX|12] **"I've also stopped my own background checks"**: verify the background processes or tasks were actually stopped (process list or task status).
+
+--- L81093 user 2026-10-07T07:34:59.030Z
+USER: it still says the loop is not closed: close it first (one click), then export when i am trying to export the test that isnt finished
+--- L81104 assistant 2026-10-07T07:35:24.215Z
+TOOL_USE PowerShell [toolu_01CRvjNWeYpRd3DarsYBmsPp]: {"command":"Set-Location C:\\Users\\nname\\Desktop\\t180-track-builder; git grep -n -i \"testexport\\|test export\\|OPEN_LOOP\\|the loop is not closed\" e17a73e -- app/index.html app/install/*.js app/core/coreshell.js | ForEach-Object { $_.Substring(0,[Math]::Min(230,$_.Length)) } | Select-Object -First 20","description":"Find how the export buttons handle an unfinished (open) track"}
+--- L81105 user 2026-10-07T07:35:25.011Z
+RESULT [toolu_01CRvjNWeYpRd3DarsYBmsPp]: e17a73e:app/core/coreshell.js:639:     * throws an ExportError with a code (OPEN_LOOP, NO_START_STRAIGHT, or the exporter's own, e.g. RED with .red). `opts.test` (D243a) is the
+e17a73e:app/core/coreshell.js:640:     * test export of an OPEN track (TEST_CLOSED on a closed one).
+e17a73e:app/core/coreshell.js:644:      // D243a: opts.test is the TEST export of an unfinished OPEN track (the page's own button, never the default): it is written open, its grid laid on
+e17a73e:app/core/coreshell.js:646:      if (opts.test && doc().closed) throw exportError('TEST_CLOSED', 'this track is closed: use Export (the test export is for an unfinished, open track)');
+e17a73e:app/core/coreshell.js:647:      if (!doc().closed && !opts.test) throw exportError('OPEN_LOOP', 'the loop is not closed: close it first (one click), then export');
+e17a73e:app/core/coreshell.js:819:function startLayout(segments, lift, start, { open = false } = {}) {   // open (D243a): the test export of an unfinished track lays its grid on an OPEN path
+e17a73e:app/index.html:23:  /* D252: the ⋯ menu beside Export to Assetto Corsa (Export… into any folder, the TEST export, the Assetto Corsa folder, See it in Assetto): it drops down over the page */
+e17a73e:app/index.html:90:  <details id="more" class="more"><summary title="more: export into a folder you pick, the test export, the Assetto Corsa folder, See it in Assetto">⋯</summary><div class="more-menu">
+e17a73e:app/index.html:92:    <button id="testexport" title="TEST export of an UNFINISHED track, to drive it by hand: the loop may be open, reds are listed as warnings (not blocking), the road ends in a wall after a run-off, and t
+e17a73e:app/index.html:263:    // D243a: the TEST export of an unfinished track, its own button (never the default Export)
+e17a73e:app/index.html:264:    if ($('testexport')) $('testexport').onclick = async () => {
+e17a73e:app/index.html:266:        const seam = await call('test_export_folder'), dir = seam || await call('plugin:dialog|open', { options: { directory: true, multiple: false, title: 'Test export (unfinished) into…' } });
+e17a73e:app/index.html:268:        status.textContent = 'test export (unfinished)…';
+e17a73e:app/index.html:271:      } catch (e) { status.textContent = `test export failed: ${e.message || e}`; }
+Shell cwd was reset to C:\Consonance\instances\librarian
+--- L81109 assistant 2026-10-07T07:35:45.020Z
+TOOL_USE Write [toolu_01Pv93HZMmEHhAyR8mdcRARA]: {"file_path":"C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\loop\\plan_t180_open_export_ac_2026-10-07.md","content":"# T-180: Export to Assetto Corsa on an UNFINISHED track says \"close it first\". Librarian, on D, 2026-10-07 01:3x. Lap D264.\n\nThe keeper, 01:34: \"it still says the loop is not closed: close it first (one click), then export when i am trying to export the test that isnt finished\".\n\n## Why (read at t180 `e17a73e`)\n- The main button **Export to Assetto Corsa** (`app/install`) goes through `exportDoc` without `opts.test`, so an open track is refused\n  `OPEN_LOOP` (`app/core/coreshell.js:647`).\n- T
+…[1028 chars cut]…
+lines follow.\n- Rows red on `e17a73e` first: an open track + Export to Assetto Corsa writes `t180b_<name>_test` into a FAKE AC tree and says so; a closed\n  track still writes `t180b_<name>`; the guards hold.\n\nNEXT: chair dispatch D264 to B when this plan is read\n"}
+--- L81110 user 2026-10-07T07:35:45.063Z
+RESULT [toolu_01Pv93HZMmEHhAyR8mdcRARA]: File created successfully at: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_open_export_ac_2026-10-07.md (file state is current in your context — no need to Read it back)
+--- L81112 assistant 2026-10-07T07:35:52.398Z
+TOOL_USE PowerShell [toolu_01ASg25qq39uBmh3xZj1stgL]: {"command":"Get-Content C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\loop\\plan_t180_open_export_ac_2026-10-07.md -TotalCount 3","description":"Read back the start of the open-track export plan"}
+--- L81113 user 2026-10-07T07:35:53.017Z
+RESULT [toolu_01ASg25qq39uBmh3xZj1stgL]: # T-180: Export to Assetto Corsa on an UNFINISHED track says "close it first". Librarian, on D, 2026-10-07 01:3x. Lap D264.
+
+The keeper, 01:34: "it still says the loop is not closed: close it first (one click), then export when i am trying to export the test that isnt finished".
+--- L81115 assistant 2026-10-07T07:36:02.416Z
+TOOL_USE mcp__consonance__call_chair [toolu_01PsSs2K4tDwVa7TEtWLRdMh]: {"text":"D264, the keeper at 01:34: \"it still says the loop is not closed: close it first … when i am trying to export the test that isnt finished\". Plan: exo_memory/loop/plan_t180_open_export_ac_2026-10-07.md. Owner B, FEEL tier.\n- Export to Assetto Corsa on an OPEN track refuses OPEN_LOOP (coreshell.js:647). The test export only lives in ⋯ and asks for a folder.\n- The FIX: on an open track, Export to Assetto Corsa does the TEST export straight into <AC>\\content\\tracks\\t180b_<name>_test, with the same guards, and a result line saying it's an unfinished test (run-off and wall, reds as warnings). ⋯ → Test export uses
+…[216 chars cut]…
+B is blocked, and I'll stop it.\n\nSOURCES: `Get-Content C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\loop\\plan_t180_open_export_ac_2026-10-07.md -TotalCount 3`\n\nOUTPUT → NEXT: changed — D264 opened for B\nNEXT: chair dispatch D264 to B when this ring is read"}
+--- L81116 user 2026-10-07T07:36:02.901Z
+RESULT [toolu_01PsSs2K4tDwVa7TEtWLRdMh]: delivered to Main (rendered in its pane — not proof it was read)
+--- L81125 assistant 2026-10-07T07:36:10.003Z
+TOOL_USE PowerShell [toolu_01T9WiamxbY9hxj51hTycKbB]: {"command":"$lock = if (Test-Path C:\\Consonance\\data\\heavy-run.lock) { Get-Content C:\\Consonance\\data\\heavy-run.lock -Raw | ConvertFrom-Json } else { $null }; if ($lock -and $lock.seat -eq '0c0c0c0b') { Get-CimInstance Win32_Process | Where-Object { $_.ParentProcessId -eq $lock.pid } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }; Stop-Process -Id $lock.pid -Force -ErrorAction SilentlyContinue; Start-Sleep 2; \"stopped my harness run (pid $($lock.pid))\" } else { \"lock: \" + $(if ($lock) { $lock.seat } else { 'free' }) }; Test-Path C:\\Consonance\\data\\heavy-run.lock","description":"Stop my deferred harness run so B's fix isn't stuck behind it"}
+--- L81127 user 2026-10-07T07:36:12.870Z
+RESULT [toolu_01T9WiamxbY9hxj51hTycKbB]: stopped my harness run (pid 3024)
+True
+--- L81134 assistant 2026-10-07T07:36:22.483Z
+TEXT: I've stopped my background checks so B's fix isn't stuck waiting on them. I'm just clearing my leftover lock.
+--- L81135 assistant 2026-10-07T07:36:23.400Z
+TOOL_USE PowerShell [toolu_01PnVQfbRuXH1oheeAcFAVnH]: {"command":"$lock = Get-Content C:\\Consonance\\data\\heavy-run.lock -Raw | ConvertFrom-Json; if ($lock.seat -eq '0c0c0c0b' -and -not (Get-Process -Id $lock.pid -ErrorAction SilentlyContinue)) { Remove-Item C:\\Consonance\\data\\heavy-run.lock -Confirm:$false; \"removed my stale lock\" } else { \"lock held by $($lock.seat) pid $($lock.pid)\" }","description":"Remove my own stale test lock if its process is gone"}
+--- L81136 user 2026-10-07T07:36:24.690Z
+RESULT [toolu_01PnVQfbRuXH1oheeAcFAVnH]: removed my stale lock
+--- L81138 assistant 2026-10-07T07:36:38.855Z  <<< THE CLAIM'S MESSAGE
+TEXT: That's a gap in what we built, and it's being fixed now.
+
+**Why it happened:** the main **Export to Assetto Corsa** button only exports finished, closed tracks. The test export for unfinished tracks is hidden in the **⋯** menu, and it asks you to pick a folder instead of going straight into AC.
+
+**Right now, as a workaround:** click **⋯ → Test export (unfinished)…** and pick your AC `content\tracks` folder. It'll write `t180b_<name>_test`, with a run-off and a wall where the road ends.
+
+**The fix B is making:** pressing **Export to Assetto Corsa** on an unfinished track will do the test export straight into AC, no folder picking. The message will tell you it went out as an unfinished test. Closed tracks export exactly as now. I've also stopped my own background checks so B isn't kept waiting.
+
+Sources: none

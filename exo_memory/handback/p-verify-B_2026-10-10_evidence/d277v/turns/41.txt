@@ -1,0 +1,112 @@
+MESSAGE 41  msg_011Cfm2Vcc5cGyLZpZe2JDWa  seat C  ts 2026-10-06T13:01:21.366Z  turn L54633..L54695 (next prompt L54740)
+CLAIMS:
+  [msg_011Cfm2Vcc5cGyLZpZe2JDWa|8] "the short way cost him 191 shift-click pairs he could save before": check the number 191 with a command. "Him" is also a guessed pronoun for whoever "he" is. Use "them" or reword it.
+  [msg_011Cfm2Vcc5cGyLZpZe2JDWa|9] "The short way is taken only where it can be kept; otherwise the inside run, and the line says why": check that the implementation actually does this.
+  [msg_011Cfm2Vcc5cGyLZpZe2JDWa|19] "the tie compared float sums": check that the code before the fix compared raw float sums.
+
+--- L54633 user 2026-10-06T13:00:06.486Z
+USER: 
+
+<pasted_content id="e180">
+[chair:MAIN] AFTER your 8292269 look: two fixes on your f13cded (seam selection), from A's look (exo_memory/handback/p-seamsel-A_2026-10-06.md), as ruled by the librarian:
+A. On the keeper's TEST 1 (cup p46 at the end, legacy p1 at the start) EVERY wrapped run is refused MIXED_RUN, so the short way would cost him 191 shift-click pairs he can save today. Choose the short way only when the short run CAN be saved. When it can't (MIXED_RUN or SEAM_RUN) and the inside run can, select the inside run and say so in the line ("the long way round: the short way crosses the start line between a cup and a plain piece").
+B. The tie compares float sums. Compare with an epsilon of 1e-6 m (a tie stays inside), and add A's tiefloat case (lengths 327.7/170.3/327.7/257.4) as a row.
+One small commit on f13cded, TARGETED only. Append a "fixes" section to exo_memory/handback/p-seamsel-C_2026-10-06.md. A re-checks the two rows.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-seamsel-A_2026-10-06.md
+NEXT: librarian call_librarian with the pointer when the fixes are written — plan default after it: A re-checks, then it lands with 8292269 on 8b15ee9, unless the output says otherwise
+</pasted_content id="e180">
+
+--- L54638 assistant 2026-10-06T13:00:08.818Z
+TEXT: First I'll finish the 8292269 look; checking its run.
+--- L54639 assistant 2026-10-06T13:00:11.587Z
+TOOL_USE Bash [toolu_01SzvBZ75Bkg9ETVUD2tnYpj]: {"command":"SP=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; tail -2 $SP/sa/run.log | cut -c1-120; tail -2 \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/tasks/bgcmt8ymm.output\" | cut -c1-160; grep -E \"test result|^test .*(FAILED|ok)$\" $SP/sa/cargo.out 2>/dev/null | tail -12","description":"Check the merged-tree run"}
+--- L54646 user 2026-10-06T13:00:11.822Z
+RESULT [toolu_01SzvBZ75Bkg9ETVUD2tnYpj]: tail: cannot open '/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/sa/run.log' for reading: No such file or directory
+heavy-run: waiting on 0c0c0c0b pid 27144 (librarian three mutation harnesses once on 8b15ee9, since 2026-10-06T12:40:47.856Z)
+heavy-run: waiting on 0c0c0c0b pid 27144 (librarian three mutation harnesses once on 8b15ee9, since 2026-10-06T12:40:47.856Z)
+--- L54649 assistant 2026-10-06T13:00:14.313Z
+TEXT: My run is still waiting behind the librarian's three harnesses. Meanwhile I'll read A's look and write the two fixes. No test runs until the lock frees.
+--- L54650 assistant 2026-10-06T13:00:15.454Z
+TOOL_USE Bash [toolu_011KkwS6eHMu1rqmKL6p5eoa]: {"command":"grep -nE \"tiefloat|327.7|191|MIXED_RUN|tie|epsilon\" /c/Users/nname/Desktop/lighthouse/exo_memory/handback/p-seamsel-A_2026-10-06.md | cut -c1-300 | head -20","description":"Read A's findings for the two fixes"}
+--- L54651 user 2026-10-06T13:00:15.650Z
+RESULT [toolu_011KkwS6eHMu1rqmKL6p5eoa]: 5:**Nothing was edited** in C's branch or any repo file. I built the merged tree in a throwaway worktree `C:\Users\nname\Desktop\worktrees\a-merge-wt` (branch `merge-look-a`, from `63dc19b`): `d4b31fd` → `1139f00` → `539c120` → `fe6ad5a` → `f13cded`, by cherry-pick (head `2d3639c`). Targeted
+21:**2. The tie rule — a real fragility in the arithmetic.** On the keeper's real laps it behaves (below); in general it does not (finding B).
+23:**3. SEAM_RUN by name, and what comes first.** A hand-edited lap that still passes `checkDoc` and has, at the line: a 3 m width step, a 0.2 rad bank step, a slope step in the turn rate, a slope step in the climb rate, a wall-rise step: **SEAM_RUN** (5 of 5; the reason names the joint). Each side 
+30:**A. (REAL, on the keeper's own lap) With the short way chosen, TEST 1 loses pairs it could save.** TEST 1 (46 pieces, closed, bank winding −4π) has a **cup piece (p46) at the end of the lap and a legacy piece (p1) at the start**, so **every wrapped run on it is refused MIXED_RUN: 1,035 of 1,0
+31:- **A fix that keeps the keeper's choice and loses nothing:** take the short way only when the short run can be saved; when it cannot (`saveProblem` of MIXED_RUN or SEAM_RUN) and the inside run can, select the inside run (and say so in the line: "the long way round: the short way crosses the star
+34:**B. (REAL, small) The tie rule is not exact in floating point.** C's expression `total − len(from+1, to−1) < len(from, to)` compares sums of decimal lengths; an exact tie can come out as a strict "less". **Deterministic case:** lengths `[327.7, 170.3, 327.7, 257.4]`, select pieces 2 and 4 (i
+36:**C. (INFO, not C's change, but it decides what a wrapped save of a wound lap is worth) Wound pieces are not "straight" for the export's grid.** `startLayout` in `coreshell.js` accepts a straight when `|roll| ≤ 0.5°`, with no reduction modulo 2π, so a straight carrying −2π of bank is "bank
+41:- `attack.js` row `A-whole-0..n-1`: my harness treated `0..n−1` as wrapped; it is the ordinary whole run. `D-tie-float`: random, it fires on some runs and not others; the deterministic case is `tiefloat.js`.
+57:NEXT: librarian decide A (the fallback when the short way cannot be saved) and B (the epsilon) before or after landing; it lands after the jump batch on the merged tree, unless you say otherwise
+--- L54653 assistant 2026-10-06T13:00:18.074Z
+TOOL_USE Bash [toolu_014gmdXaqF14JaQrbMqVTX1u]: {"command":"sed -n 30,36p /c/Users/nname/Desktop/lighthouse/exo_memory/handback/p-seamsel-A_2026-10-06.md | cut -c1-900","description":"Read findings A and B in full"}
+--- L54654 user 2026-10-06T13:00:18.243Z
+RESULT [toolu_014gmdXaqF14JaQrbMqVTX1u]: **A. (REAL, on the keeper's own lap) With the short way chosen, TEST 1 loses pairs it could save.** TEST 1 (46 pieces, closed, bank winding −4π) has a **cup piece (p46) at the end of the lap and a legacy piece (p1) at the start**, so **every wrapped run on it is refused MIXED_RUN: 1,035 of 1,035** (`real.js`). Before this change a shift-click between two pieces took the run INSIDE and, if it was one kind, it saved. Now, for **310 of the 1,035 shift-click pairs** the short way is across the line; **795 pairs were saveable before, 604 are now: 191 pairs that saved before now select the across-the-line run and refuse with MIXED_RUN, and 0 are gained** (`test1.js`). C names the general cost ("a run longer than half the lap can no longer be shift-selected") but not this one: on TEST 1 the cost is a quarter of the saveable runs.
+- **A fix that keeps the keeper's choice and loses nothing:** take the short way only when the short run can be saved; when it cannot (`saveProblem` of MIXED_RUN or SEAM_RUN) and the inside run can, select the inside run (and say so in the line: "the long way round: the short way crosses the start line and cannot be saved as one piece"). That restores all 191 and changes nothing on a lap where the short way saves (the three ovals: 15 of 15 wrapped runs kept). C's own idea, a second shift-click flipping the way round, would also work; the fallback needs no extra click.
+- **I did not change anything**; it is the keeper's and the librarian's call whether "Short way" means "always" or "when it can be kept".
+
+**B. (REAL, small) The tie rule is not exact in floating point.** C's expression `total − len(from+1, to−1) < len(from, to)` compares sums of decimal lengths; an exact tie can come out as a strict "les
+…[649 chars cut]…
+hs that happen to tie, so it is rare. **Fix:
+
+**C. (INFO, not C's change, but it decides what a wrapped save of a wound lap is worth) Wound pieces are not "straight" for the export's grid.** `startLayout` in `coreshell.js` accepts a straight when `|roll| ≤ 0.5°`, with no reduction modulo 2π, so a straight carrying −2π of bank is "banked". A whole-roll lap rotated by saving and re-adding runs (or built by hand: both refuse identically) cannot place its grid: "not exported: the track has no straight word to put the grid on". It does not affect any lap of the keeper's today (TEST 1's wrapped runs refuse earlier, MIXED_RUN), and it exists without this change. **A one-line fix would be to reduce `roll` modulo 2π in `nearly`;** I did not test it.
+--- L54658 assistant 2026-10-06T13:00:38.388Z
+TOOL_USE Edit [toolu_01Bovdkpwoicoi14MHd47ws2]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-seamsel-wt\\app\\core\\coreshell.js","old_string":"      // D250 item 4 (the keeper: \"Short way across start\"): on a CLOSED lap a shift-click takes the SHORTER way round, by road length; across the start line it is from > to\n      // (from..last, then 0..to), which src/core/piece.js saveRun keeps; a tie stays the run that does not cross the line\n      let from = Math.min(anchor, i), to = Math.max(anchor, i);\n      if (d.closed && from !== to) { const len = (a, b) => d.pieces.slice(a, b + 1).reduce((x, P) => x + (P.type === 'road' ? P.length : 0)
+…[2363 chars cut]…
+from <= to ? d.pieces.slice(from, to + 1) : [...d.pieces.slice(from), ...d.pieces.slice(0, to + 1)];\n      return set({ selection: Object.freeze({ base: d, anchor, from, to, longWay, ids: Object.freeze(ids.map((P) => P.id)) }), deleteProposal: null, message: null });"}
+--- L54659 user 2026-10-06T13:00:38.433Z
+RESULT [toolu_01Bovdkpwoicoi14MHd47ws2]: The file C:\Users\nname\Desktop\worktrees\c-seamsel-wt\app\core\coreshell.js has been updated successfully.
+--- L54660 assistant 2026-10-06T13:00:39.469Z
+TOOL_USE Bash [toolu_01CxJegcDMyVjR5ML1LUpBZ1]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-seamsel-wt && grep -n \"kindOf\" src/core/document.js | head -3; grep -n \"^const D = \\|^const PC = \" app/core/coreshell.js","description":"Check kindOf export and imports"}
+--- L54667 user 2026-10-06T13:00:39.690Z
+RESULT [toolu_01CxJegcDMyVjR5ML1LUpBZ1]: 106:const kindOf = (P) => (P.tube ? 'tube' : P.cup ? 'cup' : 'legacy');
+107:/** kindOf of the last road piece ('legacy' for an empty track): what a piece extended after it continues as. */
+108:function endKind(doc) { for (let i = doc.pieces.length - 1; i >= 0; i--) if (doc.pieces[i].type === 'road') return kindOf(doc.pieces[i]); return 'legacy'; }
+38:const D = require('../../src/core/document.js');
+50:const PC = require('../../src/core/piece.js');   // D240: saved pieces (save a run, put one at the head, mirror it, delete pieces)
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L54670 assistant 2026-10-06T13:00:42.431Z
+TOOL_USE Bash [toolu_01KwJiEA937zK3RfNf78enXN]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-seamsel-wt && grep -n \"kindOf\" src/core/document.js | grep -n \"module\\|exports\\|kindOf,\" | head; sed -n '/^module.exports/,/};/p' src/core/document.js | grep -o \"kindOf\" | head -1","description":"Confirm kindOf is exported"}
+--- L54671 user 2026-10-06T13:00:42.670Z
+RESULT [toolu_01KwJiEA937zK3RfNf78enXN]: 6:481:  OPTIONAL, OPT_DEFAULT, EDGE_EPS, S_MIN, S_MAX, S_DEFAULT, TUBE_MAX, TUBE_EDGE_MAX, kindOf, endKind, tubeSlotMinDeg,
+kindOf
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L54673 assistant 2026-10-06T13:00:44.253Z
+TEXT: Now `selectionInfo` exposes `longWay`, and the selection line shows it.
+--- L54674 assistant 2026-10-06T13:00:45.649Z
+TOOL_USE Edit [toolu_019PaEi7UfsATE7gXv1cy5JL]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-seamsel-wt\\app\\core\\coreshell.js","old_string":"atEnd: s.to === d.pieces.length - 1, closed: !!d.closed, saveProblem };","new_string":"atEnd: s.to === d.pieces.length - 1, closed: !!d.closed, longWay: s.longWay || null, saveProblem };"}
+--- L54675 user 2026-10-06T13:00:45.684Z
+RESULT [toolu_019PaEi7UfsATE7gXv1cy5JL]: The file C:\Users\nname\Desktop\worktrees\c-seamsel-wt\app\core\coreshell.js has been updated successfully.
+--- L54676 assistant 2026-10-06T13:00:46.953Z
+TOOL_USE Edit [toolu_01XPmakovDtJZjwTuRza17fY]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-seamsel-wt\\app\\core\\piecesui.js","old_string":"${info.from > info.to ? ' · across the start line' : ''}","new_string":"${info.from > info.to ? ' · across the start line' : ''}${info.longWay ? ` · ${info.longWay}` : ''}"}
+--- L54677 user 2026-10-06T13:00:46.989Z
+RESULT [toolu_01XPmakovDtJZjwTuRza17fY]: The file C:\Users\nname\Desktop\worktrees\c-seamsel-wt\app\core\piecesui.js has been updated successfully.
+--- L54678 assistant 2026-10-06T13:00:48.007Z
+TOOL_USE Bash [toolu_01Prdr58TvWQyY3s2oXBS5oy]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-seamsel-wt && grep -n \"deepEqual({ ...s.selectionInfo()\" app/test/core-pieces-ui.test.js | cut -c1-250","description":"Find tests that deep-compare selectionInfo"}
+--- L54679 user 2026-10-06T13:00:48.167Z
+RESULT [toolu_01Prdr58TvWQyY3s2oXBS5oy]: 80:  s.selectPiece(1); assert.deepEqual({ ...s.selectionInfo(), ids: [...s.selectionInfo().ids] }, { from: 1, to: 1, count: 1, ids: ['p2'], lengthM: 150, atEnd: false, closed: false, saveProblem: null });
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L54684 assistant 2026-10-06T13:01:08.678Z
+TOOL_USE Bash [toolu_01JwTaFQuEcikHdBUUoMiYP9]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-seamsel-wt && grep -n \"legacyEdgeDeg\" src/core/document.js | head -2; grep -n \"^const .*= require\\|^const TURN\\|^const Q\" app/test/core-pieces-ui.test.js | head -12 | cut -c1-160","description":"Check helpers available to the UI test"}
+--- L54691 user 2026-10-06T13:01:08.922Z
+RESULT [toolu_01JwTaFQuEcikHdBUUoMiYP9]: 86:function legacyEdgeDeg(family, w, r) {
+97:  else if (!P.cup) out.c = { v: legacyEdgeDeg(P.family, out.w.v, out.r.v), m: 0 };
+17:const test = require('node:test');
+18:const assert = require('node:assert/strict');
+19:const fs = require('fs');
+20:const path = require('path');
+21:const { createCoreShell, thumbOf } = require('../core/coreshell.js');
+22:const D = require('../../src/core/document.js');
+23:const PC = require('../../src/core/piece.js');
+24:const { extend } = require('../../src/core/extend.js');
+25:const { close } = require('../../src/core/close.js');
+26:const AD = require('../../src/core/adapter.js');
+27:const SL = require('../core/selectionlayer.js');
+28:const PU = require('../core/piecesui.js');
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L54693 assistant 2026-10-06T13:01:21.366Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Edit [toolu_01WtRxoukwqXb13sWN5Sk9Y4]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-seamsel-wt\\app\\test\\core-pieces-ui.test.js","old_string":"test('row 1: select a piece, shift-click a run","new_string":"// A's look at f13cded, finding A: on TEST 1 (a cup at the end of the lap, a plain piece at its start) EVERY run across the line is MIXED_RUN, so the short way cost him\n// 191 shift-click pairs he could save before. The short way is taken only where it can be kept; otherwise the inside run, and the line says why\ntest('row 1d: where the run across the start line CANNOT be saved (a cup at one side of it, a plain piece at the other) and the inside run can, the inside run is selected and the line says why', async () => {\n  const H = lap(), o = JSON.parse(D.serialize(H)), n = o.pieces.length, last = o.pieces[n - 1], prevEnd = D.pieceEnd(H.pieces[n - 2]).c.v;\n  o.pieces[n - 1] = { ...last, cup: true, channels: { ...last.channels, c: last.channels.w.map(() => prevEnd) } };   // the lap's last piece a cup, as TEST 1's p46\n  const s = await createCoreShell({ brushFn: null, storage: store(), autosaveMs: 0 }); s.adopt(D.parse(JSON.stringify(o)));\n  const d = s.getState().history.present; assert.equal(d.closed, true); assert.equal(D.kindOf(d.pieces[n - 1]), 'cup'); assert.equal(D.kindOf(d.pieces[0]), 'legacy');\n  assert.throws(() => PC.saveRun(d, n - 2, 0, { name: 'x' }), (e) => e.code === 'MIXED_RUN', 'control: the run across the line cannot be kept');\n  s.selectPiece(0); s.selectPiece(n - 2, { extend: true }); let i = s.selectionInfo();\n  assert.deepEqual([i.from, i.to, i.saveProblem], [0, n - 2, null], 'p1 then the last but one: the INSIDE run, which saves');\n  assert.equal(i.longWay, 'the long way round: the short way crosses the start line between a cup and a plain piece');\n  const box = await mountPieces(s); assert.match(box.selectionText(), /the long way round: the short way crosses the start line between a cup and a plain piece/);\n  s.selectPiece(n - 1); s.selectPiece(1, { extend: true }); i = s.selectionInfo();\n  assert.deepEqual([i.from > i.to, i.longWay], [true, null], 'control: the inside run (the cup and plain pieces) cannot be saved either, so the short way is kept');\n  s.selectPiece(1); s.selectPiece(3, { extend: true }); assert.equal(s.selectionInfo().longWay, null, 'control: inside is the short way already');\n});\n// A's look, finding B: the tie compared float sums; lengths 327.7, 170.3, 327.7, 257.4 make an EXACT tie read as 755.3999999999999 < 755.4\ntest('row 1e: a tie stays inside the lap even when the lengths are decimals whose sums differ in the last bit (A\\'s tiefloat case)', async () => {\n  let d = D.createDoc('tie'); for (const L of [327.7, 170.3, 327.7, 257.4]) d = extend(d, { length: L, family: 'bowl' });\n  const s = await createCoreShell({ brushFn: null, storage: store(), autosaveMs: 0 }); s.adopt({ ...d, closed: true });\n  assert.ok(s.getState().history.present.closed);\n  s.selectPiece(1); s.selectPiece(3, { extend: true }); const i = s.selectionInfo();\n  assert.deepEqual([i.from, i.to, i.count], [1, 3, 3], '170.3 + 327.7 + 257.4 against 257.4 + 327.7 + 170.3 is a tie: it stays inside');\n});\ntest('row 1: select a piece, shift-click a run"}
+--- L54694 user 2026-10-06T13:01:21.404Z
+RESULT [toolu_01WtRxoukwqXb13sWN5Sk9Y4]: The file C:\Users\nname\Desktop\worktrees\c-seamsel-wt\app\test\core-pieces-ui.test.js has been updated successfully.
+--- L54695 assistant 2026-10-06T13:01:22.752Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_0118LoGdmLkzxnN84eAo8y4t]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-seamsel-wt && grep -n \"mountPieces\\|selectionText\\|function mount\\|PU.mount(\" app/test/core-pieces-ui.test.js | head -8 | cut -c1-200; grep -n \"adopt(\" app/core/coreshell.js | head -2 | cut -c1-200","description":"Check whether a panel-mount helper exists, and adopt"}

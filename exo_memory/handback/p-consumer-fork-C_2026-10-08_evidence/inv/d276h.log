@@ -1,0 +1,56 @@
+== D276 C heading check · asked 2026-10-09T17:16:22.234Z · lock held 2026-10-09T17:16:22.238Z · NODE_OPTIONS=--max-old-space-size=4096
+$ node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/defheads.js C:/Users/nname/Desktop/lighthouse/exo_memory/handback
+NV headings: 105 distinct, 512 total
+   123  n · not verified
+    64  not verified
+    52  n · what this does not establish
+    43  n · what was not verified
+    40  what this does not establish
+    19  n what was not verified
+    13  not established
+    13  n what is not verified
+    11  what it does not establish
+    11  n what this does not establish
+     6  n not verified
+     5  n · not established
+     5  what is not verified
+     4  does not establish
+     4  not verified / not done
+     3  not done / not established
+     2  n · what this hand-back does not establish
+     2  what this read does not establish
+     2  f · still not verified
+     2  n · what is not verified
+     2  n not done / not established
+     2  §n — what this does not establish
+     2  what this list does not establish
+     1  n · what was not verified — and the packet's bar as written is not met
+     1  n · what measurement n does not establish
+
+SD headings: 205 distinct, 364 total
+    30  n · corrections, including mine
+    20  n · corrections, including to myself
+    19  corrections, mine
+    18  corrections
+    17  corrections to myself
+    14  n · corrections i made to myself
+    12  corrections i made to myself
+     9  n corrections i made to myself
+     7  my slips
+     6  n · corrections to myself
+     5  n · corrections, mine
+     4  n · corrections i made to myself this lap
+     4  n corrections, mine
+     3  n · caught in my own work
+     2  n · corrections
+     2  my own slip
+     2  my own slips
+     2  self-corrections
+     2  n self-corrections and method failures
+     1  the premise correction, confirmed independently before anything was bu
+     1  n · a defect the live run found in my own reader
+     1  n · the controls ran first, and the first one caught my own broken met
+     1  n · the finding this turned up — it corrects my own dna
+     1  p-attribution — the correction mechanism, and the ruling the packet wa
+     1  n · the premise correction is itself wrong, and that is the first find
+== exit 0 · done 2026-10-09T17:16:22.359Z

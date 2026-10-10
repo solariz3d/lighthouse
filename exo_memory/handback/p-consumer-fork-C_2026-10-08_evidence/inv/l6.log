@@ -1,0 +1,14 @@
+== D273 lap6 C verify · asked 2026-10-09T11:11:57.628Z · lock held 2026-10-09T11:11:57.632Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd C:/Users/nname/Desktop/worktrees/c-lap6-wt && node --test --test-concurrency=1 consonance/tools/consumer-relabel.test.js consonance/tools/consumer-fork-wiring.test.js consonance/tools/identity-diff.test.js 2>&1 | grep -E 'ℹ (tests|pass|fail|skipped)|✖ [a-zA-Z]|Error' | head -8; rm -rf C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/l6 && mkdir -p C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/l6 && node -e "const r=require('./consonance/tools/gen-consumer.js').build(process.argv[1],{allowDirty:true});console.log('build refused:',r.refused||'no','staged',r.staged,'forked',r.forked,'leaks',r.leaks.length)" C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/l6 && node consonance/tools/identity-diff.js --gen C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/l6 > C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/l6-id.txt 2>&1; echo identity-diff exit $?; grep -n 'In this copy:' C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/l6/consonance/src-tauri/brief/BUILDING.md | cut -c1-120
+[31m✖ applyFork is FORK_HOOK's contract: a registered file comes back relabelled with n = its edits, any other file untouched with n = 0 [90m(1.924ms)[39m[39m
+[34mℹ tests 37[39m
+[34mℹ pass 36[39m
+[34mℹ fail 1[39m
+[34mℹ skipped 0[39m
+[31m✖ failing tests:[39m
+[31m✖ applyFork is FORK_HOOK's contract: a registered file comes back relabelled with n = its edits, any other file untouched with n = 0 [90m(1.924ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+build refused: no staged [33m394[39m forked [33m85[39m leaks [33m0[39m
+identity-diff exit 0
+834:> **In this copy:** this section is the original room's own workflow between ITS two trees — the keeper's dev
+== exit 0 · done 2026-10-09T11:12:46.745Z

@@ -1,0 +1,24 @@
+MESSAGE 46  msg_011CfmeNrA9rg4Znt8jgU5bf  seat librarian  ts 2026-10-06T20:51:49.662Z  turn L79193..L79207 (next prompt L79213)
+CLAIMS:
+  [msg_011CfmeNrA9rg4Znt8jgU5bf|4] "It only stops for shortcuts: Ctrl+Z/Y/S/Backspace". Check that the exclusion list is exactly these, and that "only" holds, with no other exclusions.
+  [msg_011CfmeNrA9rg4Znt8jgU5bf|6] "Ctrl+scroll (the lens)". Check that Ctrl+scroll is bound to the lens and suppresses flying.
+  [msg_011CfmeNrA9rg4Znt8jgU5bf|7] "Ctrl-snapping a handle". Check that handle snapping uses Ctrl and suppresses flying.
+
+--- L79193 user 2026-10-06T20:51:31.720Z
+USER: new bug LOL. Down left control only works when no other inputs are being pushed. cant even click drag look around and go down.
+--- L79204 assistant 2026-10-06T20:51:42.469Z
+TOOL_USE mcp__consonance__call_chair [toolu_017RatEh1EC7FyvWdyhwRCVe]: {"text":"D257, the keeper at 14:51: \"Down left control only works when no other inputs are being pushed. cant even click drag look around and go down.\" My D252 ruling (\"Ctrl flies only when it's the ONLY key and no button is down\") was too broad. Owner B, FEEL tier, rows only, no look.\nNEW RULE for Left Ctrl:\n- It flies down TOGETHER with the movement keys (W/A/S/D, Q/E, Space, Shift, the arrows) and while the RIGHT button drags the look.\n- It stops, and that press's descent is undone as today, only when a SHORTCUT key joins it (Z, Y, S, Backspace, or any key keys.js acts on with Ctrl), when the wheel turns (Ctrl+wh
+…[448 chars cut]…
+ for the next install. Fold in the jumpplan.js:85 stale string (\"the jump is red\" → a warning) from E's D256 note while B's there.\n\nSOURCES: none (no state claims)\n\nOUTPUT → NEXT: changed — D257 opened for B\nNEXT: chair dispatch D257 to B when this ring is read"}
+--- L79205 user 2026-10-06T20:51:42.959Z
+RESULT [toolu_017RatEh1EC7FyvWdyhwRCVe]: delivered to Main (rendered in its pane — not proof it was read)
+--- L79207 assistant 2026-10-06T20:51:49.662Z  <<< THE CLAIM'S MESSAGE
+TEXT: Ha, that one's my fault. To stop Ctrl+Z from moving the camera, I made Left Ctrl fly only when nothing else is pressed. That also blocked normal flying combos.
+
+**The new rule, now with B:**
+- **Left Ctrl flies down along with any movement:** W/A/S/D, Space, Shift, the arrows, and while you right-click drag to look around.
+- **It only stops for shortcuts:** Ctrl+Z/Y/S/Backspace (the camera stays where it was), Ctrl+scroll (the lens), and Ctrl-snapping a handle.
+
+B tests each combo, including "Ctrl+W goes down and forward" and "Ctrl plus right-drag goes down while looking". It goes in the next update.
+
+Sources: none

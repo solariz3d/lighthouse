@@ -1,0 +1,61 @@
+MESSAGE 39  msg_011Cfky9D9XVrABVxfSEwZGg  seat chair  ts 2026-10-06T12:17:15.665Z  turn L92156..L92174 (next prompt L92179)
+CLAIMS:
+  [msg_011Cfky9D9XVrABVxfSEwZGg|6] "It keeps the lap's full rolls."
+
+--- L92156 user 2026-10-06T12:16:55.944Z
+USER: 
+
+<pasted_content id="f5af">
+[librarian:LIB] D250 item 4, the short-way seam selection (C, t180 f13cded on 63dc19b, branch seamsel-c, GEOMETRY for the core part): collated from exo_memory/handback/p-seamsel-C_2026-10-06.md.
+- On a closed lap, Shift-click takes the shorter way by road length (a tie stays inside). A run across the line is [last, p1] in lap order, and the text says "across the start line".
+- Save as piece HANDLES a wrapped run: the seam is C1 by close() modulo whole bank turns (close.js:211), so the pieces after the line carry the lap's exact whole-turn winding (TEST 1 ends at −4π).
+- If the seam isn't smooth (only a hand-edited lap), it's refused by name as SEAM_RUN. Delete of a wrapped run is refused CLOSED, as every closed-lap delete already is.
+- New rows 11a–11d plus the UI row 1c.
+For the quick look, A (built the D240 selection; not the author here) or E after item 2:
+- attack the winding shift: a lap rolling a non-whole turn, a tube lap, a saved wrapped run re-added at an open head;
+- the tie rule.
+MERGE ORDER: it touches coreshell.js selectPiece/selectionInfo/savePiece, and the jump batch (F2, 539c120, fe6ad5a) also touches coreshell.js. Land it AFTER that batch, with targeted tests on the merged tree (core_piece, core-pieces-ui, jump-ui, redgroups).
+
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-seamsel-C_2026-10-06.md
+
+OUTPUT → NEXT: changed — the seam selection is ready for a look; it lands after the jump batch
+NEXT: chair dispatch the f13cded look to A or E when one is free, and land it after the jump batch on the merged tree
+</pasted_content id="f5af">
+
+--- L92166 assistant 2026-10-06T12:17:01.725Z
+TOOL_USE Bash [toolu_01FXQhQ9aRBhtn2sLRxgwLsY]: {"command":"cd /c/Users/nname/Desktop/lighthouse && node consonance/tools/lap-row.js --stage D244 working --holder chair --by chair 2>&1|tail -1; git -C C:/Users/nname/Desktop/t180-track-builder log --oneline -1 f13cded; git add -- exo_memory/handback/p-seamsel-C_2026-10-06.md; git commit -q -m \"D250 item 4: C's seam-selection hand-back (f13cded)\n\nCo-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01K4HM85wnuzT9z9KbahmuXz\" -- exo_memory/handback/p-seamsel-C_2026-10-06.md; git log --oneline -1","description":"Retake; confirm; commit C's hand-back"}
+--- L92167 user 2026-10-06T12:17:02.547Z
+RESULT [toolu_01FXQhQ9aRBhtn2sLRxgwLsY]:   gate: RE-TAKE (--by equals --holder) — you pulled the baton to yourself; no ring owed.
+f13cded D250 item 4: Shift-click across a closed lap's start line goes the short way; Save keeps the run
+c158446d D250 item 4: C's seam-selection hand-back (f13cded)
+Shell cwd was reset to C:\Consonance\instances\main
+--- L92169 assistant 2026-10-06T12:17:09.112Z
+TOOL_USE mcp__consonance__chair_inject [toolu_01CgSxiU1Fr4G2aG6pzPkRWP]: {"token":"60c288b5-efa3-4df9-ac09-308365aa2d2e","target":"A","text":"A quick non-author look at C's f13cded (D250 item 4: Shift-click across a closed lap's start line goes the short way; Save keeps the run; branch seamsel-c, on 63dc19b). You built the D240 selection, and you're not the author here. C's hand-back is exo_memory/handback/p-seamsel-C_2026-10-06.md. GEOMETRY for the core part, TARGETED only.\nAttack:\n- the winding shift: a lap rolling a NON-whole turn, a tube lap, and a saved wrapped run re-added at an OPEN head (does it join C1 and export like the hand-built version?);\n- the tie rule (equal road length both 
+…[409 chars cut]…
+C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\handback\\p-seamsel-C_2026-10-06.md\nNEXT: librarian call_librarian with the pointer when the look is written — plan default after it: it lands after the jump batch on the merged tree, unless the output says otherwise"}
+--- L92170 user 2026-10-06T12:17:09.574Z
+RESULT [toolu_01CgSxiU1Fr4G2aG6pzPkRWP]: delivered to 6fe15f0a (rendered in pane — not proof it was read)
+--- L92171 assistant 2026-10-06T12:17:10.019Z
+TOOL_USE Bash [toolu_015LX82cHk9yxvt9eY8QJMLP]: {"command":"cd /c/Users/nname/Desktop/lighthouse && sleep 1; node consonance/tools/lap-row.js --stage D244 dispatched --holder panes --by chair --to A --note \"A looks at f13cded\" 2>&1|tail -1","description":"Hand to A"}
+--- L92172 user 2026-10-06T12:17:11.654Z
+RESULT [toolu_015LX82cHk9yxvt9eY8QJMLP]:   gate: an audited delivery to panes precedes this row.
+Shell cwd was reset to C:\Consonance\instances\main
+--- L92174 assistant 2026-10-06T12:17:15.665Z  <<< THE CLAIM'S MESSAGE
+TEXT: C has finished the change to Shift-click across the start line (f13cded).
+
+**Selecting:**
+- On a closed loop, Shift-click now takes the shorter way round. If both ways are equally long, it stays inside the lap.
+- A selection that crosses the start line is described as "across the start line".
+
+**Saving:**
+- A run that crosses the start line can be saved as a piece. It keeps the lap's full rolls; TEST 1, for example, ends after two whole rolls.
+- If the start line isn't smooth, which only happens on a hand-edited track, saving is refused with a reason.
+
+**Deleting** a run that crosses the start line is refused, as deleting is on any closed loop already.
+
+A is checking it now, including:
+- a loop that doesn't end on a whole roll;
+- a tube loop;
+- a saved piece from across the start line, added onto an open track.
+
+It lands after the Jump batch, with quick tests run on the combined version, since both change the same file.

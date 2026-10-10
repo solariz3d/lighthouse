@@ -1,0 +1,78 @@
+heavy-run: waiting on 12fb81f6 pid 26064 (B D195 bash -c node --max-old-space-size=4096 lag.js --exe '/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-in, since 2026-09-30T09:35:33.333Z)
+[32m✔ CONTROL: the whole of core_chord.test.js passes on an unmutated copy of src/, tools/ and app/ [90m(1580.0289ms)[39m[39m
+[32m✔ mutant K1 every segment counts as constant (no chord is ever drawn): applied, and caught by "2 ·|3 ·|4 ·|5 ·" [90m(1527.0997ms)[39m[39m
+[34mℹ K1 every segment counts as constant (no chord is ever drawn): 10 of 11 run tests failed[39m
+[32m✔ mutant K2 no segment counts as constant (a chord everywhere, even on a constant width): applied, and caught by "1 ·" [90m(432.6432ms)[39m[39m
+[34mℹ K2 no segment counts as constant (a chord everywhere, even on a constant width): 4 of 4 run tests failed[39m
+[32m✔ mutant K3 a chord's profile is the one at its START: applied, and caught by "2 ·|3 ·|4 ·" [90m(870.9468ms)[39m[39m
+[34mℹ K3 a chord's profile is the one at its START: 7 of 9 run tests failed[39m
+[32m✔ mutant K4 a chord blends from its END profile (no change across the segment): applied, and caught by "2 ·|3 ·|4 ·" [90m(883.0112ms)[39m[39m
+[34mℹ K4 a chord blends from its END profile (no change across the segment): 7 of 9 run tests failed[39m
+[32m✔ mutant K5 the segment is not marked as a chord (the readers do not evaluate its blend): applied, and caught by "4 ·" [90m(445.8045ms)[39m[39m
+[34mℹ K5 the segment is not marked as a chord (the readers do not evaluate its blend): 3 of 3 run tests failed[39m
+[32m✔ mutant K6 a chord's blend runs over twice the segment (its end row is not the end profile): applied, and caught by "2 ·|3 ·" [90m(879.8776ms)[39m[39m
+[34mℹ K6 a chord's blend runs over twice the segment (its end row is not the end profile): 6 of 6 run tests failed[39m
+[32m✔ mutant K7 a chord's weight is already 1 at its start: applied, and caught by "2 ·|3 ·" [90m(842.8967ms)[39m[39m
+[34mℹ K7 a chord's weight is already 1 at its start: 6 of 6 run tests failed[39m
+[31m✖ mutant K8 the next piece and a flight take a chord's START as the last profile: applied, and caught by "5 ·|3 ·" [90m(1314.6397ms)[39m[39m
+[34mℹ K8 the next piece and a flight take a chord's START as the last profile: 0 of 6 run tests failed[39m
+[32m✔ mutant K9 a legacy piece's first row for the seam fade is its END: applied, and caught by "5 ·" [90m(872.9781ms)[39m[39m
+[34mℹ K9 a legacy piece's first row for the seam fade is its END: 1 of 2 run tests failed[39m
+[31m✖ mutant K10 a legacy piece's last row for the seam fade is its START: applied, and caught by "5 ·" [90m(1146.1288ms)[39m[39m
+[34mℹ K10 a legacy piece's last row for the seam fade is its START: 0 of 2 run tests failed[39m
+[32m✔ mutant K11 the same-cross-section tolerance is 10 m (a width change is called constant): applied, and caught by "2 ·|3 ·" [90m(873.5406ms)[39m[39m
+[34mℹ K11 the same-cross-section tolerance is 10 m (a width change is called constant): 5 of 6 run tests failed[39m
+[32m✔ mutant K12 readsBlend leaves the chord out (readAt and the joint check take the target for the whole segment): applied, and caught by "4 ·" [90m(447.6082ms)[39m[39m
+[34mℹ K12 readsBlend leaves the chord out (readAt and the joint check take the target for the whole segment): 3 of 3 run tests failed[39m
+[32m✔ mutant K13 the water does not evaluate a chord's blend: applied, and caught by "4 ·" [90m(449.1124ms)[39m[39m
+[34mℹ K13 the water does not evaluate a chord's blend: 1 of 3 run tests failed[39m
+[32m✔ mutant K14 jointSteps looks at cup segments only (a chord joint is not inspected): applied, and caught by "4 ·" [90m(441.9153ms)[39m[39m
+[34mℹ K14 jointSteps looks at cup segments only (a chord joint is not inspected): 1 of 3 run tests failed[39m
+[32m✔ mutant K15 a constant segment takes the profile at its END, not its middle (today's bytes change): applied, and caught by "1 ·" [90m(428.5059ms)[39m[39m
+[34mℹ K15 a constant segment takes the profile at its END, not its middle (today's bytes change): 4 of 4 run tests failed[39m
+[34mℹ tests 16[39m
+[34mℹ suites 0[39m
+[34mℹ pass 14[39m
+[34mℹ fail 2[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 13495.3317[39m
+
+[31m✖ failing tests:[39m
+
+test at test\core_chord_mutation.test.js:49:3
+[31m✖ mutant K8 the next piece and a flight take a chord's START as the last profile: applied, and caught by "5 ·|3 ·" [90m(1314.6397ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: NOT CAUGHT: 6 pass, 0 fail with the pattern "5 ·|3 ·"
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d195-wt\[39mtest\core_chord_mutation.test.js:60:14[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_chord_mutation.test.js:49:3
+[31m✖ mutant K10 a legacy piece's last row for the seam fade is its START: applied, and caught by "5 ·" [90m(1146.1288ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: NOT CAUGHT: 2 pass, 0 fail with the pattern "5 ·"
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d195-wt\[39mtest\core_chord_mutation.test.js:60:14[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }

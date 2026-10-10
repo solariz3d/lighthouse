@@ -1,0 +1,142 @@
+MESSAGE 31  msg_011CfjpEJHgqceTnu4ycYnUm  seat E  ts 2026-10-05T21:39:52.520Z  turn L48847..L48926 (next prompt L48962)
+CLAIMS:
+  [msg_011CfjpEJHgqceTnu4ycYnUm|9] "(its seam would join the landing ramp to the start)": confirm this is the actual reason in the code.
+  [msg_011CfjpEJHgqceTnu4ycYnUm|16] J8c anchor, "`const H = P.gap + ramp(p),`": confirm this text appears exactly once.
+
+--- L48847 user 2026-10-05T21:31:23.996Z
+USER: <task-notification>
+<task-id>bhdn1m5l4</task-id>
+<summary>Monitor event: "D243 jumps checks: each result as it lands"</summary>
+<event>{"label":"targeted","exit":1,"tests":"360","pass":"358","fail":"1","skipped":"1","min":"4.4","notOk":["not ok 217 - in TEST mode a red is LISTED and does not block: the jump's gap-in-road red is in the TEST file and the warnings"],"flags":["# Subtest: a landing road too short to catch the long flight: clear, but NOT caught","ok 313 - a landing road too short to catch the long flight: clear, but NOT caught","# Subtest: validate: a jump taken too slowly is not caught, and a closed lap over it fail...(truncated)</event>
+</task-notification>
+--- L48850 assistant 2026-10-05T21:31:36.095Z
+TEXT: One targeted failure, and it's my own D243a test. It used the jump's `gap-in-road` red as its example of a red that TEST mode lists without blocking, and D243 has just made that red go away on purpose. The skipped test is a separate thing I still need to identify. First, the failing test's code:
+--- L48851 assistant 2026-10-05T21:31:38.463Z
+TOOL_USE Bash [toolu_01KGHRdeokwJyXpbFMLntYZg]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && grep -n \"LISTED and does not block\" -B2 -A14 test/export_test_unfinished.test.js | cut -c1-240; sed -n 1,40p test/export_test_unfinished.test.js | grep -n \"F7\\|fixture\\|function\\|const \" | cut -c1-200 | head -20","description":"Read the D243a test that now fails"}
+--- L48852 user 2026-10-05T21:31:38.659Z
+RESULT [toolu_01KGHRdeokwJyXpbFMLntYZg]: 49-});
+50-
+51:test('in TEST mode a red is LISTED and does not block: the jump\'s gap-in-road red is in the TEST file and the warnings', () => {
+52-  const b = testExport(), text = fs.readFileSync(path.join(b.f.dir, 't180b_TEST_UNFINISHED.txt'), 'utf8');
+53-  assert.match(text, /gap-in-road/);
+54-  assert.ok(b.r.warnings.some((w) => /TEST EXPORT \(unfinished\): \d+ red finding\(s\) NOT blocking/.test(w)), b.r.warnings.join(' | '));
+55-});
+56-
+57-test('the TEST folder carries point-to-point gates and the named end wall in its kn5', () => {
+58-  const b = testExport(), names = b.kn5.dummies.map((d) => d.name);
+59-  for (const nm of ['AC_AB_START_L', 'AC_AB_START_R', 'AC_AB_FINISH_L', 'AC_AB_FINISH_R']) assert.ok(names.includes(nm), `${nm} missing: ${names.join(', ')}`);
+60-  assert.ok(b.kn5.meshes.some((m) => /^1WALL_T180_END/.test(m.name)), 'no 1WALL_T180_END mesh');
+61-  // the finish gate sits before the end (a run-off), not past it: its distance to the AI line's last point is at least 100 m on this 400 m road
+62-  const n = b.ai.readInt32LE(4), last = [b.ai.readFloatLE(16 + (n - 1) * 20), b.ai.readFloatLE(20 + (n - 1) * 20), b.ai.readFloatLE(24 + (n - 1) * 20)];
+63-  const fin = b.kn5.dummies.find((d) => d.name === 'AC_AB_FINISH_L').pos;
+64-  assert.ok(Math.hypot(fin[0] - last[0], fin[2] - last[2]) >= 90, `finish ${Math.hypot(fin[0] - last[0], fin[2] - last[2])} m from the end`);
+65-});
+5:// The track used is fixture F7 (a hill, a core jump, the landing road; OPEN), whose jump the validator reds today (gap-in-road), so a red is on hand.
+7:const test = require('node:test');
+8:const assert = require('node:assert/strict');
+9:const fs = require('fs');
+10:const os = require('os');
+11:const path = require('path');
+12:const D 
+…[371 chars cut]…
+../scripts/platform_test.js');
+20:const F7 = D.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'F7-hill-then-jump.core2.json'), 'utf8'));
+21:const segs = AD.toSegments(F7), lift = (q) => AD.offsetPath(F7, segs, q), start = { pos: F7.start.pos.slice(), theta: F7.start.heading, p: F7.start.pitch };
+22:const meta = { name: 'F7 test', description: 'test', via: 'test', liftPath: lift, start };
+23:const tmp = () => fs.mkdtempSync(path.join(os.tmpdir(), 't180b-test-unfinished-'));
+26:function testExport() {
+28:  const dir = tmp();
+29:  const r = FW.exportSegments(segs, meta, { outDir: dir, variant: 'block', markers: startLayout(segs, lift, start, { open: true }), test: true });
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48857 assistant 2026-10-05T21:31:48.321Z
+TOOL_USE Read [toolu_01Vykktgg15sZYseuf2YSDZE]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\test\\export_test_unfinished.test.js","offset":1,"limit":36}
+--- L48858 user 2026-10-05T21:31:48.351Z
+RESULT [toolu_01Vykktgg15sZYseuf2YSDZE]: 1	// export_test_unfinished.test.js: node --test test/export_test_unfinished.test.js
+2	// D243a, the TEST export of an UNFINISHED track (the keeper: "it should allow to export even without it being completed"), src/export/fromwords.js opts.test:
+3	// an OPEN track exports into a t180b_*_test folder named "(test, unfinished)", its reds are listed and do not block, the AI line is open, point-to-point
+4	// gates AC_AB_START/FINISH are placed, and the road ends in a named wall (1WALL_T180_END). A NORMAL export of an open track still refuses, unchanged.
+5	// The track used is fixture F7 (a hill, a core jump, the landing road; OPEN), whose jump the validator reds today (gap-in-road), so a red is on hand.
+6	// Every folder is written under the OS temp directory and removed.
+7	const test = require('node:test');
+8	const assert = require('node:assert/strict');
+9	const fs = require('fs');
+10	const os = require('os');
+11	const path = require('path');
+12	const D = require('../src/core/document.js');
+13	const AD = require('../src/core/adapter.js');
+14	const FW = require('../src/export/fromwords.js');
+15	const { startLayout } = require('../app/core/coreshell.js');
+16	const { readKn5 } = require('../tools/kn5.cjs');
+17	const { generateAiLine, encodeAiLine, readAiLine } = require('../src/export/ailine.js');
+18	const pt = require('../scripts/platform_test.js');
+19	
+20	const F7 = D.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'F7-hill-then-jump.core2.json'), 'utf8'));
+21	const segs = AD.toSegments(F7), lift = (q) => AD.offsetPath(F7, segs, q), start = { pos: F7.start.pos.slice(), theta: F7.start.heading, p: F7.start.pitch };
+22	const meta = { name: 'F7 test', description: 'test', via: 'test', liftPath: lift, start };
+23	const tmp
+…[71 chars cut]…
+));
+24	
+25	let built = null;
+26	function testExport() {
+27	  if (built) return built;
+28	  const dir = tmp();
+29	  const r = FW.exportSegments(segs, meta, { outDir: dir, variant: 'block', markers: startLayout(segs, lift, start, { open: true }), test: true });
+30	  const f = r.folders[0];
+31	  built = { dir, r, f, kn5: readKn5(path.join(f.dir, `${path.basename(f.dir)}.kn5`)), ai: fs.readFileSync(path.join(f.dir, 'ai', 'fast_lane.ai')), ui: JSON.parse(fs.readFileSync(path.join(f.dir, 'ui', 'ui_track.json'), 'utf8')) };
+32	  return built;
+33	}
+34	test.after(() => { if (built) fs.rmSync(built.dir, { recursive: true, force: true }); });
+35	
+36	test('a NORMAL export of an open track still refuses (unchanged): NOT_CLOSED, nothing written', () => {
+--- L48872 assistant 2026-10-05T21:32:10.902Z
+TOOL_USE Edit [toolu_017enYH3jWCPvV4mU2K72PkZ]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\test\\export_test_unfinished.test.js","old_string":"test('in TEST mode a red is LISTED and does not block: the jump\\'s gap-in-road red is in the TEST file and the warnings', () => {\n  const b = testExport(), text = fs.readFileSync(path.join(b.f.dir, 't180b_TEST_UNFINISHED.txt'), 'utf8');\n  assert.match(text, /gap-in-road/);\n  assert.ok(b.r.warnings.some((w) => /TEST EXPORT \\(unfinished\\): \\d+ red finding\\(s\\) NOT blocking/.test(w)), b.r.warnings.join(' | '));\n});","new_string":"// D243 changed this row's red: F7's jump was red gap
+…[902 chars cut]…
+'t180b_TEST_UNFINISHED.txt'), 'utf8'), /gap-in-road/);\n    assert.ok(r.warnings.some((w) => /TEST EXPORT \\(unfinished\\): \\d+ red finding\\(s\\) NOT blocking/.test(w)), r.warnings.join(' | '));\n  } finally { fs.rmSync(dir, { recursive: true, force: true }); }\n});"}
+--- L48873 user 2026-10-05T21:32:10.936Z
+RESULT [toolu_017enYH3jWCPvV4mU2K72PkZ]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\test\export_test_unfinished.test.js has been updated successfully.
+--- L48874 assistant 2026-10-05T21:32:12.630Z
+TOOL_USE Edit [toolu_01GufJ2rRRYJaAFnnb7X3q6M]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\test\\export_test_unfinished.test.js","old_string":"// The track used is fixture F7 (a hill, a core jump, the landing road; OPEN), whose jump the validator reds today (gap-in-road), so a red is on hand.","new_string":"// The track used is fixture F7 (a hill, a core jump, the landing road; OPEN). Since D243 its jump is not red (a core flight's gap is intended), so\n// the row that needs a red plants a real hole in its landing road."}
+--- L48875 user 2026-10-05T21:32:12.658Z
+RESULT [toolu_01GufJ2rRRYJaAFnnb7X3q6M]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\test\export_test_unfinished.test.js has been updated successfully.
+--- L48886 assistant 2026-10-05T21:32:19.016Z
+TEXT: Next, a probe: is the close's model accurate enough across a jump to test it directly, and does it detect the J8 mutant?
+--- L48887 assistant 2026-10-05T21:32:31.369Z
+TOOL_USE Write [toolu_018WrwqzdJWqQ9TFT6baffyV]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\jumps\\jac.js","content":"// D243 (pane E): does the close's position model predict the adapter ACROSS a jump? Bump one kh and one kv control point before the jump and one after;\n// compare the end's move on the adapter's path with J·ε. Run on the tree given (the real one, and a J8 copy).   node jac.js <tree>\n'use strict';\nconst path = require('path'), T = path.resolve(process.argv[2]) + '/', req = (m) => require(T + m);\nconst D = req('src/core/document.js'), C = req(
+…[1131 chars cut]…
+ypot(...act.map((v, k) => v - pred[k])) / Math.max(1e-9, Math.hypot(...act));\n  out.push({ at: `${ch} p${p}[${i}]`, actual: act.map((v) => +v.toFixed(1)), model: pred.map((v) => +v.toFixed(1)), relErr: +err.toExponential(2) });\n}\nconsole.log(JSON.stringify(out));\n"}
+--- L48888 user 2026-10-05T21:32:31.397Z
+RESULT [toolu_018WrwqzdJWqQ9TFT6baffyV]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\jumps\jac.js (file state is current in your context — no need to Read it back)
+--- L48889 assistant 2026-10-05T21:32:39.247Z
+TOOL_USE Bash [toolu_01FrFoLXupRkNwuu5ZLxyA5q]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/jumps\" && CONSONANCE_HEAVY_WAIT_MS=7200000 node --max-old-space-size=4096 -e \"\nrequire('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({cmd:'t180 E: D243 Jacobian probe'});\nconst fs=require('fs'),os=require('os'),path=require('path'),cp=require('child_process');\nconst T='C:/Users/nname/Desktop/worktrees/e-jumps-wt';\nconsole.log('real', cp.execFileSync(process.execPath,['jac.js',T],{encoding:'utf8'}).trim());\nconst dir=fs.mkdtempSync(path.join(os.tm
+…[400 chars cut]…
+'J8  ', cp.execFileSync(process.execPath,['jac.js',dir],{encoding:'utf8'}).trim());\nfs.rmSync(dir,{recursive:true,force:true});\n\" 2>&1 | grep -v \"waiting on\"","description":"Compare the close's model to the adapter across a jump, real vs J8","timeout_ms":"1800000"}
+--- L48893 user 2026-10-05T21:39:05.622Z
+RESULT [toolu_01FrFoLXupRkNwuu5ZLxyA5q]: real [{"at":"kh p0[3]","actual":[13577.5,0,-0.2],"model":[13577.6,0,-0.1],"relErr":0.00000982},{"at":"kv p0[3]","actual":[0,4623.5,16509.4],"model":[0,5200,0],"relErr":0.964},{"at":"kh p2[3]","actual":[6396,0,-0.1],"model":[6396,0,-0.1],"relErr":0.00000962},{"at":"kv p2[3]","actual":[0,29001.8,223.3],"model":[0,29001.8,223.4],"relErr":0.00000219},{"at":"kv p4[2]","actual":[-90.2,12512.4,-68.9],"model":[-90.2,12512.4,-68.9],"relErr":0.00000438}]
+J8   [{"at":"kh p0[3]","actual":[13577.5,0,-0.2],"model":[13577.6,0,-0.1],"relErr":0.00000982},{"at":"kv p0[3]","actual":[0,4623.5,16509.4],"model":[0,35001.3,251.3],"relErr":2.01},{"at":"kh p2[3]","actual":[6396,0,-0.1],"model":[6396,0,-0.1],"relErr":0.00000962},{"at":"kv p2[3]","actual":[0,29001.8,223.3],"model":[0,29001.8,223.4],"relErr":0.00000219},{"at":"kv p4[2]","actual":[-90.2,12512.4,-68.9],"model":[-90.2,12512.4,-68.9],"relErr":0.00000438}]
+--- L48912 assistant 2026-10-05T21:39:40.679Z
+TOOL_USE Edit [toolu_0148tdrJjBWdVZBXYrd4ADmy]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\src\\core\\close.js","old_string":"    // D243: A JUMP (src/core/adapter.js toSegments): the flight covers `gap` along the heading and its landing ramp a horizontal r.length more,\n    // neither turning; then the pitch IS the landing pitch. So the flight is one step in heading (H·∂T/∂θ at pitch 0, H = gap + ramp), and it\n    // cuts the pitch: no kv before a jump moves anything after it in this model. (The ramp's length depends weakly on the take-off pitch; the\n    // model leaves that out. The residual is the adapter's own path, so the 
+…[1289 chars cut]…
+ 1e-6;\n      const H = P.gap + ramp(p), dL = (ramp(p + dp) - ramp(p - dp)) / (2 * dp);\n      G.push({ flight: true, Tt: dTdTh(th, 0).map((v) => v * H), Tp: [Math.sin(th), Math.tan(P.land), Math.cos(th)].map((v) => v * dL) });\n      p = P.land;\n      return;\n    }"}
+--- L48913 user 2026-10-05T21:39:40.709Z
+RESULT [toolu_0148tdrJjBWdVZBXYrd4ADmy]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\src\core\close.js has been updated successfully.
+--- L48914 assistant 2026-10-05T21:39:43.079Z
+TOOL_USE Edit [toolu_016PbS1W6XCNEpZN1VTjJycc]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\src\\core\\close.js","old_string":"    if (g.flight) { sT = sT.map((v, k) => v + g.Tt[k]); sP = [0, 0, 0]; continue; }   // D243: the jump turns nothing and resets the pitch","new_string":"    if (g.flight) { sT = sT.map((v, k) => v + g.Tt[k]); sP = g.Tp.slice(); continue; }   // D243: the jump turns nothing; before it, pitch reaches the end only through the ramp"}
+--- L48915 user 2026-10-05T21:39:43.117Z
+RESULT [toolu_016PbS1W6XCNEpZN1VTjJycc]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\src\core\close.js has been updated successfully.
+--- L48919 assistant 2026-10-05T21:39:52.522Z  <<< THE CLAIM'S MESSAGE
+TEXT: Next, the test that pins the model across a jump, and the mutant anchors that moved with the change:
+--- L48920 assistant 2026-10-05T21:39:59.826Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Edit [toolu_01PwVPYt23MQgmAKv7KYj7Ki]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\test\\core_jump.test.js","old_string":"test('row 4: a lap that ENDS in a jump is refused by name (its seam would join the landing ramp to the start)', () => {","new_string":"test('row 4: the close\\'s position model predicts the adapter ACROSS a jump: one control point bumped before it (heading and pitch) and after it moves the end as J says', () => {\n  const d = jumpLap(LONG_JUMP), J = positionJacobian(d), endOf = (x) => { const S = A.toPath({ ...x, closed: false }).path.samples; return S[S.length - 1].pos; }, e0 = endOf(d), eps = 1e-6;\n  for (const [p, ch, i] of [[0, 'kh', 3], [0, 'kv', 3], [2, 'kh', 3], [2, 'kv', 3]]) {\n    const c = d.pieces[p].channels[ch].slice(); c[i] += eps;\n    const e1 = endOf({ ...d, pieces: d.pieces.map((X, k) => (k === p ? { ...X, channels: { ...X.channels, [ch]: c } } : X)) });\n    const act = [0, 1, 2].map((k) => (e1[k] - e0[k]) / eps), pred = J[ch].get(`${p}:${i}`), err = Math.hypot(...act.map((v, k) => v - pred[k])) / Math.hypot(...act);\n    assert.ok(err < 1e-3, `${ch} of p${p}[${i}] (${p === 0 ? 'before' : 'after'} the jump): the adapter moves the end ${act.map((v) => v.toFixed(1))}, the model says ${pred.map((v) => v.toFixed(1))} (relative ${err.toExponential(2)})`);\n  }\n});\ntest('row 4: a lap that ENDS in a jump is refused by name (its seam would join the landing ramp to the start)', () => {"}
+--- L48921 user 2026-10-05T21:39:59.852Z
+RESULT [toolu_01PwVPYt23MQgmAKv7KYj7Ki]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\test\core_jump.test.js has been updated successfully. (file state is current in your context — no need to Read it back)
+--- L48922 assistant 2026-10-05T21:40:01.519Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Edit [toolu_01LLHg4yMFnwUGiUQMq5cPk9]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\test\\core_jump.test.js","old_string":"const { close, closeWindow } = require('../src/core/close.js');","new_string":"const { close, closeWindow, positionJacobian } = require('../src/core/close.js');"}
+--- L48923 user 2026-10-05T21:40:01.546Z
+RESULT [toolu_01LLHg4yMFnwUGiUQMq5cPk9]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\test\core_jump.test.js has been updated successfully. (file state is current in your context — no need to Read it back)
+--- L48924 assistant 2026-10-05T21:40:03.970Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Edit [toolu_01QegKih9S9425EZCir9k8Kg]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\test\\core_jump_mutation.test.js","old_string":"  { id: 'J5 the close\\'s model skips the flight (no displacement, no pitch reset)', pattern: 'row 4', file: 'src/core/close.js', from: \"    if (P.type === 'flight') {\\n      const H = P.gap\", to: \"    if (false) {\\n      const H = P.gap\" },","new_string":"  { id: 'J5 the close\\'s model skips the flight (no displacement, no pitch reset)', pattern: 'row 4', file: 'src/core/close.js', from: \"    if (P.type === 'flight') {\\n      const ramp = (pp)\", to: \"    if (false) {\\n      const ramp = (pp)\" },"}
+--- L48925 user 2026-10-05T21:40:03.996Z
+RESULT [toolu_01QegKih9S9425EZCir9k8Kg]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\test\core_jump_mutation.test.js has been updated successfully. (file state is current in your context — no need to Read it back)
+--- L48926 assistant 2026-10-05T21:40:09.329Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Edit [toolu_01H2eqC4uvfYBHbUuTroTxJX]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\test\\core_jump_mutation.test.js","old_string":"  { id: 'J8 the model\\'s pitch is not cut at the flight', pattern: 'row 4', file: 'src/core/close.js', from: 'sT = sT.map((v, k) => v + g.Tt[k]); sP = [0, 0, 0]; continue;', to: 'sT = sT.map((v, k) => v + g.Tt[k]); continue;' },","new_string":"  { id: 'J8 the model\\'s pitch is not cut at the flight', pattern: 'row 4', file: 'src/core/close.js', from: 'sT = sT.map((v, k) => v + g.Tt[k]); sP = g.Tp.slice(); continue;', to: 'sT = sT.map((v, k) => v + g.Tt[k]); continue;' },\n  { id: 'J8b the model leaves out the ramp\\'s dependence on the take-off pitch', pattern: 'row 4', file: 'src/core/close.js', from: 'sT = sT.map((v, k) => v + g.Tt[k]); sP = g.Tp.slice(); continue;', to: 'sT = sT.map((v, k) => v + g.Tt[k]); sP = [0, 0, 0]; continue;' },\n  { id: 'J8c the ramp is taken as not reaching the end in heading (H = gap)', pattern: 'row 4', file: 'src/core/close.js', from: 'const H = P.gap + ramp(p),', to: 'const H = P.gap,' },"}

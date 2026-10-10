@@ -1,0 +1,150 @@
+MESSAGE 10  msg_011CfhJEMyBvNqKFVFtp5V7V  seat A  ts 2026-10-04T13:45:28.147Z  turn L60588..L60629 (next prompt L60768)
+CLAIMS:
+  [msg_011CfhJEMyBvNqKFVFtp5V7V|7] The element `#left` exists and is the left column.
+
+--- L60588 user 2026-10-04T13:44:36.410Z
+USER: [Image #10]
+
+<pasted_content id="e589">
+[chair:MAIN] D235, the scroll-bar fix, FEEL tier: targeted tests plus a quick non-author look. t180 is public: don't push, don't launch AC. Base: t180 main ee3df097. Use a fresh worktree under
+C:\Users\nname\Desktop\worktrees\, with no junctions.
+The plan, read its "scroll bar" section: exo_memory/loop/plan_t180_edit_speed_2026-10-04.md. The keeper's screenshot:
+In the Extend column, the value fields run under the scroll bar, so a click there grabs the bar, and the "width like…" select is cut off.
+- The core panel's fields and selects must stop short of the scroll bar.
+- The width-like select must be fully visible.
+- Check in a real window at the keeper's size (1818 px wide) if you can, or say you couldn't.
+- Change nothing in the export path.
+E is profiling edit speed at the same time (read-only): share the heavy-run lock, one heavy job at a time, --test-concurrency=1.
+Hand-back: exo_memory/handback/p-scroll-A_2026-10-04.md, plus your map line.
+SOURCES:
+C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_edit_speed_2026-10-04.md
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: B's quick look, unless the output says otherwise
+</pasted_content id="e589">
+
+--- L60590 user 2026-10-04T13:44:36.410Z
+USER: [Image: source: C:\Users\nname\Pictures\Screenshots\scroll bar in the way of the click for changing values.png]
+--- L60606 assistant 2026-10-04T13:44:43.381Z
+TOOL_USE Bash [toolu_01HRVo3hHgs5GsxotZakPGyv]: {"command":"cd C:/Users/nname/Desktop/t180-track-builder && git rev-parse main | cut -c1-8; git worktree add --detach C:/Users/nname/Desktop/worktrees/a-scroll-wt ee3df097 2>&1 | tail -1; grep -n -i \"scroll\" C:/Users/nname/Desktop/lighthouse/exo_memory/loop/plan_t180_edit_speed_2026-10-04.md | head -12 | cut -c1-200","description":"Create the worktree and find the plan's scroll-bar section"}
+--- L60607 user 2026-10-04T13:44:43.843Z
+RESULT [toolu_01HRVo3hHgs5GsxotZakPGyv]: ee3df097
+HEAD is now at ee3df09 A refused or failed export no longer leaves the picked empty folder, and the refusal is hard to miss
+1:# T-180: changes render slowly while editing; and the scroll bar sits on the value fields. Librarian, on D, 2026-10-04 07:4x. Lap D235.
+4:change it from one to the next? Sometimes it lags and is so slow". His screenshot is named "scroll bar in the way of the click for changing
+5:values" (`C:\Users\nname\Pictures\Screenshots\scroll bar in the way of the click for changing values.png`): in the Extend column the
+6:value fields run to the column's right edge, under the scroll bar, so a click there grabs the bar. The "width like…" select is cut off too.
+9:- The left column scrolls as one: `app/index.html:31` `#left { … overflow-y: auto; overflow-x: hidden; scrollbar-gutter: stable; }`,
+38:**The scroll bar (A, now, in parallel with part 1; FEEL tier):**
+39:- The core panel's fields and selects stop short of the scroll bar: a right padding at least the gutter's width, or fields sized to the
+45:NEXT: chair dispatch D235 part 1 (the profile) to E and the scroll-bar fix to A when this plan is read
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L60609 assistant 2026-10-04T13:44:47.807Z
+TOOL_USE Read [toolu_019mQYVsiBLEcddcVLBBcDof]: {"file_path":"C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\loop\\plan_t180_edit_speed_2026-10-04.md","offset":1,"limit":46}
+--- L60610 user 2026-10-04T13:44:47.833Z
+RESULT [toolu_019mQYVsiBLEcddcVLBBcDof]: 1	# T-180: changes render slowly while editing; and the scroll bar sits on the value fields. Librarian, on D, 2026-10-04 07:4x. Lap D235.
+2	
+3	The keeper, 07:43: "the equation changes to the track work so good, but I wonder, is there a way to make the changes render faster while you
+4	change it from one to the next? Sometimes it lags and is so slow". His screenshot is named "scroll bar in the way of the click for changing
+5	values" (`C:\Users\nname\Pictures\Screenshots\scroll bar in the way of the click for changing values.png`): in the Extend column the
+6	value fields run to the column's right edge, under the scroll bar, so a click there grabs the bar. The "width like…" select is cut off too.
+7	
+8	## Checked (main ee3df097, worktree `lib-refused-build`)
+9	- The left column scrolls as one: `app/index.html:31` `#left { … overflow-y: auto; overflow-x: hidden; scrollbar-gutter: stable; }`,
+10	  `#side > section { padding: 10px; … }` (`:41`). Even with the gutter reserved, the core panel's fields reach the gutter in the screenshot.
+11	- The only debounce in the core panel is the water's (`app/core/panel.js:213`, 120 ms). Everything else (the ghost, the readout, the
+12	  preview mesh) recomputes on every change. Not measured where the time goes.
+13	- **Related, from 05:06–05:10 (chair's ring):** the WebView burned about 1.5 cores for ~3 min with a big tube open. Inferred to be the
+14	  preview, not measured.
+15	
+16	## The lap, in two parts
+17	**Part 1, MEASURE FIRST (E, instrument tier, read-only, under the heavy-run lock):** for one edit, the time per stage:
+18	- resolve/adapter;
+19	- `buildMesh` (the preview's scene);
+20	- the preview's batch rebuild and upload (`app/preview/preview.js batchesFor`);
+21	- the ghost;
+22	- the
+…[969 chars cut]…
+tered now:** keep a change only if E's re-measure shows the edit-to-draw time on the tube oval at least 2× faster,
+36	  AND the export is byte-identical (the fixtures, 0 of 9 differ), since the preview path must never change what's exported.
+37	
+38	**The scroll bar (A, now, in parallel with part 1; FEEL tier):**
+39	- The core panel's fields and selects stop short of the scroll bar: a right padding at least the gutter's width, or fields sized to the
+40	  column's content box.
+41	- The "width like…" select is fully visible.
+42	- Check in a real window at the keeper's size (the screenshot is 1818 px wide).
+43	- Then B's quick look.
+44	
+45	NEXT: chair dispatch D235 part 1 (the profile) to E and the scroll-bar fix to A when this plan is read
+46	
+--- L60611 assistant 2026-10-04T13:44:48.167Z
+TOOL_USE Bash [toolu_015ebu1u2dieDHdbaWeiE2AJ]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-scroll-wt && sed -n 25,70p app/index.html | cut -c1-230","description":"Read the plan section and the page's layout CSS"}
+--- L60612 user 2026-10-04T13:44:48.305Z
+RESULT [toolu_015ebu1u2dieDHdbaWeiE2AJ]:   button:hover:not([disabled]) { border-color: var(--accent); }
+  button[disabled] { opacity: .4; cursor: default; }
+  /* The left column scrolls as ONE (up and down only): #palette and #side take their natural height inside it */
+  /* Both columns sit in the window-filling third row by name. Auto-placed, they slid up into the banner's content-sized
+     row whenever the banner was empty (display: none takes it out of the grid). */
+  #left, #stage { grid-row: 3; }
+  #left { display: flex; flex-direction: column; min-height: 0; overflow-y: auto; overflow-x: hidden; scrollbar-gutter: stable; background: var(--panel); border-right: 1px solid var(--line); }
+  #palette, #side { flex: none; background: var(--panel); }
+  #palette { padding: 10px; }
+  #stage { position: relative; display: grid; grid-template-rows: minmax(0, 1fr) auto; min-width: 0; min-height: 0; }
+  #preview { position: relative; min-height: 0; overflow: hidden; }
+  #camera { border-top: 1px solid var(--line); padding: 6px 10px; }
+  /* The side sections never scroll sideways (seen at the default window size once E's 480 px load graph showed): what a
+     panel puts here is held to the column's width. Canvases, images and tables shrink to fit, long words break, and the
+     vertical scrollbar's width is reserved up front so it cannot push content sideways when it appears. */
+  #side { border-top: 1px solid var(--line); overflow-x: hidden; }   /* the scrollbar gutter is #left's: only the column scrolls */
+  #side > section { padding: 10px; border-bottom: 1px solid var(--line); min-width: 0; overflow-wrap: anywhere; }
+  #side canvas, #side img, #side svg, #side video { display: block; max-width: 100%; height: auto; }
+  #side table { display: block; max-width: 100%
+…[987 chars cut]…
+verflow: auto; font-family: ui-monospace, Consolas, monospace; }
+  .track li { padding: 2px 6px; border-radius: 3px; cursor: pointer; }
+  .track li.selected { background: #1f3550; }
+  .head { color: var(--dim); margin-bottom: 8px; }
+  .message, .panel-error { color: var(--bad); white-space: pre-wrap; }
+  .message.ok { color: var(--text); }
+  .panel-error { margin: 12px; }
+  .empty { color: var(--dim); margin: 0; }
+  .placeholder { position: absolute; inset: 0; display: grid; place-items: center; color: var(--dim); text-align: center; padding: 20px; }
+  .reds li { margin: 3px 0; }
+  .reds .src { color: var(--dim); }
+</style>
+</head>
+<body>
+<header>
+  <h1>T-180 TRACK BUILDER</h1>
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L60615 assistant 2026-10-04T13:45:08.237Z
+TOOL_USE Bash [toolu_01EzWqNkGboeADN7Q7gEk4i4]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-scroll-wt && sed -n 96,112p app/index.html | cut -c1-240; ls \"C:/Program Files (x86)/Microsoft/Edge/Application\" 2>/dev/null | head -3; ls \"C:/Program Files/Google/Chrome/Application\" 2>/dev/null | head -2; grep -n \"WEBVIEW2_ADDITIONAL\\|remote-debugging\" C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/d224_window.js | head -3 | cut -c1-200","description":"How the page loads its modules and which browsers exist for a layout probe"}
+--- L60622 user 2026-10-04T13:45:08.525Z
+RESULT [toolu_01EzWqNkGboeADN7Q7gEk4i4]: <script src="lib/cjs.js"></script>
+<script>
+'use strict';
+// The page's glue: storage and export through the native side, the palette, the keys, the recovery offer, and the
+// panels C and E own (app/README.md, "The seam"). Nothing here edits a document: every action is the shell's.
+(async () => {
+  const $ = (id) => document.getElementById(id), status = $('status');
+  // Served from src-tauri/dist, which mirrors the repository: this page is app/index.html, the program is ../src/.
+  const get = (p) => fetch(`../${p}`).then((r) => { if (!r.ok) throw new Error(`${r.status} ${p}`); return r.text(); });
+  const tauri = window.__TAURI__ && window.__TAURI__.core;
+  const call = (cmd, args) => (tauri ? tauri.invoke(cmd, args) : Promise.reject(new Error('not running inside the app: no native side')));
+  const b64 = (bytes) => { let s = ''; for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000)); return btoa(s); };
+  const storage = {
+    saveDoc: (name, text) => call('save_track', { name, text }),
+    openDoc: (name) => call('open_track', { name }),
+    listDocs: () => call('list_tracks'),
+    saveLibrary: (text) => call('save_library', { text }),
+154.0.4258.53
+AppxSignature.p7x
+PlatformExperiencesHelper
+154.0.8037.93
+PlatformExperienceHelper
+35:  const env = { ...process.env, WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS: `--remote-debugging-port=${port}`, WEBVIEW2_USER_DATA_FOLDER: PR.profileDir(out) };
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L60627 assistant 2026-10-04T13:45:43.755Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Write [toolu_01PhyD1micGRpVFqhcFPCqJC]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\sc_probe.js","content":"// usage: node sc_probe.js <repo root> <out prefix> [width=1818]\n// Serves the repo root over http, opens app/index.html?mode=core in Chrome (headed, off-screen) at the keeper's width over CDP, and reports where every field of the\n// left column ends against the column's usable edge (its clientWidth: the scroll bar's gutter is outside it) plus the section's own content edge. Saves a screenshot.\nconst http = require('http'), fs = require('fs'), path = require('path'), cp = require('child_process'), os = require('os');\nconst ROOT = path.resolve(process.argv[2]), PFX = process.argv[3], WIDTH = Number(process.argv[4] || 1818), HEIGHT = 1100, PORT = 8765 + Math.floor(Math.random() * 200), DBG = 9400 + Math.floor(Math.random() * 200);\nconst MIME = { '.html': 'text/html', '.js': 'text/javascript', '.cjs': 'text/javascript', '.json': 'application/json', '.css': 'text/css' };\nconst srv = http.createServer((q, r) => { const f = path.join(ROOT, decodeURIComponent(q.url.split('?')[0])); fs.readFile(f, (e, b) => { if (e) { r.writeHead(404); r.end(); } else { r.writeHead(200, { 'content-type': MIME[path.extname(f)] || 'application/octet-stream' }); r.end(b); } }); });\nconst sleep = (ms) => new Promise((r) => setTimeout(r, ms));\n(async () => {\n  await new Promise((r) => srv.listen(PORT, r));\n  const udd = fs.mkdtempSync(path.join(os.tmpdir(), 't180-scroll-')), chrome = 'C:/Program Files/Google/Chrome/Application/chrome.exe';\n  const proc = cp.spawn(chrome, [`--remote-debugging-port=${DBG}`, `--user-data-dir=${udd}`, '--no-first-run', '--no-default-browser-check', '--window-position=-2600,0', `--window-size=${WIDTH + 20},${HEIGHT + 120}`, `http://127.0.0.1:${PORT}/app/index.html?mode=core`], { stdio: 'ignore' });\n  try {\n    let tab = null; for (let i = 0; i < 60 && !tab; i++) { await sleep(500); try { const l = await (await fetch(`http://127.0.0.1:${DBG}/json`)).json(); tab = l.find((t) => t.type === 'page' && /index\\.html/.test(t.url)); } catch (e) { /* not up yet */ } }\n    if (!tab) throw new Error('no page tab');\n    const ws = new WebSocket(tab.webSocketDebuggerUrl); await new Promise((r) => { ws.onopen = r; });\n    let id = 0; const wait = new Map(), errors = []; ws.onmessage = (m) => { const d = JSON.parse(m.data); if (d.id && wait.has(d.id)) { wait.get(d.id)(d); wait.delete(d.id); } else if (d.method === 'Runtime.exceptionThrown') errors.push(d.params.exceptionDetails.text + ' ' + ((d.params.exceptionDetails.exception || {}).description || '').slice(0, 200)); };\n    const send = (method, params = {}) => new Promise((r) => { const i = ++id; wait.set(i, r); ws.send(JSON.stringify({ id: i, method, params })); });\n    await send('Runtime.enable'); await send('Page.enable');\n    await send('Emulation.setDeviceMetricsOverride', { width: WIDTH, height: HEIGHT, deviceScaleFactor: 1, mobile: false });\n    await send('Page.reload'); await sleep(6000);\n    const js = `(() => {\n      const left = document.getElementById('left'), lr = left.getBoundingClientRect(), usable = lr.left + left.clientWidth, bar = left.offsetWidth - left.clientWidth - (parseFloat(getComputedStyle(left).borderRightWidth) || 0);\n      const sec = document.querySelector('#palette'), secs = [...document.querySelectorAll('#palette, #side > section')];\n      const fields = [...left.querySelectorAll('input:not([type=checkbox]):not([type=file]), select')].filter((e) => e.offsetParent !== null).map((e) => { const r = e.getBoundingClientRect(), lab = e.closest('label'), name = lab && lab.children[0] ? lab.children[0].textContent : (e.getAttribute('aria-label') || e.tagName); return { name, tag: e.tagName, left: Math.round(r.left), right: Math.round(r.right * 10) / 10, width: Math.round(r.width * 10) / 10 }; });\n      const sectionRight = (e) => { const s = e.closest('section, #palette'); if (!s) return null; const r = s.getBoundingClientRect(), cs = getComputedStyle(s); return r.right - parseFloat(cs.paddingRight); };\n      const els = [...left.querySelectorAll('input:not([type=checkbox]):not([type=file]), select')].filter((e) => e.offsetParent !== null);\n      fields.forEach((f, i) => { f.contentRight = Math.round(sectionRight(els[i]) * 10) / 10; f.over = Math.round((f.right - f.contentRight) * 10) / 10; f.underBar = f.right > usable + 0.5; });\n      const like = left.querySelector('select[aria-label^=\"width like\"]');\n      return { windowInnerWidth: innerWidth, leftOffsetWidth: left.offsetWidth, leftClientWidth: left.clientWidth, scrollBarPx: bar, usableRight: usable, gutter: getComputedStyle(left).scrollbarGutter, fields, widthLike: like ? { optionCount: like.options.length, selectedText: like.options[like.selectedIndex].textContent, right: Math.round(like.getBoundingClientRect().right * 10) / 10 } : null, leftScrollWidth: left.scrollWidth, leftScrollHeight: left.scrollHeight, leftClientHeight: left.clientHeight };\n    })()`;\n    const res = await send('Runtime.evaluate', { expression: js, returnByValue: true }); const out = res.result.result.value;\n    const shot = await send('Page.captureScreenshot', { format: 'png', clip: { x: 0, y: 0, width: 520, height: HEIGHT, scale: 1 } }); fs.writeFileSync(`${PFX}_left.png`, Buffer.from(shot.result.data, 'base64'));\n    const full = await send('Page.captureScreenshot', { format: 'png' }); fs.writeFileSync(`${PFX}_full.png`, Buffer.from(full.result.data, 'base64'));\n    out.pageErrors = errors; fs.writeFileSync(`${PFX}.json`, JSON.stringify(out, null, 1)); console.log(JSON.stringify({ ...out, fields: undefined }));\n    for (const f of out.fields) console.log(`${f.name.padEnd(16)} ${f.tag.padEnd(6)} right ${String(f.right).padStart(7)}  contentRight ${String(f.contentRight).padStart(7)}  over ${String(f.over).padStart(6)}  underBar ${f.underBar}`);\n    ws.close();\n  } finally { proc.kill(); srv.close(); try { fs.rmSync(udd, { recursive: true, force: true }); } catch (e) { /* the browser still holds it */ } }\n})().catch((e) => { console.error('PROBE FAILED', e.message); process.exit(1); });\n"}
+--- L60628 user 2026-10-04T13:45:43.785Z
+RESULT [toolu_01PhyD1micGRpVFqhcFPCqJC]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\sc_probe.js (file state is current in your context — no need to Read it back)
+--- L60629 assistant 2026-10-04T13:45:46.081Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_011ipfJhFGgDisthfDyA7Q16]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sc_run.js <<'XX'\nrequire('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({ cmd: 'A D235 scroll probe' });\nconst r = require('child_process').spawnSync(process.execPath, [__dirname + '/sc_probe.js', ...process.argv.slice(2)], { encoding: 'utf8', timeout: 300000 });\nconsole.log((r.stdout || '') + (r.stderr || '').split('\\n').filter((l) => !/NO_COLOR|trace-warn/.test(l)).join('\\n'));\nXX\nnode sc_run.js C:/Users/nname/Desktop/worktrees/a-scroll-wt $PWD/sc_before 1818 2>&1 | cut -c1-260","description":"Measure the layout before the fix at 1818 px wide","timeout":400000}

@@ -1,0 +1,711 @@
+MESSAGE 73  msg_011CfsE1dPM8on8hP1uFqXjC  seat A  ts 2026-10-09T19:35:54.663Z  turn L76911..L77155 (next prompt L77331)
+CLAIMS:
+  [msg_011CfsE1dPM8on8hP1uFqXjC|11] `assert.equal(idsOf().length, 14)`: that there are exactly 14 ids at this point in the test.
+
+--- L76911 user 2026-10-09T19:27:05.560Z
+USER: 
+
+<pasted_content id="e589">
+[chair:MAIN] D278: after placing a Jump, the panel stays in landing mode. The keeper, 13:26: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and height". FEEL tier, plus a core read if the cause is in the core. Rows and fake hosts only, no real window.
+Plan: exo_memory/loop/plan_t180_jump_mode_stuck_2026-10-09.md. panel.js:354-359 shows the landing box while shell.landing() is the head; the bug is that it never RETURNS.
+1. Reproduce HEADLESS: a straight, Jump, then continue (Extend with normal values, and the drag handles). Record which block is shown, what shell.landing() returns, and whether the new piece is placed.
+2. Name the cause among the plan's (a) landing() stays true, (b) the Extend block never re-renders, (c) no extend after a landing, (d) the handles stay the landing's, or something else, with the line.
+3. Fix: the landing boxes and handles show only while the landing is the head; once a road piece follows, the normal Extend controls and road handles are back and work. Re-selecting the landing may bring its boxes back.
+Rows red first: Jump then Extend → landing box hidden, Extend shown and working, handles are the road's; the landing's own tuning still works while it's the head. Targeted tests plus app/test/core-xsec.test.js. If you touch src/core, the jump harness too.
+Fresh t180 worktree from main d1bf901 (0.3.3, as pushed). Add a CHANGELOG entry under [Unreleased].
+Hand-back: exo_memory/handback/p-jumpstuck-A_2026-10-09.md, plus your map line.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_jump_mode_stuck_2026-10-09.md
+NEXT: librarian call_librarian with the hand-back pointer when the cause is named and the fix is committed with its rows
+</pasted_content id="e589">
+
+--- L76921 assistant 2026-10-09T19:27:08.829Z
+TOOL_USE Bash [toolu_013mHtDLp4Gdkp8pgV2gf36r]: {"command":"cat /c/Users/nname/Desktop/lighthouse/exo_memory/loop/plan_t180_jump_mode_stuck_2026-10-09.md | cut -c1-700; cd /c/Users/nname/Desktop/t180-track-builder && git log -1 --format='%h %s' d1bf901 | cut -c1-100; git status --short | head -3","description":"Read the plan and check the t180 repo state"}
+--- L76922 user 2026-10-09T19:27:09.174Z
+RESULT [toolu_013mHtDLp4Gdkp8pgV2gf36r]: # T-180: after placing a Jump, the panel stays in landing mode instead of going back to the normal equation controls. Librarian, on D, 2026-10-09 13:2x. Lap D278.
+
+The keeper, 13:26: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways,
+and height".
+
+## Read at t180 `d1bf901` (0.3.3)
+- `app/core/panel.js:354-359`: the landing's number boxes (heading, sideways, height: `app/core/landing.js` `BOXES`) are "shown only while a landing
+  is the head". `landingBox.style.display = shell.landing() ? '' : 'none'`.
+- So right after Jump the landing IS the head, which is by design so it can be tuned. The bug is that it does not RETURN: the keeper ends up stuck with
+  the landing controls where the base-equation Extend controls (length, turn, climb, bank…) and the road handles should be.
+- inferred candidates, to be told apart, not assumed:
+  (a) `shell.landing()` keeps returning the landing after a road piece is extended past it (the "head" test reads the last flight, not the last piece);
+  (b) the panel never re-renders the Extend block, or hides it, while a landing exists anywhere;
+  (c) there is no way to extend a road piece after a landing at all, so the head stays the landing forever;
+  (d) the drag handles stay the landing's after the head moves on.
+
+## The lap (A, who built the jump UI and the handles; FEEL tier, plus a core read if the cause is (a) or (c))
+1. **Reproduce headless:** a straight, Jump, then try to continue (Extend with normal values, and the drag handles). Record which block is shown, what
+   `shell.landing()` returns, and whether the new piece is placed.
+2. **Name the cause** among (a)–(d), or something else, with the line.
+3. **Fix:
+…[132 chars cut]…
+nd road
+   handles are back, and they work. Selecting the landing again (if selection exists) may bring its boxes back.
+- Rows red first: after Jump then Extend, the landing box is hidden, the Extend block is shown and works, the handles are the road's; the landing's
+  own tuning still works while it is the head. Targeted tests. Then install.
+
+NEXT: chair dispatch D278 to A when this plan is read
+d1bf901 D274 follow-up (test-only): core_cup M50 re-anchored to the new fade line; core_jump's harne
+ M .claude/skills/track-equations/references/03_bsplines.md
+ M .claude/skills/track-equations/references/09_core_channels.md
+ M .claude/skills/track-equations/references/MATH_SOURCES.md
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L76924 assistant 2026-10-09T19:27:11.853Z
+TOOL_USE Bash [toolu_01PMM4CJXhjVXuvCK7Bbcsuk]: {"command":"cd /c/Users/nname/Desktop/t180-track-builder && git worktree add -q -b jumpstuck-a \"C:/Users/nname/Desktop/worktrees/a-js-wt\" d1bf901 2>&1 | tail -1; cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && git log -1 --format=%h && sed -n 330,380p app/core/panel.js | cut -c1-200; grep -n \"landing\" app/core/coreshell.js | head -50 | cut -c1-170","description":"Make worktree; read panel.js near the landing box and coreshell landing code"}
+--- L76925 user 2026-10-09T19:27:12.659Z
+RESULT [toolu_01PMM4CJXhjVXuvCK7Bbcsuk]: d1bf901
+    end: () => { if (landDrag) { landDrag = false; shell.endLanding(); } if (sculptDrag) { sculptDrag = null; shell.endSculpt(); } if (scrubbing) { scrubbing = false; ghost(); } },   // the release: t
+  };
+  sculptOn.onchange = () => {
+    shell.setSculpt(sculptOn.checked);
+    if (sculptOn.checked) { send('t180-ghost-clear'); mode.value = 'rate'; mode.disabled = true; } else { mode.disabled = false; triedDoc = null; }
+    fillChannels();
+  };
+  handlesOn.onchange = () => { triedDoc = null; if (!handlesOn.checked && !sculptOn.checked) send('t180-ghost-clear'); };
+
+  // JUMP, THE KEEPER'S WAY (D258; the core is src/core/jump.js, E's). The Jump button sits beside Extend: it places the piece the fields describe exactly as Extend would (the take-off: the climb is t
+  // fields' own), then a free flight to a default landing (a 60 m straight, 40 m ahead, the same height, lined up). While the landing is the head it is moved by the four handles on it (forward, sidew
+  // height, heading) and by these boxes: forward, sideways (+ left), height (+ up) in m, heading, pitch, bank in degrees (shell.moveLanding: one undo step each). Extend from the landing fixes it; del
+  // back to it makes it the head again. A move the core refuses (LANDING_NOT_HEAD, a landing under 1 m from the take-off) says why in plain words. Nothing is solved or drawn for the air: drive it in 
+  const jumpNote = el('div', { 'aria-label': 'jump note', style: 'font-size:12px;margin:2px 0;color:#aab2c0' });
+  const sayJump = (...lines) => jumpNote.replaceChildren(...lines.filter(Boolean).map((t) => el('p', { text: t, style: 'margin:2px 0' })));
+  const LANDING_HINT = 'Move the landing: drag its arrows on the track (white forward, orange sideways, yellow hei
+…[6586 chars cut]…
+ landingDrag: { base: doc(), flightId: L.flight.id }, message: null }));
+317:    landingTo(ui) {
+318:      const b = st.landingDrag; if (!b) return set({ message: 'no landing drag is open' });
+319:      let d; try { d = JU.setLanding(b.base, landingPose(ui)); } catch (e) { if (e && e.name === 'CoreError') return set({ message: JW.jumpWords(e) }); throw e; }   /
+320:      return attempt(() => { const t0 = now(), h = D.dragTo(st.history, d), r = resolvedOf(d); return set({ history: h, ...r, dirty: true, lastStep: { op: 'landing', 
+323:      if (!st.landingDrag) return st;
+324:      return attempt(() => set({ history: D.endDrag(st.history), landingDrag: null, lastEdited: null }));
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L76928 assistant 2026-10-09T19:27:15.603Z
+TOOL_USE Bash [toolu_01LtnPdUJshMjrDxWGPRoabo]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && grep -n \"landingOf\" -B2 -A22 src/core/jump.js | sed -n 1,80p | cut -c1-200; echo ----; grep -n \"extend(\" app/core/coreshell.js | head -5 | cut -c1-200","description":"Read landingOf in the core and find shell.extend"}
+--- L76935 user 2026-10-09T19:27:15.920Z
+RESULT [toolu_01LtnPdUJshMjrDxWGPRoabo]: 9-//                                                       up, 40 m ahead, at the same height, level), then a straight landing of landingM (default 60 m)
+10-//   jump(doc, pose)                                  -> a free flight appended at the open end (pose: forward, left, up, heading, pitch, bank)
+11://   landingOf(doc)                                   -> { flight, index, pose } while the landing is the HEAD (the last piece, right after its flight,
+12-//                                                       or a flight still waiting for its landing at the end), else null
+13-//   setLanding(doc, pose)                            -> the head landing moved: its flight's pose changed (a partial pose keeps the rest), the landing's
+14-//                                                       bank following the flight's; refused by name, LANDING_NOT_HEAD, once road is extended from it
+15-//
+16-// The landing is movable only while it is the head (the keeper: "the user will make the landing and perfect it before expanding it on outward after the
+17-// jump … there is no need for this idea of tweaking a jump that tweaks the rest of the track"). Deleting back to it makes it the head, and movable, again.
+18-//
+19-// Refused by name: an empty track (NO_TAKEOFF), a closed one (CLOSED), a track that ends in a jump (JUMP_AFTER_JUMP, D.checkDoc), a road that still
+20-// carries a height or sideways offset at the lip (FLIGHT_OFFSET), a pose that is not one (BAD_FLIGHT, FLIGHT_TOO_SHORT), a landing that is not the head
+21-// (LANDING_NOT_HEAD).
+22-'use strict';
+23-
+24-const D = require('./document.js');
+25-const { extend } = require('./extend.js');
+26-const { WIDTHS, RATES } = require('../geom/fonts.js');
+27-
+28-const LANDING_M = 60;   //
+…[2353 chars cut]…
+{ jump, jumpHere, landingOf, setLanding, LANDING_M };
+----
+7://   shell.extend({ length, targets })   shell.candidate({ length, targets })   shell.undo()   shell.redo()
+73:// is the state extend() starts the first piece from (src/core/extend.js: level, straight, the family's measured width and rate)
+328:    extend: (opts) => commit('extend', () => extend(doc(), opts), { lastEdited: [doc().pieces.length] }),
+346:    candidate: (opts) => { const d = extend(doc(), opts); return { segments: segmentsOf(d), closed: false, start: startOf(d) }; },
+347:    /** The ghost's readout: what extend(opts) would place, before it is placed (A: the same numbers as after). Throws on bad fields. */
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L76938 assistant 2026-10-09T19:27:21.821Z
+TOOL_USE Bash [toolu_01T1AaCS8XvDvhTkfZJ59rVR]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && ls app/test | grep -iE \"jump|land|panel\" ; grep -ln \"shell.jump\\|landing\" app/test/*.js | head; wc -l app/test/jump-ui.test.js 2>/dev/null","description":"Find the existing jump/landing panel tests"}
+--- L76939 user 2026-10-09T19:27:22.151Z
+RESULT [toolu_01T1AaCS8XvDvhTkfZJ59rVR]: jump-ui.test.js
+markers-panel.test.js
+palette-panels.test.js
+texmaker-panel.test.js
+texture-panel.test.js
+validate-ui-jumpdefault.test.js
+validate-ui-jumps.test.js
+validate-ui-panel.test.js
+app/test/core-pieces-ui.test.js
+app/test/export.test.js
+app/test/handles.test.js
+app/test/jump-ui.test.js
+app/test/preview-async.test.js
+app/test/share-install.test.js
+app/test/shell-ghost.test.js
+app/test/validate-ui-incval.test.js
+app/test/validate-ui-jumpdefault.test.js
+app/test/validate-ui-jumps.test.js
+129 app/test/jump-ui.test.js
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L76941 assistant 2026-10-09T19:27:23.936Z
+TOOL_USE Bash [toolu_01VJTED5Eig8bn49tjRwJoNT]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && sed -n 1,129p app/test/jump-ui.test.js | cut -c1-210","description":"Read the existing jump UI test harness"}
+--- L76942 user 2026-10-09T19:27:24.194Z
+RESULT [toolu_01VJTED5Eig8bn49tjRwJoNT]: // jump-ui.test.js: node --test app/test/jump-ui.test.js   (under the heavy-run lock)
+// D258, THE FREE JUMP, UI HALF (the keeper's way: "instead of clicking extend, it says jump ... it then lets the user move around a blank straight piece ... through testing in the game trial and error
+// driving it themselves"; the core is src/core/jump.js, E's; this half is app/core/landing.js, jumpwords.js, flightlayer.js, the shell's jump / landing API and the panel's Jump button, landing boxes and
+// handles, whose rows are 14 to 14c of app/test/core-pieces-ui.test.js). It REPLACES D243's Add-jump control (gap, drop, landing angle, ballistic arcs: jumpplan.js is gone). FEEL tier: rows on the shell and
+// pure modules, fake hosts for the panel; NO real window (no pointer lock or focus while the keeper is at the PC: the rule of 2026-10-06). Rows:
+//   1  shell.jump: the take-off as Extend would place it, a free flight, a 60 m landing, ONE undo step, the default landing 40 m ahead, lined up; the null take-off; the ghost is flagged a jump's
+//   1b every refusal in plain words (no code name), nothing changed, no undo step
+//   2  the landing while it is the head: its values in the boxes' units; moveLanding is one undo step; a drag (begin / to / end) is ONE undo step from the document it began on, a step the core refuses
+//      leaves it at the last good one; LANDING_NOT_HEAD after an Extend, in words, and deleting back to it moves it again
+//   3  the handles' frames: the arrows ARE the pose's axes (forward moves the landing along the take-off's heading, sideways along its left, height straight up), on a turning and on a climbing take-off
+//   4  the flight layer: the centreline of each flight from the take-off station to the landing,
+…[14413 chars cut]…
+cond (candidate) flight: the ghost's path holds the placed flights AND the candidate's, so it is the one read
+  const t = await base(); t.jump({ length: 60 }); t.extend({ length: 200 }); const c = t.candidateJump({ length: 50 }), gp = { path: G.buildPath(c.segments, { step: 2, closed: false, start: c.start }), segments
+  ghost = { samples: gp.path.samples, segments: gp.segments, jump: true, s0: 0 }; tick(); assert.equal(layer.flights().length, 2, 'the ghost\'s path: the placed flight and the candidate'); assert.equal(layer.li
+  ghost = null; tick(); assert.equal(layer.flights().length, 1, 'no ghost: the placed track again'); layer.unmount(); assert.equal(canvas.gone, true);
+});
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L76952 assistant 2026-10-09T19:27:33.074Z
+TOOL_USE Bash [toolu_01DuiyAiq8YLFKpFHmB9pNZH]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && grep -n \"landing\\|Landing\" app/core/panel.js | cut -c1-230 | head -40; echo ----H; grep -n \"landing\\|Landing\" app/core/handles.js | cut -c1-200 | head -40","description":"Find every landing reference in panel.js and handles.js"}
+--- L76953 user 2026-10-09T19:27:33.341Z
+RESULT [toolu_01DuiyAiq8YLFKpFHmB9pNZH]: 23:const LD = require('./landing.js');
+26:const VO = require('./valuesoverlay.js');   // D267: the values of the piece being edited, large over the 3D view   // D258: the free jump's landing: where its handles are, and its number boxes
+310:  // D258: THE LANDING (the free jump): while it is the head, its four handles (forward, sideways, height, heading) are the ones on the track, and a drag is the shell's landing drag (one undo step; the same
+311:  // numbers as the boxes below the Jump button). They take the place of the Extend ghost's handles, which would be on the piece Extend adds from the landing.
+313:  const landingModel = () => {
+315:    const L = shell.landing(); if (!L) return null;
+317:    return { mode: 'landing', samples: [], s0: 0, s1: 1, half: () => 0, kinds: HD.LANDING_ORDER, free, base: (k) => L.pose[LAND_FIELD[k]], ctx: () => ({}) };
+321:    model: () => landingModel() || sculptModel() || ghostModel(),
+323:    begin: (h) => { if (LAND_FIELD[h.kind]) { shell.beginLanding(); landDrag = !!shell.getState().landingDrag; return; } const m = sculptModel(); if (!m) scrubbing = true; if (m) { shell.beginSculpt({ channel: SCULPT_CH[h.kind
+325:      if (LAND_FIELD[h.kind]) { if (landDrag) shell.landingTo({ [LAND_FIELD[h.kind]]: value }); return; }
+330:    end: () => { if (landDrag) { landDrag = false; shell.endLanding(); } if (sculptDrag) { sculptDrag = null; shell.endSculpt(); } if (scrubbing) { scrubbing = false; ghost(); } },   // the release: the full ghost
+340:  // fields' own), then a free flight to a default landing (a 60 m straight, 40 m ahead, the same height, lined up). While the landing is the head it is moved by the four handles on it (forward, sideways,
+341:  // height, heading) and by these boxes: for
+…[1841 chars cut]…
+landingBox,
+438:    hintNow(); fillLanding();
+----H
+42:// TAKE-OFF's heading frame (T0 forward, L0 left, U0 up), because that is the frame the landing's pose is given in (src/core/document.js flightPiece), so the arrow moves the number of its box. Each
+43:// arrow from the landing's start, so the four are not on one point and can be picked apart (forward 10 m ahead, sideways 8 m to the left, height 6 m up); the HEADING mark sits 15 m ahead along the
+44:// direction (T1) and drags sideways along its own left (L1): turning the landing about its start.
+83:    if (K.free) {   // D258: at the landing's start, in the take-off's heading frame (model.free = { pos, T0, L0, U0, T1, L1 })
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L76956 assistant 2026-10-09T19:27:42.787Z
+TOOL_USE Bash [toolu_01XvVfdLw35vNQzLptST1a5i]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && grep -n \"appliedLen\\|extendBtn\\|const jumpHere\\|const ghost\\b\\|const ghost =\\|const apply\\|lastEdited\" app/core/panel.js | cut -c1-260 | head -40","description":"Find the Extend button, apply and ghost logic in panel.js"}
+--- L76957 user 2026-10-09T19:27:43.030Z
+RESULT [toolu_01XvVfdLw35vNQzLptST1a5i]: 163:  const extendHere = () => { const before = shell.getState().history.present, made = fieldsNow(); shell.extend(opts()); appliedLen = len.value; const after = shell.getState().history.present; if (after !== before) madeWith.set(after, { before, made }); };
+164:  const putBack = (m) => { len.value = appliedLen = m.len; for (const k of Object.keys(HEAD)) HEAD[k][0].value = m.values[k]; for (const [k, b] of Object.entries(atStart)) b.checked = !!m.ticks[k]; if (cup.value !== shown.cup) exclusive(cup); else if (tube
+187:  const ghost = () => {
+209:  let appliedLen = len.value, lastTouched = null; const applied = {};
+211:  const baselineOf = (f) => (f === len ? appliedLen : applied[Object.keys(HEAD).find((k) => HEAD[k][0] === f)]);
+222:  const extendBtn = el('button', { text: 'Extend', title: 'add a piece at the open end; fields left as shown keep going the way the track goes',
+236:  const levelHere = (fn) => { const before = shell.getState().history.present, made = fieldsNow(); send('t180-ghost-clear'); shell[fn](opts()); appliedLen = len.value; const after = shell.getState().history.present; if (after !== before) madeWith.set(after
+351:  const jumpHere = () => { send('t180-ghost-clear'); const before = shell.getState().history.present, made = fieldsNow(); shell.jump(opts()); appliedLen = len.value; const after = shell.getState().history.present; if (after !== before) madeWith.set(after, 
+373:  const applyBtn = el('button', { text: 'Apply', title: 'close the loop as previewed (one undo step)', onclick: () => shell.applyClose() });
+419:    el('div', { class: 'actions' }, extendBtn, jumpBtn, straightBtn, levelBtn, floorBtn), jumpNote, landingBox,
+434:    extendBtn.disabled = jumpBtn.disabled = !!d.closed; closeBtn.disabled = closeHow.disabled = !!d.closed || !d.pieces.length;
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L76959 assistant 2026-10-09T19:27:45.040Z
+TOOL_USE Bash [toolu_01WLs5LuA3qMNdVMKg5HAkdY]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && sed -n 160,236p app/core/panel.js | cut -c1-330; sed -n 425,445p app/core/panel.js | cut -c1-260","description":"Read the panel's Extend/ghost logic and the render function"}
+--- L76966 user 2026-10-09T19:27:45.306Z
+RESULT [toolu_01WLs5LuA3qMNdVMKg5HAkdY]:   // shown, the at-start ticks), so Extend again rebuilds the same piece. Redo, a brush and open show the head, as before
+  const madeWith = new WeakMap();
+  const fieldsNow = () => ({ len: len.value, values: Object.fromEntries(Object.keys(HEAD).map((k) => [k, HEAD[k][0].value])), ticks: Object.fromEntries(Object.entries(atStart).map(([k, b]) => [k, b.checked])) });
+  const extendHere = () => { const before = shell.getState().history.present, made = fieldsNow(); shell.extend(opts()); appliedLen = len.value; const after = shell.getState().history.present; if (after !== before) madeWith.set(after, { before, made }); };
+  const putBack = (m) => { len.value = appliedLen = m.len; for (const k of Object.keys(HEAD)) HEAD[k][0].value = m.values[k]; for (const [k, b] of Object.entries(atStart)) b.checked = !!m.ticks[k]; if (cup.value !== shown.cup) exclusive(cup); else if (tube.value !== shown.tube) exclusive(tube); };
+  // the ghost: a candidate the shell cannot build, or the preview cannot draw, says why (it used to vanish without a word)
+  // THE READOUT of the piece the fields describe: 16 px bold rows, so its ink is at least 11 device px tall (E's M5 (d))
+  // cup reads from → to: the DOCUMENT's values (A's cupFromDeg / cupToDeg, which for a legacy piece are its rendered edge), never
+  // the typed target, which the core's fit may ring past and its guard may refuse (E's seal row 7)
+  let values = null;   // D267: the values of the piece being edited, large over the 3D view (app/core/valuesoverlay.js); mounted where the stage is found, below
+  const RO = ['length', 'turn', 'climb', 'bank', 'cup', 'edge', 'start', 'tube'], roCells = Object.fromEntries(RO.map((k) => [k, el('span', { 'data-readout': k })]));
+  const roName = (k)
+…[8650 chars cut]…
+   // D267: a new document: the note is empty again (it shows only a refusal's words; the standing hint is the button's tooltip)
+    // D244b: the Sculpt switch follows the shell, and says what to do next
+    sculptOn.checked = !!st.sculpt;
+    const si = st.sculpt ? shell.sculptInfo() : null;
+    sculptHint.textContent = !st.sculpt ? '' : si ? `Sculpting ${si.id}: drag its handles (bank, width${si.hasCup ? ', cup' : ''}) or use the brush; one drag is one undo step. The route never moves.` : 'Select ONE piece: click it on the track. Only its shape (
+  };
+  // the labels on the track: a DOM layer over the preview (app/core/labels.js); none when there is no preview to lay them on
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L76969 assistant 2026-10-09T19:27:55.213Z
+TOOL_USE Bash [toolu_01Pqb1VUzDdPnEm6VwzzAbX1]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && grep -n \"^test(\\|^// row\\|row 14\" app/test/core-pieces-ui.test.js | cut -c1-200 | head -40; grep -n \"fakeDoc\\|function fake\\|const fake\\|makeDoc\\|mountPanel\\|createPanel\" app/test/core-pieces-ui.test.js | head -12 | cut -c1-200","description":"Find the fake-host panel harness used by existing rows"}
+--- L76970 user 2026-10-09T19:27:55.490Z
+RESULT [toolu_01Pqb1VUzDdPnEm6VwzzAbX1]: 65:test('row 1c: on a CLOSED lap a shift-click across the start line takes the SHORT way: the pieces either side of the line; Save keeps them, Delete says CLOSED', async () => {
+79:test('row 1d: where the run across the start line CANNOT be saved (a cup at one side of it, a plain piece at the other) and the inside run can, the inside run is selected and the line says why', as
+94:test('row 1e: a tie stays inside the lap even when the lengths are decimals whose sums differ in the last bit (A\'s tiefloat case)', async () => {
+101:test('row 1: select a piece, shift-click a run (the first piece selected stays the anchor), an out-of-range piece is refused, and any change of the document drops the selection', async () => {
+116:test('row 2: Save as piece stores exactly the core\'s text; a name already used is refused and the stored piece untouched; a bad name and a mixed run are refused by name', async () => {
+133:test('row 3: the library lists name, length, turn, climb and a thumbnail; an unreadable file and a whole track are LISTED with the reason', async () => {
+150:test('row 4: Add at head is the core\'s insert as ONE undo step, mirrored on request; closed, missing and damaged are refused by name with nothing changed', async () => {
+167:test('row 5 (REQUIRED, through the app): a track built by saving a run and adding it back through the shell is the SAME DOCUMENT and exports the SAME BYTES', async () => {
+184:test('row 6: rename (the new name must be free; the file\'s own name changes) and delete of a saved piece', async () => {
+194:test('row 6b: a CASE-ONLY rename (Run to run) works where names are case-blind (C, look F2), on a case-sensitive store too, and a failure on the way never loses the piece', async () => {
+210:test
+…[5746 chars cut]…
+af = deaf;
+629:  const P1 = await mountPanel(), { shell } = P1;   // (a five-piece track)
+651:  const j = await mountPanel(); j.shell.jump(null); const jd = j.shell.getState().history.present; assert.deepEqual(jd.pieces.map((p) => p.type).slice(-2), ['flight', 'road']);
+655:  const e = await mountPanel(); e.shell.extend({ length: 100 }); e.shell.setGrip(90); assert.match(e.shell.getState().message, /^select the pieces first/);
+755:  const st = store(), P1 = await mountPanel(st, { bin: true }), { shell } = P1, tick = () => new Promise((r) => setImmediate(r));
+781:  const P1 = await mountPanel(st, { bin: true }), menu = P1.menuEl, tick = () => new Promise((r) => setImmediate(r));
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L76978 assistant 2026-10-09T19:27:57.983Z
+TOOL_USE Bash [toolu_01W6LtNugVpkbUXKgQT2NnwU]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && sed -n 313,346p app/test/core-pieces-ui.test.js | cut -c1-260; sed -n 541,603p app/test/core-pieces-ui.test.js | cut -c1-330","description":"Read mountPanel and rows 14 to 14c"}
+--- L76979 user 2026-10-09T19:27:58.309Z
+RESULT [toolu_01W6LtNugVpkbUXKgQT2NnwU]: function fakeWindow() {
+  const doc = { ids: {}, listeners: {}, createElement: (t) => new El(t, doc) };
+  doc.getElementById = (id) => doc.ids[id] || null;
+  doc.addEventListener = (e, f) => { (doc.listeners[e] = doc.listeners[e] || []).push(f); };
+  doc.removeEventListener = (e, f) => { doc.listeners[e] = (doc.listeners[e] || []).filter((x) => x !== f); };
+  doc.dispatchEvent = (ev) => { for (const f of (doc.listeners[ev.type] || []).slice()) f(ev); return true; };
+  const frames = [];
+  const win = { CustomEvent: class { constructor(type, init = {}) { this.type = type; this.detail = init.detail; } }, Option: class { constructor(t, v) { this.textContent = t; this.value = v; } },
+    requestAnimationFrame: (f) => { frames.push(f); return frames.length; }, cancelAnimationFrame: () => {}, setTimeout: () => 0, clearTimeout: () => {}, frames };
+  doc.defaultView = win;
+  return { doc, win, tick: () => { const fs2 = frames.splice(0); for (const f of fs2) f(0); } };
+}
+async function mountPanel(st = store(), { bin = false } = {}) {
+  const { doc, win, tick: frame } = fakeWindow();
+  let menuEl = null, binEl = null;   // D269: the top bar's Pieces menu (index.html: <details id="pieces"><div id="pieces-bin">), found by the panel by id as #preview is
+  if (bin) { menuEl = doc.createElement('details'); menuEl.setAttribute('id', 'pieces'); menuEl.open = false; binEl = doc.createElement('div'); binEl.setAttribute('id', 'pieces-bin'); menuEl.append(binEl); }
+  const stage = doc.createElement('div'); stage.setAttribute('id', 'preview'); stage.clientWidth = 900; stage.clientHeight = 600; stage.isRoot = true;
+  const root = doc.createElement('div'), shell = await track(st);
+  // the preview's side of the events the panel asks: a pick ans
+…[11664 chars cut]…
+ 40; i++) P1.frame(); assert.equal(P1.panel.handles.handles().length, 10, 'the Extend handles are back, the landing\'s are gone'); assert.ok(!P1.panel.handles.handles().some((h) => h.kind.startsWith('land')));
+  // the switch turns them off
+  shell.removeHead(); for (let i = 0; i < 3; i++) P1.frame(); assert.equal(P1.panel.handles.handles().length, 4, 'back on the landing'); P1.input('drag handles').checked = false; P1.input('drag handles').onchange(); for (let i = 0; i < 3; i++) P1.frame(); assert.deepEqual(P1.panel.handles.handles(), [], 'the switch is off');
+  P1.panel.unmount();
+});
+
+const gripsOf = (shell) => shell.getState().history.present.pieces.map((p) => D.gripOf(p));
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L76990 assistant 2026-10-09T19:28:14.938Z
+TOOL_USE Bash [toolu_013sEbp6KFCyBVSZy8AiS9uW]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt/app/test\" && cp core-pieces-ui.test.js probe_jump.test.js && cat >> probe_jump.test.js <<'EOF'\n\ntest('PROBE: the keeper\\'s flow, headless', async () => {\n  const P = await handlePanel(), { shell } = P, box = landingBoxOf(P);\n  const hs = () => P.panel.handles.handles().map((h) => h.id).join(',');\n  const rep = (tag) => { for (let i = 0; i < 40; i++) P.frame(); console.log(`[${tag}] pieces=${shell.getState().history.present.pieces.map((p) => p.type[0]).join('')} landing=${JSON.stringify(shell.landing() && shell.landing().index)} landingBox=${JSON.stringify(box
+…[608 chars cut]…
+);\n});\nEOF\ncd ../.. && node --test --test-name-pattern=PROBE app/test/probe_jump.test.js 2>&1 | sed 's/\\x1b\\[[0-9;]*m//g' | grep -E \"^\\[|✔|✖|Error\" | cut -c1-330","description":"Run a throwaway probe of the keeper's flow on the fake-host panel","timeout":200000}
+--- L76991 user 2026-10-09T19:28:17.756Z
+RESULT [toolu_013sEbp6KFCyBVSZy8AiS9uW]: [start] pieces=rrrrr landing=null landingBox="none" handles=length:0,width:1,width:-1,bank:1,bank:-1,cup:1,cup:-1,turn:1,turn:-1,climb:0 msg=""
+[after Jump] pieces=rrrrrrfr landing=6 landingBox="" handles=landfwd:0,landleft:0,landup:0,landturn:0 msg="Jump placed: move its landing by hand."
+[typed length 90 (not extended)] pieces=rrrrrrfr landing=6 landingBox="" handles=landfwd:0,landleft:0,landup:0,landturn:0 msg="Jump placed: move its landing by hand."
+[hover Extend] pieces=rrrrrrfr landing=6 landingBox="" handles=landfwd:0,landleft:0,landup:0,landturn:0 msg="Jump placed: move its landing by hand."
+[after Extend click] pieces=rrrrrrfrr landing=null landingBox="none" handles=length:0,width:1,width:-1,bank:1,bank:-1,cup:1,cup:-1,turn:1,turn:-1,climb:0 msg=""
+[after 2nd Extend] pieces=rrrrrrfrrr landing=null landingBox="none" handles=length:0,width:1,width:-1,bank:1,bank:-1,cup:1,cup:-1,turn:1,turn:-1,climb:0 msg=""
+[undo] pieces=rrrrrrfrr landing=null landingBox="none" handles=length:0,width:1,width:-1,bank:1,bank:-1,cup:1,cup:-1,turn:1,turn:-1,climb:0 msg=""
+[undo 2] pieces=rrrrrrfr landing=6 landingBox="" handles=landfwd:0,landleft:0,landup:0,landturn:0 msg=""
+✔ PROBE: the keeper's flow, headless (1858.2625ms)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L76995 assistant 2026-10-09T19:28:38.768Z
+TOOL_USE Bash [toolu_01WpzEnphVWy9wZ9h2FV4fqC]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && rm -f app/test/probe_jump.test.js; wc -l app/core/handles.js; sed -n 30,140p app/core/handles.js | cut -c1-260","description":"Read handles.js model use and handle construction"}
+--- L77002 user 2026-10-09T19:28:39.063Z
+RESULT [toolu_01WpzEnphVWy9wZ9h2FV4fqC]: 275 app/core/handles.js
+const EXTEND_KINDS = Object.freeze({
+  // D250 item 3 (the keeper chose "Near end, like my picture"): LENGTH and WIDTH are at the piece's NEAR end, as in his marked-up screenshot. The near end stays where it is when the value changes, so
+  // length is dragged AWAY from the piece (back toward the camera, `sign: 'back'`: stretching the near edge toward you is longer), and the width marks sit at the TARGET half-width (`target: true`: the
+  // field's value, not the head's width the piece starts from), so they follow the pointer as the width changes. Turn and climb stay at the far side, bank and cup mid-piece.
+  length: Object.freeze({ label: 'length', unit: 'm', colour: '#ffffff', at: 0, lat: 0, axis: 'T', sides: Object.freeze([0]), sign: 'back', perPx: 0.42, min: 1, max: 5000, step: 0.1, snap: 10 }),
+  width: Object.freeze({ label: 'width', unit: 'm', colour: '#ff5a5a', at: 0, lat: 1, axis: 'L', sides: Object.freeze([1, -1]), sign: 'out', target: true, perPx: 0.068, min: 0.5, max: 400, step: 0.1, snap: 5 }),
+  bank: Object.freeze({ label: 'bank', unit: '°', colour: '#4d86ff', at: 0.5, lat: 1, axis: 'U', sides: Object.freeze([1, -1]), sign: 'up', perPx: 0.45, zero: true, min: -720, max: 720, step: 0.1, snap: 5 }),
+  cup: Object.freeze({ label: 'cup', unit: '°', colour: '#3ddc6e', at: 0.5, lat: 0.3, axis: 'L', sides: Object.freeze([1, -1]), sign: 'out', perPx: 0.24, min: 0, max: 150, step: 0.1, snap: 5 }),
+  turn: Object.freeze({ label: 'turn', unit: '°/100 m', colour: '#b968ff', at: 0.75, lat: 1, axis: 'L', sides: Object.freeze([1, -1]), sign: 'left', perPx: 0.083, zero: true, min: -90, max: 90, step: 0.1, snap: 5 }),
+  climb: Object.freeze({ label: 'climb', unit: '°/100 m', colour: '#ffd23d', at: 0
+…[7281 chars cut]…
+mods.ctrl) v = round(v, K.snap);
+  else {
+    let best = null;
+    for (const t of K.zero ? [0, base] : [base]) { const e = Math.abs(v - t); if (e < DETENT_PX * r && (best === null || e < best.e)) best = { t, e }; }
+    v = round(best ? best.t : v, K.step);
+  }
+  return clamp(v, K.min, K.max);
+}
+
+/** What a double-click on a handle sets: 0 for bank, turn and climb, else `pre` (the value before the drag), or null when there is none. */
+function resetValue(kind, pre) { const K = KINDS[kind]; if (!K) throw new Error(`handles: no kind "${kind}"`); return K.zero ? 0 : (Number.isFinite(pre) ? pre : null); }
+
+function hitTest(list, x, y, r = HIT_PX) {
+  let best = null, bd = Infinity;
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L77005 assistant 2026-10-09T19:28:49.766Z
+TOOL_USE Bash [toolu_018isUH2HmkPSdTFyEn9waS2]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && sed -n 240,333p app/core/panel.js | cut -c1-420","description":"Read the handles host: ghostModel, landingModel and drag routing"}
+--- L77006 user 2026-10-09T19:28:49.995Z
+RESULT [toolu_018isUH2HmkPSdTFyEn9waS2]:   // D267: no paragraph under the buttons; the sense is the "at start" box's tooltip
+  const turnStartTitle = atStart.turn.getAttribute('title');
+  const hintNow = () => { const typed = asTyped('turn'); const hint = typed !== '' && Number(typed) === 0 && Number(shown.turn) !== 0 && !atStart.turn.checked ? `turn 0 eases over the whole piece: tick "at start" (or press Straight) to be straight from ${AT_START_M} m on` : ''; atStart.turn.setAttribute('title', hint ? `${turnStartTitle} ${hint}` : turnStartTitle); };
+
+  // BRUSH
+  const mode = el('select', { 'aria-label': 'brush mode' }), channel = el('select', { 'aria-label': 'brush channel' }), radius = num(60, 10, 'brush radius, m');
+  const armed = el('input', { type: 'checkbox', 'aria-label': 'brush on' });
+  // SHARP (E's opt-in, the chair's ruling 2): its spill is declared right here, in the words of E's own SHARP_NOTE
+  const sharp = el('input', { type: 'checkbox', 'aria-label': 'sharp brush', title: 'Sharp brush: acts at exactly the size you set by adding finer control points first. It can nudge the track just outside the brush by up to 0.1 mm. Leave it off for an exactly local edit.' });
+  // D244b SCULPT: while it is on, the brush is the value brush on the SHAPE channels only (turn and climb are not offered); the shell refuses anything else by name
+  const sculptOn = el('input', { type: 'checkbox', 'aria-label': 'sculpt on', title: 'Sculpt: reshape a piece that is already placed (bank, cup, width, edge, wall rise, tube sweep) without moving the rest of the track. Select ONE piece, then drag its handles or use the brush. Turn and climb are not offered; the centreline is checked on every step' });
+  const handlesOn = el('input', { type: 'checkbox', 'aria-label': 'drag
+…[8060 chars cut]…
+    if (sculptDrag) { const delta = value - sculptDrag.base; shell.sculptTo(h.kind === 'bank' ? delta * HD.DEG : delta); return; }
+      if (shell.getState().sculpt) return;
+      const f = HANDLE_FIELD[h.kind]; f.value = h.kind === 'bank' ? show(HD.wrapTurn(value)) : String(value); if (f.oninput) f.oninput();   // typed: the field's own handler follows it (D259: the bank within one turn)
+    },
+    end: () => { if (landDrag) { landDrag = false; shell.endLanding(); } if (sculptDrag) { sculptDrag = null; shell.endSculpt(); } if (scrubbing) { scrubbing = false; ghost(); } },   // the release: the full ghost
+  };
+  sculptOn.onchange = () => {
+    shell.setSculpt(sculptOn.checked);
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L77015 assistant 2026-10-09T19:28:56.430Z
+TOOL_USE Bash [toolu_01Vjui5wAW43MyzSfUxnKmAj]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && grep -n \"\\.mode\\|model()\" app/core/handles.js app/core/panel.js app/preview/*.js 2>/dev/null | grep -v \"brush mode\\|mode.value\\|mode.disabled\\|mode.onchange\\|mode.replace\" | cut -c1-200 | head -20; sed -n 150,275p app/core/handles.js | grep -n \"model\\b\\|model\\.\" | head -30 | cut -c1-220","description":"See where the handle model's mode and fields are used"}
+--- L77016 user 2026-10-09T19:28:56.758Z
+RESULT [toolu_01Vjui5wAW43MyzSfUxnKmAj]: app/core/handles.js:160: *   host.model()                       -> null | { samples, s0, s1, half(f), kinds, base(kind), ctx(kind) } what to draw now (null: no handles)
+app/core/handles.js:175:    model = host.model(); const pose = host.pose(), W = stage.clientWidth, H = stage.clientHeight;
+app/preview/index.js:68:  const ask = (e) => { if (e.detail && e.detail.mode) p.setMode(e.detail.mode); };
+app/preview/index.js:77:  const viewNow = (e) => { if (!e.detail || typeof e.detail.reply !== 'function') return; const v = p.view(), h = v.track && v.track.path ? v.track.path.head : null; e.detail.r
+app/preview/look.js:65:    const { min, max } = localBounds(b), M = b.model;
+app/preview/preview.js:103:    grid: gMode === 'legacy' ? 'ground' : gMode, drawn: plan && plan.mode !== 'off' ? plan.mode : gMode === 'legacy' && grid ? 'ground' : 'off', flat: plan ? plan.flat : nul
+app/preview/preview.js:147:      if (prop) { try { ghost = { ...model.proposalGhost(prop.resolved), proposal: true }; } catch (e) { ghost = null; } }
+app/preview/preview.js:165:  const said = () => { if (onMode) onMode(rig.mode); };
+app/preview/preview.js:177:    if (rig.mode === 'free' && f.moved) rig.free.move(0, 0, f.moved);
+app/preview/preview.js:179:    if (f.mode !== 'free' && ![...held.keys()].some((k) => k !== 'ControlLeft')) { takeover = false; if (rig.mode === 'free') { rig.setMode(f.mode, ctx()); said(); } }
+app/preview/preview.js:193:      if (!e.repeat) { if (!shortcutDown.size && !buttons && !e.altKey && !e.metaKey) { ctrlFly = { mode: rig.mode, moved: 0 }; held.set('ControlLeft', DOWN); takeover = tru
+app/preview/preview.js:224:      if (rig.mode !== 'free') { const c = ctx(); if (!c) return; rig.setMode('free', c); said(); }
+app/preview/preview
+…[1551 chars cut]…
+pre = null, onKeyDown = null, lastClick = null;   // lastClick: { id, t } the last press-and-release on a h
+26:    model = host.model(); const pose = host.pose(), W = stage.clientWidth, H = stage.clientHeight;
+27:    if (!model || !pose || !(W > 0 && H > 0)) { drawn = []; return; }
+29:    drawn = placeHandles(model).map((h) => ({ ...h, screen: screenAxis(VP, W, H, h.pos, h.axis) }));
+49:        const text = drag ? format(h.kind, drag.value) : format(h.kind, model.base(h.kind)) + (K.zero ? ' · double-click: 0' : pre && pre.kind === h.kind && pre.to === model.base(h.kind) ? ` · double-click: ${Number
+72:    const m = model; if (!m) return;
+108:    const m = model; if (!m) return;
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L77019 assistant 2026-10-09T19:29:14.683Z
+TOOL_USE Bash [toolu_01RBwCdkD1ss2GrQHNVbUTPQ]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && grep -n \"^async function handlePanel\\|^function handleOf\\|^const handleOf\\|^function dragBy\\|^const dragBy\\|^function fire\\|^const fire\\|^const statusOf\\|^const fieldOf\\|^function fieldOf\\|^function stubPreview\\|^const STAMP\" app/test/core-pieces-ui.test.js | cut -c1-120; sed -n \"$(grep -n '^async function handlePanel' app/test/core-pieces-ui.test.js | cut -d: -f1),+14p\" app/test/core-pieces-ui.test.js | cut -c1-300; grep -n \"dragBy = \\|function dragBy\" -A8 app/test/core-pieces-ui.test.js | head -14 | cut -c1-300","description":"Find the test helpers the new rows will use"}
+--- L77020 user 2026-10-09T19:29:15.024Z
+RESULT [toolu_01RBwCdkD1ss2GrQHNVbUTPQ]: 397:function stubPreview(P1) {
+417:function fire(P1, type, x, y, extra = {}) {
+422:const fieldOf = (P1, text) => P1.all().find((e) => e.tagName === 'LABEL' && e.children[0] && e.children[0].textConte
+423:async function handlePanel({ deaf = false } = {}) {
+429:const handleOf = (P1, id) => P1.panel.handles.handles().find((h) => h.id === id);
+431:function dragBy(P1, id, px, extra = {}) {
+540:const statusOf = (P1) => P1.all().find((e) => e.attrs.role === 'status').textContent;
+async function handlePanel({ deaf = false } = {}) {
+  const P1 = await mountPanel(); P1.deaf = deaf; const S = stubPreview(P1); S.deaf = deaf;
+  const l = P1.stage.listeners.pointerdown; l.unshift(l.pop());   // the handles' listener is the capture-phase one: first
+  fieldOf(P1, 'length m').value = '100';   // (the fake DOM does not turn the value attribute into the value, a real input shows 100)
+  P1.frame(); P1.frame(); return Object.assign(P1, { S });
+}
+const handleOf = (P1, id) => P1.panel.handles.handles().find((h) => h.id === id);
+/** Drag the handle `id` by `px` PIXELS along its own on-screen axis (from where it was pressed; D251: the speed is per pixel, so a drag is told in pixels), release. */
+function dragBy(P1, id, px, extra = {}) {
+  const h = handleOf(P1, id), a = h.screen, k = px / a.len;
+  fire(P1, 'pointerdown', a.x, a.y);
+  fire(P1, 'pointermove', a.x + a.dx * k, a.y + a.dy * k, extra); P1.frame();
+  fire(P1, 'pointerup', a.x + a.dx * k, a.y + a.dy * k, extra);
+}
+
+431:function dragBy(P1, id, px, extra = {}) {
+432-  const h = handleOf(P1, id), a = h.screen, k = px / a.len;
+433-  fire(P1, 'pointerdown', a.x, a.y);
+434-  fire(P1, 'pointermove', a.x + a.dx * k, a.y + a.dy * k, extra); P1.frame();
+435-  fire(P1, 'pointerup', a.x + a.dx * k, a.y + a.dy * k, extra);
+436-}
+437-
+438-test('row 11: Extend\'s handles: on the ghost and only while there is one; a drag types into the matching field and reaches no document until Extend; mirrored handles change the same field; Extend places what was dragged', async () => {
+439-  const P1 = await handlePanel(), { shell, S } = P1, d0 = shell.getState().history.present, n0 = d0.pieces.length, past0 = shell.getState().history.past.length;
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L77030 assistant 2026-10-09T19:29:23.935Z
+TOOL_USE Bash [toolu_01LSndniFJ332WejtjbvYS5A]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && sed -n 438,472p app/test/core-pieces-ui.test.js | cut -c1-330","description":"Read row 11 for the field labels and how drags on Extend handles are asserted"}
+--- L77031 user 2026-10-09T19:29:24.137Z
+RESULT [toolu_01LSndniFJ332WejtjbvYS5A]: test('row 11: Extend\'s handles: on the ghost and only while there is one; a drag types into the matching field and reaches no document until Extend; mirrored handles change the same field; Extend places what was dragged', async () => {
+  const P1 = await handlePanel(), { shell, S } = P1, d0 = shell.getState().history.present, n0 = d0.pieces.length, past0 = shell.getState().history.past.length;
+  const hs = P1.panel.handles.handles(); assert.deepEqual(hs.map((h) => h.id), ['length:0', 'width:1', 'width:-1', 'bank:1', 'bank:-1', 'cup:1', 'cup:-1', 'turn:1', 'turn:-1', 'climb:0'], 'ten handles on the ghost, both sides where there are sides');
+  assert.ok(hs.every((h) => h.screen), 'all on screen'); assert.ok(S.ghosts >= 1, 'the ghost was shown for them');
+  let seen = null; P1.doc.dispatchEvent(new P1.win.CustomEvent('t180:handles-request', { detail: { reply: (l) => { seen = l; } } }));
+  assert.deepEqual(seen.map((h) => h.id), hs.map((h) => h.id), 'the read-only request (for the window proof) lists the same handles'); assert.ok(seen.every((h) => Number.isFinite(h.x) && Number.isFinite(h.dy)));
+  // length: a drag along the road, 20 m
+  const len = fieldOf(P1, 'length m'), width = fieldOf(P1, 'width m'), bank = fieldOf(P1, 'bank °'), turn = fieldOf(P1, 'turn °/100m'), cup = fieldOf(P1, 'cup °');
+  assert.equal(len.value, '100'); const ghosts0 = S.ghosts; dragBy(P1, 'length:0', 50); assert.equal(len.value, '121', 'length: 50 px along the road, 0.42 m each'); assert.ok(S.ghosts > ghosts0, 'the ghost followed the field (typed)');
+  assert.equal(shell.getState().history.present, d0, 'a drag is no document edit'); assert.equal(shell.getState().history.past.length, past0, 'nothing in Undo');
+  // width: either side's handle, 1 m
+…[3406 chars cut]…
+was dragged
+  width.value = String(w0 + 4); width.oninput(); P1.frame(); assert.match(P1.root.all().find((e) => e.attrs['data-readout'] === 'length').textContent, /121/, 'the readout shows the dragged length');
+  P1.button('Extend').onclick(); const d1 = shell.getState().history.present; assert.equal(d1.pieces.length, n0 + 1, 'Extend adds the piece'); assert.equal(shell.getState().history.past.length, past0 + 1, 'ONE undo step');
+  const placed = d1.pieces[d1.pieces.length - 1]; assert.equal(placed.length, 121); assert.ok(Math.abs(D.channelAt(placed, 'w', placed.length).v - (w0 + 4)) < 1e-6, 'the width that was dragged is the width the piece ends at');
+  P1.panel.unmount();
+});
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L77035 assistant 2026-10-09T19:29:28.475Z
+TEXT: First the new rows, written to fail against the current code. They capture what the keeper expects right after Jump: the Extend ghost's handles up beside the landing's.
+--- L77036 assistant 2026-10-09T19:29:42.927Z
+TOOL_USE Write [toolu_01WHyB9i7zn8rJbxeX2p5ekR]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\lf\\row14d.txt","content":"test('row 14d (D278, the keeper: \"after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and height\"): right after Jump the Extend ghost\\'s handles are up BESIDE the landing\\'s four; an Extend handle types into its field and edits no document; a landing handle still moves the landing in ONE undo step; Extend fixes the landing, and its handles go', async () => {\n  con
+…[5166 chars cut]…
+ulpt target; the handles are the selected piece\\'s or none\n  P1.input('sculpt on').checked = true; P1.input('sculpt on').onchange(); settle(); assert.ok(!idsOf().some((i) => i.startsWith('land')), 'no landing arrows while sculpting');\n  P1.panel.unmount();\n});\n\n"}
+--- L77037 user 2026-10-09T19:29:42.965Z
+RESULT [toolu_01WHyB9i7zn8rJbxeX2p5ekR]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\lf\row14d.txt (file state is current in your context — no need to Read it back)
+--- L77038 assistant 2026-10-09T19:29:47.077Z
+TOOL_USE Bash [toolu_01NrR2CnLAEDrNyXCmZAkMEk]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && node -e '\nconst fs=require(\"fs\");const f=\"app/test/core-pieces-ui.test.js\";let s=fs.readFileSync(f,\"utf8\");\nconst add=fs.readFileSync(\"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/lf/row14d.txt\",\"utf8\");\nconst a=\"const gripsOf = (shell) =>\";if(s.split(a).length!==2)throw new Error(\"anchor\");\ns=s.replace(a,()=>add+a);fs.writeFileSync(f,s);console.log(\"inserted\")' && S=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-6
+…[77 chars cut]…
+w 14d|row 14e\" app/test/core-pieces-ui.test.js 2>&1 | sed 's/\\x1b\\[[0-9;]*m//g' | grep -E \"^✔|^✖|AssertionError|expected|actual|^ℹ (pass|fail)\" | cut -c1-300 | head -20","description":"Insert the new rows and confirm they fail on the current code","timeout":200000}
+--- L77045 user 2026-10-09T19:29:48.412Z
+RESULT [toolu_01NrR2CnLAEDrNyXCmZAkMEk]: inserted
+✖ row 14d (D278, the keeper: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and height"): right after Jump the Extend ghost's handles are up BESIDE the landing's four; an Extend handle types into its field and edit
+✖ row 14e (D278): a hover on Jump shows the jump ghost with no Extend handles on it, while a landing's own handles stay; a hover on Extend with a landing as the head shows the Extend ghost's handles; Sculpt takes the landing's handles away as before (381.6586ms)
+ℹ pass 0
+ℹ fail 2
+✖ failing tests:
+✖ row 14d (D278, the keeper: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and height"): right after Jump the Extend ghost's handles are up BESIDE the landing's four; an Extend handle types into its field and edit
+  AssertionError [ERR_ASSERTION]: and the Extend ghost's ten, as before the jump
+  + actual - expected
+    actual: [],
+    expected: [
+✖ row 14e (D278): a hover on Jump shows the jump ghost with no Extend handles on it, while a landing's own handles stay; a hover on Extend with a landing as the head shows the Extend ghost's handles; Sculpt takes the landing's handles away as before (381.6586ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+    actual: 4,
+    expected: 14,
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L77050 assistant 2026-10-09T19:30:03.865Z
+TOOL_USE Write [toolu_0159z82G8LrJNBjqqAW33KGR]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\lf\\fixpanel.js","content":"const fs = require('fs');\nconst f = 'C:/Users/nname/Desktop/worktrees/a-js-wt/app/core/panel.js';\nlet s = fs.readFileSync(f, 'utf8');\nconst once = (a, b) => { if (s.split(a).length !== 2) throw new Error('anchor not once: ' + a.slice(0, 80)); s = s.replace(a, () => b); };\n\nonce(\"  // D258: THE LANDING (the free jump): while it is the head, its four handles (forward, sideways, height, heading) are the ones on the track, and a drag is the s
+…[1670 chars cut]…
+eld's)\\n      return { ...G, mode: 'extend+landing', kinds: [...L.kinds, ...G.kinds], free: L.free, base: (k) => (LAND_FIELD[k] ? L.base(k) : G.base(k)), ctx: (k) => (LAND_FIELD[k] ? L.ctx(k) : G.ctx(k)) };\\n    },\");\n\nfs.writeFileSync(f, s); console.log('ok');\n"}
+--- L77051 user 2026-10-09T19:30:03.901Z
+RESULT [toolu_0159z82G8LrJNBjqqAW33KGR]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\lf\fixpanel.js (file state is current in your context — no need to Read it back)
+--- L77052 assistant 2026-10-09T19:30:06.011Z
+TOOL_USE Bash [toolu_01RQeYvZ1SYbKsnkEcSxLK1g]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && node \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/lf/fixpanel.js\" && node --test app/test/core-pieces-ui.test.js 2>&1 | sed 's/\\x1b\\[[0-9;]*m//g' | grep -E \"^✖|AssertionError|actual|expected|^ℹ (pass|fail)\" | cut -c1-260 | head -24","description":"Apply the fix and run the whole core-pieces-ui file","timeout":400000}
+--- L77053 user 2026-10-09T19:30:06.252Z
+RESULT [toolu_01RQeYvZ1SYbKsnkEcSxLK1g] ERROR: Exit code 1
+C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\lf\fixpanel.js:4
+const once = (a, b) => { if (s.split(a).length !== 2) throw new Error('anchor not once: ' + a.slice(0, 80)); s = s.replace(a, () => b); };
+                                                      ^
+
+Error: anchor not once:   // D258: THE LANDING (the free jump): while it is the head, its four handles (
+    at once (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\lf\fixpanel.js:4:61)
+    at Object.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\lf\fixpanel.js:6:1)
+[90m    at Module._compile (node:internal/modules/cjs/loader:1812:14)[39m
+[90m    at Object..js (node:internal/modules/cjs/loader:1943:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:1533:32)[39m
+[90m    at Module._load (node:internal/modules/cjs/loader:1335:12)[39m
+[90m    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)[39m
+[90m    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)[39m
+[90m    at node:internal/main/run_main_module:33:47[39m
+
+Node.js v24.14.1
+--- L77056 assistant 2026-10-09T19:30:12.235Z
+TOOL_USE Bash [toolu_01VGDWdHFnGNuX4qfV7baTrf]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && file app/core/panel.js | cut -c1-80; grep -c $'\\r' app/core/panel.js; git config core.autocrlf; node -e '\nconst fs=require(\"fs\");const p=\"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/lf/fixpanel.js\";let s=fs.readFileSync(p,\"utf8\");\ns=s.replace(\"let s = fs.readFileSync(f, \\x27utf8\\x27);\",\"let s = fs.readFileSync(f, \\x27utf8\\x27); const crlf = s.includes(\\x27\\\\r\\\\n\\x27); s = s.replace(/\\\\r\\\\n/g, \\x27\\\\n\\x27);\").replace(\"fs.writeFileSync(f, s); cons
+…[171 chars cut]…
+27);\");fs.writeFileSync(p,s)' && node \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/lf/fixpanel.js\"","description":"Make the edit script keep the file's line endings, then apply it"}
+--- L77063 user 2026-10-09T19:30:12.664Z
+RESULT [toolu_01VGDWdHFnGNuX4qfV7baTrf] ERROR: Exit code 1
+app/core/panel.js: Unicode text, UTF-8 text, with very long lines (711), with CR
+0
+true
+C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\lf\fixpanel.js:3
+let s = fs.readFileSync(f, 'utf8'); const crlf = s.includes('
+                                                            ^
+
+SyntaxError: Invalid or unexpected token
+[90m    at wrapSafe (node:internal/modules/cjs/loader:1743:18)[39m
+[90m    at Module._compile (node:internal/modules/cjs/loader:1786:20)[39m
+[90m    at Object..js (node:internal/modules/cjs/loader:1943:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:1533:32)[39m
+[90m    at Module._load (node:internal/modules/cjs/loader:1335:12)[39m
+[90m    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)[39m
+[90m    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)[39m
+[90m    at node:internal/main/run_main_module:33:47[39m
+
+Node.js v24.14.1
+--- L77067 assistant 2026-10-09T19:30:22.196Z
+TOOL_USE Write [toolu_01JiChUmXmwgra3cQLxNxSD1]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\lf\\fixpanel.js","content":"const fs = require('fs');\nconst f = 'C:/Users/nname/Desktop/worktrees/a-js-wt/app/core/panel.js';\nconst raw = fs.readFileSync(f, 'utf8');\nconst nCR = (raw.match(/\\r/g) || []).length, nLF = (raw.match(/\\n/g) || []).length;\nconsole.log('CR', nCR, 'LF', nLF);\nconst crlf = nCR > 0 && nCR >= nLF - 2;   // a CRLF file (a stray lone CR elsewhere does not make it one)\nlet s = crlf ? raw.replace(/\\r\\n/g, '\\n') : raw;\nconst once = (a, b) => {
+…[2031 chars cut]…
+...G.kinds], free: L.free, base: (k) => (LAND_FIELD[k] ? L.base(k) : G.base(k)), ctx: (k) => (LAND_FIELD[k] ? L.ctx(k) : G.ctx(k)) };\\n    },\");\n\nfs.writeFileSync(f, crlf ? s.replace(/\\n/g, '\\r\\n') : s);\nconsole.log('ok', crlf ? '(CRLF kept)' : '(LF kept)');\n"}
+--- L77068 user 2026-10-09T19:30:22.229Z
+RESULT [toolu_01JiChUmXmwgra3cQLxNxSD1]: The file C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\lf\fixpanel.js has been updated successfully. (file state is current in your context — no need to Read it back)
+--- L77069 assistant 2026-10-09T19:30:23.630Z
+TOOL_USE Bash [toolu_01QvF6gpgvbv6bGnVCAwuXxV]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && git diff --stat | tail -3; node \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/lf/fixpanel.js\" && git diff --stat | tail -4","description":"Apply the panel fix preserving line endings"}
+--- L77070 user 2026-10-09T19:30:24.079Z
+RESULT [toolu_01QvF6gpgvbv6bGnVCAwuXxV]: warning: in the working copy of 'app/test/core-pieces-ui.test.js', LF will be replaced by CRLF the next time Git touches it
+ app/test/core-pieces-ui.test.js | 42 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
+CR [33m459[39m LF [33m459[39m
+ok (CRLF kept)
+warning: in the working copy of 'app/test/core-pieces-ui.test.js', LF will be replaced by CRLF the next time Git touches it
+ app/core/panel.js               | 14 +++++++++++---
+ app/test/core-pieces-ui.test.js | 42 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 53 insertions(+), 3 deletions(-)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L77079 assistant 2026-10-09T19:30:27.996Z
+TOOL_USE Bash [toolu_01TF3Mt8PQspqYEBezwmZzg7]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && node --test app/test/core-pieces-ui.test.js 2>&1 | sed 's/\\x1b\\[[0-9;]*m//g' | grep -E \"^✖|AssertionError|^  *actual|^  *expected|^ℹ (pass|fail)\" | cut -c1-280 | head -24","description":"Run the whole core-pieces-ui file after the fix","timeout":400000}
+--- L77080 user 2026-10-09T19:30:44.254Z
+RESULT [toolu_01TF3Mt8PQspqYEBezwmZzg7]: ✖ row 14c: the landing's four handles replace the Extend ghost's; a drag moves the number of its box in ONE undo step; Shift is fine, Ctrl snaps; two quick presses reset one; an Extend takes them away (73.7286ms)
+✖ row 14d (D278, the keeper: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and height"): right after Jump the Extend ghost's handles are up BESIDE the landing's four; an Extend handle types int
+ℹ pass 37
+ℹ fail 2
+✖ failing tests:
+✖ row 14c: the landing's four handles replace the Extend ghost's; a drag moves the number of its box in ONE undo step; Shift is fine, Ctrl snaps; two quick presses reset one; an Extend takes them away (73.7286ms)
+  AssertionError [ERR_ASSERTION]: the four landing handles, none of the Extend ghost's
+    actual: [
+    expected: [ 'landfwd:0', 'landleft:0', 'landup:0', 'landturn:0' ],
+✖ row 14d (D278, the keeper: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and height"): right after Jump the Extend ghost's handles are up BESIDE the landing's four; an Extend handle types int
+  AssertionError [ERR_ASSERTION]: the Extend fields are untouched
+    actual: '0',
+    expected: '3.3',
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L77084 assistant 2026-10-09T19:31:03.602Z
+TOOL_USE Bash [toolu_01WAdbAqBCB4QMeCELqPQqkA]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && grep -n \"const commit = \\|function commit\\|lastStep: { op\" app/core/coreshell.js | head -6 | cut -c1-260; grep -n \"const showHead\" -A6 app/core/panel.js | cut -c1-240 | head -12","description":"Check how lastStep.op is set and what showHead refills"}
+--- L77085 user 2026-10-09T19:31:03.887Z
+RESULT [toolu_01WAdbAqBCB4QMeCELqPQqkA]: 238:  const commit = (op, make, extra = {}) => attempt(() => {
+240:    return set({ history: D.commit(st.history, d), ...r, dirty: true, message: null, lastStep: { op, ms }, ...extra });
+320:      return attempt(() => { const t0 = now(), h = D.dragTo(st.history, d), r = resolvedOf(d); return set({ history: h, ...r, dirty: true, lastStep: { op: 'landing', ms: now() - t0 }, message: null }); });
+403:        return set({ history: h, ...r, ...keep, brush: { ...b, delta, rUsed: used }, dirty: true, lastStep: { op: `brush:${b.mode}`, ms }, message: note, messageKind: note ? 'ok' : null });
+429:        return set({ history: D.commit(st.history, res.doc), ...r, dirty: true, lastStep: { op: 'close', ms: now() - t0 }, ...ok(`loop closed: ${res.report}`) });
+468:      return set({ history: D.commit(st.history, p.doc), resolved: p.resolved, resolveError: null, dirty: true, closeProposal: null, lastStep: { op: 'close', ms: p.ms }, ...ok(`loop closed: ${p.report}`) });
+125:  const showHead = () => { const h = shell.headState(); for (const [k, [input, of]] of Object.entries(HEAD)) { shown[k] = show(of(h)); input.value = shown[k]; } for (const [k, f] of [['cup', cup], ['tube', tube]]) { f.disabled = false; 
+126-  // A PIECE IS A CUP OR A TUBE, never both (A's contract: `c` and `t` targets together are refused BAD_TARGET). CHOSEN: the field changed
+127-  // LAST wins. Changing one puts the other back to what it shows (so it sends no target) and DISABLES it, with a tooltip saying why; putting
+128-  // the changed one back to its shown value enables the other again, and so does every new document (showHead).
+129-  const ONE_OF = 'a piece is a cup or a tube, not both: put the other field back to its shown value to use this one';
+130-  const baseTitle = { cup: cup.getAttribute('title'), tube: tube.getAttribute('title') };
+131-  const exclusive = (changed) => {
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L77090 assistant 2026-10-09T19:31:12.607Z
+TOOL_USE Write [toolu_01R5LevEzmvBzLquFaCrg1qo]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\lf\\fixpanel2.js","content":"const fs = require('fs');\nconst f = 'C:/Users/nname/Desktop/worktrees/a-js-wt/app/core/panel.js';\nconst raw = fs.readFileSync(f, 'utf8');\nconst crlf = (raw.match(/\\r/g) || []).length > 0;\nlet s = crlf ? raw.replace(/\\r\\n/g, '\\n') : raw;\nconst once = (a, b) => { if (s.split(a).length !== 2) throw new Error('anchor not once: ' + a.slice(0, 80)); s = s.replace(a, () => b); };\n\nonce(\"      showGrip(); showHead(); if (undone) putBack(m.
+…[808 chars cut]…
+ue = v; if (cup.value !== shown.cup) exclusive(cup); else if (tube.value !== shown.tube) exclusive(tube); }\\n\" +\n  \"      shownFor = d;\\n\");\n\nfs.writeFileSync(f, crlf ? s.replace(/\\n/g, '\\r\\n') : s);\nconsole.log('ok', crlf ? '(CRLF kept)' : '(LF kept)');\n"}
+--- L77091 user 2026-10-09T19:31:12.640Z
+RESULT [toolu_01R5LevEzmvBzLquFaCrg1qo]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\lf\fixpanel2.js (file state is current in your context — no need to Read it back)
+--- L77092 assistant 2026-10-09T19:31:14.570Z
+TOOL_USE Bash [toolu_01ErVpBVzUCEE5XYf9yQkmSU]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && node \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/lf/fixpanel2.js\" && node --test app/test/core-pieces-ui.test.js 2>&1 | sed 's/\\x1b\\[[0-9;]*m//g' | grep -E \"^✖|AssertionError|^  *actual|^  *expected|^ℹ (pass|fail)\" | cut -c1-280 | head -24","description":"Keep un-applied Extend fields across a landing move, then rerun the file","timeout":400000}
+--- L77099 user 2026-10-09T19:31:32.383Z
+RESULT [toolu_01ErVpBVzUCEE5XYf9yQkmSU]: ok (CRLF kept)
+✖ row 14c: the landing's four handles replace the Extend ghost's; a drag moves the number of its box in ONE undo step; Shift is fine, Ctrl snaps; two quick presses reset one; an Extend takes them away (75.8154ms)
+ℹ pass 38
+ℹ fail 1
+✖ failing tests:
+✖ row 14c: the landing's four handles replace the Extend ghost's; a drag moves the number of its box in ONE undo step; Shift is fine, Ctrl snaps; two quick presses reset one; an Extend takes them away (75.8154ms)
+  AssertionError [ERR_ASSERTION]: the four landing handles, none of the Extend ghost's
+    actual: [
+    expected: [ 'landfwd:0', 'landleft:0', 'landup:0', 'landturn:0' ],
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L77103 assistant 2026-10-09T19:31:38.274Z
+TEXT: Rows 14d and 14e pass. The only failure is row 14c, whose assertion encodes the superseded "replace" design. I'm updating those assertions to the new behaviour and noting the change in the hand-back.
+--- L77104 assistant 2026-10-09T19:31:43.009Z
+TOOL_USE Write [toolu_013HQ2rYJMiuVx52zVS86mwZ]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\lf\\fix14c.js","content":"const fs = require('fs');\nconst f = 'C:/Users/nname/Desktop/worktrees/a-js-wt/app/test/core-pieces-ui.test.js';\nconst raw = fs.readFileSync(f, 'utf8');\nlet s = raw.replace(/\\r\\n/g, '\\n');\nconst once = (a, b) => { if (s.split(a).length !== 2) throw new Error('anchor not once: ' + a.slice(0, 90)); s = s.replace(a, () => b); };\nonce(\"test('row 14c: the landing\\\\'s four handles replace the Extend ghost\\\\'s; a drag moves\",\n  \"test('row
+…[908 chars cut]…
+equal(P1.panel.handles.handles().length, 4, 'back on the landing');\",\n  \"assert.equal(P1.panel.handles.handles().filter((h) => h.kind.startsWith('land')).length, 4, 'back on the landing');\");\nfs.writeFileSync(f, s.replace(/\\n/g, '\\r\\n'));\nconsole.log('ok');\n"}
+--- L77105 user 2026-10-09T19:31:43.043Z
+RESULT [toolu_013HQ2rYJMiuVx52zVS86mwZ]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\lf\fix14c.js (file state is current in your context — no need to Read it back)
+--- L77106 assistant 2026-10-09T19:31:45.258Z
+TOOL_USE Bash [toolu_015jZRBNRfdPf5h8sNAJSiB7]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && git stash list | head -1; git diff --stat | tail -3; node \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/lf/fix14c.js\" && git diff --stat | tail -3; node --test app/test/core-pieces-ui.test.js 2>&1 | sed 's/\\x1b\\[[0-9;]*m//g' | grep -E \"^✖|AssertionError|^ℹ (pass|fail)\" | cut -c1-200","description":"Update row 14c's superseded assertions and rerun","timeout":400000}
+--- L77107 user 2026-10-09T19:32:03.791Z
+RESULT [toolu_015jZRBNRfdPf5h8sNAJSiB7]: warning: in the working copy of 'app/test/core-pieces-ui.test.js', LF will be replaced by CRLF the next time Git touches it
+ app/core/panel.js               | 21 +++++++++++++++++----
+ app/test/core-pieces-ui.test.js | 42 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+), 4 deletions(-)
+ok
+ app/core/panel.js               | 21 +++++++++++++----
+ app/test/core-pieces-ui.test.js | 50 +++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 63 insertions(+), 8 deletions(-)
+ℹ pass 39
+ℹ fail 0
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L77111 assistant 2026-10-09T19:32:08.567Z
+TEXT: All 39 rows pass. Now a mutant check on the fix, to see whether the new rows can actually fail.
+--- L77112 assistant 2026-10-09T19:32:16.051Z
+TOOL_USE Write [toolu_01BjzP1kXPw3DyG2AmdsnZsT]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\lf\\mut_panel.js","content":"// ad hoc mutants of the D278 changes in app/core/panel.js; each must turn app/test/core-pieces-ui.test.js red.\nconst fs = require('fs'), { spawnSync } = require('child_process');\nconst W = 'C:/Users/nname/Desktop/worktrees/a-js-wt/';\nconst F = W + 'app/core/panel.js';\nconst src = fs.readFileSync(F, 'utf8');\nconst M = [\n  ['landing only (the old behaviour)', \"const G = ghostModel(); if (!G) return L;\", \"const G = null; if (!G) return 
+…[1921 chars cut]…
+i.test.js'], { cwd: W, encoding: 'utf8', timeout: 300000 });\n    const red = r.status !== 0; if (red) caught++;\n    console.log((red ? 'caught  ' : 'SURVIVED') + ' ' + name);\n  }\n} finally { fs.writeFileSync(F, src); }\nconsole.log(`${caught} of ${ran} caught`);\n"}
+--- L77113 user 2026-10-09T19:32:16.086Z
+RESULT [toolu_01BjzP1kXPw3DyG2AmdsnZsT]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\lf\mut_panel.js (file state is current in your context — no need to Read it back)
+--- L77114 assistant 2026-10-09T19:32:17.677Z
+TOOL_USE Bash [toolu_01JqkMohdpEyn2gygQm2ndy1]: {"command":"node \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/lf/mut_panel.js\" 2>&1 | tail -n 16; cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && git diff --stat | tail -3","description":"Run the panel mutants","timeout":900000}
+--- L77121 user 2026-10-09T19:32:17.996Z
+RESULT [toolu_01JqkMohdpEyn2gygQm2ndy1]: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\lf\mut_panel.js:10
+  ['base always the landing\\'s', "base: (k) => (LAND_FIELD[k] ? L.base(k) : G.base(k)), ctx", "base: (k) => L.base(k), ctx"],
+                              ^
+
+SyntaxError: Unexpected identifier 's'
+[90m    at wrapSafe (node:internal/modules/cjs/loader:1743:18)[39m
+[90m    at Module._compile (node:internal/modules/cjs/loader:1786:20)[39m
+[90m    at Object..js (node:internal/modules/cjs/loader:1943:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:1533:32)[39m
+[90m    at Module._load (node:internal/modules/cjs/loader:1335:12)[39m
+[90m    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)[39m
+[90m    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)[39m
+[90m    at node:internal/main/run_main_module:33:47[39m
+
+Node.js v24.14.1
+ app/core/panel.js               | 21 +++++++++++++----
+ app/test/core-pieces-ui.test.js | 50 +++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 63 insertions(+), 8 deletions(-)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L77124 assistant 2026-10-09T19:32:22.768Z
+TOOL_USE Bash [toolu_01A687s5JRVJpqBd8QFkaLiD]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/lf && sed -i \"s/'base always the landing\\\\\\\\\\\\\\\\'s'/'base always the landing'/; s/'base always the field\\\\\\\\\\\\\\\\'s'/'base always the field'/; s/'ctx always the ghost\\\\\\\\\\\\\\\\'s'/'ctx always the ghost'/\" mut_panel.js && grep -n \"always\" mut_panel.js | cut -c1-90 && node mut_panel.js 2>&1 | tail -n 16; cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && git diff --stat | tail -2","description":"Fix the mutant names and run the panel mutants","timeout":900000}
+--- L77125 user 2026-10-09T19:32:23.182Z
+RESULT [toolu_01A687s5JRVJpqBd8QFkaLiD]: 10:  ['base always the landing\\'s', "base: (k) => (LAND_FIELD[k] ? L.base(k) : G.base(k))
+11:  ['base always the field\\'s', "base: (k) => (LAND_FIELD[k] ? L.base(k) : G.base(k)), 
+12:  ['ctx always the ghost\\'s', "ctx: (k) => (LAND_FIELD[k] ? L.ctx(k) : G.ctx(k)) };", 
+C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\lf\mut_panel.js:10
+  ['base always the landing\\'s', "base: (k) => (LAND_FIELD[k] ? L.base(k) : G.base(k)), ctx", "base: (k) => L.base(k), ctx"],
+                              ^
+
+SyntaxError: Unexpected identifier 's'
+[90m    at wrapSafe (node:internal/modules/cjs/loader:1743:18)[39m
+[90m    at Module._compile (node:internal/modules/cjs/loader:1786:20)[39m
+[90m    at Object..js (node:internal/modules/cjs/loader:1943:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:1533:32)[39m
+[90m    at Module._load (node:internal/modules/cjs/loader:1335:12)[39m
+[90m    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)[39m
+[90m    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)[39m
+[90m    at node:internal/main/run_main_module:33:47[39m
+
+Node.js v24.14.1
+ app/test/core-pieces-ui.test.js | 50 +++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 63 insertions(+), 8 deletions(-)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L77128 assistant 2026-10-09T19:32:26.619Z
+TOOL_USE Read [toolu_01BhktSAtTumTcR2RRQnwut5]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\lf\\mut_panel.js","offset":10,"limit":3}
+--- L77129 user 2026-10-09T19:32:26.643Z
+RESULT [toolu_01BhktSAtTumTcR2RRQnwut5]: 10	  ['base always the landing\\'s', "base: (k) => (LAND_FIELD[k] ? L.base(k) : G.base(k)), ctx", "base: (k) => L.base(k), ctx"],
+11	  ['base always the field\\'s', "base: (k) => (LAND_FIELD[k] ? L.base(k) : G.base(k)), ctx", "base: (k) => G.base(k), ctx"],
+12	  ['ctx always the ghost\\'s', "ctx: (k) => (LAND_FIELD[k] ? L.ctx(k) : G.ctx(k)) };", "ctx: (k) => G.ctx(k) };"],
+--- L77131 assistant 2026-10-09T19:32:30.926Z
+TOOL_USE Edit [toolu_01VWgiexufgvEfE37fxiz5Sn]: {"replace_all":false,"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\lf\\mut_panel.js","old_string":"  ['base always the landing\\\\'s', \"base: (k) => (LAND_FIELD[k] ? L.base(k) : G.base(k)), ctx\", \"base: (k) => L.base(k), ctx\"],\n  ['base always the field\\\\'s', \"base: (k) => (LAND_FIELD[k] ? L.base(k) : G.base(k)), ctx\", \"base: (k) => G.base(k), ctx\"],\n  ['ctx always the ghost\\\\'s', \"ctx: (k) => (LAND_FIELD[k] ? L.ctx(k) : G.ctx(k)) };\", \"ctx: (k) => G.ctx(k) };\"],","new_string":"  ['base always the la
+…[90 chars cut]…
+L.base(k), ctx\"],\n  ['base always the field one', \"base: (k) => (LAND_FIELD[k] ? L.base(k) : G.base(k)), ctx\", \"base: (k) => G.base(k), ctx\"],\n  ['ctx always the ghost one', \"ctx: (k) => (LAND_FIELD[k] ? L.ctx(k) : G.ctx(k)) };\", \"ctx: (k) => G.ctx(k) };\"],"}
+--- L77132 user 2026-10-09T19:32:30.965Z
+RESULT [toolu_01VWgiexufgvEfE37fxiz5Sn]: The file C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\lf\mut_panel.js has been updated successfully.
+--- L77133 assistant 2026-10-09T19:32:32.443Z
+TOOL_USE Bash [toolu_01Q4xUHAYam6KEUtf29X1uVj]: {"command":"node \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/lf/mut_panel.js\" 2>&1 | tail -n 16; cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && git diff --stat | tail -2","description":"Run the panel mutants","timeout":900000}
+--- L77140 user 2026-10-09T19:35:29.109Z
+RESULT [toolu_01Q4xUHAYam6KEUtf29X1uVj]: caught   landing only (the old behaviour)
+caught   ghost only when a landing exists
+caught   landing kinds missing free frame
+caught   base always the landing one
+caught   base always the field one
+SURVIVED ctx always the ghost one
+caught   sculpt falls through to landing
+caught   keep disabled
+caught   keep on every step
+SURVIVED keep also when undone
+SURVIVED keep restores all fields
+8 of 11 caught
+ app/test/core-pieces-ui.test.js | 50 +++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 63 insertions(+), 8 deletions(-)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L77144 assistant 2026-10-09T19:35:42.445Z
+TOOL_USE Bash [toolu_011auDbU7rDdzsZuBwRBBPEU]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && grep -n \"undo()\\|redo()\" app/core/coreshell.js | head -4 | cut -c1-280; grep -n \"headState\" app/core/coreshell.js | head -2 | cut -c1-200","description":"Check whether Undo resets lastStep and what headState returns"}
+--- L77145 user 2026-10-09T19:35:42.722Z
+RESULT [toolu_011auDbU7rDdzsZuBwRBBPEU]: 7://   shell.extend({ length, targets })   shell.candidate({ length, targets })   shell.undo()   shell.redo()
+355:    headState() {
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L77147 assistant 2026-10-09T19:35:44.801Z
+TOOL_USE Bash [toolu_01ARX7G4VMXJ1MRE7p72z1zd]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && grep -n \"undo\\b\\|undo:\" app/core/coreshell.js | sed -n 1,8p | cut -c1-300","description":"Find the undo implementation in the shell"}
+--- L77148 user 2026-10-09T19:35:45.023Z
+RESULT [toolu_01ARX7G4VMXJ1MRE7p72z1zd]: 7://   shell.extend({ length, targets })   shell.candidate({ length, targets })   shell.undo()   shell.redo()
+8://   shell.beginBrush({ mode, channel, s0, r })   shell.brushTo(delta)   shell.endBrush()      one undo step per drag
+13://   (D272: save also writes the undo history beside the track, open reads it back: see UNDO_CAP below)
+29://   state.history.present is the CORE document (src/core/document.js), with its own undo history.
+85:// D272 (the keeper, 11:55: "when you save a track, but then close program, reopen and go back to it, you cannot undo pieces of the track ... not cool"): THE UNDO HISTORY SURVIVES SAVE AND RESTART.
+86:// Save writes a SIDECAR, storage.saveUndo(PREFIX + name, text), beside the track (natively eq-<name>.t180undo; the track file is unchanged, so share codes, exports and older builds read it as ever):
+87:// { schema: 1, kind: 'core-undo', present, past: [...], future: [...] }, every document D.serialize'd, the last UNDO_CAP steps (the past's newest, the future's nearest). Open restores it ONLY when its
+89:// the track with no history and says so once. The autosave carries the same text in its `undo` field, so Restore after a crash can undo too.
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L77153 assistant 2026-10-09T19:35:58.899Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Write [toolu_01S4Dt4sx7f8TecHqwk1XRpE]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\lf\\fix14d2.js","content":"const fs = require('fs');\nconst f = 'C:/Users/nname/Desktop/worktrees/a-js-wt/app/test/core-pieces-ui.test.js';\nlet s = fs.readFileSync(f, 'utf8').replace(/\\r\\n/g, '\\n');\nconst once = (a, b) => { if (s.split(a).length !== 2) throw new Error('anchor not once: ' + a.slice(0, 90)); s = s.replace(a, () => b); };\nonce(\"  // 5  Extend places the piece the fields (and the dragged handles) describe, FIXES the landing\",\n  \"  // 4b what was typed or dragged into the Extend fields survives a landing move (the move is a new document, and the panel used to refill every field from the head); a field nobody touched follows the head\\n\" +\n  \"  const bank = fieldOf(P1, 'bank °'), bank0 = bank.value, turnKept = turn.value, lenKept = len.value; assert.notEqual(turnKept, String(t0), 'control: the turn field holds the dragged value');\\n\" +\n  \"  LB('bank').value = '6'; LB('bank').onchange(); settle(); assert.equal(turn.value, turnKept, 'the dragged turn survived the landing move'); assert.equal(len.value, lenKept, 'and the dragged length');\\n\" +\n  \"  assert.notEqual(bank.value, bank0, 'the bank nobody typed follows the head: the landing road\\\\'s bank moved with the landing\\\\'s'); assert.equal(idsOf().length, 14);\\n\" +\n  \"  // 5  Extend places the piece the fields (and the dragged handles) describe, FIXES the landing\");\nfs.writeFileSync(f, s.replace(/\\n/g, '\\r\\n')); console.log('ok');\n"}
+--- L77154 user 2026-10-09T19:35:58.933Z
+RESULT [toolu_01S4Dt4sx7f8TecHqwk1XRpE]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\lf\fix14d2.js (file state is current in your context — no need to Read it back)
+--- L77155 assistant 2026-10-09T19:36:02.170Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_01AR5fyc1rrhPhow145PYMAT]: {"command":"cd \"C:/Users/nname/Desktop/worktrees/a-js-wt\" && node \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/lf/fix14d2.js\" && node --test app/test/core-pieces-ui.test.js 2>&1 | sed 's/\\x1b\\[[0-9;]*m//g' | grep -E \"^✖|AssertionError|^  *actual|^  *expected|^ℹ (pass|fail)\" | cut -c1-240; node \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/lf/mut_panel.js\" 2>&1 | grep -E \"SURVIVED|caught$|of \"","description":"Add the field-survival row, rerun the file and the mutants","timeout":900000}

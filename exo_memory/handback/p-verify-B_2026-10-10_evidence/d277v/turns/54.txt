@@ -1,0 +1,61 @@
+MESSAGE 54  msg_011CfnWPr63CyQHtvgVDpJF3  seat C  ts 2026-10-07T07:47:46.113Z  turn L57075..L57102 (next prompt L57139)
+CLAIMS:
+  [msg_011CfnWPr63CyQHtvgVDpJF3|3] "Seat C (pane C)": check the seat or pane assignment record.
+  [msg_011CfnWPr63CyQHtvgVDpJF3|18] "(the button's name since D250)": check the decision log or git history.
+  [msg_011CfnWPr63CyQHtvgVDpJF3|19] "On 2b929c2": check that this commit exists and is the one the tests ran on.
+
+--- L57075 user 2026-10-07T07:46:19.639Z
+USER: [chair:MAIN] D264 is ON main: t180 2b929c2 (a fast-forward of e17a73e; B's CHANGELOG entry is under [Unreleased]). Rebase your prepared 0.3.0 tree onto 2b929c2 now, so that entry lands inside [0.3.0], and make the ONE commit, naming the paths. Re-run your 111 targeted tests on the rebased tree, then hand back with the sha.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-release030-C_2026-10-07.md · `git log -1 --format="%h %s" main`
+NEXT: librarian call_librarian with the hand-back pointer and the 0.3.0 commit sha when it is committed on 2b929c2
+--- L57087 assistant 2026-10-07T07:46:25.459Z
+TEXT: The changes are uncommitted, and the stash list is shared across seats (B's stash slip). So I'll carry them as a patch file instead of stashing: save the diff, fast-forward to 2b929c2, then apply it with a 3-way merge.
+--- L57088 assistant 2026-10-07T07:46:29.834Z
+TOOL_USE Bash [toolu_016uZ453i2TKqBCXRZJHxWNt]: {"command":"P=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/rel/v030.patch; cd /c/Users/nname/Desktop/worktrees/c-release030-wt && git log -1 --format=\"%h %s\" main && git diff --binary > $P && wc -l $P && git checkout -- CHANGELOG.md README.md docs/RELEASE.md src-tauri/Cargo.lock src-tauri/Cargo.toml src-tauri/tauri.conf.json && git status --short && git merge -q --ff-only 2b929c2 && git log --oneline -1 && git apply --3way $P; echo apply exit $?; git status --short; git diff --stat","description":"Move prepared changes onto 2b929c2 via patch"}
+--- L57089 user 2026-10-07T07:46:30.613Z
+RESULT [toolu_016uZ453i2TKqBCXRZJHxWNt]: 2b929c2 D264: Export to Assetto Corsa on an open track installs the TEST export (t180b_<name>_test) instead of refusing
+123 /c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/rel/v030.patch
+2b929c2 D264: Export to Assetto Corsa on an open track installs the TEST export (t180b_<name>_test) instead of refusing
+Applied patch to 'CHANGELOG.md' cleanly.
+Applied patch to 'README.md' cleanly.
+Applied patch to 'docs/RELEASE.md' cleanly.
+Applied patch to 'src-tauri/Cargo.lock' cleanly.
+Applied patch to 'src-tauri/Cargo.toml' cleanly.
+Applied patch to 'src-tauri/tauri.conf.json' cleanly.
+apply exit 0
+M  CHANGELOG.md
+M  README.md
+M  docs/RELEASE.md
+M  src-tauri/Cargo.lock
+M  src-tauri/Cargo.toml
+M  src-tauri/tauri.conf.json
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L57094 assistant 2026-10-07T07:46:33.059Z
+TEXT: Applied cleanly on 2b929c2. Checking that B's D264 entry now sits inside `[0.3.0]` and that `[Unreleased]` is empty:
+--- L57095 assistant 2026-10-07T07:46:34.398Z
+TOOL_USE Bash [toolu_012WUD4DDroF2utCA6peSvcV]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-release030-wt && grep -n \"^## \\|D264\" CHANGELOG.md | head -6 | cut -c1-160; git grep -n -F \"0.2.2\" -- src-tauri | cut -c1-80","description":"Verify D264 entry position and versions"}
+--- L57096 user 2026-10-07T07:46:34.682Z
+RESULT [toolu_012WUD4DDroF2utCA6peSvcV]: 6:## [Unreleased]
+8:## [0.3.0] - 2026-10-07
+58:- **Export to Assetto Corsa works on an unfinished track: it goes in as a TEST export instead of being refused (D264; the keeper: "it still says the loop is 
+272:## [0.2.2] - 2026-09-28
+279:## [0.2.1] - 2026-09-27
+346:## [0.2.0] - 2026-09-27
+src-tauri/Cargo.lock:1851:version = "0.2.2"
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L57098 assistant 2026-10-07T07:46:36.976Z
+TEXT: B's D264 entry is at line 58, inside `[0.3.0]` (lines 8–271), and `[Unreleased]` is empty. Re-running the targeted tests and the Cargo lock check on the rebased tree, under the lock:
+--- L57099 assistant 2026-10-07T07:46:42.237Z
+TOOL_USE Bash [toolu_0174RVP2pcrsFX16TWgV1DFW]: {"command":"S=C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; W=C:/Users/nname/Desktop/worktrees/c-release030-wt; for k in $(seq 1 20); do node $S/lockrun.js \"D265 0.3.0 targeted on 2b929c2\" $S/rel/run3.log -- \"cd $W && set -o pipefail && node --test --test-concurrency=1 test/release.test.js app/test/guides.test.js app/test/shell-dist.test.js app/test/closer.test.js app/test/core-eqonly.test.js app/test/export.test.js 2>&1 | grep -E 'ℹ (tests|pass|fail|todo|skipped)|^✖|not ok'; cd src-tauri && /c/Users/nname/.cargo/bin/cargo.exe metadata 
+…[89 chars cut]…
+=require('$S/rel/meta.json').packages[0];console.log('cargo-locked-ok',p.name,p.version)\\\"\"; e=$?; [ $e -ne 3 ] && break; done; grep -vE '^(\\$|== D265)' $S/rel/run3.log | tail -8","description":"Re-run targeted tests and lock check on rebased tree","timeout":600000}
+--- L57100 user 2026-10-07T07:47:35.935Z
+RESULT [toolu_0174RVP2pcrsFX16TWgV1DFW]: [34mℹ tests 111[39m
+[34mℹ pass 111[39m
+[34mℹ fail 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+cargo-locked-ok t180-track-builder 0.3.0
+== exit 0 · done 2026-10-07T07:47:35.872Z
+--- L57102 assistant 2026-10-07T07:47:46.113Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_01AKKZHKFQJQjdsjSq7HF7Yr]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-release030-wt && git commit -q -F - -- CHANGELOG.md README.md docs/RELEASE.md src-tauri/Cargo.lock src-tauri/Cargo.toml src-tauri/tauri.conf.json <<'EOF' && git log --oneline -2 && git status --short\nVersion 0.3.0: the first GitHub release (D265 step 2)\n\nSeat C (pane C), at the keeper's 01:39 (\"can you make a release exe for\nthe repo of the newest version\"); plan\nexo_memory/loop/plan_t180_release_030_2026-10-07.md. DOC tier, no code.\n\n- tauri.conf.json, Cargo.toml and the t180-track-builder entry of\n  Cargo.lock: 0.2.2 -> 0.3.0 (num-conv's own 0.2.2 in Cargo.lock is left\n  as is). `cargo metadata --locked` agrees.\n- CHANGELOG: [Unreleased] -> [0.3.0] - 2026-10-07 with a fresh empty\n  [Unreleased], so D264's entry is inside 0.3.0. The sentence \"No\n  installer is built from this yet: 0.2.2 below is still the one to\n  install\" is amended, so the 0.3.0 notes do not send people to 0.2.2.\n- README Install: 0.3.0 is the current installer, linking the v0.3.0\n  release; STATUS_0.2.2.md is named as the older release's record.\n- docs/RELEASE.md: retitled 0.3.0, the installer path is 0.3.0, \"The first\n  installer\" -> \"The installer\", and \"Install to AC\" -> \"Export to\n  Assetto Corsa\" (the button's name since D250).\n\nOn 2b929c2, under the heavy-run lock: test/release, app/test/guides,\nshell-dist, closer, core-eqonly, export: 111/111.\n\nCo-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_017jVCxaAah7YfDwfSsgsdXy\nEOF","description":"Make the single 0.3.0 commit by named paths"}

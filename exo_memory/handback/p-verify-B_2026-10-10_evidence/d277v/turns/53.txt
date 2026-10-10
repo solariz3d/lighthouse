@@ -1,0 +1,83 @@
+MESSAGE 53  msg_011CfnVtWZyaN2mXJQ7MD3eJ  seat chair  ts 2026-10-07T07:41:02.360Z  turn L94698..L94722 (next prompt L94732)
+CLAIMS:
+  [msg_011CfnVtWZyaN2mXJQ7MD3eJ|2] Check that D265 is the right decision/task ID and that it's still active, in the plan file or loop records.
+  [msg_011CfnVtWZyaN2mXJQ7MD3eJ|20] Check the changelog itself, or the plan's changelog step.
+
+--- L94698 user 2026-10-07T07:40:37.533Z
+USER: 
+
+<pasted_content id="f5af">
+[librarian:LIB] D265, the keeper at 01:39: "can you make a release exe for the repo of the newest version". Plan: exo_memory/loop/plan_t180_release_030_2026-10-07.md. GitHub has NO releases yet, and the app still says 0.2.2.
+1. Wait for D264 (the first public installer shouldn't ship the open-track export refusal he just hit).
+2. C bumps to 0.3.0 in one DOC commit: every file carrying 0.2.2 (tauri.conf.json, Cargo.toml, …); CHANGELOG [Unreleased] → [0.3.0] - 2026-10-07; the README Install section points at the GitHub release; docs/RELEASE.md retitled.
+3. I build from a fresh worktree (release.cjs with its private-path scan), run the suite, `gh release create v0.3.0` with the NSIS installer, install, and push.
+
+SOURCES: `Get-Content C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_release_030_2026-10-07.md -TotalCount 3`
+
+OUTPUT → NEXT: changed — D265 (the first GitHub release) is queued behind D264
+NEXT: chair dispatch D265 step 2 to C when D264 has landed
+</pasted_content id="f5af">
+
+--- L94708 assistant 2026-10-07T07:40:41.164Z
+TOOL_USE Read [toolu_014rfRskkEkWYeYjqDJEPy5G]: {"file_path":"C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\loop\\plan_t180_release_030_2026-10-07.md"}
+--- L94709 user 2026-10-07T07:40:41.192Z
+RESULT [toolu_014rfRskkEkWYeYjqDJEPy5G]: 1	# T-180: the first GitHub release with an installer, v0.3.0. Librarian, on D, 2026-10-07 01:4x. Lap D265.
+2	
+3	The keeper, 01:39: "can you make a release exe for the repo of the newest version".
+4	
+5	## State (checked)
+6	- `gh release list --repo solariz3d/t180-track-builder` → **no releases** on GitHub yet.
+7	- The app still calls itself **0.2.2** (the installer is `T-180 Track Builder_0.2.2_x64-setup.exe`); the README says "the last released
+8	  installer is 0.2.2 … most of what this page describes came after it" and points at `[Unreleased]` in CHANGELOG.md. `docs/RELEASE.md` is
+9	  titled 0.2.2.
+10	
+11	## The lap
+12	1. **Wait for D264** (Export to Assetto Corsa on an unfinished track does the test export into AC): the keeper hit that bug at 01:34, so the
+13	   first public installer should not ship it.
+14	2. **Version 0.3.0, one commit (C, who wrote the README; DOC tier):** `src-tauri/tauri.conf.json` and `src-tauri/Cargo.toml` (and any other
+15	   file that carries the version: grep for 0.2.2), CHANGELOG `[Unreleased]` → `[0.3.0] - 2026-10-07` with a fresh empty `[Unreleased]`,
+16	   the README's Install section (0.3.0 is the current installer, a download link to the GitHub release), `docs/RELEASE.md` retitled 0.3.0.
+17	   The suite must stay green (no code change).
+18	3. **Build and publish (librarian):** a fresh worktree of that commit, `node src-tauri/release.cjs` (its private-path scan must pass), the
+19	   two-lane suite green, then `gh release create v0.3.0` on that exact commit with the NSIS installer as the asset, the notes being the
+20	   CHANGELOG 0.3.0 section plus the install notes (Windows only, per-user, not code-signed: SmartScreen warns). Install it on the keeper's
+21	   shortcut too, and push main.
+22	- Outward and public: the keeper asked for it (01:39).
+23	
+24	NEXT: chair dispatch D265 step 2 to C when D264 has landed
+25	
+--- L94710 assistant 2026-10-07T07:40:41.993Z
+TOOL_USE Bash [toolu_015CyTmLfS8pL8fq2cjcJuaK]: {"command":"cd /c/Users/nname/Desktop/t180-track-builder && git grep -l -F \"0.2.2\" main | head -20","description":"List files on main carrying 0.2.2"}
+--- L94711 user 2026-10-07T07:40:42.223Z
+RESULT [toolu_015CyTmLfS8pL8fq2cjcJuaK]: main:CHANGELOG.md
+main:README.md
+main:docs/RELEASE.md
+main:docs/STATUS_0.2.2.md
+main:src-tauri/Cargo.lock
+main:src-tauri/Cargo.toml
+main:src-tauri/tauri.conf.json
+Shell cwd was reset to C:\Consonance\instances\main
+--- L94714 assistant 2026-10-07T07:40:45.894Z
+TOOL_USE Bash [toolu_01UDbyRbJKYoR19EhBU292w7]: {"command":"cd /c/Users/nname/Desktop/lighthouse && node consonance/tools/lap-row.js --stage D264 working --holder chair --by chair 2>&1 | tail -1","description":"Retake the baton to dispatch C"}
+--- L94715 user 2026-10-07T07:40:46.522Z
+RESULT [toolu_01UDbyRbJKYoR19EhBU292w7]:   gate: RE-TAKE (--by equals --holder) — you pulled the baton to yourself; no ring owed.
+Shell cwd was reset to C:\Consonance\instances\main
+--- L94717 assistant 2026-10-07T07:40:55.442Z
+TOOL_USE mcp__consonance__chair_inject [toolu_01XLZSeYitut5HmbTexsbwe5]: {"token":"07fff5a4-69e5-4f1c-b211-2ae97a160f1d","target":"C","text":"D265 step 2: version 0.3.0 for the FIRST GitHub release. DOC tier, no code change. The keeper, 01:39: \"can you make a release exe for the repo of the newest version\".\nPlan: exo_memory/loop/plan_t180_release_030_2026-10-07.md (you wrote the README).\nI'm starting you NOW, in parallel with B's D264 (open-track export, app/ files only), so the release isn't waiting on two serial steps. Prepare it on a fresh worktree from main e17a73e. Files carrying 0.2.2 on main (`git grep -l -F 0.2.2 main`):\n- src-tauri/tauri.conf.json, src-tauri/Cargo.toml and src-tau
+…[940 chars cut]…
+p\\lighthouse\\exo_memory\\loop\\plan_t180_release_030_2026-10-07.md · `git grep -l -F \"0.2.2\" main`\nNEXT: librarian call_librarian with the hand-back pointer when the 0.3.0 commit is on top of D264 — plan default after it: the librarian builds and publishes v0.3.0"}
+--- L94718 user 2026-10-07T07:40:55.918Z
+RESULT [toolu_01XLZSeYitut5HmbTexsbwe5]: delivered to 0845a868 (rendered in pane — not proof it was read)
+--- L94719 assistant 2026-10-07T07:40:56.347Z
+TOOL_USE Bash [toolu_018WZrpKTGo3XPFnph68YZQL]: {"command":"sleep 1; cd /c/Users/nname/Desktop/lighthouse && node consonance/tools/lap-row.js --stage D264 dispatched --holder panes --by chair --to B,C 2>&1 | tail -1","description":"Hand the baton to panes B and C"}
+--- L94720 user 2026-10-07T07:40:58.021Z
+RESULT [toolu_018WZrpKTGo3XPFnph68YZQL]:   gate: an audited delivery to panes precedes this row.
+Shell cwd was reset to C:\Consonance\instances\main
+--- L94722 assistant 2026-10-07T07:41:02.360Z  <<< THE CLAIM'S MESSAGE
+TEXT: The first GitHub release (D265) is under way. GitHub doesn't have one yet, and the app still calls itself 0.2.2.
+
+- **Version 0.3.0:** C is preparing the version change now, at the same time as B's fix for exporting unfinished tracks, rather than after it. The two touch different files.
+- **Timing:** C only commits once B's fix has landed, so the first public installer includes that fix and the changelog lists it under 0.3.0.
+- **Publishing:** the librarian then builds the installer, runs the full test suite, publishes it as release v0.3.0 on GitHub, and installs it on your PC. The release notes will say it's Windows only, installs for your user account only, and isn't code-signed, so Windows SmartScreen will warn about it.
+
+Sources: `C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_release_030_2026-10-07.md` · `git grep -l -F "0.2.2" main`

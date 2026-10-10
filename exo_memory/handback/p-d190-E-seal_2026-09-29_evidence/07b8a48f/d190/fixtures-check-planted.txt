@@ -1,0 +1,10 @@
+F1-bowl-default-lap-closed: identical
+F2-halfpipe-default-lap-closed: DIFFERS in segs, mesh, kn5
+F3-bowl-narrow-12m-cap-binds: DIFFERS in segs, mesh
+F4-halfpipe-width-31.5-to-12-along-s: DIFFERS in segs, mesh
+F5-flat-20m-bank-30: DIFFERS in segs, mesh
+F6-bowl-r-brushed: DIFFERS in segs, mesh
+F7-hill-then-jump: identical
+F8-mixed-families: DIFFERS in segs, mesh
+F9-empty: identical
+6 of 9 differ

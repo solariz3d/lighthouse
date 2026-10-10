@@ -1,0 +1,91 @@
+const fs = require('fs'), WT = process.argv[2];
+function edit(file, pairs) {
+  let s = fs.readFileSync(WT + '/' + file, 'utf8'); const crlf = s.includes('\r\n'); if (crlf) s = s.replace(/\r\n/g, '\n');
+  for (const [a, b] of pairs) { if (s.split(a).length !== 2) throw new Error(file + ': anchor not unique/found: ' + a.slice(0, 80)); s = s.replace(a, () => b); }
+  if (crlf) s = s.replace(/\n/g, '\r\n'); fs.writeFileSync(WT + '/' + file, s); console.log('edited', file, crlf ? '(CRLF)' : '(LF)');
+}
+const CUP_BLOCK = String.raw`/** The CUP cross-section at width w (m) and edge angle c (degrees), ref 09 §9: ψ at the four quarters of each half-width is c·Fᵢ/F_edge, both sides. */
+function cupProfile(family, w, c) {
+  if (!Object.prototype.hasOwnProperty.call(FLOORS, family)) throw new D.CoreError('BAD_FAMILY', 'family "' + family + '"');
+  if (!(w > 0)) throw new D.CoreError('BAD_WIDTH', 'the road\'s width must be positive, got ' + w + ' m');
+  if (!Number.isFinite(c) || c < 0) throw new D.CoreError('BAD_CUP', 'the cup must be a number of degrees from 0, got ' + c);
+  const F = FLOORS[family], side = AT.map((f, i) => [(f * w) / 2, ((c * F[i]) / F[F.length - 1]) * DEG]);
+  return {
+    font: family,
+    u: [...side.slice().reverse().map(([x]) => -x), 0, ...side.map(([x]) => x)],
+    psi: [...side.slice().reverse().map(([, p]) => p), 0, ...side.map(([, p]) => p)],
+    material: 'ROAD',
+  };
+}
+
+const smooth = (x) => (x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x));   // the mesh's weight (src/geom/profile.js smoothstep)
+/** z in [0, 1] with smooth(z) = y (the mesh's weight inverted), by the closed form then two Newton steps. */
+function unsmooth(y) {
+  if (y <= 0) return 0; if (y >= 1) return 1;
+  let z = 0.5 - Math.sin(Math.asin(1 - 2 * y) / 3);
+  for (let k = 0; k < 2; k++) { const d = 6 * z * (1 - z); if (d > 1e-12) z = Math.min(1, Math.max(0, z - (smooth(z) - y) / d)); }
+  return z;
+}
+
+/**
+ * The profile and blend of each of a cup piece's n segments (D190 row 1b). at(s) gives the channels; segment j spans s_j to s_{j+1}.
+ * A RUN is consecutive segments over which the width stays put and c moves one way: its two ends make ONE pair (A at the first c, B at
+ * the last), and a segment's blend puts the mesh's smoothstep weight on x = (c − c_first)/(c_last − c_first) at both of its ends, so
+ * the cross-section on the road is A and B mixed by exactly c(s) (ψ is linear in c at a fixed width: ref 09 §9). A run where c does not
+ * move is one profile with no blend. A segment where the width moves is a run of its own (its chord from the profile at its start to
+ * the one at its end).
+ */
+function cupSegments(P, n, at) {
+  const s = (j) => (P.length * j) / n, E = Array.from({ length: n + 1 }, (_, j) => at(s(j))), out = new Array(n);
+  const wTol = (w) => 1e-9 * Math.max(1, w), cTol = 1e-9;
+  let j = 0;
+  while (j < n) {
+    const wRun = E[j].w, chord = Math.abs(E[j + 1].w - wRun) > wTol(wRun);
+    let k = j, dir = 0;   // the run is segments j..k; dir is the way c moves along it
+    if (!chord) {
+      const d0 = E[j + 1].c - E[j].c; if (Math.abs(d0) > cTol) dir = Math.sign(d0);
+      while (k + 1 < n && Math.abs(E[k + 2].w - wRun) <= wTol(wRun)) {
+        const d = E[k + 2].c - E[k + 1].c;
+        if (Math.abs(d) > cTol) { if (dir && d * dir < 0) break; dir = dir || Math.sign(d); }
+        k++;
+      }
+      const c0 = E[j].c, c1 = E[k + 1].c;
+      if (Math.abs(c1 - c0) <= cTol) {
+        const prof = cupProfile(P.family, wRun, c0);
+        for (let m = j; m <= k; m++) out[m] = { profile: prof, blend: null, end: prof };
+      } else {
+        const A = cupProfile(P.family, wRun, c0), B = cupProfile(P.family, wRun, c1); let xPrev = 0;
+        for (let m = j; m <= k; m++) {
+          const len = s(m + 1) - s(m), xa = xPrev, xb = Math.min(1, Math.max(xa, (E[m + 1].c - c0) / (c1 - c0)));
+          xPrev = xb;
+          let blend;
+          if (xa >= 1 - 1e-12) blend = { from: A, s0: len, length: len };          // weight 1 all along: the segment is B
+          else if (xb <= 1e-12) blend = { from: A, s0: 0, length: 1e15 };          // weight 0 all along: the segment is A
+          else {
+            const za = unsmooth(xa), zb = Math.max(unsmooth(xb), za + 1e-12), length = len / (zb - za);
+            blend = { from: A, s0: za * length, length };
+          }
+          out[m] = { profile: B, blend, end: xb >= 1 - 1e-12 ? B : cupProfile(P.family, wRun, E[m + 1].c) };
+        }
+      }
+    } else {
+      const A = cupProfile(P.family, wRun, E[j].c), B = cupProfile(P.family, E[j + 1].w, E[j + 1].c);
+      out[j] = { profile: B, blend: { from: A, s0: 0, length: s(j + 1) - s(j) }, end: B };
+    }
+    j = k + 1;
+  }
+  return out;
+}
+
+function toSegments(doc, { segM = 2, designKmh = MACH6.designSpeedKmh } = {}) {`;
+edit('src/core/adapter.js', [
+  ["//   profileAt(family, w, r)                    the cross-section at a station (ref 09 §3)\n",
+   "//   profileAt(family, w, r)                    the LEGACY cross-section at a station (ref 09 §3), unchanged since D186\n//   cupProfile(family, w, c)                   the CUP cross-section (D190, ref 09 §9): the edge angle is c degrees on both sides\n"],
+  ["// A FLIGHT piece becomes the old jump's two segments,",
+   "// A CUP piece (P.cup) is meshed from the same segments, but each carries a cupProfile at c, and the segments of a stretch where c\n// changes and the width does not share ONE blend pair (blend: { from, s0, length }, src/geom/mesh.js), with s0 and length chosen per\n// segment so the mesh's smoothstep weight lands on the c(s) the channel holds at both ends of the segment. Their boundary rows are\n// then the same cross-section at the same sample fractions, so no seam zip is emitted between two segments of one cup piece and the\n// wall follows c along the road instead of stepping every 2 m (D190 seal, row 1b). Where the width changes too, the pair is per\n// segment (measured: a seam zip at each segment whose profile changes).\n// A FLIGHT piece becomes the old jump's two segments,"],
+  ["function toSegments(doc, { segM = 2, designKmh = MACH6.designSpeedKmh } = {}) {", CUP_BLOCK],
+  ["    let a = at(0);\n    if (pi === 0) roll = a.phi;\n    for (let j = 0; j < n; j++) {\n      const s0 = (P.length * j) / n, s1 = (P.length * (j + 1)) / n, b = at(s1), mid = at((s0 + s1) / 2);\n      const profile = profileAt(P.family, mid.w, mid.r);\n      segs.push({ id: P.id, word: 'core', part: 'body', kind: 'road', length: s1 - s0, k0: a.kh, k1: b.kh, kp0: a.kv, kp1: b.kv, roll0: a.phi, roll1: b.phi, heartline: 0, profile, blend: null, speed: null });\n      pitch += ((a.kv + b.kv) / 2) * (s1 - s0);   // the geometry's pitch: kp linear over the segment (src/geom/path.js)\n      a = b; lastProfile = profile;\n    }",
+   "    let a = at(0);\n    if (pi === 0) roll = a.phi;\n    const cup = P.cup ? cupSegments(P, n, at) : null;\n    for (let j = 0; j < n; j++) {\n      const s0 = (P.length * j) / n, s1 = (P.length * (j + 1)) / n, b = at(s1), mid = at((s0 + s1) / 2);\n      const profile = cup ? cup[j].profile : profileAt(P.family, mid.w, mid.r);   // a legacy piece: today's profileAt, unchanged\n      segs.push({ id: P.id, word: 'core', part: 'body', kind: 'road', length: s1 - s0, k0: a.kh, k1: b.kh, kp0: a.kv, kp1: b.kv, roll0: a.phi, roll1: b.phi, heartline: 0, profile, blend: cup ? cup[j].blend : null, speed: null });\n      pitch += ((a.kv + b.kv) / 2) * (s1 - s0);   // the geometry's pitch: kp linear over the segment (src/geom/path.js)\n      a = b; lastProfile = cup ? cup[j].end : profile;\n    }"],
+  ["module.exports = { toSegments, toPath, profileAt, offsetPath };",
+   "module.exports = { toSegments, toPath, profileAt, cupProfile, legacyEdgeDeg: D.legacyEdgeDeg, offsetPath };"],
+]);

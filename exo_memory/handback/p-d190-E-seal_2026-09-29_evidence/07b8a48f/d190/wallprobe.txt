@@ -1,0 +1,20 @@
+{"name":"baseline (c964c2d profiles)","csp":true,"ms":1235,"ok":true,"keys":"folder,scene,kn5,ai,path,segments,resolvedVia,validation,markers,markerChecks,pitLane,readback,aiLine,desc,warnings","amber":"[]","warnings":5}
+{"name":"baseline (c964c2d profiles)","csp":false,"ms":1120,"ok":true,"keys":"folder,scene,kn5,ai,path,segments,resolvedVia,validation,markers,markerChecks,pitLane,readback,aiLine,desc,warnings","amber":"[]","warnings":5}
+{"name":"bowl c=90","csp":true,"ms":3581,"ok":true,"keys":"folder,scene,kn5,ai,path,segments,resolvedVia,validation,markers,markerChecks,pitLane,readback,aiLine,desc,warnings","amber":"[]","warnings":5}
+{"name":"bowl c=90","csp":false,"ms":3274,"ok":false,"code":"RED","reds":{"steep-without-raycast":1}}
+{"name":"bowl c=150","csp":true,"ms":6342,"ok":true,"keys":"folder,scene,kn5,ai,path,segments,resolvedVia,validation,markers,markerChecks,pitLane,readback,aiLine,desc,warnings","amber":"[]","warnings":5}
+{"name":"bowl c=150","csp":false,"ms":5564,"ok":false,"code":"RED","reds":{"steep-without-raycast":1}}
+{"name":"half-pipe c=90","csp":true,"ms":3783,"ok":true,"keys":"folder,scene,kn5,ai,path,segments,resolvedVia,validation,markers,markerChecks,pitLane,readback,aiLine,desc,warnings","amber":"[]","warnings":5}
+{"name":"half-pipe c=90","csp":false,"ms":3337,"ok":false,"code":"RED","reds":{"steep-without-raycast":1}}
+{"name":"half-pipe c=150","csp":true,"ms":6270,"ok":true,"keys":"folder,scene,kn5,ai,path,segments,resolvedVia,validation,markers,markerChecks,pitLane,readback,aiLine,desc,warnings","amber":"[]","warnings":5}
+{"name":"half-pipe c=150","csp":false,"ms":5691,"ok":false,"code":"RED","reds":{"steep-without-raycast":1}}
+{"name":"flat c=90","csp":true,"ms":3622,"ok":true,"keys":"folder,scene,kn5,ai,path,segments,resolvedVia,validation,markers,markerChecks,pitLane,readback,aiLine,desc,warnings","amber":"[]","warnings":5}
+{"name":"flat c=90","csp":false,"ms":3312,"ok":false,"code":"RED","reds":{"steep-without-raycast":1}}
+{"name":"flat c=150","csp":true,"ms":5906,"ok":true,"keys":"folder,scene,kn5,ai,path,segments,resolvedVia,validation,markers,markerChecks,pitLane,readback,aiLine,desc,warnings","amber":"[]","warnings":5}
+{"name":"flat c=150","csp":false,"ms":5431,"ok":false,"code":"RED","reds":{"steep-without-raycast":1}}
+{"name":"bowl c=159 (0.7 under the touch)","csp":true,"ms":5950,"ok":false,"code":"RED","reds":{"downforce-ray-gap":1}}
+{"name":"bowl c=159 (0.7 under the touch)","csp":false,"ms":5910,"ok":false,"code":"RED","reds":{"downforce-ray-gap":1,"steep-without-raycast":1}}
+{"name":"bowl c=165 (past the touch)","csp":true,"ms":6042,"ok":false,"code":"RED","reds":{"downforce-ray-gap":1}}
+{"name":"bowl c=165 (past the touch)","csp":false,"ms":6107,"ok":false,"code":"RED","reds":{"downforce-ray-gap":1,"steep-without-raycast":1}}
+{"name":"half-pipe c=180","csp":true,"ms":7556,"ok":true,"keys":"folder,scene,kn5,ai,path,segments,resolvedVia,validation,markers,markerChecks,pitLane,readback,aiLine,desc,warnings","amber":"[]","warnings":5}
+{"name":"half-pipe c=180","csp":false,"ms":6839,"ok":false,"code":"RED","reds":{"steep-without-raycast":1}}

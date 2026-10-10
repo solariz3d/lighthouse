@@ -1,0 +1,7 @@
+{"len":100,"transition":100,"maxCP":150,"maxValue":150,"endCP":150}
+{"len":100,"transition":40,"maxCP":167.17621,"maxValue":153.750096,"endCP":150.870649}
+{"len":60,"transition":20,"maxCP":220.93243,"maxValue":163.01932,"endCP":144.499171}
+{"len":30,"transition":10,"maxCP":296.942615,"maxValue":174.653372,"endCP":165.474837}
+{"len":200,"transition":15,"maxCP":234.685761,"maxValue":172.303061,"endCP":150.114545}
+{"len":12,"transition":12,"maxCP":150,"maxValue":150,"endCP":150}
+{"continuation_from":{"v":140,"m":0},"next_piece_end":140}

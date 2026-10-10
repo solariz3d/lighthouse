@@ -1,0 +1,23 @@
+== D273 lap4b prefork TRAINING · asked 2026-10-09T08:53:56.050Z · lock held 2026-10-09T08:53:56.063Z · NODE_OPTIONS=--max-old-space-size=4096
+$ node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/prefork.js C:/Users/nname/Desktop/worktrees/c-lap4b-wt exo_memory/TRAINING.md 86 104
+  86|   progress photo once the sampling-frame fix below lands.~~
+  87| 
+  88|   > **SUPERSEDED IN PLACE, 2026-07-28 (cycle 8, chair decision).** The tell-index does not
+  89|   > compute a maturity ratio any more — **it was deleted**, not repaired. It scored by
+  90|   > SPEAKER and called the result CATCHER, and applying `catch-ledger.js`'s withholding rule
+  91|   > to it honestly withheld 15 of 16 windows. The reps ledger now reads from
+  92|   > **`catch-ledger.js`**, over a master in this line of record and the journals, where attribution is
+  93|   > actually written down. The sampling-frame caveat below still applies to the tell RATES,
+  94|   > which the tell-index still produces; it no longer gates a ratio, because there is none.
+  95|   >
+  96|   > Struck in place rather than corrected in a later section, because leaving this line
+  97|   > pointing at a deleted computation is exactly the defect the convergence read named in
+  98|   > this very file — a correction metabolised *beside* its target, never into it — and
+  99|   > authoring a fresh instance of it inside the cleanup would be worse than the original.
+ 100|   >
+ 101|   > R1's rule survives the move unchanged and now attaches to catch-ledger's number: a ratio
+ 102|   > is indicative within a single session, never a trend, until the frame rides with it.
+ 103| - **Sampling frame stated with every number (F5):** the index currently rests on ~15% of
+ 104|   board entries (replay-burst filtering), and WHICH 15% depends on restart timing. No
+keeper lines: [33m9[39m
+== exit 0 · done 2026-10-09T08:53:56.202Z

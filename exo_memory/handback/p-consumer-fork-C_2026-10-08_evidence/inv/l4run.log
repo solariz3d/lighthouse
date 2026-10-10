@@ -1,0 +1,63 @@
+== D273 lap4 C verify · asked 2026-10-09T00:12:55.301Z · lock held 2026-10-09T00:12:55.305Z · NODE_OPTIONS=--max-old-space-size=4096
+$ bash C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/l4run.sh
+=== TESTS
+[31m✖ a generated tree carries the fork note at all three sites, naming HEAD, and the relabel table applied [90m(1405.6284ms)[39m[39m
+[31m✖ lap 4 C4/C5: the two person-specific cards keep their move, say whose case it was, and carry no gendered pronoun [90m(1.2564ms)[39m[39m
+[31m✖ a full dry run over the real tree is clean and refuses nothing [90m(1363.009ms)[39m[39m
+[31m✖ RE-POINT: restoring the UNREACHABLE: prefix REFUSES the build [90m(2775.2846ms)[39m[39m
+[31m✖ SEED: the registry ships and the private bytes do not [90m(1424.689ms)[39m[39m
+[31m✖ L038/A · and the produced tree carries no $<digit> that is not regex source [90m(1389.7187ms)[39m[39m
+[31m✖ L038/A · a dirty tree is REFUSED, because the sha it would stamp is not earned [90m(4316.6208ms)[39m[39m
+[31m✖ L038 · no [[wiki-link]] in the produced tree points at a card that is not there [90m(1457.798ms)[39m[39m
+[31m✖ D273: consonance/state-manifest.json and the root README.md ship, and the README keeps the About block the app checks [90m(1414.4671ms)[39m[39m
+[31m✖ D273: the output is a FRESH-HISTORY git repository: one commit, a neutral author, a clean tree, no remote, and a push goes nowhere [90m(1371.0646ms)[39m[39m
+[31m✖ D273: generating into a directory that already holds a history is REFUSED before anything is written (fresh history means fresh) [90m(1419.8586ms)[39m[39m
+[31m✖ D273/A: the six composer screens ship SCRUBBED, byte for byte A's acceptance hashes, each the length of its source [90m(1426.4456ms)[39m[39m
+[31m✖ D273/A: the declared JS rows (26 of A + 1 Jev) and 12 Rust tests are declared in the OUTPUT, and plain in the SOURCE so the source suite still runs them [90m(1400.1349ms)[39m[39m
+[31m✖ D273 lap 3: METHOD.md, INSTRUMENTS.md, dev/SPINE.md and consonance/AUTONOMY.md ship through the scan, and the README links no excluded jev/README.md [90m(1435.4853ms)[39m[39m
+[31m✖ D273 lap 3 (A's catch): the GENERATED corrections-gate.js guards exactly what the source one guards (the muscle_map rule had emptied its regex) [90m(1411.0724ms)[39m[39m
+[31m✖ D273: consonance/GATES.md ships, and the gate refusals' pointer resolves to it in the generated tree [90m(1414.1347ms)[39m[39m
+[31m✖ on a REAL generation: one planted edit in a shipped card adds exactly one unregistered line, named path:line, and the CLI exits 1 [90m(1334.3711ms)[39m[39m
+[34mℹ tests 115[39m
+[34mℹ pass 97[39m
+[34mℹ fail 17[39m
+[34mℹ skipped 1[39m
+[31m✖ failing tests:[39m
+[31m✖ a generated tree carries the fork note at all three sites, naming HEAD, and the relabel table applied [90m(1405.6284ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: refused: 1 leak(s) survived the transformations
+[31m✖ lap 4 C4/C5: the two person-specific cards keep their move, say whose case it was, and carry no gendered pronoun [90m(1.2564ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: exo_memory/cards/verify-before-claiming.md: a pronoun still makes the keeper's case read as the person here
+[31m✖ a full dry run over the real tree is clean and refuses nothing [90m(1363.009ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: leaks survived the transformations
+[31m✖ RE-POINT: restoring the UNREACHABLE: prefix REFUSES the build [90m(2775.2846ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: and clean once the prefix is dropped
+=== IDENTITY-DIFF, as committed (B's rows not applied)
+exit 2
+identity-diff: the generator refused: 1 leak(s) survived the transformations
+=== IDENTITY-DIFF, with B's three lap-4 EXCLUDE rows applied TEMPORARILY
+added 3 EXCLUDE rows (temporary)
+build refused: 1 leak(s) survived the transformations staged [33m375[39m forked [33m67[39m leaks [33m1[39m
+exit 1
+identity-diff: FAIL — 0 wake files compared; 70 unregistered difference(s)
+  generated from unknown; this repo at 29d9b1fe
+  registered, by step:
+  not shipped, with the generator's reason (16):
+    consonance/src-tauri/brief/BOOT.md — STAYS_PRIVATE: THE MASTER, which fails this scan and would OUTRANK the sanitised brief via pick_default_room. The PATH ships; this FILE does
+    exo_memory/BOOT.md — STAYS_PRIVATE: THE MASTER, which fails this scan and would OUTRANK the sanitised brief via pick_default_room. The PATH ships; this FILE does
+  master BOOT -> shipped brief: 17 line(s) out, 30 in, by gen-brief.ps1 (dev side; guarded by gen-brief-gate.test.js); reported, not gated
+  UNREGISTERED:
+    consonance/GATES.md:0 - (the whole file)  [a MANIFEST rule reaches this dev wake file and the generated tree does not have it]
+    consonance/hooks/ask-ending.js:0 - (the whole file)  [a MANIFEST rule reaches this dev wake file and the generated tree does not have it]
+    consonance/hooks/ask-surface.js:0 - (the whole file)  [a MANIFEST rule reaches this dev wake file and the generated tree does not have it]
+    consonance/hooks/baton-wake-stop.js:0 - (the whole file)  [a MANIFEST rule reaches this dev wake file and the generated tree does not have it]
+    consonance/hooks/blind.js:0 - (the whole file)  [a MANIFEST rule reaches this dev wake file and the generated tree does not have it]
+    consonance/hooks/board-digest.js:0 - (the whole file)  [a MANIFEST rule reaches this dev wake file and the generated tree does not have it]
+    consonance/hooks/carrier-drift-watch.js:0 - (the whole file)  [a MANIFEST rule reaches this dev wake file and the generated tree does not have it]
+    consonance/hooks/delete-gate.js:0 - (the whole file)  [a MANIFEST rule reaches this dev wake file and the generated tree does not have it]
+--- generated memory/ and the dont-offer card:
+ls: cannot access 'C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/l4b/exo_memory/cards/dont-offer-rest-assume-momentum.md': No such file or directory
+--- generated MEMORY.md:
+restored; gen-consumer.js diff lines: 0
+ls: cannot access 'C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/l4b/exo_memory/memory/': No such file or directory
+cat: 'C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/l4b/exo_memory/memory/MEMORY.md': No such file or directory
+== exit 0 · done 2026-10-09T00:13:47.943Z

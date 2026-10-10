@@ -1,0 +1,84 @@
+control (unmutated copy)                              pass 56 fail 0
+ 1 guard: the dream gate removed                                                         pass 55 fail 1  CAUGHT
+ 2 guard: the reentrancy guard removed                                                   pass 55 fail 1  CAUGHT
+ 3 guard: a tool that is not a ring tool is gated                                        pass 55 fail 1  CAUGHT
+ 4 decide: a missing SOURCES line is allowed                                             pass 50 fail 6  CAUGHT
+ 5 decide: an empty SOURCES line is allowed                                              pass 55 fail 1  CAUGHT
+ 6 decide: "none" is denied                                                              pass 53 fail 3  CAUGHT
+ 7 decide: an unmatched item is allowed                                                  pass 35 fail 21  CAUGHT
+ 8 decide: the reason names ALL items, matched or not                                    pass 54 fail 2  CAUGHT
+ 9 turn: calls of a PREVIOUS turn count (no boundary)                                    pass 48 fail 8  CAUGHT
+10 turn: a tool result counts as a prompt (the turn is cut at every call)                pass 55 fail 1  CAUGHT
+11 turn: a meta user message starts a new turn                                           pass 55 fail 1  CAUGHT
+12 turn: subagent (sidechain) entries count                                              pass 55 fail 1  CAUGHT
+13 turn: an errored call counts as opened                                                pass 55 fail 1  CAUGHT
+14 turn: a call with no recorded result counts as opened                                 pass 54 fail 2  CAUGHT
+15 transcript: the tail does not grow past the first window                              pass 54 fail 2  CAUGHT
+16 transcript: a transcript that cannot be parsed is read as an empty turn (denies)      pass 55 fail 1  CAUGHT
+17 transcript: a missing transcript is read as an empty turn (denies)                    pass 54 fail 2  CAUGHT
+18 notification: a machine-only notification IS a boundary again (the branch removed)    pass 50 fail 6  CAUGHT
+19 notification: a message MIXING a notification with keeper text is read as machine-only pass 55 fail 1  CAUGHT
+20 notification: a message recorded as typed by a human can be machine-only              pass 55 fail 1  CAUGHT
+21 notification: no marker is required (a bare reminder counts as a notification)        pass 55 fail 1  CAUGHT
+22 notification: the origin.kind task-notification marker is ignored                     pass 55 fail 1  CAUGHT
+23 notification: the <task-notification text marker is ignored                           pass 55 fail 1  CAUGHT
+24 notification: the [SYSTEM NOTIFICATION text marker is ignored                         pass 55 fail 1  CAUGHT
+25 notification: <system-reminder> blocks are not taken out before the test              pass 54 fail 2  CAUGHT
+26 notification: hook-output blocks are not taken out before the test                    pass 55 fail 1  CAUGHT
+27 notification: <task-notification> blocks are not taken out before the test            pass 51 fail 5  CAUGHT
+28 notification: the [SYSTEM NOTIFICATION ...] banner is not taken out before the test   pass 55 fail 1  CAUGHT
+29 notification: the backward read stops at ANY entry, not at a real prompt              pass 54 fail 2  CAUGHT
+30 match: an echo / printf / Write-Host counts as opened                                 pass 55 fail 1  CAUGHT
+31 match: NO metadata-only leader is excluded (ls, stat ... count as opened)             pass 54 fail 2  CAUGHT
+32 match: `ls` counts as opened                                                          pass 54 fail 2  CAUGHT
+33 match: `stat` counts as opened                                                        pass 55 fail 1  CAUGHT
+34 match: `test` counts as opened                                                        pass 55 fail 1  CAUGHT
+35 match: `[` counts as opened                                                           pass 55 fail 1  CAUGHT
+36 match: `Get-Item` counts as opened                                                    pass 54 fail 2  CAUGHT
+37 match: `Test-Path` counts as opened                                                   pass 54 fail 2  CAUGHT
+38 match: the PowerShell dir/gci aliases count as opened                                 pass 55 fail 1  CAUGHT
+39 reason: the same-message race is not named                                            pass 55 fail 1  CAUGHT
+40 reason: the read-back after a write is not named                                      pass 55 fail 1  CAUGHT
+41 reason: the metadata-only exclusion is not named                                      pass 55 fail 1  CAUGHT
+42 reason: the spelling guidance is dropped                                              pass 55 fail 1  CAUGHT
+43 match: a comment line counts as opened                                                pass 55 fail 1  CAUGHT
+44 match: a command is not split into segments (an echo hides a real read)               pass 54 fail 2  CAUGHT
+45 match: a Bash command matches only the whole item, never a shorter tail               pass 55 fail 1  CAUGHT
+46 match: a relative item no longer matches an absolute Read path by its tail            pass 54 fail 2  CAUGHT
+47 match: a Read of the exact path no longer counts                                      pass 38 fail 18  CAUGHT
+48 match: a relative call path is not resolved against cwd                               pass 55 fail 1  CAUGHT
+49 match: a Grep over a directory counts whether or not its result names the item        pass 55 fail 1  CAUGHT
+50 match: a WebFetch of any URL counts                                                   pass 55 fail 1  CAUGHT
+51 parse: continuation lines are not read                                                pass 55 fail 1  CAUGHT
+52 parse: the NEXT trailer does not end the slot                                         pass 55 fail 1  CAUGHT
+53 parse: a dot inside backticks splits an item                                          pass 55 fail 1  CAUGHT
+54 parse: a trailing (annotation) is kept                                                pass 55 fail 1  CAUGHT
+55 parse: a #L10 suffix is kept                                                          pass 55 fail 1  CAUGHT
+56 parse: a path:line suffix is kept                                                     pass 55 fail 1  CAUGHT
+57 parse: markdown emphasis around SOURCES: is not tolerated                             pass 55 fail 1  CAUGHT
+58 loss: a deny is emitted even when its ledger row could not be written                 pass 55 fail 1  CAUGHT
+59 contract: the decision is "allow", not "deny"                                         pass 29 fail 27  CAUGHT
+60 contract: a deny exits 2                                                              pass 53 fail 3  CAUGHT
+61 ledger: the message text is written into the row                                      pass 52 fail 4  CAUGHT
+62 ledger: the pointer line is not scrubbed (a key shape)                                pass 55 fail 1  CAUGHT
+63 ledger: the unmatched items are not scrubbed (a key shape)                            pass 55 fail 1  CAUGHT
+64 ledger: the allowed items are not scrubbed (a key shape)                              pass 55 fail 1  CAUGHT
+65 ledger: the sk-or- shape is not scrubbed                                              pass 55 fail 1  CAUGHT
+66 dispatch: chair_inject is not in the gate's tool set                                  pass 49 fail 7  CAUGHT
+67 dispatch: the reason says "ring" for a dispatch                                       pass 55 fail 1  CAUGHT
+68 dispatch: the target is not logged                                                    pass 55 fail 1  CAUGHT
+69 token: the ring sha is taken over the whole tool_input (the token goes into the hash) pass 54 fail 2  CAUGHT
+70 token: redaction is switched off                                                      pass 54 fail 2  CAUGHT
+71 token: redaction applies to a one-character token (ordinary text is eaten)            pass 55 fail 1  CAUGHT
+72 token: the pointer line is not redacted                                               pass 55 fail 1  CAUGHT
+73 token: the unmatched items are not redacted                                           pass 55 fail 1  CAUGHT
+74 token: the allowed items are not redacted                                             pass 55 fail 1  CAUGHT
+75 token: the deny reason is not redacted                                                pass 55 fail 1  CAUGHT
+76 token: the token itself is written into the row                                       pass 55 fail 1  CAUGHT
+77 token: the target is not redacted                                                     pass 55 fail 1  CAUGHT
+78 install: the gate no longer covers chair_inject                                       pass 55 fail 1  CAUGHT
+79 install: the SECOND READER's matcher also gains chair_inject                          pass 55 fail 1  CAUGHT
+80 install: the gate registers on every tool (no matcher scope)                          pass 55 fail 1  CAUGHT
+
+80 applied · 80 caught · 0 survived · 0 NOT APPLIED
+exit 0

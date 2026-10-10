@@ -1,0 +1,55 @@
+control (unmutated copy)                              pass 32 fail 0
+ 1 guard: the dream gate removed                                                                 pass 31 fail 1  CAUGHT
+ 2 shadow: the SHADOW constant is false (the slot is live)                                       pass 28 fail 4  CAUGHT
+ 3 shadow: a would-block produces its block output even when live is false                       pass 28 fail 4  CAUGHT
+ 4 loop guard: stop_hook_active is ignored in the verdict                                        pass 28 fail 4  CAUGHT
+ 5 loop guard: the transcript is read even when stop_hook_active is true                         pass 31 fail 1  CAUGHT
+ 6 live: the block is never built                                                                pass 30 fail 2  CAUGHT
+ 7 live: the decision is not "block"                                                             pass 30 fail 2  CAUGHT
+ 8 who: no seat gate (every session is evaluated)                                                pass 31 fail 1  CAUGHT
+ 9 who: the chair's pane id is not recognised                                                    pass 28 fail 4  CAUGHT
+10 who: the librarian's pane id is not recognised                                                pass 13 fail 19  CAUGHT
+11 who: a committee pane id falls through to the cwd rule                                        pass 31 fail 1  CAUGHT
+12 who: the cwd rule accepts a subdirectory                                                      pass 31 fail 1  CAUGHT
+13 who: the chair's fixed id is wrong                                                            pass 27 fail 5  CAUGHT
+14 tokens: the path kind is not detected                                                         pass 28 fail 4  CAUGHT
+15 tokens: the sha kind is not detected                                                          pass 31 fail 1  CAUGHT
+16 tokens: the commit kind is not detected                                                       pass 31 fail 1  CAUGHT
+17 tokens: the count kind is not detected                                                        pass 24 fail 8  CAUGHT
+18 tokens: the percentage kind is not detected                                                   pass 31 fail 1  CAUGHT
+19 tokens: the version kind is not detected                                                      pass 31 fail 1  CAUGHT
+20 tokens: no cap at 12                                                                          pass 31 fail 1  CAUGHT
+21 tokens: no de-duplication                                                                     pass 31 fail 1  CAUGHT
+22 tokens: a flagged token is not redacted                                                       pass 31 fail 1  CAUGHT
+23 tokens: a sentence-final full stop stays in the token                                         pass 31 fail 1  CAUGHT
+24 turn: the bare "ok" reply is evaluated                                                        pass 31 fail 1  CAUGHT
+25 turn: a keep-warm prompt is not recognised                                                    pass 30 fail 2  CAUGHT
+26 turn: a chair or pane ring is read as the keeper                                              pass 30 fail 2  CAUGHT
+27 turn: a slash command or machine form is read as the keeper                                   pass 30 fail 2  CAUGHT
+28 turn: a turn a notification started while idle is read as the keeper                          pass 30 fail 2  CAUGHT
+29 turn: a notification that arrives mid-work (after a tool call) is read as starting the turn   pass 31 fail 1  CAUGHT
+30 turn: every turn is evaluated, whoever prompted it                                            pass 28 fail 4  CAUGHT
+31 pane ring: a [pane: ring is not told apart from the other rings                               pass 27 fail 5  CAUGHT
+32 pane ring: it is never evaluated, even in the librarian session                               pass 28 fail 4  CAUGHT
+33 pane ring: it is evaluated in EVERY session, the chair's too                                  pass 29 fail 3  CAUGHT
+34 pane ring: it is evaluated when no seat is named                                              pass 31 fail 1  CAUGHT
+35 pane ring: main does not pass the seat to the verdict                                         pass 29 fail 3  CAUGHT
+36 pane ring: a CHAIR ring is also read as a pane ring (so it is evaluated in the librarian session) pass 30 fail 2  CAUGHT
+37 pane ring: the keep-warm check no longer precedes the pane-ring mapping                       pass 30 fail 2  CAUGHT
+38 pane ring: the row does not say what the prompt was                                           pass 30 fail 2  CAUGHT
+39 slot: the Sources line need not be the FINAL block (it is found across a blank line)          pass 31 fail 1  CAUGHT
+40 slot: "sources:" is case-sensitive                                                            pass 25 fail 7  CAUGHT
+41 slot: the head is not normalised to the form the gate reads                                   pass 25 fail 7  CAUGHT
+42 verdict: "Sources: none" is not recognised                                                    pass 30 fail 2  CAUGHT
+43 verdict: an empty Sources line is not recognised                                              pass 31 fail 1  CAUGHT
+44 verdict: an unmatched item still passes                                                       pass 28 fail 4  CAUGHT
+45 verdict: wouldBlock is never set                                                              pass 27 fail 5  CAUGHT
+46 ledger: the reply text is written into the row                                                pass 30 fail 2  CAUGHT
+47 ledger: an unmatched item is not redacted                                                     pass 31 fail 1  CAUGHT
+48 fail-open: a missing last_assistant_message is not logged                                     pass 31 fail 1  CAUGHT
+49 fail-open: a missing sources-gate is not handled                                              pass 31 fail 1  CAUGHT
+50 install: the reply slot registers on Stop with a matcher                                      pass 31 fail 1  CAUGHT
+51 install: sources-gate.js installs to a different directory than reply-slot.js                 pass 31 fail 1  CAUGHT
+
+51 applied · 51 caught · 0 survived · 0 NOT APPLIED
+exit 0

@@ -1,0 +1,4 @@
+== D277 C census v3 (read-only) · asked 2026-10-09T17:29:29.221Z · lock held 2026-10-09T17:29:29.225Z · NODE_OPTIONS=--max-old-space-size=4096
+$ node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/census.js C:/Users/nname/Desktop/lighthouse C:/Users/nname/.claude/projects/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/census_rules.tsv > C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/census.txt; echo exit $?
+exit 0
+== exit 0 · done 2026-10-09T17:29:30.080Z

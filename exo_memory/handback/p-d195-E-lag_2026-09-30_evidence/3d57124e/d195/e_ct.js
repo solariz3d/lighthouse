@@ -1,0 +1,6 @@
+const fs = require('fs'), f = 'C:/Users/nname/Desktop/a-d195-wt/test/core_chord.test.js'; let s = fs.readFileSync(f, 'utf8');
+function rep(a, b) { if (s.split(a).length !== 2) throw new Error('anchor: ' + a.slice(0, 70)); s = s.replace(a, () => b); }
+rep("  let d = run([{ length: 200, family: 'bowl', first: { w: 12 } }]); d = S.brush(d, { channel: 'r', at: 100, width: 40, delta: -6 }, {});", "  let d = run([{ length: 200, family: 'bowl' }, { length: 200 }]); d = S.brush(d, { mode: 'value', channel: 'r', s0: 210, r: 60, delta: -2.2 }).doc;   // F6's own brush");
+rep("  assert.deepEqual(PF.readAt(g, 0).psi, PF.normalize(g.blend.from).psi); assert.deepEqual(PF.readAt(g, 0).u, PF.normalize(g.blend.from).u);\n  for (let i = 0; i < 3; i++) assert.ok(Math.abs(PF.readAt(g, g.length).u[0] - PF.normalize(g.profile).u[0]) < 1e-9);",
+"  const near = (x, y) => x.length === y.length && x.every((v, i) => Math.abs(v - y[i]) < 1e-9);\n  assert.ok(near(PF.readAt(g, 0).psi, PF.normalize(g.blend.from).psi) && near(PF.readAt(g, 0).u, PF.normalize(g.blend.from).u), 'd = 0 is the start profile');\n  assert.ok(near(PF.readAt(g, g.length).psi, PF.normalize(g.profile).psi) && near(PF.readAt(g, g.length).u, PF.normalize(g.profile).u), 'd = length is the end profile');");
+fs.writeFileSync(f, s);

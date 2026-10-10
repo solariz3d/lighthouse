@@ -1,0 +1,7 @@
+== D273 lap5 tests 2 · asked 2026-10-09T09:07:24.965Z · lock held 2026-10-09T09:07:24.969Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd C:/Users/nname/Desktop/worktrees/c-lap5-wt && node --test --test-concurrency=1 consonance/tools/consumer-relabel.test.js consonance/tools/consumer-fork-wiring.test.js consonance/tools/identity-diff.test.js 2>&1 | grep -E 'ℹ (tests|pass|fail|skipped)|✖ [a-zA-Z]|Error' | head -8
+[34mℹ tests 31[39m
+[34mℹ pass 31[39m
+[34mℹ fail 0[39m
+[34mℹ skipped 0[39m
+== exit 0 · done 2026-10-09T09:07:31.571Z

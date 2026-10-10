@@ -1,0 +1,6 @@
+=== C:/Program Files/nodejs/node.exe consonance/tools/chain-status.js
+=== cwd C:/Users/nname/Desktop/worktrees/b-d277-gen2
+=== env {"CONSONANCE_DATA":"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d273/emptydata"}
+chain-status: silent — no ledger at C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-5bf9d657\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\scratchpad\d273\emptydata\lap.jsonl
+
+=== exit 0 signal null error  0.0s

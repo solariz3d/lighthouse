@@ -1,0 +1,1 @@
+[{"name":"light-gen-probe","argv":["C:/Program Files/nodejs/node.exe","--max-old-space-size=4096","--test","--test-concurrency=1","dev/shell/hooks/zz-bprobe-light.test.js"],"cwd":"C:/Users/nname/Desktop/worktrees/b-d277-gen"}]

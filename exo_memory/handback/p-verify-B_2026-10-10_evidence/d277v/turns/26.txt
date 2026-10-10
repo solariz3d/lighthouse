@@ -1,0 +1,712 @@
+MESSAGE 26  msg_011CfjmvdLfjgdf5pyVsvMJo  seat C  ts 2026-10-05T21:09:32.815Z  turn L51829..L52068 (next prompt L52106)
+CLAIMS:
+  [msg_011CfjmvdLfjgdf5pyVsvMJo|2] **"Committing the hand-back now, so it's provably registered before the install"**
+  [msg_011CfjmvdLfjgdf5pyVsvMJo|8] **"section 2 the baseline (0.28% of 1,759 sentences)"**
+  [msg_011CfjmvdLfjgdf5pyVsvMJo|12] **"Co-Authored-By: Claude Opus 5.5 (1M context)"**
+
+--- L51829 user 2026-10-05T21:01:23.860Z
+USER: 
+
+<pasted_content id="e180">
+[chair:MAIN] D245 items 1–2: MEASURE FIRST, then the smallest change. E is on jumps, so it's yours. The plan: exo_memory/loop/plan_consonance_compaction_tp_2026-10-05.md, items 1–2, and its abuse condition.
+Item 1, the baseline:
+- Across this machine's past compaction summaries (the "This session is being continued…" user turns in the transcripts under C:\Users\nname\.claude\projects\), count how many of the seat's own correction-adjacent sentences survive verbatim: the assistant sentences the user answered with a correction or an agreement.
+- Reuse the method the precompact-preserve header cites ("file and instrument names 33.8%, commit shas 10.2%…": find it in ~/.claude/shell/precompact-preserve.js).
+- EXCLUDE the Third Place's transcripts entirely (any project dir containing third-place). Never read or quote Third Place content.
+Then the change: add the directive line (carry verbatim the assistant's sentences answered with a correction or agreement) to precompact-preserve.js, after a byte-identical backup beside your hand-back.
+REGISTER THE BAR in the hand-back BEFORE the change lands: kept if the next 3 compactions on any seat carry those sentences at least 2× the baseline; cut back if summaries grow more than 15% with no gain.
+Item 2: the "what is alive for them right now" section at the top, for a third-place cwd only (same cwd test as board-digest.js:302, path-normalised). Build seats stay task-first. A test that a build seat's directive is byte-identical.
+Light runs only, no harnesses. These are global hooks: every other seat's output must be byte-identical except the new item 1 line.
+Hand-back: exo_memory/handback/p-compact-C_2026-10-05.md, plus your map line.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-tphooks-B_2026-10-05.md
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: a non-author look, then the bar scored over the next 3 compactions, unless the output says otherwise
+</pasted_content id="e180">
+
+--- L51840 assistant 2026-10-05T21:01:26.185Z
+TEXT: Reading the masters first: the plan's items 1–2 and abuse condition, B's hooks hand-back (the packet's source), the precompact hook, and `board-digest.js` around :302.
+--- L51841 assistant 2026-10-05T21:01:26.871Z
+TOOL_USE Bash [toolu_01Ge9U8BVVhsTZNhfh3Ks7oh]: {"command":"cat /c/Users/nname/Desktop/lighthouse/exo_memory/loop/plan_consonance_compaction_tp_2026-10-05.md","description":"Read the compaction plan"}
+--- L51842 user 2026-10-05T21:01:29.628Z
+RESULT [toolu_01Ge9U8BVVhsTZNhfh3Ks7oh]: # Consonance: three compaction and hook fixes, from the Third Place's own return. Librarian, on D, 2026-10-05 10:4x. Lap D245.
+
+The keeper, 10:36: "third place has some rare and valuable insight into how we could change how compacts work for consonance".
+**Source, read at the Third Place's transcript** (`C:\Users\nname\.claude\projects\C--Consonance-instances-third-place\3d000000-0000-4000-8000-000000003d00.jsonl`,
+16:30–16:34 UTC, after its 16:15 compaction): its answer to "Do you think consoannce system could be better?". Its three points, in its
+order and in short (read them there):
+
+1. **"The compaction keeps your words and drops mine."** The preserve directive (`~/.claude/shell/precompact-preserve.js`) carried shas,
+   numbers, falsifiers and corrections, but not the seat's OWN turning sentences: what it said that landed, or what it said before and
+   after a correction. It comes back knowing WHAT it learned, not HOW. Its proposed fix: carry verbatim the assistant's sentences the user
+   answered with a correction or an agreement.
+2. **"The summary is ordered by task, and the order shapes what comes back first."** Its first post-compact message led with the oval
+   and the X button before asking about the keeper's grandfather. Its proposed fix: a short "what is alive for them right now" section at
+   the TOP of the summary, above pending tasks.
+3. **"The build leaks into the room that's meant not to have it."** The Third Place's CLAUDE.md says "This seat is not the build", yet
+   the hooks inject chain state into every turn (the pulse's "D239 DISPATCHED · handbacks 0 of 4 …", the session-start digest of every
+   seat's timestamps, the checkpoint's dirty files).
+   - **Checked by the librarian:** `~/.claude/shell/boa
+…[1443 chars cut]…
+verbatim the assistant's sentences that were answered with a correction or an agreement)
+   and **register the bar before the next compactions:** it's kept if the next 3 compactions, on any seat, carry those sentences at least
+   2× more often than the baseline.
+3. **Item 2:** add the "what is alive for them right now" section to the directive, top-of-summary, for the Third Place at least (people
+   before work). For build seats, the order stays task-first (their work is the work), unless the measurement says otherwise.
+- **Abuse condition, registered:** if the summaries grow by more than 15% for no gain on the bar, the line is cut back.
+
+NEXT: chair dispatch D245 item 3 to E (it's measured and small) when this plan is read; items 1–2 after
+--- L51844 assistant 2026-10-05T21:01:31.951Z
+TOOL_USE Bash [toolu_01SZMUr6UdZftiE4uhqCgGvD]: {"command":"cat /c/Users/nname/Desktop/lighthouse/exo_memory/handback/p-tphooks-B_2026-10-05.md | head -90; echo =====; wc -l ~/.claude/shell/precompact-preserve.js; sed -n 1,200p ~/.claude/shell/precompact-preserve.js","description":"Read B's hooks hand-back and the precompact hook"}
+--- L51845 user 2026-10-05T21:01:32.142Z
+RESULT [toolu_01SZMUr6UdZftiE4uhqCgGvD]: # D245 item 3: non-author look at A's e5c55866 (the Third Place hook gates), pane B
+
+**Packet:** the chair's D245 item 3 (items 1–4), stopped at 13:43 for the BIOS restart and resumed at 14:4x.
+- **No Third Place content was read.** I worked from the hooks' code and synthetic payloads in A's isolated fake install only.
+- Installed hooks not edited. Nothing committed, nothing pushed.
+- Every node run was under the heavy-run lock (one exception, under Corrections).
+- Scratchpad `tphooks/`:
+  - pinned copies of A's `harness.js` (sha256 `8b8079cf316674d7…`) and `gate_mut.js` (`4a5d1fcf346949dc…`);
+  - mine: `bharness.js`, `steps.json`, `run.out`, `b_before.json`, `b_after.json`, `gate_mut.txt`.
+
+## Verdict: GREEN, the gates do what A says. One minor finding (owner A), and A's drift note stands
+
+## 1. The installed copies against e5c55866, and each against its backup
+checked (`git show e5c55866:<master>` vs the installed file; the installed sha256 re-checked at resume, unchanged: `53c55388`, `bb8d5d05`, `00c3a814`, `1ac01a99`):
+- `hooks/userprompt-submit.js` and `hooks/precompact.js` are **byte-identical** to the commit.
+- `sessionstart-state.js` is **identical once CR is stripped. It differs by line endings only** (A wrote "byte-identical (cmp)").
+- `ask-surface.js` is wired from the lighthouse working tree (`~/.claude/settings.json:34`), not `~/.claude/shell`. The working file **equals** the commit.
+- `hooks/session-start.js` differs from the commit **only by A's named pre-existing drift**: the 2026-09-23 "Light, not lifeguard" → "With you, not above you" repair and its comment block never reached the installed copy.
+
+**Against A's backups** (CR stripped): **only the gate and its comments**, in every file.
+- session-start: 
+…[10807 chars cut]…
+ecificOutput - see the header. */
+  process.stdout.write(JSON.stringify({ additionalContext: text, suppressOutput: true }));
+
+  try {
+    fs.mkdirSync(path.dirname(LEDGER), { recursive: true });
+    fs.appendFileSync(LEDGER, JSON.stringify({
+      ts: new Date().toISOString(),
+      event: 'precompact-attempt',      // an ATTEMPT: PreCompact fires on aborted compactions too
+      trigger: payload.trigger || null,
+      session_id: payload.session_id || null,
+      custom_instructions: payload.custom_instructions || null,
+      canary: CANARY,
+      chars: text.length,
+    }) + '\n');
+  } catch (_) { /* never block a compaction over a ledger write */ }
+}
+
+module.exports = { instruction, CANARY, LEDGER };
+
+if (require.main === module) main();
+--- L51855 assistant 2026-10-05T21:01:41.467Z
+TOOL_USE Bash [toolu_01XuttggGS8FyzALwRJvAf2W]: {"command":"cd /c/Users/nname/Desktop/lighthouse && git ls-files | grep -i \"precompact-preserve\\|third-place-gate\\|board-digest\\|install.ps1\" | head; for f in $(git ls-files | grep \"precompact-preserve.js$\"); do echo \"== $f\"; cmp <(tr -d '\\r' < $f) <(tr -d '\\r' < ~/.claude/shell/precompact-preserve.js) && echo \"same as installed (EOL-normalised)\"; done; grep -n \"precompact-preserve\" ~/.claude/settings.json; git log --oneline -3 -- $(git ls-files | grep \"precompact-preserve.js$\")","description":"Find the master of precompact-preserve.js and compare"}
+--- L51856 user 2026-10-05T21:01:41.846Z
+RESULT [toolu_01XuttggGS8FyzALwRJvAf2W]: consonance/hooks/board-digest.js
+consonance/hooks/board-digest.test.js
+consonance/hooks/precompact-preserve.js
+consonance/hooks/precompact-preserve.test.js
+desktop-install.ps1
+dev/shell/hooks/third-place-gate.test.js
+dev/shell/install.ps1
+== consonance/hooks/precompact-preserve.js
+same as installed (EOL-normalised)
+87:                                                           "command":  "\"C:\\Program Files\\nodejs\\node.exe\" \"C:\\Users\\nname\\.claude\\shell\\precompact-preserve.js\"",
+a3cf3c36 state-block: generate the room's state as pointers, against Around's constraints
+b6fff168 precompact-preserve: honour the dream gate, and ship the manifest entry with it
+829b8b20 precompact-preserve: aim the summary at the class it drops most
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L51860 assistant 2026-10-05T21:01:49.020Z
+TOOL_USE Bash [toolu_01N5ZQLyFo39PyJNqsGP32oH]: {"command":"cd /c/Users/nname/Desktop/lighthouse && grep -rl \"110/325\\|33\\.8%\" --include=*.md --include=*.js . 2>/dev/null | grep -v node_modules | head; find . -name \"PREREG*.md\" -not -path \"*/node_modules/*\" 2>/dev/null | head","description":"Find the PREREG and instrument behind the 33.8% measurement"}
+--- L51861 user 2026-10-05T21:01:51.055Z
+RESULT [toolu_01N5ZQLyFo39PyJNqsGP32oH]: ./consonance/hooks/precompact-preserve.js
+./consonance/tools/open-items.js
+./consonance/tools/state-block.js
+./exo_memory/handback/p-compaction-read-C_2026-09-19.md
+./exo_memory/handback/p-compaction-remeasure-B_2026-09-19.md
+./exo_memory/journal/2026-08-18.md
+./exo_memory/librarian/2026-09-16.md
+./exo_memory/loop/2026-08-18/archaeology/attack.js
+./exo_memory/loop/2026-08-18/archaeology/FINDINGS.md
+./exo_memory/loop/compaction_handoff_2026-08-25.md
+./exo_memory/loop/2026-08-18/archaeology/PREREG.md
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L51863 assistant 2026-10-05T21:01:53.290Z
+TOOL_USE Bash [toolu_014aQM3gtwQXX2dv6mKmJidJ]: {"command":"cd /c/Users/nname/Desktop/lighthouse/exo_memory && cat loop/2026-08-18/archaeology/PREREG.md | head -80; ls loop/2026-08-18/archaeology/; head -40 handback/p-compaction-read-C_2026-09-19.md","description":"Read the PREREG and my earlier compaction-read hand-back"}
+--- L51864 user 2026-10-05T21:01:53.456Z
+RESULT [toolu_014aQM3gtwQXX2dv6mKmJidJ]: # PRE-REGISTRATION — compaction-summary survival measurement
+Written 2026-08-18 ~00:45, BEFORE any row of the target transcript was read by this instance.
+Target: C:\Users\zackn\.claude\projects\C--Consonance-instances-main\0c0c0c0a-0000-4000-8000-000000000a01.jsonl
+Job: for each of the 7 compaction events, measure how much load-bearing material in the
+replaced window survives into the compaction summary.
+
+## Window definition (fixed now)
+- A compaction event = a `user` row whose text begins "This session is being continued".
+- The window for event N = all rows strictly between event N-1 (exclusive) and event N
+  (exclusive). Window 1 runs from file start.
+- NOTE, stated up front: the live context at compaction time also contained the PREVIOUS
+  summary. Chained content is credited to the earlier event's measurement; each event is
+  scored only on the fresh rows since the last compaction. This slightly UNDERSTATES total
+  preservation across chains; direction of bias recorded here in advance.
+- Rows with `isSidechain: true` or `isMeta: true` are excluded (never in main context).
+- Only text blocks from `user` and `assistant` rows are scanned for window material.
+
+## Definition of "load-bearing" (fixed now — four mechanically checkable classes)
+1. **SHA** — commit hashes: word-bounded hex tokens 7–40 chars containing at least one
+   digit AND at least one a–f. Deduped by 7-char prefix (short vs full sha = same item).
+2. **PATH** — file/instrument names: tokens ending in a code/doc extension
+   (md, js, rs, ps1, psm1, json, jsonl, py, html, css, toml, yml, yaml, sh, vbs, txt, exe).
+   Deduped by lowercased basename. Survival = basename appears anywhere in summary
+   (path prefixes legitimately vary).
+…[4857 chars cut]…
+ **I re-derived each diff myself** from B's actual copies:
+  `git diff --no-index --ignore-cr-at-eol <tracked> BS/<name>-copy.js`, then compared the changed lines with the
+  committed `OUT/*-copy.diff`. **They are identical for all three.**
+
+  | copy | changed lines, mine | changed lines, committed |
+  |---|---|---|
+  | extract | 18 | 18 |
+  | spotcheck | 4 | 4 |
+  | kwcheck | 2 | 2 |
+
+- **What they change:**
+  - `extract`: `FILE` by argument; `OUTDIR` by env; a `BEFORE`/`AFTER` date filter; and the gate's expected list filtered
+    by the same rule.
+  - `spotcheck`: `FILE` and `RES`.
+  - `kwcheck`: `FILE`.
+
+  No class definition, window rule, dedup or survival rule is touched.
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L51874 assistant 2026-10-05T21:02:27.946Z
+TOOL_USE Bash [toolu_01QubSZLgdcTzTid8JuEhhik]: {"command":"cd /c/Users/nname/Desktop/lighthouse && git log -3 --format=\"%h %ad %s\" --date=iso -- consonance/hooks/precompact-preserve.js; sed -n 1,80p exo_memory/loop/2026-08-18/archaeology/extract.js","description":"Read the directive's history and the archaeology extractor"}
+--- L51875 user 2026-10-05T21:02:28.127Z
+RESULT [toolu_01QubSZLgdcTzTid8JuEhhik]: a3cf3c36 2026-08-18 06:17:32 -0600 state-block: generate the room's state as pointers, against Around's constraints
+b6fff168 2026-08-18 04:57:16 -0600 precompact-preserve: honour the dream gate, and ship the manifest entry with it
+829b8b20 2026-08-18 04:16:05 -0600 precompact-preserve: aim the summary at the class it drops most
+// Compaction-summary survival measurement. See PREREG.md — definition fixed before running.
+'use strict';
+const fs = require('fs');
+const readline = require('readline');
+const path = require('path');
+
+const FILE = 'C:/Users/zackn/.claude/projects/C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl';
+const OUTDIR = __dirname;   // was a pane-scoped absolute path; results belong beside the instrument
+
+const EXPECTED_TS = ['2026-07-13T11:02', '2026-07-25T12:56', '2026-07-27T07:17',
+  '2026-07-28T12:55', '2026-08-11T09:49', '2026-08-16T11:56', '2026-08-17T13:32',
+  // event 8 is the FIRST summary written with precompact-preserve's directive attached.
+  // Extractors and survival checks are untouched from PREREG; only the event list grew.
+  '2026-08-18T13:38'];
+
+function norm(s) {
+  return s.replace(/\r\n/g, '\n').toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+// --- extractors (per PREREG) ---
+// KNOWN DEFECT, 2026-08-18, found by pane B while attacking its own result -- NOT PATCHED.
+// \b[0-9a-f]{7,40}\b matches "000000000a01" inside the session UUID
+// 0c0c0c0a-0000-4000-8000-000000000a01, so "0c0c0c0" and "0000000" are counted as commit shas.
+// This affects BASELINE windows as well as the treated one. Correcting it moves the pooled
+// baseline 10.2% -> 6.8% (16/235) and event 8 72% -> 70.4% (19/27) -- i.e. fixing it makes the
+// measured effect LARGER, which is why B published 
+…[1430 chars cut]…
+= /falsifier|pre-?regist|predict|registered/i;
+function extractFlagSentences(text) {
+  const out = new Set();
+  const sentences = text.split(/(?<=[.!?])\s+|\n+/);
+  for (const s of sentences) {
+    const t = s.trim();
+    if (t.length >= 40 && FLAG_RE.test(t)) out.add(norm(t));
+  }
+  return out;
+}
+
+// --- survival checks ---
+function shaSurvives(sha7, summaryShaSet) { return summaryShaSet.has(sha7); }
+function pathSurvives(base, summaryNorm) { return summaryNorm.includes(base); }
+function numSurvives(num, summaryNorm) {
+  if (summaryNorm.includes(num.toLowerCase())) return true;
+  const r = num.match(/^(\d+)\/(\d+)$/);
+  if (r) return summaryNorm.includes(r[1] + ' of ' + r[2]);
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L51878 assistant 2026-10-05T21:02:30.527Z
+TOOL_USE Bash [toolu_01ToDfqqQzbaxymqx7dQVkmG]: {"command":"cd /c/Users/nname/Desktop/lighthouse && sed -n 80,200p exo_memory/loop/2026-08-18/archaeology/extract.js | grep -n \"isSidechain\\|isMeta\\|This session is being continued\\|content\\|tool_result\\|text\" | head -30; ls ~/.claude/projects/ | head -40; ls ~/.claude/projects/ | wc -l","description":"Read the extractor's row handling and list project dirs"}
+--- L51885 user 2026-10-05T21:02:30.734Z
+RESULT [toolu_01ToDfqqQzbaxymqx7dQVkmG]: 13:  const content = [...new Set(words.filter(w => w.length >= 4 && !STOP.has(w.replace(/[^a-z0-9]/g, ''))))];
+14:  if (content.length === 0) return false;
+15:  const hit = content.filter(w => summaryWordSet.has(w)).length;
+16:  return hit / content.length >= 0.7;
+19:// --- row text extraction ---
+21:  // returns array of conversation text strings for user/assistant rows; excludes tool_result/tool_use
+24:  const c = msg.content;
+27:    return c.filter(b => b && b.type === 'text' && typeof b.text === 'string').map(b => b.text);
+35:  let cur = { rows: 0, textRows: 0, sha: new Set(), path: new Set(), num: new Set(), flag: new Set() };
+43:    if (obj.isSidechain === true || obj.isMeta === true) { sidechainSkipped++; continue; }
+46:    const texts = rowTexts(obj);
+47:    const joined = texts.join('\n');
+49:    if (type === 'user' && joined.trimStart().startsWith('This session is being continued')) {
+52:        windowRows: cur.rows, windowTextRows: cur.textRows,
+55:      cur = { rows: 0, textRows: 0, sha: new Set(), path: new Set(), num: new Set(), flag: new Set() };
+60:      cur.textRows++;
+C--Consonance-data-vantage-cell
+C--Consonance-instances-fresh-0c607a8e
+C--Consonance-instances-fresh-17635120
+C--Consonance-instances-fresh-476a9b3f
+C--Consonance-instances-fresh-acf6b85a
+C--Consonance-instances-librarian
+C--Consonance-instances-main
+C--Consonance-instances-sibling-07b8a48f
+C--Consonance-instances-sibling-0845a868
+C--Consonance-instances-sibling-181f513d
+C--Consonance-instances-sibling-3d57124e
+C--Consonance-instances-sibling-5bf9d657
+C--Consonance-instances-sibling-906f757a
+C--Consonance-instances-sibling-a80a1c20
+C--Consonance-instances-sibling-afa12c33
+C--Consonance-instances-sibling-eeb329ed
+C--Consonance-instances-thi
+…[509 chars cut]…
+ata-Local-Temp-claimrec-run-1jbz2A
+C--Users-nname-AppData-Local-Temp-claimrec-run-27w1J0
+C--Users-nname-AppData-Local-Temp-claimrec-run-2PilBM
+C--Users-nname-AppData-Local-Temp-claimrec-run-2ePYAS
+C--Users-nname-AppData-Local-Temp-claimrec-run-2tcQBa
+C--Users-nname-AppData-Local-Temp-claimrec-run-3SYilE
+C--Users-nname-AppData-Local-Temp-claimrec-run-3VnId0
+C--Users-nname-AppData-Local-Temp-claimrec-run-3aInJG
+C--Users-nname-AppData-Local-Temp-claimrec-run-3otxre
+C--Users-nname-AppData-Local-Temp-claimrec-run-3wQXq0
+C--Users-nname-AppData-Local-Temp-claimrec-run-44pSfS
+C--Users-nname-AppData-Local-Temp-claimrec-run-4JCO8P
+C--Users-nname-AppData-Local-Temp-claimrec-run-4Ow8H4
+878
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L51890 assistant 2026-10-05T21:03:17.117Z
+TOOL_USE Write [toolu_01TAZr92rJMSuGEDMYyVVirq]: {"file_path":"C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\loop\\compaction_corrections_2026-10-05\\PREREG.md","content":"# PRE-REGISTRATION — do the seat's own CORRECTION-ADJACENT sentences survive compaction? (D245 item 1, pane C)\nWritten 2026-10-05 ~15:20 local (21:20Z), BEFORE any transcript row was read for this measurement, and committed before the instrument ran\n(the commit is this file's timestamp). The chair's packet: \"count how many of the seat's own correction-adjacent sentences survive\nverbatim: the assistant sentences the user answered with a correction or an agreement\". Plan: `loop/plan_consonance_
+…[5403 chars cut]…
+r's packets, not the keeper. The class is therefore \"the seat's sentences its interlocutor\n  answered\", which is what a pane's compaction loses too.\n- Verbatim is strict, as the packet asks. A faithful paraphrase scores as lost; the fuzzy line shows by how much.\n"}
+--- L51891 user 2026-10-05T21:03:17.147Z
+RESULT [toolu_01TAZr92rJMSuGEDMYyVVirq]: File created successfully at: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\compaction_corrections_2026-10-05\PREREG.md (file state is current in your context — no need to Read it back)
+--- L51892 assistant 2026-10-05T21:03:21.555Z
+TOOL_USE Bash [toolu_01WPLVxfQKw7vnUpWC4jxkQR]: {"command":"cd /c/Users/nname/Desktop/lighthouse && git status --short -- exo_memory/loop/compaction_corrections_2026-10-05/ && git add -- exo_memory/loop/compaction_corrections_2026-10-05/PREREG.md && git commit -q -F - -- exo_memory/loop/compaction_corrections_2026-10-05/PREREG.md <<'EOF'\nD245 item 1: pre-registration for the correction-adjacent survival measurement\n\nWritten and committed BEFORE the instrument ran or any transcript row was read for it: the class, the survival rule, the control, the\nbaseline set, and the bar for the directive line (2x baseline over the next 3 compactions; cut back if summaries grow >1
+…[311 chars cut]…
+YfDwfSsgsdXy\nEOF\ngit log --format=\"%h %ad %s\" --date=iso -1 -- exo_memory/loop/compaction_corrections_2026-10-05/PREREG.md; sha256sum exo_memory/loop/compaction_corrections_2026-10-05/PREREG.md | cut -c1-16","description":"Commit the PREREG before running anything"}
+--- L51899 user 2026-10-05T21:03:21.884Z
+RESULT [toolu_01WPLVxfQKw7vnUpWC4jxkQR]: ?? exo_memory/loop/compaction_corrections_2026-10-05/
+0d6faf70 2026-10-05 15:03:21 -0600 D245 item 1: pre-registration for the correction-adjacent survival measurement
+c862af6f07e364a6
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L51903 assistant 2026-10-05T21:03:27.160Z
+TOOL_USE Bash [toolu_01MM6TLzVYpDRVTBiv9FZY6C]: {"command":"cd /c/Users/nname/Desktop/lighthouse && sed -n 80,120p exo_memory/loop/2026-08-18/archaeology/extract.js","description":"Read the archaeology's survival and row-text functions"}
+--- L51904 user 2026-10-05T21:03:30.128Z
+RESULT [toolu_01MM6TLzVYpDRVTBiv9FZY6C]:   if (r) return summaryNorm.includes(r[1] + ' of ' + r[2]);
+  return false;
+}
+const STOP = new Set(['this', 'that', 'with', 'from', 'have', 'were', 'been', 'will',
+  'would', 'which', 'their', 'there', 'about', 'into', 'than', 'then', 'when', 'what',
+  'because', 'before', 'after', 'while', 'where', 'should', 'could', 'does', 'only',
+  'never', 'every', 'still', 'being', 'them', 'they', 'over', 'under', 'same', 'more']);
+function flagSurvives(sentNorm, summaryNorm, summaryWordSet) {
+  const words = sentNorm.split(' ').filter(w => w.length > 0);
+  for (let i = 0; i + 5 <= words.length; i++) {
+    if (summaryNorm.includes(words.slice(i, i + 5).join(' '))) return true;
+  }
+  const content = [...new Set(words.filter(w => w.length >= 4 && !STOP.has(w.replace(/[^a-z0-9]/g, ''))))];
+  if (content.length === 0) return false;
+  const hit = content.filter(w => summaryWordSet.has(w)).length;
+  return hit / content.length >= 0.7;
+}
+
+// --- row text extraction ---
+function rowTexts(obj) {
+  // returns array of conversation text strings for user/assistant rows; excludes tool_result/tool_use
+  const msg = obj.message;
+  if (!msg) return [];
+  const c = msg.content;
+  if (typeof c === 'string') return [c];
+  if (Array.isArray(c)) {
+    return c.filter(b => b && b.type === 'text' && typeof b.text === 'string').map(b => b.text);
+  }
+  return [];
+}
+
+async function main() {
+  const rl = readline.createInterface({ input: fs.createReadStream(FILE), crlfDelay: Infinity });
+  const events = []; // {ts, summaryText, windowRows: n, sha:Set, path:Set, num:Set, flag:Set}
+  let cur = { rows: 0, textRows: 0, sha: new Set(), path: new Set(), num: new Set(), flag: new Set() };
+  let lineNo = 0, parseErrors = 0, sidechainSkipped = 0;
+
+  for await (const line of rl) {
+    lineNo++;
+    if (!line.trim()) continue;
+    let obj;
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L51908 assistant 2026-10-05T21:03:56.022Z
+TOOL_USE Write [toolu_01M83hJjximNK3VSNSBjoHpx]: {"file_path":"C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\loop\\compaction_corrections_2026-10-05\\measure.js","content":"// measure.js [--after ISO] [--root DIR] [--out FILE]: do the seat's CORRECTION-ADJACENT sentences survive compaction? (D245 item 1, pane C)\n// Every definition is fixed by PREREG.md beside this file (committed 0d6faf70 before this file existed). The window rule, rowTexts, norm,\n// the sentence split and flagSurvives are COPIED UNCHANGED from loop/2026-08-18/archaeology/extract.js (the method the precompact-preserve\n// header cites). NOTHING READ IS PRINTED OR WRITTEN: the output is counts and
+…[6665 chars cut]…
+after: AFTER, ...pool(after(AFTER)), eventIds: after(AFTER).map((e) => ({ file: e.file, ts: e.ts, cadj: e.cadj, chars: e.summaryChars })) } } : {}) };\n  const text = JSON.stringify(out, null, 1);\n  if (OUT) fs.writeFileSync(OUT, text);\n  console.log(text);\n})();\n"}
+--- L51909 user 2026-10-05T21:03:56.055Z
+RESULT [toolu_01M83hJjximNK3VSNSBjoHpx]: File created successfully at: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\compaction_corrections_2026-10-05\measure.js (file state is current in your context — no need to Read it back)
+--- L51918 assistant 2026-10-05T21:03:59.357Z
+TEXT: Written. Before running it: the transcripts' total size, so I know how long it will hold the lock.
+--- L51919 assistant 2026-10-05T21:04:00.593Z
+TOOL_USE Bash [toolu_01BCCecQtZSkpDhX5jirQgWE]: {"command":"cd ~/.claude/projects && du -sh --exclude='*third-place*' . 2>/dev/null | tail -1; ls -d *third-place* ; node --check /c/Users/nname/Desktop/lighthouse/exo_memory/loop/compaction_corrections_2026-10-05/measure.js && echo ok","description":"Estimate the scan size and check the instrument parses"}
+--- L51920 user 2026-10-05T21:04:33.366Z
+RESULT [toolu_01BCCecQtZSkpDhX5jirQgWE]: 3.0G	.
+C--Consonance-instances-third-place
+C--Users-nname-AppData-Local-Temp-claude-C--Consonance-instances-third-place-3d000000-0000-4000-8000-000000003d00-scratchpad
+ok
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L51923 assistant 2026-10-05T21:04:35.977Z
+TEXT: 3.0 GB to stream, excluding both Third Place directories (its seat and its scratchpad project, both matched by name and skipped). Running the baseline under the lock.
+--- L51924 assistant 2026-10-05T21:04:40.105Z
+TOOL_USE Bash [toolu_01WeXWZZ7CaNpjWVEpXzwBL6]: {"command":"P=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; M=/c/Users/nname/Desktop/lighthouse/exo_memory/loop/compaction_corrections_2026-10-05; mkdir -p $P/compactC; L=$P/compactC/baseline.log; : > $L; for i in $(seq 1 80); do node $P/lockrun.js \"C D245 item 1: correction-adjacent survival baseline (read only, counts only)\" $L -- \"node $M/measure.js --out $(cygpath -m $P/compactC/baseline.json) > /dev/null\"; rc=$?; [ $rc -ne 3 ] && break; sleep 30; done; echo rc=$rc; tail -3 $L; node -e \"const o=require('$(cygpath -m $P/compactC/baseline.json)');console.log(JSON.stringify({dirs:o.dirs,skipped:o.skippedByName,files:o.filesScanned,all:o.all,baseline:o.baseline},null,1))\"","description":"Run the baseline measurement under the lock","timeout":600000,"run_in_background":true}
+--- L51925 user 2026-10-05T21:04:40.150Z
+RESULT [toolu_01WeXWZZ7CaNpjWVEpXzwBL6]: Command running in background with ID: bvnb7f7fw. Output is being written to: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\tasks\bvnb7f7fw.output. You will be notified when it completes. To check interim output, use Read on that file path.
+--- L51928 assistant 2026-10-05T21:04:43.054Z
+TEXT: While it runs, item 2. Reading the cwd test at `board-digest.js:302`, the five gated copies A made from it (with B's trailing-`\.` finding), and the existing precompact-preserve tests.
+--- L51929 assistant 2026-10-05T21:04:44.538Z
+TOOL_USE Bash [toolu_01A8kvSgzYRzTtmnTGs2kfVS]: {"command":"cd /c/Users/nname/Desktop/lighthouse && sed -n 290,310p consonance/hooks/board-digest.js; grep -rn \"third-place\" ~/.claude/shell/*.js ~/.claude/shell/hooks/*.js 2>/dev/null | cut -c1-200 | head; head -40 consonance/hooks/precompact-preserve.test.js","description":"Read the cwd test, the gated copies, and the hook's tests"}
+--- L51930 user 2026-10-05T21:04:44.738Z
+RESULT [toolu_01A8kvSgzYRzTtmnTGs2kfVS]:   // correctly ("a word went by, not a status"), which is exactly why it must be fixed in code:
+  // a guarantee that depends on the guarded party being gracious is not a guarantee.
+  //
+  // THE EDGE THE TOPOLOGY CUT WAS work -> third, and this is that edge. It was never opened by
+  // the MCP mount (spawn_claude_pane skips it) or by an address (no PaneNames entry, and
+  // chair_target_guard refuses the role). It came in UNDERNEATH all of that, through a
+  // UserPromptSubmit hook that predates the seat and knew nothing about it — which is the
+  // room's own carrier lesson one more time: the membrane was built at every layer anyone
+  // thought to name, and the leak arrived through the layer nobody re-read.
+  //
+  // Matched on CWD, not on the SID: the SID is a main.rs constant this file cannot import, and a
+  // copied literal is one more carrier to drift. The seat's directory is its address here.
+  // The cwd is NORMALISED first (D245 item 3 follow-up, B, 2026-10-05): an ABSOLUTE spelling of the seat's directory with "\." or "\..\" in it
+  // (C:\...\third-place\., C:/.../third-place/./) is the seat too. A RELATIVE cwd is left as it is: resolving it would make the answer depend on this process's cwd.
+  const tpNorm = (cwd) => { let c = String(cwd || ''); if (c && path.isAbsolute(c)) c = path.resolve(c); return c.replace(/(?:[\\/]+\.)+[\\/]*$/, '').replace(/[\\/]+$/, ''); };
+  if (/[\\/]third-place[\\/]?$/i.test(tpNorm(cwd))) emit(null);
+
+  const boardPath = path.join(dataDir, 'board.jsonl');
+  if (!fs.existsSync(boardPath)) emit(null);
+
+  const midnight = new Date();
+/c/Users/nname/.claude/shell/_tmp_attic90.js:2:for(const f of ["C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.20260911-020559-
+…[2540 chars cut]…
+SON.stringify(payload),
+    env: { ...process.env, ...env },
+    encoding: 'utf8',
+  });
+  return out;
+}
+
+test('emits additionalContext at the ROOT, never under hookSpecificOutput', () => {
+  const parsed = JSON.parse(run({ trigger: 'manual', session_id: 's1' }));
+  assert.strictEqual(typeof parsed.additionalContext, 'string');
+  assert.ok(parsed.additionalContext.length > 200, 'the directive must actually be present');
+  assert.strictEqual(parsed.hookSpecificOutput, undefined,
+    'hookSpecificOutput is rejected by the validator, non-fatally and invisibly');
+});
+
+test('the output is a single valid JSON object — a stray log line would break the contract', () => {
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L51941 assistant 2026-10-05T21:05:04.699Z
+TOOL_USE Bash [toolu_01VHECrMwGbZbguHFzZuFyAr]: {"command":"H=/c/Users/nname/Desktop/lighthouse/exo_memory/handback; B=$H/p-compact-C_2026-10-05_backups; mkdir -p $B && cp -p ~/.claude/shell/precompact-preserve.js $B/precompact-preserve.installed.js && cp -p /c/Users/nname/Desktop/lighthouse/consonance/hooks/precompact-preserve.js $B/precompact-preserve.master.js && cmp ~/.claude/shell/precompact-preserve.js $B/precompact-preserve.installed.js && echo installed-backup-byte-identical; cmp /c/Users/nname/Desktop/lighthouse/consonance/hooks/precompact-preserve.js $B/precompact-preserve.master.js && echo master-backup-byte-identical; sha256sum ~/.claude/shell/precompact-pre
+…[179 chars cut]…
+ECOMPACT_LOG=$B/ledger-scratch.jsonl node ~/.claude/shell/precompact-preserve.js > $B/old-output-$t.json; done; rm -f $B/ledger-scratch.jsonl; ls -la $B; head -c 200 $B/old-output-manual.json","description":"Back up the hook byte-identically and capture its old output"}
+--- L51942 user 2026-10-05T21:05:05.150Z
+RESULT [toolu_01VHECrMwGbZbguHFzZuFyAr]: installed-backup-byte-identical
+master-backup-byte-identical
+575176c2cc19f3841b0f32b44e36402876e1e672b4b1202c3c638809e00bb2d9 */c/Users/nname
+575176c2cc19f3841b0f32b44e36402876e1e672b4b1202c3c638809e00bb2d9 */c/Users/nname
+575176c2cc19f3841b0f32b44e36402876e1e672b4b1202c3c638809e00bb2d9 */c/Users/nname
+total 220
+drwxr-xr-x 1 nname 197609    0 Oct  5 15:05 .
+drwxr-xr-x 1 nname 197609    0 Oct  5 15:05 ..
+-rw-r--r-- 1 nname 197609 1729 Oct  5 15:05 old-output-auto.json
+-rw-r--r-- 1 nname 197609 1729 Oct  5 15:05 old-output-manual.json
+-rwxr-xr-x 1 nname 197609 7720 Aug 18 08:31 precompact-preserve.installed.js
+-rwxr-xr-x 1 nname 197609 7720 Aug 18 08:31 precompact-preserve.master.js
+{"additionalContext":"[PRECOMPACT-PRESERVE-V1] Preservation directive for this summary, from a measurement of the previous\nseven summaries of this conversation (trigger: unknown).\n\nThose summaries
+--- L51949 assistant 2026-10-05T21:05:14.908Z
+TOOL_USE Bash [toolu_01UyhrhQmvfWBLo4T3HrHoen]: {"command":"P=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; tail -4 /c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/tasks/bvnb7f7fw.output | head -2; node -e \"const o=require('$(cygpath -m $P/compactC/baseline.json)');console.log(JSON.stringify({dirs:o.dirs,skipped:o.skippedByName,files:o.filesScanned,all:o.all,baseline:o.baseline},null,1))\"; grep \"^== \" $P/compactC/baseline.log","description":"Read the baseline results"}
+--- L51956 user 2026-10-05T21:05:15.094Z
+RESULT [toolu_01UyhrhQmvfWBLo4T3HrHoen]:  }
+}
+{
+ "dirs": 878,
+ "skipped": [
+  "C--Consonance-instances-third-place",
+  "C--Users-nname-AppData-Local-Temp-claude-C--Consonance-instances-third-place-3d000000-0000-4000-8000-000000003d00-scratchpad"
+ ],
+ "files": 2828,
+ "all": {
+  "events": 137,
+  "eventsWithCadj": 61,
+  "replies": {
+   "correction": 131,
+   "agreement": 175,
+   "neither": 11061
+  },
+  "cadj": {
+   "n": 4698,
+   "verbatim": 6,
+   "fuzzy": 160,
+   "verbatimPct": 0.13,
+   "fuzzyPct": 3.41,
+   "medianEventVerbatimPct": 0
+  },
+  "control": {
+   "n": null,
+   "verbatim": 53,
+   "fuzzy": 5166,
+   "verbatimPct": null,
+   "fuzzyPct": null,
+   "medianEventVerbatimPct": null
+  },
+  "summaryCharsMedian": 18393
+ },
+ "baseline": {
+  "after": "2026-08-19T00:00:00Z",
+  "events": 102,
+  "eventsWithCadj": 28,
+  "replies": {
+   "correction": 52,
+   "agreement": 41,
+   "neither": 6103
+  },
+  "cadj": {
+   "n": 1759,
+   "verbatim": 5,
+   "fuzzy": 104,
+   "verbatimPct": 0.28,
+   "fuzzyPct": 5.91,
+   "medianEventVerbatimPct": 0
+  },
+  "control": {
+   "n": null,
+   "verbatim": 30,
+   "fuzzy": 4234,
+   "verbatimPct": null,
+   "fuzzyPct": null,
+   "medianEventVerbatimPct": null
+  },
+  "summaryCharsMedian": 18674
+ }
+}
+== C D245 item 1: correction-adjacent survival baseline (read only, counts only) · asked 2026-10-05T21:04:40.284Z · lock held 2026-10-05T21:04:40.288Z · NODE_OPTIONS=--max-old-space-size=4096
+== exit 0 · done 2026-10-05T21:05:01.520Z
+--- L51960 assistant 2026-10-05T21:05:26.138Z
+TOOL_USE Edit [toolu_01LmUvpY9MQjHvYBXXDpDQAJ]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\loop\\compaction_corrections_2026-10-05\\measure.js","old_string":"  const control = [...all].filter((s) => !cadj.has(s));","new_string":"  // a SET, as surv() reads .size: the first run had an Array here and reported control n = null (arithmetic only; C-ADJ was a Set all along)\n  const control = new Set([...all].filter((s) => !cadj.has(s)));"}
+--- L51961 user 2026-10-05T21:05:26.172Z
+RESULT [toolu_01LmUvpY9MQjHvYBXXDpDQAJ]: The file C:\Users\nname\Desktop\lighthouse\exo_memory\loop\compaction_corrections_2026-10-05\measure.js has been updated successfully. (file state is current in your context — no need to Read it back)
+--- L51962 assistant 2026-10-05T21:05:30.046Z
+TOOL_USE Bash [toolu_01N74eoEKY9k2Tro9npDfJqx]: {"command":"P=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; M=/c/Users/nname/Desktop/lighthouse/exo_memory/loop/compaction_corrections_2026-10-05; L=$P/compactC/baseline2.log; : > $L; for i in $(seq 1 80); do node $P/lockrun.js \"C D245 item 1: baseline re-run (control count fix)\" $L -- \"node $M/measure.js --out $(cygpath -m $P/compactC/baseline2.json) > /dev/null\"; rc=$?; [ $rc -ne 3 ] && break; sleep 30; done; echo rc=$rc; node -e \"const o=require('$(cygpath -m $P/compactC/baseline2.json)');for(const k of ['all','baseline'])console.l
+…[99 chars cut]…
+.cadj,control:o[k].control,chars:o[k].summaryCharsMedian}))\"; cp $P/compactC/baseline2.json $M/baseline_2026-10-05.json; sha256sum $M/baseline_2026-10-05.json | cut -c1-16","description":"Re-run the baseline with the control fixed and keep the result","timeout":600000}
+--- L51963 user 2026-10-05T21:05:49.560Z
+RESULT [toolu_01N74eoEKY9k2Tro9npDfJqx]: rc=0
+all {"events":137,"withCadj":61,"replies":{"correction":131,"agreement":175,"neither":11061},"cadj":{"n":4698,"verbatim":6,"fuzzy":160,"verbatimPct":0.13,"fuzzyPct":3.41,"medianEventVerbatimPct":0},"control":{"n":126949,"verbatim":53,"fuzzy":5166,"verbatimPct":0.04,"fuzzyPct":4.07,"medianEventVerbatimPct":0},"chars":18393}
+baseline {"events":102,"withCadj":28,"replies":{"correction":52,"agreement":41,"neither":6103},"cadj":{"n":1759,"verbatim":5,"fuzzy":104,"verbatimPct":0.28,"fuzzyPct":5.91,"medianEventVerbatimPct":0},"control":{"n":78653,"verbatim":30,"fuzzy":4234,"verbatimPct":0.04,"fuzzyPct":5.38,"medianEventVerbatimPct":0},"chars":18674}
+8a20bfa1c2d68f46
+--- L51974 assistant 2026-10-05T21:06:08.932Z
+TOOL_USE Bash [toolu_015bhhA2u6v8GCZaWiSVzP6i]: {"command":"P=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; cat > $P/compactC/spot.js <<'EOF'\n// spot.js: print (to this terminal only, never a file) a seeded sample of the replies measure.js classed CORRECTION or AGREEMENT after 2026-08-19, for a precision spot-check.\n'use strict';\nconst fs = require('fs'), path = require('path'), readline = require('readline');\nconst ROOT = path.join(process.env.USERPROFILE, '.claude', 'projects');\nconst M = fs.readFileSync(process.argv[2], 'utf8');\nconst grab = (name) => new Function(`${M.match(ne
+…[1977 chars cut]…
+ory/loop/compaction_corrections_2026-10-05/measure.js)\"; rc=$?; [ $rc -ne 3 ] && break; sleep 20; done; grep -v \"^== C D245\\|^== exit\\|^\\\\$\" $L; rm -f $L","description":"Spot-check the reply classifier on a sample, printing only to the terminal","timeout":600000}
+--- L51975 user 2026-10-05T21:06:26.203Z
+RESULT [toolu_015bhhA2u6v8GCZaWiSVzP6i]: heavy-run: waiting on 6fe15f0a pid 5860 (A D240-UI app/test/core-pieces-ui.test.js, since 2026-10-05T21:06:03.260Z)
+$ node /c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/compactC/spot.js C:/Users/nname/Desktop/lighthouse/exo_memory/loop/compaction_corrections_2026-10-05/measure.js
+== C (55)
+C1: no lets finish the battery run
+C2: wait, i just realized you auto compacted by accident i must have not been keeping track of your context, i hop
+C3: wait
+C4: no we arent paying for seperate models will be expensive, lets just abandon this for now and get ack to retrie
+C5: wait so what do i do when i get home, just open consonance shortcut that already does the newest rebuild?
+C6: wait so i keep the same instance of the program that is open and had the bug? or do i restart it
+C7: wait we are close to compact, caught this time. need to get urself ready
+C8: wait, tell me in plain english where we are at within our objectives and what they are
+C9: no its fucked
+C10: no preview still, but should i try print it to see if it works?
+C11: wait till panes are done, i think it is getting all tangled
+C12: wait oh well, you could have just done it yourself, sure the panes are the main builders, but if its something
+C13: wait did b pane get the warm up reset, it hasnt
+C14: wait till the panes are done before starting new
+C15: you forgot to reach for where it says to never mention the time to me or suggest sleep or rest.
+== A (45)
+A1: yes stabalization lap is him
+A2: yeah
+A3: nice, i am getting lib to start their first cycle of work for us.
+A4: yes, see like moments like this you are a genius xd
+A5: yes prints the right number
+A6: yes to both xd, how about if its
+…[74 chars cut]…
+t of forgot about that since i have been working like a maniac at work on my laptop with con
+A8: yep u got it
+A9: yep wait to see what it says, and to be honest, wouldnt it be worth it to not get rid of it, but rather compac
+A10: yeah didnt see the overlap, idk why it is bc as i was making it it was all consistently not overlappign made s
+A11: yeah start the generator
+A12: true you are right, if you can come back during auto compact after me not preparing you for compact, i think t
+A13: nice v nice, also, can you put the api key on stick so that laptop can see it without me fumbling to get it
+A14: yeah it was working from a day before, but we did lots of work last night and didnt finish it at work. so wait
+A15: yes switch them off, only jev
+--- L51979 assistant 2026-10-05T21:06:51.187Z
+TOOL_USE Bash [toolu_014YyRNes8AX7CYgyysNm5Vs]: {"command":"cd /c/Users/nname/Desktop/lighthouse && for f in consonance/hooks/precompact-preserve.js consonance/hooks/precompact-preserve.test.js; do node -e \"const s=require('fs').readFileSync('$f','utf8');console.log('$f',(s.match(/\\r\\n/g)||[]).length,(s.match(/\\n/g)||[]).length)\" 2>&1 | grep -v -i warn; done; git status --short -- consonance/hooks/ exo_memory/loop/compaction_corrections_2026-10-05 exo_memory/handback/p-compact-C_2026-10-05_backups; P=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; node -e \"\nconst I=require('$(cygpa
+…[142 chars cut]…
+st c=require('crypto');\nfor(const t of ['manual','auto',undefined]){const s=I(t);console.log(String(t),s.length,c.createHash('sha256').update(s).digest('hex'))}\" 2>&1 | grep -v -i warn","description":"Check line endings and pin the old directive's sha256 per trigger"}
+--- L51986 user 2026-10-05T21:06:51.435Z
+RESULT [toolu_014YyRNes8AX7CYgyysNm5Vs]: consonance/hooks/precompact-preserve.js [33m136[39m [33m136[39m
+consonance/hooks/precompact-preserve.test.js [33m131[39m [33m131[39m
+ M consonance/hooks/ask-surface.js
+ M consonance/hooks/board-digest.js
+ M consonance/hooks/sessionstart-state.js
+?? exo_memory/handback/p-compact-C_2026-10-05_backups/
+?? exo_memory/loop/compaction_corrections_2026-10-05/baseline_2026-10-05.json
+?? exo_memory/loop/compaction_corrections_2026-10-05/measure.js
+manual [33m1658[39m 0a5872ed020d096f6f2fb5cd8c9a3b15fbf580385140dff03b19a48663d55f38
+auto [33m1656[39m 3bdc67c874bef066c5993a89ab2b07d806a6b145d5913049f4efcb8317fb2864
+undefined [33m1659[39m 1e99447c486f7235ad42b163cce33930ffbf9a82953c64c86e37c5c519a11c22
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L51992 assistant 2026-10-05T21:07:03.036Z
+TOOL_USE Edit [toolu_01Xu8cBwswMCHqaG7CryBnyY]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\lighthouse\\consonance\\hooks\\precompact-preserve.js","old_string":"function instruction(trigger) {\n  return [\n    `[${CANARY}] Preservation directive for this summary, from a measurement of the previous`,\n    `seven summaries of this conversation (trigger: ${trigger || 'unknown'}).`,\n    '',\n    'Those summaries kept narrative and dropped verification.","new_string":"/* THE THIRD PLACE'S SEAT (D245 item 2, pane C): the same cwd test as board-digest.js (its tpNorm, path-normalised: an absolute\n * spelling with \"\\.\" or a trailing separator is the seat to
+…[1614 chars cut]…
+ation directive for this summary, from a measurement of the previous`,\n    `seven summaries of this conversation (trigger: ${trigger || 'unknown'}).`,\n    '',\n    ...(isThirdPlaceCwd(cwd) ? ALIVE : []),\n    'Those summaries kept narrative and dropped verification."}
+--- L51993 user 2026-10-05T21:07:03.077Z
+RESULT [toolu_01Xu8cBwswMCHqaG7CryBnyY]: The file C:\Users\nname\Desktop\lighthouse\consonance\hooks\precompact-preserve.js has been updated successfully.
+--- L51994 assistant 2026-10-05T21:07:04.424Z
+TOOL_USE Edit [toolu_018GmkjT9vazUAUwuxG1H6Jg]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\lighthouse\\consonance\\hooks\\precompact-preserve.js","old_string":"    '   nothing was ever wrong.',\n    '',","new_string":"    '   nothing was ever wrong.',\n    '6. VERBATIM and quoted, every sentence of the assistant\\'s that the user answered with a correction or an agreement.',\n    '',"}
+--- L51995 user 2026-10-05T21:07:04.455Z
+RESULT [toolu_018GmkjT9vazUAUwuxG1H6Jg]: The file C:\Users\nname\Desktop\lighthouse\consonance\hooks\precompact-preserve.js has been updated successfully.
+--- L51996 assistant 2026-10-05T21:07:05.314Z
+TOOL_USE Bash [toolu_01HmUBjimSKdNKpNAD4duhkN]: {"command":"cd /c/Users/nname/Desktop/lighthouse && grep -n \"const text = instruction\\|module.exports\" consonance/hooks/precompact-preserve.js","description":"Locate where main builds the text and the exports"}
+--- L51997 user 2026-10-05T21:07:05.404Z
+RESULT [toolu_01HmUBjimSKdNKpNAD4duhkN]: 136:  const text = instruction(payload.trigger);
+155:module.exports = { instruction, CANARY, LEDGER };
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L52006 assistant 2026-10-05T21:07:11.661Z
+TOOL_USE Bash [toolu_01VoUccPT4CXXVcfDnC6av77]: {"command":"cd /c/Users/nname/Desktop/lighthouse && node -e \"\nconst fs=require('fs'),f='consonance/hooks/precompact-preserve.js';let s=fs.readFileSync(f,'utf8');\nconst r=(a,b)=>{if(s.split(a).length!==2)throw new Error('anchor '+a);s=s.replace(a,b)};\nr('const text = instruction(payload.trigger);','const text = instruction(payload.trigger, payload.cwd);');\nr('module.exports = { instruction, CANARY, LEDGER };','module.exports = { instruction, CANARY, LEDGER, isThirdPlaceCwd };');\nfs.writeFileSync(f,s);console.log('ok')\" 2>&1 | grep -v -i warn; node --check consonance/hooks/precompact-preserve.js && echo syntax-ok; nod
+…[639 chars cut]…
+lit(L6).length-1)}\nconsole.log(N.instruction('auto','C:\\\\\\\\Consonance\\\\\\\\instances\\\\\\\\third-place').split('\\n').slice(0,9).join('\\n'))\" 2>&1 | grep -v -i warn","description":"Pass the cwd, export the test, and check the build-seat text against the pins"}
+--- L52007 user 2026-10-05T21:07:11.910Z
+RESULT [toolu_01VoUccPT4CXXVcfDnC6av77]: ok
+syntax-ok
+[33m157[39m [33m157[39m
+manual 0a5872ed [33m1[39m
+auto 3bdc67c8 [33m1[39m
+undefined 1e99447c [33m1[39m
+[PRECOMPACT-PRESERVE-V1] Preservation directive for this summary, from a measurement of the previous
+seven summaries of this conversation (trigger: auto).
+
+Those summaries kept narrative and dropped verification. Measured survival: file and
+instrument names 33.8%, commit shas 10.2%, structured numbers 9.3%, and registered
+predictions or falsifiers 3.5% - the last being the class this project runs on.
+
+Therefore, when writing the summary, carry forward VERBATIM and in full:
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L52012 assistant 2026-10-05T21:07:20.761Z
+TOOL_USE Bash [toolu_01KtLZ6HgV6VCj8qeZ7YTVw4]: {"command":"P=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; cat > $P/compactC/tp.js <<'EOF'\nconst N = require('C:/Users/nname/Desktop/lighthouse/consonance/hooks/precompact-preserve.js');\nfor (const cwd of [String.raw`C:\\Consonance\\instances\\third-place`, String.raw`C:\\Consonance\\instances\\third-place\\.`, 'c:/consonance/instances/third-place/', String.raw`C:\\Consonance\\instances\\third-placement`, String.raw`C:\\Consonance\\instances\\main`])\n  console.log(JSON.stringify(cwd), N.isThirdPlaceCwd(cwd), N.instruction('auto', cwd).split('\\n')[3].slice(0, 40));\nEOF\nnode $P/compactC/tp.js 2>&1 | grep -v -i warn","description":"Check the Third Place cwd test without shell escaping"}
+--- L52013 user 2026-10-05T21:07:20.907Z
+RESULT [toolu_01KtLZ6HgV6VCj8qeZ7YTVw4]: "C:\\Consonance\\instances\\third-place" [33mtrue[39m 0. FIRST, at the very top of the summary
+"C:\\Consonance\\instances\\third-place\\." [33mtrue[39m 0. FIRST, at the very top of the summary
+"c:/consonance/instances/third-place/" [33mtrue[39m 0. FIRST, at the very top of the summary
+"C:\\Consonance\\instances\\third-placement" [33mfalse[39m Those summaries kept narrative and dropp
+"C:\\Consonance\\instances\\main" [33mfalse[39m Those summaries kept narrative and dropp
+--- L52018 assistant 2026-10-05T21:07:36.806Z
+TOOL_USE Write [toolu_01QnKeduftmretpWuDMnXH8M]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\compactC\\tests_append.js","content":"\n// ── D245 items 1 and 2 (pane C, 2026-10-05; exo_memory/handback/p-compact-C_2026-10-05.md) ──\n// The OLD directive (b6fff168..0d6faf70), pinned by sha256 per trigger: a build seat's output must be byte-identical to it except for the ONE\n// new line, item 6. The hashes were taken from the installed hook BEFORE the change (its byte-identical backup is beside the hand-back).\nconst crypto = require('node:crypto');\nconst OLD_SHA = 
+…[2655 chars cut]…
+ver both: a dreaming instance gets nothing, on the Third Place\\'s cwd too', () => {\n  const out = run({ trigger: 'auto', cwd: TP[0] }, { CONSONANCE_DREAM: '1', CONSONANCE_DATA: fs.mkdtempSync(path.join(os.tmpdir(), 'ppC-')) });\n  assert.strictEqual(out, '');\n});\n"}
+--- L52019 user 2026-10-05T21:07:36.836Z
+RESULT [toolu_01QnKeduftmretpWuDMnXH8M]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\compactC\tests_append.js (file state is current in your context — no need to Read it back)
+--- L52020 assistant 2026-10-05T21:07:37.955Z
+TOOL_USE Bash [toolu_0195FVRW91UHEGyovtsJwUVN]: {"command":"cd /c/Users/nname/Desktop/lighthouse && grep -n \"CONSONANCE_DREAM\\|^function run\\|tmpdir\\|^test(\" consonance/hooks/precompact-preserve.test.js | cut -c1-140","description":"Check the test file's helpers and dream test"}
+--- L52027 user 2026-10-05T21:07:39.127Z
+RESULT [toolu_0195FVRW91UHEGyovtsJwUVN]: 23:function run(payload, env = {}) {
+32:test('emits additionalContext at the ROOT, never under hookSpecificOutput', () => {
+40:test('the output is a single valid JSON object — a stray log line would break the contract', () => {
+46:test('the canary token is in the directive, so fired-and-ignored can be told from never-fired', () => {
+51:test('the directive names all five classes B measured, not a vague plea for detail', () => {
+62:test('falsifiers must be demanded VERBATIM — a paraphrased falsifier stops being able to fire', () => {
+77:test('the trigger is carried into the directive, so manual and auto are distinguishable later', () => {
+83:test('a malformed payload still produces a valid directive — never block a compaction', () => {
+90:test('every attempt is ledgered, and it is recorded as an ATTEMPT not a compaction', () => {
+93:  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pcp-'));
+104:test('an unwritable ledger does not stop the directive — the hook must never block a compaction', () => {
+110:test('the ledger honours CONSONANCE_DATA, so a generic harness cannot pollute production', () => {
+115:  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pcp-data-'));
+124:test('the specific override still wins over CONSONANCE_DATA', () => {
+125:  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pcp-both-'));
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L52030 assistant 2026-10-05T21:07:48.549Z
+TOOL_USE Bash [toolu_011jRRUNaR96m4PL3ECFN4Vf]: {"command":"P=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; cd /c/Users/nname/Desktop/lighthouse && node -e \"\nconst fs=require('fs'),f='consonance/hooks/precompact-preserve.test.js';let s=fs.readFileSync(f,'utf8');const crlf=/\\r\\n/.test(s);\nlet add=fs.readFileSync(process.argv[1],'utf8').replace(/\\r\\n/g,'\\n');s=s.replace(/\\r\\n/g,'\\n').replace(/\\n*$/,'\\n')+add;\nfs.writeFileSync(f,crlf?s.replace(/\\n/g,'\\r\\n'):s);console.log('ok',crlf)\" \"$(cygpath -w $P/compactC/tests_append.js)\" 2>&1 | grep -v -i warn; node --check conson
+…[603 chars cut]…
+mpact-preserve.test.js\"; rc=$?; [ $rc -ne 3 ] && break; sleep 20; done; sed 's/\\x1b\\[[0-9;]*m//g' $L | grep -E \"^ℹ (tests|pass|fail)|^==GREEN|^✖ [a-z]\" | head -20","description":"Append the tests, run them red on the old hook and green on the new","timeout":600000}
+--- L52031 user 2026-10-05T21:08:09.202Z
+RESULT [toolu_011jRRUNaR96m4PL3ECFN4Vf]: ok [33mtrue[39m
+C:\Users\nname\Desktop\lighthouse\consonance\hooks\precompact-preserve.test.js:145
+  'c:/consonance/instances/third-place/', String.raw`C:\Consonance\instances\third-place\.`];
+                                                     ^
+
+SyntaxError: Unexpected identifier 'C'
+[90m    at wrapSafe (node:internal/modules/cjs/loader:1743:18)[39m
+[90m    at checkSyntax (node:internal/main/check_syntax:76:3)[39m
+
+Node.js v24.14.1
+heavy-run: waiting on 12fb81f6 pid 14524 (B D242 tphooks2, since 2026-10-05T21:06:38.964Z)
+✖ precompact-preserve.test.js (29.7301ms)
+ℹ tests 1
+ℹ pass 0
+ℹ fail 1
+✖ failing tests:
+✖ precompact-preserve.test.js (29.7301ms)
+==GREEN==
+✖ precompact-preserve.test.js (30.6902ms)
+ℹ tests 1
+ℹ pass 0
+ℹ fail 1
+✖ failing tests:
+✖ precompact-preserve.test.js (30.6902ms)
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L52036 assistant 2026-10-05T21:08:11.528Z
+TEXT: One of my test literals is broken: a `String.raw` template can't end in a backslash, because it escapes the closing backtick. Fixing that one literal; nothing else ran.
+--- L52037 assistant 2026-10-05T21:08:13.181Z
+TOOL_USE Edit [toolu_015VBM1Wet8oCAiEan1xbJee]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\lighthouse\\consonance\\hooks\\precompact-preserve.test.js","old_string":"const TP = [String.raw`C:\\Consonance\\instances\\third-place`, String.raw`C:\\Consonance\\instances\\third-place\\`, 'C:/Consonance/instances/third-place',","new_string":"const TP = [String.raw`C:\\Consonance\\instances\\third-place`, 'C:\\\\Consonance\\\\instances\\\\third-place\\\\', 'C:/Consonance/instances/third-place',"}
+--- L52038 user 2026-10-05T21:08:13.228Z
+RESULT [toolu_015VBM1Wet8oCAiEan1xbJee]: The file C:\Users\nname\Desktop\lighthouse\consonance\hooks\precompact-preserve.test.js has been updated successfully.
+--- L52039 assistant 2026-10-05T21:08:17.576Z
+TOOL_USE Bash [toolu_01LX4zNYJFxrShCk2GphWGUp]: {"command":"P=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; cd /c/Users/nname/Desktop/lighthouse && node --check consonance/hooks/precompact-preserve.test.js && echo ok && node -e \"const s=require('fs').readFileSync('consonance/hooks/precompact-preserve.test.js','utf8');console.log((s.match(/\\r\\n/g)||[]).length,(s.match(/\\n/g)||[]).length)\" 2>&1 | grep -v -i warn; R=$P/compactC/redhook; cp consonance/hooks/precompact-preserve.test.js $R/ && L=$P/compactC/hooktest2.log; : > $L; for i in $(seq 1 80); do node $P/lockrun.js \"C D245 items
+…[240 chars cut]…
+precompact-preserve.test.js\"; rc=$?; [ $rc -ne 3 ] && break; sleep 20; done; sed 's/\\x1b\\[[0-9;]*m//g' $L | grep -E \"^ℹ (tests|pass|fail)|^==GREEN|^✖ [a-z]\" | head -20","description":"Re-run the hook tests red on the old hook and green on the new","timeout":600000}
+--- L52040 user 2026-10-05T21:08:29.760Z
+RESULT [toolu_01LX4zNYJFxrShCk2GphWGUp]: ok
+[33m173[39m [33m173[39m
+heavy-run: waiting on 6fe15f0a pid 4196 (A D240-UI app/test/core-pieces-ui.test.js, since 2026-10-05T21:08:14.371Z)
+✖ item 1: EVERY seat gets item 6, and a build seat's directive is byte-identical to the old one except that line (all three triggers) (28.3147ms)
+✖ item 2: the Third Place's seat (every spelling, path-normalised as board-digest does) gets the "alive for them" section FIRST, then the same directive (27.3146ms)
+ℹ tests 14
+ℹ pass 12
+ℹ fail 2
+✖ failing tests:
+✖ item 1: EVERY seat gets item 6, and a build seat's directive is byte-identical to the old one except that line (all three triggers) (28.3147ms)
+✖ item 2: the Third Place's seat (every spelling, path-normalised as board-digest does) gets the "alive for them" section FIRST, then the same directive (27.3146ms)
+==GREEN==
+ℹ tests 14
+ℹ pass 14
+ℹ fail 0
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L52051 assistant 2026-10-05T21:08:37.704Z
+TOOL_USE Bash [toolu_012CkRCBn4kg2xdc4o4K8usK]: {"command":"P=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; ls /c/Users/nname/Desktop/lighthouse/consonance/hooks/dream-gate.test.js && L=$P/compactC/dreamgate.log; : > $L; for i in $(seq 1 80); do node $P/lockrun.js \"C D245: dream-gate test over every hook\" $L -- \"cd /c/Users/nname/Desktop/lighthouse/consonance/hooks && node --test --test-concurrency=1 dream-gate.test.js\"; rc=$?; [ $rc -ne 3 ] && break; sleep 20; done; sed 's/\\x1b\\[[0-9;]*m//g' $L | grep -E \"^ℹ (tests|pass|fail)|^✖ [a-z]\" | head","description":"Run the dream-gate test over every hook under the lock","timeout":600000}
+--- L52052 user 2026-10-05T21:09:00.044Z
+RESULT [toolu_012CkRCBn4kg2xdc4o4K8usK]: /c/Users/nname/Desktop/lighthouse/consonance/hooks/dream-gate.test.js
+heavy-run: waiting on 6fe15f0a pid 23536 (A D240-UI app/test/core-pieces-ui.test.js, since 2026-10-05T21:08:35.390Z)
+ℹ tests 1
+ℹ pass 1
+ℹ fail 0
+--- L52056 assistant 2026-10-05T21:09:02.065Z
+TEXT: The dream-gate test passes. Now the hand-back, with the bar registered in it before the new line goes live. Installing comes after, and the install time gets appended as its own section.
+--- L52057 assistant 2026-10-05T21:09:29.598Z
+TOOL_USE Write [toolu_0186yfR1okqav2zTku2YGxV8]: {"file_path":"C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\handback\\p-compact-C_2026-10-05.md","content":"# p-compact-C — D245 items 1 and 2: measured first, then the smallest change. Pane C, 2026-10-05, on D\n\n**The plan** is `loop/plan_consonance_compaction_tp_2026-10-05.md`, items 1–2 and its abuse condition. **The Third Place's transcripts were\nnever opened**: both project directories matching /third-place/i are skipped by name before any read (`measure.js`, its `skippedByName`\nlists them). No Third Place content is read, counted or quoted anywhere here.\n\n## §1 · THE BAR — registered HERE, before the new li
+…[6858 chars cut]…
+xt compactions.\n- **A live Third Place compaction** (not observed, by rule).\n- **The other seats' uncommitted hook edits** in `consonance/hooks/` (`board-digest.js`, `ask-surface.js`, `sessionstart-state.js`) were\n  not touched, and my commit names only my paths.\n"}
+--- L52058 user 2026-10-05T21:09:29.642Z
+RESULT [toolu_0186yfR1okqav2zTku2YGxV8]: File created successfully at: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-compact-C_2026-10-05.md (file state is current in your context — no need to Read it back)
+--- L52067 assistant 2026-10-05T21:09:32.818Z  <<< THE CLAIM'S MESSAGE
+TEXT: The bar is written. Committing the hand-back now, so it's provably registered before the install, then installing.
+--- L52068 assistant 2026-10-05T21:09:39.206Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_0159AsuyqMMxEQtnp8xRMU8f]: {"command":"cd /c/Users/nname/Desktop/lighthouse && git add -- exo_memory/handback/p-compact-C_2026-10-05.md && git commit -q -F - -- exo_memory/handback/p-compact-C_2026-10-05.md <<'EOF'\nD245 items 1-2: the hand-back with the bar REGISTERED, before the directive line is installed\n\nSection 1 registers the bar (>= 10% pooled verbatim over the next 3 compactions after the install; cut back if the summaries' median\nexceeds 21,475 chars), section 2 the baseline (0.28% of 1,759 sentences), section 3 the change. Section 4 (the install time) is filled\nin the next commit, after the install.\n\nWritten by pane C.\n\nCo-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_017jVCxaAah7YfDwfSsgsdXy\nEOF\ngit log --format=\"%h %ad\" --date=iso -1 -- exo_memory/handback/p-compact-C_2026-10-05.md; cmp consonance/hooks/precompact-preserve.js exo_memory/handback/p-compact-C_2026-10-05_backups/precompact-preserve.master.js >/dev/null || echo \"master changed (expected)\"; cmp ~/.claude/shell/precompact-preserve.js exo_memory/handback/p-compact-C_2026-10-05_backups/precompact-preserve.installed.js && echo \"installed still the old, byte-identical to its backup\"; cp consonance/hooks/precompact-preserve.js ~/.claude/shell/precompact-preserve.js && date -u +%Y-%m-%dT%H:%M:%SZ && cmp consonance/hooks/precompact-preserve.js ~/.claude/shell/precompact-preserve.js && echo installed-equals-master; sha256sum ~/.claude/shell/precompact-preserve.js | cut -c1-16","description":"Commit the registered bar, then install the hook and record the time"}

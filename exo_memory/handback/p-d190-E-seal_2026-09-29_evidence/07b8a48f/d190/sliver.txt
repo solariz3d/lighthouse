@@ -1,0 +1,12 @@
+{"fam":"bowl","w":12,"c":30,"rowA":74,"rowB":73,"sliver_mm":0.378}
+{"fam":"bowl","w":12,"c":90,"rowA":193,"rowB":193,"sliver_mm":0}
+{"fam":"bowl","w":12,"c":150,"rowA":313,"rowB":313,"sliver_mm":0}
+{"fam":"bowl","w":31,"c":30,"rowA":93,"rowB":93,"sliver_mm":0}
+{"fam":"bowl","w":31,"c":90,"rowA":212,"rowB":212,"sliver_mm":0}
+{"fam":"bowl","w":31,"c":150,"rowA":332,"rowB":332,"sliver_mm":0}
+{"fam":"half-pipe","w":12,"c":30,"rowA":73,"rowB":73,"sliver_mm":0}
+{"fam":"half-pipe","w":12,"c":90,"rowA":194,"rowB":193,"sliver_mm":0.219}
+{"fam":"half-pipe","w":12,"c":150,"rowA":313,"rowB":313,"sliver_mm":0}
+{"fam":"half-pipe","w":31,"c":30,"rowA":92,"rowB":93,"sliver_mm":0.529}
+{"fam":"half-pipe","w":31,"c":90,"rowA":212,"rowB":212,"sliver_mm":0}
+{"fam":"half-pipe","w":31,"c":150,"rowA":332,"rowB":332,"sliver_mm":0}

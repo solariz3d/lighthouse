@@ -1,0 +1,85 @@
+== D184 evals final · asked 2026-09-28T12:10:19.291Z · lock held 2026-09-28T12:10:19.295Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd /c/Users/nname/Desktop/t180-track-builder && node --test --test-concurrency=4 .claude/skills/track-equations/evals/known_answers.test.js .claude/skills/track-equations/evals/mutation.test.js
+[32m✔ track-equations 01 §1: Möller–Trumbore: a ray through a triangle hits at the right t and barycentrics; outside, parallel or behind is a miss [90m(0.5637ms)[39m[39m
+[32m✔ track-equations 01 §2: of stacked road hits, the one nearest the previous station's height is taken, not the first [90m(0.3472ms)[39m[39m
+[32m✔ track-equations 01 §3: the centre is the midpoint of the left and right edges [90m(0.0698ms)[39m[39m
+[32m✔ track-equations 02 §1: curvature from position: a circle 1/R, a line 0, a helix a/(a² + b²) [90m(0.0868ms)[39m[39m
+[32m✔ track-equations 02 §2: the tangent is a unit vector; heading 0 is +z, heading 90° is +x, pitch 90° is up [90m(0.0878ms)[39m[39m
+[32m✔ track-equations 02 §2: a constant heading rate 1/R for 2πR rebuilds a circle of radius R that closes, net heading 2π [90m(1.5066ms)[39m[39m
+[32m✔ track-equations 02 §3: a circle's heading rate, read back from its points, is 1/R [90m(0.6635ms)[39m[39m
+[32m✔ track-equations 02 §4: a clothoid's κ is linear in s, reaching 1/R at L with A² = R·L; the smoothstep ramp's steepest slope is 1.5 at ½ [90m(0.0918ms)[39m[39m
+[32m✔ track-equations 03 §1: cubic B-spline basis: partition of unity, and each function is zero outside its 4 spans [90m(0.2947ms)[39m[39m
+[32m✔ track-equations 03 §2: a least-squares cubic B-spline fit reproduces a cubic polynomial exactly [90m(0.9659ms)[39m[39m
+[32m✔ track-equations 03 §3: knot refinement adds a midpoint knot only where the error exceeds the tolerance [90m(0.1277ms)[39m[39m
+[32m✔ track-equations 04 §1: least squares recovers an exact line from its samples [90m(0.1623ms)[39m[39m
+[32m✔ track-equations 04 §2: KKT: two cubic pieces fitted to data meet at their joint in value, slope AND curvature (G2), as constrained [90m(0.4092ms)[39m[39m
+[32m✔ track-equations 04 §2: KKT closure: a fitted cubic constrained to end where it starts, and with the same slope, does [90m(0.0932ms)[39m[39m
+[32m✔ track-equations 04 §3: least-norm: J δ = −r, δ orthogonal to J's null space; weighted, no dearer than any feasible step [90m(0.1944ms)[39m[39m
+[32m✔ track-equations 04 §3: a perturbed loop starts open and closes to < 1e-9·L under least-norm Newton steps [90m(2.8188ms)[39m[39m
+[32m✔ track-equations 05 §1: a projectile on level ground lands at v²·sin2θ/g after 2v·sinθ/g, and conserves ½v² + g·y [90m(0.1356ms)[39m[39m
+[32m✔ track-equations 05 §2: the time to come down to a landing height is the later root; the arc passes through that height then [90m(0.0687ms)[39m[39m
+[32m✔ track-equations 06 §2: a sphere has K = 1/R² (angle defect smoothed over 1 m, away from the poles) [90m(9.2029ms)[39m[39m
+[32m✔ track-equations 06 §2: a cylinder and a cone have zero angle defect at every interior vertex (K = 0) [90m(11.4971ms)[39m[39m
+[32m✔ track-equations 06 §3: a torus has K = cos v/(r(R + r cos v)): each ring's summed angle defect equals ∫K dA over its band [90m(38.6946ms)[39m[39m
+[32m✔ track-equations 06 §4: Gauss–Bonnet (Descartes): angle defects of a closed mesh sum to exactly 2πχ (sphere 4π, torus 0) [90m(34.573ms)[39m[39m
+[32m✔ track-equations 06 §6: DERIVED: a dished corner banked into its turn is elliptic, K ≈ κh·sin β·dψ/du at its centre (within 25%) [90m(29.5311ms)[39m[39m
+[32m✔ track-equations 06 §7: a frictionless particle on a surface conserves ½v² + g·y; over a crest it lifts off exactly when v² > gR [90m(2.3172ms)[39m[39m
+[32m✔ track-equations 07 §1: a Fourier fit of cos(3·2πs/L) gives a₃ = 1; a square wave (a jump) gives b_k = 4/(πk) on odd k: 1/k decay [90m(1.1816ms)[39m[39m
+[32m✔ CONTROL: every known-answer check passes on the unmutated mathref.cjs [90m(0.5458ms)[39m[39m
+[32m✔ mutant K1 ray: accept u + v up to 2: applied, and CAUGHT [90m(118.0957ms)[39m[39m
+[34mℹ K1 ray: accept u + v up to 2: caught by 01 §1[39m
+[32m✔ mutant K2 ray: accept hits behind the origin: applied, and CAUGHT [90m(129.7346ms)[39m[39m
+[34mℹ K2 ray: accept hits behind the origin: caught by 01 §1[39m
+[32m✔ mutant K3 nearest hit: take the first: applied, and CAUGHT [90m(102.6759ms)[39m[39m
+[34mℹ K3 nearest hit: take the first: caught by 01 §2[39m
+[32m✔ mutant K4 curvature: |r′|² not |r′|³: applied, and CAUGHT [90m(105.0816ms)[39m[39m
+[34mℹ K4 curvature: |r′|² not |r′|³: caught by 02 §1[39m
+[32m✔ mutant K5 tangent: sin and cos of heading swapped: applied, and CAUGHT [90m(103.1147ms)[39m[39m
+[34mℹ K5 tangent: sin and cos of heading swapped: caught by 02 §2, 02 §2[39m
+[32m✔ mutant K6 rebuild: explicit Euler: applied, and CAUGHT [90m(103.2574ms)[39m[39m
+[34mℹ K6 rebuild: explicit Euler: caught by 02 §2[39m
+[32m✔ mutant K7 discrete curvature: over the sum of arcs: applied, and CAUGHT [90m(112.1569ms)[39m[39m
+[34mℹ K7 discrete curvature: over the sum of arcs: caught by 02 §3[39m
+[32m✔ mutant K8 clothoid: κ ∝ s²: applied, and CAUGHT [90m(104.1464ms)[39m[39m
+[34mℹ K8 clothoid: κ ∝ s²: caught by 02 §4[39m
+[32m✔ mutant K9 smoothstep: 2u² − u³: applied, and CAUGHT [90m(102.6252ms)[39m[39m
+[34mℹ K9 smoothstep: 2u² − u³: caught by 02 §4[39m
+[32m✔ mutant K10 Cox–de Boor: drop the right term: applied, and CAUGHT [90m(103.0563ms)[39m[39m
+[34mℹ K10 Cox–de Boor: drop the right term: caught by 03 §1, 03 §2[39m
+[32m✔ mutant K11 knot refinement: refine every span: applied, and CAUGHT [90m(104.7007ms)[39m[39m
+[34mℹ K11 knot refinement: refine every span: caught by 03 §3[39m
+[32m✔ mutant K12 least squares: drop Aᵀ on the right: applied, and CAUGHT [90m(102.4535ms)[39m[39m
+[34mℹ K12 least squares: drop Aᵀ on the right: caught by 03 §2, 04 §1[39m
+[32m✔ mutant K13 KKT: ignore the constraint rows: applied, and CAUGHT [90m(103.2974ms)[39m[39m
+[34mℹ K13 KKT: ignore the constraint rows: caught by 04 §2, 04 §2[39m
+[32m✔ mutant K14 least norm: sign: applied, and CAUGHT [90m(111.1697ms)[39m[39m
+[34mℹ K14 least norm: sign: caught by 04 §3, 04 §3[39m
+[32m✔ mutant K15 least norm: no weights: applied, and CAUGHT [90m(105.1453ms)[39m[39m
+[34mℹ K15 least norm: no weights: caught by 04 §3[39m
+[32m✔ mutant K16 close loop: no correction applied: applied, and CAUGHT [90m(114.2912ms)[39m[39m
+[34mℹ K16 close loop: no correction applied: caught by 04 §3[39m
+[32m✔ mutant K17 projectile: g not halved: applied, and CAUGHT [90m(123.3981ms)[39m[39m
+[34mℹ K17 projectile: g not halved: caught by 05 §1[39m
+[32m✔ mutant K18 time to height: the earlier root: applied, and CAUGHT [90m(103.7301ms)[39m[39m
+[34mℹ K18 time to height: the earlier root: caught by 05 §2[39m
+[32m✔ mutant K19 sphere K: 1/R: applied, and CAUGHT [90m(102.0399ms)[39m[39m
+[34mℹ K19 sphere K: 1/R: caught by 06 §2[39m
+[32m✔ mutant K20 torus K: sin v: applied, and CAUGHT [90m(102.5853ms)[39m[39m
+[34mℹ K20 torus K: sin v: caught by 06 §3[39m
+[32m✔ mutant K21 dished corner: cos β: applied, and CAUGHT [90m(104.2524ms)[39m[39m
+[34mℹ K21 dished corner: cos β: caught by 06 §6[39m
+[32m✔ mutant K22 particle: gravity sign: applied, and CAUGHT [90m(102.9277ms)[39m[39m
+[34mℹ K22 particle: gravity sign: caught by 06 §7[39m
+[32m✔ mutant K23 particle: no 1/D: applied, and CAUGHT [90m(103.981ms)[39m[39m
+[34mℹ K23 particle: no 1/D: caught by 06 §7[39m
+[32m✔ mutant K24 Fourier: 1/M not 2/M: applied, and CAUGHT [90m(104.8271ms)[39m[39m
+[34mℹ K24 Fourier: 1/M not 2/M: caught by 07 §1[39m
+[34mℹ tests 50[39m
+[34mℹ suites 0[39m
+[34mℹ pass 50[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 2774.2015[39m
+== exit 0 · done 2026-09-28T12:10:22.117Z

@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T-180 Track Builder</title>
+<style>
+  :root { --bg: #101318; --panel: #171b22; --line: #2a303b; --text: #e6e9ef; --dim: #8b93a3; --accent: #57b3ff; --mine: #ffb357; --bad: #ff6b6b; --warn: #ffd166; }
+  * { box-sizing: border-box; }
+  /* The page never scrolls: the grid fills the window exactly, and each side panel scrolls inside itself. (At the
+     default 1400×860 window the page used to scroll: grid rows sized to content push the body past the window.) */
+  html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font: 13px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  body { display: grid; grid-template-columns: 280px minmax(0, 1fr) 300px; grid-template-rows: 44px auto minmax(0, 1fr); height: 100vh; }
+  header { grid-column: 1 / -1; display: flex; gap: 8px; align-items: center; padding: 0 12px; border-bottom: 1px solid var(--line); background: var(--panel); min-width: 0; }
+  header h1 { font-size: 14px; margin: 0 12px 0 0; letter-spacing: .04em; white-space: nowrap; }
+  header input, header select { background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 4px 6px; }
+  header label { color: var(--dim); white-space: nowrap; }
+  #banner { grid-column: 1 / -1; }
+  #banner:empty { display: none; }
+  .bar { display: flex; gap: 10px; align-items: center; padding: 8px 12px; background: #2a2412; border-bottom: 1px solid #5a4a1c; }
+  button { background: #222834; color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 5px 9px; cursor: pointer; }
+  button:hover:not([disabled]) { border-color: var(--accent); }
+  button[disabled] { opacity: .4; cursor: default; }
+  #palette, #side { min-height: 0; overflow: auto; background: var(--panel); }
+  #palette { padding: 10px; border-right: 1px solid var(--line); }
+  #stage { position: relative; display: grid; grid-template-rows: minmax(0, 1fr) auto; min-width: 0; min-height: 0; }
+  #preview { position: relative; min-height: 0; overflow: hidden; }
+  #camera { border-top: 1px solid var(--line); padding: 6px 10px; }
+  /* The right panel never scrolls sideways (seen at the default window size once E's 480 px load graph showed): what a
+     panel puts here is held to the panel's width. Canvases, images and tables shrink to fit, long words break, and the
+     vertical scrollbar's width is reserved up front so it cannot push content sideways when it appears. */
+  #side { border-left: 1px solid var(--line); overflow-x: hidden; scrollbar-gutter: stable; }
+  #side > section { padding: 10px; border-bottom: 1px solid var(--line); min-width: 0; overflow-wrap: anywhere; }
+  #side canvas, #side img, #side svg, #side video { display: block; max-width: 100%; height: auto; }
+  #side table { display: block; max-width: 100%; overflow-x: auto; }
+  #reds:empty { display: none; }
+  h3 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--dim); margin: 14px 0 6px; }
+  .pickers { display: grid; gap: 6px; }
+  .picker { display: grid; grid-template-columns: 60px 1fr; align-items: center; gap: 6px; }
+  .picker select { background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 3px; }
+  .pieces { display: flex; flex-wrap: wrap; gap: 6px; }
+  .piece.mine { border-color: #5a4528; color: var(--mine); }
+  .piece.suggested { border-color: var(--accent); }
+  .next { color: var(--dim); margin-bottom: 8px; font-size: 12px; }
+  .actions, .save-piece { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+  .save-piece input { flex: 1; min-width: 0; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 4px 6px; }
+  .track { list-style: none; padding: 0; margin: 0; max-height: 30vh; overflow: auto; font-family: ui-monospace, Consolas, monospace; }
+  .track li { padding: 2px 6px; border-radius: 3px; cursor: pointer; }
+  .track li.selected { background: #1f3550; }
+  .head { color: var(--dim); margin-bottom: 8px; }
+  .message, .panel-error { color: var(--bad); white-space: pre-wrap; }
+  .message.ok { color: var(--text); }
+  .panel-error { margin: 12px; }
+  .empty { color: var(--dim); margin: 0; }
+  .placeholder { position: absolute; inset: 0; display: grid; place-items: center; color: var(--dim); text-align: center; padding: 20px; }
+  .reds li { margin: 3px 0; }
+  .reds .src { color: var(--dim); }
+</style>
+</head>
+<body>
+<header>
+  <h1>T-180 TRACK BUILDER</h1>
+  <select id="mode" aria-label="builder" title="Equation track: shape the track as equations (extend, brush, close, water). Pieces: the earlier piece builder, paused but kept."><option value="core">Equation track</option><option value="pieces">Pieces (paused)</option></select>
+  <button id="new" title="New track">New</button>
+  <input id="name" placeholder="track name" aria-label="track name" size="16">
+  <button id="save" title="Ctrl+S">Save</button>
+  <select id="open" aria-label="open a saved track"><option value="">Open…</option></select>
+  <button id="export" title="Write an Assetto Corsa track folder into a folder you pick. Nothing is installed or launched.">Export…</button>
+  <span id="install" title="Install to AC writes into Assetto Corsa's content\tracks, always as a t180b_ folder"></span>
+  <span id="status" style="color: var(--dim)"></span>
+</header>
+<div id="banner"></div>
+<aside id="palette"></aside>
+<main id="stage">
+  <div id="preview"><div class="placeholder">Loading the preview…</div></div>
+  <div id="camera"></div>
+  <div id="guide" style="position: absolute; inset: 0; pointer-events: none; z-index: 5;"></div>
+</main>
+<aside id="side">
+  <section id="reds"></section>
+  <section id="validation"></section>
+  <section id="handles"></section>
+  <section id="textures"></section>
+  <section id="share"></section>
+</aside>
+<script src="lib/cjs.js"></script>
+<script>
+'use strict';
+// The page's glue: storage and export through the native side, the palette, the keys, the recovery offer, and the
+// panels C and E own (app/README.md, "The seam"). Nothing here edits a document: every action is the shell's.
+(async () => {
+  const $ = (id) => document.getElementById(id), status = $('status');
+  // Served from src-tauri/dist, which mirrors the repository: this page is app/index.html, the program is ../src/.
+  const get = (p) => fetch(`../${p}`).then((r) => { if (!r.ok) throw new Error(`${r.status} ${p}`); return r.text(); });
+  const tauri = window.__TAURI__ && window.__TAURI__.core;
+  const call = (cmd, args) => (tauri ? tauri.invoke(cmd, args) : Promise.reject(new Error('not running inside the app: no native side')));
+  const b64 = (bytes) => { let s = ''; for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000)); return btoa(s); };
+  const storage = {
+    saveDoc: (name, text) => call('save_track', { name, text }),
+    openDoc: (name) => call('open_track', { name }),
+    listDocs: () => call('list_tracks'),
+    saveLibrary: (text) => call('save_library', { text }),
+    openLibrary: () => (tauri ? call('open_library') : Promise.resolve(null)),
+    saveAutosave: (text) => (tauri ? call('save_autosave', { text }) : Promise.resolve()),
+    openAutosave: () => (tauri ? call('open_autosave') : Promise.resolve(null)),
+    clearAutosave: () => (tauri ? call('clear_autosave') : Promise.resolve()),
+    writeExport: (dir, folder, files) => call('write_export', { dir, folder, files: files.map((f) => ({ path: f.path, data: b64(f.bytes) })) }),
+  };
+
+  // TWO BUILDERS, ONE PAGE (D186). The EQUATION TRACK (the core: app/core, src/core) is the default; the PIECE builder (app/shell.js,
+  // the palette) is paused, not deleted, and one switch away. The switch reloads the page into the other builder, so the two
+  // never share a live shell or a panel: ?mode=pieces or ?mode=core in the address picks one (the window proofs use it), and
+  // the last choice is remembered on this machine.
+  const MODE = (() => { const q = new URLSearchParams(location.search).get('mode'); if (q === 'core' || q === 'pieces') return q; try { return localStorage.getItem('t180.mode') === 'pieces' ? 'pieces' : 'core'; } catch (e) { return 'core'; } })();
+  $('mode').value = MODE;
+  $('mode').onchange = (e) => { try { localStorage.setItem('t180.mode', e.target.value); } catch (err) { /* a private window: the address still carries it */ } location.search = `?mode=${e.target.value}`; };
+  if (MODE === 'core') { await startCore(); return; }
+
+  async function startCore() {
+    let C, panels, shell, exporter;
+    try {
+      // the core's modules reach tools/piecewise.cjs (its solver), whose command-line half requires fs and path: they are given
+      // the exporter's in-memory node shim, so they load and nothing touches the disk (the core calls only the solver)
+      const shim = (await loadCjs('app/export/node-shim.js', get)).createShim();
+      C = await loadCjs('app/core/coreshell.js', get, { builtins: shim.builtins, globals: { Buffer: shim.Buffer } });
+      panels = await loadCjs('app/palette/panels.js', get);
+      exporter = await (await loadCjs('app/export/export.js', get)).makeExporter(get);
+      shell = await C.createCoreShell({ storage, exporter, now: () => performance.now() });
+    } catch (e) { $('palette').textContent = `The equation builder could not start: ${e.message}`; return; }
+    const el = (tag, text, cls) => { const e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; return e; };
+    const drawReds = (st) => {
+      const r = $('reds');
+      if (!st.exportReds) { r.replaceChildren(); return; }
+      const list = el('ul', null, 'reds');
+      for (const x of st.exportReds) list.append(el('li', `${x.reason}${Number.isFinite(x.s0) ? ` at s ${Math.round(x.s0)} m` : ''} ${x.source ? `(${x.source})` : ''}`));
+      r.replaceChildren(el('h3', 'Not exported: red on the track'), list);
+    };
+    const draw = (st) => { drawReds(st); status.textContent = `${st.name || 'unsaved'}${st.dirty ? ' •' : ''}${st.history.present.closed ? ' · closed loop' : ''}`; };
+    shell.subscribe(draw); draw(shell.getState());
+    const refreshList = async () => { try { const names = await shell.list(); $('open').replaceChildren(new Option('Open…', ''), ...names.map((n) => new Option(n, n))); } catch (e) { status.textContent = e.message; } };
+    $('new').onclick = () => shell.newDoc();
+    $('save').onclick = async () => { try { await shell.save($('name').value.trim()); await refreshList(); } catch (e) { status.textContent = e.message; } };
+    $('open').onchange = async (e) => { const n = e.target.value; if (!n) return; try { await shell.open(n); $('name').value = n; } catch (err) { status.textContent = err.message; } e.target.value = ''; };
+    $('export').onclick = async () => {
+      try {
+        const dir = (await call('test_export_folder')) || await call('plugin:dialog|open', { options: { directory: true, multiple: false, title: 'Export the track into…' } });
+        if (!dir) return;
+        status.textContent = 'exporting…';
+        await shell.exportTo(dir);   // the self-intersection check is always on (app/export/export.js)
+      } catch (e) { status.textContent = `export failed: ${e.message || e}`; }
+    };
+    refreshList();
+    // the keys: undo, redo, save (the piece builder's removeHead has no meaning here)
+    const S0 = await loadCjs('app/shell.js', get).catch(() => null);
+    document.addEventListener('keydown', (e) => {
+      const act = S0 && S0.keyAction({ key: e.key, ctrlKey: e.ctrlKey, metaKey: e.metaKey, shiftKey: e.shiftKey, inField: !!e.target.matches && e.target.matches('input, select, textarea') });
+      if (!act || !['undo', 'redo', 'save'].includes(act)) return;
+      e.preventDefault();
+      if (act === 'save') $('save').click(); else shell[act]();
+    });
+    // the panels that read only the shared path (preview, camera, validation) are the piece builder's, reused unchanged; the
+    // core's own controls take the left column. Handles, textures, share, install and the guide are the piece builder's.
+    await panels.mountPanel($('palette'), 'equation track', () => loadCjs('app/core/index.js', get), shell);
+    for (const [dir, id] of [['preview', 'preview'], ['camera', 'camera'], ['validate-ui', 'validation']]) {
+      await panels.mountPanel($(id), dir, () => loadCjs(`app/${dir}/index.js`, get), shell);
+    }
+  }
+
+  let S, pal, panels, shell, exporter;
+  // the texture set the textures panel announces (the one the preview draws); the export and the install write it
+  let textureSet = null;
+  document.addEventListener('t180:textures', (e) => { textureSet = e.detail ? e.detail.set : null; });
+  try {
+    S = await loadCjs('app/shell.js', get);
+    pal = await loadCjs('app/palette/palette.js', get);
+    panels = await loadCjs('app/palette/panels.js', get);
+    const ex = await loadCjs('app/export/export.js', get);
+    exporter = await ex.makeExporter(get);
+    shell = await S.createShell({ storage, exporter });
+  } catch (e) { $('palette').textContent = `The app could not start: ${e.message}`; return; }
+
+  // THE GHOST (the preview's seam, app/preview/index.js): pointing at a palette piece sends 't180-ghost' with the shell's
+  // CANDIDATE, the track as it would be with that piece placed, built by the same code as place(); leaving it, or placing,
+  // sends 't180-ghost-clear'. A piece that cannot be placed shows no ghost, and says why in the status line.
+  const ghost = (name) => {
+    if (!name) { document.dispatchEvent(new CustomEvent('t180-ghost-clear')); return; }
+    let candidate;
+    try { candidate = shell.candidate(name); } catch (e) { document.dispatchEvent(new CustomEvent('t180-ghost-clear')); status.textContent = e.message; return; }
+    document.dispatchEvent(new CustomEvent('t180-ghost', { detail: { candidate } }));
+  };
+  const on = {
+    place: (n) => { ghost(null); shell.place(n); }, ghost, setPicker: (k, v) => shell.setPicker(k, v), undo: () => shell.undo(), redo: () => shell.redo(),
+    removeHead: () => shell.removeHead(), select: (a, b) => shell.select(a, b),
+    saveSelection: (name) => shell.saveSelectionAsPiece(name).catch((e) => { status.textContent = e.message; }),
+    // closing solves and validates several candidate laps: say so first, then give the page a frame to show it
+    closeLoop: () => { status.textContent = 'closing the loop…'; setTimeout(() => shell.closeLoop(), 30); },
+  };
+  const el = (tag, text, cls) => { const e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; return e; };
+  const drawBanner = (st) => {
+    const b = $('banner');
+    if (!st.recovery) { b.replaceChildren(); return; }
+    const words = st.recovery.doc.words.length, restore = el('button', 'Restore it'), discard = el('button', 'Discard it');
+    restore.onclick = () => { shell.restore(); if (st.recovery.name) $('name').value = st.recovery.name; };
+    discard.onclick = () => shell.discardRecovery();
+    const bar = el('div', null, 'bar');
+    bar.append(el('span', `A track from your last session was not saved${st.recovery.name ? ` ("${st.recovery.name}")` : ''}: ${words} word${words === 1 ? '' : 's'}.`), restore, discard);
+    b.replaceChildren(bar);
+  };
+  const drawReds = (st) => {
+    const r = $('reds');
+    if (!st.exportReds) { r.replaceChildren(); return; }
+    const list = el('ul', null, 'reds');
+    for (const x of st.exportReds) {
+      const li = el('li');
+      const where = Number.isFinite(x.s0) ? `s ${Math.round(x.s0)}${Number.isFinite(x.s1) && x.s1 !== x.s0 ? `–${Math.round(x.s1)}` : ''} m` : '';
+      li.append(el('span', `${x.reason}${where ? ` at ${where}` : ''} `), el('span', x.source ? `(${x.source})` : '', 'src'));
+      list.append(li);
+    }
+    r.replaceChildren(el('h3', 'Not exported: red on the track'), list);
+  };
+  const draw = (st) => {
+    pal.renderPalette($('palette'), pal.paletteModel(st, shell.pickers()), on);
+    drawBanner(st); drawReds(st);
+    status.textContent = `${st.name || 'unsaved'}${st.dirty ? ' •' : ''}${st.history.present.closed ? ' · closed loop' : ''}`;
+  };
+  shell.subscribe(draw); draw(shell.getState());
+
+  const refreshList = async () => {
+    try { const names = await shell.list(); $('open').replaceChildren(new Option('Open…', ''), ...names.map((n) => new Option(n, n))); }
+    catch (e) { status.textContent = e.message; }
+  };
+  $('new').onclick = () => shell.newDoc();
+  $('save').onclick = async () => { try { await shell.save($('name').value.trim()); await refreshList(); } catch (e) { status.textContent = e.message; } };
+  $('open').onchange = async (e) => { const n = e.target.value; if (!n) return; try { await shell.open(n); $('name').value = n; } catch (err) { status.textContent = err.message; } e.target.value = ''; };
+  $('export').onclick = async () => {
+    try {
+      // D181 test seam (C): the app answers the dialog itself only when LAUNCHED with T180_TEST_EXPORT_FOLDER set (src-tauri
+      // test_export_folder); in normal use that is null and the native dialog opens, as before. The export below is the same.
+      const dir = (await call('test_export_folder')) || await call('plugin:dialog|open', { options: { directory: true, multiple: false, title: 'Export the track into…' } });
+      if (!dir) return;
+      status.textContent = 'exporting…';
+      await shell.exportTo(dir, { textures: textureSet });   // the self-intersection check is always on; the set is the preview's
+    } catch (e) { status.textContent = `export failed: ${e.message || e}`; }
+  };
+  refreshList();
+
+  // Keys map through the shell's keyAction (tested there): a bare Backspace does nothing, Ctrl+Backspace removes the head.
+  document.addEventListener('keydown', (e) => {
+    const act = S.keyAction({ key: e.key, ctrlKey: e.ctrlKey, metaKey: e.metaKey, shiftKey: e.shiftKey, altKey: e.altKey, inField: !!e.target.matches && e.target.matches('input, select, textarea') });
+    if (!act) return;
+    e.preventDefault();
+    if (act === 'save') $('save').click(); else shell[act]();
+  });
+
+  // A clean exit clears the autosave; a crash leaves it for the next start to offer back.
+  const win = window.__TAURI__ && window.__TAURI__.window && window.__TAURI__.window.getCurrentWindow && window.__TAURI__.window.getCurrentWindow();
+  if (win && win.onCloseRequested) win.onCloseRequested(async () => { if (!shell.getState().dirty) await shell.cleanExit(); else await shell.flushAutosave(); });
+
+  // C's and E's panels: each optional, each mount(root, shell); a failure is shown in its own area (app/palette/panels.js).
+  // Share codes, and Install to AC / See it in Assetto (the launch is off by default; src-tauri/src/ac.rs).
+  const b64files = (files) => files.map((f) => ({ path: f.path, data: b64(f.bytes) }));
+  const native = {
+    getAcRoot: () => call('get_ac_root'), setAcRoot: (path) => call('set_ac_root', { path }),
+    installTrack: (folder, files) => call('install_track', { folder, files: b64files(files) }),
+    getSeeItSetting: () => (tauri ? call('get_see_it_setting') : Promise.resolve(false)), setSeeItSetting: (on) => call('set_see_it_setting', { on }),
+    seeIt: (track, layout) => call('see_it_in_assetto', { track, layout }),
+  };
+  const pickFolder = (title) => call('plugin:dialog|open', { options: { directory: true, multiple: false, title } });
+  await panels.mountPanel($('share'), 'share', () => loadCjs('app/share/index.js', get), shell);
+  await panels.mountPanel($('install'), 'install', () => loadCjs('app/install/index.js', get).then((m) => ({ mount: (root, sh) => m.mount(root, sh, { exporter, native, pickFolder, getTextures: () => textureSet }) })), shell);
+  for (const [dir, id] of [['preview', 'preview'], ['camera', 'camera'], ['validate-ui', 'validation'], ['handles', 'handles'], ['texture', 'textures'], ['onboarding', 'guide']]) {
+    await panels.mountPanel($(id), dir, () => loadCjs(`app/${dir}/index.js`, get), shell);
+  }
+})();
+</script>
+</body>
+</html>

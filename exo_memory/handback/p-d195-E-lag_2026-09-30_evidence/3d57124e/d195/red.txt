@@ -1,0 +1,31 @@
+heavy-run: waiting on a2122153 pid 15520 (d195 cargo build before, since 2026-09-30T09:13:23.437Z)
+node:internal/test_runner/harness:121
+      throw err;
+      ^
+
+TypeError: startRampM is not a function
+    at Object.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d195\redtree\test\core_ramp.test.js:51:103)
+[90m    at Module._compile (node:internal/modules/cjs/loader:1812:14)[39m
+[90m    at Object..js (node:internal/modules/cjs/loader:1943:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:1533:32)[39m
+[90m    at Module._load (node:internal/modules/cjs/loader:1335:12)[39m
+[90m    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)[39m
+[90m    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)[39m
+[90m    at node:internal/main/run_main_module:33:47[39m
+
+Node.js v24.14.1
+[31m✖ C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d195\redtree\test\core_ramp.test.js [90m(45.7259ms)[39m[39m
+[34mℹ tests 1[39m
+[34mℹ suites 0[39m
+[34mℹ pass 0[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 51.5765[39m
+
+[31m✖ failing tests:[39m
+
+test at ..\..\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d195\redtree\test\core_ramp.test.js:1:1
+[31m✖ C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d195\redtree\test\core_ramp.test.js [90m(45.7259ms)[39m[39m
+  [32m'test failed'[39m

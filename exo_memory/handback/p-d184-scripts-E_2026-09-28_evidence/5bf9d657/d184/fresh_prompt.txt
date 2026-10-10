@@ -1,0 +1,10 @@
+Use the track-equations skill in this repository (.claude/skills/track-equations/) to do two things, and report exactly what you ran and what each run printed.
+
+1. Reproduce the equation of the Assetto Corsa track "Serpents" and report its N and whether it meets the skill's bar.
+2. Show that a sphere of radius R has Gaussian curvature K = 1/R², using what the skill provides.
+
+The Assetto Corsa folder on this machine is G:\SteamLibrary\steamapps\common\assettocorsa (tracks are under content\tracks).
+
+Limits: do not launch Assetto Corsa or any game or app window; do not commit, push or install anything; write only inside this repository.
+
+At the end, list anything you had to guess or work out yourself because the skill did not say it.

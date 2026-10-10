@@ -1,0 +1,692 @@
+MESSAGE 38  msg_011CfkxNtA3Kd7hwo1FrwHco  seat E  ts 2026-10-06T12:07:19.527Z  turn L50882..L51144 (next prompt L51175)
+CLAIMS:
+  [msg_011CfkxNtA3Kd7hwo1FrwHco|2] **"row 2's "a flight with NO landing is red""**
+  [msg_011CfkxNtA3Kd7hwo1FrwHco|4] **"a gap with NO landing ramp staying red is row 2's [case]"**
+  [msg_011CfkxNtA3Kd7hwo1FrwHco|12] **"the 3.2 g fall"**
+
+--- L50882 user 2026-10-06T12:00:52.751Z
+USER: 
+
+<pasted_content id="37d3">
+[chair:MAIN] D250 item 2 (plan: exo_memory/loop/plan_t180_keeper_choices_2026-10-06.md). The keeper rules jumps are tuned by DRIVING: "the jumps are going to have to be tested by the user through trial and error driving it in assetto themselves".
+- landing-misses-zone becomes a WARNING that does NOT block export or install, worded plainly ("this jump may fly past its landing at the lap's speed").
+- A gap with no landing ramp stays RED (a hole, not a jump).
+- Ramp sizing unchanged.
+EXPORT tier, but TARGETED tests only (new rule; the librarian runs the harnesses once at install). Base: t180 main 63dc19b. Use a fresh worktree. Stay in src/validate and the export/install message path. A's jump UI already shows the warning text from validation, so don't touch panel.js; list any line you touch outside src/.
+Note: A's preview-async row 3b uses landing-misses-zone as its "non-overlap red" control. If it's no longer a red, that control changes: tell A in your hand-back, or fix the row by the same rule (a real hole).
+Hand-back: exo_memory/handback/p-jumpwarn-E_2026-10-06.md, plus your map line.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_keeper_choices_2026-10-06.md
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: a quick look, land on the merged tree, unless the output says otherwise
+</pasted_content id="37d3">
+
+--- L50892 assistant 2026-10-06T12:01:00.496Z
+TOOL_USE Bash [toolu_015PC4mjSrdvLdukFi293wED]: {"command":"cd /c/Users/nname/Desktop/lighthouse && grep -n \"item 2\\|landing-misses\\|D250\" exo_memory/loop/plan_t180_keeper_choices_2026-10-06.md | head -15 | cut -c1-300; cd /c/Users/nname/Desktop/t180-track-builder && git log --oneline -1 63dc19b && git worktree add -q -b d250-jumpwarn C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt 63dc19b && cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && grep -rn \"landing-misses-zone\" --include=*.js src app test | grep -v node_modules | cut -c1-200","description":"Read the plan item; fresh worktree; find every use of the red"}
+--- L50893 user 2026-10-06T12:01:01.256Z
+RESULT [toolu_015PC4mjSrdvLdukFi293wED]: 1:# T-180: the keeper's four choices, and export straight into AC. Librarian, on D, 2026-10-06 06:0x. Lap D250.
+22:   check (`landing-misses-zone`) becomes a WARNING that does not block export or install, worded plainly ("this jump may fly past its
+63dc19b D244: keep the mutation harnesses' anchors applying (C2 in endBrush, V5 in panel.js)
+src/validate/index.js:77:  'landing-misses-zone': 'ARCHITECTURE.md:75-78 (the landing ramp must catch both landings)',
+src/validate/index.js:370:    if (missed.length) red.push({ s: jp.s, s1: jp.s + jp.gap, u: null, reason: 'landing-misses-zone', worst: Math.max(...missed.map((L) => L.g)) });
+app/test/preview-async.test.js:179:  // since the jumps core (fae3910) a flight is INTENDED, not red: the control's non-overlap red is a landing too short for the speed (core_jump row 3's), a 40 m jum
+app/test/preview-async.test.js:180:  j.setDesignSpeed(460); j.selectPiece(1); j.deleteSelection(); const jp = j.getState().deleteProposal; assert.ok(jp.check.others.some((x) => x.reason === 'landing-m
+app/test/validate-ui-jumpdefault.test.js:62:    else assert.ok(r.length && r.every((x) => x.reason === 'landing-misses-zone'), `${k} km/h: the car does not clear the gap, so the jump must be red for t
+app/test/validate-ui-jumpdefault.test.js:81:  const r = reds(ctl).filter((x) => x.reason === 'landing-misses-zone');
+app/validate-ui/labels.js:29:    'landing-misses-zone': 'a jump landing misses its ramp',
+test/core_jump.test.js:6://   3  validation: a landing road too short for the car at the lap's speed is red (landing-misses-zone), with the both-landings-caught control
+test/core_jump.test.js:101:test('row 3: a landing road too short for the lap\'s speed is red (landing-misses-zone); a jump both falls l
+…[309 chars cut]…
+g-misses-zone, the heaviest missed fall named', () => {
+test/validate_head.test.js:67:  assert.ok(reasons(r).includes('landing-misses-zone'), JSON.stringify(reasons(r)));
+test/validate_head.test.js:68:  const red = r.red.find((x) => x.reason === 'landing-misses-zone');
+test/validate_head.test.js:77:  const red = r.red.find((x) => x.reason === 'landing-misses-zone');
+test/validate_head.test.js:84:  assert.ok(!reasons(validate(clean.path, clean.segs, {})).includes('landing-misses-zone'));
+test/vocab-corpus.test.js:67:  assert.ok(median.red.some((r) => r.reason === 'landing-misses-zone'), `the median ${C.jump.gap_m.p50} m jump: ${JSON.stringify(median.red.map((r) => r.reason))}`);
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L50897 assistant 2026-10-06T12:01:10.541Z
+TOOL_USE Bash [toolu_01S2VDVT6SmBPnq759C7bw6x]: {"command":"cd /c/Users/nname/Desktop/lighthouse && sed -n 18,30p exo_memory/loop/plan_t180_keeper_choices_2026-10-06.md; cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && sed -n \"$(grep -n '^function proveLap' src/validate/index.js | cut -d: -f1),+22p\" src/validate/index.js; grep -n \"lap-proof\\|amber\" src/export/fromwords.js | head -12 | cut -c1-200","description":"Read the plan item, proveLap, and how export uses the lap and amber"}
+--- L50898 user 2026-10-06T12:01:10.946Z
+RESULT [toolu_01S2VDVT6SmBPnq759C7bw6x]:    `steamapps\common\assettocorsa\content\tracks`. Found → remember it and install with no dialog; not found → the existing picker.
+   Make the button obvious beside Export ("Export to Assetto Corsa"), and say in the result line where it went and that re-exporting the
+   same track updates that folder. Tests use a FAKE Steam tree; never the real AC install.
+2. **Jumps are tuned by driving (E; EXPORT tier).** The keeper's ruling: the user tests jumps in AC by trial and error. So the ramp-reach
+   check (`landing-misses-zone`) becomes a WARNING that does not block export or install, worded plainly ("this jump may fly past its
+   landing at the lap's speed"). A gap with no landing ramp stays RED (that is a hole, not a jump). Ramp sizing is unchanged.
+3. **Handles at the near end (A; FEEL).** Length and width handles move to the piece's near end, as in his picture (`at` in `KINDS`).
+4. **Shift-click across a closed lap's start goes the short way (C, who found it; GEOMETRY for the core part).** A run that wraps the seam
+   is selected as the pieces either side of the line; Save as piece and Delete handle a wrapped run, or refuse it by name if the core
+   cannot keep it.
+- Ghost "always": already the default; no change.
+
+## Checks
+function proveLap(S, isRoad, v, lines, jumps) {
+  const n = S.length, where = [];
+  let t = 0, minV = Infinity;
+  for (let i = 0; i < n; i++) {
+    minV = Math.min(minV, v[i]);
+    if (i) { const va = (v[i] + v[i - 1]) / 2; t += va > 0 ? (S[i].s - S[i - 1].s) / va : Infinity; }
+    if (isRoad(i) && !(v[i] > 0)) where.push({ s: S[i].s, reason: 'stall' });
+  }
+  for (const l of lines) if (l.u === 0 && l.fN_g < 0) where.push({ s: l.s, reason: 'leaves-surface', fN_g: l.fN_g });
+  for (const jp of jumps) 
+…[822 chars cut]…
+alse) is red too, reason 'lap-proof' (ARCHITECTURE.md:88-89).
+24:// AMBER EXPORTS, WITH A WARNING: every amber range, a lap that could not run (no speed model), each check validation
+189:  // validation first: a red refuses, amber warns
+202:    red.push({ reason: 'lap-proof', s0: Math.min(...ss), s1: Math.max(...ss), source: 'ARCHITECTURE.md:88-89', where: w, detail: w.map((x) => `${x.reason} at s ${x.s.toFixed(1)} m`).join(', ') });
+207:  for (const a of v.amber) warnings.push(`amber: ${rangeText(a)}`);
+212:  // the markers (§5c): the layout given, or the default one; a red check refuses, an amber warns
+229:  for (const a of mk.check.amber) warnings.push(`markers: ${a.text}`);
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L50900 assistant 2026-10-06T12:01:15.352Z
+TOOL_USE Bash [toolu_01QL9vRw85n3L9KBszjYhFq6]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && sed -n 185,212p src/export/fromwords.js | cut -c1-250; grep -rn \"jump-not-caught\\|landing-unreachable\" --include=*.js src app test | grep -v node_modules | cut -c1-200 | head -20","description":"Read the export's red/amber split and the lap-proof jump reasons"}
+--- L50901 user 2026-10-06T12:01:15.716Z
+RESULT [toolu_01QL9vRw85n3L9KBszjYhFq6]:   const mesh = buildMesh(p, segs, { ...(o.mesh || {}), selfCheck });
+  const warnings = [];
+  if (!selfCheck) warnings.push('self-intersection NOT checked: selfCheck is false (ARCHITECTURE.md:58, :84)');
+
+  // validation first: a red refuses, amber warns
+  // the built physics road, in world space, for the downforce-ray gap check (src/validate/raygap.js; R1)
+  const roadMesh = walkScene(mesh.scene).meshes.filter((m) => isDrivable(m.name) && m.indices && m.indices.length);
+  const v = validate(p, segs, { csp: o.csp, softCollision: true, folds: mesh.folds, roadMesh });
+  const red = [...v.red];
+  // the pit lane (D174): built beside the road, self-checked against it with the same tests; its findings are red
+  let pit = null;
+  if (doc.pitLane) {
+    try { pit = PitLane.laneForExport(p, segs, mesh, doc.pitLane, { selfCheck, mesh: o.mesh }); } catch (e) { if (e.name === 'PitLaneError') throw new ExportError('PIT_LANE', e.message); throw e; }
+    red.push(...pit.red);
+  }
+  if (v.lap && v.lap.ok === false) {
+    const w = v.lap.where, ss = w.map((x) => x.s);
+    red.push({ reason: 'lap-proof', s0: Math.min(...ss), s1: Math.max(...ss), source: 'ARCHITECTURE.md:88-89', where: w, detail: w.map((x) => `${x.reason} at s ${x.s.toFixed(1)} m`).join(', ') });
+  }
+  const testReds = test ? red.map(rangeText) : [];   // TEST: every red is listed, none blocks
+  if (red.length && !test) throw new ExportError('RED', `validation is red, nothing written: ${red.map(rangeText).join('; ')}`, { red });
+  if (test) warnings.push(`TEST EXPORT (unfinished): ${red.length} red finding(s) NOT blocking, listed in ${TEST_FILE}`);
+  for (const a of v.amber) warnings.push(`amber: ${rangeText(a)}`);
+  if (v.lap && v.lap.ok === null) warnings.push(`lap pro
+…[595 chars cut]…
+}, { reason: 'leaves-surface' }, { reason: 'jump-not-caught-3.2g' }, { reason: 'jump-not-caught-6.3g' }, { reason: 'landing-unreac
+app/validate-ui/labels.js:53:  if (r === 'landing-unreachable') return 'a jump lands too deep below its take-off to be reached';
+app/validate-ui/labels.js:54:  const m = /^jump-not-caught-([\d.]+)g$/.exec(r);
+test/export_words.test.js:116:    && e.red.some((r) => r.reason === 'lap-proof' && r.where.some((x) => x.reason === 'jump-not-caught-6.3g'))
+test/export_words.test.js:117:    && /lap-proof \[jump-not-caught-6\.3g at s \d/.test(e.message));
+test/validate_jumps.test.js:113:  assert.ok(r.lap.where.some((w) => w.reason === 'jump-not-caught-6.3g'));
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L50911 assistant 2026-10-06T12:01:38.839Z
+TOOL_USE Bash [toolu_01WMQ2qa6TSMDKBabWyXMhLZ]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && grep -rn \"landing\\|jump-not-caught\\|amber\" app/core/*.js app/validate-ui/*.js | grep -v test | cut -c1-200 | head -30; grep -n \"const amber = \\|return {$\\|lines, red: ranges\" src/validate/index.js | head","description":"Find where the app reads jump warnings and amber"}
+--- L50912 user 2026-10-06T12:01:39.106Z
+RESULT [toolu_01WMQ2qa6TSMDKBabWyXMhLZ]: app/core/overlapjob.js:21: * stacked, a downforce ray that meets another road), others (every other red), amber (count) }.
+app/core/overlapjob.js:27:  return { overlaps: v.red.filter((x) => OVERLAP.has(x.reason)), others: v.red.filter((x) => !OVERLAP.has(x.reason)), amber: v.amber.length };
+app/core/overlapjob.js:44:  if (part === 'rest') { const mesh = G.buildMesh(p, segs, { selfCheck: true }), v = V.validate(p, segs, { csp: true, softCollision: true, folds: mesh.folds, ...speed }); ret
+app/core/overlapmerge.js:5://   parts: rest = { red, amber }   the validator's ranges with the folds and NO road mesh, and the amber count
+app/core/overlapmerge.js:13:/** The one answer { overlaps, others, amber } from the two parts: all the reds in the validator's order, split as overlapCheck splits them. */
+app/core/overlapmerge.js:16:  return { overlaps: red.filter((x) => OVERLAP.has(x.reason)), others: red.filter((x) => !OVERLAP.has(x.reason)), amber: rest.amber };
+app/core/overlaprunner.js:5://     promise  resolves with the check's result ({ overlaps, others, amber }), or rejects (a worker failed; or { cancelled: true } after cancel)
+app/core/overlapworker.js:4://   out: { id, ok: true, result, timing }         overlapjob.runJob's result: { overlaps, others, amber } (plain data); timing { loadMs, waitedMs, jobMs } in ms
+app/validate-ui/colour.js:1:// colour.js: red and amber along the track, from src/validate's result (ARCHITECTURE §1.3, §4; the plan's step 5).
+app/validate-ui/colour.js:13://   · From the red and amber RANGES (folds, stacks, gaps, steep, seams, …): every line of every station whose s lies in
+app/validate-ui/colour.js:29:// inferred: display choices, not measurements. Red and amber as the program names them; info a 
+…[2188 chars cut]…
+ng zone marked.
+app/validate-ui/jumparcs.js:6://   zone = { s0, s1 } on the landing road, between the two touchdowns (null unless both land)
+app/validate-ui/jumparcs.js:10:// flightY, and each touchdown x is the landing's own `x` from the result. So an arc cannot disagree with the red/amber.
+app/validate-ui/jumparcs.js:12://          speed model), each landing is drawn at its OWN minimum speed, the slowest flight that still clears the
+313:  const amber = [...raw.pts.filter((p) => p.kind === 'amber'), ...rollAmber], info = raw.pts.filter((p) => p.kind === 'info');
+386:    lines, red: ranges(red, step), amber: ranges(amber, step), info: ranges(info, step), jumps, lap, notChecked,
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L50916 assistant 2026-10-06T12:01:58.725Z
+TOOL_USE Bash [toolu_01XGPc58eF9D8oG1kmV7ES7n]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && sed -n 60,86p test/validate_head.test.js | cut -c1-230; echo ====; sed -n 60,70p test/vocab-corpus.test.js | cut -c1-230; echo ====; sed -n 105,118p test/export_words.test.js | cut -c1-230; echo ====; sed -n 105,116p test/validate_jumps.test.js | cut -c1-230","description":"Read the old-requirement assertions in src tests"}
+--- L50923 user 2026-10-06T12:01:59.045Z
+RESULT [toolu_01XGPc58eF9D8oG1kmV7ES7n]:   // the lighter fall carries farther, and sets the length
+  assert.ok(R.touchdowns[0].x > R.touchdowns[1].x);
+});
+
+test('a ramp too short for the clean-flight landing is RED: landing-misses-zone, the heaviest missed fall named', () => {
+  const { segs, path } = jumpTrack({ rampScale: 0.4 });
+  const r = validate(path, segs, { designSpeed: DESIGN, landingSearchM: 1000 });
+  assert.ok(reasons(r).includes('landing-misses-zone'), JSON.stringify(reasons(r)));
+  const red = r.red.find((x) => x.reason === 'landing-misses-zone');
+  assert.strictEqual(red.worst, 3.2);
+  assert.match(red.source, /ARCHITECTURE\.md:75-78/);
+});
+
+test('too slow for the override-dive landing (6.3 g needs more speed than it has): red, 6.3 g named', () => {
+  const { segs, path, R } = jumpTrack({ speed: kmh(200) });
+  const r = validate(path, segs, {});
+  assert.strictEqual(R.touchdowns[1].x, null, '6.3 g cannot clear at 200 km/h');
+  const red = r.red.find((x) => x.reason === 'landing-misses-zone');
+  assert.ok(red, JSON.stringify(reasons(r)));
+  assert.strictEqual(red.worst, 6.3);
+});
+
+test('with no speed at all nothing about a landing is claimed (no landing red), while the floating head is still red', () => {
+  const clean = jumpTrack();
+  assert.ok(!reasons(validate(clean.path, clean.segs, {})).includes('landing-misses-zone'));
+  const floating = jumpTrack({ ramp: false });
+  assert.deepStrictEqual(reasons(validate(floating.path, floating.segs, {})), ['head-in-the-air']);
+====
+}
+
+test('the default jump is the p10 gap because the median one misses: at 460 km/h off a level road, 81 m is caught at both falls, 125 m is not', () => {
+  const def = firstJump();
+  assert.deepEqual(def.red, [], 'the default jump is clean at the default design speed');
+  as
+…[1507 chars cut]…
+/.test(e.message));
+  assert.deepStrictEqual(fs.readdirSync(out), []);
+====
+  assert.strictEqual(j.reachable, true);
+});
+
+test('validate: a jump taken too slowly is not caught, and a closed lap over it fails with the reason', () => {
+  const { path, segs } = jumpPath(20, { drop: 1 });   // 20 m/s over 40 m falling 1 m: short at either fall
+  const r = validate({ ...path, closed: true }, segs);
+  assert.ok(r.jumps[0].landings.every((l) => !l.clear));
+  assert.strictEqual(r.lap.ok, false);
+  assert.ok(r.lap.where.some((w) => w.reason === 'jump-not-caught-6.3g'));
+});
+
+// CHANGED 2026-09-27 (D170): "not a failure" was the rule until the librarian's item 3 ("an open end must sit on
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L50927 assistant 2026-10-06T12:02:05.084Z
+TEXT: I'm making the source change now; the test updates follow. First, `validate/index.js`, where the red becomes an amber and the lap proof gets its warning list:
+--- L50928 assistant 2026-10-06T12:02:06.986Z
+TOOL_USE Bash [toolu_01DKvn2i2LvKaZRDjU5ZegxS]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && sed -n 362,372p src/validate/index.js","description":"Read the landing-red lines in context"}
+--- L50929 user 2026-10-06T12:02:07.156Z
+RESULT [toolu_01DKvn2i2LvKaZRDjU5ZegxS]:     const first = firstOf[lastSeg];
+    red.push({ s: S[first].s, s1: S[n - 1].s, u: null, reason: 'head-in-the-air' });
+  }
+  // With a known take-off speed, the landing road must catch BOTH landings (ARCHITECTURE.md:75-78; jumps.js). A missed
+  // one is red on an open track too, not only in the closed lap's proof; `worst` is the heaviest fall that misses.
+  for (const jp of jumps) {
+    if (jp.pending || !Number.isFinite(jp.speed)) continue;
+    const missed = jp.landings.filter((L) => !L.caught);
+    if (missed.length) red.push({ s: jp.s, s1: jp.s + jp.gap, u: null, reason: 'landing-misses-zone', worst: Math.max(...missed.map((L) => L.g)) });
+  }
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L50930 assistant 2026-10-06T12:02:08.173Z
+TOOL_USE Bash [toolu_01BXvnw2YDhir7wAuq9RcSQh]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && sed -n 72,80p src/validate/index.js; grep -n \"^function lapOf\" -A10 src/validate/index.js | cut -c1-200","description":"Read the SRC entry and lapOf"}
+--- L50931 user 2026-10-06T12:02:08.394Z
+RESULT [toolu_01BXvnw2YDhir7wAuq9RcSQh]:   'steep-without-raycast': 'ARCHITECTURE.md:87 (community-reported)',
+  'load-above-proven': 'FINDINGS.md:105, :112-113',
+  'seam-past-envelope': 'FINDINGS.md:24, :110-111',
+  'on-the-stops': 'FINDINGS.md:103-104',
+  'head-in-the-air': 'ARCHITECTURE.md:82 (a hole: the open end is the flight of a jump, over no road)',
+  'landing-misses-zone': 'ARCHITECTURE.md:75-78 (the landing ramp must catch both landings)',
+  'downforce-ray-gap': 'FINDINGS.md:110 (gaps in the road mesh are RED); docs/research/04_ac_physics_drivability.md §4 (the Mach 6\'s downforce is one ray to the road, 1 m ahead of the car: a gap under it takes ALL the downforce)',
+  'joint-step': 'FINDINGS.md:110 (a step in the road mesh is a gap: the D190 round-3 ruling (c) reds a lap seam or a cup joint that steps more than 1 mm)',
+  'roll-rate': 'D225 seal V7 / S3 (exo_memory/loop/cross_section_seal_registration_2026-10-03.md): the roll rate over a 20 m chord, the bar the Centrifuge lap measured (RED 1.2144°/m, AMBER 0.9338°/m)',
+418:function lapOf(path, segments, result) {
+419-  if (!result.lap || result.lap.reason !== 'deferred') return result.lap;
+420-  const S = path.samples, isRoad = (i) => segments[S[i].seg].kind !== 'gap';
+421-  return proveLap(S, isRoad, result.speed.map((x) => x.v), result.lines, result.jumps);
+422-}
+423-
+424-/** The station index of opts.uptoS (the first station at or past it), or undefined: no window. */
+425-const uptoOf = (S, opts) => { if (opts.uptoS == null) return undefined; const k = S.findIndex((p) => p.s >= opts.uptoS - 1e-9); return k < 0 ? S.length : k; };
+426-
+427-/**
+428- * validate(path, segments, opts): the whole track. With opts.uptoS, only the stations before it; the rest is PENDING
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L50934 assistant 2026-10-06T12:02:18.109Z
+TOOL_USE Edit [toolu_014FSRKWSfPZeqULmyBDaYTx]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\src\\validate\\index.js","old_string":"  // With a known take-off speed, the landing road must catch BOTH landings (ARCHITECTURE.md:75-78; jumps.js). A missed\n  // one is red on an open track too, not only in the closed lap's proof; `worst` is the heaviest fall that misses.\n  for (const jp of jumps) {\n    if (jp.pending || !Number.isFinite(jp.speed)) continue;\n    const missed = jp.landings.filter((L) => !L.caught);\n    if (missed.length) red.push({ s: jp.s, s1: jp.s + jp.gap, u: null, reason: 'landing-misses-zone', worst: Math.max(
+…[532 chars cut]…
+ (jp.pending || !Number.isFinite(jp.speed)) continue;\n    const missed = jp.landings.filter((L) => !L.caught);\n    if (missed.length) amber.push({ s: jp.s, s1: jp.s + jp.gap, u: null, reason: 'landing-misses-zone', worst: Math.max(...missed.map((L) => L.g)) });\n  }"}
+--- L50935 user 2026-10-06T12:02:18.181Z
+RESULT [toolu_014FSRKWSfPZeqULmyBDaYTx]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\src\validate\index.js has been updated successfully.
+--- L50936 assistant 2026-10-06T12:02:19.760Z
+TOOL_USE Edit [toolu_013xPyXqWtnixHHVkNJM3yj7]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\src\\validate\\index.js","old_string":"  'landing-misses-zone': 'ARCHITECTURE.md:75-78 (the landing ramp must catch both landings)',","new_string":"  'landing-misses-zone': 'ARCHITECTURE.md:75-78 (the landing ramp should catch both landings); a WARNING since D250: the keeper tunes jumps by driving them',"}
+--- L50937 user 2026-10-06T12:02:19.801Z
+RESULT [toolu_013xPyXqWtnixHHVkNJM3yj7]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\src\validate\index.js has been updated successfully.
+--- L50938 assistant 2026-10-06T12:02:23.074Z
+TOOL_USE Edit [toolu_0131HfkrrNFz1HoQcuE7ev2z]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\src\\validate\\index.js","old_string":"function proveLap(S, isRoad, v, lines, jumps) {\n  const n = S.length, where = [];","new_string":"// D250: a jump's REACH (a landing the car flies past, or one too deep below the take-off to reach) is a WARNING, `warn`, not a reason the lap fails:\n// the keeper tunes jumps by driving them. The lap still fails (`where`) on a stall, a leave of the surface, or a jump whose landing lip is not ahead.\nfunction proveLap(S, isRoad, v, lines, jumps) {\n  const n = S.length, where = [], warn = [];"}
+--- L50939 user 2026-10-06T12:02:23.122Z
+RESULT [toolu_0131HfkrrNFz1HoQcuE7ev2z]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\src\validate\index.js has been updated successfully.
+--- L50940 assistant 2026-10-06T12:02:27.260Z
+TOOL_USE Edit [toolu_01U3Hht1ua9uUmw2nRbgyEcf]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\src\\validate\\index.js","old_string":"    for (const L of jp.landings) if (!L.caught) where.push({ s: jp.s, reason: `jump-not-caught-${L.g}g`, speed: jp.speed, minSpeed: L.minSpeed });\n    if (!jp.reachable) where.push({ s: jp.s, reason: 'landing-unreachable' });\n  }\n  return { ok: where.length === 0, timeS: t, minV, where };","new_string":"    for (const L of jp.landings) if (!L.caught) warn.push({ s: jp.s, reason: `jump-not-caught-${L.g}g`, speed: jp.speed, minSpeed: L.minSpeed });\n    if (!jp.reachable) warn.push({ s: jp.s, reason: 'landing-unreachable' });\n  }\n  return { ok: where.length === 0, timeS: t, minV, where, warn };"}
+--- L50941 user 2026-10-06T12:02:27.309Z
+RESULT [toolu_01U3Hht1ua9uUmw2nRbgyEcf]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\src\validate\index.js has been updated successfully.
+--- L50942 assistant 2026-10-06T12:02:28.714Z
+TOOL_USE Bash [toolu_01GbcMBf1gPUCKRJu4wSzRt2]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && node --check src/validate/index.js && grep -n \"lap.where\\|\\.where\\b\" src app --include=*.js -r | grep -v test | cut -c1-200; grep -n \"warnings\" app/install/*.js app/core/coreshell.js | head -12 | cut -c1-200","description":"Find consumers of lap.where and the warning message path"}
+--- L50949 user 2026-10-06T12:02:29.101Z
+RESULT [toolu_01GbcMBf1gPUCKRJu4wSzRt2]: src/export/fromwords.js:201:    const w = v.lap.where, ss = w.map((x) => x.s);
+app/validate-ui/index.js:61:      if (r.lap && r.lap.ok === false) for (const w of r.lap.where) list.append(el('li', { textContent: `lap: ${lapWhereText(w)}, at ${w.s.toFixed(0)} m`, title: w.reason, 
+app/core/coreshell.js:545:      // the open path, its reds listed as warnings. A CLOSED track is refused it by name: the lap would be built open, with the end wall at its seam
+app/core/coreshell.js:574:      const w = (out.result.warnings && out.result.warnings.length ? ` (${out.result.warnings.length} warning${out.result.warnings.length > 1 ? 's' : ''}: ${out.result.warnin
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L50953 assistant 2026-10-06T12:02:36.474Z
+TEXT: The live panel already lists amber ranges with their labels, so the warning reaches it without touching any panel code. Next, what the install's result message says:
+--- L50954 assistant 2026-10-06T12:02:37.612Z
+TOOL_USE Bash [toolu_01KR4dbTgcazh5839Eauoyr8]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && grep -n \"buildExport\\|message\\|result\" app/install/index.js | head -20 | cut -c1-200; sed -n 572,576p app/core/coreshell.js | cut -c1-300","description":"Read the install message path and exportTo's warning line"}
+--- L50955 user 2026-10-06T12:02:37.873Z
+RESULT [toolu_01KR4dbTgcazh5839Eauoyr8]: 10:  const inst = createInstaller({ build: (opts) => shell.buildExport(opts), native, getDoc: () => shell.exportDoc(), getTextures });
+19:  const pick = async () => { const p = await pickFolder('Your Assetto Corsa folder (the one with content\\tracks)'); if (!p) return null; const r = await inst.chooseRoot(p); note.textContent = r.ok
+24:    note.textContent = r.message; if (r.ok) last = r.folder;
+28:  seeIt.onclick = async () => { const r = await see.run(last); note.textContent = r.ok ? `Assetto Corsa closed (exit ${r.code})` : r.message; };
+      if (!storage || typeof storage.writeExport !== 'function') return stop({ message: 'there is nowhere to write the export here' });
+      for (const f of out.folders) await storage.writeExport(dir, f.folder, f.files);
+      const w = (out.result.warnings && out.result.warnings.length ? ` (${out.result.warnings.length} warning${out.result.warnings.length > 1 ? 's' : ''}: ${out.result.warnings.join(' · ')})` : '') + await tidy();
+      return set({ ...ok(`exported ${out.folders.map((f) => f.folder).join(', ')} to ${dir}${w}`), exportReds: null, exportRefusal: null, lastExport: { dir, folders: out.folders.map((f) => f.folder) } });
+      } catch (e) { await tidy(); throw e; }   // a failure nobody planned for (a write that throws): the empty folder still goes
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L50957 assistant 2026-10-06T12:02:42.675Z
+TOOL_USE Bash [toolu_01NucaAopvyuRueEJ59u8pHo]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && grep -rn \"createInstaller\" app --include=*.js -l | grep -v test; f=$(grep -rln \"function createInstaller\" app src --include=*.js); echo $f; grep -n \"warnings\\|message:\" $f | head -12 | cut -c1-220","description":"Find the installer's own result message"}
+--- L50958 user 2026-10-06T12:02:43.003Z
+RESULT [toolu_01NucaAopvyuRueEJ59u8pHo]: app/install/index.js
+app/install/install.js
+app/install/install.js
+27:      try { return { ok: true, root: await native.setAcRoot(path) }; } catch (e) { return { ok: false, message: String(e.message || e) }; }
+31:      if (!root) return { ok: false, needsRoot: true, message: 'pick your Assetto Corsa folder first (the one that holds content\\tracks); it is remembered' };
+33:      if (!name || /^untitled$/i.test(name)) return { ok: false, message: 'name the track first (Save, with a name): it installs as t180b_<name>, and an unnamed track would replace the last unnamed one' };
+37:        return { ok: false, message: e.message, reds: e.code === 'RED' ? e.red : null };
+41:        try { await native.installTrack(f.folder, f.files); } catch (e) { return { ok: false, message: `not installed: ${e.message || e}` }; }
+45:      return { ok: true, folder: names[0], message: `installed "${doc.name || 'untitled'}" as ${names.join(', ')} in ${root}\\content\\tracks (${PREFIX_NOTE})` };
+54:      if (!(await native.getSeeItSetting())) return { ok: false, message: '"See it in Assetto" is off: it launches the game. Turn it on in the settings to use it.' };
+55:      try { return { ok: true, code: await native.seeIt(folder, layout) }; } catch (e) { return { ok: false, message: String(e.message || e) }; }
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L50961 assistant 2026-10-06T12:02:51.258Z
+TEXT: The install success message currently carries no warnings, so a jump warning would never show on install. The packet puts the install message path in scope. Here's that code:
+--- L50962 assistant 2026-10-06T12:02:52.262Z
+TOOL_USE Bash [toolu_01A83Tg7xfQwQA1Y3E8rJJQo]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && sed -n 28,48p app/install/install.js","description":"Read the installer's install() body"}
+--- L50963 user 2026-10-06T12:02:52.434Z
+RESULT [toolu_01A83Tg7xfQwQA1Y3E8rJJQo]:     },
+    async install() {
+      const root = await native.getAcRoot();
+      if (!root) return { ok: false, needsRoot: true, message: 'pick your Assetto Corsa folder first (the one that holds content\\tracks); it is remembered' };
+      const name = String(getDoc().name || '').trim();
+      if (!name || /^untitled$/i.test(name)) return { ok: false, message: 'name the track first (Save, with a name): it installs as t180b_<name>, and an unnamed track would replace the last unnamed one' };
+      let out;
+      try { out = build({ textures: getTextures() }); } catch (e) {
+        if (e.name !== 'ExportError') throw e;
+        return { ok: false, message: e.message, reds: e.code === 'RED' ? e.red : null };
+      }
+      const names = [];
+      for (const f of out.folders) {
+        try { await native.installTrack(f.folder, f.files); } catch (e) { return { ok: false, message: `not installed: ${e.message || e}` }; }
+        names.push(f.folder);
+      }
+      const doc = getDoc();
+      return { ok: true, folder: names[0], message: `installed "${doc.name || 'untitled'}" as ${names.join(', ')} in ${root}\\content\\tracks (${PREFIX_NOTE})` };
+    },
+  };
+}
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L50967 assistant 2026-10-06T12:03:07.174Z
+TOOL_USE Bash [toolu_011m8dS7Q6inhtjNYmvhxMqA]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && grep -n \"const rangeText\\|function rangeText\" -A4 src/export/fromwords.js | cut -c1-250","description":"Read rangeText in fromwords"}
+--- L50974 user 2026-10-06T12:03:07.341Z
+RESULT [toolu_011m8dS7Q6inhtjNYmvhxMqA]: 154:const rangeText = (x) => `${x.reason}${x.detail ? ` [${x.detail}]` : ''} at s ${x.s0.toFixed(1)}–${x.s1.toFixed(1)} m${x.source ? ` (${x.source})` : ''}`;
+155-
+156-/** Everything up to the bytes, and nothing written. Throws ExportError on every refusal. */
+157-function buildExport(doc, opts = {}) {
+158-  try { D.checkDoc(doc); } catch (e) { throw new ExportError('BAD_DOC', e.message); }
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L50978 assistant 2026-10-06T12:03:19.102Z
+TOOL_USE Edit [toolu_01KDzLu9bZjFzLpAtKMtUnnq]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\src\\export\\fromwords.js","old_string":"  for (const a of v.amber) warnings.push(`amber: ${rangeText(a)}`);\n  if (v.lap && v.lap.ok === null) warnings.push(`lap proof not run: ${v.lap.reason}`);","new_string":"  // D250: a jump's reach is the user's to tune by driving it in AC (the keeper), so it WARNS, in plain words, and never blocks. Each line starts\n  // \"jump: \" so the install message can carry the jump warnings alone (app/install/install.js). A missed landing is said once, from its amber range;\n  // the lap proof adds only wh
+…[236 chars cut]…
+ if (w.reason === 'landing-unreachable') warnings.push(`jump: this jump may land too deep below its take-off to be reached, at s ${w.s.toFixed(0)} m; tune it by driving it in AC`);\n  if (v.lap && v.lap.ok === null) warnings.push(`lap proof not run: ${v.lap.reason}`);"}
+--- L50979 user 2026-10-06T12:03:19.138Z
+RESULT [toolu_01KDzLu9bZjFzLpAtKMtUnnq]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\src\export\fromwords.js has been updated successfully.
+--- L50980 assistant 2026-10-06T12:03:23.952Z
+TOOL_USE Edit [toolu_016gAxEiwfqsbhWD4PUUXFbn]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\src\\export\\fromwords.js","old_string":"const rangeText = (x) => `${x.reason}${x.detail ? ` [${x.detail}]` : ''} at s ${x.s0.toFixed(1)}–${x.s1.toFixed(1)} m${x.source ? ` (${x.source})` : ''}`;","new_string":"const rangeText = (x) => `${x.reason}${x.detail ? ` [${x.detail}]` : ''} at s ${x.s0.toFixed(1)}–${x.s1.toFixed(1)} m${x.source ? ` (${x.source})` : ''}`;\n/** D250: the plain warning for a landing the car may fly past at the lap's speed (validation's landing-misses-zone, amber). */\nconst jumpWarning = (a) => `jump: this jump may fly past its landing at the lap's speed, at s ${a.s0.toFixed(0)}–${a.s1.toFixed(0)} m${a.worst != null ? ` (the ${a.worst} g fall misses)` : ''}; tune it by driving it in AC`;"}
+--- L50981 user 2026-10-06T12:03:23.976Z
+RESULT [toolu_016gAxEiwfqsbhWD4PUUXFbn]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\src\export\fromwords.js has been updated successfully.
+--- L50982 assistant 2026-10-06T12:03:27.392Z
+TOOL_USE Edit [toolu_01Pvmycc95AsdHURTb3VcUvL]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\app\\install\\install.js","old_string":"      const doc = getDoc();\n      return { ok: true, folder: names[0], message: `installed \"${doc.name || 'untitled'}\" as ${names.join(', ')} in ${root}\\\\content\\\\tracks (${PREFIX_NOTE})` };","new_string":"      const doc = getDoc();\n      // D250: a jump the car may fly past is installed, and said (the keeper tunes jumps by driving them); the export's other warnings stay where they were\n      const jumps = ((out.result && out.result.warnings) || []).filter((w) => /^jump: /.test(w));\n      return { ok: true, folder: names[0], message: `installed \"${doc.name || 'untitled'}\" as ${names.join(', ')} in ${root}\\\\content\\\\tracks (${PREFIX_NOTE})${jumps.length ? `. ${jumps.join('. ')}` : ''}` };"}
+--- L50983 user 2026-10-06T12:03:27.431Z
+RESULT [toolu_01Pvmycc95AsdHURTb3VcUvL]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\app\install\install.js has been updated successfully.
+--- L50987 assistant 2026-10-06T12:03:33.828Z
+TEXT: Next, the label the live panel shows for this amber. It lives in `app/validate-ui/labels.js`, outside `src/`, so I'll list the line in the hand-back:
+--- L50988 assistant 2026-10-06T12:03:35.749Z
+TOOL_USE Bash [toolu_01G1zzG7Bg8bkZvNxNUydvS2]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && sed -n 25,32p app/validate-ui/labels.js; sed -n 50,60p app/validate-ui/labels.js; grep -rn \"a jump landing misses its ramp\\|landing too short\\|misses its ramp\" app test --include=*.js | cut -c1-180","description":"Read the jump labels and who asserts on them"}
+--- L50995 user 2026-10-06T12:03:36.063Z
+RESULT [toolu_01G1zzG7Bg8bkZvNxNUydvS2]:     'load-above-proven': `the load is over ${car.provenG} g, more than any track has proven`,
+    'seam-past-envelope': `a seam is sharper than measured on real tracks (over ${car.seamP90Deg}°)`,
+    'on-the-stops': `the car is on its suspension stops (${car.suspensionStopG} g or more)`,
+    'head-in-the-air': 'the open end is in the air: place the landing',
+    'landing-misses-zone': 'a jump landing misses its ramp',
+    'jump-gap-not-forward': 'a jump lands behind its own take-off',
+    'joint-step': 'the road steps between two pieces here (the cup and the piece next to it do not meet)',
+    // THE CROSS-SECTION reds (D225): the ids are the seal's and the librarian's rulings (ruling 1 `tube-too-narrow`, S3 `roll-rate`; A's
+  const r = w.reason || '';
+  if (r === 'stall') return 'the car stops here: it has no speed';
+  if (r === 'leaves-surface') return 'the car leaves the road surface here';
+  if (r === 'landing-unreachable') return 'a jump lands too deep below its take-off to be reached';
+  const m = /^jump-not-caught-([\d.]+)g$/.exec(r);
+  if (m) return `a jump is not caught (the ${m[1]} g landing)`;
+  return reasonText(r);
+}
+
+const at = (x) => (x.s1 != null && x.s1 !== x.s0 ? `at ${x.s0.toFixed(0)}–${x.s1.toFixed(0)} m` : `at ${x.s0.toFixed(0)} m`);
+function findingLine(kind, x) {
+app/test/preview-async.test.js:179:  // since the jumps core (fae3910) a flight is INTENDED, not red: the control's non-overlap red is a landing too short for the speed (core_jump 
+app/validate-ui/labels.js:29:    'landing-misses-zone': 'a jump landing misses its ramp',
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L50998 assistant 2026-10-06T12:03:41.327Z
+TOOL_USE Edit [toolu_012VeqqEmcML7U72V64PAj1z]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\app\\validate-ui\\labels.js","old_string":"    'landing-misses-zone': 'a jump landing misses its ramp',","new_string":"    'landing-misses-zone': 'this jump may fly past its landing at the lap\\'s speed (a warning: tune it by driving it in AC)',   // D250: amber since the keeper's ruling"}
+--- L50999 user 2026-10-06T12:03:41.363Z
+RESULT [toolu_012VeqqEmcML7U72V64PAj1z]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\app\validate-ui\labels.js has been updated successfully.
+--- L51000 assistant 2026-10-06T12:03:43.240Z
+TOOL_USE Bash [toolu_016o5fpezNLeo4mSBXKi189Z]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && for f in src/validate/index.js src/export/fromwords.js app/install/install.js app/validate-ui/labels.js; do node --check $f || echo BAD $f; done; git diff --stat; sed -n 170,186p app/test/preview-async.test.js | cut -c1-260; sed -n 55,85p app/test/validate-ui-jumpdefault.test.js | cut -c1-230","description":"Check syntax; read A's row 3b and the jump-default UI test"}
+--- L51001 user 2026-10-06T12:03:43.678Z
+RESULT [toolu_016o5fpezNLeo4mSBXKi189Z]:  app/install/install.js    |  4 +++-
+ app/validate-ui/labels.js |  2 +-
+ src/export/fromwords.js   |  8 +++++++-
+ src/validate/index.js     | 19 +++++++++++--------
+ 4 files changed, 22 insertions(+), 11 deletions(-)
+});
+
+test('row 3b: the check\'s TWO PARTS put together are EXACTLY the one-piece check (a coil with overlaps, a jump, a cup, a tube, a 13 km delete, a 14 km Close)', async () => {
+  const parts = (doc, closed, speed = null) => mergeParts(clone(OJ.runJob({ doc, designSpeedKmh: speed, closed, part: 'rest' })), clone(OJ.runJob({ doc, designSpeedKmh: speed, closed, part: 'rays' })));
+  const mk = () => createCoreShell({ brushFn: null, autosaveMs: 0 });
+  const coil = await openLap({ turns: 8, lastLen: 60 }); coil.proposeClose(); const cp = coil.getState().closeProposal; assert.ok(cp.check.overlaps.length > 0);
+  assert.deepEqual(parts(cp.doc, true), clone(cp.check), 'a coil\'s Close (overlaps of three kinds)'); assert.deepEqual(parts(cp.doc, true, 120), clone(OJ.overlapCheck(OJ.resolveDoc(cp.doc), 120, { closed: true })), 'with a design speed');
+  coil.cancelClose(); coil.selectPiece(0); coil.deleteSelection(); const dp = coil.getState().deleteProposal; assert.deepEqual(parts(dp.doc, false), clone(dp.check), 'a coil\'s delete');
+  const DEG = Math.PI / 180, j = await mk(); j.extend({ length: 200, family: 'bowl' }); j.extend({ length: 100, transition: 40, targets: { kh: 1 / 300 } }); j.commitDoc(D.appendPiece(j.getState().history.present, D.flightPiece({ gap: 40, drop: 2, land: -2 * DE
+  // since the jumps core (fae3910) a flight is INTENDED, not red: the control's non-overlap red is a landing too short for the speed (core_jump row 3's), a 40 m jump taken at the 460 km/h design speed misses its landing ramp (chec
+…[3454 chars cut]…
+g landing cannot reach at 460 km/h.
+  // The measured default jump is itself 81 m with a 14 m drop, so "sculpted past" has to say what it was sculpted to
+  shell.sculpt(jump.id, { handles: { gap: 80, drop: 0.7, land: -2 * DEG } });
+  assert.strictEqual(shell.getState().message, null, shell.getState().message);
+  const r = reds(ctl).filter((x) => x.reason === 'landing-misses-zone');
+  assert.strictEqual(r.length, 1, JSON.stringify(reds(ctl)));
+  assert.ok(r[0].source && /ARCHITECTURE/.test(r[0].source), 'it carries its source');
+  assert.strictEqual(r[0].worst, 6.3, 'the heaviest fall that misses is named');
+  assert.ok(ctl.state.result.jumps[0].landings.some((L) => !L.caught));
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L51006 assistant 2026-10-06T12:04:12.198Z
+TOOL_USE Bash [toolu_01Bm7VmhD2zPTRUyLpf5ddDm]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && grep -n \"const reasons\\|function reasons\\|const reds\\|function reds\\|ambers\\|function firstJump\\|const firstJump\" test/validate_head.test.js test/vocab-corpus.test.js app/test/validate-ui-jumpdefault.test.js test/core_jump.test.js | cut -c1-230","description":"Find the helpers the tests use to read reds"}
+--- L51013 user 2026-10-06T12:04:12.373Z
+RESULT [toolu_01Bm7VmhD2zPTRUyLpf5ddDm]: test/validate_head.test.js:14:const reasons = (r) => r.red.map((x) => x.reason);
+test/vocab-corpus.test.js:55:function firstJump(handles) {
+app/test/validate-ui-jumpdefault.test.js:19:async function firstJump() {
+app/test/validate-ui-jumpdefault.test.js:26:const reds = (ctl) => ctl.state.result.red;
+test/core_jump.test.js:36:const reasons = (r) => r.red.map((x) => x.reason);
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L51019 assistant 2026-10-06T12:04:16.022Z
+TEXT: Now the test updates, each marked `CHANGED D250` with the reason, starting with `validate_head`:
+--- L51020 assistant 2026-10-06T12:04:30.309Z
+TOOL_USE Edit [toolu_01VYkedCU6MJQtf9V69bz31o]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\test\\validate_head.test.js","old_string":"test('a ramp too short for the clean-flight landing is RED: landing-misses-zone, the heaviest missed fall named', () => {\n  const { segs, path } = jumpTrack({ rampScale: 0.4 });\n  const r = validate(path, segs, { designSpeed: DESIGN, landingSearchM: 1000 });\n  assert.ok(reasons(r).includes('landing-misses-zone'), JSON.stringify(reasons(r)));\n  const red = r.red.find((x) => x.reason === 'landing-misses-zone');\n  assert.strictEqual(red.worst, 3.2);\n  assert.match(red.source, /ARCHITECTURE\\.
+…[2382 chars cut]…
+till red', () => {\n  const clean = jumpTrack();\n  assert.ok(!reasons(validate(clean.path, clean.segs, {})).includes('landing-misses-zone'));\n  assert.ok(!ambers(validate(clean.path, clean.segs, {})).includes('landing-misses-zone'), 'and no landing warning either');"}
+--- L51021 user 2026-10-06T12:04:30.350Z
+RESULT [toolu_01VYkedCU6MJQtf9V69bz31o]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\test\validate_head.test.js has been updated successfully.
+--- L51022 assistant 2026-10-06T12:04:35.068Z
+TOOL_USE Edit [toolu_01FVb6wYpNq3HiLht29WDRNz]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\test\\vocab-corpus.test.js","old_string":"  assert.ok(median.red.some((r) => r.reason === 'landing-misses-zone'), `the median ${C.jump.gap_m.p50} m jump: ${JSON.stringify(median.red.map((r) => r.reason))}`);","new_string":"  // CHANGED D250: the median jump's miss is a WARNING (amber), not a red: the keeper tunes jumps by driving them. The row's claim (the median one misses) stands\n  assert.ok(median.amber.some((r) => r.reason === 'landing-misses-zone'), `the median ${C.jump.gap_m.p50} m jump: ${JSON.stringify(median.amber.map((r) => r.reason))}`);\n  assert.ok(!median.red.some((r) => r.reason === 'landing-misses-zone'), 'and it is not a red');"}
+--- L51023 user 2026-10-06T12:04:35.106Z
+RESULT [toolu_01FVb6wYpNq3HiLht29WDRNz]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\test\vocab-corpus.test.js has been updated successfully.
+--- L51024 assistant 2026-10-06T12:04:41.815Z
+TOOL_USE Edit [toolu_019MiWhYWdJuMbH1kTzrYW91]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\test\\validate_jumps.test.js","old_string":"test('validate: a jump taken too slowly is not caught, and a closed lap over it fails with the reason', () => {\n  const { path, segs } = jumpPath(20, { drop: 1 });   // 20 m/s over 40 m falling 1 m: short at either fall\n  const r = validate({ ...path, closed: true }, segs);\n  assert.ok(r.jumps[0].landings.every((l) => !l.clear));\n  assert.strictEqual(r.lap.ok, false);\n  assert.ok(r.lap.where.some((w) => w.reason === 'jump-not-caught-6.3g'));\n});","new_string":"// CHANGED D250 (the keeper:
+…[517 chars cut]…
+);\n  assert.ok(r.jumps[0].landings.every((l) => !l.clear));\n  assert.ok(r.lap.warn.some((w) => w.reason === 'jump-not-caught-6.3g'), JSON.stringify(r.lap));\n  assert.ok(!r.lap.where.some((w) => /^jump-not-caught/.test(w.reason)), 'not a reason the lap fails');\n});"}
+--- L51025 user 2026-10-06T12:04:41.866Z
+RESULT [toolu_019MiWhYWdJuMbH1kTzrYW91]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\test\validate_jumps.test.js has been updated successfully.
+--- L51026 assistant 2026-10-06T12:04:48.525Z
+TOOL_USE Edit [toolu_01AdoxxeaN7mTinLqoUiqvbJ]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\test\\core_jump.test.js","old_string":"test('row 3: a landing road too short for the lap\\'s speed is red (landing-misses-zone); a jump both falls land on is not', () => {\n  const long = validateDoc(close(jumpLap(LONG_JUMP), { edited: [0] }).doc), jl = long.jumps[0];\n  assert.ok(jl.speed * 3.6 > 600, `control: the lap takes the jump fast, at ${(jl.speed * 3.6).toFixed(0)} km/h, past the ramp's 460`);\n  assert.ok(jl.landings.some((L) => !L.caught), JSON.stringify(jl.landings)); assert.ok(reasons(long).includes('landing-misses-zone'), J
+…[574 chars cut]…
+e ramp's 460`);\n  assert.ok(jl.landings.some((L) => !L.caught), JSON.stringify(jl.landings));\n  assert.ok(long.amber.some((x) => x.reason === 'landing-misses-zone'), JSON.stringify(long.amber)); assert.ok(!reasons(long).includes('landing-misses-zone'), 'not a red');"}
+--- L51027 user 2026-10-06T12:04:48.564Z
+RESULT [toolu_01AdoxxeaN7mTinLqoUiqvbJ]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\test\core_jump.test.js has been updated successfully.
+--- L51028 assistant 2026-10-06T12:04:49.594Z
+TOOL_USE Bash [toolu_014HVBVpmqbW65yC1ZVgECuY]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && sed -n 100,112p test/core_jump.test.js | cut -c1-250","description":"Read the rest of core_jump row 3"}
+--- L51029 user 2026-10-06T12:04:49.759Z
+RESULT [toolu_014HVBVpmqbW65yC1ZVgECuY]: // taken faster can fly past it: that is red.
+// CHANGED D250 (the keeper: jumps are tuned by driving them in AC): a landing too short for the lap's speed is a WARNING (amber), not a red.
+test('row 3: a landing road too short for the lap\'s speed WARNS (landing-misses-zone, amber since D250) and is not red; a jump both falls land on does not warn', () => {
+  const long = validateDoc(close(jumpLap(LONG_JUMP), { edited: [0] }).doc), jl = long.jumps[0];
+  assert.ok(jl.speed * 3.6 > 600, `control: the lap takes the jump fast, at ${(jl.speed * 3.6).toFixed(0)} km/h, past the ramp's 460`);
+  assert.ok(jl.landings.some((L) => !L.caught), JSON.stringify(jl.landings));
+  assert.ok(long.amber.some((x) => x.reason === 'landing-misses-zone'), JSON.stringify(long.amber)); assert.ok(!reasons(long).includes('landing-misses-zone'), 'not a red');
+  const ok = validateDoc(close(jumpLap(OK_JUMP), { edited: [0] }).doc);
+  assert.ok(ok.jumps[0].landings.every((L) => L.caught), JSON.stringify(ok.jumps[0].landings)); assert.deepEqual(ok.red, []);
+});
+
+// ── row 4 ──
+test('row 4: a lap with a jump CLOSES (whole lap): the flight is the very same piece, the road after it still starts level, and it is stored closed', () => {
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L51039 assistant 2026-10-06T12:05:01.144Z
+TOOL_USE Bash [toolu_01SjuaUY1z4AUsYTbrD7AcPu]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && node - <<'EOF'\nconst fs = require('fs'), f = 'test/core_jump.test.js'; let t = fs.readFileSync(f, 'utf8');\nconst R = [\n  [\"// taken faster can fly past it: that is red.\\n\", \"// taken faster can fly past it: that WARNS (amber; it was red before D250).\\n\"],\n  [\"//   3  validation: a landing road too short for the car at the lap's speed is red (landing-misses-zone), with the both-landings-caught control\", \"//   3  validation: a landing road too short for the car at the lap's speed WARNS (landing-misses-zone, amber since D250), with the both-landings
+…[345 chars cut]…
+t.replace(a, b); }\nfs.writeFileSync(f, t); console.log('ok');\nEOF\ngrep -n \"landing-misses-zone\\|lap-proof\" test/export_words.test.js | head; sed -n 100,104p test/export_words.test.js | cut -c1-200","description":"Finish core_jump row 3; read the export_words row"}
+--- L51040 user 2026-10-06T12:05:01.389Z
+RESULT [toolu_01SjuaUY1z4AUsYTbrD7AcPu]: [stdin]:7
+for (const [a, b] of R) { const n = t.split(a).length - 1; if (n !== 1) throw new Error('anchor x' + n + ': ' + a.slice(0, 60)); t = t.replace(a, b); }
+                                                                        ^
+
+Error: anchor x0: // taken faster can fly past it: that is red.
+
+    at [stdin]:7:79
+[90m    at runScriptInThisContext (node:internal/vm:219:10)[39m
+[90m    at node:internal/process/execution:451:12[39m
+    at [stdin]-wrapper:6:24
+[90m    at runScriptInContext (node:internal/process/execution:449:60)[39m
+[90m    at evalFunction (node:internal/process/execution:283:30)[39m
+[90m    at evalTypeScript (node:internal/process/execution:295:3)[39m
+[90m    at node:internal/main/eval_stdin:51:5[39m
+[90m    at Socket.<anonymous> (node:internal/process/execution:205:5)[39m
+[90m    at Socket.emit (node:events:520:35)[39m
+
+Node.js v24.14.1
+116:    && e.red.some((r) => r.reason === 'lap-proof' && r.where.some((x) => x.reason === 'jump-not-caught-6.3g'))
+117:    && /lap-proof \[jump-not-caught-6\.3g at s \d/.test(e.message));
+  assert.throws(() => exportTrack(SAMPLE, { outDir: out, csp: false }), (e) => e instanceof ExportError && e.code === 'RED'
+    && e.red.some((r) => r.reason === 'steep-without-raycast') && /steep-without-raycast/.test(e.message));
+  assert.deepStrictEqual(fs.readdirSync(out), []);
+});
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L51043 assistant 2026-10-06T12:05:09.915Z
+TEXT: The anchors missed because t180's files are CRLF (my standing carry). I'll use the Edit tool instead:
+--- L51044 assistant 2026-10-06T12:05:11.564Z
+TOOL_USE Edit [toolu_01GDkFyQHu6QgjU9in3CxzXg]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\test\\core_jump.test.js","old_string":"// taken faster can fly past it: that is red.","new_string":"// taken faster can fly past it: that WARNS (amber; it was red before D250)."}
+--- L51045 user 2026-10-06T12:05:11.592Z
+RESULT [toolu_01GDkFyQHu6QgjU9in3CxzXg]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\test\core_jump.test.js has been updated successfully.
+--- L51046 assistant 2026-10-06T12:05:14.013Z
+TOOL_USE Edit [toolu_01JisWQWiXkqmeqXm75L7mWQ]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\test\\core_jump.test.js","old_string":"//   3  validation: a landing road too short for the car at the lap's speed is red (landing-misses-zone), with the both-landings-caught control","new_string":"//   3  validation: a landing road too short for the car at the lap's speed WARNS (landing-misses-zone, amber since D250), with the both-landings-caught control"}
+--- L51047 user 2026-10-06T12:05:14.046Z
+RESULT [toolu_01JisWQWiXkqmeqXm75L7mWQ]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\test\core_jump.test.js has been updated successfully.
+--- L51048 assistant 2026-10-06T12:05:16.464Z
+TOOL_USE Edit [toolu_01HMGF5rdgqsmYYXWGv6mLNT]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\test\\core_jump.test.js","old_string":"  assert.ok(ok.jumps[0].landings.every((L) => L.caught), JSON.stringify(ok.jumps[0].landings)); assert.deepEqual(ok.red, []);","new_string":"  assert.ok(ok.jumps[0].landings.every((L) => L.caught), JSON.stringify(ok.jumps[0].landings)); assert.deepEqual(ok.red, []);\n  assert.ok(!ok.amber.some((x) => x.reason === 'landing-misses-zone'), 'and no landing warning');"}
+--- L51049 user 2026-10-06T12:05:16.491Z
+RESULT [toolu_01HMGF5rdgqsmYYXWGv6mLNT]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\test\core_jump.test.js has been updated successfully.
+--- L51050 assistant 2026-10-06T12:05:17.298Z
+TOOL_USE Read [toolu_016JAWUjbsW1fhmPDq7LDF12]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\test\\export_words.test.js","offset":105,"limit":15}
+--- L51051 user 2026-10-06T12:05:17.328Z
+RESULT [toolu_016JAWUjbsW1fhmPDq7LDF12]: 105	// CHANGED 2026-09-27 (D170): was 300 km/h. Validation then measured a jump one station long (a 12 m gap as 13 m), and
+106	// the 6.3 g landing needed about 311 km/h. Measured from the lip, it needs 287 km/h (D170 hand-back §2), so 300 now
+107	// lands it, and the jump is taken at 250 km/h instead: still below what the 6.3 g landing needs.
+108	test('a lap the proof fails is refused: a jump taken below the speed its 6.3 g landing needs, each failing point named', () => {
+109	  let d = D.createDoc('Jump Loop');
+110	  for (const w of ['straight', 'straight', 'jump', 'straight', 'tight', 'straight', 'tight']) d = appendOld(D, d, w, { speed: kmh(250) });
+111	  const c = closeLoop(d);
+112	  assert.ok(c.candidates.length, c.reason);
+113	  const jl = withSpeed(c.candidates.slice().sort((a, b) => a.lengthM - b.lengthM)[0].doc, kmh(250));
+114	  const out = tmp();
+115	  assert.throws(() => exportTrack(jl, { outDir: out }), (e) => e.code === 'RED'
+116	    && e.red.some((r) => r.reason === 'lap-proof' && r.where.some((x) => x.reason === 'jump-not-caught-6.3g'))
+117	    && /lap-proof \[jump-not-caught-6\.3g at s \d/.test(e.message));
+118	  assert.deepStrictEqual(fs.readdirSync(out), []);
+119	});
+--- L51061 assistant 2026-10-06T12:05:25.379Z
+TEXT: This row's subject changes with the ruling: a lap whose only failing point is an uncaught jump is now exported, with the jump warning. I'll check what `exportTrack` returns before restating it:
+--- L51062 assistant 2026-10-06T12:05:26.485Z
+TOOL_USE Bash [toolu_01QKdKRz9fNDPbwmoSuZojdd]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && grep -n \"^function exportTrack\" -A12 src/export/fromwords.js | grep -n \"return\\|warnings\" | head -5 | cut -c1-200; grep -n \"exportTrack(.*outDir\" test/export_words.test.js | head -3 | cut -c1-200","description":"Check exportTrack's return shape"}
+--- L51063 user 2026-10-06T12:05:26.707Z
+RESULT [toolu_01QKdKRz9fNDPbwmoSuZojdd]: 5:320-  return writeExport(buildExport(doc, opts), { outDir, variant, t180 });
+13:328-  return writeExport(buildFromSegments(segs, meta, opts), { outDir, variant, t180 });
+45:  sample = { out, r: exportTrack(SAMPLE, { outDir: out }) };
+100:  assert.throws(() => exportTrack(SAMPLE, { outDir: out, csp: false }), (e) => e instanceof ExportError && e.code === 'RED'
+115:  assert.throws(() => exportTrack(jl, { outDir: out }), (e) => e.code === 'RED'
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L51065 assistant 2026-10-06T12:05:31.607Z
+TOOL_USE Bash [toolu_015uVSgTiQDfXgvFZkX143Qx]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && grep -n \"r\\.warnings\\|sample.r\\.\\|\\.warnings\" test/export_words.test.js | head -5 | cut -c1-200; grep -n \"^function writeExport\" -A3 src/export/fromwords.js | cut -c1-200; grep -n \"return { folders\" src/export/fromwords.js | cut -c1-200","description":"Find how tests read an export's warnings"}
+--- L51066 user 2026-10-06T12:05:31.902Z
+RESULT [toolu_015uVSgTiQDfXgvFZkX143Qx]: 46:  const f = sample.r.folders[0];
+52:  assert.deepStrictEqual(sample.r.readback.dummies.filter((n) => /^AC_/.test(n)).sort(), names);
+56:  const f = sample.r.folders[0];
+63:  const f = sample.r.folders[0];
+72:  const line = readAiLine(fs.readFileSync(path.join(sample.r.folders[0].dir, 'ai', 'fast_lane.ai')));
+331:function writeExport(b, { outDir, variant, t180 }) {
+332-  const vs = VARIANTS[variant].map((v) => ({ ...v, softCollision: !!t180 && v.softCollision, extendedPhysics: !!t180 }));
+333-  const folders = vs.map((v) => writeFolder(b, outDir, v));
+334-  const warnings = [...b.warnings];
+337:  return { folders, kn5Sha: sha256(b.kn5), kn5Bytes: b.kn5.length, aiSha: sha256(b.ai), aiLine: b.aiLine, readback: b.readback, lengthM: b.path.lengthM, resolvedVia: b.resolvedVia, markers: b.mark
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L51069 assistant 2026-10-06T12:05:49.968Z
+TOOL_USE Edit [toolu_014E6VsdLwct9BEwrUtAoxHx]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\test\\export_words.test.js","old_string":"test('a lap the proof fails is refused: a jump taken below the speed its 6.3 g landing needs, each failing point named', () => {\n  let d = D.createDoc('Jump Loop');\n  for (const w of ['straight', 'straight', 'jump', 'straight', 'tight', 'straight', 'tight']) d = appendOld(D, d, w, { speed: kmh(250) });\n  const c = closeLoop(d);\n  assert.ok(c.candidates.length, c.reason);\n  const jl = withSpeed(c.candidates.slice().sort((a, b) => a.lengthM - b.lengthM)[0].doc, kmh(250));\n  const out = tmp();
+…[1415 chars cut]…
+ out });\n  assert.ok(r.folders.length && fs.readdirSync(out).length, 'written');\n  assert.ok(r.warnings.some((w) => /^jump: this jump may fly past its landing at the lap's speed, at s \\d+–\\d+ m \\(the 6\\.3 g fall misses\\)/.test(w)), r.warnings.join(' | '));\n});"}
+--- L51070 user 2026-10-06T12:05:50.002Z
+RESULT [toolu_014E6VsdLwct9BEwrUtAoxHx]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\test\export_words.test.js has been updated successfully.
+--- L51071 assistant 2026-10-06T12:05:50.741Z
+TOOL_USE Read [toolu_01MVpYNcktHrgH1g1AeuDh7n]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\app\\test\\validate-ui-jumpdefault.test.js","offset":40,"limit":50}
+--- L51072 user 2026-10-06T12:05:50.769Z
+RESULT [toolu_01MVpYNcktHrgH1g1AeuDh7n]: 40	test('resolve with no speed given sizes the ramp for the same default, so every caller agrees (the export, the connector)', () => {
+41	  let d = D.createDoc('t'); for (const w of ['straight', 'straight', 'jump']) d = D.appendWord(d, w);
+42	  const segs = D.resolve(d).segments, ramp = segs.find((g) => g.part === 'land');
+43	  assert.deepStrictEqual([ramp.landing.speedFrom, Math.round(ramp.landing.speed * 3.6)], ['default', MACH6.designSpeedKmh]);
+44	  const v = validate(G.buildPath(segs, { step: 2 }), segs, { designSpeed: MACH6.designSpeedKmh / 3.6 });
+45	  assert.deepStrictEqual(v.red, []);
+46	});
+47	
+48	test(`the slider swept over its whole range (${MIN}–${MAX} km/h, its own step of ${STEP}): clean wherever the car clears the gap, and nowhere else`, async () => {
+49	  // "clears the gap" is computed independently of the ramp: both falls come down past the gap (jumps.js landingRamp's
+50	  // touchdowns) off the default jump, whatever the vocabulary makes it (12 m / 0.7 m before D182; 81 m / 14 m measured). Below that speed no ramp can help,
+51	  // and the red says why; above it the ramp resized to the slider must catch both landings at EVERY step.
+52	  const J = D.WORDS ? D.WORDS.jump : require('../../src/doc/vocab.js').WORDS.jump;
+53	  const clears = (kmh) => landingRamp({ D: J.gap, dh: -J.drop, thetaRad: 0, landRad: J.land, v: kmh / 3.6 }).touchdowns.every((t) => t.x != null);
+54	  const t = await firstJump(), dirty = [], clean = [];
+55	  // every step the slider stops at (50, 55 … 760: a range input snaps to min + n·step), and its maximum, which the
+56	  // picker's own clamp can set (speed.js set(kmh))
+57	  const speeds = []; for (let k = MIN; k <= MAX; k += STEP) speeds.push(k); if (speeds[speeds.length - 1] !==
+…[1871 chars cut]…
+pted to
+79	  shell.sculpt(jump.id, { handles: { gap: 80, drop: 0.7, land: -2 * DEG } });
+80	  assert.strictEqual(shell.getState().message, null, shell.getState().message);
+81	  const r = reds(ctl).filter((x) => x.reason === 'landing-misses-zone');
+82	  assert.strictEqual(r.length, 1, JSON.stringify(reds(ctl)));
+83	  assert.ok(r[0].source && /ARCHITECTURE/.test(r[0].source), 'it carries its source');
+84	  assert.strictEqual(r[0].worst, 6.3, 'the heaviest fall that misses is named');
+85	  assert.ok(ctl.state.result.jumps[0].landings.some((L) => !L.caught));
+86	});
+87	
+88	test('the ramp resize is DERIVED: no undo step, the document unchanged, and the same speed gives the same ramp again', async () => {
+89	  const { shell } = await firstJump();
+--- L51084 assistant 2026-10-06T12:06:03.236Z
+TOOL_USE Edit [toolu_01HMbRd1JYzVYp6WN2sTF36f]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\app\\test\\validate-ui-jumpdefault.test.js","old_string":"    const r = reds(t.ctl);\n    if (clears(k)) { if (r.length) dirty.push(`${k} km/h: ${r.map((x) => x.reason).join(', ')}`); else clean.push(k); }\n    else assert.ok(r.length && r.every((x) => x.reason === 'landing-misses-zone'), `${k} km/h: the car does not clear the gap, so the jump must be red for that, and only that: ${JSON.stringify(r.map((x) => x.reason))}`);","new_string":"    const r = reds(t.ctl);\n    if (clears(k)) { if (r.length) dirty.push(`${k} km/h: ${r.map((x) =>
+…[166 chars cut]…
+S (amber), and nothing is red\n    else { assert.deepStrictEqual(r, [], `${k} km/h: not red (a warning since D250)`); assert.ok(t.ctl.state.result.amber.some((x) => x.reason === 'landing-misses-zone'), `${k} km/h: the car does not clear the gap, so the jump warns`); }"}
+--- L51085 user 2026-10-06T12:06:03.267Z
+RESULT [toolu_01HMbRd1JYzVYp6WN2sTF36f]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\app\test\validate-ui-jumpdefault.test.js has been updated successfully.
+--- L51086 assistant 2026-10-06T12:06:06.535Z
+TOOL_USE Edit [toolu_011ahfqDL5LdwYKiGmMnBJ8B]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\app\\test\\validate-ui-jumpdefault.test.js","old_string":"test('a jump sculpted past what the car can clear is red, and says so: the landings that miss, the heaviest fall', async () => {","new_string":"// CHANGED D250: the row's subject stands (a jump sculpted past what the car can clear is named, with the heaviest fall); it is read from the AMBER\n// ranges now, a warning, and asserted not red\ntest('a jump sculpted past what the car can clear WARNS (amber, D250), and says so: the landings that miss, the heaviest fall', async () => {"}
+--- L51087 user 2026-10-06T12:06:06.569Z
+RESULT [toolu_011ahfqDL5LdwYKiGmMnBJ8B]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\app\test\validate-ui-jumpdefault.test.js has been updated successfully.
+--- L51088 assistant 2026-10-06T12:06:08.765Z
+TOOL_USE Edit [toolu_01FA1xpBYWuUxroBWAXtsfSh]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\app\\test\\validate-ui-jumpdefault.test.js","old_string":"  const r = reds(ctl).filter((x) => x.reason === 'landing-misses-zone');\n  assert.strictEqual(r.length, 1, JSON.stringify(reds(ctl)));","new_string":"  const r = ctl.state.result.amber.filter((x) => x.reason === 'landing-misses-zone');\n  assert.strictEqual(r.length, 1, JSON.stringify(ctl.state.result.amber));\n  assert.ok(!reds(ctl).some((x) => x.reason === 'landing-misses-zone'), 'not red');"}
+--- L51089 user 2026-10-06T12:06:08.823Z
+RESULT [toolu_01FA1xpBYWuUxroBWAXtsfSh]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\app\test\validate-ui-jumpdefault.test.js has been updated successfully.
+--- L51099 assistant 2026-10-06T12:06:15.124Z
+TEXT: Now A's row 3b in `preview-async.test.js`:
+--- L51100 assistant 2026-10-06T12:06:16.426Z
+TOOL_USE Bash [toolu_019k88dGw1apPa4vV3gwnsLo]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && grep -n \"control: the jump track has a red that is not an overlap\" app/test/preview-async.test.js | cut -c1-20; awk 'NR==179 || NR==180' app/test/preview-async.test.js","description":"Show row 3b's control lines in full"}
+--- L51101 user 2026-10-06T12:06:16.632Z
+RESULT [toolu_019k88dGw1apPa4vV3gwnsLo]: 180:  j.setDesignSpe
+  // since the jumps core (fae3910) a flight is INTENDED, not red: the control's non-overlap red is a landing too short for the speed (core_jump row 3's), a 40 m jump taken at the 460 km/h design speed misses its landing ramp (checked: gap 40, drop 2, land -2 deg, 460: landing-misses-zone; 700: none)
+  j.setDesignSpeed(460); j.selectPiece(1); j.deleteSelection(); const jp = j.getState().deleteProposal; assert.ok(jp.check.others.some((x) => x.reason === 'landing-misses-zone'), 'control: the jump track has a red that is not an overlap (landing-misses-zone): ' + JSON.stringify(jp.check.others.map((x) => x.reason))); assert.deepEqual(parts(jp.doc, false, 460), clone(jp.check), 'a track with a jump');
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L51104 assistant 2026-10-06T12:06:27.411Z
+TOOL_USE Edit [toolu_01F9VAcSAxMqsXLa1jsCdenP]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\app\\test\\preview-async.test.js","old_string":"  j.setDesignSpeed(460); j.selectPiece(1); j.deleteSelection(); const jp = j.getState().deleteProposal; assert.ok(jp.check.others.some((x) => x.reason === 'landing-misses-zone'), 'control: the jump track has a red that is not an overlap (landing-misses-zone): ' + JSON.stringify(jp.check.others.map((x) => x.reason))); assert.deepEqual(parts(jp.doc, false, 460), clone(jp.check), 'a track with a jump');","new_string":"  // CHANGED D250 (pane E; the keeper: jumps are tuned by driving them): lan
+…[540 chars cut]…
+-misses-zone'), 'control: the jump track carries the jump\\'s warning (amber), not a red: ' + JSON.stringify({ amber: jp.check.amber, others: jp.check.others.map((x) => x.reason) })); assert.deepEqual(parts(jp.doc, false, 460), clone(jp.check), 'a track with a jump');"}
+--- L51105 user 2026-10-06T12:06:27.449Z
+RESULT [toolu_01F9VAcSAxMqsXLa1jsCdenP]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\app\test\preview-async.test.js has been updated successfully.
+--- L51106 assistant 2026-10-06T12:06:29.431Z
+TOOL_USE Bash [toolu_01QRQyHCz9o8fP3YgmfBCpWi]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && for f in test/validate_head.test.js test/vocab-corpus.test.js test/validate_jumps.test.js test/core_jump.test.js test/export_words.test.js app/test/validate-ui-jumpdefault.test.js app/test/preview-async.test.js; do node --check $f || echo BAD $f; done; git status --short; git ls-files --eol src/validate/index.js test/core_jump.test.js | head -2","description":"Syntax-check the edited tests; show the dirty set"}
+--- L51107 user 2026-10-06T12:06:29.934Z
+RESULT [toolu_01QRQyHCz9o8fP3YgmfBCpWi]:  M app/install/install.js
+ M app/test/preview-async.test.js
+ M app/test/validate-ui-jumpdefault.test.js
+ M app/validate-ui/labels.js
+ M src/export/fromwords.js
+ M src/validate/index.js
+ M test/core_jump.test.js
+ M test/export_words.test.js
+ M test/validate_head.test.js
+ M test/validate_jumps.test.js
+ M test/vocab-corpus.test.js
+i/lf    w/crlf  attr/                 	src/validate/index.js
+i/lf    w/crlf  attr/                 	test/core_jump.test.js
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L51111 assistant 2026-10-06T12:06:39.816Z
+TEXT: Two new rows are needed: one shows the closed fast-jump lap now exports with the plain warning, the other that the install message carries the jump warnings. Next, the existing install tests' shape:
+--- L51112 assistant 2026-10-06T12:06:40.760Z
+TOOL_USE Bash [toolu_016TUNc5qGKdFkDtLezRsror]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && ls app/test | grep -i install; grep -n \"createInstaller\\|installTrack\\|build:\" app/test/*install*.test.js | head -8 | cut -c1-220","description":"Find the installer's tests and their stubs"}
+--- L51119 user 2026-10-06T12:06:40.976Z
+RESULT [toolu_016TUNc5qGKdFkDtLezRsror]: share-install.test.js
+16:const { createInstaller, createLauncher } = require('../install/install.js');
+79:    installTrack: async (folder, files) => { n.installs.push({ folder, files: files.map((f) => f.path), bytes: files.map((f) => Buffer.from(f.bytes)) }); return files.length; },
+86:const installerFor = (s, native, getTextures) => createInstaller({ build: (o) => s.buildExport(o), native, getDoc: () => s.exportDoc(), getTextures });
+120:  const inst = createInstaller({ build, native, getDoc: () => D.createDoc('x'), getTextures: () => 'THE-SET' });
+130:    const r = await createInstaller({ build: (o) => s.buildExport(o), native, getDoc: () => ({ ...s.exportDoc(), name }) }).install();
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L51121 assistant 2026-10-06T12:06:48.358Z
+TOOL_USE Bash [toolu_01TFAAq1hcT9JvcJuHm6wQYQ]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && sed -n 70,90p app/test/share-install.test.js | cut -c1-230; sed -n 115,128p app/test/share-install.test.js | cut -c1-230","description":"Read the install test's native stub and a build stub"}
+--- L51122 user 2026-10-06T12:06:48.564Z
+RESULT [toolu_01TFAAq1hcT9JvcJuHm6wQYQ]:   assert.match(r2.message, /does not import texture packs/);
+});
+
+/** A fake native side: remembers a root, records every install (paths and bytes) and every launch request. */
+function fakeNative({ seeIt = false } = {}) {
+  const n = { root: null, installs: [], launches: [], setting: seeIt };
+  Object.assign(n, {
+    getAcRoot: async () => n.root,
+    setAcRoot: async (p) => { if (!/assettocorsa$/.test(p)) throw new Error(`${p} has no content\\tracks`); n.root = p; return p; },
+    installTrack: async (folder, files) => { n.installs.push({ folder, files: files.map((f) => f.path), bytes: files.map((f) => Buffer.from(f.bytes)) }); return files.length; },
+    getSeeItSetting: async () => n.setting,
+    setSeeItSetting: async (on) => { n.setting = on; },
+    seeIt: async (folder, layout) => { n.launches.push({ folder, layout }); return 0; },
+  });
+  return n;
+}
+const installerFor = (s, native, getTextures) => createInstaller({ build: (o) => s.buildExport(o), native, getDoc: () => s.exportDoc(), getTextures });
+
+test('Install to AC asks for the AC folder once, remembers it, and installs as t180b_<name>, saying so', async () => {
+  const native = fakeNative(), s = await lap({ closed: true, exporter: await makeExporter(get) }); await s.save('Monza');
+  const inst = installerFor(s, native);
+
+test('Install to AC hands the build the texture set the page holds, as Export does', async () => {
+  const native = fakeNative(); native.root = 'G:/games/assettocorsa';
+  let seen = null;
+  const build = (opts) => { seen = opts; return { result: {}, folders: [{ folder: 't180b_x', files: [{ path: 'a', bytes: new Uint8Array(1) }] }] }; };
+  const inst = createInstaller({ build, native, getDoc: () => D.createDoc('x'), getTextures: () => 'THE-SET' });
+  assert.strictEqual((await inst.install()).ok, true);
+  assert.deepStrictEqual(seen, { textures: 'THE-SET' });
+});
+
+test('an unnamed track is not installed: the user is asked to name it, and nothing is written', async () => {
+  const native = fakeNative(); native.root = 'G:/games/assettocorsa';
+  const exporter = await makeExporter(get);
+  for (const name of ['', 'untitled', ' Untitled ']) {
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L51126 assistant 2026-10-06T12:07:01.651Z
+TOOL_USE Edit [toolu_01FnCJRwh7snRminawGiKpYJ]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\app\\test\\share-install.test.js","old_string":"test('an unnamed track is not installed: the user is asked to name it, and nothing is written', async () => {","new_string":"test('D250: a jump the car may fly past is INSTALLED, and the message says so in plain words; the export\\'s other warnings stay out of it', async () => {\n  const native = fakeNative(); native.root = 'G:/games/assettocorsa';\n  const jumpLine = \"jump: this jump may fly past its landing at the lap's speed, at s 300–340 m (the 3.2 g fall misses); tune it by driving it
+…[803 chars cut]…
+...D.createDoc('x'), name: 'X' }), getTextures: () => null }).install();\n  assert.ok(!/jump:/.test(plain.message), 'control: no jump, no jump line');\n});\n\ntest('an unnamed track is not installed: the user is asked to name it, and nothing is written', async () => {"}
+--- L51127 user 2026-10-06T12:07:01.690Z
+RESULT [toolu_01FnCJRwh7snRminawGiKpYJ]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\app\test\share-install.test.js has been updated successfully.
+--- L51128 assistant 2026-10-06T12:07:10.260Z
+TOOL_USE Edit [toolu_01XdE9SWkgMSRmEqJEnZ69Pg]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\test\\core_jump.test.js","old_string":"  assert.ok(fw.kn5.length > 1000 && fw.ai, 'buildFromSegments: a kn5 and an AI line');\n});","new_string":"  assert.ok(fw.kn5.length > 1000 && fw.ai, 'buildFromSegments: a kn5 and an AI line');\n});\n// D250 (the keeper: \"the jumps are going to have to be tested by the user through trial and error driving it in assetto themselves\")\ntest('row 5b (D250): a closed lap whose jump the car flies past at the lap\\'s speed EXPORTS, with one plain warning naming it; a gap with no ramp is still red', () =>
+…[1105 chars cut]…
+.slice(0, j + 1), ...segs.slice(j + 2)];\n  assert.throws(() => FW.buildFromSegments(cut, { name: 'hole', via: 'test', liftPath: lift, start }, { markers: startLayout(cut, lift, start) }), (e) => e.code === 'RED' && e.red.some((r) => r.reason === 'gap-in-road'));\n});"}
+--- L51129 user 2026-10-06T12:07:10.293Z
+RESULT [toolu_01XdE9SWkgMSRmEqJEnZ69Pg]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\test\core_jump.test.js has been updated successfully.
+--- L51140 assistant 2026-10-06T12:07:20.180Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Edit [toolu_01Pk6W4PiecMAVkfxLjvD5Yc]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\test\\core_jump.test.js","old_string":"test('row 5b (D250): a closed lap whose jump the car flies past at the lap\\'s speed EXPORTS, with one plain warning naming it; a gap with no ramp is still red', () => {","new_string":"// (a gap with NO landing ramp staying red is row 2's \"a flight with NO landing is red\", unchanged by D250)\ntest('row 5b (D250): a closed lap whose jump the car flies past at the lap\\'s speed EXPORTS, with one plain warning naming it', () => {"}
+--- L51141 user 2026-10-06T12:07:20.214Z
+RESULT [toolu_01Pk6W4PiecMAVkfxLjvD5Yc]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\test\core_jump.test.js has been updated successfully.
+--- L51142 assistant 2026-10-06T12:07:25.034Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Edit [toolu_01FJJRh54sFGoGss8FbfFc6D]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpwarn-wt\\test\\core_jump.test.js","old_string":"  assert.match(jw[0], /^jump: this jump may fly past its landing at the lap's speed, at s \\d+–\\d+ m \\(the 3\\.2 g fall misses\\); tune it by driving it in AC$/);\n  // the hole is still a hole: the core's gap with its landing ramp taken away is red (row 2), and so the export refuses it\n  const j = segs.findIndex((g) => g.kind === 'gap'), cut = [...segs.slice(0, j + 1), ...segs.slice(j + 2)];\n  assert.throws(() => FW.buildFromSegments(cut, { name: 'hole', via: 'test', liftPath: lift, start }, { markers: startLayout(cut, lift, start) }), (e) => e.code === 'RED' && e.red.some((r) => r.reason === 'gap-in-road'));\n});","new_string":"  assert.match(jw[0], /^jump: this jump may fly past its landing at the lap's speed, at s \\d+–\\d+ m \\(the 3\\.2 g fall misses\\); tune it by driving it in AC$/);\n});"}
+--- L51143 user 2026-10-06T12:07:25.064Z
+RESULT [toolu_01FJJRh54sFGoGss8FbfFc6D]: The file C:\Users\nname\Desktop\worktrees\e-jumpwarn-wt\test\core_jump.test.js has been updated successfully.
+--- L51144 assistant 2026-10-06T12:07:33.847Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_013pzXor9TqPMGvEh835txdD]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpwarn-wt && node --check test/core_jump.test.js && node --check app/test/share-install.test.js && S=\"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad\"; mkdir -p \"$S/jumpwarn\"; SHIM=$(cd \"$S/suite\" && pwd -W)/serial-shim.js; NODE_OPTIONS=\"--require $SHIM\" CONSONANCE_HEAVY_WAIT_MS=7200000 node -e \"require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({cmd:'t180 E: D250 jump warning, targeted'}); const fs=require('fs'); const r=require('child_process').spawnSync(process.execPath,['--max-old-space-size=4096','--test','--test-concurrency=1','--test-reporter=tap','test/core_jump.test.js','test/validate_head.test.js','test/validate_jumps.test.js','test/vocab-corpus.test.js','test/export_words.test.js','test/export_test_unfinished.test.js','test/validate.test.js','test/core_cup_fixtures.test.js','test/doc-jump.test.js','app/test/validate-ui-jumpdefault.test.js','app/test/validate-ui.test.js','app/test/share-install.test.js','app/test/preview-async.test.js','app/test/core-shell.test.js','app/test/export.test.js'],{encoding:'utf8',maxBuffer:1<<27}); const fd=fs.openSync('$S/jumpwarn/targeted.tap','w'); fs.writeSync(fd,r.stdout); fs.fsyncSync(fd); fs.closeSync(fd); const L=r.stdout.split(/\\r?\\n/); console.log(L.filter(l=>/^not ok|^# (tests|pass|fail|skipped)/.test(l)).join('\\n')); const i=r.stdout.indexOf('not ok'); if(i>=0) console.log(r.stdout.slice(i,i+3000));\" 2>&1 | grep -v \"waiting on\"","description":"Run the targeted tests for the jump warning","run_in_background":true}

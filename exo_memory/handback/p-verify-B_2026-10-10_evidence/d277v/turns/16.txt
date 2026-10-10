@@ -1,0 +1,758 @@
+MESSAGE 16  msg_011CfiS48RkuUCNAXGmA8KMZ  seat A  ts 2026-10-05T04:08:24.644Z  turn L62903..L63140 (next prompt L63151)
+CLAIMS:
+  [msg_011CfiS48RkuUCNAXGmA8KMZ|13] "The app's water tests went with the feature"
+  [msg_011CfiS48RkuUCNAXGmA8KMZ|22] "five harness mutants anchored on water lines were retired (C6, C9, C10, C11, C13 of `app/test/core-mutation.test.js`)". Check the count, the IDs, and the file path.
+
+--- L62903 user 2026-10-05T04:02:42.154Z
+USER: 
+
+<pasted_content id="e589">
+[chair:MAIN] D238: remove the water sim from the BUILDER. The keeper, 22:01: "can you remove the water sim feature?" FEEL tier plus the anchored app harnesses. Base: t180 main fa5fd937. Use a fresh worktree, with no junctions.
+The plan, read it: exo_memory/loop/plan_t180_remove_water_2026-10-04.md
+1. Remove from the app: the WATER panel section, shell.pour, clearWater, state.water and its resets, the 120 ms debounce, the stream overlay (preview, renderer, index) and the require in coreshell. Nothing about water shows anywhere in the app.
+2. KEEP src/core/water.js and its own tests, dormant (other features' tests read profiles through it). In the hand-back, say exactly what deleting the module would take: the files and test rows.
+3. Tests:
+   - remove the app's water tests WITH the feature, each by name in the hand-back;
+   - retire by name any harness mutant anchored on a water line;
+   - add a test that the panel has no water section and the shell no pour;
+   - fixtures 0 of 9.
+Heavy-run lock, --test-concurrency=1. No push, no AC. You may answer "this is wrong".
+Hand-back: exo_memory/handback/p-nowater-A_2026-10-04.md, plus your map line.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_remove_water_2026-10-04.md
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: B's quick look, unless the output says otherwise
+</pasted_content id="e589">
+
+--- L62913 assistant 2026-10-05T04:02:58.569Z
+TOOL_USE Read [toolu_0124woy45C3jXcmJtpmKYU2P]: {"file_path":"C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\loop\\plan_t180_remove_water_2026-10-04.md"}
+--- L62914 user 2026-10-05T04:02:58.616Z
+RESULT [toolu_0124woy45C3jXcmJtpmKYU2P]: 1	# T-180: remove the water sim from the builder. Librarian, on D, 2026-10-04 22:0x. Lap D238.
+2	
+3	The keeper, 22:01: "can you remove the water sim feature?"
+4	
+5	## Checked (main fa5fd937, worktree `lib-mirror-build`)
+6	- **The app side:**
+7	  - `app/core/coreshell.js` (`W = require('../../src/core/water.js')` at :32, `shell.pour`, `shell.clearWater`, `state.water`, and `water: null`
+8	    on every edit);
+9	  - `app/core/panel.js` (the WATER section: on, km/h, streams; the 120 ms pour debounce at :213);
+10	  - `app/index.html`;
+11	  - `app/preview/index.js`, `preview.js` and `renderer.js` (the stream overlay).
+12	- **The export never uses it:** nothing under `src/export` or `src/validate` requires `src/core/water.js` (grep). So removing it can't change an
+13	  export (the fixtures are the guard).
+14	- `src/core/water.js` is also read by tests of OTHER features, as a reader of the road profile: `test/core_chord.test.js` row 4,
+15	  `test/core_cup_readers.test.js`, `test/validate_xsec.test.js` S2 (iv). Its own suites are `test/core_water*.test.js`, and the mutation
+16	  harnesses have water rows.
+17	
+18	## The lap (A, FEEL tier for the app; targeted tests + the anchored app harnesses, whose anchors may move + the keeper's hands)
+19	1. **Remove the water from the BUILDER entirely:** the WATER panel section, `shell.pour` / `clearWater` / `state.water` and the `water: null`
+20	   resets, the debounce, the stream overlay in the preview and renderer, and the `require` in coreshell. Nothing about water shows anywhere
+21	   in the app.
+22	2. **Keep `src/core/water.js` and its own tests where they are, dormant (the librarian's default):** other features' tests read profiles
+23	   through it, the module is self-contained, and keeping it makes the removal one revert away if the keeper ever wants it back.
+24	   Deleting the module too is the keeper's call. Say in the hand-back what deleting it would take (the files and test rows).
+25	3. **Tests:** the app's water tests are removed WITH the feature, by name in the hand-back (removing a feature's own tests is not weakening
+26	   them). Any harness mutant whose anchor was a water line is retired by name. A new test asserts the panel has no water section and the
+27	   shell no pour. The fixtures read 0 of 9 differ.
+28	- Then B's quick look; land; install.
+29	
+30	NEXT: chair dispatch D238 to A when this plan is read
+31	
+--- L62915 assistant 2026-10-05T04:02:59.663Z
+TOOL_USE Bash [toolu_017SiNPhZAWvCqrXFqsNjsiE]: {"command":"cd C:/Users/nname/Desktop/t180-track-builder && git log -1 --format=\"%h %s\" main && git worktree add -q -b nowater-a-d238 C:/Users/nname/Desktop/worktrees/a-nowater-wt fa5fd937 && cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && git log -1 --format=\"%h\" && grep -rniE \"water|pour|stream\" app src/core --include=*.js --include=*.html -l | head -30"}
+--- L62916 user 2026-10-05T04:03:00.231Z
+RESULT [toolu_017SiNPhZAWvCqrXFqsNjsiE]: fa5fd93 D237b: the mirror gap's tree is versioned (B's stale-tree regression)
+fa5fd93
+app/core/coreshell.js
+app/core/panel.js
+app/export/node-shim.js
+app/index.html
+app/preview/index.js
+app/preview/preview.js
+app/preview/renderer.js
+app/test/core-mutation.test.js
+app/test/core-shell.test.js
+app/test/core-xsec.test.js
+app/test/export.test.js
+app/test/guides.test.js
+app/test/markers-panel.test.js
+app/test/preview-speed.test.js
+src/core/adapter.js
+src/core/water.js
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62919 assistant 2026-10-05T04:03:04.012Z
+TEXT: The plan's file list is a start, so I'm taking a full inventory of every water line in the app and its tests, by file and line.
+--- L62920 assistant 2026-10-05T04:03:04.668Z
+TOOL_USE Bash [toolu_01965t4Q9rs3FuNibzaXFmAU]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && for f in app/core/coreshell.js app/core/panel.js app/export/node-shim.js app/index.html app/preview/index.js app/preview/preview.js app/preview/renderer.js; do echo \"=== $f\"; grep -niE \"water|pour|stream|overlay\" $f | cut -c1-210; done"}
+--- L62921 user 2026-10-05T04:03:05.084Z
+RESULT [toolu_01965t4Q9rs3FuNibzaXFmAU]: === app/core/coreshell.js
+8://   shell.close()   shell.pour(track, { speedKmh, count, fromS, lengthM })   shell.clearWater()
+29:// Not at 17c2301; when the adapter exports it, the shell hands it on as `resolved.lift`, so the preview, the water and the export
+32:const W = require('../../src/core/water.js');
+54:    message: null, messageKind: null, name: null, dirty: false, lastEdited: null, lastStep: null, brush: null, water: null, exportReds: null,
+70:  // src/core/water.js refuses with plain Errors whose message starts "water:" (e.g. a lifted track whose samples do not carry
+72:  const attempt = (fn) => { try { return fn(); } catch (e) { if (e.name === 'CoreError' || e.name === 'WaterError' || /^water: /.test(e.message || '')) { set({ message: e.message }); return null; } throw e; 
+76:    return set({ history: D.commit(st.history, d), ...r, dirty: true, message: null, water: null, lastStep: { op, ms }, ...extra });
+141:        return set({ history: D.dragTo(st.history, d), ...r, brush: { ...b, delta, rUsed: used }, dirty: true, water: null, lastStep: { op: `brush:${b.mode}`, ms }, message: note, messageKind: note ? 'ok' :
+164:        return set({ history: D.commit(st.history, res.doc), ...r, dirty: true, water: null, lastStep: { op: 'close', ms: now() - t0 }, ...ok(`loop closed: ${res.report}`) });
+169:     * POUR WATER on the track the preview draws (`track` = its shared { path, segments }: the 't180:track' event), over a window
+171:     * start on a closed one. Streams start across the width at the design speed (src/core/water.js). The result, in
+172:     * state.water: each stream as world points for the overlay, and every red in plain words.
+174:    pour(track, { speedKmh = 250, count = 7, fromS, lengthM = 1500, h =
+…[7227 chars cut]…
+r.js
+11://       extras = { grid, marker, ghost, lines = true, overlay }   grid / marker from look.js (world lines); ghost = batches drawn
+13://                                                         overlay = [{ positions (world line pairs), colour, alpha? }] drawn last,
+14://                                                         over everything (D186: the water and its reds)
+235:      // the OVERLAY (D186: the water and its reds), world line pairs drawn over everything, each with its own colour
+236:      if (extras.overlay && extras.overlay.length) {
+238:        for (const o of extras.overlay) drawLines(o.positions, IDENTITY, o.colour, o.alpha === undefined ? 1 : o.alpha);
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62931 assistant 2026-10-05T04:03:18.383Z
+TOOL_USE Bash [toolu_015fthe1AN7v6tMqUyodq9oF]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && grep -rnE \"redText|waterRun|exportReds|overlayOf|setOverlay|t180:overlay|clearWater|\\.pour\\(|state\\.water|st\\.water|\\.water\\b\" app --include=*.js --include=*.html | grep -v \"^app/test\" | cut -c1-230; echo ---TESTS; grep -rlniE \"water|pour|redText|overlayOf|setOverlay|t180:overlay|exportReds\" app/test test tools scripts 2>/dev/null | head -30"}
+--- L62932 user 2026-10-05T04:03:18.871Z
+RESULT [toolu_015fthe1AN7v6tMqUyodq9oF]: app/core/coreshell.js:8://   shell.close()   shell.pour(track, { speedKmh, count, fromS, lengthM })   shell.clearWater()
+app/core/coreshell.js:54:    message: null, messageKind: null, name: null, dirty: false, lastEdited: null, lastStep: null, brush: null, water: null, exportReds: null,
+app/core/coreshell.js:172:     * state.water: each stream as world points for the overlay, and every red in plain words.
+app/core/coreshell.js:179:        const run = waterRun(p, track.segments, a, b);
+app/core/coreshell.js:182:        const res = W.pour(F, { speed: speedKmh / 3.6, count, h, distance: run.samples[run.samples.length - 1].s - run.samples[0].s });
+app/core/coreshell.js:185:        const reds = res.reds.map((x) => ({ ...x, pos: x.pos || W._at(F, x.s, x.u).p, text: redText(x, speedKmh) }));
+app/core/coreshell.js:189:    clearWater: () => set({ water: null }),
+app/core/coreshell.js:194:    adopt: (d) => attempt(() => { D.checkDoc(d); return set({ history: D.createHistory(d), ...resolvedOf(d), name: null, dirty: false, lastEdited: null, water: null, message: null, exportReds: null }); })
+app/core/coreshell.js:195:    newDoc(name = 'untitled') { const d = D.createDoc(name); return set({ history: D.createHistory(d), ...resolvedOf(d), name: null, dirty: false, lastEdited: null, water: null, message: null, exportReds:
+app/core/coreshell.js:207:        return set({ history: D.createHistory(d), ...resolvedOf(d), name: null, dirty: true, lastEdited: null, water: null, exportReds: null, ...ok(`opened ${name}: ${d.pieces.length} pieces, open; close 
+app/core/coreshell.js:219:      if (t.refused) return set({ message: t.refused.reason, exportReds: null, exportRefusal: t.refused.reason });
+app/core/coreshell.js:224:      if (!doc().closed)
+…[4131 chars cut]…
+Refusal: message });
+app/shell.js:263:      return set({ message: `exported ${out.folders.map((f) => f.folder).join(', ')} to ${dir}${warn}`, messageKind: 'ok', exportReds: null, exportRefusal: null, lastExport: { dir, folders: out.folders.map((f) => 
+---TESTS
+app/test/core-mutation.test.js
+app/test/core-shell.test.js
+app/test/export-csp.test.js
+app/test/export.test.js
+app/test/guides.test.js
+test/core_chord.test.js
+test/core_chord_mutation.test.js
+test/core_cup_mutation.test.js
+test/core_cup_readers.test.js
+test/core_offset.test.js
+test/core_water.test.js
+test/core_water_adapter.test.js
+test/core_water_mutation.test.js
+test/core_xsec_mutation.test.js
+test/validate_xsec.test.js
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62935 assistant 2026-10-05T04:03:27.579Z
+TEXT: `exportReds` is the export's own reds list (not water), so it stays, and so does the renderer's generic overlay pass that the mirror ghost uses. Now the water lines in the tests.
+--- L62936 assistant 2026-10-05T04:03:28.919Z
+TOOL_USE Bash [toolu_01CjvFd3wMExCENXy1PBu9cP]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && for f in app/test/core-mutation.test.js app/test/core-shell.test.js app/test/export-csp.test.js app/test/export.test.js app/test/guides.test.js app/test/preview-speed.test.js app/test/core-xsec.test.js app/test/markers-panel.test.js app/test/preview.test.js app/test/look.test.js; do echo \"=== $f\"; grep -niE \"water|pour|redText|waterRun|overlayOf|setOverlay|t180:overlay|clearWater\" $f | cut -c1-200; done"}
+--- L62937 user 2026-10-05T04:03:29.421Z
+RESULT [toolu_01CjvFd3wMExCENXy1PBu9cP]: === app/test/core-mutation.test.js
+65:  { id: 'C6 an edit keeps the old water', file: 'core/coreshell.js',
+66:    from: 'dirty: true, message: null, water: null, lastStep: { op, ms }', to: 'dirty: true, message: null, lastStep: { op, ms }', caughtBy: 'a successful edit retires the water' },
+71:  { id: 'C9 the water runs on across a jump\'s flight', file: 'core/coreshell.js',
+72:    from: "if (out.length) { gap = true; break; } continue;", to: 'continue;', caughtBy: 'water stops at a jump' },
+74:    from: "x.u > 0 ? 'left' : 'right'", to: "x.u > 0 ? 'right' : 'left'", caughtBy: 'redText' },
+76:    from: 'pos: x.pos || W._at(F, x.s, x.u).p,', to: 'pos: x.pos || [NaN, NaN, NaN],', caughtBy: 'water: poured over a window' },
+80:    from: 'blue.push(...pts[i - 1], ...pts[i]);', to: 'blue.push(...pts[i]);', caughtBy: 'water: poured over a window' },
+=== app/test/core-shell.test.js
+9:const { createCoreShell, redText, waterRun, PREFIX, STRAIGHT_K, startLayout } = require('../core/coreshell.js');
+10:const { overlayOf, extendOptions } = require('../core/panel.js');
+152:test('water: poured over a window of the preview\'s path, every stream drawn and every red in plain words', async () => {
+155:  s.pour(t, { speedKmh: 200, count: 5, fromS: 0, lengthM: 600 });
+156:  const w = s.getState().water;
+160:  const ov = overlayOf(w), pairs = w.streams.reduce((a, pts) => a + pts.length - 1, 0);
+163:  s.extend({ length: 10 });   // refused (closed), so the water stays
+164:  assert.ok(s.getState().water); s.undo(); assert.equal(s.getState().water, null, 'any change to the track retires the old water');
+167:test('a successful edit retires the water (it was poured on the old track)', async () => {
+169:  s.pour(toPath(s.getState().history.present),
+…[1150 chars cut]…
+sal in words: ${s.getState().message}`);
+=== app/test/export-csp.test.js
+=== app/test/export.test.js
+=== app/test/guides.test.js
+173:test('row 11b: the plan follows the track: a flat track replaced by a hilly one is drawn as the lattice, with no setGuides call; the layer is given every frame\'s plan and is disposed with the pre
+179:  p.setGuides({ mirror: 'x' }); a.win.step(); const l1 = p.renderer.stats().lines; p.setOverlay([{ positions: new Float32Array([0, 0, 0, 1, 1, 1]), colour: [1, 0, 0] }]); a.win.step(); assert.equa
+=== app/test/preview-speed.test.js
+=== app/test/core-xsec.test.js
+=== app/test/markers-panel.test.js
+=== app/test/preview.test.js
+=== app/test/look.test.js
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62946 assistant 2026-10-05T04:03:45.757Z
+TEXT: Now reading the exact code I'm about to cut in the panel and the shell.
+--- L62947 assistant 2026-10-05T04:03:46.476Z
+TOOL_USE Bash [toolu_01Dzz4gUn8SXn9wcvQgqEHqZ]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && sed -n 1,40p app/core/panel.js | cut -c1-250; echo ......; sed -n 205,263p app/core/panel.js | cut -c1-330"}
+--- L62948 user 2026-10-05T04:03:46.682Z
+RESULT [toolu_01Dzz4gUn8SXn9wcvQgqEHqZ]: // panel.js: the EQUATION CORE's controls (D186, pane C), in the left column where the piece builder's palette is. DOM only; every
+// action is the core shell's (app/core/coreshell.js), every number it shows is the shell's state.
+//
+//   EXTEND at the build head: keep going (no handle), or turn / climb / bank / cup / width targets over a length. Hovering the button
+//          shows the ghost (the preview's 't180-ghost' candidate), so what a click adds is seen before it is added.
+//   BRUSH on the preview: arm it, then drag on the track. The pick is the preview's ('t180-pick'); the drag's vertical distance is
+//          the change at the brush's centre; one drag is one undo step. The local height/lateral brush (E) is the default when
+//          it is in the build; the rate brush (one channel) is the explicit second mode.
+//   CLOSE as one click. WATER, drawn LIVE: while it is on, every change to the track pours again (the preview's 't180:track'
+//          event), and the streams and reds are drawn over the track ('t180:overlay'). Every red is listed in plain words.
+//   THE READOUT (L130): beside Extend's fields, the piece they describe, BEFORE it is placed: its length and the change it makes
+//          in turn, climb and bank (A's src/core/readout.js, candidateReadout), redrawn inside every field's input handler; and on
+//          the track, a label at every placed piece with the same numbers (app/core/labels.js). The strings are the same function's
+//          (labels.js formatReadout), so what the ghost promised is what the placed piece's label says.
+//   OPEN A LOCAL EXAMPLE: a real track's D184 fit and its read, picked from the user's own reads/ folder (never in the program).
+'use strict';
+
+const LB = require('
+…[7112 chars cut]…
+ls.js); none when there is no preview to lay them on
+  const labels = stage ? LB.mount(stage, shell, win) : null;
+  const unsub = shell.subscribe(draw); draw(shell.getState());
+  // options(): the options Extend, the ghost and the readout use right now (fields left as shown send no target)
+  return { labels, options: opts, unmount() { unsub(); if (frame) win.cancelAnimationFrame(frame); if (labels) labels.unmount(); doc.removeEventListener('t180:track', onTrack); if (stage) { stage.removeEventListener('pointerdown', down); stage.removeEventListener('pointermove', move); stage.removeEventListener('pointerup', up); 
+}
+
+module.exports = { mount, overlayOf, extendOptions, PER_PX };
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62957 assistant 2026-10-05T04:03:56.092Z
+TOOL_USE Bash [toolu_01KiTPa8sV2R4wSkbxgohwit]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && grep -n \"send(\\|const send\\|\\.reds\\|class: 'reds'\\|'src'\\|class: 'src'\\|\\.src\" app/core/panel.js app/index.html | cut -c1-200; sed -n 296,323p app/core/coreshell.js | cut -c1-240; sed -n 252,258p app/core/coreshell.js | cut -c1-240; grep -rn \"setDesignSpeed\\|designSpeedKmh\" app --include=*.js --include=*.html | grep -v \"app/test\" | cut -c1-200"}
+--- L62958 user 2026-10-05T04:03:56.441Z
+RESULT [toolu_01KiTPa8sV2R4wSkbxgohwit]: app/core/panel.js:33:  for (const x of water.reds) { const [a, b, c] = x.pos, k = 3; red.push(a - k, b, c, a + k, b, c, a, b - k, c, a, b + k, c, a, b, c - k, a, b, c + k); }
+app/core/panel.js:92:  const send = (name, detail) => doc.dispatchEvent(new win.CustomEvent(name, { detail }));
+app/core/panel.js:168:    try { send('t180-ghost', { candidate: shell.candidate(opts()), reply: (r) => { if (r && r.error) why = r.error; } }); } catch (e) { why = e.message; }
+app/core/panel.js:169:    if (why) { send('t180-ghost-clear'); msg.textContent = `no preview of this piece: ${why}`; msg.className = 'message'; }
+app/core/panel.js:181:    onclick: () => { send('t180-ghost-clear'); shell.extend(opts()); }, onmouseenter: ghost, onmouseleave: () => send('t180-ghost-clear') });
+app/core/panel.js:197:    const [x, y] = rel(e); let hit = null; send('t180-pick', { x, y, reply: (h) => { hit = h; } });
+app/core/panel.js:216:  const pour = () => { if (!latest) { send('t180:track-request', { reply: (t) => { latest = t; } }); } if (latest) shell.pour(latest, { speedKmh: Number(speed.value), count: Numb
+app/core/panel.js:228:  const msg = el('p', { class: 'message', role: 'status' }), reds = el('ul', { class: 'reds' }), info = el('p', { class: 'head' });
+app/core/panel.js:250:    if (!w) reds.replaceChildren(); else if (!w.reds.length) reds.replaceChildren(el('li', { text: `The water rides clean from ${Math.round(w.fromS)} to ${Math.round(w.toS)} m at
+app/core/panel.js:251:    else reds.replaceChildren(...w.reds.map((x) => el('li', { text: x.text, style: 'color: var(--bad)' })));
+app/core/panel.js:252:    if (w && w.cutAt !== null) reds.append(el('li', { text: `The water stops at ${Math.round(w.cutAt)} m: a jump's flight is not modelled.`, clas
+…[4369 chars cut]…
+a = {}, onUpdate = () => {}, schedule = (fn) => fn(), sharedPa
+app/validate-ui/panel.js:64:  let design = designSpeedKmh;
+app/validate-ui/panel.js:151:    setDesignSpeed(kmh) { design = kmh == null ? null : kmh; live = createLive({ validate: vo() }); update(shell.getState(), true); },
+app/validate-ui/panel.js:152:    get designSpeedKmh() { return design; },
+app/validate-ui/speed.js:9:// src/validate/limits.js MACH6.designSpeedKmh. THE RANGE is 50 km/h (inferred: a floor below which loads are ~1 g and
+app/validate-ui/speed.js:21:function createSpeedPicker({ kmh = MACH6.designSpeedKmh, onChange = () => {} } = {}) {
+app/validate-ui/speed.js:34:    defaultKmh: MACH6.designSpeedKmh,
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62961 assistant 2026-10-05T04:04:06.994Z
+TEXT: Two reds-related things stay because they belong to the export: the `.reds` styles and the `exportReds` box. Now the docs that describe the water panel and its events.
+--- L62962 assistant 2026-10-05T04:04:07.650Z
+TOOL_USE Bash [toolu_018qPT8WoGBrd3QFFWBv7kCL]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && grep -niE \"water|t180:overlay|pour\\b\" app/README.md README.md | cut -c1-260; ls docs | head -20; grep -rliE \"water\" docs | head"}
+--- L62963 user 2026-10-05T04:04:07.871Z
+RESULT [toolu_018qPT8WoGBrd3QFFWBv7kCL]: app/README.md:91:| `app/core/coreshell.js` | the core's state and actions, no DOM (tested headless): extend, the brush drag, close, water, export, a local example, save/open under the `eq-` prefix |
+app/README.md:105:- `t180:overlay` `{ lines }`: world line pairs drawn over the track (the water and its reds), or null;
+ARCHITECTURE.md
+FINDINGS.md
+INTERFACES.md
+RELEASE.md
+math
+research
+docs/math/04a_bank_ramp.md
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62966 assistant 2026-10-05T04:04:14.563Z
+TEXT: Now exact text for the shell edits.
+--- L62967 assistant 2026-10-05T04:04:15.221Z
+TOOL_USE Bash [toolu_01DihSpfH3qxMNgL7QmQJwv5]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && sed -n 26,34p app/core/coreshell.js; echo ...; sed -n 68,77p app/core/coreshell.js; echo ...; sed -n 164,196p app/core/coreshell.js"}
+--- L62974 user 2026-10-05T04:04:15.447Z
+RESULT [toolu_01DihSpfH3qxMNgL7QmQJwv5]: const AD = require('../../src/core/adapter.js');
+const { toSegments } = AD;
+// A's offset channels h and l (the chair's ruling 1, D186): offsetPath(doc, segments, path) lifts a path and recomputes its frame.
+// Not at 17c2301; when the adapter exports it, the shell hands it on as `resolved.lift`, so the preview, the water and the export
+// read the road AS BRUSHED (the segments alone do not carry the offsets).
+const offsetPath = typeof AD.offsetPath === 'function' ? AD.offsetPath : null;
+const W = require('../../src/core/water.js');
+// THE READOUT (L130, A's src/core/readout.js): a piece's length and the change it makes in turn, climb and bank, for the panel
+// (the ghost, candidateReadout) and the labels on the track (every placed piece, pieceReadout)
+...
+  const resolvedOf = (d) => { const segments = segmentsOf(d); return { resolved: Object.freeze({ segments, closed: !!d.closed, start: startOf(d), lift: offsetPath && segments.length ? (p) => offsetPath(d, segments, p) : undefined }), resolveError: null }; };
+  /** Run an edit; a core error becomes the message, and nothing else changes. */
+  // src/core/water.js refuses with plain Errors whose message starts "water:" (e.g. a lifted track whose samples do not carry
+  // d1/d2): a refusal the user reads, never a crash of the panel
+  const attempt = (fn) => { try { return fn(); } catch (e) { if (e.name === 'CoreError' || e.name === 'WaterError' || /^water: /.test(e.message || '')) { set({ message: e.message }); return null; } throw e; } };
+  /** Commit a new document as one undo step, timing the operation plus the adapter. */
+  const commit = (op, make, extra = {}) => attempt(() => {
+    const t0 = now(), d = make(), r = resolvedOf(d), ms = now() - t0;
+    return set({ his
+…[2684 chars cut]…
+ush drag first' }); const h = D.redo(st.history); return set({ history: h, ...resolvedOf(h.present), dirty: true, water: null, message: null }); }),
+    /** Put a prepared core document in front of the user, as opening one does: fresh history, nothing to undo. */
+    adopt: (d) => attempt(() => { D.checkDoc(d); return set({ history: D.createHistory(d), ...resolvedOf(d), name: null, dirty: false, lastEdited: null, water: null, message: null, exportReds: null }); }),
+    newDoc(name = 'untitled') { const d = D.createDoc(name); return set({ history: D.createHistory(d), ...resolvedOf(d), name: null, dirty: false, lastEdited: null, water: null, message: null, exportReds: null }); },
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62977 assistant 2026-10-05T04:04:19.757Z
+TOOL_USE Bash [toolu_01RQv55qCH52dcd7WUjjZiDG]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && grep -rn \"profilerOf\" app test src --include=*.js | cut -c1-200; sed -n 258,296p app/core/coreshell.js | cut -c1-200"}
+--- L62978 user 2026-10-05T04:04:20.049Z
+RESULT [toolu_01RQv55qCH52dcd7WUjjZiDG]: app/core/coreshell.js:181:        const t0 = now(), F = W.surfaceFrom({ samples: run.samples, profileAt: profilerOf(p, track.segments) });
+app/core/coreshell.js:264:function profilerOf(path, segments) {
+app/core/coreshell.js:323:module.exports = { createCoreShell, NAME_RE, PREFIX, BRUSH_MODES, STRAIGHT_K, waterRun, redText, piecesIn, straightPieces, startLayout, profilerOf };
+test/core_chord.test.js:21:const { profilerOf } = require('../app/core/coreshell.js');
+test/core_chord.test.js:83:test('4 · the water (profilerOf) reads a chord\'s blend, and a word document\'s font-transition blend (no chord, no cup) as its own profile', () => {
+test/core_chord.test.js:84:  const doc = rampDoc(), { segments, path } = A.toPath(doc), profile = profilerOf(path, segments), g = segments.findIndex((x) => x.chord);
+test/core_cup_readers.test.js:17:const { profilerOf } = require('../app/core/coreshell.js');
+test/core_cup_readers.test.js:77:  const { segments, path, P } = ramp({ target: 90, trans: 100, len: 250 }), pr = profilerOf(path, segments);
+}
+
+/**
+ * The cross-section under a path sample, as the mesh draws it: the segment's profile, or, where the segment carries a blend (a cup's do,
+ * D190), the blend evaluated at the sample. A segment without a blend gives its own profile object, so the water reads it as before.
+ */
+function profilerOf(path, segments) {
+  const Prof = require('../../src/geom/profile.js'), starts = []; let a = path.samples[0].s;
+  for (const g of segments) { starts.push(a); a += g.length; }
+  return (m) => { const g = segments[m.seg]; return Prof.readsBlend(g) && g.blend ? Prof.atSegment(g, m.s - starts[m.seg]) : g.profile; };
+}
+
+/** The road pieces the user built exactly straight and level (κh, κv and φ all exactly
+…[1399 chars cut]…
+ STRAIGHT_ROLL);
+  const marked = segments.map((g) => (nearly(g) ? { ...g, word: 'straight', k0: 0, k1: 0, kp0: 0, kp1: 0, roll0: 0, roll1: 0 } : g));
+  const p = buildPath(segments, { step: 2, closed: true, ...(start ? { start } : {}) });
+  return Markers.defaultLayout(lift ? lift(p) : p, marked);
+}
+
+/** The road pieces overlapping [a, b] of the path's s (the adapter's s, flights and ramps included: sculpt.js pieceOffsets), for
+ *  close's "edited last". */
+function piecesIn(doc, a, b) {
+  const off = pieceOffsets(doc), out = [];
+  doc.pieces.forEach((P, i) => { if (P.type === 'road' && off[i] + P.length >= a && off[i] <= b) out.push(i); });
+  return out.length ? out : null;
+}
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62983 assistant 2026-10-05T04:04:42.115Z
+TOOL_USE Write [toolu_01NwUXpM8Pe9UuSCSyxsQQst]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\sp_nw1.js","content":"// D238: take the water out of app/core/coreshell.js. Every edit asserts how many times its text occurs.\nconst fs = require('fs'), f = 'C:/Users/nname/Desktop/worktrees/a-nowater-wt/app/core/coreshell.js';\nlet s = fs.readFileSync(f, 'utf8'); const crlf = s.includes('\\r\\n'); s = s.replace(/\\r\\n/g, '\\n');\nconst once = (a, b) => { const n = s.split(a).length - 1; if (n !== 1) throw new Error(`expected 1, found ${n}: ${a.slice(0, 90)}`); s = s.re
+…[2961 chars cut]…
+it('\\n').map((l, i) => [i + 1, l]).filter(([, l]) => /water|pour|redText|waterRun|WaterError/i.test(l));\nfs.writeFileSync(f, crlf ? s.replace(/\\n/g, '\\r\\n') : s); console.log('left over:', left.map(([n, l]) => `${n}: ${l.slice(0, 140)}`).join('\\n') || 'none');\n"}
+--- L62984 user 2026-10-05T04:04:42.147Z
+RESULT [toolu_01NwUXpM8Pe9UuSCSyxsQQst]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\sp_nw1.js (file state is current in your context — no need to Read it back)
+--- L62985 assistant 2026-10-05T04:04:43.904Z
+TOOL_USE Bash [toolu_01S5D1WNr7n6BtFkVVG7FN1d]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && node sp_nw1.js && cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && node -e \"require('./app/core/coreshell.js')\" 2>&1 | head -3; git diff --stat | tail -2"}
+--- L62986 user 2026-10-05T04:04:44.140Z
+RESULT [toolu_01S5D1WNr7n6BtFkVVG7FN1d]: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\sp_nw1.js:5
+const all = (a, b, want) => { const n = s.split(a).length - 1; if (n !== want) throw new Error(`expected ${want}, found ${n}: ${a.slice(0, 90)}`); s = s.split(a).join(b); };
+                                                                               ^
+
+Error: expected 1, found 2: , water: null, exportReds: null,
+    at all [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\[39msp_nw1.js:5:86[90m)[39m
+    at Object.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\[39msp_nw1.js:14:1[90m)[39m
+[90m    at Module._compile (node:internal/modules/cjs/loader:1812:14)[39m
+[90m    at Object..js (node:internal/modules/cjs/loader:1943:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:1533:32)[39m
+[90m    at Module._load (node:internal/modules/cjs/loader:1335:12)[39m
+[90m    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)[39m
+[90m    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)[39m
+[90m    at node:internal/main/run_main_module:33:47[39m
+
+Node.js v24.14.1
+warning: Not a git repository. Use --no-index to compare two paths outside a working tree
+usage: git diff --no-index [<options>] <path> <path>
+
+Diff output format options
+    -p, --patch           generate patch
+    -s, --no-patch        suppress diff output
+    -u                    generate patch
+    -U, --unified[=<n>]   generate diffs with <n> lines context
+
+…[6152 chars cut]…
+        look for differences that change the number of occurrences of the specified regex
+    --pickaxe-all         show all changes in the changeset with -S or -G
+    --pickaxe-regex       treat <string> in -S as extended POSIX regular expression
+    -O <file>             control the order in which files appear in the output
+    --rotate-to <path>    show the change in the specified path first
+    --skip-to <path>      skip the output to the specified path
+    --find-object <object-id>
+                          look for differences that change the number of occurrences of the specified object
+    --diff-filter [(A|C|D|M|R|T|U|X|B)...[*]]
+                          select files by diff type
+    --output <file>       output to a specific file
+--- L62995 assistant 2026-10-05T04:04:52.630Z
+TEXT: Nothing was written (the script writes only at the end). The first pattern also matches the open-example line, so I'll do the four-way pattern first, then the state initialiser.
+--- L62996 assistant 2026-10-05T04:04:55.375Z
+TOOL_USE Bash [toolu_01CxTxZ2KRdk1RGJT7VGnDMX]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && node - <<'EOF'\nconst fs=require('fs');let t=fs.readFileSync('sp_nw1.js','utf8');\nconst a='all(\", water: null, exportReds: null,\", \", exportReds: null,\", 1);                       // the state\\'s first shape\\n';\nconst b='all(\"lastEdited: null, water: null, \", \"lastEdited: null, \", 4);                           // adopt, newDoc, open example, open\\n';\nif(!t.includes(a)||!t.includes(b)) throw new Error('lines');\nt=t.replace(a,'').replace(b,b+a);\nfs.writeFileSync('sp_nw1.js',t);console.log('reordered');\nEOF\nnode sp_nw1.js && cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && node -e \"require('./app/core/coreshell.js'); console.log('loads')\" 2>&1 | head -3; git diff --stat | tail -2"}
+--- L62997 user 2026-10-05T04:04:55.953Z
+RESULT [toolu_01CxTxZ2KRdk1RGJT7VGnDMX]: reordered
+left over: 236:  * D190), the blend evaluated at the sample. A segment without a blend gives its own profile object. (Kept for the readers that take a cross
+(node:28132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+loads
+ app/core/coreshell.js | 83 ++++++++++-----------------------------------------
+ 1 file changed, 16 insertions(+), 67 deletions(-)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63001 assistant 2026-10-05T04:05:03.182Z
+TEXT: The shell is done: it loads, with 16 lines added and 67 removed. I'll reword the one explanatory comment that still names the water, then do the panel.
+--- L63002 assistant 2026-10-05T04:05:11.955Z
+TOOL_USE Bash [toolu_01Htms2AJnWFeeyF8mwdrcpb]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sp_nw2.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-nowater-wt/app/core/coreshell.js\n@@OLD\nA segment without a blend gives its own profile object. (Kept for the readers that take a cross-section off a path sample; the water that first used it is gone from the builder, D238.)\n@@NEW\nA segment without a blend gives its own profile object. (A reader of the cross-section under a path sample: the tests of the cup and chord readers take it from here.)\n@@END\nEOF\n
+…[2664 chars cut]…
+([n, l]) => `${n}: ${l.slice(0, 150)}`).join('\\n') || 'none');\nEOF\nnode sp_nw3.js && cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && node -e \"const m=require('./app/core/panel.js'); console.log('loads', Object.keys(m).join(','))\" 2>&1 | grep -v Warn | head -3"}
+--- L63003 user 2026-10-05T04:05:12.305Z
+RESULT [toolu_01Htms2AJnWFeeyF8mwdrcpb]: C:/Users/nname/Desktop/worktrees/a-nowater-wt/app/core/coreshell.js [33m1[39m edits
+left over: 191:   // animation frame, with the LATEST position; the release applies the last position that is still waiting, then ends the drag.
+(node:29480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+loads mount,extendOptions,PER_PX
+(Use `node --trace-warnings ...` to show where the warning was created)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63013 assistant 2026-10-05T04:05:21.194Z
+TOOL_USE Bash [toolu_01TPmTyuSNgJQw2f8XsmhRv8]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && sed -n 259,263p app/preview/preview.js | cut -c1-200; sed -n 74,77p app/preview/index.js | cut -c1-200; sed -n 92,94p app/preview/index.js | cut -c1-700; sed -n 73,76p app/index.html | cut -c1-400; sed -n 88,92p app/README.md | cut -c1-200; sed -n 102,107p app/README.md | cut -c1-200"}
+--- L63014 user 2026-10-05T04:05:21.630Z
+RESULT [toolu_01TPmTyuSNgJQw2f8XsmhRv8]:     showGhost(candidate) { ghost = model.ghostFor(candidate); return ghost.batches.length; },
+    clearGhost() { ghost = null; },
+    /** D186: world line pairs drawn over the track (the water and its reds): [{ positions, colour, alpha? }], or null. */
+    setOverlay(list) { overlay = list && list.length ? list : null; return overlay ? overlay.length : 0; },
+    /** D186: the track station under a point of the canvas (css px from its top-left): { s, pos, px } or null (pickAt). */
+  const hideGhost = () => p.clearGhost();
+  const textures = (e) => { p.setTextureSet(e.detail ? e.detail.set : null); };
+  const overlayNow = (e) => { p.setOverlay(e.detail ? e.detail.lines : null); };
+  const viewNow = (e) => { if (!e.detail || typeof e.detail.reply !== 'function') return; const v = p.view(), h = v.track && v.track.path ? v.track.path.head : null; e.detail.reply({ pose: v.pose, mod
+  doc.addEventListener('t180:view', viewNow);
+  return { preview: p, unmount() { doc.removeEventListener('t180:guides', setGuides); doc.removeEventListener('t180:guides-request', guidesNow); doc.removeEventListener('t180:textures', textures); doc.removeEventListener('t180:track-request', trackNow); doc.removeEventListener('t180-camera', ask); doc.removeEventListener('t180-probe', answer); doc.removeEventListener('t180-ghost', showGhost); doc.removeEventListener('t180-ghost-clear', hideGhost); doc.removeEventListener('t180:overlay', overlayNow); doc.removeEventListener('t180-pick', pickNow); doc.removeEventListener('t180:view', viewNow); p.dispose(); root.replaceChildren(); } };
+}
+<header>
+  <h1>T-180 TRACK BUILDER</h1>
+  <select id="mode" aria-label="builder" title="Equation track: shape the track as equations (extend, brush, close, water). Pieces: 
+…[144 chars cut]…
+>
+  <button id="new" title="New track">New</button>
+
+| path | what |
+|---|---|
+| `app/core/coreshell.js` | the core's state and actions, no DOM (tested headless): extend, the brush drag, close, water, export, a local example, save/open under the `eq-` prefix |
+| `app/core/panel.js` | the core's controls in the left column |
+`tools/piecewise.cjs`, whose command-line half requires `fs` and `path`. Nothing touches the disk.
+
+**Events the core's panel adds** (the preview answers them, `app/preview/index.js`):
+- `t180:overlay` `{ lines }`: world line pairs drawn over the track (the water and its reds), or null;
+- `t180-pick` `{ x, y, reply }`: the track station under a canvas point.
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63017 assistant 2026-10-05T04:05:31.665Z
+TOOL_USE Write [toolu_019yWxS479ao3HaFqXhpw4L8]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\sp_nw4.js","content":"// D238: the water out of the preview (setOverlay, the t180:overlay event), the page title and the README. Every edit asserts its count.\nconst fs = require('fs'), R = 'C:/Users/nname/Desktop/worktrees/a-nowater-wt/';\nfunction edit(file, fn) { const f = R + file; let s = fs.readFileSync(f, 'utf8'); const crlf = s.includes('\\r\\n'); s = s.replace(/\\r\\n/g, '\\n'); const once = (a, b) => { const n = s.split(a).length - 1; if (n !== 1) throw new Erro
+…[2043 chars cut]…
+ close, water, export, a local example\", \"extend, the brush drag, close, export, a local example\");\n  once(\"- `t180:overlay` `{ lines }`: world line pairs drawn over the track (the water and its reds), or null;\\n\", \"\");\n  return s;\n});\nconsole.log('ok');\n"}
+--- L63018 user 2026-10-05T04:05:31.698Z
+RESULT [toolu_019yWxS479ao3HaFqXhpw4L8]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\sp_nw4.js (file state is current in your context — no need to Read it back)
+--- L63019 assistant 2026-10-05T04:05:33.927Z
+TOOL_USE Bash [toolu_01Eq1AKYhkJuNiKuwTE7zjn7]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && node sp_nw4.js && cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && grep -rniE \"water|pour\\b|clearWater|setOverlay|t180:overlay|overlayOf|redText|waterRun\" app --include=*.js --include=*.html --include=*.md | grep -v \"^app/test\" | cut -c1-200; echo \"--- (above: what still names water outside app/test)\"; git diff --stat | tail -9"}
+--- L63020 user 2026-10-05T04:05:34.370Z
+RESULT [toolu_01Eq1AKYhkJuNiKuwTE7zjn7]: ok
+app/index.html:75:  <select id="mode" aria-label="builder" title="Equation track: shape the track as equations (extend, brush, close, water). Pieces: the earlier piece builder, paused but kept."><opti
+app/preview/index.js:21://   't180:overlay'        { detail: { lines } }          world line pairs drawn over the track (the water, its reds), or null
+app/preview/index.js:76:  const overlayNow = (e) => { p.setOverlay(e.detail ? e.detail.lines : null); };
+app/preview/index.js:90:  doc.addEventListener('t180:overlay', overlayNow);
+app/preview/index.js:93:  return { preview: p, unmount() { doc.removeEventListener('t180:guides', setGuides); doc.removeEventListener('t180:guides-request', guidesNow); doc.removeEventListener('t180:t
+app/preview/preview.js:12://   p.setOverlay([{ positions, colour }])   world line pairs over the track (D186: the water and its reds), or null
+app/preview/preview.js:261:    /** D186: world line pairs drawn over the track (the water and its reds): [{ positions, colour, alpha? }], or null. */
+app/preview/preview.js:262:    setOverlay(list) { overlay = list && list.length ? list : null; return overlay ? overlay.length : 0; },
+app/preview/renderer.js:14://                                                         over everything (D186: the water and its reds)
+app/preview/renderer.js:235:      // the OVERLAY (D186: the water and its reds), world line pairs drawn over everything, each with its own colour
+app/README.md:91:| `app/core/coreshell.js` | the core's state and actions, no DOM (tested headless): extend, the brush drag, close, water, export, a local example, save/open under the `eq-` prefix |
+app/README.md:105:- `t180:overlay` `{ lines }`: world line pairs drawn over the track (the water and its reds), or null;
+--- (above: what still names water outside app/test)
+ app/core/coreshell.js | 83 ++++++++++-----------------------------------------
+ app/core/panel.js     | 37 ++++-------------------
+ 2 files changed, 21 insertions(+), 99 deletions(-)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63029 assistant 2026-10-05T04:05:40.256Z
+TEXT: "ok" printed but nothing changed: my `edit` helper has a shadowing bug, where the callback returns its own untouched parameter. Fixing the helper and re-running.
+--- L63030 assistant 2026-10-05T04:05:43.347Z
+TOOL_USE Bash [toolu_01MQnKye2Zeu9ZAdmfQo7E7N]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && node - <<'EOF'\nconst fs=require('fs');let t=fs.readFileSync('sp_nw4.js','utf8');\nt=t.replace(\"s = fn(s, once) || s; fs.writeFileSync\",\"fn(once); fs.writeFileSync\");\nt=t.replace(/\\(s, once\\) => \\{/g,'(once) => {').replace(/\\n  return s;\\n/g,'\\n');\nt=t.replace(\"edit('app/index.html', (once) => { once(\\\"(extend, brush, close, water)\\\", \\\"(extend, brush, close)\\\"); return s; });\",\"edit('app/index.html', (once) => { once(\\\"(extend, brush, close, water)\\\"
+…[190 chars cut]…
+rep -rniE \"water|pour\\b|clearWater|setOverlay|t180:overlay|overlayOf|redText|waterRun\" app --include=*.js --include=*.html --include=*.md | grep -v \"^app/test\" | cut -c1-200; echo \"--- (above: what still names water outside app/test)\"; git diff --stat | tail -9"}
+--- L63031 user 2026-10-05T04:05:43.711Z
+RESULT [toolu_01MQnKye2Zeu9ZAdmfQo7E7N]: [33mfalse[39m
+(node:27432) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok
+--- (above: what still names water outside app/test)
+ app/README.md           |  3 +-
+ app/core/coreshell.js   | 83 ++++++++++---------------------------------------
+ app/core/panel.js       | 37 +++-------------------
+ app/index.html          |  2 +-
+ app/preview/index.js    |  5 +--
+ app/preview/preview.js  |  7 ++---
+ app/preview/renderer.js |  4 +--
+ 7 files changed, 28 insertions(+), 113 deletions(-)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63035 assistant 2026-10-05T04:05:51.780Z
+TEXT: The app code no longer names water anywhere outside its tests. Now the tests, starting with the mutants anchored on water lines and the app tests that exercise the feature.
+--- L63036 assistant 2026-10-05T04:05:52.788Z
+TOOL_USE Bash [toolu_01MwhyzYWnCo7wqxYLntxYre]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && sed -n 58,95p app/test/core-mutation.test.js | cut -c1-250; grep -n \"control\\|applied\\|MUT\\b\\|const M\\b\\|for (const m of\" app/test/core-mutation.test.js | cut -c1-200 | head -20"}
+--- L63037 user 2026-10-05T04:05:53.026Z
+RESULT [toolu_01MwhyzYWnCo7wqxYLntxYre]:     from: "mode: b.channel === 'lateral' ? 'swerve' : 'hill'", to: "mode: 'hill'", caughtBy: 'the local (height / sideways) brush' },
+  { id: 'C21 with E\'s brush, every channel is sent as rate', file: 'core/coreshell.js',
+    from: "mode: b.channel === 'kh' || b.channel === 'kv' ? 'rate' : 'value'", to: "mode: 'rate'", caughtBy: 'with E\'s brush, the rate brush goes through it' },
+  { id: 'C4 a second close runs again', file: 'core/coreshell.js',
+    from: "if (doc().closed) return set({ message: 'the loop is already closed' });", to: '', caughtBy: 'close: one click' },
+  { id: 'C5 the heading brush may open a closed loop', file: 'core/coreshell.js',
+    from: "if (!brushFn && doc().closed && mode === 'rate' && (channel === 'kh' || channel === 'kv'))", to: 'if (false)', caughtBy: 'close: one click' },
+  { id: 'C6 an edit keeps the old water', file: 'core/coreshell.js',
+    from: 'dirty: true, message: null, water: null, lastStep: { op, ms }', to: 'dirty: true, message: null, lastStep: { op, ms }', caughtBy: 'a successful edit retires the water' },
+  { id: 'C7 export runs on an open track', file: 'core/coreshell.js',
+    from: "if (!doc().closed) return stop({ message: 'the loop is not closed: close it first (one click), then export', exportReds: null });", to: '', caughtBy: 'export: an open track is refused' },   // D234: re-pointed, the refusal now leaves throu
+  { id: 'C8 the list shows the piece builder\'s tracks too', file: 'core/coreshell.js',
+    from: '.filter((n) => n.startsWith(PREFIX))', to: '', caughtBy: 'save and open use their own prefix' },
+  { id: 'C9 the water runs on across a jump\'s flight', file: 'core/coreshell.js',
+    from: "if (out.length) { gap = true; break; } continue;", to: 'continue;', caught
+…[2743 chars cut]…
+== null ? 1 : src.split(m.from).length - 1, applied = n === 1
+124:    if (applied && m.from !== null) fs.writeFileSync(f, src.replace(m.from, () => m.to));
+131:    return { applied, n, caught: failed.some((l) => l.includes(m.caughtBy)), failed: [...new Set(failed)] };
+135:test('control: the unmutated temp copy passes every core-shell test', () => {
+136:  const r = runMutant({ id: 'control', file: 'core/panel.js', from: null, to: null, caughtBy: '(no test is named this)' });
+139:for (const m of MUTATIONS) {
+140:  test(`mutation ${m.id}: applied, and caught by "${m.caughtBy}…"`, () => {
+142:    assert.ok(r.applied, `NOT APPLIED: "${m.from}" occurs ${r.n} times in app/${m.file}`);
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63046 assistant 2026-10-05T04:06:00.282Z
+TEXT: Five mutants are anchored on the water and caught by water tests: C6, C9, C10, C11 and C13. I'm viewing the exact test blocks before cutting.
+--- L63047 assistant 2026-10-05T04:06:00.999Z
+TOOL_USE Bash [toolu_01L1qmvK96t5k8MM3xoQrxRa]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && sed -n 148,186p app/test/core-shell.test.js | cut -c1-260; echo ......; sed -n 250,275p app/test/core-shell.test.js | cut -c1-300; grep -n \"toPath\\|overlayOf\\|redText\\|waterRun\" app/test/core-shell.test.js | cut -c1-120"}
+--- L63048 user 2026-10-05T04:06:01.264Z
+RESULT [toolu_01L1qmvK96t5k8MM3xoQrxRa]:   s.beginBrush({ mode: 'rate', channel: 'kh', s0: 400, r: 60 }); assert.match(s.getState().message, /would open it/); assert.equal(s.getState().brush, null);
+  s.undo(); assert.equal(s.getState().history.present.closed, false, 'undo takes the close back');
+});
+
+test('water: poured over a window of the preview\'s path, every stream drawn and every red in plain words', async () => {
+  const s = await lap(); s.close();
+  const t = toPath(s.getState().history.present);
+  s.pour(t, { speedKmh: 200, count: 5, fromS: 0, lengthM: 600 });
+  const w = s.getState().water;
+  assert.ok(w, s.getState().message); assert.equal(w.streams.length, 5); assert.equal(w.fromS, 0); assert.equal(w.toS, 600);
+  for (const pts of w.streams) for (const p of pts) assert.ok(p.every(Number.isFinite));
+  for (const x of w.reds) { assert.ok(x.text && x.pos.every(Number.isFinite)); }
+  const ov = overlayOf(w), pairs = w.streams.reduce((a, pts) => a + pts.length - 1, 0);
+  assert.equal(ov[0].positions.length, pairs * 6, 'one line pair per step of every stream');
+  if (w.reds.length) assert.equal(ov[1].positions.length, w.reds.length * 18, 'a cross (3 line pairs) per red');
+  s.extend({ length: 10 });   // refused (closed), so the water stays
+  assert.ok(s.getState().water); s.undo(); assert.equal(s.getState().water, null, 'any change to the track retires the old water');
+});
+
+test('a successful edit retires the water (it was poured on the old track)', async () => {
+  const s = await createCoreShell({ brushFn: null }); s.extend({ length: 300 });
+  s.pour(toPath(s.getState().history.present), { speedKmh: 150, count: 3 }); assert.ok(s.getState().water, s.getState().message);
+  s.extend({ length: 50 }); assert.equal(s.getState().message, null); assert.equal(s
+…[4703 chars cut]…
+s: 1234.4, u: -15 }, 250), /spills over the right edge at 1,234 m/);
+182:  assert.match(redText({ type: 'liftoff', s: 88, u: 0 }, 300), /lifts off the road at 88 m.*300 km\/h/);
+183:  assert.match(redText({ type: 'shock', s: 42, u: 1 }, 250), /cross at 42 m/);
+224:  const segs = toPath(d).segments, tm = createTrackModel();
+235:  const segs2 = toPath(d2).segments, ext = tm.update({ segments: segs2, closed: false, lift: liftBy(3, 150, 350) });
+288:  const d = s.getState().history.present, ref = toPath(d).path, tm = createTrackModel(), shown = tm.update(s.getStat
+301:  const p = toPath(d).path, W = 800, H = 600, at = p.samples.find((x) => x.s === 100), pose = { ...headCamera(at, {
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63051 assistant 2026-10-05T04:06:05.522Z
+TEXT: Four whole tests go, and one test loses only its water lines. For the new "no water section" test I need to see how the panel's own tests mount it.
+--- L63052 assistant 2026-10-05T04:06:06.183Z
+TOOL_USE Bash [toolu_01NKCnUght2zuPbzcf83JZJk]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && grep -n \"panel.js\\|mount(\" app/test/core-readout-display.test.js | head -12 | cut -c1-200; sed -n 1,60p app/test/core-readout-display.test.js | cut -c1-200 | head -80"}
+--- L63053 user 2026-10-05T04:06:06.408Z
+RESULT [toolu_01NKCnUght2zuPbzcf83JZJk]: 12:const { extendOptions } = require('../core/panel.js');
+49:  const panel = require('../core/panel.js').mount(root, shell);
+147:  P.panel.unmount();
+165:  P.panel.unmount();
+192:  P.panel.unmount();
+215:  P.panel.unmount();
+225:  P.panel.unmount();
+257:  P.panel.unmount();
+275:  P.panel.unmount();
+299:  P.panel.unmount();
+322:  P.panel.unmount();
+338:  P.panel.unmount();
+// core-readout-display.test.js: node --test app/test/core-readout-display.test.js
+// THE READOUT DISPLAY (L130, pane C): the strings (app/core/labels.js formatReadout), the label layout (the head's keep-out, no
+// overlaps), the anchors, the shell's readouts (A's src/core/readout.js), and the PANEL mounted on a small fake DOM, read back
+// as the TEXT it shows. E's sealed check (readout_check_registration_2026-09-29.md) is scored by a non-author seat; these are the
+// author's own tests of the same properties, not that score.
+'use strict';
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const LB = require('../core/labels.js');
+const { createCoreShell } = require('../core/coreshell.js');
+const RD = require('../../src/core/readout.js');
+const { extendOptions } = require('../core/panel.js');
+
+// ── a small fake DOM: enough for the panel and the label layer ──
+class El {
+  constructor(tag, doc) { this.tagName = tag.toUpperCase(); this.ownerDocument = doc; this.children = []; this.attrs = {}; this.style = {}; this._text = ''; this.listeners = {}; this.value = ''; this.
+  append(...k) { for (const c of k) { if (c == null) continue; const n = typeof c === 'string' ? Object.assign(new El('#text', this.ownerDocument), { _text: c }) : c; n.parent = this; this.children.pu
+  replaceChildren(...k) { for (const c of this.children) c.
+…[2991 chars cut]…
+
+  const cell = (k) => root.all().find((e) => e.attrs['data-readout'] === k).textContent;
+  const type = (text, v) => { const f = field(text); f.value = String(v); f.oninput(); };
+  // the options the PANEL uses (D193: a field left as shown sends no target, so the raw field text is no longer the options)
+  const opts = () => panel.options();
+  return { doc, win, tick, stage, root, shell, panel, label, field, cell, type, opts };
+}
+
+// THE STUB (D190): A's core, which adds the channel c, cupFromDeg / cupToDeg and Extend's target c, does not exist at c964c2d. These
+// tests stand in for it with stubCup(shell), which wraps the REAL shell and does exactly three things, nothing else:
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63063 assistant 2026-10-05T04:06:25.717Z
+TOOL_USE Bash [toolu_01SZ5f4AYDeQfJdmjGvvM8sW]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && sed -n 179,181p app/test/guides.test.js | cut -c1-600"}
+--- L63064 user 2026-10-05T04:06:25.884Z
+RESULT [toolu_01SZ5f4AYDeQfJdmjGvvM8sW]:   p.setGuides({ mirror: 'x' }); a.win.step(); const l1 = p.renderer.stats().lines; p.setOverlay([{ positions: new Float32Array([0, 0, 0, 1, 1, 1]), colour: [1, 0, 0] }]); a.win.step(); assert.equal(p.renderer.stats().lines, l1 + 1, 'an overlay already set (the water) still draws beside the mirror ghost');
+  p.dispose(); assert.equal(disposed, true, 'the layer goes with the preview');
+});
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63067 assistant 2026-10-05T04:06:38.829Z
+TOOL_USE Write [toolu_017chk8yrJbjmtDhAeLKkXLo]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\sp_nw5.js","content":"// D238: the app's water tests go with the feature, by name; the five harness mutants anchored on water lines are retired by name. Every edit asserts its count.\nconst fs = require('fs'), R = 'C:/Users/nname/Desktop/worktrees/a-nowater-wt/';\nfunction edit(file, fn) { const f = R + file; let s = fs.readFileSync(f, 'utf8'); const crlf = s.includes('\\r\\n'); s = s.replace(/\\r\\n/g, '\\n'); const ctx = { get s() { return s; }, set s(v) { s = v; } }; f
+…[2914 chars cut]…
+in.step();\\n\");\n  once(c, \"the layer is given every frame\\\\'s plan and is disposed with the preview; the water overlay and the mirror ghost both draw'\", \"the layer is given every frame\\\\'s plan and is disposed with the preview'\");\n});\nconsole.log('ok');\n"}
+--- L63068 user 2026-10-05T04:06:38.866Z
+RESULT [toolu_017chk8yrJbjmtDhAeLKkXLo]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\sp_nw5.js (file state is current in your context — no need to Read it back)
+--- L63069 assistant 2026-10-05T04:06:40.341Z
+TOOL_USE Bash [toolu_01BTAs92uejHDoy2kcEExdAj]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && node sp_nw5.js && cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && git diff --stat | tail -12; grep -rniE \"water|\\.pour\\(|overlayOf|redText|waterRun|setOverlay\" app/test/*.js | cut -c1-200"}
+--- L63070 user 2026-10-05T04:06:40.612Z
+RESULT [toolu_01BTAs92uejHDoy2kcEExdAj]: ok
+ app/README.md                  |  3 +-
+ app/core/coreshell.js          | 83 ++++++++----------------------------------
+ app/core/panel.js              | 37 +++----------------
+ app/index.html                 |  2 +-
+ app/preview/index.js           |  5 +--
+ app/preview/preview.js         |  7 +---
+ app/preview/renderer.js        |  4 +-
+ app/test/core-mutation.test.js | 10 -----
+ app/test/core-shell.test.js    | 42 ++-------------------
+ app/test/guides.test.js        |  4 +-
+ 10 files changed, 33 insertions(+), 164 deletions(-)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63080 assistant 2026-10-05T04:06:57.492Z
+TOOL_USE Bash [toolu_014zhmUpxyXQtzCANjDa9Jg4]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && tail -5 app/test/core-readout-display.test.js | cut -c1-200; grep -n \"^const fs\\|require('fs')\\|require('path')\" app/test/core-readout-display.test.js | head"}
+--- L63081 user 2026-10-05T04:06:57.675Z
+RESULT [toolu_014zhmUpxyXQtzCANjDa9Jg4]:   P.root.all().find((e) => e.tagName === 'BUTTON' && e.textContent === 'Extend').onclick();
+  assert.equal(box.checked, true, 'kept after Extend, like a preference');
+  assert.equal(S.stub.seen.at(-1).transition, undefined, 'after Extend the field shows the head again (untouched), so nothing is sent');
+  P.panel.unmount();
+});
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63084 assistant 2026-10-05T04:07:10.843Z
+TOOL_USE Write [toolu_01Jg3F2BDE9o4VFPShMn8aX6]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\t_nowater.txt","content":"\n// ── D238 (the keeper, 22:01: \"can you remove the water sim feature?\"): nothing about the water in the builder ───────────────────────────────────────────────────────────────────────────────────────────\ntest('no water: the panel has no Water section, the shell no pour and no water state, an edit pours and draws nothing, and no file of the app names the water', async () => {\n  const fs = require('fs'), path = require('path');\n  const P = a
+…[2198 chars cut]…
+est(n.name)) { const t = fs.readFileSync(p, 'utf8'); if (/water|\\bpour\\b|setOverlay|t180:overlay/i.test(t)) found.push(path.relative(app, p)); } } };\n  walk(app); assert.deepEqual(found, [], `files of the app that still name the water: ${found.join(', ')}`);\n});\n"}
+--- L63085 user 2026-10-05T04:07:10.880Z
+RESULT [toolu_01Jg3F2BDE9o4VFPShMn8aX6]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\t_nowater.txt (file state is current in your context — no need to Read it back)
+--- L63086 assistant 2026-10-05T04:07:14.937Z
+TOOL_USE Bash [toolu_018PpyoiCzaeRNL2eGKDdMWk]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && node -e \"\nconst fs=require('fs'),f='C:/Users/nname/Desktop/worktrees/a-nowater-wt/app/test/core-readout-display.test.js';let s=fs.readFileSync(f,'utf8');const crlf=s.includes('\\r\\n');s=s.replace(/\\r\\n/g,'\\n').replace(/\\n*$/,'\\n')+fs.readFileSync('t_nowater.txt','utf8').replace(/\\r\\n/g,'\\n');fs.writeFileSync(f,crlf?s.replace(/\\n/g,'\\r\\n'):s)\" && cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && node -e \"\nrequire('C:/Users/nname/Desktop/lighthouse/consonance/t
+…[306 chars cut]…
+out+r.stderr;console.log('exit',r.status);console.log(t.split('\\n').filter(l=>/^ℹ (tests|pass|fail)|^✖|AssertionError|^  Error|actual|expected|files of the app/.test(l)).join('\\n').slice(0,3000));\" 2>&1 | grep -av \"Warn\\|heavy-run\" | cut -c1-300","timeout":600000}
+--- L63093 user 2026-10-05T04:07:18.540Z
+RESULT [toolu_018PpyoiCzaeRNL2eGKDdMWk]: exit [33m0[39m
+ℹ tests 33
+ℹ pass 33
+ℹ fail 0
+(Use `node --trace-warnings ...` to show where the warning was created)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63096 assistant 2026-10-05T04:07:26.115Z
+TEXT: It passes, but one control assertion I wrote is a tautology (`… || sent.length >= 0`). Replacing it with a real control, then proving the new test is red on the base tree.
+--- L63097 assistant 2026-10-05T04:07:34.133Z
+TOOL_USE Bash [toolu_015bRKms1DLcgAxvL17fp2q7]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sp_nw6.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-nowater-wt/app/test/core-readout-display.test.js\n@@OLD\n  const sent = [], real = P.doc.dispatchEvent; P.doc.dispatchEvent = (ev) => { sent.push(ev.type); return real(ev); };\n  P.shell.extend({ length: 100 }); P.tick();\n  assert.ok(sent.length > 0 && sent.includes('t180-ghost-clear') === false || sent.length >= 0, 'control: the spy sees the panel\\'s events');\n@@NEW\n  const sent = [], real = P.doc.dispatch
+…[1741 chars cut]…
+eSync(DST, orig); }\nEOF\nnode sp_nw_base.js 2>&1 | grep -av \"Warn\\|heavy-run\" | cut -c1-300; cd C:/Users/nname/Desktop/worktrees/a-mirror-wt && git status --short | head -3; echo \"base worktree clean? $(git status --short | wc -l) changed files\"","timeout":600000}
+--- L63098 user 2026-10-05T04:07:37.614Z
+RESULT [toolu_015bRKms1DLcgAxvL17fp2q7]: C:/Users/nname/Desktop/worktrees/a-nowater-wt/app/test/core-readout-display.test.js [33m1[39m edits
+ON THE BASE: exit [33m1[39m
+✖ no water: the panel has no Water section, the shell no pour and no water state, an edit pours and draws nothing, and no file of the app names the water (1.0552ms)
+ℹ tests 33
+ℹ pass 32
+ℹ fail 1
+✖ no water: the panel has no Water section, the shell no pour and no water state, an edit pours and draws nothing, and no file of the app names the water (1.0552ms)
+  AssertionError [ERR_ASSERTION]: the panel's sections: no Water between Close and Local example
+(Use `node --trace-warnings ...` to show where the warning was created)
+base worktree clean? 0 changed files
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63101 assistant 2026-10-05T04:07:44.233Z
+TEXT: The new test fails on the base tree, on exactly "the panel's sections: no Water between Close and Local example", and the base worktree is back to clean. Now: which harnesses anchor files I changed?
+--- L63102 assistant 2026-10-05T04:07:45.095Z
+TOOL_USE Bash [toolu_01TqVPswou969rTWXciFcYwU]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && grep -lE \"coreshell|core/panel|preview/preview|preview/renderer|preview/index|app/index.html\" test/*mutation*.test.js app/test/*mutation*.test.js; grep -n \"water\" test/core_chord_mutation.test.js test/core_cup_mutation.test.js test/core_xsec_mutation.test.js | cut -c1-200 | head"}
+--- L63103 user 2026-10-05T04:07:45.310Z
+RESULT [toolu_01TqVPswou969rTWXciFcYwU]: test/core_chord_mutation.test.js
+test/core_cup_mutation.test.js
+app/test/core-mutation.test.js
+app/test/core-xsec-mutation.test.js
+app/test/mutation.test.js
+test/core_chord_mutation.test.js:26:  { id: 'K13 the water does not evaluate a chord\'s blend', pattern: '4 ·', edits: [['app/core/coreshell.js', 'return Prof.readsBlend(g) && g.blend ?', 'return fal
+test/core_cup_mutation.test.js:52:  { id: 'M37 (R1) the water reads segment.profile', file: 'readers', pattern: 'water', app: 'core/coreshell.js', edits: [['app/core/coreshell.js', 'return (m) => { co
+test/core_xsec_mutation.test.js:67:  { id: 'KS2-5 water over a heartline is an anonymous throw', file: 'val', pattern: 'S2 \\(iv\\)', edits: [[C + 'water.js', "e.code = 'WATER_HEARTLINE'; throw e; }",
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63106 assistant 2026-10-05T04:07:50.571Z
+TEXT: The harnesses that anchor on `coreshell.js` do so on `profilerOf`, which stays. Now the full suite and then the seven relevant harnesses, back to back in the background.
+--- L63107 assistant 2026-10-05T04:07:54.071Z
+TOOL_USE Bash [toolu_01XrU9RBtVFb6WzHt4THKaXT]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && sed -e \"s#a-grid3d-wt#a-nowater-wt#; s#'app/test/mutation.test.js', 'app/test/core-mutation.test.js', 'app/test/core-xsec-mutation.test.js', 'test/lookmatch_mutation.test.js'#'app/test/mutation.test.js', 'app/test/core-mutation.test.js', 'app/test/core-xsec-mutation.test.js', 'test/core_chord_mutation.test.js', 'test/core_cup_mutation.test.js', 'test/core_xsec_mutation.test.js', 'test/core_water_mutation.test.js'#; s#harn2_#harn3_#; s#sp_harn2_out#sp_harn3_out#; s#A D237 ancho
+…[77 chars cut]…
+-c \"a-nowater-wt\\|core_water_mutation\\|harn3_\" sp_harn3.js && (node sp_full.js C:/Users/nname/Desktop/worktrees/a-nowater-wt sp_full_nowater.txt 2>&1 | grep -av Warn; node sp_harn3.js 2>&1 | grep -av \"Warn\\|heavy-run\")","timeout":3600000,"run_in_background":true}
+--- L63108 user 2026-10-05T04:07:54.119Z
+RESULT [toolu_01XrU9RBtVFb6WzHt4THKaXT]: Command running in background with ID: bucs5a7j2. Output is being written to: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\tasks\bucs5a7j2.output. You will be notified when it completes. To check interim output, use Read on that file path.
+Session cwd remains C:\Consonance\instances\sibling-3d57124e; directory changes made by the backgrounded command do not apply to subsequent commands.
+--- L63117 assistant 2026-10-05T04:08:01.517Z
+TEXT: While that runs, the inventory of what deleting `src/core/water.js` would take: every file and test row that touches it, read-only.
+--- L63118 assistant 2026-10-05T04:08:02.718Z
+TOOL_USE Bash [toolu_01PEvCxunSJqWGSy4xEjcJ2K]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && echo \"== files that mention water (outside app/):\"; grep -rliE \"water\" src test tools scripts docs README.md package.json 2>/dev/null | sort; echo; echo \"== require of water.js:\"; grep -rnE \"require\\([^)]*water(\\.js)?['\\\"]\" src test tools scripts app 2>/dev/null | cut -c1-170; echo; wc -l src/core/water.js test/core_water.test.js test/core_water_adapter.test.js test/core_water_mutation.test.js"}
+--- L63119 user 2026-10-05T04:08:03.181Z
+RESULT [toolu_01PEvCxunSJqWGSy4xEjcJ2K]: == files that mention water (outside app/):
+docs/math/04a_bank_ramp.md
+src/core/README.md
+src/core/adapter.js
+src/core/water.js
+test/core_chord.test.js
+test/core_chord_mutation.test.js
+test/core_cup_mutation.test.js
+test/core_cup_readers.test.js
+test/core_offset.test.js
+test/core_water.test.js
+test/core_water_adapter.test.js
+test/core_water_mutation.test.js
+test/core_xsec_mutation.test.js
+test/validate_xsec.test.js
+
+== require of water.js:
+test/core_water.test.js:170:  const W = require('../src/core/water.js');
+test/core_water_adapter.test.js:17:  const Dc = require('../src/core/document.js'), AD = require('../src/core/adapter.js'), W = require('../src/core/water.js');
+test/validate_xsec.test.js:13:const W = require('../src/core/water.js');
+
+  264 src/core/water.js
+  172 test/core_water.test.js
+   36 test/core_water_adapter.test.js
+   51 test/core_water_mutation.test.js
+  523 total
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63122 assistant 2026-10-05T04:08:08.989Z
+TOOL_USE Bash [toolu_01UvwJ6NYwMazKyEpDzhHcEX]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && for f in test/core_chord.test.js test/core_cup_readers.test.js test/core_offset.test.js test/validate_xsec.test.js src/core/adapter.js src/core/README.md test/core_chord_mutation.test.js test/core_cup_mutation.test.js test/core_xsec_mutation.test.js docs/math/04a_bank_ramp.md; do echo \"=== $f\"; grep -niE \"water|\\bW\\.\" $f | cut -c1-190 | head -12; done; echo; grep -nE \"^test\\(\" test/core_water.test.js test/core_water_adapter.test.js | cut -c1-170"}
+--- L63123 user 2026-10-05T04:08:09.739Z
+RESULT [toolu_01UvwJ6NYwMazKyEpDzhHcEX]: === test/core_chord.test.js
+83:test('4 · the water (profilerOf) reads a chord\'s blend, and a word document\'s font-transition blend (no chord, no cup) as its own profile', () => {
+86:  assert.ok(Math.abs(at(0).u[0] - PF.normalize(segments[g].blend.from).u[0]) < 1e-9, 'the water under the segment\'s start is the start profile');
+=== test/core_cup_readers.test.js
+4:// atSegment, the way markers/place.js and geom/pitlane.js already do): the marker layout's floor, validation, the water, the camera's span, and
+76:test('water: the profile under a sample is the road as drawn there (the edge is c(s)), and a segment without a blend still gives its own profile object', () => {
+=== test/core_offset.test.js
+4:// the loads and the water would read the un-hilled road. A hill is built as the brush will build it: knots refined under the
+=== test/validate_xsec.test.js
+1:// validate_xsec.test.js (D225): the cross-section lap's validator rows, the spiral, the export and the water, against the seal
+13:const W = require('../src/core/water.js');
+123:test('S2 (iv): water over a heartline offset is refused BY NAME (WATER_HEARTLINE), never an anonymous throw', () => {
+125:  assert.throws(() => W.surfaceFrom({ samples: t.path.samples, closed: false, lengthM: t.path.lengthM, profileAt: (sm) => P.normalize(t.segments[sm.seg].profile) }), (e) => e.code === 'W
+=== src/core/adapter.js
+21:// its station with src/geom/profile.js atSegment (the marker layout's floor, validation, the water, the camera's span, the export's sections).
+341: * (ref 09 §7), so validation, the loads and the water read the road as brushed. A sample where both offsets and their first
+345: * (preview, mesh, validation, water, export): src/geom's incremental extendPath and rebuild
+…[1504 chars cut]…
+67:  { id: 'KS2-5 water over a heartline is an anonymous throw', file: 'val', pattern: 'S2 \\(iv\\)', edits: [[C + 'water.js', "e.code = 'WATER_HEARTLINE'; throw e; }", "e.code = undefined; 
+=== docs/math/04a_bank_ramp.md
+61:- **The ride-up of anything flowing along the road** (primer 06, the water line) is not computed from this ramp. The claim
+
+test/core_water_adapter.test.js:23:test('TEST 5a through the core: the balanced 45° ring, as B sealed it', { skip: HAVE ? false : 'src/core/document.js or adapter.js is 
+test/core_water_adapter.test.js:32:test('TEST 5b through the core: the 10° ring spills every stream over the OUTER lip, RED, within ±5% / ±5 m', { skip: HAVE ? false :
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63127 assistant 2026-10-05T04:08:20.197Z
+TOOL_USE Bash [toolu_01Vsgn6iL2YaGAEza99bQds1]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && awk 'NR>=6 && NR<=40 && /^(## |### )/ {print NR\": \"$0}' CHANGELOG.md | cut -c1-80; grep -n \"^### Removed\" CHANGELOG.md | head -3"}
+--- L63134 user 2026-10-05T04:08:20.415Z
+RESULT [toolu_01Vsgn6iL2YaGAEza99bQds1]: 6: ## [Unreleased]
+8: ### Changed
+13: ### Fixed
+28: ### Added
+580:### Removed
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L63138 assistant 2026-10-05T04:08:31.915Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Write [toolu_01DJw6rg7ovQ4XtPq7qV2kKn]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\sp_cl5.js","content":"const fs = require('fs'), f = 'C:/Users/nname/Desktop/worktrees/a-nowater-wt/CHANGELOG.md';\nlet s = fs.readFileSync(f, 'utf8'); const crlf = s.includes('\\r\\n'); s = s.replace(/\\r\\n/g, '\\n');\nconst u = s.indexOf('## [Unreleased]'), nextRel = s.indexOf('\\n## [', u + 5), a = s.indexOf('### Added\\n', u); if (a < 0 || (nextRel > 0 && a > nextRel)) throw new Error('no Added in Unreleased');\nif (s.slice(u, nextRel > 0 ? nextRel : undefined).includes('### Removed')) throw new Error('Unreleased already has a Removed section');\nconst entry = \"### Removed\\n- **The water simulation is gone from the builder (D238).** The keeper: \\\"can you remove the water sim feature?\\\" Removed from the app: the **Water** section of the equation panel (on, km/h, streams), `shell.pour` and `shell.clearWater`, `state.water` and the `water: null` reset on every edit, the 120 ms debounce that re-poured on every change, the stream and red-cross overlay (`overlayOf`, the panel's `t180:overlay` event, the preview's `setOverlay` and its listener), the list of reds under the panel, and `waterRun` and `redText` in the shell; the page's tooltip and the README no longer mention it. **Nothing in the export, the validation or the document changes** (the export never used it: nothing under `src/export` or `src/validate` requires it; the nine fixtures still read 0 of 9 differ). **Kept, dormant: `src/core/water.js` and its own tests** (`test/core_water*.test.js`), because other features' tests read the road's profile through the shell's `profilerOf` and one validation row reads `water.js` for its named refusal; bringing the water back is one revert of this commit, and deleting the module too is the keeper's call (what it would take is in `exo_memory/handback/p-nowater-A_2026-10-04.md`). The renderer's overlay pass stays: the symmetry mirror ghost (D237) is drawn through it. The app's water tests went with the feature, and five harness mutants anchored on water lines were retired (C6, C9, C10, C11, C13 of `app/test/core-mutation.test.js`); a new test asserts the panel has no Water section, the shell no pour, an edit sends no overlay, and no file of the app names the water.\\n\\n\";\ns = s.slice(0, a) + entry + s.slice(a);\nfs.writeFileSync(f, crlf ? s.replace(/\\n/g, '\\r\\n') : s); console.log('ok');\n"}
+--- L63139 user 2026-10-05T04:08:31.957Z
+RESULT [toolu_01DJw6rg7ovQ4XtPq7qV2kKn]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\sp_cl5.js (file state is current in your context — no need to Read it back)
+--- L63140 assistant 2026-10-05T04:08:33.148Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_014PU9cNnZTVq4MBcbpkZac2]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && node sp_cl5.js; cd C:/Users/nname/Desktop/worktrees/a-nowater-wt && git status --short"}

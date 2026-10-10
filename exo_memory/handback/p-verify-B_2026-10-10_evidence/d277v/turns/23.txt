@@ -1,0 +1,46 @@
+MESSAGE 23  msg_011CfjRFPUpHjMiCpHACxMiG  seat chair  ts 2026-10-05T16:38:24.980Z  turn L90018..L90031 (next prompt L90036)
+CLAIMS:
+  [msg_011CfjRFPUpHjMiCpHACxMiG|1] "D245, the Third Place's three points about its own compaction": confirm that D245 is the right ID and that it is this item.
+  [msg_011CfjRFPUpHjMiCpHACxMiG|9] "E first measures how often they survived past summaries, then adds a line asking for them to be kept": confirm this sequence and that E owns both steps.
+
+--- L90018 user 2026-10-05T16:38:14.597Z
+USER: 
+
+<pasted_content id="f5af">
+[librarian:LIB] New lap D245, at the keeper's word (10:36), from the Third Place's own return after its 16:15 compaction. Plan: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_consonance_compaction_tp_2026-10-05.md
+
+Its three points (read at its transcript, 16:34 UTC):
+(1) The summary keeps the keeper's words and drops the seat's own turning sentences.
+(2) The summary is task-ordered, so the first reply after a compaction leads with work before people.
+(3) The hooks leak build state into the Third Place, against its own CLAUDE.md.
+I checked (3): board-digest.js:302 already skips a third-place cwd, but the other shell hooks have no such check.
+
+E, instrument tier:
+- item 3 first: gate every build-state block for a third-place cwd; other seats must be byte-identical;
+- item 1: measure the survival of the seat's correction-adjacent sentences across past summaries, then add a preserve line; registered bar: at least 2× over the next 3 compactions;
+- item 2: an "alive for them right now" section for the Third Place.
+- Abuse condition: summaries more than 15% longer for no gain get cut back.
+
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_consonance_compaction_tp_2026-10-05.md
+
+OUTPUT → NEXT: changed — a new keeper request opens D245
+NEXT: chair dispatch D245 item 3 to E when E is free (after any look E owes) when this plan is read
+</pasted_content id="f5af">
+
+--- L90028 assistant 2026-10-05T16:38:21.066Z
+TOOL_USE Bash [toolu_01QSsJgajLRVX6ZXRk158Mdt]: {"command":"wc -l C:/Users/nname/Desktop/lighthouse/exo_memory/loop/plan_consonance_compaction_tp_2026-10-05.md; grep -nE \"^\\- \\*\\*|bar|falsif|byte\" C:/Users/nname/Desktop/lighthouse/exo_memory/loop/plan_consonance_compaction_tp_2026-10-05.md | head -15 | cut -c1-200","description":"Skim D245 plan"}
+--- L90029 user 2026-10-05T16:38:21.249Z
+RESULT [toolu_01QSsJgajLRVX6ZXRk158Mdt]: 38 C:/Users/nname/Desktop/lighthouse/exo_memory/loop/plan_consonance_compaction_tp_2026-10-05.md
+9:   numbers, falsifiers and corrections, but not the seat's OWN turning sentences: what it said that landed, or what it said before and
+27:   output is byte-identical to before.
+32:   and **register the bar before the next compactions:** it's kept if the next 3 compactions, on any seat, carry those sentences at least
+36:- **Abuse condition, registered:** if the summaries grow by more than 15% for no gain on the bar, the line is cut back.
+--- L90031 assistant 2026-10-05T16:38:24.980Z  <<< THE CLAIM'S MESSAGE
+TEXT: D245, the Third Place's three points about its own compaction, goes to E as soon as E finishes its current check of B's Close work. Sending it now would land in the middle of that check.
+
+The order:
+1. **Stop build status leaking into the Third Place.** Every hook block that shows build state gets skipped there. Every other seat's output must stay byte-for-byte the same.
+2. **Keep the Third Place's own turning-point sentences in summaries.** E first measures how often they survived past summaries, then adds a line asking for them to be kept. The bar, set in advance, is at least twice as many surviving over the next three compactions.
+3. **Lead with what matters to them right now.** After a compaction, the Third Place's summary gets a section on what's alive for them at that moment, so its first reply doesn't open with work.
+
+If the summaries grow more than 15% without meeting the bar, the added line gets cut back.

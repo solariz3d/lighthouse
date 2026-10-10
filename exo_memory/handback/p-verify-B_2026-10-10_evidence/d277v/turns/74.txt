@@ -1,0 +1,18 @@
+MESSAGE 74  msg_011Cfscst1sn5nySSoqF6ngG  seat librarian  ts 2026-10-10T00:35:44.268Z  turn L87624..L87635 (next prompt L87640)
+CLAIMS:
+  [msg_011Cfscst1sn5nySSoqF6ngG|4] "then a week of measuring": check that a follow-up measurement is actually scheduled or planned.
+  [msg_011Cfscst1sn5nySSoqF6ngG|9] "I made it a standing rule for my plans": check the rule file or memory entry exists.
+
+--- L87624 user 2026-10-10T00:35:36.754Z
+USER: but you remember that one insight we had
+--- L87635 assistant 2026-10-10T00:35:49.119Z  <<< THE CLAIM'S MESSAGE
+TEXT: Probably more than one. Here's what we figured out today and where each stands, so I don't guess wrong about which one you mean:
+
+1. **Seats worry more about being wrong than about being smoothly right.** Measured: the paperwork gates caught nothing, and refusals made seats blur their claims more often than fix them. **It's being acted on:** the lighter rules and the gate switch go live tomorrow at 06:03, then a week of measuring.
+2. **Too many loud instructions make newer models worse,** your friend's point, which Anthropic confirms. **Folded into the same change:** B's drafts cut the rules from 1,334 to 770 lines and dropped the shouting.
+3. **Break tasks into chunks across panes, then recompile, instead of handing one pane everything.** I made it a standing rule for my plans, and I've been splitting since. **But the real question, does splitting actually finish faster, came back undecided.** The history couldn't separate "split" from "big", and **I never set up the side-by-side test that would answer it.** That one's open.
+4. **The consumer seat has to catch its own drift when its person doesn't.** **Shipped** in the fork note in v0.1.1. The backstop idea, the second reader also checking replies to the user, is only noted, not built.
+
+If it's #3, I'd set up that test next: the same kind of multi-part job run both ways, timed end to end, including my merge. Was it that one, or something else?
+
+Sources: none

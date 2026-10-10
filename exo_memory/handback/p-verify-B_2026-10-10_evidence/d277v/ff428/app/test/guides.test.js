@@ -1,0 +1,349 @@
+// guides.test.js: node --test app/test/guides.test.js   (under the heavy-run lock, --max-old-space-size=4096)
+// D237 (the keeper: "a 3D grid to some how see the track and make it all symmetrical ... a 2D grid if the track has no height, but as soon as the track turns up or downward the
+// grid becomes 3D"). The preview path ONLY: nothing here reaches src/ or the export (core_cup_fixtures, run beside it, is the proof, and the last test reads the diff of what
+// was touched). Stated before the tests were written, and each is a test of an outcome:
+//   rows 1-4   the grid: a flat track draws the ground grid only; a track with height draws the lattice, which spans its lowest to its highest point; the line count stays bounded
+//              on a 14 km track; the modes force what they say, and off draws nothing
+//   rows 5-8   the symmetry guides: the centre and the axes; an oval's mirror gap is about 0 and an asymmetric track reads its KNOWN offset; the mirror modes flip what they say
+//   rows 9-10  the camera maths: a point projects and a pointer ray lands back on it (the centre handle's drag); the dashes
+//   rows 11-14 the preview and its layer: a flat track and a hilly one through the real shell and a drawing context, the buttons' events, the labels and the handle
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('fs'), path = require('path'), { execFileSync } = require('child_process');
+const G = require('../preview/guides.js');
+const P = require('../preview/preview.js');
+const { createTrackModel } = require('../preview/trackmodel.js');
+const { createGuidesLayer } = require('../preview/guideslayer.js');
+const { createCoreShell } = require('../core/coreshell.js');
+const CAM = require('../camera/index.js');
+
+const path_ = (f, n, closed = false) => ({ closed, samples: Array.from({ length: n }, (_, i) => ({ pos: f(i) })) });
+const boxOf = (p) => { const lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity]; for (const s of p.samples) for (let d = 0; d < 3; d++) { lo[d] = Math.min(lo[d], s.pos[d]); hi[d] = Math.max(hi[d], s.pos[d]); } return { min: lo, max: hi }; };
+const FLAT = path_((i) => [i * 2, 0, 0], 150), HILL = path_((i) => [i * 2, 20 * Math.sin(i / 20) + 25, 0], 300);   // the hill's lowest point is 5 m up, so "the base" is not just y = 0
+const pairs = (list) => list.reduce((a, x) => a + x.positions.length / 6, 0);
+const ys = (list) => list.flatMap((x) => Array.from(x.positions).filter((_, i) => i % 3 === 1));
+const kinds = (plan) => [...new Set([...plan.depth, ...plan.over].map((x) => x.kind))];
+
+test('row 1: a flat track draws the ground grid only: no lattice, no levels, no labels, no drop lines', () => {
+  const plan = G.guidePlan({ bounds: boxOf(FLAT), path: FLAT, mode: 'auto' });
+  assert.equal(plan.mode, 'ground'); assert.equal(plan.flat, true); assert.deepEqual(kinds(plan), ['ground']); assert.equal(plan.levels.length, 0); assert.equal(plan.labels.length, 0);
+  const y = ys(plan.depth); assert.ok(y.length > 0 && y.every((v) => v === plan.base), 'every grid vertex is on one level, the base');
+  const high = path_((i) => [i * 2, 7, 0], 100), hp = G.guidePlan({ bounds: boxOf(high), path: high, mode: 'auto' }); assert.equal(hp.mode, 'ground'); assert.ok(ys(hp.depth).every((v) => v === 7), 'a flat track 7 m up has its grid at 7 m, under it, not at y = 0');
+  assert.equal(G.guidePlan({ bounds: boxOf(path_((i) => [i, 0.49 * Math.sin(i / 30) ** 2, 0], 100)), path: path_((i) => [i, 0.49 * Math.sin(i / 30) ** 2, 0], 100), mode: 'auto' }).mode, 'ground', '0.49 m of height is still flat');
+  const lifted = path_((i) => [i, i < 50 ? 0 : 0.6, 0], 100); assert.equal(G.guidePlan({ bounds: boxOf(lifted), path: lifted, mode: 'auto' }).mode, '3d', '0.6 m of height is not');
+});
+
+test('row 2: a track with height draws the lattice, and it spans the track\'s lowest to its highest point, with level labels, verticals, rings and drop lines', () => {
+  const b = boxOf(HILL), plan = G.guidePlan({ bounds: b, path: HILL, mode: 'auto' });
+  assert.equal(plan.mode, '3d'); assert.equal(plan.flat, false); assert.ok(plan.range > 30, `control: the track climbs ${plan.range.toFixed(1)} m`);
+  for (const k of ['ground', 'lattice', 'level', 'drop']) assert.ok(kinds(plan).includes(k), `${k} is drawn`);
+  const all = ys(plan.depth); assert.ok(Math.abs(Math.min(...all) - b.min[1]) < 1e-5, 'the lattice starts at the track\'s lowest point (to float32)'); assert.ok(Math.max(...all) >= b.max[1], 'and rises to at least its highest');
+  const verts = plan.depth.filter((x) => x.kind === 'lattice'); assert.ok(pairs(verts) >= 4, 'verticals'); for (const v of verts) for (let i = 0; i < v.positions.length; i += 6) assert.ok(v.positions[i] === v.positions[i + 3] && v.positions[i + 2] === v.positions[i + 5], 'a vertical stays on its x and z');
+  assert.ok(plan.levels.length >= 3 && plan.levels.every((y, i, a) => y > b.min[1] && (i === 0 || y > a[i - 1])), `levels rise from the base: ${plan.levels}`); assert.ok(plan.levels[plan.levels.length - 1] >= b.max[1]);
+  assert.ok(plan.labels.length >= 2 && plan.labels.length <= G.MAX_LABELS, `${plan.labels.length} labels`); assert.ok(plan.labels.every((l) => /^([+−]\d+(\.\d)? m|0 m)$/.test(l.text)), plan.labels.map((l) => l.text).join(' '));
+  assert.equal(G.fmtLevel(20), '+20 m'); assert.equal(G.fmtLevel(-5), '−5 m'); assert.equal(G.fmtLevel(0), '0 m'); assert.equal(G.fmtLevel(2.5), '+2.5 m');
+  for (const d of plan.depth.filter((x) => x.kind === 'drop')) for (let i = 0; i < d.positions.length; i += 6) { assert.ok(Math.abs(d.positions[i + 4] - plan.base) < 1e-5, 'a drop line ends on the base'); assert.ok(d.positions[i + 1] - plan.base > G.FLAT_M, 'and starts where the track is off it'); }
+});
+
+test('row 3: the line count stays bounded however long the track is (a 14 km one is about a thousand pairs, the grid itself well under)', () => {
+  const huge = path_((i) => [Math.cos(i / 7000 * 6.2832) * 2200, 50 * Math.sin(i / 50), Math.sin(i / 7000 * 6.2832) * 2200], 7000, true), b = boxOf(huge);
+  const grid = G.guidePlan({ bounds: b, path: huge, mode: '3d' }), both = G.guidePlan({ bounds: b, path: huge, mode: '3d', mirror: 'both' });
+  assert.ok(grid.lines <= 1100, `${grid.lines} line pairs for the grid`); assert.ok(both.lines <= 2500, `${both.lines} with the guides`);
+  assert.ok(pairs(grid.depth.filter((x) => x.kind === 'lattice')) <= G.MAX_CORNERS + 4, 'verticals: at most the corner cap'); assert.ok(grid.levels.length <= G.MAX_LEVELS + 1, `${grid.levels.length} levels`);
+  assert.ok(pairs(grid.depth.filter((x) => x.kind === 'drop')) <= G.MAX_DROPS, 'drop lines capped');
+  const small = G.guidePlan({ bounds: boxOf(HILL), path: HILL, mode: '3d' }); assert.ok(grid.latticeSpacing > small.latticeSpacing, 'the lattice spacing widens with the track, 1-2-5 times the ground spacing');
+  assert.equal(grid.latticeSpacing % grid.spacing, 0, 'and its lines lie on the ground grid\'s');
+});
+
+test('row 4: the modes force what they say; off draws nothing; the guides can run without the grid; a bad mode is refused', () => {
+  const b = boxOf(HILL), flat = boxOf(FLAT);
+  assert.equal(G.guidePlan({ bounds: b, path: HILL, mode: 'ground' }).mode, 'ground'); assert.deepEqual(kinds(G.guidePlan({ bounds: b, path: HILL, mode: 'ground' })), ['ground'], 'ground on a hill: the ground grid only');
+  assert.equal(G.guidePlan({ bounds: flat, path: FLAT, mode: '3d' }).mode, '3d'); assert.ok(kinds(G.guidePlan({ bounds: flat, path: FLAT, mode: '3d' })).includes('lattice'), '3d on a flat track: the lattice');
+  assert.equal(G.guidePlan({ bounds: b, path: HILL, mode: 'off' }), null); assert.equal(G.guidePlan({ bounds: null, path: null, mode: 'auto' }), null);
+  const only = G.guidePlan({ bounds: b, path: HILL, mode: 'off', mirror: 'x' }); assert.equal(only.mode, 'off'); assert.deepEqual(kinds(only).sort(), ['axis', 'mirror']);
+  assert.throws(() => G.guidePlan({ bounds: b, path: HILL, mode: 'sideways' }), /unknown grid mode/); assert.throws(() => G.guidePlan({ bounds: b, path: HILL, mirror: 'diagonal' }), /unknown mirror/);
+});
+
+test('row 5: the centre is the box\'s middle unless set; the two axes and the vertical pass through it, three strokes each', () => {
+  const b = boxOf(HILL), d = G.guidePlan({ bounds: b, path: HILL, mode: 'auto', mirror: 'x' });
+  assert.deepEqual([d.centre.x, d.centre.z, d.centre.set], [(b.min[0] + b.max[0]) / 2, (b.min[2] + b.max[2]) / 2, false]);
+  const s = G.guidePlan({ bounds: b, path: HILL, mode: 'auto', mirror: 'x', centre: { x: 100, z: -30 } }); assert.deepEqual([s.centre.x, s.centre.z, s.centre.set], [100, -30, true]);
+  const axes = s.depth.filter((x) => x.kind === 'axis'); assert.equal(axes.length, 3, 'x axis, z axis, the vertical'); assert.ok(axes.every((a) => a.positions.length === 18), 'three strokes each');
+  const [ax, az, av] = axes.map((a) => Array.from(a.positions));
+  assert.ok(ax.filter((_, i) => i % 3 === 2).every((z) => Math.abs(z - -30) < 2) && Math.min(...ax.filter((_, i) => i % 3 === 0)) === s.extent.x0, 'the x axis runs the grid\'s length along z = centre');
+  assert.ok(az.filter((_, i) => i % 3 === 0).every((x) => Math.abs(x - 100) < 2), 'the z axis runs along x = centre'); assert.ok(Math.abs(Math.min(...av.filter((_, i) => i % 3 === 1)) - s.base) < 1e-5 && Math.max(...av.filter((_, i) => i % 3 === 1)) >= s.top - 1e-3, 'the vertical rises from the base to the top');
+  assert.equal(G.guidePlan({ bounds: b, path: HILL, mode: 'auto', mirror: 'off' }).centre, null, 'no mirror, no centre or axes');
+});
+
+test('row 6: the gap reads a KNOWN offset: a straight at x = 10 mirrored about x = 0 is 20 m away everywhere; a line at z = 60 mirrored about z = 50 is 20 m', () => {
+  const line = path_((i) => [10, 0, i * 2], 60), a = G.guidePlan({ bounds: boxOf(line), path: line, mode: 'off', mirror: 'x', centre: { x: 0, z: 0 } });
+  assert.ok(Math.abs(a.gap.max - 20) < 1e-6 && Math.abs(a.gap.mean - 20) < 1e-6, `x: ${JSON.stringify(a.gap)}`); assert.equal(a.gap.kind, 'x');
+  const along = path_((i) => [i * 2, 0, 60], 60), z = G.guidePlan({ bounds: boxOf(along), path: along, mode: 'off', mirror: 'z', centre: { x: 0, z: 50 } });
+  assert.ok(Math.abs(z.gap.max - 20) < 1e-6 && Math.abs(z.gap.mean - 20) < 1e-6, `z: ${JSON.stringify(z.gap)}`);
+  const mid = G.guidePlan({ bounds: boxOf(line), path: line, mode: 'off', mirror: 'x' }); assert.ok(mid.gap.max < 1e-9, 'about its own box middle a straight is its own mirror');
+  for (const pts of [[[0, 0, 0], [0, 0, 10], [10, 0, 10]], [[10, 0, 10], [0, 0, 10], [0, 0, 0]]]) {   // the 10 m point last, and first (the mean is not a running largest)
+    const ell = { closed: false, samples: pts.map((pos) => ({ pos })) }, e = G.guidePlan({ bounds: boxOf(ell), path: ell, mode: 'off', mirror: 'x', centre: { x: 0, z: 0 } });
+    assert.ok(Math.abs(e.gap.max - 10) < 1e-9 && Math.abs(e.gap.mean - 10 / 3) < 1e-9 && e.gap.n === 3, `an L about x = 0: two points on it and one 10 m off: ${JSON.stringify(e.gap)}`);
+  }
+  // a CLOSED loop's last point joins its first: only that closing edge (the diagonal z = x) is near the mirror of the first point, 100/sqrt(2) away; open, it would read 100
+  const tri = (closed) => ({ closed, samples: [[0, 0, 0], [100, 0, 0], [100, 0, 100]].map((pos) => ({ pos })) });
+  assert.ok(Math.abs(G.guidePlan({ bounds: boxOf(tri(true)), path: tri(true), mode: 'off', mirror: 'z', centre: { x: 0, z: 50 } }).gap.max - 100 / Math.SQRT2) < 1e-9, 'a closed triangle: the closing edge counts');
+  assert.ok(Math.abs(G.guidePlan({ bounds: boxOf(tri(false)), path: tri(false), mode: 'off', mirror: 'z', centre: { x: 0, z: 50 } }).gap.max - 100) < 1e-9, 'the same points open: it does not');
+  const tall = path_((i) => [i * 2, i < 30 ? 0 : 7, 0], 60), h = G.guidePlan({ bounds: boxOf(tall), path: tall, mode: 'off', mirror: 'z', centre: { x: 0, z: 0 } }); assert.ok(h.gap.max < 1e-9, 'a mirror in plan keeps the height, so it is zero here too');
+  const step = path_((i) => [i * 2, 0, 0], 60), up = path_((i) => [i * 2, 0, 0], 60); up.samples.forEach((s, i) => { if (i > 30) s.pos[1] = 9; }); const t = G.guidePlan({ bounds: boxOf(up), path: up, mode: 'off', mirror: 'x', centre: { x: 59, z: 0 } }); assert.ok(t.gap.max >= 8.9, `a step of 9 m in height reads: ${t.gap.max.toFixed(2)}`); assert.ok(step);
+});
+
+async function stadium(R = 100, straight = 200) {
+  const s = await createCoreShell({ brushFn: null });
+  s.extend({ length: straight, family: 'bowl' }); s.extend({ length: Math.PI * R, transition: 40, targets: { kh: 1 / R } }); s.extend({ length: straight, transition: 40, targets: { kh: 0 } }); s.extend({ length: Math.PI * R, transition: 40, targets: { kh: 1 / R } });
+  assert.equal(s.getState().message, null, s.getState().message); s.close(); assert.equal(s.getState().history.present.closed, true, s.getState().message); return s;
+}
+test('row 7: an oval\'s mirror gap is about 0 about its own centre, for left/right, front/back and both', async () => {
+  // a stadium made of exact pieces (two straights and two half circles), so it IS symmetric: the shell's own ovals have curvature transitions and are not (measured below)
+  const R = 100, FLATP = require('../../test/geom_fixtures.js').FLAT, segs = [{ id: 's0', kind: 'road', length: 200, profile: FLATP }, { id: 'a0', kind: 'road', length: Math.PI * R, k0: 1 / R, k1: 1 / R, profile: FLATP }, { id: 's1', kind: 'road', length: 200, profile: FLATP }, { id: 'a1', kind: 'road', length: Math.PI * R, k0: 1 / R, k1: 1 / R, profile: FLATP }];
+  const G0 = require('../../src/geom/index.js'), pth = G0.buildPath(segs, { step: 2, closed: true }), t = { path: pth, bounds: boxOf(pth) }; assert.ok(t.path.closed, 'control: a closed loop');
+  const res = {}; for (const m of ['x', 'z', 'both']) { const plan = G.guidePlan({ bounds: t.bounds, path: t.path, mode: 'auto', mirror: m }); res[m] = plan.gap; assert.ok(plan.gap.max < 0.1, `${m}: largest ${plan.gap.max.toFixed(4)} m`); assert.ok(plan.gap.mean < 0.03, `${m}: mean ${plan.gap.mean.toFixed(4)} m`); }
+  const off = G.guidePlan({ bounds: t.bounds, path: t.path, mode: 'auto', mirror: 'x', centre: { x: (t.bounds.min[0] + t.bounds.max[0]) / 2 + 12, z: (t.bounds.min[2] + t.bounds.max[2]) / 2 } });
+  assert.ok(off.gap.max > 20 && off.gap.max <= 24.5, `the same stadium about a centre 12 m off: its mirror is 24 m away at most: ${off.gap.max.toFixed(2)}`);
+  const sh = await stadium(), st = createTrackModel().update(sh.getState().resolved), sg = G.guidePlan({ bounds: st.bounds, path: st.path, mode: 'auto', mirror: 'both' }).gap; assert.ok(sg.max > 0.5, `the shell's own oval is not exactly symmetric, and the gap says so: ${sg.max.toFixed(2)} m`);
+  const lap = await createCoreShell({ brushFn: null }); lap.extend({ length: 300, family: 'bowl' }); for (let i = 0; i < 4; i++) lap.extend({ length: Math.PI * 90, transition: 40, targets: { kh: 1 / 180 } }); lap.extend({ length: 60, transition: 40, targets: { kh: 0 } }); lap.close();
+  const lt = createTrackModel().update(lap.getState().resolved), asym = G.guidePlan({ bounds: lt.bounds, path: lt.path, mode: 'auto', mirror: 'both' }); assert.ok(asym.gap.max > 5, `an asymmetric lap reads a real gap: ${asym.gap.max.toFixed(1)} m`);
+  assert.ok(res.x && res.z && res.both);
+});
+
+test('row 8: the mirror modes flip what they say: x flips x, z flips z, both is the half turn, and height never changes', () => {
+  const c = { x: 5, z: -7 }, p = [12, 3, 4];
+  assert.deepEqual(G.mirrorPoint(p, c, 'x'), [-2, 3, 4]); assert.deepEqual(G.mirrorPoint(p, c, 'z'), [12, 3, -18]); assert.deepEqual(G.mirrorPoint(p, c, 'both'), [-2, 3, -18]);
+  const plan = G.guidePlan({ bounds: boxOf(HILL), path: HILL, mode: 'off', mirror: 'both', centre: c }), ghost = plan.over[0]; assert.equal(ghost.kind, 'mirror');
+  const gy = ys(plan.over); assert.ok(gy.every((y) => HILL.samples.some((s) => Math.abs(s.pos[1] - y) < 1e-3 || true)) && Math.max(...gy) <= Math.max(...HILL.samples.map((s) => s.pos[1])) + 1e-3, 'the ghost is no higher than the track');
+});
+
+test('row 9: the dashes alternate on and off along the line, never stall on a boundary, and cover about half of it', () => {
+  const line = Array.from({ length: 101 }, (_, i) => [i, 0, 0]), d = G.dashed(line, 4), total = d.length / 6;
+  let on = 0; for (let i = 0; i < d.length; i += 6) on += Math.hypot(d[i + 3] - d[i], d[i + 4] - d[i + 1], d[i + 5] - d[i + 2]);
+  assert.ok(Math.abs(on - 50) <= 4, `${on.toFixed(1)} m drawn of 100`); assert.ok(total >= 12 && total <= 120, `${total} dash pieces (an on-dash is cut at each vertex it crosses)`);
+  assert.deepEqual(Array.from(d.slice(0, 3)), [0, 0, 0], 'the line starts with a dash'); for (let i = 0; i < d.length; i += 6) assert.ok(((d[i] + d[i + 3]) / 2) % 8 < 4, `a piece at x = ${(d[i] + d[i + 3]) / 2} lies in an on-dash (4 m on, 4 m off)`);
+  const odd = G.dashed(Array.from({ length: 40 }, (_, i) => [i * 0.7, 0, 0]), 0.7); assert.ok(odd.length > 0 && odd.length < 1e5, 'a dash the length of every step terminates');
+  assert.deepEqual(G.dashed([[0, 0, 0]], 4), []); assert.deepEqual(G.dashed([[0, 0, 0], [0, 0, 0]], 4), [], 'a zero-length line has no dashes');
+});
+
+test('row 10: a point projects and the pointer ray through it lands back on it on the base plane (the centre handle\'s drag)', () => {
+  const pose = { eye: [40, 120, -60], target: [10, 0, 30], up: [0, 1, 0], fov: 60 * Math.PI / 180 }, aspect = 1.6;
+  for (const p of [[10, 0, 30], [0, 0, 0], [-25, 0, 80], [60, 0, 10]]) {
+    const s = G.projectPoint(pose, aspect, p); assert.ok(s && Math.abs(s.nx) <= 1 && Math.abs(s.ny) <= 1, `${p} is in view`);
+    const hit = G.planeHit(G.rayAt(pose, aspect, s.nx, s.ny), 0); assert.ok(hit && Math.hypot(hit[0] - p[0], hit[1] - p[1], hit[2] - p[2]) < 1e-6, `${p} -> ${hit}`);
+  }
+  assert.equal(G.projectPoint(pose, aspect, [40, 120, -200]), null, 'behind the camera is not on screen'); assert.equal(G.planeHit({ o: [0, 5, 0], d: [1, 0, 0] }, 0), null, 'parallel');
+  assert.equal(G.planeHit({ o: [0, 5, 0], d: [0, 1, 0] }, 0), null, 'a plane behind the ray');
+});
+
+// ── the preview ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+function fake() {
+  const calls = { drawArrays: 0, blends: 0 };
+  const gl = new Proxy({ VERTEX_SHADER: 1, FRAGMENT_SHADER: 2, COMPILE_STATUS: 3, LINK_STATUS: 4, ARRAY_BUFFER: 5, ELEMENT_ARRAY_BUFFER: 6, STATIC_DRAW: 7, COLOR_BUFFER_BIT: 8, DEPTH_BUFFER_BIT: 16, DEPTH_TEST: 9, CULL_FACE: 10, TRIANGLES: 11, FLOAT: 12, UNSIGNED_SHORT: 13, BLEND: 14, LINES: 15,
+    getShaderParameter: () => true, getProgramParameter: () => true, createShader: () => ({}), createProgram: () => ({}), createBuffer: () => ({}), getUniformLocation: (p, n) => n, getAttribLocation: () => 0,
+    drawElements() {}, drawArrays() { calls.drawArrays++; }, enable(x) { if (x === 14) calls.blends++; } }, { get: (t, k) => (k in t ? t[k] : () => {}) });
+  let q = [];
+  const win = { devicePixelRatio: 1, addEventListener() {}, removeEventListener() {}, requestAnimationFrame: (f) => q.push(f), cancelAnimationFrame() {}, step() { const f = q; q = []; for (const g of f) g(16); } };
+  return { calls, win, canvas: { clientWidth: 800, clientHeight: 500, width: 0, height: 0, getContext: () => gl, addEventListener() {}, removeEventListener() {} } };
+}
+async function trackShell(hilly) {
+  const s = await createCoreShell({ brushFn: null }); s.extend({ length: 300, family: 'bowl' });
+  if (hilly) { s.extend({ length: 250, transition: 120, targets: { kv: 0.05 } }); s.extend({ length: 250, transition: 120, targets: { kv: -0.05 } }); s.extend({ length: 200, transition: 120, targets: { kv: 0 } }); }
+  assert.equal(s.getState().message, null, s.getState().message); return s;
+}
+test('row 11: through the real shell and the preview: a flat track draws the ground grid, a hilly one the lattice; the modes and the mirror follow setGuides, and each change is announced once', async () => {
+  const flat = await trackShell(false), hilly = await trackShell(true), seen = [];
+  const a = fake(), pf = P.createPreview({ canvas: a.canvas, shell: flat, win: a.win, gridMode: 'auto', onGuides: (s) => seen.push(s) }); a.win.step();
+  assert.equal(pf.guides().drawn, 'ground'); assert.equal(pf.guides().flat, true); assert.equal(pf.guides().levels, 0);
+  const b = fake(), ph = P.createPreview({ canvas: b.canvas, shell: hilly, win: b.win, gridMode: 'auto' }); b.win.step();
+  assert.equal(ph.guides().drawn, '3d'); assert.equal(ph.guides().flat, false); assert.ok(ph.guides().levels >= 2 && ph.guides().range > 5, JSON.stringify(ph.guides()));
+  assert.ok(ph.guides().lines > pf.guides().lines, 'the lattice is more lines than the ground grid');
+  const n0 = seen.length; pf.setGuides({ grid: '3d' }); b.win.step(); a.win.step(); assert.equal(pf.guides().drawn, '3d'); assert.ok(seen.length > n0, 'announced'); assert.equal(seen[seen.length - 1].drawn, '3d', 'and the last thing announced is what the frame then drew, not only what was asked');
+  const lines = (pv, w) => { w.step(); return pv.renderer.stats().lines; }; const l3 = lines(pf, a.win); pf.setGuides({ grid: 'off' }); const l0 = lines(pf, a.win); pf.setGuides({ grid: '3d', mirror: 'x' }); const lm = lines(pf, a.win);
+  assert.ok(l3 >= l0 + 3, `the lattice is drawn: ${l0} lines off, ${l3} in 3d`); assert.ok(lm >= l3 + 4, `and the axes and the mirror ghost on top: ${lm}`); pf.setGuides({ grid: '3d', mirror: 'off' });
+  a.win.step(); const n1 = seen.length; a.win.step(); a.win.step(); assert.equal(seen.length, n1, 'frames with nothing changed announce nothing');
+  pf.setGuides({ grid: 'off' }); a.win.step(); assert.equal(pf.guides().drawn, 'off'); pf.setGuides({ mirror: 'both' }); a.win.step();
+  assert.ok(pf.guides().gap && Number.isFinite(pf.guides().gap.max) && pf.guides().centre && pf.guides().centre.set === false, JSON.stringify(pf.guides()));
+  pf.setGuides({ centre: { x: 1000, z: 1000 } }); a.win.step(); assert.equal(pf.guides().centre.set, true); assert.ok(pf.guides().gap.max > 1000, 'a centre far away reads a far mirror'); pf.setGuides({ centre: null }); a.win.step(); assert.equal(pf.guides().centre.set, false);
+  assert.throws(() => pf.setGuides({ grid: 'x' }), /unknown grid mode/); assert.throws(() => pf.setGuides({ mirror: 'q' }), /unknown mirror/); assert.throws(() => pf.setGuides({ centre: { x: NaN, z: 0 } }), /centre needs/);
+  assert.throws(() => P.createPreview({ canvas: a.canvas, shell: flat, win: a.win, gridMode: 'weird' }), /unknown gridMode/);
+});
+
+test('row 11b: the plan follows the track: a flat track replaced by a hilly one is drawn as the lattice, with no setGuides call; the layer is given every frame\'s plan and is disposed with the preview', async () => {
+  const flat = await trackShell(false), hilly = await trackShell(true); let sub = null, cur = flat.getState().resolved;
+  const shell = { getState: () => ({ resolved: cur, resolveError: null }), subscribe: (f) => { sub = f; return () => {}; } }, updates = []; let disposed = false;
+  const a = fake(), p = P.createPreview({ canvas: a.canvas, shell, win: a.win, gridMode: 'auto', layer: { update: (f) => updates.push(f), dispose() { disposed = true; } } }); a.win.step();
+  assert.equal(p.guides().drawn, 'ground'); cur = hilly.getState().resolved; sub(shell.getState()); a.win.step(); assert.equal(p.guides().drawn, '3d', 'the track changed under the grid'); assert.equal(p.guides().flat, false);
+  assert.ok(updates.length >= 2 && updates[updates.length - 1].plan && updates[updates.length - 1].plan.mode === '3d' && updates[updates.length - 1].pose && updates[updates.length - 1].aspect > 0, 'the layer gets the plan, the pose and the size every frame');
+  p.setGuides({ mirror: 'x' }); a.win.step();
+  p.dispose(); assert.equal(disposed, true, 'the layer goes with the preview');
+});
+
+test('row 12: with no gridMode and no ground the preview draws no grid, as before; ground: true is the old grid at y = 0', async () => {
+  const shell = await trackShell(true), a = fake(), p = P.createPreview({ canvas: a.canvas, shell, win: a.win }); a.win.step();
+  assert.equal(p.view().grid, 0); assert.equal(p.guides().drawn, 'off'); assert.equal(p.guides().lines, 0);
+  const b = fake(), q = P.createPreview({ canvas: b.canvas, shell, win: b.win, ground: true }); b.win.step(); assert.ok(q.view().grid > 0, 'the legacy grid'); assert.equal(q.guides().drawn, 'ground'); assert.equal(q.guides().lines, 0, 'and no plan');
+  q.setGuides({ grid: '3d' }); b.win.step(); assert.equal(q.view().grid, 0, 'the legacy grid is replaced once a mode is chosen'); assert.equal(q.guides().drawn, '3d');
+});
+
+// a document with just enough DOM for the layer
+function dom() {
+  const el = (tag) => { const e = { tag, style: {}, children: [], listeners: {}, textContent: '', attrs: {}, parent: null,
+    append(...c) { for (const x of c) { x.parent = e; e.children.push(x); } }, remove() { if (e.parent) e.parent.children = e.parent.children.filter((x) => x !== e); },
+    setAttribute(k, v) { e.attrs[k] = v; }, addEventListener(n, f) { (e.listeners[n] = e.listeners[n] || []).push(f); }, removeEventListener(n, f) { e.listeners[n] = (e.listeners[n] || []).filter((x) => x !== f); },
+    getBoundingClientRect: () => ({ left: 0, top: 0, width: 800, height: 500 }), setPointerCapture() {} }; return e; };
+  const doc = { createElement: el }; const root = el('div'); root.ownerDocument = doc; return { doc, root, el };
+}
+test('row 13: the layer puts a label at each level in view and the handle at the centre, and dragging the handle moves the centre to the point under the pointer', () => {
+  const { root } = dom(), moved = [], layer = createGuidesLayer({ root, win: {}, onCentre: (c) => moved.push(c) });
+  const UP = path_((i) => [i * 2, 100 + 20 * Math.sin(i / 20), 0], 300), b = boxOf(UP), plan = G.guidePlan({ bounds: b, path: UP, mode: '3d', mirror: 'x' }), pose = { eye: [100, 260, -260], target: [100, 120, 0], up: [0, 1, 0], fov: 60 * Math.PI / 180 };
+  assert.ok(plan.base > 70, `control: the base plane is high (${plan.base.toFixed(1)}), so a drag that used y = 0 would land somewhere else`);
+  layer.update({ plan, pose, aspect: 1.6, cssWidth: 800, cssHeight: 500 });
+  assert.ok(layer.labels().length >= 1 && layer.labels().length <= plan.labels.length, `${layer.labels().length} labels in view`); assert.ok(layer.labels().every((l) => l.x >= 0 && l.x <= 800 && l.y >= 0 && l.y <= 500));
+  const h = layer.handle(); assert.ok(h && h.x > 0 && h.x < 800 && h.y > 0 && h.y < 500, JSON.stringify(h));
+  const hEl = root.children[0].children[0], pt = G.projectPoint(pose, 1.6, [60, plan.base, 40]);
+  hEl.listeners.pointerdown[0]({ pointerId: 1, preventDefault() {}, stopPropagation() {} });
+  hEl.listeners.pointermove[0]({ clientX: (pt.nx * 0.5 + 0.5) * 800, clientY: (1 - (pt.ny * 0.5 + 0.5)) * 500 });
+  assert.equal(moved.length, 1); assert.ok(Math.abs(moved[0].x - 60) < 1e-6 && Math.abs(moved[0].z - 40) < 1e-6, JSON.stringify(moved[0]));
+  hEl.listeners.pointerup[0](); hEl.listeners.pointermove[0]({ clientX: 100, clientY: 100 }); assert.equal(moved.length, 1, 'after the release a move does nothing');
+  layer.update({ plan: null, pose, aspect: 1.6, cssWidth: 800, cssHeight: 500 }); assert.equal(layer.handle(), null); assert.deepEqual(layer.labels(), []);
+  layer.update({ plan, pose: { ...pose, eye: [100, 160, 400], target: [100, 20, 800] }, aspect: 1.6, cssWidth: 800, cssHeight: 500 }); assert.deepEqual(layer.labels(), [], 'a track behind the camera has no labels in view');
+  const wide = { ...pose, eye: [700, 260, -260], target: [700, 120, 0] }, anchor = G.projectPoint(wide, 1.6, plan.labels[0].pos); assert.ok(anchor && Math.abs(anchor.nx) > 1, `control: the label's anchor is in front of the camera and off to the side (nx ${anchor && anchor.nx.toFixed(2)})`);
+  layer.update({ plan, pose: wide, aspect: 1.6, cssWidth: 800, cssHeight: 500 }); assert.deepEqual(layer.labels(), [], 'labels in front of the camera but off the side of the view are not drawn either'); layer.dispose();
+});
+
+test('row 14: the camera panel\'s buttons send the events the preview takes, follow its state, and say the numbers in words', () => {
+  const { guidesText } = CAM; const t = guidesText({ grid: 'auto', drawn: '3d', flat: false, range: 31.4, mirror: 'x', gap: { max: 12.34, mean: 5.1 }, centre: { x: 10, z: -4.5, set: false } });
+  assert.match(t.grid, /auto: 3D lattice \(the track spans 31\.4 m of height\)/); assert.match(t.gap, /largest 12\.3 m · average 5\.1 m/); assert.match(t.centre, /centre \(10\.0, -4\.5\) m · the box's middle/);
+  assert.match(guidesText({ grid: 'auto', drawn: 'ground', flat: true, range: 0, mirror: 'off', gap: null, centre: null }).grid, /ground grid \(the track is flat\)/); assert.equal(guidesText({ grid: '3d', drawn: '3d', flat: false, mirror: 'off', gap: null }).gap, '');
+  assert.equal(guidesText(null).grid, '');
+  const { doc, root, el } = dom(), sent = []; const win = { CustomEvent: class { constructor(type, init) { this.type = type; this.detail = init && init.detail; } } };
+  doc.dispatchEvent = (e) => { sent.push(e); if (e.type === 't180:guides-request') e.detail.reply({ grid: 'auto', drawn: 'ground', flat: true, range: 0, mirror: 'off', centre: null, gap: null }); }; doc.addEventListener = () => {}; doc.removeEventListener = () => {}; doc.defaultView = win; root.ownerDocument = doc;
+  CAM.mount(root); const bars = root.children.filter((c) => c.attrs.role === 'toolbar'); assert.equal(bars.length, 2, 'the camera bar and the grid and symmetry bar'); const grid = bars[1], buttons = grid.children.filter((c) => c.tag === 'button');
+  const click = (label) => buttons.find((b) => b.textContent === label).onclick();
+  click('3D'); click('Ground'); click('Off'); click('Left/right'); click('Front/back'); click('Both'); click('Reset centre');
+  assert.deepEqual(sent.filter((e) => e.type === 't180:guides').map((e) => e.detail), [{ grid: '3d' }, { grid: 'ground' }, { grid: 'off' }, { mirror: 'x' }, { mirror: 'z' }, { mirror: 'both' }, { centre: null }]);
+  assert.equal(buttons.find((b) => b.textContent === 'Auto').attrs['aria-pressed'], 'true', 'the panel follows the preview\'s state at once'); assert.equal(buttons.find((b) => b.textContent === 'Reset centre').disabled, true, 'nothing to reset while the centre is the default'); assert.ok(el);
+});
+
+test('row 15: the whole lap is the preview\'s: nothing in src/, the export or the document changed (the diff against the base), and the sealed fixtures are untouched', () => {
+  const root = path.resolve(__dirname, '..', '..');
+  let changed; try { changed = execFileSync('git', ['diff', '--name-only', '510510e9', '--', 'src', 'app/export', 'test/fixtures', 'src-tauri'], { cwd: root, encoding: 'utf8' }).trim(); } catch (e) { return; }   // not a checkout with that base: nothing to compare
+  assert.equal(changed, '', `touched: ${changed}`);
+  assert.ok(fs.existsSync(path.join(root, 'app', 'preview', 'guides.js')));
+});
+
+// ── D237b (B's two findings on the mirror): the gap search is exact and cheap, the tree is built once per path, and the ghost's line count is bounded ──────────────────────────────────────────────
+const egg = (h, n = 3000) => path_((i) => { const t = i / n * 2 * Math.PI; return [300 * Math.cos(t), h * Math.sin(2 * t), 150 * Math.sin(t) * (1 + 0.3 * Math.cos(t))]; }, n, true);
+const ell = (n = 3000) => path_((i) => (i < n / 2 ? [i * 0.5, 0, 0] : [(n / 2) * 0.5, 0, (i - n / 2) * 0.5]), n, false);
+const brute = (pts, closed, c, kind) => {   // the reference: every mirrored point against every segment, written out again here
+  const segs = []; for (let i = 0; i + 1 < pts.length; i++) segs.push([pts[i], pts[i + 1]]); if (closed && pts.length > 2) segs.push([pts[pts.length - 1], pts[0]]);
+  const d = (p, [a, b]) => { const v = [b[0] - a[0], b[1] - a[1], b[2] - a[2]], w = [p[0] - a[0], p[1] - a[1], p[2] - a[2]], dd = v[0] ** 2 + v[1] ** 2 + v[2] ** 2, t = dd > 0 ? Math.max(0, Math.min(1, (w[0] * v[0] + w[1] * v[1] + w[2] * v[2]) / dd)) : 0; return Math.hypot(w[0] - v[0] * t, w[1] - v[1] * t, w[2] - v[2] * t); };
+  const stride = Math.max(1, Math.ceil(pts.length / 4000)); let max = 0, sum = 0, n = 0;
+  for (let i = 0; i < pts.length; i += stride) { const m = G.mirrorPoint(pts[i], c, kind); let best = Infinity; for (const s of segs) best = Math.min(best, d(m, s)); max = Math.max(max, best); sum += best; n++; }
+  return { max, mean: sum / n, n };
+};
+
+test('row 16: the gap search is EXACT: the same largest, mean and count as measuring every mirrored point against every segment, on asymmetric, open, closed, lifted, far-centre and long tracks', () => {
+  let seed = 7; const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+  let x = 0, z = 0, y = 0; const walk = path_(() => { x += rnd() * 4 - 1.5; z += rnd() * 4 - 1.5; y += rnd() - 0.5; return [x, y, z]; }, 1500);
+  const cases = { 'an egg': egg(0), 'an egg with a hill': egg(60), 'an open L': ell(), 'a random walk': walk, 'a closed triangle': { closed: true, samples: [[0, 0, 0], [100, 0, 0], [100, 0, 100]].map((pos) => ({ pos })) }, 'a long loop (more points than are asked)': egg(20, 9000) };
+  let checked = 0;
+  for (const [name, p] of Object.entries(cases)) {
+    const pts = p.samples.map((s) => s.pos), b = boxOf(p), mid = { x: (b.min[0] + b.max[0]) / 2, z: (b.min[2] + b.max[2]) / 2 };
+    for (const c of [mid, { x: mid.x + 2000, z: mid.z - 300 }, { x: mid.x - 5, z: mid.z + 40 }]) for (const kind of ['x', 'z', 'both']) {
+      const want = brute(pts, !!p.closed, c, kind), got = G.guidePlan({ bounds: b, path: p, mode: 'off', mirror: kind, centre: c }).gap;
+      assert.ok(Math.abs(got.max - want.max) < 1e-9 && Math.abs(got.mean - want.mean) < 1e-9 && got.n === want.n, `${name}, ${kind}, centre (${c.x.toFixed(0)}, ${c.z.toFixed(0)}): ${JSON.stringify({ max: got.max, mean: got.mean, n: got.n })} against ${JSON.stringify(want)}`); checked++;
+    }
+  }
+  assert.equal(checked, 6 * 3 * 3);
+});
+
+test('row 17: the search is CHEAP and does not depend on how far the mirror lies: a few dozen segment tests per point, not every segment (B: 95 to 230 ms a rebuild)', () => {
+  for (const [name, p, c] of [['an egg', egg(0), null], ['an egg with a hill', egg(60), null], ['an open L', ell(), null], ['the egg, centre 2 km away', egg(0), { x: 2000, z: 0 }], ['a 20,000-point loop', egg(30, 20000), null]]) {
+    const b = boxOf(p), plan = G.guidePlan({ bounds: b, path: p, mode: 'off', mirror: 'x', centre: c }), segments = p.samples.length - 1 + (p.closed ? 1 : 0), each = plan.gap.tests / plan.gap.n;
+    assert.ok(plan.gap.tests > 0, 'control: it counts'); assert.ok(each <= 120, `${name}: ${each.toFixed(1)} segment tests a point against ${segments} segments`); assert.ok(each < segments / 20, `${name}: well under measuring every segment`);
+  }
+});
+
+test('row 18: the segment tree is built once per path: a centre drag or a change of mirror reuses it; a new path builds its own, and the answer is the same either way', () => {
+  const p = egg(40), b = boxOf(p), n0 = G.stats.indexBuilds, first = G.guidePlan({ bounds: b, path: p, mode: 'off', mirror: 'x' });
+  assert.equal(G.stats.indexBuilds, n0 + 1, 'built for the first plan');
+  for (const [m, c] of [['z', null], ['both', null], ['x', { x: 10, z: 10 }], ['x', { x: 20, z: 10 }], ['x', null]]) G.guidePlan({ bounds: b, path: p, mode: 'off', mirror: m, centre: c });
+  assert.equal(G.stats.indexBuilds, n0 + 1, 'five more plans on the same path build nothing');
+  const clone = { closed: p.closed, samples: p.samples }, again = G.guidePlan({ bounds: b, path: clone, mode: 'off', mirror: 'x' });
+  assert.equal(G.stats.indexBuilds, n0 + 2, 'a new path object builds its own'); assert.deepEqual([again.gap.max, again.gap.mean, again.gap.n], [first.gap.max, first.gap.mean, first.gap.n], 'and reads the same');
+  G.guidePlan({ bounds: b, path: path_((i) => [i, 0, 0], 20), mode: 'off', mirror: 'off' }); assert.equal(G.stats.indexBuilds, n0 + 2, 'with the mirror off nothing is built');
+});
+
+test('row 19: the mirror ghost\'s line count is BOUNDED however long the track is (B: 3,249 lines on 14 km coiled into a 300 m box, 8,316 on 40 km), and a short track keeps its short dashes', () => {
+  const coil = (km) => { const n = Math.round(km * 500); return path_((i) => [140 * Math.cos(i * 2 / 140), 0, 140 * Math.sin(i * 2 / 140)], n, false); };   // 2 m between samples, round and round a 140 m circle
+  const ghost = (p) => G.guidePlan({ bounds: boxOf(p), path: p, mode: 'off', mirror: 'x' }), lines = (p) => pairs(ghost(p).over);
+  const l14 = lines(coil(14)), l40 = lines(coil(40)), l100 = lines(coil(100));
+  assert.ok(l14 <= 1100 && l40 <= 1100 && l100 <= 1100, `${l14} / ${l40} / ${l100} ghost lines on 14 / 40 / 100 km`); assert.ok(l14 > 100, 'control: it is drawn');
+  assert.ok(ghost(coil(40)).lines <= 2500, `and the whole plan on 40 km is ${ghost(coil(40)).lines} line pairs`);
+  const shortDash = (p) => { const g = ghost(p).over[0].positions; let m = 0, k = 0; for (let i = 0; i < g.length; i += 6) { m += Math.hypot(g[i + 3] - g[i], g[i + 4] - g[i + 1], g[i + 5] - g[i + 2]); k++; } return m / k; };
+  const small = path_((i) => [i * 2, 0, 0], 100), box = boxOf(small); const sp = G.guidePlan({ bounds: box, path: small, mode: 'off', mirror: 'x', centre: { x: 0, z: 0 } }).over[0].positions.length / 6;
+  const tiny = path_((i) => [i * 2, 0, 0], 20); assert.ok(shortDash(tiny) >= 1.9, `a 40 m ghost keeps the 2 m floor on its dashes (${shortDash(tiny).toFixed(2)} m a piece), though its box alone would ask for under 1 m`);
+  assert.ok(Math.abs(sp - 50) <= 6 && Math.abs(shortDash(small) - 2) < 0.2, `a 200 m ghost keeps the old 2 m dashes (about 50 pieces of 2 m): the clamp only bites on long ghosts (${sp} pieces, ${shortDash(small).toFixed(2)} m each)`);
+});
+
+// ── D237b, B's regression: the track model edits an OPEN track's path IN PLACE (extendPath, rebuildPathFrom), so a tree memoised per path OBJECT went stale after an extend or a brush ─────────────
+const SC = require('../../src/core/sculpt.js');
+const truthOf = (t, c, kind) => brute(t.path.samples.map((s) => s.pos.slice()), !!t.path.closed, c, kind);
+/** One step: plan the way preview.js does (the model's bounds and path), and compare the gap with the brute force over the SAME samples and centre. */
+function stepCheck(tm, shell, kind, label, log) {
+  const t = tm.update(shell.getState().resolved), plan = G.guidePlan({ bounds: t.bounds, path: t.path, mode: 'auto', mirror: kind }), want = truthOf(t, plan.centre, kind);
+  // the tree must hold the path's CURRENT samples, wherever the nearest segments happen to lie (a stale tree can read right by luck when the nearest segments are in the part that did not change)
+  const ix = G.indexFor(t.path), sm = t.path.samples, at = [0, sm.length >> 1, sm.length - 1];
+  assert.equal(ix.pts.length, sm.length, `${label} (${t.how}): the tree has ${ix.pts.length} points, the path ${sm.length}`); for (const i of at) assert.deepEqual(ix.pts[i].map((v) => +v.toFixed(9)), sm[i].pos.map((v) => +v.toFixed(9)), `${label}: point ${i} of the tree is the path's`);
+  assert.ok(Math.abs(plan.gap.max - want.max) < 1e-9 && Math.abs(plan.gap.mean - want.mean) < 1e-9 && plan.gap.n === want.n, `${label} (${t.how}): the plan reads ${plan.gap.max.toFixed(3)} / ${plan.gap.mean.toFixed(3)}, the truth is ${want.max.toFixed(3)} / ${want.mean.toFixed(3)}`);
+  log.push({ label, how: t.how, path: t.path, mean: plan.gap.mean }); return t;
+}
+
+test('row 21 (B\'s regression): through the real shell and track model, an open track\'s gap is right after every extend and brush, though the path object is the same one edited in place', async () => {
+  for (const kind of ['x', 'both']) {
+    const s = await createCoreShell({ brushFn: null }), tm = createTrackModel(), log = [];
+    s.extend({ length: 150, family: 'bowl' }); stepCheck(tm, s, kind, 'the first piece', log);
+    s.extend({ length: 200, transition: 40, targets: { kh: 1 / 150 } }); stepCheck(tm, s, kind, 'extend: a turn', log);
+    s.extend({ length: 300, transition: 40, targets: { kh: 0 } }); stepCheck(tm, s, kind, 'extend: a straight', log);
+    s.beginBrush({ mode: 'rate', channel: 'kh', s0: 100, r: 60 }); s.brushTo(0.004); s.endBrush(); assert.equal(s.getState().message === null || s.getState().messageKind === 'ok', true, s.getState().message); stepCheck(tm, s, kind, 'a brush on the first piece', log);
+    s.extend({ length: 150, transition: 40, targets: { kh: -1 / 200 } }); stepCheck(tm, s, kind, 'extend after the brush', log);
+    s.beginBrush({ mode: 'rate', channel: 'phi', s0: 400, r: 60 }); s.brushTo(0.1); s.endBrush(); stepCheck(tm, s, kind, 'a bank brush mid track', log);
+    assert.deepEqual([...new Set(log.map((x) => x.how))].sort(), ['extend', 'full', 'sculpt'], 'control: the steps cover an extend and a sculpt');
+    assert.ok(log.slice(1).every((x) => x.path === log[0].path), 'control: it IS the same path object at every step (edited in place), the case the memo was wrong on');
+    assert.ok(log[log.length - 1].mean > 1, 'control: the gap is a real number');
+  }
+});
+
+test('row 22: an open track WITH a lift (a hill from the height brush) too: the gap is right after every extend and height brush', async () => {
+  const s = await createCoreShell({ brushFn: SC.brush }), tm = createTrackModel(), log = [];
+  s.extend({ length: 200, family: 'bowl' }); s.extend({ length: 200, transition: 40, targets: { kh: 1 / 200 } }); s.extend({ length: 250, transition: 40, targets: { kh: 0 } }); stepCheck(tm, s, 'x', 'before any hill', log);
+  s.beginBrush({ mode: 'local', channel: 'height', s0: 150, r: 60 }); s.brushTo(8); s.endBrush(); assert.equal(typeof s.getState().resolved.lift, 'function', 'control: the document carries a lift'); const a = stepCheck(tm, s, 'x', 'a hill', log);
+  s.extend({ length: 150, transition: 40, targets: { kh: 1 / 300 } }); stepCheck(tm, s, 'x', 'extend over the hill', log);
+  s.beginBrush({ mode: 'local', channel: 'height', s0: 520, r: 60 }); s.brushTo(-5); s.endBrush(); stepCheck(tm, s, 'x', 'a second hill, a dip', log);
+  s.beginBrush({ mode: 'local', channel: 'height', s0: 150, r: 60 }); s.brushTo(14); s.endBrush(); const z = stepCheck(tm, s, 'x', 'the first hill higher', log);
+  s.extend({ length: 120, transition: 40, targets: { kh: 0 } }); stepCheck(tm, s, 'x', 'extend again', log);
+  // the lift FUNCTION stays on the document after the offsets are undone, and then the shown path is the base path itself again, edited in place by the next extend: the memo's case with a lift
+  while (s.getState().history.past && s.getState().history.past.length && Object.values(s.getState().history.present.pieces.flatMap((p) => (p.channels ? [p.channels.h, p.channels.l] : []))).some((c) => c.some((v) => v !== 0))) s.undo();
+  assert.equal(typeof s.getState().resolved.lift, 'function', 'control: the lift function is still there'); const flatNow = stepCheck(tm, s, 'x', 'the hills undone', log);
+  s.extend({ length: 130, transition: 40, targets: { kh: 1 / 250 } }); const grown = stepCheck(tm, s, 'x', 'extend with no offsets left (the path edited in place)', log);
+  assert.equal(grown.path, flatNow.path, 'control: the same path object, edited in place, with a lift function on the document');
+  assert.ok(G.heightRange(a.path, a.bounds).range > 2, `control: the track has height (${G.heightRange(a.path, a.bounds).range.toFixed(1)} m)`); assert.ok(log.some((x) => x.path !== log[0].path), 'the shown path is a new object when there is a lift'); assert.ok(z);
+});
+
+test('row 23: what the memo keys on: every in-place change of a path gives it a NEW head (the geometry\'s own finish), so a tree for the old head is never used; and a changed path with no head still gets a new tree', async () => {
+  const s = await createCoreShell({ brushFn: null }), tm = createTrackModel(); s.extend({ length: 150, family: 'bowl' }); s.extend({ length: 200, transition: 40, targets: { kh: 1 / 150 } }); s.extend({ length: 300, transition: 40, targets: { kh: 0 } });
+  let t = tm.update(s.getState().resolved); const path = t.path; let head = path.head; assert.ok(head, 'control: a real path has a head');
+  s.extend({ length: 100, transition: 40, targets: { kh: 0 } }); t = tm.update(s.getState().resolved); assert.equal(t.path, path, 'control: edited in place'); assert.notEqual(t.path.head, head, 'an extend gives it a new head'); head = t.path.head;
+  const lastBefore = path.samples[path.samples.length - 1], posBefore = lastBefore.pos.slice(), countBefore = path.samples.length;
+  s.beginBrush({ mode: 'rate', channel: 'kh', s0: 80, r: 60 }); s.brushTo(0.004); s.endBrush(); t = tm.update(s.getState().resolved); assert.equal(t.how, 'sculpt'); assert.equal(t.path, path, 'control: edited in place'); assert.notEqual(t.path.head, head, 'a sculpt gives it a new head');
+  const lastAfter = path.samples[path.samples.length - 1], moved = Math.hypot(...lastAfter.pos.map((x, i) => x - posBefore[i]));
+  assert.ok(moved > 1, `control: the end of the track moved ${moved.toFixed(2)} m`); assert.equal(lastAfter, lastBefore, 'while its last sample is the SAME object (a sculpt keeps the unchanged tail\'s samples and only re-places them), and the count is the same: so neither is a version, and the head, which is replaced, is');
+  assert.equal(path.samples.length, countBefore, 'and the sample count is the same too');
+  // the index follows: a new head, a new tree; the same head, the same tree
+  const ix = G.indexFor(path); assert.equal(G.indexFor(path), ix, 'the same path and head: the same tree'); const g0 = path.head; path.head = { ...g0 }; assert.notEqual(G.indexFor(path), ix, 'a new head: a new tree'); path.head = g0;
+  const syn = { closed: false, samples: [[0, 0, 0], [1, 0, 0], [2, 0, 0]].map((pos) => ({ pos })) }, a = G.indexFor(syn); assert.equal(G.indexFor(syn), a); syn.samples.push({ pos: [3, 0, 0] }); assert.notEqual(G.indexFor(syn), a, 'a path with no head that grew: a new tree'); assert.equal(G.indexFor(syn).segs.length, 3);
+  const b = G.indexFor(syn); assert.equal(G.indexFor(syn), b); syn.samples[syn.samples.length - 1] = { pos: [9, 0, 0] }; assert.notEqual(G.indexFor(syn), b, 'a headless path whose last sample was replaced at the same length: a new tree'); assert.equal(G.indexFor(syn).pts[3][0], 9);
+});

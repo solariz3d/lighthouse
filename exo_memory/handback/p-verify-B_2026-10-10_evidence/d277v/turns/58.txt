@@ -1,0 +1,319 @@
+MESSAGE 58  msg_011CfoBr2AHRfsNLVZfw7dSU  seat E  ts 2026-10-07T16:25:08.814Z  turn L55586..L55706 (next prompt L55776)
+CLAIMS:
+  [msg_011CfoBr2AHRfsNLVZfw7dSU|9] **"Before, it was x − hl·U"**: check the previous code in the file or its history.
+
+--- L55586 user 2026-10-07T16:21:23.086Z
+USER: 
+
+<pasted_content id="37d3">
+[chair:MAIN] D268: opening a full tube back to a flat road makes a hump, plus a pinched two-lobe fold at the top. GEOMETRY tier. The keeper, 10:20: "when you make the full 360 degree tube, but then try to transition back into a flatter track, there is this weird hump".
+Plan: exo_memory/loop/plan_t180_tube_open_hump_2026-10-07.md (you wrote the seal; opening was never registered). His two screenshots are named in it.
+1. Reproduce HEADLESS. Rebuild the track from the readout: a straight, a full tube, then 254.1 m with tube 360→0, cup 180→0, edge start 0.64, width 44. His track is unsaved.
+2. Find the cause by checking, not assuming. The plan lists three candidates: the radius or centre from width-held-as-round, an edge anchor moving u=0 off the path, and tube and cup easing on different curves.
+3. Fix it to the bar REGISTERED in the plan before any fix:
+   - u=0 on the path at every station, ≤ 1 cm;
+   - no floor point rises above the path more than it does at either end;
+   - no self-fold (the export's self-check is clean);
+   - the closed-tube and flat-road ends byte-identical to today's.
+Fresh worktree from t180 main e850c45. Rows red first. Targeted tests plus app/test/core-xsec.test.js; the librarian runs the full suite and both xsec mutation harnesses at landing. A is on D267 (the panel's texts, panel.js/widthlike.js/griplike.js/index.html) at the same time. Keep to the xsec core, and name any shared file.
+Hand-back: exo_memory/handback/p-tubeopen-E_2026-10-07.md, plus your map line. "This is wrong" or "the bar is wrong" are valid answers, with numbers.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_tube_open_hump_2026-10-07.md
+NEXT: librarian call_librarian with the hand-back pointer when the fix meets the registered bar or fails it with numbers
+</pasted_content id="37d3">
+
+--- L55596 assistant 2026-10-07T16:21:25.897Z
+TOOL_USE Bash [toolu_01QDtRqb7NrYhibM5yjh3NZJ]: {"command":"cat /c/Users/nname/Desktop/lighthouse/exo_memory/loop/plan_t180_tube_open_hump_2026-10-07.md; cd /c/Users/nname/Desktop/t180-track-builder && git log --oneline -1 e850c45 && git worktree add -b d268-tubeopen /c/Users/nname/Desktop/worktrees/e-tubeopen-wt e850c45 2>&1 | tail -1","description":"Read the plan and create the worktree from e850c45"}
+--- L55597 user 2026-10-07T16:21:26.542Z
+RESULT [toolu_01QDtRqb7NrYhibM5yjh3NZJ]: # T-180: opening a full tube back to a flat road makes a hump (and a pinched fold at the top). Librarian, on D, 2026-10-07 10:2x. Lap D268.
+
+The keeper, 10:20, with two screenshots (`C:\Users\nname\Pictures\Screenshots\there is a hump when making the tube back into a regular track undoing the tube sweep to 0.png`
+and `…\second pic.png`): "when you make the full 360 degree tube, but then try to transition back into a flatter track, there is this weird hump jum[p]".
+
+## What the screenshots show (his unsaved track; the readout as shown)
+- 3 pieces, 2,300 m, open. The piece being extended: length 254.1 m, **tube from 360.0° → 0.0°, cup from 180.0° → 0.0°**, edge start 0.64 → 0.64,
+  width 44 m, turn/climb/bank 0. The piece before it ends at 300.0 m, in a full tube.
+- Side view (pic 1): the floor of the opening piece swells up into a ridge across the middle of the piece, then settles flat at the end.
+- Looking down the tube (pic 2): as the tube opens, the top of the section folds into two lobes with a sharp spike between them; the road itself is
+  pushed up inside.
+- Nothing about tube OPENING is registered in `loop/cross_section_seal_registration_2026-10-03.md` (grep for opens/back/360 → 0 finds nothing). The seal
+  covered closing a road into a tube.
+
+## The lap (E, who wrote the cross-section seal and the tube; GEOMETRY tier: full checks + the xsec harness at landing)
+1. **Reproduce headless** on a rebuilt copy: a straight, then the full tube, then 254.1 m with tube 360 → 0 and cup 180 → 0 (edge start 0.64, width 44).
+   His track is unsaved; `track-backups/eq-unsaved.2026-10-06_150107.t180track` is older and may not have it. Rebuild it from the readout above.
+2. **Find the cause** (inferred candidates, to be checked, not
+…[571 chars cut]…
+the floor (|u| ≤ the flat road's half-width at the end) rises above the path by more than it does at either end of the piece;
+   - the section never folds over itself (the export's self-check reports no self-intersection in the piece).
+   The closed-tube and flat-road ends are byte-identical to today's (they already export clean).
+- Rows red first. Full suite + `core-xsec-mutation` and `test/core_xsec_mutation` at landing (geometry). Then install, and 0.3.2 with D267.
+
+NEXT: chair dispatch D268 to E when this plan is read
+e850c45 D259 follow-up: core-xsec harness X6 names the renamed bank row
+HEAD is now at e850c45 D259 follow-up: core-xsec harness X6 names the renamed bank row
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L55600 assistant 2026-10-07T16:21:27.793Z
+TEXT: Worktree `e-tubeopen-wt` is on `e850c45`. Looking at your two screenshots first.
+--- L55601 assistant 2026-10-07T16:21:28.437Z
+TOOL_USE Bash [toolu_015ULBiV2HtuC7sZRPZw7UiS]: {"command":"ls \"/c/Users/nname/Pictures/Screenshots/\" | grep -i \"hump\\|second pic\"","description":"Find the two screenshots"}
+--- L55602 user 2026-10-07T16:21:28.641Z
+RESULT [toolu_015ULBiV2HtuC7sZRPZw7UiS]: second pic.png
+there is a hump when making the tube back into a regular track undoing the tube sweep to 0.png
+--- L55604 assistant 2026-10-07T16:21:29.867Z
+TOOL_USE Read [toolu_01X1W6dNCecaFysEMphwwQEk]: {"file_path":"C:\\Users\\nname\\Pictures\\Screenshots\\there is a hump when making the tube back into a regular track undoing the tube sweep to 0.png"}
+--- L55605 user 2026-10-07T16:21:30.073Z
+RESULT [toolu_01X1W6dNCecaFysEMphwwQEk]: [image]
+--- L55606 user 2026-10-07T16:21:30.071Z
+USER: [Image: original 2559x1439, displayed at 2000x1125. Multiply coordinates by 1.28 to map to original image.]
+--- L55607 assistant 2026-10-07T16:21:30.209Z
+TOOL_USE Read [toolu_018aCshkgoTgtwKKYnAPrpY8]: {"file_path":"C:\\Users\\nname\\Pictures\\Screenshots\\second pic.png"}
+--- L55614 user 2026-10-07T16:21:30.540Z
+RESULT [toolu_018aCshkgoTgtwKKYnAPrpY8]: [image]
+--- L55615 user 2026-10-07T16:21:30.537Z
+USER: [Image: original 2559x1439, displayed at 2000x1125. Multiply coordinates by 1.28 to map to original image.]
+--- L55624 assistant 2026-10-07T16:21:33.895Z
+TEXT: Both screenshots match the plan: a ridge across the opening piece in the side view, and two lobes with a spike at the top looking down the tube. Reading the cross-section code.
+--- L55625 assistant 2026-10-07T16:21:35.080Z
+TOOL_USE Bash [toolu_017iAj7zbxKDGYUymRNQqx3x]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-tubeopen-wt && grep -rn \"function xsecSegments\\|^function \\|^const [a-zA-Z]* = (\" src/core/xsec*.js 2>/dev/null | cut -c1-200 | head -40; ls src/core/","description":"Find the cross-section core code"}
+--- L55626 user 2026-10-07T16:21:35.340Z
+RESULT [toolu_017iAj7zbxKDGYUymRNQqx3x]: README.md
+adapter.js
+close.js
+document.js
+extend.js
+jump.js
+piece.js
+readout.js
+sculpt.js
+water.js
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L55628 assistant 2026-10-07T16:21:37.260Z
+TOOL_USE Bash [toolu_019XiuCgEfRnDbaQcZd8Pkfo]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-tubeopen-wt && grep -n \"function xsecSegments\\|function xsecProfile\\|function tubeProfile\\|function edgeProfile\\|xsec\" src/core/adapter.js | head -30 | cut -c1-200","description":"Find the cross-section code in the adapter"}
+--- L55629 user 2026-10-07T16:21:37.477Z
+RESULT [toolu_019XiuCgEfRnDbaQcZd8Pkfo]: 76:function tubeProfile(w, t) {
+87:function edgeProfile(base, e, s, nE) {
+108:function xsecSegments(P, n, at, join) {
+282:    const kind = D.kindOf(P), xs = kind === 'tube' || !!P.edge || (kind === 'cup' && lastKind === 'tube');   // D225: a tube, an edge, or a cup entering from a tube is built by xsecSegments
+289:    const cup = xs ? xsecSegments(P, n, at, lastKind && lastKind !== kind && lastProfile ? { profile: lastProfile } : null) : P.cup ? (cupRuns ? cupSegmentsRuns(P, n, at, join, tail) : cupSegments
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L55631 assistant 2026-10-07T16:21:39.086Z
+TOOL_USE Bash [toolu_01YVJw1opBibnkxrHNjMr1zw]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-tubeopen-wt && sed -n 50,150p src/core/adapter.js | cut -c1-330","description":"Read the tube, edge and xsec segment code"}
+--- L55632 user 2026-10-07T16:21:39.309Z
+RESULT [toolu_01YVJw1opBibnkxrHNjMr1zw]:     material: 'ROAD',
+  };
+}
+
+/** The CUP cross-section at width w (m) and edge angle c (degrees), ref 09 §9: ψ at the four quarters of each half-width is c·Fᵢ/F_edge, both sides. */
+function cupProfile(family, w, c) {
+  if (!Object.prototype.hasOwnProperty.call(FLOORS, family)) throw new D.CoreError('BAD_FAMILY', 'family "' + family + '"');
+  if (!(w > 0)) throw new D.CoreError('BAD_WIDTH', 'the road\'s width must be positive, got ' + w + ' m');
+  if (!Number.isFinite(c) || c < 0) throw new D.CoreError('BAD_CUP', 'the cup must be a number of degrees from 0, got ' + c);
+  const F = FLOORS[family], side = AT.map((f, i) => [(f * w) / 2, ((c * F[i]) / F[F.length - 1]) * DEG]);
+  return {
+    font: family,
+    u: [...side.slice().reverse().map(([x]) => -x), 0, ...side.map(([x]) => x)],
+    psi: [...side.slice().reverse().map(([, p]) => p), 0, ...side.map(([, p]) => p)],
+    material: 'ROAD',
+  };
+}
+
+const smooth = (x) => (x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x));   // the mesh's weight (src/geom/profile.js smoothstep); also G, the edge curve's shape (ref 09 §10)
+
+// ── D225, THE CROSS-SECTION LAP: the tube, the edge curve, and the pieces that carry them (ref 09 §10) ──────────────────────────────
+const EDGE_MIN_N = 64;      // outer-zone intervals of an edge profile: at least this, and ceil(1.5·e_max) above 43° (the polyline's own sag is e·G″max/(8n²) ≤ 0.05° at n ≥ 47 for e = 150)
+const TUBE_N = 12;          // knots per side of a tube profile: ψ is linear in u, so the polyline is exact at any count; the validator and the stack check read these lines
+const HEARTLINE_FROM = 300; // a tube's roll axis leaves the road centre at this sweep and reaches the tube's own axis at 360 (smoothstep): the heartline is continuous, n
+…[6314 chars cut]…
+null, tail = null) {
+  const s = (j) => (P.length * j) / n, E = Array.from({ length: n + 1 }, (_, j) => at(s(j))), out = new Array(n);
+  const wTol = (w) => 1e-9 * Math.max(1, w), cTol = 1e-9;
+  let j = 0;
+  if (join) j = morphZone(P, n, E, s, join, out);   // the first metres of a cup that follows a legacy piece
+  const nr = tail ? tailZone(P, n, E, s, tail, out, j) : n;   // the last metres of a cup that closes onto a legacy start: the runs stop where the fade begins
+  while (j < nr) {
+    const wRun = E[j].w, chord = Math.abs(E[j + 1].w - wRun) > wTol(wRun);
+    if (chord) {
+      const A = cupProfile(P.family, wRun, E[j].c), B = cupProfile(P.family, E[j + 1].w, E[j + 1].c);
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L55642 assistant 2026-10-07T16:21:56.492Z
+TOOL_USE Bash [toolu_01FvMPQJ3WeHWj1tYDWZNmr6]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-tubeopen-wt && grep -n \"tube\\b\\|tube:\\|\\bt:\\|targets.t\\|targets.c\\|kind ===\\|cup:\" src/core/extend.js | head -30 | cut -c1-220","description":"Read how extend handles tube and cup targets"}
+--- L55643 user 2026-10-07T16:21:56.729Z
+RESULT [toolu_01FvMPQJ3WeHWj1tYDWZNmr6]: 10:// makes it a tube. A piece is a cup OR a tube (c and t together are refused, BAD_TARGET); a target c after a tube, or t after a cup, switches the kind, starting at the edge the
+83:  if (targets.c !== undefined && targets.c !== null && !(Number.isFinite(targets.c) && targets.c >= 0 && targets.c <= D.CUP_MAX)) throw new D.CoreError('BAD_CUP', 'the cup target must be from 0 to ' + D.CUP_MAX + ' de
+89:    if (given(o.t) && !(Number.isFinite(o.t) && o.t >= 0 && o.t <= D.TUBE_MAX)) throw new D.CoreError('BAD_TUBE', `the ${where} tube sweep t must be from 0 to ${D.TUBE_MAX} degrees, got ${o.t}`);
+90:    if (given(o.c) && given(o.t)) throw new D.CoreError('BAD_TARGET', `a piece is a cup or a tube, not both: the ${where} gives a cup c and a tube sweep t`);
+106:  const shortRamps = Object.keys(ramp).filter((ch) => ramp[ch] < length - 1e-9 && targets[ch] !== undefined && targets[ch] !== null);
+110:  const f0 = first || {}, kind = given(targets.c) ? 'cup' : given(targets.t) ? 'tube' : !from && given(f0.c) ? 'cup' : !from && given(f0.t) ? 'tube' : D.endKind(doc), cup = kind === 'cup', tube = kind === 'tube';
+111:  if (cup && from && from.c.v > D.CUP_MAX + 1e-6) throw new D.CoreError('BAD_CUP', `a cup cannot start where the tube before it ends: its edge is ${from.c.v.toFixed(2)}° (t/2), past the cup's ${D.CUP_MAX}°; open th
+119:    if (f.t === undefined) f.t = 2 * f.c;   // a tube asked for on an empty track starts at twice that edge (its own edge is t/2)
+122:  if (from.tNext) from = { ...from, t: from.tNext };   // the tube this piece may start continues from tNext (endState reports t only at a tube head)
+123:  const channels = Object.fromEntries(D.CHANNELS.map((ch) => [ch, channelFn(from[ch], targets[ch], Lof(ch))]));
+125:  cons
+…[201 chars cut]…
+ampControl(piece, ch, from[ch], targets[ch], ramp[ch], held);   // not fitted: see rampControl
+132:  if (tube) {
+134:    if (t[n - 1] <= 1e-3 || t[n - 1] >= D.TUBE_MAX - 1e-3) t[n - 2] = t[n - 1];   // a tube that ends at open or closed ends flat, so the piece after it can continue C1
+137:    const C = piece.channels, legacyMid = !cup && !tube ? D.legacyEdgeDeg(fam, Math.max(...C.w), Math.max(...C.r)) : 0;
+138:    const cap = (i) => (tube ? D.TUBE_EDGE_MAX - C.t[i] / 2 : cup ? D.CUP_MAX - C.c[i] : D.CUP_MAX - legacyMid);   // the total edge angle's cap, per control point (the convex hull, ref 03 §1b)
+140:    const what = tube ? 'tube (180°, t/2 + e)' : 'cup/bowl (150°, c + e)';
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L55647 assistant 2026-10-07T16:22:08.902Z
+TOOL_USE Bash [toolu_013uoPsHqMqtfMJ3Uc1Lp9Me]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-tubeopen-wt && grep -n \"first\\b\\|first:\" src/core/extend.js | head -8 | cut -c1-200; grep -n \"samples.push\\|{ s:.*pos\" src/geom/path.js | head -5 | cut -c1-250; grep -n \"heartline\" src/geom/*.js | head -20 | cut -c1-220","description":"Check extend's first option, path samples, heartline use"}
+--- L55648 user 2026-10-07T16:22:09.231Z
+RESULT [toolu_013uoPsHqMqtfMJ3Uc1Lp9Me]: 14:// map uses the piece's length; a value 'start' is the SHORT RAMP AT THE START, startRampM(length, knotM) = the first knot span (≤ 20 m, or the whole
+21:// the old profileAt, unchanged. The first piece of a track takes a cup with first: { c }; a cup that follows a legacy piece starts at the
+24:// reached; past it the channel holds the target. On an EMPTY track the first piece starts from `first` (default: level,
+41:/** The ramp 'start' means: the first knot span of a piece of this length, at most KNOT_M (20 m); the whole piece when it is shorter than that. */
+66: * Overwrite the free control points of channel `ch` (all but a joint's first two, which carry the continued value and slope, so the joint stays C1) with the
+68: * slope of the joint may legitimately carry the first two points past the range and they are not touched).
+80:function extend(doc, { length, transition, targets = {}, family, knotM, first, grip } = {}) {
+84:  if (first && first.c !== undefined && !(Number.isFinite(first.c) && first.c >= 0 && first.c <= D.CUP_MAX)) throw new D.CoreError('BAD_CUP', 'the first piece cup must be from 0 to ' + D.CUP_MAX + 
+201:    return { s: u, seg: gi, pos: x, T, L: Lr, U: Ur, kvec, roll: phi, bankG: Math.asin(Math.max(-1, Math.min(1, Lr[1]))),
+254:  return { s: P.s0 + r.s, seg: P.seg, pos: pt(r.pos), T: f(r.T), L: f(r.L), U: f(r.U), kvec: f(r.kvec), roll: r.roll, bankG: r.bankG, grade: r.grade, _R: f(r._R), _x: pt(r._x) };
+270:  toJSON() { const v = this._v; return { s: v.s, seg: v.seg, pos: v.pos, T: v.T, L: v.L, U: v.U, kvec: v.kvec, roll: v.roll, bankG: v.bankG, grade: v.grade }; }
+288:    for (const r of blk.recs) path.samples.push(new SampleView(r, blk));
+394:  return { s: e.s, seg: e.seg, pos: e.pos.slice(), T: e.
+…[775 chars cut]…
+h.js:116:  // THE HEARTLINE: constant over the segment, or (heartline1 given, D225) linear from heartline at its start to heartline1 at its end, so it is continuous across segments
+src/geom/path.js:117:  const hl = g.heartline1 === undefined ? num(g.heartline) : num(g.heartline) + (g.heartline1 - num(g.heartline)) * u / L;
+src/geom/path.js:146:const blockKey = (g) => [g.length, g.k0, g.k1, g.kp0, g.kp1, g.roll0, g.roll1, g.heartline, g.heartline1, g.rollRate0, g.rollRate1].map((v) => (v === undefined ? '' : num(v))).join(',')   // an absen
+src/geom/path.js:237:  // the segment's OWN end sample (its own roll1 and heartline), so a piece's mesh never borrows the next piece's frame
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L55659 assistant 2026-10-07T16:22:44.587Z
+TOOL_USE Write [toolu_01Wqs2rcbuiicznC613BmrMa]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\tubeopen\\repro.js","content":"// D268 (pane E): the keeper's track rebuilt headless from his readout: a straight, a piece closing a full tube, then 254.1 m opening it (t 360 → 0), width 44.\n// Measures, on the opening piece: the t channel (overshoot past 360?), the heartline, the road centre (u = 0 row of the mesh) against the path's curve,\n// the floor's rise above the path, and the mesh self-check.   node repro.js <worktree> [closeLen]\n'use strict';\nconst path = re
+…[2307 chars cut]…
+).length, ')');\nconsole.log('first in piece:', JSON.stringify(sc.intersections.filter(inPiece).slice(0, 3).map((x) => ({ s: +(x.s - s0).toFixed(1), u: +x.u.toFixed(2), sOther: +(x.sOther - s0).toFixed(1), uOther: +x.uOther.toFixed(2) }))));\nmodule.exports = { d };\n"}
+--- L55660 user 2026-10-07T16:22:44.623Z
+RESULT [toolu_01Wqs2rcbuiicznC613BmrMa]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\tubeopen\repro.js (file state is current in your context — no need to Read it back)
+--- L55661 assistant 2026-10-07T16:22:47.403Z
+TOOL_USE Bash [toolu_01FV6JVQEp9L1X6gKakqFVCv]: {"command":"S=\"$TEMP/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad\"; W=/c/Users/nname/Desktop/worktrees/e-tubeopen-wt; export CONSONANCE_HEAVY_WAIT_MS=10800000; node \"$S/locked.js\" \"D268 repro\" \"$W\" \"$S/tubeopen/repro.txt\" \"$S/tubeopen/repro.js\" \"$W\"; cat \"$S/tubeopen/repro.txt\"","description":"Reproduce the opening tube headless and measure","timeout":300000}
+--- L55662 user 2026-10-07T16:22:48.695Z
+RESULT [toolu_01FV6JVQEp9L1X6gKakqFVCv]: pieces p1 300 legacy  | p2 300 tube  | p3 254.1 tube 
+opening piece t: start 360.000 max 360.000 at s [33m0[39m min 0.000 end 0.000 ; w [33m43.945798124621966[39m
+┌─────────┬───────┬───────┬───────┬────────┬────────────────────┐
+│ (index) │ s     │ t     │ hl    │ y      │ centreOffHeartline │
+├─────────┼───────┼───────┼───────┼────────┼────────────────────┤
+│ 0       │ [33m0[39m     │ [33m360[39m   │ [33m6.996[39m │ [33m-6.996[39m │ [33m6.996[39m              │
+│ 1       │ [33m15.9[39m  │ [33m356[39m   │ [33m6.905[39m │ [33m-6.905[39m │ [33m6.905[39m              │
+│ 2       │ [33m31.8[39m  │ [33m344.5[39m │ [33m5.84[39m  │ [33m-5.84[39m  │ [33m5.84[39m               │
+│ 3       │ [33m47.6[39m  │ [33m326.8[39m │ [33m2.936[39m │ [33m-2.936[39m │ [33m2.936[39m              │
+│ 4       │ [33m63.5[39m  │ [33m303.8[39m │ [33m0.079[39m │ [33m-0.079[39m │ [33m0.079[39m              │
+│ 5       │ [33m79.4[39m  │ [33m276.5[39m │ [33m0[39m     │ [33m0[39m      │ [33m0[39m                  │
+│ 6       │ [33m95.3[39m  │ [33m246.1[39m │ [33m0[39m     │ [33m0[39m      │ [33m0[39m                  │
+│ 7       │ [33m111.2[39m │ [33m213.6[39m │ [33m0[39m     │ [33m0[39m      │ [33m0[39m                  │
+│ 8       │ [33m127.1[39m │ [33m180[39m   │ [33m0[39m     │ [33m0[39m      │ [33m0[39m                  │
+│ 9       │ [33m142.9[39m │ [33m146.4[39m │ [33m0[39m     │ [33m0[39m      │ [33m0[39m                  │
+│ 10      │ [33m158.8[39m │ [33m113.9[39m │ [33m0[39m     │ [33m0[39m      │ [33m0[39m                  │
+│ 11      │ [33m174.7[39m │ [33m83.5[39m  │ [33m0[39m     │ [33m0[39m      │ [33m0[39m             
+…[65 chars cut]…
+m     │ [33m0[39m      │ [33m0[39m                  │
+│ 13      │ [33m206.5[39m │ [33m33.2[39m  │ [33m0[39m     │ [33m0[39m      │ [33m0[39m                  │
+│ 14      │ [33m222.3[39m │ [33m15.5[39m  │ [33m0[39m     │ [33m0[39m      │ [33m0[39m                  │
+│ 15      │ [33m238.2[39m │ [33m4[39m     │ [33m0[39m     │ [33m0[39m      │ [33m0[39m                  │
+│ 16      │ [33m254.1[39m │ [33m0[39m     │ [33m0[39m     │ [33m0[39m      │ [33m0[39m                  │
+└─────────┴───────┴───────┴───────┴────────┴────────────────────┘
+selfCheck: intersections [33m0[39m (in the opening piece [33m0[39m ) stacked [33m0[39m (in piece [33m0[39m )
+first in piece: []
+
+[locked.js] exit 0 in 1 s
+--- L55674 assistant 2026-10-07T16:24:07.288Z
+TOOL_USE Write [toolu_013o7VfSBUHsejWMmfn9MMwn]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\tubeopen\\rise.js","content":"// D268 (pane E): on the rebuilt track, per mesh ROW of the closing and opening pieces: the world height of the u = 0 vertex (the floor's centre), of the\n// highest vertex (the tips), against the curve the user drew (level, y = 0 here: no climb anywhere) and against the path sample (the road centre).\n//   node rise.js <worktree>\n'use strict';\nconst path = require('path'), [wt] = process.argv.slice(2), R = (m) => require(path.join(wt, m));
+…[2460 chars cut]…
+.op.map((x) => x.topY)).toFixed(3), 'at s', (op.reduce((b, x) => (x.topY > b.topY ? x : b)).s - s2).toFixed(1));\nconsole.log('centre vs path sample, max |dy| over the opening piece:', Math.max(...op.map((x) => Math.abs(x.centreY - sample(x.s).pos[1]))).toFixed(4));\n"}
+--- L55675 user 2026-10-07T16:24:07.319Z
+RESULT [toolu_013o7VfSBUHsejWMmfn9MMwn]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\tubeopen\rise.js (file state is current in your context — no need to Read it back)
+--- L55676 assistant 2026-10-07T16:24:10.189Z
+TOOL_USE Bash [toolu_01NqsvWGQfWTQy48cdNcaddw]: {"command":"S=\"$TEMP/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad\"; W=/c/Users/nname/Desktop/worktrees/e-tubeopen-wt; export CONSONANCE_HEAVY_WAIT_MS=10800000; node \"$S/locked.js\" \"D268 rise\" \"$W\" \"$S/tubeopen/rise.txt\" \"$S/tubeopen/rise.js\" \"$W\"; cat \"$S/tubeopen/rise.txt\"","description":"Measure the floor centre and the tips' heights","timeout":300000}
+--- L55683 user 2026-10-07T16:24:10.770Z
+RESULT [toolu_01NqsvWGQfWTQy48cdNcaddw]: ┌─────────┬───────┬───────────┬─────────┬────────┬────────┐
+│ (index) │ s     │ piece     │ centreY │ pathY  │ topY   │
+├─────────┼───────┼───────────┼─────────┼────────┼────────┤
+│ 0       │ [33m500[39m   │ [32m'closing'[39m │ [33m0[39m       │ [33m0[39m      │ [33m15.917[39m │
+│ 1       │ [33m514[39m   │ [32m'closing'[39m │ [33m0[39m       │ [33m0[39m      │ [33m15.751[39m │
+│ 2       │ [33m528[39m   │ [32m'closing'[39m │ [33m-0.755[39m  │ [33m-0.755[39m │ [33m14.69[39m  │
+│ 3       │ [33m542[39m   │ [32m'closing'[39m │ [33m-3.126[39m  │ [33m-3.126[39m │ [33m11.941[39m │
+│ 4       │ [33m556[39m   │ [32m'closing'[39m │ [33m-5.313[39m  │ [33m-5.313[39m │ [33m9.365[39m  │
+│ 5       │ [33m570[39m   │ [32m'closing'[39m │ [33m-6.553[39m  │ [33m-6.553[39m │ [33m7.785[39m  │
+│ 6       │ [33m584[39m   │ [32m'closing'[39m │ [33m-6.955[39m  │ [33m-6.955[39m │ [33m7.142[39m  │
+│ 7       │ [33m598[39m   │ [32m'closing'[39m │ [33m-6.996[39m  │ [33m-6.996[39m │ [33m6.998[39m  │
+│ 8       │ [33m611.9[39m │ [32m'opening'[39m │ [33m-6.966[39m  │ [33m-6.966[39m │ [33m7.115[39m  │
+│ 9       │ [33m625.8[39m │ [32m'opening'[39m │ [33m-6.44[39m   │ [33m-6.44[39m  │ [33m7.938[39m  │
+│ 10      │ [33m639.7[39m │ [32m'opening'[39m │ [33m-4.597[39m  │ [33m-4.597[39m │ [33m10.218[39m │
+│ 11      │ [33m653.6[39m │ [32m'opening'[39m │ [33m-1.615[39m  │ [33m-1.615[39m │ [33m13.68[39m  │
+│ 12      │ [33m667.5[39m │ [32m'opening'[39m │ [33m-0[39m      │ [33m0[39m      │ [33m15.704[39m │
+│ 13      │ [33m681.4[39m │ [32m'opening'[39m │ [33m0[39m       │ [33m0[39m      │ [33m15.915[39m │
+│ 14      │ [33m695.3[39m │ 
+…[929 chars cut]…
+[39m      │ [33m3.162[39m  │
+│ 23      │ [33m820.4[39m │ [32m'opening'[39m │ [33m0[39m       │ [33m0[39m      │ [33m1.661[39m  │
+│ 24      │ [33m834.2[39m │ [32m'opening'[39m │ [33m0[39m       │ [33m0[39m      │ [33m0.599[39m  │
+│ 25      │ [33m848.1[39m │ [32m'opening'[39m │ [33m0[39m       │ [33m0[39m      │ [33m0.056[39m  │
+│ 26      │ [33m852.1[39m │ [32m'opening'[39m │ [33m0[39m       │ [33m0[39m      │ [33m0.006[39m  │
+└─────────┴───────┴───────────┴─────────┴────────┴────────┘
+closing piece: floor centre min -6.996 top max 15.931
+opening piece: floor centre from -6.996 to 0.000 ; top max 15.922 at s 85.4
+centre vs path sample, max |dy| over the opening piece: 0.0000
+
+[locked.js] exit 0 in 0 s
+--- L55687 assistant 2026-10-07T16:24:26.510Z
+TOOL_USE Bash [toolu_019zhgWin91NqLF1P8Ju49ZK]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-tubeopen-wt && sed -n 25,45p src/geom/path.js | cut -c1-230; sed -n 105,145p src/geom/path.js | cut -c1-260; sed -n 180,205p src/geom/path.js | cut -c1-260","description":"Read the heartline handling in path.js"}
+--- L55688 user 2026-10-07T16:24:27.423Z
+RESULT [toolu_019zhgWin91NqLF1P8Ju49ZK]: // 10°), and a piece's shape in its own frame depends only on its handles and its start pitch. The explicit roll φ
+// (+ = left side up, smoothstep between roll0 and roll1) is then applied about T. (T, L, U) is right-handed and
+// L = U × T, as INTERFACES §2 and the T1 markers define left. On a CLOSED loop the frame closes with the heading, so there
+// is no closing twist (path.twist is 0; the RMF's twist used to be spread over s).
+// Until D177 the frame was rotation-minimising (the double reflection of Wang et al. 2008, still exported below).
+//
+// HEARTLINE. The curve integrated is the heartline. The road's centre is the heartline minus heartline·U (+ = the
+// heartline above the road), as INTERFACES §1 "heartline … + = up" reads.
+//
+// GROWING FROM THE OPEN END (the keeper, 12:20: the user builds the track, coaster-builder style). Everything a segment
+// needs from the past is its START STATE: position, heading, pitch, tangent and the unrolled RMF left, all carried in
+// `path._end`. So extendPath integrates only the new segments. Its stations are the same set a full rebuild would pick
+// (every multiple of `step`, plus every segment boundary), so an extended path equals a full rebuild, and its cost
+// depends on the new tail, not on the track's length. The ONE sample it rewrites is the old open end: a boundary sample
+// belongs to the segment it starts, so it is re-emitted under the new segment's roll, heartline and profile (the seam).
+// A CLOSED path cannot be extended or sculpted in place: it must still meet itself, and closing a loop is the document's
+// connector's job (ARCHITECTURE §2), so a closed loop is rebuilt in full.
+//
+// SCULPTING (rebuildPathFrom) regrows only the changed segments and RE-PLACES the un
+…[5379 chars cut]…
+;   // continuous along the curve
+    if (u >= L) theta = endTheta;
+    const dd = C.d2(t), kvec = mul(sub(dd, mul(T, dot(dd, T))), 1 / (sp * sp));
+    const R = [Math.cos(theta), 0, -Math.sin(theta)], phi = num(g.roll0) + (num(g.roll1) - num(g.roll0)) * smooth(u / L);
+    const U0 = cross(T, R), Lr = add(mul(R, Math.cos(phi)), mul(U0, Math.sin(phi))), Ur = cross(T, Lr);
+    work.n++;
+    return { s: u, seg: gi, pos: x, T, L: Lr, U: Ur, kvec, roll: phi, bankG: Math.asin(Math.max(-1, Math.min(1, Lr[1]))),
+      grade: run > 1e-12 ? T[1] / run : (T[1] > 0 ? Infinity : -Infinity), _R: R, _x: x };
+  };
+  const us = [0];
+  for (let k = 1; k * step < L - 1e-9; k++) us.push(k * step);
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L55698 assistant 2026-10-07T16:24:57.313Z
+TOOL_USE Bash [toolu_01Dpc1pU9cgeuM3HXieGnyTY]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-tubeopen-wt && git grep -n \"heartline\" -- src app ':!*.md' | grep -v \"^src/geom/path.js\\|^src/core/adapter.js\" | cut -c1-200 | head -30","description":"Find every other heartline consumer"}
+--- L55699 user 2026-10-07T16:24:57.521Z
+RESULT [toolu_01Dpc1pU9cgeuM3HXieGnyTY]: app/core/centreline.js:4:// shape does feed the route (a closed tube's heartline is its width / 2π, adapter.js heartlineOf), can never move the rest of the track silently.
+app/core/centreline.js:7://        of the start pose, each segment's route fields (length, k0, k1, kp0, kp1, heartline, heartline1; and, where a heartline is
+app/core/centreline.js:8://        in play, the roll fields, because the road's centre is then the heartline minus heartline * U) and the offset channels h and l,
+app/core/centreline.js:16:const ROUTE = Object.freeze(['length', 'k0', 'k1', 'kp0', 'kp1', 'heartline', 'heartline1']);
+app/core/centreline.js:17:const ROLL = Object.freeze(['roll0', 'roll1', 'rollRate0', 'rollRate1']);   // they move the centre only when a heartline is in play
+app/core/centreline.js:27:    const fields = a.heartline || a.heartline1 || b.heartline || b.heartline1 ? [...ROUTE, ...ROLL] : ROUTE;
+app/core/centreline.js:39: * THE REASON IN THE KEEPER'S WORDS (D243's F3: C's look found the refusal naming an internal field, "heartline1 moved from undefined to 0"). `d` is what routeMovedDetail ret
+app/core/centreline.js:40: * centre once its sweep passes 300° (src/core/adapter.js heartlineOf), so its width, bank and sweep feed the route there; a sweep that CROSSES 300° makes that field appear
+app/core/centreline.js:45:    if (/^heartline|^roll/.test(d.field)) return d.from === undefined || d.to === undefined
+app/test/core-sculpt.test.js:9://   5  the runtime guard refuses by name when a change WOULD move the centreline: a closed tube's width and bank (its heartline is its width / 2π), and a brush that st
+app/test/core-sculpt.test.js:37:// A CLOSED tube (sweep 300 to 360) is not here for bank, width or sweep: its roll axis is it
+…[2618 chars cut]…
+WATER_HEARTLINE: water: samples ${i}–${i + 1}: pos is not ∫T ds (off by ${off.toExponential(2)} per metre); a heartline offset 
+src/doc/connector.js:46:/** Integrate segments from a heartline point, heading and pitch, as the geometry does. */
+src/doc/connector.js:81:  const base = (dir) => ({ tempo: 'standard', font: P.font, dir, handles: { easeIn: e, easeOut: e, heartline: P.heart, width: P.width, wall: P.wall } });
+src/doc/connector.js:173:  const heart = head.handles.heartline;
+src/doc/connector.js:174:  if (Math.abs(first.handles.heartline - heart) > 1e-9) return { candidates: [], reason: 'no connector: the first and last words have different heartlines, and a heartline can
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L55704 assistant 2026-10-07T16:25:10.849Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Edit [toolu_018eEecQEJa54wVfsvCrBKjE]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-tubeopen-wt\\src\\geom\\path.js","old_string":"  const pos = sub(x, mul(Ur, hl));","new_string":"  // D268: a core segment (heartline1 given: adapter.js xsecSegments, a closed tube's roll axis) keeps the road's centre ON THE CURVE the user drew while it is not rolled:\n  // the axis is hl ABOVE the curve (along the unrolled up U0) and a roll turns the road about it, so the centre is x + hl·(U0 − U). Before, it was x − hl·U, which put the\n  // floor of every closed tube hl = w/2π below the curve, so opening a tube back to a road lifted the floor that far inside the piece (the keeper's \"hump\", 7 m at 44 m wide).\n  // A word's heartline (constant, no heartline1: INTERFACES §1, the rider's heart above the track) is as before.\n  const pos = g.heartline1 === undefined ? sub(x, mul(Ur, hl)) : add(x, mul(sub(U0, Ur), hl));"}
+--- L55705 user 2026-10-07T16:25:10.906Z
+RESULT [toolu_018eEecQEJa54wVfsvCrBKjE]: The file C:\Users\nname\Desktop\worktrees\e-tubeopen-wt\src\geom\path.js has been updated successfully.
+--- L55706 assistant 2026-10-07T16:25:15.331Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_01NnmKLKjbxmqn3dLLeRGqBG]: {"command":"S=\"$TEMP/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad\"; W=/c/Users/nname/Desktop/worktrees/e-tubeopen-wt; cd $W && grep -n \"^const sub\\|^const add\\|^const mul\\|const { .*add\" src/geom/path.js | head -3 | cut -c1-200; file src/geom/path.js; export CONSONANCE_HEAVY_WAIT_MS=10800000; node \"$S/locked.js\" \"D268 rise after\" \"$W\" \"$S/tubeopen/rise2.txt\" \"$S/tubeopen/rise.js\" \"$W\"; tail -3 \"$S/tubeopen/rise2.txt\"; node \"$S/locked.js\" \"D268 repro after\" \"$W\" \"$S/tubeopen/repro2.txt\" \"$S/tubeopen/repro.js\" \"$W\"; tail -2 \"$S/tubeopen/repro2.txt\"","description":"Re-measure the floor and tips after the change","timeout":300000}

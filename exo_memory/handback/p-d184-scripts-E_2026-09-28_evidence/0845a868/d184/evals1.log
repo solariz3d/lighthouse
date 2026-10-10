@@ -1,0 +1,40 @@
+== D184 C: track-equations known-answer evals + mutants · asked 2026-09-28T12:04:26.508Z · lock held 2026-09-28T12:04:26.512Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd C:/Users/nname/Desktop/t180-track-builder && node --test --test-concurrency=4 .claude/skills/track-equations/evals/known_answers.test.js .claude/skills/track-equations/evals/mutation.test.js 2>&1 | sed 's/\x1b\[[0-9;]*m//g' | grep -E '^✖|^ℹ (tests|pass|fail)|caught by|got .*expected|Error|NOT' | head -90
+✖ track-equations 06 §3: a torus has K = cos v/(r(R + r cos v)), positive outside, negative inside (63.026ms)
+✖ CONTROL: every known-answer check passes on the unmutated mathref.cjs (0.9768ms)
+ℹ K1 ray: accept u + v up to 2: caught by 01 §1
+ℹ K2 ray: accept hits behind the origin: caught by 01 §1
+ℹ K3 nearest hit: take the first: caught by 01 §2
+ℹ K4 curvature: |r′|² not |r′|³: caught by 02 §1
+ℹ K5 tangent: sin and cos of heading swapped: caught by 02 §2, 02 §2
+ℹ K6 rebuild: explicit Euler: caught by 02 §2
+ℹ K7 discrete curvature: over the sum of arcs: caught by 02 §3
+ℹ K8 clothoid: κ ∝ s²: caught by 02 §4
+ℹ K9 smoothstep: 2u² − u³: caught by 02 §4
+ℹ K10 Cox–de Boor: drop the right term: caught by 03 §1, 03 §2
+ℹ K11 knot refinement: refine every span: caught by 03 §3
+ℹ K12 least squares: drop Aᵀ on the right: caught by 03 §2, 04 §1
+ℹ K13 KKT: ignore the constraint rows: caught by 04 §2, 04 §2
+ℹ K14 least norm: sign: caught by 04 §3, 04 §3
+ℹ K15 least norm: no weights: caught by 04 §3
+ℹ K16 close loop: no correction applied: caught by 04 §3
+ℹ K17 projectile: g not halved: caught by 05 §1
+ℹ K18 time to height: the earlier root: caught by 05 §2
+ℹ K19 sphere K: 1/R: caught by 06 §2
+✖ mutant K20 torus K: sin v: applied, and CAUGHT (77.7435ms)
+ℹ K20 torus K: sin v: caught by NOTHING
+ℹ K21 dished corner: cos β: caught by 06 §6
+ℹ K22 particle: gravity sign: caught by 06 §7
+ℹ K23 particle: no 1/D: caught by 06 §7
+ℹ K24 Fourier: 1/M not 2/M: caught by 07 §1
+ℹ tests 50
+ℹ pass 47
+ℹ fail 3
+✖ failing tests:
+✖ track-equations 06 §3: a torus has K = cos v/(r(R + r cos v)), positive outside, negative inside (63.026ms)
+  AssertionError [ERR_ASSERTION]: v 0.52 got 0.024913683405525633, expected 0.022914223549041598 (±0.0015384615384615382)
+✖ CONTROL: every known-answer check passes on the unmutated mathref.cjs (0.9768ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+✖ mutant K20 torus K: sin v: applied, and CAUGHT (77.7435ms)
+  AssertionError [ERR_ASSERTION]: K20 torus K: sin v was NOT CAUGHT
+== exit 0 · done 2026-09-28T12:04:29.507Z

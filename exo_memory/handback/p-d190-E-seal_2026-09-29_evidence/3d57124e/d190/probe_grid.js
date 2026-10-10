@@ -1,0 +1,15 @@
+const T = 'C:/Users/nname/Desktop/a-d188-wt/';
+const D = require(T + 'src/core/document.js'), { extend } = require(T + 'src/core/extend.js'), { close } = require(T + 'src/core/close.js'), A = require(T + 'src/core/adapter.js');
+const Prof = require(T + 'src/geom/profile.js');
+const Rr = 180, Q = Math.PI * Rr / 2, c = 150, family = 'bowl';
+let d = extend(D.createDoc('l'), { length: 300, family });
+const edge = D.legacyEdgeDeg(family, D.channelAt(d.pieces[0], 'w', 300).v, D.channelAt(d.pieces[0], 'r', 300).v);
+for (let i = 0; i < 4; i++) d = extend(d, { length: Q, transition: 40, targets: { kh: 1 / Rr, c: i === 3 ? edge : c } });
+d = extend(d, { length: 60, transition: 40, targets: { kh: 0, c: edge } });
+const r = close(d, { edited: [0] }); const doc = r.doc, segs = A.toSegments(doc);
+const K = 1 / 5000, nearly = (g) => g.kind === 'road' && [g.k0, g.k1, g.kp0, g.kp1].every((x) => Math.abs(x) <= K) && [g.roll0, g.roll1].every((x) => Math.abs(x) <= 0.5 * Math.PI / 180);
+console.log('edge', edge, 'pieces', doc.pieces.map((P) => P.id + (P.cup ? '*' : '') + ':' + P.length.toFixed(0)).join(' '));
+let run = null; const out = [];
+segs.forEach((g, k) => { if (nearly(g)) { const half = (P) => { const lim = 15 * Math.PI / 180, i0 = P.u.indexOf(0); const reach = (dir) => { for (let i = i0; i + dir >= 0 && i + dir < P.u.length; i += dir) { const a = Math.abs(P.psi[i]), b = Math.abs(P.psi[i + dir]); if (b > lim) return Math.abs(P.u[i] + (P.u[i + dir] - P.u[i]) * (a >= lim ? 0 : (lim - a) / (b - a))); } return Math.abs(P.u[dir > 0 ? P.u.length - 1 : 0]); }; return Math.min(reach(1), reach(-1)); };
+  const hw = half(Prof.normalize(g.profile)); if (!run) { run = { k0: k, id: g.id, n: 0, minHalf: Infinity }; out.push(run); } run.n++; run.minHalf = Math.min(run.minHalf, hw); } else run = null; });
+console.log(out.map((x) => `${x.id} from seg ${x.k0} x${x.n} minHalf ${x.minHalf.toFixed(2)}`).join(' | '));

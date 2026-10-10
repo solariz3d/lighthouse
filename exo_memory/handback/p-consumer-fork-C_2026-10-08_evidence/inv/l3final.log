@@ -1,0 +1,65 @@
+== D273 lap3 final: generated-tree gate + full dev suites · asked 2026-10-08T22:14:30.770Z · lock held 2026-10-08T22:14:30.776Z · NODE_OPTIONS=--max-old-space-size=4096
+$ bash C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/gen3.sh; echo '=== DEV: consonance node suite'; cd C:/Users/nname/Desktop/worktrees/c-consumer-fork3-wt && node --test --test-concurrency=1 --test-reporter=tap consonance/tools/*.test.js consonance/hooks/*.test.js > C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/l3node.tap 2>&1; grep -E '^# (tests|pass|fail|skipped|todo)' C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/l3node.tap; grep '^not ok' C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/l3node.tap | grep -v '# TODO' | cut -c1-140; echo '=== DEV: cargo test'; cd consonance/src-tauri && /c/Users/nname/.cargo/bin/cargo.exe test 2>&1 | grep -E '^test result|FAILED|panicked' | head -20
+build refused: no staged [33m371[39m forked [33m28[39m leaks [33m0[39m
+--- shipped? gen-brief.ps1:
+ls: cannot access 'C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/gen3/consonance/src-tauri/gen-brief.ps1': No such file or directory
+--- CONSUMER-STATUS.md present:
+C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/gen3/CONSUMER-STATUS.md
+--- markers in the generated briefs:
+exo_memory/BOOT.md 1 1
+consonance/src-tauri/brief/BOOT.md 1 1
+exo_memory/SEED.md 1 1
+consonance/src-tauri/brief/SEED.md 1 1
+--- OLD gate test (ab25d588) inside the generated tree:
+[34mℹ tests 7[39m
+[34mℹ pass 3[39m
+[34mℹ fail 4[39m
+[34mℹ skipped 0[39m
+  AssertionError [ERR_ASSERTION]: gen-brief REFUSED against the current exo_memory/BOOT.md — the installer build will fail:
+  The argument 'C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\cons\gen3\consonance\src-tauri\gen-brief.ps1' to the -File parameter does not exist. Provide the path to an existing '.ps1' file as an argument to the -File parameter.
+    actual: [32m"Windows PowerShell\r\nCopyright (C) Microsoft Corporation. All rights reserved.\r\n\r\nThe argument 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\cons\\gen3\\consonance\\src-tauri\\gen-brief.ps1' to the -File parameter does not exist. Provide the path to an existing '.ps1' file as an argument to the -File parameter.\r\n"[39m,
+    actual: [32m"Windows PowerShell\r\nCopyright (C) Microsoft Corporation. All rights reserved.\r\n\r\nThe argument 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\cons\\gen3\\consonance\\src-tauri\\gen-brief.ps1' to the -File parameter does not exist. Provide the path to an existing '.ps1' file as an argument to the -File parameter.\r\n"[39m,
+--- NEW gate test inside the generated tree:
+[34mℹ tests 8[39m
+[34mℹ pass 1[39m
+[34mℹ fail 0[39m
+[34mℹ skipped 7[39m
+--- my two test files inside the generated tree (expected to break: they are dev-side generator tests, owed to EXCLUDE):
+consonance/tools/consumer-relabel.test.js ships:
+[34mℹ pass 0[39m
+[34mℹ fail 1[39m
+consonance/tools/consumer-fork-wiring.test.js ships:
+Error: Cannot find module './gen-consumer.js'
+[34mℹ pass 0[39m
+[34mℹ fail 1[39m
+=== DEV: consonance node suite
+# tests 2171
+# pass 2152
+# fail 12
+# skipped 7
+# todo 0
+not ok 9 - consonance\\hooks\\dream-gate.test.js
+not ok 547 - THE BAR, half one: the shipped registry is GREEN against the working tree
+not ok 552 - the shipped frozen CH-4 list still matches a live walk — the registry is self-consistent
+not ok 567 - MUTATION over the REAL tree: the shipped cant-lose entry is ARMED and green; break its marker and it fires, disarm it and the s
+not ok 1140 - WIRING (a source sweep): js-suite and every *.mutants.js and mutant-harness.js take the lock through this helper
+not ok 1813 - the green line says how many baselined sites are FATAL — exempted is not fixed
+not ok 1814 - the real repo is green against its committed baseline
+not ok 1951 - a real transcript produces a non-zero denominator
+not ok 2017 - no live PullRequest is constructed with a bare empty target
+not ok 2018 - raise_from_forming names its unaddressed pull
+not ok 2019 - raise_pull stops collapsing an absent target into a blank one
+not ok 2020 - the name lives beside PullRequest, and it is exported
+=== DEV: cargo test
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 77 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 2.64s
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 77 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 2.55s
+test result: ok. 988 passed; 0 failed; 4 ignored; 0 measured; 0 filtered out; finished in 14.69s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.05s
+== exit 0 · done 2026-10-08T22:25:19.733Z

@@ -1,0 +1,39 @@
+[32m✔ R3 (a) X3: a bowl 16 m lap with the cup at 90 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(527.2719ms)[39m[39m
+[32m✔ R3 (a) X3: a bowl 16 m lap with the cup at 150 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(558.2494ms)[39m[39m
+[32m✔ R3 (a) X3: a half-pipe 24 m lap with the cup at 90 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(498.4923ms)[39m[39m
+[32m✔ R3 (a) X3: a half-pipe 24 m lap with the cup at 150 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(602.1387ms)[39m[39m
+[32m✔ R3 (a) X2: a 20 m closing straight after the cup returns (the fit's ringing left 0.02-0.03°) closes with the seam within 1 mm (B: 2.3-5.3 mm) [90m(2013.89ms)[39m[39m
+[32m✔ R3 (b) X1: a cup NOT returned before closing (B: 150° against an edge of 15.5°, a 9,488 mm cliff) is never reported converged over a step: it closes with the seam within 1 mm, or it is refused by name [90m(748.8041ms)[39m[39m
+[32m✔ R3 (b): close() holds the cup's last value at the legacy start's rendered edge (0.05°), for a returned cup and for one that was not [90m(608.36ms)[39m[39m
+[32m✔ R3 (a) mirror: a lap that STARTS in a cup and ends on a legacy piece meets within 1 mm at the seam too (the cup start is held to the legacy end's rendered edge) [90m(831.0187ms)[39m[39m
+[31m✖ R3 (c): validation reds a lap seam whose curve steps more than 1 mm (drawn with the local scheme, which has no reverse morph: the panel would otherwise read "0 red · lap proved" over the cliff), and does not red the same lap drawn by default [90m(274.9925ms)[39m[39m
+[32m✔ R3 (c): the panel has words for the joint-step red (labels reasonText) [90m(0.9942ms)[39m[39m
+[32m✔ R3 (c): a legacy → cup JOINT the R2 morph matched is not red [90m(10.6201ms)[39m[39m
+[34mℹ tests 11[39m
+[34mℹ suites 0[39m
+[34mℹ pass 10[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 6767.9511[39m
+
+[31m✖ failing tests:[39m
+
+test at test\core_cup_seam.test.js:75:1
+[31m✖ R3 (c): validation reds a lap seam whose curve steps more than 1 mm (drawn with the local scheme, which has no reverse morph: the panel would otherwise read "0 red · lap proved" over the cliff), and does not red the same lap drawn by default [90m(274.9925ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the red is at the lap seam (s = 0)
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_seam.test.js:79:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }

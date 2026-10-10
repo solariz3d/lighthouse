@@ -1,0 +1,186 @@
+MESSAGE 03  msg_011CffcStV9xKJhkCtdNHUnw  seat A  ts 2026-10-03T16:22:58.297Z  turn L57608..L57657 (next prompt L57682)
+CLAIMS:
+  [msg_011CffcStV9xKJhkCtdNHUnw|3] **`'C:/Users/nname/Desktop/worktrees/a-xsec-wt/test/geom_mutation.test.js'`**: This assumes the worktree and the test file exist at that exact path. The session's working directory is a Temp folder, not this path.
+  [msg_011CffcStV9xKJhkCtdNHUnw|4] **The search string**: ``from: 'const blockKey = (g) => [g.length, g.k0, g.k1, g.kp0, g.kp1, g.roll0, g.roll1, g.heartline]', to: 'const blockKey = (g) => [g.length, g.k0, g.k1, g.kp0, g.kp1, g.heartline]'``
+  [msg_011CffcStV9xKJhkCtdNHUnw|10] Check the geometry source or schema to confirm those fields exist under those names.
+
+--- L57608 user 2026-10-03T16:18:49.256Z
+USER: <task-notification>
+<task-id>by2s6rkoy</task-id>
+<tool-use-id>toolu_0111eMEHFz9NfjjPTxoG5X4S</tool-use-id>
+<output-file>C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\tasks\by2s6rkoy.output</output-file>
+<status>completed</status>
+<summary>Monitor "the old mutation harnesses run (single watch)" stream ended</summary>
+<event>✖ mutant K5 the segment is not marked as a chord (the readers do not evaluate its blend): applied, and caught by "4 ·" (97.7691ms)
+✖ mutant M16 a piece extended after a cup piece is a legacy piece: applied, and caught by "row 3" (853.1499ms)
+✖ mutant W1 normal force: gravity term dropped: applied, and CAUGHT (12.7893ms)
+✖ mutant W2 normal force: the cross term not doubled: applied, and CAUGHT (10.5646ms)
+✖ mutant W3 no velocity projection onto the tangent plane: applied, and CAUGHT (9.1824ms)
+✖ mutant W4 RK4: middle stages weighted 1, not 2: applied, and CAUGHT (9.9768ms)
+✖ mutant W5 spill: the −u lip never checked: applied, and CAUGHT (9.5418ms)
+✖ mutant W6 spill: the +u lip never checked: applied, and CAUGHT (10.6577ms)
+✖ mutant W7 lift-off never flagged: applied, and CAUGHT (9.5525ms)
+✖ mutant W8 shock never flagged: applied, and CAUGHT (10.5711ms)
+✖ mutant W9 quintic Hermite: a basis coefficient off: applied, and CAUGHT (9.5865ms)
+✖ mutant W10 frame slope: equal-spacing central difference: applied, and CAUGHT (9.5879ms)
+✖ mutant W11 profile: Y′ without the side's sign: applied, and CAUGHT (8.7943ms)
+✖ mutant W12 profile blend: no s-derivative: applied, and CAUGHT (8.9454ms)
+✖ mutant W13 spill located at the step's end, not inside it: applied, and CAUGHT (9.4345ms)
+✖ mutant W14 projection: Gauss–Newton step reversed: applied, and CAUGHT (8.646ms)
+✖ mutant W15 energy instrument reads nothing: applied, and CAUGHT (9.6152ms)
+✖ mutant W16 the pos′ = T refusal disabled: applied, and CAUGHT (9.0008ms)
+✖ mutant W18 the pos′ = T check without the h²/12 correction: applied, and CAUGHT (9.2449ms)
+✖ mutant W19 a lifted sample's d1 ignored: applied, and CAUGHT (9.8073ms)
+✖ mutant W1
+…[442 chars cut]…
+(97.7691ms)
+AssertionError [ERR_ASSERTION]: NOT APPLIED: the string occurs 0 times in core/adapter.js: ...(cup ? { cup: true } : L.chord ? { chord: true } : {})
+✖ mutant M16 a piece extended after a cup piece is a legacy piece: applied, and caught by "row 3" (853.1499ms)
+AssertionError [ERR_ASSERTION]: NOT CAUGHT: 11 pass, 0 fail with the pattern "row 3"
+✖ mutant W1 normal force: gravity term dropped: applied, and CAUGHT (12.7893ms)
+✖ mutant W2 normal force: the cross term not doubled: applied, and CAUGHT (10.5646ms)
+✖ mutant W3 no velocity projection onto the tangent plane: applied, and CAUGHT (9.1824ms)
+✖ mutant W4 RK4: middle stages weighted 1, not 2: applied, and CAUGHT (9.9768ms)
+✖ mutant W5 spill: the −u lip never checked: applied, and CAUGHT (9.5418ms)
+✖ mutant W6 spill: the +u lip never checked: applied, and CAUGHT (10.6577ms)
+✖ mutant 
+...(truncated)</event>
+</task-notification>
+--- L57611 assistant 2026-10-03T16:18:54.826Z
+TEXT: 22 failures in the old harnesses. Let me read exactly what they are (the water ones look like a harness error, not a missed mutant).
+--- L57612 assistant 2026-10-03T16:18:56.065Z
+TOOL_USE Bash [toolu_01Bug4reEtPHmdzrtZH6j9fN]: {"command":"S=\"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\"; sed -n '/failing tests:/,$p' $S/old_mut_out.txt | grep -vE \"^\\s*$|^\\s+at \" | head -70 | cut -c1-330"}
+--- L57613 user 2026-10-03T16:18:56.224Z
+RESULT [toolu_01Bug4reEtPHmdzrtZH6j9fN]: ✖ failing tests:
+test at test\core_chord_mutation.test.js:49:3
+✖ mutant K5 the segment is not marked as a chord (the readers do not evaluate its blend): applied, and caught by "4 ·" (97.7691ms)
+  AssertionError [ERR_ASSERTION]: NOT APPLIED: the string occurs 0 times in core/adapter.js: ...(cup ? { cup: true } : L.chord ? { chord: true } : {})
+  0 !== 1
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+test at test\core_cup_mutation.test.js:97:3
+✖ mutant M16 a piece extended after a cup piece is a legacy piece: applied, and caught by "row 3" (853.1499ms)
+  AssertionError [ERR_ASSERTION]: NOT CAUGHT: 11 pass, 0 fail with the pattern "row 3"
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+test at test\core_water_mutation.test.js:42:3
+✖ mutant W1 normal force: gravity term dropped: applied, and CAUGHT (12.7893ms)
+  Error: Cannot find module './document.js'
+  Require stack:
+  - C:\Users\nname\AppData\Local\Temp\t180-water-LBdhoB\W1.js
+  - C:\Users\nname\Desktop\worktrees\a-xsec-wt\test\core_water_mutation.test.js
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [ 'C:\\Users\\nname\\AppData\\Local\\Temp\\t180-water-LBdhoB\\W1.js', 'C:\\Users\\nname\\Desktop\\worktrees\\a-xsec-wt\\test\\core_water_mutation.test.js' ]
+  }
+test at test\core_water_mutation.test.js:42:3
+✖ mutant W2 normal force: the cross term not doubled: applied, and CAUGHT (10.5646ms)
+  Error: Cannot find module './document.js'
+  Require stack:
+  - C:\Users\nname\AppData\Local\Temp\t180-water-LBdhoB\W2.js
+  - C:\Users\nname\Desktop\worktrees\a-xsec-wt\test\core_water_mutation.test.js
+  
+…[1244 chars cut]…
+xsec-wt\\test\\core_water_mutation.test.js' ]
+  }
+test at test\core_water_mutation.test.js:42:3
+✖ mutant W5 spill: the −u lip never checked: applied, and CAUGHT (9.5418ms)
+  Error: Cannot find module './document.js'
+  Require stack:
+  - C:\Users\nname\AppData\Local\Temp\t180-water-LBdhoB\W5.js
+  - C:\Users\nname\Desktop\worktrees\a-xsec-wt\test\core_water_mutation.test.js
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [ 'C:\\Users\\nname\\AppData\\Local\\Temp\\t180-water-LBdhoB\\W5.js', 'C:\\Users\\nname\\Desktop\\worktrees\\a-xsec-wt\\test\\core_water_mutation.test.js' ]
+  }
+test at test\core_water_mutation.test.js:42:3
+✖ mutant W6 spill: the +u lip never checked: applied, and CAUGHT (10.6577ms)
+  Error: Cannot find module './document.js'
+--- L57617 assistant 2026-10-03T16:19:10.040Z
+TOOL_USE Bash [toolu_018BPw6wFAxhtAXwCCyTyy5U]: {"command":"cd /c/Users/nname/Desktop/worktrees/a-xsec-wt && grep -n \"W16\\|W18\" test/core_water_mutation.test.js | cut -c1-420; sed -n 30,48p test/core_water_mutation.test.js | cut -c1-200"}
+--- L57618 user 2026-10-03T16:19:10.201Z
+RESULT [toolu_018BPw6wFAxhtAXwCCyTyy5U]: 29:  ['W16 the pos′ = T refusal disabled', 'if (!(off <= 1e-3))', 'if (!(off <= 1e9))'],
+30:  ['W18 the pos′ = T check without the h²/12 correction', 'mul(sub(K[i], K[i + 1]), h * h / 12)', 'mul(sub(K[i], K[i + 1]), 0)'],
+  ['W18 the pos′ = T check without the h²/12 correction', 'mul(sub(K[i], K[i + 1]), h * h / 12)', 'mul(sub(K[i], K[i + 1]), 0)'],
+  ['W19 a lifted sample\'s d1 ignored', 'T.push([...(m.d1 || m.T)]);', 'T.push([...m.T]);'],
+  ['W17 closed seam: the wrap sample not appended', 'if (closed && S[n - 1] < S[0] + Lm - 1e-9) {', 'if (false) {'],
+];
+
+const src = fs.readFileSync(SRC, 'utf8').replace("require('../geom/profile.js')", () => `require(${JSON.stringify(path.join(__dirname, '..', 'src', 'geom', 'profile.js'))})`);
+const dir = fs.mkdtempSync(path.join(os.tmpdir(), 't180-water-'));
+const baseline = new Set(); { const W = require(SRC); for (const c of CHECKS) { try { c.run(W); baseline.add(c); } catch (e) { /* the control reports it */ } } }
+test('CONTROL: every water check passes on the unmutated water.js', () => {
+  assert.deepEqual(CHECKS.filter((c) => !baseline.has(c)).map((c) => c.name), []);
+});
+for (const [name, from, to] of MUTANTS) {
+  test(`mutant ${name}: applied, and CAUGHT`, (t) => {
+    const n = src.split(from).length - 1;
+    assert.equal(n, 1, `NOT APPLIED: the string occurs ${n} times in water.js`);
+    const f = path.join(dir, `${name.split(' ')[0]}.js`); fs.writeFileSync(f, src.replace(from, () => to));
+    const W = require(f), caught = [];
+    for (const c of CHECKS) { if (!baseline.has(c)) continue; try { c.run(W); } catch (e) { caught.push(c.name.split(':')[0]); } }
+    t.diagnostic(`${name}: caught by ${caught.length ? caught.join(' | ') : 'NOTHING'}`);
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L57628 assistant 2026-10-03T16:19:20.265Z
+TOOL_USE Write [toolu_01SFuKbm7modR357DiKEgQHb]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\x6b_fix.js","content":"const { patch } = require('./patchlib.js');\nconst W = 'C:/Users/nname/Desktop/worktrees/a-xsec-wt/';\npatch(W + 'src/core/water.js', [\n  [\"const { normalize, offsetAt, psiAt } = require('../geom/profile.js');\\nconst { CoreError } = require('./document.js');\", \"const { normalize, offsetAt, psiAt } = require('../geom/profile.js');\"],\n  [\"    if (!(off <= 1e-3)) throw new CoreError('WATER_HEARTLINE', `water: samples ${i}–${i + 1}: pos is not ∫
+…[860 chars cut]…
+ throw e; }\\\", \\\"e.code = undefined; throw e; }\\\"]]\"],\n]);\npatch(W + 'test/core_chord_mutation.test.js', [\n  [\"...(cup ? { cup: true } : L.chord ? { chord: true } : {})\", \": { cup: true }) : L.chord ? { chord: true } : {})\"],\n]);\nconsole.log('done');\n"}
+--- L57629 user 2026-10-03T16:19:20.287Z
+RESULT [toolu_01SFuKbm7modR357DiKEgQHb]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\x6b_fix.js (file state is current in your context — no need to Read it back)
+--- L57630 assistant 2026-10-03T16:19:21.700Z
+TOOL_USE Bash [toolu_01Sm1t71as59Z39fELe5A4Bd]: {"command":"cd /c/Users/nname/Desktop/worktrees/a-xsec-wt && S=\"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\"; grep -n \"K5\" test/core_chord_mutation.test.js | cut -c1-400"}
+--- L57631 user 2026-10-03T16:19:21.829Z
+RESULT [toolu_01Sm1t71as59Z39fELe5A4Bd]: 18:  { id: 'K5 the segment is not marked as a chord (the readers do not evaluate its blend)', pattern: '4 ·', edits: [[AD, '...(cup ? { cup: true } : L.chord ? { chord: true } : {})', '...(cup ? { cup: true } : {})']] },
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L57634 assistant 2026-10-03T16:19:34.394Z
+TOOL_USE Bash [toolu_01NM5tTy5zuEkjD5tcan7QYS]: {"command":"cd /c/Users/nname/Desktop/worktrees/a-xsec-wt && S=\"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\"; node -e '\nconst fs=require(\"fs\");const p=process.argv[1];let s=fs.readFileSync(p,\"utf8\");\nconst a=s.indexOf(\"patch(W + \\x27test/core_chord_mutation.test.js\\x27\");const b=s.indexOf(\"console.log(\\x27done\\x27);\");\nconst rep=\"patch(W + \\x27test/core_chord_mutation.test.js\\x27, [\\n  [\\\"[AD, \\x27...(cup ? { cup: true } : L.chord ? { chord: true } : {})\\x27, \\x27...(cup ? { cup: true } : {})\\x27]\\\", \\\"[AD, 
+…[925 chars cut]…
+ }\", \"if (doc.pieces[i].type === 'road') return kindOf(doc.pieces[i]) === 'cup' ? 'legacy' : kindOf(doc.pieces[i]); return 'legacy'; }\"]] },`],\n]);\nconsole.log('M16 re-pointed');\nEOF\nnode $S/x6b2.js; grep -n \"K5\" test/core_chord_mutation.test.js | cut -c1-300"}
+--- L57635 user 2026-10-03T16:19:34.701Z
+RESULT [toolu_01NM5tTy5zuEkjD5tcan7QYS]: done
+M16 re-pointed
+18:  { id: 'K5 the segment is not marked as a chord (the readers do not evaluate its blend)', pattern: '4 ·', edits: [[AD, ': { cup: true }) : L.chord ? { chord: true } : {})', ': { cup: true }) : {})']] },
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L57639 assistant 2026-10-03T16:19:39.651Z
+TEXT: Re-running the old harnesses with the re-pointed anchors and the self-contained water error.
+--- L57640 assistant 2026-10-03T16:19:41.957Z
+TOOL_USE Bash [toolu_018i4YHRX1JJtE79SaGaaCwu]: {"command":"S=\"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\"; cd /c/Users/nname/Desktop/worktrees/a-xsec-wt && rm -f $S/old_mut_out.txt && node $S/d225_run.js \"$PWD\" \"t180 A old mutation harnesses 2\" $S/old_mut_out.txt test/core_cup_mutation.test.js test/core_chord_mutation.test.js test/core_ramp_mutation.test.js test/core_water_mutation.test.js test/geom_mutation.test.js; grep -E \"^(ℹ (tests|pass|fail)|exit)\" $S/old_mut_out.txt; sed -n '/failing tests:/,$p' $S/old_mut_out.txt | grep -E \"^✖|NOT|Error\" | head -10 | cut -c1-260","timeout":1800000}
+--- L57647 user 2026-10-03T16:22:30.892Z
+RESULT [toolu_018i4YHRX1JJtE79SaGaaCwu]: ℹ tests 141
+ℹ pass 140
+ℹ fail 1
+exit 1
+✖ failing tests:
+✖ mutation R8 a segment's roll is not part of its path handles (a roll edit downstream is taken as unchanged tail): applied, and caught by "rigid: a later segment whose ROLL changed…" (174.7312ms)
+  AssertionError [ERR_ASSERTION]: NOT APPLIED: "const blockKey = (g) => [g.length, g.k0, g.k1, g.kp0, g.kp1, g.roll0, g.roll1, g.heartline]" is not in src/geom/path.js
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L57650 assistant 2026-10-03T16:22:47.756Z
+TEXT: One left: the geometry harness's R8 anchors on the old `blockKey` line, which I extended. Re-pointing it.
+--- L57651 assistant 2026-10-03T16:22:48.135Z
+TOOL_USE Bash [toolu_01DBJHeNbQzpnjJH484ofTdD]: {"command":"cd /c/Users/nname/Desktop/worktrees/a-xsec-wt && grep -n \"R8\" test/geom_mutation.test.js | cut -c1-500"}
+--- L57652 user 2026-10-03T16:22:48.254Z
+RESULT [toolu_01DBJHeNbQzpnjJH484ofTdD]: 90:  { id: "R8 a segment's roll is not part of its path handles (a roll edit downstream is taken as unchanged tail)", file: 'path.js',
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L57654 assistant 2026-10-03T16:22:51.285Z
+TOOL_USE Bash [toolu_01FNbn6jtpPhQyN7M9dD79TK]: {"command":"cd /c/Users/nname/Desktop/worktrees/a-xsec-wt && sed -n 88,96p test/geom_mutation.test.js | cut -c1-420"}
+--- L57655 user 2026-10-03T16:22:51.403Z
+RESULT [toolu_01FNbn6jtpPhQyN7M9dD79TK]:   { id: "R7 an append does not drop the old open end from its block's count", file: 'path.js',
+    from: 'const last = path.blocks[from - 1]; last.n--;', to: 'const last = path.blocks[from - 1];', caughtBy: 'rigid: an append, then a sculpt upstream' },
+  { id: "R8 a segment's roll is not part of its path handles (a roll edit downstream is taken as unchanged tail)", file: 'path.js',
+    from: 'const blockKey = (g) => [g.length, g.k0, g.k1, g.kp0, g.kp1, g.roll0, g.roll1, g.heartline]', to: 'const blockKey = (g) => [g.length, g.k0, g.k1, g.kp0, g.kp1, g.heartline]', caughtBy: 'rigid: a later segment whose ROLL changed' },
+  { id: 'R9 a placed sample turns its y component too (the bank against gravity drifts)', file: 'path.js',
+    from: 'const ry = (v, c, sn) => [c * v[0] + sn * v[2], v[1], c * v[2] - sn * v[0]];', to: 'const ry = (v, c, sn) => [c * v[0] + sn * v[2], v[1] * (1 + (1 - c) * 1e-3 + 1e-15), c * v[2] - sn * v[0]];', caughtBy: 'rigid: the displayed bank after the move' },
+];
+
+// D181 (a load-flaky catch made deterministic, p-d181-flaky-C): a mutant is judged by its NAMED test, run ALONE
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L57657 assistant 2026-10-03T16:22:58.297Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_01L5g1cQSXKnAJGgeJXsdfjn]: {"command":"cd /c/Users/nname/Desktop/worktrees/a-xsec-wt && S=\"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\"; cat > $S/t5_geommut.js <<'EOF'\nconst { patch } = require('./patchlib.js');\npatch('C:/Users/nname/Desktop/worktrees/a-xsec-wt/test/geom_mutation.test.js', [\n  [`from: 'const blockKey = (g) => [g.length, g.k0, g.k1, g.kp0, g.kp1, g.roll0, g.roll1, g.heartline]', to: 'const blockKey = (g) => [g.length, g.k0, g.k1, g.kp0, g.kp1, g.heartline]'`,\n   `from: 'const blockKey = (g) => [g.length, g.k0, g.k1, g.kp0, g.kp1, g.roll0, g.roll1, g.heartline, g.heartline1, g.rollRate0, g.rollRate1]', to: 'const blockKey = (g) => [g.length, g.k0, g.k1, g.kp0, g.kp1, g.heartline, g.heartline1, g.rollRate0, g.rollRate1]'`],\n]);\nEOF\nnode $S/t5_geommut.js && node $S/d225_run.js \"$PWD\" \"t180 A geom mutation R8\" $S/r8.txt --test-name-pattern \"R8|CONTROL\" test/geom_mutation.test.js; grep -E \"^(ℹ (tests|pass|fail)|exit)|mutation R8|NOT\" $S/r8.txt | cut -c1-200","timeout":900000}

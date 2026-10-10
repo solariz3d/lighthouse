@@ -1,0 +1,38 @@
+MESSAGE 43  msg_011CfmUDgKQ2QZwbHr5peQsb  seat librarian  ts 2026-10-06T18:38:37.503Z  turn L78577..L78593 (next prompt L78604)
+CLAIMS:
+  [msg_011CfmUDgKQ2QZwbHr5peQsb|4] "D252 Space/Ctrl fly + one export button + startup AC card". Check the D252 record or commit message for these three items.
+
+--- L78577 user 2026-10-06T18:37:51.155Z
+USER: <task-notification>
+<task-id>bo9kl1b04</task-id>
+<tool-use-id>toolu_01YFNrk2ja5Lr319QYEPWygT</tool-use-id>
+<output-file>C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-librarian\0c0c0c0b-0000-4000-8000-00000000115b\tasks\bo9kl1b04.output</output-file>
+<status>completed</status>
+<summary>Background command "Run the suite, the two touched harnesses and the build on c698f4e" completed (exit code 0)</summary>
+</task-notification>
+--- L78579 assistant 2026-10-06T18:37:57.623Z
+TOOL_USE Bash [toolu_018WhcxJoCUq1wyRDZ8AiZwT]: {"command":"S=\"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b\"; grep -v \"heavy-run: waiting\" $S/tasks/bo9kl1b04.output | grep -v -i deprecation; grep -h -E \"^not ok\" $S/scratchpad/fullc69.tap $S/scratchpad/mutc69-*.tap | grep -v \"# TODO\" | head -3; tasklist //FI \"IMAGENAME eq t180-track-builder.exe\" | tail -2","description":"Show the suite, harness and build results for c698f4e and check for a running builder"}
+--- L78580 user 2026-10-06T18:37:58.008Z
+RESULT [toolu_018WhcxJoCUq1wyRDZ8AiZwT]: files [33m148[39m exit [33m0[39m # tests 1942 | # pass 1929 | # fail 0 | # cancelled 0 | # skipped 6 | # todo 7
+app/test/core-close-mutation.test.js exit [33m0[39m # tests 37 | # pass 37 | # fail 0 NOT APPLIED [33m0[39m
+test/core_cup_mutation.test.js exit [33m0[39m # tests 51 | # pass 51 | # fail 0 NOT APPLIED [33m0[39m
+t180-track-builder.exe: 10234368 bytes, no private paths
+T-180 Track Builder_0.2.2_x64-setup.exe: 2663226 bytes, no private paths
+EXIT [33m0[39m
+
+[exited with code 0]
+INFO: No tasks are running which match the specified criteria.
+--- L78588 assistant 2026-10-06T18:38:13.456Z
+TOOL_USE PowerShell [toolu_01UBz1a8yKCe8L2PwMEmzLFR]: {"command":"$d=\"$env:LOCALAPPDATA\\T-180 Track Builder\"; Copy-Item \"$d\\t180-track-builder.exe\" \"$d\\t180-track-builder.exe.before-precision\"; $p=Start-Process \"C:\\Users\\nname\\AppData\\Local\\Temp\\lib-bundle-target\\release\\bundle\\nsis\\T-180 Track Builder_0.2.2_x64-setup.exe\" -ArgumentList \"/S\",\"/D=$d\" -Wait -PassThru; \"exit $($p.ExitCode)\"; $a=[IO.File]::ReadAllBytes(\"$d\\t180-track-builder.exe\"); $b=[IO.File]::ReadAllBytes(\"C:\\Users\\nname\\AppData\\Local\\Temp\\lib-bundle-target\\release\\t180-track-builder.exe\"); \"installed $($a.Length) built $($b.Length)\"; $n=0; for($i=0;$i -lt [Math]::Min($a.Length,$b.Length);$i++){ if($a[$i] -ne $b[$i]){$n++} }; \"differing bytes $n\"","description":"Back up the installed exe, install the c698f4e build, and compare it with the build"}
+--- L78589 assistant 2026-10-06T18:38:15.487Z
+TOOL_USE Bash [toolu_01DcrTTRFjnD8CUB6DyAuosq]: {"command":"cd C:/Users/nname/Desktop/t180-track-builder && git diff origin/main c698f4e | grep -E \"^\\+\" | grep -iE \"(api[_-]?key|secret|passw|PRIVATE KEY|ghp_|AKIA|sk-ant|vck_|nname)\" | cut -c1-150; echo scan-done; git push origin c698f4e:main 2>&1 | tail -1","description":"Scan the diff for credentials, then push c698f4e"}
+--- L78590 user 2026-10-06T18:38:27.448Z
+RESULT [toolu_01UBz1a8yKCe8L2PwMEmzLFR]: exit 0
+installed 10234368 built 10234368
+differing bytes 3
+--- L78591 user 2026-10-06T18:38:30.305Z
+RESULT [toolu_01DcrTTRFjnD8CUB6DyAuosq]: scan-done
+   eeec787..c698f4e  c698f4e -> main
+Shell cwd was reset to C:\Consonance\instances\librarian
+--- L78593 assistant 2026-10-06T18:38:37.503Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_01GdqSJxX4R8tvr9qm5S7s2Y]: {"command":"git -C C:/Users/nname/Desktop/t180-track-builder log --oneline -1 origin/main; cat >> C:/Users/nname/Desktop/lighthouse/exo_memory/librarian/2026-10-03.desktop.md <<'EOF'\n\n## 2026-10-06 12:4x: c698f4e installed and pushed (D251 handle precision + pointer lock + length 5×, D252 Space/Ctrl fly + one export button + startup AC card)\n- Suite on c698f4e: 1,929 pass / 0 fail of 1,942 (fullc69.tap). Touched harnesses once: core-close 37/37, core_cup 51/51, 0 NOT APPLIED.\n  exe 10,234,368 bytes, .before-precision kept. Pushed origin eeec787 → c698f4e.\n- Rules today: FEEL tweaks skip the separate look (keeper 12:10); no pointer-lock / focus-taking real window while the keeper may be at\n  the PC (A's lock run captured his real mouse). D253 (B: Ctrl-snap during a handle drag may fly the camera; overhead lookAt flood) open.\nEOF\ntail -1 C:/Users/nname/Desktop/lighthouse/exo_memory/librarian/2026-10-03.desktop.md | cut -c1-80","description":"Confirm the origin head and append the install record to my notes"}

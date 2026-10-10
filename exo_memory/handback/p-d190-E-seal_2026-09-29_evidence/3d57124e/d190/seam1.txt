@@ -1,0 +1,33 @@
+[32m✔ R3 (a) X3: a bowl 16 m lap with the cup at 90 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(510.6426ms)[39m[39m
+[32m✔ R3 (a) X3: a bowl 16 m lap with the cup at 150 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(539.9803ms)[39m[39m
+[32m✔ R3 (a) X3: a half-pipe 24 m lap with the cup at 90 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(461.7535ms)[39m[39m
+[32m✔ R3 (a) X3: a half-pipe 24 m lap with the cup at 150 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24) [90m(567.7706ms)[39m[39m
+[32m✔ R3 (a) X2: a 20 m closing straight after the cup returns (the fit's ringing left 0.02-0.03°) closes with the seam within 1 mm (B: 2.3-5.3 mm) [90m(1881.378ms)[39m[39m
+[32m✔ R3 (b) X1: a cup NOT returned before closing (B: 150° against an edge of 15.5°, a 9,488 mm cliff) is never reported converged over a step: it closes with the seam within 1 mm, or it is refused by name [90m(784.2834ms)[39m[39m
+[32m✔ R3 (b): close() holds the cup's last value at the legacy start's rendered edge (0.05°), for a returned cup and for one that was not [90m(586.1669ms)[39m[39m
+[32m✔ R3 (a) mirror: a lap that STARTS in a cup and ends on a legacy piece meets within 1 mm at the seam too (the cup start is held to the legacy end's rendered edge) [90m(776.8275ms)[39m[39m
+[31m✖ R3 (c): validation reds a lap seam whose curve steps more than 1 mm (the panel would otherwise read "0 red · lap proved" over the cliff), and does not red the seam of a lap the reverse morph has matched [90m(28.0899ms)[39m[39m
+[32m✔ R3 (c): a legacy → cup JOINT the R2 morph matched is not red [90m(12.5311ms)[39m[39m
+[34mℹ tests 10[39m
+[34mℹ suites 0[39m
+[34mℹ pass 9[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 6241.5903[39m
+
+[31m✖ failing tests:[39m
+
+test at test\core_cup_seam.test.js:75:1
+[31m✖ R3 (c): validation reds a lap seam whose curve steps more than 1 mm (the panel would otherwise read "0 red · lap proved" over the cliff), and does not red the seam of a lap the reverse morph has matched [90m(28.0899ms)[39m[39m
+  Error: buildPath: closed loop does not close (position 3.60e+2 m, tangent 2.14e-4)
+      at buildPath [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\geom\path.js:246:41[90m)[39m
+      at Object.toPath [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\core\adapter.js:230:16[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_seam.test.js:77:85[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m

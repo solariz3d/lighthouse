@@ -1,0 +1,1077 @@
+MESSAGE 02  msg_011CffYYkHEyCPzQUfEbLMRG  seat C  ts 2026-10-03T15:31:51.211Z  turn L47480..L47830 (next prompt L47974)
+CLAIMS:
+  [msg_011CffYYkHEyCPzQUfEbLMRG|6] **"with the same 10 m"**: that the old test also used 10 m.
+  [msg_011CffYYkHEyCPzQUfEbLMRG|10] `words(2)`
+  [msg_011CffYYkHEyCPzQUfEbLMRG|14] positions laid out as base vertex (0–2), then tip (3–5)
+
+--- L47480 user 2026-10-03T15:21:49.176Z
+USER: 
+
+<pasted_content id="e180">
+[chair:MAIN] CROSS-SECTION lap (lap row D225): the Extend FIELDS, in parallel with A's core.
+READ:
+- the SEAL, C:\Users\nname\Desktop\lighthouse\exo_memory\loop\cross_section_seal_registration_2026-10-03.md (lighthouse 4abc3682), especially the camera/labels rows and "the head marker follows the road's U";
+- the plan's "The seal, collated + RULINGS" in exo_memory/loop/plan_t180_edge_curve_2026-10-03.md.
+BUILD in Extend, beside your at-start boxes:
+- edge angle (degrees; 0 = off), default from the seal;
+- edge start (a share; default 0.64);
+- tube sweep (0–360°);
+- bank accepting values past ±180 (continuous, for the spiral);
+- the readout cells for the new channels;
+- the head marker following the road's U;
+- camera and labels inside a closed tube per the seal, if they live in app/;
+- a refusal shown by NAME when the core refuses (tube-too-narrow, roll-rate red).
+CONTRACT: A names the channel keys and the bank > ±180 behaviour in its hand-back. Code against those names; if they aren't out yet, stub them only in your tests and say exactly what you stubbed.
+BASE: a new worktree C:\Users\nname\Desktop\worktrees\c-xsec-wt off t180 local main b3364df. No junctions.
+FILES YOU OWN: app/ (core/panel.js, coreshell.js, labels.js, preview where the head marker and camera live) and app/test/*. NOT src/ and not CHANGELOG (A owns those); put a proposed CHANGELOG line in your hand-back.
+TESTS: targeted plus UI mutation, applied / caught / NOT APPLIED, under the heavy-run lock (require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({cmd}), --test-concurrency=1), one heavy job at a time. No full suite. No AC launch. t180 is public: no keys or personal paths. Don't push. You may refuse.
+HAND-BACK: exo_memory/handback/p-xsec-C_2026-10-03.md (in lighthouse), plus one line in map/C.md, with a SOURCES line.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\cross_section_seal_registration_2026-10-03.md
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: B combines A + C and scores against the seal, unless the output says otherwise
+</pasted_content id="e180">
+
+--- L47490 assistant 2026-10-03T15:22:31.401Z
+TOOL_USE Bash [toolu_01GL9gZXBvJz9RRnUcdWKQjK]: {"command":"cd /c/Users/nname/Desktop/lighthouse && git log --oneline -1 4abc3682; wc -l exo_memory/loop/cross_section_seal_registration_2026-10-03.md; cat exo_memory/loop/cross_section_seal_registration_2026-10-03.md","description":"Read the cross-section seal"}
+--- L47491 user 2026-10-03T15:22:31.600Z
+RESULT [toolu_01GL9gZXBvJz9RRnUcdWKQjK]: <persisted-output>
+Output too large (41.4KB). Full output saved to: C:\Users\nname\.claude\projects\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\tool-results\bx58vcl1y.txt
+
+Preview (first 2KB):
+4abc3682 Cross-section seal (E) + 3 librarian rulings
+499 exo_memory/loop/cross_section_seal_registration_2026-10-03.md
+# CROSS-SECTION (lap D225): the EDGE CURVE, the TUBE and the SPIRAL — the seal, registered before anyone builds (pane E, 2026-10-03, D)
+
+**Packet:** the chair's D225 step 1, GEOMETRY tier, docs only.
+**Base:**
+- t180 main `b3364df` (D222 landed). Read from a clean `git archive b3364df` copy, with the git-ignored `reads/` copied beside it for one probe.
+- The plan: lighthouse `d86aac20`, `exo_memory/loop/plan_t180_edge_curve_2026-10-03.md`, sha256 `bc2c0b67cff9fe3f730167f2aa241792accc76c5d208b36caa7a5f2df9d62cdb`. I read all of it, including the AMENDMENT and C's test-track collation.
+- C's measurement: `exo_memory/loop/t180_testtrack_profile_2026-10-03.md`, sha256 `f51ffe980242307c3bae67971dbabfa6482f4e8bcb9d80cb1d313fea84635961`.
+
+**Who scores it:** B, as non-author, scores every row except G against A's core and C's fields in one combined worktree. Row G is the keeper's.
+
+**What a row is**, as in D190:
+- a CHECK;
+- its FAIL condition, written before the code exists;
+- PLANTED controls that B plants in the combined tree and the row's test must catch. An uncaught control means the TEST is broken; that row is then unscored until it catches.
+
+**Evidence labels:**
+- `checked:` measured at `b3364df` by a probe named in §6.
+- `inferred:` read from the code, not run.
+
+---
+
+## §0 Verdicts on the plan
+
+**V1 · G is named: the cubic smoothstep, G(t) = 3t² − 2t³.** It is not t².
+- **It meets the plan's three conditions** (DERIVED; the source is in §4):
+  - G(0) = 0, G′(0) = 0 and G(1) = 1.
+  - It is monotone, because G′(t) = 6t(1 − t) ≥ 0 on [0, 1].
+  - **It adds G′(1) = 0.** The extra turning fades out at the very edge, so the outer band arrives at the edge at a held angle. That matches C's read: a steep band holding about 19–20° from u 0.66 to 0.88.
+...
+</persisted-output>
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47499 assistant 2026-10-03T15:22:35.380Z
+TOOL_USE Read [toolu_01WfUHFDQhgMEmwnz7saaAVz]: {"file_path":"C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\tool-results\\bx58vcl1y.txt"}
+--- L47500 user 2026-10-03T15:22:35.591Z
+RESULT [toolu_01WfUHFDQhgMEmwnz7saaAVz]: 1	4abc3682 Cross-section seal (E) + 3 librarian rulings
+2	499 exo_memory/loop/cross_section_seal_registration_2026-10-03.md
+3	# CROSS-SECTION (lap D225): the EDGE CURVE, the TUBE and the SPIRAL — the seal, registered before anyone builds (pane E, 2026-10-03, D)
+4	
+5	**Packet:** the chair's D225 step 1, GEOMETRY tier, docs only.
+6	**Base:**
+7	- t180 main `b3364df` (D222 landed). Read from a clean `git archive b3364df` copy, with the git-ignored `reads/` copied beside it for one probe.
+8	- The plan: lighthouse `d86aac20`, `exo_memory/loop/plan_t180_edge_curve_2026-10-03.md`, sha256 `bc2c0b67cff9fe3f730167f2aa241792accc76c5d208b36caa7a5f2df9d62cdb`. I read all of it, including the AMENDMENT and C's test-track collation.
+9	- C's measurement: `exo_memory/loop/t180_testtrack_profile_2026-10-03.md`, sha256 `f51ffe980242307c3bae67971dbabfa6482f4e8bcb9d80cb1d313fea84635961`.
+10	
+11	**Who scores it:** B, as non-author, scores every row except G against A's core and C's fields in one combined worktree. Row G is the keeper's.
+12	
+13	**What a row is**, as in D190:
+14	- a CHECK;
+15	- its FAIL condition, written before the code exists;
+16	- PLANTED controls that B plants in the combined tree and the row's test must catch. An uncaught control means the TEST is broken; that row is then unscored until it catches.
+17	
+18	**Evidence labels:**
+19	- `checked:` measured at `b3364df` by a probe named in §6.
+20	- `inferred:` read from the code, not run.
+21	
+22	---
+23	
+24	## §0 Verdicts on the plan
+25	
+26	**V1 · G is named: the cubic smoothstep, G(t) = 3t² − 2t³.** It is not t².
+27	- **It meets the plan's three conditions** (DERIVED; the source is in §4):
+28	  - G(0) = 0, G′(0) = 0 and G(1) = 1.
+29	  - It is monotone, because G′(t) = 6t(1 − t) ≥ 
+…[41067 chars cut]…
+find the FIRST sign change, stepping e by 1°. The result is the same (no touch), now for the right reason.
+497	- **The csp false export** (X1): the option was in the wrong argument. Re-run.
+498	- **The first two export runs were refused at the grid, `NO_START_STRAIGHT`.** I had tubed the start straight's neighbouring segments, which the grid reads as straight. Fixed by tubing only segments turning faster than 1e-3/m.
+499	- **I expected KE3-2 to be bit-neutral.** It is not (7 of 9 differ). The interpolation at a knot is the cause, and that is now the plant.
+500	
+501	sha256 of every byte above this line (the file with this trailer line and the blank line before it removed): 3077ff16ce6be489bccba9d5725cfbbf58549c18f056266bf05735eea1add7e2
+502	
+--- L47509 assistant 2026-10-03T15:22:41.391Z
+TOOL_USE Bash [toolu_013sHfdw13LxyZecjsfZLb43]: {"command":"cd /c/Users/nname/Desktop/lighthouse && grep -n \"^## \\|^### \" exo_memory/loop/plan_t180_edge_curve_2026-10-03.md; awk '/seal, collated/{f=1} f' exo_memory/loop/plan_t180_edge_curve_2026-10-03.md | head -80","description":"Read the plan's collated rulings section"}
+--- L47510 user 2026-10-03T15:22:41.543Z
+RESULT [toolu_013sHfdw13LxyZecjsfZLb43]: 7:## What it is
+18:## The maths (for A and E; the profile in the D190 cup's terms)
+26:## Channels and the document
+32:## Seal BEFORE build (E, as for D190's cup seal)
+39:## Owners and order (GEOMETRY tier)
+45:## AMENDMENT (librarian, 08:0x): one CROSS-SECTION lap = edge curve + TUBE + spiral. The keeper, 07:59: "id like that, since i like the idea of spiraling through it".
+72:## C's test-track measurement, collated (librarian, 09:0x): `loop/t180_testtrack_profile_2026-10-03.md` (handback `p-testtrack-C_2026-10-03.md`)
+83:## The seal, collated + RULINGS (librarian, 09:2x): `loop/cross_section_seal_registration_2026-10-03.md`, handback `p-xsec-E-seal_2026-10-03.md`
+## The seal, collated + RULINGS (librarian, 09:2x): `loop/cross_section_seal_registration_2026-10-03.md`, handback `p-xsec-E-seal_2026-10-03.md`
+- E's own rulings are accepted:
+  - G = cubic smoothstep 3t² − 2t³ (holds the band's angle at the edge, as the test track shows);
+  - schema `t180b.core/4`, because today's reader would silently DROP e/s on save;
+  - s default 0.64;
+  - bank unwrapping already exists (a regression row, not new work);
+  - the heartline's reason corrected (a heartline STEP jumps 4.46 m);
+  - the e = 0 identity is a pure `+ 0`, with no knot insertion.
+- **RULING 1, the narrowest tube (T1 iv / X2 i):** a CLOSED tube with w < 9.43 m is REFUSED by name (validator red `tube-too-narrow`), not
+  camera-patched. Below that the chase eye cannot fit, and a T-180 cannot drive it. Never silent. Open tubes keep the normal camera.
+- **RULING 2, the roll-rate bar (V7) vs the keeper's 360° over 300 m:** the bar STANDS as sealed (RED > 1.2144°/m, AMBER > 0.9338°/m at a 20 m
+  chord, from Centrifuge's measured lap). The keeper's example reds. A full 360° t
+…[363 chars cut]…
+. Fully closed and fully open stretches stay green, so the
+  keeper's choice is where to put the closing transition (e.g. with the driving line on the floor, not mid-spiral).
+- **Also owed (X2 ii):** the head marker points along the road's U, not world y, so it stays inside a tube and right-side-up when inverted.
+- **The lip:** not in v1. The keeper hasn't answered, and it can be a later additive control.
+- **Next:** A builds the core (tube family, the heartline-only roll interpolation fix with e = 0 identity kept, the edge term, /4 migration,
+  validator rows incl. the spiral's loads), C builds the Extend fields. Then B is the non-author against the seal. ONE serialized suite.
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47513 assistant 2026-10-03T15:22:46.568Z
+TOOL_USE Bash [toolu_01XtdyAo7HcqZNFx7E5Z66Ys]: {"command":"cd /c/Users/nname/Desktop/t180-track-builder && git log --oneline -1 b3364df && git worktree add --detach /c/Users/nname/Desktop/worktrees/c-xsec-wt b3364df >/dev/null 2>&1; cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && git log --oneline -1 && find . -type l | wc -l; ls /c/Users/nname/Desktop/lighthouse/exo_memory/handback/ | grep -i xsec; ls app/core app/preview app/camera app/test | head -80","description":"Create the worktree and look for A's hand-back"}
+--- L47514 user 2026-10-03T15:22:47.128Z
+RESULT [toolu_01XtdyAo7HcqZNFx7E5Z66Ys]: b3364df D222: re-baseline row 5 for the AC-ready export (F1 F2 kn5 only), recorded in manifest.d222.json
+b3364df D222: re-baseline row 5 for the AC-ready export (F1 F2 kn5 only), recorded in manifest.d222.json
+0
+p-xsec-E-seal_2026-10-03.md
+app/camera:
+cameras.js
+index.js
+math.js
+
+app/core:
+coreshell.js
+index.js
+labels.js
+panel.js
+
+app/preview:
+ACTOOLS-MS-PL.txt
+aclook.js
+acshaders.js
+batches.js
+index.js
+kn5look.js
+look.js
+preview.js
+renderer.js
+smoke.html
+trackmodel.js
+
+app/test:
+aclook.test.js
+aclook_webview.test.js
+camera.test.js
+closer.test.js
+core-mutation.test.js
+core-readout-display.test.js
+core-shell.test.js
+export-csp.test.js
+export-selfcheck.test.js
+export.test.js
+handles-panel.test.js
+handles.test.js
+look.test.js
+markers-panel.test.js
+mutation.test.js
+onboarding.test.js
+palette-dom.test.js
+palette-fakedom.js
+palette-grammar.test.js
+palette-panels.test.js
+palette-phrasebook.test.js
+palette.test.js
+preview.test.js
+render_proof.test.js
+share-install.test.js
+sharedpath.test.js
+shell-autosave.test.js
+shell-close.test.js
+shell-dist.test.js
+shell-failed-edit.test.js
+shell-ghost.test.js
+shell-keys.test.js
+shell-layout.test.js
+shell-loader.test.js
+shell.test.js
+texmaker-panel.test.js
+texture-panel.test.js
+timers-regression.test.js
+validate-ui-incval.test.js
+validate-ui-jumpdefault.test.js
+validate-ui-jumps.test.js
+validate-ui-panel.test.js
+validate-ui-speed.test.js
+validate-ui.test.js
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47517 assistant 2026-10-03T15:22:51.847Z
+TEXT: A's hand-back isn't out yet. Checking A's worktree for the channel names in progress, then reading my panel code.
+--- L47518 assistant 2026-10-03T15:22:53.824Z
+TOOL_USE Bash [toolu_01FZrDz3CawvdShiEAgrUsdQ]: {"command":"ls /c/Users/nname/Desktop/worktrees/ /c/Users/nname/Desktop | grep -i \"xsec\\|a-d22\"; for d in /c/Users/nname/Desktop/worktrees/a-xsec* /c/Users/nname/Desktop/a-xsec*; do [ -d \"$d\" ] && (cd $d; git status --short | head; grep -n \"CHANNELS\\s*=\" src/core/*.js; grep -rn \"tube\\|edgeFromDeg\\|sliceFrom\" src/core/*.js | head -30); done","description":"Look at A's worktree for channel names in progress"}
+--- L47519 user 2026-10-03T15:22:54.066Z
+RESULT [toolu_01FZrDz3CawvdShiEAgrUsdQ] ERROR: Exit code 1
+a-d220-wt
+a-d220b-wt
+a-d224-base-wt
+a-d224-wt
+a-xsec-wt
+c-xsec-wt
+src/core/document.js:26:const CHANNELS = Object.freeze(['kh', 'kv', 'phi', 'w', 'r', 'h', 'l', 'c']);
+--- L47528 assistant 2026-10-03T15:23:00.775Z
+TOOL_USE Bash [toolu_01Qw7kZzts4Jcvs8PkUkozDN]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && wc -l app/core/*.js app/preview/look.js app/camera/cameras.js && cat app/core/panel.js","description":"Read the Extend panel code"}
+--- L47529 user 2026-10-03T15:23:00.964Z
+RESULT [toolu_01Qw7kZzts4Jcvs8PkUkozDN]:   309 app/core/coreshell.js
+    5 app/core/index.js
+  200 app/core/labels.js
+  209 app/core/panel.js
+  132 app/preview/look.js
+  228 app/camera/cameras.js
+ 1083 total
+// panel.js: the EQUATION CORE's controls (D186, pane C), in the left column where the piece builder's palette is. DOM only; every
+// action is the core shell's (app/core/coreshell.js), every number it shows is the shell's state.
+//
+//   EXTEND at the build head: keep going (no handle), or turn / climb / bank / cup / width targets over a length. Hovering the button
+//          shows the ghost (the preview's 't180-ghost' candidate), so what a click adds is seen before it is added.
+//   BRUSH on the preview: arm it, then drag on the track. The pick is the preview's ('t180-pick'); the drag's vertical distance is
+//          the change at the brush's centre; one drag is one undo step. The local height/lateral brush (E) is the default when
+//          it is in the build; the rate brush (one channel) is the explicit second mode.
+//   CLOSE as one click. WATER, drawn LIVE: while it is on, every change to the track pours again (the preview's 't180:track'
+//          event), and the streams and reds are drawn over the track ('t180:overlay'). Every red is listed in plain words.
+//   THE READOUT (L130): beside Extend's fields, the piece they describe, BEFORE it is placed: its length and the change it makes
+//          in turn, climb and bank (A's src/core/readout.js, candidateReadout), redrawn inside every field's input handler; and on
+//          the track, a label at every placed piece with the same numbers (app/core/labels.js). The strings are the same function's
+//          (labels.js formatReadout), so what the ghost promised is what the placed piece
+…[18150 chars cut]…
+lay them on
+  const labels = stage ? LB.mount(stage, shell, win) : null;
+  const unsub = shell.subscribe(draw); draw(shell.getState());
+  // options(): the options Extend, the ghost and the readout use right now (fields left as shown send no target)
+  return { labels, options: opts, unmount() { unsub(); if (labels) labels.unmount(); doc.removeEventListener('t180:track', onTrack); if (stage) { stage.removeEventListener('pointerdown', down); stage.removeEventListener('pointermove', move); stage.removeEventListener('pointerup', up); stage.removeEventListener('pointercancel', up); } root.replaceChildren(); } };
+}
+
+module.exports = { mount, overlayOf, extendOptions, PER_PX };
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47538 assistant 2026-10-03T15:23:05.250Z
+TOOL_USE Bash [toolu_01LJBNtBE27f3b3d4oJYdb6Q]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && cat app/preview/look.js; grep -n \"headState\\|message\\|CoreError\\|catch\\|code\" app/core/coreshell.js | head -40","description":"Read the head marker code and the shell's refusal handling"}
+--- L47539 user 2026-10-03T15:23:05.412Z
+RESULT [toolu_01LJBNtBE27f3b3d4oJYdb6Q]: // look.js: what makes the preview read as a track (D170, the D170 review of the D169 window captures, items 1, 2, 7).
+// Pure numbers, no GL, so each piece is tested headless; the renderer draws what this returns.
+//
+//   LIGHT, shade(n)          the lighting: one key light low and to the side, a weak fill from the other side, ambient.
+//                            The GLSL in renderer.js is generated from these same numbers, so the test of shade() is a
+//                            test of what the shader computes.
+//   linesFor(batch)          road lines in the batch's own frame: the two EDGES and the CENTRE along the road, and a TIE
+//                            across the road every TIE_M metres (a tie shows banking and the profile's shape).
+//   localBounds(batch)       the axis-aligned box of a batch's vertices in its own frame (memoised per array)
+//   worldBounds(batches)     the world box of every batch: each local box's 8 corners through its model matrix. It
+//                            contains every vertex (a box of a box is conservative).
+//   gridLines(bounds)        a faint ground grid at y = 0 under the track (editor UI: scale and height, not scenery)
+//   headMarker(head)         a mast and a cross at the build head, so the head is visible from overhead
+'use strict';
+
+const norm = (v) => { const l = Math.hypot(v[0], v[1], v[2]); return l > 0 ? v.map((x) => x / l) : v; };
+/** Key light from low and to the side (so a floor and a wall differ), fill from the opposite side, and ambient. */
+const LIGHT = Object.freeze({ key: norm([-0.45, 0.7, 0.55]), fill: norm([0.5, 0.35, -0.6]), keyK: 0.72, fillK: 0.22, ambient: 0.2 });
+/**
+ * The brightness of a surface with unit normal n: ambient + key
+…[11872 chars cut]…
+ge || typeof storage.writeExport !== 'function') return set({ message: 'there is nowhere to write the export here' });
+226:      if (!storage) return set({ message: 'saving is not available here' });
+227:      if (!NAME_RE.test(name || '')) return set({ message: `a track name is 1 to 60 letters, digits, spaces, _ or -, starting with a letter or digit; got ${JSON.stringify(name)}` });
+229:      return set({ name, dirty: false, message: null });
+232:      if (!storage) return set({ message: 'opening is not available here' });
+235:      return set({ history: D.createHistory(d), ...resolvedOf(d), name, dirty: false, lastEdited: null, water: null, message: null, exportReds: null });
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47548 assistant 2026-10-03T15:23:12.075Z
+TOOL_USE Bash [toolu_015GzR9aGvkh1N1qY6uxBwWo]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && sed -n 95,116p app/core/coreshell.js; grep -rn \"red\\.\\(code\\|kind\\|text\\)\\|\\.code\\b\" app/validate-ui/*.js | head -15; grep -n \"class CoreError\\|this.code\\|function CoreError\" -A3 src/core/document.js | head -12","description":"Read headState, red rendering and the CoreError shape"}
+--- L47549 user 2026-10-03T15:23:12.322Z
+RESULT [toolu_015GzR9aGvkh1N1qY6uxBwWo]:     candidate: (opts) => { const d = extend(doc(), opts); return { segments: segmentsOf(d), closed: false, start: startOf(d) }; },
+    /** The ghost's readout: what extend(opts) would place, before it is placed (A: the same numbers as after). Throws on bad fields. */
+    candidateReadout: (opts) => RD.candidateReadout(doc(), opts),
+    /**
+     * The head's END state in the core's units: kh, kv (rad/m), phi (rad), w (m), c (degrees; a legacy piece's is the edge it renders).
+     * An empty track gives the first piece's START (extend.js's own: bowl, level, straight, WIDTHS.bowl, the edge that renders). Read only.
+     */
+    headState() {
+      const e = D.endState(doc());
+      if (e) return { kh: e.kh.v, kv: e.kv.v, phi: e.phi.v, w: e.w.v, c: e.c.v };
+      const fam = 'bowl';   // extend.js: `family || (last ? last.family : 'bowl')`
+      return { kh: 0, kv: 0, phi: 0, w: WIDTHS[fam], c: D.legacyEdgeDeg(fam, WIDTHS[fam], RATES[fam]) };
+    },
+    /** Every placed piece's readout, in order: computed ONCE per document (the labels read it every frame). */
+    pieceReadouts() { const d = doc(); if (readsFor !== d) { reads = d.pieces.map((_, i) => RD.pieceReadout(d, i)); readsFor = d; } return reads; },
+
+    /**
+     * THE BRUSH, one drag = one undo step. beginBrush fixes the brush (its mode, channel, centre s0 and radius r, all on the
+     * document as it was when the drag began); brushTo(delta) applies the WHOLE delta to that base, so a drag never
+     * accumulates rounding; endBrush commits. mode 'local' is E's height/lateral brush (channel 'height' | 'lateral');
+     * 'rate' is src/core/sculpt.js on one channel (kh, kv, phi, w, r).
+     */
+36:class CoreError extends Error {
+37:  constructor(code, message) { super(`${code}: ${message}`); this.name = 'CoreError'; this.code = code; }
+38-}
+39-const q = (x, dec) => { if (!Number.isFinite(x)) throw new CoreError('NOT_FINITE', `a number is ${x}`); const v = Number(x.toFixed(dec)); return Object.is(v, -0) ? 0 : v; };
+40-const deepFreeze = (o) => { if (o && typeof o === 'object' && !Object.isFrozen(o)) { Object.freeze(o); for (const k of Object.keys(o)) deepFreeze(o[k]); } return o; };
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47552 assistant 2026-10-03T15:23:19.301Z
+TOOL_USE Bash [toolu_011wCJgY7GhkchDGSfhL5YDC]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && ls app/validate-ui; grep -n \"red\\b\\|reds\\|kind\\|\\.what\\|\\.id\" app/validate-ui/panel.js | head -30; grep -rn \"validate-ui\\|validate(\" app/core/coreshell.js app/shell.js 2>/dev/null | head","description":"Check how validation reds are shown"}
+--- L47553 user 2026-10-03T15:23:19.486Z
+RESULT [toolu_011wCJgY7GhkchDGSfhL5YDC]: colour.js
+graph.js
+index.js
+jumparcs.js
+labels.js
+live.js
+panel.js
+pathview.js
+speed.js
+26:// instead of growing a second path next to it; `state.pathFrom` says 'shared' or 'own'. The view is used only when
+28:// divide) the controller grows its own path as below, so the shared path can make validation faster, never different.
+31:// the lap DEFERRED (lap.reason 'deferred'), and the change that ends the drag proves it (src/validate lapOf), the same
+32:// lap an undeferred validate gives.
+55:  const idAt = (k) => segments[k] && segments[k].id;
+61:}   // m between stations: the step the export and the D167 tests use (inferred: not tuned for the preview)
+67:  let segs = null, path = null, resolvedSeen = null, source = null;   // source: 'shared' (a view of the preview's path) | 'own'
+85:  function shared(r) {
+96:      // the same document, and the drag has ended: what the drag deferred is owed now. Stations past the drag window are
+105:      } else if (!dragging && res && res.lap && res.lap.reason === 'deferred') { out.state = { ...out.state, result: withLap(res, lapOf(out.state.path, segs, res)) }; onUpdate(out.state); }
+113:      const sp = shared(r);
+118:        const keep = p.how !== 'full' && source === 'shared' && path && path.src === sp;
+130:      const pathFrom = np.src ? 'shared' : 'own';
+164:  if (!r) return { red: 0, amber: 0, lap: null, jumps: 0, jumpsPending: 0, pendingFrom: null };
+165:  // pendingFrom (D179): during a drag the counts cover the track up to it; a jump past it is deferred, not waiting for a landing
+166:  return { red: r.red.length, amber: r.amber.length, lap: r.lap, jumps: r.jumps.length, jumpsPending: r.jumps.filter((j) => j.pending && !j.deferred).length, pendingFrom: r.pendingFrom == null ? null : r.pendingFrom };
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47555 assistant 2026-10-03T15:23:23.183Z
+TOOL_USE Bash [toolu_0171BMvGRvi45H17HScJnthQ]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && grep -n \"text\\|\\.code\\|plain\\|reason\" app/validate-ui/index.js | head -30; grep -n \"code:\\|red.push\\|reds.push\\|function red\" src/validate/index.js | head -20","description":"See how a validator red's name reaches the UI"}
+--- L47556 user 2026-10-03T15:23:23.365Z
+RESULT [toolu_0171BMvGRvi45H17HScJnthQ]: 10://   · every red and amber range with its reason and FINDINGS/ARCHITECTURE source; every jump with both landings.
+45:    head.textContent = state.error ? `not validated: ${state.error}`
+59:        for (const x of items) { const f = findingLine(kind, x); list.append(el('li', { textContent: f.text, title: f.title, style: `color: ${css(PALETTE[lvl])}` })); }   // the rule and its source in the tooltip
+61:      if (r.lap && r.lap.ok === false) for (const w of r.lap.where) list.append(el('li', { textContent: `lap: ${lapWhereText(w)}, at ${w.s.toFixed(0)} m`, title: w.reason, style: `color: ${css(PALETTE[LEVEL.RED])}` }));
+65:      list.append(el('li', { textContent: `jump at s ${j.s.toFixed(0)} m${j.speed ? `, ${(j.speed * 3.6).toFixed(0)} km/h` : ', drawn at each landing\'s minimum speed'}: ${legs.join('; ')}` }));
+246:  if (opts.softCollision === false) red.push({ s: S[0].s, s1: S[n - 1].s, u: null, reason: 'missing-soft-collision' });
+248:    for (const f of opts.folds) if (end === n || f.s < S[end].s) red.push({ s: f.s, u: f.u == null ? null : f.u, reason: f.other ? 'self-intersection' : 'fold', worst: f.margin == null ? null : -f.margin });
+252:    for (const g of rayGaps(opts.roadMesh, S, car.downforceRay)) if (g.s != null && (end === n || g.s < S[end].s)) red.push({ s: g.s, u: g.u, reason: 'downforce-ray-gap', worst: g.widthM });
+254:  for (const p of raw.pts) if (p.kind === 'red') red.push(p);
+255:  for (const r of raw.segReds) red.push(r);
+256:  for (const e of raw.stacked.values()) red.push({ s: e.s, u: e.u, reason: 'stacked-within-2m', worst: e.worst });
+294:      red.push({ s: A.s, s1: S[last].s, u: null, reason: 'jump-gap-not-forward', worst: Number.isFinite(D) ? -D : null });
+307:    red.push({ s: S[first].s, s1: S[n - 1].s, u: null, reason: 'head-in-the-air' });
+314:    if (missed.length) red.push({ s: jp.s, s1: jp.s + jp.gap, u: null, reason: 'landing-misses-zone', worst: Math.max(...missed.map((L) => L.g)) });
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47559 assistant 2026-10-03T15:23:27.184Z
+TOOL_USE Bash [toolu_0146TtqLY12EkSKFAvywh4Vn]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && grep -n \"function findingLine\" -A25 app/validate-ui/index.js | head -40; grep -rn \"REASON_TEXT\\|reasonText\\|plainReason\" app/validate-ui/*.js | head","description":"Read how a red's reason becomes the panel line"}
+--- L47566 user 2026-10-03T15:23:27.336Z
+RESULT [toolu_0146TtqLY12EkSKFAvywh4Vn]: app/validate-ui/labels.js:6://   reasonText(reason, car)       plain words for a validation reason id (src/validate SRC), or a plain fallback
+app/validate-ui/labels.js:15:function reasonText(reason, car = MACH6) {
+app/validate-ui/labels.js:50:  return reasonText(r);
+app/validate-ui/labels.js:55:  return { text: `${kind}: ${reasonText(x.reason)}, ${at(x)}`, title: `${x.reason}${x.source ? ` · ${x.source}` : ''}` };
+app/validate-ui/labels.js:60:  const words = [...new Set(stop.reasons.map((r) => reasonText(r)))].join('; ');
+app/validate-ui/labels.js:66:module.exports = { reasonText, lapText, lapWhereText, findingLine, stopLine, refusalText };
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47568 assistant 2026-10-03T15:23:31.017Z
+TOOL_USE Bash [toolu_01Deq8jBVKK6deqC8q7xwRMv]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && sed -n 1,66p app/validate-ui/labels.js","description":"Read the validation labels' reason texts"}
+--- L47569 user 2026-10-03T15:23:31.129Z
+RESULT [toolu_01Deq8jBVKK6deqC8q7xwRMv]: // labels.js: validation's findings in plain words, for the panels (the D177 window pass and A's D180 check of the
+// installed app: the red list read "stacked-within-2m … ARCHITECTURE.md:85", which a track builder has to look up). The
+// words are what the user reads; the rule id and its source go in the TOOLTIP (title), where the docs, the tests and a
+// search still find them. No shown string carries a rule id or a ".md:" line.
+//
+//   reasonText(reason, car)       plain words for a validation reason id (src/validate SRC), or a plain fallback
+//   lapText(lap)                  the lap as the summary line shows it
+//   lapWhereText(where)           one reason the lap fails, in words
+//   findingLine(kind, range)      { text, title } for one red or amber range in the list
+//   stopLine(stop)                { text, title } for a handle drag stopped at a bound (app/handles)
+//   refusalText(message)          a document refusal without its error code ("HANDLE_RANGE: …" → "…")
+'use strict';
+const { MACH6 } = require('../../src/validate/limits.js');
+
+function reasonText(reason, car = MACH6) {
+  const T = {
+    'gap-in-road': 'a hole in the road',
+    'downforce-ray-gap': 'a gap in the road under the car\'s downforce ray: the car loses all its downforce over it',
+    'missing-soft-collision': 'the export has no soft-collision block',
+    fold: 'the surface folds over itself here (too tight for its width)',
+    'self-intersection': 'the road passes through itself here',
+    'stacked-within-2m': `two roads are stacked less than ${car.stackedM} m apart here`,
+    'wall-ride-from-wall-object': 'a wall-ride is built on a wall object',
+    'steep-without-raycast': `a surface is steeper than ${car.steepDeg}°, which needs CSP's wall 
+…[1572 chars cut]…
+ind, x) {
+  return { text: `${kind}: ${reasonText(x.reason)}, ${at(x)}`, title: `${x.reason}${x.source ? ` · ${x.source}` : ''}` };
+}
+
+/** stop: { at, reasons: [id], sources: [src] } from handles.js clamp; the value the drag stopped at is at. */
+function stopLine(stop, unitText = '') {
+  const words = [...new Set(stop.reasons.map((r) => reasonText(r)))].join('; ');
+  return { text: `stopped at ${stop.at}${unitText}: past it, ${words}`, title: `${stop.reasons.join(', ')} · ${stop.sources.join(', ')}` };
+}
+
+const refusalText = (message) => String(message).replace(/^[A-Z][A-Z_]+:\s*/, '');
+
+module.exports = { reasonText, lapText, lapWhereText, findingLine, stopLine, refusalText };
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47573 assistant 2026-10-03T15:23:52.395Z
+TOOL_USE Bash [toolu_012bzMtAenSPyjJFJyjb1kcC]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && sed -n 1,228p app/camera/cameras.js | grep -n \"chase\\|eye\\|up\\b\\|U\\b\\|function\\|zoom\" | head -60; grep -rn \"headMarker\\|head\\.U\\|headPose\\|\\.L\\b\" app/preview/preview.js | head -20","description":"Read the chase camera and where the head pose comes from"}
+--- L47574 user 2026-10-03T15:23:52.566Z
+RESULT [toolu_012bzMtAenSPyjJFJyjb1kcC]: 9://     overhead  straight down on the head, the growth direction pointing up the screen
+11://     chase     riding the road itself `lag` metres behind the head, in the road's frame (through loops and banking),
+18://   rig.pose(ctx)              the exact pose for ctx = { head, path, width?, aspect? } ({ eye, target, up, fov }), no smoothing
+20://   rig.free.move(fwd, right, up)   rig.free.look(dYaw, dPitch)     only in free mode (dYaw + turns RIGHT on screen); a move is
+21://                              hypot(fwd, right, up) metres in the direction d·fwd + r·right + U·up, whatever the pitch and the combination
+22://   rig.zoom(steps)            the scroll wheel, + nearer: a follow view scales its distance (kept per mode), free dollies
+23://   rig.lens(steps)            Ctrl + the wheel, + zooms IN: the field of view, ×1/1.15 a notch, 10° to 100°, the same in every view;
+26:// `head` is path.head (src/geom/path.js buildHead): { s, pos, T, L, U } with L = U × T, u + = left. `path` is needed
+27:// only by chase (it reads the road behind the head).
+32:// the edges pos ± L·width/2 lie at depth back·k along the view direction, k = (2 + r²) / √(4 + r²) with r = up / back
+33:// (the eye is at −T·back + U·up, looking at +T·back), so back ≥ (width / 2) / (FRAME · tan(fov / 2) · aspect · k).
+39:const MODES = Object.freeze(['build', 'overhead', 'side', 'chase', 'free']);
+42:  build: { back: 15, up: 6 },                   // the geometry's own headCamera defaults (path.js)
+45:  chase: { lag: 25, height: 3, lookAhead: 25 },
+64:function checkHead(head) {
+65:  if (!head || ![head.pos, head.T, head.L, head.U].every((v) => Array.isArray(v) && v.length === 3 && v.every(Number.isFinite)))
+66:    throw new Error('camera: needs a head { po
+…[4073 chars cut]…
+wn = { ...want, eye: want.eye.slice(), target: want.target.slice(), up: want.up.slice() }; return shown; }
+184:      shown = { eye: lerp(shown.eye, want.eye, k), target: lerp(shown.target, want.target, k), up: unit(lerp(shown.up, want.up, k)) || want.up, fov: want.fov, far: want.far };
+187:    /** The scroll wheel: `steps` notches, + nearer. A follow view scales its distance (returns its zoom factor); free
+34:const { gridLines, headMarker } = require('./look.js');
+177:      renderer.draw(track && track.batches ? track.batches : [], shownPose, { width: w, height: h }, { grid, marker: headMarker(c.head, markerSize(shownPose, c.head)), ghost: ghost ? ghost.batches : null, overlay,
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47584 assistant 2026-10-03T15:24:11.719Z
+TOOL_USE Bash [toolu_01Gij5k81CfNGTSdqkFeFnZ1]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && sed -n 1,80p app/test/core-readout-display.test.js; grep -n \"MUTANTS\\|const M\\|name:\\|from:\\|to:\" app/test/core-mutation.test.js | head -30; wc -l app/test/core-readout-display.test.js app/test/core-mutation.test.js","description":"Read my existing UI tests and mutation harness"}
+--- L47585 user 2026-10-03T15:24:11.919Z
+RESULT [toolu_01Gij5k81CfNGTSdqkFeFnZ1]: // core-readout-display.test.js: node --test app/test/core-readout-display.test.js
+// THE READOUT DISPLAY (L130, pane C): the strings (app/core/labels.js formatReadout), the label layout (the head's keep-out, no
+// overlaps), the anchors, the shell's readouts (A's src/core/readout.js), and the PANEL mounted on a small fake DOM, read back
+// as the TEXT it shows. E's sealed check (readout_check_registration_2026-09-29.md) is scored by a non-author seat; these are the
+// author's own tests of the same properties, not that score.
+'use strict';
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const LB = require('../core/labels.js');
+const { createCoreShell } = require('../core/coreshell.js');
+const RD = require('../../src/core/readout.js');
+const { extendOptions } = require('../core/panel.js');
+
+// ── a small fake DOM: enough for the panel and the label layer ──
+class El {
+  constructor(tag, doc) { this.tagName = tag.toUpperCase(); this.ownerDocument = doc; this.children = []; this.attrs = {}; this.style = {}; this._text = ''; this.listeners = {}; this.value = ''; this.checked = false; this.parent = null; }
+  append(...k) { for (const c of k) { if (c == null) continue; const n = typeof c === 'string' ? Object.assign(new El('#text', this.ownerDocument), { _text: c }) : c; n.parent = this; this.children.push(n); } }
+  replaceChildren(...k) { for (const c of this.children) c.parent = null; this.children = []; this.append(...k); }   // the removed are out of the page
+  remove() { if (this.parent) { this.parent.children = this.parent.children.filter((c) => c !== this); this.parent = null; } }
+  setAttribute(k, v) { this.attrs[k] = String(v); if (k === 'id') this.ownerDocument.ids[v] = this; }
+  get
+…[11289 chars cut]…
+s are ignored', file: 'core/panel.js', from: 'if (Object.keys(transition).length) out.transition = transition;', to: '', caughtBy: 'extendOptions "at start"' },
+46:  { id: 'V2 an untouched field is sent at start', file: 'core/panel.js', from: 'if (atStart[f] && targets[ch] !== undefined) transition[ch]', to: 'if (atStart[f]) transition[ch]', caughtBy: 'extendOptions "at start"' },
+47:  { id: 'V3 the span is not held to the piece', file: 'core/panel.js', from: 'transition[ch] = Math.min(AT_START_M, out.length);', to: 'transition[ch] = AT_START_M;', caughtBy: 'extendOptions "at start"' },
+  583 app/test/core-readout-display.test.js
+  146 app/test/core-mutation.test.js
+  729 total
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47593 assistant 2026-10-03T15:24:16.135Z
+TOOL_USE Bash [toolu_01YLF3UebwBh4ZNoZdBXqUYv]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && sed -n 44,146p app/test/core-mutation.test.js","description":"Read the rest of the mutation harness"}
+--- L47594 user 2026-10-03T15:24:16.258Z
+RESULT [toolu_01YLF3UebwBh4ZNoZdBXqUYv]:   // D194b, "at start": a ticked field with a target goes in transition as { channel: min(20 m, length) }; nothing else changes
+  { id: 'V1 the at-start boxes are ignored', file: 'core/panel.js', from: 'if (Object.keys(transition).length) out.transition = transition;', to: '', caughtBy: 'extendOptions "at start"' },
+  { id: 'V2 an untouched field is sent at start', file: 'core/panel.js', from: 'if (atStart[f] && targets[ch] !== undefined) transition[ch]', to: 'if (atStart[f]) transition[ch]', caughtBy: 'extendOptions "at start"' },
+  { id: 'V3 the span is not held to the piece', file: 'core/panel.js', from: 'transition[ch] = Math.min(AT_START_M, out.length);', to: 'transition[ch] = AT_START_M;', caughtBy: 'extendOptions "at start"' },
+  { id: 'V4 transition sent as one number for all channels', file: 'core/panel.js', from: 'if (Object.keys(transition).length) out.transition = transition;', to: 'if (Object.keys(transition).length) out.transition = AT_START_M;', caughtBy: 'extendOptions "at start"' },
+  { id: 'V5 a field sent on the wrong channel', file: 'core/panel.js', from: "bank: 'phi', width: 'w'", to: "bank: 'w', width: 'phi'", caughtBy: 'extendOptions "at start"' },
+  { id: 'V6 the panel never passes the boxes', file: 'core/panel.js', from: 'atStart: Object.fromEntries(Object.entries(atStart).map(([k, box]) => [k, box.checked])),', to: '', caughtBy: 'the panel: an "at start" box' },
+  { id: 'V7 ticking a box does not redraw', file: 'core/panel.js', from: 'cup, ...Object.values(atStart)]) f.oninput', to: 'cup]) f.oninput', caughtBy: 'the panel: an "at start" box' },  { id: 'C1 a brush frame builds on the last frame, not the drag\'s base', file: 'core/coreshell.js',
+    from: 'const t0 = now(), res = brushed(b, delta)
+…[8263 chars cut]…
+: true }); }
+}
+
+test('control: the unmutated temp copy passes every core-shell test', () => {
+  const r = runMutant({ id: 'control', file: 'core/panel.js', from: null, to: null, caughtBy: '(no test is named this)' });
+  assert.deepEqual(r.failed, [], `the unmutated copy fails: ${r.failed.join(' | ')}`);
+});
+for (const m of MUTATIONS) {
+  test(`mutation ${m.id}: applied, and caught by "${m.caughtBy}…"`, () => {
+    const r = runMutant(m);
+    assert.ok(r.applied, `NOT APPLIED: "${m.from}" occurs ${r.n} times in app/${m.file}`);
+    assert.ok(r.caught, `NOT CAUGHT; failing tests on the mutant: ${r.failed.join(' | ') || 'none'}`);
+  });
+}
+module.exports = { MUTATIONS, runMutant };
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47599 assistant 2026-10-03T15:25:01.556Z
+TOOL_USE Bash [toolu_01R2oePERTzRpThJNpYLy7Zq]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && sed -n 140,185p app/preview/preview.js; grep -n \"markerSize\\|function ctx\\|segments\" app/preview/preview.js | head -20; grep -n \"^module.exports\\|^function \" src/geom/profile.js | head","description":"Read where the preview builds the head marker"}
+--- L47606 user 2026-10-03T15:25:01.757Z
+RESULT [toolu_01R2oePERTzRpThJNpYLy7Zq]:   const noMenu = (e) => e.preventDefault();
+  // THE SCROLL WHEEL zooms every view: a follow view comes nearer or backs off, free mode flies along its view. CTRL + WHEEL is the
+  // LENS instead (rig.lens: the field of view; the camera does not move).
+  // deltaX counts only when Shift turned the wheel sideways: a trackpad's sideways swipe (deltaX, no Shift) is not a zoom, nor a lens
+  const onWheel = (e) => { const steps = -Math.sign(e.deltaY || (e.shiftKey ? e.deltaX : 0) || 0) * (e.shiftKey ? 4 : 1); if (steps) { if (e.ctrlKey) rig.lens(steps); else rig.zoom(steps); } e.preventDefault(); };
+  win.addEventListener('keydown', onKey); win.addEventListener('keyup', onUp); win.addEventListener('blur', letGo);
+  if (win.document) win.document.addEventListener('visibilitychange', onVis);
+  canvas.addEventListener('mousedown', onDown); win.addEventListener('mousemove', onMove); win.addEventListener('mouseup', onRelease);
+  canvas.addEventListener('contextmenu', noMenu); canvas.addEventListener('wheel', onWheel, { passive: false });
+
+  function frame(t) {
+    raf = win.requestAnimationFrame(frame);
+    const dt = prev ? Math.min(0.1, (t - prev) / 1000) : 0; prev = t;
+    const sprint = boost ? boostAt(boostT) : 1; boostT = boost ? boostT + dt : 0;   // the speed THIS frame, then one more frame of Shift held
+    if (takeover) { if (rig.mode === 'free') takeover = false; else { const c0 = ctx(); if (c0) { rig.setMode('free', c0); said(); takeover = false; } } }   // the first move from a view takes it over, ONCE: C and B after it stay
+    if (rig.mode === 'free') {
+      const k = sprint * flySpeed * dt;
+      // MOVEMENT IS PER AXIS (the keeper, 2026-09-29 13:05: "say I am W forward, then I press D, it should go diagonally"). `
+…[3363 chars cut]…
+t, backingSize, MAX_SIDE, markerSize, widthAtHead, pickAt, startHead };
+15:function normalize(profile) {
+32:function piece(a, b, pa, pb) {
+38:function offsetAt(P, u) {
+45:function normalAt(P, u) { const p = psiAt(P, u), sg = u > 0 ? 1 : u < 0 ? -1 : 0; return [-sg * Math.sin(p), Math.cos(p)]; } // [L, U] components
+52:function samplesAcross(P, { maxAcross = 1, maxSeam = Math.PI / 180, count } = {}) {
+67:function spanOf(P) { const X = P.u.map((u) => offsetAt(P, u)[0]); return Math.max(...X) - Math.min(...X); }
+81:function fractions(P) {
+86:function blend(A, B, w) {
+101:function blendSamples(A, B, { maxAcross = 1, maxSeam = Math.PI / 180 } = {}) {
+127:function atSegment(seg, d) {
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47609 assistant 2026-10-03T15:25:12.639Z
+TOOL_USE Bash [toolu_014GSxdJ2isF3vEeiKYkJ1YT]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && sed -n 225,269p app/preview/preview.js; sed -n 36,50p src/geom/profile.js; sed -n 120,140p src/geom/profile.js","description":"Read widthAtHead, readAt and the profile offset functions"}
+--- L47610 user 2026-10-03T15:25:12.813Z
+RESULT [toolu_014GSxdJ2isF3vEeiKYkJ1YT]:   for (const m of path.samples) {
+    const c = M.apply(VP, m.pos); if (!(c[3] > 0)) continue;
+    const sx = (c[0] / c[3] * 0.5 + 0.5) * w, sy = (1 - (c[1] / c[3] * 0.5 + 0.5)) * h, d = Math.hypot(sx - x, sy - y);
+    if (d <= maxPx && (!best || d < best.px)) best = { s: m.s, pos: m.pos.slice(), px: d };
+  }
+  return best;
+}
+
+/** The road's span at the head (m): the last road segment's cross-section (profile.js spanOf), for the build view's framing. */
+function widthAtHead(segments) {
+  for (let i = (segments || []).length - 1; i >= 0; i--) if (segments[i] && segments[i].profile) return spanOf(readAt(segments[i], segments[i].length));   // at the HEAD: the end of the last segment (a cup's segments carry a blend)
+  return null;
+}
+
+/**
+ * THE HEAD OF AN EMPTY TRACK (D195): where its first piece will start, `start` = { pos, theta, p } (the equation core's doc.start,
+ * as src/geom buildPath takes it), or the origin, heading 0, level when there is none (buildPath's own default). The frame is the
+ * geometry's gravity frame at zero roll (src/geom/path.js): T = (cos p sin θ, sin p, cos p cos θ), L = (cos θ, 0, −sin θ),
+ * U = T × L; so it is the frame the first piece's first sample will have, before anything is placed.
+ */
+function startHead(start) {
+  const s = { pos: [0, 0, 0], theta: 0, p: 0, ...(start || {}) }, th = s.theta, p = s.p;
+  const T = [Math.cos(p) * Math.sin(th), Math.sin(p), Math.cos(p) * Math.cos(th)], L = [Math.cos(th), 0, -Math.sin(th)];
+  const U = [T[1] * L[2] - T[2] * L[1], T[2] * L[0] - T[0] * L[2], T[0] * L[1] - T[1] * L[0]];
+  return { s: 0, seg: 0, pos: s.pos.slice(), T, L, U };
+}
+
+/** The head marker's size: 3 m up close, growing with the camera's distance (2%) so it stays readable from overhead. */
+…[2661 chars cut]…
+-section a READER of a segment (not the mesh) takes at distance d into it: the blend evaluated for a CUP segment (`seg.cup`), the
+ * segment's own profile for every other. A word document's font-transition blends have always been ignored by the readers (they judge the
+ * target font for the whole word); D190 does not change that, so the paused piece builder's validation, layout and export read as before.
+ */
+function readAt(seg, d) { return readsBlend(seg) ? atSegment(seg, d) : normalize(seg.profile); }
+/** The segments whose blend a reader evaluates: a cup's, and a legacy CHORD (D196: the core's width or r changing inside a segment); never a word document's font transition. */
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47614 assistant 2026-10-03T15:25:19.847Z
+TOOL_USE Bash [toolu_01EYyWeUW3tBLbxRMczbU41h]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && grep -n \"require\" app/preview/preview.js | head; grep -n \"function psiAt\\|module.exports\" src/geom/profile.js","description":"Check the preview's imports from profile.js"}
+--- L47615 user 2026-10-03T15:25:19.995Z
+RESULT [toolu_01EYyWeUW3tBLbxRMczbU41h]: 31:const { createRig, KEYS } = require('../camera/cameras.js');
+32:const { createTrackModel } = require('./trackmodel.js');
+33:const { createRenderer } = require('./renderer.js');
+34:const { gridLines, headMarker } = require('./look.js');
+35:const { resolveLook } = require('./aclook.js');
+36:const { previewTextures } = require('../../src/texture/set.js');
+37:const { normalize, spanOf, readAt } = require('../../src/geom/profile.js');
+38:const M = require('../camera/math.js');
+171:module.exports = { normalize, psiAt, offsetAt, normalAt, samplesAcross, maxPsi, spanOf, blend, blendSamples, usOf, smoothstep, atSegment, readAt, readsBlend, stepBetween, jointSteps };
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47616 assistant 2026-10-03T15:25:27.470Z
+TOOL_USE Write [toolu_01YVTXdLzVAU4cpgGLyo2Dfd]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-xsec-wt\\app\\core\\xsec.js","content":"// xsec.js: the CROSS-SECTION channels' names as the app uses them (lap D225, pane C), in ONE place: the edge curve's angle and start,\n// and the tube's sweep (E's seal, cross_section_seal_registration_2026-10-03.md, V3/V4/E4/E7/T1). The panel, the shell's head state\n// and the tests read the core through these names only, so a name A's core settles on differently is a one-line change here.\n//\n//   CHANNEL   the core channel each Extend field targets. `e` and `s` are the seal's own names (V3: \"channels `e` and `s`\", E4: \"`e
+…[1110 chars cut]…
+e default. */\nfunction headOf(end) {\n  const out = {};\n  for (const [k, ch] of Object.entries(CHANNEL)) out[ch] = end && end[ch] && Number.isFinite(end[ch].v) ? end[ch].v : DEFAULTS[k];\n  return out;\n}\n\nmodule.exports = { CHANNEL, READOUT, DEFAULTS, headOf };\n"}
+--- L47617 user 2026-10-03T15:25:27.500Z
+RESULT [toolu_01YVTXdLzVAU4cpgGLyo2Dfd]: File created successfully at: C:\Users\nname\Desktop\worktrees\c-xsec-wt\app\core\xsec.js (file state is current in your context — no need to Read it back)
+--- L47626 assistant 2026-10-03T15:25:33.547Z
+TOOL_USE Bash [toolu_019HXGoZTjNwW53q1Ly2dh2d]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && grep -rn \"core/labels.js\\|'core/panel\\|labels.js'\" --include=*.js --include=*.json --include=*.html --include=*.rs . 2>/dev/null | grep -v node_modules | grep -v \"^./app/test/core-mutation\\|reads/\" | head","description":"Check whether app modules are listed anywhere for bundling"}
+--- L47627 user 2026-10-03T15:25:35.028Z
+RESULT [toolu_019HXGoZTjNwW53q1Ly2dh2d]: ./app/core/panel.js:13://          the track, a label at every placed piece with the same numbers (app/core/labels.js). The strings are the same function's
+./app/core/panel.js:18:const LB = require('./labels.js');
+./app/core/panel.js:202:  // the labels on the track: a DOM layer over the preview (app/core/labels.js); none when there is no preview to lay them on
+./app/handles/index.js:11:const { stopLine, refusalText } = require('../validate-ui/labels.js');
+./app/preview/index.js:23:// And for the READOUT labels (L130, app/core/labels.js), answered read-only from the preview's own view():
+./app/test/core-readout-display.test.js:2:// THE READOUT DISPLAY (L130, pane C): the strings (app/core/labels.js formatReadout), the label layout (the head's keep-out, no
+./app/test/core-readout-display.test.js:9:const LB = require('../core/labels.js');
+./app/test/validate-ui.test.js:185:const L = require('../validate-ui/labels.js'), { SRC: RULES } = require('../../src/validate/index.js');
+./app/validate-ui/index.js:29:const { lapText, lapWhereText, findingLine } = require('./labels.js');
+./test/core_cup_seam.test.js:102:  const L = require('../app/validate-ui/labels.js'); assert.ok(!/no description yet/.test(L.reasonText('joint-step', { seamP90Deg: 5 })), 'reasonText has no line for joint-step');
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47630 assistant 2026-10-03T15:25:39.993Z
+TOOL_USE Bash [toolu_017HKaHdkjbNzDx9peBetCU4]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && grep -n \"^const\\|require(\" app/core/coreshell.js | head -20; sed -n 1,40p app/lib/cjs.js | head -40; grep -n \"cjs\" app/test/shell-loader.test.js | head -5","description":"Read the shell's imports and the webview module loader"}
+--- L47631 user 2026-10-03T15:25:40.184Z
+RESULT [toolu_017HKaHdkjbNzDx9peBetCU4]: 21:const D = require('../../src/core/document.js');
+22:const { extend } = require('../../src/core/extend.js');
+23:const SC = require('../../src/core/sculpt.js');
+24:const { sculpt, pieceOffsets } = SC;
+25:const { close } = require('../../src/core/close.js');
+26:const AD = require('../../src/core/adapter.js');
+27:const { toSegments } = AD;
+31:const offsetPath = typeof AD.offsetPath === 'function' ? AD.offsetPath : null;
+32:const W = require('../../src/core/water.js');
+35:const RD = require('../../src/core/readout.js');
+38:const { WIDTHS, RATES } = require('../../src/geom/fonts.js');
+40:const NAME_RE = /^[A-Za-z0-9][A-Za-z0-9 _-]{0,59}$/;
+41:const PREFIX = 'eq-';                 // core documents are stored beside the piece builder's under this prefix
+42:const BRUSH_MODES = Object.freeze(['local', 'rate']);
+251:  const Prof = require('../../src/geom/profile.js'), starts = []; let a = path.samples[0].s;
+267:const STRAIGHT_K = 1 / 5000, STRAIGHT_ROLL = 0.5 * Math.PI / 180;
+269:  const { buildPath } = require('../../src/geom/index.js'), Markers = require('../../src/markers/layout.js');
+// cjs.js: run the program's own CommonJS files (src/, app/) in the webview, with no bundler and no dependency.
+//
+// The document model, geometry and validation are CommonJS so that node --test runs them as they are. The webview has
+// no require(), so this gives it one: fetch the entry file, find its require('./…') calls, fetch those, and so on;
+// then evaluate each file once, in the order it is required, with module/exports/require of its own. Only RELATIVE
+// requires are served. A node built-in ('fs', 'path', …) fails loudly, naming the module and the file that asked:
+// the code the app runs in the UI process must not need one (ARCHITECT
+…[1360 chars cut]…
+k]);
+  const src = new Map(), missing = new Map();
+  async function fetchAll(p) {
+    if (src.has(p) || missing.has(p)) return;
+    let text;
+    try { text = await fetchText(p); } catch (e) { missing.set(p, e); return; }
+    src.set(p, text);
+    for (const m of text.matchAll(REQ)) if (m[1].startsWith('.')) await fetchAll(resolveFrom(p, m[1]));
+2:// app/lib/cjs.js, the loader that runs the program's CommonJS files in the webview. Here it is fed from the disk the
+9:const { loadCjs, norm } = require('../lib/cjs.js');
+48:    'c/b.js': "const a = require('./a.js'); exports.b = 2; exports.sawA = a.a; module.exports.count = (globalThis.__cjsRuns = (globalThis.__cjsRuns || 0) + 1);",
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47634 assistant 2026-10-03T15:25:43.685Z
+TEXT: Editing the shell's head state, then the panel.
+--- L47635 assistant 2026-10-03T15:25:49.325Z
+TOOL_USE Bash [toolu_01SCPDb8jauLYihjRiUepr1Q]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && node - <<'EOF'\nconst fs=require('fs'), f='app/core/coreshell.js'; let s=fs.readFileSync(f,'utf8');\nconst a=\"const { WIDTHS, RATES } = require('../../src/geom/fonts.js');\";\nif(s.split(a).length!==2) throw 'a';\ns=s.replace(a, a+\"\\nconst XS = require('./xsec.js');   // the cross-section channels' names (D225): the edge curve and the tube\");\nconst b=\"     * The head's END state in the core's units: kh, kv (rad/m), phi (rad), w (m), c (degrees; a legacy piece's is the edge it renders).\";\nif(s.split(b).length!==2) throw 'b';\ns=s.replace(b, b+\"\\n     * A
+…[665 chars cut]…
+ow 'd';\ns=s.replace(d,\"return { kh: 0, kv: 0, phi: 0, w: WIDTHS[fam], c: D.legacyEdgeDeg(fam, WIDTHS[fam], RATES[fam]), ...XS.headOf(null) };\");\nfs.writeFileSync(f,s); console.log('ok');\nEOF","description":"Add the cross-section channels to the shell's head state"}
+--- L47642 user 2026-10-03T15:25:49.457Z
+RESULT [toolu_01SCPDb8jauLYihjRiUepr1Q]: ok
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47645 assistant 2026-10-03T15:26:16.323Z
+TOOL_USE Bash [toolu_01SDjGW7o4Kg2zQ6c9ZkJmY2]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && node - <<'EOF'\nconst fs=require('fs'), f='app/core/panel.js'; let s=fs.readFileSync(f,'utf8');\nconst rep=(a,b)=>{ const n=s.split(a).length-1; if(n!==1) throw new Error('count '+n+' for: '+a.slice(0,80)); s=s.replace(a,()=>b); };\nrep(\"const LB = require('./labels.js');\", \"const LB = require('./labels.js');\\nconst XS = require('./xsec.js');   // the cross-section channels (D225): edge angle, edge start, tube sweep\");\nrep(\"const FIELD_CHANNEL = Object.freeze({ turn: 'kh', climb: 'kv', bank: 'phi', width: 'w', cup: 'c' });\",\n\"const FIELD_CHANNEL = Objec
+…[5697 chars cut]…
+rt, 'start'), fieldAt('tube sweep °', tube, 'tube')),\");\nfs.writeFileSync(f,s); console.log('ok');\nEOF\nnode --check app/core/panel.js && node --check app/core/coreshell.js && echo syntax-ok","description":"Add the three Extend fields and readout cells to the panel"}
+--- L47646 user 2026-10-03T15:26:16.530Z
+RESULT [toolu_01SDjGW7o4Kg2zQ6c9ZkJmY2]: [stdin]:2
+const rep=(a,b)=>{ const n=s.split(a).length-1; if(n!==1) throw new Error('count '+n+' for: '+a.slice(0,80)); s=s.replace(a,()=>b); };
+                                                          ^
+
+Error: count 0 for:   if (k !== null) targets.c = k;
+
+    at rep ([stdin]:2:65)
+    at [stdin]:10:1
+[90m    at runScriptInThisContext (node:internal/vm:219:10)[39m
+[90m    at node:internal/process/execution:451:12[39m
+    at [stdin]-wrapper:6:24
+[90m    at runScriptInContext (node:internal/process/execution:449:60)[39m
+[90m    at evalFunction (node:internal/process/execution:283:30)[39m
+[90m    at evalTypeScript (node:internal/process/execution:295:3)[39m
+[90m    at node:internal/main/eval_stdin:51:5[39m
+[90m    at Socket.<anonymous> (node:internal/process/execution:205:5)[39m
+
+Node.js v24.14.1
+syntax-ok
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47649 assistant 2026-10-03T15:26:25.199Z
+TOOL_USE Bash [toolu_01WAo4qC5QFhkS8fYLzZWZgH]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && for f in app/core/panel.js app/core/coreshell.js app/preview/look.js app/preview/preview.js app/validate-ui/labels.js app/test/core-readout-display.test.js; do printf \"%s \" $f; grep -c $'\\r$' $f; done; git diff --stat","description":"Check the files' line endings"}
+--- L47650 user 2026-10-03T15:26:25.517Z
+RESULT [toolu_01WAo4qC5QFhkS8fYLzZWZgH]: app/core/panel.js 0
+app/core/coreshell.js 0
+app/preview/look.js 0
+app/preview/preview.js 0
+app/validate-ui/labels.js 0
+app/test/core-readout-display.test.js 0
+warning: in the working copy of 'app/core/coreshell.js', LF will be replaced by CRLF the next time Git touches it
+ app/core/coreshell.js | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47653 assistant 2026-10-03T15:26:31.383Z
+TOOL_USE Bash [toolu_01YHSQvtj89pq5pw9pcASStx]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && grep -n \"targets.c = k\" app/core/panel.js | cat -A | cut -c1-80","description":"Show the exact cup target line"}
+--- L47660 user 2026-10-03T15:26:31.506Z
+RESULT [toolu_01YHSQvtj89pq5pw9pcASStx]: 59:  if (k !== null) targets.c = k;$
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47663 assistant 2026-10-03T15:26:39.080Z
+TOOL_USE Bash [toolu_015QVk8iLEb9cEFTaxSxpLqu]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && node -e \"const s=require('fs').readFileSync('app/core/panel.js','utf8'); console.log(s.split('  if (k !== null) targets.c = k;\\n').length-1, JSON.stringify(s.slice(s.indexOf('targets.c = k')-20, s.indexOf('targets.c = k')+20)))\"","description":"Debug the replacement match"}
+--- L47664 user 2026-10-03T15:26:39.210Z
+RESULT [toolu_015QVk8iLEb9cEFTaxSxpLqu]: [33m0[39m "\r\n  if (k !== null) targets.c = k;\r\n  co"
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47667 assistant 2026-10-03T15:26:44.797Z
+TEXT: The files are CRLF; my grep check was wrong. My coreshell edit put bare LF lines into a CRLF file, so I'm fixing that, then re-running the panel edit with line-ending handling.
+--- L47668 assistant 2026-10-03T15:26:46.950Z
+TOOL_USE Bash [toolu_016mbHQJ6mBCt3Pspq9uk9GF]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && node -e \"const fs=require('fs'),f='app/core/coreshell.js';let s=fs.readFileSync(f,'utf8');s=s.replace(/\\r\\n/g,'\\n').replace(/\\n/g,'\\r\\n');fs.writeFileSync(f,s);const b=fs.readFileSync(f);let lf=0,crlf=0;for(let i=0;i<b.length;i++)if(b[i]===10){if(b[i-1]===13)crlf++;else lf++;}console.log('coreshell crlf',crlf,'bare lf',lf)\"; git diff --stat","description":"Normalise coreshell.js back to CRLF"}
+--- L47669 user 2026-10-03T15:26:47.171Z
+RESULT [toolu_016mbHQJ6mBCt3Pspq9uk9GF]: coreshell crlf [33m312[39m bare lf [33m0[39m
+ app/core/coreshell.js | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47672 assistant 2026-10-03T15:27:14.096Z
+TOOL_USE Bash [toolu_01V3NZyuiYywJmSVBsvAEC8p]: {"command":"S=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; mkdir -p $S/xsec; cat > $S/xsec/edit_panel.js <<'EOF'\nconst fs=require('fs'), f=process.argv[2]+'/app/core/panel.js'; let s=fs.readFileSync(f,'utf8').replace(/\\r\\n/g,'\\n');\nconst rep=(a,b)=>{ const n=s.split(a).length-1; if(n!==1) throw new Error('count '+n+' for: '+a.slice(0,80)); s=s.replace(a,()=>b); };\nrep(\"const LB = require('./labels.js');\", \"const LB = require('./labels.js');\\nconst XS = require('./xsec.js');   // the cross-section channels (D225): edge angle, edg
+…[6145 chars cut]…
+e \"const fs=require('fs'),f='C:/Users/nname/Desktop/worktrees/c-xsec-wt/app/core/xsec.js';fs.writeFileSync(f,fs.readFileSync(f,'utf8').replace(/\\r\\n/g,'\\n').replace(/\\n/g,'\\r\\n'))\" && cd $W && git diff --stat","description":"Apply the panel edits, keeping CRLF"}
+--- L47679 user 2026-10-03T15:27:14.289Z
+RESULT [toolu_01V3NZyuiYywJmSVBsvAEC8p]: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\xsec\edit_panel.js:2
+const rep=(a,b)=>{ const n=s.split(a).length-1; if(n!==1) throw new Error('count '+n+' for: '+a.slice(0,80)); s=s.replace(a,()=>b); };
+                                                          ^
+
+Error: count 0 for: const fmtCup = (x) => LB.fmtDeg(x).replace(/^+/, '');
+    at rep (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\xsec\edit_panel.js:2:65)
+    at Object.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\xsec\edit_panel.js:19:1)
+[90m    at Module._compile (node:internal/modules/cjs/loader:1812:14)[39m
+[90m    at Object..js (node:internal/modules/cjs/loader:1943:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:1533:32)[39m
+[90m    at Module._load (node:internal/modules/cjs/loader:1335:12)[39m
+[90m    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)[39m
+[90m    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)[39m
+[90m    at node:internal/main/run_main_module:33:47[39m
+
+Node.js v24.14.1
+--- L47682 assistant 2026-10-03T15:27:22.275Z
+TEXT: A heredoc dropped one backslash, the failure my map already records, so I'm fixing that line with the Edit tool.
+--- L47683 assistant 2026-10-03T15:27:23.855Z
+TOOL_USE Read [toolu_01CiZ5c57dc6AghUoBuMfmRz]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\xsec\\edit_panel.js","offset":19,"limit":6}
+--- L47684 user 2026-10-03T15:27:23.874Z
+RESULT [toolu_01CiZ5c57dc6AghUoBuMfmRz]: 19	rep("const fmtCup = (x) => LB.fmtDeg(x).replace(/^\+/, '');",
+20	"const fmtCup = (x) => LB.fmtDeg(x).replace(/^\+/, '');\n"+
+21	"/** An edge start as the readout shows it: a share, two decimals, half away from zero (one decimal would read C's 0.64 as 0.6). */\n"+
+22	"const fmtShare = (x) => (Math.round(Math.abs(x) * 100 + 1e-7) / 100 * Math.sign(x) || 0).toFixed(2);\n"+
+23	"/** \"from → to\" for a pair of readout values, or — when the core does not report them (a core without the channel) */\n"+
+24	"const pairOf = (r, [from, to], fmt) => (Number.isFinite(r[from]) && Number.isFinite(r[to]) ? `${fmt(r[from])} → ${fmt(r[to])}` : '—');");
+--- L47687 assistant 2026-10-03T15:27:29.157Z
+TOOL_USE Edit [toolu_01GpQyupih2Jz1M2EdjJFQqs]: {"replace_all":false,"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\xsec\\edit_panel.js","old_string":"rep(\"const fmtCup = (x) => LB.fmtDeg(x).replace(/^\\+/, '');\",\n\"const fmtCup = (x) => LB.fmtDeg(x).replace(/^\\+/, '');\\n\"+","new_string":"rep(\"const fmtCup = (x) => LB.fmtDeg(x).replace(/^\\\\+/, '');\",\n\"const fmtCup = (x) => LB.fmtDeg(x).replace(/^\\\\+/, '');\\n\"+"}
+--- L47688 user 2026-10-03T15:27:29.189Z
+RESULT [toolu_01GpQyupih2Jz1M2EdjJFQqs]: The file C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\xsec\edit_panel.js has been updated successfully.
+--- L47692 assistant 2026-10-03T15:27:36.905Z
+TOOL_USE Bash [toolu_016JQY3eZiJKvZbJtc9r3jpm]: {"command":"S=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; W=/c/Users/nname/Desktop/worktrees/c-xsec-wt; cd $W && git diff --stat -- app/core/panel.js; node $S/xsec/edit_panel.js C:/Users/nname/Desktop/worktrees/c-xsec-wt && node --check app/core/panel.js && node -e \"const fs=require('fs'),f='app/core/xsec.js';fs.writeFileSync(f,fs.readFileSync(f,'utf8').replace(/\\r\\n/g,'\\n').replace(/\\n/g,'\\r\\n'))\" && git diff --stat && grep -n 'replace(/^' app/core/panel.js","description":"Re-run the panel edit and check the result"}
+--- L47699 user 2026-10-03T15:27:37.274Z
+RESULT [toolu_016JQY3eZiJKvZbJtc9r3jpm]: ok
+ app/core/coreshell.js |  7 +++++--
+ app/core/panel.js     | 42 +++++++++++++++++++++++++++++++++---------
+ 2 files changed, 38 insertions(+), 11 deletions(-)
+79:const fmtCup = (x) => LB.fmtDeg(x).replace(/^\+/, '');
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47702 assistant 2026-10-03T15:27:40.563Z
+TEXT: Panel and shell edits are in. Next: the head marker follows the road's U, and stays inside a closed tube.
+--- L47703 assistant 2026-10-03T15:27:41.261Z
+TOOL_USE Read [toolu_014uUVuZCFTikMKift1FrJ5Q]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-xsec-wt\\app\\preview\\look.js","offset":100,"limit":14}
+--- L47704 user 2026-10-03T15:27:41.283Z
+RESULT [toolu_014uUVuZCFTikMKift1FrJ5Q]: 100	  const ring = [[r, r], [r, -r], [-r, -r], [-r, r]].flatMap((p, i, q) => [...c(...p), ...c(...q[(i + 1) % 4])]);
+101	  return { positions: new Float32Array([...head.pos, ...at(up, size * 10 / 3), ...at(head.T, -size), ...at(head.T, size), ...at(head.L, -size), ...at(head.L, size), ...ring]) };
+102	}
+103	
+104	/**
+105	 * Per-vertex tangents (the direction of increasing u, orthogonalised against the normal), for the normal-mapped shader:
+106	 * each triangle's dPosition/du is summed into its vertices, then made perpendicular to the normal, as
+107	 * src/export/kn5write.js writes the kn5's tangents. Memoised per positions array. A degenerate one falls back to the
+108	 * normal's own perpendicular.
+109	 */
+110	const tanMemo = new WeakMap();
+111	function tangentsFor(b) {
+112	  const hit = tanMemo.get(b.positions); if (hit) return hit;
+113	  const P = b.positions, N = b.normals, U = b.uvs, I = b.indices, T = new Float32Array(P.length);
+--- L47706 assistant 2026-10-03T15:27:44.614Z
+TOOL_USE Read [toolu_01GEjYbmmUuQh2BsuVFfcrJ2]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-xsec-wt\\app\\preview\\look.js","offset":88,"limit":14}
+--- L47707 user 2026-10-03T15:27:44.634Z
+RESULT [toolu_01GEjYbmmUuQh2BsuVFfcrJ2]: 88	  return { positions: new Float32Array(p), spacing: sp };
+89	}
+90	/**
+91	 * The build head's marker, world coordinates: a mast straight up and a cross in the road plane (along T and L), plus a
+92	 * square ring around the head in that plane, so it reads from overhead too (a vertical mast seen from above is a point).
+93	 * `size` is the cross's half-length; the preview scales it with the camera's distance so it stays readable at any zoom.
+94	 * Default 3 m: a 10 m mast and a 6 m cross.
+95	 */
+96	function headMarker(head, size = 3) {
+97	  if (!head) return null;
+98	  const at = (v, k) => head.pos.map((x, i) => x + v[i] * k), up = [0, 1, 0], r = size * 1.6;
+99	  const c = (a, b) => head.pos.map((x, i) => x + head.T[i] * a + head.L[i] * b);
+100	  const ring = [[r, r], [r, -r], [-r, -r], [-r, r]].flatMap((p, i, q) => [...c(...p), ...c(...q[(i + 1) % 4])]);
+101	  return { positions: new Float32Array([...head.pos, ...at(up, size * 10 / 3), ...at(head.T, -size), ...at(head.T, size), ...at(head.L, -size), ...at(head.L, size), ...ring]) };
+--- L47712 assistant 2026-10-03T15:27:57.754Z
+TOOL_USE Edit [toolu_01CTidumD3Hu9cmPEgH4LjKK]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-xsec-wt\\app\\preview\\look.js","old_string":" * The build head's marker, world coordinates: a mast straight up and a cross in the road plane (along T and L), plus a\n * square ring around the head in that plane, so it reads from overhead too (a vertical mast seen from above is a point).\n * `size` is the cross's half-length; the preview scales it with the camera's distance so it stays readable at any zoom.\n * Default 3 m: a 10 m mast and a 6 m cross.\n */\nfunction headMarker(head, size = 3) {\n  if (!head) return null;\n  const at = (v, k) => head
+…[1952 chars cut]…
+r, -r], [-r, -r], [-r, r]].flatMap((p, i, q) => [...c(...p), ...c(...q[(i + 1) % 4])]);\n  return { positions: new Float32Array([...head.pos, ...at(U, mast), ...at(head.T, -size), ...at(head.T, size), ...at(head.L, side(-size)), ...at(head.L, side(size)), ...ring]) };"}
+--- L47713 user 2026-10-03T15:27:57.784Z
+RESULT [toolu_01CTidumD3Hu9cmPEgH4LjKK]: The file C:\Users\nname\Desktop\worktrees\c-xsec-wt\app\preview\look.js has been updated successfully.
+--- L47714 assistant 2026-10-03T15:27:59.005Z
+TOOL_USE Edit [toolu_01H6g8kqgKRk9HQqVZCi8gpN]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-xsec-wt\\app\\preview\\preview.js","old_string":"const { normalize, spanOf, readAt } = require('../../src/geom/profile.js');","new_string":"const { normalize, spanOf, readAt, offsetAt, psiAt } = require('../../src/geom/profile.js');"}
+--- L47715 user 2026-10-03T15:27:59.044Z
+RESULT [toolu_01H6g8kqgKRk9HQqVZCi8gpN]: The file C:\Users\nname\Desktop\worktrees\c-xsec-wt\app\preview\preview.js has been updated successfully.
+--- L47716 assistant 2026-10-03T15:28:04.954Z
+TOOL_USE Edit [toolu_01SJdEyZpwYTMPrbuCqAbR7m]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-xsec-wt\\app\\preview\\preview.js","old_string":"/**\n * THE HEAD OF AN EMPTY TRACK (D195)","new_string":"/**\n * THE ROOM INSIDE A CLOSED TUBE at the head (D225, E's seal X2 ii), for the head marker: { up, lat } in metres, or null when the section\n * at the head does not close (any open road, an open tube, a cup: the marker is drawn at its full size as before). A section CLOSES when\n * both edges have turned to 180° (a tube of sweep 360: E's §1, ψ edge = t/2). `up` is 0.9 of the lower edge tip's height above the floor\n * (the roof, 2R for a circl
+…[586 chars cut]…
+k <= 64; k++) for (const u of [uL * k / 64, uR * k / 64]) lat = Math.max(lat, Math.abs(offsetAt(P, u)[0]));\n    return { up: 0.9 * Math.min(offsetAt(P, uL)[1], offsetAt(P, uR)[1]), lat: 0.9 * lat };\n  }\n  return null;\n}\n\n/**\n * THE HEAD OF AN EMPTY TRACK (D195)"}
+--- L47717 user 2026-10-03T15:28:04.983Z
+RESULT [toolu_01SJdEyZpwYTMPrbuCqAbR7m]: The file C:\Users\nname\Desktop\worktrees\c-xsec-wt\app\preview\preview.js has been updated successfully.
+--- L47718 assistant 2026-10-03T15:28:09.429Z
+TOOL_USE Bash [toolu_01H69MLciaAhnC532dFyXyVB]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && node - <<'EOF'\nconst fs=require('fs'), f='app/preview/preview.js'; let s=fs.readFileSync(f,'utf8');\nconst crlf=/\\r\\n/.test(s); s=s.replace(/\\r\\n/g,'\\n');\nconst rep=(a,b)=>{ const n=s.split(a).length-1; if(n!==1) throw new Error('count '+n+' '+a.slice(0,60)); s=s.replace(a,()=>b); };\nrep(\"marker: headMarker(c.head, markerSize(shownPose, c.head)),\", \"marker: headMarker(c.head, markerSize(shownPose, c.head), clearanceAtHead(track && track.path ? track.segments : ghost && ghost.segments)),\");\nrep(\"module.exports = { createPreview, keyAction, boostAt, b
+…[399 chars cut]…
+i<b.length;i++) if(b[i]===10){ if(b[i-1]===13) cr++; else lf++; } console.log(g,'crlf',cr,'bare',lf); }\nEOF\nnode --check app/preview/preview.js && node --check app/preview/look.js && echo ok","description":"Wire the clearance into the marker call, check line endings"}
+--- L47719 user 2026-10-03T15:28:09.659Z
+RESULT [toolu_01H69MLciaAhnC532dFyXyVB]: app/preview/preview.js crlf [33m287[39m bare [33m0[39m
+app/preview/look.js crlf [33m138[39m bare [33m0[39m
+ok
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47731 assistant 2026-10-03T15:28:16.392Z
+TOOL_USE Edit [toolu_01THq5pxfNXKQBJMVsa9wahV]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-xsec-wt\\app\\validate-ui\\labels.js","old_string":"    'joint-step': 'the road steps between two pieces here (the cup and the piece next to it do not meet)',\n  };","new_string":"    'joint-step': 'the road steps between two pieces here (the cup and the piece next to it do not meet)',\n    // THE CROSS-SECTION reds (D225): the ids are the seal's and the librarian's rulings (ruling 1 `tube-too-narrow`, S3 `roll-rate`; A's\n    // core may name them otherwise, and then these lines follow A). Plain words here, the id in the tooltip, as every reason abo
+…[40 chars cut]…
+tube is narrower than 9.43 m across the road: the chase camera and a T-180 do not fit inside it',\n    'roll-rate': 'the road rolls about its own direction faster than any measured track (red over 1.21°/m, amber over 0.93°/m, read over 20 m): lengthen the roll',\n  };"}
+--- L47732 user 2026-10-03T15:28:16.426Z
+RESULT [toolu_01THq5pxfNXKQBJMVsa9wahV]: The file C:\Users\nname\Desktop\worktrees\c-xsec-wt\app\validate-ui\labels.js has been updated successfully.
+--- L47736 assistant 2026-10-03T15:28:21.156Z
+TOOL_USE Bash [toolu_01W5fZ1uhy1ouFcULHm7XyzF]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && sed -n 180,200p app/test/validate-ui.test.js","description":"Check the reason-text test for constraints on new ids"}
+--- L47737 user 2026-10-03T15:28:21.268Z
+RESULT [toolu_01W5fZ1uhy1ouFcULHm7XyzF]:   assert.deepStrictEqual(jumpArcs(r, path), []);
+});
+
+// D177 window pass and A's D180 check of the installed app: the panel shows findings in PLAIN WORDS; the rule id and
+// its source are kept, in the tooltip. No shown string carries a rule id or a ".md:" line.
+const L = require('../validate-ui/labels.js'), { SRC: RULES } = require('../../src/validate/index.js');
+const IDS = Object.keys(RULES);
+const plain = (t, what) => {
+  assert.ok(!/.md:/.test(t), `${what}: "${t}" shows a doc line`);
+  // a rule id that is not a word (hyphenated: stacked-within-2m); "fold" is also plain English, and may be said
+  for (const id of IDS.filter((x) => x.includes('-'))) assert.ok(!t.includes(id), `${what}: "${t}" shows the rule id ${id}`);
+  assert.ok(!/[a-z]+(-[a-z0-9]+){2,}/.test(t), `${what}: "${t}" shows an id-like token`);
+};
+test('every red and amber reason has plain words; the list line shows them, and its tooltip keeps the rule and source', () => {
+  for (const id of IDS) {
+    const f = L.findingLine('red', { reason: id, source: RULES[id], s0: 100, s1: 140 });
+    plain(f.text, id);
+    assert.match(f.text, /^red: .+, at 100–140 m$/);
+    assert.ok(f.title.includes(id) && f.title.includes(RULES[id]), `${id}: the tooltip keeps the rule and its source`);
+  }
+  plain(L.reasonText('no-such-rule'), 'an unknown rule');
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47740 assistant 2026-10-03T15:28:43.251Z
+TEXT: Now the tests. Checking the profile shape that `readAt` expects, and how the loader test reads files from disk.
+--- L47741 assistant 2026-10-03T15:28:44.633Z
+TOOL_USE Bash [toolu_01PsAi3czqiJBePCzA8vfnZY]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && sed -n 12,31p src/geom/profile.js; grep -n \"CoreError\" src/core/document.js | grep exports; sed -n 1,30p app/test/shell-loader.test.js | grep -n \"fetch\\|readFile\\|loadCjs\" ","description":"Read normalize, CoreError export and the loader test's disk fetch"}
+--- L47748 user 2026-10-03T15:28:44.821Z
+RESULT [toolu_01PsAi3czqiJBePCzA8vfnZY]: 'use strict';
+
+/** Validate and normalise a profile: ascending u including 0, finite ψ, ψ(0) = 0 if absent. */
+function normalize(profile) {
+  if (!profile || !Array.isArray(profile.u) || !Array.isArray(profile.psi) || profile.u.length !== profile.psi.length || profile.u.length < 2)
+    throw new Error('profile: needs u[] and psi[] of the same length (≥ 2)');
+  const u = profile.u.slice(), psi = profile.psi.slice();
+  for (let i = 0; i < u.length; i++) {
+    if (!Number.isFinite(u[i]) || !Number.isFinite(psi[i])) throw new Error(`profile: sample ${i} is not finite`);
+    if (i && !(u[i] > u[i - 1])) throw new Error(`profile: u must be strictly ascending (sample ${i})`);
+  }
+  if (!(u[0] <= 0 && u[u.length - 1] >= 0)) throw new Error('profile: u must span 0 (the centreline)');
+  if (!u.includes(0)) { let i = u.findIndex((x) => x > 0); const t = -u[i - 1] / (u[i] - u[i - 1]); u.splice(i, 0, 0); psi.splice(i, 0, psi[i - 1] + (psi[i] - psi[i - 1]) * t); }
+  return { u, psi, font: profile.font || 'custom', material: profile.material || 'ROAD' };
+}
+const psiAt = (P, u) => {
+  if (u <= P.u[0]) return P.psi[0]; if (u >= P.u[P.u.length - 1]) return P.psi[P.psi.length - 1];
+  let i = 1; while (P.u[i] < u) i++; const t = (u - P.u[i - 1]) / (P.u[i] - P.u[i - 1]); return P.psi[i - 1] + (P.psi[i] - P.psi[i - 1]) * t;
+};
+/** ∫ from a to b of (cos ψ, sin ψ) with ψ linear from pa to pb. */
+3:// way the webview is fed by fetch, and the modules it loads must behave exactly as node's own require gives them.
+9:const { loadCjs, norm } = require('../lib/cjs.js');
+12:const fromDisk = async (p) => fs.readFileSync(path.join(REPO, p), 'utf8');
+16:  const viaLoader = await loadCjs('app/shell.js', fromDisk), viaNode = require('../shell.js');
+24:  const shell = await loadCjs('app/shell.js', fromDisk), pal = await loadCjs('app/palette/palette.js', fromDisk);
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47750 assistant 2026-10-03T15:28:50.450Z
+TOOL_USE Bash [toolu_01GzAvJkBMTttbrdjooVHMt7]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && grep -n \"^module.exports\" src/core/document.js; grep -n \"app/core/coreshell.js\\|loadCjs('app/core\" app/test/*.js | head -5","description":"Check document.js exports and existing loader tests of app/core"}
+--- L47751 user 2026-10-03T15:28:50.602Z
+RESULT [toolu_01GzAvJkBMTttbrdjooVHMt7]: 381:module.exports = {
+app/test/core-shell.test.js:2:// The equation core's shell (app/core/coreshell.js), its panel's pure parts (app/core/panel.js) and the preview's pick
+app/test/core-shell.test.js:45:  await assert.rejects(loadCjs('app/core/coreshell.js', fromDisk), /"fs"/);
+app/test/core-shell.test.js:46:  const shim = createShim(), C = await loadCjs('app/core/coreshell.js', fromDisk, { builtins: shim.builtins, globals: { Buffer: shim.Buffer } });
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47754 assistant 2026-10-03T15:29:50.287Z
+TOOL_USE Write [toolu_01QXRfaKF6McrkSSxHJUKbcH]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-xsec-wt\\app\\test\\core-xsec.test.js","content":"// core-xsec.test.js: node --test app/test/core-xsec.test.js\n// THE CROSS-SECTION in the app (lap D225, pane C): the Extend fields for the edge curve (edge angle, edge start) and the tube (sweep), the\n// bank field winding past ±180 (the spiral), their readout cells, the head marker along the road's U and inside a closed tube, a core refusal\n// shown by its name, and the validation words for the two new reds. E's seal (cross_section_seal_registration_2026-10-03.md) is scored by\n// B, a non-author; these are the autho
+…[16715 chars cut]…
+in(__dirname, '..', '..');\n  const P = await loadCjs('app/core/panel.js', async (p) => fs.readFileSync(path.join(REPO, p), 'utf8'));\n  assert.equal(typeof P.extendOptions, 'function');\n  assert.equal(P.extendOptions({ length: 10, edge: '5' }).targets[E], 5);\n});\n"}
+--- L47756 user 2026-10-03T15:29:50.314Z
+RESULT [toolu_01QXRfaKF6McrkSSxHJUKbcH]: File created successfully at: C:\Users\nname\Desktop\worktrees\c-xsec-wt\app\test\core-xsec.test.js (file state is current in your context — no need to Read it back)
+--- L47765 assistant 2026-10-03T15:30:01.959Z
+TOOL_USE Edit [toolu_01RaoGteU2AgeDxvoKfTrQ6h]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-xsec-wt\\app\\test\\core-xsec.test.js","old_string":"      sent.push(o); const { o: bare, got } = strip(o), from = lastEnd();\n      try { guard(got, real.headState().w); } catch (e) { return real.attempt ? real.attempt(() => { throw e; }) : real.setMessage ? real.setMessage(e.message) : (this._refused = e.message); }\n      real.extend(bare);","new_string":"      sent.push(o); const { o: bare, got } = strip(o), from = lastEnd();\n      guard(got, real.headState().w);   // (the stub throws; A's core throws inside the shell's attempt, which shows it: the real-core test below)\n      real.extend(bare);"}
+--- L47766 user 2026-10-03T15:30:01.985Z
+RESULT [toolu_01RaoGteU2AgeDxvoKfTrQ6h]: The file C:\Users\nname\Desktop\worktrees\c-xsec-wt\app\test\core-xsec.test.js has been updated successfully. (file state is current in your context — no need to Read it back)
+--- L47767 assistant 2026-10-03T15:30:05.513Z
+TOOL_USE Edit [toolu_01LmGprh5eys4aBbcoiNMfT7]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-xsec-wt\\app\\test\\core-xsec.test.js","old_string":"  assert.equal(p.cell('tube'), '—');\n  let threw = null; try { p.shell.extend(p.opts()); } catch (e) { threw = e; }\n  const said = threw ? threw.message : p.message();\n  assert.match(said, /TUBE_SLOT/, 'Extend is refused with the guard\\'s name');\n});","new_string":"  assert.equal(p.cell('tube'), '—');\n  assert.throws(() => p.shell.extend(p.opts()), /TUBE_SLOT/, 'Extend is refused with the guard\\'s name');\n});\ntest('xsec panel: a refusal the REAL core makes on Extend is shown in the panel w
+…[147 chars cut]…
+.type('width m', -5); p.button('Extend').onclick();\n  assert.match(p.message(), /^[A-Z][A-Z_]+: /, `the message carries the core's refusal name: \"${p.message()}\"`);\n  assert.equal(p.shell.getState().history.present.pieces.length, 0, 'and nothing was placed');\n});"}
+--- L47768 user 2026-10-03T15:30:05.536Z
+RESULT [toolu_01LmGprh5eys4aBbcoiNMfT7]: The file C:\Users\nname\Desktop\worktrees\c-xsec-wt\app\test\core-xsec.test.js has been updated successfully. (file state is current in your context — no need to Read it back)
+--- L47769 assistant 2026-10-03T15:30:09.301Z
+TOOL_USE Bash [toolu_01RxFZxtpNSPfq2wTSn4gbkK]: {"command":"S=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; W=/c/Users/nname/Desktop/worktrees/c-xsec-wt; node -e \"const fs=require('fs'),f='C:/Users/nname/Desktop/worktrees/c-xsec-wt/app/test/core-xsec.test.js';fs.writeFileSync(f,fs.readFileSync(f,'utf8').replace(/\\r\\n/g,'\\n').replace(/\\n/g,'\\r\\n'))\"; node $S/lockrun.js \"xsec tests 1\" $S/xsec/t1.log -- \"cd $W && node --test --test-concurrency=1 app/test/core-xsec.test.js\"; grep -E \"^(not ok|ok|# (tests|pass|fail))|✖|ℹ (tests|pass|fail)\" $S/xsec/t1.log | head -40","description":"Run the new tests under the heavy-run lock","timeout":2400000}
+--- L47770 user 2026-10-03T15:30:09.702Z
+RESULT [toolu_01RxFZxtpNSPfq2wTSn4gbkK]: [31m✖ xsec panel: a changed field is a target, and its cell shows the DOCUMENT, not the typed value [90m(1.067ms)[39m[39m
+[31m✖ xsec panel: after Extend the fields read back what the document holds [90m(8.1108ms)[39m[39m
+[31m✖ xsec panel: the cells say — when the core reports no such readout [90m(0.4999ms)[39m[39m
+[34mℹ tests 17[39m
+[34mℹ pass 14[39m
+[34mℹ fail 3[39m
+[31m✖ failing tests:[39m
+[31m✖ xsec panel: a changed field is a target, and its cell shows the DOCUMENT, not the typed value [90m(1.067ms)[39m[39m
+[31m✖ xsec panel: after Extend the fields read back what the document holds [90m(8.1108ms)[39m[39m
+[31m✖ xsec panel: the cells say — when the core reports no such readout [90m(0.4999ms)[39m[39m
+--- L47773 assistant 2026-10-03T15:30:15.037Z
+TOOL_USE Bash [toolu_017iB64fgVcaKhLH7SuTpp3j]: {"command":"S=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; sed 's/\\x1b\\[[0-9;]*m//g' $S/xsec/t1.log | grep -A12 \"^✖ xsec panel\" | grep -E \"✖|Error|expected|actual|\\+ |\\- |message\" | head -40","description":"Read the three failures"}
+--- L47774 user 2026-10-03T15:30:15.172Z
+RESULT [toolu_017iB64fgVcaKhLH7SuTpp3j]: ✖ xsec panel: a changed field is a target, and its cell shows the DOCUMENT, not the typed value (1.067ms)
+✖ xsec panel: after Extend the fields read back what the document holds (8.1108ms)
+✖ xsec panel: the cells say — when the core reports no such readout (0.4999ms)
+✖ xsec panel: a changed field is a target, and its cell shows the DOCUMENT, not the typed value (1.067ms)
+  AssertionError [ERR_ASSERTION]: edge from → to: the document rings past the typed 15
+    actual: '—',
+    expected: '0.0 → 15.9',
+✖ xsec panel: after Extend the fields read back what the document holds (8.1108ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+    actual: '0',
+    expected: '15.87',
+✖ xsec panel: the cells say — when the core reports no such readout (0.4999ms)
+  AssertionError [ERR_ASSERTION]: the other cells still read
+    actual: '—',
+    expected: /m/,
+--- L47777 assistant 2026-10-03T15:30:26.021Z
+TOOL_USE Bash [toolu_01X6DD9LzgqPuDHbtNjhK5py]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && node -e \"\nconst { createCoreShell } = require('./app/core/coreshell.js');\n(async()=>{ const sh = await createCoreShell({brushFn:null}); const P=require('./app/core/panel.js');\ntry { console.log(sh.candidateReadout(P.extendOptions({length:100}))); } catch(e){ console.log('ERR', e.message); }\nconst o = P.extendOptions({length:'100', turn:'', climb:'', bank:'', width:'', cup:'', edge:'', start:'', tube:''}); console.log(JSON.stringify(o));\ntry { console.log(Object.keys(sh.candidateReadout(o))); } catch(e){ console.log('ERR2', e.message); } })()\" 2>&1 | tail -5","description":"Debug the empty readout with the real core"}
+--- L47784 user 2026-10-03T15:30:26.166Z
+RESULT [toolu_01X6DD9LzgqPuDHbtNjhK5py]:   [32m'climbDeg'[39m,   [32m'bankFromDeg'[39m,
+  [32m'bankToDeg'[39m,  [32m'cupFromDeg'[39m,
+  [32m'cupToDeg'[39m,   [32m'pitchFromDeg'[39m,
+  [32m'pitchToDeg'[39m, [32m'offsets'[39m
+]
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47788 assistant 2026-10-03T15:30:30.522Z
+TEXT: Fixing three failures in my new panel tests: a cell reads "—" even with the real core.
+--- L47789 assistant 2026-10-03T15:30:35.677Z
+TOOL_USE Bash [toolu_01Kvx91RMSMwyKqM8QwN5zpZ]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && cat > /tmp/dbg_xsec.js <<'EOF'\nEOF\nnode -e \"\nconst t=require('node:test'); \" ; S=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; cat > $S/xsec/dbg.js <<'EOF'\nprocess.chdir('C:/Users/nname/Desktop/worktrees/c-xsec-wt');\nconst src = require('fs').readFileSync('app/test/core-xsec.test.js','utf8');\nconst m = {}; const fn = new Function('require','module','exports','__dirname', src.replace(/^test\\(/gm,'(()=>{})(').replace(\"'use strict';\",'') + '\\n;module.exports={mountPanel,
+…[235 chars cut]…
+untPanel(); const ro = p.root.all().find((e) => e.attrs.class === 'readout'); console.log('title:', ro.title, '| length:', p.cell('length')); })();\nEOF\nnode $S/xsec/dbg.js 2>&1 | tail -3","description":"Print the readout box's refusal reason inside the mounted panel"}
+--- L47790 user 2026-10-03T15:30:35.927Z
+RESULT [toolu_01Kvx91RMSMwyKqM8QwN5zpZ]: title: BAD_LENGTH: extend needs a positive length, got 0 | length: —
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47793 assistant 2026-10-03T15:30:41.547Z
+TEXT: The cause is in my fake DOM, not the panel: it keeps an initial value as an attribute (a known quirk from D190), so the length read as 0. The tests will type a length first.
+--- L47794 assistant 2026-10-03T15:30:45.092Z
+TOOL_USE Bash [toolu_01SLZ6AdStzUbrmVSsUB9zed]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && node - <<'EOF'\nconst fs=require('fs'),f='app/test/core-xsec.test.js'; let s=fs.readFileSync(f,'utf8');\nconst rep=(a,b)=>{ const n=s.split(a).length-1; if(n!==1) throw new Error('count '+n+' '+a); s=s.replace(a,()=>b); };\nrep(\"  p.type('edge angle °', 15); p.type('edge start', 0.7); p.type('tube sweep °', 180);\", \"  p.type('length m', 100); p.type('edge angle °', 15); p.type('edge start', 0.7); p.type('tube sweep °', 180);\");\nrep(\"  const p = await mountPanel();   // the real b3364df core: no cross-section readout keys\\r\\n\", \"  const p = await mountPa
+…[93 chars cut]…
+0);   // (the fake DOM keeps an input's first value as an attribute, so a test types it)\\r\\n\");\nfs.writeFileSync(f,s); console.log('ok');\nEOF\ngrep -n \"fields read back\" -A6 app/test/core-xsec.test.js | head -8","description":"Make the tests type a length first"}
+--- L47795 user 2026-10-03T15:30:45.261Z
+RESULT [toolu_01SLZ6AdStzUbrmVSsUB9zed]: ok
+14://   3. headState() adds the same document values for the head, so the fields read back what was placed;
+15-//   4. it refuses, by a CoreError name, a held sweep in the slot (348.732°, 360°) on a 31 m road (E's T1 iii), so the name can be seen.
+16-// The real shell's own headState (no stub) is tested separately: on a core without the channels it reads the seal's defaults.
+17-'use strict';
+18-const test = require('node:test');
+19-const assert = require('node:assert/strict');
+20-const fs = require('fs'), path = require('path');
+--
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47798 assistant 2026-10-03T15:30:54.466Z
+TOOL_USE Edit [toolu_011rjt9qRyqeknXdGh2cfVhG]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-xsec-wt\\app\\test\\core-xsec.test.js","old_string":"  const lastEnd = () => { const P = real.getState().history.present.pieces; const id = P.length ? P[P.length - 1].id : null; return id && asked.has(id) ? asked.get(id) : DEF; };","new_string":"  // (the real extend redraws the panel before it returns, so the piece's record is taken from `pending` the first time its id is seen)\n  let pending = null;\n  const lastEnd = () => { const P = real.getState().history.present.pieces; const id = P.length ? P[P.length - 1].id : null;\n    if (id && !asked.has(id) && pending) { asked.set(id, pending); pending = null; }\n    return id && asked.has(id) ? asked.get(id) : DEF; };"}
+--- L47799 user 2026-10-03T15:30:54.500Z
+RESULT [toolu_011rjt9qRyqeknXdGh2cfVhG]: The file C:\Users\nname\Desktop\worktrees\c-xsec-wt\app\test\core-xsec.test.js has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+--- L47800 assistant 2026-10-03T15:30:55.817Z
+TOOL_USE Edit [toolu_01M5e2sW6K8Z6eqzA2n8YjGU]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-xsec-wt\\app\\test\\core-xsec.test.js","old_string":"      real.extend(bare); const P = real.getState().history.present.pieces; asked.set(P[P.length - 1].id, endOf(from, got));","new_string":"      pending = endOf(from, got); real.extend(bare); lastEnd(); pending = null;"}
+--- L47801 user 2026-10-03T15:30:55.846Z
+RESULT [toolu_01M5e2sW6K8Z6eqzA2n8YjGU]: The file C:\Users\nname\Desktop\worktrees\c-xsec-wt\app\test\core-xsec.test.js has been updated successfully.
+--- L47802 assistant 2026-10-03T15:30:58.502Z
+TOOL_USE Bash [toolu_01TZ5thjHqVmJjZZwWRWcWCr]: {"command":"S=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; W=/c/Users/nname/Desktop/worktrees/c-xsec-wt; node $S/lockrun.js \"xsec tests 2\" $S/xsec/t2.log -- \"cd $W && node --test --test-concurrency=1 app/test/core-xsec.test.js\"; sed 's/\\x1b\\[[0-9;]*m//g' $S/xsec/t2.log | grep -E \"^✖|ℹ (tests|pass|fail)|actual|expected|Error\" | head -20","description":"Re-run the new tests","timeout":2400000}
+--- L47809 user 2026-10-03T15:30:58.867Z
+RESULT [toolu_01TZ5thjHqVmJjZZwWRWcWCr]: ✖ xsec panel: a changed field is a target, and its cell shows the DOCUMENT, not the typed value (8.0988ms)
+ℹ tests 17
+ℹ pass 16
+ℹ fail 1
+✖ failing tests:
+✖ xsec panel: a changed field is a target, and its cell shows the DOCUMENT, not the typed value (8.0988ms)
+  AssertionError [ERR_ASSERTION]: edge from → to: the document rings past the typed 15
+  actual expected
+    actual: '0.0° → 15.9°',
+    expected: '0.0 → 15.9',
+--- L47813 assistant 2026-10-03T15:31:06.740Z
+TOOL_USE Bash [toolu_01JTd4yyefK5uwCVrW7rAENY]: {"command":"S=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; W=/c/Users/nname/Desktop/worktrees/c-xsec-wt; cd $W && node -e \"const fs=require('fs'),f='app/test/core-xsec.test.js';let s=fs.readFileSync(f,'utf8');s=s.replace(\\\"'0.0 → 15.9'\\\",\\\"'0.0° → 15.9°'\\\").replace(\\\"'0.0 → 179.1'\\\",\\\"'0.0° → 179.1°'\\\");fs.writeFileSync(f,s)\"; grep -c \"0.0° → 15.9°\\|0.0° → 179.1°\" app/test/core-xsec.test.js; node $S/lockrun.js \"xsec tests 3\" $S/xsec/t3.log -- \"cd $W && node --test --test-concurrency=1 app/test/core-xsec.test.js app
+…[81 chars cut]…
+.js app/test/preview.test.js app/test/validate-ui.test.js\"; sed 's/\\x1b\\[[0-9;]*m//g' $S/xsec/t3.log | grep -E \"^✖|ℹ (tests|pass|fail|skipped|todo)|actual|expected\" | head -20","description":"Fix the degree sign and run the new and related tests","timeout":2400000}
+--- L47814 user 2026-10-03T15:31:34.428Z
+RESULT [toolu_01JTd4yyefK5uwCVrW7rAENY]: 2
+✖ head marker: a 10 m mast straight up from the head (2.377ms)
+ℹ tests 177
+ℹ pass 176
+ℹ fail 1
+ℹ skipped 0
+ℹ todo 0
+✖ failing tests:
+✖ head marker: a 10 m mast straight up from the head (2.377ms)
+    actual: false,
+    expected: true,
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47818 assistant 2026-10-03T15:31:38.639Z
+TEXT: An existing test asserts the mast stands on world y, which the seal (X2 ii) and the librarian's ruling now change. Reading it before touching it.
+--- L47819 assistant 2026-10-03T15:31:39.386Z
+TOOL_USE Bash [toolu_01Kz8pVkLx2duzG7kEdP9bT7]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && grep -n \"head marker\" -A12 app/test/look.test.js | head -30","description":"Read the existing head-marker test"}
+--- L47820 user 2026-10-03T15:31:39.513Z
+RESULT [toolu_01Kz8pVkLx2duzG7kEdP9bT7]: 181:test('preview: a frame draws the grid and the head marker as lines (the grid only with ground: true)', () => {
+182-  const shell = { getState: () => ({ resolved: { segments: words(3), closed: false } }), subscribe: () => () => {} };
+183-  const { calls, win, canvas } = fake(), p = P.createPreview({ canvas, shell, win, ground: true }); win.step();
+184-  const cells = p.view().track.batches.filter((b) => !b.seam).length;
+185-  assert.ok(p.view().grid > 0);
+186:  assert.equal(p.renderer.stats().lines, 1 + 1 + 2 * cells, 'the grid, the head marker, and the edges and ties of each road cell');
+187-  assert.equal(calls.drawArrays, 1 + 1 + 2 * cells);
+188-});
+189:test('preview: by default there is no ground grid, only the track and the head marker', () => {
+190-  const shell = { getState: () => ({ resolved: { segments: words(3), closed: false } }), subscribe: () => () => {} };
+191-  const { calls, win, canvas } = fake(), p = P.createPreview({ canvas, shell, win }); win.step();
+192-  const cells = p.view().track.batches.filter((b) => !b.seam).length;
+193-  assert.equal(p.view().grid, 0);
+194:  assert.equal(calls.drawArrays, 1 + 2 * cells, 'the head marker and each road cell, no grid');
+195-});
+196-
+197-// ── grid and marker ──
+198-test('grid: every vertex at y = 0, covering the track\'s box, and the spacing widens so a long track stays a few hundred lines', () => {
+199-  const segs = words(9), bs = require(path.join(ADIR, 'preview', 'batches.js')).batchesOf(G.buildMesh(G.buildPath(segs), segs));
+200-  const b = LK.worldBounds(bs), g = LK.gridLines(b), P3 = g.positions;
+201-  for (let i = 1; i < P3.length; i += 3) assert.equal(P3[i], 0);
+202-  let x0 = Infinity, x1 = -Infinity, z0 = Infinity, z1 = -Infinity;
+203-  for (let i = 0; i < P3.length; i += 3) { x0 = Math.min(x0, P3[i]); x1 = Math.max(x1, P3[i]); z0 = Math.min(z0, P3[i + 2]); z1 = Math.max(z1, P3[i + 2]); }
+204-  assert.ok(x0 <= b.min[0] && x1 >= b.max[0] && z0 <= b.min[2] && z1 >= b.max[2]);
+205-  assert.equal(g.spacing, 10);
+206-  const huge = LK.gridLines({ min: [-7000, 0, -7000], max: [7000, 50, 7000] });
+--
+210:test('head marker: it grows with the camera distance (2%, never under 3 m), and its ring surrounds the head in the road plane', () => {
+211-  const p = G.buildPath(words(2)), h = p.head;
+212-  assert.equal(P.markerSize({ eye: h.pos.map((x, i) => x + (i === 1 ? 50 : 0)) }, h), 3);
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47822 assistant 2026-10-03T15:31:43.414Z
+TOOL_USE Bash [toolu_01WdBFeVUsZB74C12mP8RZrs]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-xsec-wt && grep -n \"a 10 m mast straight up\" -B2 -A10 app/test/*.test.js","description":"Find the failing mast test"}
+--- L47823 user 2026-10-03T15:31:43.523Z
+RESULT [toolu_01WdBFeVUsZB74C12mP8RZrs]: app/test/look.test.js-216-  for (let i = 0; i < ring.length; i += 3) { const d = [0, 1, 2].map((k) => ring[i + k] - h.pos[k]); assert.ok(Math.abs(dot(d, h.U)) < 1e-3, 'in the road plane'); assert.ok(Math.hypot(...d) >= 64 - 1e-3, 'around the head, not on it'); }
+app/test/look.test.js-217-});
+app/test/look.test.js:218:test('head marker: a 10 m mast straight up from the head', () => {
+app/test/look.test.js-219-  const p = G.buildPath(words(2)), mk = LK.headMarker(p.head).positions;
+app/test/look.test.js-220-  assert.deepEqual(Array.from(mk.slice(0, 3)), Array.from(new Float32Array(p.head.pos)));
+app/test/look.test.js-221-  assert.ok(Math.abs(mk[4] - mk[1] - 10) < 1e-4 && Math.abs(mk[3] - mk[0]) < 1e-9 && Math.abs(mk[5] - mk[2]) < 1e-9);
+app/test/look.test.js-222-});
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L47828 assistant 2026-10-03T15:31:53.782Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Edit [toolu_01GUacakEf5SHKqAigMHyJ3S]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-xsec-wt\\app\\test\\look.test.js","old_string":"test('head marker: a 10 m mast straight up from the head', () => {\n  const p = G.buildPath(words(2)), mk = LK.headMarker(p.head).positions;\n  assert.deepEqual(Array.from(mk.slice(0, 3)), Array.from(new Float32Array(p.head.pos)));\n  assert.ok(Math.abs(mk[4] - mk[1] - 10) < 1e-4 && Math.abs(mk[3] - mk[0]) < 1e-9 && Math.abs(mk[5] - mk[2]) < 1e-9);\n});","new_string":"// D225 (E's seal X2 ii, the librarian's ruling): the mast points along the ROAD's up (head.U), not world y, so it stays inside a tube and\n// right side up when inverted. This test said \"straight up\" (world y) until that ruling; it now holds the mast to U with the same 10 m.\ntest('head marker: a 10 m mast from the head along the road\\'s up', () => {\n  const p = G.buildPath(words(2)), mk = LK.headMarker(p.head).positions;\n  assert.deepEqual(Array.from(mk.slice(0, 3)), Array.from(new Float32Array(p.head.pos)));\n  for (let k = 0; k < 3; k++) assert.ok(Math.abs(mk[3 + k] - mk[k] - 10 * p.head.U[k]) < 1e-4, `the mast's ${'xyz'[k]} is 10 m along U`);\n});"}
+--- L47829 user 2026-10-03T15:31:53.818Z
+RESULT [toolu_01GUacakEf5SHKqAigMHyJ3S]: The file C:\Users\nname\Desktop\worktrees\c-xsec-wt\app\test\look.test.js has been updated successfully.
+--- L47830 assistant 2026-10-03T15:31:57.705Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_01DajMXJGgWTBR2Hvp2hbzbD]: {"command":"S=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; W=/c/Users/nname/Desktop/worktrees/c-xsec-wt; cd $W && grep -rln \"headMarker\\|clearanceAtHead\\|headState()\" app/test | tr '\\n' ' '; echo; node $S/lockrun.js \"xsec tests 4\" $S/xsec/t4.log -- \"cd $W && node --test --test-concurrency=1 app/test/core-xsec.test.js app/test/core-readout-display.test.js app/test/core-shell.test.js app/test/look.test.js app/test/preview.test.js app/test/validate-ui.test.js app/test/camera.test.js app/test/shell-loader.test.js\"; sed 's/\\x1b\\[[0-9;]*m//g' $S/xsec/t4.log | grep -E \"^✖|ℹ (tests|pass|fail|skipped|todo)|actual|expected\" | head -20; sha256sum $S/xsec/t4.log | cut -c1-16","description":"Run the new and related app tests under the lock","timeout":2400000}

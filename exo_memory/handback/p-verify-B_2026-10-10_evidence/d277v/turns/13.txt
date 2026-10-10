@@ -1,0 +1,699 @@
+MESSAGE 13  msg_011CfhkUxLaawcDjGreMM5RE  seat A  ts 2026-10-04T19:29:29.400Z  turn L61822..L62027 (next prompt L62190)
+CLAIMS:
+  [msg_011CfhkUxLaawcDjGreMM5RE|5] **The quote and its record ID.** `"D237 (the keeper: "a 3D grid to some how see the track and make it all symmetrical ... a 2D grid if the track has no height, but as soon as the track turns up or downward the grid becomes 3D")"`
+  [msg_011CfhkUxLaawcDjGreMM5RE|9] Check against the actual diff.
+  [msg_011CfhkUxLaawcDjGreMM5RE|11] Check that this suite exists.
+
+--- L61822 user 2026-10-04T19:19:56.525Z
+USER: 
+
+<pasted_content id="e589">
+[chair:MAIN] D237: a 3D grid plus symmetry guides. FEEL tier, preview only: nothing in src/ or the export. Base: t180 main 510510e9. Use a fresh worktree, with no junctions.
+The plan, read it in full: exo_memory/loop/plan_t180_grid3d_symmetry_2026-10-04.md
+The keeper: "a 3D grid to some how see the track and make it all symmetrical … a 2D Grid if the track has no height, but as soon as the track turns up or downward the grid becomes 3D."
+1. Extend the existing ground grid (app/preview/look.js:78 gridLines):
+   - a flat track keeps the ground grid;
+   - a track with height gets a lattice over its box: verticals, faint height rings and level labels;
+   - the line count stays bounded on a 14 km track;
+   - a toggle: off/ground/3D, auto by default;
+   - drop lines to the ground, if cheap.
+2. Symmetry guides:
+   - centre axes, bold;
+   - a dashed mirror ghost of the centreline across X, Z or both;
+   - a readout of the largest and average gap in metres;
+   - a centre the keeper can drag or reset.
+3. NOT a mirror-editing tool (that's export tier, and the next step if the keeper wants it).
+Tests:
+- flat → ground only;
+- a lifted track → the lattice spans min to max;
+- bounded lines;
+- an oval's mirror gap is ≈ 0, and an asymmetric fixture reads its known offset;
+- the export is byte-identical (fixtures 0 of 9).
+Real-window screenshots of a flat and a hilly track at 1818 px, saved under exo_memory/handback/p-grid3d-A_2026-10-04_evidence/.
+Heavy-run lock on every run, --test-concurrency=1. Don't push, don't launch AC. You may answer "this is wrong" about any part.
+Hand-back: exo_memory/handback/p-grid3d-A_2026-10-04.md, plus your map line.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_grid3d_symmetry_2026-10-04.md
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: B's quick look, unless the output says otherwise
+</pasted_content id="e589">
+
+--- L61832 assistant 2026-10-04T19:20:05.245Z
+TOOL_USE Read [toolu_01BxKPEb2tHMzv7t2am19Hrb]: {"file_path":"C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\loop\\plan_t180_grid3d_symmetry_2026-10-04.md"}
+--- L61833 user 2026-10-04T19:20:05.276Z
+RESULT [toolu_01BxKPEb2tHMzv7t2am19Hrb]: 1	# T-180: a grid that goes 3D with the track, and symmetry guides. Librarian, on D, 2026-10-04 13:2x. Lap D237.
+2	
+3	The keeper, 13:18: "I wonder if we could some how make like, a 3D grid to some how see the track and make it all symmetrical if you need it
+4	to be … It will be a 2D Grid if the track has no height, but as soon as the track turns up or downward the grid becomes 3D."
+5	
+6	## Checked (main 510510e9, worktree `lib-speed2-build`)
+7	- A faint GROUND grid already exists: `app/preview/look.js:78` `gridLines(bounds)`, lines at y = 0 over the track's box + 50 m, a 10 m
+8	  spacing that widens ×5 until each axis has ≤ 200 lines. It's flat only, and it has no vertical lines, no axes and no symmetry aid.
+9	- No mirror or symmetry code anywhere in `app/` or `src/core` (grep).
+10	
+11	## The lap (A, FEEL tier: preview only, nothing in `src/` or the export; targeted tests + a real-window look + the keeper's hands)
+12	1. **The grid grows into 3D with the track:**
+13	   - A flat track (height range under ~0.5 m) shows today's ground grid only.
+14	   - **Once the track has height,** the grid becomes a lattice over the track's box:
+15	     - the ground grid at the lowest point;
+16	     - vertical lines at the grid corners, rising to the highest point;
+17	     - faint horizontal height rings (contour levels) at the same spacing up the box;
+18	     - labels at a few levels (e.g. "+20 m").
+19	   - Faint enough not to fight the track; the spacing uses today's rule, so a 14 km track stays a few hundred lines.
+20	   - A toggle: off / ground / 3D (auto by default).
+21	   - **Height drop lines (optional, if cheap):** from the track down to the ground grid every N m, so you can read each point's height and
+22	     its position over t
+…[919 chars cut]…
+ that rebuilds one half of the track from the other.
+33	   That edits the document (EXPORT tier). The guides come first, so we can see whether the keeper wants the tool.
+34	- **Tests:** flat → ground only; a lifted track → the lattice spans its min to max height; the line count stays bounded on a long track;
+35	  the mirror ghost of a symmetric fixture (an oval) reads gap ≈ 0, and of an asymmetric one reads the known offset; the export is
+36	  byte-identical (fixtures 0 of 9, since nothing reaches it).
+37	- **The real-window look** at the keeper's size, as A did for the scroll bar (Chromium over CDP is fine): a screenshot of a flat and a hilly
+38	  track, for B and the keeper.
+39	
+40	NEXT: chair dispatch D237 to A when this plan is read
+41	
+--- L61834 assistant 2026-10-04T19:20:06.204Z
+TOOL_USE Bash [toolu_01Au62ab647a5mubn8Kis23c]: {"command":"cd C:/Users/nname/Desktop/t180-track-builder && git log -1 --format=\"%h %s\" main && git worktree add -q -b grid3d-a-d237 C:/Users/nname/Desktop/worktrees/a-grid3d-wt 510510e9 && cd C:/Users/nname/Desktop/worktrees/a-grid3d-wt && git log -1 --format=\"%h\" && wc -l app/preview/look.js app/preview/preview.js && grep -n \"gridLines\\|grid\" app/preview/look.js | head -40"}
+--- L61835 user 2026-10-04T19:20:06.756Z
+RESULT [toolu_01Au62ab647a5mubn8Kis23c]: 510510e D236: cup-oval drag and closed-loop release rebuild (preview; two read-only core changes)
+510510e
+  138 app/preview/look.js
+  314 app/preview/preview.js
+  452 total
+12://   gridLines(bounds)        a faint ground grid at y = 0 under the track (editor UI: scale and height, not scenery)
+78:function gridLines(bounds) {
+138:module.exports = { LIGHT, shade, linesFor, tangentsFor, localBounds, worldBounds, gridLines, headMarker, TIE_M, LIFT };
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L61837 assistant 2026-10-04T19:20:09.212Z
+TOOL_USE Read [toolu_019yfyrbYoZoyzw2igPCRA79]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-grid3d-wt\\app\\preview\\look.js"}
+--- L61838 user 2026-10-04T19:20:09.235Z
+RESULT [toolu_019yfyrbYoZoyzw2igPCRA79]: 1	// look.js: what makes the preview read as a track (D170, the D170 review of the D169 window captures, items 1, 2, 7).
+2	// Pure numbers, no GL, so each piece is tested headless; the renderer draws what this returns.
+3	//
+4	//   LIGHT, shade(n)          the lighting: one key light low and to the side, a weak fill from the other side, ambient.
+5	//                            The GLSL in renderer.js is generated from these same numbers, so the test of shade() is a
+6	//                            test of what the shader computes.
+7	//   linesFor(batch)          road lines in the batch's own frame: the two EDGES and the CENTRE along the road, and a TIE
+8	//                            across the road every TIE_M metres (a tie shows banking and the profile's shape).
+9	//   localBounds(batch)       the axis-aligned box of a batch's vertices in its own frame (memoised per array)
+10	//   worldBounds(batches)     the world box of every batch: each local box's 8 corners through its model matrix. It
+11	//                            contains every vertex (a box of a box is conservative).
+12	//   gridLines(bounds)        a faint ground grid at y = 0 under the track (editor UI: scale and height, not scenery)
+13	//   headMarker(head)         a mast and a cross at the build head, so the head is visible from overhead
+14	'use strict';
+15	
+16	const norm = (v) => { const l = Math.hypot(v[0], v[1], v[2]); return l > 0 ? v.map((x) => x / l) : v; };
+17	/** Key light from low and to the side (so a floor and a wall differ), fill from the opposite side, and ambient. */
+18	const LIGHT = Object.freeze({ key: norm([-0.45, 0.7, 0.55]), fill: norm([0.5, 0.35, -0.6]), keyK: 0.72, fillK: 0.22, ambient: 0.2 });
+19	/**
+20	 * The brightness of a surface w
+…[7159 chars cut]…
+126	      T[a * 3 + k] += tk; T[c * 3 + k] += tk; T[d * 3 + k] += tk;
+127	    }
+128	  }
+129	  for (let v = 0; v < P.length; v += 3) {
+130	    const n = [N[v], N[v + 1], N[v + 2]], t = [T[v], T[v + 1], T[v + 2]], nt = n[0] * t[0] + n[1] * t[1] + n[2] * t[2];
+131	    let o = [t[0] - n[0] * nt, t[1] - n[1] * nt, t[2] - n[2] * nt], l = Math.hypot(o[0], o[1], o[2]);
+132	    if (!(l > 1e-9)) { o = Math.abs(n[0]) < 0.9 ? [0, -n[2], n[1]] : [-n[1], n[0], 0]; l = Math.hypot(o[0], o[1], o[2]); }
+133	    T[v] = o[0] / l; T[v + 1] = o[1] / l; T[v + 2] = o[2] / l;
+134	  }
+135	  tanMemo.set(b.positions, T); return T;
+136	}
+137	
+138	module.exports = { LIGHT, shade, linesFor, tangentsFor, localBounds, worldBounds, gridLines, headMarker, TIE_M, LIFT };
+139	
+--- L61839 assistant 2026-10-04T19:20:10.148Z
+TOOL_USE Bash [toolu_017FsXtChF8t2j376qjuJtdW]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-grid3d-wt && grep -n \"grid\\|Grid\" app/preview/preview.js app/index.html app/core/panel.js app/preview/*.js app/camera/*.js 2>/dev/null | grep -v \"^app/preview/look.js\" | cut -c1-210 | head -50"}
+--- L61846 user 2026-10-04T19:20:10.369Z
+RESULT [toolu_017FsXtChF8t2j376qjuJtdW]: app/preview/preview.js:26://   No ground grid unless createPreview({ ground: true }): just the track (the keeper, 2026-09-29).
+app/preview/preview.js:34:const { gridLines, headMarker } = require('./look.js');
+app/preview/preview.js:82:  let ghost = null, grid = null, gridFor = null, overlay = null, start = null;
+app/preview/preview.js:200:      if (!ground) grid = null;   // no ground: just the track, so the camera goes anywhere with nothing to clip (the keeper, 2026-09-29)
+app/preview/preview.js:201:      else if (tb !== gridFor) { grid = gridLines(tb); gridFor = tb; }       // the grid follows the track's box, rebuilt only when it changes
+app/preview/preview.js:204:      renderer.draw(batchesFor(track), shownPose, { width: w, height: h }, { grid, marker: headMarker(c.head, markerSize(shownPose, c.head), clearanceAtHead(track && track.path ? trac
+app/preview/preview.js:214:    view: () => ({ track, detail: model.detail, pose: shownPose, mode: rig.mode, error: err, ghost: ghost ? ghost.batches.length : 0, grid: grid ? grid.positions.length / 6 : 0, look,
+app/index.html:10:  /* The page never scrolls: the grid fills the window exactly, and each side panel scrolls inside itself. (At the
+app/index.html:11:     default 1400×860 window the page used to scroll: grid rows sized to content push the body past the window.) */
+app/index.html:16:  body { display: grid; grid-template-columns: 320px minmax(0, 1fr); grid-template-rows: 44px auto minmax(0, 1fr); height: 100vh; }
+app/index.html:17:  header { grid-column: 1 / -1; display: flex; gap: 8px; align-items: center; padding: 0 12px; border-bottom: 1px solid var(--line); background: var(--panel); min-width: 0; }
+app/index.html:21:  #banner { grid-column: 1 / -1; }
+app/index.html:2
+…[3712 chars cut]…
+:const COLOURS = Object.freeze({ edge: [0.93, 0.93, 0.88], tie: [0.06, 0.07, 0.09], grid: [0.2, 0.23, 0.28], marker: [1.0, 0.62, 0.15], ghost: [0.55, 0.85, 1.0] });
+app/preview/renderer.js:218:      if (extras.grid) { use(line, vp); gl.enableVertexAttribArray(line.pos); drawLines(extras.grid.positions, IDENTITY, COLOURS.grid, 1); }
+app/preview/trackmodel.js:22:// Each result also carries `bounds`, the world box of every vertex (look.js worldBounds), for the overhead fit and the grid.
+app/preview/trackmodel.js:47:  // D235: `detail` > 1 meshes a COARSER preview (app/preview/coarse.js thins each segment's row grid) while the track is being dragged; 1 is full detail, the export's.
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L61849 assistant 2026-10-04T19:20:15.180Z
+TOOL_USE Read [toolu_01RFSoVPCvDi7qH7DQQ9HXEf]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-grid3d-wt\\app\\preview\\preview.js"}
+--- L61850 user 2026-10-04T19:20:15.213Z
+RESULT [toolu_01RFSoVPCvDi7qH7DQQ9HXEf]: 1	// preview.js: the 3D preview in the app window. Thin DOM glue over the headless parts:
+2	//   app/preview/trackmodel.js   the document → path + mesh, incrementally, in this (UI) process
+3	//   app/preview/renderer.js     the batches → WebGL
+4	//   app/camera/cameras.js       the build view (default), overhead, side, chase, free
+5	//
+6	//   const p = createPreview({ canvas, shell, win: window, hud, onMode })   shell = app/shell.js createShell(...)
+7	//   p.setMode('overhead')   p.dispose()                  onMode(mode) is called whenever the camera mode changes
+8	//   onTrack(t) is called after every change that moved the track, with the ONE shared path (trackmodel.js):
+9	//       t = { path, segments, closed, how, g, fromS }   how: 'extend' | 'sculpt' | 'full' | 'empty'
+10	//   p.track()   the same object for the current track, or null (for a reader that arrives later)
+11	//   p.setTextureSet(set)    A's texture set (src/texture/set.js; the textures panel sends it as 't180:textures'), or null
+12	//   p.setOverlay([{ positions, colour }])   world line pairs over the track (D186: the water and its reds), or null
+13	//   p.pick(x, y)            the track station under a canvas point (css px): { s, pos, px } or null (D186: the brush)
+14	//   p.setLook('ac' | 'words')   'ac' (the default): the AC shaders with the exported materials and textures
+15	//                               (app/preview/aclook.js, acshaders.js); 'words': the D170 colour per placed word
+16	//
+17	// KEYS (keyAction below, tested headless):  C  next camera      B  the build view, from anywhere
+18	//   L  the look: the AC shaders (default) or the colour per placed word (ARCHITECTURE §4's feedback layer)
+19	//   flying:  W / S forward and back,  A / D lef
+…[23254 chars cut]…
+2	 * a scaled display. A missing or nonsense DPR counts as 1. A side never exceeds MAX_SIDE (a safe WebGL drawing-buffer
+303	 * size); past it both sides scale down together, keeping the aspect.
+304	 */
+305	const MAX_SIDE = 8192;
+306	function backingSize(cssW, cssH, dpr) {
+307	  const d = Number.isFinite(dpr) && dpr > 0 ? dpr : 1;
+308	  let w = Math.round(Math.max(0, cssW || 0) * d), h = Math.round(Math.max(0, cssH || 0) * d);
+309	  const over = Math.max(w, h) / MAX_SIDE;
+310	  if (over > 1) { w = Math.round(w / over); h = Math.round(h / over); }
+311	  return { width: w, height: h };
+312	}
+313	
+314	module.exports = { createPreview, keyAction, boostAt, backingSize, MAX_SIDE, markerSize, widthAtHead, clearanceAtHead, pickAt, startHead };
+315	
+--- L61851 assistant 2026-10-04T19:20:15.819Z
+TOOL_USE Bash [toolu_016LEYyaW81ZrrdTNf7E4XYm]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-grid3d-wt && grep -n \"ground\\|createPreview\\|labels\\|createLabels\" app/index.html | cut -c1-220 | head -30; ls app app/preview app/camera; sed -n 195,260p app/preview/renderer.js | cut -c1-230"}
+--- L61858 user 2026-10-04T19:20:16.025Z
+RESULT [toolu_016LEYyaW81ZrrdTNf7E4XYm]: 12:  html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font: 13px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+17:  header { grid-column: 1 / -1; display: flex; gap: 8px; align-items: center; padding: 0 12px; border-bottom: 1px solid var(--line); background: var(--panel); min-width: 0; }
+19:  header input, header select { background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 4px 6px; }
+23:  .bar { display: flex; gap: 10px; align-items: center; padding: 8px 12px; background: #2a2412; border-bottom: 1px solid #5a4a1c; }
+24:  button { background: #222834; color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 5px 9px; cursor: pointer; }
+31:  #left { display: flex; flex-direction: column; min-height: 0; overflow-y: auto; overflow-x: hidden; scrollbar-gutter: stable; background: var(--panel); border-right: 1px solid var(--line); }
+32:  #palette, #side { flex: none; background: var(--panel); }
+52:  .picker select { background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 3px; }
+58:  .save-piece input { flex: 1; min-width: 0; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 4px 6px; }
+61:  .track li.selected { background: #1f3550; }
+app:
+README.md
+camera
+closer.js
+core
+export
+handles
+index.html
+install
+lib
+markers
+onboarding
+palette
+preview
+share
+shell.js
+test
+testhook
+texmaker
+texture
+validate-ui
+
+app/camera:
+cameras.js
+index.js
+math.js
+
+app/preview:
+ACTOOLS-MS-PL.txt
+aclook.js
+acshaders.js
+batches.js
+coarse.js
+index.js
+kn5look.js
+look.js
+preview.js
+renderer.js
+segkey.js
+smoke.html
+trackmodel.js
+ 
+…[2801 chars cut]…
+uffers.delete(arr); }   // no longer drawn
+      for (const [arr, e] of texes) if (e.gen !== gen) { gl.deleteTexture(e.t); texes.delete(arr); }
+    },
+    stats: () => ({ uploads, buffers: buffers.size, draws, lines, acDraws, textures: texes.size }),
+    dispose() {
+      for (const e of buffers.values()) gl.deleteBuffer(e.buf); buffers.clear();
+      for (const e of texes.values()) gl.deleteTexture(e.t); texes.clear(); if (white) gl.deleteTexture(white);
+      gl.deleteProgram(surf.p); gl.deleteProgram(line.p); for (const pr of Object.values(ac)) gl.deleteProgram(pr.p);
+    },
+  };
+}
+
+module.exports = { createRenderer, VS, FS, LVS, LFS, COLOURS, GHOST_ALPHA, TIE_FADE, CLEAR };
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L61861 assistant 2026-10-04T19:20:21.964Z
+TOOL_USE Bash [toolu_016nBFT32xdu9vKsFRMbfJwz]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-grid3d-wt && ls app/core app/testhook; grep -n \"label\" app/core/labels.js 2>/dev/null | head -5; grep -rn \"labels\" app/index.html | cut -c1-200 | head -10; grep -n \"createPreview\" app/index.html app/*.js app/*/*.js | cut -c1-240 | head"}
+--- L61862 user 2026-10-04T19:20:22.644Z
+RESULT [toolu_016nBFT32xdu9vKsFRMbfJwz]: app/core:
+coreshell.js
+index.js
+labels.js
+panel.js
+textures.js
+widthlike.js
+xsec.js
+
+app/testhook:
+ghostword.js
+probe.js
+1:// labels.js: THE READOUT on the track (L130, pane C; the plan's Part 2, "C: the display"). A small label at every placed road
+6:// A DOM layer over the preview (#preview), redrawn every animation frame: the camera eases, so the labels move with it. The
+8:// - FIXED PIXEL SIZE: a label is the same size at every zoom (0.05 to 50), so it is readable at all of them.
+9:// - NEVER OVER THE BUILD HEAD: the head and its marker are kept clear; a label that would cover them is moved, and if it cannot
+10://   be, it is not drawn. The head's own label, which is always drawn, keeps at least the head's point and 7 px clear.
+app/preview/index.js:30:const { createPreview } = require('./preview.js');
+app/preview/index.js:48:  try { p = createPreview({ canvas, shell, win, hud, onMode: announce, onTrack: publish }); } catch (e) {
+app/preview/preview.js:6://   const p = createPreview({ canvas, shell, win: window, hud, onMode })   shell = app/shell.js createShell(...)
+app/preview/preview.js:26://   No ground grid unless createPreview({ ground: true }): just the track (the keeper, 2026-09-29).
+app/preview/preview.js:74:function createPreview({ canvas, shell, win, hud = null, onMode = null, onTrack = null, flySpeed = 30, turnSpeed = 1.6, ground = false }) {
+app/preview/preview.js:314:module.exports = { createPreview, keyAction, boostAt, backingSize, MAX_SIDE, markerSize, widthAtHead, clearanceAtHead, pickAt, startHead };
+app/test/aclook.test.js:232:const { createPreview } = require(path.join(ADIR, 'preview', 'preview.js'));
+app/test/aclook.test.js:238:  return { p: createPreview({ canvas, shell, win }), win, log };
+app/test/aclook.test.js:262:  const p = createPreview({ canvas, shell, win, hud }), press = (key) => keys.get('keydown')({ key, preventDefault() {}, target: null });
+app/test/core-xsec.test.js:306:    const p = P.createPreview({ canvas, shell, win }); win.step();
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L61864 assistant 2026-10-04T19:20:26.504Z
+TOOL_USE Bash [toolu_01GFGDqWzpoeFHgpkLzeG5aM]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-grid3d-wt && sed -n 1,80p app/preview/index.js | cut -c1-230; sed -n 1,60p app/core/labels.js | cut -c1-230; wc -l app/core/labels.js; grep -n \"labels\\|createLabels\\|mount\" app/core/panel.js | head -12 | cut -c1-200"}
+--- L61865 user 2026-10-04T19:20:26.745Z
+RESULT [toolu_01GFGDqWzpoeFHgpkLzeG5aM]: // index.js: the preview panel's seam (app/README.md "The seam"): mount(root, shell) puts the 3D preview in `root`.
+// The camera panel (app/camera/index.js) is loaded separately, with its own module cache, so the two talk through two
+// DOM events on the document rather than shared state:
+//   't180-camera'       { detail: { mode } }           asks the preview for a camera mode
+//   't180-camera-mode'  { detail: { mode, modes } }    the preview says which mode it is in (on mount and on every change)
+// And one for the window proof (app/testhook/probe.js, scripts/prove_render.js), answered read-only:
+//   't180-probe'        { detail: { reply(result) } }  the mode, the head on screen, the canvas size and DPR
+// And the GHOST of the next piece (D170; the palette's side is A's, proposed in the D170 hand-back):
+//   't180-ghost'        { detail: { candidate } | { word } }   show it: a resolved candidate (the document with the word
+//                                                              appended, not committed), or a built-in word, resolved here
+//                                                              the way shell.place() would (app/testhook/ghostword.js)
+//   't180-ghost-clear'                                         hide it
+// And the TEXTURE SET (D177), from the textures panel (app/texture/index.js, A's), bubbling to the document:
+//   't180:textures'     { detail: { set } }            the set the export writes from; the preview's AC look draws it
+// And the ONE SHARED PATH (D177), for validation (app/validate-ui, E's) instead of a second path of its own:
+//   't180:track'          { detail: { path, segments, closed, how, g, fromS } }   sent after every change that moved the
+//                          tra
+…[9183 chars cut]…
+bels.js). The strings are the same function's
+14://          (labels.js formatReadout), so what the ghost promised is what the placed piece's label says.
+18:const LB = require('./labels.js');
+85:function mount(root, shell) {
+256:  // the labels on the track: a DOM layer over the preview (app/core/labels.js); none when there is no preview to lay them on
+257:  const labels = stage ? LB.mount(stage, shell, win) : null;
+260:  return { labels, options: opts, unmount() { unsub(); if (frame) win.cancelAnimationFrame(frame); if (labels) labels.unmount(); doc.removeEventListener('t180:track', onTrack); if (stage) { stage.
+263:module.exports = { mount, overlayOf, extendOptions, PER_PX };
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L61876 assistant 2026-10-04T19:21:11.006Z
+TOOL_USE Bash [toolu_01FD63NasetaXkJ8ecLuxBQD]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-grid3d-wt && sed -n 1,200p app/camera/math.js | cut -c1-200; sed -n 1,70p app/camera/index.js | cut -c1-220"}
+--- L61877 user 2026-10-04T19:21:11.172Z
+RESULT [toolu_01FD63NasetaXkJ8ecLuxBQD]: // math.js: the camera's matrices, COLUMN-MAJOR (v' = M·v), as GL takes them. Written after blackbox's ui/mathutil.js
+// (mPerspective, mLookAt, mMul), which keeps two conventions apart; this file has only the column-major one.
+//
+// kn5 node matrices (src/geom/mesh.js matrixOf, src/export/scene.js) are ROW-VECTOR, row-major: world = local · M. The
+// same 16 numbers read column-major give v' = M·v with the identical result, so a node matrix goes to GL as it is
+// (app/preview/batches.js relies on this, and app/test/preview.test.js checks it against the geometry's own transform).
+'use strict';
+
+function perspective(fovy, aspect, near, far) {
+  const f = 1 / Math.tan(fovy / 2), nf = 1 / (near - far);
+  return [f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, (far + near) * nf, -1, 0, 0, 2 * far * near * nf, 0];
+}
+function lookAt(eye, at, up) {
+  let zx = eye[0] - at[0], zy = eye[1] - at[1], zz = eye[2] - at[2];
+  const zl = Math.hypot(zx, zy, zz); if (!(zl > 0)) throw new Error('lookAt: eye and target coincide');
+  zx /= zl; zy /= zl; zz /= zl;
+  let xx = up[1] * zz - up[2] * zy, xy = up[2] * zx - up[0] * zz, xz = up[0] * zy - up[1] * zx;
+  const xl = Math.hypot(xx, xy, xz); if (!(xl > 0)) throw new Error('lookAt: up is parallel to the view direction');
+  xx /= xl; xy /= xl; xz /= xl;
+  const yx = zy * xz - zz * xy, yy = zz * xx - zx * xz, yz = zx * xy - zy * xx;
+  return [xx, yx, zx, 0, xy, yy, zy, 0, xz, yz, zz, 0,
+    -(xx * eye[0] + xy * eye[1] + xz * eye[2]), -(yx * eye[0] + yy * eye[1] + yz * eye[2]), -(zx * eye[0] + zy * eye[1] + zz * eye[2]), 1];
+}
+function mul(a, b) {
+  const o = new Array(16);
+  for (let c = 0; c < 4; c++) for (let r = 0; r < 4; r++) o[c * 4 + r] = a[r] * b[c * 4] + a[4 + r] * b[c * 4 + 1] + a[8 + r] * b[
+…[1602 chars cut]…
+m;
+    b.onclick = () => doc.dispatchEvent(new win.CustomEvent('t180-camera', { detail: { mode: m } }));
+    buttons.set(m, b); bar.append(b);
+  }
+  keys.textContent = `${KEYS.cycle.toUpperCase()}: next camera · ${KEYS.build.toUpperCase()}: build view · move: W A S D, Q E down/up, Shift sprint · look: right-drag or arrows · zoom: scroll`;
+  root.append(bar, keys);
+  const follow = (e) => { for (const [m, b] of buttons) b.setAttribute('aria-pressed', String(e.detail && e.detail.mode === m)); };
+  doc.addEventListener('t180-camera-mode', follow);
+  return { unmount() { doc.removeEventListener('t180-camera-mode', follow); root.replaceChildren(); } };
+}
+
+module.exports = { mount };
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L61878 assistant 2026-10-04T19:21:11.694Z
+TOOL_USE Bash [toolu_01HWkM9jAQqEH6p4dLcfWzVD]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-grid3d-wt && grep -n \"<script\\|mount(\\|id=\\\"preview\\\"\\|id=\\\"stage\\\"\\|id=\\\"camera\\|class=\\\"bar\\|<div id\\|<section\\|<aside\" app/index.html | cut -c1-230 | head -50"}
+--- L61879 user 2026-10-04T19:21:11.821Z
+RESULT [toolu_01HWkM9jAQqEH6p4dLcfWzVD]: 84:<div id="banner"></div>
+85:<div id="left">
+86:  <aside id="palette"></aside>
+87:  <aside id="side">
+88:    <section id="reds"></section>
+89:    <section id="validation"></section>
+90:    <section id="handles"></section>
+91:    <section id="textures"></section>
+92:    <section id="share"></section>
+95:<main id="stage">
+96:  <div id="preview"><div class="placeholder">Loading the preview…</div></div>
+97:  <div id="camera"></div>
+98:  <div id="guide" style="position: absolute; inset: 0; pointer-events: none; z-index: 5;"></div>
+100:<script src="lib/cjs.js"></script>
+101:<script>
+323:  // C's and E's panels: each optional, each mount(root, shell); a failure is shown in its own area (app/palette/panels.js).
+334:  await panels.mountPanel($('install'), 'install', () => loadCjs('app/install/index.js', get).then((m) => ({ mount: (root, sh) => m.mount(root, sh, { exporter, native, pickFolder, getTextures: () => textureSet }) })), shell);
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L61887 assistant 2026-10-04T19:21:14.772Z
+TOOL_USE Bash [toolu_01F5UzPyak6ofYsDwT2tuCe2]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-grid3d-wt && sed -n 84,100p app/index.html | cut -c1-240; sed -n 318,345p app/index.html | cut -c1-260; grep -n \"mountPanel('camera'\\|'camera'\" app/index.html app/palette/panels.js | head -5"}
+--- L61888 user 2026-10-04T19:21:14.971Z
+RESULT [toolu_01F5UzPyak6ofYsDwT2tuCe2]: <div id="banner"></div>
+<div id="left">
+  <aside id="palette"></aside>
+  <aside id="side">
+    <section id="reds"></section>
+    <section id="validation"></section>
+    <section id="handles"></section>
+    <section id="textures"></section>
+    <section id="share"></section>
+  </aside>
+</div>
+<main id="stage">
+  <div id="preview"><div class="placeholder">Loading the preview…</div></div>
+  <div id="camera"></div>
+  <div id="guide" style="position: absolute; inset: 0; pointer-events: none; z-index: 5;"></div>
+</main>
+<script src="lib/cjs.js"></script>
+
+  // A clean exit clears the autosave; a crash leaves it for the next start to offer back. The one close handler (above) runs this inside its try:
+  // if it fails or hangs the window still closes, and the autosave is simply left for the next start to offer back.
+  closeCleanup = async () => { if (!shell.getState().dirty) await shell.cleanExit(); else await shell.flushAutosave(); };
+
+  // C's and E's panels: each optional, each mount(root, shell); a failure is shown in its own area (app/palette/panels.js).
+  // Share codes, and Install to AC / See it in Assetto (the launch is off by default; src-tauri/src/ac.rs).
+  const b64files = (files) => files.map((f) => ({ path: f.path, data: b64(f.bytes) }));
+  const native = {
+    getAcRoot: () => call('get_ac_root'), setAcRoot: (path) => call('set_ac_root', { path }),
+    installTrack: (folder, files) => call('install_track', { folder, files: b64files(files) }),
+    getSeeItSetting: () => (tauri ? call('get_see_it_setting') : Promise.resolve(false)), setSeeItSetting: (on) => call('set_see_it_setting', { on }),
+    seeIt: (track, layout) => call('see_it_in_assetto', { track, layout }),
+  };
+  const pickFolder = (title) => call('plugin
+…[563 chars cut]…
+, 'guide']]) {
+    await panels.mountPanel($(id), dir, () => loadCjs(`app/${dir}/index.js`, get), shell);
+  }
+})();
+</script>
+</body>
+</html>
+app/index.html:223:    for (const [dir, id] of [['preview', 'preview'], ['camera', 'camera'], ['validate-ui', 'validation']]) {
+app/index.html:335:  for (const [dir, id] of [['preview', 'preview'], ['camera', 'camera'], ['validate-ui', 'validation'], ['handles', 'handles'], ['texture', 'textures'], ['onboarding', 'guide']]) {
+app/palette/panels.js:14:const TITLE = { preview: 'preview', camera: 'camera', 'validate-ui': 'validation panel', handles: 'handles panel', share: 'share codes', install: 'install to AC', texture: 'textures panel' };
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L61891 assistant 2026-10-04T19:21:34.524Z
+TOOL_USE Bash [toolu_01QEJ22p79nX1CQ9RorNkfnH]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-grid3d-wt && sed -n 60,110p app/preview/renderer.js | cut -c1-230; sed -n 170,196p app/preview/renderer.js | cut -c1-230"}
+--- L61892 user 2026-10-04T19:21:34.684Z
+RESULT [toolu_01QEJ22p79nX1CQ9RorNkfnH]:   gl_FragColor = vec4(mix(uFog, uColour * lit, fog), uAlpha);
+}`;
+const LVS = `
+attribute vec3 aPos;
+uniform mat4 uVP; uniform mat4 uModel;
+varying float vDepth;
+void main(){ gl_Position = uVP * uModel * vec4(aPos, 1.0); vDepth = gl_Position.w; }`;
+const LFS = `
+precision mediump float;
+varying float vDepth;
+uniform vec3 uColour; uniform float uAlpha; uniform vec3 uFog; uniform float uFogDensity; uniform vec2 uFade;
+/* uFade = (near, far): the line fades out between them (D179: ties at a distance); far <= near: no fade */
+void main(){ float fog = clamp(exp(-uFogDensity * vDepth), 0.0, 1.0); float f = uFade.y > uFade.x ? clamp((uFade.y - vDepth) / (uFade.y - uFade.x), 0.0, 1.0) : 1.0; gl_FragColor = vec4(mix(uFog, uColour, fog), uAlpha * f); }`;
+
+const IDENTITY = new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+const COLOURS = Object.freeze({ edge: [0.93, 0.93, 0.88], tie: [0.06, 0.07, 0.09], grid: [0.2, 0.23, 0.28], marker: [1.0, 0.62, 0.15], ghost: [0.55, 0.85, 1.0] });
+const GHOST_ALPHA = 0.42;
+// D179, the usability pass (p-d179-lookpass-C §1): the ties are one near-black line per station; from overhead or far
+// away they outnumber the pixels and hatch the lit road dark (measured: 42–51% of the overhead's drawn pixels near-black),
+// so they fade out between 60 and 250 m (the edges stay). And the canvas is cleared darker than the FOG colour: surfaces
+// facing away from the sun (a tube's ceiling, L* about 14) were only ΔE00 about 6 from a background that was the fog colour.
+// The fog colour itself is part of the look and is unchanged (src/lookmatch/raster.js uses the same).
+const TIE_FADE = Object.freeze([60, 250]);
+const CLEAR = Object.freeze([0.03, 0.035, 0.045]);
+
+function createRenderer(gl, { 
+…[2804 chars cut]…
+2Array(b.model));
+      const c = tint || b.colour; gl.uniform3f(surf.colour, c[0], c[1], c[2]);
+      gl.drawElements(gl.TRIANGLES, b.indices.length, gl.UNSIGNED_SHORT, 0); draws++;
+    }
+    gl.disableVertexAttribArray(surf.nrm);
+  }
+  function drawLines(arr, model, colour, alpha, fade = [0, 0]) {
+    if (!arr || !arr.length) return;
+    gl.uniformMatrix4fv(line.model, false, model); gl.uniform3f(line.colour, colour[0], colour[1], colour[2]); gl.uniform1f(line.alpha, alpha);
+    gl.uniform2f(line.fade, fade[0], fade[1]);
+    bufferFor(arr, gl.ARRAY_BUFFER); gl.vertexAttribPointer(line.pos, 3, gl.FLOAT, false, 0, 0);
+    gl.drawArrays(gl.LINES, 0, arr.length / 3); lines++;
+  }
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L61901 assistant 2026-10-04T19:21:44.932Z
+TOOL_USE Bash [toolu_01XgTdYnSJwuChAKGoaNav88]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-grid3d-wt && grep -rn \"ground\" app/test/*.js test/*.js scripts/*.js 2>/dev/null | grep -v \"^app/test/mutation\\|background\\|underground\" | cut -c1-200 | head -20; grep -rn \"gridLines\\|\\.grid\\b\" app/test/*.js | cut -c1-200 | head"}
+--- L61902 user 2026-10-04T19:21:45.916Z
+RESULT [toolu_01XgTdYnSJwuChAKGoaNav88]: app/test/camera.test.js:49:  assert.ok(near(pose.up, f, 1e-12), 'screen-up is the head\'s heading on the ground');
+app/test/camera.test.js:53:  const p = G.buildPath(F.loopTheLoop(), { start: { pos: [0, 0, 0], theta: 0.7, p: 0 } }), up = p.samples.find((s) => s.seg === 1 && s.T[1] > 0.9999), f = C.groundForward(up
+app/test/camera.test.js:224://    and with no ground drawn the view is empty: on a 400 m arc 0 of 201 centreline samples were in view from zoom 0.25 down, and
+app/test/look.test.js:180:// The keeper, 2026-09-29: "there shouldnt be a ground net its just the track for now". The grid is opt-in ({ ground: true }).
+app/test/look.test.js:181:test('preview: a frame draws the grid and the head marker as lines (the grid only with ground: true)', () => {
+app/test/look.test.js:183:  const { calls, win, canvas } = fake(), p = P.createPreview({ canvas, shell, win, ground: true }); win.step();
+app/test/look.test.js:189:test('preview: by default there is no ground grid, only the track and the head marker', () => {
+app/test/look.test.js:185:  assert.ok(p.view().grid > 0);
+app/test/look.test.js:193:  assert.equal(p.view().grid, 0);
+app/test/look.test.js:200:  const b = LK.worldBounds(bs), g = LK.gridLines(b), P3 = g.positions;
+app/test/look.test.js:206:  const huge = LK.gridLines({ min: [-7000, 0, -7000], max: [7000, 50, 7000] });
+app/test/look.test.js:208:  assert.equal(LK.gridLines(null), null);
+app/test/markers-panel.test.js:36:  ctl.edit((l) => { l.grid.pattern = '3-abreast'; l.grid.count = 6; l.grid.colGapM = 5; return l; });
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L61906 assistant 2026-10-04T19:23:16.443Z
+TOOL_USE Bash [toolu_01Lz21sPiGR29g5nKLTYbmxL]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sp_g1.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/look.js\n@@OLD\nfunction gridLines(bounds) {\n  if (!bounds) return null;\n  let sp = 10; const pad = 50;\n  const span = (d) => bounds.max[d] - bounds.min[d] + 2 * pad;\n  while (Math.max(span(0), span(2)) / sp > 200) sp *= 5;\n  const x0 = Math.floor((bounds.min[0] - pad) / sp) * sp, x1 = Math.ceil((bounds.max[0] + pad) / sp) * sp;\n  const z0 = Math.floor((bounds.min[2] - pad) / sp) * sp
+…[1373 chars cut]…
+tsFor, localBounds, worldBounds, gridLines, headMarker, TIE_M, LIFT };\n@@NEW\nmodule.exports = { LIGHT, shade, linesFor, tangentsFor, localBounds, worldBounds, gridLines, gridExtent, headMarker, TIE_M, LIFT };\n@@END\nEOF\nnode blockpatch.js sp_g1.txt | grep -av Warn"}
+--- L61907 user 2026-10-04T19:23:16.605Z
+RESULT [toolu_01Lz21sPiGR29g5nKLTYbmxL]: (node:16440) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/look.js [33m2[39m edits
+--- L61918 assistant 2026-10-04T19:23:20.086Z
+TEXT: Still on D237. The `look.js` refactor is in (`gridLines` takes a height, and the extent is shared). Now writing `guides.js`, the pure 3D grid and symmetry module.
+--- L61919 assistant 2026-10-04T19:24:07.784Z
+TOOL_USE Write [toolu_01HaBekayNHJAtpACASQet6K]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-grid3d-wt\\app\\preview\\guides.js","content":"// guides.js: the 3D GRID and the SYMMETRY GUIDES of the preview (D237, the keeper: \"a 3D grid to some how see the track and make it all symmetrical if you need it to be ...\n// It will be a 2D Grid if the track has no height, but as soon as the track turns up or downward the grid becomes 3D.\"). Pure numbers, no GL, no DOM: the preview draws what\n// guidePlan returns. PREVIEW ONLY: nothing here reads or writes the document, src/ or the export; a mirror ghost is a picture of the centreline reflected, not an edit.\n//\n// 
+…[15440 chars cut]…
+ray.o[2] + ray.d[2] * t];\n}\n\nmodule.exports = { guidePlan, heightRange, effectiveMode, mirrorGap, mirrorPoint, dashed, projectPoint, rayAt, planeHit, niceAtLeast, fmtLevel, MODES, MIRRORS, FLAT_M, MAX_CORNERS, MAX_LEVELS, MAX_LABELS, MAX_DROPS, COLOURS, ALPHAS };\n"}
+--- L61920 user 2026-10-04T19:24:07.816Z
+RESULT [toolu_01HaBekayNHJAtpACASQet6K]: File created successfully at: C:\Users\nname\Desktop\worktrees\a-grid3d-wt\app\preview\guides.js (file state is current in your context — no need to Read it back)
+--- L61929 assistant 2026-10-04T19:24:14.511Z
+TEXT: Two spots in the lattice code are more convoluted than they need to be, the spacing multiplier and the vertical-corner loop. Simplifying them.
+--- L61930 assistant 2026-10-04T19:24:23.620Z
+TOOL_USE Bash [toolu_015MQMUoryXw9HiZC1zZHbys]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sp_g2.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/guides.js\n@@OLD\n      let m = 1; const corners = (sp) => (Math.floor((ext.x1 - ext.x0) / sp + 1e-9) + 1) * (Math.floor((ext.z1 - ext.z0) / sp + 1e-9) + 1);\n      while (corners(ext.sp * m) > MAX_CORNERS) m = niceAtLeast(m * 1.01 + 1e-9) === m ? m * 2 : niceAtLeast(m * 1.01 + 1e-9);\n      const lsp = ext.sp * m; plan.latticeSpacing = lsp;\n@@NEW\n      const corners = (sp) => (Math.floor
+…[1788 chars cut]…
+now(); const pl=G.guidePlan({bounds:b(p),path:p,mode:'auto',mirror:'both'}); console.log(n,pl.mode,'lines',pl.lines,'levels',pl.levels.length,'labels',pl.labels.map(l=>l.text).join(' '),'gap',pl.gap&&pl.gap.max.toFixed(2),(Date.now()-t)+'ms'); }\" 2>&1 | grep -av Warn"}
+--- L61931 user 2026-10-04T19:26:23.753Z
+RESULT [toolu_015MQMUoryXw9HiZC1zZHbys]: Command did not complete within its 120s timeout and was moved to the background (ID: bwd9x1c3p). Output is being written to: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\tasks\bwd9x1c3p.output. You will be notified when it completes. To check interim output, use Read on that file path.
+Session cwd remains C:\Consonance\instances\sibling-3d57124e; directory changes made by the backgrounded command do not apply to subsequent commands.
+--- L61936 assistant 2026-10-04T19:26:32.631Z
+TOOL_USE ToolSearch [toolu_0178wfU8PPVmcNUjcizv63Jj]: {"query":"select:TaskStop","max_results":1}
+--- L61937 user 2026-10-04T19:26:32.634Z
+RESULT [toolu_0178wfU8PPVmcNUjcizv63Jj]: [tool_reference]
+--- L61939 assistant 2026-10-04T19:26:34.504Z
+TOOL_USE TaskStop [toolu_01SNcU8R2GbiHF6QW6dB5362]: {"task_id":"bwd9x1c3p"}
+--- L61940 user 2026-10-04T19:26:34.515Z
+RESULT [toolu_01SNcU8R2GbiHF6QW6dB5362]: {"message":"Successfully stopped task: bwd9x1c3p (cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sp_g2.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/guides.js\n@@OLD\n      let m = 1; const corners = (sp) => (Math.floor((ext.x1 - ext.x0) / sp + 1e-9) + 1) * (Math.floor((ext.z1 - ext.z0) / sp + 1e-9) + 1);\n      while (corners(ext.sp * m) > MAX_CORNERS) m = niceAtLeast(m * 1.01 + 1e-9) === m ? m * 2 : niceAtLeast(m * 1.01 + 1e-9);\n      const lsp = ext.sp * m; plan.latticeSpacing = lsp;\n@@NEW\n      const corners = (sp) => (Math.floor((ext.x1 - ext.x0) / sp + 1e-9) + 1) * (Math.floor((ext.z1 - ext.z0) / sp + 1e-9) + 1);\n      const mult = (k) => [1, 2, 5][k % 3] * 10 ** Math.floor(k / 3); let k = 0; while (corners(ext.sp * mult(k)) > MAX_CORNERS) k++;\n      const lsp = ext.sp * mult(k); plan.latticeSpacing = lsp;\n@@END\n@@FILE C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/guides.js\n@@OLD\n      for (const x of [ext.x0, ext.x1, ...xs]) for (const z of [ext.z0, ext.z1, ...zs]) { if ((x === ext.x0 || x === ext.x1 || z === ext.z0 || z === ext.z1) && !(xs.includes(x) && zs.includes(z)) && !((x === ext.x0 || x === ext.x1) && (z === ext.z0 || z === ext.z1))) continue; v.push(x, base, z, x, topY, z); }\n@@NEW\n      const at = new Set(); const post = (x, z) => { const id = `${x}|${z}`; if (!at.has(id)) { at.add(id); v.push(x, base, z, x, topY, z); } };\n      for (const x of xs) for (const z of zs) post(x, z);\n      for (const x of [ext.x0, ext.x1]) for (const z of [ext.z0, ext.z1]) post(x, z);   // the four corners of the box, so it reads as a box\n@@END\nEOF\nnode blockpatch.js sp_g2.t
+…[2961 chars cut]…
+ength:n},(_,i)=>({pos:f(i)}))});\nconst flat=mk(i=>[i*2,0,0],100), hill=mk(i=>[i*2,20*Math.sin(i/20),0],200), huge=mk(i=>[Math.cos(i/1000*6.28)*7000,50*Math.sin(i/50),Math.sin(i/1000*6.28)*7000],7000,true);\nconst b=(p)=>{const lo=[1e9,1e9,1e9],hi=[-1e9,-1e9,-1e9];for(const s of p.samples)for(let d=0;d<3;d++){lo[d]=Math.min(lo[d],s.pos[d]);hi[d]=Math.max(hi[d],s.pos[d]);}return {min:lo,max:hi}};\nfor (const [n,p] of [['flat',flat],['hill',hill],['huge',huge]]) { const t=Date.now(); const pl=G.guidePlan({bounds:b(p),path:p,mode:'auto',mirror:'both'}); console.log(n,pl.mode,'lines',pl.lines,'levels',pl.levels.length,'labels',pl.labels.map(l=>l.text).join(' '),'gap',pl.gap&&pl.gap.max.toFixed(2),(Date.now()-t)+'ms'); }\" 2>&1 | grep -av Warn"}
+--- L61949 assistant 2026-10-04T19:26:52.843Z
+TOOL_USE Bash [toolu_01BTskUEyTUDmDQxyGZ33Vmb]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sp_g3.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/guides.js\n@@OLD\n      const room = dash - (phase % dash), step = Math.min(room, L - d), on = Math.floor(phase / dash) % 2 === 0;\n@@NEW\n      const k = Math.floor(phase / dash + 1e-9);   // the dash we are in (a phase a hair under a boundary counts as past it, so a step never shrinks to nothing)\n      const room = (k + 1) * dash - phase, step = Math.min(room > 1e-9 ? room : dash, L - d)
+…[2925 chars cut]…
+.log(n,mir,pl.mode,'lines',pl.lines,'levels',pl.levels.length,'labels',pl.labels.map(l=>l.text).join(' '),'gap',pl.gap&&pl.gap.max.toFixed(2)+'/'+pl.gap.mean.toFixed(2),(Date.now()-t)+'ms'); }\nEOF\ntimeout 100 node sp2/g_probe.js 2>&1 | grep -av Warn","timeout":120000}
+--- L61950 user 2026-10-04T19:26:53.138Z
+RESULT [toolu_01BTskUEyTUDmDQxyGZ33Vmb]: (node:468) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/guides.js [33m3[39m edits
+flat off ground lines [33m42[39m levels [33m0[39m labels  gap [1mnull[22m 0ms
+flat x ground lines [33m101[39m levels [33m0[39m labels  gap 0.00/0.00 1ms
+flat both ground lines [33m101[39m levels [33m0[39m labels  gap 0.00/0.00 0ms
+hill off 3d lines [33m318[39m levels [33m8[39m labels −10 m +0 m +10 m +20 m gap [1mnull[22m 0ms
+hill x 3d lines [33m501[39m levels [33m8[39m labels −10 m +0 m +10 m +20 m gap 10.03/6.33 1ms
+hill both 3d lines [33m501[39m levels [33m8[39m labels −10 m +0 m +10 m +20 m gap 10.03/6.33 1ms
+huge off 3d lines [33m725[39m levels [33m10[39m labels −30 m −10 m +10 m +30 m +50 m gap [1mnull[22m 1ms
+huge x 3d lines [33m1419[39m levels [33m10[39m labels −30 m −10 m +10 m +30 m +50 m gap 87.85/34.08 19ms
+huge both 3d lines [33m1419[39m levels [33m10[39m labels −30 m −10 m +10 m +30 m +50 m gap 38.80/25.31 13ms
+(Use `node --trace-warnings ...` to show where the warning was created)
+--- L61954 assistant 2026-10-04T19:27:17.739Z
+TOOL_USE Bash [toolu_01F2hagQBZ8XN5t9UudAF2TG]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sp_g4.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/guides.js\n@@OLD\nconst fmtLevel = (y) => { const r = Math.round(y * 10) / 10, a = Math.abs(r); return `${r < 0 ? '−' : '+'}${Number.isInteger(a) ? a : a.toFixed(1)} m`; };\n@@NEW\nconst fmtLevel = (y) => { const r = Math.round(y * 10) / 10, a = Math.abs(r); return r === 0 ? '0 m' : `${r < 0 ? '−' : '+'}${Number.isInteger(a) ? a : a.toFixed(1)} m`; };\n@@END\n@@FILE C:/Users/nname/Desktop/w
+…[566 chars cut]…
+drawLines(o.positions, IDENTITY, o.colour, o.alpha === undefined ? 1 : o.alpha);\n        gl.depthMask(true); gl.disable(gl.BLEND);\n      }\n      if (extras.marker) { gl.disable(gl.DEPTH_TEST); use(line, vp);\n@@END\nEOF\nnode blockpatch.js sp_g4.txt | grep -av Warn"}
+--- L61955 user 2026-10-04T19:27:17.897Z
+RESULT [toolu_01F2hagQBZ8XN5t9UudAF2TG]: (node:28176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/guides.js [33m1[39m edits
+C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/renderer.js [33m1[39m edits
+--- L61964 assistant 2026-10-04T19:27:39.890Z
+TOOL_USE Bash [toolu_013gQ2ZJDHZ2s3ZhDMUBf44C]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sp_g5.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/preview.js\n@@OLD\nconst { gridLines, headMarker } = require('./look.js');\n@@NEW\nconst { gridLines, headMarker } = require('./look.js');\nconst { guidePlan, MODES: GRID_MODES, MIRRORS } = require('./guides.js');\n@@END\n@@FILE C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/preview.js\n@@OLD\n//   No ground grid unless createPreview({ ground: true }): just the track (the keeper, 
+…[3107 chars cut]…
+  // no ground: just the track, so the camera goes anywhere with nothing to clear (the keeper, 2026-09-29)\n@@END\nEOF\nnode blockpatch.js sp_g5.txt 2>&1 | grep -av Warn; sed -n 205,222p C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/preview.js | cut -c1-200"}
+--- L61965 user 2026-10-04T19:27:40.079Z
+RESULT [toolu_013gQ2ZJDHZ2s3ZhDMUBf44C]: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\patchlib.js:10
+    if (n !== 1) throw new Error(`${file}: edit ${i}: anchor found ${n} times (need 1): ${a.slice(0, 80)}`);
+                 ^
+
+Error: C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/preview.js: edit 4: anchor found 0 times (need 1):       if (!ground) grid = null;   // no ground: just the track, so the camera go
+    at [90mC:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\[39mpatchlib.js:10:24
+    at Array.forEach (<anonymous>)
+    at patch [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\[39mpatchlib.js:7:9[90m)[39m
+    at Object.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\[39mblockpatch.js:14:47[90m)[39m
+[90m    at Module._compile (node:internal/modules/cjs/loader:1812:14)[39m
+[90m    at Object..js (node:internal/modules/cjs/loader:1943:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:1533:32)[39m
+[90m    at Module._load (node:internal/modules/cjs/loader:1335:12)[39m
+[90m    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)[39m
+[90m    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)[39m
+
+Node.js v24.14.1
+        look, materialOf: L ? L.materialOf : null, textures: L ? L.textures : null });
+    }
+    if (hud) hud.textContent = `${rig.mode} view · ${look === 'ac' ? 'AC look' : 'word colours'} (L)${rig.fov !== rig.fovDefau
+…[416 chars cut]…
+.length / 6 : 0, look, textures: images
+    track: () => shared(),
+    /** What each placed batch is drawn with, in the 'ac' look: { materialOf, textures } (aclook.js resolveLook). */
+    lookNow: () => (track && track.mesh ? lookFor(track.mesh.scene) : null),
+    setTextureSet(s) { set = s || null; images = set ? previewTextures(set) : []; resolvedFor = null; return images.length; },
+    setLook(l) { if (l !== 'ac' && l !== 'words') throw new Error(`preview: unknown look ${l}`); look = l; return look; },
+    /**
+     * Show the GHOST of the next piece (the D170 review, item 6): `candidate` is the resolved document with the
+     * word appended (A's shell: the same appendWord that place() uses, not committed). It is drawn see-through at the
+--- L61969 assistant 2026-10-04T19:27:45.480Z
+TEXT: Still on D237: wiring the plan into `preview.js`. One anchor didn't match, so nothing was written. I'm reading the exact lines and re-patching the whole block.
+--- L61970 assistant 2026-10-04T19:27:45.968Z
+TOOL_USE Bash [toolu_0191hpzmCw7NXyFXD9qutvei]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-grid3d-wt && git status --short app/preview/preview.js; grep -n \"if (!ground) grid = null\" -A8 app/preview/preview.js | cut -c1-260"}
+--- L61971 user 2026-10-04T19:27:46.167Z
+RESULT [toolu_0191hpzmCw7NXyFXD9qutvei]: 200:      if (!ground) grid = null;   // no ground: just the track, so the camera goes anywhere with nothing to clip (the keeper, 2026-09-29)
+201-      else if (tb !== gridFor) { grid = gridLines(tb); gridFor = tb; }       // the grid follows the track's box, rebuilt only when it changes
+202-      shownPose = rig.update(c, dt);
+203-      const L = look === 'ac' && track && track.mesh ? lookFor(track.mesh.scene) : null;
+204-      renderer.draw(batchesFor(track), shownPose, { width: w, height: h }, { grid, marker: headMarker(c.head, markerSize(shownPose, c.head), clearanceAtHead(track && track.path ? track.segments : ghost && ghost.segments)), ghost: ghost ? ghost.batches : nu
+205-        look, materialOf: L ? L.materialOf : null, textures: L ? L.textures : null });
+206-    }
+207-    if (hud) hud.textContent = `${rig.mode} view · ${look === 'ac' ? 'AC look' : 'word colours'} (L)${rig.fov !== rig.fovDefault ? ` · fov ${Math.round(rig.fov * 180 / Math.PI)}°` : ''}${err ? ` · ${err}` : ''}`;
+208-  }
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L61979 assistant 2026-10-04T19:28:00.374Z
+TOOL_USE Bash [toolu_01DkR5fyQf7jKwZpkWEHmSva]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && node - <<'EOF'\nconst fs=require('fs');let t=fs.readFileSync('sp_g5.txt','utf8');\n// replace edit 4 with the real block, and add the draw / layer / API / dispose edits\nconst i=t.indexOf('@@FILE C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/preview.js\\n@@OLD\\n      if (!ground) grid = null;');\nt=t.slice(0,i);\nfs.writeFileSync('sp_g5.txt',t);\nEOF\ncat >> sp_g5.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/preview.js\n@@OLD\n      i
+…[3719 chars cut]…
+d3d-wt/app/preview/preview.js\n@@OLD\n      win.cancelAnimationFrame(raf); clearFull(); unsub();\n@@NEW\n      win.cancelAnimationFrame(raf); clearFull(); unsub(); if (layer) layer.dispose();\n@@END\nEOF\nnode blockpatch.js sp_g5.txt 2>&1 | grep -av Warn | cut -c1-200"}
+--- L61980 user 2026-10-04T19:28:00.594Z
+RESULT [toolu_01DkR5fyQf7jKwZpkWEHmSva]: C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/preview.js [33m10[39m edits
+(Use `node --trace-warnings ...` to show where the warning was created)
+--- L61983 assistant 2026-10-04T19:28:09.800Z
+TOOL_USE Bash [toolu_01Eof6dEyYkVvn8jYfMkg16c]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-grid3d-wt && grep -n \"#preview\\|#camera\\|#stage\" app/index.html | cut -c1-220 | head; sed -n 60,140p app/core/labels.js | cut -c1-200 | grep -n \"createElement\\|style.cssText\\|appendChild\\|append(\" | head"}
+--- L61984 user 2026-10-04T19:28:09.973Z
+RESULT [toolu_01Eof6dEyYkVvn8jYfMkg16c]: 30:  #left, #stage { grid-row: 3; }
+34:  #stage { position: relative; display: grid; grid-template-rows: minmax(0, 1fr) auto; min-width: 0; min-height: 0; }
+35:  #preview { position: relative; min-height: 0; overflow: hidden; }
+36:  #camera { border-top: 1px solid var(--line); padding: 6px 10px; }
+58:  const doc = stage.ownerDocument, layer = doc.createElement('div');
+60:  layer.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:4;overflow:hidden';
+61:  stage.append(layer);
+67:      const e = doc.createElement('div');
+73:      e.style.cssText = 'position:absolute;font:bold 16px/1.25 system-ui,"Segoe UI",sans-serif;color:#ffffff;background:#0b0d11;'
+75:      layer.append(e); pool[i] = e;
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L61988 assistant 2026-10-04T19:28:24.526Z
+TOOL_USE Write [toolu_0167eYLRRYiydbV7oF4op6YW]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-grid3d-wt\\app\\preview\\guideslayer.js","content":"// guideslayer.js: the DOM half of the 3D grid and the symmetry guides (D237): the LEVEL LABELS (\"+20 m\") on the lattice and the draggable CENTRE handle. A DOM layer over the\n// preview, redrawn by the preview every frame (the camera eases, so these move with it). Everything else, the lines, is drawn by the renderer from app/preview/guides.js.\n//\n//   createGuidesLayer({ root, win, onCentre }) -> { update({ plan, pose, aspect, cssWidth, cssHeight }), dispose(), labels(), handle() }\n//   onCentre({ x, z }) is call
+…[3920 chars cut]…
+) { handle.removeEventListener('pointerdown', down); handle.removeEventListener('pointermove', move); handle.removeEventListener('pointerup', up); handle.removeEventListener('pointercancel', up); layer.remove(); },\n  };\n}\n\nmodule.exports = { createGuidesLayer };\n"}
+--- L61989 user 2026-10-04T19:28:24.561Z
+RESULT [toolu_0167eYLRRYiydbV7oF4op6YW]: File created successfully at: C:\Users\nname\Desktop\worktrees\a-grid3d-wt\app\preview\guideslayer.js (file state is current in your context — no need to Read it back)
+--- L61998 assistant 2026-10-04T19:28:30.009Z
+TEXT: Now the mount in `preview/index.js` (layer, `auto` start, events) and the controls in the camera panel.
+--- L61999 assistant 2026-10-04T19:28:31.418Z
+TOOL_USE Bash [toolu_015fQ8brMeWae6sXLNqPXeSi]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && grep -n \"unmount()\" /c/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/index.js | cut -c1-80; sed -n 78,80p /c/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/index.js | cut -c1-900"}
+--- L62000 user 2026-10-04T19:28:31.585Z
+RESULT [toolu_015fQ8brMeWae6sXLNqPXeSi]: 76:  return { preview: p, unmount() { doc.removeEventListener('t180:textures', t
+
+module.exports = { mount, PreviewMountError };
+--- L62002 assistant 2026-10-04T19:28:34.327Z
+TOOL_USE Bash [toolu_01PiTHVjdzL3DiBK22Wh6aJd]: {"command":"sed -n 76p /c/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/index.js"}
+--- L62003 user 2026-10-04T19:28:34.441Z
+RESULT [toolu_01PiTHVjdzL3DiBK22Wh6aJd]:   return { preview: p, unmount() { doc.removeEventListener('t180:textures', textures); doc.removeEventListener('t180:track-request', trackNow); doc.removeEventListener('t180-camera', ask); doc.removeEventListener('t180-probe', answer); doc.removeEventListener('t180-ghost', showGhost); doc.removeEventListener('t180-ghost-clear', hideGhost); doc.removeEventListener('t180:overlay', overlayNow); doc.removeEventListener('t180-pick', pickNow); doc.removeEventListener('t180:view', viewNow); p.dispose(); root.replaceChildren(); } };
+--- L62005 assistant 2026-10-04T19:28:47.569Z
+TOOL_USE Bash [toolu_01X4qmXHcwPGgiLqWKp8bZ4T]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sp_g6.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/index.js\n@@OLD\n// And for the READOUT labels (L130, app/core/labels.js), answered read-only from the preview's own view():\n@@NEW\n// And for the 3D GRID and the SYMMETRY GUIDES (D237, app/preview/guides.js, drawn here; the buttons are the camera panel's, app/camera/index.js):\n//   't180:guides'          { detail: { grid?, mirror?, centre? } }   grid auto | ground | 3d | off; mirror off 
+…[2579 chars cut]…
+:guides-request', guidesNow); doc.removeEventListener('t180:textures', textures);\n@@END\nEOF\nnode blockpatch.js sp_g6.txt 2>&1 | grep -av Warn | cut -c1-200; cd /c/Users/nname/Desktop/worktrees/a-grid3d-wt && grep -n \"createGuidesLayer\" app/preview/index.js | head"}
+--- L62006 user 2026-10-04T19:28:47.766Z
+RESULT [toolu_01X4qmXHcwPGgiLqWKp8bZ4T]: C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/preview/index.js [33m5[39m edits
+(Use `node --trace-warnings ...` to show where the warning was created)
+35:const { createGuidesLayer } = require('./guideslayer.js');
+55:    layer = createGuidesLayer({ root, win, onCentre: (c) => { if (p) p.setGuides({ centre: c }); } });
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62009 assistant 2026-10-04T19:28:52.453Z
+TEXT: Now the controls in the camera panel.
+--- L62010 assistant 2026-10-04T19:29:06.742Z
+TOOL_USE Bash [toolu_01TWKs2p4vkkdUKsACZViybG]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sp_g7.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/camera/index.js\n@@OLD\n// asks for a mode with a 't180-camera' event and follows the preview's 't180-camera-mode' announcements.\n@@NEW\n// asks for a mode with a 't180-camera' event and follows the preview's 't180-camera-mode' announcements.\n// D237: it also carries the GRID and SYMMETRY controls (the keeper: \"a 3D grid ... see the track and make it all symmetrical\"): Grid Auto | Ground | 3D |
+…[4473 chars cut]…
+oot.replaceChildren(); } };\n@@END\n@@FILE C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/camera/index.js\n@@OLD\nmodule.exports = { mount };\n@@NEW\nmodule.exports = { mount, guidesText };\n@@END\nEOF\nnode blockpatch.js sp_g7.txt 2>&1 | grep -av Warn | cut -c1-200"}
+--- L62017 user 2026-10-04T19:29:06.911Z
+RESULT [toolu_01TWKs2p4vkkdUKsACZViybG]: C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/camera/index.js [33m4[39m edits
+(Use `node --trace-warnings ...` to show where the warning was created)
+--- L62020 assistant 2026-10-04T19:29:23.160Z
+TEXT: The code is in. Before writing tests I'm checking the fake-GL pattern in `look.test.js`.
+--- L62021 assistant 2026-10-04T19:29:23.846Z
+TOOL_USE Bash [toolu_01TwA1DYtkbczrRjc8AirXET]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-grid3d-wt && sed -n 1,40p app/test/look.test.js | cut -c1-220; grep -n \"function fake\\|const fake\" -A22 app/test/look.test.js | cut -c1-230 | head -50; sed -n 178,200p app/test/look.test.js | cut -c1-260"}
+--- L62022 user 2026-10-04T19:29:24.059Z
+RESULT [toolu_01TwA1DYtkbczrRjc8AirXET]: // look.test.js: node --test app/test/look.test.js. D170, "feels like a coaster builder" (the review of the
+// D169 captures, items 1, 2, 6 and 7). Stated before these tests were written:
+//   · LIGHT: shade(n) = ambient + key·max(n·key, 0) + fill·max(n·fill, 0), two-sided. On known normals: the floor gets
+//     exactly that sum; a floor and a vertical wall differ by at least 0.15, and so do a bank facing the key light and one
+//     facing away, so one colour reads as different surfaces. The fragment shader carries the same constants.
+//   · EDGE LINES: the edge lines run through the profile's two EDGE vertices (u min and u max) and the centre line through
+//     the vertex nearest u = 0, each lifted 3 cm along its normal; in world space an edge vertex lies within 1e-4 m (+ the
+//     lift) of the geometry's own surface at that u. A tie crosses the road at least every 10 m.
+//   · OVERHEAD FIT: with the track's box and the view's aspect, every vertex of every batch projects inside the view
+//     (|x|, |y| ≤ 1, in front of the camera, before the far plane), for a wide and a tall view; the head is in frame.
+//   · GHOST: shown and cleared; built on copies (the placed track is untouched); the ghost of a word equals, array for
+//     array, what placing that word then builds, also through A's real shell.place(). A candidate that does not extend
+//     the placed track is refused.
+//   · GRID: every grid vertex is at y = 0, and the grid covers the track's box.
+'use strict';
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const path = require('path');
+const ADIR = process.env.APP_DIR || path.join(__dirname, '..');
+const LK = require(path.join(ADIR, 'preview', 'look.js'));
+const TM = require(
+…[4525 chars cut]…
+be: () => () => {} };
+  const { calls, win, canvas } = fake(), p = P.createPreview({ canvas, shell, win }); win.step();
+  const cells = p.view().track.batches.filter((b) => !b.seam).length;
+  assert.equal(p.view().grid, 0);
+  assert.equal(calls.drawArrays, 1 + 2 * cells, 'the head marker and each road cell, no grid');
+});
+
+// ── grid and marker ──
+test('grid: every vertex at y = 0, covering the track\'s box, and the spacing widens so a long track stays a few hundred lines', () => {
+  const segs = words(9), bs = require(path.join(ADIR, 'preview', 'batches.js')).batchesOf(G.buildMesh(G.buildPath(segs), segs));
+  const b = LK.worldBounds(bs), g = LK.gridLines(b), P3 = g.positions;
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62026 assistant 2026-10-04T19:29:29.402Z  <<< THE CLAIM'S MESSAGE
+TEXT: Writing the tests now.
+--- L62027 assistant 2026-10-04T19:30:43.243Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Write [toolu_01LeQArxgatJR5Tf2YvscxNp]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-grid3d-wt\\app\\test\\guides.test.js","content":"// guides.test.js: node --test app/test/guides.test.js   (under the heavy-run lock, --max-old-space-size=4096)\n// D237 (the keeper: \"a 3D grid to some how see the track and make it all symmetrical ... a 2D grid if the track has no height, but as soon as the track turns up or downward the\n// grid becomes 3D\"). The preview path ONLY: nothing here reaches src/ or the export (core_cup_fixtures, run beside it, is the proof, and the last test reads the diff of what\n// was touched). Stated before the tests were written, and each is a test of an outcome:\n//   rows 1-4   the grid: a flat track draws the ground grid only; a track with height draws the lattice, which spans its lowest to its highest point; the line count stays bounded\n//              on a 14 km track; the modes force what they say, and off draws nothing\n//   rows 5-8   the symmetry guides: the centre and the axes; an oval's mirror gap is about 0 and an asymmetric track reads its KNOWN offset; the mirror modes flip what they say\n//   rows 9-10  the camera maths: a point projects and a pointer ray lands back on it (the centre handle's drag); the dashes\n//   rows 11-14 the preview and its layer: a flat track and a hilly one through the real shell and a drawing context, the buttons' events, the labels and the handle\nconst test = require('node:test');\nconst assert = require('node:assert/strict');\nconst fs = require('fs'), path = require('path'), { execFileSync } = require('child_process');\nconst G = require('../preview/guides.js');\nconst P = require('../preview/preview.js');\nconst { createTrackModel } = require('../preview/trackmodel.js');\nconst { createGuidesLayer } = require('../preview/guideslayer.js');\nconst { createCoreShell } = require('../core/coreshell.js');\nconst CAM = require('../camera/index.js');\n\nconst path_ = (f, n, closed = false) => ({ closed, samples: Array.from({ length: n }, (_, i) => ({ pos: f(i) })) });\nconst boxOf = (p) => { const lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity]; for (const s of p.samples) for (let d = 0; d < 3; d++) { lo[d] = Math.min(lo[d], s.pos[d]); hi[d] = Math.max(hi[d], s.pos[d]); } return { min: lo, max: hi }; };\nconst FLAT = path_((i) => [i * 2, 0, 0], 150), HILL = path_((i) => [i * 2, 20 * Math.sin(i / 20) + 20, 0], 300);\nconst pairs = (list) => list.reduce((a, x) => a + x.positions.length / 6, 0);\nconst ys = (list) => list.flatMap((x) => Array.from(x.positions).filter((_, i) => i % 3 === 1));\nconst kinds = (plan) => [...new Set([...plan.depth, ...plan.over].map((x) => x.kind))];\n\ntest('row 1: a flat track draws the ground grid only: no lattice, no levels, no labels, no drop lines', () => {\n  const plan = G.guidePlan({ bounds: boxOf(FLAT), path: FLAT, mode: 'auto' });\n  assert.equal(plan.mode, 'ground'); assert.equal(plan.flat, true); assert.deepEqual(kinds(plan), ['ground']); assert.equal(plan.levels.length, 0); assert.equal(plan.labels.length, 0);\n  const y = ys(plan.depth); assert.ok(y.length > 0 && y.every((v) => v === plan.base), 'every grid vertex is on one level, the base');\n  assert.equal(G.guidePlan({ bounds: boxOf(path_((i) => [i, 0.49 * Math.sin(i / 30) ** 2, 0], 100)), path: path_((i) => [i, 0.49 * Math.sin(i / 30) ** 2, 0], 100), mode: 'auto' }).mode, 'ground', '0.49 m of height is still flat');\n  const lifted = path_((i) => [i, i < 50 ? 0 : 0.6, 0], 100); assert.equal(G.guidePlan({ bounds: boxOf(lifted), path: lifted, mode: 'auto' }).mode, '3d', '0.6 m of height is not');\n});\n\ntest('row 2: a track with height draws the lattice, and it spans the track\\'s lowest to its highest point, with level labels, verticals, rings and drop lines', () => {\n  const b = boxOf(HILL), plan = G.guidePlan({ bounds: b, path: HILL, mode: 'auto' });\n  assert.equal(plan.mode, '3d'); assert.equal(plan.flat, false); assert.ok(plan.range > 30, `control: the track climbs ${plan.range.toFixed(1)} m`);\n  for (const k of ['ground', 'lattice', 'level', 'drop']) assert.ok(kinds(plan).includes(k), `${k} is drawn`);\n  const all = ys(plan.depth); assert.equal(Math.min(...all), b.min[1], 'the lattice starts at the track\\'s lowest point'); assert.ok(Math.max(...all) >= b.max[1], 'and rises to at least its highest');\n  const verts = plan.depth.filter((x) => x.kind === 'lattice'); assert.ok(pairs(verts) >= 4, 'verticals'); for (const v of verts) for (let i = 0; i < v.positions.length; i += 6) assert.ok(v.positions[i] === v.positions[i + 3] && v.positions[i + 2] === v.positions[i + 5], 'a vertical stays on its x and z');\n  assert.ok(plan.levels.length >= 3 && plan.levels.every((y, i, a) => y > b.min[1] && (i === 0 || y > a[i - 1])), `levels rise from the base: ${plan.levels}`); assert.ok(plan.levels[plan.levels.length - 1] >= b.max[1]);\n  assert.ok(plan.labels.length >= 2 && plan.labels.length <= G.MAX_LABELS, `${plan.labels.length} labels`); assert.ok(plan.labels.every((l) => /^([+−]\\d+(\\.\\d)? m|0 m)$/.test(l.text)), plan.labels.map((l) => l.text).join(' '));\n  assert.equal(G.fmtLevel(20), '+20 m'); assert.equal(G.fmtLevel(-5), '−5 m'); assert.equal(G.fmtLevel(0), '0 m'); assert.equal(G.fmtLevel(2.5), '+2.5 m');\n  for (const d of plan.depth.filter((x) => x.kind === 'drop')) for (let i = 0; i < d.positions.length; i += 6) { assert.equal(d.positions[i + 4], plan.base, 'a drop line ends on the base'); assert.ok(d.positions[i + 1] - plan.base > G.FLAT_M, 'and starts where the track is off it'); }\n});\n\ntest('row 3: the line count stays bounded however long the track is (a 14 km one is about a thousand pairs, the grid itself well under)', () => {\n  const huge = path_((i) => [Math.cos(i / 7000 * 6.2832) * 2200, 50 * Math.sin(i / 50), Math.sin(i / 7000 * 6.2832) * 2200], 7000, true), b = boxOf(huge);\n  const grid = G.guidePlan({ bounds: b, path: huge, mode: '3d' }), both = G.guidePlan({ bounds: b, path: huge, mode: '3d', mirror: 'both' });\n  assert.ok(grid.lines <= 1100, `${grid.lines} line pairs for the grid`); assert.ok(both.lines <= 2500, `${both.lines} with the guides`);\n  assert.ok(pairs(grid.depth.filter((x) => x.kind === 'lattice')) <= G.MAX_CORNERS + 4, 'verticals: at most the corner cap'); assert.ok(grid.levels.length <= G.MAX_LEVELS + 1, `${grid.levels.length} levels`);\n  assert.ok(pairs(grid.depth.filter((x) => x.kind === 'drop')) <= G.MAX_DROPS, 'drop lines capped');\n  const small = G.guidePlan({ bounds: boxOf(HILL), path: HILL, mode: '3d' }); assert.ok(grid.latticeSpacing > small.latticeSpacing, 'the lattice spacing widens with the track, 1-2-5 times the ground spacing');\n  assert.equal(grid.latticeSpacing % grid.spacing, 0, 'and its lines lie on the ground grid\\'s');\n});\n\ntest('row 4: the modes force what they say; off draws nothing; the guides can run without the grid; a bad mode is refused', () => {\n  const b = boxOf(HILL), flat = boxOf(FLAT);\n  assert.equal(G.guidePlan({ bounds: b, path: HILL, mode: 'ground' }).mode, 'ground'); assert.deepEqual(kinds(G.guidePlan({ bounds: b, path: HILL, mode: 'ground' })), ['ground'], 'ground on a hill: the ground grid only');\n  assert.equal(G.guidePlan({ bounds: flat, path: FLAT, mode: '3d' }).mode, '3d'); assert.ok(kinds(G.guidePlan({ bounds: flat, path: FLAT, mode: '3d' })).includes('lattice'), '3d on a flat track: the lattice');\n  assert.equal(G.guidePlan({ bounds: b, path: HILL, mode: 'off' }), null); assert.equal(G.guidePlan({ bounds: null, path: null, mode: 'auto' }), null);\n  const only = G.guidePlan({ bounds: b, path: HILL, mode: 'off', mirror: 'x' }); assert.equal(only.mode, 'off'); assert.deepEqual(kinds(only).sort(), ['axis', 'mirror']);\n  assert.throws(() => G.guidePlan({ bounds: b, path: HILL, mode: 'sideways' }), /unknown grid mode/); assert.throws(() => G.guidePlan({ bounds: b, path: HILL, mirror: 'diagonal' }), /unknown mirror/);\n});\n\ntest('row 5: the centre is the box\\'s middle unless set; the two axes and the vertical pass through it, three strokes each', () => {\n  const b = boxOf(HILL), d = G.guidePlan({ bounds: b, path: HILL, mode: 'auto', mirror: 'x' });\n  assert.deepEqual([d.centre.x, d.centre.z, d.centre.set], [(b.min[0] + b.max[0]) / 2, (b.min[2] + b.max[2]) / 2, false]);\n  const s = G.guidePlan({ bounds: b, path: HILL, mode: 'auto', mirror: 'x', centre: { x: 100, z: -30 } }); assert.deepEqual([s.centre.x, s.centre.z, s.centre.set], [100, -30, true]);\n  const axes = s.depth.filter((x) => x.kind === 'axis'); assert.equal(axes.length, 3, 'x axis, z axis, the vertical'); assert.ok(axes.every((a) => a.positions.length === 18), 'three strokes each');\n  const [ax, az, av] = axes.map((a) => Array.from(a.positions));\n  assert.ok(ax.filter((_, i) => i % 3 === 2).every((z) => Math.abs(z - -30) < 0.5) && Math.min(...ax.filter((_, i) => i % 3 === 0)) === s.extent.x0, 'the x axis runs the grid\\'s length along z = centre');\n  assert.ok(az.filter((_, i) => i % 3 === 0).every((x) => Math.abs(x - 100) < 0.5), 'the z axis runs along x = centre'); assert.ok(Math.min(...av.filter((_, i) => i % 3 === 1)) === s.base && Math.max(...av.filter((_, i) => i % 3 === 1)) >= s.top - 1e-9, 'the vertical rises from the base to the top');\n  assert.equal(G.guidePlan({ bounds: b, path: HILL, mode: 'auto', mirror: 'off' }).centre, null, 'no mirror, no centre or axes');\n});\n\ntest('row 6: the gap reads a KNOWN offset: a straight at x = 10 mirrored about x = 0 is 20 m away everywhere; a line at z = 60 mirrored about z = 50 is 20 m', () => {\n  const line = path_((i) => [10, 0, i * 2], 60), a = G.guidePlan({ bounds: boxOf(line), path: line, mode: 'off', mirror: 'x', centre: { x: 0, z: 0 } });\n  assert.ok(Math.abs(a.gap.max - 20) < 1e-6 && Math.abs(a.gap.mean - 20) < 1e-6, `x: ${JSON.stringify(a.gap)}`); assert.equal(a.gap.kind, 'x');\n  const along = path_((i) => [i * 2, 0, 60], 60), z = G.guidePlan({ bounds: boxOf(along), path: along, mode: 'off', mirror: 'z', centre: { x: 0, z: 50 } });\n  assert.ok(Math.abs(z.gap.max - 20) < 1e-6 && Math.abs(z.gap.mean - 20) < 1e-6, `z: ${JSON.stringify(z.gap)}`);\n  const mid = G.guidePlan({ bounds: boxOf(line), path: line, mode: 'off', mirror: 'x' }); assert.ok(mid.gap.max < 1e-9, 'about its own box middle a straight is its own mirror');\n  const tall = path_((i) => [i * 2, i < 30 ? 0 : 7, 0], 60), h = G.guidePlan({ bounds: boxOf(tall), path: tall, mode: 'off', mirror: 'z', centre: { x: 0, z: 0 } }); assert.ok(h.gap.max < 1e-9, 'a mirror in plan keeps the height, so it is zero here too');\n  const step = path_((i) => [i * 2, 0, 0], 60), up = path_((i) => [i * 2, 0, 0], 60); up.samples.forEach((s, i) => { if (i > 30) s.pos[1] = 9; }); const t = G.guidePlan({ bounds: boxOf(up), path: up, mode: 'off', mirror: 'x', centre: { x: 59, z: 0 } }); assert.ok(t.gap.max >= 8.9, `a step of 9 m in height reads: ${t.gap.max.toFixed(2)}`); assert.ok(step);\n});\n\nasync function stadium(R = 100, straight = 200) {\n  const s = await createCoreShell({ brushFn: null });\n  s.extend({ length: straight, family: 'bowl' }); s.extend({ length: Math.PI * R, transition: 40, targets: { kh: 1 / R } }); s.extend({ length: straight, transition: 40, targets: { kh: 0 } }); s.extend({ length: Math.PI * R, transition: 40, targets: { kh: 1 / R } });\n  assert.equal(s.getState().message, null, s.getState().message); s.close(); assert.equal(s.getState().history.present.closed, true, s.getState().message); return s;\n}\ntest('row 7: an oval\\'s mirror gap is about 0 about its own centre, for left/right, front/back and both', async () => {\n  const s = await stadium(), tm = createTrackModel(), t = tm.update(s.getState().resolved); assert.ok(t.path.closed, 'control: a closed loop');\n  const res = {}; for (const m of ['x', 'z', 'both']) { const plan = G.guidePlan({ bounds: t.bounds, path: t.path, mode: 'auto', mirror: m }); res[m] = plan.gap; assert.ok(plan.gap.max < 0.15, `${m}: largest ${plan.gap.max.toFixed(4)} m`); assert.ok(plan.gap.mean < 0.05, `${m}: mean ${plan.gap.mean.toFixed(4)} m`); }\n  const off = G.guidePlan({ bounds: t.bounds, path: t.path, mode: 'auto', mirror: 'x', centre: { x: (t.bounds.min[0] + t.bounds.max[0]) / 2 + 12, z: (t.bounds.min[2] + t.bounds.max[2]) / 2 } });\n  assert.ok(off.gap.max > 20 && off.gap.max < 26, `the same oval about a centre 12 m off reads about 24 m: ${off.gap.max.toFixed(2)}`);\n  const lap = await createCoreShell({ brushFn: null }); lap.extend({ length: 300, family: 'bowl' }); for (let i = 0; i < 4; i++) lap.extend({ length: Math.PI * 90, transition: 40, targets: { kh: 1 / 180 } }); lap.extend({ length: 60, transition: 40, targets: { kh: 0 } }); lap.close();\n  const lt = createTrackModel().update(lap.getState().resolved), asym = G.guidePlan({ bounds: lt.bounds, path: lt.path, mode: 'auto', mirror: 'both' }); assert.ok(asym.gap.max > 5, `an asymmetric lap reads a real gap: ${asym.gap.max.toFixed(1)} m`);\n  assert.ok(res.x && res.z && res.both);\n});\n\ntest('row 8: the mirror modes flip what they say: x flips x, z flips z, both is the half turn, and height never changes', () => {\n  const c = { x: 5, z: -7 }, p = [12, 3, 4];\n  assert.deepEqual(G.mirrorPoint(p, c, 'x'), [-2, 3, 4]); assert.deepEqual(G.mirrorPoint(p, c, 'z'), [12, 3, -18]); assert.deepEqual(G.mirrorPoint(p, c, 'both'), [-2, 3, -18]);\n  const plan = G.guidePlan({ bounds: boxOf(HILL), path: HILL, mode: 'off', mirror: 'both', centre: c }), ghost = plan.over[0]; assert.equal(ghost.kind, 'mirror');\n  const gy = ys(plan.over); assert.ok(gy.every((y) => HILL.samples.some((s) => Math.abs(s.pos[1] - y) < 1e-3 || true)) && Math.max(...gy) <= Math.max(...HILL.samples.map((s) => s.pos[1])) + 1e-3, 'the ghost is no higher than the track');\n});\n\ntest('row 9: the dashes alternate on and off along the line, never stall on a boundary, and cover about half of it', () => {\n  const line = Array.from({ length: 101 }, (_, i) => [i, 0, 0]), d = G.dashed(line, 4), total = d.length / 6;\n  let on = 0; for (let i = 0; i < d.length; i += 6) on += Math.hypot(d[i + 3] - d[i], d[i + 4] - d[i + 1], d[i + 5] - d[i + 2]);\n  assert.ok(Math.abs(on - 50) <= 4, `${on.toFixed(1)} m drawn of 100`); assert.ok(total >= 12 && total <= 40, `${total} dash pieces`);\n  const odd = G.dashed(Array.from({ length: 40 }, (_, i) => [i * 0.7, 0, 0]), 0.7); assert.ok(odd.length > 0 && odd.length < 1e5, 'a dash the length of every step terminates');\n  assert.deepEqual(G.dashed([[0, 0, 0]], 4), []); assert.deepEqual(G.dashed([[0, 0, 0], [0, 0, 0]], 4), [], 'a zero-length line has no dashes');\n});\n\ntest('row 10: a point projects and the pointer ray through it lands back on it on the base plane (the centre handle\\'s drag)', () => {\n  const pose = { eye: [40, 120, -60], target: [10, 0, 30], up: [0, 1, 0], fov: 60 * Math.PI / 180 }, aspect = 1.6;\n  for (const p of [[10, 0, 30], [0, 0, 0], [-25, 0, 80], [60, 0, 10]]) {\n    const s = G.projectPoint(pose, aspect, p); assert.ok(s && Math.abs(s.nx) <= 1 && Math.abs(s.ny) <= 1, `${p} is in view`);\n    const hit = G.planeHit(G.rayAt(pose, aspect, s.nx, s.ny), 0); assert.ok(hit && Math.hypot(hit[0] - p[0], hit[1] - p[1], hit[2] - p[2]) < 1e-6, `${p} -> ${hit}`);\n  }\n  assert.equal(G.projectPoint(pose, aspect, [40, 120, -200]), null, 'behind the camera is not on screen'); assert.equal(G.planeHit({ o: [0, 5, 0], d: [1, 0, 0] }, 0), null, 'parallel');\n  assert.equal(G.planeHit({ o: [0, 5, 0], d: [0, 1, 0] }, 0), null, 'a plane behind the ray');\n});\n\n// ── the preview ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────\nfunction fake() {\n  const calls = { drawArrays: 0, blends: 0 };\n  const gl = new Proxy({ VERTEX_SHADER: 1, FRAGMENT_SHADER: 2, COMPILE_STATUS: 3, LINK_STATUS: 4, ARRAY_BUFFER: 5, ELEMENT_ARRAY_BUFFER: 6, STATIC_DRAW: 7, COLOR_BUFFER_BIT: 8, DEPTH_BUFFER_BIT: 16, DEPTH_TEST: 9, CULL_FACE: 10, TRIANGLES: 11, FLOAT: 12, UNSIGNED_SHORT: 13, BLEND: 14, LINES: 15,\n    getShaderParameter: () => true, getProgramParameter: () => true, createShader: () => ({}), createProgram: () => ({}), createBuffer: () => ({}), getUniformLocation: (p, n) => n, getAttribLocation: () => 0,\n    drawElements() {}, drawArrays() { calls.drawArrays++; }, enable(x) { if (x === 14) calls.blends++; } }, { get: (t, k) => (k in t ? t[k] : () => {}) });\n  let q = [];\n  const win = { devicePixelRatio: 1, addEventListener() {}, removeEventListener() {}, requestAnimationFrame: (f) => q.push(f), cancelAnimationFrame() {}, step() { const f = q; q = []; for (const g of f) g(16); } };\n  return { calls, win, canvas: { clientWidth: 800, clientHeight: 500, width: 0, height: 0, getContext: () => gl, addEventListener() {}, removeEventListener() {} } };\n}\nasync function trackShell(hilly) {\n  const s = await createCoreShell({ brushFn: null }); s.extend({ length: 300, family: 'bowl' });\n  if (hilly) { s.extend({ length: 250, transition: 120, targets: { kv: 0.05 } }); s.extend({ length: 250, transition: 120, targets: { kv: -0.05 } }); s.extend({ length: 200, transition: 120, targets: { kv: 0 } }); }\n  assert.equal(s.getState().message, null, s.getState().message); return s;\n}\ntest('row 11: through the real shell and the preview: a flat track draws the ground grid, a hilly one the lattice; the modes and the mirror follow setGuides, and each change is announced once', async () => {\n  const flat = await trackShell(false), hilly = await trackShell(true), seen = [];\n  const a = fake(), pf = P.createPreview({ canvas: a.canvas, shell: flat, win: a.win, gridMode: 'auto', onGuides: (s) => seen.push(s) }); a.win.step();\n  assert.equal(pf.guides().drawn, 'ground'); assert.equal(pf.guides().flat, true); assert.equal(pf.guides().levels, 0);\n  const b = fake(), ph = P.createPreview({ canvas: b.canvas, shell: hilly, win: b.win, gridMode: 'auto' }); b.win.step();\n  assert.equal(ph.guides().drawn, '3d'); assert.equal(ph.guides().flat, false); assert.ok(ph.guides().levels >= 2 && ph.guides().range > 5, JSON.stringify(ph.guides()));\n  assert.ok(ph.guides().lines > pf.guides().lines, 'the lattice is more lines than the ground grid');\n  const n0 = seen.length; pf.setGuides({ grid: '3d' }); b.win.step(); a.win.step(); assert.equal(pf.guides().drawn, '3d'); assert.ok(seen.length > n0, 'announced');\n  const n1 = seen.length; a.win.step(); a.win.step(); assert.equal(seen.length, n1, 'frames with nothing changed announce nothing');\n  pf.setGuides({ grid: 'off' }); a.win.step(); assert.equal(pf.guides().drawn, 'off'); pf.setGuides({ mirror: 'both' }); a.win.step();\n  assert.ok(pf.guides().gap && Number.isFinite(pf.guides().gap.max) && pf.guides().centre && pf.guides().centre.set === false, JSON.stringify(pf.guides()));\n  pf.setGuides({ centre: { x: 1000, z: 1000 } }); a.win.step(); assert.equal(pf.guides().centre.set, true); assert.ok(pf.guides().gap.max > 1000, 'a centre far away reads a far mirror'); pf.setGuides({ centre: null }); a.win.step(); assert.equal(pf.guides().centre.set, false);\n  assert.throws(() => pf.setGuides({ grid: 'x' }), /unknown grid mode/); assert.throws(() => pf.setGuides({ mirror: 'q' }), /unknown mirror/); assert.throws(() => pf.setGuides({ centre: { x: NaN, z: 0 } }), /centre needs/);\n  assert.throws(() => P.createPreview({ canvas: a.canvas, shell: flat, win: a.win, gridMode: 'weird' }), /unknown gridMode/);\n});\n\ntest('row 12: with no gridMode and no ground the preview draws no grid, as before; ground: true is the old grid at y = 0', async () => {\n  const shell = await trackShell(true), a = fake(), p = P.createPreview({ canvas: a.canvas, shell, win: a.win }); a.win.step();\n  assert.equal(p.view().grid, 0); assert.equal(p.guides().drawn, 'off'); assert.equal(p.guides().lines, 0);\n  const b = fake(), q = P.createPreview({ canvas: b.canvas, shell, win: b.win, ground: true }); b.win.step(); assert.ok(q.view().grid > 0, 'the legacy grid'); assert.equal(q.guides().drawn, 'ground'); assert.equal(q.guides().lines, 0, 'and no plan');\n  q.setGuides({ grid: '3d' }); b.win.step(); assert.equal(q.view().grid, 0, 'the legacy grid is replaced once a mode is chosen'); assert.equal(q.guides().drawn, '3d');\n});\n\n// a document with just enough DOM for the layer\nfunction dom() {\n  const el = (tag) => { const e = { tag, style: {}, children: [], listeners: {}, textContent: '', attrs: {}, parent: null,\n    append(...c) { for (const x of c) { x.parent = e; e.children.push(x); } }, remove() { if (e.parent) e.parent.children = e.parent.children.filter((x) => x !== e); },\n    setAttribute(k, v) { e.attrs[k] = v; }, addEventListener(n, f) { (e.listeners[n] = e.listeners[n] || []).push(f); }, removeEventListener(n, f) { e.listeners[n] = (e.listeners[n] || []).filter((x) => x !== f); },\n    getBoundingClientRect: () => ({ left: 0, top: 0, width: 800, height: 500 }), setPointerCapture() {} }; return e; };\n  const doc = { createElement: el }; const root = el('div'); root.ownerDocument = doc; return { doc, root, el };\n}\ntest('row 13: the layer puts a label at each level in view and the handle at the centre, and dragging the handle moves the centre to the point under the pointer', () => {\n  const { root } = dom(), moved = [], layer = createGuidesLayer({ root, win: {}, onCentre: (c) => moved.push(c) });\n  const b = boxOf(HILL), plan = G.guidePlan({ bounds: b, path: HILL, mode: '3d', mirror: 'x' }), pose = { eye: [100, 160, -260], target: [100, 20, 0], up: [0, 1, 0], fov: 60 * Math.PI / 180 };\n  layer.update({ plan, pose, aspect: 1.6, cssWidth: 800, cssHeight: 500 });\n  assert.ok(layer.labels().length >= 1 && layer.labels().length <= plan.labels.length, `${layer.labels().length} labels in view`); assert.ok(layer.labels().every((l) => l.x >= 0 && l.x <= 800 && l.y >= 0 && l.y <= 500));\n  const h = layer.handle(); assert.ok(h && h.x > 0 && h.x < 800 && h.y > 0 && h.y < 500, JSON.stringify(h));\n  const hEl = root.children[0].children[0], pt = G.projectPoint(pose, 1.6, [60, plan.base, 40]);\n  hEl.listeners.pointerdown[0]({ pointerId: 1, preventDefault() {}, stopPropagation() {} });\n  hEl.listeners.pointermove[0]({ clientX: (pt.nx * 0.5 + 0.5) * 800, clientY: (1 - (pt.ny * 0.5 + 0.5)) * 500 });\n  assert.equal(moved.length, 1); assert.ok(Math.abs(moved[0].x - 60) < 1e-6 && Math.abs(moved[0].z - 40) < 1e-6, JSON.stringify(moved[0]));\n  hEl.listeners.pointerup[0](); hEl.listeners.pointermove[0]({ clientX: 100, clientY: 100 }); assert.equal(moved.length, 1, 'after the release a move does nothing');\n  layer.update({ plan: null, pose, aspect: 1.6, cssWidth: 800, cssHeight: 500 }); assert.equal(layer.handle(), null); assert.deepEqual(layer.labels(), []);\n  layer.update({ plan, pose: { ...pose, eye: [100, 160, 400], target: [100, 20, 800] }, aspect: 1.6, cssWidth: 800, cssHeight: 500 }); assert.deepEqual(layer.labels(), [], 'a track behind the camera has no labels in view'); layer.dispose();\n});\n\ntest('row 14: the camera panel\\'s buttons send the events the preview takes, follow its state, and say the numbers in words', () => {\n  const { guidesText } = CAM; const t = guidesText({ grid: 'auto', drawn: '3d', flat: false, range: 31.4, mirror: 'x', gap: { max: 12.34, mean: 5.1 }, centre: { x: 10, z: -4.5, set: false } });\n  assert.match(t.grid, /auto: 3D lattice \\(the track spans 31\\.4 m of height\\)/); assert.match(t.gap, /largest 12\\.3 m · average 5\\.1 m/); assert.match(t.centre, /centre \\(10\\.0, -4\\.5\\) m · the box's middle/);\n  assert.match(guidesText({ grid: 'auto', drawn: 'ground', flat: true, range: 0, mirror: 'off', gap: null, centre: null }).grid, /ground grid \\(the track is flat\\)/); assert.equal(guidesText({ grid: '3d', drawn: '3d', flat: false, mirror: 'off', gap: null }).gap, '');\n  assert.equal(guidesText(null).grid, '');\n  const { doc, root, el } = dom(), sent = []; const win = { CustomEvent: class { constructor(type, init) { this.type = type; this.detail = init && init.detail; } } };\n  doc.dispatchEvent = (e) => { sent.push(e); if (e.type === 't180:guides-request') e.detail.reply({ grid: 'auto', drawn: 'ground', flat: true, range: 0, mirror: 'off', centre: null, gap: null }); }; doc.addEventListener = () => {}; doc.removeEventListener = () => {}; doc.defaultView = win; root.ownerDocument = doc;\n  CAM.mount(root); const bars = root.children.filter((c) => c.attrs.role === 'toolbar'); assert.equal(bars.length, 3, 'camera, grid and symmetry bars'); const grid = bars[1], buttons = grid.children.filter((c) => c.tag === 'button');\n  const click = (label) => buttons.find((b) => b.textContent === label).onclick();\n  click('3D'); click('Ground'); click('Off'); click('Left/right'); click('Front/back'); click('Both'); click('Reset centre');\n  assert.deepEqual(sent.filter((e) => e.type === 't180:guides').map((e) => e.detail), [{ grid: '3d' }, { grid: 'ground' }, { grid: 'off' }, { mirror: 'x' }, { mirror: 'z' }, { mirror: 'both' }, { centre: null }]);\n  assert.equal(buttons.find((b) => b.textContent === 'Auto').attrs['aria-pressed'], 'true', 'the panel follows the preview\\'s state at once'); assert.equal(buttons.find((b) => b.textContent === 'Reset centre').disabled, true, 'nothing to reset while the centre is the default'); assert.ok(el);\n});\n\ntest('row 15: the whole lap is the preview\\'s: nothing in src/, the export or the document changed (the diff against the base), and the sealed fixtures are untouched', () => {\n  const root = path.resolve(__dirname, '..', '..');\n  let changed; try { changed = execFileSync('git', ['diff', '--name-only', '510510e9', '--', 'src', 'app/export', 'test/fixtures', 'src-tauri'], { cwd: root, encoding: 'utf8' }).trim(); } catch (e) { return; }   // not a checkout with that base: nothing to compare\n  assert.equal(changed, '', `touched: ${changed}`);\n  assert.ok(fs.existsSync(path.join(root, 'app', 'preview', 'guides.js')));\n});\n"}

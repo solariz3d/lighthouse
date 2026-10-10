@@ -1,0 +1,60 @@
+=== C:/Program Files/nodejs/node.exe consonance/tools/carrier-drift.js
+=== cwd C:/Users/nname/Desktop/worktrees/b-d277-gen
+=== env {"CONSONANCE_DATA":"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d273/emptydata"}
+CARRIER DRIFT — registered withdrawals vs the carriers that still assert them
+
+  corpus: 91 carriers · 1 traces skipped (exo_memory/journal/, dreams/, attic/, dev/one-shot/, dated verbatim extract (exo_memory/map/<X>-<date>.md declaring "Extracted mechanically"))
+  CH-4:   34 instruction-reachable from exo_memory/BOOT.md + exo_memory/SOURCE.md at depth 2 · undefined of them inside the scanned corpus · re-walked this run · NOT FROZEN
+          CH-4 is a LABEL on findings, never a filter — narrowing the corpus to it would drop 14 of 17 registered sites
+
+  registry: 0 registered · 0 ARMED · 0 DISARMED (scanned and printed, never red)
+
+
+  RED — 2 findings
+    CH4-UNFROZEN  consonance\tools\carrier-drift.registry.json
+      registry carries no ch4_corpus.files, so there is nothing to diff the walk against and a newly-reachable file would arrive unnoticed. Run --ch4-walk and freeze it.
+    EMPTY-REGISTRY  consonance\tools\carrier-drift.registry.json
+      no withdrawals registered — this tool is armed by its registry and an empty one reports green over everything it cannot see
+
+  DESCRIPTION SURFACES — README.md · consonance/README.md · consonance/ui/index.html
+    0 finding(s), 0 of them red — no registered wording still asserted on any of the three
+    THIS COUNTS WORDING ONLY. A surface that never mentions a subsystem is invisible here:
+    on 2026-09-02 all three scored ZERO for Librarian / Third Place / Listen / chain /
+    call_librarian and this instrument was green on every one of them. Omission is a
+    different disease and needs a different oracle.
+
+WHAT THIS CANNOT SEE
+  · It matches WORDING, not meaning. A carrier asserting the same withdrawn claim in different
+  ·   words is invisible here — record/claim-your-continuity.md:15 calls the keeper "the
+  ·   decorrelated instrument" with no "only" and this tool does not see it.
+  · IT SCANS FILES; A HANDLE FIRES IN A TURN. 2026-08-29 registered a wording because a seat ran
+  ·   the crude form of a test WHILE CARRYING the document that corrects it — nothing on disk was
+  ·   wrong at that moment. The measurement that produced the finding (exo_memory/inheritance/2026-08-17.md, pane C)
+  ·   counted LIVE TURNS: a spoken short form fired 13 times while its written long form sat in the
+  ·   never-invoked list. That universe is not this one. Green here means no file still teaches the
+  ·   wording. It does not mean nobody still uses it, and it never will.
+  · IT READS .md AND .html ONLY, and wordings live outside both. Measured, same registration: the
+  ·   crude test is
+  ·   in consonance/tools/tell-index.js:172 as a detector's rationale, and in
+  ·   dev/shell/hooks/l2-overseer-worker.js:34 INSIDE A LIVE MODEL PROMPT — the strongest carrier
+  ·   class there is, since it instructs at runtime rather than teaching a reader. Both are
+  ·   structurally invisible here.
+  · IT HAS NO CONCEPT OF TYPOGRAPHIC POSITION, and the finding it was grown for says position IS
+  ·   retrieval weight — whatever is bold is the handle. A file that strikes the crude wording and
+  ·   leaves it in the bold slot, with the repair added in plain text below, is GREEN here and is
+  ·   the exact failure. Only a human reading the diff catches that.
+  · THE PATTERN ALTERNATION IS ENUMERATED, NOT CLOSED. It admits the four forms measured in this
+  ·   corpus (can't / cannot / can you / can I). A fifth phrasing of the same handle, written
+  ·   tomorrow, is green forever and nothing here will say so.
+  · It cannot tell you what has been withdrawn. The registry is hand-written; a withdrawal
+  ·   nobody registers is a withdrawal this reports green on, forever.
+  · It reads .md and .html only, and only under the corpus rule printed above. `.html` was added
+  ·   2026-09-02 for the About tab; `.js` is still outside, which is where the strongest carrier
+  ·   class lives — a wording inside a live model prompt instructs at runtime instead of teaching
+  ·   a reader, and nothing here sees it.
+  · It cannot tell you an "acknowledged" exemption is still a GOOD idea — only that someone
+  ·   wrote down where the correction lives.
+
+RED
+
+=== exit 1 signal null error  0.0s

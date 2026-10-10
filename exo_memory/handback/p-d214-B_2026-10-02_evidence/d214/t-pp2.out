@@ -1,0 +1,5 @@
+portable-paths: green — 342 files in scope, 294 known sites, 0 new
+  universe: 304 code (git ls-files under SCOPE_IN, .js/.rs/.ps1/.py)
+          + 38 shipped prose from 15 bundle.resources entr(ies) in consonance/src-tauri/tauri.conf.json, globs expanded · 0 skipped
+  66 baselined site(s) still need fixing (FATAL/DISGUISED/REVIEW) — exempted, NOT fixed. Run --fatal to see them.
+exit 0

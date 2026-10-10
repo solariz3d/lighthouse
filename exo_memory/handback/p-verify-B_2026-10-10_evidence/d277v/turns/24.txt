@@ -1,0 +1,37 @@
+MESSAGE 24  msg_011Cfjey5KbwgV4TTHAPzyXo  seat librarian  ts 2026-10-05T19:38:21.486Z  turn L75009..L75020 (next prompt L75025)
+CLAIMS:
+  [msg_011Cfjey5KbwgV4TTHAPzyXo|15] "The Straight button"
+
+--- L75009 user 2026-10-05T19:38:15.577Z
+USER: i mean the track builder
+--- L75020 assistant 2026-10-05T19:38:26.930Z  <<< THE CLAIM'S MESSAGE
+TEXT: Everything above was about the track builder, but here it is from your side: what you have now, and what's coming.
+
+**In the builder on your shortcut right now:**
+- Equation tracks with edge curve, cup, tube and spiral
+- Asphalt road texture, dark tube interior, and the shadow-casting underside
+- "Width like…" with 17 real tracks
+- 3D grid and mirror guides
+- Fast dragging, about 5× quicker
+- Export cleans up empty folders and shows refusals clearly
+- The scroll bar fix
+
+**In the next install, being tested now:**
+- **Equation mode only,** with install-to-AC, autosave and crash restore, share codes and the guide
+- **Every Save keeps your previous versions,** plus "Previous versions…"
+- **The safer Close the loop:** only the end changes, a preview first, and an overlap check
+- **Every problem listed in plain words,** click to fly there
+- **Hover-only labels**
+- **The Straight button**
+- **Undo gives back the piece's numbers**
+- **Keyboard shortcuts:** Ctrl+Z, Ctrl+Y, Ctrl+S, and Ctrl+Backspace to delete the last piece
+- **Test export (unfinished),** for driving incomplete tracks
+- **Water removed**
+
+**After that:**
+1. **Saved pieces:** save, insert at the end (optionally mirrored), select and delete
+2. **Drag handles** on the preview piece, plus a **Sculpt mode** that only changes bank, cup and width
+3. **Jumps:** an Add jump control
+4. **Undo/redo upgrades:** shortcuts working inside the number boxes, and a History list
+
+Sources: none

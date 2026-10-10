@@ -1,0 +1,109 @@
+MESSAGE 51  msg_011CfmxKRiFNJh8LyzE7U6Cw  seat librarian  ts 2026-10-07T00:47:08.828Z  turn L79891..L79926 (next prompt L79931)
+CLAIMS:
+  [msg_011CfmxKRiFNJh8LyzE7U6Cw|4] **"Each surface type has its own friction value"**
+  [msg_011CfmxKRiFNJh8LyzE7U6Cw|6] **"The default is 100%, AC's normal road."**: Check the actual friction value of the standard ROAD surface in a real `surfaces.ini`. It may not be exactly 1.0.
+  [msg_011CfmxKRiFNJh8LyzE7U6Cw|15] **"A slippery piece will drive differently in AC than the checker predicts, and it'll say so."**: Is a checker warning actually in the plan?
+
+--- L79891 user 2026-10-07T00:46:07.476Z
+USER: also something else to queue i remember that is crucial, every track has different grip or friction values, so you can change how the tires feel on the tracks, more or less grip. It would be interesting to be able to change which piece has different grip, than the global track being one value, it could be so interesting
+--- L79902 assistant 2026-10-07T00:46:16.200Z
+TOOL_USE Bash [toolu_013Y5CuZUnUDrYMbst5XxVKR]: {"command":"cd C:/Users/nname/Desktop/t180-track-builder && git grep -n -iE \"surfaces\\.ini|FRICTION\" cc177c5 -- src/export | head -8","description":"Check how the export writes surfaces.ini and friction today"}
+--- L79903 user 2026-10-07T00:46:16.569Z
+RESULT [toolu_013Y5CuZUnUDrYMbst5XxVKR]: cc177c5:src/export/ailine.js:36:// equals the frictionless balance angle φ = atan(v² / (R g)), with R the line's own radius. On the 110° wall-ride that
+cc177c5:src/export/ailine.js:38:// friction is needed. On the 60° half-pipe the balance angle is past the top, so the line is capped 10° below the
+cc177c5:src/export/fromwords.js:38:// THE "T-180 TRACK" TOGGLE (ARCHITECTURE §6), opts.t180, default on: surfaces.ini carries the soft-collision block AND
+cc177c5:src/export/layouts.js:12://   F/L/data/surfaces.ini, F/L/data/map.ini, F/L/map.png, F/L/ai/fast_lane.ai
+cc177c5:src/export/layouts.js:43:      [`${L}/data/surfaces.ini`]: tf.surfacesIni({ softCollision: !!t180 && softCollision, extendedPhysics: !!t180 }),
+cc177c5:src/export/trackfiles.js:10:// ── data/surfaces.ini ──────────────────────────────────────────────────────────────────────────────────────────────
+cc177c5:src/export/trackfiles.js:12:// `SOFT_CFM=0.0002`, `BOUNCE=0.1`, `MAX_DEPTH=4`, and `FRICTION` 0.05 (the value on eight of the eleven tracks; the
+cc177c5:src/export/trackfiles.js:26:  'FRICTION=0.05',
+Shell cwd was reset to C:\Consonance\instances\librarian
+--- L79905 assistant 2026-10-07T00:46:20.871Z
+TOOL_USE Bash [toolu_01EVadkc4SrLm4SVGrBkUcsi]: {"command":"cd C:/Users/nname/Desktop/t180-track-builder && git show cc177c5:src/export/trackfiles.js | sed -n 10,60p | cut -c1-200","description":"Read the surfaces.ini writer"}
+--- L79906 user 2026-10-07T00:46:21.242Z
+RESULT [toolu_01EVadkc4SrLm4SVGrBkUcsi]: // ── data/surfaces.ini ─────────────────────────────────────────────────────────�
+// THE T-180 SOFT-COLLISION BLOCK. Its numbers are docs/FINDINGS.md §4c, lines 80-81: `MESHES = 1ROAD?`, `SOFT_ERP=0.8`,
+// `SOFT_CFM=0.0002`, `BOUNCE=0.1`, `MAX_DEPTH=4`, and `FRICTION` 0.05 (the value on eight of the eleven tracks; the
+// other three raise it only because they add pit concrete). The section header `[COLLISION_PARAMS_...]` is the form
+// all those tracks use (read locally on D, 2026-09-27: centrifuge, sakura_speedway, ohyeah2389_t180testtrack); it is
+// CSP's own syntax, so it is written as-is. No other author's text is copied: the keys and values are FINDINGS'.
+// INTENSITY / RIGID_WITH_BODIES / RIGID_WITH_BOXES, which the observed blocks also set (to 1 / 0 / 0), are NOT in
+// FINDINGS §4c and are left to CSP's defaults here; the hand-back names this as a difference to test if the soft road
+// does not reproduce.
+const SOFT_COLLISION_BLOCK = [
+  '[COLLISION_PARAMS_...]',
+  '; T-180 soft road (docs/FINDINGS.md §4c). CSP only: plain AC ignores this section.',
+  'MESHES=1ROAD?',
+  'SOFT_ERP=0.8',
+  'SOFT_CFM=0.0002',
+  'BOUNCE=0.1',
+  'FRICTION=0.05',
+  'MAX_DEPTH=4',
+  '',
+].join('\n');
+
+const SURFACES_HEADER = [
+  '; data/surfaces.ini, written by t180-track-builder.',
+  '; The road and walls use AC\'s own surfaces (system/data/surfaces.ini: ROAD, GRASS, KERB, SAND); none are redefined.',
+  '; A T-180 track also defines PIT, which no mesh here uses, to carry CSP\'s extended-physics flag.',
+  '',
+].join('\n');
+
+// CSP'S EXTENDED-PHYSICS SWITCH (ARCHITECTURE §6: the soft-collision block "plus CSP's WAV_PITCH=extended-0 opt-in with a
+// CSP-only warning"; missed until R1, docs/research/04_ac_physics_drivability.md §2). SOURCE
+…[461 chars cut]…
+ys. No mesh of this builder is keyed PIT
+// (the pit lane is `1ROAD_PIT_…`, src/geom/pitlane.js), so defining it changes nothing but the flag. Whether the soft
+// block NEEDS the switch is UNVERIFIED (research §2: the keeper's one AC test settles it); it is written because
+// ARCHITECTURE §6 says so and the proven tracks do.
+const EXTENDED_PHYSICS_SURFACE = [
+  '[SURFACE_0]',
+  '; CSP extended physics (ARCHITECTURE §6). Needs Custom Shaders Patch: plain AC can crash loading this file.',
+  'KEY=PIT',
+  'FRICTION=1',
+  'DAMPING=0',
+  'WAV=',
+  'WAV_PITCH=extended-0',
+  'FF_EFFECT=NULL',
+  'DIRT_ADDITIVE=0',
+  'BLACK_FLAG_TIME=0',
+  'IS_VALID_TRACK=1',
+  'SIN_HEIGHT=0',
+  'SIN_LENGTH=0',
+Shell cwd was reset to C:\Consonance\instances\librarian
+--- L79910 assistant 2026-10-07T00:46:43.037Z
+TOOL_USE Write [toolu_01TbbURHUMxeWeD59aN3SVSu]: {"file_path":"C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\loop\\plan_t180_piece_grip_2026-10-06.md","content":"# T-180: grip per piece, not one value for the whole track. Librarian, on D, 2026-10-06 18:5x. Lap D261. QUEUED behind D258–D260.\n\nThe keeper, 18:46: \"every track has different grip or friction values, so you can change how the tires feel on the tracks, more or less grip.\nIt would be interesting to be able to change which piece has different grip, than the global track being one value, it could be so interesting\".\n\n## What exists (read at t180 `cc177c5`, `src/export/trackfiles.js:10-60`, `src/export/
+…[2262 chars cut]…
+e checker assumes;\n  the warning words should say grip is not modelled.\n- AC is the test: the keeper drives a track with a low-grip and a high-grip piece.\n\nNEXT: chair queue D261 (C research first, after D260; then E core/export; then A UI) when D258–D260 are in\n"}
+--- L79911 user 2026-10-07T00:46:43.098Z
+RESULT [toolu_01TbbURHUMxeWeD59aN3SVSu]: File created successfully at: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_piece_grip_2026-10-06.md (file state is current in your context — no need to Read it back)
+--- L79919 assistant 2026-10-07T00:46:47.688Z
+TOOL_USE Bash [toolu_01BUGQin4XJFWEk6wkzrjtQW]: {"command":"head -3 C:/Users/nname/Desktop/lighthouse/exo_memory/loop/plan_t180_piece_grip_2026-10-06.md | cut -c1-120","description":"Read back the start of the grip plan"}
+--- L79920 user 2026-10-07T00:46:47.915Z
+RESULT [toolu_01BUGQin4XJFWEk6wkzrjtQW]: # T-180: grip per piece, not one value for the whole track. Librarian, on D, 2026-10-06 18:5x. Lap D261. QUEUED behind D
+
+The keeper, 18:46: "every track has different grip or friction values, so you can change how the tires feel on the track
+--- L79922 assistant 2026-10-07T00:46:58.963Z
+TOOL_USE mcp__consonance__call_chair [toolu_01WCmmePTvqvKpkHFL21DK2R]: {"text":"D261 QUEUED, the keeper at 18:46: grip per piece, not one value for the whole track. Plan: exo_memory/loop/plan_t180_piece_grip_2026-10-06.md.\n- Today the road uses AC's own ROAD surface, so there's one grip per track (trackfiles.js).\n- Mechanism to CONFIRM, not assume: one [SURFACE_n] per grip value, with each piece's road mesh named 1<KEY>…, and CSP's soft-collision MESHES pattern covering the new keys.\nOrder, after D258–D260:\n1. C researches (read-only, sourced and counted on the installed tracks): how AC parses the key from a mesh name, what MESHES=1ROAD? matches, and the T-180 friction range.\n2. E builds
+…[335 chars cut]…
+its are unchanged (grip isn't modelled; the words say so).\n\nSOURCES: `head -3 C:/Users/nname/Desktop/lighthouse/exo_memory/loop/plan_t180_piece_grip_2026-10-06.md`\n\nOUTPUT → NEXT: changed — D261 is queued\nNEXT: chair dispatch D261 step 1 to C when D260 hands back"}
+--- L79923 user 2026-10-07T00:46:59.451Z
+RESULT [toolu_01WCmmePTvqvKpkHFL21DK2R]: delivered to Main (rendered in its pane — not proof it was read)
+--- L79926 assistant 2026-10-07T00:47:08.828Z  <<< THE CLAIM'S MESSAGE
+TEXT: Great idea, and it's queued. It fits the way AC works.
+
+**How it works in AC:** a track's grip lives in a file called `surfaces.ini`. Each surface type has its own friction value, and each piece of road says which surface it's made of. Right now our export uses AC's one standard road surface for the whole track. Per-piece grip means one surface for each grip value you use, with each piece's road tagged with its own.
+
+**The plan, after the current work (the Jump install, the bank wrap and the draw-call fix):**
+1. **C checks the details against real tracks first:**
+   - exactly how AC reads a piece's surface from its name;
+   - whether the T-180 soft-road setting needs to know about the new surfaces;
+   - what grip range T-180 tracks actually use.
+
+   Getting any of those wrong would break the soft road, so it's facts first.
+2. **E stores a grip value on each piece.** The default is 100%, AC's normal road. It gets saved, carried by saved pieces and mirror, and the export writes it out. Tracks where every piece is at 100% export exactly as they do now.
+3. **A adds a Grip box** for the next piece and for selected pieces, plus a view that colours the track by grip.
+
+**One honest limit:** the red-mark checker assumes normal grip. A slippery piece will drive differently in AC than the checker predicts, and it'll say so.
+
+Sources: `head -3 C:/Users/nname/Desktop/lighthouse/exo_memory/loop/plan_t180_piece_grip_2026-10-06.md`

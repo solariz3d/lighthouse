@@ -1,0 +1,957 @@
+MESSAGE 45  msg_011CfmZya88jcJUvh9YdGHHs  seat E  ts 2026-10-06T19:54:03.738Z  turn L51930..L52249 (next prompt L52331)
+CLAIMS:
+  [msg_011CfmZya88jcJUvh9YdGHHs|4] **"with none pinned the note says validation is at FULL speed"**: check the code that builds the jump-flight note when the design speed is null or unset.
+  [msg_011CfmZya88jcJUvh9YdGHHs|7] the note text matches this string exactly,
+
+--- L51930 user 2026-10-06T19:38:28.538Z
+USER: 
+
+<pasted_content id="37d3">
+[chair:MAIN] D256 BUILD: the keeper picked ALL THREE of your proposals. See the "The keeper's decision" section of exo_memory/loop/plan_t180_design_speed_2026-10-06.md. EXPORT tier, because the TEST export's warning list changes. Red rows first, TARGETED tests; the librarian runs the validate/export harnesses once at install.
+Base: main 6f2404d (B's D255 just landed there; it touched app/validate-ui for the off box, so rebase on it). Use a fresh worktree.
+1. ALWAYS MAX: remove the design-speed slider AND its off box. The panel checks loads at 970 (MACH6.vmaxKmh), as the export does. On a closed loop the panel uses the ghost lap, so panel and export never disagree. B's off-box fix in 6f2404d goes with the box; amend its rows by name.
+2. Centreline lift-off (leaves-surface) runs on OPEN tracks too, at full speed. Confirm your expected new reds (TEST 1 recovered p7/p9/p31/p32, TEST p3) on COPIES.
+3. "holds above N km/h" on centreline stations facing down (sqrt(−B/A)), as INFO; red only where no speed holds.
+Also: correct the false D179 comment in app/validate-ui/index.js (the slider never sized the core's jump ramps).
+Update the README's checker and controls lines if they mention the slider.
+Hand-back: exo_memory/handback/p-maxspeed-E_2026-10-06.md, plus your map line.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_design_speed_2026-10-06.md
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: the chair lands it, and the librarian runs the validate/export harnesses and installs, unless the output says otherwise
+</pasted_content id="37d3">
+
+--- L51940 assistant 2026-10-06T19:38:32.758Z
+TOOL_USE Bash [toolu_017nwevdhRY8BjXvSmqNaoMq]: {"command":"cd C:/Users/nname/Desktop/lighthouse && sed -n '/keeper.s decision/,$p' exo_memory/loop/plan_t180_design_speed_2026-10-06.md; cd C:/Users/nname/Desktop/t180-track-builder && git log --oneline -6 6f2404d; git merge-base --is-ancestor da2c2d6 6f2404d && echo D250-in || echo D250-not-in; git worktree add -b d256-maxspeed C:/Users/nname/Desktop/worktrees/e-maxspeed-wt 6f2404d 2>&1 | tail -1; git show --stat 6f2404d | head -30","description":"Read decision; new worktree on 6f2404d; see B's change"}
+--- L51941 user 2026-10-06T19:38:33.386Z
+RESULT [toolu_017nwevdhRY8BjXvSmqNaoMq]: ## The keeper's decision (13:2x), on E's measurement (`loop/design_speed_measure_2026-10-06.md`): ALL THREE
+1. **Always max:** the slider (and its off box) goes; the panel checks loads at 970 (`MACH6.vmaxKmh`), as the export already does; on a
+   closed loop the panel uses the ghost lap, so panel and export never disagree. (This replaces B's off-box fix: there is no box.)
+2. **Centreline lift-off on OPEN tracks too** (`leaves-surface` beyond the closed lap's proof), at full speed. Expected new reds: TEST 1
+   recovered p7, p9, p31, p32 (lift off already at 460), TEST p3.
+3. **"holds above N km/h"** on centreline stations facing down (`sqrt(−B/A)`), as information; red only where no speed holds.
+- Also: the D179 comment in `app/validate-ui/index.js` (the slider sizes jump ramps) is false for the equation core; correct it.
+Owner E (validation; EXPORT tier, since export semantics change for open-track lift-off in the TEST export's warning list). Red rows first;
+targeted tests; the librarian runs the validate/export harnesses once at install.
+6f2404d D255: Left Ctrl instant, the right button only to turn; D256 item 1: the design-speed off box stays put
+e311f16 README rewritten for the equation builder; the 0.2.2 status table kept in docs/STATUS_0.2.2.md
+64fa6cf D252 follow-up (C's look): overhead takeover flood, Ctrl-snap during a handle drag, card, menu, seam
+c698f4e Handle drags: pointer lock on press, length 5x, today's feel for the other kinds, double-click read from presses (D251 amendment)
+0ee9fb9 Handle drags scrub per screen pixel, hold at 0 and at the start, round to 0.1 with Shift, double-click resets (D251)
+44c7b5f D252 second item + the 200 ms Ctrl hold: one Export to Assetto Corsa button; AC folder chosen at fir
+…[1158 chars cut]…
+he fix the box stays at x 14 in every state.
+    
+    README Controls rows (C's e311f16) and the guide updated. The 200 ms row in
+    preview.test.js amended BY NAME (the keeper overrode it).
+    
+    Rows red first: preview 2 (instant Ctrl + Ctrl+Z restore; left drag no
+    look, right drag looks), validate-ui-panel 1 (off box). Green: preview 77,
+    validate-ui-panel 9, validate-ui 21, validate-ui-jumpdefault 8, camera 31,
+    keys-anywhere 6, undo-guard 6, onboarding 14, core-eqonly 31,
+    share-install 21, handles 18, core-pieces-ui 23, core-shell 28.
+    Rows, fake hosts and a headless Chrome only: no window took focus.
+    
+    Written by pane B (committee). Not pushed.
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L51944 assistant 2026-10-06T19:38:56.995Z
+TOOL_USE Bash [toolu_01W7vJXs6KcdFn6a5vPS22jG]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && grep -rn \"validate(\" src/export/*.js app --include=*.js | grep -v \"/test/\" | cut -c1-220; grep -rln \"speedPicker\\|createSpeedPicker\\|mountSpeedPicker\\|speed.js\\|setDesignSpeed\\|designSpeedKmh\" app src test docs README.md *.md 2>/dev/null","description":"Find validate callers and design-speed consumers"}
+--- L51945 user 2026-10-06T19:38:57.385Z
+RESULT [toolu_01W7vJXs6KcdFn6a5vPS22jG]: src/export/fromwords.js:194:  const v = validate(p, segs, { csp: o.csp, softCollision: true, folds: mesh.folds, roadMesh });
+app/core/overlapjob.js:26:  const v = V.validate(p, segs, { csp: true, softCollision: true, folds: mesh.folds, roadMesh, ...(Number.isFinite(designSpeedKmh) && designSpeedKmh > 0 ? { designSpeed: designSpeedKmh / 3.6 } :
+app/core/overlapjob.js:44:  if (part === 'rest') { const mesh = G.buildMesh(p, segs, { selfCheck: true }), v = V.validate(p, segs, { csp: true, softCollision: true, folds: mesh.folds, ...speed }); return { red: v.red, am
+app/core/overlapjob.js:47:    return { red: V.validate(p, segs, { csp: true, softCollision: true, roadMesh, ...speed }).red.filter((x) => x.reason === 'downforce-ray-gap') };
+app/validate-ui/live.js:29:      const next = full ? validate(path, segments, o) : revalidate(result, path, segments, fromS, o);
+app/core/coreshell.js
+app/core/jumpplan.js
+app/core/overlapjob.js
+app/core/overlaprunner.js
+app/core/overlapworker.js
+app/core/panel.js
+app/markers/index.js
+app/README.md
+app/shell.js
+app/test/core-close-mutation.test.js
+app/test/core-pieces-ui.test.js
+app/test/jump-ui.test.js
+app/test/preview-async.test.js
+app/test/validate-ui-incval.test.js
+app/test/validate-ui-jumpdefault.test.js
+app/test/validate-ui-jumps.test.js
+app/test/validate-ui-panel.test.js
+app/test/validate-ui-speed.test.js
+app/validate-ui/index.js
+app/validate-ui/panel.js
+app/validate-ui/speed.js
+src/core/adapter.js
+src/core/close.js
+src/doc/resolve.js
+src/doc/vocab.js
+src/markers/layout.js
+src/validate/index.js
+src/validate/limits.js
+test/core_adapter.test.js
+test/doc-jump.test.js
+test/export_words.test.js
+test/markers_track.test.js
+test/phrasebook.test.js
+test/validate.test.js
+test/validate_head.test.js
+test/validate_jumps.test.js
+test/vocab-corpus.test.js
+CHANGELOG.md
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L51948 assistant 2026-10-06T19:39:01.068Z
+TOOL_USE Bash [toolu_01E7zpTrnhnAeo2iQYFpGy4X]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && grep -n \"speedPicker\\|createSpeedPicker\\|mountSpeedPicker\\|speed\\.js\\|setDesignSpeed\\|designSpeedKmh\\|designSpeed\\b\" app/core/*.js app/markers/index.js app/shell.js app/validate-ui/*.js app/README.md README.md | grep -v \"^app/validate-ui/speed.js\" | cut -c1-250","description":"Show every app consumer line"}
+--- L51955 user 2026-10-06T19:39:01.279Z
+RESULT [toolu_01E7zpTrnhnAeo2iQYFpGy4X]: app/core/coreshell.js:166:    const speed = Number.isFinite(st.designSpeedKmh) && st.designSpeedKmh > 0 ? st.designSpeedKmh : null;
+app/core/coreshell.js:168:    if (overlapRunner) { try { job = overlapRunner.start({ doc: d, designSpeedKmh: speed, closed }); } catch (e) { job = null; } }
+app/core/coreshell.js:368:          displacement: Object.freeze(displacementOf(base, res.doc)), check: overlapRunner ? null : Object.freeze(overlapCheck(r.resolved, st.designSpeedKmh)) });
+app/core/coreshell.js:527:          displacement: Object.freeze(displacementAfterDelete(d, res)), check: overlapRunner ? null : Object.freeze(overlapCheck(r.resolved, st.designSpeedKmh, { closed: !!res.closed })) });
+app/core/coreshell.js:681:    setDesignSpeed(kmh) { if (!(kmh === null || (Number.isFinite(kmh) && kmh > 0))) return set({ message: `the design speed must be a positive km/h, or null, got ${kmh}` }); return set({ designSpeedKmh: kmh }); },
+app/core/jumpplan.js:5:// adapter sizes at the DESIGN speed (src/validate/limits.js MACH6.designSpeedKmh, 460 km/h today; src/core/adapter.js toSegments). So the arc is BALLISTIC, drawn at that speed, one
+app/core/jumpplan.js:17:const DESIGN_KMH = L && L.MACH6 ? L.MACH6.designSpeedKmh : 460;
+app/core/overlapjob.js:4://   overlapCheck(resolved, designSpeedKmh, { closed })  the check itself, moved here unchanged from coreshell.js (D242, B's; D240's `closed: false` for an open track)
+app/core/overlapjob.js:6://   runJob({ doc, designSpeedKmh, closed, part })       the job a worker is sent: the DOCUMENT (plain data, structured-cloneable) in, the check's result (plain data) out; `part` 'rest' or
+app/core/overlapjob.js:23:function overlapCheck(resolved, designSpeedKmh, { closed = true } = {}) {   // D240: `clo
+…[3645 chars cut]…
+ull } = {}) {
+app/validate-ui/panel.js:64:  let design = designSpeedKmh;
+app/validate-ui/panel.js:65:  const vo = () => ({ ...extra, csp, ...(design == null ? {} : { designSpeed: design / 3.6 }) });
+app/validate-ui/panel.js:151:    setDesignSpeed(kmh) { design = kmh == null ? null : kmh; live = createLive({ validate: vo() }); update(shell.getState(), true); },
+app/validate-ui/panel.js:152:    get designSpeedKmh() { return design; },
+app/README.md:156:  each flight off the built path (lip, gap, drop, landing pitch) and computes the car's ballistic arc with the core's `flightY` at the design speed the ramp is sized for (`MACH6.designSpeedKmh`, 460 km/h); `app/core/flightlayer.js`
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L51958 assistant 2026-10-06T19:39:08.264Z
+TOOL_USE Bash [toolu_01P4qjzeKBR9ryeuCJDf2iwi]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && grep -rn \"'none'\\|\\\"none\\\"\\|no-speed-model\\|speedFrom\" test app/test src --include=*.js | grep -v \"^src/validate/index.js\" | cut -c1-200 | head -30; grep -n \"designSpeedKmh\" app/core/coreshell.js | head -3; grep -n \"designSpeedKmh:\" app/core/coreshell.js","description":"Find tests that depend on open-track 'none' speed"}
+--- L51959 user 2026-10-06T19:39:08.650Z
+RESULT [toolu_01P4qjzeKBR9ryeuCJDf2iwi]: test/doc-jump.test.js:81:  assert.equal(L.speedFrom, 'default');
+test/doc-library.test.js:122:  assert.throws(() => L.savePiece(L.builtinLibrary(), { name: 'none', author: 'k', doc: sculpted(), ids: ['w9'] }), (e) => e.code === 'NO_SUCH_WORD');
+test/lookmatch_mutation.test.js:55:    assert.ok(r.caught, `NOT CAUGHT; failing tests on the mutant: ${r.failed.join(' | ') || 'none'}`);
+test/perf.test.js:83:  console.log(`# a 10-step drag: ${calls.length} native calls (${[...new Set(calls.map((c) => c.name))].join(', ') || 'none'}), ${bytes} characters, all text`);
+test/texmaker_mutation.test.js:60:    assert.ok(r.caught, `NOT CAUGHT; failing tests on the mutant: ${r.failed.join(' | ') || 'none'}`);
+test/validate.test.js:20:  assert.strictEqual(r.speedFrom, 'design');
+test/validate.test.js:181:  assert.deepStrictEqual(validate(X.pathOf(X.loop(20), true), [X.seg()], { car: { accel: null } }).lap, { ok: null, reason: 'no-speed-model' });
+test/validate.test.js:188:  assert.strictEqual(flatRun.speedFrom, 'lapsim');
+test/validate_incremental.test.js:92:  assert.strictEqual(full.speedFrom, 'lapsim');
+test/validate_incremental.test.js:119:  assert.strictEqual(full.speedFrom, 'lapsim');
+test/validate_speed.test.js:25:  assert.strictEqual(r.speedFrom, 'design');
+test/validate_speed.test.js:54:  assert.deepStrictEqual([mixed.speedFrom, mixed.speed[0].v, mixed.speed[mixed.speed.length - 1].v], ['design', 40, 25]);
+test/validate_speed.test.js:61:  assert.deepStrictEqual([r.speedFrom, r.lines.length, r.speed.length, hasAmber(r), hasInfo(r)], ['none', 0, 0, false, false]);
+test/validate_speed.test.js:66:  for (const s of [0, -5, NaN]) assert.strictEqual(validate(X.pathOf(X.loop(R)), [X.seg()], { designSpeed: s }).speedFrom, 'none');
+test/val
+…[2408 chars cut]…
+> 0 ? st.designSpeedKmh : null;
+168:    if (overlapRunner) { try { job = overlapRunner.start({ doc: d, designSpeedKmh: speed, closed }); } catch (e) { job = null; } }
+368:          displacement: Object.freeze(displacementOf(base, res.doc)), check: overlapRunner ? null : Object.freeze(overlapCheck(r.resolved, st.designSpeedKmh)) });
+168:    if (overlapRunner) { try { job = overlapRunner.start({ doc: d, designSpeedKmh: speed, closed }); } catch (e) { job = null; } }
+681:    setDesignSpeed(kmh) { if (!(kmh === null || (Number.isFinite(kmh) && kmh > 0))) return set({ message: `the design speed must be a positive km/h, or null, got ${kmh}` }); return set({ designSpeedKmh: kmh }); },
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L51962 assistant 2026-10-06T19:39:16.723Z
+TOOL_USE Bash [toolu_01VqTMa3isRCDh3jkcLhbtUq]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && grep -rn \"unfinished\\|TEST_UNFINISHED\\|allowOpen\\|testExport\\|closed: false\\|closed: !!\" src/export/fromwords.js | cut -c1-230 | head; sed -n 180,200p src/export/fromwords.js | cut -c1-230; grep -n \"designSpeedKmh\" app/core/coreshell.js | head -2; grep -n \"st = {\\|const initial\\|designSpeedKmh: null\" app/core/coreshell.js | head","description":"Locate TEST export's open-path validation"}
+--- L51969 user 2026-10-06T19:39:17.087Z
+RESULT [toolu_01VqTMa3isRCDh3jkcLhbtUq]: 81:// the path is OPEN, every red is a WARNING (listed in the folder's TEST_FILE and the message), the AI line is open, the ui name and folder say "test, unfinished",
+85:const TEST_FILE = 't180b_TEST_UNFINISHED.txt', TEST_RUNOFF_M = 150, TEST_WALL_H = 4, TEST_WALL_NAME = '1WALL_T180_END';
+123:    return { r: D.resolve({ ...doc, closed: false }), via: 'resolve-open, buildPath closed (connector.js marginOf route; resolve throws CLOSE_NOT_BUILT)' };
+181:  const test = o.test === true;   // D243a: the TEST export of an unfinished track (above), only when asked for
+208:  if (test) warnings.push(`TEST EXPORT (unfinished): ${red.length} red finding(s) NOT blocking, listed in ${TEST_FILE}`);
+273:    desc: { name: (doc.name || 'Untitled') + (test ? ' (test, unfinished)' : ''), description: meta.description || 'Built by t180-track-builder.', length: p.lengthM, width: roadWidthM(segs), run: turn >= 0 ? 'counterclockwise'
+  // document resolves from the origin, level, so it has none. The geometry's shape depends on the start pitch.
+  const test = o.test === true;   // D243a: the TEST export of an unfinished track (above), only when asked for
+  try { p = buildPath(segs, { step: o.step, closed: !test, ...(meta.start ? { start: meta.start } : {}) }); } catch (e) { throw new ExportError('NOT_CLOSED', e.message); }
+  // meta.liftPath (D186): a source whose segments do not carry the whole road (the equation core's offsets, A's adapter offsetPath)
+  // lifts the path here, before the mesh, validation, markers and the AI line read it
+  if (typeof meta.liftPath === 'function') p = meta.liftPath(p);
+  const selfCheck = o.selfCheck !== false;
+  const mesh = buildMesh(p, segs, { ...(o.mesh || {}), selfCheck });
+  const warnings = [];
+  if (!sel
+…[451 chars cut]…
+.folds, roadMesh });
+  const red = [...v.red];
+  // the pit lane (D174): built beside the road, self-checked against it with the same tests; its findings are red
+  let pit = null;
+  if (doc.pitLane) {
+    try { pit = PitLane.laneForExport(p, segs, mesh, doc.pitLane, { selfCheck, mesh: o.mesh }); } catch (e) { if (e.name === 'PitLaneError') throw new ExportError('PIT_LANE', e.message); throw e; }
+    red.push(...pit.red);
+166:    const speed = Number.isFinite(st.designSpeedKmh) && st.designSpeedKmh > 0 ? st.designSpeedKmh : null;
+168:    if (overlapRunner) { try { job = overlapRunner.start({ doc: d, designSpeedKmh: speed, closed }); } catch (e) { job = null; } }
+117:  let st = {
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L51973 assistant 2026-10-06T19:39:39.987Z
+TEXT: I'm reading the panel controller and the tests that pin the slider before deciding where "full speed" lives.
+--- L51974 assistant 2026-10-06T19:39:42.120Z
+TOOL_USE Bash [toolu_01Ez2q5PzUFbVgY2HLAzFw5s]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && grep -n \"speed\\|Speed\" app/test/validate-ui-panel.test.js app/test/validate-ui-incval.test.js app/test/validate-ui-jumps.test.js app/test/validate-ui-jumpdefault.test.js app/test/core-pieces-ui.test.js app/test/jump-ui.test.js app/test/preview-async.test.js | grep -i \"picker\\|designSpeed\\|slider\\|off box\\|speedRow\\|v-speed\\|mountSpeed\\|setDesign\" | cut -c1-230; echo; head -30 app/test/validate-ui-speed.test.js | cut -c1-200","description":"Find tests pinning the slider and design speed"}
+--- L51975 user 2026-10-06T19:39:42.388Z
+RESULT [toolu_01Ez2q5PzUFbVgY2HLAzFw5s]: app/test/validate-ui-panel.test.js:21:// CHANGED 2026-09-27 (D169): the reference now validates at the controller's own default design speed, the picker's
+app/test/validate-ui-panel.test.js:24:const DESIGN = MACH6.designSpeedKmh / 3.6;
+app/test/validate-ui-panel.test.js:26:function fresh(shell, csp = true, designSpeed = DESIGN) {
+app/test/validate-ui-panel.test.js:28:  return colourMap(validate(p, r.segments, { csp, ...(designSpeed == null ? {} : { designSpeed }) }), { path: p });
+app/test/validate-ui-panel.test.js:50:  assert.ok(ctl.state.result.lines.length > 0, 'the picker\'s design speed gives loads, or this equality proves nothing');
+app/test/validate-ui-panel.test.js:51:  assert.deepStrictEqual(ctl.state.result.lines.map((l) => [l.s, l.u, l.fN_g]), (() => { const r = shell.getState().resolved, p = G.buildPath(r.segments, { step: STEP }); return validate(p, r.
+app/test/validate-ui-panel.test.js:119:// D256 item 1 (the keeper, 12:56: "when I click the off box below design speed, it disapears and cannot be turned back on?"). Measured in a headless window first:
+app/test/validate-ui-panel.test.js:122:test('D256: the design-speed value has a FIXED box and the off box stays with its word, so the box does not move; off, on and off again all work', () => {
+app/test/validate-ui-panel.test.js:123:  const fake = require('./palette-fakedom.js'), { createSpeedPicker, mountSpeedPicker } = require('../validate-ui/speed.js'), restore = fake.install();
+app/test/validate-ui-panel.test.js:125:    const seen = [], p = createSpeedPicker({ onChange: (k) => seen.push(k) }), root = new fake.Element('div'); mountSpeedPicker(root, p);
+app/test/validate-ui-panel.test.js:126:    const all = [...root.walk()], shown = all.find((e) => e.classNam
+…[7035 chars cut]…
+:476), read from the car, not typed here', () => {
+  assert.strictEqual(MACH6.designSpeedKmh, 460);
+  const p = createSpeedPicker();
+  assert.deepStrictEqual([p.kmh, p.defaultKmh], [460, 460]);
+  assert.strictEqual(p.ms(), 460 / 3.6);
+});
+
+test('the picker holds to its range: 50 km/h up to the lap sim\'s 970 km/h cap (FINDINGS.md §3e; 764 until 2026-10-03)', () => {
+  assert.deepStrictEqual([MIN_KMH, MAX_KMH], [50, MACH6.vmaxKmh]);
+  const p = createSpeedPicker();
+  assert.deepStrictEqual([p.set(10), p.set(5000), p.set(300)], [50, 970, 300]);
+});
+
+test('off is no design speed; a value that is not a number is refused loudly; onChange fires only on a change', () => {
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L51984 assistant 2026-10-06T19:39:50.726Z
+TOOL_USE Bash [toolu_01MudmmVpm8VmurMgvsSvokf]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && grep -n \"^test(\" app/test/validate-ui-speed.test.js | cut -c1-220; sed -n 1,50p app/validate-ui/index.js | cut -c1-200; sed -n 295,320p app/core/panel.js | cut -c1-260","description":"List speed tests; read panel index and the core jump note"}
+--- L51985 user 2026-10-06T19:39:51.063Z
+RESULT [toolu_01MudmmVpm8VmurMgvsSvokf]: 17:test('the picker starts at the FINDINGS default, 460 km/h (FINDINGS.md:476), read from the car, not typed here', () => {
+24:test('the picker holds to its range: 50 km/h up to the lap sim\'s 970 km/h cap (FINDINGS.md §3e; 764 until 2026-10-03)', () => {
+30:test('off is no design speed; a value that is not a number is refused loudly; onChange fires only on a change', () => {
+37:test('with the picker\'s default, a track built through the shell HAS loads now (it had none in D168)', async () => {
+46:test('with the picker off, an open track built through the shell claims no load at all', async () => {
+54:test('a faster design speed turns a tight curve amber (above the proven 90 g), and a slower one takes it away again', async () => {
+68:test('with the picker off (no loads anywhere), a geometry red still colours the live map, station by station along the path', async () => {
+// index.js: the validation panel, mounted by app/index.html as mount(root, shell) (app/README.md, "The seam").
+//
+// What it shows, in #validation:
+//   · a summary: red and amber counts, the lap (open while building), the jumps;
+//   · the design-speed picker (speed.js): loads for every word without its own speed, default 460 km/h (FINDINGS.md:476);
+//   · a CSP toggle: off validates for vanilla AC, where surfaces above 50° are red (ARCHITECTURE.md:87);
+//   · the load graph (graph.js): the hardest line's load along the track, the 20 g and 90 g limits, red and amber
+//     stretches shaded. HIDDEN while there is no load (no speed model). It replaced, in D170, a colour ribbon that
+//     painted an all-grey bar while there were no loads (the librarian's item 5);
+//   · every red and amber range with its reason and FINDINGS/ARCHITECTURE source; every jum
+…[6026 chars cut]…
+s shown as a ghost with how far each piece moved and an overlap check; Apply commits it (one undo step), Cancel drops it
+  const closeHow = el('select', { 'aria-label': 'close using', title: 'which part of the lap the close may move: everything before it stays exactly as it is' });
+  for (const [v, t] of [['0.2', 'the last ~20% of the lap'], ['last', 'the last piece only'], ['0.4', 'the last ~40% of the lap'], ['whole', 'the whole lap (moves every piece)']]) closeHow.append(new win.Option(t, v));
+  const closeBtn = el('button', { text: 'Close the loop', title: 'shows the closed track first (a ghost, how far each piece moves, any overlap): then Apply or Cancel', onclick: () => {
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L51988 assistant 2026-10-06T19:40:03.759Z
+TOOL_USE Bash [toolu_01YLWN8s6kRGrtw3kRRzgCPv]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && sed -n 1,30p test/validate_speed.test.js | cut -c1-200; ls test/*helper* test/_* 2>/dev/null; grep -n \"^function\\|^const .*= (\\|module.exports\" test/validate_fixtures.js 2>/dev/null | head -30","description":"Read validate test helpers"}
+--- L51995 user 2026-10-06T19:40:04.057Z
+RESULT [toolu_01YLWN8s6kRGrtw3kRRzgCPv]: // Tests for the speed model (src/validate/index.js speedProfile, src/validate/limits.js accelAt): the design speed from
+// the picker, the measured acceleration (FINDINGS.md §3d), and when a load may be claimed at all. D169.
+'use strict';
+const test = require('node:test');
+const assert = require('node:assert');
+const X = require('./validate_paths.js');
+const { validate, revalidate } = require('../src/validate/index.js');
+const { G, MACH6, accelAt, kmh } = require('../src/validate/limits.js');
+
+const close = (a, b, eps, msg) => assert.ok(Math.abs(a - b) <= eps, `${msg || ''} ${a} vs ${b}`);
+const R = 20;
+/** The design speed that puts the load at the bottom of a vertical loop of radius R at exactly `g` (1 + v²/(gR)). */
+const vFor = (g) => Math.sqrt((g - 1) * G * R);
+/** The load at the bottom of the loop (station 0, the centre line) with a design speed from the picker. */
+function bottom(designSpeed) {
+  const r = validate(X.pathOf(X.loop(R)), [X.seg()], { designSpeed });   // an OPEN path, a word with NO speed of its own
+  return { r, l: r.lines.find((x) => x.s === 0 && x.u === 0) };
+}
+const hasAmber = (r) => r.amber.some((a) => a.reason === 'load-above-proven');
+const hasInfo = (r) => r.info.some((a) => a.reason === 'on-the-stops');
+
+// ── the design speed turns loads on ──
+test('with a design speed from the picker, a word with no speed of its own gets loads: 1 + v²/(gR) at the loop\'s bottom', () => {
+  const { r, l } = bottom(30);
+  assert.strictEqual(r.speedFrom, 'design');
+  close(l.fN_g, 1 + 30 * 30 / (G * R), 1e-9);
+});
+
+test('boundary, the suspension stop (FINDINGS.md:103-104): just under 20 g is not flagged, just over is information', () => {
+  assert.strictEqual(MACH6.suspensionStopG, 20);
+test/core_helpers.js
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L51997 assistant 2026-10-06T19:40:05.870Z
+TOOL_USE Bash [toolu_01LL41KUdrcAwwyctuN8ifUp]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && grep -n \"^function\\|^const\\|module.exports\" test/validate_paths.js | cut -c1-220","description":"List validate_paths helpers"}
+--- L51998 user 2026-10-06T19:40:06.055Z
+RESULT [toolu_01LL41KUdrcAwwyctuN8ifUp]: 5:const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+6:const flat = (half = 5) => ({ font: 'flat', u: [-half, 0, half], psi: [0, 0, 0], material: 'ROAD' });
+7:const seg = (o = {}) => ({ id: o.id || 'w', word: 'straight', kind: 'road', speed: null, profile: flat(), ...o });
+10:function straight(len, { step = 1, seg: g = 0, start = [0, 0, 0], s0 = 0, grade = 0 } = {}) {
+17:function leftTurn(R, angle, { step = 1, seg: g = 0, start = [0, 0, 0], s0 = 0 } = {}) {
+27:function loop(R, { step = 1, seg: g = 0, s0 = 0 } = {}) {
+36:const pathOf = (samples, closed = false) => ({ lengthM: samples[samples.length - 1].s - samples[0].s, closed, twist: 0, samples });
+38:module.exports = { straight, leftTurn, loop, flat, seg, pathOf, cross };
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52000 assistant 2026-10-06T19:40:07.850Z
+TOOL_USE Bash [toolu_01Jf7SnYRg86ZRdU1fDFNcUe]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && sed -n 1,38p test/validate_paths.js | cut -c1-240","description":"Read the loop and straight path builders"}
+--- L52001 user 2026-10-06T19:40:08.038Z
+RESULT [toolu_01Jf7SnYRg86ZRdU1fDFNcUe]: // validate_paths.js: hand-made paths for the validation tests, in C's buildPath shape (docs/INTERFACES.md §2), so the
+// tests do not depend on the geometry core. Every sample carries s, seg, pos, T, L, U and kvec; L = U × T.
+'use strict';
+
+const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+const flat = (half = 5) => ({ font: 'flat', u: [-half, 0, half], psi: [0, 0, 0], material: 'ROAD' });
+const seg = (o = {}) => ({ id: o.id || 'w', word: 'straight', kind: 'road', speed: null, profile: flat(), ...o });
+
+/** A straight along +Z from `start`, `len` m, sampled every `step` m; `grade` is rise over run. */
+function straight(len, { step = 1, seg: g = 0, start = [0, 0, 0], s0 = 0, grade = 0 } = {}) {
+  const c = Math.hypot(1, grade), T = [0, grade / c, 1 / c], U = [0, 1 / c, -grade / c], L = cross(U, T), out = [];
+  for (let k = 0; k * step <= len + 1e-9; k++) { const d = k * step; out.push({ s: s0 + d, seg: g, pos: [start[0] + T[0] * d, start[1] + T[1] * d, start[2] + T[2] * d], T, L, U, kvec: [0, 0, 0] }); }
+  return out;
+}
+
+/** A flat LEFT turn of radius R through `angle` rad, starting at `start` heading +Z. */
+function leftTurn(R, angle, { step = 1, seg: g = 0, start = [0, 0, 0], s0 = 0 } = {}) {
+  const out = [], n = Math.round(R * angle / step);
+  for (let k = 0; k <= n; k++) {
+    const th = angle * k / n, T = [Math.sin(th), 0, Math.cos(th)], U = [0, 1, 0], L = cross(U, T);
+    out.push({ s: s0 + R * th, seg: g, pos: [start[0] + R - R * Math.cos(th), start[1], start[2] + R * Math.sin(th)], T, L, U, kvec: [L[0] / R, 0, L[2] / R] });
+  }
+  return out;
+}
+
+/** A vertical loop of radius R (nosing up), a full circle: the road's up axis points at the centre. */
+function loop(R, { step = 1, seg: g = 0, s0 = 0 } = {}) {
+  const out = [], n = Math.round(2 * Math.PI * R / step);
+  for (let k = 0; k <= n; k++) {
+    const th = 2 * Math.PI * k / n, T = [0, Math.sin(th), Math.cos(th)], U = [0, Math.cos(th), -Math.sin(th)], L = cross(U, T);
+    out.push({ s: s0 + R * th, seg: g, pos: [0, R - R * Math.cos(th), R * Math.sin(th)], T, L, U, kvec: [U[0] / R, U[1] / R, U[2] / R] });
+  }
+  return out;
+}
+
+const pathOf = (samples, closed = false) => ({ lengthM: samples[samples.length - 1].s - samples[0].s, closed, twist: 0, samples });
+
+module.exports = { straight, leftTurn, loop, flat, seg, pathOf, cross };
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52005 assistant 2026-10-06T19:40:30.211Z
+TOOL_USE Bash [toolu_012Z6vY8bqbsQzo3W8hMtK4j]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && sed -n 1,30p src/validate/index.js | cut -c1-220; sed -n 36,94p src/validate/index.js | cut -c1-200","description":"Read the validator header and SRC table"}
+--- L52006 user 2026-10-06T19:40:30.459Z
+RESULT [toolu_012Z6vY8bqbsQzo3W8hMtK4j]: // validate/index.js: validation from the data (ARCHITECTURE.md §4, :67-89; docs/INTERFACES.md §3).
+//
+//   validate(path, segments, opts) -> { speed, lines, red, amber, info, jumps, lap, notChecked }
+//
+// `path` is C's buildPath output (samples with s, seg, pos, T, L, U, kvec); `segments` is A's resolve output (kind,
+// word, speed, profile). Pure and deterministic: no clock, no randomness, no I/O.
+//
+// THE LOAD, per lateral line u (ARCHITECTURE.md:68-69). A profile point sits at o(u) = X·L + Y·U from the centre
+// (src/geom/profile.js offsetAt). With a rotation-minimising frame, that line's tangent is T·(1 − κ⃗·o), so moving along it
+// at speed v the acceleration is  a = v²·κ⃗ / (1 − κ⃗·o) + (dv/dt)·T,  and the specific force the car feels is
+//   f = a − g⃗ = v²·κ⃗ / (1 − κ⃗·o) + a_T·T + g·ŷ      (the "v²κN − g" of :68, with the lateral line's own κ)
+// projected on the surface frame there: fN on the drivable-side normal n(u) (src/geom/profile.js normalAt: into the
+// surface when positive), fLat across the surface (+ toward larger u), fAlong on T. A car at rest on a flat road reads
+// fN = 1 g, the calibration FINDINGS.md:31-32 states. 1 − κ⃗·o ≤ 0 is the fold (ARCHITECTURE.md:57): no load is taken
+// there, the fold is red.
+// inferred: the roll RATE's contribution (the line swinging about T as φ changes) is left out; it is second order next to
+// v²κ on any roll a road can drive.
+'use strict';
+const { G, MACH6, kmh, accelAt } = require('./limits.js');
+const { checkJump } = require('./jumps.js');
+const P = require('../geom/profile.js');
+
+const add = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+const mul = (a, k) => [a[0] * k, a[1] * k, a[2] * k]
+…[4361 chars cut]…
+ERIFIED arithmetic (the script's speed unit), so only the fact and its source are carried.
+const DOWNFORCE_STEP = (car) => ({ aheadM: car.downforceRay.aheadM, note: `the downforce drops to zero as the car's downforce ray, ${car.downforceRay.aheadM} m ahead, passes the lip, and returns in on
+/** D243: segment j is the equation core's FLIGHT (src/core/adapter.js): word 'core', part 'gap', followed by its own landing ramp (part 'land', the same id). */
+const isCoreFlight = (segments, j) => { const g = segments[j], n = segments[j + 1]; return g.word === 'core' && g.part === 'gap' && !!n && n.part === 'land' && n.id === g.id && n.kind === 'road'; };
+
+function segProfiles(segments) {
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52017 assistant 2026-10-06T19:40:32.204Z
+TEXT: I'm writing the failing tests first.
+--- L52018 assistant 2026-10-06T19:40:50.193Z
+TOOL_USE Write [toolu_01EBn2aYiz6CJFSDPMGsTPGX]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\test\\validate_fullspeed.test.js","content":"// validate_fullspeed.test.js: D256, the keeper's decision (13:2x) on pane E's measurement (exo_memory/loop/design_speed_measure_2026-10-06.md):\n// ALWAYS MAX. opts.fullSpeed: an OPEN track's loads at the lap sim's cap (MACH6.vmaxKmh), a CLOSED one on its ghost lap (as the export does);\n// the centreline lift-off (leaves-surface) on an open track too; and \"holds above N km/h\" on a centreline station facing down, red only\n// where no speed holds.\n'use strict';\nconst test = require('node:test');\nconst asser
+…[4366 chars cut]…
+g curves is RED, since no speed holds the car on it', () => {\n  const r = validate(X.pathOf(upsideDown(50)), [X.seg()], {});\n  assert.ok(reasons(r.red).includes('no-speed-holds'), JSON.stringify(r.red));\n  assert.ok(!reasons(r.info).includes('holds-above'));\n});\n"}
+--- L52019 user 2026-10-06T19:40:50.246Z
+RESULT [toolu_01EBn2aYiz6CJFSDPMGsTPGX]: File created successfully at: C:\Users\nname\Desktop\worktrees\e-maxspeed-wt\test\validate_fullspeed.test.js (file state is current in your context — no need to Read it back)
+--- L52020 assistant 2026-10-06T19:40:53.479Z
+TOOL_USE Bash [toolu_017kGELnZryDqjeUS96sdA46]: {"command":"S=C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad; W=C:/Users/nname/Desktop/worktrees/e-maxspeed-wt; mkdir -p $S/maxspeed; NODE_OPTIONS=\"--require $S/suite/serial-shim.js\" node $S/locked.js \"D256 red rows\" $W $S/maxspeed/red1.tap --test --test-concurrency=1 --test-reporter=tap test/validate_fullspeed.test.js; grep -E \"^(not )?ok|^# (pass|fail)\" $S/maxspeed/red1.tap","description":"Run the new rows red on the base","timeout":600000}
+--- L52021 user 2026-10-06T19:50:54.159Z
+RESULT [toolu_017kGELnZryDqjeUS96sdA46]: Command did not complete within its 600s timeout and was moved to the background (ID: b1lagabyv). Output is being written to: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\tasks\b1lagabyv.output. You will be notified when it completes. To check interim output, use Read on that file path.
+--- L52024 assistant 2026-10-06T19:50:57.847Z
+TEXT: The lock is busy, and editing the source while that run waits would spoil the red reading. I'm moving the red run to a separate base worktree.
+--- L52025 assistant 2026-10-06T19:50:58.052Z
+TOOL_USE ToolSearch [toolu_01WZHBRXofgx144E31HEsEuL]: {"query":"select:TaskStop","max_results":1}
+--- L52026 user 2026-10-06T19:50:58.059Z
+RESULT [toolu_01WZHBRXofgx144E31HEsEuL]: [tool_reference]
+--- L52034 assistant 2026-10-06T19:50:59.494Z
+TOOL_USE TaskStop [toolu_01Cui94Wf3LYCSwim2Ngz1F2]: {"task_id":"b1lagabyv"}
+--- L52035 user 2026-10-06T19:50:59.508Z
+RESULT [toolu_01Cui94Wf3LYCSwim2Ngz1F2]: {"message":"Successfully stopped task: b1lagabyv (S=C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad; W=C:/Users/nname/Desktop/worktrees/e-maxspeed-wt; mkdir -p $S/maxspeed; NODE_OPTIONS=\"--require $S/suite/serial-shim.js\" node $S/locked.js \"D256 red rows\" $W $S/maxspeed/red1.tap --test --test-concurrency=1 --test-reporter=tap test/validate_fullspeed.test.js; grep -E \"^(not )?ok|^# (pass|fail)\" $S/maxspeed/red1.tap)","task_id":"b1lagabyv","task_type":"local_bash","command":"S=C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad; W=C:/Users/nname/Desktop/worktrees/e-maxspeed-wt; mkdir -p $S/maxspeed; NODE_OPTIONS=\"--require $S/suite/serial-shim.js\" node $S/locked.js \"D256 red rows\" $W $S/maxspeed/red1.tap --test --test-concurrency=1 --test-reporter=tap test/validate_fullspeed.test.js; grep -E \"^(not )?ok|^# (pass|fail)\" $S/maxspeed/red1.tap"}
+--- L52036 assistant 2026-10-06T19:51:00.739Z
+TOOL_USE Bash [toolu_01L9Ai9ZCtk6S3BPdDr8i5aS]: {"command":"cat C:/Consonance/data/heavy-run.lock; echo; cd C:/Users/nname/Desktop/t180-track-builder && git worktree add --detach C:/Users/nname/Desktop/worktrees/e-maxspeed-base 6f2404d >/dev/null 2>&1; ls C:/Users/nname/Desktop/worktrees/e-maxspeed-base/test/validate_paths.js","description":"Stop the queued run; make a base worktree for red rows"}
+--- L52037 user 2026-10-06T19:51:01.305Z
+RESULT [toolu_01L9Ai9ZCtk6S3BPdDr8i5aS]: {"pid":3048,"seat":"0c0c0c0b","cmd":"librarian bundle full suite (non-mutation) on 6f2404d","started":"2026-10-06T19:38:46.920Z","token":"402afe5d-80dc-450c-a263-ecb760813280"}
+C:/Users/nname/Desktop/worktrees/e-maxspeed-base/test/validate_paths.js
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52040 assistant 2026-10-06T19:51:11.018Z
+TOOL_USE Bash [toolu_01NW585Eu91VcTHB9ZCQfUvS]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && sed -n 282,300p src/validate/index.js | cut -c1-200; grep -rn \"'leaves-surface'\\|leaves-surface\" src app --include=*.js | grep -v \"^src/validate/index.js\" | cut -c1-200","description":"How point findings are sorted; other leaves-surface users"}
+--- L52041 user 2026-10-06T19:51:11.330Z
+RESULT [toolu_01NW585Eu91VcTHB9ZCQfUvS]:     // or (D243) the equation core's FLIGHT: a gap the adapter writes as part 'gap' of word 'core' with its own landing ramp next (src/core/adapter.js
+    // toSegments). Its gap is intended; any other gap, the core's included, is still a hole
+    if (g.kind === 'gap' && g.word !== 'jump' && !isCoreFlight(segments, j) && !(!path.closed && j === lastSeg)) raw.segReds.push({ j, s: s0, s1, u: null, reason: 'gap-in-road' });
+    if (g.kind !== 'gap' && g.word === 'wall-ride' && /^WALL/i.test(profiles[j].material)) raw.segReds.push({ j, s: s0, s1, u: null, reason: 'wall-ride-from-wall-object' });
+  });
+
+  stacked(S, isRoad, profiles, path, car, opts, from, raw.stacked, rederive, end);
+  raw.end = end;
+
+  // ── whole-track reds that do not depend on stations ──
+  const red = [], notChecked = [];
+  if (opts.softCollision === false) red.push({ s: S[0].s, s1: S[n - 1].s, u: null, reason: 'missing-soft-collision' });
+  if (Array.isArray(opts.folds)) {
+    for (const f of opts.folds) if (end === n || f.s < S[end].s) red.push({ s: f.s, u: f.u == null ? null : f.u, reason: f.other ? 'self-intersection' : 'fold', worst: f.margin == null ? null : -f.mar
+  } else notChecked.push('self-intersection: needs buildMesh folds[] (a BVH between cells, ARCHITECTURE.md:58); pass opts.folds');
+  // gaps in the PHYSICS road the downforce ray can fall into (raygap.js): needs the built road, which the export has
+  if (Array.isArray(opts.roadMesh)) {
+    for (const g of rayGaps(opts.roadMesh, S, car.downforceRay)) if (g.s != null && (end === n || g.s < S[end].s)) red.push({ s: g.s, u: g.u, reason: 'downforce-ray-gap', worst: g.widthM });
+  } else notChecked.push('downforce-ray-gap: needs the built physics road (src/validate/raygap.js); pass opts.roadMesh');
+app/test/core-shell.test.js:224:  // 'leaves-surface': correct, and not what this test is about)
+app/test/export.test.js:95:  // warning, nothing red), so the red track is an INVERSION taken at 150 km/h instead, which the lap proof fails on (leaves-surface): the row's subject,
+app/test/validate-ui.test.js:203:  for (const w of [{ reason: 'stall' }, { reason: 'leaves-surface' }, { reason: 'jump-not-caught-3.2g' }, { reason: 'jump-not-caught-6.3g' }, { reason: 'landing-unreac
+app/validate-ui/labels.js:52:  if (r === 'leaves-surface') return 'the car leaves the road surface here';
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52043 assistant 2026-10-06T19:51:13.693Z
+TOOL_USE Bash [toolu_016p62h9xwjmw5weXS9FyZmS]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && sed -n 300,330p src/validate/index.js | grep -n \"pts\\|kind\" | cut -c1-200; sed -n 1,60p app/validate-ui/labels.js | grep -n \"on-the-stops\\|load-above\\|const LABEL\\|LABELS\\|function findingLine\\|'roll-rate'\" | cut -c1-200","description":"Check pts sorting and the label table"}
+--- L52044 user 2026-10-06T19:51:13.936Z
+RESULT [toolu_016p62h9xwjmw5weXS9FyZmS]: 1:  } else notChecked.push('downforce-ray-gap: needs the built physics road (src/validate/raygap.js); pass opts.roadMesh');
+2:  for (const p of raw.pts) if (p.kind === 'red') red.push(p);
+14:  const amber = [...raw.pts.filter((p) => p.kind === 'amber'), ...rollAmber], info = raw.pts.filter((p) => p.kind === 'info');
+20:    if (g.kind !== 'gap') return;
+25:    'load-above-proven': `the load is over ${car.provenG} g, more than any track has proven`,
+27:    'on-the-stops': `the car is on its suspension stops (${car.suspensionStopG} g or more)`,
+35:    'roll-rate': 'the road rolls about its own direction faster than any measured track (red over 1.21°/m, amber over 0.93°/m, read over 20 m): lengthen the roll',
+60:function findingLine(kind, x) {
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52047 assistant 2026-10-06T19:51:14.996Z
+TEXT: Now the validator edits.
+--- L52048 assistant 2026-10-06T19:51:17.747Z
+TOOL_USE Edit [toolu_01UaDz6nFThUA6bdVxaDC12u]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\src\\validate\\index.js","old_string":"  const fill = Number.isFinite(opts.designSpeed) && opts.designSpeed > 0 ? opts.designSpeed : null;","new_string":"  // D256 (the keeper, \"it should always be maxed out\"): opts.fullSpeed fills an OPEN track at the lap sim's cap; a closed one falls through\n  // to its ghost lap below, the speed the export judges it at. An explicit opts.designSpeed still wins\n  const fill = Number.isFinite(opts.designSpeed) && opts.designSpeed > 0 ? opts.designSpeed : opts.fullSpeed === true && !path.closed ? kmh(car.vmaxKmh) : null;"}
+--- L52049 user 2026-10-06T19:51:17.798Z
+RESULT [toolu_01UaDz6nFThUA6bdVxaDC12u]: The file C:\Users\nname\Desktop\worktrees\e-maxspeed-wt\src\validate\index.js has been updated successfully.
+--- L52050 assistant 2026-10-06T19:51:21.851Z
+TOOL_USE Edit [toolu_015e68YCDP3Tx48ChNWfumhR]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\src\\validate\\index.js","old_string":"      if (margin <= 0) { raw.pts.push({ i, kind: 'red', s: p.s, u, reason: 'fold', worst: -margin }); continue; }\n      if (!sp.v) continue;","new_string":"      if (margin <= 0) { raw.pts.push({ i, kind: 'red', s: p.s, u, reason: 'fold', worst: -margin }); continue; }\n      // D256 holds-above: on the CENTRELINE, a surface facing the ground (n·ŷ < 0) holds the car only while v²(κ⃗·n)/margin outweighs\n      // gravity's pull off it, i.e. above v = sqrt(−g(n·ŷ) / ((κ⃗·n)/margin)) at a steady speed
+…[220 chars cut]…
+ if (kn > 0) raw.pts.push({ i, kind: 'info', s: p.s, u, reason: 'holds-above', worst: Math.sqrt(-G * nyc / kn) * 3.6 });\n          else raw.pts.push({ i, kind: 'red', s: p.s, u, reason: 'no-speed-holds', worst: null });\n        }\n      }\n      if (!sp.v) continue;"}
+--- L52051 user 2026-10-06T19:51:21.901Z
+RESULT [toolu_015e68YCDP3Tx48ChNWfumhR]: The file C:\Users\nname\Desktop\worktrees\e-maxspeed-wt\src\validate\index.js has been updated successfully.
+--- L52052 assistant 2026-10-06T19:51:23.698Z
+TOOL_USE Edit [toolu_01NFMjfM52uchvnZK4kvNdYW]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\src\\validate\\index.js","old_string":"      raw.lines.push({ i, line });","new_string":"      raw.lines.push({ i, line });\n      // D256: the centreline lift-off on an OPEN track (a closed one has it in the lap proof below, so it is not counted twice)\n      if (!path.closed && u === 0 && line.fN_g < 0) raw.pts.push({ i, kind: 'red', s: p.s, u, reason: 'leaves-surface', worst: -line.fN_g });"}
+--- L52053 user 2026-10-06T19:51:23.747Z
+RESULT [toolu_01NFMjfM52uchvnZK4kvNdYW]: The file C:\Users\nname\Desktop\worktrees\e-maxspeed-wt\src\validate\index.js has been updated successfully.
+--- L52054 assistant 2026-10-06T19:51:26.684Z
+TOOL_USE Edit [toolu_01EkC5r4uVAQSYFd89wtoraY]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\src\\validate\\index.js","old_string":"  'jump-gap-not-forward':","new_string":"  'leaves-surface': 'ARCHITECTURE.md:68-69 (the load on the centreline is below zero: the car leaves the road); on an OPEN track since D256, where a closed one has it in the lap proof',\n  'holds-above': 'D256 (exo_memory/loop/design_speed_measure_2026-10-06.md): the centreline faces the ground here and holds the car only above this speed (km/h), from fN(v) = (κ⃗·n)v²/(1 − κ⃗·o) + g(n·ŷ)',\n  'no-speed-holds': 'D256: the centreline faces the ground and nothing curves it toward the car, so no speed holds the car on it',\n  'jump-gap-not-forward':"}
+--- L52055 user 2026-10-06T19:51:26.725Z
+RESULT [toolu_01EkC5r4uVAQSYFd89wtoraY]: The file C:\Users\nname\Desktop\worktrees\e-maxspeed-wt\src\validate\index.js has been updated successfully.
+--- L52065 assistant 2026-10-06T19:51:31.407Z
+TOOL_USE Bash [toolu_01GfgjrdJ5s59Vu15sGvorKo]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && sed -n 1,75p app/validate-ui/labels.js | cut -c1-230","description":"Read the label table"}
+--- L52066 user 2026-10-06T19:51:31.602Z
+RESULT [toolu_01GfgjrdJ5s59Vu15sGvorKo]: // labels.js: validation's findings in plain words, for the panels (the D177 window pass and A's D180 check of the
+// installed app: the red list read "stacked-within-2m … ARCHITECTURE.md:85", which a track builder has to look up). The
+// words are what the user reads; the rule id and its source go in the TOOLTIP (title), where the docs, the tests and a
+// search still find them. No shown string carries a rule id or a ".md:" line.
+//
+//   reasonText(reason, car)       plain words for a validation reason id (src/validate SRC), or a plain fallback
+//   lapText(lap)                  the lap as the summary line shows it
+//   lapWhereText(where)           one reason the lap fails, in words
+//   findingLine(kind, range)      { text, title } for one red or amber range in the list
+//   stopLine(stop)                { text, title } for a handle drag stopped at a bound (app/handles)
+//   refusalText(message)          a document refusal without its error code ("HANDLE_RANGE: …" → "…")
+'use strict';
+const { MACH6 } = require('../../src/validate/limits.js');
+
+function reasonText(reason, car = MACH6) {
+  const T = {
+    'gap-in-road': 'a hole in the road',
+    'downforce-ray-gap': 'a gap in the road under the car\'s downforce ray: the car loses all its downforce over it',
+    'missing-soft-collision': 'the export has no soft-collision block',
+    fold: 'the surface folds over itself here (too tight for its width)',
+    'self-intersection': 'the road passes through itself here',
+    'stacked-within-2m': `two roads are stacked less than ${car.stackedM} m apart here`,
+    'wall-ride-from-wall-object': 'a wall-ride is built on a wall object',
+    'steep-without-raycast': `a surface is steeper than ${car.steepDeg}°, which needs CSP's wall 
+…[2504 chars cut]…
+ind, x) {
+  return { text: `${kind}: ${reasonText(x.reason)}, ${at(x)}`, title: `${x.reason}${x.source ? ` · ${x.source}` : ''}` };
+}
+
+/** stop: { at, reasons: [id], sources: [src] } from handles.js clamp; the value the drag stopped at is at. */
+function stopLine(stop, unitText = '') {
+  const words = [...new Set(stop.reasons.map((r) => reasonText(r)))].join('; ');
+  return { text: `stopped at ${stop.at}${unitText}: past it, ${words}`, title: `${stop.reasons.join(', ')} · ${stop.sources.join(', ')}` };
+}
+
+const refusalText = (message) => String(message).replace(/^[A-Z][A-Z_]+:\s*/, '');
+
+module.exports = { reasonText, lapText, lapWhereText, findingLine, stopLine, refusalText };
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52069 assistant 2026-10-06T19:51:35.436Z
+TOOL_USE Bash [toolu_01TcWASeZd22TMM6oQhPYchM]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && sed -n 50,64p app/validate-ui/index.js | cut -c1-260; grep -n \"info\" app/validate-ui/panel.js app/validate-ui/colour.js app/core/panel.js | cut -c1-200 | head","description":"See how the panel lists findings and info"}
+--- L52070 user 2026-10-06T19:51:35.687Z
+RESULT [toolu_01TcWASeZd22TMM6oQhPYchM]:     // the canvas's backing store follows its SHOWN size (D177 window pass: drawn at 480 px and shown at ~265, its labels
+    // were too small to read); DPR-aware, so the 10 px labels are 10 css px on any screen
+    const dpr = (typeof devicePixelRatio === 'number' && devicePixelRatio > 0) ? devicePixelRatio : 1, cw = graph.clientWidth;
+    if (cw > 0 && graph.width !== Math.round(cw * dpr)) { graph.width = Math.round(cw * dpr); graph.height = Math.round(96 * dpr); }
+    drawGraph(graph, gm);
+    list.replaceChildren();
+    const r = state.result;
+    if (r) {
+      for (const [kind, items, lvl] of [['red', r.red, LEVEL.RED], ['amber', r.amber, LEVEL.AMBER]]) {
+        for (const x of items) { const f = findingLine(kind, x); list.append(el('li', { textContent: f.text, title: f.title, style: `color: ${css(PALETTE[lvl])}` })); }   // the rule and its source in the tooltip
+      }
+      if (r.lap && r.lap.ok === false) for (const w of r.lap.where) list.append(el('li', { textContent: `lap: ${lapWhereText(w)}, at ${w.s.toFixed(0)} m`, title: w.reason, style: `color: ${css(PALETTE[LEVEL.RED])}` }));
+    }
+    for (const j of state.arcs) {
+      const legs = j.arcs.map((a) => `${a.g} g ${a.caught ? `lands at ${a.touchdown.x.toFixed(1)} m` : a.clear ? 'clears, no touchdown found' : `falls short (needs ${(a.minSpeed * 3.6).toFixed(0)} km/h)`}`);
+app/validate-ui/colour.js:29:// inferred: display choices, not measurements. Red and amber as the program names them; info a quiet blue.
+app/validate-ui/colour.js:32:  Object.freeze([0.36, 0.58, 0.92, 1]),   // info
+app/core/panel.js:254:    let info = askOf('t180:ghost-request');
+app/core/panel.js:255:    if (info && info.jump) return null;   // the ghost on screen is a JUMP's (the Add-
+…[342 chars cut]…
+ = info.samples[info.samples.length - 1].s; if (!(s1 - info.s0 > 0.5)) return null;
+app/core/panel.js:264:    return { mode: 'extend', samples: info.samples, s0: info.s0, s1, half, halfTarget: wt === null ? undefined : wt / 2, kinds, base: (k) => fieldNum(HANDLE_FIELD[k]), ctx: (k) =
+app/core/panel.js:273:    return { mode: 'sculpt', info: si, samples: list, s0: list[0].s, s1: list[list.length - 1].s, half: (f) => si.halfAt(f), at: { width: 1 }, kinds, base: (k) => valueOf[k], ctx
+app/core/panel.js:279:    begin: (h) => { const m = sculptModel(); if (m) { shell.beginSculpt({ channel: SCULPT_CH[h.kind], piece: m.info.index }); sculptDrag = shell.getState().brush ? { kind: h.kind
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52074 assistant 2026-10-06T19:51:42.232Z
+TOOL_USE Edit [toolu_01R95Zc9mxVYSyBCDvRqsZ7L]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\app\\validate-ui\\labels.js","old_string":"    'edge-past-cap': 'the edge curves up past the most a road can hold (150° in all, 180° on an open tube): the walls would touch',\n  };","new_string":"    'edge-past-cap': 'the edge curves up past the most a road can hold (150° in all, 180° on an open tube): the walls would touch',\n    // D256 (the keeper chose all three of E's proposals): the centreline lift-off on an open track, and the road facing the ground\n    'leaves-surface': 'the car leaves the road surface here at full speed',\n    'no-speed-holds': 'the road faces the ground here and nothing curves it toward the car: no speed holds the car on it',\n    'holds-above': 'the road faces the ground here and holds the car only above a speed',\n  };"}
+--- L52075 user 2026-10-06T19:51:42.279Z
+RESULT [toolu_01R95Zc9mxVYSyBCDvRqsZ7L]: The file C:\Users\nname\Desktop\worktrees\e-maxspeed-wt\app\validate-ui\labels.js has been updated successfully.
+--- L52076 assistant 2026-10-06T19:51:44.435Z
+TOOL_USE Edit [toolu_015DugFCdv5Bx94zfTb4ww5P]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\app\\validate-ui\\labels.js","old_string":"function findingLine(kind, x) {\n  return","new_string":"function findingLine(kind, x) {\n  // D256: \"holds above N km/h\" carries its number, the slowest speed that keeps the car on the road there\n  if (x.reason === 'holds-above' && Number.isFinite(x.worst)) return { text: `${kind}: the road faces the ground here and holds the car only above ${Math.round(x.worst)} km/h, ${at(x)}`, title: `${x.reason}${x.source ? ` · ${x.source}` : ''}` };\n  return"}
+--- L52077 user 2026-10-06T19:51:44.475Z
+RESULT [toolu_015DugFCdv5Bx94zfTb4ww5P]: The file C:\Users\nname\Desktop\worktrees\e-maxspeed-wt\app\validate-ui\labels.js has been updated successfully.
+--- L52078 assistant 2026-10-06T19:51:45.188Z
+TOOL_USE Read [toolu_01RgQbgUdnSqg8XwthmwMVuP]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\app\\validate-ui\\index.js","offset":56,"limit":32}
+--- L52079 user 2026-10-06T19:51:45.213Z
+RESULT [toolu_01RgQbgUdnSqg8XwthmwMVuP]: 56	    const r = state.result;
+57	    if (r) {
+58	      for (const [kind, items, lvl] of [['red', r.red, LEVEL.RED], ['amber', r.amber, LEVEL.AMBER]]) {
+59	        for (const x of items) { const f = findingLine(kind, x); list.append(el('li', { textContent: f.text, title: f.title, style: `color: ${css(PALETTE[lvl])}` })); }   // the rule and its source in the tooltip
+60	      }
+61	      if (r.lap && r.lap.ok === false) for (const w of r.lap.where) list.append(el('li', { textContent: `lap: ${lapWhereText(w)}, at ${w.s.toFixed(0)} m`, title: w.reason, style: `color: ${css(PALETTE[LEVEL.RED])}` }));
+62	    }
+63	    for (const j of state.arcs) {
+64	      const legs = j.arcs.map((a) => `${a.g} g ${a.caught ? `lands at ${a.touchdown.x.toFixed(1)} m` : a.clear ? 'clears, no touchdown found' : `falls short (needs ${(a.minSpeed * 3.6).toFixed(0)} km/h)`}`);
+65	      list.append(el('li', { textContent: `jump at s ${j.s.toFixed(0)} m${j.speed ? `, ${(j.speed * 3.6).toFixed(0)} km/h` : ', drawn at each landing\'s minimum speed'}: ${legs.join('; ')}` }));
+66	    }
+67	    const map = state.map;
+68	    root.dispatchEvent(new CustomEvent('t180:validation', { bubbles: true, detail: {
+69	      path: state.path, result: state.result, map, arcs: state.arcs, speedPicker: picker,
+70	      levelAt: (s, u) => (map ? levelAt(map, s, u) : LEVEL.CLEAR), rgbaAt: (s, u) => (map ? rgbaAt(map, s, u) : PALETTE[LEVEL.CLEAR]),
+71	    } }));
+72	  }
+73	  let ctl = null;
+74	  // D179: the slider's speed also sizes the open track's jump ramps (A's shell setDesignSpeed re-resolves; derived, no
+75	  // undo step), so a jump is never checked at a speed its ramp was not built for. The shell first, then validation at it
+76	  const picker = createSpeedPicker({ onCh
+…[117 chars cut]…
+l.setDesignSpeed(kmh);
+79	  } });
+80	  // ONE PATH (D177): the preview's path, asked for through C's seam ('t180:track-request', { reply(track) }, answered
+81	  // with { path, segments, closed, how, g, fromS }: app/preview/index.js); with no answer, or a path for another
+82	  // document, the controller grows its own
+83	  const sharedPath = () => { let got = null; document.dispatchEvent(new CustomEvent('t180:track-request', { detail: { reply: (x) => { got = x; } } })); return got; };
+84	  ctl = createValidationController(shell, { designSpeedKmh: picker.kmh, onUpdate: render, schedule: raf, sharedPath });
+85	  mountSpeedPicker(speedRow, picker);
+86	  csp.onchange = () => ctl.setCsp(csp.checked);
+87	  return { dispose: () => ctl.dispose() };
+--- L52089 assistant 2026-10-06T19:51:47.607Z
+TOOL_USE Bash [toolu_01K8NA7g2thCunTDfNhCXSsQ]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && grep -rn \"speedPicker\\|v-speed\" app --include=*.js --include=*.html --include=*.css | grep -v \"app/test/\\|validate-ui/speed.js\" | cut -c1-200","description":"Find other uses of speedPicker and its CSS"}
+--- L52090 user 2026-10-06T19:51:47.825Z
+RESULT [toolu_01K8NA7g2thCunTDfNhCXSsQ]: app/validate-ui/index.js:39:  const speedRow = el('div', { className: 'v-speed-row' });
+app/validate-ui/index.js:69:      path: state.path, result: state.result, map, arcs: state.arcs, speedPicker: picker,
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52092 assistant 2026-10-06T19:51:56.529Z
+TOOL_USE Bash [toolu_019hYrs8ZiUpd6ouaU1otJAS]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && node - <<'EOF'\nconst fs = require('fs'), f = 'app/validate-ui/index.js'; let t = fs.readFileSync(f, 'utf8'); const E = t.includes('\\r\\n') ? '\\r\\n' : '\\n';\nconst rep = (a, b) => { if (!t.includes(a)) throw new Error('anchor missing: ' + a.slice(0, 60)); t = t.replace(a, b); };\nrep(`//   · the design-speed picker (speed.js): loads for every word without its own speed, default 460 km/h (FINDINGS.md:476);${E}`,\n    `//   · NO speed control (D256, the keeper: \"it should always be maxed out\"): an open track's loads at the lap sim's cap, 970 km/h${E}//   
+…[1443 chars cut]…
+alidationController(shell, { onUpdate: render, schedule: raf, sharedPath });${E}`);\nfs.writeFileSync(f, t);\nEOF\ngrep -n \"LEVEL = \\|INFO\" app/validate-ui/colour.js | head -3; git diff --stat","description":"Remove the slider from the panel; list holds-above lines"}
+--- L52093 user 2026-10-06T19:51:56.866Z
+RESULT [toolu_019hYrs8ZiUpd6ouaU1otJAS]: 8:// LEVELS, highest wins: RED 3 > AMBER 2 > INFO 1 > CLEAR 0.
+11://       fN_g >= suspensionStopG (20 g, FINDINGS.md:103-104) → INFO    (the suspension stop: shown, never a warning)
+28:const LEVEL = Object.freeze({ CLEAR: 0, INFO: 1, AMBER: 2, RED: 3, PENDING: 4 });
+ app/validate-ui/index.js  | 22 +++++++++-------------
+ app/validate-ui/labels.js |  6 ++++++
+ src/validate/index.js     | 19 ++++++++++++++++++-
+ 3 files changed, 33 insertions(+), 14 deletions(-)
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52097 assistant 2026-10-06T19:51:59.671Z
+TEXT: The validator now takes `fullSpeed`, lift-off is checked on open tracks, and "holds above N km/h" is listed; the slider is out of the panel. Next: the controller, overlap job and export.
+--- L52098 assistant 2026-10-06T19:52:00.840Z
+TOOL_USE Bash [toolu_016brjg79u2Gank3F5sF6d14]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && sed -n 1,8p app/validate-ui/panel.js | cut -c1-220; sed -n 60,68p app/validate-ui/panel.js | cut -c1-260; sed -n 148,156p app/validate-ui/panel.js | cut -c1-200; sed -n 20,50p app/core/overlapjob.js | cut -c1-260","description":"Read controller options and the overlap job speed"}
+--- L52099 user 2026-10-06T19:52:01.160Z
+RESULT [toolu_016brjg79u2Gank3F5sF6d14]: // panel.js: the validation panel's logic, with no DOM (tested headless against A's real shell). index.js mounts it.
+//
+//   const ctl = createValidationController(shell, { csp: true, designSpeedKmh, validate, onUpdate, schedule })
+//     designSpeedKmh: the picker's speed for words without their own (default MACH6.designSpeedKmh, FINDINGS.md:476;
+//     null = none). ctl.setDesignSpeed(kmh | null) re-validates the whole track at it.
+//     validate: further src/validate options (e.g. a `car` with an acceleration, so the lap sim gives loads).
+//     schedule(fn): when to run a pending update. Default: at once (headless). The app passes one animation frame, and
+//     changes arriving before it runs are coalesced into one update (several appends are still one append).
+  return fromSOf(path, m);
+}   // m between stations: the step the export and the D167 tests use (inferred: not tuned for the preview)
+
+function createValidationController(shell, { csp = true, designSpeedKmh = MACH6.designSpeedKmh, validate: extra = {}, onUpdate = () => {}, schedule = (fn) => fn(), sharedPath = null } = {}) {
+  let design = designSpeedKmh;
+  const vo = () => ({ ...extra, csp, ...(design == null ? {} : { designSpeed: design / 3.6 }) });
+  let live = createLive({ validate: vo() });
+  let segs = null, path = null, resolvedSeen = null, source = null;   // source: 'shared' (a view of the preview's path) | 'own'
+  const out = { state: { path: null, result: null, map: null, arcs: [], changed: null, full: true, how: null, error: null, pathFrom: null } };
+  return {
+    get state() { return out.state; },
+    setCsp(v) { csp = !!v; live = createLive({ validate: vo() }); update(shell.getState(), true); },
+    setDesignSpeed(kmh) { design = kmh == null 
+…[2576 chars cut]…
+mh) && designSpeedKmh > 0 ? { designSpeed: designSpeedKmh / 3.6 } : {};
+  if (part === 'rest') { const mesh = G.buildMesh(p, segs, { selfCheck: true }), v = V.validate(p, segs, { csp: true, softCollision: true, folds: mesh.folds, ...speed }); return { red: v.red, amber: v.amber.length }; }
+  if (part === 'rays') {
+    const mesh = G.buildMesh(p, segs, {}), roadMesh = walkScene(mesh.scene).meshes.filter((m) => isDrivable(m.name) && m.indices && m.indices.length);
+    return { red: V.validate(p, segs, { csp: true, softCollision: true, roadMesh, ...speed }).red.filter((x) => x.reason === 'downforce-ray-gap') };
+  }
+  throw new Error(`no such part of the overlap check: ${part}`);
+}
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52108 assistant 2026-10-06T19:52:14.041Z
+TOOL_USE Bash [toolu_01QVrXwgsKB46JgKoEQMHAX2]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && node - <<'EOF'\nconst fs = require('fs');\nconst edit = (f, pairs) => { let t = fs.readFileSync(f, 'utf8'); const E = t.includes('\\r\\n') ? '\\r\\n' : '\\n'; for (let [a, b] of pairs) { a = a.replace(/\\n/g, E); b = b.replace(/\\n/g, E); if (t.split(a).length !== 2) throw new Error(f + ': anchor not unique/missing: ' + a.slice(0, 70)); t = t.replace(a, b); } fs.writeFileSync(f, t); };\nedit('app/validate-ui/panel.js', [\n  [`//     designSpeedKmh: the picker's speed for words without their own (default MACH6.designSpeedKmh, FINDINGS.md:476;\n//     null = no
+…[1866 chars cut]…
+sted\n  const v = validate(p, segs, { csp: o.csp, softCollision: true, folds: mesh.folds, roadMesh, fullSpeed: true });`],\n]);\nEOF\ngrep -n \"MACH6\" app/validate-ui/panel.js | head -3; git diff --stat","description":"Full speed in controller, overlap job and export"}
+--- L52109 user 2026-10-06T19:52:14.376Z
+RESULT [toolu_01QVrXwgsKB46JgKoEQMHAX2]: 43:const { MACH6 } = require('../../src/validate/limits.js');
+ app/core/overlapjob.js    |  6 ++++--
+ app/validate-ui/index.js  | 22 +++++++++-------------
+ app/validate-ui/labels.js |  6 ++++++
+ app/validate-ui/panel.js  |  9 +++++----
+ src/export/fromwords.js   |  3 ++-
+ src/validate/index.js     | 19 ++++++++++++++++++-
+ 6 files changed, 44 insertions(+), 21 deletions(-)
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52112 assistant 2026-10-06T19:52:17.075Z
+TOOL_USE Bash [toolu_01MW4JYSXhCjkzg5iCnsQR4g]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && grep -c \"MACH6\" app/validate-ui/panel.js; grep -n \"designSpeedKmh\\|setDesignSpeed\" app/core/coreshell.js | cut -c1-120; sed -n 300,312p app/core/panel.js | grep -o \"Validation is using.\\{0,200\\}\"","description":"Check MACH6 use; read the core jump note text"}
+--- L52113 user 2026-10-06T19:52:17.322Z
+RESULT [toolu_01MW4JYSXhCjkzg5iCnsQR4g]: 1
+166:    const speed = Number.isFinite(st.designSpeedKmh) && st.designSpeedKmh > 0 ? st.designSpeedKmh : null;
+168:    if (overlapRunner) { try { job = overlapRunner.start({ doc: d, designSpeedKmh: speed, closed }); } catch (e) { j
+368:          displacement: Object.freeze(displacementOf(base, res.doc)), check: overlapRunner ? null : Object.freeze(ov
+527:          displacement: Object.freeze(displacementAfterDelete(d, res)), check: overlapRunner ? null : Object.freeze(
+681:    setDesignSpeed(kmh) { if (!(kmh === null || (Number.isFinite(kmh) && kmh > 0))) return set({ message: `the desig
+Validation is using ${Math.round(sp)} km/h (the design speed box), so the jump can be red there even though the ramp is sized for ${Math.round(JW.DESIGN_KMH)}.` : null);
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52116 assistant 2026-10-06T19:52:22.954Z
+TOOL_USE Bash [toolu_01XdKWjZfMraPVNRshkud6P1]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && grep -n \"limits.js\\|MACH6\" app/core/panel.js | head; grep -n \"Validation is using\" app/core/panel.js | cut -c1-60","description":"Check core panel imports"}
+--- L52117 user 2026-10-06T19:52:23.171Z
+RESULT [toolu_01XdKWjZfMraPVNRshkud6P1]: 308:    sayJump(...(w ? [w.drew, ...w.lines, w.speed] : [`Th
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52119 assistant 2026-10-06T19:52:25.116Z
+TOOL_USE Bash [toolu_01M7BrZPGcEXwMtC9FFMyrNu]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && sed -n 308p app/core/panel.js; grep -n \"vmaxKmh\\|VMAX\" app/core/jumpplan.js | head -3","description":"Read the full jump note line"}
+--- L52120 user 2026-10-06T19:52:25.336Z
+RESULT [toolu_01M7BrZPGcEXwMtC9FFMyrNu]:     sayJump(...(w ? [w.drew, ...w.lines, w.speed] : [`The landing ramp is sized for ${Math.round(JW.DESIGN_KMH)} km/h, fixed today.`]), Number.isFinite(sp) && sp > 0 && Math.round(sp) !== Math.round(JW.DESIGN_KMH) ? `Validation is using ${Math.round(sp)} km/h (the design speed box), so the jump can be red there even though the ramp is sized for ${Math.round(JW.DESIGN_KMH)}.` : null);
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52129 assistant 2026-10-06T19:52:30.457Z
+TOOL_USE Bash [toolu_015Pz7pxVyWv9ajpQVeBwhHv]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && sed -n 14,20p app/core/jumpplan.js | cut -c1-200; grep -n \"module.exports\" app/core/jumpplan.js | cut -c1-200","description":"Read jumpplan's constants and exports"}
+--- L52130 user 2026-10-06T19:52:30.683Z
+RESULT [toolu_015Pz7pxVyWv9ajpQVeBwhHv]: let J = null, L = null;
+try { J = require('../../src/validate/jumps.js'); L = require('../../src/validate/limits.js'); } catch (e) { J = null; L = null; }   // no flight model: a straight dashed line, and it says so
+const DESIGN_KMH = L && L.MACH6 ? L.MACH6.designSpeedKmh : 460;
+const FALLS = Object.freeze(L && L.MACH6 ? [...L.MACH6.jumpG] : [3.2, 6.3]);
+const ARC_POINTS = 48;
+
+113:module.exports = { flightsOfPath, arcWorld, describe, jumpWords, DESIGN_KMH, FALLS };
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52134 assistant 2026-10-06T19:52:32.537Z
+TEXT: I'm updating the Add-jump note so it says validation checks at full speed now that the box is gone.
+--- L52135 assistant 2026-10-06T19:52:41.006Z
+TOOL_USE Bash [toolu_01Wur79enaoY9FuEPkGocdtN]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && node - <<'EOF'\nconst fs = require('fs');\nconst edit = (f, pairs) => { let t = fs.readFileSync(f, 'utf8'); const E = t.includes('\\r\\n') ? '\\r\\n' : '\\n'; for (let [a, b] of pairs) { a = a.replace(/\\n/g, E); b = b.replace(/\\n/g, E); if (t.split(a).length !== 2) throw new Error(f + ': anchor: ' + a.slice(0, 70)); t = t.replace(a, b); } fs.writeFileSync(f, t); };\nedit('app/core/jumpplan.js', [\n  [`const FALLS =`, `const FULL_KMH = L && L.MACH6 ? L.MACH6.vmaxKmh : 970;   // D256: validation checks at full speed (the lap sim's cap) on an open track\nconst
+…[1547 chars cut]…
+k')\"; node --check C:/Users/nname/Desktop/worktrees/e-maxspeed-wt/app/core/panel.js && node --check C:/Users/nname/Desktop/worktrees/e-maxspeed-wt/app/validate-ui/index.js && echo syntax ok","description":"Jump note at full speed; drop the unused import; syntax check"}
+--- L52136 user 2026-10-06T19:52:41.722Z
+RESULT [toolu_01Wur79enaoY9FuEPkGocdtN]: load ok
+syntax ok
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52139 assistant 2026-10-06T19:52:44.664Z
+TOOL_USE Bash [toolu_017GRW45FYJxgqrccfNuVnB7]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && sed -n 15,55p app/test/validate-ui-panel.test.js | cut -c1-260; echo ----; sed -n 112,145p app/test/validate-ui-panel.test.js | cut -c1-200","description":"Read the panel test rows that pin the speed"}
+--- L52140 user 2026-10-06T19:52:44.888Z
+RESULT [toolu_017GRW45FYJxgqrccfNuVnB7]: const D = require('../../src/doc/index.js');
+const { appendOld } = require('../../test/pre_d182_words.js');
+
+const REPO = path.resolve(__dirname, '..', '..');
+const mem = () => { const docs = new Map(); let lib = null; return { saveDoc: async (n, t) => docs.set(n, t), openDoc: async (n) => docs.get(n), listDocs: async () => [...docs.keys()], saveLibrary: async (t) => { lib = t; }, openLibrary: async () => lib }; };
+const levels = (map) => map.stations.map((e) => Array.from(e.levels));
+// CHANGED 2026-09-27 (D169): the reference now validates at the controller's own default design speed, the picker's
+// 460 km/h (FINDINGS.md:476); before D169 the controller had none. The made-up lap-sim car these tests used to force
+// loads onto a shell-built track (accel 15, inferred) is gone: the picker is how a shell-built track gets loads now.
+const DESIGN = MACH6.designSpeedKmh / 3.6;
+/** What a fresh, full validation of the shell's current document colours: the reference every live state must equal. */
+function fresh(shell, csp = true, designSpeed = DESIGN) {
+  const r = shell.getState().resolved, p = G.buildPath(r.segments, { step: STEP });
+  return colourMap(validate(p, r.segments, { csp, ...(designSpeed == null ? {} : { designSpeed }) }), { path: p });
+}
+
+test('the first word builds and colours the whole track (full), and an empty document shows nothing', async () => {
+  const shell = await createShell({ storage: mem() });
+  const ctl = createValidationController(shell);
+  assert.deepStrictEqual([ctl.state.how, ctl.state.map], ['empty', null]);
+  shell.place('straight');
+  assert.deepStrictEqual([ctl.state.how, ctl.state.full, ctl.state.error], ['full', true, null]);
+  assert.deepStrictEqual(levels(ctl.state.map), levels(fresh(s
+…[2784 chars cut]…
+atch(String(shown.style), /display:\s*inline-block/); assert.match(String(shown.style), /min-width:\s*\d+ch/, 'the value takes the same width for "off" and "970 km/h"');
+    const group = all.find((e) => e.children && e.children.includes(box)); assert.match(String(group.style || ''), /white-space:\s*nowrap/, 'the box and its word never split across lines');
+    for (const want of [true, false, true]) { box.checked = want; box.onchange(); }
+    assert.deepStrictEqual(seen, [null, p.defaultKmh, null], 'off, on, off');
+    assert.strictEqual([...root.walk()].find((e) => e.tagName === 'INPUT' && e.type === 'checkbox'), box, 'the same box throughout');
+  } finally { restore(); }
+});
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52149 assistant 2026-10-06T19:52:49.011Z
+TOOL_USE Bash [toolu_01JV99587kuUzahBjPDGEYNC]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && grep -n \"fresh(\\|DESIGN\\|designSpeed\\|setDesignSpeed\" app/test/validate-ui-panel.test.js | cut -c1-200","description":"Find every speed reference in the panel test"}
+--- L52150 user 2026-10-06T19:52:49.190Z
+RESULT [toolu_01JV99587kuUzahBjPDGEYNC]: 24:const DESIGN = MACH6.designSpeedKmh / 3.6;
+26:function fresh(shell, csp = true, designSpeed = DESIGN) {
+28:  return colourMap(validate(p, r.segments, { csp, ...(designSpeed == null ? {} : { designSpeed }) }), { path: p });
+37:  assert.deepStrictEqual(levels(ctl.state.map), levels(fresh(shell)));
+51:  assert.deepStrictEqual(ctl.state.result.lines.map((l) => [l.s, l.u, l.fN_g]), (() => { const r = shell.getState().resolved, p = G.buildPath(r.segments, { step: STEP }); return validate(p, r.segme
+52:  assert.deepStrictEqual(levels(ctl.state.map), levels(fresh(shell)));
+62:  assert.deepStrictEqual(levels(ctl.state.map), levels(fresh(shell)));
+71:  assert.deepStrictEqual(levels(ctl.state.map), levels(fresh(shell)));
+73:  assert.deepStrictEqual(levels(ctl.state.map), levels(fresh(shell)));
+85:  assert.deepStrictEqual(levels(ctl.state.map), levels(fresh(shell, false)));
+110:  assert.deepStrictEqual(levels(ctl.state.map), levels(fresh(shell)));
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52152 assistant 2026-10-06T19:52:58.374Z
+TOOL_USE Bash [toolu_01CgvKmJVKtjeKUt4DPDQQeS]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && node - <<'EOF'\nconst fs = require('fs');\nconst edit = (f, pairs) => { let t = fs.readFileSync(f, 'utf8'); const E = t.includes('\\r\\n') ? '\\r\\n' : '\\n'; for (let [a, b] of pairs) { a = a.replace(/\\n/g, E); b = b.replace(/\\n/g, E); if (t.split(a).length !== 2) throw new Error(f + ': anchor: ' + a.slice(0, 70)); t = t.replace(a, b); } fs.writeFileSync(f, t); };\nconst f = 'app/test/validate-ui-panel.test.js';\nlet t = fs.readFileSync(f, 'utf8'); const E = t.includes('\\r\\n') ? '\\r\\n' : '\\n';\n// B's D256 item-1 row goes WITH the box (the keeper's de
+…[1498 chars cut]…
+mh / 3.6;\\n`, ``],\n]);\nEOF\ngrep -n \"MACH6\" app/test/validate-ui-panel.test.js | head -3; git rm -q app/validate-ui/speed.js app/test/validate-ui-speed.test.js && git status --short","description":"Amend the panel test rows; remove the slider module and its tests"}
+--- L52153 user 2026-10-06T19:52:58.750Z
+RESULT [toolu_01CgvKmJVKtjeKUt4DPDQQeS]: [stdin]:2
+const edit = (f, pairs) => { let t = fs.readFileSync(f, 'utf8'); const E = t.includes('\r\n') ? '\r\n' : '\n'; for (let [a, b] of pairs) { a = a.replace(/\n/g, E); b = b.replace(/\n/g, E); if (t.split(a).length !== 2) throw new Error(f + ': anchor: ' + a.slice(0, 70)); t = t.replace(a, b); } fs.writeFileSync(f, t); };
+                                                                                                                                                                                                                          ^
+
+Error: app/test/validate-ui-panel.test.js: anchor: 'the picker's design speed gives loads, or this equality proves nothin
+    at edit ([stdin]:2:225)
+    at [stdin]:10:1
+[90m    at runScriptInThisContext (node:internal/vm:219:10)[39m
+[90m    at node:internal/process/execution:451:12[39m
+    at [stdin]-wrapper:6:24
+[90m    at runScriptInContext (node:internal/process/execution:449:60)[39m
+[90m    at evalFunction (node:internal/process/execution:283:30)[39m
+[90m    at evalTypeScript (node:internal/process/execution:295:3)[39m
+[90m    at node:internal/main/eval_stdin:51:5[39m
+[90m    at Socket.<anonymous> (node:internal/process/execution:205:5)[39m
+
+Node.js v24.14.1
+13:const { MACH6 } = require('../../src/validate/limits.js');
+24:const DESIGN = MACH6.designSpeedKmh / 3.6;
+ M app/core/jumpplan.js
+ M app/core/overlapjob.js
+ M app/core/panel.js
+ M app/test/validate-ui-panel.test.js
+D  app/test/validate-ui-speed.test.js
+ M app/validate-ui/index.js
+ M app/validate-ui/labels.js
+ M app/validate-ui/panel.js
+D  app/validate-ui/speed.js
+ M src/export/fromwords.js
+ M src/validate/index.js
+?? test/validate_fullspeed.test.js
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52156 assistant 2026-10-06T19:53:01.785Z
+TEXT: The row removal landed but the follow-up edits did not; I'm finishing them with the Edit tool.
+--- L52157 assistant 2026-10-06T19:53:02.570Z
+TOOL_USE Read [toolu_018XAPjP18oTz3o8rU3tiVTy]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\app\\test\\validate-ui-panel.test.js","offset":20,"limit":10}
+--- L52158 user 2026-10-06T19:53:02.598Z
+RESULT [toolu_018XAPjP18oTz3o8rU3tiVTy]: 20	const levels = (map) => map.stations.map((e) => Array.from(e.levels));
+21	// CHANGED 2026-09-27 (D169): the reference now validates at the controller's own default design speed, the picker's
+22	// 460 km/h (FINDINGS.md:476); before D169 the controller had none. The made-up lap-sim car these tests used to force
+23	// loads onto a shell-built track (accel 15, inferred) is gone: the picker is how a shell-built track gets loads now.
+24	const DESIGN = MACH6.designSpeedKmh / 3.6;
+25	/** What a fresh, full validation of the shell's current document colours: the reference every live state must equal. */
+26	function fresh(shell, csp = true, designSpeed = DESIGN) {
+27	  const r = shell.getState().resolved, p = G.buildPath(r.segments, { step: STEP });
+28	  return colourMap(validate(p, r.segments, { csp, ...(designSpeed == null ? {} : { designSpeed }) }), { path: p });
+29	}
+--- L52161 assistant 2026-10-06T19:53:07.856Z
+TOOL_USE Edit [toolu_01VG7BVC8TGnHkJFTu8NMcTr]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\app\\test\\validate-ui-panel.test.js","old_string":"// CHANGED 2026-09-27 (D169): the reference now validates at the controller's own default design speed, the picker's\n// 460 km/h (FINDINGS.md:476); before D169 the controller had none. The made-up lap-sim car these tests used to force\n// loads onto a shell-built track (accel 15, inferred) is gone: the picker is how a shell-built track gets loads now.\nconst DESIGN = MACH6.designSpeedKmh / 3.6;\n/** What a fresh, full validation of the shell's current document colours: the reference ev
+…[630 chars cut]…
+cument colours: the reference every live state must equal. */\nfunction fresh(shell, csp = true) {\n  const r = shell.getState().resolved, p = G.buildPath(r.segments, { step: STEP });\n  return colourMap(validate(p, r.segments, { csp, fullSpeed: true }), { path: p });"}
+--- L52162 user 2026-10-06T19:53:07.907Z
+RESULT [toolu_01VG7BVC8TGnHkJFTu8NMcTr]: The file C:\Users\nname\Desktop\worktrees\e-maxspeed-wt\app\test\validate-ui-panel.test.js has been updated successfully.
+--- L52163 assistant 2026-10-06T19:53:09.944Z
+TOOL_USE Bash [toolu_01QAi8RqjAgjSdMsQaARM6yr]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && sed -i \"s/'the picker\\\\\\\\'s design speed gives loads, or this equality proves nothing'/'full speed gives loads, or this equality proves nothing'/; s/validate(p, r.segments, { csp: true, designSpeed: DESIGN })/validate(p, r.segments, { csp: true, fullSpeed: true })/\" app/test/validate-ui-panel.test.js; grep -n \"DESIGN\\|MACH6\\|picker\\|fullSpeed\\|REMOVED D256\" app/test/validate-ui-panel.test.js | cut -c1-180; file app/test/validate-ui-panel.test.js","description":"Fix the remaining two references; verify"}
+--- L52170 user 2026-10-06T19:53:10.517Z
+RESULT [toolu_01QAi8RqjAgjSdMsQaARM6yr]: 13:const { MACH6 } = require('../../src/validate/limits.js');
+22:// lap), so the reference validates with { fullSpeed: true }. Was, from D169 (2026-09-27): the picker's 460 km/h (FINDINGS.md:476).
+26:  return colourMap(validate(p, r.segments, { csp, fullSpeed: true }), { path: p });
+48:  assert.ok(ctl.state.result.lines.length > 0, 'the picker\'s design speed gives loads, or this equality proves nothing');
+49:  assert.deepStrictEqual(ctl.state.result.lines.map((l) => [l.s, l.u, l.fN_g]), (() => { const r = shell.getState().resolved, p = G.buildPath(r.segments, { step: STEP }); return
+78:  // 60°, red for vanilla AC. The half-pipe the font picker gives now is the MEASURED one, with no wall (C's fonts, D182).
+117:// REMOVED D256 BUILD (the keeper chose "always max", 13:2x: the slider and its off box are gone): B's row 'D256: the design-speed value has a
+app/test/validate-ui-panel.test.js: Unicode text, UTF-8 text
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52175 assistant 2026-10-06T19:53:13.206Z
+TOOL_USE Read [toolu_014NSqzbVebCCJHm79CK6F7j]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\app\\test\\validate-ui-panel.test.js","offset":48,"limit":2}
+--- L52176 user 2026-10-06T19:53:13.232Z
+RESULT [toolu_014NSqzbVebCCJHm79CK6F7j]: 48	  assert.ok(ctl.state.result.lines.length > 0, 'the picker\'s design speed gives loads, or this equality proves nothing');
+49	  assert.deepStrictEqual(ctl.state.result.lines.map((l) => [l.s, l.u, l.fN_g]), (() => { const r = shell.getState().resolved, p = G.buildPath(r.segments, { step: STEP }); return validate(p, r.segments, { csp: true, fullSpeed: true }).lines.map((l) => [l.s, l.u, l.fN_g]); })());
+--- L52178 assistant 2026-10-06T19:53:15.248Z
+TOOL_USE Edit [toolu_01LcBnxPM6tHg62Wo4QUy8yt]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\app\\test\\validate-ui-panel.test.js","old_string":"'the picker\\'s design speed gives loads, or this equality proves nothing'","new_string":"'full speed gives loads, or this equality proves nothing'"}
+--- L52179 user 2026-10-06T19:53:15.278Z
+RESULT [toolu_01LcBnxPM6tHg62Wo4QUy8yt]: The file C:\Users\nname\Desktop\worktrees\e-maxspeed-wt\app\test\validate-ui-panel.test.js has been updated successfully.
+--- L52180 assistant 2026-10-06T19:53:16.884Z
+TOOL_USE Bash [toolu_01WykVkidDzTUdyVKHQt3wiy]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && grep -c \"MACH6\" app/test/validate-ui-panel.test.js; grep -rln \"validate-ui/speed\\|validate-ui-speed\\|speed\\.js\" app src test docs README.md app/README.md tools 2>/dev/null; grep -n -i \"slider\\|design speed\\|design-speed\" README.md app/README.md docs/*.md 2>/dev/null | cut -c1-200 | head -20","description":"Check leftover references to the slider and speed.js"}
+--- L52181 user 2026-10-06T19:53:17.314Z
+RESULT [toolu_01WykVkidDzTUdyVKHQt3wiy]: 1
+app/test/validate-ui-jumpdefault.test.js
+app/README.md:156:  each flight off the built path (lip, gap, drop, landing pitch) and computes the car's ballistic arc with the core's `flightY` at the design speed the ramp is sized for (`MACH6.desi
+docs/ARCHITECTURE.md:69:  (a half-pipe's floor and wall load differently), with v(s) from a design speed or a point-mass lap sim.
+docs/ARCHITECTURE.md:197:  road and how often repeated objects pass per second, at the design speed.
+docs/FINDINGS.md:454:## 3d. How fast, and how hard it accelerates: the design speed and the lap sim (2026-09-27; `node tools/speed.cjs`)
+docs/FINDINGS.md:455:The builder needs two numbers FINDINGS did not have: a **design speed** to compute loads with, and the car's
+docs/FINDINGS.md:476:- **The design-speed default is the pooled p50, 460 km/h:** the speed a T-180 is at on a typical frame of a clean lap.
+docs/INTERFACES.md:60:| `speed` | m/s or `null` | design speed for validation, if the document gives one; `null` means use the lap sim | §4 `:69` "v(s) from a design speed or a point-mass lap sim" |
+docs/INTERFACES.md:230:- A lap needs design speeds or `opts.car.accel`. The car's acceleration is not in FINDINGS, so no default is
+docs/STATUS_0.2.2.md:76:| The specific force per lateral line, from a design speed or the lap sim | tested | `src/validate/index.js` · `test/validate.test.js`, `test/validate_speed.test.js` |
+docs/STATUS_0.2.2.md:77:| Design speed and acceleration measured from replays | tested | `docs/FINDINGS.md` §3d, `tools/speed.cjs`, `src/validate/limits.js` · `test/validate_speed.test.js` |
+docs/STATUS_0.2.2.md:123:| Hotlap start: a run-up to the design speed | tested | `src/markers/layout.js` `runUpM` · `test/markers_track.test.js` |
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52185 assistant 2026-10-06T19:53:21.041Z
+TOOL_USE Bash [toolu_013GRn8cEeKzJZszPhA64BtC]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && sed -i '/^const { MACH6 } = require(.\\.\\.\\/\\.\\.\\/src\\/validate\\/limits\\.js.);\\r\\?$/d' app/test/validate-ui-panel.test.js; grep -c MACH6 app/test/validate-ui-panel.test.js; grep -n -i \"speed\\|valid\\|checker\\|red\\b\" README.md | cut -c1-220 | head -30","description":"Drop unused import; find the README checker lines"}
+--- L52192 user 2026-10-06T19:53:21.302Z
+RESULT [toolu_013GRn8cEeKzJZszPhA64BtC]: 0
+3:A desktop app that builds **Assetto Corsa** tracks, for normal cars and for **T-180** tracks (the Speed Racer cars
+51:- **Width** (m). **Width like…** offers the measured widths of known T-180 tracks.
+74:  open end, mirrored if you tick **mirror on insert**. Pieces can be renamed and deleted; a saved piece is never
+89:## The checker
+91:The track is checked as you build. Everything it finds is listed in the checker panel in plain words, grouped by place,
+95:- A **red** blocks export. Export refuses while any red remains and names every one.
+97:  speed is a warning ("tune it by driving it in AC"); a jump with no landing at all is red.
+133:| a drag on a handle | change that value; Shift for a tenth of the speed, Ctrl to snap to round steps |
+136:The camera keys are ignored while you type in a text field.
+154:- **Not yet checked in AC:** "See it in Assetto", which has never been run. That AC accepts the AI line's speeds. A jump's
+156:- **One car's limits:** the checker judges every track against the Mach 6, the T-180 car whose limits were measured
+171:[`app/README.md`](app/README.md), and the measurements behind the checker are in [`docs/FINDINGS.md`](docs/FINDINGS.md).
+175:studied here (Sakura Speedway and Rainbow Road above all). Their tracks are read locally for measurement only; none of
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52195 assistant 2026-10-06T19:53:22.803Z
+TOOL_USE Read [toolu_01Ciutvc5pzZUeLySEFKFuHL]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\README.md","offset":88,"limit":14}
+--- L52196 user 2026-10-06T19:53:22.840Z
+RESULT [toolu_01Ciutvc5pzZUeLySEFKFuHL]: 88	
+89	## The checker
+90	
+91	The track is checked as you build. Everything it finds is listed in the checker panel in plain words, grouped by place,
+92	and a click on a place takes the camera there. For example: *the road passes through itself here*, *a hole in the
+93	road*, *this closed tube is narrower than 9.74 m across the road: the chase camera and a T-180 do not fit inside it*.
+94	
+95	- A **red** blocks export. Export refuses while any red remains and names every one.
+96	- A **warning** does not block. **Jumps are tuned by driving:** a jump whose car may fly past its landing at the lap's
+97	  speed is a warning ("tune it by driving it in AC"); a jump with no landing at all is red.
+98	
+99	The limits come from measurements of real T-180 tracks and replays, not guesses ([`docs/FINDINGS.md`](docs/FINDINGS.md)).
+100	
+101	## Exporting
+--- L52201 assistant 2026-10-06T19:53:25.212Z
+TEXT: The README never mentions the slider; I'm adding one line saying the checker always runs at full speed, since that is now how it behaves.
+--- L52202 assistant 2026-10-06T19:53:27.504Z
+TOOL_USE Edit [toolu_01FQQXR7HGEapHFXqmsrkEA6]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\README.md","old_string":"  speed is a warning (\"tune it by driving it in AC\"); a jump with no landing at all is red.\n","new_string":"  speed is a warning (\"tune it by driving it in AC\"); a jump with no landing at all is red.\n- **Always at full speed:** loads are checked at the car's top speed, 970 km/h, on an unfinished track, and on the lap\n  the car would drive on a closed one, the same as the export; there is no speed to set. Where the road leaves the car at\n  that speed it is red; where the road faces the ground the list says the slowest speed that still holds the car there\n  (\"holds the car only above N km/h\"), and it is red only where no speed would.\n"}
+--- L52203 user 2026-10-06T19:53:27.547Z
+RESULT [toolu_01FQQXR7HGEapHFXqmsrkEA6]: The file C:\Users\nname\Desktop\worktrees\e-maxspeed-wt\README.md has been updated successfully.
+--- L52204 assistant 2026-10-06T19:53:28.711Z
+TOOL_USE Bash [toolu_01HUhVkg47u7efr4XZdTpp4w]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && sed -n 1,30p app/test/validate-ui-jumpdefault.test.js | cut -c1-200; grep -n \"^test(\" app/test/validate-ui-jumpdefault.test.js | cut -c1-200","description":"Read the jumpdefault test that mentions the slider"}
+--- L52205 user 2026-10-06T19:53:28.957Z
+RESULT [toolu_01HUhVkg47u7efr4XZdTpp4w]: // D179: THE FIRST JUMP MUST NOT BE RED BY DEFAULT. A jump with no speed of its own sizes its landing ramp for the design
+// speed (A's src/doc: vocab.js LANDING, resolve.js landingRamp, shell.js setDesignSpeed); validation checks it at the same
+// speed (app/validate-ui). The jump is the LAST word in these tests, so only its own ramp can catch the car: the case a
+// new user meets on placing a jump at the build head. Run: node --test --test-concurrency=4 app/test/validate-ui-jumpdefault.test.js
+'use strict';
+const test = require('node:test');
+const assert = require('node:assert');
+const { createShell } = require('../shell.js');
+const D = require('../../src/doc/index.js');
+const G = require('../../src/geom/index.js');
+const { validate } = require('../../src/validate/index.js');
+const { landingRamp } = require('../../src/validate/jumps.js');
+const { MACH6 } = require('../../src/validate/limits.js');
+const { createValidationController } = require('../validate-ui/panel.js');
+
+const mem = () => { const docs = new Map(); let lib = null; return { saveDoc: async (n, t) => docs.set(n, t), openDoc: async (n) => docs.get(n), listDocs: async () => [...docs.keys()], saveLibrary: as
+const DEG = Math.PI / 180;
+/** A new user's track: two straights and a jump at the head, with the panel's controller following it. */
+async function firstJump() {
+  const shell = await createShell({ storage: mem(), autosaveMs: 0 }), ctl = createValidationController(shell);
+  for (const w of ['straight', 'straight', 'jump']) shell.place(w);
+  return { shell, ctl };
+}
+/** Move the slider the way the panel does (app/validate-ui/index.js): the shell's design speed, then validation's. */
+const slide = ({ shell, ctl }, kmh) => { shell.setDesignSpeed(kmh); ctl.s
+…[705 chars cut]…
+and nowhere else`, async () => {
+75:test('a jump sculpted past what the car can clear WARNS (amber, D250), and says so: the landings that miss, the heaviest fall', async () => {
+92:test('the ramp resize is DERIVED: no undo step, the document unchanged, and the same speed gives the same ramp again', async () => {
+105:test('a CLOSED loop keeps its ramps at the default when the slider moves, so it stays closed', async () => {
+117:test('resolve itself refuses a design speed that is not a positive number (a named ResolveError), and takes null as the default', () => {
+122:test('a design speed that is not a positive number is refused with a message, and changes nothing', async () => {
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52209 assistant 2026-10-06T19:53:37.067Z
+TEXT: Next: running the new rows red on the base, then the targeted set on the build.
+--- L52210 assistant 2026-10-06T19:53:41.391Z
+TOOL_USE Bash [toolu_01MMjaKpK356Gm3YetFvsybU]: {"command":"S=C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad; B=C:/Users/nname/Desktop/worktrees/e-maxspeed-base; cat C:/Consonance/data/heavy-run.lock 2>/dev/null | cut -c1-160; echo; cp C:/Users/nname/Desktop/worktrees/e-maxspeed-wt/test/validate_fullspeed.test.js $B/test/; NODE_OPTIONS=\"--require $S/suite/serial-shim.js\" CONSONANCE_HEAVY_WAIT_MS=7200000 node $S/locked.js \"D256 red rows on base\" $B $S/maxspeed/red-base.tap --test --test-concurrency=1 --test-reporter=tap test/validate_fullspeed.test.js; grep -E \"^(not )?ok|^# (pass|fail)\" $S/maxspeed/red-base.tap; rm $B/test/validate_fullspeed.test.js","description":"Run the new rows on the base worktree (expect red)","timeout":600000,"run_in_background":true}
+--- L52211 user 2026-10-06T19:53:41.510Z
+RESULT [toolu_01MMjaKpK356Gm3YetFvsybU]: Command running in background with ID: bx7kj4sx8. Output is being written to: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\tasks\bx7kj4sx8.output. You will be notified when it completes. To check interim output, use Read on that file path.
+--- L52220 assistant 2026-10-06T19:53:43.516Z
+TOOL_USE Read [toolu_01EwvWqeYRTLttTrjmbVm5uJ]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\app\\test\\validate-ui-jumpdefault.test.js","offset":31,"limit":10}
+--- L52221 user 2026-10-06T19:53:43.543Z
+RESULT [toolu_01EwvWqeYRTLttTrjmbVm5uJ]: 31	test('the default jump at the default design speed (460 km/h, FINDINGS.md:476) is clean: no red, both landings caught', async () => {
+32	  const { ctl, shell } = await firstJump();
+33	  assert.strictEqual(ctl.designSpeedKmh, MACH6.designSpeedKmh);
+34	  assert.deepStrictEqual(reds(ctl), [], JSON.stringify(reds(ctl)));
+35	  const jp = ctl.state.result.jumps[0];
+36	  assert.deepStrictEqual(jp.landings.map((L) => [L.g, L.caught]), [[3.2, true], [6.3, true]]);
+37	  assert.strictEqual(Math.round(rampOf(shell).landing.speed * 3.6), MACH6.designSpeedKmh, 'the ramp was sized for the default design speed');
+38	});
+39	
+40	test('resolve with no speed given sizes the ramp for the same default, so every caller agrees (the export, the connector)', () => {
+--- L52225 assistant 2026-10-06T19:53:49.209Z
+TOOL_USE Edit [toolu_01Kgy2HtdwBPgq2xxn8WxCW4]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\app\\test\\validate-ui-jumpdefault.test.js","old_string":"test('the default jump at the default design speed (460 km/h, FINDINGS.md:476) is clean: no red, both landings caught', async () => {\n  const { ctl, shell } = await firstJump();\n  assert.strictEqual(ctl.designSpeedKmh, MACH6.designSpeedKmh);\n  assert.deepStrictEqual(reds(ctl), [], JSON.stringify(reds(ctl)));","new_string":"// CHANGED D256 BUILD (the keeper chose \"always max\"): the app's controller has no design speed of its own now (full speed), so this row PINS the\n// ramp'
+…[205 chars cut]…
+ync () => {\n  const { shell } = await firstJump(), ctl = createValidationController(shell, { designSpeedKmh: MACH6.designSpeedKmh });\n  assert.strictEqual(ctl.designSpeedKmh, MACH6.designSpeedKmh);\n  assert.deepStrictEqual(reds(ctl), [], JSON.stringify(reds(ctl)));"}
+--- L52226 user 2026-10-06T19:53:49.260Z
+RESULT [toolu_01Kgy2HtdwBPgq2xxn8WxCW4]: The file C:\Users\nname\Desktop\worktrees\e-maxspeed-wt\app\test\validate-ui-jumpdefault.test.js has been updated successfully.
+--- L52227 assistant 2026-10-06T19:53:52.700Z
+TOOL_USE Edit [toolu_01MWh64YqxoqT22579635NuR]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\app\\test\\validate-ui-jumpdefault.test.js","old_string":"  assert.strictEqual(Math.round(rampOf(shell).landing.speed * 3.6), MACH6.designSpeedKmh, 'the ramp was sized for the default design speed');\n});\n","new_string":"  assert.strictEqual(Math.round(rampOf(shell).landing.speed * 3.6), MACH6.designSpeedKmh, 'the ramp was sized for the default design speed');\n});\n\ntest('D256: at the app\\'s own default, FULL speed (970 km/h on this open track), the first jump is still not red: a landing the car flies past only warns', async () => {\
+…[45 chars cut]…
+rt.strictEqual(ctl.designSpeedKmh, undefined, 'no design speed: full speed');\n  assert.ok(ctl.state.result.speed.every((x) => Math.round(x.v * 3.6) === MACH6.vmaxKmh), 'checked at 970 km/h');\n  assert.deepStrictEqual(reds(ctl), [], JSON.stringify(reds(ctl)));\n});\n"}
+--- L52228 user 2026-10-06T19:53:52.750Z
+RESULT [toolu_01MWh64YqxoqT22579635NuR]: The file C:\Users\nname\Desktop\worktrees\e-maxspeed-wt\app\test\validate-ui-jumpdefault.test.js has been updated successfully.
+--- L52238 assistant 2026-10-06T19:53:57.751Z
+TOOL_USE Bash [toolu_0121GNLg36Get7NTi3Y1HTih]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && sed -i 's#^// the slider.s range and step (app/validate-ui/speed.js: 50 km/h to MACH6.vmaxKmh, step 5)#// the range and step the design-speed slider had (app/validate-ui/speed.js, removed in D256: 50 km/h to MACH6.vmaxKmh, step 5); a host can still pin any of them#' app/test/validate-ui-jumpdefault.test.js; grep -n \"range and step\" app/test/validate-ui-jumpdefault.test.js | cut -c1-120; grep -n \"design speed box\\|Validation is using\" app/test/*.js | cut -c1-80","description":"Update stale comment; find tests of the jump note"}
+--- L52239 user 2026-10-06T19:53:58.055Z
+RESULT [toolu_0121GNLg36Get7NTi3Y1HTih]: 28:// the range and step the design-speed slider had (app/validate-ui/speed.js, removed in D256: 50 km/h to MACH6.vmaxKm
+app/test/core-pieces-ui.test.js:550:  shell.setDesignSpeed(300); gap.oninput();
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L52242 assistant 2026-10-06T19:53:59.810Z
+TOOL_USE Read [toolu_014kFK6yr5U9kbeEioEjQxwm]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\app\\test\\core-pieces-ui.test.js","offset":540,"limit":14}
+--- L52243 user 2026-10-06T19:53:59.845Z
+RESULT [toolu_014kFK6yr5U9kbeEioEjQxwm]: 540	  assert.match(P1.text('jump flight'), /^Add jump takes off from the end of the road/); assert.match(P1.text('jump flight'), /The landing ramp is sized for 460 km\/h, fixed today\.$/, 'the speed it is sized for, before any hover');
+541	  gap.value = '15'; drop.value = '1'; land.value = '-2';   // (a flat take-off: at 460 km/h both measured falls clear 15 m)
+542	  assert.equal(P1.panel.handles.handles().length, 10, 'the Extend handles are up'); P1.button('Add jump').onmouseenter();
+543	  assert.equal(S.ghostJump, true, 'the ghost is a jump\'s'); assert.equal(S.lastCandidate.jump, true); assert.ok(S.lastCandidate.segments.some((g) => g.kind === 'gap'));
+544	  const note = P1.text('jump flight'); assert.match(note, /ballistic, at 460 km\/h, falling at 3\.2 g and 6\.3 g/); assert.match(note, /3\.2 g: comes down \d+\.\d m after the lip/); assert.match(note, /6\.3 g: comes down \d+\.\d m after the lip/); assert.match(note, /The ramp is \d+\.\d m long\./); assert.match(note, /sized for 460 km\/h, fixed today; jumps are tuned by driving them in AC, so a landing the car may fly past at the lap's speed is a warning, not a red\./) /* CHANGED D250: the keeper has decided */;
+545	  for (let i = 0; i < 3; i++) P1.frame(); assert.deepEqual(P1.panel.handles.handles(), [], 'no Extend handles on a jump\'s ghost');
+546	  assert.equal(P1.panel.flights.flights().length, 1, 'the flight overlay reads the ghost\'s flight'); assert.equal(P1.panel.flights.lines().length, 2, 'two dashed arcs');
+547	  // typing changes the ghost and the words
+548	  const g0 = S.ghosts; gap.value = '120'; drop.value = '3'; land.value = '-3'; gap.oninput(); assert.ok(S.ghosts > g0, 'the ghost followed the field'); assert.match(P1.text('jump flight'), /6\.3 g: doe
+…[14 chars cut]…
+e landing at 460 km\/h \(it needs \d+ km\/h\): the jump is red\./);
+549	  // a validation speed other than the ramp's is said
+550	  shell.setDesignSpeed(300); gap.oninput(); assert.match(P1.text('jump flight'), /Validation is using 300 km\/h \(the design speed box\), so the jump can be red there even though the ramp is sized for 460\./); shell.setDesignSpeed(null);
+551	  // a refused jump: the reason in plain words, no ghost
+552	  gap.value = '0'; gap.oninput(); assert.match(P1.text('jump flight'), /^No preview of this jump: The gap must be more than 0 m: it is how far the car flies along the ground\./); assert.equal(S.ghost, null, 'no ghost for a refused jump');
+553	  // leaving the button clears the ghost, and the Extend handles come back
+--- L52247 assistant 2026-10-06T19:54:06.955Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Edit [toolu_015YxDGg6JkoHMaW9iTTHBnn]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-maxspeed-wt\\app\\test\\core-pieces-ui.test.js","old_string":"  shell.setDesignSpeed(300); gap.oninput(); assert.match(P1.text('jump flight'), /Validation is using 300 km\\/h \\(the design speed box\\), so the jump can be red there even though the ramp is sized for 460\\./); shell.setDesignSpeed(null);","new_string":"  // CHANGED D256 BUILD: there is no design speed box; with none pinned the note says validation is at FULL speed, and a host's pinned speed is still said\n  assert.match(P1.text('jump flight'), /Validation checks at full speed \\(970 km\\/h on an open track, the ghost lap on a closed one\\), so this jump may be listed as a warning even though its ramp is sized for 460 km\\/h\\./);\n  shell.setDesignSpeed(300); gap.oninput(); assert.match(P1.text('jump flight'), /Validation is using 300 km\\/h, so the jump can be listed there even though the ramp is sized for 460\\./); shell.setDesignSpeed(null);"}
+--- L52248 user 2026-10-06T19:54:07.008Z
+RESULT [toolu_015YxDGg6JkoHMaW9iTTHBnn]: The file C:\Users\nname\Desktop\worktrees\e-maxspeed-wt\app\test\core-pieces-ui.test.js has been updated successfully.
+--- L52249 assistant 2026-10-06T19:54:07.780Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_01TxWbRJHjECaWHtTaj1YhVm]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-maxspeed-wt && grep -n \"the jump is red\" app/core/*.js src -r | cut -c1-200","description":"Find the stale \"the jump is red\" string"}

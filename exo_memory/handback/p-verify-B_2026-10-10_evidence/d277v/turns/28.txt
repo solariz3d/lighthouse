@@ -1,0 +1,1409 @@
+MESSAGE 28  msg_011Cfjn9az9GJLAFu2Xx8xnB  seat A  ts 2026-10-05T21:12:27.237Z  turn L64582..L65019 (next prompt L65026)
+CLAIMS:
+  [msg_011Cfjn9az9GJLAFu2Xx8xnB|2] **"the native piece commands … are written."** Check that the native command handlers exist, for example in the Rust source, and are registered.
+
+--- L64582 user 2026-10-05T20:57:52.701Z
+USER: 
+
+<pasted_content id="e589">
+[chair:MAIN] D240 UI HALF: saved pieces in the builder. t180 main is now 12ab427 (Equation mode only, the safe Close, the test export, backups, keys).
+Step one: a fresh worktree off main; cherry-pick your b08c3c7 and C's 2b3c013 (pieces-f1-c-d240: parse runs ONE checkDoc, 2,000 pieces in 20 ms).
+Then build, per the plan (exo_memory/loop/plan_t180_equation_only_pieces_2026-10-04.md, D240 lines 40–52, plus the amendment in plan_t180_jumps_open_export_2026-10-05.md lines 39–44):
+- select a piece in the preview (click; shift-click for a run) → Save as piece… (named, written to %APPDATA%\...\pieces\<name>.t180piece) or Delete;
+- a Pieces library list: name, length, turn, climb, a small plan thumbnail; Add at head; Mirror on insert; rename; delete;
+- MIDDLE DELETE MUST PREVIEW, the librarian's ruling (C found it re-joins and shifts the far side 357 of 357 times): per-piece displacement, the overlap check, Apply/Cancel, backupNow first, the same way B's Close previews. A head delete is simple.
+Tier: FEEL for the UI. Targeted tests plus a real-window check using T180_TEST_APP_DATA (NEVER the keeper's real app-data). NO mutation harnesses (the keeper's 09-29 rule). The core's byte-identical tests must still pass; fixtures 0 of 9.
+Hand-back: exo_memory/handback/p-pieces-ui-A_2026-10-05.md, plus your map line.
+SOURCES: `git -C C:/Users/nname/Desktop/t180-track-builder log --oneline -1 2b3c013`
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: a quick non-author look, land and install, then D244 handles and D243 jumps, unless the output says otherwise
+</pasted_content id="e589">
+
+--- L64602 assistant 2026-10-05T20:57:56.469Z
+TOOL_USE Bash [toolu_01NCWt2NVwoJMWy79KiuWiP3]: {"command":"cd C:/Users/nname/Desktop/t180-track-builder && git log --oneline -1 main; git log --oneline -1 2b3c013; git log --oneline -1 b08c3c7; git branch --list \"pieces-*\" | head; git worktree list | head -20; cat C:/Consonance/data/heavy-run.lock 2>/dev/null | cut -c1-160"}
+--- L64603 user 2026-10-05T20:57:57.465Z
+RESULT [toolu_01NCWt2NVwoJMWy79KiuWiP3]: 12ab427 D243a fixes after B's look: a closed track is refused the test export; the button's path is tested
+2b3c013 D240 F1: a saved piece is checked by one checkDoc, not piece by piece
+b08c3c7 Saved pieces, the core half (D240), with delete: schema t180b.piece/1
++ pieces-core-a-d240
++ pieces-f1-c-d240
+C:/Users/nname/Desktop/t180-track-builder                                                                                                         12ab427 [main]
+C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b/scratchpad/main-build             dbb92b6 (detached HEAD)
+C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d187/base-wt    d26ef85 (detached HEAD)
+C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d190/base-c964  c964c2d (detached HEAD)
+C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d195/base-wt    4ccdd58 (detached HEAD)
+C:/Users/nname/Desktop/e-d188-wt                                                                                                                  7b52f2f (detached HEAD) prunable
+C:/Users/nname/Desktop/e-d189-wt                                                                                                                  0bf9911 (detached HEAD) prunable
+C:/Users/nname/Desktop/worktrees/a-d195-wt                                                                                                        90e8ebf (detached HEAD)
+C:/Users/nname/Desktop/worktrees/a-d224-base-wt                               
+…[1417 chars cut]…
+         b08c3c7 [pieces-core-a-d240]
+C:/Users/nname/Desktop/worktrees/a-refused-wt                                                                                                     ee3df09 [refused-a-d234]
+C:/Users/nname/Desktop/worktrees/a-scroll-wt                                                                                                      229b9cc [scroll-a-d235]
+C:/Users/nname/Desktop/worktrees/a-speed-wt                                                                                                       cb14f5b [speed-a-d235]
+{"pid":25632,"seat":"12fb81f6","cmd":"B D242 tphooks","started":"2026-10-05T20:57:11.616Z","token":"d22c2f72-4b50-4e0b-b1ed-6ea05e122b7b"}
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64606 assistant 2026-10-05T20:58:00.693Z
+TOOL_USE Bash [toolu_012tL78LiDmsJPLoy3Q4qskZ]: {"command":"cd C:/Users/nname/Desktop/t180-track-builder && git worktree add -q -b pieces-ui-a-d240 C:/Users/nname/Desktop/worktrees/a-piecesui-wt 12ab427 2>&1 | tail -2; cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && git cherry-pick b08c3c7 2>&1 | tail -4; git status --short | head"}
+--- L64607 user 2026-10-05T20:58:01.159Z
+RESULT [toolu_012tL78LiDmsJPLoy3Q4qskZ]:  5 files changed, 868 insertions(+)
+ create mode 100644 src/core/piece.js
+ create mode 100644 test/core_piece.test.js
+ create mode 100644 test/core_piece_mutation.test.js
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64609 assistant 2026-10-05T20:58:02.994Z
+TOOL_USE Bash [toolu_01LFBcWtw33MLo9FZ42B6HJb]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && git cherry-pick 2b3c013 2>&1 | tail -4; git status --short | head; git log --oneline -3; ls app app/core app/preview 2>/dev/null | head -80; wc -l app/core/*.js | tail -15"}
+--- L64610 user 2026-10-05T20:58:03.345Z
+RESULT [toolu_01LFBcWtw33MLo9FZ42B6HJb]: [pieces-ui-a-d240 c775694] D240 F1: a saved piece is checked by one checkDoc, not piece by piece
+ Date: Mon Oct 5 14:42:02 2026 -0600
+ 2 files changed, 20 insertions(+), 3 deletions(-)
+c775694 D240 F1: a saved piece is checked by one checkDoc, not piece by piece
+8728515 Saved pieces, the core half (D240), with delete: schema t180b.piece/1
+12ab427 D243a fixes after B's look: a closed track is refused the test export; the button's path is tested
+app:
+README.md
+camera
+closer.js
+core
+export
+index.html
+install
+lib
+markers
+onboarding
+palette
+preview
+share
+shell.js
+test
+testhook
+texmaker
+texture
+validate-ui
+
+app/core:
+coreshell.js
+index.js
+keys.js
+labels.js
+panel.js
+textures.js
+widthlike.js
+xsec.js
+
+app/preview:
+ACTOOLS-MS-PL.txt
+aclook.js
+acshaders.js
+batches.js
+coarse.js
+guides.js
+guideslayer.js
+index.js
+kn5look.js
+look.js
+preview.js
+renderer.js
+segkey.js
+smoke.html
+trackmodel.js
+   493 app/core/coreshell.js
+     5 app/core/index.js
+    40 app/core/keys.js
+   220 app/core/labels.js
+   284 app/core/panel.js
+   109 app/core/textures.js
+    35 app/core/widthlike.js
+    34 app/core/xsec.js
+  1220 total
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64613 assistant 2026-10-05T20:58:06.059Z
+TOOL_USE Read [toolu_01C6RvaabPjN1E75GhSqVvXj]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-piecesui-wt\\app\\core\\coreshell.js"}
+--- L64614 user 2026-10-05T20:58:06.266Z
+RESULT [toolu_01C6RvaabPjN1E75GhSqVvXj]: 1	// coreshell.js: the app's state and actions for the EQUATION CORE (the core spec's build step (d), D186, pane C). No DOM and no
+2	// Tauri, so it runs headless under node --test and unchanged in the webview (app/lib/cjs.js). Since D239 it is the app's ONLY builder
+3	// (the keeper: "can we keep only the equation mode?"): app/shell.js, the old piece builder's shell, is kept only as a test driver for
+4	// the shared preview and validation (its keys moved to app/core/keys.js; app/README.md says why).
+5	//
+6	//   const shell = await createCoreShell({ storage, exporter })
+7	//   shell.extend({ length, targets })   shell.candidate({ length, targets })   shell.undo()   shell.redo()
+8	//   shell.beginBrush({ mode, channel, s0, r })   shell.brushTo(delta)   shell.endBrush()      one undo step per drag
+9	//   shell.close()
+10	//   await shell.exportTo(dir)   shell.openExample(fitText, readText, name)   await shell.save(name)   await shell.open(name)
+11	//   shell.buildExport(opts)   shell.exportDoc()   shell.commitDoc(doc)                       (D239: install and share codes use them)
+12	//   shell.restore()   await shell.discardRecovery()   await shell.flushAutosave()   await shell.cleanExit()   (D239: autosave)
+13	//   await shell.backupNow(reason)   await shell.listVersions()   await shell.openVersion(file)   (D239 amendment: previous versions;
+14	//   every Save also moves the file it overwrites into track-backups, natively: src-tauri/src/backups.rs)
+15	//
+16	// AUTOSAVE AND CRASH RESTORE (D239, carried from the piece builder, app/shell.js, the same rules). While the track has unsaved changes it
+17	// is written (debounced by `autosaveMs`) through storage.saveAutosave as { schema: 1, kind: 'core', name, doc } with the docum
+…[42469 chars cut]…
+l0: 0, roll1: 0 } : g));
+481	  const p = buildPath(segments, { step: 2, closed: !open, ...(start ? { start } : {}) });
+482	  return Markers.defaultLayout(lift ? lift(p) : p, marked);
+483	}
+484	
+485	/** The road pieces overlapping [a, b] of the path's s (the adapter's s, flights and ramps included: sculpt.js pieceOffsets), for
+486	 *  close's "edited last". */
+487	function piecesIn(doc, a, b) {
+488	  const off = pieceOffsets(doc), out = [];
+489	  doc.pieces.forEach((P, i) => { if (P.type === 'road' && off[i] + P.length >= a && off[i] <= b) out.push(i); });
+490	  return out.length ? out : null;
+491	}
+492	
+493	module.exports = { createCoreShell, NAME_RE, PREFIX, BRUSH_MODES, STRAIGHT_K, piecesIn, straightPieces, startLayout, profilerOf };
+494	
+--- L64623 assistant 2026-10-05T20:58:12.673Z
+TOOL_USE Bash [toolu_016VGYup8BdtZfrrtcmMUJUX]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && ls src-tauri src-tauri/src; wc -l src-tauri/src/*.rs; grep -n \"fn \\|#\\[tauri::command\\]\" src-tauri/src/lib.rs | head -80"}
+--- L64624 user 2026-10-05T20:58:12.867Z
+RESULT [toolu_016VGYup8BdtZfrrtcmMUJUX]: src-tauri:
+Cargo.lock
+Cargo.toml
+build.rs
+capabilities
+icons
+release.cjs
+src
+tauri.conf.json
+
+src-tauri/src:
+ac.rs
+backups.rs
+lib.rs
+main.rs
+  336 src-tauri/src/ac.rs
+  292 src-tauri/src/backups.rs
+  578 src-tauri/src/lib.rs
+    6 src-tauri/src/main.rs
+ 1212 total
+29:pub fn valid_name(name: &str) -> bool {
+38:pub fn write_atomic(path: &Path, text: &str) -> Result<(), String> {
+48:pub fn track_names(dir: &Path) -> Result<Vec<String>, String> {
+69:pub fn test_app_data(var: Option<String>) -> Option<PathBuf> {
+74:fn data_dir(app: &tauri::AppHandle) -> Result<PathBuf, String> {
+82:fn tracks_dir(app: &tauri::AppHandle) -> Result<PathBuf, String> {
+87:fn track_path(app: &tauri::AppHandle, name: &str) -> Result<PathBuf, String> {
+94:#[tauri::command]
+95:fn list_tracks(app: tauri::AppHandle) -> Result<Vec<String>, String> {
+99:fn backups_dir(app: &tauri::AppHandle) -> Result<PathBuf, String> {
+106:#[tauri::command]
+107:fn save_track(app: tauri::AppHandle, name: String, text: String, stamp: Option<String>) -> Result<Option<String>, String> {
+115:#[tauri::command]
+116:fn backup_track(app: tauri::AppHandle, name: String, text: String, stamp: Option<String>) -> Result<String, String> {
+125:#[tauri::command]
+126:fn list_track_backups(app: tauri::AppHandle, name: String) -> Result<Vec<backups::Backup>, String> {
+134:#[tauri::command]
+135:fn open_track_backup(app: tauri::AppHandle, file: String) -> Result<String, String> {
+139:#[tauri::command]
+140:fn open_track(app: tauri::AppHandle, name: String) -> Result<String, String> {
+145:#[tauri::command]
+146:fn save_library(app: tauri::AppHandle, text: String) -> Result<(), String> {
+150:#[tauri::command]
+151:fn open_library(app: tauri::AppHandle) -> Result<Option<String>, String> {
+163:#[tau
+…[2067 chars cut]…
+  fn scratch(tag: &str) -> PathBuf {
+440:    fn the_test_app_data_seam_is_used_only_for_an_existing_absolute_folder() {
+451:    fn a_write_lands_whole_and_leaves_no_temporary_file() {
+462:    fn the_ac_guard_allows_only_t180b_folders_inside_content_tracks() {
+473:    fn export_paths_and_folder_names_cannot_leave_the_track_folder() {
+487:    fn base64_decodes_as_the_webview_encodes() {
+499:    fn an_export_writes_its_files_and_refuses_a_folder_it_did_not_write() {
+516:    fn only_an_empty_folder_made_directly_in_content_tracks_is_removed() {
+553:    fn a_dot_or_dot_dot_name_is_never_a_folder_to_remove() {
+570:    fn the_track_list_holds_only_valid_names_of_track_files_sorted() {
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64628 assistant 2026-10-05T20:58:15.587Z
+TEXT: Worktree `a-piecesui-wt` is up with both cherry-picks applied cleanly. I'm reading the app's storage, native commands and preview-selection code to design the UI half.
+--- L64629 assistant 2026-10-05T20:58:16.265Z
+TOOL_USE Bash [toolu_01F3ZCRbr37secc9ziyYAco8]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && sed -n 25,125p src-tauri/src/lib.rs; sed -n 400,420p src-tauri/src/lib.rs; grep -rn \"save_track\\|list_tracks\" app --include=*.js --include=*.html -l | head; grep -n \"saveDoc\\|listDocs\\|openDoc\\|backupDoc\" app/index.html | head -20"}
+--- L64630 user 2026-10-05T20:58:16.507Z
+RESULT [toolu_01F3ZCRbr37secc9ziyYAco8]: const TRACK_EXT: &str = "t180track";
+const LIBRARY_FILE: &str = "library.t180lib";
+
+/// 1 to 64 characters: ASCII letters, digits, space, '_' or '-', starting with a letter or digit.
+pub fn valid_name(name: &str) -> bool {
+    let bytes = name.as_bytes();
+    !bytes.is_empty()
+        && bytes.len() <= 64
+        && bytes[0].is_ascii_alphanumeric()
+        && bytes.iter().all(|b| b.is_ascii_alphanumeric() || matches!(b, b' ' | b'_' | b'-'))
+}
+
+/// Write `text` to `path` through a temporary file beside it, then rename it into place.
+pub fn write_atomic(path: &Path, text: &str) -> Result<(), String> {
+    let tmp = path.with_extension("tmp-write");
+    fs::write(&tmp, text).map_err(|e| format!("could not write {}: {e}", tmp.display()))?;
+    fs::rename(&tmp, path).map_err(|e| {
+        let _ = fs::remove_file(&tmp);
+        format!("could not move {} into place: {e}", path.display())
+    })
+}
+
+/// The names of the tracks in `dir`: every `<name>.t180track` whose name is valid, sorted.
+pub fn track_names(dir: &Path) -> Result<Vec<String>, String> {
+    let mut names = Vec::new();
+    for entry in fs::read_dir(dir).map_err(|e| format!("could not list {}: {e}", dir.display()))? {
+        let path = entry.map_err(|e| e.to_string())?.path();
+        if path.extension().and_then(|x| x.to_str()) != Some(TRACK_EXT) {
+            continue;
+        }
+        if let Some(stem) = path.file_stem().and_then(|s| s.to_str()) {
+            if valid_name(stem) {
+                names.push(stem.to_string());
+            }
+        }
+    }
+    names.sort();
+    Ok(names)
+}
+
+/// THE TEST APP-DATA SEAM (B's D239 look, F2; the real fix for C's 09:06 incident, when a window test run shared the keeper's folder while his
+/// app started): when and ON
+…[3893 chars cut]…
+ set_ac_root, install_track, get_see_it_setting, set_see_it_setting, see_it_in_assetto,
+            test_export_folder
+        ])
+        .run(tauri::generate_context!())
+        .expect("error while running the T-180 Track Builder");
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+app/index.html
+app/test/core-eqonly.test.js
+117:    saveDoc: (name, text) => call('save_track', { name, text, stamp: localStamp() }),   // D239 amendment: the file it overwrites is moved to track-backups first
+118:    backupDoc: (name, text) => call('backup_track', { name, text, stamp: localStamp() }),
+121:    openDoc: (name) => call('open_track', { name }),
+122:    listDocs: () => call('list_tracks'),
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64639 assistant 2026-10-05T20:58:20.739Z
+TOOL_USE Bash [toolu_01UvjqaJ8zKk6DjNaGq1RTow]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && wc -l app/index.html app/core/panel.js app/core/labels.js app/preview/index.js app/preview/preview.js app/preview/trackmodel.js && sed -n 100,140p app/index.html"}
+--- L64640 user 2026-10-05T20:58:20.909Z
+RESULT [toolu_01UvjqaJ8zKk6DjNaGq1RTow]:    285 app/index.html
+   284 app/core/panel.js
+   220 app/core/labels.js
+    97 app/preview/index.js
+   362 app/preview/preview.js
+   147 app/preview/trackmodel.js
+  1395 total
+<script src="lib/cjs.js"></script>
+<script>
+'use strict';
+// The page's glue: storage and export through the native side, the equation builder (app/core), the keys, the recovery offer, and
+// the panels (app/README.md, "The seam"). Nothing here edits a document: every action is the shell's. D239 (the keeper: "can we keep
+// only the equation mode?"): the Pieces builder and its switch are gone; its share codes, Install to AC / See it in Assetto, autosave
+// with crash restore and the getting-started guide are carried onto this page, each working on the equation track.
+(async () => {
+  const $ = (id) => document.getElementById(id), status = $('status');
+  // Served from src-tauri/dist, which mirrors the repository: this page is app/index.html, the program is ../src/.
+  const get = (p) => fetch(`../${p}`).then((r) => { if (!r.ok) throw new Error(`${r.status} ${p}`); return r.text(); });
+  const tauri = window.__TAURI__ && window.__TAURI__.core;
+  const call = (cmd, args) => (tauri ? tauri.invoke(cmd, args) : Promise.reject(new Error('not running inside the app: no native side')));
+  const b64 = (bytes) => { let s = ''; for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000)); return btoa(s); };
+  // the page's LOCAL time as yyyy-mm-dd_hhmmss: a backup's name (src-tauri/src/backups.rs checks the form; the keeper reads it)
+  const localStamp = () => { const d = new Date(), p = (n) => String(n).padStart(2, '0'); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}_${p(d.getHours())
+…[1666 chars cut]…
+ the
+  // window). The handler cleans up through closeCleanup (the builder sets it), never lets an error or a hang stand in its way, and ends in
+  // destroy(). If the module cannot load, a bare handler that only destroys is registered, so a stale listener can still not trap the window.
+  let closeCleanup = null;
+  // UNSAVED WORK (the keeper, 2026-10-03): the builder sets closeDirty to "is there unsaved work?"; the X then asks Save / Don't
+  // save / Cancel. Save is the Save button's own path; if the work is still unsaved after it (no name yet), the window stays
+  // open with the name field focused. No dialog API (off Tauri) or a failing one: close as before (app/closer.js).
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64641 assistant 2026-10-05T20:58:21.016Z
+TOOL_USE Read [toolu_01RVYNAdsSZSNRtmZAok83No]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-piecesui-wt\\app\\core\\panel.js"}
+--- L64642 user 2026-10-05T20:58:21.207Z
+RESULT [toolu_01RVYNAdsSZSNRtmZAok83No]: 1	// panel.js: the EQUATION CORE's controls (D186, pane C), in the left column where the piece builder's palette is. DOM only; every
+2	// action is the core shell's (app/core/coreshell.js), every number it shows is the shell's state.
+3	//
+4	//   EXTEND at the build head: keep going (no handle), or turn / climb / bank / cup / width targets over a length. Hovering the button
+5	//          shows the ghost (the preview's 't180-ghost' candidate), so what a click adds is seen before it is added.
+6	//   BRUSH on the preview: arm it, then drag on the track. The pick is the preview's ('t180-pick'); the drag's vertical distance is
+7	//          the change at the brush's centre; one drag is one undo step. The local height/lateral brush (E) is the default when
+8	//          it is in the build; the rate brush (one channel) is the explicit second mode.
+9	//   CLOSE as one click.
+10	//   THE READOUT (L130): beside Extend's fields, the piece they describe, BEFORE it is placed: its length and the change it makes
+11	//          in turn, climb and bank (A's src/core/readout.js, candidateReadout), redrawn inside every field's input handler; and on
+12	//          the track, a label at every placed piece with the same numbers (app/core/labels.js). The strings are the same function's
+13	//          (labels.js formatReadout), so what the ghost promised is what the placed piece's label says.
+14	//   OPEN A LOCAL EXAMPLE: a real track's D184 fit and its read, picked from the user's own reads/ folder (never in the program).
+15	'use strict';
+16	
+17	const LB = require('./labels.js');
+18	const RG = require('../validate-ui/redgroups.js');   // D242: every red in plain words, grouped, with where
+19	const XS = require('./xsec.js');   // the cross-sectio
+…[29667 chars cut]…
+pp/core/labels.js); none when there is no preview to lay them on
+278	  const labels = stage ? LB.mount(stage, shell, win) : null;
+279	  const unsub = shell.subscribe(draw); draw(shell.getState());
+280	  // options(): the options Extend, the ghost and the readout use right now (fields left as shown send no target)
+281	  return { labels, options: opts, unmount() { unsub(); if (frame) win.cancelAnimationFrame(frame); if (labels) labels.unmount(); if (stage) { stage.removeEventListener('pointerdown', down); stage.removeEventListener('pointermove', move); stage.removeEventListener('pointerup', up); stage.removeEventListener('pointercancel', up); } root.replaceChildren(); } };
+282	}
+283	
+284	module.exports = { mount, extendOptions, PER_PX };
+285	
+--- L64651 assistant 2026-10-05T20:58:26.052Z
+TOOL_USE Read [toolu_01McC3Gb3ftN86cvgzQxqedU]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-piecesui-wt\\app\\preview\\index.js"}
+--- L64652 user 2026-10-05T20:58:26.070Z
+RESULT [toolu_01McC3Gb3ftN86cvgzQxqedU]: 1	// index.js: the preview panel's seam (app/README.md "The seam"): mount(root, shell) puts the 3D preview in `root`.
+2	// The camera panel (app/camera/index.js) is loaded separately, with its own module cache, so the two talk through two
+3	// DOM events on the document rather than shared state:
+4	//   't180-camera'       { detail: { mode } }           asks the preview for a camera mode
+5	//   't180-camera-mode'  { detail: { mode, modes } }    the preview says which mode it is in (on mount and on every change)
+6	// And one for the window proof (app/testhook/probe.js, scripts/prove_render.js), answered read-only:
+7	//   't180-probe'        { detail: { reply(result) } }  the mode, the head on screen, the canvas size and DPR
+8	// And the GHOST of the next piece (D170; the palette's side is A's, proposed in the D170 hand-back):
+9	//   't180-ghost'        { detail: { candidate } | { word } }   show it: a resolved candidate (the document with the word
+10	//                                                              appended, not committed), or a built-in word, resolved here
+11	//                                                              the way shell.place() would (app/testhook/ghostword.js)
+12	//   't180-ghost-clear'                                         hide it
+13	// And the TEXTURE SET (D177), from the textures panel (app/texture/index.js, A's), bubbling to the document:
+14	//   't180:textures'     { detail: { set } }            the set the export writes from; the preview's AC look draws it
+15	// And the ONE SHARED PATH (D177), for validation (app/validate-ui, E's) instead of a second path of its own:
+16	//   't180:track'          { detail: { path, segments, closed, how, g, fromS } }   sent after every change that mo
+…[6605 chars cut]…
+Listener('t180-camera-focus', focusNow);
+94	  return { preview: p, unmount() { doc.removeEventListener('t180-camera-focus', focusNow); doc.removeEventListener('t180:guides', setGuides); doc.removeEventListener('t180:guides-request', guidesNow); doc.removeEventListener('t180:textures', textures); doc.removeEventListener('t180:track-request', trackNow); doc.removeEventListener('t180-camera', ask); doc.removeEventListener('t180-probe', answer); doc.removeEventListener('t180-ghost', showGhost); doc.removeEventListener('t180-ghost-clear', hideGhost); doc.removeEventListener('t180-pick', pickNow); doc.removeEventListener('t180:view', viewNow); p.dispose(); root.replaceChildren(); } };
+95	}
+96	
+97	module.exports = { mount, PreviewMountError };
+98	
+--- L64653 assistant 2026-10-05T20:58:26.575Z
+TOOL_USE Bash [toolu_01N9WJna4cLGZJugrXLbYyR5]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && grep -n \"ghost\\|pick\\|proposal\\|focus\" app/preview/preview.js | cut -c1-210 | head -60"}
+--- L64654 user 2026-10-05T20:58:26.687Z
+RESULT [toolu_01N9WJna4cLGZJugrXLbYyR5]: 12://   p.pick(x, y)            the track station under a canvas point (css px): { s, pos, px } or null (D186: the brush)
+73:// smoothstep to ×20 over 2.5 s held; ×1 the moment it is released, and reset when the window loses focus.
+88:  let ghost = null, grid = null, gridFor = null, start = null, proposalShown = null;
+119:  // a change to the placed track retires the ghost: it was built on the old head (the palette shows it again on hover)
+130:    try { track = model.update(st.resolved); err = track.stale ? st.resolveError : null; if (track.how !== 'same' && track.how !== 'kept') ghost = null; } catch (e) { err = e.message; return; }
+131:    // D242: a close PROPOSAL (the core shell's closeProposal, for the document on screen) is the ghost: the pieces it moves, see-through over the placed ones
+133:    if (prop !== proposalShown) {
+134:      if (ghost && ghost.proposal) ghost = null;
+135:      proposalShown = prop;
+136:      if (prop) { try { ghost = { ...model.proposalGhost(prop.resolved), proposal: true }; } catch (e) { ghost = null; } }
+143:   *  placed yet but a ghost showing, the ghost's head and path stand in, so the first word can be previewed too. With
+144:   *  NOTHING placed and no ghost, the track's START stands in (D195): before it, the context was null there, so no frame
+145:   *  drew, the view froze, and the wheel and keys pressed meanwhile were applied late, when a ghost first appeared (the
+149:    if (ghost && ghost.path) return { head: ghost.head, path: ghost.path, bounds: null, aspect, width: widthAtHead(ghost.segments) };
+169:  // lets go; and every held key is dropped when the window loses focus or is hidden, since the key-up then never arrives.
+179:    const ae = win.document && win.document.activeEl
+…[662 chars cut]…
+ons.length / 6 : 0, guides: guidesState(), look,
+265:    showGhost(candidate) { ghost = model.ghostFor(candidate); return ghost.batches.length; },
+266:    clearGhost() { ghost = null; },
+271:    focus(s) {
+278:    /** D186: the track station under a point of the canvas (css px from its top-left): { s, pos, px } or null (pickAt). */
+279:    pick(x, y) { return shownPose && track && track.path ? pickAt(track.path, shownPose, x, y, canvas.clientWidth, canvas.clientHeight) : null; },
+297:function pickAt(path, pose, x, y, w, h, maxPx = 40) {
+362:module.exports = { createPreview, keyAction, boostAt, backingSize, MAX_SIDE, markerSize, widthAtHead, clearanceAtHead, pickAt, startHead };
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64663 assistant 2026-10-05T20:58:32.639Z
+TOOL_USE Read [toolu_012fJK7GLCvEhyeGfV4LfU5o]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-piecesui-wt\\app\\core\\labels.js"}
+--- L64664 user 2026-10-05T20:58:32.658Z
+RESULT [toolu_012fJK7GLCvEhyeGfV4LfU5o]: 1	// labels.js: THE READOUT on the track (L130, pane C; the plan's Part 2, "C: the display"). A small label at every placed road
+2	// piece, in the view: its length and the CHANGE it makes in turn, climb and bank, the numbers of src/core/readout.js (A). The
+3	// keeper, 01:2x: "see the degrees of change when adjusting the banking, pitch, and roll and even turns"; "DISTANCE OF EACH PIECE
+4	// IN METERS SO YOU CAN SEE WITH THE DEGREE UI".
+5	//
+6	// ON HOVER ONLY (D242; the keeper, 23:46: "when there are lots of pieces, the tags take up a lot of space, it should be only when you hover over the pieces"): ONE
+7	// label for the piece under the pointer (the preview's 't180-pick', asked only when the pointer moves), plus the head's own piece, which is always labelled. No other
+8	// piece is labelled, so the layout's work is those one or two labels, not every piece every frame.
+9	//
+10	// A DOM layer over the preview (#preview), redrawn every animation frame: the camera eases, so the labels move with it. The
+11	// preview is not changed: its pose comes from the 't180:view' event (app/preview/index.js), the track from 't180:track-request'.
+12	// - FIXED PIXEL SIZE: a label is the same size at every zoom (0.05 to 50), so it is readable at all of them.
+13	// - NEVER OVER THE BUILD HEAD: the head and its marker are kept clear; a label that would cover them is moved, and if it cannot
+14	//   be, it is not drawn. The head's own label, which is always drawn, keeps at least the head's point and 7 px clear.
+15	// - NEVER OVER EACH OTHER: labels are placed in priority order (the head's own piece first, then the nearest on screen) and a
+16	//   label with no clear place is left out (culled). The head's own piece's label is placed first and
+…[14735 chars cut]…
+tail && typeof e.detail.reply === 'function') e.detail.reply({ drawn: drawn.slice(), culled: culled.slice() }); };
+210	  doc.addEventListener('t180:labels', answer);
+211	  raf = win.requestAnimationFrame(frame);
+212	  return {
+213	    labels: () => drawn.slice(), culled: () => culled.slice(),
+214	    setVisible(v) { on = !!v; layer.style.display = on ? '' : 'none'; },
+215	    hovered: () => hoverId,
+216	    unmount() { win.cancelAnimationFrame(raf); doc.removeEventListener('t180:labels', answer); stage.removeEventListener('pointermove', onPointer); stage.removeEventListener('pointerleave', onLeave); layer.remove(); },
+217	  };
+218	}
+219	
+220	module.exports = { formatReadout, labelText, fmtDeg, fmtM, layout, anchorsOf, pieceAt, mount };
+221	
+--- L64665 assistant 2026-10-05T20:58:33.474Z
+TOOL_USE Bash [toolu_01JXfH6NsiFbx7hqDNgBLWKb]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && sed -n 112,140p app/preview/preview.js | cut -c1-260; grep -n \"proposalGhost\" -A22 app/preview/trackmodel.js | head -50; wc -l app/preview/guideslayer.js; sed -n 1,40p app/preview/guideslayer.js | cut -c1-200"}
+--- L64672 user 2026-10-05T20:58:33.691Z
+RESULT [toolu_01JXfH6NsiFbx7hqDNgBLWKb]:       let u = flowMemo.get(b.uvs);
+      if (u === undefined) { u = flowCell(tr.mesh, tr.segments, set, cell, kids[k].children[0]); flowMemo.set(b.uvs, u); }
+      return u ? { ...b, uvs: u } : b;
+    });
+    flowTrack = tr.batches; flowSet = set;
+    return flowOut;
+  };
+  // a change to the placed track retires the ghost: it was built on the old head (the palette shows it again on hover)
+  const shared = () => (track && track.how !== 'kept' ? { path: track.path, segments: track.segments, closed: !!(track.path && track.path.closed), how: track.how, g: track.g, fromS: track.fromS } : null);
+  // D235 (the keeper: "make the changes render faster while you change it from one to the next"): while a brush drag is open (state.brush) the model meshes a COARSER
+  // preview (app/preview/coarse.js: a closed tube's brush step is about 3× cheaper), and full detail comes back FULL_AFTER_MS after the drag ends, once, unless another
+  // drag starts first. Nothing here touches what is exported: the model's detail changes the preview's mesh only, and the shell's resolved state is the export's.
+  const FULL_AFTER_MS = 250; let fullTimer = 0;
+  const clearFull = () => { if (fullTimer) { (win.clearTimeout || clearTimeout)(fullTimer); fullTimer = 0; } };
+  const scheduleFull = () => { clearFull(); fullTimer = (win.setTimeout || setTimeout)(() => { fullTimer = 0; model.setDetail(1); refresh(shell.getState()); }, FULL_AFTER_MS); if (fullTimer && fullTimer.unref) fullTimer.unref(); };
+  const refresh = (st) => {
+    start = st.resolved && st.resolved.start ? st.resolved.start : null;   // where the first piece starts (the equation core's doc.start)
+    if (st.brush) { clearFull(); model.setDetail(DRAG_DETAIL); } else if (model.detail > 1) sc
+…[4529 chars cut]…
+entre({ x: hit[0], z: hit[2] });
+  };
+  const down = (e) => { dragging = true; handle.style.cursor = 'grabbing'; if (handle.setPointerCapture && e.pointerId !== undefined) { try { handle.setPointerCapture(e.pointerId); } catch (err) { /* 
+  const up = () => { dragging = false; handle.style.cursor = 'grab'; };
+  handle.addEventListener('pointerdown', down); handle.addEventListener('pointermove', move); handle.addEventListener('pointerup', up); handle.addEventListener('pointercancel', up);
+
+  return {
+    update(f) {
+      last = f; drawn = []; at = null;
+      const { plan, pose, aspect, cssWidth: W, cssHeight: H } = f, labels = plan && pose && W > 0 && H > 0 ? plan.labels : [];
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64675 assistant 2026-10-05T20:59:01.631Z
+TOOL_USE Bash [toolu_01KQy67FgwriTsECgRgzYKWr]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && ls app/test | head -80; ls scripts | head -40; sed -n 1,40p app/test/core-close-preview.test.js | cut -c1-200"}
+--- L64676 user 2026-10-05T20:59:01.829Z
+RESULT [toolu_01KQy67FgwriTsECgRgzYKWr]: aclook.test.js
+aclook_webview.test.js
+camera.test.js
+closer.test.js
+core-close-mutation.test.js
+core-close-preview.test.js
+core-eqonly.test.js
+core-mutation.test.js
+core-readout-display.test.js
+core-shell.test.js
+core-textures.test.js
+core-widthlike.test.js
+core-xsec-mutation.test.js
+core-xsec.test.js
+export-csp.test.js
+export-selfcheck.test.js
+export.test.js
+guides.test.js
+layout-css.test.js
+look.test.js
+markers-panel.test.js
+mutation.test.js
+onboarding.test.js
+palette-fakedom.js
+palette-panels.test.js
+palette-phrasebook.test.js
+preview-speed.test.js
+preview.test.js
+redgroups.test.js
+render_proof.test.js
+share-install.test.js
+sharedpath.test.js
+shell-autosave.test.js
+shell-close.test.js
+shell-dist.test.js
+shell-failed-edit.test.js
+shell-ghost.test.js
+shell-keys.test.js
+shell-layout.test.js
+shell-loader.test.js
+shell.test.js
+texmaker-panel.test.js
+texture-panel.test.js
+timers-regression.test.js
+validate-ui-incval.test.js
+validate-ui-jumpdefault.test.js
+validate-ui-jumps.test.js
+validate-ui-panel.test.js
+validate-ui-speed.test.js
+validate-ui.test.js
+bench.js
+build_platform_test.js
+export_words.js
+lookmatch.js
+platform_test.js
+prove_render.js
+prove_render.ps1
+prove_render_dialog.ps1
+roundtrip.js
+soak.js
+// core-close-preview.test.js: node --test app/test/core-close-preview.test.js   (under the heavy-run lock, --max-old-space-size=4096)
+// D242: the app's Close PROPOSES before it commits (the keeper, TEST 1: the one-click close moved every piece and the lap ran into itself). Rows:
+//   (rows 1, 2 and 5 on a NEAR lap, 8.87 m from closing; rows 3 and 4 on laps only a wider window can close)
+//   1  propose: nothing committed; only the window moves (every earlier piece 0 m); Apply is ONE undo step, and Undo gives the open lap 
+…[2061 chars cut]…
+e(far, { edited: [0] }).doc, closed: false });
+  const near = D.checkDoc({ ...open, pieces: open.pieces.map((P, k) => (k === 2 ? { ...P, channels: { ...P.channels, kh: P.channels.kh.map((v, i, a) => (i >= 3 && i <= a.length - 4 ? v + 1e-4 : v)) } 
+  const s = await createCoreShell({ brushFn: null }); s.adopt(near);
+  assert.equal(s.getState().history.present.closed, false); return s;
+}
+
+test('row 1: Close PROPOSES: nothing is committed, only the window moves (every earlier piece 0 m); Apply is one undo step, and Undo gives the open lap back', async () => {
+  const s = await nearLap(), base = s.getState().history.present, n = base.pieces.length;
+  s.proposeClose({ last: true });
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64685 assistant 2026-10-05T20:59:04.834Z
+TOOL_USE Bash [toolu_01JRWbcKkHBoAyaZ65h8y33G]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && grep -ln \"core/panel.js\" app/test/*.js; sed -n 1,60p app/test/core-readout-display.test.js | cut -c1-220; wc -l app/test/palette-fakedom.js; grep -n \"^function\\|^class\\|module.exports\" app/test/palette-fakedom.js | head"}
+--- L64686 user 2026-10-05T20:59:05.062Z
+RESULT [toolu_01JRWbcKkHBoAyaZ65h8y33G]: app/test/core-close-mutation.test.js
+app/test/core-mutation.test.js
+app/test/core-readout-display.test.js
+app/test/core-shell.test.js
+app/test/core-widthlike.test.js
+app/test/core-xsec-mutation.test.js
+app/test/core-xsec.test.js
+app/test/preview-speed.test.js
+// core-readout-display.test.js: node --test app/test/core-readout-display.test.js
+// THE READOUT DISPLAY (L130, pane C): the strings (app/core/labels.js formatReadout), the label layout (the head's keep-out, no
+// overlaps), the anchors, the shell's readouts (A's src/core/readout.js), and the PANEL mounted on a small fake DOM, read back
+// as the TEXT it shows. E's sealed check (readout_check_registration_2026-09-29.md) is scored by a non-author seat; these are the
+// author's own tests of the same properties, not that score.
+'use strict';
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const LB = require('../core/labels.js');
+const { createCoreShell } = require('../core/coreshell.js');
+const RD = require('../../src/core/readout.js');
+const { extendOptions } = require('../core/panel.js');
+
+// ── a small fake DOM: enough for the panel and the label layer ──
+class El {
+  constructor(tag, doc) { this.tagName = tag.toUpperCase(); this.ownerDocument = doc; this.children = []; this.attrs = {}; this.style = {}; this._text = ''; this.listeners = {}; this.value = ''; this.checked = false; thi
+  append(...k) { for (const c of k) { if (c == null) continue; const n = typeof c === 'string' ? Object.assign(new El('#text', this.ownerDocument), { _text: c }) : c; n.parent = this; this.children.push(n); } }
+  replaceChildren(...k) { for (const c of this.children) c.parent = null; this.children = []; this.append(...k); }   // the removed are out of t
+…[3228 chars cut]…
+ontent === text);
+  const field = (text) => label(text).children[1];
+  const cell = (k) => root.all().find((e) => e.attrs['data-readout'] === k).textContent;
+  const type = (text, v) => { const f = field(text); f.value = String(v); f.oninput(); };
+  // the options the PANEL uses (D193: a field left as shown sends no target, so the raw field text is no longer the options)
+  const opts = () => panel.options();
+  return { doc, win, tick, stage, root, shell, panel, label, field, cell, type, opts };
+}
+48 app/test/palette-fakedom.js
+6:class Node {}
+7:class Text extends Node {
+11:class Element extends Node {
+42:function install() {
+48:module.exports = { install, Element, Text, Node };
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64691 assistant 2026-10-05T20:59:50.916Z
+TOOL_USE Bash [toolu_01WM3TCmNNNVxMg7vak2Vo7V]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt/src-tauri && cat build.rs | head -20; ls capabilities; cat capabilities/*.json | head -30; ls C:/Users/nname/Desktop/t180-track-builder/src-tauri/ | head; ls C:/Users/nname/Desktop/t180-track-builder/src-tauri/target 2>/dev/null | head -5; which cargo; cargo --version 2>&1 | head -1; sed -n 565,600p src/lib.rs"}
+--- L64698 user 2026-10-05T20:59:51.679Z
+RESULT [toolu_01WM3TCmNNNVxMg7vak2Vo7V]: // build.rs: before tauri-build embeds the frontend, copy the web UI (app/), the program it runs (src/) and tools/ into
+// src-tauri/dist, side by side, as they sit in the repository. So a relative require('../src/doc/index.js') in
+// app/shell.js means the same file in the webview (app/lib/cjs.js) as it does under node --test. app/test/ is left
+// out: tests do not ship. dist/ is rebuilt from scratch every time, so nothing stale survives a deleted file.
+use std::fs;
+use std::io;
+use std::path::Path;
+
+fn copy_dir(from: &Path, to: &Path, skip: &[&str]) -> io::Result<()> {
+    fs::create_dir_all(to)?;
+    for entry in fs::read_dir(from)? {
+        let entry = entry?;
+        let name = entry.file_name();
+        if skip.iter().any(|s| name == *s) {
+            continue;
+        }
+        let (src, dst) = (entry.path(), to.join(&name));
+        if entry.file_type()?.is_dir() {
+            copy_dir(&src, &dst, skip)?;
+        } else {
+default.json
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "The main window. The app's own commands read and write named files in the app's data folder (tracks, the piece library, the autosave), and write_export writes an exported track into the folder the user picked. dialog:allow-open is the Export folder picker; dialog:allow-message is the save prompt on close; core:window:allow-destroy lets the close handler (which flushes or clears the autosave) finish closing the window.",
+  "windows": ["main"],
+  "permissions": ["core:default", "core:window:allow-destroy", "dialog:allow-open", "dialog:allow-message"]
+}
+Cargo.lock
+Cargo.toml
+build.rs
+capabilities
+dist
+gen
+icons
+release.cjs
+src
+target
+CACHEDIR.TAG
+debug
+release
+w
+…[1594 chars cut]…
+8wekyb3d8bbwe:/c/Users/nname/.dotnet/tools:/usr/bin/vendor_perl:/usr/bin/core_perl)
+/usr/bin/bash: line 1: cargo: command not found
+        assert!(!ends_in_dot_name(&tracks.join("T-180 OVAL").to_string_lossy()));
+        fs::remove_dir_all(&root).unwrap();
+    }
+
+    #[test]
+    fn the_track_list_holds_only_valid_names_of_track_files_sorted() {
+        let d = scratch("list");
+        for f in ["b.t180track", "a track.t180track", "notes.txt", "..odd.t180track", "c.t180track.bak"] {
+            fs::write(d.join(f), "x").unwrap();
+        }
+        assert_eq!(track_names(&d).unwrap(), vec!["a track".to_string(), "b".to_string()]);
+        fs::remove_dir_all(&d).unwrap();
+    }
+}
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64702 assistant 2026-10-05T21:00:14.278Z
+TOOL_USE Write [toolu_012GpAfrfkLgjcHh5Q6QWS4G]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\ui\\rust_spec.txt","content":"@@FILE C:/Users/nname/Desktop/worktrees/a-piecesui-wt/src-tauri/src/lib.rs\n@@OLD\nconst LIBRARY_FILE: &str = \"library.t180lib\";\n@@NEW\nconst LIBRARY_FILE: &str = \"library.t180lib\";\nconst PIECE_EXT: &str = \"t180piece\";\n@@END\n@@OLD\n/// The names of the tracks in `dir`: every `<name>.t180track` whose name is valid, sorted.\npub fn track_names(dir: &Path) -> Result<Vec<String>, String> {\n    let mut names = Vec::new();\n    for entry
+…[5424 chars cut]…
+(&d).unwrap().all(|e| !e.unwrap().file_name().to_string_lossy().ends_with(\".tmp-write\")), \"no temporary file is left\");\n        fs::remove_dir_all(&d).unwrap();\n    }\n\n    #[test]\n    fn the_track_list_holds_only_valid_names_of_track_files_sorted() {\n@@END\n"}
+--- L64703 user 2026-10-05T21:00:14.311Z
+RESULT [toolu_012GpAfrfkLgjcHh5Q6QWS4G]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\ui\rust_spec.txt (file state is current in your context — no need to Read it back)
+--- L64712 assistant 2026-10-05T21:00:18.073Z
+TOOL_USE Bash [toolu_01Pw5NEbEiV6dbeKToKsneAP]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && node blockpatch.js ui/rust_spec.txt && cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && git diff --stat | tail -3; ls \"C:/Users/nname/.cargo/bin\" 2>/dev/null | head -5"}
+--- L64713 user 2026-10-05T21:00:18.294Z
+RESULT [toolu_01Pw5NEbEiV6dbeKToKsneAP]: C:/Users/nname/Desktop/worktrees/a-piecesui-wt/src-tauri/src/lib.rs [33m5[39m edits
+ src-tauri/src/lib.rs | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 76 insertions(+), 2 deletions(-)
+cargo-clippy.exe
+cargo-fmt.exe
+cargo-miri.exe
+cargo-tauri.exe
+cargo.exe
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64717 assistant 2026-10-05T21:01:13.007Z
+TOOL_USE Write [toolu_01CwKhWdn4a9HeRu9Vwp97nq]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\ui\\shell_spec.txt","content":"@@FILE C:/Users/nname/Desktop/worktrees/a-piecesui-wt/app/core/coreshell.js\n@@OLD\n//   await shell.backupNow(reason)   await shell.listVersions()   await shell.openVersion(file)   (D239 amendment: previous versions;\n// every Save also moves the file it overwrites into track-backups, natively: src-tauri/src/backups.rs)\n@@NEW\n//   await shell.backupNow(reason)   await shell.listVersions()   await shell.openVersion(file)   (D239 amendment:
+…[15939 chars cut]…
+ PREFIX, BRUSH_MODES, STRAIGHT_K, piecesIn, straightPieces, startLayout, profilerOf };\n@@NEW\nmodule.exports = { createCoreShell, NAME_RE, PREFIX, BRUSH_MODES, STRAIGHT_K, piecesIn, straightPieces, startLayout, profilerOf, thumbOf, displacementAfterDelete };\n@@END\n"}
+--- L64718 user 2026-10-05T21:01:13.036Z
+RESULT [toolu_01CwKhWdn4a9HeRu9Vwp97nq]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\ui\shell_spec.txt (file state is current in your context — no need to Read it back)
+--- L64727 assistant 2026-10-05T21:01:19.347Z
+TOOL_USE Bash [toolu_017noHCrf15Gw1h4jVRXUcDU]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && sed -i 's/ lastEdited: null, lastLenStep: null, lastStep/ lastEdited: null, lastStep/' ui/shell_spec.txt && node blockpatch.js ui/shell_spec.txt && cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && node --check app/core/coreshell.js && echo syntax-ok && node -e \"\nconst {createCoreShell,thumbOf}=require('./app/core/coreshell.js');\n(async()=>{const s=await createCoreShell({brushFn:null});s.extend({length:300});s.extend({length:150,transition:60,targets:{kh:1/180}});s.ex
+…[199 chars cut]…
+);console.log(s.selectionInfo().count);\ns.proposeDelete();const p=s.getState().deleteProposal;console.log(s.getState().message);console.log(p.displacement.map(x=>x.id+':'+x.maxM.toFixed(1)).join(' '), JSON.stringify(p.check.overlaps.length));\n})()\"","timeout":120000}
+--- L64728 user 2026-10-05T21:01:19.503Z
+RESULT [toolu_017noHCrf15Gw1h4jVRXUcDU] ERROR: Exit code 1
+C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\patchlib.js:10
+    if (n !== 1) throw new Error(`${file}: edit ${i}: anchor found ${n} times (need 1): ${a.slice(0, 80)}`);
+                 ^
+
+Error: C:/Users/nname/Desktop/worktrees/a-piecesui-wt/app/core/coreshell.js: edit 0: anchor found 0 times (need 1): //   await shell.backupNow(reason)   await shell.listVersions()   await shell.op
+    at [90mC:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\[39mpatchlib.js:10:24
+    at Array.forEach (<anonymous>)
+    at patch [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\[39mpatchlib.js:7:9[90m)[39m
+    at Object.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\[39mblockpatch.js:14:47[90m)[39m
+[90m    at Module._compile (node:internal/modules/cjs/loader:1812:14)[39m
+[90m    at Object..js (node:internal/modules/cjs/loader:1943:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:1533:32)[39m
+[90m    at Module._load (node:internal/modules/cjs/loader:1335:12)[39m
+[90m    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)[39m
+[90m    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)[39m
+
+Node.js v24.14.1
+--- L64733 assistant 2026-10-05T21:01:28.230Z
+TOOL_USE Bash [toolu_01C1ViJKXstMJQxuU3eAxs9g]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && node -e \"\nconst fs=require('fs');let s=fs.readFileSync('ui/shell_spec.txt','utf8');\nconst i=s.indexOf('@@OLD\\n//   await shell.backupNow'), j=s.indexOf('@@END',i)+6;\nconst head=s.slice(0,i), tail=s.slice(j);\nconst nw='@@OLD\\n// TIMING: state.lastStep = { op, ms } for the last edit, the document operation plus the adapter\\\\'s segments (spec test 6\\\\'s\\n@@NEW\\n// SAVED PIECES, THE UI HALF (D240; the core is src/core/piece.js):\\n//   shell.selectPiece(i, { extend
+…[406 chars cut]…
+peration plus the adapter\\\\'s segments (spec test 6\\\\'s\\n@@END\\n';\nfs.writeFileSync('ui/shell_spec.txt',head+nw+tail);\" && grep -n \"TIMING\" C:/Users/nname/Desktop/worktrees/a-piecesui-wt/app/core/coreshell.js | head -2 && node blockpatch.js ui/shell_spec.txt"}
+--- L64734 user 2026-10-05T21:01:29.667Z
+RESULT [toolu_01C1ViJKXstMJQxuU3eAxs9g]: 31:// TIMING: state.lastStep = { op, ms } for the last edit, the document operation plus the adapter's segments (spec test 6's
+C:/Users/nname/Desktop/worktrees/a-piecesui-wt/app/core/coreshell.js [33m8[39m edits
+--- L64736 assistant 2026-10-05T21:01:32.563Z
+TOOL_USE Bash [toolu_01Y8JpZteYbTJZhcSFDzgC7W]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && node --check app/core/coreshell.js && echo syntax-ok && node -e \"\nconst {createCoreShell,thumbOf}=require('./app/core/coreshell.js');\n(async()=>{const s=await createCoreShell({brushFn:null});s.extend({length:300});s.extend({length:150,transition:60,targets:{kh:1/180}});s.extend({length:150,transition:60,targets:{kh:1/180}});s.extend({length:100,transition:60,targets:{kh:0}});\ns.selectPiece(1);console.log(JSON.stringify(s.selectionInfo()));s.selectPiece(2,{extend:true});console.log(s.selectionInfo().count);\ns.selectPiece(1);s.proposeDelete();const p=s.getState().deleteProposal;console.log(s.getState().message);console.log(p.displacement.map(x=>x.id+':'+x.maxM.toFixed(1)).join(' '), JSON.stringify(p.check.overlaps.length));\n})()\" 2>&1 | cut -c1-300","timeout":120000}
+--- L64737 user 2026-10-05T21:01:33.358Z
+RESULT [toolu_01Y8JpZteYbTJZhcSFDzgC7W]: syntax-ok
+{"from":1,"to":1,"count":1,"ids":["p2"],"lengthM":150,"atEnd":false,"closed":false,"saveProblem":null}
+[33m2[39m
+delete preview: 1 piece go; 2 of the 3 after it move. Apply or cancel
+p1:0.0 p3:146.6 p4:140.4 0
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64741 assistant 2026-10-05T21:01:38.540Z
+TOOL_USE Edit [toolu_01EvyVUjYXjjjUGSdeqqgAgf]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-piecesui-wt\\app\\core\\coreshell.js","old_string":"        const moved = proposal.displacement.filter((x) => x.maxM > 1e-3), n = s.to - s.from + 1;\n        return set({ deleteProposal: proposal, ...ok(`delete preview: ${n} piece${n === 1 ? '' : 's'} go; ${moved.length} of the ${proposal.displacement.length} after ${n === 1 ? 'it' : 'them'} move${proposal.check.overlaps.length ?","new_string":"        const after = proposal.displacement.filter((x) => x.piece >= s.from), moved = after.filter((x) => x.maxM > 1e-3), n = s.to - s.from + 1;\n        return set({ deleteProposal: proposal, ...ok(`delete preview: ${n} piece${n === 1 ? ' goes' : 's go'}; ${moved.length} of the ${after.length} piece${after.length === 1 ? '' : 's'} after the gap move${proposal.check.overlaps.length ?"}
+--- L64742 user 2026-10-05T21:01:38.579Z
+RESULT [toolu_01EvyVUjYXjjjUGSdeqqgAgf]: The file C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\core\coreshell.js has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+--- L64753 assistant 2026-10-05T21:01:42.414Z
+TOOL_USE Edit [toolu_018txH3DdQpVR1t9c8uPBXmT]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-piecesui-wt\\app\\preview\\preview.js","old_string":"    const prop = st.closeProposal && st.history && st.closeProposal.base === st.history.present ? st.closeProposal : null;","new_string":"    // D240: a middle DELETE's preview (the core shell's deleteProposal) is shown the same way: the track as it would be, see-through over the placed one\n    const propOf = (p) => (p && st.history && p.base === st.history.present ? p : null), prop = propOf(st.closeProposal) || propOf(st.deleteProposal);"}
+--- L64754 user 2026-10-05T21:01:42.445Z
+RESULT [toolu_018txH3DdQpVR1t9c8uPBXmT]: The file C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\preview\preview.js has been updated successfully.
+--- L64759 assistant 2026-10-05T21:02:16.452Z
+TOOL_USE Write [toolu_01UV2stCAB5wuKRMYEBB9w9X]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-piecesui-wt\\app\\core\\selectionlayer.js","content":"// selectionlayer.js: THE SELECTED PIECES ON THE TRACK (D240, saved pieces, the UI half; the keeper: \"highlight/select pieces on the track\"). A canvas over the preview\n// (#preview), redrawn every animation frame like the labels (the camera eases, so the highlight moves with it): the selected pieces' centreline, drawn bright over the road\n// with a dark outline, and a dot at each end of the run. The preview is not changed: its pose comes from the 't180:view' event and the track from 't180:track-request'\n// (app/
+…[3700 chars cut]…
+.arc(p.x, p.y, 5, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); }\n  };\n  raf = win.requestAnimationFrame(frame);\n  return { lines: () => drawn.slice(), unmount() { win.cancelAnimationFrame(raf); canvas.remove(); } };\n}\n\nmodule.exports = { selectionLines, mount };\n"}
+--- L64760 user 2026-10-05T21:02:16.478Z
+RESULT [toolu_01UV2stCAB5wuKRMYEBB9w9X]: File created successfully at: C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\core\selectionlayer.js (file state is current in your context — no need to Read it back)
+--- L64771 assistant 2026-10-05T21:02:47.687Z
+TOOL_USE Write [toolu_01JrpFVd6VEzvXgjgSn1hGV2]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-piecesui-wt\\app\\core\\piecesui.js","content":"// piecesui.js: SAVED PIECES in the panel (D240, the UI half; the core is src/core/piece.js, the state and actions are the core shell's, app/core/coreshell.js). DOM only.\n//\n//   SELECT on the track: a click on a piece selects it, a shift-click selects the run from the piece selected first; a click on nothing clears. (A pointer that moved more than\n//          CLICK_PX between press and release was a camera drag and selects nothing; with the brush armed the click is the brush's.) The selection is drawn on the track\n// 
+…[12290 chars cut]…
+fresh: refreshList, items: () => items.slice(), unmount() { unsub(); if (stage) { stage.removeEventListener('pointerdown', onDown); stage.removeEventListener('pointerup', onUp); } if (layer) layer.unmount(); } };\n}\n\nmodule.exports = { mount, describe, CLICK_PX };\n"}
+--- L64772 user 2026-10-05T21:02:47.714Z
+RESULT [toolu_01JrpFVd6VEzvXgjgSn1hGV2]: File created successfully at: C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\core\piecesui.js (file state is current in your context — no need to Read it back)
+--- L64781 assistant 2026-10-05T21:02:59.399Z
+TOOL_USE Bash [toolu_01MYPWGughanVVKnVctyg3Tj]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && cat > \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/ui/panel_spec.txt\" <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-piecesui-wt/app/core/panel.js\n@@OLD\nconst XS = require('./xsec.js');   // the cross-section channels (D225): edge angle, edge start, tube sweep\n@@NEW\nconst XS = require('./xsec.js');   // the cross-section channels (D225): edge angle, edge start, tube sweep\nconst PU = require('./piecesui.js');   // D240: saved pieces: select on the track, Save as pi
+…[1115 chars cut]…
+0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && node blockpatch.js ui/panel_spec.txt && cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && node --check app/core/panel.js && node --check app/core/piecesui.js && node --check app/core/selectionlayer.js && echo syntax-ok"}
+--- L64782 user 2026-10-05T21:02:59.661Z
+RESULT [toolu_01MYPWGughanVVKnVctyg3Tj]: C:/Users/nname/Desktop/worktrees/a-piecesui-wt/app/core/panel.js [33m4[39m edits
+syntax-ok
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64785 assistant 2026-10-05T21:03:03.712Z
+TOOL_USE Bash [toolu_015eHBJ7sina7BLt5ySVkXPK]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && grep -rn \"labels.js\\|widthlike\" app/index.html app/lib/*.js src-tauri/tauri.conf.json 2>/dev/null | head; sed -n 1,30p app/lib/cjs.js | cut -c1-200"}
+--- L64786 user 2026-10-05T21:03:03.866Z
+RESULT [toolu_015eHBJ7sina7BLt5ySVkXPK]: // cjs.js: run the program's own CommonJS files (src/, app/) in the webview, with no bundler and no dependency.
+//
+// The document model, geometry and validation are CommonJS so that node --test runs them as they are. The webview has
+// no require(), so this gives it one: fetch the entry file, find its require('./…') calls, fetch those, and so on;
+// then evaluate each file once, in the order it is required, with module/exports/require of its own. Only RELATIVE
+// requires are served. A node built-in ('fs', 'path', …) fails loudly, naming the module and the file that asked:
+// the code the app runs in the UI process must not need one (ARCHITECTURE §9: the geometry core runs in the UI process).
+// A require() that appears only in a comment is fetched speculatively; if the file is not there, nothing fails
+// unless the code really calls it.
+//
+//   const shell = await loadCjs('app/shell.js', (p) => fetch(p).then((r) => { if (!r.ok) throw …; return r.text(); }));
+// Paths are relative to the served root, which mirrors the repository: app/… and src/… side by side.
+'use strict';
+
+function norm(p) {
+  const out = [];
+  for (const part of p.split('/')) {
+    if (part === '' || part === '.') continue;
+    if (part === '..') { if (!out.length) throw new Error(`cjs: ${p} climbs above the served root`); out.pop(); } else out.push(part);
+  }
+  return out.join('/');
+}
+const dirOf = (p) => p.split('/').slice(0, -1).join('/');
+const resolveFrom = (from, spec) => norm(`${dirOf(from)}/${spec}`);
+const REQ = /require\(\s*['"]([^'"]+)['"]\s*\)/g;
+
+/**
+ * opts.builtins maps a bare module name ('fs', 'zlib', …) to what require() returns for it, and opts.globals names
+ * values each file sees as free variables (e.g. Buffer). Both are how the exporter runs here (app/export/node-shim.js).
+ * A bare name NOT in builtins is still refused loudly.
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64790 assistant 2026-10-05T21:03:07.191Z
+TOOL_USE Edit [toolu_01Sn1SVUg7ZtApejw3tGV7np]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-piecesui-wt\\app\\index.html","old_string":"    listDocs: () => call('list_tracks'),","new_string":"    listDocs: () => call('list_tracks'),\n    // D240, saved pieces: one <name>.t180piece each in the app's pieces folder (src-tauri/src/lib.rs); a name already used is refused natively, never overwritten\n    listPieces: () => (tauri ? call('list_pieces') : Promise.resolve([])),\n    openPiece: (name) => call('open_piece', { name }),\n    savePiece: (name, text) => call('save_piece', { name, text }),\n    deletePiece: (name) => call('delete_piece', { name }),"}
+--- L64791 user 2026-10-05T21:03:07.228Z
+RESULT [toolu_01Sn1SVUg7ZtApejw3tGV7np]: The file C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\index.html has been updated successfully.
+--- L64801 assistant 2026-10-05T21:03:33.839Z
+TOOL_USE Bash [toolu_01B5WL654dvWWriztmRJq3eJ]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && grep -n \"row 4\" -A14 app/test/core-close-preview.test.js | cut -c1-260 | head -30; grep -n \"exporter\\|createExporter\\|makeExporter\" app/test/core-eqonly.test.js | head -8"}
+--- L64802 user 2026-10-05T21:03:33.995Z
+RESULT [toolu_01B5WL654dvWWriztmRJq3eJ]: 65:test('row 4: the preview\'s OVERLAP CHECK: a coil (two circles on one another, as TEST 1 stacked) is reported as the road overlapping itself, with where', async () => {
+66-  const s = await openLap({ turns: 8, lastLen: 60 });
+67-  s.proposeClose();
+68-  const p = s.getState().closeProposal; assert.ok(p, s.getState().message);
+69-  assert.ok(p.check.overlaps.length > 0, 'the closed coil overlaps itself');
+70-  // the MESH-only reds, which the live panel cannot see (it validates without the mesh): self-intersection from the mesh's own check, and a downforce ray that meets another road
+71-  for (const r of ['self-intersection', 'downforce-ray-gap', 'stacked-within-2m']) assert.ok(p.check.overlaps.some((x) => x.reason === r), `the check finds ${r} (B's lprobe: 2 self-intersection, 15 ray, 2 stacked)`);
+72-  assert.match(s.getState().message, /OVERLAPS ITSELF in \d+ place/);
+73-  const RG = require('../validate-ui/redgroups.js'), g = RG.groupReds(p.check.overlaps, p.resolved.segments);
+74-  assert.equal(g[0].key, 'overlap'); assert.ok(g[0].items.every((it) => /^p\d+$/.test(it.piece) && / km$/.test(it.km)), 'each place names its km and its piece');
+75-});
+76-
+77-function headlessPreview(s) {
+78-  let q = [], now = 0;   // frames run only when step() is called: the pose a view reports is the one the last frame drew
+79-  const win = { devicePixelRatio: 1, document: { hidden: false, activeElement: null, body: {}, addEventListener() {}, removeEventListener() {} }, addEventListener() {}, removeEventListener() {}, requestAnimationFrame: (fn) => { q.push(fn); return q.length; 
+14:const { makeExporter } = require('../export/export.js');
+171:  const st = storage(), s = await createCoreShell({ brushFn: null, storage: st, exporter: await makeExporter(get), autosaveMs: 0 });
+218:  const st = backupStore(), s = await createCoreShell({ brushFn: null, storage: st, exporter: null, autosaveMs: 0 });
+348:test('the removed piece-builder modules are gone, and the shared ones the equation page and the exporter use are kept', () => {
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64805 assistant 2026-10-05T21:03:40.417Z
+TOOL_USE Bash [toolu_01LdNQiD3bshiE1XbGVJ8UH6]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && sed -n 14,40p app/test/core-eqonly.test.js | cut -c1-220; sed -n 160,200p app/test/core-eqonly.test.js | cut -c1-240"}
+--- L64806 user 2026-10-05T21:03:40.579Z
+RESULT [toolu_01LdNQiD3bshiE1XbGVJ8UH6]: const { makeExporter } = require('../export/export.js');
+const { STEPS, createGuide, EXTEND_AT_LEAST } = require('../onboarding/guide.js');
+const D = require('../../src/core/document.js');
+const C = require('../../src/doc/code.js');
+const W = require('../../src/doc/index.js');
+
+const REPO = path.resolve(__dirname, '..', '..');
+const get = async (p) => fs.readFileSync(path.join(REPO, p), 'utf8');
+const R = 180, Q = Math.PI * R / 2;
+/** The native side's storage, in memory: the tracks folder, and the ONE autosave file (src-tauri: save_autosave / open_autosave / clear_autosave). */
+function storage({ autosave = null, failSave = false } = {}) {
+  const s = { docs: new Map(), auto: autosave, autoWrites: 0, cleared: 0, writes: [] };
+  return Object.assign(s, {
+    saveDoc: async (n, t) => { if (failSave) throw new Error('disk full'); s.docs.set(n, t); }, openDoc: async (n) => s.docs.get(n), listDocs: async () => [...s.docs.keys()],
+    saveAutosave: async (t) => { s.auto = t; s.autoWrites++; }, openAutosave: async () => s.auto, clearAutosave: async () => { s.auto = null; s.cleared++; },
+    writeExport: async (dir, folder, files) => { s.writes.push({ folder, files: files.map((f) => [f.path, Buffer.from(f.bytes)]) }); },
+  });
+}
+/** Timers the test runs by hand. */
+function handTimers() { const t = { due: [] }; t.setTimeout = (fn) => { t.due.push(fn); return t.due.length; }; t.clearTimeout = () => { t.due = []; }; t.run = async () => { const d = t.due; t.due = []; for (const f of d
+const extendLap = (s) => {
+  s.extend({ length: 300, family: 'bowl' });
+  for (let i = 0; i < 4; i++) s.extend({ length: Q, transition: 40, targets: { kh: 1 / R } });
+  s.extend({ length: 60, transition: 40, targets: { kh: 0 } });
+};
+const text = (s)
+…[2614 chars cut]…
+f, text); return f; },
+    // as the native list: the stamped ones newest first, then the hand-made ones
+    listBackups: async (name) => { const stamped = (f) => /\.\d{4}-\d{2}-\d{2}_\d{6}(_\d+)?\.t180track$/.test(f); return [...files.keys()].filter((f) => f.startsWith(`${name}.`)).sort((a, b) => (stamped(b) - stamped(a)) || (a < b ? 1 : a > 
+    openBackup: async (file) => { if (!files.has(file)) throw new Error(`no backup ${file}`); return files.get(file); },
+  });
+}
+test('backupNow writes the track AS IT IS NOW under its eq- name (or "unsaved"), and says why', async () => {
+  const st = backupStore(), s = await createCoreShell({ brushFn: null, storage: st, autosaveMs: 0 });
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64815 assistant 2026-10-05T21:04:16.703Z
+TOOL_USE Bash [toolu_01Grb3GtGicxGtPmiboynkYY]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && grep -n \"^function viewProj\" -B2 -A14 app/camera/math.js | cut -c1-180; sed -n 77,125p app/test/core-close-preview.test.js | cut -c1-230"}
+--- L64816 user 2026-10-05T21:04:16.844Z
+RESULT [toolu_01Grb3GtGicxGtPmiboynkYY]: function headlessPreview(s) {
+  let q = [], now = 0;   // frames run only when step() is called: the pose a view reports is the one the last frame drew
+  const win = { devicePixelRatio: 1, document: { hidden: false, activeElement: null, body: {}, addEventListener() {}, removeEventListener() {} }, addEventListener() {}, removeEventListener() {}, requestAnimationFrame: (fn) => { q.
+  const gl = new Proxy({ getShaderParameter: () => true, getProgramParameter: () => true, createShader: () => ({}), createProgram: () => ({}), createBuffer: () => ({}), getUniformLocation: (p, n) => n, getAttribLocation: () => 0 }
+  const canvas = { clientWidth: 800, clientHeight: 500, width: 0, height: 0, getContext: () => gl, addEventListener() {}, removeEventListener() {} };
+  const pv = P.createPreview({ canvas, shell: s, win });
+  pv.step = () => { const f = q; q = []; now += 16; for (const g of f) g(now); };
+  return pv;
+}
+test('row 5: the preview shows the proposal as a GHOST (dropped on Cancel), and focus(s) puts the camera in free mode looking at the station', async () => {
+  const s = await nearLap(), pv = headlessPreview(s);
+  assert.equal(pv.view().ghost, 0, 'no ghost before'); s.proposeClose({ last: true }); assert.ok(pv.view().ghost > 0, 'the proposal is drawn as a ghost');
+  s.cancelClose(); assert.equal(pv.view().ghost, 0, 'Cancel drops the ghost');
+  assert.equal(pv.focus(150), true); pv.step(); assert.equal(pv.view().mode, 'free');
+  const v = pv.view(), m = require('../camera/cameras.js').sampleAt(v.track.path, 150), d = [0, 1, 2].map((k) => v.pose.target[k] - v.pose.eye[k]), toM = [0, 1, 2].map((k) => m.pos[k] - v.pose.eye[k]);
+  const cos = (d[0] * toM[0] + d[1] * toM[1] + d[2] * toM[2]) / (Math.hypot(...d) * Math.hypot(...t
+…[3087 chars cut]…
+tate().message, /not closed: the copy from before the close could not be written \(disk full\)/);
+  }
+  // an edit while the copy is being written drops the preview: the stale close is never committed over it
+  const u = await nearLap(); let release; u.backupNow = () => new Promise((r) => { release = r; });
+  u.proposeClose({ last: true }); const pending = u.applyClose(); u.extend({ length: 20 }); const ub = u.getState().history.present; release(null); await pending;
+  assert.equal(u.getState().history.present, ub, 'the edit stands; no close was committed over it'); assert.equal(ub.closed, false);
+  assert.match(u.getState().message, /changed while its copy was being written/);
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64820 assistant 2026-10-05T21:05:51.707Z
+TOOL_USE Write [toolu_01MM8voBasg3QAWEeuJ7BfBz]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-piecesui-wt\\app\\test\\core-pieces-ui.test.js","content":"// core-pieces-ui.test.js: node --test app/test/core-pieces-ui.test.js   (under the heavy-run lock, --max-old-space-size=4096)\n// D240, THE UI HALF OF SAVED PIECES (the core is src/core/piece.js, tested by test/core_piece.test.js; this is the app: app/core/coreshell.js, piecesui.js, selectionlayer.js, the\n// preview's proposal ghost, and the native side's file commands through a storage in memory). FEEL tier: targeted rows, no mutation harness (the keeper's 09-29 rule). Rows:\n//   1   select: a piece, a shift
+…[35767 chars cut]…
+ngth: 100, transition: 40, targets: { c: 30 } }); P3.click(520); P3.click(700, { shiftKey: true });\n  assert.equal(P3.button('Save as piece').disabled, true); assert.match(P3.text('why the selection cannot be saved'), /^Cannot be saved as a piece: MIXED_RUN/);\n});\n"}
+--- L64821 user 2026-10-05T21:05:51.762Z
+RESULT [toolu_01MM8voBasg3QAWEeuJ7BfBz]: File created successfully at: C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\test\core-pieces-ui.test.js (file state is current in your context — no need to Read it back)
+--- L64831 assistant 2026-10-05T21:06:03.045Z
+TOOL_USE Bash [toolu_01SyWJ7kyqoLrtRUKiJbod5n]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && node -e \"\nconst fs=require('fs');const f='app/test/core-pieces-ui.test.js';let s=fs.readFileSync(f,'utf8');\nconst a=s.indexOf(\\\"assert.deepEqual(m, PC.insert(before, piece, { mirror: true })); assert.ok(m.pieces[2]\\\");\nif(a<0)throw new Error('nf');const e=s.indexOf('\\\\n',a);\ns=s.slice(0,a)+\\\"assert.deepEqual(m, PC.insert(before, piece, { mirror: true })); const plain = PC.insert(before, piece); assert.deepEqual(m.pieces.slice(1).map((x) => x.channels.kh), plain.pieces.slice(1).map((x) => x.channels.kh.map((v) => (v === 0 ? 0 : -v))), 'the turn is
+…[1155 chars cut]…
+g(t.split('\\n').filter((l) => /^\\s*✖|AssertionError|Error:|expected|actual|^\\s+[+-] |at .*test\\.js/.test(l)).slice(0, 70).join('\\n'));\nEOF\nnode sp_ui_run.js app/test/core-pieces-ui.test.js 2>&1 | grep -av \"Warn\\|heavy-run: wait\\|stale lock\"","timeout":900000}
+--- L64832 user 2026-10-05T21:06:15.023Z
+RESULT [toolu_01SyWJ7kyqoLrtRUKiJbod5n]: ok
+exit 1 tests 12 pass 8 fail 4
+✖ row 3: the library lists name, length, turn, climb and a thumbnail; an unreadable file and a whole track are LISTED with the reason (12.6293ms)
+✖ row 8b: the delete preview's overlap check finds a road running into itself (a two-circle coil, as TEST 1 stacked) and reports where (4129.0366ms)
+✖ row 10: the panel: a click selects the piece under it and a shift-click the run; a drag, an armed brush and a click on nothing do not select; Save as piece, the list, Add at head with Mirror, Rename, Delete with its confirm (24.4409ms)
+✖ row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot be saved (431.645ms)
+✖ failing tests:
+test at app\test\core-pieces-ui.test.js:95:1
+✖ row 3: the library lists name, length, turn, climb and a thumbnail; an unreadable file and a whole track are LISTED with the reason (12.6293ms)
+  AssertionError [ERR_ASSERTION]: two 150 m turns reaching 0.005555555555555556 rad/m: 86.04093924020698°
+      at TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\test\core-pieces-ui.test.js:104:10)
+    actual: false,
+    expected: true,
+test at app\test\core-pieces-ui.test.js:203:1
+✖ row 8b: the delete preview's overlap check finds a road running into itself (a two-circle coil, as TEST 1 stacked) and reports where (4129.0366ms)
+  AssertionError [ERR_ASSERTION]: fewer quarter turns overlap less (or not at all)
+      at TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\test\core-pieces-ui.test.js:210:10)
+    actual: false,
+    expected: true,
+test at app\test\core-pieces-ui.test.js:287:1
+✖ row 10: the panel: a click selects the piece under i
+…[722 chars cut]…
+ input did not match the regular expression /Moves: p3 up to \d+(\.\d+)? m, p\d up to/. Input:
+      at TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\test\core-pieces-ui.test.js:318:10)
+    actual: 'Preview: 1 piece (p2) would be taken out of the middle of the track. The two sides are joined again at the gap, which changes the start of p3 (up to 146.6 m), and everything after the gap moves along with it. The see-through track on the preview is the result.Moves: p5 up to 163.9 m, p3 up to 146.6 m, p4 up to 140.4 m; 0 pieces after the gap keep their place; everything before the gap is exactly as it was.No overlap and no red on the track after the delete.',
+    expected: /Moves: p3 up to \d+(\.\d+)? m, p\d up to/,
+--- L64836 assistant 2026-10-05T21:06:29.946Z
+TOOL_USE Bash [toolu_01PbgdUn3ZTNEsNjo5EMV2bg]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && node -e \"\nconst fs=require('fs');const f='app/test/core-pieces-ui.test.js';let s=fs.readFileSync(f,'utf8');\nconst once=(a,b)=>{if(s.split(a).length!==2)throw new Error('nf '+a.slice(0,60));s=s.replace(a,()=>b);};\nonce('Math.abs(b.summary.turnDeg - 150 * 2 / R / DEG) < 0.2','Math.abs(b.summary.turnDeg - (300 - 30) / R / DEG) < 0.5');\nonce(\\\"two 150 m turns reaching \\${TURN} rad/m: \\${b.summary.turnDeg}°\\\",\\\"two 150 m pieces, the first easing in over 60 m to \\${TURN} rad/m: \\${b.summary.turnDeg}°\\\");\nonce(\\\"  assert.ok(a.check.overlaps.lengt
+…[1441 chars cut]…
+\" && cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && node sp_ui_run.js app/test/core-pieces-ui.test.js 2>&1 | grep -av \"Warn\\|heavy-run: wait\\|stale lock\"","timeout":900000}
+--- L64837 user 2026-10-05T21:06:30.066Z
+RESULT [toolu_01PbgdUn3ZTNEsNjo5EMV2bg]: [eval]:3
+const once=(a,b)=>{if(s.split(a).length!==2)throw new Error('nf '+a.slice(0,60));s=s.replace(a,()=>b);};
+                                            ^
+
+Error: nf assert.match(box, /Moves: p3 up to d+(.d+)? m, pd up to/);
+    at once ([eval]:3:51)
+    at [eval]:10:1
+[90m    at runScriptInThisContext (node:internal/vm:219:10)[39m
+[90m    at node:internal/process/execution:451:12[39m
+    at [eval]-wrapper:6:24
+[90m    at runScriptInContext (node:internal/process/execution:449:60)[39m
+[90m    at evalFunction (node:internal/process/execution:283:30)[39m
+[90m    at evalTypeScript (node:internal/process/execution:295:3)[39m
+[90m    at node:internal/main/eval_string:71:3[39m
+
+Node.js v24.14.1
+--- L64846 assistant 2026-10-05T21:06:32.519Z
+TOOL_USE Edit [toolu_01W44RHpZX12pbcVAtSbGMxN]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-piecesui-wt\\app\\test\\core-pieces-ui.test.js","old_string":"Math.abs(b.summary.turnDeg - 150 * 2 / R / DEG) < 0.2","new_string":"Math.abs(b.summary.turnDeg - (300 - 30) / R / DEG) < 0.5"}
+--- L64847 user 2026-10-05T21:06:32.545Z
+RESULT [toolu_01W44RHpZX12pbcVAtSbGMxN]: The file C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\test\core-pieces-ui.test.js has been updated successfully.
+--- L64848 assistant 2026-10-05T21:06:33.687Z
+TOOL_USE Edit [toolu_017AtxJykQvz6mZ13gF2KZRn]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-piecesui-wt\\app\\test\\core-pieces-ui.test.js","old_string":"  assert.ok(a.check.overlaps.length < b.check.overlaps.length || a.check.overlaps.length === 0, 'fewer quarter turns overlap less (or not at all)');","new_string":"  assert.ok(a.check.overlaps.length > 0, 'seven quarter turns still overlap: the check reports it for any delete that leaves the coil');"}
+--- L64849 user 2026-10-05T21:06:33.716Z
+RESULT [toolu_017AtxJykQvz6mZ13gF2KZRn]: The file C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\test\core-pieces-ui.test.js has been updated successfully.
+--- L64850 assistant 2026-10-05T21:06:34.888Z
+TOOL_USE Edit [toolu_01NcEjemKy81tnjBjpPT1gXB]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-piecesui-wt\\app\\test\\core-pieces-ui.test.js","old_string":"  P1.click(500); assert.deepEqual([shell.selectionInfo().from, shell.selectionInfo().to], [1, 1], 'a plain click replaces it')","new_string":"  P1.click(400); assert.deepEqual([shell.selectionInfo().from, shell.selectionInfo().to], [1, 1], 'a plain click replaces it')"}
+--- L64851 user 2026-10-05T21:06:34.915Z
+RESULT [toolu_01NcEjemKy81tnjBjpPT1gXB]: The file C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\test\core-pieces-ui.test.js has been updated successfully.
+--- L64852 assistant 2026-10-05T21:06:35.955Z
+TOOL_USE Edit [toolu_01Sdp25kbsbsrzkZx5Ycyp2n]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-piecesui-wt\\app\\test\\core-pieces-ui.test.js","old_string":"assert.match(box, /Moves: p3 up to \\d+(\\.\\d+)? m, p\\d up to/);","new_string":"assert.match(box, /Moves: p5 up to \\d+(\\.\\d+)? m, p3 up to \\d+(\\.\\d+)? m, p4 up to/);"}
+--- L64853 user 2026-10-05T21:06:35.982Z
+RESULT [toolu_01Sdp25kbsbsrzkZx5Ycyp2n]: The file C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\test\core-pieces-ui.test.js has been updated successfully.
+--- L64854 assistant 2026-10-05T21:06:37.110Z
+TOOL_USE Edit [toolu_019LaMw2Gv2mnSgYDDAAS8tf]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-piecesui-wt\\app\\test\\core-pieces-ui.test.js","old_string":"  assert.ok(Array.isArray(p.check.overlaps) && Array.isArray(p.check.others), 'the overlap check ran');","new_string":"  assert.ok(Array.isArray(p.check.overlaps) && Array.isArray(p.check.others), 'the overlap check ran'); assert.equal(p.check.overlaps.length, 0, 'this track does not run into itself');"}
+--- L64855 user 2026-10-05T21:06:37.141Z
+RESULT [toolu_019LaMw2Gv2mnSgYDDAAS8tf]: The file C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\test\core-pieces-ui.test.js has been updated successfully.
+--- L64858 assistant 2026-10-05T21:06:39.847Z
+TOOL_USE Bash [toolu_015FuWeMJiq4f1KprqF1JNsh]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && node sp_ui_run.js app/test/core-pieces-ui.test.js 2>&1 | grep -av \"Warn\\|heavy-run: wait\\|stale lock\"","timeout":900000}
+--- L64859 user 2026-10-05T21:08:26.055Z
+RESULT [toolu_015FuWeMJiq4f1KprqF1JNsh]: exit 1 tests 12 pass 11 fail 1
+✖ row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot be saved (456.6974ms)
+✖ failing tests:
+test at app\test\core-pieces-ui.test.js:314:1
+✖ row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot be saved (456.6974ms)
+  AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to:
+      at TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\test\core-pieces-ui.test.js:319:120)
+    actual: 'none',
+    expected: 'none',
+--- L64868 assistant 2026-10-05T21:08:33.145Z
+TOOL_USE Bash [toolu_01WrCaRG1pDDe5DQwKvyXQFN]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && sed -i \"s/el('button', { text: 'Cancel', title: 'drop the preview: nothing changes', onclick: () => shell.cancelDelete() })/el('button', { text: 'Cancel delete', title: 'drop the preview: nothing changes', onclick: () => shell.cancelDelete() })/\" app/core/piecesui.js && grep -c \"Cancel delete\" app/core/piecesui.js && sed -i \"s/P2.button('Cancel')/P2.button('Cancel delete')/g\" app/test/core-pieces-ui.test.js && grep -c \"Cancel delete\" app/test/core-pieces-ui.test.js && cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && node sp_ui_run.js app/test/core-pieces-ui.test.js 2>&1 | grep -av \"Warn\\|heavy-run: wait\\|stale lock\"","timeout":900000}
+--- L64869 user 2026-10-05T21:08:47.140Z
+RESULT [toolu_01WrCaRG1pDDe5DQwKvyXQFN]: 1
+2
+exit 1 tests 12 pass 11 fail 1
+✖ row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot be saved (793.6979ms)
+✖ failing tests:
+test at app\test\core-pieces-ui.test.js:314:1
+✖ row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot be saved (793.6979ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+      at TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\test\core-pieces-ui.test.js:325:10)
+    actual: false,
+    expected: true,
+--- L64873 assistant 2026-10-05T21:08:48.887Z
+TOOL_USE Bash [toolu_01NGtXLK9kgsrCsegsJpeMKK]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && sed -n 323,327p app/test/core-pieces-ui.test.js | cut -c1-260"}
+--- L64874 user 2026-10-05T21:08:49.015Z
+RESULT [toolu_01NGtXLK9kgsrCsegsJpeMKK]:   // a mixed run says why
+  const P3 = await mountPanel(); P3.shell.extend({ length: 100, transition: 40, targets: { c: 30 } }); P3.click(520); P3.click(700, { shiftKey: true });
+  assert.equal(P3.button('Save as piece').disabled, true); assert.match(P3.text('why the selection cannot be saved'), /^Cannot be saved as a piece: MIXED_RUN/);
+});
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64877 assistant 2026-10-05T21:08:54.370Z
+TOOL_USE Bash [toolu_01FUFRsjGd7ySBD63hQq3ztY]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && sed -i \"s/P3.click(520); P3.click(700, { shiftKey: true });/P3.click(650); P3.click(800, { shiftKey: true });/\" app/test/core-pieces-ui.test.js && cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && node sp_ui_run.js app/test/core-pieces-ui.test.js 2>&1 | grep -av \"Warn\\|heavy-run: wait\\|stale lock\"","timeout":900000}
+--- L64878 user 2026-10-05T21:09:14.682Z
+RESULT [toolu_01FUFRsjGd7ySBD63hQq3ztY]: exit 0 tests 12 pass 12 fail 0
+--- L64881 assistant 2026-10-05T21:09:20.576Z
+TOOL_USE Bash [toolu_01HziP6v3Jc5rifC49wJtZMe]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && grep -ln \"const prop = st.closeProposal\\|closed: true, start: resolved.start\\|function overlapCheck\" app/test/*.js test/*.js 2>/dev/null; grep -n \"const prop = st.closeProposal\\|function overlapCheck(resolved, designSpeedKmh)\\|closed: true, start: resolved.start\" app/test/*.js | cut -c1-200 | head"}
+--- L64882 user 2026-10-05T21:09:20.767Z
+RESULT [toolu_01HziP6v3Jc5rifC49wJtZMe]: Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64885 assistant 2026-10-05T21:09:26.850Z
+TOOL_USE Bash [toolu_01WAfpXEu34LXpHCtt6HmAXx]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && FILES=$(ls app/test/*.test.js | grep -v mutation | tr '\\n' ' '); CORE=$(ls test/core_*.test.js | grep -v mutation | tr '\\n' ' '); echo $(echo $FILES | wc -w) app files, $(echo $CORE | wc -w) core files; cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && (node sp_ui_run.js $FILES $CORE 2>&1 | grep -av \"Warn\\|heavy-run: wait\\|stale lock\" > ui_regress.txt) ; cat ui_regress.txt | head -40","timeout":3000000,"run_in_background":true}
+--- L64886 user 2026-10-05T21:09:26.888Z
+RESULT [toolu_01WAfpXEu34LXpHCtt6HmAXx]: Command running in background with ID: b5vexrjbs. Output is being written to: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\tasks\b5vexrjbs.output. You will be notified when it completes. To check interim output, use Read on that file path.
+Session cwd remains C:\Consonance\instances\sibling-3d57124e; directory changes made by the backgrounded command do not apply to subsequent commands.
+--- L64895 assistant 2026-10-05T21:09:30.374Z
+TOOL_USE Bash [toolu_016nUpHtEvY2wSB4nkvCCXLo]: {"command":"cd C:/Users/nname/Desktop/lighthouse/exo_memory/handback && grep -n \"real window\\|T180_TEST_APP_DATA\\|prove_render\\|debug\\|cargo\\|driver\" p-eqonly-C_2026-10-04.md | cut -c1-260 | head -30; ls C:/Users/nname/Desktop/worktrees | head -50"}
+--- L64896 user 2026-10-05T21:09:30.549Z
+RESULT [toolu_016nUpHtEvY2wSB4nkvCCXLo]: 45:  app/test/*.test.js test/*.test.js scripts/*.js` → 24 test hits, one of them core-eqonly's existence check, + bench, prove_render,
+74:incl. the two the real window prompted (§4), install = export byte for byte, guide ×3, the page ×3); `share-install.test.js` rewritten on the core shell (12, + "an open loop is not
+91:## 4 · The real window
+92:**Run 2 PASSED, 16:03–16:04 UTC.** It used this tree's own debug build (`cargo tauri build --debug --no-bundle`, my own target dir, built after the fix below). It had its own DevTools port and WebView2 profile and was moved off-screen; the driver is my sc
+118:  While it ran, **the keeper's installed app (`AppData\Local\T-180 Track Builder`, pid 5580) started at 09:06:30**. It shares that folder, so at 09:06 it may have seen my run's autosave instead of his own. I cannot know what it showed him. I did not touch 
+125:- **Fold-in (the packet's item 3) is `80752f5`**: `CLOSE_SINGULAR`, test red on base 2 of 3; seen in the real window below.
+145:- the texture maker's fate, and porting the `app/shell.js` test drivers — proposed, not done.
+169:- **Rust** (`cargo test`, src-tauri, `rust.log`) → **22 / 22**, 5 of them new in `backups.rs`:
+185:**Real window (run 3, 17:04 UTC; same driver, now guarded; report sha256 `654b9c0a…`, steps `defb062a…`):**
+205:  `require('../shell.js').keyAction === require('../core/keys.js').keyAction`), so its own tests (`shell-keys.test.js`) and drivers are
+232:**Not verified:** the keys in a real window (headless only; the page wiring is checked by a string test and the handler by a fake document).
+242:| **F2** window test runs shared the keeper's app data | `lib.rs`: `test_app_data(var)`. When and only when the app is LAUNCHED with `T180_TEST_APP_DATA` = an 
+…[649 chars cut]…
+r, seeded with a COPY of the keeper's autosave;
+268:- the start message for a damaged autosave in a real window (headless only);
+a-d195-wt
+a-d197-wt
+a-d203-wt
+a-d205-wt
+a-d212-wt
+a-d214-wt
+a-d215-wt
+a-d218-wt
+a-d220-wt
+a-d220b-wt
+a-d224-base-wt
+a-d224-wt
+a-dark-wt
+a-expdir-wt
+a-grid3d-wt
+a-mirror-wt
+a-nits-wt
+a-nowater-wt
+a-pieces-wt
+a-piecesui-wt
+a-refused-wt
+a-scroll-wt
+a-speed-wt
+a-speed2-wt
+a-tex-wt
+a-wpre-wt
+a-xsec-wt
+a-xsec2-wt
+b-close-wt
+b-d195-wt
+b-d203-wt
+b-d205-wt
+b-d205red-wt
+b-d212-wt
+b-d214-wt
+b-d215-wt
+b-d218-wt
+b-d222-wt
+b-dark-wt
+b-eqbase-wt
+b-eqonly-wt
+b-grid3d-wt
+b-mirror-wt
+b-mirror2-wt
+b-nowater-wt
+b-openexp-wt
+b-refused-wt
+b-scroll-wt
+b-speed-wt
+b-speed2-wt
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64898 assistant 2026-10-05T21:09:32.744Z
+TOOL_USE Bash [toolu_01AmW6TUaqAecGXAcvScYeyS]: {"command":"cd C:/Users/nname/Desktop/lighthouse/exo_memory/handback && sed -n 91,100p p-eqonly-C_2026-10-04.md | cut -c1-900; sed -n 255,266p p-eqonly-C_2026-10-04.md | cut -c1-700; ls C:/Users/nname/AppData/Local/Temp/claude/ | head; find C:/Users/nname/AppData/Local/Temp/claude -name \"d239_window2.js\" 2>/dev/null | head -3"}
+--- L64899 user 2026-10-05T21:09:47.683Z
+RESULT [toolu_01AmW6TUaqAecGXAcvScYeyS]: ## 4 · The real window
+**Run 2 PASSED, 16:03–16:04 UTC.** It used this tree's own debug build (`cargo tauri build --debug --no-bundle`, my own target dir, built after the fix below). It had its own DevTools port and WebView2 profile and was moved off-screen; the driver is my scratchpad's `eqonly/d239_window.js` (sha256 `290edbb1…`). Report: `eqonly/win/window_report.json` (sha256 `38109f24…`). Step log: `eqonly/win/steps.log` (sha256 `148262bb…`). Every line below is quoted from that log:
+
+- **Page:** no mode switch, no `#handles`. 0 page exceptions and 0 console errors across two launches.
+- **First start, with the keeper's real Pieces autosave on disk:** the message was *"an unsaved track from the old Pieces builder was found; … so it was kept as the saved word track "pieces autosave 2026-10-05" in the app's tracks folder"*. Checks: `{"file":true,"bytesEqualKeeperDoc":true,"autosaveUntouched":true}`.
+- **The guide** opened on first run: *"Extend a few pieces"*, *"1 of 6"*. After the pasted lap (6 pieces) it moved by itself to *"Brush the track"*, *"2 of 6"*.
+- **Share:**
+  - paste a closed lap's `t180e` code → *"opened "untitled" from its code (Ctrl+Z goes back)"*; status `unsaved • · closed loop`;
+  - Copy code gives back the identical code (`copyBack true`);
+  - a Pieces `t180d` code → *"CODE_PIECES: this is a track code from the old Pieces builder; … (nothing changed)"*.
+- **Anchors:** `mutcheck_app.js` → 59 core mutants, 0 not applying. `core-mutation` was not re-run for this commit (not asked; the start-up
+  path it anchors is unchanged).
+
+**The real window, ON ITS OWN APP DATA (F2 in use).** `d239_window2.js` (sha256 `a1d23aed…`, report `win2/window_report.json` sha256
+`7e0cca73…`):
+- the build launched with `T18
+…[468 chars cut]…
+91 m ·
+  closed"]`; install == export 10/10; the pre-Close copy `eq-unsaved.…`; `CLOSE_SINGULAR`; the crash-restore banner. 0 page exceptions,
+  0 console errors.
+
+C--Consonance-data-vantage-cell
+C--Consonance-instances-fresh-0c607a8e
+C--Consonance-instances-fresh-17635120
+C--Consonance-instances-fresh-476a9b3f
+C--Consonance-instances-fresh-5863b0ee
+C--Consonance-instances-fresh-8960d31a
+C--Consonance-instances-fresh-acf6b85a
+C--Consonance-instances-librarian
+C--Consonance-instances-main
+C--Consonance-instances-sibling-07b8a48f
+C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/eqonly/d239_window2.js
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64902 assistant 2026-10-05T21:09:50.762Z
+TOOL_USE Bash [toolu_0142UwZstp6g3t8KpPa5VTGy]: {"command":"D=\"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/eqonly\"; ls -la \"$D\" | head -40; wc -l \"$D/d239_window2.js\"; sed -n 1,80p \"$D/d239_window2.js\" | cut -c1-200"}
+--- L64903 user 2026-10-05T21:09:51.167Z
+RESULT [toolu_0142UwZstp6g3t8KpPa5VTGy]: total 659
+drwxr-xr-x 1 nname 197609     0 Oct  5 14:02 .
+drwxr-xr-x 1 nname 197609     0 Oct  5 15:04 ..
+drwxr-xr-x 1 nname 197609     0 Oct  4 23:51 base
+-rw-r--r-- 1 nname 197609 41789 Oct  5 08:47 base.log
+-rw-r--r-- 1 nname 197609  4237 Oct  5 08:47 base.rows
+-rw-r--r-- 1 nname 197609 56064 Oct  5 10:44 bk.log
+-rw-r--r-- 1 nname 197609 20041 Oct  5 10:47 bk2.log
+-rw-r--r-- 1 nname 197609  1103 Oct  5 08:50 build.log
+-rw-r--r-- 1 nname 197609   949 Oct  5 09:41 build2.log
+-rw-r--r-- 1 nname 197609   959 Oct  5 10:56 build3.log
+-rw-r--r-- 1 nname 197609  1482 Oct  5 14:02 build4.log
+-rw-r--r-- 1 nname 197609  1731 Oct  5 13:58 cargo1.log
+-rw-r--r-- 1 nname 197609  3895 Oct  5 14:00 cargo2.log
+-rw-r--r-- 1 nname 197609  5199 Oct  4 23:49 changelog.js
+-rw-r--r-- 1 nname 197609  1695 Oct  5 14:02 cl_f.js
+-rw-r--r-- 1 nname 197609  4538 Oct  4 23:27 close_green.log
+-rw-r--r-- 1 nname 197609  5132 Oct  4 23:27 close_red.log
+-rw-r--r-- 1 nname 197609  1252 Oct  4 23:39 closer_t.js
+-rw-r--r-- 1 nname 197609  6452 Oct  4 23:50 codes.json
+-rw-r--r-- 1 nname 197609 18004 Oct  5 10:48 d239_window.js
+-rw-r--r-- 1 nname 197609 18658 Oct  5 13:57 d239_window2.js
+-rw-r--r-- 1 nname 197609   845 Oct  4 23:28 deps.js
+-rw-r--r-- 1 nname 197609  2799 Oct  5 10:43 docs_bk.js
+-rw-r--r-- 1 nname 197609  2707 Oct  5 11:27 docs_keys.js
+-rw-r--r-- 1 nname 197609 12372 Oct  4 23:34 edit_coreshell.js
+-rw-r--r-- 1 nname 197609  9084 Oct  4 23:39 edit_index.js
+-rw-r--r-- 1 nname 197609  3082 Oct  5 10:09 edit_versions.js
+-rw-r--r-- 1 nname 197609 31617 Oct  5 13:58 fcommit.log
+-rw-r--r-- 1 nname 197609  3996 Oct  5 13:56 fcommit_rs.js
+-rw-r--r-- 1 nname 197609 24453 Oct  5 09:41 fix.log
+-rw-r--r-- 1 nname 197609  2916 Oct  4 23:44 fix1.js
+-rw-r--r
+…[8176 chars cut]…
+('no butto
+const page = `(() => ({ status: document.getElementById('status').textContent, banner: document.getElementById('banner').textContent, msg: [...document.querySelectorAll('#palette .message')].map((m) =
+const paste = (code) => `(async () => { const t = document.querySelector('#share textarea'); t.value = ${JSON.stringify(code)}; const b = [...document.querySelectorAll('#share button')].find((x) => x.
+const readAuto = () => { const f = path.join(dataDir, 'autosave.t180auto'); return fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : null; };
+
+(async () => {
+  let A = null;
+  // the cleanup runs on EVERY way out, the hard timeout included (run 1's timeout skipped it and left the run's files in the keeper's folder)
+  let cleaned = false;
+--- L64912 assistant 2026-10-05T21:10:06.277Z
+TOOL_USE Bash [toolu_01TztzE244vu3SVxJ4VZ5voy]: {"command":"D=\"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/eqonly\"; head -12 \"$D/build4.log\" | cut -c1-200; head -6 \"$D/cargo2.log\" | cut -c1-200; cat C:/Users/nname/Desktop/worktrees/a-piecesui-wt/src-tauri/tauri.conf.json | head -30; cat \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/tasks/b5vexrjbs.output\" 2>/dev/null | head -5"}
+--- L64913 user 2026-10-05T21:10:06.513Z
+RESULT [toolu_01TztzE244vu3SVxJ4VZ5voy]: == C D239 F-commit: build, then the window on its own app data · asked 2026-10-05T20:00:39.826Z · lock held 2026-10-05T20:00:39.830Z · NODE_OPTIONS=--max-old-space-size=4096
+$ export PATH=/c/Users/nname/.cargo/bin:$PATH; cd /c/Users/nname/Desktop/worktrees/c-eqonly-wt && CARGO_TARGET_DIR=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/084
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 9.47s
+       Built application at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\target-eqonly\debug\t180-track-builder.ex
+== exit 0 · done 2026-10-05T20:02:04.659Z
+== C D239 F-commit: Rust red (base prune) and full cargo · asked 2026-10-05T19:59:27.185Z · lock held 2026-10-05T19:59:27.190Z · NODE_OPTIONS=--max-old-space-size=4096
+$ export PATH=/c/Users/nname/.cargo/bin:$PATH; cd /c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/eqonly/redRust/src-t
+test backups::tests::a_save_whose_prune_fails_afterwards_still_succeeds_and_the_new_text_is_written ... FAILED
+thread 'backups::tests::a_save_whose_prune_fails_afterwards_still_succeeds_and_the_new_text_is_written' (19944) panicked at src\backups.rs:261:9:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 23 filtered out; finished in 0.01s
+error: test failed, to rerun pass `--lib`
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "T-180 Track Builder",
+  "version": "0.2.2",
+  "identifier": "com.solariz3d.t180-track-builder",
+  "build": {
+    "frontendDist": "dist"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "label": "main",
+        "title": "T-180 Track Builder",
+        "url": "app/index.html",
+        "width": 1400,
+        "height": 860,
+        "minWidth": 900,
+        "minHeight": 600
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "nsis"
+    ],
+46 app files, 24 core files
+--- L64916 assistant 2026-10-05T21:10:11.230Z
+TOOL_USE Bash [toolu_015mNoDMgGbXnBdM3HcKeNJe]: {"command":"T=\"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/target-eqonly\"; du -sh \"$T\" 2>/dev/null | tail -1; ls \"$T\"; ls \"$T/debug\" | head; df -h /c | tail -1"}
+--- L64917 user 2026-10-05T21:10:25.257Z
+RESULT [toolu_015mNoDMgGbXnBdM3HcKeNJe]: 3.8G	C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/target-eqonly
+CACHEDIR.TAG
+debug
+build
+deps
+examples
+incremental
+t180-track-builder.d
+t180-track-builder.exe
+t180_track_builder.pdb
+C:              931G  792G  139G  86% /c
+--- L64920 assistant 2026-10-05T21:10:30.719Z
+TOOL_USE Bash [toolu_01G4MQUHN2ArLWGsfWjqhAZA]: {"command":"mkdir -p \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/ui\" && cp -r \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/target-eqonly\" \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/ui/target\" && du -sh \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/ui/target\" | tail -1","timeout":900000,"run_in_background":true}
+--- L64921 user 2026-10-05T21:10:30.783Z
+RESULT [toolu_01G4MQUHN2ArLWGsfWjqhAZA]: Command running in background with ID: b28vg73ki. Output is being written to: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\tasks\b28vg73ki.output. You will be notified when it completes. To check interim output, use Read on that file path.
+--- L64924 assistant 2026-10-05T21:10:36.241Z
+TOOL_USE Bash [toolu_018hcVdLFniTUu3CcxWEHk8H]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && grep -n \"pointer\\|stopPropagation\\|addEventListener('mouse\\|contextmenu\" app/preview/preview.js app/camera/*.js | cut -c1-200 | head -20"}
+--- L64931 user 2026-10-05T21:10:36.394Z
+RESULT [toolu_018hcVdLFniTUu3CcxWEHk8H]: app/preview/preview.js:197:  canvas.addEventListener('mousedown', onDown); win.addEventListener('mousemove', onMove); win.addEventListener('mouseup', onRelease);
+app/preview/preview.js:198:  canvas.addEventListener('contextmenu', noMenu); canvas.addEventListener('wheel', onWheel, { passive: false });
+app/preview/preview.js:287:      canvas.removeEventListener('contextmenu', noMenu); canvas.removeEventListener('wheel', onWheel);
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64934 assistant 2026-10-05T21:10:40.349Z
+TOOL_USE Bash [toolu_01NhojBCEHae82a1WZ9fSwW5]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && grep -n \"^## \\[Unreleased\\]\" -A6 CHANGELOG.md | cut -c1-200 | head -12; grep -n \"Saved pieces, the core half\" CHANGELOG.md | cut -c1-80; grep -n \"## \" app/README.md | head -20"}
+--- L64935 user 2026-10-05T21:10:41.437Z
+RESULT [toolu_01NhojBCEHae82a1WZ9fSwW5]: 6:## [Unreleased]
+7-
+8-### Added
+9-- **The keyboard shortcuts work on the equation page, Ctrl+Backspace included (D239 note, from the keeper's undo request).** The keys lived in the Pieces page's `app/shell.js`; `keyAction` is MOVED,
+10-- **Saving keeps the version it replaces, and Close the loop keeps the track from before it (D239 amendment; the keeper lost hours of TEST 1 to one Close, with no copy from before it).** Every Save
+11-- **The equation page has Install to AC / See it in Assetto, autosave with crash restore, share codes and the getting-started guide (D239, the keeper: "can we keep only the equation mode? And then 
+12-- **Close PREVIEWS before it changes anything, and moves only the end of the lap (D242; the keeper, TEST 1: "the close the loop fucked up my track ... completing the loop altered the rest of the tr
+52:- **Saved pieces, the core half (D240; no UI yet).** The keeper: "can we keep
+7:## Run it
+28:## The pieces, and who owns them
+43:## The seam: what C and E plug into
+81:## One builder (D239; until then two, D186)
+142:## Files on disk
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64937 assistant 2026-10-05T21:10:43.113Z
+TOOL_USE Bash [toolu_01Tb9q6ukp5AQgmyp3fXyav3]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && sed -n 142,160p app/README.md | cut -c1-220; sed -n 52p CHANGELOG.md | cut -c1-120"}
+--- L64938 user 2026-10-05T21:10:43.298Z
+RESULT [toolu_01Tb9q6ukp5AQgmyp3fXyav3]: ## Files on disk
+
+- **A track** is `<name>.t180track`: the document's canonical text (`src/doc/serial.js`), in
+  `<app data>/tracks/`.
+- **The user's pieces** are `library.t180lib` (`src/doc/library.js` `serializeLibrary`), in `<app data>/`.
+- **The autosave** is `autosave.t180auto` in `<app data>/`: `{ schema, name, doc }` with the canonical text, written
+  about 1.5 s after the last edit while the track is unsaved. It is cleared by saving under a name, or by closing with
+  nothing unsaved. Closing with unsaved changes keeps it, so the next start offers the track back rather than losing
+  it.
+- **An export** is a `t180b_<name>` folder in the folder the user picks. Inside an AC install's `content	racks`, only
+  `t180b_*` folders are written: another track's folder is refused, by the page and again by the native side. **One exception, an
+  empty folder:** a folder made directly in `content\tracks` ("T-180 TUBE OVAL") that is not `t180b_*` and is EMPTY is not another
+  track, so the export goes into `content\tracks` as the normal `t180b_<track name>` and that empty folder is removed afterwards
+  (Content Manager reads an empty track folder as "main layout is damaged"). A folder with anything in it is refused as before.
+  The native side checks it again (`folder_is_empty`, `remove_empty_folder`: rmdir, never contents); `exporter.resolveTarget`.
+- A name is 1–64 letters, digits, spaces, `_` or `-`, starting with a letter or digit. The shell checks it, and the
+  native side checks it again: no path in a name ever reaches the disk.
+- **Saved pieces, the core half (D240; no UI yet).** The keeper: "can we keep only the equation mode? And then we can sa
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64941 assistant 2026-10-05T21:10:54.840Z
+TOOL_USE Bash [toolu_01LpC6TQU4Ds69BeRYtbGtsA]: {"command":"cat > \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/ui/docs_spec.txt\" <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-piecesui-wt/CHANGELOG.md\n@@OLD\n### Added\n- **The keyboard shortcuts work on the equation page\n@@NEW\n### Added\n- **Saved pieces in the builder, the UI half (D240; the keeper: \"can we keep only the equation mode? And then we can save pieces from that we make\", and \"highlight/select pieces on the track ... Save as piece or Delete\").** Click a piece on the track to select it (Shift-click another for t
+…[2567 chars cut]…
+s a piece (`save_piece` refuses a name in use) and a name never carries a path.\n@@END\nEOF\ncd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && node blockpatch.js ui/docs_spec.txt"}
+--- L64942 user 2026-10-05T21:10:55.007Z
+RESULT [toolu_01LpC6TQU4Ds69BeRYtbGtsA]: C:/Users/nname/Desktop/worktrees/a-piecesui-wt/CHANGELOG.md [33m1[39m edits
+C:/Users/nname/Desktop/worktrees/a-piecesui-wt/app/README.md [33m1[39m edits
+--- L64952 assistant 2026-10-05T21:10:57.895Z
+TOOL_USE Bash [toolu_01Mcnn2XjD5J7wcWfhL1NFdq]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && grep -n \"module.exports\" scripts/prove_render.js | cut -c1-300; D=\"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/eqonly\"; sed -n 80,162p \"$D/d239_window2.js\" | cut -c1-260"}
+--- L64953 user 2026-10-05T21:10:58.067Z
+RESULT [toolu_01Mcnn2XjD5J7wcWfhL1NFdq]: 373:module.exports = { PLAN, VIEWS, FLOW_WORDS, parseArgs, loadPlan, judge, summarise, freePort, portFree, portOwner, guardAutosave, profileDir };
+  let cleaned = false;
+  const cleanup = () => {
+    if (cleaned) return; cleaned = true;
+    report.removed = [];   // nothing to remove: the run wrote only to its own folder
+    report.runAppData = Object.keys(snapshot(dataDir)).sort();
+    const keeperAfter = snapshot(keeperDir), kk = new Set([...Object.keys(keeperBefore), ...Object.keys(keeperAfter)]);
+    report.keeperFiles = Object.keys(keeperBefore).length; report.keeperChanged = [...kk].filter((x) => keeperBefore[x] !== keeperAfter[x]);
+    const after = snapshot(dataDir), keys = new Set([...Object.keys(before), ...Object.keys(after)]);
+    report.appDataUnchanged = [...keys].filter((x) => before[x] !== after[x]);
+    report.ended = new Date().toISOString();
+    fs.writeFileSync(path.join(out, 'window_report.json'), JSON.stringify(report, null, 1));
+  };
+  const hard = setTimeout(() => { if (A) A.kill(); report.error = 'hard timeout'; step('HARD TIMEOUT'); setTimeout(() => { cleanup(); console.error('hard timeout, cleaned up'); process.exit(2); }, 2000); }, 480000);
+  try {
+    // ── launch 1: a fresh profile (first run), and the keeper's Pieces autosave on disk ──
+    A = await launch('first');
+    const k = new Proxy(report.checks, { set(t, p, v) { t[p] = v; step(`CHECK ${String(p)} ${String(JSON.stringify(v)).slice(0, 400)}`); return true; } });
+    k.firstStart = await A.ev(page);
+    const asideFile = path.join(dataDir, 'tracks', `${ASIDE}.t180track`);
+    k.piecesAutosaveAside = { file: fs.existsSync(asideFile), bytesEqualKeeperDoc: keeperAutosave && fs.existsSync(asideFile) ? fs.readFileSync(asideFile, 'utf8') =
+…[5425 chars cut]…
+N.parse(o2.doc).pieces.length : null };
+    A.close(); A.kill(); await sleep(2000); A = null;
+    // ── launch 2: the restore offer ──
+    A = await launch('after-crash');
+    k.secondStart = await A.ev(page);
+    k.restoreClick = await A.ev(click('#banner button', 'Restore it')); await sleep(1500);
+    k.afterRestore = await A.ev(page);
+    A.close(); A.kill(); A = null;
+  } catch (e) { report.error = e.stack || e.message; step('ERROR ' + report.error); if (A) A.kill(); } finally {
+    clearTimeout(hard);
+    await sleep(1500);
+    cleanup();
+  }
+  console.log(JSON.stringify(report, null, 1));
+})().catch((e) => { console.error('d239_window: ' + e.message); process.exit(1); });
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64959 assistant 2026-10-05T21:11:04.517Z
+TOOL_USE Bash [toolu_01JdBfmUYuN982N2cnyG4Ygy]: {"command":"D=\"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/eqonly\"; grep -n \"^const click\\|^const page\\|^const paste\" \"$D/d239_window2.js\" | cut -c1-1200; sed -n 50,62p \"$D/d239_window2.js\" | cut -c200-700; cat \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/ui_regress.txt\" 2>/dev/null | head -5; cat C:/Consonance/data/heavy-run.lock | cut -c1-140"}
+--- L64966 user 2026-10-05T21:11:04.769Z
+RESULT [toolu_01JdBfmUYuN982N2cnyG4Ygy]: 72:const click = (sel, text) => `(() => { const b = [...document.querySelectorAll(${JSON.stringify(sel)})].find((x) => x.textContent.trim() === ${JSON.stringify(text)}); if (!b) throw new Error('no button ${text}'); if (b.disabled) return 'disabled'; b.click(); return 'clicked'; })()`;
+73:const page = `(() => ({ status: document.getElementById('status').textContent, banner: document.getElementById('banner').textContent, msg: [...document.querySelectorAll('#palette .message')].map((m) => m.textContent).filter(Boolean).join(' | '), shareNote: (document.querySelector('#share .t-share-note') || {}).textContent || '', installNote: (document.querySelector('#install .t-install-note') || {}).textContent || '', seeItDisabled: ([...document.querySelectorAll('#install button')].find((b) => b.textContent === 'See it in Assetto') || {}).disabled, guide: document.querySelector('.guide-card') ? { title: document.querySelector('.guide-card h3').textContent, count: document.querySelector('.guide-card .guide-count').textContent, text: document.querySelector('.guide-card p').textContent } : null, guideButton: !!document.querySelector('.guide-open'), modeSwitch: !!document.getElementById('mode'), handles: !!document.getElementById('handles') }))()`;
+74:const paste = (code) => `(async () => { const t = document.querySelector('#share textarea'); t.value = ${JSON.stringify(code)}; const b = [...document.querySelectorAll('#share button')].find((x) => x.textContent === 'Paste code'); await b.onclick(); return document.querySelector('#share .t-share-note').textContent; })()`;
+
+
+
+ch (_) {} if (!page) await sleep(300); }
+
+
+
+
+
+
+, 3).join(' | ').slice(0, 300)); }
+in(' ').slice(0, 300)); };
+ringify({ id: i, method, params })); });
+{"pid":6232,"seat":"6fe15f0a","cmd":"A D240-UI app/test/aclook.test.js app/test/aclook_webview.test.js app/test/camera.test.js app/test/clos
+--- L64969 assistant 2026-10-05T21:11:07.625Z
+TOOL_USE Bash [toolu_01BhUTAggWvmee7LTbkedREZ]: {"command":"D=\"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/eqonly\"; sed -n 44,71p \"$D/d239_window2.js\""}
+--- L64970 user 2026-10-05T21:11:07.734Z
+RESULT [toolu_01BhUTAggWvmee7LTbkedREZ]: async function launch(label) {
+  const port = await PR.freePort();
+  const env = { ...process.env, WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS: `--remote-debugging-port=${port}`, WEBVIEW2_USER_DATA_FOLDER: profile, T180_TEST_EXPORT_FOLDER: exportsDir, T180_TEST_APP_DATA: dataDir };
+  const app = spawn(exe, [], { env, stdio: 'ignore', windowsHide: false });
+  const L = { label, pid: app.pid };
+  report.launches.push(L);
+  const kill = () => { if (app.exitCode === null) spawnSync('taskkill', ['/PID', String(app.pid), '/T', '/F'], { stdio: 'ignore' }); };
+  let page = null; const dl = Date.now() + 60000;
+  while (!page && Date.now() < dl) { try { const l = await (await fetch(`http://127.0.0.1:${port}/json/list`)).json(); page = l.find((t) => t.type === 'page' && /app\/index\.html/.test(t.url)); } catch (_) {} if (!page) await sleep(300); }
+  if (!page) { kill(); throw new Error(`${label}: no app page on our DevTools port`); }
+  const owner = PR.portOwner(port, app.pid); if (!owner.ours) { kill(); throw new Error(`${label}: DevTools port held by pid ${owner.pid}, not ours`); }
+  const ws = new WebSocket(page.webSocketDebuggerUrl); await new Promise((res, rej) => { ws.onopen = res; ws.onerror = () => rej(new Error('ws')); });
+  let id = 0; const pending = new Map();
+  ws.onmessage = (m) => { const d = JSON.parse(m.data);
+    if (d.id && pending.has(d.id)) { pending.get(d.id)(d); pending.delete(d.id); return; }
+    if (d.method === 'Runtime.exceptionThrown') { const e = d.params.exceptionDetails; report.errors.push(`${label}: ` + ((e.exception && e.exception.description) || e.text || '').split('\n').slice(0, 3).join(' | ').slice(0, 300)); }
+    if (d.method === 'Runtime.consoleAPICalled' && /error|warning/.test(d.params.type)) repor
+…[1756 chars cut]…
+Ptr]::Zero,-2600,60,1400,860,0x0014) }; $true }, [IntPtr]::Zero) | Out-Null`], { encoding: 'utf8', timeout: 30000 });
+  const end = Date.now() + 40000;
+  for (;;) { const r = await ev(`(() => ({ extend: [...document.querySelectorAll('button')].some((b) => b.textContent.trim() === 'Extend'), share: !!document.querySelector('#share textarea'), install: [...document.querySelectorAll('#install button')].length, tauri: !!(window.__TAURI__ && window.__TAURI__.core) }))()`); if (r.extend && r.share && r.install && r.tauri) { L.ready = r; break; } if (Date.now() > end) { kill(); throw new Error(`${label}: the page did not come up ${JSON.stringify(r)}`); } await sleep(300); }
+  await sleep(800);
+  return { app, ev, kill, close: () => ws.close() };
+}
+--- L64973 assistant 2026-10-05T21:11:20.082Z
+TOOL_USE Bash [toolu_01Mf6Qy6fZQiivX4hF64q3sL]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-piecesui-wt && grep -n \"MODES\" app/camera/cameras.js | head -3; grep -n \"t180-camera'\" app/camera/index.js | head -3; sed -n 1,25p scripts/prove_render.js | cut -c1-160 | head -12; grep -n \"coreToCode\" src/doc/code.js | head -3; grep -n \"id=\\\"name\\\"\\|id=\\\"save\\\"\\|id=\\\"status\\\"\" app/index.html | cut -c1-140"}
+--- L64974 user 2026-10-05T21:11:20.730Z
+RESULT [toolu_01Mf6Qy6fZQiivX4hF64q3sL]: 6://   MODES, in the order the switch key walks them:
+39:const MODES = Object.freeze(['build', 'overhead', 'side', 'chase', 'free']);
+149:function createRig({ order = MODES, keys = KEYS, opts = DEFAULTS, start = 'build' } = {}) {
+3:// asks for a mode with a 't180-camera' event and follows the preview's 't180-camera-mode' announcements.
+30:    b.onclick = () => doc.dispatchEvent(new win.CustomEvent('t180-camera', { detail: { mode: m } }));
+#!/usr/bin/env node
+// prove_render.js: drive the REAL app window, place a real track through the palette, and capture the window in each
+// camera mode with PrintWindow (scripts/prove_render.ps1). D169: "PROVE THE RENDERING in the real window".
+//
+//   node scripts/prove_render.js --exe <path to the built app .exe> --out <folder outside the repo>
+//        [--port N] [--timeout 600] [--shim-timers] [--plan <plan.json>]
+//   node scripts/prove_render.js --flow --exe … --out … [--export-seam]
+//
+// --export-seam (D181, with --flow): the app is launched with T180_TEST_EXPORT_FOLDER=<out>/export, and its Export button
+// takes that folder from the app's test_export_folder command INSTEAD of the native dialog, in the same code path the
+// dialog returns into (app/index.html; A's seam, gated by the launch environment: nothing in normal use sets it). The
+// native dialog cannot be driven: its folder box is not exposed to UI Automation (A's D180 §6).
+13://   coreToCode(doc) · coreFromCode(code) -> doc                  the same for an EQUATION track (src/core/document.js serialize / parse)
+96:const coreToCode = (doc) => encode('e', require('../core/document.js').serialize(doc));
+110:module.exports = { VERSION, MAX_CODE, MAX_TEXT, encode, decode, docToCode, docFromCode, pieceToCode, pieceFromCode, packToCode, packFromCode, coreToCode, coreFromCode };
+76:  <input id="name" placeholder="track name" aria-label="track name" size="16">
+77:  <button id="save" title="Ctrl+S">Save</button>
+83:  <span id="status" style="color: var(--dim)"></span>
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L64984 assistant 2026-10-05T21:12:00.173Z
+TOOL_USE Write [toolu_01Mw9ZpAWL1QA5he4ku6FvZF]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\ui\\pieces_window.js","content":"// pieces_window.js <exe> <out folder>: the REAL-window check of D240's saved-pieces UI, in OUR build (own target dir), with a DevTools port, a WebView2 profile and an\n// APP DATA FOLDER of its own (T180_TEST_APP_DATA: F2, the keeper's folder is never the run's). Real mouse clicks (CDP Input.dispatchMouseEvent) select the pieces on the track.\n// The keeper's folder is snapshotted before and after (read only); the run refuses to start whi
+…[16415 chars cut]…
+.message; step('ERROR ' + report.error); if (A) A.kill(); } finally {\n    clearTimeout(hard); await sleep(1500); cleanup();\n  }\n  console.log(JSON.stringify(report, null, 1));\n})().catch((e) => { console.error('pieces_window: ' + e.message); process.exit(1); });\n"}
+--- L64985 user 2026-10-05T21:12:00.199Z
+RESULT [toolu_01Mw9ZpAWL1QA5he4ku6FvZF]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\ui\pieces_window.js (file state is current in your context — no need to Read it back)
+--- L64994 assistant 2026-10-05T21:12:03.185Z
+TOOL_USE Bash [toolu_01GAkV9PSnY2p32gLtBU9oSf]: {"command":"cat \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/ui_regress.txt\" 2>/dev/null | head -30; cat C:/Consonance/data/heavy-run.lock | cut -c1-100"}
+--- L64995 user 2026-10-05T21:12:03.328Z
+RESULT [toolu_01GAkV9PSnY2p32gLtBU9oSf]: {"pid":6232,"seat":"6fe15f0a","cmd":"A D240-UI app/test/aclook.test.js app/test/aclook_webview.test.
+--- L64997 assistant 2026-10-05T21:12:06.290Z
+TOOL_USE Monitor [toolu_017JYCXPbGNDQNRm8jeqdLoy]: {"command":"until [ -s \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/ui_regress.txt\" ]; do sleep 20; done; head -30 \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/ui_regress.txt\" | cut -c1-240","description":"wait for the app+core regression run","timeout_ms":3000000,"persistent":"false"}
+--- L64998 user 2026-10-05T21:12:06.314Z
+RESULT [toolu_017JYCXPbGNDQNRm8jeqdLoy]: Monitor started (task bp7073x1r, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+--- L65001 assistant 2026-10-05T21:12:14.231Z
+TOOL_USE Edit [toolu_01PqwGFrvFSXtNfWsaMCHEDB]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-piecesui-wt\\app\\core\\coreshell.js","old_string":"      if (s.to === d.pieces.length - 1 && !d.closed) {","new_string":"      if (d.closed) return set({ message: 'CLOSED: a closed track has no open end to delete from; Ctrl+Backspace removes the last piece and opens the loop (Ctrl+Z puts it back)' });\n      if (s.to === d.pieces.length - 1) {"}
+--- L65002 user 2026-10-05T21:12:14.265Z
+RESULT [toolu_01PqwGFrvFSXtNfWsaMCHEDB]: The file C:\Users\nname\Desktop\worktrees\a-piecesui-wt\app\core\coreshell.js has been updated successfully.
+--- L65007 assistant 2026-10-05T21:12:22.788Z
+TOOL_USE Write [toolu_0137oRtUSeSHj1cmod82FNUR]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\ui\\sp_rust.js","content":"// sp_rust.js: one lock hold: cargo test for the piece file commands (and all the rest), then the debug build the window run launches. Own target dir (a copy of C's warm one).\nconst { spawnSync } = require('child_process'), fs = require('fs'), path = require('path');\nrequire('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({ cmd: 'A D240-UI cargo test + debug build' });\nconst S = __dirname, W = 'C:/Users/nname/Desktop/w
+…[763 chars cut]…
+piece/.test(l)).slice(0, 20).join('\\n'));\nconst b = run('cargo tauri build --debug', ['tauri', 'build', '--debug', '--no-bundle'], 'cargo_build.log');\nconsole.log(b.t.split('\\n').filter((l) => /Finished|Built application|error/.test(l)).slice(0, 8).join('\\n'));\n"}
+--- L65008 user 2026-10-05T21:12:22.819Z
+RESULT [toolu_0137oRtUSeSHj1cmod82FNUR]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\ui\sp_rust.js (file state is current in your context — no need to Read it back)
+--- L65016 assistant 2026-10-05T21:12:25.519Z
+TOOL_USE Monitor [toolu_01Qp7CjiFD9ZNnbZbEFa5Lsw]: {"command":"sleep 1; until [ -s \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/ui_regress.txt\" ]; do sleep 20; done; echo done","description":"regression run finished marker","timeout_ms":3000000,"persistent":"false"}
+--- L65017 user 2026-10-05T21:12:25.541Z
+RESULT [toolu_01Qp7CjiFD9ZNnbZbEFa5Lsw]: Monitor started (task bfsvrhooq, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+--- L65019 assistant 2026-10-05T21:12:27.237Z  <<< THE CLAIM'S MESSAGE
+TEXT: The UI pieces, the native piece commands, the 12-test file, the docs and the window driver are written. The app and core regression run is holding the lock; after it, the Rust tests, the debug build, and the real-window run on its own app data.

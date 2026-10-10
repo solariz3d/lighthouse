@@ -1,0 +1,81 @@
+MESSAGE 25  msg_011CfjjAsPZVBVim2TxwveEd  seat C  ts 2026-10-05T20:33:30.032Z  turn L51692..L51734 (next prompt L51829)
+CLAIMS:
+  [msg_011CfjjAsPZVBVim2TxwveEd|2] `"the OLD checkPiece (b08c3c7: append piece by piece)"`: check that commit `b08c3c7` exists, that its `checkPiece` really appends piece by piece, and that `piece_old.js` is an exact copy of that version.
+  [msg_011CfjjAsPZVBVim2TxwveEd|3] `"the NEW one (one checkDoc)"`: check that the current `src/core/piece.js` validates with a single `checkDoc` call.
+  [msg_011CfjjAsPZVBVim2TxwveEd|17] `"the median of 3 for each"`: the code matches this, apart from the 2,000-piece old case, which is already stated. Nothing further is needed beyond confirming that this exception is intended.
+
+--- L51692 user 2026-10-05T20:32:39.611Z
+USER: 
+
+<pasted_content id="e180">
+[chair:MAIN] RESUME. Your D240 core look is collated GREEN. Your D239 F-commit 3a2fc11 is in, and B is looking at it. Light work only now; the heavy runs belong to E and the librarian.
+D240 follow-up F1 (your finding): piece parse time grows with the square of the run (800 pieces ≈ 1 s), because checkPiece appends through appendPiece with a whole-doc checkDoc each time. In A's piece.js (A's branch pieces-core-a-d240, b08c3c7; fresh worktree off it), make it ONE checkDoc of the assembled doc, IF appendPiece checks nothing extra. Prove the refusals are unchanged: every BAD_* case is still refused by name. Time 800 and 2,000 pieces before and after.
+FEEL/perf tier: targeted core_piece only, under the lock, no harnesses. A is building the UI half on top later, so keep the change inside piece.js and its test.
+Hand-back: exo_memory/handback/p-pieces-f1-C_2026-10-05.md, plus your map line.
+SOURCES: `git -C C:/Users/nname/Desktop/worktrees/e-d243rb-wt log --oneline -4`
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: A's D240 UI half builds on it after D239 lands, unless the output says otherwise
+</pasted_content id="e180">
+
+--- L51707 assistant 2026-10-05T20:32:42.203Z
+TEXT: Starting with the packet's source command, then the question that decides the fix: does `appendPiece` check anything that one `checkDoc` of the whole document wouldn't?
+--- L51708 assistant 2026-10-05T20:32:43.673Z
+TOOL_USE Bash [toolu_01W9teG7LRNZigkvKxE37pqa]: {"command":"git -C C:/Users/nname/Desktop/worktrees/e-d243rb-wt log --oneline -4; cd /c/Users/nname/Desktop/worktrees/c-pieces-look-wt && git log --oneline -1 && grep -n \"^function appendPiece\" -A10 src/core/document.js; grep -n \"^function checkDoc\" -A50 src/core/document.js | head -60","description":"Run the source command and read appendPiece and checkDoc"}
+--- L51709 user 2026-10-05T20:32:44.651Z
+RESULT [toolu_01W9teG7LRNZigkvKxE37pqa]: cf47fda D243a fixes after B's look: a closed track is refused the test export; the button's path is tested
+75ce4ac D243a on D242/D239: Test export (unfinished), rebased by E (ff428fa)
+cc1326a D242 on D239 + amendment: the safe Close with the real pre-close copy, plain-words reds, hover labels, Straight, Undo's values (B's a0a45ba, rebased by E)
+6ecf840 D239 note: the keys move to the equation page, with Ctrl+Backspace
+b08c3c7 Saved pieces, the core half (D240), with delete: schema t180b.piece/1
+203:function appendPiece(doc, piece) {
+204-  if (doc.closed) throw new CoreError('CLOSED', 'a closed track has no open end; open it first');
+205-  const P = { ...piece, id: `p${doc.nextId}` };
+206-  return deepFreeze(checkDoc({ ...doc, nextId: doc.nextId + 1, pieces: [...doc.pieces, P] }));
+207-}
+208-
+209-// ── the checks ─────────────────────────────────────────────────────────────────────────────────────────────────────
+210-/** A joint is C1 when value and slope agree to within what quantisation can move them (ref 09 §1). */
+211-function jointProblem(prevEnd, P, prevKind = 'legacy') {
+212-  const h = P.knots.length ? P.knots[0] : P.length, kind = kindOf(P);
+213-  for (const ch of CHANNELS) {
+256:function checkDoc(doc) {
+257-  const bad = (msg) => { throw new CoreError('BAD_DOC', msg); };
+258-  if (!doc || doc.schema !== SCHEMA) bad(`schema must be ${SCHEMA}, got ${doc && doc.schema}`);
+259-  if (typeof doc.name !== 'string') bad('name must be a string');
+260-  if (typeof doc.closed !== 'boolean') bad('closed must be true or false');
+261-  if (!doc.start || !Array.isArray(doc.start.pos) || doc.start.pos.length !== 3 || !doc.start.pos.every(Number.isFinite) || !Number.isFinite(doc.start.heading) || !Number.isFinite(doc.start.pitch
+…[3863 chars cut]…
+t.fromEntries(CHANNELS.filter((ch) => !OPTIONAL[ch] || P[OPTIONAL[ch]]).map((ch) => [ch, P.channels[ch]])) }));
+301-function serialize(doc) {
+302-  checkDoc(doc);
+303-  const head = [`  "schema": ${JSON.stringify(doc.schema)}`, `  "generator": ${JSON.stringify(GENERATOR)}`, `  "name": ${JSON.stringify(doc.name)}`, `  "closed": ${doc.closed}`,
+304-    `  "start": ${JSON.stringify({ pos: doc.start.pos, heading: doc.start.heading, pitch: doc.start.pitch })}`, `  "nextId": ${doc.nextId}`];
+305-  const body = doc.pieces.length ? `  "pieces": [\n${doc.pieces.map((P) => `    ${pieceText(P)}`).join(',\n')}\n  ]` : '  "pieces": []';
+306-  return `{\n${[...head, body].join(',\n')}\n}\n`;
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L51713 assistant 2026-10-05T20:33:11.023Z
+TOOL_USE Bash [toolu_01NGo8xUpxsM1LSJuN1tnqso]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-pieces-look-wt && git worktree add -b pieces-f1-c-d240 /c/Users/nname/Desktop/worktrees/c-pieces-f1-wt b08c3c7 2>&1 | tail -1; cd /c/Users/nname/Desktop/worktrees/c-pieces-f1-wt && git log --oneline -1 && git status --short && grep -n \"let scratch = D.createDoc('piece check')\" -B1 -A2 src/core/piece.js; node -e \"const s=require('fs').readFileSync('src/core/piece.js','utf8');console.log((s.match(/\\r\\n/g)||[]).length,(s.match(/\\n/g)||[]).length)\" 2>&1 | grep -v -i warn","description":"Create the F1 worktree and locate the scratch-doc loop"}
+--- L51720 user 2026-10-05T20:33:11.720Z
+RESULT [toolu_01NGo8xUpxsM1LSJuN1tnqso]: HEAD is now at b08c3c7 Saved pieces, the core half (D240), with delete: schema t180b.piece/1
+b08c3c7 Saved pieces, the core half (D240), with delete: schema t180b.piece/1
+141-  // the run as the document would hold it: its own joints (C1 in every channel), cup, tube and edge limits, flights, all by the document's own checks
+142:  const i0 = out.pieces.indexOf(first); let scratch = D.createDoc('piece check');
+143-  for (const P of absolute(out).slice(i0)) scratch = D.appendPiece(scratch, P);
+144-  return out;
+[33m252[39m [33m252[39m
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L51723 assistant 2026-10-05T20:33:13.554Z
+TEXT: Saving the old `piece.js` into scratch first, for the differential. Then the edit.
+--- L51724 assistant 2026-10-05T20:33:16.760Z
+TOOL_USE Bash [toolu_01YPBA7EioVxr8x2CGzyfZ3z]: {"command":"P=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/pieces; cd /c/Users/nname/Desktop/worktrees/c-pieces-f1-wt && git show b08c3c7:src/core/piece.js | node -e \"let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{const a=\\\"require('./document.js')\\\";if(s.split(a).length!==2)throw new Error('anchor');require('fs').writeFileSync(process.argv[1],s.replace(a,'require('+JSON.stringify('C:/Users/nname/Desktop/worktrees/c-pieces-f1-wt/src/core/document.js')+')'));console.log('old saved')})\" \"$(cygpath -w $P/piece_old.js)\"; grep -n \"const D = require\" $P/piece_old.js","description":"Save the old piece.js for the differential"}
+--- L51725 user 2026-10-05T20:33:16.951Z
+RESULT [toolu_01YPBA7EioVxr8x2CGzyfZ3z]: old saved
+29:const D = require("C:/Users/nname/Desktop/worktrees/c-pieces-f1-wt/src/core/document.js");
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L51728 assistant 2026-10-05T20:33:22.218Z
+TOOL_USE Edit [toolu_01FST5Gme31AKPUweK7iF5PE]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-pieces-f1-wt\\src\\core\\piece.js","old_string":"  // the run as the document would hold it: its own joints (C1 in every channel), cup, tube and edge limits, flights, all by the document's own checks\n  const i0 = out.pieces.indexOf(first); let scratch = D.createDoc('piece check');\n  for (const P of absolute(out).slice(i0)) scratch = D.appendPiece(scratch, P);\n  return out;","new_string":"  // the run as the document would hold it: its own joints (C1 in every channel), cup, tube and edge limits, flights, all by the document's own checks.\n  // ONE 
+…[486 chars cut]…
+rst failure, its code and its message are the same.\n  const i0 = out.pieces.indexOf(first), run = absolute(out).slice(i0).map((P, k) => ({ ...P, id: `p${k + 1}` }));\n  D.checkDoc({ ...D.createDoc('piece check'), nextId: run.length + 1, pieces: run });\n  return out;"}
+--- L51729 user 2026-10-05T20:33:22.270Z
+RESULT [toolu_01FST5Gme31AKPUweK7iF5PE]: The file C:\Users\nname\Desktop\worktrees\c-pieces-f1-wt\src\core\piece.js has been updated successfully.
+--- L51734 assistant 2026-10-05T20:33:52.349Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Write [toolu_01ETr3jXhXQbjQdxa7zwE4Nt]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\pieces\\diff.js","content":"// diff.js <tree> <seed>: D240 F1, the OLD checkPiece (b08c3c7: append piece by piece) against the NEW one (one checkDoc), on the same inputs.\n// Registered before the run: the change is SAFE only if, for every input, both give the same outcome, accepted with the same canonical text, or\n// refused with the same error name, code and message. ANY difference is a failure of the change, not of the corpus.\n// Inputs: valid saved runs of random tracks (all three kinds), the same hostile mutations as probe.js P1, and runs made invalid DEEP inside.\n// Then the time to parse a long straight run at 800 and 2,000 pieces, old and new (the median of 3 for each; 2,000 old once, it is slow).\n'use strict';\nconst path = require('path'), T = path.resolve(process.argv[2]), SEED = Number(process.argv[3] || 1);\nconst D = require(path.join(T, 'src/core/document.js')), { extend } = require(path.join(T, 'src/core/extend.js'));\nconst PN = require(path.join(T, 'src/core/piece.js')), PO = require(path.join(__dirname, 'piece_old.js'));\nlet s = SEED >>> 0; const rnd = () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };\nconst pick = (a) => a[Math.floor(rnd() * a.length)], range = (a, b) => a + (b - a) * rnd();\nfunction randomTrack(kind, n) {   // as probe.js\n  const first = kind === 'cup' ? { c: Math.round(range(10, 80)) } : kind === 'tube' ? { w: Math.round(range(30, 45)), t: Math.round(range(200, 360)) } : {};\n  let d = D.createDoc(`${kind} r`);\n  try { d = extend(d, { length: Math.round(range(80, 300)), family: 'bowl', first }); } catch (e) { return null; }\n  for (let i = 1; i < n; i++) {\n    const t = { kh: pick([0, 1, -1]) / Math.round(range(150, 600)), phi: Math.round(range(-0.3, 0.3) * 100) / 100 };\n    if (rnd() < 0.3) t.kv = pick([1, -1]) / Math.round(range(2000, 6000));\n    if (kind === 'cup' && rnd() < 0.5) t.c = Math.round(range(10, 80));\n    if (kind !== 'tube' && rnd() < 0.3) t.w = Math.round(range(22, 34));\n    try { d = extend(d, { length: Math.round(range(60, 400)), transition: Math.round(range(20, 60)), targets: t }); } catch (e) { /* a limit */ }\n  }\n  return d.pieces.length >= 3 ? d : null;\n}\nconst outcome = (P, txt) => { try { return { ok: P.serialize(P.parse(txt)) }; } catch (e) { return { name: e.name, code: e.code, message: e.message }; } };\nconst out = { seed: SEED, texts: 0, same: 0, differ: [], accepted: 0, refusedByCode: {} };\nconst compare = (txt, tag) => {\n  out.texts++;\n  const a = outcome(PO, txt), b = outcome(PN, txt);\n  if (JSON.stringify(a) === JSON.stringify(b)) { out.same++; if (a.ok) out.accepted++; else out.refusedByCode[a.code || a.name] = (out.refusedByCode[a.code || a.name] || 0) + 1; }\n  else if (out.differ.length < 10) out.differ.push({ tag, old: a.ok ? 'accepted' : a, new: b.ok ? 'accepted' : b, sample: txt.slice(0, 120) });\n  else out.differ.push(1);\n};\nconst texts = [];\nfor (let i = 0; i < 60; i++) {\n  const k = ['legacy', 'cup', 'tube'][i % 3], d = randomTrack(k, 3 + Math.floor(rnd() * 5)); if (!d) continue;\n  const from = Math.floor(rnd() * d.pieces.length), to = from + Math.floor(rnd() * (d.pieces.length - from));\n  try { texts.push(PN.serialize(PN.saveRun(d, from, to, { name: `r ${k}` }))); } catch (e) { /* refused at save */ }\n}\nfor (const t of texts) compare(t, 'valid');\nconst evil = [null, true, -1, 0, 1e309, 'x', [], {}, [1, 2], { a: 1 }, '__proto__', -0.0000001, 1e30];\nfor (const t of texts) for (let i = 0; i < 150; i++) {\n  let txt;\n  if (i % 3 === 0) { const at = Math.floor(rnd() * t.length); txt = t.slice(0, at) + pick(['', ',', '\"', '1', '-', ']', '}', 'e9', 'null']) + t.slice(at + 1); }\n  else {\n    const o = JSON.parse(t), paths = []; const walk = (x, p) => { if (x && typeof x === 'object') for (const k of Object.keys(x)) { paths.push([...p, k]); walk(x[k], [...p, k]); } }; walk(o, []);\n    const pth = pick(paths), par = pth.slice(0, -1).reduce((x, k) => x[k], o), key = pth[pth.length - 1];\n    const op = rnd(); if (op < 0.5) par[key] = pick(evil); else if (op < 0.7) delete par[key]; else if (op < 0.85) par[key + 'x'] = 1; else if (Array.isArray(par)) par.push(pick(evil)); else par[key] = JSON.parse(JSON.stringify(par));\n    txt = JSON.stringify(o);\n  }\n  compare(txt, 'mutated');\n}\n// a LONG straight run, made of copies of one straight piece (its joints are C1: every channel constant); bad deep inside at a given index\nlet d0 = extend(D.createDoc('s'), { length: 20, family: 'bowl' }); d0 = extend(d0, { length: 20 });\nconst one = JSON.parse(PN.serialize(PN.saveRun(d0, 1, 1, { name: 'one' })));\nconst longText = (n, breakAt = -1, how = null) => {\n  const o = { ...one, name: 'long', pieces: Array.from({ length: n }, () => JSON.parse(JSON.stringify(one.pieces[0]))) };\n  if (breakAt >= 0) how(o.pieces[breakAt]);\n  return JSON.stringify(o);\n};\nfor (const [n, at, label, how] of [[300, 250, 'a joint broken at piece 250 (kh jumps)', (P) => { P.channels.kh = P.channels.kh.map(() => 0.01); }],\n  [300, 299, 'the cup limit at the last piece', (P) => { if (P.channels.c) P.channels.c[2] = 999; else P.channels.w[2] = -5; }],\n  [300, 120, 'a flight that does not follow a level road', (P) => { Object.keys(P).forEach((k) => delete P[k]); Object.assign(P, { type: 'flight', gap: 10, drop: 0, land: 0 }); }],\n  [300, 0, 'a non-number in the first piece', (P) => { P.channels.w[1] = 'x'; }]]) compare(longText(n, at, how), label);\nout.differ = out.differ.filter((x) => x !== 1).concat(out.differ.filter((x) => x === 1).length ? [`… ${out.differ.filter((x) => x === 1).length} more`] : []);\n// timing\nconst time = (P, txt) => { const t0 = process.hrtime.bigint(); P.parse(txt); return Number(process.hrtime.bigint() - t0) / 1e6; };\nconst med = (xs) => xs.sort((a, b) => a - b)[xs.length >> 1];\nout.timing = [];\nfor (const n of [800, 2000]) {\n  const txt = longText(n);\n  const newMs = med([0, 1, 2].map(() => time(PN, txt))), oldMs = n === 2000 ? time(PO, txt) : med([0, 1, 2].map(() => time(PO, txt)));\n  out.timing.push({ pieces: n, chars: txt.length, oldMs: Math.round(oldMs), newMs: Math.round(newMs), oldRuns: n === 2000 ? 1 : 3 });\n}\nconsole.log(JSON.stringify(out, null, 1));\n"}

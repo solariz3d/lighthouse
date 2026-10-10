@@ -1,0 +1,39 @@
+== D273 lap3 item 4 evidence (generate + gate inside) · asked 2026-10-08T22:13:58.835Z · lock held 2026-10-08T22:13:58.842Z · NODE_OPTIONS=--max-old-space-size=4096
+$ bash C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/gen3.sh
+build refused: no staged [33m371[39m forked [33m28[39m leaks [33m0[39m
+--- shipped? gen-brief.ps1:
+ls: cannot access 'C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/gen3/consonance/src-tauri/gen-brief.ps1': No such file or directory
+--- CONSUMER-STATUS.md present:
+C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/gen3/CONSUMER-STATUS.md
+--- markers in the generated briefs:
+exo_memory/BOOT.md 1 1
+consonance/src-tauri/brief/BOOT.md 1 1
+exo_memory/SEED.md 1 1
+consonance/src-tauri/brief/SEED.md 1 1
+--- OLD gate test (ab25d588) inside the generated tree:
+[34mℹ tests 7[39m
+[34mℹ pass 3[39m
+[34mℹ fail 4[39m
+[34mℹ skipped 0[39m
+  AssertionError [ERR_ASSERTION]: gen-brief REFUSED against the current exo_memory/BOOT.md — the installer build will fail:
+  The argument 'C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\cons\gen3\consonance\src-tauri\gen-brief.ps1' to the -File parameter does not exist. Provide the path to an existing '.ps1' file as an argument to the -File parameter.
+    actual: [32m"Windows PowerShell\r\nCopyright (C) Microsoft Corporation. All rights reserved.\r\n\r\nThe argument 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\cons\\gen3\\consonance\\src-tauri\\gen-brief.ps1' to the -File parameter does not exist. Provide the path to an existing '.ps1' file as an argument to the -File parameter.\r\n"[39m,
+    actual: [32m"Windows PowerShell\r\nCopyright (C) Microsoft Corporation. All rights reserved.\r\n\r\nThe argument 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\cons\\gen3\\consonance\\src-tauri\\gen-brief.ps1' to the -File parameter does not exist. Provide the path to an existing '.ps1' file as an argument to the -File parameter.\r\n"[39m,
+--- NEW gate test inside the generated tree:
+[31m✖ a consumer tree: both shipped briefs carry no record, no journal citation, one empty pointer, no handle and no gendered keeper [90m(1.6586ms)[39m[39m
+[34mℹ tests 8[39m
+[34mℹ pass 0[39m
+[34mℹ fail 1[39m
+[34mℹ skipped 7[39m
+[31m✖ failing tests:[39m
+[31m✖ a consumer tree: both shipped briefs carry no record, no journal citation, one empty pointer, no handle and no gendered keeper [90m(1.6586ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: consonance/src-tauri/brief/BOOT.md: the handle survived
+--- my two test files inside the generated tree (expected to break: they are dev-side generator tests, owed to EXCLUDE):
+consonance/tools/consumer-relabel.test.js ships:
+[34mℹ pass 0[39m
+[34mℹ fail 1[39m
+consonance/tools/consumer-fork-wiring.test.js ships:
+Error: Cannot find module './gen-consumer.js'
+[34mℹ pass 0[39m
+[34mℹ fail 1[39m
+== exit 0 · done 2026-10-08T22:14:05.236Z

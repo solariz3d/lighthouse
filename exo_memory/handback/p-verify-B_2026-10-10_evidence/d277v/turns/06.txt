@@ -1,0 +1,53 @@
+MESSAGE 06  msg_011CfgPaMDvoQ2vta6FyNw5a  seat chair  ts 2026-10-04T02:14:42.153Z  turn L87808..L87820 (next prompt L87830)
+CLAIMS:
+  [msg_011CfgPaMDvoQ2vta6FyNw5a|3] "the privacy check was clean". Check the privacy check's output or log.
+
+--- L87808 user 2026-10-04T02:14:29.621Z
+USER: 
+
+<pasted_content id="f5af">
+[librarian:LIB] D227, A's three nits: collated GREEN. Pointer: exo_memory/handback/p-nits-A_2026-10-03.md. Land b8dcd1b8 on t180 main (local, off 09f3fcc, 4 files, +44/−2; the worktree is clean).
+
+Read at the file:
+- `.` and `..` are refused by name on both sides, with one JS test and one Rust test. Targeted: 72/72. Rust: 17/17.
+- The layout.js change is the comment only.
+- Not verified: the new tests' teeth. No plants, as ruled at FEEL tier. I accept that for an edge the folder picker never returns.
+
+A correction to MY last ring: I filed "A WRONG: 59 should be 51" on B's reading. A's appended line says 59 was core_cup_mutation (51) plus core_cup_readers (8) run together. So the number was right and under-specified, not wrong: the hand-back labelled it as "control plus 50 mutants". Record it as under-specified (cards/every-digest-carries-its-function, the general form), not as a WRONG.
+
+No rebuild for this. It isn't in the keeper's path, so it rides with the next install.
+
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-nits-A_2026-10-03.md
+
+OUTPUT → NEXT: unchanged — green inside its packet, so it lands; the queue is then empty apart from the keeper's open choices
+NEXT: chair land b8dcd1b8 on t180 main now when this ring is read; then the loop rests on the keeper's choices (email for the push, the lip control, harness-by-anchor)
+</pasted_content id="f5af">
+
+--- L87817 assistant 2026-10-04T02:14:34.924Z
+TOOL_USE Bash [toolu_01NTyYmtXi8MvSghuQ4eVybg]: {"command":"cd /c/Users/nname/Desktop/lighthouse && node consonance/tools/lap-row.js --stage D227 working --holder chair --by chair --note \"nits green; landing\" 2>&1|tail -1; cd /c/Users/nname/Desktop/t180-track-builder && git merge-base --is-ancestor main b8dcd1b8 && echo FF; git diff --stat main b8dcd1b8 | tail -1; git diff main b8dcd1b8 | grep -c -E \"sk-or-[A-Za-z0-9]{16,}|vck_[A-Za-z0-9]{16,}|sk-ant-[A-Za-z0-9-]{16,}|C:/Users/nname|C:\\\\\\\\Users\\\\\\\\nname|zackn\"; git update-ref refs/heads/main b8dcd1b8 09f3fcc && git reset -q --mixed main && git log --oneline -1 main; cd /c/Users/nname/Desktop/lighthouse && F=
+…[199 chars cut]…
+under-specified, not wrong\" -- $F 2>&1|tail -1; node consonance/tools/lap-row.js --stage D227 filed --holder chair --by chair --note \"nits landed b8dcd1b; queue empty pending keeper choices\" 2>&1|tail -1","description":"Privacy check, land, commit records, file lap"}
+--- L87818 user 2026-10-04T02:14:36.133Z
+RESULT [toolu_01NTyYmtXi8MvSghuQ4eVybg]:   gate: RE-TAKE (--by equals --holder) — you pulled the baton to yourself; no ring owed.
+FF
+ 4 files changed, 44 insertions(+), 2 deletions(-)
+0
+b8dcd1b Export: "." and ".." are refused by name as the picked folder; the grid comment names the real margin
+D227  FILED — next holder chair.
+Shell cwd was reset to C:\Consonance\instances\main
+--- L87820 assistant 2026-10-04T02:14:42.153Z  <<< THE CLAIM'S MESSAGE
+TEXT: A's three small fixes are landed on t180 main at `b8dcd1b`. It's local only, and the privacy check was clean.
+
+- **What changed:**
+  - "." and ".." are refused as folder names in both the app and its native code.
+  - One out-of-date comment was corrected.
+  - 72 targeted tests and 17 Rust tests pass.
+- **Not tested hard:** these were small cleanups, so no faults were planted to prove the new tests can fail.
+- **Not installed yet:** it's not something you'll notice, so it'll go in with the next install.
+- **A correction on my side:** I'd passed on B's reading that A's "59" was wrong. It wasn't. A's 59 counted two test files run together (51 + 8), and the report just didn't say so. It's now recorded as under-specified, not as an error.
+
+**Nothing else is queued.** These are waiting on you:
+- **Pushing T-180 to GitHub:** whether your email can appear in public commits. Until then, everything on t180 stays on your machine.
+- **The edge "lip":** whether to add it as a third edge control, the slight roll-back at the very edge that the real T-180 track has.
+- **Faster test runs:** whether to try running each heavy planted-fault test only when a change touches the files it covers.
+- **The old Sonnet second-reader hook:** still installed, though no longer used. Say if you want it removed.

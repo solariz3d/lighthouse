@@ -1,0 +1,1 @@
+[{"name":"cargo-gen1-light-now","argv":["C:/Users/nname/.cargo/bin/cargo.exe","test","--manifest-path","consonance/src-tauri/Cargo.toml","intake_light"],"cwd":"C:/Users/nname/Desktop/worktrees/b-d277-gen","env":{"CARGO_TARGET_DIR":"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d273/target-gen1"}}]

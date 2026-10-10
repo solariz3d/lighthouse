@@ -1,0 +1,347 @@
+MESSAGE 49  msg_011CfmsvZ2fPntJD1rk6qp5F  seat E  ts 2026-10-06T23:49:25.833Z  turn L53566..L53673 (next prompt L53695)
+CLAIMS:
+  [msg_011CfmsvZ2fPntJD1rk6qp5F|1] **"No line-ending rewrites."**
+  [msg_011CfmsvZ2fPntJD1rk6qp5F|11] **`git checkout -q d256-suitereds`**
+
+--- L53566 user 2026-10-06T23:47:59.289Z
+USER: <task-notification>
+<task-id>bhb3zp8px</task-id>
+<tool-use-id>toolu_01MNAGZ41cAT4MwvNx8GGJNj</tool-use-id>
+<output-file>C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\tasks\bhb3zp8px.output</output-file>
+<status>completed</status>
+<summary>Background command "Re-run every suite D258 touches" completed (exit code 0)</summary>
+</task-notification>
+--- L53568 assistant 2026-10-06T23:48:02.760Z
+TOOL_USE Bash [toolu_017AFS21aVSmdgWKHzWN6y1t]: {"command":"grep -v \"heavy-run: waiting\" C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/tasks/bhb3zp8px.output | cut -c1-330","description":"Read the re-run's remaining failures"}
+--- L53569 user 2026-10-06T23:48:02.916Z
+RESULT [toolu_017AFS21aVSmdgWKHzWN6y1t]: # tests 436
+# pass 426
+# fail 10
+not ok 22 - row 14: the Jump block: the hint and the ramp speed from the start; a ghost wi || eejump-wt\\app\\test\\core-pieces-ui.test.js:538:1' ||   error: |-
+not ok 116 - row 1: the flight model: the lip, gap, drop and landing pitch read off a path || es\\e-freejump-wt\\app\\test\\jump-ui.test.js:28:1' ||   error: |-
+not ok 117 - row 1b: no flight model: a STRAIGHT dashed line, and it says so; a fall that  || es\\e-freejump-wt\\app\\test\\jump-ui.test.js:49:1' ||   error: "Cannot read properties of undefined (reading 'model')"
+not ok 118 - row 2: addJump is ONE undo step, the NEXT Extend lays the landing road, and e || es\\e-freejump-wt\\app\\test\\jump-ui.test.js:75:1' ||   error: |-
+not ok 119 - row 3: the overlay: the arcs on screen with the dashed fall marked, broken be || es\\e-freejump-wt\\app\\test\\jump-ui.test.js:98:1' ||   error: "Cannot read properties of undefined (reading 'lip')"
+not ok 124 - row 3b: the check's TWO PARTS put together are EXACTLY the one-piece check (a || reejump-wt\\app\\test\\preview-async.test.js:172:1' ||   error: `control: the jump track carries the jump's warning (amber), not a red: {"amber":0,"others":[]}`
+not ok 10 - test\\core_adapter.test.js || ees\\e-freejump-wt\\test\\core_adapter.test.js:1:1' ||   error: 'test failed'
+not ok 14 - test\\core_doc.test.js || rktrees\\e-freejump-wt\\test\\core_doc.test.js:1:1' ||   error: 'test failed'
+not ok 303 - row 6: jumps in a run: a run with a flight in the middle and one that starts  || ees\\e-freejump-wt\\test\\core_piece.test.js:210:1' ||   error: |-
+not ok 311 - row 6b: a run that starts with a jump, put at a head that is TURNING and CLIM || ees\\e-freejump-wt\\test\\core_piece.test.js:360:1' ||   error: |-
+
+[exited with code 0]
+--- L53573 assistant 2026-10-06T23:48:09.639Z
+TOOL_USE Bash [toolu_01VVweZTAjuA8TDdkeSKFsN7]: {"command":"S=C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/freejump; for n in \"10 - test\" \"14 - test\" \"303 - row 6\" \"311 - row 6b\"; do echo \"=== $n\"; awk -v n=\"$n\" 'index($0, \"not ok \" n) == 1 {p=1} p {print} p && /^  \\.\\.\\.$/ {exit}' $S/run3.tap | grep -v \"^    at \\|duration\\|type:\" | head -22 | cut -c1-240; done","description":"Read the core failures in full"}
+--- L53580 user 2026-10-06T23:48:09.929Z
+RESULT [toolu_01VVweZTAjuA8TDdkeSKFsN7]: === 10 - test
+not ok 10 - test\\core_adapter.test.js
+  ---
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\e-freejump-wt\\test\\core_adapter.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+=== 14 - test
+not ok 14 - test\\core_doc.test.js
+  ---
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\e-freejump-wt\\test\\core_doc.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+=== 303 - row 6
+not ok 303 - row 6: jumps in a run: a run with a flight in the middle and one that starts with a flight are saved with their flights as they were, and go in at another head
+  ---
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\e-freejump-wt\\test\\core_piece.test.js:210:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    [32m+ actual[39m [31m- expected[39m
+    
+    [39m  [
+    [32m+[39m   undefined,
+    [32m+[39m   undefined,
+    [32m+[39m   undefined
+    [31m-[39m   28,
+    [31m-[39m   1.5,
+    [31m-[39m   -0.034906585
+    [39m  ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 28
+    1: 1.5
+=== 311 - row 6b
+not ok 311 - row 6b: a run that starts with a jump, put at a head that is TURNING and CLIMBING, has its road after the jump start level (turn and climb 0) with the rest carried from the head
+  ---
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\e-freejump-wt\\test\\core_piece.test.js:360:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the width is carried from the head
+    
+    24 !== 30.0113
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 30.0113
+  actual: 24
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\e-freejump-wt\test\core_piece.test.js:366:147)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+--- L53584 assistant 2026-10-06T23:48:19.167Z
+TOOL_USE Bash [toolu_01Pnfs1pLFRvhtwPzWc3heyJ]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-freejump-wt && node --check test/core_adapter.test.js; node --check test/core_doc.test.js; grep -n \"test('a flight becomes ONE\\|test('a flight must follow road\" test/core_adapter.test.js test/core_doc.test.js | cut -c1-200","description":"Syntax-check the two failing files"}
+--- L53585 user 2026-10-06T23:48:19.416Z
+RESULT [toolu_01Pnfs1pLFRvhtwPzWc3heyJ]: C:\Users\nname\Desktop\worktrees\e-freejump-wt\test\core_adapter.test.js:54
+test('a flight becomes ONE gap segment carrying its landing's pose; the road after it starts exactly there; no ramp is generated', () => {
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+SyntaxError: missing ) after argument list
+[90m    at wrapSafe (node:internal/modules/cjs/loader:1743:18)[39m
+[90m    at checkSyntax (node:internal/main/check_syntax:76:3)[39m
+
+Node.js v24.14.1
+C:\Users\nname\Desktop\worktrees\e-freejump-wt\test\core_doc.test.js:60
+test('a flight must follow road; the road after it starts level (κh = κv = 0) at the flight's bank, the rest carried', () => {
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+SyntaxError: missing ) after argument list
+[90m    at wrapSafe (node:internal/modules/cjs/loader:1743:18)[39m
+[90m    at checkSyntax (node:internal/main/check_syntax:76:3)[39m
+
+Node.js v24.14.1
+test/core_adapter.test.js:54:test('a flight becomes ONE gap segment carrying its landing's pose; the road after it starts exactly there; no ramp is generated', () => {
+test/core_doc.test.js:60:test('a flight must follow road; the road after it starts level (κh = κv = 0) at the flight's bank, the rest carried', () => {
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L53587 assistant 2026-10-06T23:48:22.396Z
+TOOL_USE Bash [toolu_015KxRAqfaR77fRcbpeptKRL]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-freejump-wt && sed -i \"s/carrying its landing's pose; the road/carrying its landing\\\\\\\\'s pose; the road/\" test/core_adapter.test.js && sed -i \"s/at the flight's bank, the rest carried', () => {/at the flight\\\\\\\\'s bank, the rest carried', () => {/\" test/core_doc.test.js && node --check test/core_adapter.test.js && node --check test/core_doc.test.js && echo syntax ok; sed -n 208,222p test/core_piece.test.js | cut -c1-250; sed -n 356,370p test/core_piece.test.js | cut -c1-260","description":"Fix the apostrophes; read core_piece rows 6 and 6b"}
+--- L53588 user 2026-10-06T23:48:22.756Z
+RESULT [toolu_015KxRAqfaR77fRcbpeptKRL]: C:\Users\nname\Desktop\worktrees\e-freejump-wt\test\core_adapter.test.js:54
+test('a flight becomes ONE gap segment carrying its landing's pose; the road after it starts exactly there; no ramp is generated', () => {
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+SyntaxError: missing ) after argument list
+[90m    at wrapSafe (node:internal/modules/cjs/loader:1743:18)[39m
+[90m    at checkSyntax (node:internal/main/check_syntax:76:3)[39m
+
+Node.js v24.14.1
+});
+
+test('row 6: jumps in a run: a run with a flight in the middle and one that starts with a flight are saved with their flights as they were, and go in at another head', () => {
+  let d = extend(D.createDoc('j'), { length: 250, family: 'bowl' }); d = D.appendPiece(d, D.flightPiece({ forward: 28, up: -1.5, pitch: -2 * DEG })); d = extend(d, { length: 200, transition: 80, targets: { kh: 1 / 300 } });
+  const mid = PC.saveRun(d, 0, 2, { name: 'road jump road' }); assert.deepEqual(mid.pieces.map((P) => P.type), ['road', 'flight', 'road']); assert.deepEqual([mid.pieces[1].gap, mid.pieces[1].drop, mid.pieces[1].land], [28, 1.5, q9(-2 * DEG)]);
+  const head = extend(D.createDoc('h'), { length: 180, family: 'bowl', first: { w: 26 } }), put = PC.insert(head, mid); assert.deepEqual(put.pieces.slice(1).map((P) => P.type), ['road', 'flight', 'road']); D.checkDoc(put);
+  assert.equal(put.pieces[2].gap, 28); assert.deepEqual(A.toPath(put).path.samples.every((s) => s.pos.every(Number.isFinite)), true);
+  const lead = PC.saveRun(d, 1, 2, { name: 'jump then road' }); assert.equal(lead.pieces[0].type, 'flight'); const put2 = PC.insert(head, lead); D.checkDoc(put2); assert.deepEqual(put2.pieces.map((P) => P.type), ['road', 'flight', 'road']);
+  const w0 = D.piec
+…[1622 chars cut]…
+ing'); assert.notEqual(e.w.v, run.start.w, 'control: the run does not already join the head, so it is continued');
+  const out = PC.insert(head, run), road = out.pieces[head.pieces.length + 1];
+  assert.equal(out.pieces[head.pieces.length].type, 'flight'); assert.equal(road.channels.kh[0], 0); assert.equal(road.channels.kv[0], 0); assert.equal(road.channels.w[0], e.w.v, 'the width is carried from the head');
+});
+
+test('row 4c: a closed track says CLOSED whatever the run is: a legacy run into a closed CUP track is CLOSED, not PIECE_KIND (the kind is the second question)', () => {
+  const closedCup = cupLap(45), legacyRun = PC.saveRun(legacyLap(), 1, 2, { name: 'legacy bends' });
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L53599 assistant 2026-10-06T23:48:24.926Z
+TOOL_USE Edit [toolu_01TuimnwnBd6b9JtKrD7jGv6]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-freejump-wt\\test\\core_adapter.test.js","old_string":"carrying its landing's pose; the road","new_string":"carrying its landing\\'s pose; the road"}
+--- L53600 user 2026-10-06T23:48:24.985Z
+RESULT [toolu_01TuimnwnBd6b9JtKrD7jGv6]: The file C:\Users\nname\Desktop\worktrees\e-freejump-wt\test\core_adapter.test.js has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+--- L53601 assistant 2026-10-06T23:48:25.927Z
+TOOL_USE Edit [toolu_01VDd3ZArR68boMUEmgX2GkJ]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-freejump-wt\\test\\core_doc.test.js","old_string":"at the flight's bank, the rest carried', () => {","new_string":"at the flight\\'s bank, the rest carried', () => {"}
+--- L53602 user 2026-10-06T23:48:25.977Z
+RESULT [toolu_01VDd3ZArR68boMUEmgX2GkJ]: The file C:\Users\nname\Desktop\worktrees\e-freejump-wt\test\core_doc.test.js has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+--- L53603 assistant 2026-10-06T23:48:34.278Z
+TOOL_USE Edit [toolu_01G2Xs5ozN95enGXvKfcRQtn]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-freejump-wt\\test\\core_piece.test.js","old_string":"  const mid = PC.saveRun(d, 0, 2, { name: 'road jump road' }); assert.deepEqual(mid.pieces.map((P) => P.type), ['road', 'flight', 'road']); assert.deepEqual([mid.pieces[1].gap, mid.pieces[1].drop, mid.pieces[1].land], [28, 1.5, q9(-2 * DEG)]);\n  const head = extend(D.createDoc('h'), { length: 180, family: 'bowl', first: { w: 26 } }), put = PC.insert(head, mid); assert.deepEqual(put.pieces.slice(1).map((P) => P.type), ['road', 'flight', 'road']); D.checkDoc(put);\n  assert.equal(put.pieces[2].gap, 
+…[1541 chars cut]…
+) => P.type), ['road', 'flight', 'road']);\n  const w1 = put2.pieces[2].channels.w[0], wSaved = d.pieces[2].channels.w[0]; assert.ok(Math.abs(w1 - wSaved) <= 1.01e-4, `the landing keeps its own saved width (${w1} against ${wSaved}): it is not joined to the take-off`);"}
+--- L53604 user 2026-10-06T23:48:34.321Z
+RESULT [toolu_01G2Xs5ozN95enGXvKfcRQtn]: The file C:\Users\nname\Desktop\worktrees\e-freejump-wt\test\core_piece.test.js has been updated successfully.
+--- L53605 assistant 2026-10-06T23:48:36.879Z
+TOOL_USE Edit [toolu_019rBE9vAZgvQyjWYqyzPDWb]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-freejump-wt\\test\\core_piece.test.js","old_string":"test('row 6b: a run that starts with a jump, put at a head that is TURNING and CLIMBING, has its road after the jump start level (turn and climb 0) with the rest carried from the head', () => {","new_string":"// CHANGED D258 (the free jump): the landing after a run's leading jump is the user's own piece, NOT C1 with the take-off, so it goes in AS SAVED: level (turn and\n// climb 0, the document's landing rule), its own width (was: the head's width carried through the jump)\ntest('row 6b: a run that starts with a jump, put at a head that is TURNING and CLIMBING, has its road after the jump start level (turn and climb 0) with its own saved width', () => {"}
+--- L53606 user 2026-10-06T23:48:36.918Z
+RESULT [toolu_019rBE9vAZgvQyjWYqyzPDWb]: The file C:\Users\nname\Desktop\worktrees\e-freejump-wt\test\core_piece.test.js has been updated successfully.
+--- L53607 assistant 2026-10-06T23:48:40.520Z
+TOOL_USE Edit [toolu_01E6AYzp319z7kFmcvAkkPwA]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-freejump-wt\\test\\core_piece.test.js","old_string":"  const e = D.endState(head); assert.ok(e.kh.v > 0.004 && e.kv.v > 0.008, 'control: the head is turning and climbing'); assert.notEqual(e.w.v, run.start.w, 'control: the run does not already join the head, so it is continued');\n  const out = PC.insert(head, run), road = out.pieces[head.pieces.length + 1];\n  assert.equal(out.pieces[head.pieces.length].type, 'flight'); assert.equal(road.channels.kh[0], 0); assert.equal(road.channels.kv[0], 0); assert.equal(road.channels.w[0], e.w.v, 'the width is c
+…[285 chars cut]…
+ad = out.pieces[head.pieces.length + 1];\n  assert.equal(out.pieces[head.pieces.length].type, 'flight'); assert.equal(road.channels.kh[0], 0); assert.equal(road.channels.kv[0], 0); assert.equal(road.channels.w[0], run.start.w, 'the landing keeps its own saved width');"}
+--- L53608 user 2026-10-06T23:48:40.562Z
+RESULT [toolu_01E6AYzp319z7kFmcvAkkPwA]: The file C:\Users\nname\Desktop\worktrees\e-freejump-wt\test\core_piece.test.js has been updated successfully.
+--- L53619 assistant 2026-10-06T23:48:42.462Z
+TEXT: Restating the last pinned rows: preview-async 3b next, then the `coreshell` revert.
+--- L53620 assistant 2026-10-06T23:48:43.806Z
+TOOL_USE Bash [toolu_01T7JjZavQUXKW9z25pTwDE4]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-freejump-wt && node --check test/core_adapter.test.js && node --check test/core_doc.test.js && echo syntax ok; grep -n \"jump track carries the jump's warning\" app/test/preview-async.test.js | cut -c1-60; sed -n 176,186p app/test/preview-async.test.js | cut -c1-330","description":"Confirm syntax; read preview-async row 3b"}
+--- L53621 user 2026-10-06T23:48:44.097Z
+RESULT [toolu_01T7JjZavQUXKW9z25pTwDE4]: syntax ok
+  assert.deepEqual(parts(cp.doc, true), clone(cp.check), 'a coil\'s Close (overlaps of three kinds)'); assert.deepEqual(parts(cp.doc, true, 120), clone(OJ.overlapCheck(OJ.resolveDoc(cp.doc), 120, { closed: true })), 'with a design speed');
+  coil.cancelClose(); coil.selectPiece(0); coil.deleteSelection(); const dp = coil.getState().deleteProposal; assert.deepEqual(parts(dp.doc, false), clone(dp.check), 'a coil\'s delete');
+  const DEG = Math.PI / 180, j = await mk(); j.extend({ length: 200, family: 'bowl' }); j.extend({ length: 100, transition: 40, targets: { kh: 1 / 300 } }); j.commitDoc(D.appendPiece(j.getState().history.present, D.flightPiece({ forward: 40, up: -2, pitch: -2 * DEG }))); j.extend({ length: 150 }); j.extend({ length: 150, transit
+  // since the jumps core (fae3910) a flight is INTENDED, not red: the control's non-overlap red is a landing too short for the speed (core_jump row 3's), a 40 m jump taken at the 460 km/h design speed misses its landing ramp (checked: gap 40, drop 2, land -2 deg, 460: landing-misses-zone; 700: none)
+  // CHANGED D250 (pane E; the keeper: jumps are tuned by driving them): landing-misses-zone is a WARNING now, amber, so it is no longer in `others` (the reds).
+  // The control becomes the jump's warning, which the merge must carry too (`amber`, a count). A non-overlap RED for this row would need another kind; a
+  // core document cannot make a hole (every flight carries its ramp). Told to A in p-jumpwarn-E_2026-10-06.md.
+  j.setDesignSpeed(460); j.selectPiece(1); j.deleteSelection(); const jp = j.getState().deleteProposal; assert.ok(jp.check.amber > 0 && !jp.check.others.some((x) => x.reason === 'landing-misses-zone'), 'control: the jump track carries the jump\'s warnin
+…[70 chars cut]…
+rs: jp.
+  const cup = await mk(); cup.extend({ length: 300, family: 'bowl', first: { c: 45 } }); for (let i = 0; i < 4; i++) cup.extend({ length: Q, transition: 40, targets: { kh: 1 / R, c: 45 } }); cup.extend({ length: 100, transition: 40, targets: { kh: 0, c: 45 } });
+  cup.selectPiece(2); cup.deleteSelection(); assert.deepEqual(parts(cup.getState().deleteProposal.doc, false), clone(cup.getState().deleteProposal.check), 'a cup track');
+  const tube = await mk(); tube.extend({ length: 300, first: { w: 40, t: 360 } }); for (let i = 0; i < 3; i++) tube.extend({ length: Q, transition: 40, targets: { kh: 1 / R } }); tube.extend({ length: 100, transition: 40, targets: { kh: 0 } });
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L53624 assistant 2026-10-06T23:48:48.425Z
+TEXT: With no generated ramp there is no landing warning left to serve as this row's amber control. I'll keep a real warning in it, the free jump's own: a landing placed behind its take-off.
+--- L53625 assistant 2026-10-06T23:48:54.197Z
+TOOL_USE Bash [toolu_01ULuQm81oPYXB63Px2UVM1E]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-freejump-wt && node - <<'XEOF'\nconst fs = require('fs'), f = 'app/test/preview-async.test.js';\nlet t = fs.readFileSync(f, 'utf8'); const E = t.includes('\\r\\n') ? '\\r\\n' : '\\n';\nconst rep = (a, b) => { if (t.split(a).length !== 2) throw new Error('anchor: ' + a.slice(0, 80)); t = t.replace(a, b); };\nrep(\"D.flightPiece({ forward: 40, up: -2, pitch: -2 * DEG })\", \"D.flightPiece({ forward: -30, left: 60, heading: Math.PI })\");\nrep(\"  // core document cannot make a hole (every flight carries its ramp). Told to A in p-jumpwarn-E_2026-10-06.md.\",\n    \"  // core d
+…[809 chars cut]…
+le.log('ok');\nXEOF\ngit diff --stat -- app/test/preview-async.test.js; git checkout -- app/core/coreshell.js && git diff --stat -- app/core/coreshell.js; echo \"coreshell reverted (no legacy path)\"","description":"Restate row 3b; revert the interim coreshell mapping"}
+--- L53626 user 2026-10-06T23:48:54.489Z
+RESULT [toolu_01ULuQm81oPYXB63Px2UVM1E]: [stdin]:3
+const rep = (a, b) => { if (t.split(a).length !== 2) throw new Error('anchor: ' + a.slice(0, 80)); t = t.replace(a, b); };
+                                                     ^
+
+Error: anchor: assert.ok(jp.check.amber > 0 && !jp.check.others.some((x) => x.reason === 'landi
+    at rep ([stdin]:3:60)
+    at [stdin]:9:1
+[90m    at runScriptInThisContext (node:internal/vm:219:10)[39m
+[90m    at node:internal/process/execution:451:12[39m
+    at [stdin]-wrapper:6:24
+[90m    at runScriptInContext (node:internal/process/execution:449:60)[39m
+[90m    at evalFunction (node:internal/process/execution:283:30)[39m
+[90m    at evalTypeScript (node:internal/process/execution:295:3)[39m
+[90m    at node:internal/main/eval_stdin:51:5[39m
+[90m    at Socket.<anonymous> (node:internal/process/execution:205:5)[39m
+
+Node.js v24.14.1
+ app/test/preview-async.test.js | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+coreshell reverted (no legacy path)
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L53630 assistant 2026-10-06T23:48:56.813Z
+TOOL_USE Edit [toolu_0127RWCChMH5PVYAM79zVnFM]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-freejump-wt\\app\\test\\preview-async.test.js","old_string":"D.flightPiece({ forward: 40, up: -2, pitch: -2 * DEG })","new_string":"D.flightPiece({ forward: -30, left: 60, heading: Math.PI })"}
+--- L53631 user 2026-10-06T23:48:56.861Z
+RESULT [toolu_0127RWCChMH5PVYAM79zVnFM]: The file C:\Users\nname\Desktop\worktrees\e-freejump-wt\app\test\preview-async.test.js has been updated successfully.
+--- L53632 assistant 2026-10-06T23:48:58.868Z
+TOOL_USE Edit [toolu_01PVEW4ZH5ZZDbjUY6hSG3yq]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-freejump-wt\\app\\test\\preview-async.test.js","old_string":"  // core document cannot make a hole (every flight carries its ramp). Told to A in p-jumpwarn-E_2026-10-06.md.","new_string":"  // core document cannot make a hole (every flight carries its ramp). Told to A in p-jumpwarn-E_2026-10-06.md.\n  // CHANGED D258 (the free jump, pane E): nothing is computed about where the car lands any more, so the jump's warning here is the free jump's own: its landing\n  // is placed BEHIND its take-off (60 m to the left, 30 m back, turned round), jump-gap-not-forward, amber"}
+--- L53633 user 2026-10-06T23:48:58.915Z
+RESULT [toolu_01PVEW4ZH5ZZDbjUY6hSG3yq]: The file C:\Users\nname\Desktop\worktrees\e-freejump-wt\app\test\preview-async.test.js has been updated successfully.
+--- L53634 assistant 2026-10-06T23:49:00.420Z
+TOOL_USE Bash [toolu_01Bxo7HA8TQYbCnwxh3Uikxs]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-freejump-wt && sed -i \"s/!jp.check.others.some((x) => x.reason === 'landing-misses-zone')/!jp.check.others.some((x) => x.reason === 'jump-gap-not-forward')/\" app/test/preview-async.test.js && grep -c \"reason === 'jump-gap-not-forward')\" app/test/preview-async.test.js && node --check app/test/preview-async.test.js && echo ok","description":"Point the control at the free jump's warning"}
+--- L53641 user 2026-10-06T23:49:00.674Z
+RESULT [toolu_01Bxo7HA8TQYbCnwxh3Uikxs]: 1
+ok
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L53646 assistant 2026-10-06T23:49:05.708Z
+TEXT: Step 6's last item is deleting the landing itself, so I'm adding a row for it. Then commit, rebase onto `5caf5c6`, and run red-first.
+--- L53647 assistant 2026-10-06T23:49:09.160Z
+TOOL_USE Edit [toolu_012mdovXLzJ5W4ASapUqsdH2]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-freejump-wt\\test\\core_jump.test.js","old_string":"test('row 1: refused by name: no road to take off from,","new_string":"test('row 1: deleting the LANDING itself leaves the jump waiting for one: the flight is the head, movable, and Jump\\'s landing can be laid again', () => {\n  const d = J.jumpHere(takeoff(), null, { landing: { forward: 45, left: 4 } }), gone = PC.deleteRun(d, d.pieces.length - 1);\n  assert.equal(gone.pieces[gone.pieces.length - 1].type, 'flight');\n  assert.deepEqual(J.landingOf(gone).pose, { forward: 45, left: 4, up: 0, heading
+…[4 chars cut]…
+ pitch: 0, bank: 0 }, 'the flight keeps its pose');\n  const again = extend(J.setLanding(gone, { forward: 55 }), { length: 60 }), r = landingRead(again);\n  near(r.forward, 55, 1e-9); near(r.left, 4, 1e-9);\n});\ntest('row 1: refused by name: no road to take off from,"}
+--- L53648 user 2026-10-06T23:49:09.198Z
+RESULT [toolu_012mdovXLzJ5W4ASapUqsdH2]: The file C:\Users\nname\Desktop\worktrees\e-freejump-wt\test\core_jump.test.js has been updated successfully. (note: the file had been modified on disk since you last read it — the edit applied cleanly, but the file contains other changes not in your context. Read it before edits that depend on surrounding content.)
+--- L53649 assistant 2026-10-06T23:49:10.076Z
+TOOL_USE Bash [toolu_01SSTUxAqC7b3cPPKAMrDJU6]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-freejump-wt && git status --short | head -30 && git add -A -n . | wc -l","description":"List what changed in the D258 tree"}
+--- L53650 user 2026-10-06T23:49:10.292Z
+RESULT [toolu_01SSTUxAqC7b3cPPKAMrDJU6]:  M app/test/core-pieces-ui.test.js
+ M app/test/core-readout-display.test.js
+ M app/test/core-sculpt.test.js
+ M app/test/preview-async.test.js
+ M src/core/document.js
+ M src/core/jump.js
+ M src/validate/index.js
+ M test/core_adapter.test.js
+ M test/core_close.test.js
+ M test/core_cup.test.js
+ M test/core_cup_fixtures.test.js
+ M test/core_doc.test.js
+D  test/core_freejump.test.js
+ M test/core_jump.test.js
+ M test/core_jump_mutation.test.js
+ M test/core_offset.test.js
+ M test/core_piece.test.js
+ M test/core_readout.test.js
+ M test/core_xsec.test.js
+ M test/export_test_unfinished.test.js
+ M test/jumpwarn_refusals.test.js
+?? test/fixtures/manifest.d258.json
+21
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L53654 assistant 2026-10-06T23:49:15.132Z
+TOOL_USE Bash [toolu_01248EUBk7D9fRcKaqyUmUJF]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-freejump-wt && P=$(git status --short | awk '{print $2}' | tr '\\n' ' ') && git add -- $P && git commit -q -m \"WIP D258 core 2: restated suites, F7 amendment, re-anchored mutants (NOT FOR LANDING)\" -- $P && git rebase --onto 5caf5c6 744297c 2>&1 | tail -2; git log --oneline -4; git status --short | wc -l","description":"Commit progress and rebase onto main 5caf5c6"}
+--- L53655 user 2026-10-06T23:49:15.427Z
+RESULT [toolu_01248EUBk7D9fRcKaqyUmUJF]: fatal: pathspec 'test/core_freejump.test.js' did not match any files
+d4cf69b WIP D258 core: the free jump (NOT TESTED, NOT FOR LANDING)
+744297c D256 suite reds: the lift-off and holds-above checks judge the equation core's roads only
+ea2a642 D257: Left Ctrl flies with the movement keys and a right-button look; only a shortcut, the wheel or a left press stops it
+1ff9963 D256 BUILD: always max speed, lift-off on open tracks, "holds above N km/h"
+22
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L53657 assistant 2026-10-06T23:49:18.097Z
+TOOL_USE Bash [toolu_017dVbaX3UvPx88KYN5kSRSD]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-freejump-wt && P=$(git status --short | grep -v \"^D \" | awk '{print $2}' | tr '\\n' ' ') && git add -- $P && git commit -q -m \"WIP D258 core 2: restated suites, F7 amendment, re-anchored mutants (NOT FOR LANDING)\" -- $P test/core_freejump.test.js && git rebase --onto 5caf5c6 744297c 2>&1 | tail -2; git log --oneline -4; git status --short | wc -l","description":"Commit progress (deletion named in commit only) and rebase"}
+--- L53658 user 2026-10-06T23:49:18.683Z
+RESULT [toolu_017dVbaX3UvPx88KYN5kSRSD]: warning: in the working copy of 'app/test/preview-async.test.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/core/document.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/core/jump.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/validate/index.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'test/core_adapter.test.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'test/core_doc.test.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'test/core_jump.test.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/test/preview-async.test.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/core/document.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/core/jump.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/validate/index.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'test/core_adapter.test.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'test/core_doc.test.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'test/core_jump.test.js', LF will be replaced by CRLF the next time Git touches it
+Rebasing (1/2)Rebasing (2/2)[KSuccessfully rebased and updated refs/heads/d258-freejump.
+8a35160 WIP D258 core 2: restated suites, F7 amendment, re-anchored mutants (NOT FOR LANDING)
+4bf01a6 WIP D258 core: the free jump (NOT TESTED, NOT FOR LANDING)
+5caf5c6 D256 suite reds: the lift-off and holds-above checks judge the equation core's roads only
+516af01 Preview mutation harness: re-anchor N4, E1, N13, D7 (D252/D255), A18 and D5 (D257); copy app/core/keys.js
+0
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L53667 assistant 2026-10-06T23:49:20.881Z
+TEXT: Rebased onto `5caf5c6`. Checking that no file shows a whole-file line-ending rewrite.
+--- L53668 assistant 2026-10-06T23:49:21.663Z
+TOOL_USE Bash [toolu_01ESvB8ZTWuq4gRaw2Eiwrdq]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-freejump-wt && git diff --stat 5caf5c6 | cat","description":"Show the per-file diff size against main"}
+--- L53669 user 2026-10-06T23:49:21.864Z
+RESULT [toolu_01ESvB8ZTWuq4gRaw2Eiwrdq]:  app/test/core-pieces-ui.test.js       |   2 +-
+ app/test/core-readout-display.test.js |   2 +-
+ app/test/core-sculpt.test.js          |   2 +-
+ app/test/preview-async.test.js        |   6 +-
+ src/core/adapter.js                   |  19 ++-
+ src/core/close.js                     |  44 +++---
+ src/core/document.js                  | 114 ++++++++++----
+ src/core/jump.js                      | 101 +++++++++----
+ src/core/piece.js                     |  24 +--
+ src/core/readout.js                   |  14 +-
+ src/core/sculpt.js                    |   6 +-
+ src/geom/path.js                      |  55 ++++++-
+ src/validate/index.js                 |  18 ++-
+ test/core_adapter.test.js             |  17 +--
+ test/core_close.test.js               |   2 +-
+ test/core_cup.test.js                 |   2 +-
+ test/core_cup_fixtures.test.js        |  20 ++-
+ test/core_doc.test.js                 |  11 +-
+ test/core_jump.test.js                | 274 ++++++++++++++++++++--------------
+ test/core_jump_mutation.test.js       |  39 ++---
+ test/core_offset.test.js              |   4 +-
+ test/core_piece.test.js               |  40 ++---
+ test/core_readout.test.js             |   7 +-
+ test/core_xsec.test.js                |   6 +-
+ test/export_test_unfinished.test.js   |   5 +-
+ test/fixtures/manifest.d258.json      |  52 +++++++
+ test/jumpwarn_refusals.test.js        |   9 +-
+ 27 files changed, 599 insertions(+), 296 deletions(-)
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L53672 assistant 2026-10-06T23:49:25.835Z  <<< THE CLAIM'S MESSAGE
+TEXT: No line-ending rewrites. Now one background script: the restated jump rows and the fixture rows red on base `5caf5c6`, then the whole non-mutation suite on the branch.
+--- L53673 assistant 2026-10-06T23:49:32.333Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_01Q3RhTwRHbsrHLcJjRj5EQq]: {"command":"S=C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad; W=C:/Users/nname/Desktop/worktrees/e-freejump-wt; B=C:/Users/nname/Desktop/worktrees/e-suitereds-wt; cat > $S/freejump/final.sh <<XEOF\n#!/bin/sh\nexport CONSONANCE_HEAVY_WAIT_MS=10800000\ncd $B && git checkout -q --detach 5caf5c6 && git status --short | head -3\nfor f in test/core_jump.test.js test/core_cup_fixtures.test.js test/fixtures/manifest.d258.json; do cp $W/\\$f $B/\\$f; done\nNODE_OPTIONS=\"--require $S/suite/serial-shim.js\" node $S/locked.js \"D258 rows on base 5caf5c6\" $B $S/freejump/base.tap --test --test-concurrency=1 --test-reporter=tap test/core_jump.test.js test/core_cup_fixtures.test.js\ncd $B && git checkout -q -- . && rm -f test/fixtures/manifest.d258.json && git checkout -q d256-suitereds && git status --short | head -3\ncd $W && ls test/*.test.js app/test/*.test.js | grep -v -i \"mutation\\|mutants\" > $S/freejump/files.txt\nNODE_OPTIONS=\"--require $S/suite/serial-shim.js\" node $S/locked.js \"D258 whole non-mutation suite\" $W $S/freejump/whole.tap --test --test-concurrency=1 --test-reporter=tap \\$(cat $S/freejump/files.txt)\necho BASE; grep -E \"^# (tests|pass|fail)\" $S/freejump/base.tap\necho WHOLE; grep -E \"^# (tests|pass|fail|skipped|todo)\" $S/freejump/whole.tap; grep \"^not ok\" $S/freejump/whole.tap | grep -v \"# TODO\" | cut -c1-170\nXEOF\nsh $S/freejump/final.sh","description":"Red rows on base, then the whole suite on the branch","timeout":7200000,"run_in_background":true}

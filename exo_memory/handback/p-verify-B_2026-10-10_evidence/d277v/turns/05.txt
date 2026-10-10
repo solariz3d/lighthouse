@@ -1,0 +1,92 @@
+MESSAGE 05  msg_011CfgPFoYfuyUmkNASVw1WL  seat librarian  ts 2026-10-04T02:10:31.847Z  turn L71431..L71462 (next prompt L71467)
+CLAIMS:
+  [msg_011CfgPFoYfuyUmkNASVw1WL|13] "E's run was in the heaviest of those big checks when the PC went down"
+  [msg_011CfgPFoYfuyUmkNASVw1WL|14] "A was most likely waiting"
+
+--- L71431 user 2026-10-04T02:09:37.653Z
+USER: 
+
+<pasted_content id="d7d4">
+[pane:E] D226 two-lane suite (pane E) hand-back: exo_memory/handback/p-suite2-E_2026-10-03.md — profile at exo_memory/loop/suite_profile_2026-10-03.md [digest removed — the pane's, not the ring's] runner t180 tools/suite2.cjs committed 01165a09 in e-suite-wt (blob [digest removed — the pane's, not the ring's] not pushed. Lock released.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-suite2-E_2026-10-03.md · C:\Users\nname\Desktop\lighthouse\exo_memory\loop\suite_profile_2026-10-03.md
+[digest at ring: git-blob 7cea396b2cf7d92a2846b5c7ec553c9ee3ddc1de — exo_memory/handback/p-suite2-E_2026-10-03.md, 8275 bytes, computed by call_librarian when the ring fired; also named, not hashed: exo_memory/loop/suite_profile_2026-10-03.md]
+NEXT: librarian collate D226 as DROP (serial stays, suite2.cjs not landed) when the hand-back is read, unless the chair wants the literal full serial/two-lane pair run
+</pasted_content id="d7d4">
+
+--- L71441 assistant 2026-10-04T02:09:47.186Z
+TOOL_USE Read [toolu_012LmjkPu8r2G2YDnAPLdcxK]: {"file_path":"C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\handback\\p-suite2-E_2026-10-03.md"}
+--- L71442 user 2026-10-04T02:09:47.227Z
+RESULT [toolu_012LmjkPu8r2G2YDnAPLdcxK]: 1	# p-suite2-E · D226 the two-lane suite · pane E · 2026-10-03, on D
+2	
+3	## VERDICT: DROP, by the plan's registered bar. Serial stays.
+4	- **The bar** (plan, "Registered now"): KEEP needs identical results AND ≥ 40% less wall time AND the floor never crossed.
+5	- **Identical: yes. Floor: never crossed. Saving: about 5.7% projected, and at most 12.4% by construction.** So it is DROP, decided by the bar, not tuned after.
+6	- **Why it cannot reach 40%:** the HEAVY lane is **5,404 s of the 6,167 s serial run (87.6%)**, and the plan keeps it serial.
+7	  - Even an infinitely parallel light lane saves at most the light files' own 763 s, which is 12.4%.
+8	  - The two app mutation harnesses alone take **4,597 s (74.5%)**:
+9	    - `app/test/core-mutation.test.js`: 2,993 s;
+10	    - `app/test/mutation.test.js`: 1,604 s.
+11	- inferred: the only lever left that is big enough is the mutation harnesses' own inner concurrency, which they force to 1 under the shim. The plan rules that out ("the mutation harnesses stay serialized"), and the 16:22 crash argues for keeping it.
+12	
+13	## 1 · The profile → `exo_memory/loop/suite_profile_2026-10-03.md` (sha256 `ba33e260…`)
+14	- **What ran:** all 138 files at t180 local main `90c1a3e`, in worktree `Desktop\worktrees\e-suite-wt`.
+15	  - Each file ran alone under the heavy-run lock: `node --max-old-space-size=4096 --test --test-concurrency=1 --test-reporter=tap <file>`, with B's serial shim preloaded.
+16	  - The whole process tree was sampled every ~250 ms.
+17	- **Results:** every file exited 0 — 2,086 pass, 0 fail, 6 skipped, 7 todo, from the TAP summaries.
+18	- **Free memory:** never below **32.00 GB**.
+19	- **DISCARDED, as the chair asked:**
+20	  - **The 16:18 run, killed by the crash.** It h
+…[6009 chars cut]…
+s` | `445a74b20ae33e5f…` |
+91	| `sampler.ps1` | `3223ed52b22b5b2a…` |
+92	| `prof/profile.json` (all 138 rows) | `c1b8798577b9de18…` |
+93	| `prof/profile.seg1.json` | `b163cab95bbcd750…` |
+94	| `prof.seg1.log` / `prof.seg2.log` | `fc342736…` / `cfb9177e…` |
+95	| `run-serial-light/results.json` / `run-two-light/results.json` | `b8974f25…` / `a10f6543…` |
+96	| `run-serial-light.log` / `run-two-light.log` | `0bffba36…` / `a9d98d9d…` |
+97	| `discarded/` | the two dead runs, kept, not counted |
+98	
+99	SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_two_lane_suite_2026-10-03.md · C:\Users\nname\Desktop\lighthouse\exo_memory\loop\suite_profile_2026-10-03.md · `git -C C:/Users/nname/Desktop/worktrees/e-suite-wt log --oneline -1`
+100	
+--- L71445 assistant 2026-10-04T02:09:56.599Z
+TOOL_USE Bash [toolu_01S2u2qa3FnwpJgJ795qSTfr]: {"command":"cd C:/Consonance/data && node -e '\nconst L=require(\"fs\").readFileSync(\"board.jsonl\",\"utf8\").split(\"\\n\");for(const l of L){let j;try{j=JSON.parse(l)}catch{continue}\nconst d=new Date(j.ts);if(j.ts>Date.parse(\"2026-10-03T22:05:00Z\")&&j.ts<Date.parse(\"2026-10-03T22:23:00Z\")&&/lock|heavy|mutation/i.test(j.text||\"\")){console.log(d.toLocaleTimeString(),(j.pane||\"\").slice(0,8),j.role||\"\",String(j.text).replace(/\\s+/g,\" \").slice(0,220))}}' 2>/dev/null","description":"Check who held the heavy-run lock just before the crash"}
+--- L71446 user 2026-10-04T02:09:57.070Z
+RESULT [toolu_01S2u2qa3FnwpJgJ795qSTfr]: 4:07:34 p.m. 6fe15f0a user <task-notification> <task-id>b6kmcjvmg</task-id> <tool-use-id>toolu_01Kxxitcu14q2rAAAMb2yZeG</tool-use-id> <output-file>C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04
+4:07:54 p.m. 6fe15f0a assistant The targeted test run is going again in the background, under the heavy-run lock. I'll check the results when it finishes.
+4:16:52 p.m. a2122153 user <task-notification> <task-id>bp32iz5fx</task-id> <tool-use-id>toolu_014KpmhYt5gApa11koLBVUyh</tool-use-id> <output-file>C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6
+4:17:20 p.m. a2122153 assistant The profile is rerunning with the cycle fix. It waits on A's lock first, as the packet intends, and I'll be notified when it completes.
+4:18:20 p.m. 6fe15f0a assistant All 47 targeted tests pass, including the 9 new ones. Next, a short mutation check on the new logic, under the lock.
+4:18:33 p.m. 6fe15f0a assistant The mutation check is running in the background under the lock. I'll read the result when it finishes.
+4:07:34 p.m. 6fe15f0a user <task-notification> <task-id>b6kmcjvmg</task-id> <tool-use-id>toolu_01Kxxitcu14q2rAAAMb2yZeG</tool-use-id> <output-file>C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04
+4:07:54 p.m. 6fe15f0a assistant The targeted test run is going again in the background, under the heavy-run lock. I'll check the results when it finishes.
+4:18:20 p.m. 6fe15f0a assistant All 47 targeted tests pass, including the 9 new ones. Next, a short mutation check on the new logic, under the lock.
+4:18:33 p.m. 6fe15f0a assistant The mutation check is running in the background under the lock. I'll read the result when it finishes.
+4:16:52 p.m. a2122153 user <task-notification> <task-id>bp32iz5fx</task-id> <tool-use-id>toolu_014KpmhYt5gApa11koLBVUyh</tool-use-id> <output-file>C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6
+4:17:20 p.m. a2122153 assistant The profile is rerunning with the cycle fix. It waits on A's lock first, as the packet intends, and I'll be notified when it completes.
+Shell cwd was reset to C:\Consonance\instances\librarian
+--- L71455 assistant 2026-10-04T02:10:14.015Z
+TOOL_USE Bash [toolu_01Eti7asxEXGon1Jjc5E29HR]: {"command":"cat >> C:/Users/nname/Desktop/lighthouse/exo_memory/librarian/2026-10-03.desktop.md <<'EOF'\n\n## 20:1x: D226 two-lane suite → DROP (E, `handback/p-suite2-E_2026-10-03.md`); the tube export done\n- The tube oval: exported t180b_t_180_tube_oval (REDS null) and 09f3fcc installed at 19:27 (9,958,912 B; `.before-tube` kept).\n  Native folder commands not window-tested.\n- The two-lane result: the light lane is IDENTICAL and 56% faster (615.9 s → 271.3 s), but the HEAVY lane is 5,404 of 6,167 s (87.6%), and\n  two app mutation harnesses are 4,597 s (74.5%). Projected saving 5.7%, so DROP by the registered 40% bar. s
+…[653 chars cut]…
+her way it was one heavy job, and the dump verdict\n  (IP_MISALIGNED, the same as 09-18) stands.\nEOF\ntail -4 C:/Users/nname/Desktop/lighthouse/exo_memory/librarian/2026-10-03.desktop.md","description":"Append the D226 collation and a self-correction to today's notes"}
+--- L71456 user 2026-10-04T02:10:14.172Z
+RESULT [toolu_01Eti7asxEXGon1Jjc5E29HR]: - **A likely correction of mine (inferred, from E §1 and the board):** I told the keeper "A had a short mutation check going, E waiting" at
+  the 16:22 crash. E's profile ran `app/test/core-mutation.test.js` (the heaviest file) from 16:18:28 to the crash. A said at 16:18:33 that
+  its check was "running under the lock", so A was most likely the one WAITING. Either way it was one heavy job, and the dump verdict
+  (IP_MISALIGNED, the same as 09-18) stands.
+--- L71458 assistant 2026-10-04T02:10:24.159Z
+TOOL_USE mcp__consonance__call_chair [toolu_01E6Lorhbwg86cQMaf3MPX9V]: {"text":"D226, the two-lane suite: collated as DROP, by the registered bar. Pointer: exo_memory/handback/p-suite2-E_2026-10-03.md.\n\nRead at the file:\n- The light lane is IDENTICAL test by test, 615.9 s → 271.3 s (56% faster), and the floor was never crossed.\n- The HEAVY lane is 5,404 of 6,167 s (87.6%), and the two app mutation harnesses alone are 4,597 s (74.5%). The projected saving is 5.7%, below the 40% bar.\n- So: serial stays, and suite2.cjs (01165a09, e-suite-wt) is NOT landed.\n- E ran the light lane only, not the literal full pair, and said so. I accept that: the heavy lane is the same serial command in both m
+…[791 chars cut]…
+.desktop.md\n\nOUTPUT → NEXT: changed — the bar fired DROP, so nothing lands; the next item is A's three queued nits\nNEXT: chair dispatch A's three D226 nits (. and .. refused, the stale layout.js comment, 59→51 in the record) when this ring is read; the lock is free"}
+--- L71459 user 2026-10-04T02:10:24.643Z
+RESULT [toolu_01E6Lorhbwg86cQMaf3MPX9V]: delivered to Main (rendered in its pane — not proof it was read)
+--- L71462 assistant 2026-10-04T02:10:31.850Z  <<< THE CLAIM'S MESSAGE
+TEXT: E's faster-test experiment came back: **it doesn't pay off, so we keep the one-at-a-time runs.**
+
+- The many small tests can run in parallel, and when they did, the results matched exactly and finished 56% faster.
+- **But almost all the time goes to two big "planted bug" checks.** They take about 77 of the roughly 100 minutes a full run needs. Those have to stay one at a time, so the total saving would only be about 6%, far below the 40% we set as the bar beforehand. Nothing lands.
+
+**What would actually speed things up:** run each of those two big checks only when a change touches the code it guards. A UI tweak would skip them, while a geometry or export change still gets the full treatment. I'll set that up if you want it. Otherwise everything stays as it is.
+
+**A correction to what I told you about the crash.** I said A was running a check and E was waiting. It was the other way round: E's run was in the heaviest of those big checks when the PC went down, and A was most likely waiting. It was still only one heavy job, and the dump verdict hasn't changed: the CPU tuning is still the top suspect.
+
+Sources: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-suite2-E_2026-10-03.md · C:/Users/nname/Desktop/lighthouse/exo_memory/librarian/2026-10-03.desktop.md
