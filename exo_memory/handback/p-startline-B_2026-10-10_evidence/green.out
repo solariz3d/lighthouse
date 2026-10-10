@@ -1,0 +1,19 @@
+=== node --max-old-space-size=4096 --test --test-concurrency=1 app/test/core-startline-creep.test.js
+=== cwd C:/Users/nname/Desktop/worktrees/b-startline-wt
+=== env {}
+[32m✔ a hand-placed line (along 100 on a 400 m first piece) does not move when a Straight, a broad turn, Turn by and Sharp are added [90m(241.6102ms)[39m[39m
+[32m✔ the automatic line on an open track stays put when a Straight is added to the straight it is on (the keeper's case: it followed the head) [90m(26.8058ms)[39m[39m
+[32m✔ the automatic line stays put through a broad turn, Turn by and Sharp: none of them makes a longer straight [90m(219.2383ms)[39m[39m
+[32m✔ the automatic line moves when a genuinely longer straight is added, and the panel still says the start is automatic [90m(20.6799ms)[39m[39m
+[32m✔ save, reopen, append: neither the hand-placed nor the automatic line moves [90m(30.0562ms)[39m[39m
+[32m✔ a CLOSED lap keeps its automatic start where it was: 15 m before the end of the longest straight run (the export of a finished track is unchanged) [90m(178.0484ms)[39m[39m
+[34mℹ tests 6[39m
+[34mℹ suites 0[39m
+[34mℹ pass 6[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 804.3791[39m
+
+=== exit 0 signal null error  0.8s

@@ -1,0 +1,188 @@
+=== node --max-old-space-size=4096 --test --test-concurrency=1 test/markers_export.test.js test/export_pitboxes.test.js test/export_pittexture.test.js test/doc-e2e.test.js test/markers_lane.test.js test/markers.test.js test/markers_track.test.js test/export_pitinfill.test.js test/geom-pitlane.test.js test/geom_pitlane_tilt.test.js test/core_pitlane.test.js test/doc-pitlane.test.js test/export-layouts.test.js test/export_test_unfinished.test.js test/core_spawns.test.js app/test/core-pitlane.test.js app/test/core-spawns.test.js app/test/core-spawns-ui.test.js app/test/core-startline-creep.test.js
+=== cwd C:/Users/nname/Desktop/worktrees/b-pitbal-wt
+=== env {}
+[32m✔ a pit lane on the right is built beside the start straight, and the export carries its road and its pit boxes on it [90m(1322.9737ms)[39m[39m
+[32m✔ a pit lane on the left is built beside the start straight, and the export carries its road and its pit boxes on it [90m(1184.6005ms)[39m[39m
+[31m✖ the pit boxes follow the lane's count and spacing [90m(179.3913ms)[39m[39m
+[32m✔ a lane joining a cup wall cannot be built: it is KEPT, and the panel says why in plain words [90m(173.8457ms)[39m[39m
+[32m✔ the pit lane and the hand-placed start work together [90m(1339.7736ms)[39m[39m
+[32m✔ removing the pit lane puts the pit boxes back on the track and takes the lane's road out [90m(1022.1652ms)[39m[39m
+[32m✔ the preview draws the lane's two edges, labelled, with the automatic start [90m(210.8866ms)[39m[39m
+[32m✔ every refusal of the lane geometry has words for the panel [90m(0.1263ms)[39m[39m
+[32m✔ "Flatten road for pit" on a cup lap: the refused lane builds, one undo step puts the walls back [90m(3714.4011ms)[39m[39m
+[32m✔ flattening a TUBE says up front that opening a tube under the racing line usually fails the export [90m(724.1118ms)[39m[39m
+[32m✔ the section is there, unticked: the start is automatic and the hand controls are hidden [90m(176.3302ms)[39m[39m
+[32m✔ ticking "place by hand" puts the line near the end of the first piece and the measured pack behind it, all on the road [90m(138.9519ms)[39m[39m
+[32m✔ the line box, the car count and the pack fields change the spawns, one undo step each [90m(157.5004ms)[39m[39m
+[32m✔ the pack cannot be condensed past a T-180: below the minimum the field takes the minimum [90m(146.7564ms)[39m[39m
+[32m✔ the hotlap goes on the selected piece, slides along it, says its speed at the line, and comes off again [90m(131.0834ms)[39m[39m
+[32m✔ unticking goes back to automatic: the spawns field is removed [90m(109.9141ms)[39m[39m
+[32m✔ the preview layer: a START line, one numbered box per grid slot from pole, the pits and the hotlap [90m(127.7692ms)[39m[39m
+[32m✔ a grid box is the measured T-180 on the road: 6.67 m along, 2.67 m across [90m(0.2014ms)[39m[39m
+[32m✔ the panel still loads through the webview's loader, with no node built-in [90m(7.1606ms)[39m[39m
+[32m✔ the Pit lane section: ticking it puts a lane along the start straight, sized to fit, and says how long it is and how many boxes are on it [90m(131.5361ms)[39m[39m
+[32m✔ the Pit lane section changes the side, the boxes and a join, one undo step each; unticking removes the lane [90m(191.8909ms)[39m[39m
+[32m✔ the start line sits where it is put on the first piece, and the export writes it there [90m(1194.754ms)[39m[39m
+[32m✔ the grid is numbered from pole, two staggered columns with the pack's spacing behind the line [90m(122.3014ms)[39m[39m
+[32m✔ stretching the pack spreads the slots: rowGap and colGap are the pack's length and width [90m(110.1308ms)[39m[39m
+[32m✔ the line is clamped to the first piece: a distance past its end puts the line at its end [90m(102.0848ms)[39m[39m
+[32m✔ a hotlap put down by hand stands there and reports the speed it reaches by the line [90m(1082.8051ms)[39m[39m
+[32m✔ a hotlap AFTER the line on a closed lap gets the run all the way round to it [90m(109.9642ms)[39m[39m
+[32m✔ a hotlap on a piece that no longer exists is reported as missing, not placed somewhere else [90m(101.7528ms)[39m[39m
+[32m✔ back to automatic: setSpawns(null) removes the field, and the export places the start itself again [90m(3159.3537ms)[39m[39m
+[32m✔ placing the start is one undo step [90m(120.6231ms)[39m[39m
+[32m✔ a bad pack is refused in plain words and nothing changes [90m(104.785ms)[39m[39m
+[32m✔ the "grid on a straight" amber judges an equation piece by its curvature: quiet on the straight, still there on a curve [90m(111.9254ms)[39m[39m
+[32m✔ a hand-placed line (along 100 on a 400 m first piece) does not move when a Straight, a broad turn, Turn by and Sharp are added [90m(233.6795ms)[39m[39m
+[32m✔ the automatic line on an open track stays put when a Straight is added to the straight it is on (the keeper's case: it followed the head) [90m(26.5301ms)[39m[39m
+[32m✔ the automatic line stays put through a broad turn, Turn by and Sharp: none of them makes a longer straight [90m(235.7629ms)[39m[39m
+[32m✔ the automatic line moves when a genuinely longer straight is added, and the panel still says the start is automatic [90m(19.4787ms)[39m[39m
+[32m✔ save, reopen, append: neither the hand-placed nor the automatic line moves [90m(27.3045ms)[39m[39m
+[32m✔ a CLOSED lap keeps its automatic start where it was: 15 m before the end of the longest straight run (the export of a finished track is unchanged) [90m(169.5496ms)[39m[39m
+[32m✔ a document without a pit lane saves exactly as before [90m(8.3542ms)[39m[39m
+[32m✔ setPitLane stores the lane and its boxes, and they survive save and open byte for byte [90m(4.5145ms)[39m[39m
+[32m✔ setPitLane(doc, null) removes it [90m(3.7145ms)[39m[39m
+[32m✔ a bad lane is refused by name: the side, a width out of range, a box count, an unknown key [90m(5.7365ms)[39m[39m
+[32m✔ the pit lane and the spawns live side by side and edits keep both [90m(1.8735ms)[39m[39m
+[32m✔ a document without spawns saves exactly as before: no spawns field in memory or in the file [90m(6.2083ms)[39m[39m
+[32m✔ setSpawns stores the line, the grid and a hotlap, and they survive save and open [90m(2.7725ms)[39m[39m
+[32m✔ setSpawns(doc, null) removes the field, back to the export placing the start itself [90m(3.1993ms)[39m[39m
+[32m✔ spawns are quantised to the millimetre like every other distance [90m(1.3338ms)[39m[39m
+[32m✔ bad spawns are refused by name: a negative line, a fractional or zero count, a zero gap, an unknown field [90m(5.4831ms)[39m[39m
+[32m✔ a file with bad spawns does not open: the error says which field [90m(0.9765ms)[39m[39m
+[32m✔ edits keep the spawns: extend, and a sculpt of the first piece [90m(853.9425ms)[39m[39m
+[32m✔ a hotlap on a piece that no longer exists does not block an edit (the export reports it instead) [90m(1.0135ms)[39m[39m
+[32m✔ words → closed loop → exported with every default → the kn5 reads back with every AC_ marker [90m(13384.2775ms)[39m[39m
+[32m✔ the same with a jump in the loop: the jump carries its landing ramp, and the whole lap exports and reads back [90m(20764.881ms)[39m[39m
+[32m✔ a new document has no pit lane, and writes pitLane: null in its canonical text [90m(0.7289ms)[39m[39m
+[32m✔ a pit lane round-trips byte-exact, in canonical key order whatever order it was written in [90m(1.4706ms)[39m[39m
+[32m✔ lane lengths are snapped to 0.1 mm and its speed to 0.01 km/h, on edit and on load [90m(0.7544ms)[39m[39m
+[32m✔ setting, sculpting and removing the lane are one undo step each, and undo is byte-identical [90m(0.5024ms)[39m[39m
+[32m✔ missing keys take the defaults; a bad side, anchor, range or key is refused by name [90m(0.8308ms)[39m[39m
+[32m✔ a phrase word can anchor the lane (w2/1) [90m(0.2378ms)[39m[39m
+[32m✔ removing the word a lane is anchored to is not blocked: the document keeps the lane, the geometry refuses it [90m(0.3955ms)[39m[39m
+[32m✔ a schema-2 document migrates to schema 3 with no pit lane, and resolves to the same track [90m(1.1112ms)[39m[39m
+[32m✔ a schema-1 document migrates all the way (1 -> 2 -> 3) [90m(0.2431ms)[39m[39m
+[32m✔ a schema-3 document without pitLane, or a schema-2 one with it, is refused [90m(0.2431ms)[39m[39m
+[32m✔ a project of two layouts round-trips byte-exact, and each layout's text is its document's own [90m(0.7217ms)[39m[39m
+[32m✔ layout names are AC folder names and unique; a missing layout is named [90m(0.2939ms)[39m[39m
+[32m✔ a project's layouts migrate like documents [90m(0.1811ms)[39m[39m
+[32m✔ a project layout entry with any key but layout and doc is refused [90m(0.1518ms)[39m[39m
+[32m✔ a pit lane reaches the export: its cells in the kn5, the pit boxes on it, the self-check ON [90m(383.9397ms)[39m[39m
+[32m✔ two layouts export to two layout sets in one folder, as AC lays layouts out [90m(539.0055ms)[39m[39m
+[32m✔ one red layout writes nothing at all, and a folder the builder did not write is refused untouched [90m(493.0702ms)[39m[39m
+[32m✔ a lane laid across another pass of the road is RED: the lane's findings refuse the export [90m(258.4871ms)[39m[39m
+[32m✔ row 1: asphalt: every pit box wears the road's floor material and the same diffuse texture, in the scene and in the kn5 [90m(1380.3825ms)[39m[39m
+[32m✔ row 2: image: every pit box wears the road's floor material and the same diffuse texture, in the scene and in the kn5 [90m(731.8889ms)[39m[39m
+[32m✔ row 3: solid colour: the pit boxes wear the road's own t180b_road, so they no longer show (what was asked, and named here) [90m(696.8743ms)[39m[39m
+[32m✔ row 4: the start line and grid paint, the AC_PIT_n spawn markers and the read-back are unchanged [90m(1605.7455ms)[39m[39m
+[32m✔ row 5: a box's texture coordinates are the road's there: v = (s + offset) / tileLength, within the box's own stretch of road [90m(798.2746ms)[39m[39m
+[32m✔ row 1: the infill is there, drivable, and wears the lane's floor (the road's), in the scene and in the kn5 [90m(1680.4354ms)[39m[39m
+[32m✔ row 2: NO GAP: the car's downforce ray over the road, the lane and the infill finds no gap in the lane's span [90m(1125.2525ms)[39m[39m
+[32m✔ row 3: untextured (solid): the infill wears t180b_road, as the lane and the road do [90m(1154.7503ms)[39m[39m
+[32m✔ row 4: the lane's self-check and its check against the road stay clean, and the full export of the closed lap passes [90m(1074.3039ms)[39m[39m
+[32m✔ row 1: solid (no floor texture): the lane and the road both wear t180b_road, as before [90m(399.5085ms)[39m[39m
+[32m✔ row 2: asphalt: the lane wears the road's floor material and the same diffuse texture, in the scene and in the kn5 [90m(341.6922ms)[39m[39m
+[32m✔ row 3: picture: the lane wears the road's floor material and the same diffuse texture, in the scene and in the kn5 [90m(244.4884ms)[39m[39m
+[32m✔ row 4: paint, the lane's surface keys and its mesh count are unchanged, and the AC-ready read-back passes [90m(487.2939ms)[39m[39m
+[32m✔ row 5: a word document's texture coordinates are untouched: the lane keeps mesh.js's, as the road's word cells do [90m(478.1653ms)[39m[39m
+[32m✔ a NORMAL export of an open track still refuses (unchanged): NOT_CLOSED, nothing written [90m(6.1972ms)[39m[39m
+[32m✔ the TEST export of the same open track writes a folder marked unfinished, in name and folder [90m(257.0316ms)[39m[39m
+[32m✔ D256: the TEST export checks the open track at FULL speed, so where F7's hill lets the car leave the road is LISTED (and does not block) [90m(0.523ms)[39m[39m
+[32m✔ in TEST mode a red is LISTED and does not block: a hole's gap-in-road red is in the TEST file and the warnings [90m(203.346ms)[39m[39m
+[32m✔ the TEST folder carries point-to-point gates and the named end wall in its kn5 [90m(0.2505ms)[39m[39m
+[32m✔ the TEST folder's AI line is OPEN and reads back [90m(0.1323ms)[39m[39m
+[32m✔ an open AI line is written only when asked for: the same line without open still refuses NOT_CLOSED [90m(67.3135ms)[39m[39m
+[32m✔ G1 at both joins, on a straight: the inner edge is the road's edge, and runs along it [90m(21.7733ms)[39m[39m
+[32m✔ no step at the joins, on a straight: the lane mesh's join rows lie on the road, in its plane, facing its way [90m(24.5008ms)[39m[39m
+[32m✔ G1 at both joins, leaving on a straight and rejoining in a turn: the inner edge is the road's edge, and runs along it [90m(10.8268ms)[39m[39m
+[32m✔ no step at the joins, leaving on a straight and rejoining in a turn: the lane mesh's join rows lie on the road, in its plane, facing its way [90m(24.37ms)[39m[39m
+[32m✔ the lane runs offsetM beyond the road's edge between its eases, and its s is its own arc length [90m(6.5902ms)[39m[39m
+[32m✔ E's pit boxes sit on the lane: on its surface, beyond the road's edge, and pass §5c's checks [90m(10.7167ms)[39m[39m
+[32m✔ the self-check stays ON beside the road: a lane 0.3 m off a turn is tested, and clear; without the join exemption the joins show [90m(310.6562ms)[39m[39m
+[32m✔ a lane is refused by name: a missing anchor, backwards, too short for its eases, a walled edge [90m(8.926ms)[39m[39m
+[32m✔ a lane off the measured bowl's right edge: G1 and no step at both joins, level along the run [90m(13.6339ms)[39m[39m
+[32m✔ a lane off the measured half-pipe's left edge: G1 and no step at both joins, level along the run [90m(7.5687ms)[39m[39m
+[32m✔ a lane is refused off an edge steeper than 35° (the reader's lip), and taken at 30.6° (the half-pipe) [90m(10.9044ms)[39m[39m
+[32m✔ a lane off a 33 m bowl, rejoining in a tight banked -30°: G1, and the mesh join rows in the edge's own plane [90m(18.1488ms)[39m[39m
+[32m✔ the good scene passes every §5c check [90m(2.2781ms)[39m[39m
+[32m✔ race direction comes from the grid, back slot to pole [90m(5.6566ms)[39m[39m
+[32m✔ start line behind the grid fires start-ahead-of-grid [90m(0.4833ms)[39m[39m
+[32m✔ grid numbered the wrong way (pole at the back) fires start-ahead-of-grid [90m(0.2276ms)[39m[39m
+[32m✔ a grid slot ahead of the slot numbered before it fires start-ahead-of-grid, even with the line ahead of all [90m(0.1775ms)[39m[39m
+[32m✔ swapped L and R gates fire gate-orientation [90m(0.1693ms)[39m[39m
+[32m✔ a marker 5 m up fires height-and-heading [90m(0.1641ms)[39m[39m
+[32m✔ a marker 0.3 m up (below the 1 m floor) fires height-and-heading [90m(0.1481ms)[39m[39m
+[32m✔ a grid slot pointing backwards fires height-and-heading [90m(0.2024ms)[39m[39m
+[32m✔ a marker pointing into the road fires height-and-heading [90m(0.2071ms)[39m[39m
+[32m✔ a marker off the road fires height-and-heading and slots [90m(0.5118ms)[39m[39m
+[32m✔ a marker straight above a shared triangle edge is ON the road [90m(0.2191ms)[39m[39m
+[32m✔ a marker straight above the road's outer edge is on the road [90m(0.1275ms)[39m[39m
+[32m✔ a marker over a WALL mesh only counts as off the road [90m(0.0997ms)[39m[39m
+[32m✔ a grid slot inside another fires slots [90m(0.1454ms)[39m[39m
+[32m✔ a pit box inside another fires slots [90m(0.1285ms)[39m[39m
+[32m✔ a wrong pit count fires pit-count [90m(0.1098ms)[39m[39m
+[32m✔ a gap in the pit numbering fires pit-count [90m(0.1427ms)[39m[39m
+[32m✔ no pit markers fires pit-count [90m(0.0823ms)[39m[39m
+[32m✔ no gate fails the checks that need one, with the reason [90m(0.3054ms)[39m[39m
+[32m✔ countPits counts AC_PIT_n markers only [90m(0.0761ms)[39m[39m
+[32m✔ a nested dummy gets its parent transform (world = local × parent) [90m(0.1959ms)[39m[39m
+[32m✔ a custom layout (a 3-abreast grid of 6, 3 pit boxes, sectors) is what the kn5 carries, and pitboxes counts it [90m(411.9078ms)[39m[39m
+[32m✔ the paint is written into the kn5 as visual meshes, one per mark, none of them physics [90m(287.9249ms)[39m[39m
+[32m✔ a red layout refuses the export, names the check, and writes nothing [90m(151.7857ms)[39m[39m
+[32m✔ a layout whose word is gone refuses the export: anchors [90m(156.3063ms)[39m[39m
+[32m✔ with a lane, the pit boxes are placed along the LANE from its `along`, on its surface, and pass the checks [90m(5.3683ms)[39m[39m
+[32m✔ the pit count still matches on a lane, and a lane too short for its boxes is off the road (red) [90m(2.6883ms)[39m[39m
+[32m✔ the pit box paint is laid on the lane, centred on each box [90m(1.5424ms)[39m[39m
+[32m✔ without a lane the boxes stay on the main road at the layout's `at` [90m(0.7126ms)[39m[39m
+[32m✔ the markers stay on the road after an UPSTREAM word is edited: they move with their words, same (along, u, h) [90m(24.093ms)[39m[39m
+[32m✔ editing the anchor word itself keeps the marker at the same distance into it, clamped to the word [90m(5.1574ms)[39m[39m
+[32m✔ markers on a BANKED floor stand h along the rolled normal, not world up, and pass the checks [90m(4.0786ms)[39m[39m
+[32m✔ on a half-pipe the start gates sit on the walls' edges, standing off the WALL along its normal [90m(3.2588ms)[39m[39m
+[32m✔ the grid is numbered from pole: AC_START_0 nearest the line, each slot at or behind the one before [90m(3.902ms)[39m[39m
+[32m✔ the grid order records the race direction: back slot to pole runs along +s, and every marker faces it [90m(2.3796ms)[39m[39m
+[32m✔ the patterns: 2 staggered, 2 abreast, 3 abreast (Aurora), with their spacing [90m(0.4689ms)[39m[39m
+[32m✔ a slot edit moves that slot only (editable slot by slot) [90m(0.158ms)[39m[39m
+[32m✔ the hotlap starts the run-up that reaches the design speed at the line (measured thrust, FINDINGS.md:494) [90m(4.5946ms)[39m[39m
+[32m✔ on an open track too short for the run-up, the hotlap is at the start, and says the speed it will reach (amber) [90m(3.8158ms)[39m[39m
+[32m✔ sectors 1 and 2 are gates across the road like the start, L left of R [90m(6.1728ms)[39m[39m
+[32m✔ red check: the start line ahead of the grid (a slot past the line, then a slot numbered out of order) [90m(4.6583ms)[39m[39m
+[32m✔ red check: L and R gates the right way round (swapped: fires; as placed: clear) [90m(2.217ms)[39m[39m
+[32m✔ red check: 1–2 m above the surface (3 m and 0.5 m fire, 1 m and 2 m clear) and along the road [90m(4.1933ms)[39m[39m
+[32m✔ red check: no marker inside another's slot, and none off the road [90m(4.0811ms)[39m[39m
+[32m✔ red check: the pit count (none: fires; placed ≠ asked: fires; as laid out: clear) [90m(2.6146ms)[39m[39m
+[32m✔ red check: a marker whose word is gone [90m(1.1366ms)[39m[39m
+[32m✔ the paint and the markers agree: every mark comes from a marker, at its (s, u), on the surface [90m(2.4184ms)[39m[39m
+[32m✔ the start/finish line wraps the whole cross-section, up a half-pipe's walls [90m(1.8145ms)[39m[39m
+[32m✔ inside a font transition a marker sits on the BLENDED surface the mesh builds, not the new font's [90m(2.6429ms)[39m[39m
+[32m✔ between stations on a banking turn the marker's axes are still an orthonormal frame (a valid kn5 matrix) [90m(3.8216ms)[39m[39m
+[32m✔ a marker between stations is interpolated along the road, not snapped to the station before [90m(0.3354ms)[39m[39m
+[32m✔ a marker over a jump's flight is red, off the road (no surface under it) [90m(2.2711ms)[39m[39m
+[32m✔ the default layout refuses a grid longer than the longest straight (NO_START_STRAIGHT), with the lengths [90m(1.3899ms)[39m[39m
+[32m✔ a pit box that cannot be placed (off the track's start) is red on its own, nothing else overlapping [90m(1.5513ms)[39m[39m
+[34mℹ tests 159[39m
+[34mℹ suites 0[39m
+[34mℹ pass 158[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 81732.8865[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\core-pitlane.test.js:46:1
+[31m✖ the pit boxes follow the lane's count and spacing [90m(179.3913ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: [-14,-14,-14,-14,-14]
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\b-pitbal-wt\[39mapp\test\core-pitlane.test.js:52:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+=== exit 1 signal null error  81.8s

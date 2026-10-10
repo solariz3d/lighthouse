@@ -1,0 +1,19 @@
+=== node --max-old-space-size=4096 --test --test-concurrency=1 test/markers_pitbalance.test.js
+=== cwd C:/Users/nname/Desktop/worktrees/b-pitbal-wt
+=== env {}
+[32m✔ the row no longer starts at the lane's midpoint: pit 1 (AC_PIT_0) is the first box after the entry, and each next box is further on [90m(63.4707ms)[39m[39m
+[32m✔ 2 boxes: the gap before the first box equals the gap after the last (within one spacing), and no box stands on a taper [90m(29.3247ms)[39m[39m
+[32m✔ 6 boxes: the gap before the first box equals the gap after the last (within one spacing), and no box stands on a taper [90m(25.391ms)[39m[39m
+[32m✔ 12 boxes: the gap before the first box equals the gap after the last (within one spacing), and no box stands on a taper [90m(22.3237ms)[39m[39m
+[32m✔ the boxes stand on the lane, with the count asked for, and the checks pass [90m(67.1304ms)[39m[39m
+[32m✔ a row longer than the lane's straight is still centred, and an amber says the end boxes stand on the tapers [90m(18.5918ms)[39m[39m
+[34mℹ tests 6[39m
+[34mℹ suites 0[39m
+[34mℹ pass 6[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 310.5016[39m
+
+=== exit 0 signal null error  0.3s

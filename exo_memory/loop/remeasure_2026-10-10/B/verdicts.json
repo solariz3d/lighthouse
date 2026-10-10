@@ -1,0 +1,1186 @@
+{
+ "verifier": "B",
+ "by": "pane B (machine D)",
+ "registration": "exo_memory/loop/claim_base_rate_registration_2026-09-27.md §3, §4",
+ "claimsFile": "claims.json sha256 f5d1689404b044b0bb8865a536a4ee55e25b457d1532ea56a0f8f58e393eb56d",
+ "started": "2026-10-10T08:15:33-06:00",
+ "finished": "2026-10-10T11:07:31-06:00",
+ "rows": [
+  {
+   "claimId": "msg_011CfjmvdLfjgdf5pyVsvMJo|2",
+   "seat": "C",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "intent: 'Committing the hand-back now, so ... then installing'"
+  },
+  {
+   "claimId": "msg_011CfjmvdLfjgdf5pyVsvMJo|8",
+   "seat": "C",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "the baseline run in this turn (render 26:508): cadj n 1759, verbatimPct 0.28"
+  },
+  {
+   "claimId": "msg_011CfjmvdLfjgdf5pyVsvMJo|12",
+   "seat": "C",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "a commit trailer (authorship). Seat C's transcript at L52068: model claude-opus-5-5; the harness's attribution instruction in the same transcript gives this exact line, '(1M context)' included"
+  },
+  {
+   "claimId": "msg_011CfiS48RkuUCNAXGmA8KMZ|13",
+   "seat": "A",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L63070: after the cut, grep -rniE 'water|.pour(|overlayOf|redText|waterRun|setOverlay' app/test/*.js prints nothing; t180 8ff414b (D238) removes the 4 water tests from core-shell.test.js and the water clause of the landed-core test"
+  },
+  {
+   "claimId": "msg_011CfiS48RkuUCNAXGmA8KMZ|22",
+   "seat": "A",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "the turn shows the mutants before the cut (L63037) and only a -10 line stat after; the IDs removed are not shown as a result. t180 8ff414b (the D238 commit, within 24 h): app/test/core-mutation.test.js loses exactly C6, C9, C10, C11, C13"
+  },
+  {
+   "claimId": "msg_011CffcStV9xKJhkCtdNHUnw|3",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: a path inside a Bash patch command; the message has no prose"
+  },
+  {
+   "claimId": "msg_011CffcStV9xKJhkCtdNHUnw|4",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: the patch's search string inside a Bash command (it does match L57655's shown test text)"
+  },
+  {
+   "claimId": "msg_011CffcStV9xKJhkCtdNHUnw|10",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "an instruction ('Check the geometry source...'), the reader's words, not a statement in the message"
+  },
+  {
+   "claimId": "msg_011CfoBr2AHRfsNLVZfw7dSU|9",
+   "seat": "E",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L55704/05: the Edit's old_string 'const pos = sub(x, mul(Ur, hl));' matched and was replaced (success), so the previous code was x - hl*Ur (Ur the rolled up, 'U' in the comment's notation)"
+  },
+  {
+   "claimId": "msg_011CfqL8dSTFGUeZ72Ky7BaM|13",
+   "seat": "C",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "an instruction (API guidance for B: call relabel on the raw text before transform()) with its purpose; FLAG: addressed to B's generator work"
+  },
+  {
+   "claimId": "msg_011CfqL8dSTFGUeZ72Ky7BaM|31",
+   "seat": "C",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "a document claim; lighthouse 12a43f97 (C's commit, before the claim) consonance/src-tauri/brief/frag-fork.md:5 carries both sentences (the legend quoted with an ellipsis)"
+  },
+  {
+   "claimId": "msg_011CfqL8dSTFGUeZ72Ky7BaM|61",
+   "seat": "C",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "the seat's own past: C's transcript, EXPECTED_KEEPER_LINES first written with BOOT 11 and transcript-watch 0; count.js at 19:17:03Z measured BOOT after 16, transcript-watch after 5; the relabel test first ran at 19:17:12Z (the earlier hits are Writes)"
+  },
+  {
+   "claimId": "msg_011CfqHm7gER8vfUwe99tzza|5",
+   "seat": "librarian",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L84003: the 7 commits origin/main..4acbf4d: D270 (handle grab), D271 (Level and To floor), D272 + its landing (undo survives restarts), a6cee64 and 85fafff (test fixes), 6a799cb (Version 0.3.3); the five items cover all seven"
+  },
+  {
+   "claimId": "msg_011Cfscst1sn5nySSoqF6ngG|4",
+   "seat": "librarian",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "future: a week of measuring after the switch"
+  },
+  {
+   "claimId": "msg_011Cfscst1sn5nySSoqF6ngG|9",
+   "seat": "librarian",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "the speaker's own action; the librarian's transcript at 2026-10-09T17:15:35Z writes memory plan-splits-the-work ('Every librarian plan names its parts, the pane for each ... independent parts go to separate panes by default and the librarian merges')"
+  },
+  {
+   "claimId": "msg_011CfjRFPUpHjMiCpHACxMiG|1",
+   "seat": "chair",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "the ID and item come from the turn's prompt (the librarian's ring: 'New lap D245 ... the Third Place's own return after its 16:15 compaction ... Its three points'), not a tool result; lap.jsonl: 'ledger D244 = plan D245', inquiry 'TP insight on compaction'. No Third Place file opened"
+  },
+  {
+   "claimId": "msg_011CfjRFPUpHjMiCpHACxMiG|9",
+   "seat": "chair",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "future/plan: the order E will work in"
+  },
+  {
+   "claimId": "msg_011CfqJm7f7dR5xrMeZHw8EQ|1",
+   "seat": "E",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "note": "the grep at L57284 matched $dest, USERPROFILE and WriteAllText only, not Copy-Item/New-Item; the 'so ... fully contained' goes beyond it. lighthouse ab25d588 (E's commit of this edit) dev/shell/install.ps1: every write (New-Item/Copy-Item at :380, :417-441 into $dest = USERPROFILE/.claude/shell; :814-986 settings.json and its .bak beside it) is under USERPROFILE"
+  },
+  {
+   "claimId": "msg_011CfqJm7f7dR5xrMeZHw8EQ|5",
+   "seat": "E",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "intent: 'Making the edit.'"
+  },
+  {
+   "claimId": "msg_011CfqJm7f7dR5xrMeZHw8EQ|14",
+   "seat": "E",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: a string the script prints (Write-Host) inside an Edit"
+  },
+  {
+   "claimId": "msg_011Cfs4JHfyxs6qC9dE5N7J2|2",
+   "seat": "C",
+   "kind": "UNCHECKED STATE",
+   "verdict": "WRONG",
+   "note": "PARTIAL. A code comment giving an outside fact about the census's input files (claim per R1b). lighthouse 35abc3cf (last before the claim): the briefs are hard-wrapped (BUILDING 1 of 826 non-empty lines over 200 chars, COMMITTEE 1/201, LIBRARIAN 1/230), but BOOT.md is not (48 of 117 non-empty lines over 200 chars, one paragraph per line) nor the cards (claim-your-continuity 10 of 17). As a statement about 'the files' it fails for BOOT and the cards. JUDGEMENT CALL (the block unit works either way)"
+  },
+  {
+   "claimId": "msg_011Cfs4JHfyxs6qC9dE5N7J2|4",
+   "seat": "C",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1b: the comment describes the code it annotates (where a block starts)"
+  },
+  {
+   "claimId": "msg_011Cfs4JHfyxs6qC9dE5N7J2|5",
+   "seat": "C",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1b: same comment (a heading is its own block)"
+  },
+  {
+   "claimId": "msg_011CfoC54RphgbnBQAucBqPW|7",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: test names in code inside a Write; the reader's presupposition"
+  },
+  {
+   "claimId": "msg_011CfoC54RphgbnBQAucBqPW|30",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: code expressions"
+  },
+  {
+   "claimId": "msg_011CfoC54RphgbnBQAucBqPW|31",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: test helpers used in code"
+  },
+  {
+   "claimId": "msg_011Cfmit33Wx8r2G3fJ5tBKB|6",
+   "seat": "C",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "the seat's own actions; C's transcript 2026-10-06 20:00-21:59Z: the only Write/Edit targets are scratchpad fl/alone.js, fl/full.js and this hand-back; no repo code"
+  },
+  {
+   "claimId": "msg_011Cfmit33Wx8r2G3fJ5tBKB|11",
+   "seat": "C",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "UNVERIFIABLE",
+   "note": "marked inferred by the seat; a fact about Windows process termination (TerminateProcess exit codes), no as-of source in the repo, ledgers or transcripts settles it (an external/OS fact)"
+  },
+  {
+   "claimId": "msg_011Cfmit33Wx8r2G3fJ5tBKB|62",
+   "seat": "C",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L55883: full-r1.json minutes 18.4, '== exit 0 · done 2026-10-06T21:50:34.263Z'"
+  },
+  {
+   "claimId": "msg_011CfoDNsi1hUPw6vc69wmo7|7",
+   "seat": "E",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "R2: worded as a check; its referent is 'The three all-tube tracks move as a whole by R (6.37 m and 7.16 m, every sample)'. L55856: TUBE OVAL moved 3001/3001 worst 6.366; TUBE V2 and final.t180track 3001/3001 worst 7.162 (two share R)"
+  },
+  {
+   "claimId": "msg_011CfoDNsi1hUPw6vc69wmo7|9",
+   "seat": "E",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "R2: referent 'The overlap check's answer is identical on all eight'. L55856: eight track rows, every one checkSame true"
+  },
+  {
+   "claimId": "msg_011CfjmwSd2v1DHTSoSsVvnD|7",
+   "seat": "C",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "the baseline run in this turn: cadj verbatim 5 of n 1759, verbatimPct 0.28"
+  },
+  {
+   "claimId": "msg_011CfjmwSd2v1DHTSoSsVvnD|9",
+   "seat": "C",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L52040: the green run passes 'item 1: EVERY seat gets item 6, and a build seat's directive is byte-identical to the old one except that line'; lighthouse 8273e0db adds the one line '6. VERBATIM and quoted, every sentence ... answered with a correction or an agreement.'"
+  },
+  {
+   "claimId": "msg_011CfjmwSd2v1DHTSoSsVvnD|19",
+   "seat": "C",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L52040 ==GREEN== tests 14 pass 14 fail 0; no edit to the hook or its test after it"
+  },
+  {
+   "claimId": "msg_011CfjuohTx7MjWkyh4823TG|7",
+   "seat": "E",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "a module-doc comment (carried over from the old text). t180 fae3910/47820c4: document.js:204 appendPiece throws CLOSED; jump.js:24 also throws the same CLOSED itself before calling appendPiece. RULED CORRECT as a list of refusals and the function that enforces it; read literally as 'raised only in appendPiece' it would be imprecise"
+  },
+  {
+   "claimId": "msg_011CfjuohTx7MjWkyh4823TG|11",
+   "seat": "E",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "note": "'so ...' inference: t180 47820c4 (E's commit of this rule) document.js:324-333 parse() returns checkDoc(...) and the JUMP_AFTER_JUMP rule sits in checkDoc, so a loaded file is refused too"
+  },
+  {
+   "claimId": "msg_011CfgPFoYfuyUmkNASVw1WL|13",
+   "seat": "librarian",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L71442 Read of E's hand-back §1: the 16:18 run 'ran app/test/core-mutation.test.js from 16:18:28 until the PC crashed at 16:22'; the heaviest file (2,993 s) per the same document"
+  },
+  {
+   "claimId": "msg_011CfgPFoYfuyUmkNASVw1WL|14",
+   "seat": "librarian",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "note": "hedged inference ('most likely'). As-of support: E held the heavy-run lock for its profile from 22:18:28Z (E hand-back §1, each file under the lock); A's transcript L~58270: ed_mut.js calls heavy-run hold() and was launched 22:18:30Z, its task output file is 0 bytes, stopped by the crash. Judged on whether the evidence supports the stated likelihood: it does"
+  },
+  {
+   "claimId": "msg_011Cfm1zdxsK2SS132Qws8o1|9",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: a path in a script"
+  },
+  {
+   "claimId": "msg_011Cfm1zdxsK2SS132Qws8o1|16",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: console.log labels inside a script"
+  },
+  {
+   "claimId": "msg_011CfjnjUo2aQ9ZJdpT6g93w|2",
+   "seat": "C",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: a path inside C's script. FLAG: it names B's own artifact (p-tphooks2-B backups, and B's scratchpad tphooks); the claim is C's, not B's"
+  },
+  {
+   "claimId": "msg_011CfjnjUo2aQ9ZJdpT6g93w|10",
+   "seat": "C",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: code (an indexOf anchor) inside a script"
+  },
+  {
+   "claimId": "msg_011CfjnjUo2aQ9ZJdpT6g93w|11",
+   "seat": "C",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: code (the block-end search) inside a script"
+  },
+  {
+   "claimId": "msg_011CfjpEJHgqceTnu4ycYnUm|9",
+   "seat": "E",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1b: an existing test title carried through an Edit's old/new strings, labelling the test it names"
+  },
+  {
+   "claimId": "msg_011CfjpEJHgqceTnu4ycYnUm|16",
+   "seat": "E",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: a mutant anchor string in code"
+  },
+  {
+   "claimId": "msg_011CfiZ36xF5qGii6NK54Qey|1",
+   "seat": "librarian",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "note": "tie-break: 'won't export ... downforce-ray-gap' is shown (L73580 RED, nothing written) but 'in the rolled section' is an inference from the piece list. It holds: L73584 pieces from 2570 m carry bank -174 deg and from 3250 m -178 deg, -360 deg at 5100, -306 deg from 6090; the reds sit at 4510-6022"
+  },
+  {
+   "claimId": "msg_011CfiZ36xF5qGii6NK54Qey|8",
+   "seat": "librarian",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L73580: 'RED: validation is red, nothing written: downforce-ray-gap at s 4510.0...'"
+  },
+  {
+   "claimId": "msg_011CfiZ36xF5qGii6NK54Qey|15",
+   "seat": "librarian",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "note": "the shown listing (L73584, head -40) covers 31 of 46 pieces, all 't -'; 'anywhere' goes beyond it. As-of source: the keeper's eq-TEST 1.t180track is unchanged since 2026-10-04 23:39:18 -06:00 (57,682 B, the size listed at L73571); on a COPY (sha256 9e6f7be8...), 46 pieces, channels kh/kv/h/l/r/phi/w and c on 40, no 't' anywhere"
+  },
+  {
+   "claimId": "msg_011Cfky9D9XVrABVxfSEwZGg|6",
+   "seat": "chair",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "from the turn's prompt (the librarian's ring of C's hand-back), not a tool result. t180 f13cded src/core/piece.js: a wrapped run adds the lap's whole-turn bank winding (wind = d when d is a whole multiple of 2 pi) to the pieces after the line"
+  },
+  {
+   "claimId": "msg_011Cfjey5KbwgV4TTHAPzyXo|15",
+   "seat": "librarian",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "listed under 'In the next install, being tested now'; t180 a0a45ba (2026-10-05 16:03:49Z, before the claim) 'D242: the safe Close ..., hover labels, Straight, Undo's values'"
+  },
+  {
+   "claimId": "msg_011CfoBVyhdqJvVtsN4ZgUFy|23",
+   "seat": "librarian",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "the item's text is only an instruction ('Check the tier definition.')"
+  },
+  {
+   "claimId": "msg_011Cfs42fB793YqoNAULUNWW|15",
+   "seat": "librarian",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "a claim about A's document (not read in this turn); lighthouse 35abc3cf (its first commit, 17:26:57Z; file mtime 17:20:31Z, before the claim) loop_friction_A :16-17 '-2.5 min with a 95% bootstrap interval of [-6.5, +3.6]'; H2: :20 'as registered, comes back FALSE' but :21-25 'cannot answer the keeper's question, and I do not read it as an answer ... The two measurements disagree'. 'Undecided' ruled a fair summary of A's own reading"
+  },
+  {
+   "claimId": "msg_011Cfs42fB793YqoNAULUNWW|29",
+   "seat": "librarian",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "plan: item 4 tells A to stage the harness so the re-measure (from 10-10 05:55) doubles as the 'before' number (future)"
+  },
+  {
+   "claimId": "msg_011CfhsmRj7MURKHjpyuRTd5|30",
+   "seat": "A",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "note": "tie-break: the numbers are shown (L62338: x/z largest 0.0015, both 0.0000, centre 12 m off largest 24.0004 mean 18.6782) but '(the 2 m chord error)' is a causal attribution. It holds: g_nums.js builds R=100 at step 2 (sagitta 4/800 = 0.005 m bounds it), and the half turn maps samples onto samples (0.0000)"
+  },
+  {
+   "claimId": "msg_011CfhsmRj7MURKHjpyuRTd5|59",
+   "seat": "A",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "t180 802451ab (this commit, 21:04:19Z): preview.js:92 gMode = gridMode || (ground ? 'legacy' : 'off') -> no grid by default; look.test.js not in the commit's stat, and :189 pins 'by default there is no ground grid'; app/preview/index.js:58 createPreview({... gridMode: 'auto'})"
+  },
+  {
+   "claimId": "msg_011CfsdPcGB6UR83yXmUauVM|4",
+   "seat": "A",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "a comment naming another file's behaviour; in the turn the test was written, its goldens computed (GOLDEN_PRINT) and row 1 'BYTE-FOR-BYTE the hook as it was' passed (render 75:~620). lighthouse 0794577d (A's commit, 00:50Z): session-start-light.test.js:19 sha = createHash('sha256'), :63 the unmodified output's bytes and sha256"
+  },
+  {
+   "claimId": "msg_011CfjNqyvrhrJts3L2oDctz|6",
+   "seat": "librarian",
+   "kind": "UNCHECKED STATE",
+   "verdict": "WRONG",
+   "note": "no result in the turn places the start gate (E's hand-back only says AC_AB_START sits at AC_TIME_0). Recomputed with the code that ran (t180 ff428fa7, testexport.js: startLayout(..., {open: true})) on a COPY of the keeper's eq-TEST 1 recovered (unchanged since 2026-10-04 23:45, sha256 cd97c6ef...): line { word p1, along 999 } on a 15,260 m road, the grid behind it on the first 1 km straight. The start gate is ~1 km in, not at the beginning (the D284 open-track line class)"
+  },
+  {
+   "claimId": "msg_011CfmP3K94pcRYNYXRogMyR|1",
+   "seat": "librarian",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "about the plan as written before this turn (not shown here). lighthouse 863f9ddd (the plan's first commit, 18:11Z, landing the same file) plan_t180_handle_precision :33 '6. **Length scrubs 5× faster** than today', the meaning restated"
+  },
+  {
+   "claimId": "msg_011CfmP3K94pcRYNYXRogMyR|6",
+   "seat": "librarian",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L78255: tail -2 of the plan shows the appended 'Item 6 clarified by the keeper, 11:30' lines"
+  },
+  {
+   "claimId": "msg_011CfmP3K94pcRYNYXRogMyR|7",
+   "seat": "librarian",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "lighthouse 863f9ddd plan_t180_handle_precision :11 '## The lap (A, who built the handles ...)' and :25 'chair dispatch D251 to A'"
+  },
+  {
+   "claimId": "msg_011Cfjn9az9GJLAFu2Xx8xnB|2",
+   "seat": "A",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "the seat's own patch of src-tauri/src/lib.rs (PIECE_EXT and the piece commands); L64713 result: 5 edits applied, lib.rs +76/-2. 'written' is all the claim says (built and tested are said to come after)"
+  },
+  {
+   "claimId": "msg_011CfhwD5pNQGE4zB7YVMHgx|33",
+   "seat": "A",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "what the test does (a document claim); t180 fa5fd93 (21:49:57Z, before the claim) app/test/guides.test.js:296-301 stepCheck: tree point count == path samples, points 0 / mid / last equal, and the gap == brute force over the same samples and centre"
+  },
+  {
+   "claimId": "msg_011CfmxKRiFNJh8LyzE7U6Cw|4",
+   "seat": "librarian",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "the turn shows one [SURFACE_0] with FRICTION=1 (L79906); the general statement is beyond it. t180 cc177c5 docs/research/01_ac_export_pipeline.md:73: surface fields 'KEY FRICTION DAMPING ...' (each surface carries its own FRICTION)"
+  },
+  {
+   "claimId": "msg_011CfmxKRiFNJh8LyzE7U6Cw|6",
+   "seat": "librarian",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "plan: the default E will give the new grip value (D261 queued, not built)"
+  },
+  {
+   "claimId": "msg_011CfmxKRiFNJh8LyzE7U6Cw|15",
+   "seat": "librarian",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "future: a prediction plus what the planned warning will say"
+  },
+  {
+   "claimId": "msg_011CfrQ9SaqcQ8un3opRScMG|3",
+   "seat": "C",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "the turn's git log (render 69:~275) lists f92c4c4c over a19c876d; lighthouse: f92c4c4c's parent is a19c876d"
+  },
+  {
+   "claimId": "msg_011CfrQ9SaqcQ8un3opRScMG|34",
+   "seat": "C",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "the ruling is in the turn's prompt/plan read ('C2 ... RULED as it stands: no change'); f92c4c4c adds rows for C1, C3, C4/C5, C6 and none for C2"
+  },
+  {
+   "claimId": "msg_011CfrQ9SaqcQ8un3opRScMG|41",
+   "seat": "C",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "lighthouse f92c4c4c: consumer-relabel.test.js changes the line-ending row's input from read(...) to preFork(...); consumer-relabel.js gains relabel rows only, no line-ending handling changed"
+  },
+  {
+   "claimId": "msg_011CfmeNrA9rg4Znt8jgU5bf|4",
+   "seat": "librarian",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "plan: 'The new rule, now with B' specifies behaviour B is yet to build (D257). FLAG: B's own coming work"
+  },
+  {
+   "claimId": "msg_011CfmeNrA9rg4Znt8jgU5bf|6",
+   "seat": "librarian",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "plan: part of the new rule for B (future)"
+  },
+  {
+   "claimId": "msg_011CfmeNrA9rg4Znt8jgU5bf|7",
+   "seat": "librarian",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "plan: part of the new rule for B (future)"
+  },
+  {
+   "claimId": "msg_011CfhJEMyBvNqKFVFtp5V7V|7",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: presupposed by probe code (getElementById('left')) inside a Write; no statement. (L60612 does show #left as the scrolling column.)"
+  },
+  {
+   "claimId": "msg_011Cfswno2JSXNajF6KSd3QE|14",
+   "seat": "chair",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "a memory note on the chair's own parser bug. The JS rule is standard (an unknown escape backslash-d in a string literal is 'd'); as-of support: the chair's 02:00Z reply names 'a bug in my own counting script' after a 0-test count, and its land_turnby.js (mtime 01:59:28Z) now matches digits with [0-9]+ in a string-built RegExp. The original line is not on disk, so the 'this was the bug' part rests on the chair's transcript"
+  },
+  {
+   "claimId": "msg_011CfmUDgKQ2QZwbHr5peQsb|4",
+   "seat": "librarian",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "the librarian's own note heading; t180 eeec787..c698f4e: 4d58b99 'D252: Space flies the camera up, Left Ctrl down', 44c7b5f 'D252 second item ...: one Export to Assetto Corsa button; AC folder chosen at first start'"
+  },
+  {
+   "claimId": "msg_011CfjtHdX8JYidt6jHg32v4|14",
+   "seat": "librarian",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "future/plan: what the next install will carry. FLAG: the message relays B's own hand-back (p-jumps-core-B); the claim is the librarian's"
+  },
+  {
+   "claimId": "msg_011CfjPoyhmsyuLwK5RTBbF4|8",
+   "seat": "E",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "the speaker's own past (kept IN per §4). E's hand-back p-suite2-E §1 (read in turn 05's source) says the 16:18 run was the only heavy job, what it ran, and 'I cannot tell from my logs whether that harness's inner suite ran at concurrency 1'"
+  },
+  {
+   "claimId": "msg_011CfjPoyhmsyuLwK5RTBbF4|9",
+   "seat": "E",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "opinion: an evaluation of the seat's own role ('narrow ... It suits me')"
+  },
+  {
+   "claimId": "msg_011CfjKWHSAKRZkqQdggjEk1|2",
+   "seat": "librarian",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "a document claim; lighthouse 9e210522 (last before the claim) exo_memory/BOOT.md:44 and :46 name the log spiral"
+  },
+  {
+   "claimId": "msg_011CfjKWHSAKRZkqQdggjEk1|5",
+   "seat": "librarian",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "note": "an interpretive paraphrase of a document, applied to the Close bug. BOOT.md:154 (9e210522) law 2: 'Never rewrite an old master from a drifted memory... drifted rewrite = telephone' (decay into a stranger, law 1). The paraphrase is a fair reading, not contradicted"
+  },
+  {
+   "claimId": "msg_011Cfsv8g9Pm1eFQkDnDXpo3|8",
+   "seat": "A",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "a header comment carrying the turn's finding; L78230: after TaskStop of the temp holder, 'lock file now:' still holds pid 17968's lock, and the holder and child read dead three ways"
+  },
+  {
+   "claimId": "msg_011Cfsv8g9Pm1eFQkDnDXpo3|9",
+   "seat": "A",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L78135: the chair's live holder pid 3124 probed from A's session: kill0 'alive (no throw)', tasklist lists node.exe 3124, CIM shows it (land_sharp.js)"
+  },
+  {
+   "claimId": "msg_011Cfsv8g9Pm1eFQkDnDXpo3|16",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: identifiers in code"
+  },
+  {
+   "claimId": "msg_011CfsrouF4BzPA7hbwaBeTY|3",
+   "seat": "chair",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: a label inside a script's cmd string"
+  },
+  {
+   "claimId": "msg_011CfsrouF4BzPA7hbwaBeTY|5",
+   "seat": "chair",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: code (h.release && h.release())"
+  },
+  {
+   "claimId": "msg_011CfhcduHM1J9VhVSRUuPqU|1",
+   "seat": "E",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "'[written through Bash]' is not a statement in the message (the message is one Bash edit); the reader's label plus an instruction"
+  },
+  {
+   "claimId": "msg_011CfhcduHM1J9VhVSRUuPqU|6",
+   "seat": "E",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1b: a code comment labelling the line it annotates (conditional on G0.reuseMesh), written in the same edit"
+  },
+  {
+   "claimId": "msg_011CfhcduHM1J9VhVSRUuPqU|13",
+   "seat": "E",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1b: the new file's header comment describing the edit it is part of (cp at L45798 + this edit)"
+  },
+  {
+   "claimId": "msg_011CfrP92ZrKghimQkmg9r7S|2",
+   "seat": "E",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "'[written through Edit]' is the reader's label for an Edit, not a statement in the message"
+  },
+  {
+   "claimId": "msg_011CfrP92ZrKghimQkmg9r7S|4",
+   "seat": "E",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: a test assertion in code"
+  },
+  {
+   "claimId": "msg_011Cfh4runEZRD1eA8ecvabE|16",
+   "seat": "A",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "turn: core-widthlike test '...the note says w is round the tube' passed (render 08:572); commit ec682a3 widthlike.js:29 'A tube's width is the distance ROUND it, not across.' and panel.js:123/178 show it"
+  },
+  {
+   "claimId": "msg_011CfmjFxazubHKz2yeTkCrc|5",
+   "seat": "librarian",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "UNVERIFIABLE",
+   "note": "a generalisation about what else the PC was running during the crashes (runtime process state); the same sentence admits it is not known; no as-of record of the processes"
+  },
+  {
+   "claimId": "msg_011CfmjFxazubHKz2yeTkCrc|8",
+   "seat": "librarian",
+   "kind": "UNCHECKED STATE",
+   "verdict": "UNVERIFIABLE",
+   "note": "an external fact about a third-party product (League and Riot Vanguard). C's p-flake-C hand-back lists a vgc.exe fault on 09-30, which suggests Vanguard is present, but that it is League's anti-cheat is outside every as-of source"
+  },
+  {
+   "claimId": "msg_011CfoJKEiXyEZs9GmHCx3fq|1",
+   "seat": "E",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L56070: xsecmut.tap '# tests 60 # pass 60 # fail 0'"
+  },
+  {
+   "claimId": "msg_011CfoJKEiXyEZs9GmHCx3fq|19",
+   "seat": "E",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "a commit message describing a test row; t180 0014555 (this commit) test/validate_xsec.test.js:125-131: tube t 270, roll 90 deg, worst distance from the drawn curve <= 1e-3 m"
+  },
+  {
+   "claimId": "msg_011CfkfWeBuSP2nb78jA6kgF|8",
+   "seat": "chair",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L91699: the chair's own commit fd8466b2 'D249 red merge: B's hand-back (05f0c2c)' and the inject at L91701 'now called D249'. FLAG: the item concerns B's own red merge; the claim is the chair's"
+  },
+  {
+   "claimId": "msg_011CfkfWeBuSP2nb78jA6kgF|10",
+   "seat": "chair",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "future: when C will look"
+  },
+  {
+   "claimId": "msg_011Cfm2Vcc5cGyLZpZe2JDWa|8",
+   "seat": "C",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "a test comment carrying A's finding; L54654 (Read of A's hand-back): '795 pairs were saveable before, 604 are now: 191 pairs that saved before now ... refuse with MIXED_RUN'"
+  },
+  {
+   "claimId": "msg_011Cfm2Vcc5cGyLZpZe2JDWa|9",
+   "seat": "C",
+   "kind": "UNCHECKED STATE",
+   "verdict": "WRONG",
+   "note": "PARTIAL. The comment says the short way is taken ONLY where it can be kept, otherwise the inside run. C's fix f13bffa coreshell.js:419-427 falls back to the inside run only when the inside run CAN be saved (and only for MIXED_RUN/SEAM_RUN); when neither can be saved the short way is kept (the else branch), and the same Edit's own test control says so ('the inside run ... cannot be saved either, so the short way is kept'). Contradicted for that case"
+  },
+  {
+   "claimId": "msg_011Cfm2Vcc5cGyLZpZe2JDWa|19",
+   "seat": "C",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L54654 (A's hand-back, finding B): 'C's expression total - len(from+1, to-1) < len(from, to) compares sums of decimal lengths'"
+  },
+  {
+   "claimId": "msg_011CfnWRXgZLLD67JffXtjh3|18",
+   "seat": "C",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L57099 wrote the run to $S/rel/run3.log; L57100 its tail: 111/111 and 'cargo-locked-ok t180-track-builder 0.3.0'"
+  },
+  {
+   "claimId": "msg_011CfnWRXgZLLD67JffXtjh3|21",
+   "seat": "C",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "the step is D265 step 2 per the chair's dispatch and the plan; 'first GitHub release': lighthouse e20f0b2a plan_t180_release_030 :6 records 'gh release list ... -> no releases on GitHub yet' (checked 07:4x)"
+  },
+  {
+   "claimId": "msg_011CfnWRXgZLLD67JffXtjh3|25",
+   "seat": "C",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "L57096 shows one remaining 0.2.2 at Cargo.lock:1851 but not whose; t180 4afddb2: Cargo.lock diff is one version line 0.2.2 -> 0.3.0, and :1848-1851 is num-conv 0.2.2, kept"
+  },
+  {
+   "claimId": "msg_011CfnVtWZyaN2mXJQ7MD3eJ|2",
+   "seat": "chair",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "R2 (supersedes the earlier row): referent 'The first GitHub release (D265) is under way'. L94709 Read of the plan: 'Lap D265', the first GitHub release; the chair dispatches C to it in the same turn (L94717/18)"
+  },
+  {
+   "claimId": "msg_011CfnVtWZyaN2mXJQ7MD3eJ|20",
+   "seat": "chair",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "the item's text is only an instruction ('Check the changelog itself ...'), no statement given"
+  },
+  {
+   "claimId": "msg_011Cfh51JfNSJoCxD3mabp1z|4",
+   "seat": "A",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "no result in this turn shows an entry label (L60177 prints 'Thunderhead 24 (21-28)' in its own format). t180 aed6ea4 (10:52:04Z, A's commit of this work) app/core/widthlike.js label(): `${name}, ${median} m (${p10}–${p90})`; widths.json Thunderhead 24/21/28 -> 'Thunderhead, 24 m (21–28)'"
+  },
+  {
+   "claimId": "msg_011Cfh51JfNSJoCxD3mabp1z|14",
+   "seat": "A",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L60170 ran exactly `node tools/widths.cjs reads > src/doc/widths.json`; L60177 shows the 17 tracks it made"
+  },
+  {
+   "claimId": "msg_011CffP6XYFiwPmqtVrEwZ2r|8",
+   "seat": "librarian",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L69858 stat of 5debee8 lists app/preview/aclook.js; L69862 subject 'Exported tracks work in AC: the car stays on the road, and the road is lit'"
+  },
+  {
+   "claimId": "msg_011CfkxNtA3Kd7hwo1FrwHco|2",
+   "seat": "E",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "a test comment naming an outside fact (what row 2 covers); t180 63dc19b (main, E's base) test/core_jump.test.js:90 \"row 2: a flight with NO landing is red: the core's gap without its landing ramp after it is a hole\""
+  },
+  {
+   "claimId": "msg_011CfkxNtA3Kd7hwo1FrwHco|4",
+   "seat": "E",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "the same comment, the same source (:90): row 2 keeps a gap with no landing ramp red"
+  },
+  {
+   "claimId": "msg_011CfkxNtA3Kd7hwo1FrwHco|12",
+   "seat": "E",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: text inside a test regex (the expected message), code"
+  },
+  {
+   "claimId": "msg_011CfqdLcJorEJwDbLJ3Sdv1|7",
+   "seat": "C",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: code inside a Write (REPO = path.resolve(...))"
+  },
+  {
+   "claimId": "msg_011CfqdLcJorEJwDbLJ3Sdv1|16",
+   "seat": "C",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: a step name in test code"
+  },
+  {
+   "claimId": "msg_011CfqdLcJorEJwDbLJ3Sdv1|17",
+   "seat": "C",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: an expected value in test code"
+  },
+  {
+   "claimId": "msg_011CffYYkHEyCPzQUfEbLMRG|6",
+   "seat": "C",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L47823 grep shows the old test 'a 10 m mast straight up' with mk[4]-mk[1]-10"
+  },
+  {
+   "claimId": "msg_011CffYYkHEyCPzQUfEbLMRG|10",
+   "seat": "C",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "a code token inside an Edit (G.buildPath(words(2))), asserts nothing"
+  },
+  {
+   "claimId": "msg_011CffYYkHEyCPzQUfEbLMRG|14",
+   "seat": "C",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: test code inside an Edit (mk[3+k]-mk[k]), a check not a statement. (Had it been a claim: t180 b3364df look.js:101 supports it.) Supersedes the earlier row."
+  },
+  {
+   "claimId": "msg_011CfqKAgTiFneiVcDKmpwjH|1",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1b: the new script's header describing what it scans"
+  },
+  {
+   "claimId": "msg_011CfqKAgTiFneiVcDKmpwjH|2",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1b: same header"
+  },
+  {
+   "claimId": "msg_011CfqKAgTiFneiVcDKmpwjH|4",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1b: same header (the purpose: a tool that crashes at load)"
+  },
+  {
+   "claimId": "msg_011Cfh4oUD2KooCCc1RQ9Ycv|11",
+   "seat": "A",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L60106: git rev-parse HEAD:src/doc/widths.json prints 1661dc59815b5b8e (git blob, first 16)"
+  },
+  {
+   "claimId": "msg_011Cfh4oUD2KooCCc1RQ9Ycv|52",
+   "seat": "A",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "turn L~60060 (render 07:639-645) widths tests 10/10 pass, skipped 0 with the full reads/ copy; final targeted L60068 96/96 skipped 0; only CHANGELOG/README edited after"
+  },
+  {
+   "claimId": "msg_011CfssxaRqhbkXg17MS5R2r|1",
+   "seat": "librarian",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "board.jsonl rows 03:48-03:53:27Z: B's progress at 03:48:28, then only keep-warms and the librarian's own Turn-by-installed reply (03:50); nothing new from the seats in the last few minutes"
+  },
+  {
+   "claimId": "msg_011CfssxaRqhbkXg17MS5R2r|2",
+   "seat": "librarian",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "another seat's state from the board: B received the Sharp blind check at 03:45:21Z, posted progress 03:48:28Z, and reported the result at 04:16:01Z. FLAG: this is a claim about B (the verifier's own seat), made by the librarian; judged from the board, not from memory"
+  },
+  {
+   "claimId": "msg_011CfssxaRqhbkXg17MS5R2r|5",
+   "seat": "librarian",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "a suggestion carrying a behaviour claim (Turn by gives a 90 deg turn that exits straight); t180 3025a5e 'D280 part 1: Turn by, a piece that turns exactly the typed angle and exits straight', on main and installed (board 03:50Z)"
+  },
+  {
+   "claimId": "msg_011CfiZQ2rGhMXencxTDGWRn|7",
+   "seat": "librarian",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: a path expression inside a Bash script; plus an instruction"
+  },
+  {
+   "claimId": "msg_011Cfkv4DfHytDyFdaJbmU7P|10",
+   "seat": "librarian",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "t180 63dc19b (the installed, pushed build, L77534): app/core/handles.js:30-35 a colour per handle; renderer.js:76/:222-224 the ghost drawn see-through (GHOST_ALPHA 0.42)"
+  },
+  {
+   "claimId": "msg_011Cfkv4DfHytDyFdaJbmU7P|21",
+   "seat": "librarian",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "t180 63dc19b app/validate-ui/redgroups.js:17-18, :65-75: within a group, reds that overlap or touch (<= 2 m on the piece the place ends on) merge into one place; reds of different groups stay in their groups (the overlap group holds self-intersection and stacked together). FLAG: this is B's own red merge (D249); the claim is the librarian's"
+  },
+  {
+   "claimId": "msg_011CfnVYMyV78Ap7i49xdmSX|6",
+   "seat": "librarian",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "an instruction to the keeper (which folder to pick)"
+  },
+  {
+   "claimId": "msg_011CfnVYMyV78Ap7i49xdmSX|12",
+   "seat": "librarian",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L81127 'stopped my harness run (pid 3024)', L81136 'removed my stale lock'. FLAG: the message hands D264 to B; the claim is the librarian's"
+  },
+  {
+   "claimId": "msg_011CfnWPr63CyQHtvgVDpJF3|3",
+   "seat": "C",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "the speaker's own seat; the transcript is sibling-0845a868, which the claims file and the assignment map to seat C"
+  },
+  {
+   "claimId": "msg_011CfnWPr63CyQHtvgVDpJF3|18",
+   "seat": "C",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "t180 main 6081ee6 'D250 item 1: Export to Assetto Corsa finds AC through Steam': the button renamed from 'Install to AC' ('D250; was \"Install to AC\"')"
+  },
+  {
+   "claimId": "msg_011CfnWPr63CyQHtvgVDpJF3|19",
+   "seat": "C",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L57089: merge --ff-only 2b929c2, HEAD 2b929c2; L57100: the targeted run on that tree 111/111"
+  },
+  {
+   "claimId": "msg_011CfhkUxLaawcDjGreMM5RE|5",
+   "seat": "A",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "a quote of the keeper in a test header; the turn's Read of plan_t180_grid3d_symmetry (render 13:44-45) shows the keeper's words; the comment is a faithful excerpt with an ellipsis (only 'Grid' lower-cased)"
+  },
+  {
+   "claimId": "msg_011CfhkUxLaawcDjGreMM5RE|9",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "the item's text is an instruction ('Check against the actual diff.'), no statement given"
+  },
+  {
+   "claimId": "msg_011CfhkUxLaawcDjGreMM5RE|11",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "the item's text is an instruction ('Check that this suite exists.'), no statement given"
+  },
+  {
+   "claimId": "msg_011CfmsvZ2fPntJD1rk6qp5F|1",
+   "seat": "E",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "note": "inferred from a git diff --stat (L53669), which cannot show line endings by itself. t180 1e76d35 (E's D258 core commit, parent 5caf5c6, 00:12Z): numstat against 5caf5c6 identical with and without --ignore-cr-at-eol; no CR in core_jump.test.js on either side"
+  },
+  {
+   "claimId": "msg_011CfmsvZ2fPntJD1rk6qp5F|11",
+   "seat": "E",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: a command inside a script"
+  },
+  {
+   "claimId": "msg_011CfjjAsPZVBVim2TxwveEd|2",
+   "seat": "C",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "a header comment naming an outside fact; L51720 shows b08c3c7 src/core/piece.js:142-143: scratch = D.appendPiece(scratch, P) for each piece of the run"
+  },
+  {
+   "claimId": "msg_011CfjjAsPZVBVim2TxwveEd|3",
+   "seat": "C",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "the seat's own edit (L51728): the loop replaced by one D.checkDoc of the assembled run; the Edit result only says 'updated', so no result reports the content; the transcript's own Edit is the source (§4 item 3)"
+  },
+  {
+   "claimId": "msg_011CfjjAsPZVBVim2TxwveEd|17",
+   "seat": "C",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1b: the script's header describing its own timing method"
+  },
+  {
+   "claimId": "msg_011CfmYpicFqyZSHtqMG5ka4|5",
+   "seat": "chair",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "another seat's state; the librarian's transcript at 19:38:46Z starts 'Run the suite, the two preview harnesses and the build on 6f2404d' (full6f2, mut6f2); its ring names core-close plus core_cup"
+  },
+  {
+   "claimId": "msg_011CfmYpicFqyZSHtqMG5ka4|7",
+   "seat": "chair",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "future: a later install"
+  },
+  {
+   "claimId": "msg_011CfmYpicFqyZSHtqMG5ka4|9",
+   "seat": "chair",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "note": "a 'because' about E's in-flight D256; t180 1ff9963 (D256 BUILD, 20:21Z, within 24 h): src/validate opts.fullSpeed used by the export (the TEST export's open path), lift-off red on open tracks, a new red no-speed-holds"
+  },
+  {
+   "claimId": "msg_011CfmwyDtnki4bnRxmakP7c|8",
+   "seat": "chair",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L93634: the key grep over git diff 5caf5c6..N printed nothing before 'keys (none=clean)'; N's tree identical to the landed cc177c5"
+  },
+  {
+   "claimId": "msg_011CfmwyDtnki4bnRxmakP7c|16",
+   "seat": "chair",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "future: the librarian's next steps"
+  },
+  {
+   "claimId": "msg_011CfmZya88jcJUvh9YdGHHs|4",
+   "seat": "E",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "a test comment about panel code; t180 1ff9963 (E's D256 commit, 20:21Z) app/core/panel.js:307-309: with no finite pinned designSpeedKmh the note reads 'Validation checks at full speed (970 km/h on an open track, the ghost lap on a closed one)...'"
+  },
+  {
+   "claimId": "msg_011CfmZya88jcJUvh9YdGHHs|7",
+   "seat": "E",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: a test regex (code)"
+  },
+  {
+   "claimId": "msg_011CfjGnq2nTDXgSVQ861EoP|6",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1b: a test comment labelling the helper written beside it in the same patch (n = 40000, (i + 0.5))"
+  },
+  {
+   "claimId": "msg_011CfjGnq2nTDXgSVQ861EoP|7",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: code inside a Bash patch"
+  },
+  {
+   "claimId": "msg_011CfjGnq2nTDXgSVQ861EoP|12",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: a test tolerance in code; an assertion to be run, not a statement"
+  },
+  {
+   "claimId": "msg_011CfjpUMo9sSmdSjQCEenia|2",
+   "seat": "C",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "a section header naming an outside fact (62f5d39 is D240's UI, C a non-author); L52430 Read of A's hand-back: 'commit 62f5d39 on branch pieces-ui-a-d240', seat A; git: 62f5d39 'D240 UI half...' 'Seat A (Sonnet 5.5) wrote this.'"
+  },
+  {
+   "claimId": "msg_011CfjpUMo9sSmdSjQCEenia|5",
+   "seat": "C",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1b: the comment states the purpose of the next line (track-backups made a file so the backup fails); a prediction about the run, labelling its own code"
+  },
+  {
+   "claimId": "msg_011CfjpUMo9sSmdSjQCEenia|16",
+   "seat": "C",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: CDP modifier values in code"
+  },
+  {
+   "claimId": "msg_011CfjoDdHn8hViv8obGk11y|9",
+   "seat": "E",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "a CHANGELOG line about the seat's own code; t180 fae3910 (the D243 core commit, 22:33Z) src/core/jump.js:7-9, :18, :31 builds the flight through the adapter's toSegments (solveJump, landingRamp at the design speed)"
+  },
+  {
+   "claimId": "msg_011CfjoDdHn8hViv8obGk11y|12",
+   "seat": "E",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "t180 fae3910 src/validate/index.js: isCoreFlight (word 'core', part 'gap', followed by its own part 'land' road of the same id) exempted from gap-in-road; any other gap still red"
+  },
+  {
+   "claimId": "msg_011CfgPaMDvoQ2vta6FyNw5a|3",
+   "seat": "chair",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L87818: the privacy grep -c over git diff main b8dcd1b8 printed 0"
+  },
+  {
+   "claimId": "msg_011CfrwdkUkVoMrQjBc5zzuW|15",
+   "seat": "E",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "a commit message describing the README change; lighthouse 70c3bf56 (this commit) README: 'The evidence that they do is the bullet above ... and the record of the round ...' with links to A's, E's and the three cold-read hand-backs; all linked files exist in that tree"
+  },
+  {
+   "claimId": "msg_011CfhReQUUqYfFxfHFtRhZA|2",
+   "seat": "chair",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L88936: grep VERDICT in p-speed-B prints 'GREEN. Land cb14f5b9.'"
+  },
+  {
+   "claimId": "msg_011CfhReQUUqYfFxfHFtRhZA|10",
+   "seat": "chair",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "another seat's state; the librarian's transcript: the chair's inject arrives 15:22:20Z, its next tool call 'Build cb14f5b9 in a fresh worktree...' runs 15:22:2x-15:23:47Z, then 'Back up and install the speed build' 15:23:53Z. cb14f5b9 is main, which carries the scroll-bar fix too"
+  },
+  {
+   "claimId": "msg_011CfkbZyQBBSTpi6CUkhkWk|1",
+   "seat": "A",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "a fact about the test's fake DOM, not shown by any result (inferred from the failing row). t180 4d2e67b (the base) app/test/core-pieces-ui.test.js:257/261: El starts value = '' and setAttribute only writes attrs[k]"
+  },
+  {
+   "claimId": "msg_011CfkbZyQBBSTpi6CUkhkWk|7",
+   "seat": "A",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "the same fact in the test comment; same source (:257, :261)"
+  },
+  {
+   "claimId": "msg_011CfpgWbRbfBEfw3Y44tjyF|37",
+   "seat": "E",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "the code fact under the 'inferred' redundancy: t180 6a799cb (the base named) src/core/document.js:129-141 endState returns afterFlight(e, flight) (level, no offsets, the flight's bank) for the piece placed after a flight; afterFlight absent at 5caf5c6 (pre-D258)"
+  },
+  {
+   "claimId": "msg_011CfsE1dPM8on8hP1uFqXjC|11",
+   "seat": "A",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: a test assertion in code"
+  },
+  {
+   "claimId": "msg_011CfgMvbrKDB1TQLG3QowVJ|2",
+   "seat": "E",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "intent: 'Adding a --lane option so the two modes can be compared' is a plan with its purpose"
+  },
+  {
+   "claimId": "msg_011CfgMvbrKDB1TQLG3QowVJ|8",
+   "seat": "E",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "R1: code inside an Edit (a return in the new lines); the reader's presupposition, not a statement"
+  },
+  {
+   "claimId": "msg_011CfnaJmtrNQn733H44bbSc|1",
+   "seat": "C",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "note": "L57156: the diff sets 0.3.1 in tauri.conf/Cargo.toml/Cargo.lock; D266 is the dispatch's lap (L57139)"
+  },
+  {
+   "claimId": "msg_011CfnaJmtrNQn733H44bbSc|14",
+   "seat": "C",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "note": "future: how E's line will arrive and be moved at landing"
+  },
+  {
+   "claimId": "msg_011CfnaJmtrNQn733H44bbSc|18",
+   "seat": "C",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "note": "the seat's own run: L57160 ran through lockrun.js, whose code (unchanged since 09-28) calls heavy-run hold() before the command; its log rel/run4.log (unchanged since 08:38:54Z) reads 'lock held 2026-10-07T08:38:05.761Z'. The result shown in the turn omits the lock line"
+  }
+ ]
+}

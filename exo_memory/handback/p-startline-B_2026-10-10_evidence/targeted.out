@@ -1,0 +1,390 @@
+=== node --max-old-space-size=4096 --test --test-concurrency=1 app/test/core-spawns.test.js app/test/core-spawns-ui.test.js app/test/core-pitlane.test.js app/test/markers-panel.test.js app/test/core-xsec.test.js app/test/core-xsec-mutation.test.js app/test/core-shell.test.js test/core_spawns.test.js test/core_pitlane.test.js test/core_pitflat.test.js test/core_xsec.test.js test/core_xsec_math.test.js test/core_xsec_mutation.test.js test/markers.test.js test/markers_export.test.js test/markers_lane.test.js test/markers_track.test.js test/export-layouts.test.js test/export_test_unfinished.test.js test/geom-pitlane.test.js test/export_pitboxes.test.js test/export_pitinfill.test.js test/core_cup_readers.test.js
+=== cwd C:/Users/nname/Desktop/worktrees/b-startline-wt
+=== env {}
+[32m✔ a pit lane on the right is built beside the start straight, and the export carries its road and its pit boxes on it [90m(1301.1919ms)[39m[39m
+[32m✔ a pit lane on the left is built beside the start straight, and the export carries its road and its pit boxes on it [90m(1179.6413ms)[39m[39m
+[32m✔ the pit boxes follow the lane's count and spacing [90m(197.143ms)[39m[39m
+[32m✔ a lane joining a cup wall cannot be built: it is KEPT, and the panel says why in plain words [90m(206.4855ms)[39m[39m
+[32m✔ the pit lane and the hand-placed start work together [90m(1400.3939ms)[39m[39m
+[32m✔ removing the pit lane puts the pit boxes back on the track and takes the lane's road out [90m(1035.8064ms)[39m[39m
+[32m✔ the preview draws the lane's two edges, labelled, with the automatic start [90m(220.7826ms)[39m[39m
+[32m✔ every refusal of the lane geometry has words for the panel [90m(0.1614ms)[39m[39m
+[32m✔ "Flatten road for pit" on a cup lap: the refused lane builds, one undo step puts the walls back [90m(3777.9221ms)[39m[39m
+[32m✔ flattening a TUBE says up front that opening a tube under the racing line usually fails the export [90m(817.6362ms)[39m[39m
+[32m✔ the core loads through the WEBVIEW's loader with the node shim, builds the same track as node's, and is refused without the shim [90m(50.6469ms)[39m[39m
+[32m✔ extend: a piece is added at the head, the segments are the adapter's, and undo / redo walk it back and forth exactly [90m(7.1344ms)[39m[39m
+[32m✔ the ghost of an extension is exactly what the click then builds [90m(4.5799ms)[39m[39m
+[32m✔ extendOptions: empty fields continue; turn and climb are degrees per 100 m, bank degrees, width metres [90m(0.1453ms)[39m[39m
+[32m✔ a failed extend changes nothing and says why [90m(0.8513ms)[39m[39m
+[32m✔ the rate brush: one drag is one undo step, every frame applies the WHOLE delta to the drag's base, and undo restores the track exactly [90m(13.1912ms)[39m[39m
+[32m✔ the local (height / sideways) brush: refused by name while E's brush is not in the build; E's hill and swerve when it is [90m(5.2006ms)[39m[39m
+[32m✔ with E's brush, the rate brush goes through it: kh and kv as its rate mode, bank, width and rise as its value mode [90m(4.8246ms)[39m[39m
+[32m✔ a brush E widened says so, with the radius it really used (the chair's ruling 2: always shown) [90m(4.3799ms)[39m[39m
+[32m✔ the sharp opt-in reaches E's brush only when asked; the default is off (the chair's ruling 2: widen by default) [90m(3.8498ms)[39m[39m
+[32m✔ E's refusal (a hill with no offset channel yet) is the message, and nothing changes [90m(2.01ms)[39m[39m
+[32m✔ close: one click closes the lap; extending a closed loop is refused; the rate brush on heading refuses to open it [90m(139.8292ms)[39m[39m
+[32m✔ export: an open track is refused before anything runs; a closed lap goes through the SAME exporter and its files are written [90m(1079.7945ms)[39m[39m
+[32m✔ save and open use their own prefix, so the piece builder's tracks are neither listed nor opened here [90m(2.2443ms)[39m[39m
+[32m✔ openExample refuses files that are not a fit and a read, and changes nothing [90m(0.6798ms)[39m[39m
+[32m✔ the track model draws the LIFTED road, re-meshes a lift-only change to exactly a full build, and keeps the lift through an extend [90m(156.4532ms)[39m[39m
+[32m✔ the export lifts the path before it meshes it (meta.liftPath), so an exported hill is in the kn5 [90m(1364.7674ms)[39m[39m
+[32m✔ landed core: a 1 m hill brushed in the app is in the preview's path and the export's [90m(6925.2363ms)[39m[39m
+[32m✔ landed core: a narrow brush that E widened says so, with the radius it used (E reports radiusUsed) [90m(1206.39ms)[39m[39m
+[32m✔ a lap that starts pitched, turned and off the origin: the preview starts and ends where the adapter does, and it closes and exports [90m(781.53ms)[39m[39m
+[32m✔ the pick: the station under a canvas point, as the renderer projects it; nothing when the point is off the track [90m(3.5636ms)[39m[39m
+[32m✔ D226 export (core): an EMPTY folder made directly in content\tracks exports to content\tracks and is removed; a folder with anything in it is refused and kept [90m(1242.212ms)[39m[39m
+[32m✔ D234 an OPEN loop exported into an EMPTY picked folder is refused, the message and the refusal are shown, and the folder is GONE [90m(27.1277ms)[39m[39m
+[32m✔ D234 a REFUSED GRID (a tube too narrow for even one slot) and a RED lap into an empty picked folder: refused, shown, folder gone [90m(648.9055ms)[39m[39m
+[32m✔ D234 a NON-EMPTY foreign folder is untouched in every case (open loop, refused grid, red): the target is refused first, nothing is removed or written [90m(1087.1697ms)[39m[39m
+[32m✔ D234 a successful export is unchanged: written to content\tracks, the empty folder removed once, no refusal left; and a failed WRITE still removes the empty folder [90m(2443.0582ms)[39m[39m
+[32m✔ D243a the TEST export of an OPEN lap goes through the shell and the exporter: written open as a test folder, its reds listed, the loop not refused [90m(1173.2244ms)[39m[39m
+[32m✔ D243a the TEST export of a CLOSED lap is refused by name, and nothing is written (the lap would be built open with its end wall at the seam) [90m(1254.4058ms)[39m[39m
+[32m✔ the section is there, unticked: the start is automatic and the hand controls are hidden [90m(189.4413ms)[39m[39m
+[32m✔ ticking "place by hand" puts the line near the end of the first piece and the measured pack behind it, all on the road [90m(135.9382ms)[39m[39m
+[32m✔ the line box, the car count and the pack fields change the spawns, one undo step each [90m(153.26ms)[39m[39m
+[32m✔ the pack cannot be condensed past a T-180: below the minimum the field takes the minimum [90m(149.3094ms)[39m[39m
+[32m✔ the hotlap goes on the selected piece, slides along it, says its speed at the line, and comes off again [90m(161.2126ms)[39m[39m
+[32m✔ unticking goes back to automatic: the spawns field is removed [90m(124.2797ms)[39m[39m
+[32m✔ the preview layer: a START line, one numbered box per grid slot from pole, the pits and the hotlap [90m(126.3686ms)[39m[39m
+[32m✔ a grid box is the measured T-180 on the road: 6.67 m along, 2.67 m across [90m(0.2006ms)[39m[39m
+[32m✔ the panel still loads through the webview's loader, with no node built-in [90m(6.9348ms)[39m[39m
+[32m✔ the Pit lane section: ticking it puts a lane along the start straight, sized to fit, and says how long it is and how many boxes are on it [90m(117.0689ms)[39m[39m
+[32m✔ the Pit lane section changes the side, the boxes and a join, one undo step each; unticking removes the lane [90m(199.4699ms)[39m[39m
+[32m✔ the start line sits where it is put on the first piece, and the export writes it there [90m(1181.5711ms)[39m[39m
+[32m✔ the grid is numbered from pole, two staggered columns with the pack's spacing behind the line [90m(118.8606ms)[39m[39m
+[32m✔ stretching the pack spreads the slots: rowGap and colGap are the pack's length and width [90m(105.4941ms)[39m[39m
+[32m✔ the line is clamped to the first piece: a distance past its end puts the line at its end [90m(98.8473ms)[39m[39m
+[32m✔ a hotlap put down by hand stands there and reports the speed it reaches by the line [90m(1075.9089ms)[39m[39m
+[32m✔ a hotlap AFTER the line on a closed lap gets the run all the way round to it [90m(107.7634ms)[39m[39m
+[32m✔ a hotlap on a piece that no longer exists is reported as missing, not placed somewhere else [90m(100.1666ms)[39m[39m
+[32m✔ back to automatic: setSpawns(null) removes the field, and the export places the start itself again [90m(3164.2711ms)[39m[39m
+[32m✔ placing the start is one undo step [90m(126.496ms)[39m[39m
+[32m✔ a bad pack is refused in plain words and nothing changes [90m(104.1061ms)[39m[39m
+[32m✔ the "grid on a straight" amber judges an equation piece by its curvature: quiet on the straight, still there on a curve [90m(139.4393ms)[39m[39m
+[32m✔ control: the unmutated temp copy passes every cross-section test [90m(827.8601ms)[39m[39m
+[32m✔ mutation X1 the edge angle sent in radians: applied, and caught by "xsec extendOptions: each field is its channel target…" [90m(790.8765ms)[39m[39m
+[32m✔ mutation X2 the panel clamps the edge, hiding the core guard (KE2-2): applied, and caught by "xsec extendOptions: nothing is clamped…" [90m(786.0804ms)[39m[39m
+[32m✔ mutation X3 the tube field is not sent: applied, and caught by "xsec extendOptions: each field is its channel target…" [90m(768.5321ms)[39m[39m
+[32m✔ mutation X4 the edge start sent on the edge channel: applied, and caught by "xsec extendOptions: each field is its channel target…" [90m(801.7834ms)[39m[39m
+[32m✔ mutation X5 the bank wrapped to ±180 (S1): applied, and caught by "xsec extendOptions: bank winds past…" [90m(780.9549ms)[39m[39m
+[32m✔ mutation X6 (KS1-2) max="180" on the bank input: applied, and caught by "xsec panel: the bank field takes any number…" [90m(785.3412ms)[39m[39m
+[32m✔ mutation X7 (KE7-1, UI) the edge cell shows the typed target: applied, and caught by "xsec panel: a changed field is a target…" [90m(789.3446ms)[39m[39m
+[32m✔ mutation X8 (KE7-2) the edge cell wired to the cup values: applied, and caught by "xsec panel (A…" [90m(759.423ms)[39m[39m
+[32m✔ mutation X9 the edge start shown to one decimal: applied, and caught by "xsec panel: a changed field is a target…" [90m(767.367ms)[39m[39m
+[32m✔ mutation X10 the edge field is not on the panel: applied, and caught by "xsec panel: the three fields are on the panel…" [90m(768.0866ms)[39m[39m
+[32m✔ mutation X11 the new fields do not redraw the readout: applied, and caught by "xsec panel: the edge angle and the edge start each redraw…" [90m(761.4072ms)[39m[39m
+[32m✔ mutation X12 an untouched edge field is sent as a target: applied, and caught by "xsec panel: the three fields are on the panel…" [90m(863.518ms)[39m[39m
+[32m✔ mutation X13 the edge has no "at start": applied, and caught by "xsec extendOptions: the new fields take the "at start" box…" [90m(798.7881ms)[39m[39m
+[32m✔ mutation X14 the head state drops the cross-section channels: applied, and caught by "xsec headState…" [90m(818.143ms)[39m[39m
+[32m✔ mutation X15 the default edge start is the plan's stale 0.70: applied, and caught by "xsec headState…" [90m(772.9669ms)[39m[39m
+[32m✔ mutation X16 (X2 ii) the mast stands on world y: applied, and caught by "xsec head marker: the mast follows the road's U…" [90m(793.0357ms)[39m[39m
+[32m✔ mutation X17 the mast is not held below the roof: applied, and caught by "xsec head marker: inside a closed tube…" [90m(786.7324ms)[39m[39m
+[32m✔ mutation X18 the cross and ring reach through the wall: applied, and caught by "xsec head marker: inside a closed tube…" [90m(791.7276ms)[39m[39m
+[32m✔ mutation X19 an open tube read as closed: applied, and caught by "xsec head marker: the clearance of a closed tube…" [90m(808.6292ms)[39m[39m
+[32m✔ mutation X20 the roof read sideways: applied, and caught by "xsec head marker: the clearance of a closed tube…" [90m(819.5124ms)[39m[39m
+[32m✔ mutation X21 the preview never hands the room to the marker: applied, and caught by "xsec head marker: the preview hands…" [90m(829.9997ms)[39m[39m
+[32m✔ mutation X22 the tube-too-narrow red has no words: applied, and caught by "xsec validation words…" [90m(824.5841ms)[39m[39m
+[32m✔ mutation X23 the roll-rate red has no words: applied, and caught by "xsec validation words…" [90m(835.7199ms)[39m[39m
+[32m✔ mutation X24 the readout swallows the refusal's name: applied, and caught by "xsec panel: a core refusal is shown by its name…" [90m(816.9154ms)[39m[39m
+[32m✔ mutation X25 a typed tube leaves the cup enabled: applied, and caught by "xsec panel: a piece is a cup OR a tube…" [90m(814.3323ms)[39m[39m
+[32m✔ mutation X29 a non-tube head shows the sweep the core keeps internally (RULING 2): applied, and caught by "xsec headState…" [90m(803.4355ms)[39m[39m
+[32m✔ mutation X30 the head piece is never read as a tube: applied, and caught by "xsec headState…" [90m(801.704ms)[39m[39m
+[32m✔ mutation X31 the tube-too-narrow words keep the first, wrong 9.43 m: applied, and caught by "xsec validation words…" [90m(789.6956ms)[39m[39m
+[32m✔ mutation X27 a new document leaves a field disabled: applied, and caught by "xsec panel: a piece is a cup OR a tube…" [90m(795.1564ms)[39m[39m
+[32m✔ mutation X28 the cup-or-tube rule is never wired: applied, and caught by "xsec panel: a piece is a cup OR a tube…" [90m(795.8262ms)[39m[39m
+[32m✔ xsec extendOptions: each field is its channel target, in the seal's units [90m(0.5893ms)[39m[39m
+[32m✔ xsec extendOptions: nothing is clamped; the core's guards refuse by name (E2 KE2-2) [90m(0.3812ms)[39m[39m
+[32m✔ xsec extendOptions: bank winds past ±180 (the spiral, S1 iv) [90m(0.0804ms)[39m[39m
+[32m✔ xsec extendOptions: the new fields take the "at start" box like the others [90m(0.1092ms)[39m[39m
+[32m✔ xsec headState (A's core): a non-tube head shows tube sweep 0 ("none"); an edge head and a tube head show the document's values [90m(20.6107ms)[39m[39m
+[32m✔ xsec panel: the three fields are on the panel and show the head; left as shown they send nothing [90m(13.7815ms)[39m[39m
+[32m✔ xsec panel: a changed field is a target, and its cell shows the DOCUMENT, not the typed value [90m(6.9303ms)[39m[39m
+[32m✔ xsec panel: the edge angle and the edge start each redraw the readout on their own, with no other field typed after them [90m(2.8323ms)[39m[39m
+[32m✔ xsec panel: after Extend the fields read back what the document holds [90m(4.4152ms)[39m[39m
+[32m✔ xsec panel (A's core): each cross-section cell is the core's own readout of the candidate [90m(26.9496ms)[39m[39m
+[32m✔ xsec panel: a core that reports no cross-section readout shows — in those cells [90m(1.6308ms)[39m[39m
+[32m✔ xsec panel: a core refusal is shown by its name (BAD_TUBE, BAD_EDGE: A's contract) [90m(8.548ms)[39m[39m
+[32m✔ xsec panel: a piece is a cup OR a tube — changing one puts the other back and disables it [90m(5.1392ms)[39m[39m
+[32m✔ xsec panel: a cup and a tube sent together anyway are refused by name (BAD_TARGET) [90m(0.5226ms)[39m[39m
+[32m✔ xsec panel: a refusal the REAL core makes on Extend is shown in the panel with its name [90m(2.7278ms)[39m[39m
+[32m✔ xsec panel: the bank field takes any number and keeps it within one turn, its sign kept: 360 is 0 and -540 is -180 (D259) [90m(13.0925ms)[39m[39m
+[32m✔ xsec head marker: the mast follows the road's U, right side up when inverted [90m(0.2982ms)[39m[39m
+[32m✔ xsec head marker: inside a closed tube the marker keeps to the room it has [90m(0.0985ms)[39m[39m
+[32m✔ xsec head marker: the clearance of a closed tube is 0.9 of its roof and of its reach [90m(0.8056ms)[39m[39m
+[32m✔ xsec head marker: the preview hands the closed tube's room to the marker it draws [90m(49.5856ms)[39m[39m
+[32m✔ xsec validation words: the tube-too-narrow and roll-rate reds read in plain words, the id in the tooltip [90m(0.2328ms)[39m[39m
+[32m✔ xsec the panel loads in the webview loader with no node built-in (D186) [90m(7.024ms)[39m[39m
+[32m✔ the panel drops the default layout on the first straight long enough, and says what stops it before that [90m(15.5331ms)[39m[39m
+[32m✔ once edited the layout is kept, and its markers ride along when an upstream word is sculpted [90m(6.7402ms)[39m[39m
+[32m✔ a slot edited slot by slot, and an overlap it causes is red in the panel [90m(5.7907ms)[39m[39m
+[32m✔ slot edits accumulate: an edit to a second slot keeps the first [90m(4.5271ms)[39m[39m
+[32m✔ removing the word the layout sits on turns the panel red (anchors), not silent [90m(2.602ms)[39m[39m
+[32m✔ the markers panel loads through A's webview loader and exports mount(root, shell) [90m(13.5962ms)[39m[39m
+[32m✔ atSegment: the profile at d = 0 is the blend's `from`, at the segment's end the mix at its end weight, and a segment with no blend is its own profile [90m(13.1535ms)[39m[39m
+[32m✔ a word document font-transition blend is NOT evaluated by the readers, only a cup: readAt gives the own profile for a blended segment without the cup mark (the paused piece builder validation, layout and export read as before) [90m(0.1699ms)[39m[39m
+[32m✔ atSegment lands on the document's c along the ramp: the edge of the cross-section at a station is c(s) within 0.05° (a reader that took segment.profile would read the run's widest, 90°, at the start) [90m(10.2001ms)[39m[39m
+[32m✔ marker layout: a straight running into a cupped turn keeps the width of the straight (the grid is not refused as "too narrow" by the turn's 150° target) [90m(11.332ms)[39m[39m
+[32m✔ validation: with csp off the first steep-without-raycast red is where the wall PASSES 50° (c(s) = 50, about 47 m into a 100 m ramp), not at the ramp's start (the run's widest, 90°) [90m(25.1228ms)[39m[39m
+[32m✔ export sections: the section at a station is the road as drawn there (its maxPsi is c(s)), not the run's widest [90m(26.2393ms)[39m[39m
+[32m✔ water: the profile under a sample is the road as drawn there (the edge is c(s)), and a segment without a blend still gives its own profile object [90m(4.0981ms)[39m[39m
+[32m✔ camera: the width at the head is the last segment's cross-section at the head (a cup brushed down at its end reads the lowered c, not the run's widest) [90m(4.7742ms)[39m[39m
+[32m✔ a 90° cup lap refuses a pit lane; flattened beside it, the same lane builds [90m(184.406ms)[39m[39m
+[32m✔ the route does not move: every centreline station is where it was, to the bit [90m(149.7336ms)[39m[39m
+[32m✔ only the shape beside the lane changes: the cup is 0 under the lane, untouched past the ramp, and no other channel moves [90m(115.3422ms)[39m[39m
+[32m✔ a closed TUBE lap opens beside the lane, and the lane builds [90m(488.3638ms)[39m[39m
+[32m✔ a plain road has nothing to flatten, and says so [90m(139.1291ms)[39m[39m
+[32m✔ the result saves and opens byte for byte (a valid document) [90m(116.12ms)[39m[39m
+[32m✔ the weight is 1 on the stretch, eases to 0 over the ramp, and is 0 beyond it [90m(0.1011ms)[39m[39m
+[32m✔ a document without a pit lane saves exactly as before [90m(7.5586ms)[39m[39m
+[32m✔ setPitLane stores the lane and its boxes, and they survive save and open byte for byte [90m(4.1717ms)[39m[39m
+[32m✔ setPitLane(doc, null) removes it [90m(3.452ms)[39m[39m
+[32m✔ a bad lane is refused by name: the side, a width out of range, a box count, an unknown key [90m(5.3643ms)[39m[39m
+[32m✔ the pit lane and the spawns live side by side and edits keep both [90m(2.0166ms)[39m[39m
+[32m✔ a document without spawns saves exactly as before: no spawns field in memory or in the file [90m(6.3311ms)[39m[39m
+[32m✔ setSpawns stores the line, the grid and a hotlap, and they survive save and open [90m(2.9167ms)[39m[39m
+[32m✔ setSpawns(doc, null) removes the field, back to the export placing the start itself [90m(2.7228ms)[39m[39m
+[32m✔ spawns are quantised to the millimetre like every other distance [90m(1.2547ms)[39m[39m
+[32m✔ bad spawns are refused by name: a negative line, a fractional or zero count, a zero gap, an unknown field [90m(5.506ms)[39m[39m
+[32m✔ a file with bad spawns does not open: the error says which field [90m(0.9548ms)[39m[39m
+[32m✔ edits keep the spawns: extend, and a sculpt of the first piece [90m(825.0169ms)[39m[39m
+[32m✔ a hotlap on a piece that no longer exists does not block an edit (the export reports it instead) [90m(1.5068ms)[39m[39m
+[32m✔ SCHEMA: new documents are t180b.core/4; /1, /2 and /3 text still loads; a piece without an edge or a tube carries none of e, s, t in its text [90m(4.5998ms)[39m[39m
+[32m✔ SCHEMA: an edge piece and a tube piece write their channels, read back with their flags, and save to the same text (round trip) [90m(2.8521ms)[39m[39m
+[32m✔ DOMAIN (E2, V4, T1, T3): a hand-built document with e < 0, s outside [0.5, 0.95], a total past the cap, a closed tube with an edge, or a tube held in the slot is refused by name [90m(6.3394ms)[39m[39m
+[32m✔ A PIECE IS A CUP OR A TUBE: c and t together are refused, in extend and in a hand-built document [90m(0.8148ms)[39m[39m
+[32m✔ JOINT (E4 i, KE4-1): e and s join C1 like every channel: a 5° step in e at a joint is refused JOINT; e starts from 0 where the piece before has no edge [90m(0.7867ms)[39m[39m
+[32m✔ ENDSTATE (ruling 2): endState reports the tube sweep t ONLY for a tube head (a non-tube head reads 0, so the shell shows none); a tube started after another kind still starts at twice the edge it renders (the internal tNext) [90m(1.7844ms)[39m[39m
+[32m✔ A TUBE JOINT: a tube after another kind starts at the edge that piece renders (t = 2·edge); a cup after a tube starts at t/2; tube to tube is C1 in t [90m(1.079ms)[39m[39m
+[32m✔ EXTEND: e, s and t targets are range-checked by name; an e target on a plain track makes an edge piece; the edge continues while active and turns off with e = 0 [90m(5.5426ms)[39m[39m
+[32m✔ EXTEND: the fit never leaves the range (D190 V5 ringing): a 30 m piece, a 10 m ramp to e = 150 − c on a cup, stays inside [0, cap] and the document is accepted (E2 iii, KE2-2) [90m(2.1919ms)[39m[39m
+[32m✔ EXTEND: the transition map takes e, s and t like the others, and the at-start `first` carries them on an empty track [90m(3.3058ms)[39m[39m
+[32m✔ READOUT (E7): edgeFrom/To, sliceFrom/To, tubeFrom/To come from the document; a plain piece reads 0, 0.64 and 0; candidateReadout equals the placed piece bit for bit (KE7-1) [90m(3.1525ms)[39m[39m
+[32m✔ E1 (i): the rendered edge of an edge piece is ψ_mid(edge) + e on BOTH sides, within 0.05°; bank and a closed lap do not change that (E6) [90m(9.9049ms)[39m[39m
+[32m✔ E6: edge THEN roll: at φ = +30° the left edge surface is 105° from gravity and the right 45°; a −30° bank mirrors it; e changes no readout and no path sample [90m(27.7364ms)[39m[39m
+[32m✔ E4 (ii): e, s and t are CARRIED across a flight like c, and an edge continues after the jump [90m(1.5672ms)[39m[39m
+[32m✔ E4 (vi, vii): inside an edge piece every segment is a chord that shares ONE row grid and meets the next on the same profile, so the mesh emits no seam zip; the joint from a plain piece steps ≤ 1 mm [90m(130.5428ms)[39m[39m
+[32m✔ E4 (v): along a moving slice (s 0.5 → 0.95 over 40 m, e 15) every row at a segment boundary is within 0.05° of the analytic profile and every row inside a segment within 0.5° (KE4-3) [90m(15.1714ms)[39m[39m
+[32m✔ E5: a lap with an edge exports end to end: mesh, markers and kn5 write and read back, with no NaN in any buffer (the F1-style lap, edge 15 on the turns) [90m(347.1421ms)[39m[39m
+[32m✔ T1 (ii, iii): a closed tube meshes with its two edge rows within 1 mm; the tube profile is the circle; a transition cup → tube has no seam zip and every row X_tip >= 0 (T2) [90m(201.1625ms)[39m[39m
+[32m✔ CLOSE (E4 iii, T2): a lap whose seam would join a tube to a different cross-section is refused TUBE_SEAM; an edge still active at only one end is refused EDGE_SEAM [90m(1.9538ms)[39m[39m
+[32m✔ CLOSE: a lap whose edge ends at 0.004° (under the 0.01° seam tolerance) at a plain start closes, and the close leaves every edge array exactly as built (no row reaches e where only one end has it) [90m(567.6283ms)[39m[39m
+[32m✔ BRUSH (E2 iii): a brush on e, s or t reaching a piece without them is refused by name; one that takes e outside its range is refused BAD_EDGE [90m(38.5728ms)[39m[39m
+[32m✔ G = 3t² − 2t³: G(0) = 0, G′(0) = 0, G(1) = 1, G′(1) = 0, monotone, G′ peaks at ½ with 3/2 (ref 09 §10, DERIVED) [90m(0.6784ms)[39m[39m
+[32m✔ the edge profile is the analytic ψ_mid + e·G within 0.05° at 4000 points a side, for every family, width, s and e on the seal grid (E1 iii) [90m(40.7851ms)[39m[39m
+[32m✔ the slice is no kink: |Δψ| at u = s·h is 0 and the one-sided slope difference of ψ − ψ_mid is 3e-6 of what G = t gives (the seal measured 3e-6, E1 ii) [90m(0.2033ms)[39m[39m
+[32m✔ LINEAR in e at a fixed s: the fraction-matched blend of two edge profiles IS the profile at the blended e (to 1e-12 rad); NOT linear in s (ref 09 §10, E4 iv and v) [90m(0.8074ms)[39m[39m
+[32m✔ the TUBE: ψ = (t/2)|u|/h is a circular arc of radius w/t_rad, and at t = 360 its two edges meet at Y = 2R = w/π within 1e-9 m (E T1 i, ii) [90m(2.9291ms)[39m[39m
+[32m✔ the tube slot: t1m(w) is where the two tips are 1.0 m apart: 4 → 283.566°, 8 → 319.241°, 12 → 332.053°, 31 → 348.732°, 60 → 354.096° (the seal, F_tube) [90m(0.3059ms)[39m[39m
+[32m✔ the helix curvature of a floor at radius R rolling at ω is R·ω²/(1 + R²ω²) (a = R, b = 1/ω, ref 02 §1), by finite differences of the helix [90m(0.1356ms)[39m[39m
+[32m✔ CONTROL: core_xsec, core_xsec_math and validate_xsec pass whole on an unmutated copy of src/, tools/ and app/ [90m(110814.4987ms)[39m[39m
+[32m✔ mutant KE1-1 G = t (the slice is a kink): applied, and caught by "slice is no kink|analytic" [90m(369.6443ms)[39m[39m
+[34mℹ KE1-1 G = t (the slice is a kink): 1 of 2 run tests failed[39m
+[32m✔ mutant KE1-2 the edge term is signed by the side (right side −e): applied, and caught by "E1 \(i\)" [90m(377.364ms)[39m[39m
+[34mℹ KE1-2 the edge term is signed by the side (right side −e): 1 of 1 run tests failed[39m
+[32m✔ mutant KE1-3 e is taken as radians: applied, and caught by "E1 \(i\)" [90m(380.956ms)[39m[39m
+[34mℹ KE1-3 e is taken as radians: 1 of 1 run tests failed[39m
+[32m✔ mutant KE1-4 four intervals for the outer zone: applied, and caught by "E4 \(v\)" [90m(371.6964ms)[39m[39m
+[34mℹ KE1-4 four intervals for the outer zone: 1 of 1 run tests failed[39m
+[32m✔ mutant KE1-5 the slice is placed at the full width, not the half-width (the edge is never reached): applied, and caught by "E1 \(i\)" [90m(379.0968ms)[39m[39m
+[34mℹ KE1-5 the slice is placed at the full width, not the half-width (the edge is never reached): 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-1 the cap is applied to e alone, not the total: applied, and caught by "DOMAIN" [90m(381.4436ms)[39m[39m
+[34mℹ KE2-1 the cap is applied to e alone, not the total: 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-2 no guard on the edge in the document: applied, and caught by "DOMAIN" [90m(357.4094ms)[39m[39m
+[34mℹ KE2-2 no guard on the edge in the document: 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-3 s has no lower bound: applied, and caught by "DOMAIN" [90m(358.5591ms)[39m[39m
+[34mℹ KE2-3 s has no lower bound: 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-4 e may be negative (a lip): applied, and caught by "DOMAIN" [90m(347.4782ms)[39m[39m
+[34mℹ KE2-4 e may be negative (a lip): 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-5 extend does not refuse a target the cap cannot hold: applied, and caught by "EXTEND: e, s and t targets" [90m(344.0311ms)[39m[39m
+[34mℹ KE2-5 extend does not refuse a target the cap cannot hold: 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-6 the fit's ringing is not clamped (e): applied, and caught by "ringing" [90m(356.4904ms)[39m[39m
+[34mℹ KE2-6 the fit's ringing is not clamped (e): 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-7 a legacy piece's total cap ignores its own edge angle (e alone against 150): applied, and caught by "DOMAIN" [90m(381.0799ms)[39m[39m
+[34mℹ KE2-7 a legacy piece's total cap ignores its own edge angle (e alone against 150): 1 of 1 run tests failed[39m
+[32m✔ mutant KE3-3 the schema is still /3: applied, and caught by "SCHEMA" [90m(372.9651ms)[39m[39m
+[34mℹ KE3-3 the schema is still /3: 1 of 2 run tests failed[39m
+[32m✔ mutant KE3-4 every piece's text carries e, s and t: applied, and caught by "SCHEMA: new documents" [90m(358.265ms)[39m[39m
+[34mℹ KE3-4 every piece's text carries e, s and t: 1 of 1 run tests failed[39m
+[32m✔ mutant KE3-5 a /3 file is not read: applied, and caught by "SCHEMA: new documents" [90m(386.9459ms)[39m[39m
+[34mℹ KE3-5 a /3 file is not read: 1 of 1 run tests failed[39m
+[32m✔ mutant KE3-6 a text with an edge array is not read as an edge piece: applied, and caught by "SCHEMA: an edge piece" [90m(259.2295ms)[39m[39m
+[34mℹ KE3-6 a text with an edge array is not read as an edge piece: 1 of 1 run tests failed[39m
+[32m✔ mutant KE4-1 e is left out of the joint test: applied, and caught by "JOINT \(E4 i" [90m(392.8692ms)[39m[39m
+[34mℹ KE4-1 e is left out of the joint test: 1 of 1 run tests failed[39m
+[32m✔ mutant KE4-2 e is reset after a flight, like the heading rate: applied, and caught by "E4 \(ii\)" [90m(390.8009ms)[39m[39m
+[34mℹ KE4-2 e is reset after a flight, like the heading rate: 1 of 1 run tests failed[39m
+[32m✔ mutant KE4-3 one blend start for the whole piece (the cup's run trick on a moving slice): applied, and caught by "E4 \(v\)|E4 \(vi" [90m(441.5757ms)[39m[39m
+[34mℹ KE4-3 one blend start for the whole piece (the cup's run trick on a moving slice): 2 of 2 run tests failed[39m
+[32m✔ mutant KE4-4 no blend: one profile per segment (the stair-step): applied, and caught by "E4 \(vi" [90m(379.3551ms)[39m[39m
+[34mℹ KE4-4 no blend: one profile per segment (the stair-step): 1 of 1 run tests failed[39m
+[32m✔ mutant KE4-5 the mesh ignores the piece's shared row grid (each segment samples its own rows: a zip inside the piece): applied, and caught by "E4 \(vi" [90m(451.9651ms)[39m[39m
+[34mℹ KE4-5 the mesh ignores the piece's shared row grid (each segment samples its own rows: a zip inside the piece): 1 of 1 run tests failed[39m
+[32m✔ mutant KE4-6 the chords do not share one fraction array: applied, and caught by "E4 \(vi" [90m(473.9682ms)[39m[39m
+[34mℹ KE4-6 the chords do not share one fraction array: 1 of 1 run tests failed[39m
+[32m✔ mutant KE5-1 the csp-off steep check is dropped: applied, and caught by "E5 " [90m(109812.1989ms)[39m[39m
+[34mℹ KE5-1 the csp-off steep check is dropped: 4 of 4 run tests failed[39m
+[32m✔ mutant KE6-2 e is fed into the roll: applied, and caught by "E6" [90m(405.1481ms)[39m[39m
+[34mℹ KE6-2 e is fed into the roll: 1 of 2 run tests failed[39m
+[32m✔ mutant KE7-1 edgeToDeg reads the start of the piece: applied, and caught by "READOUT" [90m(367.4261ms)[39m[39m
+[34mℹ KE7-1 edgeToDeg reads the start of the piece: 1 of 1 run tests failed[39m
+[32m✔ mutant KE7-3 a plain piece reads the wrong default slice: applied, and caught by "READOUT" [90m(342.4179ms)[39m[39m
+[34mℹ KE7-3 a plain piece reads the wrong default slice: 1 of 1 run tests failed[39m
+[32m✔ mutant KT1-1 the tube's edge angle is t, not t/2: applied, and caught by "TUBE" [90m(282.4531ms)[39m[39m
+[34mℹ KT1-1 the tube's edge angle is t, not t/2: 1 of 1 run tests failed[39m
+[32m✔ mutant KT1-2 a tube HELD in the slot is not refused: applied, and caught by "DOMAIN" [90m(358.7469ms)[39m[39m
+[34mℹ KT1-2 a tube HELD in the slot is not refused: 1 of 1 run tests failed[39m
+[32m✔ mutant KT1-3 the closure is 20 mm short of closing: applied, and caught by "T1 \(ii" [90m(370.5523ms)[39m[39m
+[34mℹ KT1-3 the closure is 20 mm short of closing: 1 of 1 run tests failed[39m
+[32m✔ mutant KT1-4 the slot formula has no factor 2: applied, and caught by "tube slot" [90m(305.178ms)[39m[39m
+[34mℹ KT1-4 the slot formula has no factor 2: 1 of 1 run tests failed[39m
+[32m✔ mutant KT1-5 a sweep past 360 is accepted: applied, and caught by "DOMAIN" [90m(379.6128ms)[39m[39m
+[34mℹ KT1-5 a sweep past 360 is accepted: 1 of 1 run tests failed[39m
+[32m✔ mutant KT2-1 no morph into a tube from another kind (a zip with no fade): applied, and caught by "T1 \(ii" [90m(748.3472ms)[39m[39m
+[34mℹ KT2-1 no morph into a tube from another kind (a zip with no fade): 1 of 1 run tests failed[39m
+[32m✔ mutant KT3-1 CUP_MAX is applied to an open tube's t/2 + e: applied, and caught by "DOMAIN" [90m(403.7513ms)[39m[39m
+[34mℹ KT3-1 CUP_MAX is applied to an open tube's t/2 + e: 1 of 1 run tests failed[39m
+[32m✔ mutant KT3-2 a closed tube takes an edge: applied, and caught by "DOMAIN" [90m(364.8766ms)[39m[39m
+[34mℹ KT3-2 a closed tube takes an edge: 1 of 1 run tests failed[39m
+[32m✔ mutant KT4-1 a cup and a tube are allowed together (extend): applied, and caught by "CUP OR A TUBE" [90m(358.1257ms)[39m[39m
+[34mℹ KT4-1 a cup and a tube are allowed together (extend): 1 of 1 run tests failed[39m
+[32m✔ mutant KT4-2 a tube starts at the wrong edge after another kind (t = edge, not 2·edge): applied, and caught by "A TUBE JOINT" [90m(392.5106ms)[39m[39m
+[34mℹ KT4-2 a tube starts at the wrong edge after another kind (t = edge, not 2·edge): 1 of 1 run tests failed[39m
+[32m✔ mutant KT4-4 endState reports t at a non-tube head (twice the edge, the internal value leaks): applied, and caught by "ENDSTATE" [90m(344.9723ms)[39m[39m
+[34mℹ KT4-4 endState reports t at a non-tube head (twice the edge, the internal value leaks): 1 of 1 run tests failed[39m
+[32m✔ mutant KT4-5 a tube after another kind starts from the head's t (0), not from tNext: applied, and caught by "A TUBE JOINT|ENDSTATE" [90m(367.9644ms)[39m[39m
+[34mℹ KT4-5 a tube after another kind starts from the head's t (0), not from tNext: 2 of 2 run tests failed[39m
+[32m✔ mutant KT4-3 a cup after a closed tube is not refused by name: applied, and caught by "X1 and T2" [90m(670.8485ms)[39m[39m
+[34mℹ KT4-3 a cup after a closed tube is not refused by name: 1 of 1 run tests failed[39m
+[32m✔ mutant KS2-1 the roll stays the per-segment smoothstep under a heartline: applied, and caught by "S2 \(iii\)" [90m(726.9792ms)[39m[39m
+[34mℹ KS2-1 the roll stays the per-segment smoothstep under a heartline: 1 of 1 run tests failed[39m
+[32m✔ mutant KS2-2 the heartline is a constant per segment (a step between segments): applied, and caught by "S2 \(i, ii\)|S2 \(vi\)" [90m(738.2441ms)[39m[39m
+[34mℹ KS2-2 the heartline is a constant per segment (a step between segments): 1 of 2 run tests failed[39m
+[32m✔ mutant KS2-3 a closed tube carries heartline 0: applied, and caught by "S2 \(i, ii\)" [90m(709.8221ms)[39m[39m
+[34mℹ KS2-3 a closed tube carries heartline 0: 1 of 1 run tests failed[39m
+[32m✔ mutant KS2-4 the heartline ramp starts at 180 (a step where a tube hands over to a cup): applied, and caught by "X1 and T2|S2 \(vii\)" [90m(3249.0947ms)[39m[39m
+[34mℹ KS2-4 the heartline ramp starts at 180 (a step where a tube hands over to a cup): 1 of 2 run tests failed[39m
+[32m✔ mutant KS2-5 water over a heartline is an anonymous throw: applied, and caught by "S2 \(iv\)" [90m(714.2665ms)[39m[39m
+[34mℹ KS2-5 water over a heartline is an anonymous throw: 1 of 1 run tests failed[39m
+[32m✔ mutant KS3-1 the roll rate is read over a 0.5 m chord: applied, and caught by "S3: a full 360" [90m(712.6266ms)[39m[39m
+[34mℹ KS3-1 the roll rate is read over a 0.5 m chord: 1 of 1 run tests failed[39m
+[32m✔ mutant KS3-2 the bar is raised to 2.0: applied, and caught by "S3: a full 360" [90m(664.6852ms)[39m[39m
+[34mℹ KS3-2 the bar is raised to 2.0: 1 of 1 run tests failed[39m
+[32m✔ mutant KS3-3 the gravity-frame φ′ is read instead of the frame-intrinsic rate (blind on a climbing turn at constant bank): applied, and caught by "S3 \(KS3-3\)" [90m(712.6026ms)[39m[39m
+[34mℹ KS3-3 the gravity-frame φ′ is read instead of the frame-intrinsic rate (blind on a climbing turn at constant bank): 1 of 1 run tests failed[39m
+[32m✔ mutant KS3-4 the amber bar is dropped: applied, and caught by "S3: a full 360" [90m(746.2922ms)[39m[39m
+[34mℹ KS3-4 the amber bar is dropped: 1 of 1 run tests failed[39m
+[32m✔ mutant KS3-5 the roll rate is never checked: applied, and caught by "S3: a full 360" [90m(674.2172ms)[39m[39m
+[34mℹ KS3-5 the roll rate is never checked: 1 of 1 run tests failed[39m
+[32m✔ mutant KS4-1 the spiral's curvature is not given to the validator (kvec of the integrated curve): applied, and caught by "S4" [90m(756.6305ms)[39m[39m
+[34mℹ KS4-1 the spiral's curvature is not given to the validator (kvec of the integrated curve): 1 of 1 run tests failed[39m
+[32m✔ mutant KS4-2 a lifted sample keeps only its own fields (spread of a view): applied, and caught by "S4|S2 \(i, ii\)" [90m(751.5073ms)[39m[39m
+[34mℹ KS4-2 a lifted sample keeps only its own fields (spread of a view): 2 of 2 run tests failed[39m
+[32m✔ mutant KV1 tube-too-narrow is never raised: applied, and caught by "T1 iv" [90m(705.4816ms)[39m[39m
+[34mℹ KV1 tube-too-narrow is never raised: 1 of 1 run tests failed[39m
+[32m✔ mutant KV2 the narrowest tube bar is 5 m: applied, and caught by "T1 iv" [90m(684.4753ms)[39m[39m
+[34mℹ KV2 the narrowest tube bar is 5 m: 1 of 1 run tests failed[39m
+[32m✔ mutant KV2b the narrowest tube bar is the old 9.43 (the eye on the ceiling): applied, and caught by "T1 iv" [90m(863.0148ms)[39m[39m
+[34mℹ KV2b the narrowest tube bar is the old 9.43 (the eye on the ceiling): 1 of 1 run tests failed[39m
+[32m✔ mutant KV3 edge-past-cap is never raised: applied, and caught by "E2: the validator" [90m(1083.1831ms)[39m[39m
+[34mℹ KV3 edge-past-cap is never raised: 1 of 1 run tests failed[39m
+[32m✔ mutant KC1 close does not refuse a seam that joins a tube to another kind: applied, and caught by "CLOSE \(E4 iii" [90m(457.5042ms)[39m[39m
+[34mℹ KC1 close does not refuse a seam that joins a tube to another kind: 1 of 1 run tests failed[39m
+[32m✔ mutant KC2 close does not refuse an edge active at one end only: applied, and caught by "CLOSE \(E4 iii" [90m(448.6276ms)[39m[39m
+[34mℹ KC2 close does not refuse an edge active at one end only: 1 of 1 run tests failed[39m
+[32m✔ mutant KC3 close moves e (it joins e at a seam where only one end has it): applied, and caught by "CLOSE: a lap whose edge ends" [90m(906.2957ms)[39m[39m
+[34mℹ KC3 close moves e (it joins e at a seam where only one end has it): 1 of 1 run tests failed[39m
+[32m✔ mutant KB1 an e brush may reach a piece without an edge: applied, and caught by "BRUSH" [90m(376.028ms)[39m[39m
+[34mℹ KB1 an e brush may reach a piece without an edge: 1 of 1 run tests failed[39m
+[32m✔ a pit lane reaches the export: its cells in the kn5, the pit boxes on it, the self-check ON [90m(406.9588ms)[39m[39m
+[32m✔ two layouts export to two layout sets in one folder, as AC lays layouts out [90m(540.6028ms)[39m[39m
+[32m✔ one red layout writes nothing at all, and a folder the builder did not write is refused untouched [90m(479.7371ms)[39m[39m
+[32m✔ a lane laid across another pass of the road is RED: the lane's findings refuse the export [90m(256.0036ms)[39m[39m
+[32m✔ row 1: asphalt: every pit box wears the road's floor material and the same diffuse texture, in the scene and in the kn5 [90m(1463.027ms)[39m[39m
+[32m✔ row 2: image: every pit box wears the road's floor material and the same diffuse texture, in the scene and in the kn5 [90m(771.3526ms)[39m[39m
+[32m✔ row 3: solid colour: the pit boxes wear the road's own t180b_road, so they no longer show (what was asked, and named here) [90m(740.3078ms)[39m[39m
+[32m✔ row 4: the start line and grid paint, the AC_PIT_n spawn markers and the read-back are unchanged [90m(1710.2002ms)[39m[39m
+[32m✔ row 5: a box's texture coordinates are the road's there: v = (s + offset) / tileLength, within the box's own stretch of road [90m(802.7237ms)[39m[39m
+[32m✔ row 1: the infill is there, drivable, and wears the lane's floor (the road's), in the scene and in the kn5 [90m(1763.6457ms)[39m[39m
+[32m✔ row 2: NO GAP: the car's downforce ray over the road, the lane and the infill finds no gap in the lane's span [90m(1158.4055ms)[39m[39m
+[32m✔ row 3: untextured (solid): the infill wears t180b_road, as the lane and the road do [90m(1143.1269ms)[39m[39m
+[32m✔ row 4: the lane's self-check and its check against the road stay clean, and the full export of the closed lap passes [90m(1109.5062ms)[39m[39m
+[32m✔ a NORMAL export of an open track still refuses (unchanged): NOT_CLOSED, nothing written [90m(6.028ms)[39m[39m
+[32m✔ the TEST export of the same open track writes a folder marked unfinished, in name and folder [90m(265.1399ms)[39m[39m
+[32m✔ D256: the TEST export checks the open track at FULL speed, so where F7's hill lets the car leave the road is LISTED (and does not block) [90m(0.5809ms)[39m[39m
+[32m✔ in TEST mode a red is LISTED and does not block: a hole's gap-in-road red is in the TEST file and the warnings [90m(213.3903ms)[39m[39m
+[32m✔ the TEST folder carries point-to-point gates and the named end wall in its kn5 [90m(0.2564ms)[39m[39m
+[32m✔ the TEST folder's AI line is OPEN and reads back [90m(0.1405ms)[39m[39m
+[32m✔ an open AI line is written only when asked for: the same line without open still refuses NOT_CLOSED [90m(62.6296ms)[39m[39m
+[32m✔ G1 at both joins, on a straight: the inner edge is the road's edge, and runs along it [90m(24.2997ms)[39m[39m
+[32m✔ no step at the joins, on a straight: the lane mesh's join rows lie on the road, in its plane, facing its way [90m(21.9683ms)[39m[39m
+[32m✔ G1 at both joins, leaving on a straight and rejoining in a turn: the inner edge is the road's edge, and runs along it [90m(11.7246ms)[39m[39m
+[32m✔ no step at the joins, leaving on a straight and rejoining in a turn: the lane mesh's join rows lie on the road, in its plane, facing its way [90m(31.3391ms)[39m[39m
+[32m✔ the lane runs offsetM beyond the road's edge between its eases, and its s is its own arc length [90m(5.9237ms)[39m[39m
+[32m✔ E's pit boxes sit on the lane: on its surface, beyond the road's edge, and pass §5c's checks [90m(9.5516ms)[39m[39m
+[32m✔ the self-check stays ON beside the road: a lane 0.3 m off a turn is tested, and clear; without the join exemption the joins show [90m(314.6446ms)[39m[39m
+[32m✔ a lane is refused by name: a missing anchor, backwards, too short for its eases, a walled edge [90m(7.8817ms)[39m[39m
+[32m✔ the good scene passes every §5c check [90m(2.2806ms)[39m[39m
+[32m✔ race direction comes from the grid, back slot to pole [90m(5.548ms)[39m[39m
+[32m✔ start line behind the grid fires start-ahead-of-grid [90m(0.4791ms)[39m[39m
+[32m✔ grid numbered the wrong way (pole at the back) fires start-ahead-of-grid [90m(0.3787ms)[39m[39m
+[32m✔ a grid slot ahead of the slot numbered before it fires start-ahead-of-grid, even with the line ahead of all [90m(0.2187ms)[39m[39m
+[32m✔ swapped L and R gates fire gate-orientation [90m(0.1871ms)[39m[39m
+[32m✔ a marker 5 m up fires height-and-heading [90m(0.182ms)[39m[39m
+[32m✔ a marker 0.3 m up (below the 1 m floor) fires height-and-heading [90m(0.1518ms)[39m[39m
+[32m✔ a grid slot pointing backwards fires height-and-heading [90m(0.2066ms)[39m[39m
+[32m✔ a marker pointing into the road fires height-and-heading [90m(0.2183ms)[39m[39m
+[32m✔ a marker off the road fires height-and-heading and slots [90m(0.5373ms)[39m[39m
+[32m✔ a marker straight above a shared triangle edge is ON the road [90m(0.2018ms)[39m[39m
+[32m✔ a marker straight above the road's outer edge is on the road [90m(0.114ms)[39m[39m
+[32m✔ a marker over a WALL mesh only counts as off the road [90m(0.0887ms)[39m[39m
+[32m✔ a grid slot inside another fires slots [90m(0.134ms)[39m[39m
+[32m✔ a pit box inside another fires slots [90m(0.1245ms)[39m[39m
+[32m✔ a wrong pit count fires pit-count [90m(0.1121ms)[39m[39m
+[32m✔ a gap in the pit numbering fires pit-count [90m(0.1313ms)[39m[39m
+[32m✔ no pit markers fires pit-count [90m(0.087ms)[39m[39m
+[32m✔ no gate fails the checks that need one, with the reason [90m(0.1593ms)[39m[39m
+[32m✔ countPits counts AC_PIT_n markers only [90m(0.2144ms)[39m[39m
+[32m✔ a nested dummy gets its parent transform (world = local × parent) [90m(0.1494ms)[39m[39m
+[32m✔ a custom layout (a 3-abreast grid of 6, 3 pit boxes, sectors) is what the kn5 carries, and pitboxes counts it [90m(386.3631ms)[39m[39m
+[32m✔ the paint is written into the kn5 as visual meshes, one per mark, none of them physics [90m(280.6346ms)[39m[39m
+[32m✔ a red layout refuses the export, names the check, and writes nothing [90m(200.6615ms)[39m[39m
+[32m✔ a layout whose word is gone refuses the export: anchors [90m(157.9099ms)[39m[39m
+[32m✔ with a lane, the pit boxes are placed along the LANE from its `along`, on its surface, and pass the checks [90m(3.5871ms)[39m[39m
+[32m✔ the pit count still matches on a lane, and a lane too short for its boxes is off the road (red) [90m(2.1998ms)[39m[39m
+[32m✔ the pit box paint is laid on the lane, centred on each box [90m(0.8713ms)[39m[39m
+[32m✔ without a lane the boxes stay on the main road at the layout's `at` [90m(0.5473ms)[39m[39m
+[32m✔ the markers stay on the road after an UPSTREAM word is edited: they move with their words, same (along, u, h) [90m(18.7312ms)[39m[39m
+[32m✔ editing the anchor word itself keeps the marker at the same distance into it, clamped to the word [90m(7.3964ms)[39m[39m
+[32m✔ markers on a BANKED floor stand h along the rolled normal, not world up, and pass the checks [90m(4.1628ms)[39m[39m
+[32m✔ on a half-pipe the start gates sit on the walls' edges, standing off the WALL along its normal [90m(2.5329ms)[39m[39m
+[32m✔ the grid is numbered from pole: AC_START_0 nearest the line, each slot at or behind the one before [90m(2.9722ms)[39m[39m
+[32m✔ the grid order records the race direction: back slot to pole runs along +s, and every marker faces it [90m(2.0204ms)[39m[39m
+[32m✔ the patterns: 2 staggered, 2 abreast, 3 abreast (Aurora), with their spacing [90m(0.3596ms)[39m[39m
+[32m✔ a slot edit moves that slot only (editable slot by slot) [90m(0.1054ms)[39m[39m
+[32m✔ the hotlap starts the run-up that reaches the design speed at the line (measured thrust, FINDINGS.md:494) [90m(2.7065ms)[39m[39m
+[32m✔ on an open track too short for the run-up, the hotlap is at the start, and says the speed it will reach (amber) [90m(2.896ms)[39m[39m
+[32m✔ sectors 1 and 2 are gates across the road like the start, L left of R [90m(2.5873ms)[39m[39m
+[32m✔ red check: the start line ahead of the grid (a slot past the line, then a slot numbered out of order) [90m(2.9143ms)[39m[39m
+[32m✔ red check: L and R gates the right way round (swapped: fires; as placed: clear) [90m(1.7457ms)[39m[39m
+[32m✔ red check: 1–2 m above the surface (3 m and 0.5 m fire, 1 m and 2 m clear) and along the road [90m(3.2978ms)[39m[39m
+[32m✔ red check: no marker inside another's slot, and none off the road [90m(2.9947ms)[39m[39m
+[32m✔ red check: the pit count (none: fires; placed ≠ asked: fires; as laid out: clear) [90m(2.441ms)[39m[39m
+[32m✔ red check: a marker whose word is gone [90m(1.0042ms)[39m[39m
+[32m✔ the paint and the markers agree: every mark comes from a marker, at its (s, u), on the surface [90m(2.8948ms)[39m[39m
+[32m✔ the start/finish line wraps the whole cross-section, up a half-pipe's walls [90m(1.4777ms)[39m[39m
+[32m✔ inside a font transition a marker sits on the BLENDED surface the mesh builds, not the new font's [90m(2.8138ms)[39m[39m
+[32m✔ between stations on a banking turn the marker's axes are still an orthonormal frame (a valid kn5 matrix) [90m(3.5ms)[39m[39m
+[32m✔ a marker between stations is interpolated along the road, not snapped to the station before [90m(0.3281ms)[39m[39m
+[32m✔ a marker over a jump's flight is red, off the road (no surface under it) [90m(2.0111ms)[39m[39m
+[32m✔ the default layout refuses a grid longer than the longest straight (NO_START_STRAIGHT), with the lengths [90m(1.3451ms)[39m[39m
+[32m✔ a pit box that cannot be placed (off the track's start) is red on its own, nothing else overlapping [90m(1.6654ms)[39m[39m
+[34mℹ tests 318[39m
+[34mℹ suites 0[39m
+[34mℹ pass 318[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 345601.3267[39m
+
+=== exit 0 signal null error  345.6s
