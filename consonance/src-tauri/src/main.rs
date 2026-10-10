@@ -7999,6 +7999,10 @@ fn librarian_shelf_light() -> String {
     }
 }
 
+/// The directories the light shelf indexes, `""` being the room root: the strict walk's `order` table, cards aside (they ride
+/// whole). A directory a room does not have (the consumer ships no map/ or librarian/) is skipped, never listed.
+const LIGHT_SHELF_DIRS: [&str; 9] = ["", "record", "memory", "librarian", "spread", "research", "map", "journal", "loop"];
+
 fn librarian_shelf_light_at(root: &Path, today: chrono::NaiveDate) -> String {
     let rel = |p: &Path| p.strip_prefix(root).unwrap_or(p).to_string_lossy().replace('\\', "/");
     let mut carried: Vec<(String, String)> = Vec::new();
@@ -8046,8 +8050,7 @@ fn librarian_shelf_light_at(root: &Path, today: chrono::NaiveDate) -> String {
         }
     }
     s.push_str("\n## BY DIRECTORY -- open these by path\n\n");
-    // The directories the strict walk visits (its `order` table), cards aside: they ride above.
-    for dir in ["", "record", "memory", "librarian", "spread", "research", "map", "journal", "loop"] {
+    for dir in LIGHT_SHELF_DIRS {
         let d = if dir.is_empty() { root.to_path_buf() } else { root.join(dir) };
         if !d.is_dir() { continue; }
         let mut files: Vec<PathBuf> = Vec::new();
@@ -8215,7 +8218,22 @@ mod intake_light_tests {
         let topics = read_curation().map(|c| c.dir);
         let memory = memory_pointer(&atoms, 0, topics.as_deref());
         let paths: Vec<String> = abs_paths(index).into_iter().chain(abs_paths(&memory)).collect();
-        assert!(paths.len() >= 10, "expected the directory lines and the memory pointers, found {paths:?}");
+        // THE FLOOR IS WHAT THIS ROOM HAS, never a bare number: every LIGHT_SHELF_DIRS directory present here, the atoms master,
+        // and the topics directory when it exists. The workshop lists 9 + 2; the consumer, which ships no map/ or librarian/,
+        // 7 + 1 (D277 parity, B, 2026-10-10). Each expected pointer must be in the list, so an empty list cannot pass.
+        let root = room_master_path().parent().expect("room root").to_path_buf();
+        let mut expected: Vec<PathBuf> = LIGHT_SHELF_DIRS
+            .iter()
+            .map(|d| if d.is_empty() { root.clone() } else { root.join(d) })
+            .filter(|d| d.is_dir())
+            .collect();
+        expected.push(atoms.clone());
+        expected.extend(topics.filter(|d| d.is_dir()));
+        assert!(expected.len() >= 3, "the room root, one indexed directory and the atoms master at least: {expected:?}");
+        for e in &expected {
+            let e = e.display().to_string();
+            assert!(paths.contains(&e), "expected pointer `{e}` is on neither the shelf nor the memory section, found {paths:?}");
+        }
         for p in paths {
             assert!(Path::new(&p).exists(), "pointer `{p}` names nothing on this machine");
         }
