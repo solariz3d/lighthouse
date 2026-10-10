@@ -293,7 +293,8 @@ const UNIVERSE_LINE = /^[ \t]*JS-SUITE:[ \t]*UNIVERSE\b[ \t]*(?:[-–—:]+[ \t]
 // D287 part 1: EACH test file gets its own TEMP/TMP/TMPDIR, a fresh folder under the scratch root, removed in a `finally` whether the file passed,
 // failed, crashed or timed out. That one move reaches every creator under the file that uses os.tmpdir(), including the ones nobody has looked at,
 // because the test files cannot be trusted to remove their own folders (they leaked ~260,000 of them). A file killed by TIMEOUT_MS leaves nothing
-// either: the folder belongs to this runner, not to the child.
+// either: the folder belongs to this runner, not to the child. CONSONANCE_SCRATCH points INTO it too, so a child's scratch.mkdtemp folders (which
+// its exit hook removes) are ALSO inside the folder this runner removes: a child killed by the timeout never runs its exit hook, and would leak otherwise.
 function runFile(f, extraEnv) {
   let code = 0, out = '', err = '';
   const tmp = scratch.mkdtemp('js-suite-tmp-');
@@ -301,7 +302,7 @@ function runFile(f, extraEnv) {
     out = execFileSync(process.execPath, [f], {
       cwd: path.dirname(f), encoding: 'utf8', timeout: TIMEOUT_MS,
       stdio: ['ignore', 'pipe', 'pipe'],
-      env: { ...process.env, CONSONANCE_OS_TMP: process.env.CONSONANCE_OS_TMP || os.tmpdir(), ...scratch.tempEnv(tmp), ...(extraEnv || {}) },
+      env: { ...process.env, CONSONANCE_OS_TMP: process.env.CONSONANCE_OS_TMP || os.tmpdir(), ...scratch.tempEnv(tmp), CONSONANCE_SCRATCH: tmp, ...(extraEnv || {}) },
     });
   } catch (e) {
     code = e.status === undefined || e.status === null ? 'timeout/signal' : e.status;

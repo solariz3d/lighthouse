@@ -148,3 +148,12 @@ test('js-suite: the child sees TEMP inside the scratch root (the redirect is rea
   const r = node(['js-suite.js'], { ...env, JS_SUITE_ROOT: dir });
   assert.strictEqual(r.status, 0, 'the child did not see a redirected TEMP: ' + r.stdout + r.stderr);
 }));
+
+test('js-suite: a test file KILLED by the timeout leaves nothing behind (its exit hook never runs, so the runner must)', () => withTemps(({ root, env, left }) => {
+  const dir = fixtureTree(root, { 'a.test.js': "const s=require(" + JSON.stringify(path.join(TOOLS, 'scratch.js')) + ");s.mkdtemp('hung-');"
+    + "require('fs').mkdtempSync(require('path').join(require('os').tmpdir(),'hung-os-'));setInterval(()=>{},1000);" });
+  const r = node(['js-suite.js'], { ...env, JS_SUITE_ROOT: dir, JS_SUITE_TIMEOUT_MS: '2500' });
+  assert.notStrictEqual(r.status, 0, 'a file killed by the timeout must turn the suite red');
+  assert.strictEqual(left('hung-'), 0, 'a killed file folders survived js-suite');
+  assert.strictEqual(left('hung-os-'), 0);
+}));
