@@ -39,7 +39,7 @@ const block = (id, goal, asked, question, status) =>
 const REAL_Q = 'Narrow the interest list in goal.json to what the feeds have, or widen the feed list in server.js:227-234 to cover the interests?';
 
 function tmpStore(text) {
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'ask-'));
+  const d = require('./scratch.js').mkdtemp('ask-');
   const p = path.join(d, 'ASK.md');
   fs.writeFileSync(p, text);
   return p;
@@ -165,7 +165,7 @@ test('--why refuses to call a queue empty when blocks are unreadable', () => {
 });
 
 test('the wiring check finds a caller when one exists, and reports UNWIRED when none does', () => {
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'ask-wire-'));
+  const d = require('./scratch.js').mkdtemp('ask-wire-');
   fs.writeFileSync(path.join(d, 'nothing.js'), '// a hook that calls something else\n');
   assert.strictEqual(A.wiring([d]).wired, false, 'must not invent a caller');
 
@@ -178,7 +178,7 @@ test('the wiring check finds a caller when one exists, and reports UNWIRED when 
 test('the wiring check does not count the tool, its own tests, or .bak files as callers', () => {
   // Every one of these mentions ask.js and none of them CALLS it. A self-satisfying wiring check
   // is the same species as a falsifier that reads the ledger it writes into.
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'ask-wire2-'));
+  const d = require('./scratch.js').mkdtemp('ask-wire2-');
   fs.writeFileSync(path.join(d, 'ask.test.js'), 'require("./ask.js")\n');
   fs.writeFileSync(path.join(d, 'hook.js.bak-20260817-121017'), 'node ask.js --line\n');
   assert.strictEqual(A.wiring([d]).wired, false, 'a test or a .bak must not read as a live caller');
@@ -214,7 +214,7 @@ test('an unparseable asked-date does not crash the line or claim an age', () => 
 /* ── the candidate scan is inference and says so ────────────────────────────────────────────── */
 
 test('candidates are read from cron logs and are never auto-filed', () => {
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'ask-cand-'));
+  const d = require('./scratch.js').mkdtemp('ask-cand-');
   const g = path.join(d, 'some-goal');
   fs.mkdirSync(g);
   fs.writeFileSync(path.join(g, 'system-cron.log'),
@@ -391,7 +391,7 @@ const osx = require('os');
 const pathx = require('path');
 
 function goalTree(files) {
-  const root = fsx.mkdtempSync(pathx.join(osx.tmpdir(), 'askprov-'));
+  const root = require('./scratch.js').mkdtemp('askprov-');
   for (const [rel, body] of Object.entries(files)) {
     const p = pathx.join(root, rel);
     fsx.mkdirSync(pathx.dirname(p), { recursive: true });

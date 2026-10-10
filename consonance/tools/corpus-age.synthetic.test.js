@@ -29,7 +29,7 @@ const path = require('node:path');
 const { execFileSync, spawnSync } = require('node:child_process');
 
 const TOOL = path.join(__dirname, 'corpus-age.js');
-const root = fs.mkdtempSync(path.join(os.tmpdir(), 'corpus-age-syn-'));
+const root = require('./scratch.js').mkdtemp('corpus-age-syn-');
 test.after(() => { try { fs.rmSync(root, { recursive: true, force: true, maxRetries: 3 }); } catch (e) { /* a temp folder Windows is still holding is not a failure of the tool */ } });
 
 const git = (env, ...a) => execFileSync('git', ['-C', root, ...a], { encoding: 'utf8', env: { ...process.env, ...env } });

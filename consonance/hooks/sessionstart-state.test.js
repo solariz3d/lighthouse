@@ -19,7 +19,7 @@ const path = require('node:path');
 const { execFileSync } = require('node:child_process');
 
 const HOOK = path.join(__dirname, 'sessionstart-state.js');
-const tmp = (p) => fs.mkdtempSync(path.join(os.tmpdir(), p));
+const tmp = (p) => require('../tools/scratch.js').mkdtemp(p);
 
 function run(payload, env = {}) {
   return execFileSync(process.execPath, [HOOK], {

@@ -12,7 +12,9 @@ const { spawnSync } = require('child_process');
 
 const HOOK = path.join(__dirname, 'delete-gate.js');
 const G = require('./delete-gate.js');
-const tmp = (p) => fs.mkdtempSync(path.join(os.tmpdir(), p));
+// D287: OS_TMP is the machine's REAL temp dir (js-suite hands each file a redirected TEMP and passes the real one as CONSONANCE_OS_TMP), ON PURPOSE (the MSYS /tmp/... row below needs the folder where Git Bash maps /tmp); still removed at exit.
+const OS_TMP = process.env.CONSONANCE_OS_TMP || os.tmpdir();
+const tmp = (p) => require('../tools/scratch.js').mkdtemp(p, OS_TMP);
 /** A tree to delete with a junction inside it, pointing at a precious directory outside it. */
 function tree({ link = true } = {}) {
   const root = tmp('dg-'), wt = path.join(root, 'worktree'), precious = path.join(root, 'precious');
@@ -47,7 +49,7 @@ test('RED: the Bash tool\'s MSYS paths are read as Git Bash means them: /c/Users
   const t = tree(), data = tmp('dgd-');
   const msys = t.wt.replace(/^([A-Za-z]):/, (_, d) => `/${d.toLowerCase()}`).replace(/\\/g, '/');
   assert.equal(runHook(cmd(`rm -rf ${msys}`, os.homedir()), data).deny, true, 'the /c/... form');
-  const viaTmp = '/tmp/' + path.relative(fs.realpathSync(os.tmpdir()), fs.realpathSync(t.wt)).replace(/\\/g, '/');
+  const viaTmp = '/tmp/' + path.relative(fs.realpathSync(OS_TMP), fs.realpathSync(t.wt)).replace(/\\/g, '/');
   assert.equal(runHook(cmd(`git worktree remove ${viaTmp}`, os.homedir()), data).deny, true, 'the /tmp/... form');
 });
 test('RED: an environment variable in the target is expanded ($env:NAME, ${NAME}, $NAME) (found live: "$env:TEMP\\x" was read as a literal path)', () => {

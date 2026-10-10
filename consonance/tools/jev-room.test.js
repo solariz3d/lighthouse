@@ -11,13 +11,13 @@ const os = require('os');
 const path = require('path');
 
 function installed() {
-  const dir = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'jev-room-inst-')), 'somewhere', 'tools');
+  const dir = path.join(require('./scratch.js').mkdtemp('jev-room-inst-'), 'somewhere', 'tools');
   fs.mkdirSync(dir, { recursive: true });
   fs.copyFileSync(path.join(__dirname, 'jev-room.js'), path.join(dir, 'jev-room.js'));
   return require(path.join(dir, 'jev-room.js'));
 }
 function room() {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-room-repo-'));
+  const root = require('./scratch.js').mkdtemp('jev-room-repo-');
   fs.mkdirSync(path.join(root, 'consonance', 'src-tauri', 'src'), { recursive: true });
   fs.writeFileSync(path.join(root, 'consonance', 'src-tauri', 'src', 'main.rs'), 'const MAIN_SID: &str = "x";\n');
   fs.mkdirSync(path.join(root, 'exo_memory'));
@@ -25,7 +25,7 @@ function room() {
   return root;
 }
 function homeWith(cfg) {
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-room-home-'));
+  const home = require('./scratch.js').mkdtemp('jev-room-home-');
   if (cfg !== undefined) fs.writeFileSync(path.join(home, '.consonance.json'), typeof cfg === 'string' ? cfg : JSON.stringify(cfg));
   return home;
 }

@@ -21,7 +21,7 @@ const { stamp } = require('./ready.js');
 
 let pass = 0, fail = 0;
 function check(name, fn) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'ready-test-'));
+  const dir = require('../../../consonance/tools/scratch.js').mkdtemp('ready-test-');
   const saved = { ...process.env };
   try {
     // A clean slate every case: the live variables must never decide a result here.

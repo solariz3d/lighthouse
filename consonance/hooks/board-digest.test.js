@@ -26,8 +26,8 @@ const READER = '0c0c0c0a-0000-4000-8000-0000000000ff'; // any pane that is not t
 /** A minimal but real bed: one sibling pane with a prompt and a reply from today, so the digest
  *  has a non-empty [panes] body to either show or (wrongly) suppress. */
 function bed() {
-  const instances = fs.mkdtempSync(path.join(os.tmpdir(), 'bd-inst-'));
-  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'bd-data-'));
+  const instances = require('../tools/scratch.js').mkdtemp('bd-inst-');
+  const data = require('../tools/scratch.js').mkdtemp('bd-data-');
   const cwd = path.join(instances, 'a-pane');
   fs.mkdirSync(cwd, { recursive: true });
   const now = Date.now();

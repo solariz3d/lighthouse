@@ -83,7 +83,7 @@ function layout(root) {
 }
 
 function score(target, text) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-shadow-mut-'));
+  const root = require('./scratch.js').mkdtemp('jev-shadow-mut-');
   try {
     const tools = layout(root);
     const file = path.join(tools, TARGETS[target].file);

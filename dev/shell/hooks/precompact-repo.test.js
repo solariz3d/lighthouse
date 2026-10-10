@@ -18,7 +18,7 @@ const mk = (p, s) => { fs.mkdirSync(path.dirname(p), { recursive: true }); fs.wr
 
 /** A temp home with a fake `py` (node), and the hook copied in with fresh-guard beside it as installed. */
 function world() {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'pc-repo-')), home = path.join(root, 'home');
+  const root = require('../../../consonance/tools/scratch.js').mkdtemp('pc-repo-'), home = path.join(root, 'home');
   mk(path.join(root, 'shell', 'hooks', 'precompact.js'), fs.readFileSync(HOOK));
   mk(path.join(root, 'shell', 'lib', 'fresh-guard.js'), fs.readFileSync(path.join(__dirname, '..', 'lib', 'fresh-guard.js')));
   fs.mkdirSync(path.join(root, 'bin'), { recursive: true });

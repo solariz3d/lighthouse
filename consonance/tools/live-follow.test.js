@@ -31,7 +31,7 @@ function bareEnv(home, extra = {}) {
   return { ...env, ...extra };
 }
 function withHome(fn) {
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'follow-home-'));
+  const home = require('./scratch.js').mkdtemp('follow-home-');
   try { return fn(home); } finally { fs.rmSync(home, { recursive: true, force: true }); }
 }
 const run = (args, env) => spawnSync(process.execPath, [TOOL, ...args], { encoding: 'utf8', env });

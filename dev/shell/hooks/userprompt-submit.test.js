@@ -35,7 +35,7 @@ const SEED = JSON.stringify({ last_surfaced_job_ids: ['seed-job'], first_seen_is
   last_prompt_iso: '2026-08-15T00:00:00.000Z' });
 
 function runHook(cwd) {
-  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'ups-d097-'));
+  const data = require('../../../consonance/tools/scratch.js').mkdtemp('ups-d097-');
   const statePath = path.join(data, 'userprompt_state.json');
   fs.writeFileSync(statePath, SEED);
   const env = { ...process.env, CONSONANCE_SHELL_DIR: data };

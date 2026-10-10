@@ -18,7 +18,7 @@ function test(name, fn) {
   catch (e) { console.log(`  FAIL ${name}\n       ${e.message}`); fail++; }
 }
 
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'ferrytest-'));
+const tmp = require('./scratch.js').mkdtemp('ferrytest-');
 process.env.FERRY_LEDGER = path.join(tmp, 'ferry.jsonl');
 const ferry = require('./ferry.js');
 

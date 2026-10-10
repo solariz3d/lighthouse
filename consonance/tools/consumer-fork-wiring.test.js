@@ -23,7 +23,7 @@ test('gen-consumer has the fork hook wired (FORK_HOOK.apply is set at load)', ()
 });
 
 test('a generated tree carries the fork note at all three sites, naming HEAD, and the relabel table applied', () => {
-  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-consumer-fork-'));
+  const out = require('./scratch.js').mkdtemp('gen-consumer-fork-');
   try {
     const r = G.build(out, { allowDirty: true });
     assert.ok(!r.refused, 'refused: ' + r.refused);

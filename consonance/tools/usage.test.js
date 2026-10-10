@@ -19,7 +19,7 @@ const PANE_OLD = 'ffffffff-1111-4000-8000-00000000000f';
 
 /** A home with ~/.consonance.json, a data dir (panes.json, letters.json) and an empty projects dir. */
 function bed(cfgExtra = {}) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'usage-'));
+  const root = require('./scratch.js').mkdtemp('usage-');
   const home = path.join(root, 'home');
   const data = path.join(root, 'data');
   const instances = path.join(root, 'instances');

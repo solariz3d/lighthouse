@@ -22,7 +22,7 @@ const LIB = 'mcp__consonance__call_librarian', CHAIR = 'mcp__consonance__call_ch
 const OR_TOKEN = ['sk', 'or', 'v1', 'a1b2c3d4e5f6a7b8c9d0e1f2a3b4'].join('-');
 const sha = (s) => crypto.createHash('sha256').update(s).digest('hex');
 
-function tmpDir() { return fs.mkdtempSync(path.join(os.tmpdir(), 'sg-test-')); }
+function tmpDir() { return require('../tools/scratch.js').mkdtemp('sg-test-'); }
 const rows = (dir) => { try { return fs.readFileSync(path.join(dir, 'sources-gate.jsonl'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)); } catch (_) { return []; } };
 
 // mock transcript entries

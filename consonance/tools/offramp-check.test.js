@@ -19,7 +19,7 @@ const { scan } = require('./offramp-check.js');
 /* A transcript is JSONL of {type, message:{content}}. Built here rather than fixtured from the
  * real one so the tests state their own premises. */
 function transcript(turns) {
-  const f = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'offramp-')), 't.jsonl');
+  const f = path.join(require('./scratch.js').mkdtemp('offramp-'), 't.jsonl');
   fs.writeFileSync(f, turns.map((t) => JSON.stringify({
     type: t[0], timestamp: '2026-08-22T00:00:00.000Z', message: { content: t[1] },
   })).join('\n'));

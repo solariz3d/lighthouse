@@ -62,7 +62,7 @@ test('the wake set: briefs, cards, record/, GATES.md and hook files are in; test
 });
 
 test('an empty or refused generation is refused as a comparison (exit 2), never reported as a diff of every dev file', () => {
-  const empty = fs.mkdtempSync(path.join(os.tmpdir(), 'identity-diff-empty-'));
+  const empty = require('./scratch.js').mkdtemp('identity-diff-empty-');
   try {
     assert.throws(() => D.run({ gen: empty }), /no wake files/);
     const cli = spawnSync(process.execPath, [path.join(__dirname, 'identity-diff.js'), '--gen', empty], { encoding: 'utf8' });
@@ -71,7 +71,7 @@ test('an empty or refused generation is refused as a comparison (exit 2), never 
 });
 
 test('on a REAL generation: one planted edit in a shipped card adds exactly one unregistered line, named path:line, and the CLI exits 1', () => {
-  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'identity-diff-real-'));
+  const out = require('./scratch.js').mkdtemp('identity-diff-real-');
   try {
     const b = G.build(out, { allowDirty: true });
     assert.ok(!b.refused, 'refused: ' + b.refused);
@@ -93,7 +93,7 @@ test('on a REAL generation: one planted edit in a shipped card adds exactly one 
  * exo_memory/inheritance/, which a seat is not carried whole), and A2 made CONSUMER-STATUS.md ship only when measured. The parity run at 5d087a64
  * read both as differences: the moved files as "the generated tree does not have it", and the generated-from commit as unknown. */
 const fakeTrees = (withMoved) => {
-  const repo = fs.mkdtempSync(path.join(os.tmpdir(), 'identity-diff-repo-')), gen = fs.mkdtempSync(path.join(os.tmpdir(), 'identity-diff-gen-'));
+  const repo = require('./scratch.js').mkdtemp('identity-diff-repo-'), gen = require('./scratch.js').mkdtemp('identity-diff-gen-');
   const put = (root, rel, text) => { fs.mkdirSync(path.dirname(path.join(root, rel)), { recursive: true }); fs.writeFileSync(path.join(root, rel), text); };
   put(repo, 'exo_memory/cards/c.md', 'card\n'); put(gen, 'exo_memory/cards/c.md', 'card\n');
   put(repo, 'exo_memory/record/x.md', 'record\n');

@@ -49,7 +49,7 @@ function filedRow(lap, at) {
 }
 
 function fixture({ board = [], laps = [], noBoard = false, noLaps = false } = {}) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'bcheck-'));
+  const dir = require('./scratch.js').mkdtemp('bcheck-');
   const boardPath = path.join(dir, 'board.jsonl');
   const lapPath = path.join(dir, 'lap.jsonl');
   const w = (p, rows) => fs.writeFileSync(p, rows.map(r => (typeof r === 'string' ? r : JSON.stringify(r))).join('\n') + (rows.length ? '\n' : ''));

@@ -49,14 +49,14 @@ process.env.LAP_MACHINE_TAG = 'L';
  * Unpinned, every fixture here would read the REAL repo's history (L069 and up) and refuse L001 - the
  * same leak the tag pin above closes. An empty git repo is a record of nothing. No assertion changed. */
 process.env.LAP_REPO = (() => {
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-emptyrec-'));
+  const d = require('./scratch.js').mkdtemp('lap-emptyrec-');
   execFileSync('git', ['-C', d, 'init', '-q']);
   return d;
 })();
 
 /** A fresh ledger and a fresh module instance bound to it. */
 function fixture() {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-'));
+  const dir = require('./scratch.js').mkdtemp('lap-');
   const ledger = path.join(dir, 'lap.jsonl');
   process.env.LAP_LEDGER = ledger;
   delete require.cache[require.resolve('./lap-row.js')];
@@ -397,7 +397,7 @@ test('report: an empty ledger says so plainly instead of printing zeroes as find
 // ---------------------------------------------------------------- cli
 
 test('cli: the three writes and the report round-trip', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-cli-'));
+  const dir = require('./scratch.js').mkdtemp('lap-cli-');
   const ledger = path.join(dir, 'lap.jsonl');
   assert.strictEqual(cli(['--open', '--initiator', 'human', '--entry', 'orch', '--inquiry', 'q', '--guess', 'a.md,b.md', '--blind'], ledger).code, 0);
   assert.strictEqual(cli(['--map', 'L001', '--paths', 'b.md,c.md'], ledger).code, 0);
@@ -409,7 +409,7 @@ test('cli: the three writes and the report round-trip', () => {
 });
 
 test('cli: a refusal exits non-zero and writes nothing', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-cli2-'));
+  const dir = require('./scratch.js').mkdtemp('lap-cli2-');
   const ledger = path.join(dir, 'lap.jsonl');
   cli(['--open', '--initiator', 'chair', '--entry', 'orch', '--inquiry', 'q', '--guess', 'a.md'], ledger);
   cli(['--map', 'L001', '--paths', 'a.md'], ledger);
@@ -421,7 +421,7 @@ test('cli: a refusal exits non-zero and writes nothing', () => {
 });
 
 test('cli: no verb prints usage and exits 2', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-cli3-'));
+  const dir = require('./scratch.js').mkdtemp('lap-cli3-');
   const r = cli([], path.join(dir, 'lap.jsonl'));
   assert.strictEqual(r.code, 2);
   assert.match(r.stderr, /usage:/);
@@ -449,8 +449,8 @@ test('2W-1: two machines minting against their OWN ledgers do not produce the sa
   // machine-local lap.jsonl, so both are at the same count and both mint the same NUMBER. Only the
   // tag separates them. A test that shared one ledger would prove nothing, because the second mint
   // would see the first row and increment past it -- the collision would be hidden by the fixture.
-  const dirA = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-2w1a-'));
-  const dirB = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-2w1b-'));
+  const dirA = require('./scratch.js').mkdtemp('lap-2w1a-');
+  const dirB = require('./scratch.js').mkdtemp('lap-2w1b-');
   const ledA = path.join(dirA, 'lap.jsonl');
   const ledB = path.join(dirB, 'lap.jsonl');
 
@@ -476,8 +476,8 @@ test('2W-1: an unconfigured machine does NOT fall back to a shared constant', ()
   //
   // Fixed by making the machine genuinely unconfigured: HOME and USERPROFILE point at an empty
   // temp dir, so fromConfig finds nothing and the derivation is the only path left.
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-2w1c-'));
-  const fakeHome = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-nohome-'));
+  const dir = require('./scratch.js').mkdtemp('lap-2w1c-');
+  const fakeHome = require('./scratch.js').mkdtemp('lap-nohome-');
   const ledger = path.join(dir, 'lap.jsonl');
   const env = { ...process.env, LAP_LEDGER: ledger, HOME: fakeHome, USERPROFILE: fakeHome };
   delete env.LAP_MACHINE_TAG;
@@ -500,7 +500,7 @@ test('2W-1: max+1 still holds when the ledger carries MORE THAN ONE tag', () => 
   // The parse used to strip only /^L/. Left alone it would read a D-row as NaN, drop it from the
   // max, and re-mint an id that already exists -- reintroducing the exact gap-filling merge that
   // mintId's own comment forbids at length.
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-2w1d-'));
+  const dir = require('./scratch.js').mkdtemp('lap-2w1d-');
   const ledger = path.join(dir, 'lap.jsonl');
   fs.writeFileSync(ledger,
     JSON.stringify({ lap: 'L001', stage: 'open', initiator: 'chair', inquiry: 'x', guess: ['a.md'], ts: 1 }) + '\n' +
@@ -1719,7 +1719,7 @@ test('FALSIFIER: this tool\'s own is a ONE-SHOT - one opened row disarms it fore
  * D095 beside L069, the two machines count separately, and a cross-tag max would refuse tonight's
  * own L070. An unreadable record refuses: a guard that cannot see its record must not pass. */
 function recordRepo(subjects) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-rec-'));
+  const dir = require('./scratch.js').mkdtemp('lap-rec-');
   execFileSync('git', ['-C', dir, 'init', '-q']);
   for (const s of subjects) {
     execFileSync('git', ['-C', dir, '-c', 'user.name=t', '-c', 'user.email=t@t', '-c', 'commit.gpgsign=false',
@@ -1790,7 +1790,7 @@ test('record: only an id STARTING a subject is a lap - "L077 and L080 are the da
 });
 
 test('record: a record that cannot be read REFUSES rather than passing', () => {
-  withRecord(fs.mkdtempSync(path.join(os.tmpdir(), 'lap-norepo-')), (f) => {
+  withRecord(require('./scratch.js').mkdtemp('lap-norepo-'), (f) => {
     ledgerTo(f, 54);
     assert.throws(() => f.mod.open(OPEN), /record/i);
   });

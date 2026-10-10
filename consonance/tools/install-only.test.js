@@ -48,7 +48,7 @@ function test(name, fn) {
 }
 
 const REPO = path.resolve(__dirname, '..', '..');
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'installonly-'));
+const tmp = require('./scratch.js').mkdtemp('installonly-');
 let seq = 0;
 
 // A throwaway repo: only the two source directories the manifest draws from, plus the script.

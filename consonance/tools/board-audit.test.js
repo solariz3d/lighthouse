@@ -79,7 +79,7 @@ function audit(env) {
 }
 const boardRow = (i) => JSON.stringify({ pane: '0c0c0c0a-0000-4000-8000-000000000a01', role: 'assistant', text: 't' + i, ts: 1000 + i * 60000 });
 test('D273: an EMPTY CONSONANCE_DATA is read as empty: no board there is said in words, exit 1, and no other board is read', () => {
-  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'audit-empty-'));
+  const data = require('./scratch.js').mkdtemp('audit-empty-');
   try {
     const r = audit({ CONSONANCE_DATA: data });
     assert.strictEqual(r.code, 1, r.out + r.err);
@@ -89,7 +89,7 @@ test('D273: an EMPTY CONSONANCE_DATA is read as empty: no board there is said in
   } finally { fs.rmSync(data, { recursive: true, force: true }); }
 });
 test('D273: the board is found under CONSONANCE_DATA, then ~/.consonance.json data_dir, then ~/.consonance, and the line names the file it read', () => {
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'audit-find-'));
+  const tmp = require('./scratch.js').mkdtemp('audit-find-');
   try {
     const put = (dir) => { fs.mkdirSync(dir, { recursive: true }); fs.writeFileSync(path.join(dir, 'board.jsonl'), [0, 1, 2].map(boardRow).join('\n') + '\n'); return path.join(dir, 'board.jsonl'); };
     const viaEnv = put(path.join(tmp, 'env'));

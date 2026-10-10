@@ -13,7 +13,7 @@ const { spawnSync } = require('child_process');
 const HOOK = path.join(__dirname, 'ask-ending.js');
 const G = require('./ask-ending.js');
 const FAKE = ['sk', 'or', 'v1', 'a1b2c3d4e5f6a7b8c9d0e1f2'].join('-');
-const tmp = (p) => fs.mkdtempSync(path.join(os.tmpdir(), p));
+const tmp = (p) => require('../tools/scratch.js').mkdtemp(p);
 const user = (text) => ({ type: 'user', message: { role: 'user', content: text } });
 const assistant = (...blocks) => ({ type: 'assistant', message: { role: 'assistant', content: blocks } });
 const T = (text) => ({ type: 'text', text });

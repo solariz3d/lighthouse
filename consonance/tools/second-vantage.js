@@ -341,7 +341,7 @@ function worldCheck(row, tier, repoRoot, spawner) {
   if (!row.head || !cur || row.head === cur) {
     return { checked: false, moved: false, claimHead: row.head || '', currentHead: cur };
   }
-  const wt = fs.mkdtempSync(path.join(require('os').tmpdir(), 'vantage-wt-'));
+  const wt = require('./scratch.js').mkdtemp('vantage-wt-');
   let moved = false;
   try {
     const add = cp.spawnSync('git', ['worktree', 'add', '--detach', wt, row.head],

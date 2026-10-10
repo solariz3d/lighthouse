@@ -75,7 +75,7 @@ const FAKE = [
 ].join('\r\n');
 
 function world({ mode = 'current', appRunning = false, timeout = 30, noClaude = false, noReceiptDir = false, env = {} } = {}) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'launch-fuse-'));
+  const root = require('./tools/scratch.js').mkdtemp('launch-fuse-');
   const bin = path.join(root, 'bin'); fs.mkdirSync(bin);
   const claude = path.join(bin, 'claude.cmd');
   if (!noClaude) fs.writeFileSync(claude, FAKE);
@@ -169,8 +169,8 @@ test('the receipt directory is missing: no throw, the outcome still returned, la
 });
 
 test('the receipt NEVER lands in the data dir (an unplaced data-dir file makes close.js --check refuse), even with CONSONANCE_DATA set', () => {
-  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'fuse-data-'));
-  const local = fs.mkdtempSync(path.join(os.tmpdir(), 'fuse-local-'));
+  const data = require('./tools/scratch.js').mkdtemp('fuse-data-');
+  const local = require('./tools/scratch.js').mkdtemp('fuse-local-');
   const r = spawnSync('powershell.exe', ['-NoProfile', '-Command', `
     $ast = [System.Management.Automation.Language.Parser]::ParseFile('${LAUNCH.replace(/'/g, "''")}', [ref]$null, [ref]$null)
     $d = $ast.Find({ param($n) $n -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $n.Name -eq 'Get-FuseReceiptDir' }, $true)

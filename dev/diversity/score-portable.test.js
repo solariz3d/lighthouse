@@ -83,7 +83,7 @@ check('with no LIGHTHOUSE_REPO, the checkout the scorer sits in is found', () =>
 });
 
 check('a git checkout that is NOT this repo (no dev/diversity/phase-window.js) is refused, not used', () => {
-  const other = fs.mkdtempSync(path.join(os.tmpdir(), 'not-lighthouse-'));
+  const other = require('../../consonance/tools/scratch.js').mkdtemp('not-lighthouse-');
   try {
     execFileSync('git', ['init', '-q', other]);
     const m = throws(() => resolve(other, undefined));

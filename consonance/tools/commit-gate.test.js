@@ -28,7 +28,7 @@ const REPO = path.resolve(__dirname, '..', '..');
 
 const dirs = [];
 function tmp(tag) {
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), `commit-gate-${tag}-`));
+  const d = require('./scratch.js').mkdtemp(`commit-gate-${tag}-`);
   dirs.push(d);
   return d;
 }

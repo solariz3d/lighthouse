@@ -250,7 +250,7 @@ test('a ledger row carries hashes and counts — never the state, a question, or
 });
 
 function cliFiles() {
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-cli-'));
+  const d = require('./scratch.js').mkdtemp('jev-cli-');
   fs.writeFileSync(path.join(d, 's.json'), JSON.stringify(SCHEMA));
   fs.writeFileSync(path.join(d, 'state.txt'), STATE);
   return d;

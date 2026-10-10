@@ -50,7 +50,7 @@ function test(name, fn) {
   catch (e) { console.log(`  FAIL ${name}\n       ${e && e.message}`); fail++; }
 }
 
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'close-'));
+const tmp = require('./scratch.js').mkdtemp('close-');
 let seq = 0;
 
 const MIN_MANIFEST = {
@@ -191,7 +191,7 @@ test('L065: the state refusal fires before anything is prepared — no commit la
 // The packet's own red condition, kept as a CONTROL: an empty home and no CONSONANCE_* vars refuses on the missing
 // corpus BEFORE the state is ever consulted. It was a clean refusal before this lap and must stay one.
 test('L065 control: an empty home with no CONSONANCE_* vars refuses on the corpus, with no stack trace', () => {
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'close-home-'));
+  const home = require('./scratch.js').mkdtemp('close-home-');
   const env = { ...process.env, USERPROFILE: home, HOME: home };
   for (const k of Object.keys(env)) if (/^CONSONANCE_/.test(k)) delete env[k];
   let code = 0, err = '';

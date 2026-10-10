@@ -107,9 +107,9 @@ function iso(msAgo) { return new Date(Date.now() - msAgo).toISOString(); }
 
 /* One isolated run. Returns { ctx, raw, status }. */
 function run({ prevMsAgo, compactMsAgo, startMsAgo, hook = HOOK, stdin = true }) {
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'pulse-home-'));
-  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'pulse-data-'));
-  const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'pulse-cwd-sibling-'));
+  const home = require('../../../consonance/tools/scratch.js').mkdtemp('pulse-home-');
+  const data = require('../../../consonance/tools/scratch.js').mkdtemp('pulse-data-');
+  const cwd = require('../../../consonance/tools/scratch.js').mkdtemp('pulse-cwd-sibling-');
   const shell = path.join(home, '.claude', 'shell');
   fs.mkdirSync(shell, { recursive: true });
   const safe = path.basename(cwd).replace(/[^A-Za-z0-9\-_]/g, '_').slice(0, 64);
@@ -252,7 +252,7 @@ test('MUTATION: with the ROW 10 block removed, the positive fixture prints no pa
   const b = src.indexOf('# --- end ROW 10');
   assert.ok(a > 0 && b > a, 'the ROW 10 block must be delimited by its two marker comments');
   const mutant = src.slice(0, a) + 'row10_part = ""\n' + src.slice(src.indexOf('\n', b) + 1);
-  const mpath = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'pulse-mut-')), 'userprompt_pulse.py');
+  const mpath = path.join(require('../../../consonance/tools/scratch.js').mkdtemp('pulse-mut-'), 'userprompt_pulse.py');
   fs.writeFileSync(mpath, mutant);
   const r = run({ prevMsAgo: 2 * H, compactMsAgo: 1 * H, startMsAgo: 1 * H, hook: mpath });
   assert.ok(r.ctx, 'the mutant must still be a valid pulse: ' + r.raw + r.err);

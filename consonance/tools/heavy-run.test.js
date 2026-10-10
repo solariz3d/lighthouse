@@ -14,7 +14,7 @@ const H = require('./heavy-run.js');
 const HELPER = path.join(__dirname, 'heavy-run.js');
 
 const dirs = [];
-function tmp() { const d = fs.mkdtempSync(path.join(os.tmpdir(), 'heavy-run-')); dirs.push(d); return d; }
+function tmp() { const d = require('./scratch.js').mkdtemp('heavy-run-'); dirs.push(d); return d; }
 process.on('exit', () => { for (const d of dirs) { try { fs.rmSync(d, { recursive: true, force: true }); } catch (_) {} } });
 
 const cleanEnv = (extra = {}) => { const e = { ...process.env }; delete e[H.TOKEN_ENV]; delete e.CONSONANCE_PANE; return { ...e, ...extra }; };

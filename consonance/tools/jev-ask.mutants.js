@@ -81,7 +81,7 @@ function main() {
   delete env.OPENROUTER_API_KEY;
   delete env.JEV_LIVE_SMOKE;
   const runCopy = (text) => {
-    const d = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-mut-'));
+    const d = require('./scratch.js').mkdtemp('jev-mut-');
     try {
       fs.writeFileSync(path.join(d, 'jev-ask.js'), text);
       fs.writeFileSync(path.join(d, 'jev-ask.test.js'), suite);

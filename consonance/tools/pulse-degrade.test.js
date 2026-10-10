@@ -127,9 +127,9 @@ function t(name, fn) {
 // The hook keys its state file on the BASENAME of the working directory
 // (`pulse_state.<cwd>.json`), so the cwd is part of the isolation and not incidental.
 function arm({ configDataDir, envDataDir, ledger }) {
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'pulse-home-'));
-  const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'pulse-cwd-'));
-  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'pulse-data-'));
+  const home = require('./scratch.js').mkdtemp('pulse-home-');
+  const cwd = require('./scratch.js').mkdtemp('pulse-cwd-');
+  const data = require('./scratch.js').mkdtemp('pulse-data-');
 
   const cfg = { machine_tag: 'TEST' };
   if (configDataDir) cfg.data_dir = data;

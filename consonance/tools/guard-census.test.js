@@ -288,7 +288,7 @@ t("a numeric subscript is left to the num operator, keeping the families disjoin
 
 t("a live lock stops a second sweep from interleaving two mutation streams in one tree", () => {
   const { takeLock, LOCKNAME } = require("./guard-census.js");
-  const dir = require("fs").mkdtempSync(path.join(require("os").tmpdir(), "gclock-"));
+  const dir = require('./scratch.js').mkdtemp('gclock-');
   const drop = takeLock(dir, "first");
   const rec = JSON.parse(require("fs").readFileSync(path.join(dir, LOCKNAME), "utf8"));
   assert.equal(rec.pid, process.pid);
@@ -306,7 +306,7 @@ t("a live lock stops a second sweep from interleaving two mutation streams in on
 t("a stale lock from a dead pid is cleared, not honoured forever", () => {
   const { takeLock, LOCKNAME } = require("./guard-census.js");
   const fs2 = require("fs");
-  const dir = fs2.mkdtempSync(path.join(require("os").tmpdir(), "gclock-"));
+  const dir = require('./scratch.js').mkdtemp("gclock-");
   fs2.writeFileSync(path.join(dir, LOCKNAME), JSON.stringify({ pid: 999999, what: "ghost" }));
   const drop = takeLock(dir, "live");                       // must not exit
   assert.equal(JSON.parse(fs2.readFileSync(path.join(dir, LOCKNAME), "utf8")).pid, process.pid);

@@ -265,7 +265,7 @@ Write-Output (ConvertTo-Json $out -Depth 5 -Compress)
 let PROBE_PATH = null;
 function probeScript() {
   if (!PROBE_PATH) {
-    PROBE_PATH = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'launch-probe-')), 'probe.ps1');
+    PROBE_PATH = path.join(require('./scratch.js').mkdtemp('launch-probe-'), 'probe.ps1');
     fs.writeFileSync(PROBE_PATH, PROBE_PS1, 'utf8');
   }
   return PROBE_PATH;
@@ -450,7 +450,7 @@ if (WIN && !PROBE_ON) {
   console.log('BUILD-GATE:   run it where a window appearing is nobody\'s interruption.');
 }
 
-const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'build-gate-'));
+const scratch = require('./scratch.js').mkdtemp('build-gate-');
 const NODE = process.execPath;
 
 function controlWindowScript() {
@@ -712,7 +712,7 @@ function gate() {
   }
 
   const started = Date.now();
-  const tree = fs.mkdtempSync(path.join(os.tmpdir(), 'consumer-gate-'));
+  const tree = require('./scratch.js').mkdtemp('consumer-gate-');
   const gen = spawnSync(NODE, [path.join(REPO, 'consonance/tools/gen-consumer.js'), '--out', tree],
     { cwd: REPO, encoding: 'utf8', timeout: 10 * 60 * 1000 });
   say('generate: exit ' + gen.status + ' -> ' + tree);
@@ -728,7 +728,7 @@ function gate() {
   const stale = freshExeProblem(exe, target, started);
   if (stale) { say('REFUSED: ' + stale); process.exit(1); }
 
-  const scratchHome = fs.mkdtempSync(path.join(os.tmpdir(), 'consumer-home-'));
+  const scratchHome = require('./scratch.js').mkdtemp('consumer-home-');
   const v = launchProbe({ exe, expectClass: APP_WINDOW_CLASS,
     expectTitle: '^' + appWindowTitle() + '$', timeoutMs: 60000,
     env: { USERPROFILE: scratchHome } });

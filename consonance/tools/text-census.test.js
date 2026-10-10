@@ -23,7 +23,7 @@ function it(name, fn) {
 }
 
 // A fresh temp dir per run; the test writes only here.
-const ROOT = fs.mkdtempSync(path.join(os.tmpdir(), 'text-census-'));
+const ROOT = require('./scratch.js').mkdtemp('text-census-');
 const write = (rel, buf) => {
   const p = path.join(ROOT, rel);
   fs.mkdirSync(path.dirname(p), { recursive: true });

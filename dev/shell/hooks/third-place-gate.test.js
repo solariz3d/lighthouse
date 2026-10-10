@@ -36,7 +36,7 @@ const SEAT_DOT = ['tpDot', 'tpDotFwd', 'tpDotDot', 'tpSubUp'];
 const LOOKALIKE = ['lkPlacement', 'lkOldUnder', 'lkUnderscore', 'lkBak', 'lkTwo', 'lkSpace', 'lkDashPrefix', 'lkDotDotOut', 'lkRelative'];
 
 function install(hooksDir) {   // hooksDir: where the five hooks are taken from (the repo's own, or a mutated copy)
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'tp-gate-')), shell = path.join(root, 'shell'), home = path.join(root, 'home'), repo = path.join(root, 'repo');
+  const root = require('../../../consonance/tools/scratch.js').mkdtemp('tp-gate-'), shell = path.join(root, 'shell'), home = path.join(root, 'home'), repo = path.join(root, 'repo');
   for (const f of ['session-start.js', 'userprompt-submit.js', 'precompact.js']) cp(path.join(hooksDir.shell, f), path.join(shell, 'hooks', f));
   for (const f of ['sessionstart-state.js']) cp(path.join(hooksDir.consonance, f), path.join(shell, f));
   cp(path.join(hooksDir.consonance, 'ask-surface.js'), path.join(repo, 'consonance', 'hooks', 'ask-surface.js'));

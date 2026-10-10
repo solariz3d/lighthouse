@@ -50,7 +50,7 @@ function renderIn(repo) {
 let poisonedDir = null;
 function poisoned() {
   if (poisonedDir) return poisonedDir;
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'sb-poison-'));
+  const d = require('./scratch.js').mkdtemp('sb-poison-');
   const g = (...a) => cp.execFileSync('git', a, { cwd: d, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
   g('init', '-q');
   g('-c', 'user.name=fixture', '-c', 'user.email=fixture@test', 'commit', '-q', '--allow-empty', '-m', POISON);
@@ -190,7 +190,7 @@ test('a failed command is REPORTED, never omitted', () => {
   // that it returned some lines — it never forced a failure, so it was green over nothing, in the
   // file whose whole subject is that. STATE_BLOCK_REPO exists so the failure path is reachable.
   const { execFileSync } = require('node:child_process');
-  const empty = fs.mkdtempSync(path.join(os.tmpdir(), 'sb-norepo-'));
+  const empty = require('./scratch.js').mkdtemp('sb-norepo-');
   const out = execFileSync(process.execPath, [require.resolve('./state-block.js')], {
     env: { ...process.env, STATE_BLOCK_REPO: empty },
     encoding: 'utf8',
@@ -250,7 +250,7 @@ test('the block declares itself machine-generated and names its own regenerator'
 const { execFileSync } = require('node:child_process');
 
 function withHome(cfg) {
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'sb-home-'));
+  const home = require('./scratch.js').mkdtemp('sb-home-');
   if (cfg !== null) fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify(cfg));
   return execFileSync(process.execPath, [require.resolve('./state-block.js')], {
     env: { ...process.env, USERPROFILE: home },
@@ -280,7 +280,7 @@ test('with NO chair_name it reports the absence and does NOT manufacture one', (
 
 test('an unreadable config is REPORTED, not silently treated as unnamed', () => {
   // Otherwise a corrupt config and a deliberate absence look identical.
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'sb-badcfg-'));
+  const home = require('./scratch.js').mkdtemp('sb-badcfg-');
   fs.writeFileSync(path.join(home, '.consonance.json'), '{ this is not json');
   const out = execFileSync(process.execPath, [require.resolve('./state-block.js')], {
     env: { ...process.env, USERPROFILE: home }, encoding: 'utf8',
@@ -397,7 +397,7 @@ test('D273 lap 3: a fresh history with NO origin/main is said in words, not FAIL
   /* Found by the lap-3 consumer parity: the generated tree is a fresh-history repository with no remote, and the REPO section printed
    * "FAILED: git rev-list did not run here", so sessionstart-state.test.js ("the live generator must not be reporting FAILED") was red only there,
    * and every session start of a new user would have carried a FAILED line. A real git failure still prints FAILED (the empty-directory row above). */
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sb-fresh-'));
+  const dir = require('./scratch.js').mkdtemp('sb-fresh-');
   try {
     const g = (args) => cp.execFileSync('git', args, { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
     g(['init', '-q', '-b', 'main']); fs.writeFileSync(path.join(dir, 'a.txt'), 'a\n'); g(['add', '.']);

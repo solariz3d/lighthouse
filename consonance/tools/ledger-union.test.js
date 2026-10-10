@@ -7,6 +7,8 @@ const os = require('os');
 const path = require('path');
 const { spawnSync, spawn } = require('child_process');
 const { canon, parseJsonl, union } = require('./ledger-union.js');
+// D287: these dirs stay on the machine's REAL temp dir, not the G: scratch root. The 'hot writer' rows race a tight append loop against rename+link and lose 50 placements in a row on the faster drive (2 of 8 runs on G:, 0 of 8 on C:); they are timing-sensitive to the disk, so the disk is held as it was. Still removed at exit.
+const OS_TMP = process.env.CONSONANCE_OS_TMP || os.tmpdir();
 
 const TOOL = path.join(__dirname, 'ledger-union.js');
 const J = (...rows) => rows.map((r) => JSON.stringify(r)).join('\n') + '\n';
@@ -14,7 +16,7 @@ const J = (...rows) => rows.map((r) => JSON.stringify(r)).join('\n') + '\n';
 /* THE STATE PIN (L072). The union now reads the STATE SET's copy too, resolved like state-sync.js (CONSONANCE_STATE,
  * then ~/.consonance.json state_dir). Unpinned, every fixture here would read this machine's REAL state set — L's
  * config declares one — and count its rows. An empty temp dir is a state set holding nothing. No assertion changed. */
-process.env.CONSONANCE_STATE = fs.mkdtempSync(path.join(os.tmpdir(), 'lu-emptystate-'));
+process.env.CONSONANCE_STATE = require('./scratch.js').mkdtemp('lu-emptystate-', OS_TMP);
 
 test('the key is the WHOLE row: field order does not decide identity', () => {
   assert.strictEqual(canon({ lap: 'L1', at: 5, stage: 'open' }), canon({ stage: 'open', at: 5, lap: 'L1' }));
@@ -80,7 +82,7 @@ test('the CLI --write refuses without an explicit single --file', () => {
 });
 
 test('the CLI refuses an --out inside the data dir, and writes nothing there', () => {
-  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'lu-data-'));
+  const data = require('./scratch.js').mkdtemp('lu-data-', OS_TMP);
   fs.writeFileSync(path.join(data, 'lap.jsonl'), J({ lap: 'L1', at: 1 }));
   const before = fs.readdirSync(data).sort();
   const r = spawnSync(process.execPath, [TOOL, '--data', data, '--out', path.join(data, 'x'), '--file', 'lap'], { encoding: 'utf8' });
@@ -90,7 +92,7 @@ test('the CLI refuses an --out inside the data dir, and writes nothing there', (
 });
 
 test('a dry run end to end leaves the live file and every attic copy byte-identical', () => {
-  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'lu-e2e-'));
+  const data = require('./scratch.js').mkdtemp('lu-e2e-', OS_TMP);
   const live = path.join(data, 'lap.jsonl');
   const atticDir = path.join(data, 'attic', 'pre-sync-2026-01-01T00-00-00-000Z');
   fs.mkdirSync(atticDir, { recursive: true });
@@ -98,7 +100,7 @@ test('a dry run end to end leaves the live file and every attic copy byte-identi
   fs.writeFileSync(live, J({ lap: 'L1', at: 1 }));
   fs.writeFileSync(atticFile, J({ lap: 'L1', at: 1 }, { lap: 'L2', at: 2 }));
   const b1 = fs.readFileSync(live), b2 = fs.readFileSync(atticFile);
-  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'lu-out-'));
+  const out = require('./scratch.js').mkdtemp('lu-out-', OS_TMP);
   const r = spawnSync(process.execPath, [TOOL, '--data', data, '--out', out, '--file', 'lap'], { encoding: 'utf8' });
   assert.strictEqual(r.status, 0, r.stderr);
   assert.match(r.stdout, /ROWS TO ADD to live\s+1/);
@@ -112,7 +114,7 @@ test('a dry run end to end leaves the live file and every attic copy byte-identi
 const { writeUnion } = require('./ledger-union.js');
 
 function writeFixture(liveRows, atticRows, extraLive = '') {
-  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'lu-w-'));
+  const data = require('./scratch.js').mkdtemp('lu-w-', OS_TMP);
   fs.writeFileSync(path.join(data, 'lap.jsonl'), J(...liveRows) + extraLive);
   const atticDir = path.join(data, 'attic', 'pre-sync-2026-01-01T00-00-00-000Z');
   fs.mkdirSync(atticDir, { recursive: true });
@@ -234,7 +236,7 @@ test('WRITE: a second write (new stamp) adds nothing — the union is already in
 // Under L070's stop-before-write, a launch that meets a DIVERGED ledger refuses and writes nothing — so on the other
 // machine no attic copy of this machine's rows ever exists. The only copy is the state set's (<state>/data/<file>).
 function stateWorld({ live, state, attic = null }) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'lu-st-'));
+  const root = require('./scratch.js').mkdtemp('lu-st-', OS_TMP);
   const data = path.join(root, 'data'), stateDir = path.join(root, 'state');
   fs.mkdirSync(data, { recursive: true });
   fs.mkdirSync(path.join(stateDir, 'data'), { recursive: true });
@@ -280,7 +282,7 @@ test('STATE: the key is still the WHOLE row — a state row equal to a live row 
 
 test('STATE: NOTHING is written into the state dir — neither by the dry run nor by the write', () => {
   const w = stateWorld({ live: [{ lap: 'L001', at: 1 }], state: [{ lap: 'D090', at: 2 }], attic: [{ lap: 'L000', at: 0 }] });
-  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'lu-st-out-'));
+  const out = require('./scratch.js').mkdtemp('lu-st-out-', OS_TMP);
   const before = treeHash(w.stateDir);
   const dry = cliIn(w, ['--out', out, '--file', 'lap']);
   assert.strictEqual(dry.status, 0, dry.stderr);
@@ -301,7 +303,7 @@ test('STATE: the dry run NAMES the state source and its row count', () => {
 
 test('STATE: an UNDECLARED state dir refuses loudly (exit 2) — for the dry run and for the write — and writes nothing', () => {
   const w = stateWorld({ live: [{ lap: 'L001', at: 1 }], state: [{ lap: 'D090', at: 2 }] });
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'lu-nohome-'));            // no ~/.consonance.json here
+  const home = require('./scratch.js').mkdtemp('lu-nohome-', OS_TMP);            // no ~/.consonance.json here
   const env = { CONSONANCE_STATE: '', USERPROFILE: home, HOME: home };
   const liveBefore = fs.readFileSync(w.live);
   for (const args of [['--file', 'lap'], ['--write', '--file', 'lap']]) {
@@ -337,7 +339,7 @@ test('STATE: a state set that holds no copy of THIS file is said out loud, and t
 const { FILES, fileSpec, timeOf } = require('./ledger-union.js');
 
 function nineWorld(name, live, state) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'lu-nine-'));
+  const root = require('./scratch.js').mkdtemp('lu-nine-', OS_TMP);
   const data = path.join(root, 'data'), stateDir = path.join(root, 'state');
   const lp = path.join(data, name), sp = path.join(stateDir, 'data', name);
   fs.mkdirSync(path.dirname(lp), { recursive: true });
@@ -420,7 +422,7 @@ test('NINE: --file accepts each marked file by key, by file name, and by manifes
 });
 
 test('NINE: NOTHING is written into the state dir — a dry run of all eleven and a write of each leave it byte-identical', () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'lu-nine-all-'));
+  const root = require('./scratch.js').mkdtemp('lu-nine-all-', OS_TMP);
   const data = path.join(root, 'data'), stateDir = path.join(root, 'state');
   for (const f of Object.values(FILES)) {
     const t0 = Array.isArray(f.time) ? f.time[0] : f.time;
@@ -431,7 +433,7 @@ test('NINE: NOTHING is written into the state dir — a dry run of all eleven an
     }
   }
   const before = treeHash(stateDir);
-  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'lu-nine-out-'));
+  const out = require('./scratch.js').mkdtemp('lu-nine-out-', OS_TMP);
   const dry = spawnSync(process.execPath, [TOOL, '--data', data, '--out', out, '--file', 'all'], { encoding: 'utf8', env: { ...process.env, CONSONANCE_STATE: stateDir } });
   assert.strictEqual(dry.status, 0, dry.stderr);
   for (const f of Object.values(FILES)) assert.ok(dry.stdout.includes(`=== ${f.name}`), `the dry run skipped ${f.name}`);
@@ -475,7 +477,7 @@ test('WRITE: a REAL concurrent writer process appending throughout loses no row'
 const { takeUnionLock, releaseUnionLock, LOCK } = require('./ledger-union.js');
 
 test('D114 a second union of the same data dir is REFUSED while the first holds the lock', () => {
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'union-lock-'));
+  const d = require('./scratch.js').mkdtemp('union-lock-', OS_TMP);
   const first = takeUnionLock({ dataDir: d, name: 'lap.jsonl' });
   assert.ok(fs.existsSync(path.join(d, LOCK)));
   assert.throws(() => takeUnionLock({ dataDir: d, name: 'board.jsonl' }), /already running/i,
@@ -494,7 +496,7 @@ test('D114 a second union of the same data dir is REFUSED while the first holds 
 });
 
 test('D114 a lock whose holder is DEAD is taken over, and the takeover is reported', () => {
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'union-lock-'));
+  const d = require('./scratch.js').mkdtemp('union-lock-', OS_TMP);
   // a pid that cannot be running: the highest Windows pids are far below this, and process.kill(0) says so
   fs.writeFileSync(path.join(d, LOCK), JSON.stringify({ pid: 2147483646, file: 'lap.jsonl', at: '2026-09-22T00:00:00.000Z' }));
   const l = takeUnionLock({ dataDir: d, name: 'lap.jsonl' });

@@ -31,7 +31,7 @@ function digest(date, counts = COUNTS[date]) {
 }
 const LIB = CWDS[1], TP = CWDS[0];
 function install({ config = {}, digests = true, l3 = false, knock = false, extra = {} } = {}) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'ss-light-')), shell = path.join(root, 'shell'), home = path.join(root, 'home'), inst = path.join(root, 'instances');
+  const root = require('../../../consonance/tools/scratch.js').mkdtemp('ss-light-'), shell = path.join(root, 'shell'), home = path.join(root, 'home'), inst = path.join(root, 'instances');
   cp(HOOK, path.join(shell, 'hooks', 'session-start.js'));
   for (const f of ['ambient.js', 'fresh-guard.js']) cp(path.join(SHELLSRC, 'lib', f), path.join(shell, 'lib', f));
   if (digests) for (const d of Object.keys(COUNTS)) mk(path.join(shell, 'digests', d + '.md'), digest(d));

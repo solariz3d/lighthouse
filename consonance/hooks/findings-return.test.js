@@ -12,7 +12,7 @@ const { spawnSync } = require('child_process');
 const HOOK = path.join(__dirname, 'findings-return.js');
 const PANE_CWD = 'C:\\panes\\sibling-test';
 
-function tmpdir() { return fs.mkdtempSync(path.join(os.tmpdir(), 'fret-')); }
+function tmpdir() { return require('../tools/scratch.js').mkdtemp('fret-'); }
 
 function env(tmp, extra) {
   return {

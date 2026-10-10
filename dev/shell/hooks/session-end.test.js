@@ -24,12 +24,12 @@ const path = require('node:path');
 const { spawnSync } = require('node:child_process');
 
 const HOOK = path.join(__dirname, 'session-end.js');
-const SHELL = fs.mkdtempSync(path.join(os.tmpdir(), 'session-end-shell-'));
+const SHELL = require('../../../consonance/tools/scratch.js').mkdtemp('session-end-shell-');
 const dirs = [SHELL];
 test.after(() => { for (const d of dirs) { try { fs.rmSync(d, { recursive: true, force: true, maxRetries: 3 }); } catch (e) { /* a temp folder Windows still holds */ } } });
 process.env.CONSONANCE_SHELL_DIR = SHELL;   // BEFORE the hook is required: it reads this at load
 
-const scratch = (name, bytes) => { const d = fs.mkdtempSync(path.join(os.tmpdir(), 'session-end-t-')); dirs.push(d); const f = path.join(d, name); fs.writeFileSync(f, bytes); return f; };
+const scratch = (name, bytes) => { const d = require('../../../consonance/tools/scratch.js').mkdtemp('session-end-t-'); dirs.push(d); const f = path.join(d, name); fs.writeFileSync(f, bytes); return f; };
 const rec = (o) => JSON.stringify(o);
 const user = (content) => rec({ type: 'user', message: { role: 'user', content } });
 const asst = (text) => rec({ type: 'assistant', message: { role: 'assistant', content: [{ type: 'text', text }] } });

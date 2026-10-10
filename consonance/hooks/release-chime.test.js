@@ -26,7 +26,7 @@ test.after(() => { for (const r of roots) try { fs.rmSync(r, { recursive: true, 
 const FIXED = Date.parse('2026-10-09T20:00:00Z');
 
 function room(cfg = {}, { sound = true } = {}) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'chime-')); roots.push(root);
+  const root = require('../tools/scratch.js').mkdtemp('chime-'); roots.push(root);
   const home = path.join(root, 'home'), data = path.join(root, 'data'), media = path.join(root, 'Media'), stub = path.join(root, 'stub.jsonl');
   fs.mkdirSync(home, { recursive: true }); fs.mkdirSync(media, { recursive: true });
   if (sound) fs.writeFileSync(path.join(media, 'chimes.wav'), WAV);
@@ -157,7 +157,7 @@ test('row 10: the ledger has one row per ship it recognised, with the decision a
 
 test('row 11: the real player command plays a silent wav to the end and exits 0, with an apostrophe in the path (win32)', (t) => {
   if (process.platform !== 'win32') return t.skip('Windows PowerShell only');
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "it's here ")); roots.push(dir); const f = path.join(dir, 's.wav'); fs.writeFileSync(f, WAV);
+  const dir = require('../tools/scratch.js').mkdtemp("it's here "); roots.push(dir); const f = path.join(dir, 's.wav'); fs.writeFileSync(f, WAV);
   assert.match(C.playerArgs(f).join(' '), /''s here/, 'the apostrophe is doubled');
   const r = spawnSync(C.powershell(), C.playerArgs(f), { encoding: 'utf8', timeout: 30000, windowsHide: true }); assert.equal(r.status, 0, `${r.stderr}`);
   const bad = spawnSync(C.powershell(), C.playerArgs(path.join(dir, 'missing.wav')), { encoding: 'utf8', timeout: 30000, windowsHide: true }); assert.notEqual(bad.status, 0, 'control: a missing file fails in the player (the hook ignores it)');

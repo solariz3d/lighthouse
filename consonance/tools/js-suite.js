@@ -301,7 +301,7 @@ function runFile(f, extraEnv) {
     out = execFileSync(process.execPath, [f], {
       cwd: path.dirname(f), encoding: 'utf8', timeout: TIMEOUT_MS,
       stdio: ['ignore', 'pipe', 'pipe'],
-      env: { ...process.env, ...scratch.tempEnv(tmp), ...(extraEnv || {}) },
+      env: { ...process.env, CONSONANCE_OS_TMP: process.env.CONSONANCE_OS_TMP || os.tmpdir(), ...scratch.tempEnv(tmp), ...(extraEnv || {}) },
     });
   } catch (e) {
     code = e.status === undefined || e.status === null ? 'timeout/signal' : e.status;

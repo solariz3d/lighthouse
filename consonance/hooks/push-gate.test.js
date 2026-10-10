@@ -16,7 +16,9 @@ const G = require('./push-gate.js');
 const FAKE_VCK = ['vck', 'a1B2c3D4e5F6g7H8i9J0k1L2'].join('_');
 const FAKE_SKANT = ['sk', 'ant', 'api03', 'Zx9Yw8Vu7Ts6Rq5Po4Nm3Lk2'].join('-');
 
-const tmp = (p) => fs.mkdtempSync(path.join(os.tmpdir(), p));
+// D287: OS_TMP is the machine's REAL temp dir (js-suite hands each file a redirected TEMP and passes the real one as CONSONANCE_OS_TMP), ON PURPOSE (the MSYS /tmp/... row needs the folder where Git Bash maps /tmp); still removed at exit.
+const OS_TMP = process.env.CONSONANCE_OS_TMP || os.tmpdir();
+const tmp = (p) => require('../tools/scratch.js').mkdtemp(p, OS_TMP);
 const git = (cwd, ...args) => { const r = spawnSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@t', '-c', 'init.defaultBranch=main', '-c', 'core.autocrlf=false', ...args], { cwd, encoding: 'utf8' }); assert.equal(r.status, 0, `git ${args.join(' ')}: ${r.stderr}`); return r.stdout; };
 /** A bare origin, a clone with one pushed commit (so @{upstream} exists and origin/HEAD is set). */
 function repo() {
@@ -84,7 +86,7 @@ test('RED: the Bash tool\'s MSYS paths are read as Git Bash means them: /c/Users
   const { root, work } = repo(), data = tmp('pgd-');
   fs.writeFileSync(path.join(work, 'm.txt'), `${FAKE_VCK}\n`); git(work, 'add', 'm.txt'); git(work, 'commit', '-q', '-m', 'm');
   assert.equal(runHook(push(os.homedir(), `git -C ${msysDrive(work)} push`), data).deny, true, 'the /c/... form');
-  const viaTmp = '/tmp/' + path.relative(fs.realpathSync(os.tmpdir()), fs.realpathSync(work)).replace(/\\/g, '/');
+  const viaTmp = '/tmp/' + path.relative(fs.realpathSync(OS_TMP), fs.realpathSync(work)).replace(/\\/g, '/');
   assert.equal(G.nativePath(viaTmp).toLowerCase().replace(/\\/g, '/'), fs.realpathSync(work).toLowerCase().replace(/\\/g, '/'), `cygpath maps ${viaTmp}`);
   assert.equal(runHook(push(root, `git -C ${viaTmp} push`), data).deny, true, 'the /tmp/... form');
   assert.equal(G.nativePath('C:/already/native'), 'C:/already/native');

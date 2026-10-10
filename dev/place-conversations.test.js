@@ -36,7 +36,7 @@ function test(name, fn) {
   catch (e) { console.log(`  FAIL ${name}\n       ${e && e.message}`); fail++; }
 }
 
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'place-'));
+const tmp = require('../consonance/tools/scratch.js').mkdtemp('place-');
 let seq = 0;
 
 /** A jsonl transcript with real-shaped records, so timespan has something true to read. */

@@ -49,7 +49,7 @@ function test(name, fn) {
   catch (e) { console.log(`  FAIL ${name}\n       ${e.message}`); fail++; }
 }
 
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'imprint-measure-'));
+const tmp = require('./scratch.js').mkdtemp('imprint-measure-');
 function near(a, b, tol, what) {
   assert.ok(Math.abs(a - b) <= tol, `${what}: ${a} is not within ${tol} of ${b}`);
 }

@@ -17,7 +17,7 @@ const { execFileSync } = require('child_process');
 const { scan, VALUE_PATTERNS, READING_TOOLS } = require('./sourced.js');
 
 function transcript(turns) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sourced-'));
+  const dir = require('./scratch.js').mkdtemp('sourced-');
   const f = path.join(dir, 't.jsonl');
   const lines = [];
   for (const t of turns) {
@@ -81,7 +81,7 @@ test('a missing ~/.claude/projects exits 2 with a message, not an uncaught ENOEN
   // newestMain() used to readdirSync(PROJECTS) unguarded, so on any box without ~/.claude/projects
   // the tool crashed before reaching the "no transcript found" handler written for exactly that
   // case. Point HOME/USERPROFILE at an empty dir (os.homedir() reads these) and run with no --file.
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'sourced-nohome-'));
+  const home = require('./scratch.js').mkdtemp('sourced-nohome-');
   const env = { ...process.env, USERPROFILE: home, HOME: home };
   let code = 0, stderr = '';
   try {
@@ -128,7 +128,7 @@ function wholeFileTurns(file) {   // the previous implementation, kept here as t
   }
   if (pending) out.push(pending); return out;
 }
-const scratchFile = (bytes) => { const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sourced-chunk-')), f = path.join(dir, 't.jsonl'); fs.writeFileSync(f, bytes); return { f, done: () => fs.rmSync(dir, { recursive: true, force: true }) }; };
+const scratchFile = (bytes) => { const dir = require('./scratch.js').mkdtemp('sourced-chunk-'), f = path.join(dir, 't.jsonl'); fs.writeFileSync(f, bytes); return { f, done: () => fs.rmSync(dir, { recursive: true, force: true }) }; };
 
 test('turns() agrees with a whole-file read at every chunk size, including sizes that split a multi-byte character, a line, and a CRLF', () => {
   const { turns } = require('./sourced.js');

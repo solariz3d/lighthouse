@@ -28,7 +28,7 @@ const PREFIX = '21d5453^';   // the commit before the TRAINING/BOOT/lap marking 
 // ── fixture plumbing ─────────────────────────────────────────────────────────────────────
 const dirs = [];
 function tmpTree(files) {
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'carrier-drift-'));
+  const d = require('./scratch.js').mkdtemp('carrier-drift-');
   dirs.push(d);
   for (const [rel, body] of Object.entries(files)) {
     const p = path.join(d, rel);

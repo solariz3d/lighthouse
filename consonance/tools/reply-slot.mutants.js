@@ -86,7 +86,7 @@ const MUTANTS = [
 ];
 
 function tree() {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'rs-mut-'));
+  const dir = require('./scratch.js').mkdtemp('rs-mut-');
   fs.mkdirSync(path.join(dir, 'consonance', 'hooks'), { recursive: true });
   for (const f of [HOOK, SUITE, ...SIBLINGS]) fs.copyFileSync(path.join(HERE, f), path.join(dir, 'consonance', 'hooks', f));
   for (const rel of [INSTALL, MAIN_RS, PLAN]) { fs.mkdirSync(path.dirname(path.join(dir, rel)), { recursive: true }); fs.copyFileSync(path.join(REPO, rel), path.join(dir, rel)); }

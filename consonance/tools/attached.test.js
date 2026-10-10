@@ -24,7 +24,7 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 // One tmp DATA root for the in-process producer, bound BEFORE the module loads its constants.
-const TMP = fs.mkdtempSync(path.join(os.tmpdir(), 'attached-'));
+const TMP = require('./scratch.js').mkdtemp('attached-');
 process.env.VANTAGE_DATA = TMP;
 delete process.env.VANTAGE_FINDINGS;
 delete process.env.FINDINGS_LEDGER;

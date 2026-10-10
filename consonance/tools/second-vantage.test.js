@@ -156,7 +156,7 @@ const { execFileSync } = require('node:child_process');
 const TOOL = path.join(__dirname, 'second-vantage.js');
 
 function bed(rows) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sv-'));
+  const dir = require('./scratch.js').mkdtemp('sv-');
   fs.writeFileSync(path.join(dir, 'led.jsonl'), rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
   return dir;
 }
@@ -234,7 +234,7 @@ test('advanceWatermark is monotonic — a stale row cannot un-consume paid claim
   // Tested as a UNIT because the run-level path cannot discriminate: run()'s end-of-loop reduce
   // seeds from the existing mark, so it never goes backward either. Mutating the guard away left
   // the suite green, which is how this test came to exist.
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'svw-'));
+  const dir = require('./scratch.js').mkdtemp('svw-');
   const wm = path.join(dir, 'mark.json');
   const prev = process.env.VANTAGE_WATERMARK;
   process.env.VANTAGE_WATERMARK = wm;
@@ -333,9 +333,9 @@ test('a killed loop keeps what it paid for — the per-row watermark, now testab
 // Each child gets its OWN temp root, so the default cell (under os.tmpdir()) resolves inside the test's sandbox and
 // the real cell the live tool uses is never planted in or emptied by a test run.
 // A SIBLING of the data dir, never inside it — inside would put the default cell under DATA, the very thing tested.
-const sandboxTemp = () => { const t = fs.mkdtempSync(path.join(os.tmpdir(), 'sv-tmp-')); return { TEMP: t, TMP: t, TMPDIR: t }; };
+const sandboxTemp = () => { const t = require('./scratch.js').mkdtemp('sv-tmp-'); return { TEMP: t, TMP: t, TMPDIR: t }; };
 function whereWithDefaults(extra = {}) {
-  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'sv-data-'));
+  const data = require('./scratch.js').mkdtemp('sv-data-');
   const env = { ...process.env, VANTAGE_DATA: data, ...sandboxTemp(data), ...extra };
   delete env.VANTAGE_CELL;
   Object.assign(env, extra);
@@ -356,7 +356,7 @@ test('D100: with no VANTAGE_CELL, the resolved cell is NOT under the data dir', 
 });
 
 test('D100: VANTAGE_CELL still overrides, exactly', () => {
-  const cell = fs.mkdtempSync(path.join(os.tmpdir(), 'sv-cell-'));
+  const cell = require('./scratch.js').mkdtemp('sv-cell-');
   const { data, where } = whereWithDefaults({ VANTAGE_CELL: cell });
   try { assert.equal(path.resolve(where.CELL), path.resolve(cell)); }
   finally { fs.rmSync(data, { recursive: true, force: true }); fs.rmSync(cell, { recursive: true, force: true }); }
@@ -365,7 +365,7 @@ test('D100: VANTAGE_CELL still overrides, exactly', () => {
 // Run in a child so the module resolves its default cell with no VANTAGE_CELL; the child plants a leftover the way
 // the _verify_refuse reader did (a nested tree, cwd inside it), then prepares the cell for the next reader.
 function prepareInChild(extra = {}) {
-  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'sv-data-'));
+  const data = require('./scratch.js').mkdtemp('sv-data-');
   const env = { ...process.env, VANTAGE_DATA: data, ...sandboxTemp(data), ...extra };
   if (!('VANTAGE_CELL' in extra)) delete env.VANTAGE_CELL;
   const script = `
@@ -393,7 +393,7 @@ test('D100: a cell held open by a process inside it is a REFUSAL, never a reader
   // another child prepares the cell. On Windows the held directory cannot be removed, so prepareCell must report
   // ok:false with a reason; on a platform that allows it, the cell must come back empty. Either way no reader
   // launches into a cell that still holds another reader's scratch.
-  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'sv-data-'));
+  const data = require('./scratch.js').mkdtemp('sv-data-');
   const env = { ...process.env, VANTAGE_DATA: data, ...sandboxTemp(data) };
   delete env.VANTAGE_CELL;
   const cell = JSON.parse(execFileSync(process.execPath, [TOOL, '--where'], { env, encoding: 'utf8' }).trim().split('\n').pop()).CELL;
@@ -416,7 +416,7 @@ test('D100: a cell held open by a process inside it is a REFUSAL, never a reader
 });
 
 test('D100: an operator-chosen VANTAGE_CELL is never emptied — its contents are not the tool\'s to delete', () => {
-  const cell = fs.mkdtempSync(path.join(os.tmpdir(), 'sv-cell-'));
+  const cell = require('./scratch.js').mkdtemp('sv-cell-');
   const { data, res } = prepareInChild({ VANTAGE_CELL: cell });
   try {
     assert.equal(res.r.ok, true);

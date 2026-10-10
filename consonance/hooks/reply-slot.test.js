@@ -20,7 +20,7 @@ const MAIN_ID = '0c0c0c0a-0000-4000-8000-000000000a01', LIB_ID = '0c0c0c0b-0000-
 const sha = (s) => crypto.createHash('sha256').update(s).digest('hex');
 const OR_TOKEN = ['sk', 'or', 'v1', 'a1b2c3d4e5f6a7b8c9d0e1f2a3b4'].join('-');
 
-const tmpDir = () => fs.mkdtempSync(path.join(os.tmpdir(), 'rs-test-'));
+const tmpDir = () => require('../tools/scratch.js').mkdtemp('rs-test-');
 const rows = (dir) => { try { return fs.readFileSync(path.join(dir, 'reply-slot.jsonl'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)); } catch (_) { return []; } };
 const USER = (text, extra = {}) => ({ type: 'user', message: { role: 'user', content: text }, ...extra });
 const HUMAN = (text) => USER(text, { origin: { kind: 'human' }, promptSource: 'typed' });

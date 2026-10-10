@@ -28,7 +28,7 @@ const ANT_TOKEN = ['sk', 'ant', 'api03', 'Zq8rT1uV2wX3yA4bC5dE6fG7hJ8k'].join('-
 const VCK_TOKEN = ['vc', 'k_', 'A1b2C3d4E5f6G7h8I9j0K1l2'].join('');
 const sha = (s) => crypto.createHash('sha256').update(s).digest('hex');
 
-function tmpDir() { return fs.mkdtempSync(path.join(os.tmpdir(), 'sr-test-')); }
+function tmpDir() { return require('../tools/scratch.js').mkdtemp('sr-test-'); }
 function rows(dir) { try { return fs.readFileSync(path.join(dir, 'second-reader.jsonl'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)); } catch (_) { return []; } }
 
 /** A stub worker: records that it ran (and what it saw), optionally sleeps, releases the lock like the real one, then exits. */

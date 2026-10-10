@@ -33,7 +33,7 @@ const assistant = (text, tools = []) => ({
   message: { role: 'assistant', content: [{ type: 'text', text }, ...tools.map(n => ({ type: 'tool_use', name: n, input: {} }))] },
 });
 
-function tmpdir() { return fs.mkdtempSync(path.join(os.tmpdir(), 'sstop-')); }
+function tmpdir() { return require('../tools/scratch.js').mkdtemp('sstop-'); }
 function ledgerRows(tmp) {
   const f = path.join(tmp, 'ledger.jsonl');
   if (!fs.existsSync(f)) return [];

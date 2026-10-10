@@ -23,11 +23,13 @@ const PS = path.join(process.env.SystemRoot || 'C:\\Windows', 'System32', 'Windo
 function resolve(home) {
   const f = path.join(path.dirname(home), path.basename(home) + '-probe.ps1');
   fs.writeFileSync(f, blockOf(text()) + '\nWrite-Output $root\n');
-  const r = spawnSync(PS, ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', f], { encoding: 'utf8', timeout: 30000, env: { ...process.env, USERPROFILE: home } });
+  let r;
+  try { r = spawnSync(PS, ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', f], { encoding: 'utf8', timeout: 30000, env: { ...process.env, USERPROFILE: home } }); }
+  finally { fs.rmSync(f, { force: true }); } // D287: the probe script is a SIBLING of the home folder, so removing the folder never removed it
   assert.strictEqual(r.status, 0, r.stderr);
   return r.stdout.replace(/\r?\n$/, '');
 }
-const home = (cfg) => { const d = fs.mkdtempSync(path.join(os.tmpdir(), 'dream-home-')); if (cfg !== undefined) fs.writeFileSync(path.join(d, '.consonance.json'), cfg); return d; };
+const home = (cfg) => { const d = require('../../consonance/tools/scratch.js').mkdtemp('dream-home-'); if (cfg !== undefined) fs.writeFileSync(path.join(d, '.consonance.json'), cfg); return d; };
 
 test('row 1: the D273 instances block is in dream_cycle.ps1, and its code names no C:\\Consonance path', () => {
   const t = text();

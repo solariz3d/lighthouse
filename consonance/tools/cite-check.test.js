@@ -74,7 +74,7 @@ test('verify: NOT-RUN when the command cannot execute — never a green, never a
 
 test('mutation: the shipped ~43 KB error goes RED against the real byte count', () => {
   // the exact class this tool exists for: figure recalled, not measured
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'cite-'));
+  const tmp = require('./scratch.js').mkdtemp('cite-');
   const f = path.join(tmp, 'boot-stub.txt');
   fs.writeFileSync(f, 'x'.repeat(50514));
   const cmd = `"${NODE}" -e "console.log(require('fs').statSync('boot-stub.txt').size)"`;
@@ -121,7 +121,7 @@ test('verify: VOID is not a green even when the command succeeds and prints numb
 });
 
 test('END TO END: the same wrong figure goes RED indented and RED unindented', () => {
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'cite-indent-'));
+  const tmp = require('./scratch.js').mkdtemp('cite-indent-');
   const f = path.join(tmp, 'fixture.md');
   const cmd = '`node -e "console.log(42)"`';
   fs.writeFileSync(f,

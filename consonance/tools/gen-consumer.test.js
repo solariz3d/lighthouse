@@ -678,7 +678,7 @@ test('L038 · the CUTOFF is a pure function of the commit, and a hand-edit is de
   assert.strictEqual(G.transform(a, 'prose').body, a,
     'a transformation edits CUTOFF.md, so --verify-cutoff can never pass on a real tree');
 
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'cutoff-'));
+  const dir = require('./scratch.js').mkdtemp('cutoff-');
   fs.mkdirSync(path.join(dir, 'exo_memory'), { recursive: true });
   const id = G.commitIdentity();
   const file = path.join(dir, 'exo_memory', 'CUTOFF.md');
@@ -888,7 +888,7 @@ test('L080 · the sweep catches a rewrite that emits a literal $1, and passes a 
   const produced = { 'a.md': broken(src['a.md']), 'b.js': broken(src['b.js']), 'c.js': src['c.js'], 'gen.md': 'on $1\n' };
   assert.ok(produced['a.md'].includes('on $1') && produced['b.js'].includes('on $1'),
     'the fixture rewrite must actually emit a literal $1, or this test proves nothing');
-  const staging = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-consumer-dollar-'));
+  const staging = require('./scratch.js').mkdtemp('gen-consumer-dollar-');
   try {
     for (const [rel, body] of Object.entries(produced)) fs.writeFileSync(path.join(staging, rel), body);
     const flagged = builtDollarLines(staging, (rel) => (rel in src ? src[rel] : null)).map((l) => l.split(':')[0]);
@@ -960,7 +960,7 @@ test('L038/A · a dirty tree is REFUSED, because the sha it would stamp is not e
   /* THE WRITE IS. Asserted as an EQUIVALENCE against the tree's actual state, so the test means the
    * same thing on a clean checkout and on a dirty one — a test that only passes while the tree
    * happens to be dirty stops testing on the day it matters. */
-  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-dirty-'));
+  const out = require('./scratch.js').mkdtemp('gen-dirty-');
   const w = G.build(out, {});
   assert.strictEqual(!!w.refused && /uncommitted change/.test(w.refused || ''), reallyDirty,
     reallyDirty
@@ -974,7 +974,7 @@ test('L038/A · a dirty tree is REFUSED, because the sha it would stamp is not e
   // D273 lap 2 AMENDED THIS ROW BY NAME (pane B, 2026-10-08): the override build now goes into its OWN empty directory. The output became a fresh-history
   // git repository, and a directory that already holds a history is refused; on a CLEAN tree the write above made one, so writing again into `out` was
   // refused for that reason and this row (whose subject is dirtiness, not re-use of a directory) failed only when the tree was clean.
-  const out2 = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-dirty-override-'));
+  const out2 = require('./scratch.js').mkdtemp('gen-dirty-override-');
   const ok = G.build(out2, { allowDirty: true });
   assert.ok(!ok.refused, '--allow-dirty did not lift the refusal: ' + ok.refused);
   assert.match(fs.readFileSync(path.join(out2, 'exo_memory', 'CUTOFF.md'), 'utf8'),
@@ -1006,7 +1006,7 @@ test('L038/A · an overridden stamp is legible as one, in both documents', () =>
     'a clean render carries the dirty marker, so the drift guard against E\'s copy would fail');
 
   // And the tamper check still works in the dirty mode, including against deleting the block.
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'cutoff-dirty-'));
+  const dir = require('./scratch.js').mkdtemp('cutoff-dirty-');
   fs.mkdirSync(path.join(dir, 'exo_memory'), { recursive: true });
   const id = G.commitIdentity();
   const file = path.join(dir, 'exo_memory', 'CUTOFF.md');
@@ -1250,7 +1250,7 @@ test('D273: consonance/state-manifest.json and the root README.md ship, and the 
 });
 
 test('D273: the output is a FRESH-HISTORY git repository: one commit, a neutral author, a clean tree, no remote, and a push goes nowhere', () => {
-  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-consumer-git-'));
+  const out = require('./scratch.js').mkdtemp('gen-consumer-git-');
   try {
     const r = G.build(out, { allowDirty: true });
     assert.ok(!r.refused, 'refused: ' + r.refused);
@@ -1266,7 +1266,7 @@ test('D273: the output is a FRESH-HISTORY git repository: one commit, a neutral 
 });
 
 test('D273: generating into a directory that already holds a history is REFUSED before anything is written (fresh history means fresh)', () => {
-  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-consumer-again-'));
+  const out = require('./scratch.js').mkdtemp('gen-consumer-again-');
   try {
     gitIn(out, ['init', '-q']); fs.writeFileSync(path.join(out, 'keep.txt'), 'theirs\n');
     const r = G.build(out, { allowDirty: true });
@@ -1872,7 +1872,7 @@ test('D273 lap 7 GUARD: every path the GENERATED tauri.conf.json references (fro
  * core.autocrlf=true, which took the .bin captures for text and stripped their CRs; the consumer shipped no .gitattributes. Simulated here with
  * GIT_CONFIG_GLOBAL pointed at a temp file, never the real global config. */
 const withAutocrlf = (fn) => {
-  const cfgDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-crlf-cfg-')), cfg = path.join(cfgDir, 'gitconfig');
+  const cfgDir = require('./scratch.js').mkdtemp('gen-crlf-cfg-'), cfg = path.join(cfgDir, 'gitconfig');
   fs.writeFileSync(cfg, '[core]\n\tautocrlf = true\n');
   const prev = process.env.GIT_CONFIG_GLOBAL; process.env.GIT_CONFIG_GLOBAL = cfg;
   try { return fn(); } finally { if (prev === undefined) delete process.env.GIT_CONFIG_GLOBAL; else process.env.GIT_CONFIG_GLOBAL = prev; fs.rmSync(cfgDir, { recursive: true, force: true }); }
@@ -1880,7 +1880,7 @@ const withAutocrlf = (fn) => {
 const headBlob = (dir, rel) => require('child_process').execFileSync('git', ['-C', dir, 'cat-file', 'blob', 'HEAD:' + rel], { maxBuffer: 1 << 26 });
 
 test('D273 lap 7 (CRLF): under a global core.autocrlf=true the generated repo\'s HEAD carries every screen fixture byte for byte', () => {
-  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-crlf-out-'));
+  const out = require('./scratch.js').mkdtemp('gen-crlf-out-');
   try {
     withAutocrlf(() => {
       const b = G.build(out, { allowDirty: true });
@@ -1899,7 +1899,7 @@ test('D273 lap 7 (CRLF): under a global core.autocrlf=true the generated repo\'s
 });
 
 test('D273 lap 7 (CRLF) GUARD: verifyCommitted reports a byte-exact file whose HEAD blob differs, as a commit under autocrlf=true makes it', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-crlf-repo-'));
+  const dir = require('./scratch.js').mkdtemp('gen-crlf-repo-');
   try {
     withAutocrlf(() => {
       fs.writeFileSync(path.join(dir, 'cap.bin'), Buffer.from('line one\r\nline two\r\n', 'latin1'));

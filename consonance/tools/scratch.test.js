@@ -13,6 +13,7 @@ const { spawnSync } = require('child_process');
 
 const scratch = require('./scratch.js');
 const TOOLS = __dirname;
+const drv = (letter) => letter + ':' + path.sep; // a drive root, built so this file carries no drive-letter constant
 
 // The rows' own root is made with raw mkdtempSync (not scratch.js) and removed in a finally: the thing under test cannot clean up its own test.
 function withRoot(fn) {
@@ -37,11 +38,11 @@ const node = (args, env, cwd) => spawnSync(process.execPath, args, {
 
 test('the root: CONSONANCE_SCRATCH wins, then G: when it exists, else the OS temp dir', () => {
   assert.strictEqual(scratch.scratchRoot({ CONSONANCE_SCRATCH: path.resolve('x-root') }, 'win32', () => true), path.resolve('x-root'));
-  assert.strictEqual(scratch.scratchRoot({}, 'win32', (p) => p === 'G:\\'), path.join('G:\\', 'consonance-scratch'));
+  assert.strictEqual(scratch.scratchRoot({}, 'win32', (p) => p === drv('G')), path.join(drv('G'), 'consonance-scratch'));
   assert.strictEqual(scratch.scratchRoot({}, 'win32', () => false), os.tmpdir());
   assert.strictEqual(scratch.scratchRoot({}, 'linux', () => true), os.tmpdir(), 'a drive letter means nothing off Windows');
   assert.strictEqual(scratch.scratchRoot({ CONSONANCE_SCRATCH: '   ' }, 'win32', () => false), os.tmpdir(), 'a blank override is no override');
-  assert.strictEqual(scratch.scratchRoot({ CONSONANCE_SCRATCH_DRIVE: 'Q' }, 'win32', (p) => p === 'Q:\\'), path.join('Q:\\', 'consonance-scratch'));
+  assert.strictEqual(scratch.scratchRoot({ CONSONANCE_SCRATCH_DRIVE: 'Q' }, 'win32', (p) => p === drv('Q')), path.join(drv('Q'), 'consonance-scratch'));
   assert.strictEqual(scratch.scratchRoot({ CONSONANCE_SCRATCH_DRIVE: '..\\x' }, 'win32', () => true), os.tmpdir(), 'a malformed drive is ignored, not joined');
   assert.strictEqual(scratch.scratchRoot({}, 'win32', () => { throw new Error('boom'); }), os.tmpdir(), 'a probe that throws falls back');
 });

@@ -22,7 +22,7 @@ const WRITER = path.join(__dirname, 'lap-row.js');
 const NODE = process.execPath;
 
 function fixture(rows) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'chain-'));
+  const dir = require('./scratch.js').mkdtemp('chain-');
   const ledger = path.join(dir, 'lap.jsonl');
   if (rows) fs.writeFileSync(ledger, rows.map(r => (typeof r === 'string' ? r : JSON.stringify(r))).join('\n') + '\n');
   return { dir, ledger, cleanup: () => fs.rmSync(dir, { recursive: true, force: true }) };
@@ -43,7 +43,7 @@ const mod = () => { delete require.cache[require.resolve('./chain-status.js')]; 
 // D138: clause 6 reads seats' transcripts from ~/.claude/projects. No test may read the REAL one (a live seat waiting on
 // the keeper would leak into every line here), so the whole file, and every CLI it spawns, points at an empty temp dir.
 // Tests that need transcripts build their own and pass it as `projectsDir`.
-process.env.CONSONANCE_PROJECTS_DIR = fs.mkdtempSync(path.join(os.tmpdir(), 'chain-projects-empty-'));
+process.env.CONSONANCE_PROJECTS_DIR = require('./scratch.js').mkdtemp('chain-projects-empty-');
 
 // ---------------------------------------------------------------- reader: with and without
 
@@ -534,7 +534,7 @@ const WORKING = (at) => ([
 
 /** lap.jsonl + board.jsonl + letters.json in one temp dir. `board:null` omits the board entirely. */
 function store(lapRows, boardRows, opts = {}) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'chain-store-'));
+  const dir = require('./scratch.js').mkdtemp('chain-store-');
   fs.writeFileSync(path.join(dir, 'lap.jsonl'), lapRows.map((r) => JSON.stringify(r)).join('\n') + '\n');
   if (boardRows !== null) {
     fs.writeFileSync(path.join(dir, 'board.jsonl'),
@@ -997,7 +997,7 @@ test('tree() names an UNTRACKED hand-back and not a committed one', () => {
   // Against a real repository, because the property is about what git considers untracked and a
   // mock of git would only prove the mock.
   const { execFileSync } = require('node:child_process');
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'chain-tree-'));
+  const dir = require('./scratch.js').mkdtemp('chain-tree-');
   const git = (...a) => execFileSync('git', a, { cwd: dir, encoding: 'utf8' });
   git('init', '-q');
   git('config', 'user.email', 'test@example.invalid');
@@ -1023,7 +1023,7 @@ test('tree() names an UNTRACKED hand-back and not a committed one', () => {
 });
 
 test('tree() on a non-repo is dirty null and hand-backs EMPTY, never a claim', () => {
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'chain-nonrepo-'));
+  const d = require('./scratch.js').mkdtemp('chain-nonrepo-');
   const t = mod().tree(path.join(d, 'not-a-repo-at-all'));
   assert.strictEqual(t.dirty, null);
   assert.deepStrictEqual(t.handbacks, []);
@@ -1590,7 +1590,7 @@ const SEAT_ROW = (ts, sid) => ({ pane: sid, role: 'assistant', ts, ts_source: 't
 
 /** A projects dir holding `{ <dir>: { <sid>: [rows] } }`, a store whose board makes the listed sids live, and the line. */
 function wline(transcripts, boardRows, now, opts = {}) {
-  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'chain-projects-'));
+  const proj = require('./scratch.js').mkdtemp('chain-projects-');
   for (const [dir, bySid] of Object.entries(transcripts)) {
     fs.mkdirSync(path.join(proj, dir), { recursive: true });
     for (const [sid, rows] of Object.entries(bySid)) {

@@ -24,7 +24,7 @@ const path = require('node:path');
 const { execFileSync } = require('node:child_process');
 const sv = require('./second-vantage.js');
 
-const root = fs.mkdtempSync(path.join(os.tmpdir(), 'sv-hist-'));
+const root = require('./scratch.js').mkdtemp('sv-hist-');
 test.after(() => { try { fs.rmSync(root, { recursive: true, force: true, maxRetries: 3 }); } catch (e) { /* a temp folder Windows is still holding is not a failure of the guard */ } });
 const git = (...a) => execFileSync('git', ['-C', root, ...a], { encoding: 'utf8' }).trim();
 git('init', '-q'); git('config', 'user.email', 't@t'); git('config', 'user.name', 't');

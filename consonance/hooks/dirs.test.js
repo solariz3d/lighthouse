@@ -24,7 +24,7 @@ const text = (h) => fs.readFileSync(path.join(REPO, h), 'utf8').replace(/\r\n/g,
 const blockOf = (t) => { const a = t.indexOf('// D273 dirs: begin'), b = t.indexOf('// D273 dirs: end'); return a < 0 || b < 0 ? null : t.slice(a, b + '// D273 dirs: end'.length); };
 /** consonanceDir from a hook's own block, run with this env (no hook body runs). */
 const resolver = (h, env) => { const ctx = { fs, path, process: { env } }; vm.createContext(ctx); vm.runInContext(blockOf(text(h)) + '\n;globalThis.__f = consonanceDir;', ctx); return ctx.__f; };
-const home = (files = {}) => { const d = fs.mkdtempSync(path.join(os.tmpdir(), 'dirs-home-')); for (const [k, v] of Object.entries(files)) fs.writeFileSync(path.join(d, k), v); return d; };
+const home = (files = {}) => { const d = require('../tools/scratch.js').mkdtemp('dirs-home-'); for (const [k, v] of Object.entries(files)) fs.writeFileSync(path.join(d, k), v); return d; };
 
 test('row 1: one rule — the D273 block is the same text in all five hooks, and none still names C:\\Consonance', () => {
   const blocks = HOOKS.map((h) => blockOf(text(h)));
@@ -64,7 +64,7 @@ test('row 4: the env overrides each hook had still win over the rule', () => {
 });
 
 test('row 5: a real hook in a stranger\'s home (sourced-stop, no override) writes its ledger under THAT home, never C:\\Consonance', () => {
-  const h = home(), tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'dirs-run-'));
+  const h = home(), tmp = require('../tools/scratch.js').mkdtemp('dirs-run-');
   const t = path.join(tmp, 'transcript.jsonl');
   fs.writeFileSync(t, [{ type: 'user', message: { role: 'user', content: 'how big?' }, timestamp: '2026-10-08T11:00:00.000Z' },
     { type: 'assistant', timestamp: '2026-10-08T11:00:01.000Z', message: { role: 'assistant', content: [{ type: 'text', text: 'The file has 340 lines.' }] } }].map((r) => JSON.stringify(r)).join('\n') + '\n');

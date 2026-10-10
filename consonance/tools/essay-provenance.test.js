@@ -423,7 +423,7 @@ function mkLapFixture() {
   const fs2 = require('fs');
   const os2 = require('os');
   const p2 = require('path');
-  const dir = fs2.mkdtempSync(p2.join(os2.tmpdir(), 'essay-prov-'));
+  const dir = require('./scratch.js').mkdtemp('essay-prov-');
   const f = p2.join(dir, 'lap.jsonl');
   fs2.writeFileSync(f, `${JSON.stringify({
     lap: 'L01', stage: 'opened', at: 1, paths: ['essay/REAL.md'],
@@ -711,7 +711,7 @@ test('the corrections ledger skips comments and survives a malformed row', () =>
   const os2 = require('os');
   const fs3 = require('fs');
   const path3 = require('path');
-  const dir = fs3.mkdtempSync(path3.join(os2.tmpdir(), 'prov-'));
+  const dir = require('./scratch.js').mkdtemp('prov-');
   const file = path3.join(dir, 'c.jsonl');
   fs3.writeFileSync(file, ['# a comment', '', JSON.stringify(correction()), 'not json at all'].join('\n'));
   const got = readCorrections(file);
@@ -759,7 +759,7 @@ test('the evidence reader reads the COMMITTED blob, never the working tree', () 
   const { execFileSync } = require('child_process');
   const { gitBlobReader } = require('./essay-provenance.js');
 
-  const dir = fs4.mkdtempSync(path4.join(os4.tmpdir(), 'prov-git-'));
+  const dir = require('./scratch.js').mkdtemp('prov-git-');
   const git = (...a) => execFileSync('git', a, { cwd: dir, encoding: 'utf8' });
   git('init', '-q');
   git('config', 'user.email', 'test@example.invalid');

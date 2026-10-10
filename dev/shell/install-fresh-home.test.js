@@ -20,7 +20,7 @@ function install(home) {
 }
 
 test('row 1: a fresh home with no settings.json: install creates {} there, says so, and registers the hooks into it', { skip }, () => {
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'fresh-home-'));
+  const home = require('../../consonance/tools/scratch.js').mkdtemp('fresh-home-');
   try {
     const r = install(home), out = r.stdout + r.stderr, f = path.join(home, '.claude', 'settings.json');
     assert.strictEqual(r.status, 0, out.slice(-2000));
@@ -33,7 +33,7 @@ test('row 1: a fresh home with no settings.json: install creates {} there, says 
 });
 
 test('row 2: a home that HAS a settings.json is merged into, never re-created: the user\'s own keys survive', { skip }, () => {
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'fresh-home-'));
+  const home = require('../../consonance/tools/scratch.js').mkdtemp('fresh-home-');
   try {
     fs.mkdirSync(path.join(home, '.claude')); fs.writeFileSync(path.join(home, '.claude', 'settings.json'), JSON.stringify({ theme: 'dark', model: 'theirs' }));
     const r = install(home), out = r.stdout + r.stderr;
@@ -45,7 +45,7 @@ test('row 2: a home that HAS a settings.json is merged into, never re-created: t
 });
 
 test('row 3: D273 ruling 5 (Jev retired): a fresh install registers no jev-flags hook and copies no jev-flags.js', { skip }, () => {
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'fresh-home-'));
+  const home = require('../../consonance/tools/scratch.js').mkdtemp('fresh-home-');
   try {
     const r = install(home), out = r.stdout + r.stderr;
     assert.strictEqual(r.status, 0, out.slice(-2000));

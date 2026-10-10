@@ -26,7 +26,7 @@ function test(name, fn) {
 const TOOL = path.join(__dirname, 'js-suite.js');
 
 function tree(files) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jssuite-'));
+  const dir = require('./scratch.js').mkdtemp('jssuite-');
   for (const [rel, body] of Object.entries(files)) {
     const p = path.join(dir, rel);
     fs.mkdirSync(path.dirname(p), { recursive: true });
@@ -251,7 +251,7 @@ const REAL_GATE = 'const fs=require("fs"),p=require("path");'
   + 'if(!ok&&process.env.JS_SUITE_UNIVERSE!=="force"){console.log("JS-SUITE: NOT-RUN — a foreign board: no corpus.txt under "+(root||"(unset)"));process.exit(0)}';
 // A corpus the REAL_GATE accepts, so a fixture can be "at home" for the duration of one test.
 function corpus() {
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'jssuite-corpus-'));
+  const d = require('./scratch.js').mkdtemp('jssuite-corpus-');
   fs.writeFileSync(path.join(d, 'corpus.txt'), 'here');
   return d;
 }

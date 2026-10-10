@@ -129,7 +129,7 @@ test('CARGO_TARGET_DIR is honoured, proven by pointing it somewhere empty', () =
   // The positive case can pass by accident if the conventional path also happens to hold a build.
   // Point the env var at a directory with no BOOT.md: the tool must fall through, not crash, and
   // must not claim a verdict it cannot support.
-  const empty = fs.mkdtempSync(path.join(require('node:os').tmpdir(), 'oi-'));
+  const empty = require('./scratch.js').mkdtemp('oi-');
   try {
     const r = run({ CARGO_TARGET_DIR: empty });
     assert.strictEqual(r.status, 0, 'the tool crashed on an empty target dir:\n' + r.out);

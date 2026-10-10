@@ -192,7 +192,7 @@ if (require.main === module) {
     const args = process.argv.slice(2), json = args.includes('--json');
     let gen = args.includes('--gen') ? args[args.indexOf('--gen') + 1] : null, made = null;
     if (!gen && args.includes('--generate')) {
-      made = fs.mkdtempSync(path.join(os.tmpdir(), 'identity-diff-'));
+      made = require('./scratch.js').mkdtemp('identity-diff-');
       const b = require('./gen-consumer.js').build(made, { allowDirty: true });
       if (b.refused) { console.error('identity-diff: the generator refused: ' + b.refused); process.exit(2); }
       gen = made;

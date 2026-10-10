@@ -14,7 +14,7 @@ const { spawnSync, execFileSync } = require('child_process');
 const HOOK = path.join(__dirname, 'ferry-watch.js');
 
 function world() {
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'ferry-watch-'));
+  const tmp = require('../tools/scratch.js').mkdtemp('ferry-watch-');
   const repo = path.join(tmp, 'repo'), home = path.join(tmp, 'home'), data = path.join(tmp, 'data'), chair = path.join(tmp, 'chair');
   for (const d of [repo, home, data, chair]) fs.mkdirSync(d, { recursive: true });
   fs.writeFileSync(path.join(chair, '.chair-token'), 'x');

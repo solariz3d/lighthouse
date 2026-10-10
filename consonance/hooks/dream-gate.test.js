@@ -260,7 +260,7 @@ function runHook(abs, withGate) {
   if (!exe) throw new Error('no python.exe found outside the Store stub; cannot verify the pulse gate');
   const cwd = path.join(TMP_INSTANCES, 'sibling-gate-test');
   fs.mkdirSync(cwd, { recursive: true });
-  const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'dreamgate-data-'));
+  const dataDir = require('../tools/scratch.js').mkdtemp('dreamgate-data-');
   tmpDirs.push(dataDir);
   seedBed(dataDir);
   const env = {

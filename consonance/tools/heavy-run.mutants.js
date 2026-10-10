@@ -90,7 +90,7 @@ const MUTANTS = [
 ];
 
 function tree() {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'hr-mut-'));
+  const dir = require('./scratch.js').mkdtemp('hr-mut-');
   fs.mkdirSync(path.join(dir, 'tools'), { recursive: true });
   const files = new Set([SRC, SUITE, 'state-manifest.js', 'js-suite.js', 'mutant-harness.js', ...fs.readdirSync(HERE).filter((f) => f.endsWith('.mutants.js'))]);
   for (const f of files) fs.copyFileSync(path.join(HERE, f), path.join(dir, 'tools', f));

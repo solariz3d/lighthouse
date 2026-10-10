@@ -48,7 +48,7 @@ function test(name, fn) {
   catch (e) { console.log(`  FAIL ${name}\n       ${e && e.message}`); fail++; }
 }
 
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'tail-'));
+const tmp = require('../consonance/tools/scratch.js').mkdtemp('tail-');
 let seq = 0;
 
 const SID = 'aaaaaaaa-1111-4111-8111-111111111111';
@@ -2428,7 +2428,7 @@ test('R1 · --verify-set with no stick EXITS 2 — the process, not the text', (
 });
 
 test('R1 · --verify-set combined with --carry-dir EXITS 2 — the process, not the text', () => {
-  const src = fs.mkdtempSync(path.join(os.tmpdir(), 'tc-r1-'));
+  const src = require('../consonance/tools/scratch.js').mkdtemp('tc-r1-');
   try {
     const r = cli(['--verify-set', '--carry-dir', src]);
     assert.match(r.stdout, /REFUSED — --carry-dir is its own command/, 'the refusal text is not the one this pins');

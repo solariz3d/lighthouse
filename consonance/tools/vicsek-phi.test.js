@@ -187,7 +187,7 @@ test('the era window and the pane both bite', () => {
 // file read — is printed before loadEncoder runs. No models are needed, so these run on a machine without them.
 const fsR = require('fs'), osR = require('os'), pathR = require('path');
 const { spawnSync: spawnR } = require('child_process');
-const tmpR = (tag) => fsR.mkdtempSync(pathR.join(osR.tmpdir(), 'rc2-vicsek-phi-' + tag + '-'));
+const tmpR = (tag) => require('./scratch.js').mkdtemp('rc2-vicsek-phi-' + tag + '-');
 const cliR = (args, env) => spawnR(process.execPath, [pathR.join(__dirname, 'vicsek-phi.js'), ...args],
   { encoding: 'utf8', env: Object.assign({}, process.env, env) });
 

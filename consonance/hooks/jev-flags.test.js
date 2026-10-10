@@ -115,14 +115,14 @@ test('the line never carries the prompt, the answer text, or the word "keeper"',
 
 // ── the CLI, spawned with a hermetic env ─────────────────────────────────────────────────────────────────────────────
 function store(rows) {
-  const lad = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-flags-'));
+  const lad = require('../tools/scratch.js').mkdtemp('jev-flags-');
   const d = path.join(lad, 'consonance', 'jev-shadow'); fs.mkdirSync(d, { recursive: true });
   fs.writeFileSync(path.join(d, 'jev_judge.jsonl'), rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
   return lad;
 }
 // L089: HOME is part of the hermetic env now. The hook resolves the room through ~/.consonance.json, so a test that
 // inherited this machine's real home would read the real config — and pass or fail on the machine, not on the code.
-const emptyHome = () => fs.mkdtempSync(path.join(os.tmpdir(), 'jev-flags-home-'));
+const emptyHome = () => require('../tools/scratch.js').mkdtemp('jev-flags-home-');
 function cliAt(hook, env) {
   const home = env.USERPROFILE || emptyHome();
   const base = { SystemRoot: process.env.SystemRoot || '', PATH: process.env.PATH || '', JEV_FLAGS_NOW: new Date(NOW).toISOString(),
@@ -136,7 +136,7 @@ const cli = (env) => cliAt(HOOK, env);
 // not exist. The first build resolved main.rs only from there, so an installed copy was silent forever while -Check read ok.
 const REPO = path.resolve(__dirname, '..', '..');
 function installedCopy() {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-flags-installed-'));
+  const root = require('../tools/scratch.js').mkdtemp('jev-flags-installed-');
   const dir = path.join(root, '.claude', 'shell', 'hooks');
   fs.mkdirSync(dir, { recursive: true });
   const hook = path.join(dir, 'jev-flags.js');
@@ -270,7 +270,7 @@ test('L099: a NEW row (seat already a letter) prints as written when letters.jso
 });
 
 test('L099 INSTALLED: the CLI reads letters.json from ~/.consonance.json data_dir', () => {
-  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-flags-data-'));
+  const data = require('../tools/scratch.js').mkdtemp('jev-flags-data-');
   fs.writeFileSync(path.join(data, 'letters.json'), JSON.stringify({ [PANE_B]: 'B' }));
   const home = homeWith({ room_path: path.join(REPO, 'exo_memory', 'BOOT.md'), data_dir: data });
   const r = cliAt(installedCopy(), { LOCALAPPDATA: store([row({ sid: PANE_B, seat: '✦ brief' })]), CONSONANCE_PANE: MAIN, USERPROFILE: home });
