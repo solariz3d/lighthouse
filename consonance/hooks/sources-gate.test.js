@@ -47,9 +47,14 @@ function payloadOf(dir, entries, { tool = LIB, text, cwd = 'C:/work', extra = {}
   const tp = entries ? writeTranscript(dir, entries) : null;
   return JSON.stringify({ session_id: 's1', transcript_path: tp, cwd, hook_event_name: 'PreToolUse', tool_name: tool, tool_input: { text }, tool_use_id: RING_ID, ...extra });
 }
+// D287 (finding 2, loop/landing_suite_d287_2026-10-10.md): every child runs with a temp home, so the real ~/.consonance.json (its gates_mode,
+// room_path, data_dir) never reaches a row; with light set there, four of these rows went red. STRICT_HOME holds no config, so the hook runs
+// strict; a row that tests light passes homeWith({ gates_mode: 'light' }).
+function homeWith(cfg) { const h = tmpDir(); if (cfg) fs.writeFileSync(path.join(h, '.consonance.json'), JSON.stringify(cfg)); return h; }
+const STRICT_HOME = homeWith(null);
 function envFor(dir, extra = {}) {
   const base = { ...process.env }; delete base.CONSONANCE_DREAM; delete base.CONSONANCE_SECOND_READER_RUN;
-  return { ...base, CONSONANCE_DATA: dir, CONSONANCE_PANE: 'A', ...extra };
+  return { ...base, CONSONANCE_DATA: dir, CONSONANCE_PANE: 'A', USERPROFILE: STRICT_HOME, HOME: STRICT_HOME, ...extra };
 }
 function runGate(dir, input, extra = {}) {
   const t0 = Date.now(), r = spawnSync(process.execPath, [HOOK], { input, env: envFor(dir, extra), encoding: 'utf8', timeout: 20000 });
@@ -573,4 +578,16 @@ test('D273: gatesDocFrom resolves <repo>/consonance/GATES.md from room_path when
   assert.strictEqual(G.gatesDocFrom(path.join('C:', 'rooms', 'mine', 'CLAUDE.md'), () => true), G.GATES_REL + ' (in the Consonance repository)', 'a room outside a repo');
   assert.strictEqual(G.gatesDocFrom('', () => true), G.GATES_REL + ' (in the Consonance repository)');
   assert.strictEqual(G.gatesDocFrom(room, () => { throw new Error('EACCES'); }), G.GATES_REL + ' (in the Consonance repository)', 'an error checking the file falls back, never throws');
+});
+
+test('D287 LIGHT: with gates_mode light in the home, the hook allows a quoted cd-chain that ran (strict denies it), marks the row light, and still denies an item nothing touched', () => {
+  const dir = tmpDir(), light = homeWith({ gates_mode: 'light' });
+  const turn = [USER('go'), ...bashCall('t1', 'cd /c/Users/x/repo && git log --oneline -1 main')];
+  const chain = withSources('SOURCES: `cd /c/Users/x/repo && git log --oneline -1 main`');
+  assert.ok(isDeny(runGate(dir, payloadOf(dir, turn, { text: chain }))), 'strict (the pinned home) must deny the quoted chain, or this row tests nothing');
+  assert.strictEqual(rows(dir).pop().mode, undefined, 'a strict row carries no mode field');
+  const r = runGate(dir, payloadOf(dir, turn, { text: chain }), { USERPROFILE: light, HOME: light });
+  assert.strictEqual(r.out, null, JSON.stringify(r.out));
+  const row = rows(dir).pop(); assert.strictEqual(row.decision, 'allow'); assert.strictEqual(row.mode, 'light');
+  assert.ok(isDeny(runGate(dir, payloadOf(dir, turn, { text: withSources('SOURCES: exo_memory/handback/never-opened.md') }), { USERPROFILE: light, HOME: light })), 'light let through an item nothing in the turn touched');
 });

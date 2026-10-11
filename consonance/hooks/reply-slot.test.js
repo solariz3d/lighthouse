@@ -32,9 +32,14 @@ const readCall = (id, p) => [ASSIST(USE(id, 'Read', { file_path: p })), RESULT(i
 const bashCall = (id, cmd) => [ASSIST(USE(id, 'Bash', { command: cmd })), RESULT(id, 'out')];
 const writeTranscript = (dir, entries) => { const f = path.join(dir, 'transcript.jsonl'); fs.writeFileSync(f, entries.map((e) => JSON.stringify(e)).join('\n') + '\n'); return f; };
 
+// D287 (finding 2, loop/landing_suite_d287_2026-10-10.md): every child runs with a temp home, so the real ~/.consonance.json (its gates_mode,
+// room_path, data_dir) never reaches a row; with light set there, six of these rows went red. STRICT_HOME holds no config, so the hook runs
+// strict; a row that tests light passes homeWith({ gates_mode: 'light' }).
+function homeWith(cfg) { const h = tmpDir(); if (cfg) fs.writeFileSync(path.join(h, '.consonance.json'), JSON.stringify(cfg)); return h; }
+const STRICT_HOME = homeWith(null);
 function envFor(dir, extra = {}) {
   const base = { ...process.env }; delete base.CONSONANCE_DREAM; delete base.CONSONANCE_PANE;
-  return { ...base, CONSONANCE_DATA: dir, CONSONANCE_PANE: LIB_ID, ...extra };
+  return { ...base, CONSONANCE_DATA: dir, CONSONANCE_PANE: LIB_ID, USERPROFILE: STRICT_HOME, HOME: STRICT_HOME, ...extra };
 }
 function stopPayload(dir, entries, reply, extra = {}) {
   return JSON.stringify({ session_id: 'abcdef012345', transcript_path: entries ? writeTranscript(dir, entries) : null, cwd: 'C:/Consonance/instances/librarian', hook_event_name: 'Stop', stop_hook_active: false, last_assistant_message: reply, ...extra });
@@ -320,4 +325,17 @@ test('D273: the block reason names GATES.md section 2 at the path it is given, a
   assert.ok(given.output && given.output.reason.endsWith('How this works and why: C:/repo/consonance/GATES.md, section 2 (the reply slot).'), given.output && given.output.reason);
   const dflt = R.verdict({ reply: 'Done at C:/work/zzz.md, 3 of 5.', entries: t, stopHookActive: false, live: true, seat: 'librarian' });
   assert.ok(dflt.output.reason.includes('consonance/GATES.md, section 2'), dflt.output.reason);
+});
+
+test('D287 LIGHT: with gates_mode light in the home, a would-block reply WARNS instead of blocking (strict blocks it), exits 0, and its row says light', () => {
+  const dir = tmpDir(), light = homeWith({ gates_mode: 'light' }), input = stopPayload(dir, KEEPER_TURN(), 'It is 47/47 at exo_memory/x.md.');
+  const strict = run(dir, input);
+  assert.strictEqual(JSON.parse(strict.stdout).decision, 'block', 'strict (the pinned home) must block, or this row tests nothing'); assert.strictEqual(last(dir).mode, undefined);
+  const r = run(dir, input, { USERPROFILE: light, HOME: light });
+  assert.strictEqual(r.status, 0); assert.strictEqual(r.stderr, '');
+  const out = JSON.parse(r.stdout);
+  assert.strictEqual(out.decision, undefined, 'light blocked');
+  assert.ok(out.systemMessage.startsWith('REPLY SLOT (warning only, gates_mode light)'), out.systemMessage);
+  const row = last(dir); assert.strictEqual(row.wouldBlock, true); assert.strictEqual(row.blocked, false); assert.strictEqual(row.mode, 'light');
+  assert.strictEqual(run(dir, stopPayload(dir, KEEPER_TURN(), 'Sources: none'), { USERPROFILE: light, HOME: light }).stdout, '', 'light warned on a reply that needs nothing');
 });
