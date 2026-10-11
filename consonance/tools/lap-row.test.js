@@ -2041,3 +2041,93 @@ test('floor: MUTATION - collapse the two causes back into one and tonight\'s sit
     delete require.cache[require.resolve(mutant)];
   });
 });
+
+// ---------------------------------------------------------------- D293: the `parts` field on a dispatched row
+// H2 (split vs single pane) stays unrun; the free field goes in instead, so split against single can be READ later.
+// Observational only: the writer never uses it to refuse or route anything.
+
+function ledgerRows(ledger) { return fs.readFileSync(ledger, 'utf8').trim().split('\n').map((l) => JSON.parse(l)); }
+function openLap(mod) { mod.open({ initiator: 'chair', entry: 'ring', inquiry: 'q', guess: ['a.md'], now: 1 }); }
+
+test('PARTS: a dispatched row carries how many parts the plan split the work into; absent writes no key at all', () => {
+  const { mod, ledger, cleanup } = fixture();
+  openLap(mod);
+  const a = mod.chain('L001', 'dispatched', 'panes', null, 2, 'A,B,C', undefined, 3);
+  assert.strictEqual(a.parts, 3);
+  const b = mod.chain('L001', 'working', 'panes', null, 3);
+  assert.ok(!('parts' in b), 'a row written without --parts has no parts key, so old and new rows of other stages stay byte-identical');
+  assert.strictEqual(ledgerRows(ledger).filter((r) => 'parts' in r).length, 1);
+  cleanup();
+});
+
+test('PARTS: it is validated - a positive whole number, and only on a dispatched row', () => {
+  const { mod, ledger, cleanup } = fixture();
+  openLap(mod);
+  for (const bad of [0, -1, 1.5, 'x', '3a', '']) {
+    assert.throws(() => mod.chain('L001', 'dispatched', 'panes', null, 2, 'A', undefined, bad), /--parts/, `parts ${JSON.stringify(bad)} must be refused`);
+  }
+  assert.throws(() => mod.chain('L001', 'working', 'panes', null, 2, 'A', undefined, 2), /--parts.*dispatched/);
+  assert.strictEqual(ledgerRows(ledger).filter((r) => r.stage === 'chain').length, 0, 'a refusal writes nothing');
+  assert.strictEqual(mod.chain('L001', 'dispatched', 'panes', null, 2, 'A', undefined, '1').parts, 1, 'the CLI hands it over as a string');
+  cleanup();
+});
+
+test('PARTS: the CLI flag --parts N reaches the ledger, and omitting it still works', () => {
+  const { mod, ledger, cleanup } = fixture();
+  openLap(mod);
+  const r = cli(['--stage', 'L001', 'dispatched', '--holder', 'panes', '--to', 'A,B', '--parts', '2'], ledger);
+  assert.strictEqual(r.code, 0, r.stderr);
+  const r2 = cli(['--stage', 'L001', 'dispatched', '--holder', 'panes', '--to', 'A', '--note', 'follow-up'], ledger);
+  assert.strictEqual(r2.code, 0, r2.stderr);
+  const d = ledgerRows(ledger).filter((x) => x.chain === 'dispatched');
+  assert.deepStrictEqual(d.map((x) => x.parts), [2, undefined]);
+  cleanup();
+});
+
+test('PARTS: several dispatched rows on one lap read per row, and the lap total is known only when every row says', () => {
+  const { mod, ledger, cleanup } = fixture();
+  openLap(mod);
+  mod.chain('L001', 'dispatched', 'panes', null, 2, 'A,B,C,E', undefined, 4);
+  mod.chain('L001', 'dispatched', 'panes', 'follow-up', 3, 'A', undefined, 1);
+  let l = mod.laps().find((x) => x.lap === 'L001');
+  assert.deepStrictEqual(l.dispatches.map((d) => d.parts), [4, 1]);
+  assert.strictEqual(l.partsTotal, 5, 'a follow-up is more parts dispatched on the same lap');
+  fs.appendFileSync(ledger, JSON.stringify({ lap: 'L001', stage: 'chain', at: 4, chain: 'dispatched', holder: 'panes' }) + '\n');   // an old-shape row
+  l = mod.laps().find((x) => x.lap === 'L001');
+  assert.strictEqual(l.partsTotal, null, 'one dispatch with no count makes the lap total UNKNOWN, never a smaller number');
+  assert.strictEqual(l.dispatches.length, 3);
+  cleanup();
+});
+
+test('PARTS: --report on a ledger of old rows still runs, and says how many dispatched laps carry a count', () => {
+  const { mod, ledger, cleanup } = fixture();
+  openLap(mod);
+  fs.appendFileSync(ledger, JSON.stringify({ lap: 'L001', stage: 'chain', at: 4, chain: 'dispatched', holder: 'panes' }) + '\n');
+  const old = cli(['--report'], ledger);
+  assert.strictEqual(old.code, 0, old.stderr);
+  assert.match(old.stdout, /PARTS.*\n.*0 of 1 dispatched lap/);
+  mod.open({ initiator: 'chair', entry: 'ring', inquiry: 'q2', guess: ['b.md'], now: 5 });
+  mod.chain('L002', 'dispatched', 'panes', null, 6, 'A,B', undefined, 2);
+  const now = cli(['--report'], ledger);
+  assert.match(now.stdout, /1 of 2 dispatched lap/);
+  assert.match(now.stdout, /2 parts: 1 lap/);
+  cleanup();
+});
+
+test('PARTS: the other readers of lap.jsonl give the same answer with and without the field', () => {
+  const cs = require('./chain-status.js'), cg = require('./commit-gate.js');
+  const base = [
+    { lap: 'L001', stage: 'open', at: 1, initiator: 'chair', entry: 'ring', inquiry: 'q', guess: ['a.md'] },
+    { lap: 'L001', stage: 'chain', chain: 'dispatched', holder: 'panes', to: ['A', 'B'], at: 2 },
+  ];
+  const withParts = base.map((r) => (r.chain === 'dispatched' ? { ...r, parts: 2 } : r));
+  const write = (rows) => { const d = require('./scratch.js').mkdtemp('parts-rd-'); fs.writeFileSync(path.join(d, 'lap.jsonl'), rows.map((r) => JSON.stringify(r)).join('\n') + '\n'); return d; };
+  const d1 = write(base), d2 = write(withParts);
+  try {
+    assert.deepStrictEqual(cg.lapState(d2), cg.lapState(d1));
+    // these hand back the raw row, so the one new key is the only allowed difference; everything derived must match
+    const bare = (x) => JSON.parse(JSON.stringify(x, (k, v) => (k === 'parts' ? undefined : v)));
+    assert.deepStrictEqual(bare(cs.openLaps(withParts)), bare(cs.openLaps(base)));
+    assert.deepStrictEqual(bare(cs.chainLaps(withParts)), bare(cs.chainLaps(base)));
+  } finally { fs.rmSync(d1, { recursive: true, force: true }); fs.rmSync(d2, { recursive: true, force: true }); }
+});

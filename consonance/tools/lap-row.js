@@ -40,7 +40,7 @@
 //                    --inquiry <text> --guess <p[,p...]> [--blind]
 //   node lap-row.js --map <lap-id> --paths <p[,p...]>
 //   node lap-row.js --opened <lap-id> --paths <p[,p...]>   (--paths none is legal; see THE OPENED-ROW GATE)
-//   node lap-row.js --stage <lap-id> <stage> --holder <station> [--by <station>] [--to <letters>] [--note <text>]
+//   node lap-row.js --stage <lap-id> <stage> --holder <station> [--by <station>] [--to <letters>] [--parts <n>] [--note <text>]
 //                    --by is REQUIRED when the row moves the baton - see THE BATON-ORDER GATE below
 //   node lap-row.js --void <lap-id> --reason <text> --by <seat>
 //   node lap-row.js --report [--last N]
@@ -362,13 +362,14 @@ function laps(all = rows()) {
   const folded = [];
   for (const [id, gens] of generations(all)) {
     for (const g of gens) {
-      const L = { lap: id, opens: [], maps: [], openeds: [], voids: [], gen: g.gen, gens: gens.length, genRows: g.rows,
+      const L = { lap: id, opens: [], maps: [], openeds: [], voids: [], chains: [], gen: g.gen, gens: gens.length, genRows: g.rows,
         genDate: g.opens.length ? isoMinute(g.opens[0].at) : null };
       for (const r of g.rows) {
         if (r.stage === 'open') L.opens.push(r);
         else if (r.stage === 'map') L.maps.push(r);
         else if (r.stage === 'opened') L.openeds.push(r);
         else if (r.stage === 'void') L.voids.push(r);
+        else if (r.stage === 'chain') L.chains.push(r);
       }
       folded.push(L);
     }
@@ -405,7 +406,13 @@ function laps(all = rows()) {
     // lap, whatever the hashes say.
     if (integrity === 'OK' && map && open && map.at < open.at) integrity = 'OUT-OF-ORDER';
 
+    // D293: every dispatched row of this generation, each with ITS OWN parts (null = an old row, or one written without --parts).
+    // partsTotal is the sum across the lap's dispatches (follow-ups add parts) and is null unless EVERY dispatch carries a count:
+    // a lap with one uncounted dispatch has an unknown total, never a smaller one.
+    const dispatches = L.chains.filter(r => r.chain === 'dispatched').map(r => ({ at: r.at, parts: Number.isInteger(r.parts) && r.parts >= 1 ? r.parts : null }));
+    const partsTotal = dispatches.length && dispatches.every(d => d.parts != null) ? dispatches.reduce((n, d) => n + d.parts, 0) : null;
     return {
+      dispatches, partsTotal,
       lap: L.lap, at: open ? open.at : (map ? map.at : 0),
       initiator: open ? open.initiator : null,
       // A row from before the field carries `undefined`; it is reported as absent, never as 'orch'.
@@ -961,7 +968,7 @@ function gateContext() {
   return { armed, why, deliveries };
 }
 
-function chain(lap, stage, holder, note, now, to, by) {
+function chain(lap, stage, holder, note, now, to, by, parts) {
   if (!lap || !String(lap).trim()) throw new Error('--stage needs a lap id: node lap-row.js --stage <lap> <stage> --holder <seat>');
   const s = String(stage || '').trim().toLowerCase();
   if (!CHAIN_STAGES.includes(s)) {
@@ -1013,6 +1020,18 @@ function chain(lap, stage, holder, note, now, to, by) {
       // overload the holder gate just closed, one field over.
       throw new Error(`--to names the panes the baton went to, so it goes with --holder panes; got --holder ${JSON.stringify(h)}.`);
     }
+  }
+  /* PARTS (D293). How many parts the plan split this dispatch into (1 = a single pane), so split against single can be read later
+   * by count. OBSERVATIONAL: nothing here routes or refuses on it beyond the shape check. It comes from a FLAG, not from the plan's
+   * part list: plans are prose with no parser, the chair is the one who knows the count at the moment of the row, and a flag is one
+   * word the row can be re-run with. Dispatched rows only - a count on any other stage would be a second, unread meaning. The key is
+   * OMITTED when not given (never null), so every old row and every other stage stays byte-identical and a reader that never
+   * heard of it sees nothing new. A lap can dispatch more than once (follow-ups): each row's parts is THAT dispatch's own. */
+  let partsN;
+  if (parts != null) {
+    if (s !== 'dispatched') throw new Error('--parts is the part count of a DISPATCH; it goes only on --stage <lap> dispatched, got ' + JSON.stringify(s) + '.');
+    if (!/^[1-9][0-9]*$/.test(String(parts).trim())) throw new Error('--parts is the number of parts the plan split the work into, a whole number from 1 (1 = a single pane); got ' + JSON.stringify(parts) + '.');
+    partsN = Number(String(parts).trim());
   }
   /* THE OPENED-ROW GATE, placed BELOW every vocabulary check and ABOVE the baton gate. Both halves
    * of that position are load-bearing:
@@ -1091,6 +1110,7 @@ function chain(lap, stage, holder, note, now, to, by) {
     // `unarmed` is a hand-off nothing checked, `rung-unknown` one allowed on an unresolved pane id.
     by: b, gate: g.verdict === 'unchanged' ? null : g.verdict,
     head: headSha(),
+    ...(partsN !== undefined ? { parts: partsN } : {}),
   });
 }
 
@@ -1349,6 +1369,16 @@ function report(last, out = console.log) {
       (n !== null && n >= COMMIT_WINDOW ? (share < 0.5 ? '  -> window closed, falsifier does NOT fire' : '  -> window closed, FALSIFIER FIRES') : '  -> window still open'));
   }
 
+  // ---- PARTS (D293): split against single, read by count. Observational - it settles nothing about whether splitting helps.
+  out('');
+  out('PARTS (D293) - how many parts each dispatched lap was split into; a count is on the row only since the field was added.');
+  const dl = L.filter(l => l.dispatches.length);
+  const counted = dl.filter(l => l.partsTotal != null);
+  out(`  ${counted.length} of ${dl.length} dispatched lap(s) carry a part count on every dispatch (older rows have none: UNKNOWN, not 1).`);
+  const byN = new Map();
+  for (const l of counted) byN.set(l.partsTotal, (byN.get(l.partsTotal) || 0) + 1);
+  for (const n of [...byN.keys()].sort((a, b) => a - b)) out(`  ${n} part${n === 1 ? '' : 's'}: ${byN.get(n)} lap(s)`);
+
   // ---- this tool's own falsifier
   out('');
   out(`THIS TOOL'S OWN FALSIFIER - if ${WINDOW} laps pass and no row has an opened field, the third stage is theatre.`);
@@ -1429,7 +1459,7 @@ function main(argv, now = Date.now()) {
     }
     if (argv.includes('--stage')) {
       const i = argv.indexOf('--stage');
-      const r = chain(argv[i + 1], argv[i + 2], at('--holder'), at('--note'), now, at('--to'), at('--by'));
+      const r = chain(argv[i + 1], argv[i + 2], at('--holder'), at('--note'), now, at('--to'), at('--by'), at('--parts'));
       console.log(`${r.lap}  ${r.chain.toUpperCase()} — next holder ${r.holder}${r.to ? ` (${r.to.join(',')})` : ''}.`);
       /* THE NON-REFUSING VERDICTS ARE PRINTED. An absent guard and a passing guard must never
        * produce the same observation — `handback/p-commit-gate_2026-09-02.md` §7 — so a hand-off
@@ -1463,13 +1493,14 @@ function main(argv, now = Date.now()) {
   console.error('  lap-row.js --opened <lap-id> --paths <p[,p...]>');
   console.error('      --paths none is LEGAL and records the falsifier firing; it is NOT the same as never calling this.');
   console.error('      REQUIRED before --stage <lap> dispatched|filed on a lap that has a map (the opened-row gate).');
-  console.error('  lap-row.js --stage <lap-id> <stage> --holder <station> [--by <station>] [--to <letters>] [--note <text>]');
+  console.error('  lap-row.js --stage <lap-id> <stage> --holder <station> [--by <station>] [--to <letters>] [--parts <n>] [--note <text>]');
   console.error(`      stages: ${CHAIN_STAGES.join(' -> ')}`);
   console.error(`      holder: ${[...STATIONS].join(' | ')}   a STATION, never a pane name`);
   console.error('      --by:   the station WRITING the row. REQUIRED when the row moves the baton.');
   console.error('              --by == --holder is a re-take; --by != --holder is a hand-off and needs a RING FIRST');
   console.error('              (writing the row revokes your standing to send it — mcp.rs:397).');
   console.error('      --to:   the pane letters the baton fanned out to, e.g. --to A,B,C,E (with --holder panes)');
+  console.error('      --parts: on a dispatched row, how many parts the plan split the work into (1 = a single pane); optional, observational');
   console.error('      written by whoever COMPLETES a stage; --holder names who must act NEXT');
   console.error('  lap-row.js --void <lap-id> --reason <text> --by <seat>');
   console.error('      withdraws the lap\'s guess/map MEASUREMENT from every total; the lap stays visible and its chain is untouched');
