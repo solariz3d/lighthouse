@@ -4834,15 +4834,23 @@ mod fresh_permission_tests {
 mod dirs_guard_tests {
     use super::*;
 
-    // A test-local lock/slot pair. The guard is exercised against THESE rather than the process
+    // Test-local lock/slot pairs. The guard is exercised against THESE rather than the process
     // globals so the assertions can sit outside the critical section without racing the suite's
     // real writers — which the first version of these tests did, and which made them pass alone
     // and fail in the suite.
-    static TEST_LOCK: Mutex<()> = Mutex::new(());
-    static TEST_SLOT: Mutex<Option<Dirs>> = Mutex::new(None);
+    //
+    // ONE PAIR PER ROW, not one per module. Until D300 the two rows below shared a single pair, so
+    // each row's after-the-guard assertion could land while the OTHER row held the lock with the
+    // slot set: the same race one level down, between the guard's own tests. It went red once in a
+    // full run (D299 baseline, "a panicking writer left the slot set"). An assertion outside the
+    // critical section is safe only on a pair no other test writes.
+    static WRITER_LOCK: Mutex<()> = Mutex::new(());
+    static WRITER_SLOT: Mutex<Option<Dirs>> = Mutex::new(None);
+    static PANICKER_LOCK: Mutex<()> = Mutex::new(());
+    static PANICKER_SLOT: Mutex<Option<Dirs>> = Mutex::new(None);
 
-    fn slot_is_set() -> bool {
-        TEST_SLOT.lock().unwrap_or_else(|e| e.into_inner()).is_some()
+    fn slot_is_set(slot: &Mutex<Option<Dirs>>) -> bool {
+        slot.lock().unwrap_or_else(|e| e.into_inner()).is_some()
     }
 
     fn a_dirs() -> Dirs {
@@ -4853,11 +4861,11 @@ mod dirs_guard_tests {
     #[test]
     fn a_writer_puts_dirs_back_when_it_finishes() {
         {
-            let _g = DirsGuard::on(&TEST_LOCK, &TEST_SLOT);
-            *TEST_SLOT.lock().unwrap() = Some(a_dirs());
-            assert!(slot_is_set());
+            let _g = DirsGuard::on(&WRITER_LOCK, &WRITER_SLOT);
+            *WRITER_SLOT.lock().unwrap() = Some(a_dirs());
+            assert!(slot_is_set(&WRITER_SLOT));
         }
-        assert!(!slot_is_set(), "the guard must restore on the normal path");
+        assert!(!slot_is_set(&WRITER_SLOT), "the guard must restore on the normal path");
     }
 
     /// THE CASE THE OLD CODE COULD NOT PASS. A manual reset at the end of a test body is skipped
@@ -4869,14 +4877,14 @@ mod dirs_guard_tests {
         let hook = std::panic::take_hook();
         std::panic::set_hook(Box::new(|_| {})); // the panic below is the fixture, not a failure
         let out = std::panic::catch_unwind(|| {
-            let _g = DirsGuard::on(&TEST_LOCK, &TEST_SLOT);
-            *TEST_SLOT.lock().unwrap() = Some(a_dirs());
+            let _g = DirsGuard::on(&PANICKER_LOCK, &PANICKER_SLOT);
+            *PANICKER_SLOT.lock().unwrap() = Some(a_dirs());
             panic!("a failing assertion, which is how real tests leave early");
         });
         std::panic::set_hook(hook);
         assert!(out.is_err(), "the fixture must actually panic or this proves nothing");
         assert!(
-            !slot_is_set(),
+            !slot_is_set(&PANICKER_SLOT),
             "a panicking writer left the slot set — against the real DIRS that means the next test \
              to resolve a directory gets a path that was deleted, and data_dir() silently \
              recreates it"
