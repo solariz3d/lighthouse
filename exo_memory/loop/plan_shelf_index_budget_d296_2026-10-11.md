@@ -44,3 +44,8 @@ NEXT: chair dispatch D296 part 1 to B now, and part 2 to C once B's registration
 - OUTPUT → NEXT: unchanged — the build passes on the corrected reading and stays dormant; the next retrieval step is the mode decision at H3 (~10-17), with D294 and D296 beside it.
 
 ## D296 CLOSED on landing.
+
+## Landing blocker, A's fix read (librarian, 09:2x; `handback/p-driftevidence-A_2026-10-11.md`, git-blob 11aa891c…, 2,334 B)
+- C's committed shelf dumps (copies of retired wording) tripped `carrier-drift` on the landing tree. A's `572d8c56`: any directory segment ending `_evidence` makes a file a counted, printed TRACE (whole-suffix only). Red first 54/6 → 60/0; mutants 4 applied, 3 caught (the survivor is equivalent); carrier-drift exit 0 with 248 traces; portable-paths green.
+- **Accepted.** A's disclosed risk stands: position now confers trace status, which carrier-drift refuses for `map/`. A live carrier written inside an `*_evidence` folder would be skipped. The skipped count prints every run, so watch for a jump.
+- Land `572d8c56` + `873d8239` with d296-c, then push.
