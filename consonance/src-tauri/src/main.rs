@@ -32,6 +32,8 @@ mod nowplaying;  // what is actually playing, from Windows' own media session â€
 mod harvest_guard;  // the capture watcher's recovery + liveness policy; one mutex, one policy (E, L043)
 mod sync_launch;  // pull-verify-then-start, and the retire rule for a second machine (C, L052)
 mod pane_exit;  // a pane's claude process ending by itself: shown, recorded, a fixed seat reopened ONCE (A, D143)
+#[cfg(test)]
+mod test_scratch;  // test folders that remove themselves on drop (A, D299)
 
 // the shared MCP control-plane port (0 = not started); read when launching panes
 static MCP_PORT: AtomicU16 = AtomicU16::new(0);
@@ -4973,11 +4975,21 @@ mod seed_upgrade_tests {
     // destroyed the evidence. Asserting "it works" from a decision table is not the same as
     // watching bytes move.
 
-    fn scratch(tag: &str) -> PathBuf {
-        let d = std::env::temp_dir().join(format!("consonance_seed_test_{tag}"));
+    fn scratch(tag: &str) -> crate::test_scratch::Scratch {
+        let d = crate::test_scratch::root().join(format!("consonance_seed_test_{tag}"));
         let _ = fs::remove_dir_all(&d);
         fs::create_dir_all(&d).unwrap();
-        d
+        crate::test_scratch::Scratch::owning(d)   // D299: removed on drop; the four tests below used to leave theirs
+    }
+    #[test]
+    fn the_seed_scratch_helper_leaves_no_folder_behind() {
+        let dir;
+        {
+            let d = scratch("leakcheck");
+            dir = d.to_path_buf();
+            assert!(dir.exists(), "control: the folder exists while the test holds it");
+        }
+        assert!(!dir.exists(), "the helper's folder outlived the test");
     }
 
     /// The whole point of the change: bundle moves, untouched local copy follows it.
@@ -22011,15 +22023,25 @@ mod config_merge_tests {
 }"#;
     const NOT_OWNED: [&str; 8] = ["base", "flags", "instances", "dream_model", "dream_times", "machine_tag", "state_dir", "zz_unknown"];
 
-    fn tmp(name: &str, text: Option<&str>) -> PathBuf {
-        let d = std::env::temp_dir().join(format!("cfgmerge-{}-{}", std::process::id(), name));
+    fn tmp(name: &str, text: Option<&str>) -> crate::test_scratch::Scratch {
+        let d = crate::test_scratch::root().join(format!("cfgmerge-{}-{}", std::process::id(), name));
         let _ = fs::create_dir_all(&d);
         let p = d.join(".consonance.json");
         let _ = fs::remove_file(&p);
         if let Some(t) = text {
             fs::write(&p, t).unwrap();
         }
-        p
+        crate::test_scratch::Scratch::inside(d, p)   // D299: the folder went with the file; it used to stay behind
+    }
+    #[test]
+    fn the_cfgmerge_helper_leaves_no_folder_behind() {
+        let dir;
+        {
+            let p = tmp("leakcheck", Some("{}"));
+            dir = p.parent().unwrap().to_path_buf();
+            assert!(dir.exists(), "control: the folder exists while the test holds it");
+        }
+        assert!(!dir.exists(), "the helper's folder outlived the test");
     }
     fn read_obj(p: &Path) -> serde_json::Map<String, serde_json::Value> {
         match serde_json::from_str::<serde_json::Value>(&fs::read_to_string(p).unwrap()).unwrap() {

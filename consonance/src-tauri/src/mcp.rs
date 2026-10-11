@@ -3251,13 +3251,23 @@ mod digest_at_ring_tests {
     /// my hand-back was run with; the chair's plain `cargo test` found it in one run.
     static FIXTURE_N: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
 
-    fn fixture(rel: &str, body: &str) -> std::path::PathBuf {
+    fn fixture(rel: &str, body: &str) -> crate::test_scratch::Scratch {
         let n = FIXTURE_N.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
-        let dir = std::env::temp_dir().join(format!("digest-at-ring-{}-{}-{n}", std::process::id(), now_ms()));
+        let dir = crate::test_scratch::root().join(format!("digest-at-ring-{}-{}-{n}", std::process::id(), now_ms()));
         let p = dir.join(rel);
         std::fs::create_dir_all(p.parent().unwrap()).unwrap();
         std::fs::write(&p, body).unwrap();
-        dir
+        crate::test_scratch::Scratch::owning(dir)   // D299: removed on drop; 17 of these were left per run
+    }
+    #[test]
+    fn the_digest_fixture_leaves_no_folder_behind() {
+        let dir;
+        {
+            let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+            dir = root.to_path_buf();
+            assert!(dir.exists(), "control: the folder exists while the test holds it");
+        }
+        assert!(!dir.exists(), "the fixture's folder outlived the test");
     }
 
     fn delivered(v: DigestVerdict) -> DigestDeliver {
@@ -3303,7 +3313,7 @@ mod digest_at_ring_tests {
         registry and my two hand-backs by named paths when they re-derive";
     const B_HANDBACK: &str = "exo_memory/handback/p-l060-carriers-B_2026-09-21.md";
 
-    fn b_checkout() -> std::path::PathBuf {
+    fn b_checkout() -> crate::test_scratch::Scratch {
         let root = fixture(B_HANDBACK, "the delivered hand-back\n");
         for p in ["exo_memory/handback/p-six-reds-B_2026-09-19.md", "exo_memory/handback/p-ask001-abstain-B_2026-09-20.md"] {
             std::fs::create_dir_all(root.join(p).parent().unwrap()).unwrap();
@@ -3788,8 +3798,9 @@ mod trailer_gate_tests {
         for raw in [r#"{"gates_mode":"light"}"#, r#"{"gates_mode":" Light "}"#, "\u{feff}{\"gates_mode\":\"LIGHT\"}"] {
             assert_eq!(gates_mode_from(raw), Light, "{raw}");
         }
-        let d = std::env::temp_dir().join(format!("gates-mode-{}", std::process::id()));
+        let d = crate::test_scratch::root().join(format!("gates-mode-{}", std::process::id()));
         let _ = std::fs::create_dir_all(&d);
+        let _gone = crate::test_scratch::Scratch::owning(d.clone());   // D299: the folder was left behind after the file was removed
         let p = d.join(".consonance.json");
         let _ = std::fs::remove_file(&p);
         assert_eq!(gates_mode_at(&p), Strict, "a missing file is strict");
