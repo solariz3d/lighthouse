@@ -97,7 +97,7 @@ test('only librarian transcripts count: other seats and the Third Place are neve
 });
 
 test('only Read tool_use counts: a Grep, a plain mention, a path outside exo_memory/, and a torn line are ignored', async () => {
-  const grep = JSON.stringify({ timestamp: at(1), message: { content: [{ type: 'tool_use', name: 'Read', input: { file_path: 'C:/elsewhere/none.md' } }, { type: 'tool_use', name: 'Grep', input: { file_path: P('loop/new1.md') } }] } });
+  const grep = JSON.stringify({ timestamp: at(1), message: { content: [{ type: 'tool_use', name: 'Read', input: { file_path: '/elsewhere/none.md' } }, { type: 'tool_use', name: 'Grep', input: { file_path: P('loop/new1.md') } }] } });
   const text = JSON.stringify({ timestamp: at(1), message: { content: [{ type: 'text', text: '"Read" ' + P('loop/new1.md') }] } });
   const root = projects({ [LIB + '/s.jsonl']: [grep, text, read('C:' + BS + 'other' + BS + 'loop' + BS + 'new1.md', at(1)), '{"Read" torn', read(P('journal/new2.md'), at(1))] });
   const r = await S.scanOpens(root, W0, W0 + 14 * 864e5);
