@@ -7512,7 +7512,88 @@ const INDEX_TITLE_CHARS: usize = 40;
 /// "(no title)" rather than printing nothing, so an empty title is never mistaken for a cut one.
 fn index_entry_line(label: &str, body: &str) -> String {
     let head = body.lines().find(|l| l.starts_with("# ")).unwrap_or("").trim_start_matches("# ").trim();
-    format!("- {label}  ({} lines)  {}", body.lines().count(), index_title(head))
+    format!("- {label}  ({} lines)  {}", body.lines().count(), index_title(strip_lead_label(label, head)))
+}
+
+/// A heading over the cap with its leading lap/ledger label removed, so the cut spends its chars on
+/// the claim (D297; pane B's D296 read, `handback/p-d296read-B_2026-10-11.md` §3). The label is
+/// read word by word from the start, and every word in it must be one of:
+/// - a ledger id: `D177`, `L025`, `Q3`, `P1b`, or a packet code `P-L113-READER` (`is_ledger_id`);
+/// - a qualifier `packet`/`part`/`item`/`step`/`pane`/`lap` with an argument of 1-3 letters or
+///   digits (`packet C`, `item 2`);
+/// - a word the path already shows (`path_shows`).
+/// It must hold at least one ledger id and end at a separator: a word ending in `:`, or a lone
+/// em dash, en dash or middle dot. The first word that is none of these leaves the heading whole,
+/// so a label never eats a word the path does not show. A heading within the cap keeps its label
+/// (nothing is cut), and one that is all label is returned whole and cut as before.
+fn strip_lead_label<'a>(path: &str, head: &'a str) -> &'a str {
+    if head.chars().count() <= INDEX_TITLE_CHARS {
+        return head;
+    }
+    let words: Vec<&str> = head.split(' ').collect();
+    let mut ledger = false;
+    let mut i = 0;
+    while i < words.len() {
+        let w = words[i];
+        if matches!(w, "\u{2014}" | "\u{2013}" | "\u{00b7}") {
+            if !ledger {
+                return head;
+            }
+            i += 1;
+            break;
+        }
+        let core = w.trim_start_matches('(').trim_end_matches([',', ':', ')']);
+        let arg = words.get(i + 1).map(|a| a.trim_end_matches([',', ':', ')']));
+        if is_ledger_id(core) {
+            ledger = true;
+            i += 1;
+        } else if matches!(core, "packet" | "part" | "item" | "step" | "pane" | "lap" | "Lap")
+            && arg.is_some_and(|a| (1..=3).contains(&a.len()) && a.chars().all(|c| c.is_ascii_alphanumeric()))
+        {
+            i += 2;
+        } else if path_shows(path, core) {
+            i += 1;
+        } else {
+            return head;
+        }
+        if words[i - 1].ends_with(':') {
+            if !ledger {
+                return head;
+            }
+            break;
+        }
+        if i == words.len() {
+            return head;
+        }
+    }
+    let at: usize = words[..i].iter().map(|w| w.len() + 1).sum();
+    match head.get(at.min(head.len())..).map(str::trim) {
+        Some(rest) if !rest.is_empty() => rest,
+        _ => head,
+    }
+}
+
+/// `D177`, `L025`, `Q3`, `P1b` (one or two capitals, 1-4 digits, an optional lowercase letter), or
+/// a packet code `P-` followed by dash-joined runs of capitals and digits. No English word has
+/// either shape; `T-180` (a project name) has neither.
+fn is_ledger_id(w: &str) -> bool {
+    if let Some(code) = w.strip_prefix("P-") {
+        return code.split('-').all(|p| !p.is_empty() && p.chars().all(|c| c.is_ascii_uppercase() || c.is_ascii_digit()));
+    }
+    let b = w.as_bytes();
+    let caps = b.iter().take_while(|c| c.is_ascii_uppercase()).count();
+    let digits = b[caps..].iter().take_while(|c| c.is_ascii_digit()).count();
+    let tail = &b[caps + digits..];
+    (1..=2).contains(&caps) && (1..=4).contains(&digits) && (tail.is_empty() || (tail.len() == 1 && tail[0].is_ascii_lowercase()))
+}
+
+/// Whether the path already shows `word`: its letters and digits, lowercased, equal one of the
+/// path's alphanumeric tokens, or begin with one of 4+ chars (`PREREG` shows "PRE-REGISTRATION").
+fn path_shows(path: &str, word: &str) -> bool {
+    let w: String = word.chars().filter(|c| c.is_ascii_alphanumeric()).collect::<String>().to_ascii_lowercase();
+    !w.is_empty()
+        && path.to_ascii_lowercase().split(|c: char| !c.is_ascii_alphanumeric()).filter(|t| !t.is_empty())
+            .any(|t| t == w || (t.len() >= 4 && w.starts_with(t)))
 }
 
 fn index_title(head: &str) -> String {
@@ -16277,6 +16358,101 @@ mod index_title_tests {
         let w = "a".repeat(INDEX_TITLE_CHARS + 10);
         let t = index_title(&w);
         assert_eq!(t, format!("{} ...", "a".repeat(INDEX_TITLE_CHARS)));
+    }
+
+    // ---- D297: a leading lap/ledger label is stripped before the cut ---------------------------
+    // Through `index_entry_line`, which the strict walk calls, so each row was runnable on 5d5740b4.
+    // Titles are verbatim headings from the D296 snapshot unless marked made-up. The hand-back
+    // (`handback/p-labelstrip-C_2026-10-11.md`) says which rows were red there and which pin the
+    // rule's narrowness (green on both sides by design, held by a mutant instead).
+
+    /// The title an index line shows for a file at `label` whose heading is `head`.
+    fn shown(label: &str, head: &str) -> String {
+        let line = index_entry_line(label, &format!("# {head}\n"));
+        line.split_once("lines)  ").expect("an index line").1.to_string()
+    }
+
+    #[test]
+    fn a_ledger_label_the_path_carries_is_stripped_before_the_cut() {
+        // B's D296 #8: "Q3" is a ledger id, "read" is in the path.
+        assert_eq!(shown("loop/q3_read_Jev_2026-09-27.md",
+            "Q3 read: Jev (typesafe/jev-1.13-20260917, through OpenRouter) — D162 resumed, pane E, 2026-10-01"),
+            "Jev (typesafe/jev-1.13-20260917 ...");
+        // ended by a standalone dash rather than a colon
+        assert_eq!(shown("loop/q3_units_2026-09-27.md",
+            "Q3 units — 40 pairs for the two-reader agreement test (D161, built by pane E on D, 2026-09-27)"),
+            "40 pairs for the two-reader agreement ...");
+        // a qualifier and its short argument ride with the id
+        assert_eq!(shown("loop/design_speed_measure_2026-10-06.md",
+            "D256 item 2: what \"always max speed\" would change, measured · pane E, on D, 2026-10-06 ~13:3x"),
+            "what \"always max speed\" would change ...");
+        // an id in parentheses inside the label; the rest then fits and is shown whole
+        assert_eq!(shown("handback/p-indicator-loop-chain-ui_2026-09-01.md",
+            "P-INDICATOR (L025) — the loop indicator in the UI"),
+            "the loop indicator in the UI");
+        // subject words the path already shows go with the id (B's loss rule allows it)
+        assert_eq!(shown("loop/rule_census_score_2026-10-02.md",
+            "D210 rule census: SCORE. Where MD rules work, and where they fail. Librarian, on D, 2026-10-02 13:2x."),
+            "SCORE. Where MD rules work, and where ...");
+    }
+
+    #[test]
+    fn a_path_token_of_four_or_more_chars_shows_a_word_it_begins() {
+        // made-up heading on a real path: `PREREG` shows "PRE-REGISTRATION" (B's §3 rule)
+        assert_eq!(shown("loop/compaction_corrections_2026-10-05/PREREG.md",
+            "D245 PRE-REGISTRATION: do the seat's own CORRECTION-ADJACENT sentences survive compaction?"),
+            "do the seat's own CORRECTION-ADJACENT ...");
+    }
+
+    #[test]
+    fn a_word_the_path_does_not_show_stops_the_label_and_nothing_is_stripped() {
+        // B's D296 #27: "(reordered first)" is two words no path token shows
+        assert_eq!(shown("handback/p-d177-rigid-C_2026-09-27.md",
+            "D177, packet C (reordered first): rigid downstream edits and one shared path"),
+            "D177, packet C (reordered first): rigid ...");
+        // made-up: "Consonance" is not in the path, so the id before it cannot take it along
+        assert_eq!(shown("loop/plan_consumer_refresh_2026-10-08.md",
+            "D273 Consonance consumer: bring it up to date with dev, ready for a new user."),
+            "D273 Consonance consumer: bring it up ...");
+    }
+
+    #[test]
+    fn a_label_must_end_at_a_separator() {
+        // B's D296 #12: the id is followed by the claim in parentheses, with no separator between
+        assert_eq!(shown("loop/qs2s_units_v2_2026-10-03.md",
+            "QS2S units v2, D217 (is seat Y correcting seat X?) — re-drawn for the readers' overlap and frozen by pane E, 2026-10-03"),
+            "QS2S units v2, D217 (is seat Y ...");
+    }
+
+    #[test]
+    fn a_leading_phrase_with_no_ledger_id_is_not_a_label() {
+        // B's D296 #2, #18, #20, verbatim: a document kind, a subject, a subject
+        assert_eq!(shown("loop/compaction_corrections_2026-10-05/PREREG.md",
+            "PRE-REGISTRATION — do the seat's own CORRECTION-ADJACENT sentences survive compaction? (D245 item 1, pane C)"),
+            "PRE-REGISTRATION — do the seat's own ...");
+        assert_eq!(shown("loop/battery_run2_sealed_rows_2026-09-25.md",
+            "Battery run 2 — the sealed rows, prepared by B (D136). **NOT FOR LANDING as they stand: no kind has a fieldable pair.**"),
+            "Battery run 2 — the sealed rows ...");
+        assert_eq!(shown("loop/plan_consumer_refresh_2026-10-08.md",
+            "Consonance consumer: bring it up to date with dev, ready for a new user. Librarian, on D, 2026-10-08 12:3x. Lap D273 (first of 2–4)."),
+            "Consonance consumer: bring it up to ...");
+        // a project name with digits is not a ledger id, even when the path shows it
+        assert_eq!(shown("loop/plan_t180_sharp_turns_2026-10-09.md",
+            "T-180: a 90° turn does not come out straight, and the turns cannot be as sharp as Thunderhead's."),
+            "T-180: a 90° turn does not come out ...");
+    }
+
+    #[test]
+    fn a_title_within_the_cap_keeps_its_label() {
+        assert_eq!(shown("loop/sharp_turn_registration_2026-10-09.md", "D282: the Sharp turn bar, sealed"),
+            "D282: the Sharp turn bar, sealed");
+    }
+
+    #[test]
+    fn a_title_that_is_all_label_is_cut_as_before_and_never_says_no_title() {
+        // made-up: nothing would remain after the label, so the whole heading is cut as before
+        assert_eq!(shown("loop/d296_d297_d298.md", "D296 part 2, D297 part 3, D298 part 4, D299:"),
+            "D296 part 2, D297 part 3, D298 part 4 ...");
     }
 }
 
