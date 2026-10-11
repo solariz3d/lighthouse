@@ -29,3 +29,8 @@ Scored over the first **20 dispatch turns** the shadow records for the chair sea
 
 ## 6. Bias
 I am the seat that wrote the 98.1% line's neighbours and that proposed the shadow as the cheapest honest form; I expect the nag result. B scores it, not me.
+
+## Scoring switch, 2026-10-11 08:5x, by the scorer (librarian)
+- The bar is scored on `boundary-reminder.js`'s replay of the chair's transcript since 10-01, not on "the first 20 shadow rows". Decided at the D294 score (`loop/plan_retrieval_now_d294_2026-10-11.md`, SCORE), before any shadow row existed: the hook was never installed and `1b4cb7c0` did not land.
+- Why (B, `handback/p-d294read-B_2026-10-11.md` §3): the shadow logs and sends nothing, so its 20 rows sample the same process the replay already read 341 times this month, and the shadow drops long turns that all fire.
+- **Score: 326/341 = 95.6% wouldFire (Wilson 92.9–97.3%) ≥ 90% → the live state-dependent reminder is REFUSED.** A constant reminder's compliance effect is untested here.

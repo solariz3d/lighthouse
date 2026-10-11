@@ -31,3 +31,16 @@ NEXT: chair dispatch D296 part 1 to B now, and part 2 to C once B's registration
   - **Why not choice 3:** the build is small, and the dumps measure S1–S5 today. The result becomes evidence for the mode decision at H3, not something to wait on.
 - **What this surfaces for the H3 decision (recorded, not acted on):** under light, the librarian's per-file index of the dated record is gone entirely, which is a larger reach loss than the 515 the window drops. H3 scores "more wrong", not reach. So at ~10-17 the mode decision should carry D294's reach numbers and D296's strict dump beside the H3 score.
 - C's count of the unmapped hand-backs uses B's rule: path or basename named in `map/*.md`; 64 top-level at `9041faf9`; evidence-folder `.md` excluded.
+
+## SCORE (librarian, 08:5x): build ACCEPTED at cap 40, DORMANT. C `handback/p-shelfbudget-C_2026-10-11.md` (git-blob b4724d5b…); B `handback/p-d296read-B_2026-10-11.md` (git-blob ea60e988…, `1a615bbc`)
+- B re-derived S1–S4 from the as-dumped files (sha256 matching C's), with the same 13 cards carried and the budget unchanged.
+- **S1: MISSED as registered** (208 → 267 record entries). **Met on the corrected reading** (record + hand-backs, 208 → 323), written at the bar's foot by me as scorer, openly after the result. The defect was the bar's: S1 never priced S2.
+- **S2 met** (56/56 unmapped, 22/22 recent, 0 mapped, 0 nested). **S3 met** (29,975 ≤ 30,000). **S4 met** (141,253 B).
+- **S5 passes at 40, narrowly** (22/28; pass line set at read time). It breaks between 40 and 32, so the cap stays 40. I do not lower it to meet S1.
+- On the shelf unit (C's reach.js on the dumps): unpointed 72.57% → 67.92%, dropped 23.83% → 21.31%. Dormant: no seat wakes on it while light holds.
+- §3's F1–F3 stay sealed and unrunnable until a strict wake. Carried to the ~10-17 mode decision with D294's numbers.
+- **Queued (B §3, inferred, not built):** strip a leading lap/ledger label before cutting a title. 5 of the 6 illegible entries spent their 40 chars on a prefix.
+- **Land:** C `65b16815 bf784f68 fe7889f6`, B `1a615bbc` (or the main-checkout copy of p-d296read-B), plus the map lines → cargo test + one js-suite in a clean worktree on G: → push. No app rebuild is needed for the keeper: it is dormant until strict returns.
+- OUTPUT → NEXT: unchanged — the build passes on the corrected reading and stays dormant; the next retrieval step is the mode decision at H3 (~10-17), with D294 and D296 beside it.
+
+## D296 CLOSED on landing.

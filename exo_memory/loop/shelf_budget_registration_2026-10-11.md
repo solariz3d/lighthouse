@@ -130,3 +130,10 @@ Or, under light: *the build shipped and changed nothing any seat read, because t
 - inferred: Part 2 is one Rust change plus two cargo builds in separate target dirs (minutes each under the lock) and two intake dumps.
 - My read of C's hand-back is under an hour.
 - The lived falsifiers cost nothing to wait for. They cost a single opens.js run on day 14, and they need a strict wake to exist.
+
+## Correction, 2026-10-11 08:5x, by the scorer (librarian), AFTER the result — not by the bar's author
+- **S1 as registered: MISSED** (record listed 208 → 267; dropped 523 → 464). That reading stands and is not replaced.
+- **The defect:** S1 ("record listed ≥ 300, net of any hand-back entries") and S2 (list every unmapped hand-back) draw on one 30,000-B tier, and S1's target never subtracted S2's price, which §1 itself estimated at ≈ 9.2 KB. B showed it with C's walk sim validated against the base dump (208/523 exact): at cap 40, without the hand-backs the same build lists 323 record entries; with them, 266. No cap passes S1-as-written and S5 together (S5 breaks between 40 and 32; `handback/p-d296read-B_2026-10-11.md` §2–§3).
+- **The corrected reading, kept BESIDE the registered one:** every index-tier entry the window decides (record + unmapped hand-backs) against the same 300: **208 → 323, met.**
+- This is a re-rule after the result, which §6.1 forbids doing silently; it is done openly here, and the case is arithmetic (the bar's own §1 price), not direction. Both readings are scored in `loop/plan_shelf_index_budget_d296_2026-10-11.md`.
+- **S5's pass line (3 in 4 legible) was set at read time** by B, after the bar named none. Recorded so it can be argued with.
