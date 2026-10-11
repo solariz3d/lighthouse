@@ -54,3 +54,47 @@ Both survivors were **missing tests, not equivalent mutants**. One was also a de
 - **W2:** my first probe run passed the scratchpad path to node in Git Bash form (`/c/...`), so node resolved it against `G:` and found nothing. I re-ran it with the Windows path.
 
 NEXT: librarian read this, rule on F1; the chair lands `7b717f8a` (independent of C's ledger-union part).
+
+---
+
+# F1 follow-up (D289 F1, 2026-10-11 ~03:2x): an unreadable moved lock is put back
+
+**DONE. Commit `2db943ee` on branch `d289-b2`** (worktree `G:\b-d289b2-wt`, from main `b8b52bbd`). Not pushed. It touches the same 3 files: `heavy-run.js`, `heavy-run.test.js` and `heavy-run.mutants.js`.
+
+## The condition: I argue the ruling's is too narrow, and took a stricter one
+- **The ruling:** put an unreadable moved lock back unless the lock first read (`h`) was itself unreadable.
+- **Why that is too narrow:** suppose `h` is an OLD junk lock. Racer X also judges it stale, takes it over, and opens its own claim with `wx`, empty for now. Our rename then moves X's empty claim. Both reads are unreadable, so the ruling's condition takes it, and two runners share the slot again. Row 2 below is exactly this, and mutant #72 (the ruling's condition) fails it.
+- **What I did instead:** an unreadable moved lock gets the rule every unreadable lock already gets, `UNREADABLE_GRACE_MS` by mtime. The rename keeps the file's mtime.
+  - Younger than the grace, it is put back and judged at the next poll.
+  - Older, it is taken. So the old junk file the first read saw is still taken, as the ruling wants: the existing D283 unreadable row stays green, and mutant #73 (always put back) shows taking a junk lock would otherwise never end.
+- **If the aside vanishes before its age is read,** it counts as fresh: we try to put it back and judge it at the next poll. **This branch is not pinned by any row.** Nothing reaches it without another seam, so I added no mutant that could only survive.
+
+## The seam and the rows
+- **The seam:** `beforeTake({ slot, file })` fires just before the rename (`heavy-run.js`, in `takeIfStale`), beside the existing `beforeClaim`. It is test-only and changes no behaviour.
+- **The racer is a real `wx` handle,** so after the put-back (`linkSync` to the same file) its write lands in the slot, as on a live machine.
+- **The rows:**
+  1. `D289 F1 a race: another runner's claim caught between its wx open and its write …`. A dead old holder, then the racer's empty claim swapped in. The waiter times out, the racer's record is in the slot, and nothing is left set aside.
+  2. `D289 F1 the same race when the lock first read was itself an OLD unreadable lock …`. The same, behind a junk lock, through `beforeTake`.
+  3. `D289 F1 a claim being written this instant … is waited for without ever being moved aside`. `beforeTake` fires 0 times.
+     - Why it is needed: my first full harness run left **#69 SURVIVED** ("unreadable: a lock being written this instant is taken at once"), because the new put-back rescued the claim.
+     - But that mutant moves the claim aside and back on every poll. In that gap a third runner can claim the slot, the put-back then fails, and the claim being written is lost. So the first-read grace check is not redundant, and this row pins it.
+
+## Runs (all under the lock via `scratchpad/d273/run.js`, main's heavy-run.js by absolute path; logs `scratchpad/d289b2/`)
+
+| run | tree | result |
+|---|---|---|
+| `heavy-run.test.js` (`red-test.out`) | the seam + rows 1–2 only, with the old condition | **47 pass / 2 fail**: rows 1 and 2, "the waiter did not claim the racer's slot" |
+| full mutants (`green-mut.out`) | condition + rows 1–2 | 72 applied · 71 caught · **1 survived (#69) · 1 NOT APPLIED (#16**, whose anchor was the line F1 changed) |
+| `--only 16`, `--only 69` (`q-mut*.out`) | + #16 re-anchored, + row 3 | both CAUGHT (49 pass / 1 fail) |
+| `heavy-run.test.js` (`q-test.out`) | final | **50 / 0** |
+| full mutants (`full-mut.out`, 1,244 s) | final | control 50/0; **73 applied · 73 caught · 0 survived · 0 NOT APPLIED** (#71: 48/2, #72: 49/1, #73: 49/1) |
+| `portable-paths.test.js` (`pp.out`) | committed 2db943ee | **43 / 0** |
+
+- The three new mutants are **appended at the end** of the list (#71–73), so #1–70 keep the numbers earlier hand-backs cite.
+- **#16 is re-anchored** on the new condition (`: moved.token !== h.token)) {`), and its meaning is unchanged.
+- No existing row was weakened.
+
+## Corrections to myself
+- **W3:** my first full run's NOT APPLIED #16 was my own doing: I changed the line its anchor named. It is re-anchored, and it is caught.
+
+NEXT: librarian read this, and say whether the stricter condition stands over the ruling's; the chair lands `2db943ee` on top of `594b05e2`.

@@ -121,3 +121,67 @@ with a separate writer process doing one `appendFileSync` per row; the count is 
 - `G:/worktrees/c-d289-wt` (after landing).
 - `G:/consonance-scratch/c-d289`.
 - `C:/Users/nname/AppData/Local/Temp/c-d289-probe`.
+
+---
+
+## MR follow-up (the chair's D289 MR packet, 2026-10-11): step (6)'s loop covers a real case, now pinned
+
+Commit: **d7ee4fea** on branch `d289-c2`, worktree `G:/worktrees/c-d289c2-wt`, parent b8b52bbd. Not pushed.
+One file: `consonance/tools/ledger-union.test.js` (+28). **`ledger-union.js` is unchanged.**
+
+### Verdict: not subsumed; a test was missing
+
+- The loop is **not** an equivalent mutant. It holds the union's **only** `sleepMs(settleMs)`
+  (`consonance/tools/ledger-union.js:404`; it is the only call of `sleepMs` in `writeUnion`).
+- Without the loop, the tail carry at `:413-416` runs the moment the union is linked. So a row that reaches the frozen
+  original a moment later is never read. That row comes from a writer that held the file open across the rename and
+  writes through its fd after it.
+- Why MR survived: every existing row writes **synchronously inside a hook** (`afterLink` and the others), so its bytes
+  are already on disk before step (6) starts. The tail carry finds them with no wait.
+- My part 2 inference ("the tail carry subsumes the loop") was wrong for exactly this reason.
+  - It holds only for bytes already written when step (6) begins.
+  - The loop's job is the bytes that are not yet written.
+
+### The row
+
+`WRITE: a writer holding the original open that writes DURING the settle is reconciled in`
+1. A separate writer process opens `lap.jsonl` (`'a'`) before the union starts, and says so on stdout.
+2. It polls for the backup name (W's fixed clock fixes it), then writes one row 150 ms later through the fd it still
+   holds.
+3. The union runs with `settleMs: 1500`.
+
+The row asserts four things:
+- the writer exited 0 (it saw the freeze);
+- the row really landed in the frozen original (otherwise the row proves nothing);
+- the row is in the live file;
+- `reconciled === 1`.
+
+### Measured
+
+`node d289/mr.js 10` (my scratchpad): code applied to a copy of `consonance/tools` on G:, never to tracked sources;
+the new row run 10 times per variant.
+- **control, no change: red 0/10**, the row passing every run;
+- **MR, `pass < 20` → `pass < 0`: red 10/10**, every one on "a row written into the frozen original during the settle
+  was lost". Applied 1 / caught 1 / NOT APPLIED 0.
+
+Done-when:
+
+| row | command | result |
+|---|---|---|
+| hot-writer rows, 20 of 20 on G: | `WT=G:/worktrees/c-d289c2-wt node d289/rep.js 20`: whole file, directly, worktree on G:, fixtures under `G:\consonance-scratch` | **20/20 green, 45 pass / 0 fail each** (uncommitted tree, content identical to d7ee4fea) |
+| ledger-union.test.js green on the committed tree | | 45 tests, 45 pass, 0 fail |
+| portable-paths on the committed tree, after committing | `node consonance/tools/portable-paths.js` | "green — 379 files in scope, 449 known sites, 0 new", exit 0 |
+| union-at-launch mutants | | **not run**: the code did not change |
+
+All runs held main's heavy-run lock through `scratchpad/lockrun.js` (absolute-path `require` of main's `heavy-run.js`).
+
+### What this does not establish
+
+- The row pins one delayed write inside the first settle pass.
+- It does not pin the loop's **repeat-until-quiet**: a writer still writing across several settle periods. Removing
+  only the repeat (one pass instead of up to 20) would survive it (inferred, not run).
+- The 150 ms margin against `settleMs: 1500` is wide, but it is a margin and not a lock-step. A machine stalled for more
+  than ~1.3 s between the freeze and the writer's write could turn the row red against correct code (inferred).
+- The tail carry's extra `'\n'` after complete lines (a possible blank line) is untouched and unpinned.
+
+Leftovers, mine, safe to delete after landing: `G:/worktrees/c-d289c2-wt`, plus the part 2 leftovers above.
