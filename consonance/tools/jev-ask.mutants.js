@@ -85,6 +85,7 @@ function main() {
     try {
       fs.writeFileSync(path.join(d, 'jev-ask.js'), text);
       fs.writeFileSync(path.join(d, 'jev-ask.test.js'), suite);
+      fs.copyFileSync(path.join(__dirname, 'scratch.js'), path.join(d, 'scratch.js'));   // the suite makes its temp folders through it (D287 part 1)
       const r = spawnSync(process.execPath, ['--test', path.join(d, 'jev-ask.test.js')], { encoding: 'utf8', env });
       const o = (r.stdout + r.stderr).replace(/\x1b\[[0-9;]*m/g, '');
       const n = (k) => Number((o.match(new RegExp(`^ℹ ${k} (\\d+)`, 'm')) || [])[1]);

@@ -89,6 +89,8 @@ function tree() {
   const dir = require('./scratch.js').mkdtemp('rs-mut-');
   fs.mkdirSync(path.join(dir, 'consonance', 'hooks'), { recursive: true });
   for (const f of [HOOK, SUITE, ...SIBLINGS]) fs.copyFileSync(path.join(HERE, f), path.join(dir, 'consonance', 'hooks', f));
+  // scratch.js: the suite makes its temp folders through it (D287 part 1); without it the control is red at load
+  fs.mkdirSync(path.join(dir, 'consonance', 'tools'), { recursive: true }); fs.copyFileSync(path.join(HERE, '..', 'tools', 'scratch.js'), path.join(dir, 'consonance', 'tools', 'scratch.js'));
   for (const rel of [INSTALL, MAIN_RS, PLAN]) { fs.mkdirSync(path.dirname(path.join(dir, rel)), { recursive: true }); fs.copyFileSync(path.join(REPO, rel), path.join(dir, rel)); }
   return dir;
 }

@@ -28,7 +28,7 @@ const { spawnSync } = require('child_process');
 
 const TOOLS = __dirname;
 const HOOKS = path.resolve(__dirname, '..', '..', 'dev', 'shell', 'hooks');
-const COPIED = ['jev-shadow.js', 'jev-shadow.test.js', 'jev-shadow-runner.js', 'jev-shadow-runner.test.js', 'jev-ask.js', 'jev-judge.js', 'jev-room.js'];   // jev-room.js: L105, required by all three
+const COPIED = ['jev-shadow.js', 'jev-shadow.test.js', 'jev-shadow-runner.js', 'jev-shadow-runner.test.js', 'jev-ask.js', 'jev-judge.js', 'jev-room.js', 'scratch.js'];   // jev-room.js: L105, required by all three; scratch.js: D287 part 1, the suites make their temp folders through it
 const HANG_MS = 120000;
 
 const TARGETS = {
@@ -79,6 +79,11 @@ function layout(root) {
   fs.mkdirSync(tools, { recursive: true });
   fs.cpSync(HOOKS, path.join(root, 'dev', 'shell', 'hooks'), { recursive: true });
   for (const f of COPIED) fs.copyFileSync(path.join(TOOLS, f), path.join(tools, f));
+  // D123: the runner suite's withJev() copies these from the repo it sits in; without them its two CONSONANCE_JEV_MODULE rows are red at the control
+  for (const rel of ['jev/lib/prompt.js', 'jev/lib/ask.js', 'jev/lib/config.js', 'jev/METHOD.md', 'consonance/jev-room/.jev/config.json']) {
+    fs.mkdirSync(path.dirname(path.join(root, rel)), { recursive: true });
+    fs.copyFileSync(path.join(TOOLS, '..', '..', rel), path.join(root, rel));
+  }
   return tools;
 }
 
