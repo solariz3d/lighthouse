@@ -189,8 +189,8 @@ test('a dry run changes nothing: every candidate of every class is still there, 
 test('the last line of defence: a drive root, D:, the keeper\'s folders and anything outside its class root are refused at the act', () => {
   assert.throws(() => J.assertSafe('C:\\', 'C:\\'), /drive root/);
   assert.throws(() => J.assertSafe('D:\\consonance-scratch\\x', 'D:\\consonance-scratch'), /USB stick/);
-  assert.throws(() => J.assertSafe('C:\\Users\\nname\\Downloads\\jt-AbC123', 'C:\\Users\\nname'), /keeper's own/);
-  assert.throws(() => J.assertSafe('C:\\Users\\nname\\Documents\\x', 'C:\\Users\\nname'), /keeper's own/);
+  assert.throws(() => J.assertSafe('C:\\Users\\someone\\Downloads\\jt-AbC123', 'C:\\Users\\someone'), /keeper's own/);
+  assert.throws(() => J.assertSafe('C:\\Users\\someone\\Documents\\x', 'C:\\Users\\someone'), /keeper's own/);
   assert.throws(() => J.assertSafe('C:\\elsewhere\\jt-AbC123', 'C:\\temp'), /not under its class root/);
   assert.doesNotThrow(() => J.assertSafe('C:\\temp\\jt-AbC123', 'C:\\temp'));
 });
@@ -238,6 +238,33 @@ test('the act refuses a forged entry outside its class root: recorded as an erro
     assert.equal(r.done.a.n, 0);
     assert.match(r.errors[0].error, /not under its class root/);
     assert.equal(fs.existsSync(outside), true);
+  } finally { scratch.rm(s.root); }
+});
+
+test('D287-e2 config: a root is the env override, else the ~/.consonance.json key, else nothing (a blank value is nothing)', () => {
+  const was = process.env.JANITOR_TEST_ROOT;
+  try {
+    process.env.JANITOR_TEST_ROOT = '/from/env';
+    assert.equal(J.setting('JANITOR_TEST_ROOT', 'k', { k: '/from/config' }), '/from/env');
+    delete process.env.JANITOR_TEST_ROOT;
+    assert.equal(J.setting('JANITOR_TEST_ROOT', 'k', { k: '/from/config' }), '/from/config');
+    assert.equal(J.setting('JANITOR_TEST_ROOT', 'k', { k: '  ' }), null);
+    assert.equal(J.setting('JANITOR_TEST_ROOT', 'k', {}), null);
+  } finally { if (was === undefined) delete process.env.JANITOR_TEST_ROOT; else process.env.JANITOR_TEST_ROOT = was; }
+});
+
+test('D287-e2 config: with no archive configured (b) moves nothing; with no worktrees folder (d) is not run; each is SAID, naming its key', () => {
+  const s = sandbox();
+  try {
+    const log = put(path.join(s.claude, 'C--Consonance-instances-a', 's1', 'tasks', 'bnocfg001.output')); age(log, 30);
+    const w = repoWithWorktree(s, 'cfg', true), t = target(path.join(w.wt, 'target')); ageGit(w.wt, 3); age(t, 3);
+    const p = J.plan(s.opts({ archiveRoot: null, worktreesDir: null }));
+    assert.deepEqual([p.classes.b, p.classes.d], [[], []]);
+    assert.deepEqual(p.kept.b['no archive configured'], [log]);
+    assert.ok(p.notes.some((n) => /archive_dir/.test(n)) && p.notes.some((n) => /worktrees_dir/.test(n)), JSON.stringify(p.notes));
+    const lines = []; J.report(p, (l) => lines.push(l));
+    assert.ok(lines.some((l) => /^  NOTE: \(b\) moves nothing/.test(l)) && lines.some((l) => /^  NOTE: \(d\) is not run/.test(l)), 'the report does not say it');
+    assert.deepEqual(paths(J.plan(s.opts()).classes.d), [t], 'control: configured, the same target is a candidate');
   } finally { scratch.rm(s.root); }
 });
 

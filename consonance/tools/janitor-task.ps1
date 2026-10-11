@@ -63,6 +63,20 @@ if ($LASTEXITCODE -ne 0) {
 }
 Write-Host "Runner pre-flight: parses clean." -ForegroundColor Green
 
+# -- THE CONFIG CHECK, printed loudly: the two roots that are this machine's live in ~/.consonance.json, never in the code (D287-e2) --
+# A WARNING, not a refusal (the vantage installer's form): registering first is a legitimate order, but not without being told that class (b) will
+# move nothing and class (d) will not run until the keys are set.
+$cfgPath = Join-Path $env:USERPROFILE ".consonance.json"
+$cfg = $null
+if (Test-Path $cfgPath) { try { $cfg = Get-Content $cfgPath -Raw | ConvertFrom-Json } catch { $cfg = $null } }
+foreach ($k in @("archive_dir", "worktrees_dir")) {
+  if (-not $cfg -or -not $cfg.$k) {
+    Write-Host "WARNING - $k is NOT set in $cfgPath; the janitor skips its class until it is (see the janitor's NOTE lines)." -ForegroundColor Yellow
+  } else {
+    Write-Host "Config:   $k = $($cfg.$k)" -ForegroundColor Green
+  }
+}
+
 # -- The launcher shim ---------------------------------------------------------
 if (-not (Test-Path $LauncherDir)) { New-Item -ItemType Directory -Path $LauncherDir -Force | Out-Null }
 $vbs       = Join-Path $LauncherDir "janitor_launch.vbs"
@@ -96,7 +110,7 @@ $action  = New-ScheduledTaskAction -Execute "wscript.exe" -Argument "//B //Nolog
 $trigger = New-ScheduledTaskTrigger -Daily -At $At
 $taskSettings = New-ScheduledTaskSettingsSet -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Minutes 60) -MultipleInstances IgnoreNew
 Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger -Settings $taskSettings `
-  -Description "janitor.js --apply (D287): removes the room's old temp test folders, idle cargo targets in scratchpads and merged worktrees, and moves old task-output logs to Z:\consonance-archive. One line per run in <data>\janitor.jsonl. Remove: powershell -ExecutionPolicy Bypass -File consonance\tools\janitor-task.ps1 -Uninstall" `
+  -Description "janitor.js --apply (D287): removes the room's old temp test folders, idle cargo targets in scratchpads and merged worktrees, and moves old task-output logs to the archive_dir set in ~/.consonance.json. One line per run in <data>\janitor.jsonl. Remove: powershell -ExecutionPolicy Bypass -File consonance\tools\janitor-task.ps1 -Uninstall" `
   -Force | Out-Null
 
 Write-Host "Registered '$TaskName': daily at $At (machine must already be awake; WakeToRun is off)." -ForegroundColor Green

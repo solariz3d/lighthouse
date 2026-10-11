@@ -18,12 +18,13 @@
 //                temp_dir().join(format!("head{…")) in the Rust (matched at its - or _ boundary). A folder that merely starts the same way but is
 //                not shaped like the room's is not matched.
 //   (b) LOGS     Claude task-output logs (<%TEMP%>\claude\<project>\<session>\tasks\*) older than 7 days, EXCEPT any whose task id appears
-//                anywhere in exo_memory/ (it is cited as evidence). MOVED to Z:\consonance-archive\<date>\<project>\<session>\tasks\, never deleted.
-//                No archive drive, no move: they are kept.
+//                anywhere in exo_memory/ (it is cited as evidence). MOVED to <archive>\<date>\<project>\<session>\tasks\, never deleted, where
+//                <archive> is archive_dir in ~/.consonance.json (or CONSONANCE_ARCHIVE). No archive configured, or its drive absent: no move, kept.
 //   (c) SCRATCH  cargo `target*` folders inside Claude scratchpads, idle more than 2 days. A folder is a cargo target only if it carries cargo's
 //                CACHEDIR.TAG; nothing else in a scratchpad is touched (scratchpads themselves are NOT a class this lap: the ruling on C's 75
 //                cited directories archives them later, after C's copy is checked).
-//   (d) WORKTREE the cargo `target*` of a worktree under Desktop\worktrees whose HEAD is already in its repository's main and which has been idle
+//   (d) WORKTREE the cargo `target*` of a worktree under the worktrees folder (worktrees_dir in ~/.consonance.json, or CONSONANCE_WORKTREES; none
+//                configured: not run, said) whose HEAD is already in its repository's main and which has been idle
 //                more than 24 h. Never a main checkout; never a worktree a heavy-run lock is held in (or any, while a lock records no tree).
 //
 // SAFETY, in order of what would hurt most. Never on D: (the USB stick). Never Downloads, Documents, app data, or a main checkout. Never a
@@ -174,15 +175,29 @@ function defaults() {
   // the LIVE room's exo_memory (room_path names its BOOT.md) as well as this checkout's: run from a worktree, this checkout's is an older
   // snapshot, and a citation added since would be missed (and the cited log moved)
   const exo = [path.join(REPO, 'exo_memory')];
-  try { const rp = JSON.parse(fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8')).room_path; if (rp) exo.push(path.dirname(rp)); } catch (_) {}
+  const cfg = config();
+  if (cfg.room_path) exo.push(path.dirname(String(cfg.room_path)));
   return {
     tempDirs: [tmp, scratch].filter((d, i, a) => d && a.findIndex((x) => x && norm(x) === norm(d)) === i),
     claudeTemp: path.join(tmp, 'claude'),
-    worktreesDir: path.join(os.homedir(), 'Desktop', 'worktrees'),
+    // D287-e2: the two roots that are THIS machine's, read from its config, never written into the code (portable-paths): an env override, then
+    // ~/.consonance.json. Neither set: that class is not run, and the report says so and names the key (it degrades loudly, never to a guess).
+    worktreesDir: setting('CONSONANCE_WORKTREES', 'worktrees_dir', cfg),
     repo: REPO, exo: exo.filter((d, i, a) => a.findIndex((x) => norm(x) === norm(d)) === i), dataDir,
-    archiveRoot: 'Z:\\consonance-archive',
+    archiveRoot: setting('CONSONANCE_ARCHIVE', 'archive_dir', cfg),
     mainCheckouts: [REPO],
   };
+}
+/** ~/.consonance.json, parsed loosely (a BOM is tolerated); {} when absent or unreadable. */
+function config() {
+  try { return JSON.parse(fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^﻿/, '')) || {}; } catch (_) { return {}; }
+}
+/** An env override, else a ~/.consonance.json key, else null (the transcript-watch.js dataDir() shape). */
+function setting(env, key, cfg = config()) {
+  const e = process.env[env] && String(process.env[env]).trim();
+  if (e) return e;
+  const v = cfg && cfg[key] != null ? String(cfg[key]).trim() : '';
+  return v || null;
 }
 
 /** Throws unless `p` may be acted on by class `cls` under `root`. The last line of defence: every act calls it again. */
@@ -199,6 +214,9 @@ function plan(opts = {}) {
   const o = { ...defaults(), ...opts }, now = o.now !== undefined ? o.now : Date.now();
   const out = { at: new Date(now).toISOString(), classes: { a: [], b: [], c: [], d: [] }, kept: { a: {}, b: {}, c: {}, d: {} }, unmatched: {}, notes: [] };
   const keep = (cls, why, p) => { (out.kept[cls][why] = out.kept[cls][why] || []).push(p); };
+
+  if (!o.archiveRoot) out.notes.push('(b) moves nothing: no archive is configured. Set archive_dir in ~/.consonance.json (or CONSONANCE_ARCHIVE) to the folder logs are moved to.');
+  if (!o.worktreesDir) out.notes.push('(d) is not run: no worktrees folder is configured. Set worktrees_dir in ~/.consonance.json (or CONSONANCE_WORKTREES).');
 
   // (a) TEMP
   const prefixes = o.prefixes || sourcePrefixes(o.repo);
@@ -232,6 +250,7 @@ function plan(opts = {}) {
       if (cited === null) cited = citedTokens(o.exo);
       const id = e.name.replace(/\.[^.]*$/, '');
       if (cited.has(id)) { keep('b', 'cited in exo_memory', p); continue; }
+      if (!o.archiveRoot) { keep('b', 'no archive configured', p); continue; }
       if (!archiveReady(o.archiveRoot)) { keep('b', 'no archive drive', p); continue; }
       out.classes.b.push({ path: p, root: o.claudeTemp, bytes: st.size, newest: st.mtimeMs, act: 'move', to: path.join(o.archiveRoot, day, path.relative(o.claudeTemp, p)) });
     }
@@ -317,6 +336,7 @@ function report(p, log = console.log) {
     for (const x of cls === 'a' ? [] : xs) log(`      ${x.act === 'move' ? 'move' : 'delete'} ${x.path}  (${gb(x.bytes)} GB)${x.to ? ' → ' + x.to : ''}`);
   }
   log(`  TOTAL: ${gb(p.total)} GB`);
+  for (const n of p.notes || []) log(`  NOTE: ${n}`);
   const top = Object.entries(p.unmatched).sort((a, b) => b[1] - a[1]).slice(0, 8);
   if (top.length) log(`  not the room's (left alone; the most common names): ${top.map(([k, v]) => `${k} ${v}`).join(', ')}`);
 }
@@ -334,4 +354,4 @@ function main(argv = process.argv.slice(2)) {
 }
 
 if (require.main === module) main();
-module.exports = { plan, apply, report, sourcePrefixes, roomTempName, survey, findTargets, citedTokens, heldLocks, worktreeFacts, assertSafe, isCargoTarget, TEMP_MIN_AGE, LOG_MIN_AGE, SCRATCH_MIN_IDLE, WORKTREE_MIN_IDLE, CARGO_TAG };
+module.exports = { plan, apply, report, setting, sourcePrefixes, roomTempName, survey, findTargets, citedTokens, heldLocks, worktreeFacts, assertSafe, isCargoTarget, TEMP_MIN_AGE, LOG_MIN_AGE, SCRATCH_MIN_IDLE, WORKTREE_MIN_IDLE, CARGO_TAG };
