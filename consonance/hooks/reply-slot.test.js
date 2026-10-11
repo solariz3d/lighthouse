@@ -118,6 +118,15 @@ test('VERDICT: the matcher is the SOURCES gate\'s: a command item matches a Bash
   run(dir, stopPayload(dir, KEEPER_TURN(...readCall('t1', 'C:/work/a.md'), NOTIF()), REPLY_OK)); assert.strictEqual(last(dir).kind, 'pass-matched');
 });
 
+test('D288 F1: in light the reply slot uses the same fixed matcher: a path only ls\'d or echoed still warns as unmatched; a command that ran still passes', () => {
+  const v = (cmd, reply) => R.verdict({ reply, entries: KEEPER_TURN(...bashCall('t1', cmd)), stopHookActive: false, live: true, seat: 'librarian', mode: 'light' });
+  for (const cmd of ['ls -la C:/work/a.md', 'echo C:/work/a.md']) {
+    const r = v(cmd, 'At C:/work/a.md, 3 of 5.\n\nSources: C:/work/a.md');
+    assert.strictEqual(r.kind, 'would-block-unmatched', cmd); assert.ok(r.warn && !r.output, 'light warns, never blocks: ' + cmd);
+  }
+  assert.strictEqual(v('git log -1', 'Head is 3062377, 47/47.\n\nSources: `git log -1`').kind, 'pass-matched');
+});
+
 // ------------------------------------------------------------------ what passes untouched
 
 test('PASSES: no token is pass-notoken; the keep-warm "ok" and a keep-warm turn are skipped; a reply to a ring or a notification is not a reply to the keeper', () => {

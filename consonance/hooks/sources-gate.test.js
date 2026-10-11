@@ -591,3 +591,43 @@ test('D287 LIGHT: with gates_mode light in the home, the hook allows a quoted cd
   const row = rows(dir).pop(); assert.strictEqual(row.decision, 'allow'); assert.strictEqual(row.mode, 'light');
   assert.ok(isDeny(runGate(dir, payloadOf(dir, turn, { text: withSources('SOURCES: exo_memory/handback/never-opened.md') }), { USERPROFILE: light, HOME: light })), 'light let through an item nothing in the turn touched');
 });
+
+// ------------------------------------------------------------------ D288 F1: light matches what a command OPENED, not the command's text
+// (exo_memory/handback/p-hermetichooks-B_2026-10-10.md F1). In-process: decide() with the mode given, so these rows test the matcher, not the home.
+const callsOf = (...entries) => G.turnCalls([USER('go'), ...entries.flat()]);
+const decideIn = (mode, line, ...entries) => G.decide(withSources(line), callsOf(...entries), 'C:/work', 'L.jsonl', 'abc', 'ring', 'GATES.md', mode);
+
+test('D288 F1 TOO LOOSE: in light, a path that was only echoed, printed, ls\'d, stat\'d or in a comment is refused, as in strict', () => {
+  for (const cmd of ['echo C:/work/a.md', 'printf "%s" C:/work/a.md', 'ls -la C:/work/a.md', 'stat C:/work/a.md', '# C:/work/a.md\nls', 'Write-Host C:\\work\\a.md']) {
+    for (const mode of ['strict', 'light']) assert.strictEqual(decideIn(mode, 'SOURCES: C:/work/a.md', bashCall('t1', cmd)).decision, 'deny', `${mode} counted "${cmd}" as opening the path`);
+  }
+});
+
+test('D288 F1 TOO LOOSE: in light, a COMMAND item is matched only by a segment that ran it, never by an echo of its text', () => {
+  assert.strictEqual(decideIn('light', 'SOURCES: `git log -1 --format=%h`', bashCall('t1', 'git log -1 --format=%h')).decision, 'allow', 'the command that ran');
+  assert.strictEqual(decideIn('light', 'SOURCES: `git log -1 --format=%h`', bashCall('t1', 'echo "git log -1 --format=%h"')).decision, 'deny', 'an echo of the command\'s text');
+  assert.strictEqual(decideIn('light', 'SOURCES: `git log -1 --format=%h`', bashCall('t1', '# git log -1 --format=%h\npwd')).decision, 'deny', 'the command only in a comment');
+  // the whole-chain rule: a cited command that ran IS what was run, even an ls (light only; strict never counts a metadata command)
+  assert.strictEqual(decideIn('light', 'SOURCES: `ls -la C:/work/dir`', bashCall('t1', 'ls -la C:/work/dir')).decision, 'allow', 'light: the cited ls that ran');
+  assert.strictEqual(decideIn('strict', 'SOURCES: `ls -la C:/work/dir`', bashCall('t1', 'ls -la C:/work/dir')).decision, 'deny', 'strict: unchanged');
+  assert.strictEqual(decideIn('light', 'SOURCES: `cd /c/Users/x/repo && git log --oneline -1 main`', bashCall('t1', 'cd /c/Users/x/repo && git log --oneline -1 main')).decision, 'allow', 'the quoted cd-chain (D277) still matches');
+});
+
+test('D288 F1 TOO STRICT (the librarian\'s ring 2eb8b2bdd226): a relative grep after a cd matches the absolute item in BOTH modes, when the call completed', () => {
+  const cmd = 'cd /c/Users/nname/Desktop/lighthouse && grep -n "_evidence\\|SKIP" consonance/tools/js-suite.js | head -30';
+  for (const mode of ['strict', 'light']) assert.strictEqual(decideIn(mode, 'SOURCES: C:\\Users\\nname\\Desktop\\lighthouse\\consonance\\tools\\js-suite.js', bashCall('t1', cmd)).decision, 'allow', mode);
+});
+
+test('D288 F1 THE REAL CAUSE of ring 2eb8b2bdd226: the same read inside a Bash call that ended non-zero (is_error) is refused in both modes, by the failed-call rule', () => {
+  const cmd = 'cd /c/Users/nname/Desktop/lighthouse && grep -n "SKIP" consonance/tools/js-suite.js | head -30; git check-ignore -v x';
+  for (const mode of ['strict', 'light']) {
+    const d = decideIn(mode, 'SOURCES: C:\\Users\\nname\\Desktop\\lighthouse\\consonance\\tools\\js-suite.js', bashCall('t1', cmd, 'out', true));
+    assert.strictEqual(d.decision, 'deny', mode); assert.match(d.reason, /a failed call/);
+  }
+});
+
+test('D288 strict is unchanged: a bare path is still matched by any opening segment that names it, after a cd, by its tail', () => {
+  assert.strictEqual(decideIn('strict', 'SOURCES: C:/Users/n/lighthouse/exo_memory/loop/plan.md', bashCall('t1', 'cd /c/Users/n/lighthouse/exo_memory && cat loop/plan.md')).decision, 'allow');
+  assert.strictEqual(decideIn('strict', 'SOURCES: C:/work/a.md', bashCall('t1', 'node tools/x.js C:/work/a.md')).decision, 'allow', 'a program that is not a read verb still opens the path it is given');
+  assert.strictEqual(decideIn('strict', 'SOURCES: `cd /c/Users/x/repo && git log --oneline -1 main`', bashCall('t1', 'cd /c/Users/x/repo && git log --oneline -1 main')).decision, 'deny', 'strict never accepted a quoted chain');
+});

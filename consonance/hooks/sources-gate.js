@@ -253,7 +253,10 @@ function turnCalls(entries, ring = {}) {
  *   - a command quoted WITH its `cd <dir> &&` / `Set-Location <dir>;` prefix (the prefix is stripped from both sides, and the item may be the whole chain);
  *   - a command DESCRIBED: its first word is the program of an opening segment that ran, and a file name in the item (x.ext, 5+ characters) is in that segment;
  *   - a WebSearch query (an item "WebSearch: <query>" or the bare query), and a fetched URL given by a prefix of 8+ characters.
- * It still refuses an item nothing in the turn touched, a program named with no file, and every missing or empty line. */
+ * It still refuses an item nothing in the turn touched, a program named with no file, and every missing or empty line.
+ * D288 F1 (exo_memory/handback/p-hermetichooks-B_2026-10-10.md): the command rule matches an item against a SEGMENT that opens something (never an echo,
+ * printf, ls, stat or a comment), or against the whole chain. Before, `cmd.includes(item)` matched the command's whole text, so a path matched its own echo,
+ * ls or comment, which contradicted the line above. With segments filtered, a bare path is matched in light only where strict's tail rule matches it too. */
 const stripCd = (n) => n.replace(/^(?:(?:cd|set-location|pushd|sl)\s+(?:"[^"]*"|'[^']*'|\S+)\s*(?:&&|;)\s*)+/, '');
 function lightMatch(item, calls) {
   const itemN = norm(item);
@@ -265,9 +268,9 @@ function lightMatch(item, calls) {
     const inp = c.input || {};
     if ((c.name === 'Bash' || c.name === 'PowerShell') && inp.command) {
       const cmd = norm(inp.command), cmdC = stripCd(cmd);
-      if (itemC && (cmdC === itemC || cmd.includes(itemC))) return 'light-command';
       // the same segment split as opensInSegment, its alternatives written in another order on purpose: the mutation harness anchors on that line's text
-      const segs = cmd.split(/\r?\n|&&|\|\||;|\|/).map((s) => s.trim()).filter((s) => s && !NON_OPENING.has(leadingWord(s)));
+      const segs = cmd.split(/\r?\n|&&|\|\||;|\|/).map((s) => s.trim()).filter((s) => s && leadingWord(s) !== '#' && !NON_OPENING.has(leadingWord(s)));
+      if (itemC && (cmdC === itemC || segs.some((s) => stripCd(s).includes(itemC)))) return 'light-command';
       if (segs.some((s) => s.length >= 8 && itemC.includes(s))) return 'light-chain';
       if (lead && files.length && segs.some((s) => leadingWord(s) === lead && files.some((f) => s.includes(f)))) return 'light-described';
     } else if (c.name === 'WebSearch' && inp.query) {
