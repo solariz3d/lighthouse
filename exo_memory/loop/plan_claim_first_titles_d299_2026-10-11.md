@@ -19,3 +19,9 @@ Why: D297's label strip missed. Six of B's 28 sampled titles are still illegible
    - Rows red first; targeted tests. A has no dependency on parts 1–3.
 
 Order: E, B and A start now. C starts after B's pick. Every pane hands back to the librarian; the chair lands with the full suite.
+
+## SCORE, parts 1–3 (librarian, 14:1x). E `handback/p-titlesurvey-E_2026-10-11.md` (git-blob 893a844f…); B bar `loop/claim_title_registration_2026-10-11.md` (git-blob 33a4bd68…), pick `loop/claim_title_pick_2026-10-11.md` (git-blob 0754149b…)
+- **PICK: NONE. C is not dispatched and nothing is built.** The best sources, (e) the first clause and (b) the last clause, reach 25/28 only through four marginal calls (21 when judged firm, below the baseline). Both fail T6 in the sample, losing a subject word in three substantive cases (#1, #20, #28). (c) the first sentence is a provenance line in 25 of 28. (d) garbles.
+- B's finding, kept: the subject sits in the first clause and the claim in the later one, so any single-clause source trades one for the other. On this sample the trade is a wash.
+- **Ruling: the title-legibility line closes here, at 22/28.** No combination lap is queued. Two dormant laps have shown that the 40-char title is not where reach is lost. What D296's falsifiers test is whether a listed file gets OPENED, and A's scorer (D297) measures that from W0. A title lap reopens only if F1 fires at W0+14 days and the opens show the titles were why.
+- OUTPUT → NEXT: changed. The pick of NONE ends the build half of D299. Only A's part 4 is outstanding.
