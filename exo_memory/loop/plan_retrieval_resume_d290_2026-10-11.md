@@ -20,3 +20,18 @@ At the keeper's word (2026-10-10): get the restart done, then get back to retrie
 
 ## Order
 E and B in parallel → the librarian reads both → E's fix proposal goes to the keeper as one decision; B's registration is sealed, and its run waits for the keeper's yes on the cost.
+
+## Part 2 read (librarian, 03:4x; `loop/h2_registration_2026-10-11.md`, git-blob 92a4e7c8…, 17,485 B)
+- **Accepted as a registration.** `10966409` on `d290-b`. It is the same task in both arms at once, from one base, in QUIET. Times come from machine rows only, with cross-arm lock waits subtracted. A sealed acceptance check plus a blind reviewer, with defects confirmed by me. I draw the randomisation. N=6, no early stop. TRUE needs at least 5 of 6, median r ≤ 0.75, and quality no worse. Seven degeneracy conditions are stated before the run. B states their own prior (it favours S) and set the bar high against it.
+- **The cost is about 66 pane-hours (88 with both replacements), about 21 hours of room time, and a quarter to a third of the finished work discarded.** B says plainly that UNDECIDED is the likely outcome at N=6.
+- **My recommendation to the keeper:** don't run it now. Take B's free option instead: a `parts` field on the plan's dispatch row, observational, which narrows the question at no cost. The registration stays sealed and ready if he wants the answer later. Either way it's his call (spend), so it goes to him as one decision once E's part is in.
+- Held for E's part 1.
+
+## Part 1 read and D290 collated (librarian, 03:5x; `handback/p-digestwriter-E_2026-10-11.md`, git-blob a312d127…, 7,399 B)
+- **Accepted.** The writer is the SessionEnd hook (`~/.claude/shell/hooks/session-end.js:231-250`). No scheduled task writes the dated digests. A digest appears only on a local day when some session ends cleanly. Panes are killed, not exited, so on 10-04 and 10-07 to 10-09 none ended. The 50-B file is a local-date versus UTC-prefix mismatch. "422 sessions" is 422 turn ends from 8 sessions. The Disabled tasks were my own 09-27 change at the keeper's "do we even need this", for their model cost, and they explain only the news and journal files.
+- **The finding that matters:** every wake carries the two newest digests, about 14 KB of mislabelled timestamps with no "what" for the room.
+- **Two decisions for the keeper, each with my recommendation:**
+  1. **Digests: (A) take them off the wake** (one call in `session-start.js` plus its repo copy), saving about 14 KB per wake. (B) is to repair them, (C) to re-enable the tasks, which wouldn't fix them. I recommend (A).
+  2. **H2: don't run the 66-pane-hour test now.** Add the free `parts` field to the dispatch row instead. I recommend it.
+- Both are changes to things every seat runs, or a spend, so they're his to say. Then a normal lap.
+- OUTPUT → NEXT: changed — both parts came back as decisions for the keeper rather than work to land.
