@@ -25,3 +25,9 @@ Order: E, B and A start now. C starts after B's pick. Every pane hands back to t
 - B's finding, kept: the subject sits in the first clause and the claim in the later one, so any single-clause source trades one for the other. On this sample the trade is a wash.
 - **Ruling: the title-legibility line closes here, at 22/28.** No combination lap is queued. Two dormant laps have shown that the 40-char title is not where reach is lost. What D296's falsifiers test is whether a listed file gets OPENED, and A's scorer (D297) measures that from W0. A title lap reopens only if F1 fires at W0+14 days and the opens show the titles were why.
 - OUTPUT → NEXT: changed. The pick of NONE ends the build half of D299. Only A's part 4 is outstanding.
+
+## SCORE, part 4 (librarian, 14:2x). A `handback/p-rusttemp-A_2026-10-11.md` (git-blob a718efd8…), commit 02be494c on d299-a
+- **ACCEPTED.** All 30 `temp_dir()` sites are test code; none is live. The measure (cargo test with TEMP pointed at an empty folder) went from 29 folders left to 0. Four helpers now use a `Scratch` drop guard (`test_scratch.rs`), with no `G:` literal. cargo 1035/0/5, mutants 7/7, portable-paths and carrier-drift exit 0.
+- **Watch, not cleared:** `dirs_guard_tests::a_panicking_writer_still_puts_dirs_back` (main.rs:4876) failed once in A's baseline and passed after. It looks like a parallel race on the shared `DIRS` slot (inferred by A). The chair's full run reports it; if it reds again, it becomes its own lap.
+- **A gap, named:** the gates-mode guard's removal is caught only by the leftover count, not by a row (A §Checks).
+- D299 is ready to land whole.
