@@ -16242,6 +16242,9 @@ mod shelf_handback_tests {
         let shelf = corpus_shelf_at_with_index(0, 100_000);
         assert!(shelf.contains("- handback/p-a_2026-10-05.md  ("), "the top-level hand-back is not listed");
         assert!(!shelf.contains("_evidence/"), "an evidence-folder .md is listed");
+        // by count too: a walk that recursed and labelled by file name alone would print
+        // `handback/notes.md` and never show the folder
+        assert_eq!(shelf.lines().filter(|l| l.starts_with("- handback/")).count(), 1, "an evidence-folder .md is listed");
     }
 }
 
