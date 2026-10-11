@@ -2,8 +2,8 @@
   "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
-    "BENIGN-TEST": 360,
-    "BENIGN-FIXTURE": 9,
+    "BENIGN-TEST": 369,
+    "BENIGN-FIXTURE": 12,
     "REVIEW": 15,
     "DISGUISED": 15,
     "BENIGN-MESSAGE": 4,
@@ -2182,6 +2182,90 @@
       "verdict": "BENIGN-TEST",
       "text": "const stray = commands(home).filter((c) => /X:\\\\old/.test(c));",
       "key": "consonance/tools/install-only.test.js\u0000const stray = commands(home).filter((c) => /X:\\\\old/.test(c));\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "function archiveReady(root) { try { return fs.existsSync(path.parse(path.resolve(root)).root) && driveOf(root) !== 'D:\\\\'; } catch (_) { return false; } }",
+      "key": "consonance/tools/janitor.js\u0000function archiveReady(root) { try { return fs.existsSync(path.parse(path.resolve(root)).root) && driveOf(root) !== 'D:\\\\'; } catch (_) { return false; } }\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "if (driveOf(a) === 'D:\\\\') throw new Error(`janitor: refusing ${a}: D: is the USB stick`);",
+      "key": "consonance/tools/janitor.js\u0000if (driveOf(a) === 'D:\\\\') throw new Error(`janitor: refusing ${a}: D: is the USB stick`);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.mutants.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "['refusal: D: is allowed', SRC, \"if (driveOf(a) === 'D:\\\\\\\\') throw new Error(`janitor: refusing ${a}: D: is the USB stick`);\", ''],",
+      "key": "consonance/tools/janitor.mutants.js\u0000['refusal: D: is allowed', SRC, \"if (driveOf(a) === 'D:\\\\\\\\') throw new Error(`janitor: refusing ${a}: D: is the USB stick`);\", ''],\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.doesNotThrow(() => J.assertSafe('C:\\\\temp\\\\jt-AbC123', 'C:\\\\temp'));",
+      "key": "consonance/tools/janitor.test.js\u0000assert.doesNotThrow(() => J.assertSafe('C:\\\\temp\\\\jt-AbC123', 'C:\\\\temp'));\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.throws(() => J.assertSafe('C:\\\\', 'C:\\\\'), /drive root/);",
+      "key": "consonance/tools/janitor.test.js\u0000assert.throws(() => J.assertSafe('C:\\\\', 'C:\\\\'), /drive root/);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.throws(() => J.assertSafe('C:\\\\elsewhere\\\\jt-AbC123', 'C:\\\\temp'), /not under its class root/);",
+      "key": "consonance/tools/janitor.test.js\u0000assert.throws(() => J.assertSafe('C:\\\\elsewhere\\\\jt-AbC123', 'C:\\\\temp'), /not under its class root/);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.throws(() => J.assertSafe('C:\\\\Users\\\\someone\\\\Documents\\\\x', 'C:\\\\Users\\\\someone'), /keeper's own/);",
+      "key": "consonance/tools/janitor.test.js\u0000assert.throws(() => J.assertSafe('C:\\\\Users\\\\someone\\\\Documents\\\\x', 'C:\\\\Users\\\\someone'), /keeper's own/);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.throws(() => J.assertSafe('C:\\\\Users\\\\someone\\\\Downloads\\\\jt-AbC123', 'C:\\\\Users\\\\someone'), /keeper's own/);",
+      "key": "consonance/tools/janitor.test.js\u0000assert.throws(() => J.assertSafe('C:\\\\Users\\\\someone\\\\Downloads\\\\jt-AbC123', 'C:\\\\Users\\\\someone'), /keeper's own/);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.throws(() => J.assertSafe('D:\\\\consonance-scratch\\\\x', 'D:\\\\consonance-scratch'), /USB stick/);",
+      "key": "consonance/tools/janitor.test.js\u0000assert.throws(() => J.assertSafe('D:\\\\consonance-scratch\\\\x', 'D:\\\\consonance-scratch'), /USB stick/);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const p = J.plan(s.opts({ archiveRoot: 'Q:\\\\nowhere-at-all\\\\consonance-archive' }));",
+      "key": "consonance/tools/janitor.test.js\u0000const p = J.plan(s.opts({ archiveRoot: 'Q:\\\\nowhere-at-all\\\\consonance-archive' }));\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "if (fs.existsSync('Q:\\\\')) return; // a machine that has a Q: drive cannot run this row",
+      "key": "consonance/tools/janitor.test.js\u0000if (fs.existsSync('Q:\\\\')) return; // a machine that has a Q: drive cannot run this row\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "put(path.join(s.exo, 'handback', 'p-x.md'), 'the run is at C:\\\\Temp\\\\claude\\\\C--proj\\\\sess1\\\\tasks\\\\bcited001.output, read it');",
+      "key": "consonance/tools/janitor.test.js\u0000put(path.join(s.exo, 'handback', 'p-x.md'), 'the run is at C:\\\\Temp\\\\claude\\\\C--proj\\\\sess1\\\\tasks\\\\bcited001.output, read it');\u0000#1"
     },
     {
       "file": "consonance/tools/lap-row.js",
