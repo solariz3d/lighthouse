@@ -95,3 +95,18 @@ NEXT: chair dispatch D287 part 1 to A, part 2 to E (after its D277 work is done)
 - **Owed:** the 05:40 run's `janitor.jsonl` line comes to me (the chair sends it).
 - **Queued, owner C** (C wrote `ledger-union.js`, L070–L072): the hot-writer race. On G: the placement loses 50 in a row (EEXIST, `ledger-union.js:388`). It failed 1 of 2 landing suites, and 2 of 8 direct runs in A's measure. Decide whether the code (a real hot writer on a fast drive) or the test's timing is wrong, with a red-first row on G:. It isn't in D288.
 - **Also still queued:** Rust `temp_dir()` (29 sites); fixed-name temp files; the two pre-existing heavy-run mutant survivors (#16, #30); `t180-soak-` cleanup in the T-180 repo.
+
+## D288 F1 read (librarian, 21:0x; `handback/p-lightmatch-E_2026-10-10.md`, git-blob b55aadf5…, 7,036 B)
+- **Accepted.** `f744a715` + `cdbf2315` + `811f98a7` on `d288-e`. The too-loose case is confirmed and fixed: light now matches only a command segment that opens something, never echo, ls, stat or a comment. Strict is unchanged. 108/108; final mutants 85 of 85 caught, using an untracked copy of the harness because of F2; portable-paths green; 168/168 on the committed tree.
+- **My diagnosis of ring 2eb8b2bdd226 was WRONG**, and E found it by replaying my transcript. The relative grep was never the problem: the Bash call it was in ended with `git check-ignore`, which exited 1, so the whole call was recorded `is_error` and the gate drops errored calls by design. The lesson for this seat: don't end a reading command with a probe that can exit non-zero (`|| true`, or a separate call). Ring 8c05ad8a07ca is by design: the gate is scoped to the turn.
+- **F3 note for the light-week score:** with an unwritable ledger, a light warning is shown but not counted, so the warning count can only undercount.
+- **Landing note:** d287-e2 is already on main as `af968170 46145109` (cherry-picked), so d288-e is cherry-picked too, not fast-forwarded.
+- **Held for A's F2 hand-back** (wait for every output). The 5 light mutant rows (`d288/mk-sgmut.js` in E's scratchpad) go into A's tracked `sources-gate.mutants.js` once its copy-list fix is in, as part of A's part if A hasn't landed yet, else as a short follow-up.
+
+## D288 F2 read and D288 collated (librarian, 01:3x 10-11; `handback/p-mutantscopy-A_2026-10-10.md`, git-blob 1389242c…, 4,848 B)
+- **Accepted.** `1fde903b` on `d288-a` from `57ef433d` changes 5 harness copy lists (+13 −1). A found three more broken than F2 named: second-reader, jev-ask, and jev-shadow. jev-shadow's runner was also missing jev lib files, probably since D123 (inferred). All 16 live harnesses were run to a control, and every result is in the table.
+- **Not closed by either part, and the one thing left in D288:** A ran the harnesses on `57ef433d`'s sources, before E's matcher change. Neither harness has been run on the combined tree. Also reply-slot #43 was NOT APPLIED (its anchor has moved), and E's 5 light mutant rows are still untracked.
+- **One follow-up → E** (E owns the matcher and the rows), on main once `1fde903b` and `d288-e` have landed: paste the 5 light rows into `sources-gate.mutants.js`, re-anchor reply-slot #43, then run both harnesses to 0 survived and 0 not applied.
+- **Queued:** heavy-run #16 and #30 (they predate D287; heavy-run.js, D283 lineage) go to **B** with C's ledger-union race as the next fix lap.
+- **Order:** land `1fde903b` (A) and `f744a715 cdbf2315 811f98a7` (E) → E's follow-up → land it → one js-suite in a clean worktree on G: → push. D288 then closes.
+- OUTPUT → NEXT: changed — the combined tree hasn't been mutation-tested, so a short follow-up by E comes before the suite.
