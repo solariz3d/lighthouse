@@ -106,6 +106,12 @@ const MUTANTS = [
   ['token: the deny reason is not redacted', HOOK, "return emitDeny(R(d.reason));", "return emitDeny(d.reason);"],
   ['token: the token itself is written into the row', HOOK, "const base = { seat, tool, ringSha,", "const base = { token, seat, tool, ringSha,"],
   ['token: the target is not redacted', HOOK, "clip(scrub(R(String((payload.tool_input && payload.tool_input.target) || ''))), 20)", "clip(scrub(String((payload.tool_input && payload.tool_input.target) || '')), 20)"],
+  // ---- light mode (D277 part 2; D288 F1: the command rule matches a segment that opens something, never a command's text) ----
+  ['light D288: the command rule matches the raw command text again (an echo counts)', HOOK, "segs.some((s) => stripCd(s).includes(itemC))", "cmd.includes(itemC)"],
+  ['light D288: a comment segment counts', HOOK, "leadingWord(s) !== '#' && ", ""],
+  ['light D288: an echo, ls or stat segment counts', HOOK, "s && leadingWord(s) !== '#' && !NON_OPENING.has(leadingWord(s)))", "s)"],
+  ['light D288: the whole-chain match is gone (a cited command that ran no longer matches)', HOOK, "(cmdC === itemC || segs.some", "(segs.some"],
+  ['light D277: light is strict (lightMatch never consulted)', HOOK, "return strict || (mode === 'light' ? lightMatch(item, calls) : null);", "return strict;"],
   // ---- registration ----
   ['install: the gate no longer covers chair_inject', INSTALL, "|mcp__consonance__call_chair|mcp__consonance__chair_inject' }", "|mcp__consonance__call_chair' }"],
   ['install: the SECOND READER\'s matcher also gains chair_inject', INSTALL, "Rel = 'hooks\\second-reader.js';      Runner = 'node';\n     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair' }", "Rel = 'hooks\\second-reader.js';      Runner = 'node';\n     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair|mcp__consonance__chair_inject' }"],

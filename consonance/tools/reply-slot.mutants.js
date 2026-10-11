@@ -62,7 +62,8 @@ const MUTANTS = [
   ["pane ring: it is never evaluated, even in the librarian session", HOOK, "if (pk === 'pane-ring') pk = seat === 'librarian' ? 'keeper' : 'ring';", "if (pk === 'pane-ring') pk = 'ring';"],
   ["pane ring: it is evaluated in EVERY session, the chair's too", HOOK, "if (pk === 'pane-ring') pk = seat === 'librarian' ? 'keeper' : 'ring';", "if (pk === 'pane-ring') pk = 'keeper';"],
   ["pane ring: it is evaluated when no seat is named", HOOK, "pk = seat === 'librarian' ? 'keeper' : 'ring';", "pk = seat !== 'chair' ? 'keeper' : 'ring';"],
-  ["pane ring: main does not pass the seat to the verdict", HOOK, "live: !SHADOW, seat });", "live: !SHADOW });"],
+  // D288-e2: re-anchored. The verdict call gained gates (D273) and mode (D277 part 2) after `seat`, so "seat });" no longer occurred and the row was NOT APPLIED
+  ["pane ring: main does not pass the seat to the verdict", HOOK, "live: !SHADOW, seat, gates:", "live: !SHADOW, gates:"],
   ["pane ring: a CHAIR ring is also read as a pane ring (so it is evaluated in the librarian session)", HOOK, "const PANE_RING = /^\\s*\\[pane:/i;", "const PANE_RING = /^\\s*\\[(pane|chair):/i;"],
   ["pane ring: the keep-warm check no longer precedes the pane-ring mapping", HOOK, "  if (pk === 'keepwarm') { r.kind = 'skip-keepwarm'; return r; }\n  // D218 scope fix", "  // D218 scope fix"],
   ["pane ring: the row does not say what the prompt was", HOOK, "log({ kind: v.kind, prompt: v.prompt, wouldBlock:", "log({ kind: v.kind, wouldBlock:"],
