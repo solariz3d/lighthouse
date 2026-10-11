@@ -2,7 +2,7 @@
   "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
-    "BENIGN-TEST": 380,
+    "BENIGN-TEST": 386,
     "BENIGN-FIXTURE": 12,
     "REVIEW": 15,
     "DISGUISED": 15,
@@ -2932,6 +2932,48 @@
       "verdict": "BENIGN-MESSAGE",
       "text": "Write-Host \"Ledger: C:\\Consonance\\data\\head-watch.jsonl\"",
       "key": "dev/headwatch/install_headwatch.ps1\u0000Write-Host \"Ledger: C:\\Consonance\\data\\head-watch.jsonl\"\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/digest-repair.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "'# 2026-10-01 Digest', '', '## 1 turn end from 1 session', '', '### C:\\\\work\\\\a', '- 03:00:00 UTC', '',",
+      "key": "dev/shell/hooks/digest-repair.test.js\u0000'# 2026-10-01 Digest', '', '## 1 turn end from 1 session', '', '### C:\\\\work\\\\a', '- 03:00:00 UTC', '',\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/digest-repair.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const end = (s) => run(s, 'session-end.js', { hook_event_name: 'SessionEnd', session_id: 'x', cwd: 'C:\\\\Consonance\\\\instances\\\\x' });",
+      "key": "dev/shell/hooks/digest-repair.test.js\u0000const end = (s) => run(s, 'session-end.js', { hook_event_name: 'SessionEnd', session_id: 'x', cwd: 'C:\\\\Consonance\\\\instances\\\\x' });\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/digest-repair.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const rows = ['a', 'a', 'b'].map((sid, i) => ({ type: 'session_stop', timestamp: `2026-10-10T1${i}:00:00Z`, cwd: 'C:\\\\w', session_id: sid }));",
+      "key": "dev/shell/hooks/digest-repair.test.js\u0000const rows = ['a', 'a', 'b'].map((sid, i) => ({ type: 'session_stop', timestamp: `2026-10-10T1${i}:00:00Z`, cwd: 'C:\\\\w', session_id: sid }));\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/digest-repair.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const start = (s, cwd = 'C:\\\\Consonance\\\\instances\\\\librarian') => run(s, 'session-start.js', { hook_event_name: 'SessionStart', source: 'startup', session_id: 'now', cwd });",
+      "key": "dev/shell/hooks/digest-repair.test.js\u0000const start = (s, cwd = 'C:\\\\Consonance\\\\instances\\\\librarian') => run(s, 'session-start.js', { hook_event_name: 'SessionStart', source: 'startup', session_id: 'now', cwd });\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/digest-repair.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const stop = (iso, session, cwd = 'C:\\\\work\\\\a') => JSON.stringify({ type: 'session_stop', timestamp: new Date(iso).toISOString(), cwd, transcript_path: `C:\\\\t\\\\${session}.jsonl`, session_id: session });",
+      "key": "dev/shell/hooks/digest-repair.test.js\u0000const stop = (iso, session, cwd = 'C:\\\\work\\\\a') => JSON.stringify({ type: 'session_stop', timestamp: new Date(iso).toISOString(), cwd, transcript_path: `C:\\\\t\\\\${session}.jsonl`, session_id: session });\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/digest-repair.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "digests: { '2026-10-09': { text: '# 2026-10-09 Digest\\n\\n## 5 sessions\\n\\n### C:\\\\w\\n- 01:00:00 UTC\\n', mtime: '2026-10-10T07:00:00Z' } } });",
+      "key": "dev/shell/hooks/digest-repair.test.js\u0000digests: { '2026-10-09': { text: '# 2026-10-09 Digest\\n\\n## 5 sessions\\n\\n### C:\\\\w\\n- 01:00:00 UTC\\n', mtime: '2026-10-10T07:00:00Z' } } });\u0000#1"
     },
     {
       "file": "dev/shell/hooks/l2-overseer-worker.js",
