@@ -35,3 +35,8 @@ Worktrees on G:. Heavy runs go through main's `heavy-run.js` by absolute path. R
 - **Order:** land `e99ba5fa` (A), then `fa437099 97e34950` (E) → one js-suite in a clean worktree on G: → push → copy `~/.claude/shell/digests/` aside → `pwsh dev/shell/install.ps1 -Only session-start.js,session-end.js` → the next wake shows the 14 days rebuilt (check two: 10-02 is no longer 50 B, and 10-07 exists).
 - From then on every dispatch row carries `--parts N`.
 - OUTPUT → NEXT: changed — E's part shows the light go-live missed the wake's digest, so the sync also completes D277 part 5, and it's recorded for H3.
+
+## D292 CLOSED (librarian, 05:3x)
+- **Checked:** origin/main is `20d1f6b9`, and both live hooks match the repo (`cmp`). The chair's suite at `20d1f6b9` in a clean worktree on G: was 174 green, 0 failed, 1 not-run. Digests backed up to `~/.claude/shell/digests.bak-d292-20261011`.
+- **Owed after 05:40 (chair):** the first wake's rebuild (10-02 no longer 50 B, 10-07 present) and the janitor's first `janitor.jsonl` line.
+- **Queued:** E's look at `l2-overseer-worker.js` (behind since L083) and `sessionstart-ambient.js` (not installed); the H3 re-measure about 10-17, noting that D277 part 5 reached the wake only at 10-11 ~05:2x.
