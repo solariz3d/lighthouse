@@ -480,3 +480,56 @@ test('D286 the claim is EXCLUSIVE: a rival that takes the slot between this runn
   assert.strictEqual(readLock(d).token, 'RIVAL', 'the rival\'s lock is intact');
   assert.match(e.message, /rrrr0000 pid 999/);
 });
+
+// ---- D287 part 2: THE DISK GUARD. Free space is faked through `diskFree`; the janitor's total through `diskTotal`. No lock is left behind. ----
+const GB = 1e9;
+const guarded = (d, free, extra = {}) => { const logs = []; const r = (() => { try { return H.acquire({ cmd: 'guard', dataDir: d, env: cleanEnv(), tree: '/t/g', writes: ['C:\\x', 'G:\\y'], diskFree: free, diskTotal: () => 'the janitor would free 42.0 GB', log: (s) => logs.push(s), ...extra }); } catch (e) { return e; } })(); return { r, logs }; };
+
+test('D287 disk guard: under 20 GB free on a drive the run writes to, it REFUSES before taking a slot, naming the drive, the figure and the janitor\'s total', () => {
+  const d = tmp();
+  const { r } = guarded(d, (p) => (p.startsWith('G') ? 12.3 * GB : 500 * GB));
+  assert.strictEqual(r.code, 'HEAVY_RUN_DISK');
+  assert.match(r.message, /G:\\ has 12\.3 GB free, under the 20 GB floor/);
+  assert.match(r.message, /the janitor would free 42\.0 GB/);
+  assert.strictEqual(fs.existsSync(lockOf(d)), false, 'no slot is taken by a refused run');
+});
+
+test('D287 disk guard: at a normal free space it runs (takes the slot) and says nothing', () => {
+  const d = tmp();
+  const { r, logs } = guarded(d, () => 500 * GB);
+  assert.ok(r && r.file && !r.code, 'it took a slot');
+  assert.deepEqual(logs, []);
+  r.release();
+});
+
+test('D287 disk guard: between 20 and 50 GB it WARNS once and still runs; the LOWEST drive decides', () => {
+  const d = tmp();
+  const { r, logs } = guarded(d, (p) => (p.startsWith('C') ? 30 * GB : 900 * GB));
+  assert.ok(r && r.file && !r.code);
+  assert.strictEqual(logs.length, 1); assert.match(logs[0], /WARNING: C:\\ has 30\.0 GB free, under 50 GB/);
+  r.release();
+  const e = guarded(tmp(), (p) => (p.startsWith('C') ? 900 * GB : 19.99 * GB)).r;
+  assert.strictEqual(e.code, 'HEAVY_RUN_DISK', 'a low G: refuses even when C: is roomy');
+});
+
+test('D287 disk guard: a drive that cannot be read is said and skipped, never a refusal or a silent pass', () => {
+  const d = tmp();
+  const { r, logs } = guarded(d, (p) => { if (p.startsWith('G')) throw Object.assign(new Error('nope'), { code: 'ENOENT' }); return 500 * GB; });
+  assert.ok(r && r.file && !r.code);
+  assert.match(logs.join('\n'), /could not read the free space of G:\\ \(ENOENT\); not checked/);
+  r.release();
+});
+
+test('D287 disk guard: what the run writes to is the cwd, the scratch root and CARGO_TARGET_DIR', () => {
+  const w = H.writePaths({ CONSONANCE_SCRATCH: 'Q:\\scr', CARGO_TARGET_DIR: 'R:\\tgt' }, 'P:\\work');
+  assert.deepEqual(w.map((p) => p.slice(0, 2).toUpperCase()), ['P:', 'Q:', 'R:']);
+  assert.deepEqual(H.writePaths({ CONSONANCE_SCRATCH: 'Q:\\scr' }, 'P:\\work').length, 2, 'no CARGO_TARGET_DIR, no third path');
+});
+
+test('D287 disk guard through hold(): a refused run EXITS 4, loudly, and never starts', () => {
+  const d = tmp();
+  const r = spawnSync(process.execPath, ['-e', `const H=require(${JSON.stringify(HELPER)});H.hold({cmd:'g',diskFree:()=>5e9,diskTotal:()=>'janitor 1.0 GB'});console.log('STARTED')`], { env: cleanEnv({ CONSONANCE_DATA: d }), encoding: 'utf8' });
+  assert.strictEqual(r.status, 4, r.stderr);
+  assert.doesNotMatch(r.stdout, /STARTED/);
+  assert.match(r.stderr, /refusing to start: .* has 5\.0 GB free/);
+});

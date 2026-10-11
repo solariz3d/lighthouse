@@ -2,7 +2,7 @@
   "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
-    "BENIGN-TEST": 354,
+    "BENIGN-TEST": 360,
     "BENIGN-FIXTURE": 9,
     "REVIEW": 15,
     "DISGUISED": 15,
@@ -2119,6 +2119,48 @@
       "verdict": "DISGUISED",
       "text": "os.homedir(), '.claude', 'projects', 'C--Consonance-instances-main', `${MAIN_SID}.jsonl`);",
       "key": "consonance/tools/head-watch.js\u0000os.homedir(), '.claude', 'projects', 'C--Consonance-instances-main', `${MAIN_SID}.jsonl`);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepEqual(H.writePaths({ CONSONANCE_SCRATCH: 'Q:\\\\scr' }, 'P:\\\\work').length, 2, 'no CARGO_TARGET_DIR, no third path');",
+      "key": "consonance/tools/heavy-run.test.js\u0000assert.deepEqual(H.writePaths({ CONSONANCE_SCRATCH: 'Q:\\\\scr' }, 'P:\\\\work').length, 2, 'no CARGO_TARGET_DIR, no third path');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.match(logs.join('\\n'), /could not read the free space of G:\\\\ \\(ENOENT\\); not checked/);",
+      "key": "consonance/tools/heavy-run.test.js\u0000assert.match(logs.join('\\n'), /could not read the free space of G:\\\\ \\(ENOENT\\); not checked/);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.match(r.message, /G:\\\\ has 12\\.3 GB free, under the 20 GB floor/);",
+      "key": "consonance/tools/heavy-run.test.js\u0000assert.match(r.message, /G:\\\\ has 12\\.3 GB free, under the 20 GB floor/);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(logs.length, 1); assert.match(logs[0], /WARNING: C:\\\\ has 30\\.0 GB free, under 50 GB/);",
+      "key": "consonance/tools/heavy-run.test.js\u0000assert.strictEqual(logs.length, 1); assert.match(logs[0], /WARNING: C:\\\\ has 30\\.0 GB free, under 50 GB/);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const guarded = (d, free, extra = {}) => { const logs = []; const r = (() => { try { return H.acquire({ cmd: 'guard', dataDir: d, env: cleanEnv(), tree: '/t/g', writes: ['C:\\\\x', 'G:\\\\y'], diskFree: free, diskTotal: () => 'the janitor would free 42.0 GB', log: (s) => logs.push(s), ...extra }); } catch (e) { return e; } })(); return { r, logs }; };",
+      "key": "consonance/tools/heavy-run.test.js\u0000const guarded = (d, free, extra = {}) => { const logs = []; const r = (() => { try { return H.acquire({ cmd: 'guard', dataDir: d, env: cleanEnv(), tree: '/t/g', writes: ['C:\\\\x', 'G:\\\\y'], diskFree: free, diskTotal: () => 'the janitor would free 42.0 GB', log: (s) => logs.push(s), ...extra }); } catch (e) { return e; } })(); return { r, logs }; };\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const w = H.writePaths({ CONSONANCE_SCRATCH: 'Q:\\\\scr', CARGO_TARGET_DIR: 'R:\\\\tgt' }, 'P:\\\\work');",
+      "key": "consonance/tools/heavy-run.test.js\u0000const w = H.writePaths({ CONSONANCE_SCRATCH: 'Q:\\\\scr', CARGO_TARGET_DIR: 'R:\\\\tgt' }, 'P:\\\\work');\u0000#1"
     },
     {
       "file": "consonance/tools/install-only.test.js",

@@ -53,6 +53,11 @@
 // RELEASED on normal exit and on an uncaught error (both fire process 'exit'), and on SIGINT/SIGTERM/SIGBREAK/SIGHUP. A
 // release removes the lock only if it still carries this run's token.
 //
+// THE DISK GUARD (D287 part 2; C: hit 0 bytes at 12:13 on 2026-10-10, and a run that fills the disk takes every seat's transcript with it).
+// Before it takes a slot, a runner reads the free space of every drive the run will write to: the cwd's, the scratch root's (scratch.js) and
+// CARGO_TARGET_DIR's when set. The lowest decides. Under 50 GB it WARNS once; under 20 GB it REFUSES (exit 4) with the free figure and what
+// the janitor's dry run would free, so the fix is in the message. A nested run is the same run and is not checked again.
+//
 //   const h = require('./heavy-run.js').hold({ cmd: 'js-suite' });   // waits, or exits 3 loudly; releases on exit
 
 const fs = require('fs');
@@ -71,6 +76,37 @@ const POLL_MS = 2000;
 const SAY_EVERY_MS = 60 * 1000;
 const YOUNG_MS = 30 * 60 * 1000;         // D283: a lock younger than this is taken only when a SECOND method also says its holder is gone (the full suite took 1,570 s)
 const UNREADABLE_GRACE_MS = 10 * 1000;   // a lock being written this instant reads empty; only an OLD unreadable one is stale
+const DISK_WARN_BYTES = 50e9;            // D287: under this, warn
+const DISK_REFUSE_BYTES = 20e9;          // D287: under this, refuse to start
+
+/** Free bytes on the drive holding `p` (fs.statfsSync: GetDiskFreeSpaceExW on Windows). */
+function freeBytes(p) { const s = fs.statfsSync(path.parse(path.resolve(p)).root); return s.bavail * s.bsize; }
+/** The paths a run writes to: its cwd, the scratch root, and CARGO_TARGET_DIR when set. scratch.js is required here, not at load. */
+function writePaths(env = process.env, cwd = process.cwd()) {
+  const out = [cwd];
+  try { out.push(require('./scratch.js').scratchRoot(env)); } catch (_) { /* no scratch.js beside this copy: the cwd still counts */ }
+  if (env.CARGO_TARGET_DIR) out.push(env.CARGO_TARGET_DIR);
+  return out;
+}
+/** What the janitor's dry run would free, as text for the refusal; its failure is said, never thrown (the refusal stands either way). */
+function janitorTotal() {
+  try { const p = require('./janitor.js').plan(); return `the janitor's dry run would free ${(p.total / 1e9).toFixed(1)} GB (node consonance/tools/janitor.js to see it, --apply to act)`; }
+  catch (e) { return `the janitor's dry run failed (${e.message}); run node consonance/tools/janitor.js`; }
+}
+/** D287: refuse (throw HEAVY_RUN_DISK) when a drive the run writes to is under DISK_REFUSE_BYTES; warn under DISK_WARN_BYTES. */
+function checkDisk({ paths, free = freeBytes, total = janitorTotal, log }) {
+  let low = null;
+  for (const p of paths) {
+    const root = path.parse(path.resolve(p)).root;
+    let b; try { b = free(p); } catch (e) { log(`heavy-run: could not read the free space of ${root} (${e.code || e.message}); not checked`); continue; }
+    if (low === null || b < low.bytes) low = { root, bytes: b };
+  }
+  if (!low) return null;
+  const gbs = (low.bytes / 1e9).toFixed(1);
+  if (low.bytes < DISK_REFUSE_BYTES) throw Object.assign(new Error(`heavy-run: refusing to start: ${low.root} has ${gbs} GB free, under the ${DISK_REFUSE_BYTES / 1e9} GB floor; a heavy run that fills the disk fails every seat's writes. ${total()}.`), { code: 'HEAVY_RUN_DISK', free: low });
+  if (low.bytes < DISK_WARN_BYTES) log(`heavy-run: WARNING: ${low.root} has ${gbs} GB free, under ${DISK_WARN_BYTES / 1e9} GB; run node consonance/tools/janitor.js`);
+  return low;
+}
 
 function pidAlive(pid, kill = process.kill.bind(process)) {
   if (!Number.isInteger(pid) || pid <= 0) return false;
@@ -115,6 +151,7 @@ function acquire({
   cmd, dataDir, env = process.env, slots, tree, onClaim, beforeClaim,
   maxWaitMs = Number(process.env.CONSONANCE_HEAVY_WAIT_MS) || MAX_WAIT_MS, pollMs = POLL_MS,
   alive = pidAlive, confirmGone = pidGone, log = (s) => process.stderr.write(s + '\n'), now = () => Date.now(), sleep = sleepSync,
+  writes, diskFree = freeBytes, diskTotal = janitorTotal,
 } = {}) {
   const dir = dataDir === undefined ? manifestDataDir() : dataDir;
   if (!dir) throw Object.assign(new Error('heavy-run: no data dir (CONSONANCE_DATA unset and ~/.consonance.json has no data_dir) — refusing to run without the lock'), { code: 'HEAVY_RUN_NO_DATA' });
@@ -128,6 +165,7 @@ function acquire({
     }
   }
 
+  checkDisk({ paths: writes || writePaths(env), free: diskFree, total: diskTotal, log });   // D287: refuses (throws) under the floor; a nested run returned above
   const myTree = tree !== undefined ? tree : resolveTree();
   const token = crypto.randomUUID();
   const t0 = now();
@@ -247,7 +285,7 @@ function hold(opts = {}) {
   let h;
   try { h = acquire(opts); } catch (e) {
     process.stderr.write(e.message + '\n');
-    process.exit(e.code === 'HEAVY_RUN_TIMEOUT' ? 3 : 2);
+    process.exit(e.code === 'HEAVY_RUN_TIMEOUT' ? 3 : e.code === 'HEAVY_RUN_DISK' ? 4 : 2);
   }
   if (h.reentrant) return h;
   process.on('exit', () => h.release());
@@ -260,4 +298,4 @@ function hold(opts = {}) {
   return h;
 }
 
-module.exports = { acquire, hold, pidAlive, pidGone, slotCount, slotFile, resolveTree, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE };
+module.exports = { acquire, hold, pidAlive, pidGone, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };

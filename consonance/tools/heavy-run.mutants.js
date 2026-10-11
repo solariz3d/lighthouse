@@ -23,7 +23,7 @@ const MUTANTS = [
   ['release: removes a lock that is not its own', SRC, 'if (cur && cur.token === token) { try { fs.unlinkSync(file); } catch (_) { /* already gone */ }', 'if (cur) { try { fs.unlinkSync(file); } catch (_) { /* already gone */ }'],
   ['release: not on exit or error', SRC, "  process.on('exit', () => h.release());\n", ''],
   ['the max wait RUNS ANYWAY instead of failing loudly', SRC, 'throw Object.assign(new Error(`heavy-run: gave up after', 'if (true) return { file: heldBy[0].file, slot: 0, reentrant: false, holder: named[0], release() {} }; throw Object.assign(new Error(`heavy-run: gave up after'],
-  ['the exit code of a timeout is not 3', SRC, "process.exit(e.code === 'HEAVY_RUN_TIMEOUT' ? 3 : 2);", 'process.exit(2);'],
+  ['the exit code of a timeout is not 3', SRC, "process.exit(e.code === 'HEAVY_RUN_TIMEOUT' ? 3 : e.code === 'HEAVY_RUN_DISK' ? 4 : 2);", "process.exit(e.code === 'HEAVY_RUN_DISK' ? 4 : 2);"],   // D287: re-anchored on the line the disk guard extended
   // ---- kill(0) ----
   ['pidAlive: EPERM reads as dead', SRC, "return e.code === 'EPERM';", 'return false;'],
   ['pidAlive: any throw reads as alive', SRC, "return e.code === 'EPERM';", 'return true;'],
@@ -84,6 +84,14 @@ const MUTANTS = [
   ['nested: only slot 1 is searched for the run\'s own token', SRC, "for (let k = 1; k <= MAX_SLOTS; k++) {\n      const file = slotFile(dir, k), current", "for (let k = 1; k <= 1; k++) {\n      const file = slotFile(dir, k), current"],
   ['takeover: only a dead holder in slot 1 is taken', SRC, 'if (takeIfStale(file, k, h)) {', 'if (k === 1 && takeIfStale(file, k, h)) {'],
   ['takeover: the log does not name the slot', SRC, ' (slot ${k})`);', '`);'],
+  // ---- D287 part 2: the disk guard ----
+  ['disk: the refusal floor is zero (a run starts on a full disk)', SRC, 'const DISK_REFUSE_BYTES = 20e9;', 'const DISK_REFUSE_BYTES = 0;'],
+  ['disk: the warning is never given', SRC, 'if (low.bytes < DISK_WARN_BYTES) log(', 'if (false) log('],
+  ['disk: the ROOMIEST drive decides, not the lowest', SRC, 'if (low === null || b < low.bytes) low = { root, bytes: b };', 'if (low === null || b > low.bytes) low = { root, bytes: b };'],
+  ['disk: the guard is never called', SRC, '  checkDisk({ paths: writes || writePaths(env), free: diskFree, total: diskTotal, log });', ''],
+  ['disk: an unreadable drive is skipped in silence', SRC, "log(`heavy-run: could not read the free space of ${root} (${e.code || e.message}); not checked`); continue;", 'continue;'],
+  ['disk: a refusal exits 2, not 4', SRC, "e.code === 'HEAVY_RUN_DISK' ? 4 : 2", '2'],
+  ['disk: CARGO_TARGET_DIR is not counted', SRC, '  if (env.CARGO_TARGET_DIR) out.push(env.CARGO_TARGET_DIR);\n', ''],
   // ---- unreadable locks ----
   ['unreadable: a lock being written this instant is taken at once', SRC, 'stale = age > UNREADABLE_GRACE_MS;', 'stale = true;'],
   ['unreadable: an old unreadable lock is never taken', SRC, 'stale = age > UNREADABLE_GRACE_MS;', 'stale = false;'],
@@ -92,7 +100,8 @@ const MUTANTS = [
 function tree() {
   const dir = require('./scratch.js').mkdtemp('hr-mut-');
   fs.mkdirSync(path.join(dir, 'tools'), { recursive: true });
-  const files = new Set([SRC, SUITE, 'state-manifest.js', 'js-suite.js', 'mutant-harness.js', ...fs.readdirSync(HERE).filter((f) => f.endsWith('.mutants.js'))]);
+  // scratch.js: the suite's tmp() makes its folders through it (D287 part 1), and the disk guard reads its root (part 2)
+  const files = new Set([SRC, SUITE, 'state-manifest.js', 'scratch.js', 'js-suite.js', 'mutant-harness.js', ...fs.readdirSync(HERE).filter((f) => f.endsWith('.mutants.js'))]);
   for (const f of files) fs.copyFileSync(path.join(HERE, f), path.join(dir, 'tools', f));
   return dir;
 }
