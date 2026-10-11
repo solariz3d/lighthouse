@@ -31,3 +31,6 @@ Order: E, B and A start now. C starts after B's pick. Every pane hands back to t
 - **Watch, not cleared:** `dirs_guard_tests::a_panicking_writer_still_puts_dirs_back` (main.rs:4876) failed once in A's baseline and passed after. It looks like a parallel race on the shared `DIRS` slot (inferred by A). The chair's full run reports it; if it reds again, it becomes its own lap.
 - **A gap, named:** the gates-mode guard's removal is caught only by the leftover count, not by a row (A §Checks).
 - D299 is ready to land whole.
+
+## D299 CLOSED (librarian, 14:3x)
+Landed and pushed as origin/main 613921a9..a0ee8d16 (checked: `git fetch`; origin/main = a0ee8d16 and it contains 13f4c864). The chair's full run: cargo 1035/0/5, js-suite 175/0/1 not-run. The dirs_guard row was ok, 1 of 1, and stays a watch item. Next: D300, `loop/plan_queue_sweep_d300_2026-10-11.md`.
