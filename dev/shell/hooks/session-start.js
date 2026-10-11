@@ -257,9 +257,11 @@ function gatesMode() {
   try { return gatesModeFrom(fs.readFileSync(path.join(process.env.USERPROFILE || os.homedir(), '.consonance.json'), 'utf8')); } catch (_) { return 'strict'; }
 }
 /** The light form of ONE day's digest, or null when it cannot be read (then the caller keeps the digest as it is: a parse failure hides nothing).
- *  Layout (dev/shell/hooks/session-end.js): "## N sessions", then per folder "### <cwd>" and one "- HH:MM:SS UTC[ — text]" line per session. */
+ *  Layout (dev/shell/hooks/session-end.js): "## N turn ends from M sessions" (D292; before it, "## N sessions", which counted turn ends too), then per folder
+ *  "### <cwd>" and one "- HH:MM:SS UTC[ — text]" line per turn end. Both headlines are read; each is said back as it was written. */
 function lightDigest(content, withTimes) {
-  const total = /^## (\d+) sessions\s*$/m.exec(content), groups = [];
+  const now = /^## (\d+) turn ends? from (\d+) sessions?\s*$/m.exec(content), old = now ? null : /^## (\d+) sessions\s*$/m.exec(content), groups = [];
+  const total = now || old;
   for (const line of String(content).split(/\r?\n/)) {
     const g = /^### (.+?)\s*$/.exec(line);
     if (g) { groups.push({ cwd: g[1], n: 0, times: [] }); continue; }
@@ -269,7 +271,7 @@ function lightDigest(content, withTimes) {
   }
   if (!total || !groups.length) return null;
   const rows = groups.map((g) => `- ${g.cwd}: ${g.n}${withTimes && g.times.length ? ` · last ${g.times.slice(-3).reverse().join(', ')} UTC` : ''}`);
-  return [`${total[1]} sessions`, ...rows].join('\n');
+  return [now ? `${now[1]} turn ends from ${now[2]} sessions` : `${total[1]} sessions`, ...rows].join('\n');
 }
 
 function buildContext(meta) {
@@ -344,6 +346,9 @@ function buildContext(meta) {
     }
   }
 
+  // D292: before the digests are read, any missing or part-day digest of the last 14 local days is rebuilt from the event log (session-end.js catchUp;
+  // the one builder, so the two hooks cannot disagree on a day). Guarded: without session-end.js beside this file, or on any error, the wake goes on as before.
+  if (!isThirdPlaceCwd(meta.cwd)) { try { require(path.join(__dirname, 'session-end.js')).catchUp(); } catch (e) { /* the wake is never blocked by its digests */ } }
   const digests = isThirdPlaceCwd(meta.cwd) ? [] : getRecentDigests(2);
   if (digests.length > 0) {
     sections.push('## Recent session digests');
