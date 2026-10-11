@@ -68,3 +68,28 @@ two rows carried a real username path; changed to `C:\Users\n\lighthouse` first.
 - The key scan flagged `sources-gate.js`: its own SECRET_SHAPES patterns, present on the base. No key was added.
 
 NEXT: librarian collate D288 F1 (land d287-e2 first, then d288-e) and route the 5 light mutant rows to A, when this hand-back is read
+
+---
+
+## D288-e2 follow-up (2026-10-11 ~01:4x): the combined tree, mutation-tested
+The chair's packet: A's F2 harness fix (`3e428c28`) and my three F1 commits (`1e1ee0e6`, `efd00909`, `1bd8610c`) are on main `0a958b02`, but A ran the harnesses
+BEFORE my matcher change, reply-slot #43 was NOT APPLIED, and the 5 light rows were untracked. **Result: lighthouse `78fabb7b` on `0a958b02`, branch `d288-e2`,
+worktree `G:\worktrees\e-d288e2-wt`. Not pushed; tree clean.** Two files: `consonance/tools/sources-gate.mutants.js`, `consonance/tools/reply-slot.mutants.js`.
+No survivor, so `sources-gate.js` and its test were not touched.
+
+- **The 5 light rows** (from `d288/mk-sgmut.js`, unchanged) are in `sources-gate.mutants.js`, under a `light mode` heading before the registration rows.
+- **reply-slot #43** ("pane ring: main does not pass the seat to the verdict") was NOT APPLIED because its anchor `"live: !SHADOW, seat });"` no longer occurs: the
+  verdict call at `reply-slot.js:235` gained `gates` (D273) and `mode` (D277 part 2, mine) after `seat`. Re-anchored on `"live: !SHADOW, seat, gates:"` →
+  `"live: !SHADOW, gates:"`. It still removes ONLY the seat; the other arguments are untouched, so it tests the same thing.
+- **Anchors checked before any run** with `d288e2/anchors.js`, which loads each harness without its `main()` and counts every anchor in the file it mutates exactly as the
+  harness does: reply-slot 59 rows, 1 not applied before the re-anchor, **0 after**; sources-gate **85 rows, 0**.
+
+| harness (on the committed tree `78fabb7b`) | control | applied | caught | survived | NOT APPLIED | sha256 |
+|---|---|---|---|---|---|---|
+| `sources-gate.mutants.js` | pass 64 / fail 0 | 85 | **85** | **0** | **0** | `sgmut.txt` `aeb289bc4ffa7298…` |
+| `reply-slot.mutants.js` | pass 38 / fail 0 | 59 | **59** | **0** | **0** | `rsmut.txt` `2248f28ed40b3522…` |
+
+Both harnesses took the heavy-run lock themselves (their own `hold()`); this worktree is past `9807cd1b`, so its copy is the two-slot `heavy-run.js`.
+Evidence in my scratchpad `d288e2/`.
+
+NEXT: librarian collate D288-e2 (both harnesses 0 survived, 0 not applied on the combined tree), when this addendum is read
