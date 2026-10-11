@@ -1,0 +1,34 @@
+== d297 mutants · asked 2026-10-11T19:36:12.722Z · lock held 2026-10-11T19:36:12.771Z · NODE_OPTIONS=--max-old-space-size=4096
+$ node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d297/mut.js
+N0 control: SURVIVED
+N1 a colon ends a label with no ledger id: caught by a_leading_phrase_with_no_ledger_id_is_not_a_label
+N2 a dash ends a label with no ledger id: caught by a_leading_phrase_with_no_ledger_id_is_not_a_label
+N3 the path shows every word: caught by a_label_must_end_at_a_separator, a_word_the_path_does_not_show_stops_the_label_and_nothing_is_stripped
+N4 a title within the cap is stripped too: caught by a_title_within_the_cap_keeps_its_label
+N5 an all-label title is emptied: caught by a_title_that_is_all_label_is_cut_as_before_and_never_says_no_title
+N6 no prefix-4 rule: caught by a_path_token_of_four_or_more_chars_shows_a_word_it_begins
+N7 no qualifier: caught by a_ledger_label_the_path_carries_is_stripped_before_the_cut
+N8 parentheses not trimmed: caught by a_ledger_label_the_path_carries_is_stripped_before_the_cut
+N9 a lone capital is an id: caught by a_leading_phrase_with_no_ledger_id_is_not_a_label
+N10 a lowercase P- run is an id: caught by a_leading_phrase_with_no_ledger_id_is_not_a_label
+N11 a colon does not end the label: caught by a_ledger_label_the_path_carries_is_stripped_before_the_cut, a_path_token_of_four_or_more_chars_shows_a_word_it_begins
+N12 the strip is not called: caught by a_path_token_of_four_or_more_chars_shows_a_word_it_begins, a_ledger_label_the_path_carries_is_stripped_before_the_cut
+N13 (D296 M6) no title cap: caught by a_long_title_is_cut_at_a_word_boundary_with_a_visible_mark, a_single_word_longer_than_the_cap_is_cut_and_still_marked, a_title_that_is_all_label_is_cut_as_before_and_never_says_no_title, a_path_token_of_four_or_more_chars_shows_a_word_it_begins, a_word_the_path_does_not_show_stops_the_label_and_nothing_is_stripped, a_label_must_end_at_a_separator, a_leading_phrase_with_no_ledger_id_is_not_a_label, a_ledger_label_the_path_carries_is_stripped_before_the_cut
+N14 (D296 M7) untitled prints nothing: caught by a_short_title_is_kept_whole_and_a_missing_one_says_so
+--- tree dff6810b, restored: true
+N0 control: SURVIVED
+N1 a colon ends a label with no ledger id: caught by a_leading_phrase_with_no_ledger_id_is_not_a_label
+N2 a dash ends a label with no ledger id: caught by a_leading_phrase_with_no_ledger_id_is_not_a_label
+N3 the path shows every word: caught by a_label_must_end_at_a_separator, a_word_the_path_does_not_show_stops_the_label_and_nothing_is_stripped
+N4 a title within the cap is stripped too: caught by a_title_within_the_cap_keeps_its_label
+N5 an all-label title is emptied: caught by a_title_that_is_all_label_is_cut_as_before_and_never_says_no_title
+N6 no prefix-4 rule: caught by a_path_token_of_four_or_more_chars_shows_a_word_it_begins
+N7 no qualifier: caught by a_ledger_label_the_path_carries_is_stripped_before_the_cut
+N8 parentheses not trimmed: caught by a_ledger_label_the_path_carries_is_stripped_before_the_cut
+N9 a lone capital is an id: caught by a_leading_phrase_with_no_ledger_id_is_not_a_label
+N10 a lowercase P- run is an id: caught by a_leading_phrase_with_no_ledger_id_is_not_a_label
+N11 a colon does not end the label: caught by a_ledger_label_the_path_carries_is_stripped_before_the_cut, a_path_token_of_four_or_more_chars_shows_a_word_it_begins
+N12 the strip is not called: caught by a_path_token_of_four_or_more_chars_shows_a_word_it_begins, a_ledger_label_the_path_carries_is_stripped_before_the_cut
+N13 (D296 M6) no title cap: caught by a_long_title_is_cut_at_a_word_boundary_with_a_visible_mark, a_single_word_longer_than_the_cap_is_cut_and_still_marked, a_title_that_is_all_label_is_cut_as_before_and_never_says_no_title, a_path_token_of_four_or_more_chars_shows_a_word_it_begins, a_word_the_path_does_not_show_stops_the_label_and_nothing_is_stripped, a_label_must_end_at_a_separator, a_leading_phrase_with_no_ledger_id_is_not_a_label, a_ledger_label_the_path_carries_is_stripped_before_the_cut
+N14 (D296 M7) untitled prints nothing: caught by a_short_title_is_kept_whole_and_a_missing_one_says_so
+== exit 0 · done 2026-10-11T19:38:22.488Z
