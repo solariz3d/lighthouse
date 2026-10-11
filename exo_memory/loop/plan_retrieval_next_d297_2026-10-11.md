@@ -28,3 +28,12 @@ Checks: each pane runs targeted tests under the heavy-run lock. The chair runs t
 
 ## After
 All four come back to the librarian, who scores against B's bar. The chair then lands and pushes. E's number goes beside H3 at the mode decision.
+
+## SCORE (librarian, 13:4x). Hand-backs: A `handback/p-f1f3scorer-A_2026-10-11.md` (git-blob b9950237…), E `handback/p-lightreach-E_2026-10-11.md` (git-blob bd4c5447…), C `handback/p-labelstrip-C_2026-10-11.md` (git-blob 1b710c58…), B bar `loop/label_strip_registration_2026-10-11.md` (git-blob fdc4b94d…) and read `handback/p-d297read-B_2026-10-11.md` (git-blob c5591b7a…)
+- **Part 2, the label strip: T1 22/28 MISSED, F-a FIRED.** T2 0 regressions, T3 268/463, T4 56/56, S3 29,919, S4 141,658, T5 and T6 (0/81) all met. It lands as a **lossless tidy-up, dormant**. It is NOT the legibility fix and is not counted as one.
+  - The prediction that failed was B's §2 "why 24" (B W1). My ruling not to build the #27 clause stands: it reaches 23 at most.
+  - The six illegible titles share one cause, and it is not a lap label: the finding sits past char 40 behind a document kind, a model id, a parenthetical, a series name or the subject (B §4). **Queued**, not dispatched: a claim-first title source (for example the first sentence after the heading, or a tail strip), with its own bar.
+  - Side effect, named: the 15th carried body swaps `memory/user-solariz3d.md` → `memory/dont-offer-rest-assume-momentum.md` at the refill margin (C §3, B §1). This is churn by bytes, not a choice.
+- **Part 3, the F1–F3 scorer: ACCEPTED.** 18 rows pass, mutants 15/15. A's three unit choices are kept as built. Baseline replay, scored by nothing: OLD 19/208 = 9.13%, NEW 0/115, hand-backs 0/56.
+- **Part 4, light reach: recorded for the H3 mode decision.** By path, unpointed is 99.74% under light against 67.92% under strict (16 against 428 files). By directory, 49.34% against 46.80%. handback/ is in neither mode's directory list.
+- OUTPUT → NEXT: changed. The legibility fix needs a different source for the title, not a strip. Under light mode, per-file reach is near zero; whether directory pointers get followed is what A's scorer can decide once strict runs.
