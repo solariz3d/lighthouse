@@ -1,0 +1,27 @@
+== C d296 mutants · asked 2026-10-11T14:41:53.800Z · lock held 2026-10-11T14:41:53.830Z · NODE_OPTIONS=--max-old-space-size=4096
+$ node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d296/mut.js
+M0 control: SURVIVED
+M1 mapped check removed: caught by a_mapped_hand_back_is_not_listed_and_an_unmapped_one_is
+M2 hand-backs bypass the budget: caught by the_index_budget_is_never_exceeded_with_hand_backs_in_the_tier
+M3 recurse into evidence folders: caught by an_evidence_folder_md_is_never_listed
+M4 missing map/ means nothing unmapped: caught by a_missing_map_dir_leaves_every_top_level_hand_back_unmapped
+M6 no title cap: caught by a_long_titled_entry_the_window_used_to_drop_is_listed, a_long_title_is_cut_at_a_word_boundary_with_a_visible_mark, a_single_word_longer_than_the_cap_is_cut_and_still_marked
+M7 untitled prints nothing: caught by a_missing_map_dir_leaves_every_top_level_hand_back_unmapped, a_short_title_is_kept_whole_and_a_missing_one_says_so
+M8 hand-backs not newest first: caught by a_missing_map_dir_leaves_every_top_level_hand_back_unmapped
+---
+M0 control: SURVIVED
+M1 mapped check removed: caught by a_mapped_hand_back_is_not_listed_and_an_unmapped_one_is
+M2 hand-backs bypass the budget: caught by the_index_budget_is_never_exceeded_with_hand_backs_in_the_tier
+M3 recurse into evidence folders: caught by an_evidence_folder_md_is_never_listed
+M4 missing map/ means nothing unmapped: caught by a_missing_map_dir_leaves_every_top_level_hand_back_unmapped
+M5 zero hand-backs not reported: NOT APPLIED (brace anchor)
+M6 no title cap: caught by a_long_titled_entry_the_window_used_to_drop_is_listed, a_long_title_is_cut_at_a_word_boundary_with_a_visible_mark, a_single_word_longer_than_the_cap_is_cut_and_still_marked
+M7 untitled prints nothing: caught by a_missing_map_dir_leaves_every_top_level_hand_back_unmapped, a_short_title_is_kept_whole_and_a_missing_one_says_so
+M8 hand-backs not newest first: caught by a_missing_map_dir_leaves_every_top_level_hand_back_unmapped
+== exit 0 · done 2026-10-11T14:43:24.499Z
+== C d296 mutant M5 · asked 2026-10-11T14:44:08.285Z · lock held 2026-10-11T14:44:08.319Z · NODE_OPTIONS=--max-old-space-size=4096
+$ node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d296/mut.js M5
+M5 zero hand-backs not reported: caught by an_empty_handback_dir_lists_none_and_says_zero
+---
+M5 zero hand-backs not reported: caught by an_empty_handback_dir_lists_none_and_says_zero
+== exit 0 · done 2026-10-11T14:44:13.359Z

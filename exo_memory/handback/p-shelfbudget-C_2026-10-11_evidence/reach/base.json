@@ -1,0 +1,132 @@
+{
+  "check_0822_tree": {
+    "per": {
+      "root": 4518,
+      "attic": 1657,
+      "cards": 224,
+      "journal": 5927,
+      "loop": 11862,
+      "map": 1215,
+      "memory": 273,
+      "record": 80,
+      "research": 187,
+      "spread": 266
+    },
+    "total": 26209,
+    "inContext": 163,
+    "inContextPct": "0.62%",
+    "reachable": 6754,
+    "reachablePct": "25.77%",
+    "unpointed": 19455,
+    "unpointedPct": "74.23%",
+    "note": "git tree 33e11457 : the 08-22 live corpus included uncommitted files, so this need not equal 26,265 exactly",
+    "namedRootMeasured": 147
+  },
+  "today_same_method_all_dirs": {
+    "per": {
+      "root": 4956,
+      "astra": 81,
+      "attic": 1889,
+      "audit": 265,
+      "cards": 379,
+      "handback": 130180,
+      "journal": 8500,
+      "librarian": 16912,
+      "loop": 126344,
+      "map": 14065,
+      "memory": 273,
+      "record": 697,
+      "research": 1252,
+      "review": 127,
+      "spread": 266
+    },
+    "total": 306186,
+    "inContext": 205,
+    "inContextPct": "0.07%",
+    "reachable": 10547,
+    "reachablePct": "3.44%",
+    "unpointed": 295639,
+    "unpointedPct": "96.56%"
+  },
+  "today_same_method_0822_dirs": {
+    "per": {
+      "root": 4956,
+      "attic": 1889,
+      "cards": 379,
+      "journal": 8500,
+      "loop": 126344,
+      "map": 14065,
+      "memory": 273,
+      "record": 697,
+      "research": 1252,
+      "spread": 266
+    },
+    "total": 158621,
+    "inContext": 205,
+    "inContextPct": "0.13%",
+    "reachable": 10547,
+    "reachablePct": "6.65%",
+    "unpointed": 148074,
+    "unpointedPct": "93.35%"
+  },
+  "today_named_root_measured": {
+    "per": {
+      "root": 4956,
+      "astra": 81,
+      "attic": 1889,
+      "audit": 265,
+      "cards": 379,
+      "handback": 130180,
+      "journal": 8500,
+      "librarian": 16912,
+      "loop": 126344,
+      "map": 14065,
+      "memory": 273,
+      "record": 697,
+      "research": 1252,
+      "review": 127,
+      "spread": 266
+    },
+    "total": 306186,
+    "inContext": 205,
+    "inContextPct": "0.07%",
+    "reachable": 10544,
+    "reachablePct": "3.44%",
+    "unpointed": 295642,
+    "unpointedPct": "96.56%"
+  },
+  "wake": {
+    "bootLines": 162,
+    "stateBlockLines": 43,
+    "namedRootMeasured": 147
+  },
+  "librarian_shelf": {
+    "NOT_COMPARABLE": "librarian wake, recursive corpus, carried/indexed by file; the 08-22 figures used a fresh instance, top-level files and hand-classified directories",
+    "shelf": "G:/consonance-scratch/c-d296/base2/librarian.strict.md",
+    "shelfMtime": "2026-10-11T14:39:47.131Z",
+    "header": "13 file(s) carried in full (44177 of 44633 bytes); 299 indexed by path.",
+    "dropHdr": "523 index-tier entries (75210 bytes) dropped by the index window:",
+    "carriedFiles": 13,
+    "indexedFiles": 299,
+    "indexedMissingOnDisk": [],
+    "corpusRecursiveLines": 342732,
+    "corpusRecursiveFiles": 2105,
+    "inContextLines": 541,
+    "inContextPct": "0.16%",
+    "indexedLines": 93474,
+    "reachablePct": "27.43%",
+    "droppedFiles": 523,
+    "droppedLines": 81685,
+    "droppedPct": "23.83%",
+    "unpointedPct": "72.57%",
+    "notListedNewerThanShelf": [],
+    "unpointedLinesByTop": {
+      "astra/": 81,
+      "attic/": 1889,
+      "audit/": 265,
+      "handback/": 157532,
+      "loop/": 88823,
+      "review/": 127
+    }
+  }
+}

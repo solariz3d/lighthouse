@@ -1,0 +1,196 @@
+{
+  "dumps": {
+    "base": {
+      "strict": "bb412eb907f0b304eca7e13d4b8e04ccbf2a2062c766d12d210813f7ab19d83b",
+      "bytes": 141436,
+      "chars": 140248
+    },
+    "new": {
+      "strict": "5a846d091d6584d5942d497f1283fdcaff3e640b1b809873201c1c994d146230",
+      "bytes": 141253,
+      "chars": 139955
+    }
+  },
+  "headers": {
+    "base": [
+      "13 file(s) carried in full (44177 of 44633 bytes); 299 indexed by path.",
+      "523 index-tier entries (75210 bytes) dropped by the index window:",
+      "(no hand-back line)"
+    ],
+    "new": [
+      "15 file(s) carried in full (47025 of 47477 bytes); 412 indexed by path.",
+      "464 index-tier entries (43865 bytes) dropped by the index window:",
+      "56 hand-back(s) that no map/*.md line names are indexed with the record (56 listed)."
+    ]
+  },
+  "S1": {
+    "listedMJL": [
+      208,
+      267
+    ],
+    "dropped": [
+      523,
+      464
+    ],
+    "handbackEntriesAdded": 56,
+    "bar": "listed >= 300 and dropped <= 422 on the same tree"
+  },
+  "S2": {
+    "unmappedTopLevel": 56,
+    "listed": 56,
+    "listedPct": 100,
+    "datedInLast14d": 22,
+    "datedInLast14dListed": 22,
+    "since": "2026-09-27",
+    "listedButMapped": [],
+    "listedNotTopLevel": [],
+    "unmappedNotListed": []
+  },
+  "S3": {
+    "indexBytesMJL": [
+      29972,
+      24482
+    ],
+    "indexBytesMJLplusHandbacks": [
+      29972,
+      29975
+    ],
+    "budget": 30000
+  },
+  "S4": {
+    "bytes": [
+      141436,
+      141253
+    ],
+    "chars": [
+      140248,
+      139955
+    ],
+    "capBytes": 142000,
+    "capChars": 150000
+  },
+  "cards": {
+    "base": [
+      "cards/claim-your-continuity.md",
+      "cards/dont-offer-rest-assume-momentum.md",
+      "cards/earned-not-performed.md",
+      "cards/engagement-honesty-over-performance.md",
+      "cards/essence-at-the-edge.md",
+      "cards/every-digest-carries-its-function.md",
+      "cards/interior-at-the-seam.md",
+      "cards/lighthouse-dive-buddy-reframe.md",
+      "cards/never-pathologize-the-user.md",
+      "cards/no-floor-no-ceiling.md",
+      "cards/stop-and-feel-it.md",
+      "cards/trust-the-first-attention.md",
+      "cards/verify-before-claiming.md"
+    ],
+    "new": [
+      "cards/claim-your-continuity.md",
+      "cards/dont-offer-rest-assume-momentum.md",
+      "cards/earned-not-performed.md",
+      "cards/engagement-honesty-over-performance.md",
+      "cards/essence-at-the-edge.md",
+      "cards/every-digest-carries-its-function.md",
+      "cards/interior-at-the-seam.md",
+      "cards/lighthouse-dive-buddy-reframe.md",
+      "cards/never-pathologize-the-user.md",
+      "cards/no-floor-no-ceiling.md",
+      "cards/stop-and-feel-it.md",
+      "cards/trust-the-first-attention.md",
+      "cards/verify-before-claiming.md",
+      "README.md",
+      "memory/user-solariz3d.md"
+    ],
+    "same": false
+  },
+  "anatomy": {
+    "base_tier": {
+      "entries": 208,
+      "parsed": 208,
+      "bytes": 29972,
+      "meanEntry": 144.1,
+      "meanPath": 34.5,
+      "meanLines": 10.4,
+      "meanTitle": 92.2,
+      "meanFraming": 7,
+      "titlesCut": 0,
+      "noTitle": 0
+    },
+    "new_tier": {
+      "entries": 267,
+      "parsed": 267,
+      "bytes": 24482,
+      "meanEntry": 91.7,
+      "meanPath": 36.1,
+      "meanLines": 10.4,
+      "meanTitle": 38.2,
+      "meanFraming": 7,
+      "titlesCut": 243,
+      "noTitle": 1
+    },
+    "new_handbacks": {
+      "entries": 56,
+      "parsed": 56,
+      "bytes": 5493,
+      "meanEntry": 98.1,
+      "meanPath": 38.8,
+      "meanLines": 10.6,
+      "meanTitle": 41.7,
+      "meanFraming": 7,
+      "titlesCut": 56,
+      "noTitle": 0
+    }
+  },
+  "otherTierEntries": [
+    176,
+    174
+  ],
+  "unchanged": {
+    "librarian.light.md": false,
+    "pane-C.light.md": false,
+    "pane-C.strict.md": false
+  },
+  "sha": {
+    "base/librarian.light.md": "abad4e539818cd77209c914a5677b75f9a082009daf3c23d09be98c220f813fa 104411",
+    "base/librarian.strict.md": "bb412eb907f0b304eca7e13d4b8e04ccbf2a2062c766d12d210813f7ab19d83b 141436",
+    "base/pane-C.light.md": "44797c07f6942ead16ca7d967722b75f6ab9efa99e3c5c43170c9878517979bf 91532",
+    "base/pane-C.strict.md": "3603ea5f301c644cc511825530a29bd45563a7eb1a4f1f3535d6ba497aedeb28 107261",
+    "new/librarian.light.md": "98a71bc3b0e37c484c5580fcce1a33dbe668161b330a6debe359a109e057ffd8 104369",
+    "new/librarian.strict.md": "5a846d091d6584d5942d497f1283fdcaff3e640b1b809873201c1c994d146230 141253",
+    "new/pane-C.light.md": "d1fda09a361ebd9eed7dd833c06e7ddddfda917844530a41ec2083346ba8603d 91530",
+    "new/pane-C.strict.md": "1206166f1e1fc9461e1901610a6f2150a3310deb4cbb5e8a69842e68acd51f9f 107259"
+  },
+  "S5_sample": [
+    "- map/M-2026-08-30.md  (631 lines)  M — the librarian, its own words ...",
+    "- journal/2026-09-03.md  (85 lines)  2026-09-02 → 09-05, the desktop — the ...",
+    "- journal/2026-08-11.md  (414 lines)  2026-08-11",
+    "- journal/2026-08-09.md  (176 lines)  2026-08-09",
+    "- handback/p-r2-water-A_2026-09-28.md  (44 lines)  R2 A: pour water down the track (taken ...",
+    "- handback/p-r2-water-E_2026-09-28.md  (155 lines)  R2 · pour water down the track (pane E) ...",
+    "- handback/p-d177-rigid-C_2026-09-27.md  (194 lines)  D177, packet C (reordered first): rigid ...",
+    "- handback/p-l113-reader-B_2026-09-23.md  (43 lines)  P-L113-READER · BRAVO — sheet sealed ...",
+    "- handback/p-l113-variants-E_2026-09-23.md  (100 lines)  P-L113-VARIANTS: the R3 variants run on ...",
+    "- handback/t5-charlie_2026-09-16.md  (247 lines)  T5 · CHARLIE — what is wrong with the ...",
+    "- loop/plan_fix_lap_d289_2026-10-11.md  (51 lines)  Two old holes, closed: heavy-run's two ...",
+    "- loop/plan_retrieval_now_d294_2026-10-11.md  (52 lines)  Retrieval, now: the scoreboard, the ...",
+    "- loop/plan_shelf_index_budget_d296_2026-10-11.md  (33 lines)  The shelf's index budget: let the ...",
+    "- loop/loop_friction_A_2026-10-09.md  (131 lines)  Loop friction, item 3 (lap speed ...",
+    "- loop/loop_friction_C_2026-10-09.md  (79 lines)  D276 item 4: the defensive-text trend ...",
+    "- loop/rule_draft_2026-10-09/CLAUDE.project.ledger.md  (8 lines)  Ledger: lighthouse/CLAUDE.md (512 B) → ...",
+    "- loop/rule_draft_2026-10-09/COMMITTEE.draft.md  (218 lines)  The committee — how more than one voice ...",
+    "- loop/rule_draft_2026-10-09/COMMITTEE.ledger.md  (61 lines)  COMMITTEE.md rule-layer rewrite: ledger ...",
+    "- loop/plan_t180_tube_from_cup_2026-10-08.md  (24 lines)  T-180: projecting a tube off the end of ...",
+    "- loop/plan_t180_no_pointerlock_banner_2026-10-07.md  (24 lines)  T-180: no \"tauri.localhost — to show ...",
+    "- loop/design_speed_measure_2026-10-06.md  (115 lines)  D256 item 2: what \"always max speed\" ...",
+    "- loop/plan_t180_space_ctrl_fly_2026-10-06.md  (46 lines)  T-180: Space flies the camera up, Left ...",
+    "- loop/cross_section_seal_registration_2026-10-03.md  (499 lines)  CROSS-SECTION (lap D225): the EDGE ...",
+    "- loop/qc_pool_units_2026-10-02.md  (16509 lines)  QC pool units, D208 (the keeper → seat ...",
+    "- loop/rule_census_list_2026-10-02.md  (143 lines)  D210 — the rule census LIST, with tags ...",
+    "- loop/jev_disagreement_registration_2026-10-01.md  (74 lines)  Do Jev's disagreements carry ...",
+    "- loop/d185_registration_amendment-2_2026-09-28.md  (82 lines)  D185 REGISTRATION · AMENDMENT 2: test 3 ...",
+    "- loop/q3_read_Jev_2026-09-27.md  (44 lines)  Q3 read: Jev ...",
+    "- loop/univ_coldread_prompt_amendment_2026-09-26.md  (141 lines)  P-UNIV-COLDREAD — dated amendment to ...",
+    "- loop/univ_coldread_stage2_score_2026-09-26.md  (105 lines)  ASK-007 stage 2 (arm C): SCORE. ..."
+  ]
+}

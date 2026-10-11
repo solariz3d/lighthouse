@@ -1,0 +1,83 @@
+== C d296 red-first on 9041faf9 · asked 2026-10-11T14:33:42.125Z · lock held 2026-10-11T14:33:42.158Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd G:/worktrees/c-d296-base/consonance/src-tauri && CARGO_TARGET_DIR=G:/ctarget/c-d296-base ~/.cargo/bin/cargo.exe test --bin consonance shelf_handback_tests 2>&1 | tail -80
+warning: field `tool_router` is never read
+   --> src\mcp.rs:338:5
+    |
+291 | pub struct ConsonanceMcp {
+    |            ------------- field in this struct
+...
+338 |     tool_router: ToolRouter<ConsonanceMcp>,
+    |     ^^^^^^^^^^^
+    |
+    = note: `ConsonanceMcp` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: `consonance` (bin "consonance" test) generated 6 warnings (run `cargo fix --bin "consonance" -p consonance --tests` to apply 4 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 56.76s
+     Running unittests src\main.rs (G:/ctarget/c-d296-base\debug\deps\consonance-1fac528b6fcd74f5.exe)
+
+running 6 tests
+test shelf_handback_tests::a_long_titled_entry_the_window_used_to_drop_is_listed ... FAILED
+test shelf_handback_tests::a_missing_map_dir_leaves_every_top_level_hand_back_unmapped ... FAILED
+test shelf_handback_tests::a_mapped_hand_back_is_not_listed_and_an_unmapped_one_is ... FAILED
+test shelf_handback_tests::an_empty_handback_dir_lists_none_and_says_zero ... FAILED
+test shelf_handback_tests::an_evidence_folder_md_is_never_listed ... FAILED
+test shelf_handback_tests::the_index_budget_is_never_exceeded_with_hand_backs_in_the_tier ... FAILED
+
+failures:
+
+---- shelf_handback_tests::a_long_titled_entry_the_window_used_to_drop_is_listed stdout ----
+
+thread 'shelf_handback_tests::a_long_titled_entry_the_window_used_to_drop_is_listed' (15344) panicked at src\main.rs:16075:9:
+assertion `left == right` failed: a dropped entry is still dropped: [
+    "- loop/plan_x11_2026-09-21.md  (3 lines)  Twelve laps of a record that the index used to drop because every title ran to a hundred and fifty characters of seat machine and clock",
+    "- loop/plan_x10_2026-09-20.md  (3 lines)  Twelve laps of a record that the index used to drop because every title ran to a hundred and fifty characters of seat machine and clock",
+    "- loop/plan_x09_2026-09-19.md  (3 lines)  Twelve laps of a record that the index used to drop because every title ran to a hundred and fifty characters of seat machine and clock",
+    "- loop/plan_x08_2026-09-18.md  (3 lines)  Twelve laps of a record that the index used to drop because every title ran to a hundred and fifty characters of seat machine and clock",
+    "- loop/plan_x07_2026-09-17.md  (3 lines)  Twelve laps of a record that the index used to drop because every title ran to a hundred and fifty characters of seat machine and clock",
+    "- loop/plan_x06_2026-09-16.md  (3 lines)  Twelve laps of a record that the index used to drop because every title ran to a hundred and fifty characters of seat machine and clock",
+    "- loop/plan_x05_2026-09-15.md  (3 lines)  Twelve laps of a record that the index used to drop because every title ran to a hundred and fifty characters of seat machine and clock",
+]
+  left: 7
+ right: 12
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- shelf_handback_tests::a_missing_map_dir_leaves_every_top_level_hand_back_unmapped stdout ----
+
+thread 'shelf_handback_tests::a_missing_map_dir_leaves_every_top_level_hand_back_unmapped' (33140) panicked at src\main.rs:16139:9:
+with no map/ nothing is named, so both are unmapped
+
+---- shelf_handback_tests::a_mapped_hand_back_is_not_listed_and_an_unmapped_one_is stdout ----
+
+thread 'shelf_handback_tests::a_mapped_hand_back_is_not_listed_and_an_unmapped_one_is' (25344) panicked at src\main.rs:16092:9:
+the unmapped hand-back is not listed
+
+---- shelf_handback_tests::an_empty_handback_dir_lists_none_and_says_zero stdout ----
+
+thread 'shelf_handback_tests::an_empty_handback_dir_lists_none_and_says_zero' (1804) panicked at src\main.rs:16124:9:
+the zero is not reported
+
+---- shelf_handback_tests::an_evidence_folder_md_is_never_listed stdout ----
+
+thread 'shelf_handback_tests::an_evidence_folder_md_is_never_listed' (12068) panicked at src\main.rs:16155:9:
+the top-level hand-back is not listed
+
+---- shelf_handback_tests::the_index_budget_is_never_exceeded_with_hand_backs_in_the_tier stdout ----
+
+thread 'shelf_handback_tests::the_index_budget_is_never_exceeded_with_hand_backs_in_the_tier' (30244) panicked at src\main.rs:16113:9:
+assertion `left == right` failed: at a budget that fits everything, the six hand-backs must all be in the tier being measured
+  left: 0
+ right: 6
+
+
+failures:
+    shelf_handback_tests::a_long_titled_entry_the_window_used_to_drop_is_listed
+    shelf_handback_tests::a_mapped_hand_back_is_not_listed_and_an_unmapped_one_is
+    shelf_handback_tests::a_missing_map_dir_leaves_every_top_level_hand_back_unmapped
+    shelf_handback_tests::an_empty_handback_dir_lists_none_and_says_zero
+    shelf_handback_tests::an_evidence_folder_md_is_never_listed
+    shelf_handback_tests::the_index_budget_is_never_exceeded_with_hand_backs_in_the_tier
+
+test result: FAILED. 0 passed; 6 failed; 0 ignored; 0 measured; 1016 filtered out; finished in 0.05s
+
+error: test failed, to rerun pass `--bin consonance`
+== exit 0 · done 2026-10-11T14:34:39.782Z

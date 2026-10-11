@@ -1,0 +1,16 @@
+== C d296 dumps on one live snapshot (tar) · asked 2026-10-11T14:38:59.809Z · lock held 2026-10-11T14:38:59.841Z · NODE_OPTIONS=--max-old-space-size=4096
+$ bash C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d296/dump2.sh
+snapshot start 2026-10-11T14:38:59.916787800Z
+snap rc 0 files 6834
+snapshot done 2026-10-11T14:39:15.144750700Z
+mirror c-d296-base rc 0 files 6834
+mirror c-d296-wt rc 0 files 6834
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1015 filtered out; finished in 2.78s
+base dumped 2026-10-11T14:39:47.317989700Z
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1024 filtered out; finished in 6.16s
+new dumped 2026-10-11T14:39:54.049016300Z
+base tree == snapshot after dump
+new tree == snapshot after dump
+restored c-d296-base: 0 dirty
+restored c-d296-wt: 0 dirty
+== exit 0 · done 2026-10-11T14:40:41.382Z
