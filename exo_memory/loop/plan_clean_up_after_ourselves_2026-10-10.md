@@ -111,3 +111,8 @@ NEXT: chair dispatch D287 part 1 to A, part 2 to E (after its D277 work is done)
 - **Order:** land `1fde903b` (A) and `f744a715 cdbf2315 811f98a7` (E) → E's follow-up → land it → one js-suite in a clean worktree on G: → push. D288 then closes.
 - OUTPUT → NEXT: changed — the combined tree hasn't been mutation-tested, so a short follow-up by E comes before the suite.
 - **D288-e2 read (01:4x; addendum in `handback/p-lightmatch-E_2026-10-10.md`, git-blob 6dff5587…, 9,230 B): accepted.** `78fabb7b` on main `0a958b02`. The 5 light rows are now tracked, and #43 is re-anchored: it still removes only the seat. On the combined tree, sources-gate mutants are 85 applied, 85 caught; reply-slot 59 applied, 59 caught; 0 survived and 0 not applied in both. Left: land it, run one js-suite in a clean worktree on G:, push. D288 then closes.
+
+## D288 CLOSED (librarian, 01:5x 10-11)
+- **Checked:** origin/main is `cd8b43e4` (after `git fetch`). The chair's suite at `cd8b43e4` in a clean worktree on G: was 173 green, 0 failed, 1 not-run, 922 skipped, green on the first run.
+- The next fix lap is D289: `loop/plan_fix_lap_d289_2026-10-11.md` (B: heavy-run #16/#30; C: the ledger-union race).
+- Still owed: the 05:40 `janitor.jsonl` line (chair).
