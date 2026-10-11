@@ -16440,6 +16440,12 @@ mod index_title_tests {
         assert_eq!(shown("loop/plan_t180_sharp_turns_2026-10-09.md",
             "T-180: a 90° turn does not come out straight, and the turns cannot be as sharp as Thunderhead's."),
             "T-180: a 90° turn does not come out ...");
+        // a lone capital is a seat's name, not an id, even when the path shows it (B's D296 #5)
+        assert_eq!(shown("map/M-2026-08-24.md", "M — the librarian, its own words, 2026-08-24"),
+            "M — the librarian, its own words ...");
+        // made-up: a packet code is capitals and digits; a lowercase run after `P-` is a word
+        assert_eq!(shown("loop/p_value_note_2026-10-01.md", "P-value: what a threshold of 0.05 does and does not tell a reader"),
+            "P-value: what a threshold of 0.05 does ...");
     }
 
     #[test]
