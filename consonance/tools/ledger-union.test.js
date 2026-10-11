@@ -197,6 +197,29 @@ test('WRITE: a write still in flight into the FROZEN original after the swap is 
   assert.ok(backup && fs.existsSync(backup));
 });
 
+// D289 MR: step (6)'s loop holds the union's only settle. The row above writes synchronously inside the hook, before step
+// (6) starts, so the tail carry alone finds its bytes, and removing the loop changed no test. A real writer is a separate
+// process with the original OPEN across the rename, writing a moment later: without the settle that row is never read.
+test('WRITE: a writer holding the original open that writes DURING the settle is reconciled in', { timeout: 30000 }, async () => {
+  const fx = writeFixture([{ n: 'a', at: 10 }], [{ n: 'b', at: 20 }]);
+  const backup = `${fx.live}.pre-union-2026-09-22T08-00-00-000Z`;      // W's fixed clock names the backup
+  const script = [
+    "const fs = require('fs');",
+    `const fd = fs.openSync(${JSON.stringify(fx.live)}, 'a'); process.stdout.write('open');`,
+    `const B = ${JSON.stringify(backup)}; const end = Date.now() + 20000;`,
+    "(function poll() { if (Date.now() > end) process.exit(3); if (!fs.existsSync(B)) return setTimeout(poll, 5);",
+    "  setTimeout(() => { fs.writeSync(fd, JSON.stringify({ n: 'settle', at: 99 }) + String.fromCharCode(10)); fs.closeSync(fd); }, 150); })();",
+  ].join('\n');
+  const writer = spawn(process.execPath, ['-e', script], { stdio: ['ignore', 'pipe', 'ignore'] });
+  await new Promise((r) => writer.stdout.once('data', r));          // the writer holds the original open before the union starts
+  const exited = new Promise((r) => writer.on('exit', r));
+  const r = writeUnion({ dataDir: fx.data, name: 'lap.jsonl', time: 'at', settleMs: 1500, now: () => new Date('2026-09-22T08:00:00.000Z') });
+  assert.strictEqual(await exited, 0, 'the writer never saw the freeze');
+  assert.ok(fs.readFileSync(backup, 'utf8').includes('"settle"'), 'the write did not land in the frozen original — the row proves nothing');
+  assert.ok(lines(fx.live).some((l) => JSON.parse(l).n === 'settle'), 'a row written into the frozen original during the settle was lost');
+  assert.strictEqual(r.reconciled, 1);
+});
+
 test('WRITE: a PARTIAL last line at read time (a writer mid-line) comes through once, intact', () => {
   const fx = writeFixture([{ n: 'a', at: 10 }], [{ n: 'b', at: 20 }], '{"n":"half"');
   W(fx, { afterRead: () => fs.appendFileSync(fx.live, ',"at":99}\n') });
