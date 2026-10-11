@@ -7499,6 +7499,69 @@ fn label_date(label: &str) -> Option<String> {
     found
 }
 
+/// The longest index-entry title, in chars, before it is cut (D296). MEASURED on the strict shelf
+/// of 2026-10-11 00:31Z: an index-tier entry was 143.9 B, of which the title was 91.9 B, and the
+/// index budget is bytes. Most titles lead with their claim and trail with seat, machine and
+/// time, which the path's own date already carries. At 40 chars the claim survives in the
+/// sampled titles; shorter caps list more entries but cut into the claim (the hand-back has the
+/// cap-against-count table).
+const INDEX_TITLE_CHARS: usize = 40;
+
+/// One index line: the FULL path, the line count, and the title cut at a word boundary with a
+/// visible " ..." when it is longer than `INDEX_TITLE_CHARS`. A file with no `# ` heading says
+/// "(no title)" rather than printing nothing, so an empty title is never mistaken for a cut one.
+fn index_entry_line(label: &str, body: &str) -> String {
+    let head = body.lines().find(|l| l.starts_with("# ")).unwrap_or("").trim_start_matches("# ").trim();
+    format!("- {label}  ({} lines)  {}", body.lines().count(), index_title(head))
+}
+
+fn index_title(head: &str) -> String {
+    if head.is_empty() {
+        return "(no title)".to_string();
+    }
+    if head.chars().count() <= INDEX_TITLE_CHARS {
+        return head.to_string();
+    }
+    let cut: String = head.chars().take(INDEX_TITLE_CHARS).collect();
+    // A word boundary: the last space inside the cap. A single word longer than the cap has none,
+    // and is cut at the cap -- still marked, so the reader knows there is more.
+    let kept = match cut.rfind(' ') {
+        Some(i) if i > 0 => &cut[..i],
+        _ => cut.as_str(),
+    };
+    let kept = kept.trim_end_matches(|c: char| c.is_whitespace() || ",;:-".contains(c) || c == '\u{2014}' || c == '\u{2013}');
+    format!("{kept} ...")
+}
+
+/// The top-level hand-backs that no `map/*.md` names, by path or by bare basename (D296; pane B's
+/// rule from D294, `loop/shelf_budget_registration_2026-10-11.md` §1). Top level only: the `.md`
+/// files inside `<hand-back>_evidence/` folders are outputs, not hand-backs, and are never listed.
+/// A missing map/ names nothing, so every hand-back is unmapped; a missing or empty handback/
+/// yields nothing. Sorted by path; the window orders them by date.
+fn unmapped_handbacks(root: &Path) -> Vec<PathBuf> {
+    let mut map_text = String::new();
+    if let Ok(rd) = fs::read_dir(root.join("map")) {
+        for e in rd.flatten() {
+            let p = e.path();
+            if p.is_file() && p.extension().and_then(|x| x.to_str()) == Some("md") {
+                if let Ok(t) = fs::read_to_string(&p) { map_text.push_str(&t); map_text.push('\n'); }
+            }
+        }
+    }
+    let mut out: Vec<PathBuf> = Vec::new();
+    let Ok(rd) = fs::read_dir(root.join("handback")) else { return out };
+    for e in rd.flatten() {
+        let p = e.path();
+        if !p.is_file() || p.extension().and_then(|x| x.to_str()) != Some("md") { continue; }
+        let Some(name) = p.file_name().and_then(|x| x.to_str()) else { continue };
+        let stem = name.trim_end_matches(".md");
+        if map_text.contains(name) || map_text.contains(stem) { continue; }
+        out.push(p);
+    }
+    out.sort();
+    out
+}
+
 /// THE COLLAPSE LINE -- one line for everything the index budget could not seat.
 ///
 /// A REFUSAL, AND ITS PARTS ARE SEPARATE FACTS, which is E's L061 rule applied here: the count
@@ -7547,7 +7610,8 @@ fn index_window_line(
 fn index_tier_entry_count() -> usize {
     corpus_shelf_at_with_index(0, usize::MAX)
         .lines()
-        .filter(|l| l.starts_with("- map/") || l.starts_with("- journal/") || l.starts_with("- loop/"))
+        // D296: the index tier now holds the unmapped hand-backs too (rule change, not a weaker check).
+        .filter(|l| l.starts_with("- map/") || l.starts_with("- journal/") || l.starts_with("- loop/") || l.starts_with("- handback/"))
         .count()
 }
 
@@ -7799,8 +7863,7 @@ fn corpus_shelf_at_with_index(budget: usize, index_budget: usize) -> String {
                     budget_dropped += 1;
                     budget_dropped_bytes += body.len();
                 }
-                let head = body.lines().find(|l| l.starts_with("# ")).unwrap_or("").trim_start_matches("# ").to_string();
-                let line = format!("- {label}  ({} lines)  {head}", body.lines().count());
+                let line = index_entry_line(&label, &body);
                 if tier_is_index {
                     let date = label_date(&label);
                     // GROUP 0 rides first and in practice always rides: map/ and journal/ are 17
@@ -7812,13 +7875,14 @@ fn corpus_shelf_at_with_index(budget: usize, index_budget: usize) -> String {
                     // newest file is 2026-09-06, older than ~170 loop/ files, so a flat
                     // date-ordered window drops the ENTIRE journal index before it drops a single
                     // recent lap note. That is a bigger change than the breach being fixed.
+                    // Group 1 is the unmapped hand-backs, added after this walk (D296).
                     let group = if dir != "loop" { 0u8 }
-                        else if date.is_some() { 1 }
+                        else if date.is_some() { 2 }
                         // The standing instruments ride with map/ and journal/: they are not the
                         // dated record and a date window cannot order them. See
                         // `loop_standing_instrument` -- by rule, never by list.
                         else if loop_standing_instrument(&label) { 0 }
-                        else { 2 };
+                        else { 3 };
                     index_tier.push(IndexEntry { group, date, seq: index_seq, label: label.clone(), line });
                     index_seq += 1;
                 } else {
@@ -7826,6 +7890,24 @@ fn corpus_shelf_at_with_index(budget: usize, index_budget: usize) -> String {
                 }
             }
         }
+    }
+
+    // THE UNMAPPED HAND-BACKS (D296), group 1: after map/, journal/ and the standing instruments,
+    // before the dated loop/ record, newest first, inside the same index budget. A hand-back that
+    // a map/ line names is reached one hop out through that map, so listing it here would be a
+    // second route to the same file; one that no map names had no route at all. Group 1 rather
+    // than interleaved with loop/ by date, because the set is bounded by what the maps miss (64 at
+    // 9041faf9) while dated loop/ grows every lap; interleaved, the older ones would be the first
+    // the window drops, and they are exactly the ones nothing else reaches.
+    let unmapped = unmapped_handbacks(&root);
+    let handbacks_unmapped = unmapped.len();
+    for f in unmapped {
+        let Ok(body) = fs::read_to_string(&f) else { continue };
+        let name = f.file_name().and_then(|x| x.to_str()).unwrap_or("?").to_string();
+        let label = format!("handback/{name}");
+        let line = index_entry_line(&label, &body);
+        index_tier.push(IndexEntry { group: 1, date: label_date(&label), seq: index_seq, label, line });
+        index_seq += 1;
     }
 
     // THE INDEX WINDOW. Ordered newest-first by the date in the label, then spent as a PREFIX.
@@ -7838,7 +7920,7 @@ fn corpus_shelf_at_with_index(budget: usize, index_budget: usize) -> String {
     // to actually be one.
     index_tier.sort_by(|a, b| {
         a.group.cmp(&b.group).then_with(|| match a.group {
-            1 => b.date.cmp(&a.date).then_with(|| a.label.cmp(&b.label)),
+            1 | 2 => b.date.cmp(&a.date).then_with(|| a.label.cmp(&b.label)),
             _ => a.seq.cmp(&b.seq),
         })
     });
@@ -7905,6 +7987,12 @@ fn corpus_shelf_at_with_index(budget: usize, index_budget: usize) -> String {
         s.push_str("the index tier has a byte budget of its own and this is what did not fit. The\n");
         s.push_str("line under the index names the range and the command that lists them.\n");
     }
+    // Reported always, zero included: a count that appears only when it is non-zero cannot tell
+    // "no hand-back is unmapped" from "hand-backs were never looked at".
+    let handbacks_listed = indexed.iter().filter(|l| l.starts_with("- handback/")).count();
+    s.push_str(&format!(
+        "{handbacks_unmapped} hand-back(s) that no map/*.md line names are indexed with the record ({handbacks_listed} listed).\n"
+    ));
     s.push_str(&librarian_window_line(&window_rule, &window_delivered, librarian_leftover));
     if !indexed.is_empty() {
         s.push_str("\n## NOT CARRIED -- open these by path\n\n");
@@ -16021,6 +16109,175 @@ mod librarian_tests {
 }
 
 #[cfg(test)]
+mod shelf_handback_tests {
+    // ---- D296: the unmapped hand-backs and the shorter entry, on the STRICT walk ---------------
+    // Every row builds its own room under the OS temp dir and points DIRS at it, so the walk reads
+    // a fixture and never the live corpus. Each was run red on 9041faf9 before the change; the
+    // hand-back (`handback/p-shelfbudget-C_2026-10-11.md`) says, per row, whether it was red for
+    // its own property or only because hand-backs were not indexed at all, and which mutant pins it.
+    use super::*;
+
+    struct Room { root: PathBuf, _g: DirsGuard<'static> }
+    impl Drop for Room {
+        fn drop(&mut self) { let _ = fs::remove_dir_all(&self.root); }
+    }
+
+    fn room(tag: &str) -> Room {
+        let g = DirsGuard::take();
+        let root = std::env::temp_dir().join(format!("consonance_d296_{tag}_{}", std::process::id()));
+        let _ = fs::remove_dir_all(&root);
+        fs::create_dir_all(&root).expect("fixture room");
+        fs::write(root.join("BOOT.md"), "# boot\n").unwrap();
+        *DIRS.lock().unwrap() = Some(Dirs {
+            room: root.join("BOOT.md").display().to_string(),
+            instances: root.join("instances").display().to_string(),
+            data: root.join("data").display().to_string(),
+        });
+        Room { root, _g: g }
+    }
+
+    fn put(root: &Path, rel: &str, body: &str) {
+        let p = root.join(rel);
+        fs::create_dir_all(p.parent().unwrap()).unwrap();
+        fs::write(p, body).unwrap();
+    }
+
+    fn tier(shelf: &str) -> Vec<&str> {
+        shelf.lines().filter(|l| {
+            l.starts_with("- map/") || l.starts_with("- journal/") || l.starts_with("- loop/") || l.starts_with("- handback/")
+        }).collect()
+    }
+
+    const LONG: &str = "Twelve laps of a record that the index used to drop because every title ran to a hundred and fifty characters of seat machine and clock";
+
+    #[test]
+    fn a_long_titled_entry_the_window_used_to_drop_is_listed() {
+        let r = room("drop");
+        for i in 0..12 {
+            put(&r.root, &format!("loop/plan_x{i:02}_2026-09-{:02}.md", 10 + i), &format!("# {LONG}\n\nbody\n"));
+        }
+        // 12 entries at <= 110 B each: room for all of them once the title is cut, and for about
+        // six at the uncut ~190 B.
+        let shelf = corpus_shelf_at_with_index(0, 12 * 110);
+        let listed = tier(&shelf);
+        assert_eq!(listed.len(), 12, "a dropped entry is still dropped: {listed:#?}");
+        assert!(!shelf.contains("dropped by the index window"), "the window still dropped something");
+        for l in &listed {
+            assert!(l.starts_with("- loop/plan_x") && l.contains("_2026-09-") && l.contains(".md  ("),
+                "the path was not kept whole: {l}");
+            assert!(l.ends_with(" ..."), "a cut title carries no visible mark: {l}");
+        }
+    }
+
+    #[test]
+    fn a_mapped_hand_back_is_not_listed_and_an_unmapped_one_is() {
+        let r = room("mapped");
+        put(&r.root, "map/C.md", "- a finding: `handback/p-bypath_2026-10-01.md`\n- another, by stem: p-bystem_2026-10-03\n");
+        put(&r.root, "handback/p-bypath_2026-10-01.md", "# named by path\n");
+        put(&r.root, "handback/p-bystem_2026-10-03.md", "# named by stem\n");
+        put(&r.root, "handback/p-free_2026-10-02.md", "# named by no map\n");
+        let shelf = corpus_shelf_at_with_index(0, 100_000);
+        assert!(shelf.contains("- handback/p-free_2026-10-02.md  ("), "the unmapped hand-back is not listed");
+        assert!(!shelf.contains("p-bypath_2026-10-01"), "a hand-back a map names by path is listed: a second route");
+        assert!(!shelf.contains("p-bystem_2026-10-03"), "a hand-back a map names by stem is listed: a second route");
+    }
+
+    #[test]
+    fn the_index_budget_is_never_exceeded_with_hand_backs_in_the_tier() {
+        let r = room("budget");
+        for i in 0..6 {
+            put(&r.root, &format!("handback/p-h{i}_2026-10-0{}.md", i + 1), &format!("# {LONG}\n"));
+        }
+        for i in 0..20 {
+            put(&r.root, &format!("loop/note_{i:02}_2026-09-{:02}.md", 1 + i), &format!("# {LONG}\n"));
+        }
+        put(&r.root, "map/C.md", "nothing named here\n");
+        for budget in [0usize, 1, 60, 61, 200, 777, 1_500, 2_222, 5_000, 100_000] {
+            let shelf = corpus_shelf_at_with_index(0, budget);
+            let spent: usize = tier(&shelf).iter().map(|l| l.len() + 1).sum();
+            assert!(spent <= budget, "the index tier spent {spent} B against a budget of {budget}");
+        }
+        let all = corpus_shelf_at_with_index(0, 100_000);
+        assert_eq!(all.lines().filter(|l| l.starts_with("- handback/")).count(), 6,
+            "at a budget that fits everything, the six hand-backs must all be in the tier being measured");
+    }
+
+    #[test]
+    fn an_empty_handback_dir_lists_none_and_says_zero() {
+        let r = room("empty");
+        put(&r.root, "map/C.md", "x\n");
+        put(&r.root, "loop/a_2026-09-01.md", "# a\n");
+        fs::create_dir_all(r.root.join("handback")).unwrap();
+        let shelf = corpus_shelf_at_with_index(0, 100_000);
+        assert!(shelf.contains("0 hand-back(s) that no map/*.md line names"), "the zero is not reported");
+        assert!(!shelf.contains("- handback/"), "an empty handback/ produced an entry");
+        assert!(shelf.contains("- loop/a_2026-09-01.md  ("), "the rest of the tier went missing");
+        // and with no handback/ at all
+        fs::remove_dir_all(r.root.join("handback")).unwrap();
+        let shelf = corpus_shelf_at_with_index(0, 100_000);
+        assert!(shelf.contains("0 hand-back(s) that no map/*.md line names"), "a missing handback/ is not reported as zero");
+    }
+
+    #[test]
+    fn a_missing_map_dir_leaves_every_top_level_hand_back_unmapped() {
+        let r = room("nomap");
+        put(&r.root, "handback/p-one_2026-10-01.md", "# one\n");
+        put(&r.root, "handback/p-two_2026-10-02.md", "no heading here\n");
+        let shelf = corpus_shelf_at_with_index(0, 100_000);
+        assert!(shelf.contains("2 hand-back(s) that no map/*.md line names"), "with no map/ nothing is named, so both are unmapped");
+        assert!(shelf.contains("- handback/p-one_2026-10-01.md  (1 lines)  one"));
+        assert!(shelf.contains("- handback/p-two_2026-10-02.md  (1 lines)  (no title)"), "an untitled entry must say so");
+        let one = shelf.find("p-one_2026-10-01").unwrap();
+        let two = shelf.find("p-two_2026-10-02").unwrap();
+        assert!(two < one, "hand-backs are listed newest first");
+    }
+
+    #[test]
+    fn an_evidence_folder_md_is_never_listed() {
+        let r = room("evidence");
+        put(&r.root, "map/C.md", "x\n");
+        put(&r.root, "handback/p-a_2026-10-05.md", "# the hand-back\n");
+        put(&r.root, "handback/p-a_2026-10-05_evidence/notes.md", "# notes\n");
+        put(&r.root, "handback/p-a_2026-10-05_evidence/out/report.md", "# report\n");
+        let shelf = corpus_shelf_at_with_index(0, 100_000);
+        assert!(shelf.contains("- handback/p-a_2026-10-05.md  ("), "the top-level hand-back is not listed");
+        assert!(!shelf.contains("_evidence/"), "an evidence-folder .md is listed");
+    }
+}
+
+#[cfg(test)]
+mod index_title_tests {
+    use super::*;
+
+    #[test]
+    fn a_short_title_is_kept_whole_and_a_missing_one_says_so() {
+        assert_eq!(index_title("The bar, sealed"), "The bar, sealed");
+        assert_eq!(index_title(""), "(no title)");
+        let exact: String = "x".repeat(INDEX_TITLE_CHARS);
+        assert_eq!(index_title(&exact), exact, "a title at the cap is not cut");
+    }
+
+    #[test]
+    fn a_long_title_is_cut_at_a_word_boundary_with_a_visible_mark() {
+        let t = index_title("The shelf-budget bar, sealed before any code. Pane B, machine D, 2026-10-11");
+        assert_eq!(t, "The shelf-budget bar, sealed before any ...");
+        // no trailing punctuation before the mark
+        let t = index_title("Two old holes, closed: heavy-run's two surviving mutants, and more");
+        assert!(t.ends_with(" ...") && !t.trim_end_matches(" ...").ends_with(','), "{t}");
+        // multi-byte text is cut on chars, never inside one
+        let t = index_title(&"é ".repeat(60));
+        assert!(t.ends_with(" ...") && t.chars().count() <= INDEX_TITLE_CHARS + 4);
+    }
+
+    #[test]
+    fn a_single_word_longer_than_the_cap_is_cut_and_still_marked() {
+        let w = "a".repeat(INDEX_TITLE_CHARS + 10);
+        let t = index_title(&w);
+        assert_eq!(t, format!("{} ...", "a".repeat(INDEX_TITLE_CHARS)));
+    }
+}
+
+#[cfg(test)]
 mod shelf_tests {
 
     // ---- L062: THE INDEX-TIER WINDOW -------------------------------------------------------
@@ -16127,7 +16384,8 @@ mod shelf_tests {
     fn index_lines_of(shelf: &str) -> Vec<String> {
         shelf
             .lines()
-            .filter(|l| l.starts_with("- map/") || l.starts_with("- journal/") || l.starts_with("- loop/"))
+            // D296: the index tier now holds the unmapped hand-backs too (rule change, not a weaker check).
+            .filter(|l| l.starts_with("- map/") || l.starts_with("- journal/") || l.starts_with("- loop/") || l.starts_with("- handback/"))
             .map(|l| l.to_string())
             .collect()
     }
