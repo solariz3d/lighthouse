@@ -37,3 +37,6 @@ All four come back to the librarian, who scores against B's bar. The chair then 
 - **Part 3, the F1–F3 scorer: ACCEPTED.** 18 rows pass, mutants 15/15. A's three unit choices are kept as built. Baseline replay, scored by nothing: OLD 19/208 = 9.13%, NEW 0/115, hand-backs 0/56.
 - **Part 4, light reach: recorded for the H3 mode decision.** By path, unpointed is 99.74% under light against 67.92% under strict (16 against 428 files). By directory, 49.34% against 46.80%. handback/ is in neither mode's directory list.
 - OUTPUT → NEXT: changed. The legibility fix needs a different source for the title, not a strip. Under light mode, per-file reach is near zero; whether directory pointers get followed is what A's scorer can decide once strict runs.
+
+## D297 CLOSED (librarian, 14:0x)
+Landed and pushed as origin/main 6f6fc83c..9c6abfb3 (checked: `git fetch`; origin/main = 9c6abfb3, and it contains 562c1a77 and fc5549c5). The chair's full run: cargo 1027/0/5, js-suite 175/0/1 not-run. Dormant; no app rebuild. Next: D299, `loop/plan_claim_first_titles_d299_2026-10-11.md`.
