@@ -35,7 +35,7 @@ const MUTANTS = [
   ['takeover: whom it replaced is not recorded', SRC, 'if (tookOver) rec.took_over = tookOver;', ''],
   ['takeover: the set-aside file is left behind', SRC, "    try { fs.unlinkSync(aside); } catch (_) {}\n    const age = h.started", '    const age = h.started'],
   ['race: a live lock caught by the rename is not put back', SRC, "try { fs.linkSync(aside, file); } catch (_) { /* a newer lock is already there */ }", ''],
-  ['race: the moved lock is judged by kill(0) alone (a young one is thrown away without the second witness)', SRC, 'if (moved && !moved.unreadable && moved.token !== h.token) {', 'if (moved && !moved.unreadable && moved.token !== h.token && alive(moved.pid)) {'],   // D289: the check this row used to remove was the defect
+  ['race: the moved lock is judged by kill(0) alone (a young one is thrown away without the second witness)', SRC, ': moved.token !== h.token)) {', ': moved.token !== h.token && alive(moved.pid))) {'],   // D289: the check this row used to remove was the defect (re-anchored on F1's condition)
   // ---- D283: a young lock needs a second witness ----
   ['young: the second witness is never asked', SRC, 'if (age === null || age < YOUNG_MS) {', 'if (false) {'],
   ['young: the boundary is inclusive (a lock exactly 30 minutes old is young)', SRC, 'if (age === null || age < YOUNG_MS) {', 'if (age === null || age <= YOUNG_MS) {'],
@@ -95,6 +95,10 @@ const MUTANTS = [
   // ---- unreadable locks ----
   ['unreadable: a lock being written this instant is taken at once', SRC, 'stale = age > UNREADABLE_GRACE_MS;', 'stale = true;'],
   ['unreadable: an old unreadable lock is never taken', SRC, 'stale = age > UNREADABLE_GRACE_MS;', 'stale = false;'],
+  // ---- D289 F1: an unreadable moved lock (appended, so the numbers above stay what earlier hand-backs cite) ----
+  ['race F1: an unreadable moved lock is thrown away (a claim caught before its write: two runners in one slot)', SRC, 'if (moved && (moved.unreadable ? movedAge() <= UNREADABLE_GRACE_MS : moved.token !== h.token)) {', 'if (moved && !moved.unreadable && moved.token !== h.token) {'],
+  ['race F1: an unreadable moved lock is put back only when the first read was readable (the narrower condition)', SRC, 'moved.unreadable ? movedAge() <= UNREADABLE_GRACE_MS :', 'moved.unreadable ? !h.unreadable :'],
+  ['race F1: an OLD unreadable moved lock is put back too (the takeover of a junk lock never ends)', SRC, 'moved.unreadable ? movedAge() <= UNREADABLE_GRACE_MS :', 'moved.unreadable ? true :'],
 ];
 
 function tree() {

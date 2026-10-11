@@ -44,7 +44,8 @@
 //     lock is as before: kill(0) alone.
 // A pid the OS has since REUSED reads alive — the waiter then waits and, at the max wait, fails loudly naming it, which
 // is the safe direction. The takeover moves the stale file aside with an atomic rename; if a race moved ANOTHER runner's
-// lock instead, it is put back with linkSync, which cannot overwrite, and the waiter keeps waiting; the next poll judges that lock like any other (D289).
+// lock instead, it is put back with linkSync, which cannot overwrite, and the waiter keeps waiting; the next poll judges that lock like any other (D289). That includes
+// an unreadable one younger than the grace: a claim whose write has not landed yet (D289 F1).
 //
 // NESTED RUNS ARE THE SAME RUN. The holder exports its token as CONSONANCE_HEAVY_RUN_TOKEN, which every child inherits;
 // a runner whose environment carries the token of the current lock does not wait (it would wait on its own parent
@@ -148,7 +149,7 @@ function resolveTree(cwd = process.cwd(), run = spawnSync, platform = process.pl
 }
 
 function acquire({
-  cmd, dataDir, env = process.env, slots, tree, onClaim, beforeClaim,
+  cmd, dataDir, env = process.env, slots, tree, onClaim, beforeClaim, beforeTake,
   maxWaitMs = Number(process.env.CONSONANCE_HEAVY_WAIT_MS) || MAX_WAIT_MS, pollMs = POLL_MS,
   alive = pidAlive, confirmGone = pidGone, log = (s) => process.stderr.write(s + '\n'), now = () => Date.now(), sleep = sleepSync,
   writes, diskFree = freeBytes, diskTotal = janitorTotal,
@@ -200,9 +201,13 @@ function acquire({
     }
     if (!stale) return false;
     const aside = `${file}.stale-${process.pid}-${now()}`;
+    if (beforeTake) beforeTake({ slot: k, file });   // a seam for the tests: the instant between judging a lock stale and moving it aside (D289 F1)
     try { fs.renameSync(file, aside); } catch (e) { if (e.code === 'ENOENT') return true; throw e; }
     const moved = readLock(aside);
-    if (moved && !moved.unreadable && moved.token !== h.token) {
+    // D289 F1: an UNREADABLE moved lock is another runner's claim caught between its 'wx' open and its write, unless it is OLD. The rule every unreadable lock gets decides
+    // (UNREADABLE_GRACE_MS, by mtime, which the rename keeps): the old unreadable file the first read saw is still taken, and a fresh claim that replaced it is put back.
+    const movedAge = () => { try { return now() - fs.statSync(aside).mtimeMs; } catch (_) { return 0; } };   // the aside vanished under us: unknown is the safe side (try to put back, judge at the next poll)
+    if (moved && (moved.unreadable ? movedAge() <= UNREADABLE_GRACE_MS : moved.token !== h.token)) {
       // A race: between our read and our rename another runner took the lock. Put ITS lock back; linkSync fails
       // rather than overwrite, so a lock created meanwhile is never clobbered either. D289: put back whether or not kill(0) reads it alive, and judged
       // at the next poll by the rules every lock gets: judging it here by kill(0) alone threw a young lock away without D283's second witness.

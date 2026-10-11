@@ -301,6 +301,43 @@ test('D289 a race: a YOUNG lock caught by the rename is not thrown away on kill(
   assert.deepStrictEqual(fs.readdirSync(d), ['heavy-run.lock'], 'and nothing is left set aside');
 });
 
+// D289 F1: a runner claims with openSync(file, 'wx') and writes after, so a rename in between moves an EMPTY file, which reads unreadable. Throwing it away let the waiter claim the slot
+// while the racer, whose clash check skips its own slot, ran too. An unreadable moved lock now gets the rule every unreadable lock gets: put back while younger than the grace, taken when
+// old. The racer is a real open handle here, so its write after the put-back lands in the slot as it would on a live machine.
+function racerClaim(file) { fs.unlinkSync(file); return fs.openSync(file, 'wx'); }   // another runner took the stale lock over and has opened its claim, not yet written
+function racerWrites(fd, rec) { try { fs.writeSync(fd, JSON.stringify(rec)); } finally { fs.closeSync(fd); } }
+const racerRec = () => ({ pid: 333, seat: 'kkkk1111', cmd: 'the racer', started: new Date(mark()).toISOString(), token: 'T3' });
+test('D289 F1 a race: another runner\'s claim caught between its wx open and its write (an empty lock) is put back, not thrown away, and the waiter waits; the racer\'s write lands in the slot', () => {
+  const d = tmp(); lockAt(d, 40, { pid: 111, token: 'T1' });   // an OLD dead holder: kill(0) alone may take it
+  let fd = null;
+  const r = attempt(d, { alive: (p) => { if (p === 111 && fd === null) fd = racerClaim(lockOf(d)); return false; } });
+  if (r.h) r.h.release();
+  const rec = racerRec(); racerWrites(fd, rec);
+  assert.ok(r.err, 'the waiter did not claim the racer\'s slot'); assert.strictEqual(r.err.code, 'HEAVY_RUN_TIMEOUT');
+  assert.deepStrictEqual(readLock(d), rec, 'the racer\'s claim is in the slot');
+  assert.deepStrictEqual(fs.readdirSync(d), ['heavy-run.lock'], 'and nothing is left set aside');
+});
+// With F1 a fresh unreadable lock moved aside is put back, so the first read's grace rule (mutant #69) could look redundant. It is not: moving a claim aside and back opens a gap in
+// which a third runner can claim the slot, the put-back then fails, and the claim being written is lost. A lock younger than the grace is never moved at all.
+test('D289 F1 a claim being written this instant (unreadable, younger than the grace) is waited for without ever being moved aside', () => {
+  const d = tmp(); fs.writeFileSync(lockOf(d), '');
+  let moves = 0, t = 0; const base = Date.now();
+  assert.throws(() => H.acquire({ cmd: 'x', dataDir: d, env: {}, maxWaitMs: 500, pollMs: 100, now: () => base + t, sleep: (ms) => { t += ms; }, log: () => {}, beforeTake: () => { moves++; } }), (e) => e.code === 'HEAVY_RUN_TIMEOUT');
+  assert.strictEqual(moves, 0, 'the claim was never moved');
+  assert.strictEqual(fs.readFileSync(lockOf(d), 'utf8'), '');
+});
+test('D289 F1 the same race when the lock first read was itself an OLD unreadable lock: the racer\'s fresh empty claim is still put back (only an old unreadable file is taken)', () => {
+  const d = tmp(); fs.writeFileSync(lockOf(d), 'junk'); const past = new Date(Date.now() - 60000); fs.utimesSync(lockOf(d), past, past);
+  let fd = null, t = 0; const base = Date.now();
+  let h = null, err = null;
+  try { h = H.acquire({ cmd: 'x', dataDir: d, env: {}, maxWaitMs: 500, pollMs: 100, now: () => base + t, sleep: (ms) => { t += ms; }, log: () => {}, beforeTake: ({ file }) => { if (fd === null) fd = racerClaim(file); } }); } catch (e) { err = e; }
+  if (h) h.release();
+  const rec = racerRec(); racerWrites(fd, rec);
+  assert.ok(err, 'the waiter did not claim the racer\'s slot'); assert.strictEqual(err.code, 'HEAVY_RUN_TIMEOUT');
+  assert.deepStrictEqual(readLock(d), rec, 'the racer\'s claim is in the slot');
+  assert.deepStrictEqual(fs.readdirSync(d), ['heavy-run.lock'], 'and nothing is left set aside');
+});
+
 test('D283 hold() exits 3 when the max wait runs out behind a live holder (loudly, naming it) and 2 when there is no data dir; it never runs the work', async () => {
   const d = tmp(); const holder = child(d, 'a long real run', 'setTimeout(()=>{},20000)', 'hhhh9999-holder');
   try {
