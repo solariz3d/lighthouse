@@ -151,6 +151,21 @@ const ROOT = process.env.JS_SUITE_ROOT || path.resolve(__dirname, '..', '..');
 const SKIP_DIRS = new Set(['node_modules', '.git', 'target', 'gen', '__pycache__', 'attic']);
 const TIMEOUT_MS = Number(process.env.JS_SUITE_TIMEOUT_MS || 120000);
 
+// A directory named *_evidence holds a hand-back's COPIES of old scratchpad files (D287 part 3). They are
+// records of what was run then, not tests of this tree, and some fail here by design. Skip the directory,
+// keep the copy untouched, and count the test files inside so the skip is printed, not silent.
+const EVIDENCE_SUFFIX = '_evidence';
+let evidenceSkipped = 0;
+function countTests(dir) {
+  let n = 0, entries;
+  try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return 0; }
+  for (const e of entries) {
+    if (e.isDirectory()) n += countTests(path.join(dir, e.name));
+    else if (e.isFile() && e.name.endsWith('.test.js')) n++;
+  }
+  return n;
+}
+
 function discover(dir, out = []) {
   let entries;
   try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return out; }
@@ -158,6 +173,7 @@ function discover(dir, out = []) {
     const p = path.join(dir, e.name);
     if (e.isDirectory()) {
       if (SKIP_DIRS.has(e.name)) continue;
+      if (e.name.endsWith(EVIDENCE_SUFFIX)) { evidenceSkipped += countTests(p); continue; }
       discover(p, out);
     } else if (e.isFile() && e.name.endsWith('.test.js')) {
       out.push(p);
@@ -170,7 +186,7 @@ const files = discover(ROOT).sort();
 
 if (process.argv.includes('--list')) {
   files.forEach((f) => console.log(path.relative(ROOT, f)));
-  console.log(`\n${files.length} test files`);
+  console.log(`\n${files.length} test files (${evidenceSkipped} test files skipped under *${EVIDENCE_SUFFIX})`);
   process.exit(files.length ? 0 : 1);
 }
 
@@ -462,6 +478,7 @@ const ranCount = [...green, ...failed, ...canary, ...canarySang, ...classErr, ..
 const neither = files.length - ranCount - notRunFiles.length;
 console.log(`\nuniverse: ${files.length} test files discovered · ${ranCount} ran assertions to a summary · ` +
             `${notRunFiles.length} declared NOT-RUN · ${neither} neither`);
+console.log(`  ${evidenceSkipped} test files skipped under *${EVIDENCE_SUFFIX} directories (copies kept as records, not run).`);
 console.log('  rule: every discovered file runs unconditionally, EXCEPT a file whose header declares');
 console.log('        `JS-SUITE: MACHINE-BOUND` — that file runs only where its own corpus gate says its');
 console.log('        universe is present, and must print NOT-RUN with a reason everywhere else.');

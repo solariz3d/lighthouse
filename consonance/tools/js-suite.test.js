@@ -213,6 +213,27 @@ test('node_modules is not walked', () => {
   assert.ok(/1 test files/.test(r.out), r.out);
 });
 
+test('a *_evidence directory is not walked, and a near-miss name still is', () => {
+  const root = tree({
+    'a.test.js': GREEN,
+    'handback/foo_evidence/old.test.js': FAILING,
+    'handback/foo_evidence/deep/older.test.js': FAILING,
+    'handback/foo_evidencex/b.test.js': GREEN,
+  });
+  const r = run(root, ['--list']);
+  assert.ok(!/old\.test\.js|older\.test\.js/.test(r.out), 'a copied test under foo_evidence/ is a record, not a test: ' + r.out);
+  assert.ok(/foo_evidencex[\\/]b\.test\.js/.test(r.out), 'foo_evidencex is not an evidence folder: ' + r.out);
+  assert.ok(/2 test files/.test(r.out), r.out);
+});
+
+test('the run prints how many evidence files it skipped, and a failing one does not fail the run', () => {
+  const root = tree({ 'a.test.js': GREEN, 'h/foo_evidence/old.test.js': FAILING, 'h/foo_evidence/x/older.test.js': FAILING });
+  const r = run(root);
+  assert.strictEqual(r.code, 0, r.out + r.err);
+  assert.ok(/2 test files skipped under \*_evidence/.test(r.out), r.out);
+  assert.ok(/1 test files discovered/.test(r.out), r.out);
+});
+
 test('all three real summary shapes count as completed', () => {
   const root = tree({
     'hand.test.js': 'console.log("x: 3 passed, 0 failed");',
