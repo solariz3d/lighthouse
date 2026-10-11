@@ -539,7 +539,13 @@ const MUTFILE = (corpus, opset) => `mutation-${corpus}${opset === "narrow" ? "" 
  * Note what this is not: it is not a guard against losing the work. It is a guard against
  * leaving a perturbation in somebody else's tree, which is the harm.
  */
-function inflightPath() { fs.mkdirSync(SCRATCH, { recursive: true }); return path.join(SCRATCH, "inflight.json"); }
+/* ONE RECORD PER RUN, NAMED BY ITS PID (D300). The record was one fixed `inflight.json` in the OS temp dir, shared by every
+ * run on the machine whatever tree it mutated (the tree lock below is per tree). So a second run starting while a first
+ * was mid-mutation "restored" the first run's file under it — its mutant went back to the original and was scored as
+ * SURVIVED — and two runs inside withRestore unlinked each other's record, so a kill then left a mutation nobody had on
+ * file. Now each run writes `inflight-<pid>.json`, and a run restores only records whose pid is dead. */
+function inflightPath(pid = process.pid) { fs.mkdirSync(SCRATCH, { recursive: true }); return path.join(SCRATCH, `inflight-${pid}.json`); }
+function pidAlive(pid) { try { process.kill(pid, 0); return true; } catch (e) { return false; } }
 
 /* ------------------------------------------------------------- the lock ---
  * A sweep that mutates a tree IN PLACE owns that tree for its duration, and until tonight
@@ -580,21 +586,34 @@ function takeLock(root, what) {
   return drop;
 }
 
+/* THE WORK COPIES HAVE FIXED NAMES (D300). work-blackbox, work-canfail, work-selfcheck and wt-blackbox sit under one
+ * SCRATCH for every run on the machine, and each arm deletes its copy before rebuilding it, so a second run would delete
+ * the first one's copy under it. The names stay (a `--skip` resume reuses the copy it left, and `cleanup` names them);
+ * instead an arm that touches them takes the same visible, pid-checked lock on SCRATCH itself, and a second one refuses. */
+function lockScratch(what) { fs.mkdirSync(SCRATCH, { recursive: true }); return takeLock(SCRATCH, what); }
+
 function withRestore(p, fn) {
   const orig = fs.readFileSync(p);
-  fs.writeFileSync(inflightPath(), JSON.stringify({ path: p, bytes: orig.toString("base64") }));
+  fs.writeFileSync(inflightPath(), JSON.stringify({ pid: process.pid, path: p, bytes: orig.toString("base64") }));
   try { return fn(); }
   finally { fs.writeFileSync(p, orig); try { fs.unlinkSync(inflightPath()); } catch (e) {} }
 }
 
 function restoreInflight() {
-  const f = inflightPath();
-  if (!fs.existsSync(f)) return false;
-  let rec; try { rec = JSON.parse(fs.readFileSync(f, "utf8")); } catch (e) { fs.unlinkSync(f); return false; }
-  fs.writeFileSync(rec.path, Buffer.from(rec.bytes, "base64"));
-  fs.unlinkSync(f);
-  console.log(`RESTORED a mutation left in place by a killed run: ${rec.path}`);
-  return true;
+  fs.mkdirSync(SCRATCH, { recursive: true });
+  let restored = false;
+  for (const name of fs.readdirSync(SCRATCH)) {
+    const m = /^inflight(?:-(\d+))?\.json$/.exec(name);
+    if (!m) continue;
+    if (m[1] && pidAlive(Number(m[1]))) continue;      // a live run's mutation is its own to restore; the bare name is a pre-D300 record
+    const f = path.join(SCRATCH, name);
+    let rec; try { rec = JSON.parse(fs.readFileSync(f, "utf8")); } catch (e) { fs.unlinkSync(f); continue; }
+    fs.writeFileSync(rec.path, Buffer.from(rec.bytes, "base64"));
+    fs.unlinkSync(f);
+    console.log(`RESTORED a mutation left in place by a killed run: ${rec.path}`);
+    restored = true;
+  }
+  return restored;
 }
 
 /* deterministic sample, so a re-run of the census reproduces the same perturbations */
@@ -661,6 +680,7 @@ function mutateJs(corpus, budget, seed, opset) {
   fs.mkdirSync(OUT, { recursive: true });
   restoreInflight();
   if (cfg.inPlace) takeLock(cfg.root, `${corpus} --ops ${opset}`);
+  else lockScratch(`${corpus} --ops ${opset}`);
   const resuming = parseInt(arg("--skip", "0"), 10) > 0 && fs.existsSync(cfg.work);
   if (!cfg.inPlace && !resuming) {                    // a resume reuses the copy it left behind
     if (fs.existsSync(cfg.work)) fs.rmSync(cfg.work, { recursive: true, force: true });
@@ -827,6 +847,7 @@ function mutateRust(budget, seed, opset) {
  * the commit before the test appeared, drop the test in as it was written, and run it. */
 function history(limit) {
   fs.mkdirSync(OUT, { recursive: true });
+  lockScratch("history");
   const wt = path.join(SCRATCH, "wt-blackbox");
   const gb = (...a) => run("git", ["-C", BLACKBOX, ...a], BLACKBOX);
   if (!fs.existsSync(wt)) gb("worktree", "add", "--detach", wt, "HEAD");
@@ -903,6 +924,7 @@ function history(limit) {
 function canfail(only) {
   const work = path.join(SCRATCH, "work-canfail");
   fs.mkdirSync(OUT, { recursive: true });
+  lockScratch("canfail");
   if (fs.existsSync(work)) fs.rmSync(work, { recursive: true, force: true });
   for (const rel of run("git", ["-C", BLACKBOX, "ls-files"], BLACKBOX).out.trim().split("\n")) {
     if (!rel || rel.startsWith("src-tauri/")) continue;
@@ -1011,6 +1033,7 @@ function selfcheckTools() {
 function selfcheck() {
   const work = path.join(SCRATCH, "work-selfcheck");
   fs.mkdirSync(OUT, { recursive: true });
+  lockScratch("selfcheck");
   if (fs.existsSync(work)) fs.rmSync(work, { recursive: true, force: true });
   for (const rel of run("git", ["-C", BLACKBOX, "ls-files"], BLACKBOX).out.trim().split("\n")) {
     if (!rel || rel.startsWith("src-tauri/")) continue;
@@ -1299,6 +1322,7 @@ if (require.main === module) {
     /* The history arm registers a git WORKTREE in the other repo. That is a write into
      * somebody else's .git that outlives this process and shows up in their `git worktree
      * list` — a side effect of measuring, left behind by the measurement. Undo it. */
+    lockScratch("cleanup");
     const wt = path.join(SCRATCH, "wt-blackbox");
     console.log(run("git", ["-C", BLACKBOX, "worktree", "remove", "--force", wt], BLACKBOX).out || "worktree removed");
     run("git", ["-C", BLACKBOX, "worktree", "prune"], BLACKBOX);
@@ -1321,4 +1345,4 @@ if (require.main === module) {
   } else { console.error("unknown command " + cmd); process.exit(1); }
 }
 
-module.exports = { FAMILIES, CORPORA, takeLock, LOCKNAME, withRestore, restoreInflight, MUTFILE, toolFrames, blankJs, blankRust, jsSites, rustSites, inventory, resolveSites, onlyScript, mutants, classify, codeStrings };
+module.exports = { FAMILIES, CORPORA, SCRATCH, takeLock, LOCKNAME, withRestore, restoreInflight, MUTFILE, toolFrames, blankJs, blankRust, jsSites, rustSites, inventory, resolveSites, onlyScript, mutants, classify, codeStrings };

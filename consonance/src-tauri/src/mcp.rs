@@ -3789,6 +3789,26 @@ mod trailer_gate_tests {
         out
     }
 
+    /// The folder the switch test writes its config into, removed on drop (D299: it was left behind after the file was
+    /// removed). A helper with a tag, so the row below and the test above never share one folder inside one test process.
+    fn gates_mode_dir(tag: &str) -> crate::test_scratch::Scratch {
+        let d = crate::test_scratch::root().join(format!("gates-mode-{tag}-{}", std::process::id()));
+        let _ = std::fs::create_dir_all(&d);
+        crate::test_scratch::Scratch::owning(d)
+    }
+
+    // D300: removing the guard was caught only by a leftover COUNT after a whole cargo run, never by a row (D299 A, Checks).
+    #[test]
+    fn the_gates_mode_folder_is_gone_after_the_test() {
+        let dir;
+        {
+            let d = gates_mode_dir("leakcheck");
+            dir = d.to_path_buf();
+            assert!(dir.exists(), "control: the folder exists while the test holds it");
+        }
+        assert!(!dir.exists(), "the gates-mode folder outlived the test");
+    }
+
     #[test]
     fn d277_the_switch_reads_only_light_as_light() {
         use crate::trailer::GateMode::{Light, Strict};
@@ -3798,9 +3818,7 @@ mod trailer_gate_tests {
         for raw in [r#"{"gates_mode":"light"}"#, r#"{"gates_mode":" Light "}"#, "\u{feff}{\"gates_mode\":\"LIGHT\"}"] {
             assert_eq!(gates_mode_from(raw), Light, "{raw}");
         }
-        let d = crate::test_scratch::root().join(format!("gates-mode-{}", std::process::id()));
-        let _ = std::fs::create_dir_all(&d);
-        let _gone = crate::test_scratch::Scratch::owning(d.clone());   // D299: the folder was left behind after the file was removed
+        let d = gates_mode_dir("switch");
         let p = d.join(".consonance.json");
         let _ = std::fs::remove_file(&p);
         assert_eq!(gates_mode_at(&p), Strict, "a missing file is strict");
