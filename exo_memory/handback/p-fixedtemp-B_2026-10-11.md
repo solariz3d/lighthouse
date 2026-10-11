@@ -1,6 +1,6 @@
 # P-FIXEDTEMP-B: fixed-name temp files, and the gates-mode row (pane B, machine D, 2026-10-11, lap D300 part 3)
 
-Plan: `loop/plan_queue_sweep_d300_2026-10-11.md`, "Part 3 REPLACED" (main `0d08cec7`). Branch `d300-b`, worktree `G:\b-d300-wt`, from `0d08cec7`; not pushed. Commit and files: see §4.
+Plan: `loop/plan_queue_sweep_d300_2026-10-11.md`, "Part 3 REPLACED" (main `0d08cec7`). Branch `d300-b`, worktree `G:\b-d300-wt`, from `0d08cec7`; not pushed. Code commit `10376635`: `consonance/tools/guard-census.js`, `consonance/tools/guard-census.test.js`, `consonance/src-tauri/src/mcp.rs` (only `trailer_gate_tests`; nothing in `dirs_guard_tests`), and this file.
 
 ## The answer first
 - **One LIVE collision, fixed: `consonance/tools/guard-census.js`.** Its crash-restore record was one fixed `inflight.json` in the OS temp dir, shared by every run on the machine whatever tree it mutated. A second run starting mid-sweep "restored" the first run's mutated file under it, so that mutant was scored SURVIVED. Two runs inside `withRestore` also unlinked each other's record. Its four work copies (`work-blackbox`, `work-canfail`, `work-selfcheck`, `wt-blackbox`) are fixed names too, and every arm deletes its copy before rebuilding it.
@@ -58,7 +58,7 @@ A cargo test binary runs its tests as threads of ONE process, so `<name>-<pid>` 
 - **Green in the worktree:** `node consonance/tools/guard-census.test.js` → 44 passed (`green2.out`).
 - **Mutants** (`scratchpad/d300b/mut.js`, `mut.out`, in the scratch copy, never the worktree): **applied 11 / caught 11 / NOT APPLIED 0**, control survived. M1 restore ignores liveness; M2 record name ignores the pid; M3 restore reads only the bare name; M4 pidAlive always false; M5 the bare pre-D300 name skipped; M6 lockScratch a no-op; M7–M11 each arm (canfail, selfcheck, cleanup, history, blackbox mutation) without its lock.
 - Every node and cargo run went under the heavy-run lock through `scratchpad/d273/run.js` (main's `heavy-run.js` by absolute path); `CARGO_TARGET_DIR=G:/ctarget/b-d300`.
-- PORTABLE
+- **portable-paths after committing `10376635`:** "green — 383 files in scope, 455 known sites, 0 new" (`scratchpad/d300b/portable.out`).
 
 ## 5. Seen, not in scope
 - `selfcheckTools` (`guard-census.js:1006`) mutates `tools/` in place with a bare `try/finally`: no `withRestore` record and no tree lock. A kill mid-control leaves a perturbation in the tree. Not a temp-dir name, so not changed.
