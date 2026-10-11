@@ -42,3 +42,11 @@ The chair found B's #16/#30 already done in D289 (`handback/p-heavyrunmut-B_2026
   - **The existing folders are gone, not by the janitor.** The keeper asked at 16:0x; at his "make sure its only the temp ones" I deleted only `t180-soak-*` folders older than a day holding only `progress.txt` or nothing (dry run 1,260/1,260, 0 odd), with a loop that removes that one file and then `rmdir` (refuses a non-empty folder). Left: 0. That departs from this plan's "leave it to the janitor" line on the keeper's word.
   - **So E's §5 janitor coverage is not needed:** the fix stops new folders and none are left. Not built.
 - **D284's owed suite was NOT reported** (E's hand-back has no D284 section; the fold-in was ruled at 14:4x, likely after E's dispatch). It moves to the landing: when the chair lands d300-e it runs T-180's full suite and core harnesses at the new tip, which contains 9bdd10d. D284 is filed when they are green.
+
+## D300 CLOSED (librarian, 17:2x). D284 FILED.
+- Landed and pushed (checked on origin): lighthouse 029082ec..56711430 (C as 56b4c426, 35574a81; B as a6d08733, bddc15d8, fcc43e97); T-180 f5a5f56..a19798e.
+- Chair's suites: cargo 1036/0/5, all three dirs_guard rows ok, so the row leaves the watch list; js-suite 175/0. T-180 `npm test` at a19798e: 2,708 tests, 2,694 pass, 0 fail, 7 skipped, 7 todo, including the mutation harnesses.
+- D284: the owed suite is paid by that run (a19798e contains 9bdd10d, checked). Filed.
+- Not scanned by the push-gate: the T-180 push (allow-error, repo path in a shell variable). The chair ran findKeys by hand: 0 hits. Noted, not repeated.
+- The chair's finding that the T-180 main checkout is a stale working tree (152 deleted, 95 modified against HEAD) is with the keeper. Syncing it overwrites disk, so it is his call.
+- Queued, ideas only: TEMP per run for cargo under heavy-run; the global panic-hook swap (C).
