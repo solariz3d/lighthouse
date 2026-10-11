@@ -1,0 +1,19 @@
+{
+  "_rule": "Hand corrections to the lexical W extraction, each read at its line by pane E on 2026-10-11. add: an entry the extraction cannot see; drop: a match that is not an entry; finder: the finder read at the line where the rule chose wrongly.",
+  "add": [
+    { "at": "exo_memory/librarian/2026-09-06.md:54", "day": "2026-09-06", "finder": "seat", "why": "WRONG 71 on the second column (the map's central figure; the chair corrected it before dispatch): the number 71 was used by both machines' columns" },
+    { "at": "exo_memory/librarian/2026-09-01.md:752", "day": "2026-09-01", "finder": "seat", "why": "the second of TWO WRONGS OF MINE (lifetime 61)" }
+  ],
+  "drop": [
+    { "at": "exo_memory/librarian/2026-09-20.md:80", "why": "a QUOTE of an 08-25 entry inside a re-count, not an entry of the window" }
+  ],
+  "finder": {
+    "exo_memory/librarian/2026-09-16.md:131": { "finder": "keeper", "why": "the entry follows the keeper's 07:29 rule, quoted verbatim in its heading" },
+    "exo_memory/librarian/2026-09-16.md:143": { "finder": "keeper", "why": "the keeper's 08:34 word, quoted on the same line, is what named it" },
+    "exo_memory/librarian/2026-09-26.md:23": { "finder": "keeper", "why": "The keeper: \"you are taking it on urself\"" },
+    "exo_memory/librarian/2026-09-27.desktop.md:201": { "finder": "keeper", "why": "\"The keeper found it from ...\" (same bullet, two lines on)" },
+    "exo_memory/librarian/2026-10-06.desktop.md:42": { "finder": "unattributed", "why": "a day summary: its Onuris half repeats :25 (counted there); its second half, the harness selection miss, names no finder" },
+    "exo_memory/librarian/2026-09-09.md:47": { "finder": "seat", "why": "\"B corrected this desk — WRONG 85\" (:57)" },
+    "exo_memory/librarian/2026-09-09.md:270": { "finder": "seat", "why": "the window mentions a mutant; the fixture's absence was found in C's lap, not by a red" }
+  }
+}
