@@ -2206,3 +2206,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-11 ~08:2x (D) · D294 part 1, the catch scoreboard → `exo_memory/handback/p-scoreboard-E_2026-10-11.md`
 - lighthouse `c8f43c74` + `d76c3b56` on `7f08f148` (d294-e), evidence script, catch-ledger.js untouched. 09-01 → 10-11: the paperwork gates made 0 claim catches in 383 refusals (174 changed re-sends, all read: 20 dropped an unchecked figure, 0 corrected a wrong one); the keeper found 14 of 101 librarian WRONGs; hand-back corrections about 690, ~19% instrument (audited), the rest seat. No shift toward the instrument.
 - **Carry:** a gate that checks the trailer makes seats DROP figures, not correct them; a wrong claim went through SOURCES intact and a seat caught it. A refusal count is not a catch count.
+
+## 2026-10-11 ~13:5x (D) · D297 part 4, what light mode costs in reach → `exo_memory/handback/p-lightreach-E_2026-10-11.md`
+- lighthouse `1452aea4` on `5d5740b4` (d297-e). reach.js's shelf section ported verbatim onto the D296 snapshot (strict reproduces C's new.json in every field) plus a light-form parser. By path: strict 428 files reachable, 67.92% unpointed; light 16 files, 99.74%. Counting directory pointers: strict 1,138 / 44.53%, light 1,082 / 46.65%. handback/ is in neither shelf's directory list. No verdict on the mode.
+- **Carry:** two shelves can differ 32 points in one unit and 2 in another; say which unit a reach number is in before it goes beside a decision.
