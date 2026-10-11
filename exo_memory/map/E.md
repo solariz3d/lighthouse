@@ -2163,3 +2163,46 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - t180 `8639987` on `3025a5e` (d282-sharp). Ramp to 1/R, hold, ramp to 0, on 2 m knots, two pieces as one undo step. 90° at R 22 W 24 is exact on the path, entry 1.5 m, exit 3.5 m, green. The minimum radius comes from a probe validated at full speed: W 45 → 24.2 m, W 24 → 13.4 m (B's bar expects 15, so R 14 will fail it). 81/81 targeted.
 - OPEN: on a 4 m ramp the readout (exact integral) reads 0.07–0.14° more than the drawn path (the adapter's 2 m trapezoid). I solve on the path.
 - **Carry:** two honest measures of one angle can disagree once the shape outruns a discretisation, so say which one a bar means before solving to it.
+
+## 2026-10-10 ~13:5xZ (D) · D277 measure (b), the 10-03 re-measure, steps 1–5 → `exo_memory/handback/p-remeasure-E_2026-10-10.md`
+- Frame 3,676, eligible 3,676; drawn 100, ids sha256 `8f8b17df…` (filed first). Readers 100/100 on opus-5-5, $5.69. Packets 100. Claims 298 (B 168, C 186, 56 on both); verify hashes filed before either verifier opened its file.
+- **Carry:** total from the full log, never from a task's tail. Here the tail held 10 of 100 lines and gave a false total.
+
+## 2026-10-10 ~11:2x (D) · D277 go-live repair → `exo_memory/handback/p-d277repair-E_2026-10-10.md`
+- lighthouse `9d755c7b` on `d83645ea` (d277-repair). The seven pins (one was a seventh, in intake_light) move to B's wording; the relabel table is re-judged role vs provenance with B's new role uses added, keeper pins 42→20 / 7→6; the lap-row heading anchors fixed. Bar: cargo 0, js-suite 171/0, chair list 269/0, gen --dry clean, identity-diff PASS, portable-paths and carrier-drift green; (P,M,B) not run.
+- The shelf red: the merge changed no code (main.rs identical to C's 73c61c8a). It is intermittent, 2 of ~27 runs. I locked the seven unguarded DIRS readers: the likely cure, not proven.
+- OPEN for the keeper: the consumer port frame ("a push is a human's word, each time") contradicts B's standing push permission.
+- **Carry:** before naming a cause, run the reporter's exact command. My scratch path, filter and target each changed the result.
+
+## 2026-10-10 ~19:4x (D) · D287 part 2, the janitor and the disk guard → `exo_memory/handback/p-janitor-E_2026-10-10.md`
+- lighthouse `ef8fe910` on `be4ccafd` (d287-e). janitor.js is dry-run by default: (a) room temp folders by source-read prefixes, (b) old task logs moved to Z:, (c)/(d) idle cargo targets, never through a link. heavy-run refuses under 20 GB free (exit 4). Tests 61/61; janitor mutants 25/25; heavy-run 68/70, and its 2 survivors predate this lap. Today's dry run: 2.19 GB plus 20 logs. The task is written, not installed.
+- Found: heavy-run.mutants.js's control is red on main (scratch.js missing from its tree since part 1). Fixed here.
+- **Carry:** a regex that refuses parentheses misses `os.tmpdir()`, the commonest argument there is. Test a scanner against the real corpus before trusting its silence.
+
+## 2026-10-10 ~20:2x (D) · D287-e2, the janitor's machine paths → `exo_memory/handback/p-janitorpaths-E_2026-10-10.md`
+- lighthouse `611baf44` + `90687cf4` on `57ef433d` (d287-e2). The archive and worktrees roots now come from config (env, then `archive_dir` / `worktrees_dir`); with neither set the class is skipped and says so. 12 benign sites baselined, diff read row by row. portable-paths green, 106/106, mutants 25/25.
+- My D287 "portable-paths green" was false: it scans tracked files, and I ran it before committing.
+- **Carry:** a ratchet over `git ls-files` says nothing about uncommitted files. Commit, then run it.
+
+## 2026-10-10 ~21:0x (D) · D288 F1, the light SOURCES matcher → `exo_memory/handback/p-lightmatch-E_2026-10-10.md`
+- lighthouse `f744a715`..`811f98a7` on d287-e2 `90687cf4` (d288-e). Light's command rule now matches only a segment that opens something, or the whole chain, so an echo, ls or comment no longer opens a path. Mutants 85/85; 168/168; portable-paths green.
+- Ring 2eb8b2bdd226 was not a relative-path miss: the Bash call's last command exited 1, so the call was is_error and dropped. Ring 8c05ad8a07ca and F3 are by design.
+- **Carry:** replay the refused turn through the gate's own reader before accepting a diagnosis. Two seats' "too strict" was a failed-call rule.
+
+## 2026-10-11 ~01:4x (D) · D288-e2, the combined tree mutation-tested → `exo_memory/handback/p-lightmatch-E_2026-10-10.md` (addendum)
+- lighthouse `78fabb7b` on `0a958b02` (d288-e2). The 5 light rows are now tracked; reply-slot #43 is re-anchored (the verdict call gained gates and mode after seat). sources-gate 85/85, reply-slot 59/59, 0 survived and 0 not applied on both, controls green.
+- **Carry:** extending a call's argument list disarms every mutant anchored on its old tail, so count anchors after any signature edit.
+
+## 2026-10-11 ~04:1x (D) · D290 part 1, the session digest writer (measure only) → `exo_memory/handback/p-digestwriter-E_2026-10-11.md`
+- The writer is the SessionEnd hook, not a task. A dated digest exists only when some session ends cleanly that local day; room panes are killed, not exited, so 4 days are missing. 10-02 is empty because a local date was matched against UTC timestamps. The tasks (disabled 09-27 by the librarian at the keeper's word) write the journal and news files instead.
+- The digest is not worth reviving as it stands: "422 sessions" is 422 turn ends from 8 sessions, and it costs ~14 KB per wake. One decision for the keeper: (A) drop it from the wake, (B) repair it with no task, or (C) re-enable the tasks.
+- **Carry:** a file named after a job is not evidence that the job writes it. Find the writer in the code first.
+
+## 2026-10-11 ~05:2x (D) · D292 part 1, the dated digests repaired → `exo_memory/handback/p-digestrepair-E_2026-10-11.md`
+- lighthouse `fa437099` + `97e34950` on `56badc64` (d292-e). Days are local dates; the headline reads "N turn ends from M sessions"; SessionStart rebuilds any missing or part-day digest of the last 14 days from one log read. Rows 6/6 red then 43/43 green with every test that spawns the hooks; portable-paths green.
+- The live sync is held: it also brings A's D277 part 5 light digests live for the first time, and the first wake rewrites all 14 days (10-02: 50 B → 251 turn ends from 7 sessions).
+- **Carry:** a fixture that is not shaped like the real data (no milliseconds) can make a "does not contain" assertion unfailable. Copy the writer's own format.
+
+## 2026-10-11 ~08:2x (D) · D294 part 1, the catch scoreboard → `exo_memory/handback/p-scoreboard-E_2026-10-11.md`
+- lighthouse `c8f43c74` + `d76c3b56` on `7f08f148` (d294-e), evidence script, catch-ledger.js untouched. 09-01 → 10-11: the paperwork gates made 0 claim catches in 383 refusals (174 changed re-sends, all read: 20 dropped an unchecked figure, 0 corrected a wrong one); the keeper found 14 of 101 librarian WRONGs; hand-back corrections about 690, ~19% instrument (audited), the rest seat. No shift toward the instrument.
+- **Carry:** a gate that checks the trailer makes seats DROP figures, not correct them; a wrong claim went through SOURCES intact and a seat caught it. A refusal count is not a catch count.
