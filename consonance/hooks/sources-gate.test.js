@@ -614,14 +614,14 @@ test('D288 F1 TOO LOOSE: in light, a COMMAND item is matched only by a segment t
 });
 
 test('D288 F1 TOO STRICT (the librarian\'s ring 2eb8b2bdd226): a relative grep after a cd matches the absolute item in BOTH modes, when the call completed', () => {
-  const cmd = 'cd /c/Users/nname/Desktop/lighthouse && grep -n "_evidence\\|SKIP" consonance/tools/js-suite.js | head -30';
-  for (const mode of ['strict', 'light']) assert.strictEqual(decideIn(mode, 'SOURCES: C:\\Users\\nname\\Desktop\\lighthouse\\consonance\\tools\\js-suite.js', bashCall('t1', cmd)).decision, 'allow', mode);
+  const cmd = 'cd /c/Users/n/lighthouse && grep -n "_evidence\\|SKIP" consonance/tools/js-suite.js | head -30';
+  for (const mode of ['strict', 'light']) assert.strictEqual(decideIn(mode, 'SOURCES: C:\\Users\\n\\lighthouse\\consonance\\tools\\js-suite.js', bashCall('t1', cmd)).decision, 'allow', mode);
 });
 
 test('D288 F1 THE REAL CAUSE of ring 2eb8b2bdd226: the same read inside a Bash call that ended non-zero (is_error) is refused in both modes, by the failed-call rule', () => {
-  const cmd = 'cd /c/Users/nname/Desktop/lighthouse && grep -n "SKIP" consonance/tools/js-suite.js | head -30; git check-ignore -v x';
+  const cmd = 'cd /c/Users/n/lighthouse && grep -n "SKIP" consonance/tools/js-suite.js | head -30; git check-ignore -v x';
   for (const mode of ['strict', 'light']) {
-    const d = decideIn(mode, 'SOURCES: C:\\Users\\nname\\Desktop\\lighthouse\\consonance\\tools\\js-suite.js', bashCall('t1', cmd, 'out', true));
+    const d = decideIn(mode, 'SOURCES: C:\\Users\\n\\lighthouse\\consonance\\tools\\js-suite.js', bashCall('t1', cmd, 'out', true));
     assert.strictEqual(d.decision, 'deny', mode); assert.match(d.reason, /a failed call/);
   }
 });
