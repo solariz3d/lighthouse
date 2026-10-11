@@ -2210,3 +2210,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-11 ~13:5x (D) · D297 part 4, what light mode costs in reach → `exo_memory/handback/p-lightreach-E_2026-10-11.md`
 - lighthouse `1452aea4` on `5d5740b4` (d297-e). reach.js's shelf section ported verbatim onto the D296 snapshot (strict reproduces C's new.json in every field) plus a light-form parser. By path: strict 428 files reachable, 67.92% unpointed; light 16 files, 99.74%. Counting directory pointers: strict 1,138 / 44.53%, light 1,082 / 46.65%. handback/ is in neither shelf's directory list. No verdict on the mode.
 - **Carry:** two shelves can differ 32 points in one unit and 2 in another; say which unit a reach number is in before it goes beside a decision.
+
+## 2026-10-11 ~14:3x (D) · D299 part 1, the title-source survey → `exo_memory/handback/p-titlesurvey-E_2026-10-11.md`
+- lighthouse `8d319534` on `613921a9` (d299-e). Five sources through main.rs's own 40-char cut on the 324 index-tier entries of new3; the ported baseline equals the dump's printed title 413/413. Path-restating: today 24, last clause 21, first sentence 2, minus-path-words 16 (and 16 empty), first clause 20. The first sentence is a quoted keeper ask in 82 of 324. No legibility judgment.
+- **Carry:** port the production cut and prove parity on every entry before comparing sources, so a difference is the source and never the cutter.
