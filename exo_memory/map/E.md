@@ -2214,3 +2214,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-11 ~14:3x (D) · D299 part 1, the title-source survey → `exo_memory/handback/p-titlesurvey-E_2026-10-11.md`
 - lighthouse `8d319534` on `613921a9` (d299-e). Five sources through main.rs's own 40-char cut on the 324 index-tier entries of new3; the ported baseline equals the dump's printed title 413/413. Path-restating: today 24, last clause 21, first sentence 2, minus-path-words 16 (and 16 empty), first clause 20. The first sentence is a quoted keeper ask in 82 of 324. No legibility judgment.
 - **Carry:** port the production cut and prove parity on every entry before comparing sources, so a difference is the source and never the cutter.
+
+## 2026-10-11 ~15:0x (D) · D300 part 3, T-180's t180-soak- temp folders → `exo_memory/handback/p-soakclean-E_2026-10-11.md`
+- T-180 `b593422` on `f5a5f56` (d300-e). One creator: perf_soak.test.js's --progress row made a folder per run and never removed it; now a finally. New test runs it in a private temp: 0 left after a pass and after a planted failure (red first, both rows, for the right reason). 7/7, 1.2 s. 1,260 old folders (66 KB) left alone; janitor coverage needs a second-repo source key and the keeper's word.
+- **Carry:** a child `node --test` inherits NODE_TEST_CONTEXT and silently skips its file; a "the test actually ran" control is what caught it.
