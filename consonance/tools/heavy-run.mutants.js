@@ -35,7 +35,7 @@ const MUTANTS = [
   ['takeover: whom it replaced is not recorded', SRC, 'if (tookOver) rec.took_over = tookOver;', ''],
   ['takeover: the set-aside file is left behind', SRC, "    try { fs.unlinkSync(aside); } catch (_) {}\n    const age = h.started", '    const age = h.started'],
   ['race: a live lock caught by the rename is not put back', SRC, "try { fs.linkSync(aside, file); } catch (_) { /* a newer lock is already there */ }", ''],
-  ['race: the put-back does not check that the moved lock is alive', SRC, 'if (moved && !moved.unreadable && moved.token !== h.token && alive(moved.pid)) {', 'if (moved && !moved.unreadable && moved.token !== h.token) {'],
+  ['race: the moved lock is judged by kill(0) alone (a young one is thrown away without the second witness)', SRC, 'if (moved && !moved.unreadable && moved.token !== h.token) {', 'if (moved && !moved.unreadable && moved.token !== h.token && alive(moved.pid)) {'],   // D289: the check this row used to remove was the defect
   // ---- D283: a young lock needs a second witness ----
   ['young: the second witness is never asked', SRC, 'if (age === null || age < YOUNG_MS) {', 'if (false) {'],
   ['young: the boundary is inclusive (a lock exactly 30 minutes old is young)', SRC, 'if (age === null || age < YOUNG_MS) {', 'if (age === null || age <= YOUNG_MS) {'],

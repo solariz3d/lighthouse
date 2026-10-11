@@ -263,6 +263,14 @@ test('D283 pidGone: tasklist is asked for exactly that pid; a listed row means r
   assert.strictEqual(H.pidGone(process.pid), process.platform === 'win32' ? false : true); assert.strictEqual(H.pidGone(0x7ffffff0), true, 'a pid that cannot exist is gone');
 });
 
+// D289 (mutant #30): r.error is not covered by r.status. Measured with node 24 on machine D: a child that exits 0 while a process it started still holds its stdout comes back from spawnSync
+// as { error: ETIMEDOUT, status: 0, stdout: <what arrived so far> }. That output can stop before the pid's row, and reading it would call a running holder gone.
+test('D289 pidGone: a call that timed out after tasklist exited 0 (error set, status 0, partial output) is "cannot tell", not gone', () => {
+  const timedOut = Object.assign(new Error('spawnSync tasklist ETIMEDOUT'), { code: 'ETIMEDOUT' });
+  const row = (pid) => `"node.exe","${pid}","Console","1","50,000 K"\r\n`;
+  for (const stdout of ['', row(3125), '"node.exe","31']) assert.strictEqual(H.pidGone(3124, () => ({ error: timedOut, status: 0, signal: null, stdout }), 'win32'), null, JSON.stringify(stdout));
+});
+
 test('D283 pidAlive: EPERM is alive (not allowed to touch it is not dead); ESRCH, any other error and a bad pid are not', () => {
   const thrower = (code) => () => { const e = new Error(code); e.code = code; throw e; };
   assert.strictEqual(H.pidAlive(10, () => {}), true); assert.strictEqual(H.pidAlive(10, thrower('EPERM')), true);
@@ -277,6 +285,19 @@ test('D283 a race: a LIVE lock created between the read and the takeover is put 
   const alive = (p) => { if (p === 111 && !swapped) { swapped = true; fs.writeFileSync(lockOf(d), JSON.stringify(mine)); return false; } return p === 222; };   // the holder reads dead; meanwhile another runner took the lock
   assert.throws(() => H.acquire({ cmd: 'x', dataDir: d, env: {}, maxWaitMs: 500, pollMs: 100, now: () => base + t, sleep: (ms) => { t += ms; }, log: () => {}, alive, confirmGone: () => true }), (e) => e.code === 'HEAVY_RUN_TIMEOUT' && /gggg8888 pid 222/.test(e.message));
   assert.deepStrictEqual(readLock(d), mine, 'the racer\'s lock was put back exactly');
+  assert.deepStrictEqual(fs.readdirSync(d), ['heavy-run.lock'], 'and nothing is left set aside');
+});
+
+// D289 (mutant #16): the put-back judged the moved lock by kill(0) alone, so a YOUNG racer's lock that kill(0) misreads was thrown away without D283's second witness. Any other runner's lock caught
+// by the rename is now put back and judged at the next poll by the rules every lock gets.
+test('D289 a race: a YOUNG lock caught by the rename is not thrown away on kill(0) alone; it is put back, tasklist is asked, and while tasklist says RUNNING the waiter waits', () => {
+  const d = tmp(); lockAt(d, 40, { pid: 111, token: 'T1' });   // an OLD dead holder: kill(0) alone may take it
+  const racer = { pid: 222, seat: 'gggg8888', cmd: 'the racer', started: new Date(mark()).toISOString(), token: 'T2' };
+  let swapped = false; const asked = [];
+  const r = attempt(d, { alive: (p) => { if (p === 111 && !swapped) { swapped = true; fs.writeFileSync(lockOf(d), JSON.stringify(racer)); } return false; }, gone: (p) => { asked.push(p); return p !== 222; } });
+  assert.ok(r.err, 'it did not take the racer\'s lock'); assert.strictEqual(r.err.code, 'HEAVY_RUN_TIMEOUT'); assert.match(r.err.message, /gggg8888 pid 222/);
+  assert.deepStrictEqual(readLock(d), racer, 'the racer\'s lock was put back exactly');
+  assert.ok(asked.includes(222), 'tasklist was asked about the racer: ' + JSON.stringify(asked));
   assert.deepStrictEqual(fs.readdirSync(d), ['heavy-run.lock'], 'and nothing is left set aside');
 });
 

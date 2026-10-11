@@ -43,8 +43,8 @@
 //     if the two disagree, or the second cannot tell, it waits and says so once. A lock with no readable `started` counts as young (unknown is the safe side). An older
 //     lock is as before: kill(0) alone.
 // A pid the OS has since REUSED reads alive — the waiter then waits and, at the max wait, fails loudly naming it, which
-// is the safe direction. The takeover moves the stale file aside with an atomic rename; if a race moved a LIVE lock
-// instead, it is put back with linkSync, which cannot overwrite, and the waiter keeps waiting.
+// is the safe direction. The takeover moves the stale file aside with an atomic rename; if a race moved ANOTHER runner's
+// lock instead, it is put back with linkSync, which cannot overwrite, and the waiter keeps waiting; the next poll judges that lock like any other (D289).
 //
 // NESTED RUNS ARE THE SAME RUN. The holder exports its token as CONSONANCE_HEAVY_RUN_TOKEN, which every child inherits;
 // a runner whose environment carries the token of the current lock does not wait (it would wait on its own parent
@@ -202,9 +202,10 @@ function acquire({
     const aside = `${file}.stale-${process.pid}-${now()}`;
     try { fs.renameSync(file, aside); } catch (e) { if (e.code === 'ENOENT') return true; throw e; }
     const moved = readLock(aside);
-    if (moved && !moved.unreadable && moved.token !== h.token && alive(moved.pid)) {
+    if (moved && !moved.unreadable && moved.token !== h.token) {
       // A race: between our read and our rename another runner took the lock. Put ITS lock back; linkSync fails
-      // rather than overwrite, so a lock created meanwhile is never clobbered either.
+      // rather than overwrite, so a lock created meanwhile is never clobbered either. D289: put back whether or not kill(0) reads it alive, and judged
+      // at the next poll by the rules every lock gets: judging it here by kill(0) alone threw a young lock away without D283's second witness.
       try { fs.linkSync(aside, file); } catch (_) { /* a newer lock is already there */ }
       try { fs.unlinkSync(aside); } catch (_) {}
       return false;
