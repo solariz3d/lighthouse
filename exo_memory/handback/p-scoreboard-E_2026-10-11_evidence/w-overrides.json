@@ -2,7 +2,8 @@
   "_rule": "Hand corrections to the lexical W extraction, each read at its line by pane E on 2026-10-11. add: an entry the extraction cannot see; drop: a match that is not an entry; finder: the finder read at the line where the rule chose wrongly.",
   "add": [
     { "at": "exo_memory/librarian/2026-09-06.md:54", "day": "2026-09-06", "finder": "seat", "why": "WRONG 71 on the second column (the map's central figure; the chair corrected it before dispatch): the number 71 was used by both machines' columns" },
-    { "at": "exo_memory/librarian/2026-09-01.md:752", "day": "2026-09-01", "finder": "seat", "why": "the second of TWO WRONGS OF MINE (lifetime 61)" }
+    { "at": "exo_memory/librarian/2026-09-01.md:752", "day": "2026-09-01", "finder": "seat", "why": "the second of TWO WRONGS OF MINE (lifetime 61)" },
+    { "at": "exo_memory/librarian/2026-10-06.desktop.md:123", "day": "2026-10-10", "finder": "seat", "why": "\"my miss, caught by the chair\" (B had started its half). UNCOMMITTED at the scoreboard's base 7f08f148: the line is in the main checkout's working tree only, read there 2026-10-11 08:1x" }
   ],
   "drop": [
     { "at": "exo_memory/librarian/2026-09-20.md:80", "why": "a QUOTE of an 08-25 entry inside a re-count, not an entry of the window" }

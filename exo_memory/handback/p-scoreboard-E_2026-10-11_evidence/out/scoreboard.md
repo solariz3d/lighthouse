@@ -9,8 +9,8 @@
 | 2026-09-14 | 5 | 162 | 36 | 0 | 203 |
 | 2026-09-21 | 4 | 247 | 10 | 0 | 261 |
 | 2026-09-28 | 2 | 129 | 16 | 0 | 147 |
-| 2026-10-05 | 1 | 256 | 12 | 1 | 270 |
-| **all** | 17 | 990 | 82 | 5 | 1094 |
+| 2026-10-05 | 1 | 257 | 12 | 1 | 271 |
+| **all** | 17 | 991 | 82 | 5 | 1095 |
 
 ### L: catch-ledger.js (muscle_map + journal; the journal ends 09-22)
 
@@ -29,8 +29,8 @@
 | 2026-09-14 | 5 | 16 | 0 | 0 | 21 |
 | 2026-09-21 | 3 | 13 | 0 | 0 | 16 |
 | 2026-09-28 | 2 | 7 | 0 | 0 | 9 |
-| 2026-10-05 | 1 | 0 | 0 | 1 | 2 |
-| **all** | 14 | 85 | 0 | 1 | 100 |
+| 2026-10-05 | 1 | 1 | 0 | 1 | 3 |
+| **all** | 14 | 86 | 0 | 1 | 101 |
 
 ### H: hand-back corrections sections
 
@@ -188,7 +188,7 @@
   "override:a day summary: its Onuris half repeats :25 (counted there); its second half, the harness selection miss, names no finder": 1,
   "override:\"B corrected this desk — WRONG 85\" (:57)": 1,
   "override:the window mentions a mutant; the fixture's absence was found in C's lap, not by a red": 1,
-  "override:add": 2
+  "override:add": 3
  },
  "H": {
   "instrument": 82,
