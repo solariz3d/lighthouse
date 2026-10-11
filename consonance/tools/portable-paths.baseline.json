@@ -2,7 +2,7 @@
   "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
-    "BENIGN-TEST": 369,
+    "BENIGN-TEST": 380,
     "BENIGN-FIXTURE": 12,
     "REVIEW": 15,
     "DISGUISED": 15,
@@ -486,6 +486,13 @@
       "file": "consonance/hooks/reply-slot.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "const r = v(cmd, 'At C:/work/a.md, 3 of 5.\\n\\nSources: C:/work/a.md');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const r = v(cmd, 'At C:/work/a.md, 3 of 5.\\n\\nSources: C:/work/a.md');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "const REPLY_OK = 'The plan is at C:/work/a.md and 3 of 5 are done.\\n\\nSources: C:/work/a.md';",
       "key": "consonance/hooks/reply-slot.test.js\u0000const REPLY_OK = 'The plan is at C:/work/a.md and 3 of 5 are done.\\n\\nSources: C:/work/a.md';\u0000#1"
     },
@@ -523,6 +530,13 @@
       "verdict": "BENIGN-TEST",
       "text": "for (const [pane, cwd] of [[PANE_ID, 'C:/Consonance/instances/sibling-3d57124e'], [PANE_ID, 'C:/Consonance/instances/librarian'], ['', 'C:/Consonance/instances/sibling-3d57124e'], ['', 'C:/Consonance/instances/main/sub'], ['', 'C:/work']]) {",
       "key": "consonance/hooks/reply-slot.test.js\u0000for (const [pane, cwd] of [[PANE_ID, 'C:/Consonance/instances/sibling-3d57124e'], [PANE_ID, 'C:/Consonance/instances/librarian'], ['', 'C:/Consonance/instances/sibling-3d57124e'], ['', 'C:/Consonance/instances/main/sub'], ['', 'C:/work']]) {\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const cmd of ['ls -la C:/work/a.md', 'echo C:/work/a.md']) {",
+      "key": "consonance/hooks/reply-slot.test.js\u0000for (const cmd of ['ls -la C:/work/a.md', 'echo C:/work/a.md']) {\u0000#1"
     },
     {
       "file": "consonance/hooks/reply-slot.test.js",
@@ -815,6 +829,34 @@
       "file": "consonance/hooks/sources-gate.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(decideIn('light', 'SOURCES: `ls -la C:/work/dir`', bashCall('t1', 'ls -la C:/work/dir')).decision, 'allow', 'light: the cited ls that ran');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(decideIn('light', 'SOURCES: `ls -la C:/work/dir`', bashCall('t1', 'ls -la C:/work/dir')).decision, 'allow', 'light: the cited ls that ran');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(decideIn('strict', 'SOURCES: `ls -la C:/work/dir`', bashCall('t1', 'ls -la C:/work/dir')).decision, 'deny', 'strict: unchanged');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(decideIn('strict', 'SOURCES: `ls -la C:/work/dir`', bashCall('t1', 'ls -la C:/work/dir')).decision, 'deny', 'strict: unchanged');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(decideIn('strict', 'SOURCES: C:/Users/n/lighthouse/exo_memory/loop/plan.md', bashCall('t1', 'cd /c/Users/n/lighthouse/exo_memory && cat loop/plan.md')).decision, 'allow');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(decideIn('strict', 'SOURCES: C:/Users/n/lighthouse/exo_memory/loop/plan.md', bashCall('t1', 'cd /c/Users/n/lighthouse/exo_memory && cat loop/plan.md')).decision, 'allow');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(decideIn('strict', 'SOURCES: C:/work/a.md', bashCall('t1', 'node tools/x.js C:/work/a.md')).decision, 'allow', 'a program that is not a read verb still opens the path it is given');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(decideIn('strict', 'SOURCES: C:/work/a.md', bashCall('t1', 'node tools/x.js C:/work/a.md')).decision, 'allow', 'a program that is not a read verb still opens the path it is given');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "assert.strictEqual(G.decide('x\\nSOURCES: none (no state claims)', [], 'C:/work', 'L', 'a', 'ring', p).reason, '');",
       "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(G.decide('x\\nSOURCES: none (no state claims)', [], 'C:/work', 'L', 'a', 'ring', p).reason, '');\u0000#1"
     },
@@ -927,8 +969,22 @@
       "file": "consonance/hooks/sources-gate.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "const d = decideIn(mode, 'SOURCES: C:\\\\Users\\\\n\\\\lighthouse\\\\consonance\\\\tools\\\\js-suite.js', bashCall('t1', cmd, 'out', true));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const d = decideIn(mode, 'SOURCES: C:\\\\Users\\\\n\\\\lighthouse\\\\consonance\\\\tools\\\\js-suite.js', bashCall('t1', cmd, 'out', true));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "const d = G.decide(text, [], 'C:/work', 'L.jsonl', 'abc', 'ring', p);",
       "key": "consonance/hooks/sources-gate.test.js\u0000const d = G.decide(text, [], 'C:/work', 'L.jsonl', 'abc', 'ring', p);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const decideIn = (mode, line, ...entries) => G.decide(withSources(line), callsOf(...entries), 'C:/work', 'L.jsonl', 'abc', 'ring', 'GATES.md', mode);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const decideIn = (mode, line, ...entries) => G.decide(withSources(line), callsOf(...entries), 'C:/work', 'L.jsonl', 'abc', 'ring', 'GATES.md', mode);\u0000#1"
     },
     {
       "file": "consonance/hooks/sources-gate.test.js",
@@ -1216,6 +1272,27 @@
       "verdict": "BENIGN-TEST",
       "text": "const t2 = [USER('go'), ...readCall('t1', 'C:/work/a.md'), { ...USER('caveat text'), isMeta: true }, ...readCall('t2', 'C:/work/b.md')];",
       "key": "consonance/hooks/sources-gate.test.js\u0000const t2 = [USER('go'), ...readCall('t1', 'C:/work/a.md'), { ...USER('caveat text'), isMeta: true }, ...readCall('t2', 'C:/work/b.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const cmd of ['echo C:/work/a.md', 'printf \"%s\" C:/work/a.md', 'ls -la C:/work/a.md', 'stat C:/work/a.md', '# C:/work/a.md\\nls', 'Write-Host C:\\\\work\\\\a.md']) {",
+      "key": "consonance/hooks/sources-gate.test.js\u0000for (const cmd of ['echo C:/work/a.md', 'printf \"%s\" C:/work/a.md', 'ls -la C:/work/a.md', 'stat C:/work/a.md', '# C:/work/a.md\\nls', 'Write-Host C:\\\\work\\\\a.md']) {\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const mode of ['strict', 'light']) assert.strictEqual(decideIn(mode, 'SOURCES: C:/work/a.md', bashCall('t1', cmd)).decision, 'deny', `${mode} counted \"${cmd}\" as opening the path`);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000for (const mode of ['strict', 'light']) assert.strictEqual(decideIn(mode, 'SOURCES: C:/work/a.md', bashCall('t1', cmd)).decision, 'deny', `${mode} counted \"${cmd}\" as opening the path`);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const mode of ['strict', 'light']) assert.strictEqual(decideIn(mode, 'SOURCES: C:\\\\Users\\\\n\\\\lighthouse\\\\consonance\\\\tools\\\\js-suite.js', bashCall('t1', cmd)).decision, 'allow', mode);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000for (const mode of ['strict', 'light']) assert.strictEqual(decideIn(mode, 'SOURCES: C:\\\\Users\\\\n\\\\lighthouse\\\\consonance\\\\tools\\\\js-suite.js', bashCall('t1', cmd)).decision, 'allow', mode);\u0000#1"
     },
     {
       "file": "consonance/hooks/sources-gate.test.js",
