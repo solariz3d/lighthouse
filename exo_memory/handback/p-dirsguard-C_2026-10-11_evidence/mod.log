@@ -1,0 +1,45 @@
+== C d300 module x2000 both · asked 2026-10-11T20:41:44.679Z · lock held 2026-10-11T20:41:46.897Z · NODE_OPTIONS=--max-old-space-size=4096
+$ mkdir -p G:/consonance-scratch/c-d300/tmp && export TEMP=G:/consonance-scratch/c-d300/tmp TMP=G:/consonance-scratch/c-d300/tmp; for T in 613 a0e; do node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d300/runs.js G:/consonance-scratch/c-d300/t$T.exe G:/worktrees/c-d300-$T/consonance/src-tauri module 2000 | grep -v '^run .*row ok sib ok exit 0' ; done; echo left $(ls G:/consonance-scratch/c-d300/tmp | wc -l)
+run 340: row FAILED sib ok exit 101 71 ms | test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 1029 filtered out; finished in 0.01s | FAILED dirs_guard_tests::a_panicking_writer_still_puts_dirs_back
+test dirs_guard_tests::a_panicking_writer_still_puts_dirs_back ... FAILED
+---- dirs_guard_tests::a_panicking_writer_still_puts_dirs_back stdout ----
+thread 'dirs_guard_tests::a_panicking_writer_still_puts_dirs_back' (36364) panicked at src\main.rs:4876:9:
+a panicking writer left the slot set — against the real DIRS that means the next test to resolve a directory gets a path that was deleted, and data_dir() silently recreates it
+    dirs_guard_tests::a_panicking_writer_still_puts_dirs_back
+run 425: row FAILED sib ok exit 101 78 ms | test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 1029 filtered out; finished in 0.01s | FAILED dirs_guard_tests::a_panicking_writer_still_puts_dirs_back
+test dirs_guard_tests::a_panicking_writer_still_puts_dirs_back ... FAILED
+---- dirs_guard_tests::a_panicking_writer_still_puts_dirs_back stdout ----
+thread 'dirs_guard_tests::a_panicking_writer_still_puts_dirs_back' (34328) panicked at src\main.rs:4876:9:
+a panicking writer left the slot set — against the real DIRS that means the next test to resolve a directory gets a path that was deleted, and data_dir() silently recreates it
+    dirs_guard_tests::a_panicking_writer_still_puts_dirs_back
+run 1169: row FAILED sib ok exit 101 72 ms | test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 1029 filtered out; finished in 0.01s | FAILED dirs_guard_tests::a_panicking_writer_still_puts_dirs_back
+test dirs_guard_tests::a_panicking_writer_still_puts_dirs_back ... FAILED
+---- dirs_guard_tests::a_panicking_writer_still_puts_dirs_back stdout ----
+thread 'dirs_guard_tests::a_panicking_writer_still_puts_dirs_back' (28448) panicked at src\main.rs:4876:9:
+a panicking writer left the slot set — against the real DIRS that means the next test to resolve a directory gets a path that was deleted, and data_dir() silently recreates it
+    dirs_guard_tests::a_panicking_writer_still_puts_dirs_back
+run 1394: row FAILED sib ok exit 101 82 ms | test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 1029 filtered out; finished in 0.01s | FAILED dirs_guard_tests::a_panicking_writer_still_puts_dirs_back
+test dirs_guard_tests::a_panicking_writer_still_puts_dirs_back ... FAILED
+---- dirs_guard_tests::a_panicking_writer_still_puts_dirs_back stdout ----
+thread 'dirs_guard_tests::a_panicking_writer_still_puts_dirs_back' (760) panicked at src\main.rs:4876:9:
+a panicking writer left the slot set — against the real DIRS that means the next test to resolve a directory gets a path that was deleted, and data_dir() silently recreates it
+    dirs_guard_tests::a_panicking_writer_still_puts_dirs_back
+TALLY module exe=G:/consonance-scratch/c-d300/t613.exe args=["dirs_guard_tests"] runs 2000: row ok 1996 / red 4 / missing 0; sibling red 0; other reds {}; 139 s
+run 170: row ok sib FAILED exit 101 64 ms | test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 1037 filtered out; finished in 0.01s | FAILED dirs_guard_tests::a_writer_puts_dirs_back_when_it_finishes
+run 279: row FAILED sib ok exit 101 63 ms | test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 1037 filtered out; finished in 0.01s | FAILED dirs_guard_tests::a_panicking_writer_still_puts_dirs_back
+test dirs_guard_tests::a_panicking_writer_still_puts_dirs_back ... FAILED
+---- dirs_guard_tests::a_panicking_writer_still_puts_dirs_back stdout ----
+thread 'dirs_guard_tests::a_panicking_writer_still_puts_dirs_back' (12280) panicked at src\main.rs:4878:9:
+a panicking writer left the slot set — against the real DIRS that means the next test to resolve a directory gets a path that was deleted, and data_dir() silently recreates it
+    dirs_guard_tests::a_panicking_writer_still_puts_dirs_back
+run 294: row FAILED sib ok exit 101 65 ms | test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 1037 filtered out; finished in 0.01s | FAILED dirs_guard_tests::a_panicking_writer_still_puts_dirs_back
+test dirs_guard_tests::a_panicking_writer_still_puts_dirs_back ... FAILED
+---- dirs_guard_tests::a_panicking_writer_still_puts_dirs_back stdout ----
+thread 'dirs_guard_tests::a_panicking_writer_still_puts_dirs_back' (33656) panicked at src\main.rs:4878:9:
+a panicking writer left the slot set — against the real DIRS that means the next test to resolve a directory gets a path that was deleted, and data_dir() silently recreates it
+    dirs_guard_tests::a_panicking_writer_still_puts_dirs_back
+run 1614: row ok sib FAILED exit 101 64 ms | test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 1037 filtered out; finished in 0.01s | FAILED dirs_guard_tests::a_writer_puts_dirs_back_when_it_finishes
+run 1866: row ok sib FAILED exit 101 66 ms | test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 1037 filtered out; finished in 0.01s | FAILED dirs_guard_tests::a_writer_puts_dirs_back_when_it_finishes
+TALLY module exe=G:/consonance-scratch/c-d300/ta0e.exe args=["dirs_guard_tests"] runs 2000: row ok 1998 / red 2 / missing 0; sibling red 3; other reds {}; 140 s
+left 0
+== exit 0 · done 2026-10-11T20:46:25.833Z
