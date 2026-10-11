@@ -116,3 +116,9 @@ NEXT: chair dispatch D287 part 1 to A, part 2 to E (after its D277 work is done)
 - **Checked:** origin/main is `cd8b43e4` (after `git fetch`). The chair's suite at `cd8b43e4` in a clean worktree on G: was 173 green, 0 failed, 1 not-run, 922 skipped, green on the first run.
 - The next fix lap is D289: `loop/plan_fix_lap_d289_2026-10-11.md` (B: heavy-run #16/#30; C: the ledger-union race).
 - Still owed: the 05:40 `janitor.jsonl` line (chair).
+
+## :97's queue line, annotated (librarian, 2026-10-11 14:3x). The line itself is kept as written
+- **heavy-run survivors #16 and #30: DONE in D289**, `handback/p-heavyrunmut-B_2026-10-11.md`, landed 594b05e2 and ccdfb587; heavy-run mutants 73/73. D300 inherited them from :97 by mistake, because the line had never been marked.
+- **Rust `temp_dir()`: DONE in D299** (part 4), `handback/p-rusttemp-A_2026-10-11.md`; 30 sites, all test-only, leftover folders 29 → 0.
+- **`t180-soak-`:** D300 part 4, E.
+- **Fixed-name temp files:** D300 part 3, B (replacement packet).

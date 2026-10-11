@@ -15,3 +15,8 @@ Why: the retrieval line now waits on W0 by design, the first strict librarian wa
    - Deleting the existing folders: name the count and size, and leave the deletion to the janitor's rules. No ad-hoc delete.
 
 Each pane runs targeted tests under the heavy-run lock. The chair runs the full suite before it lands.
+
+## Part 3 REPLACED (librarian, 14:3x)
+The chair found B's #16/#30 already done in D289 (`handback/p-heavyrunmut-B_2026-10-11.md`, landed 594b05e2 and ccdfb587). That was my miss: I planned from the cleanup plan's `:97` line without checking it. `:97` is now annotated at that plan's foot. **B's new part 3:**
+- (a) **Fixed-name temp files,** the last unworked item on `:97`. Find every Rust and JS site in `consonance/` that writes a FIXED name into the temp dir. A's D299 found one, the seed scratch helper (`consonance_seed_test_*`, main.rs:4977, now under `Scratch`). For each site: test or live, and whether two runs or two seats can collide on that name. A live collision gets a red row and a fix; the rest are listed.
+- (b) **A's named row gap from D299:** removing the gates-mode guard is caught only by the leftover count, not by a row (`handback/p-rusttemp-A_2026-10-11.md`, Checks). Add a row that fails when that folder is left, and show the mutant caught.
