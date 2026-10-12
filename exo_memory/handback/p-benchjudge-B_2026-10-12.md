@@ -38,7 +38,7 @@ NEXT: librarian compares B's 40 with C's on the same ids (§7.7), then tells A t
 
 ### Result
 - **REPEATS 17 · not-REPEATS 23** of 40. checked: `grep -c` over the verdicts file; JSON parse → 40 rows.
-- **Tool requests decided 6 of the 17:**
+- **6 of the 17 write W in a tool request; for 3 of them (R002, R009, R026) the tool request is the only place W appears:**
   - writes W: R004 (stamp tool), R020 and R074 (plan corrections), R002, R009 and R026 (the W058 work-shape writes);
   - in prose as well: R004, R020 and R074.
 - **Of the 23 not-REPEATS:**
