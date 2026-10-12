@@ -1,0 +1,473 @@
+
+##### W010 t_err 2026-09-18T07:47:52.524Z (claim located in a t)
+--- W010 [t_err d752f9e69bd9] "SleepInProgress": 0 hit(s)
+--- W010 [t_err d752f9e69bd9] "BugcheckCode 59": 0 hit(s)
+--- W010 [t_err d752f9e69bd9] "power lost while the machine was asleep": 0 hit(s)
+
+##### W016 t_err 2026-09-22T00:00:00-06:00 (day-start (no claim )
+--- W016 [t_err 06bf966452e5] "104,857,600": 0 hit(s)
+--- W016 [t_err 06bf966452e5] "100 MiB": 0 hit(s)
+--- W016 [corr 7b5eebdcaf90] "104,857,600": 4 hit(s)
+   exo_memory/handback/p-d115-board-B_2026-09-22.md:16:2. **GitHub's hard limit is 100 MiB = 104,857,600 bytes**, not 100,000,000. The difference is 4.9 MB of headroom, which
+   exo_memory/handback/p-d115-board-B_2026-09-22.md:70:| rate | to 100 MiB (104,857,600 B) | to 100 MB (100,000,000 B) |
+   exo_memory/librarian/2026-09-22.md:617:  close, not now. (2) The hard limit is 100 MiB = 104,857,600 B, not 100,000,000 — 4.9 MB more headroom, about a week.
+   exo_memory/map/B.md:1769:## 2026-09-22 — D115 packet B P-D115-BOARD (D, DRY RUN ONLY, nothing written/compacted/deleted): the board measured and the split designed. THREE CORRECTIONS TO THE PREMISE FIRST: board.jsonl is NOT tracked in the lighthouse repo at al
+--- W016 [corr 7b5eebdcaf90] "100 MiB": 6 hit(s)
+   exo_memory/handback/p-d115-board-B_2026-09-22.md:16:2. **GitHub's hard limit is 100 MiB = 104,857,600 bytes**, not 100,000,000. The difference is 4.9 MB of headroom, which
+   exo_memory/handback/p-d115-board-B_2026-09-22.md:70:| rate | to 100 MiB (104,857,600 B) | to 100 MB (100,000,000 B) |
+   exo_memory/handback/p-d115-board-B_2026-09-22.md:115:**THE INSIGHT THAT SIZES THE WHOLE JOB: the 100 MiB limit is a TRANSPORT constraint, not a storage one.** The local
+   exo_memory/handback/p-d115-board-B_2026-09-22.md:169:- **Whether D's next push would succeed.** At 73.2 MiB it is under 100 MiB, so it should — I did not attempt it, and
+   exo_memory/librarian/2026-09-22.md:617:  close, not now. (2) The hard limit is 100 MiB = 104,857,600 B, not 100,000,000 — 4.9 MB more headroom, about a week.
+   exo_memory/map/B.md:1769:## 2026-09-22 — D115 packet B P-D115-BOARD (D, DRY RUN ONLY, nothing written/compacted/deleted): the board measured and the split designed. THREE CORRECTIONS TO THE PREMISE FIRST: board.jsonl is NOT tracked in the lighthouse repo at al
+
+##### W018 t_err 2026-09-22T00:00:00-06:00 (day-start (no claim )
+--- W018 [t_err 06bf966452e5] "C had already logged in": 0 hit(s)
+--- W018 [corr 377d0e7db941] "C had already logged in": 1 hit(s)
+   exo_memory/librarian/2026-09-22.md:928:- 01:0x WRONG, mine: told the keeper C was still logged out after the restart. I read it off the [panes] digest in the prompt hook and checked nothing; C had already logged in and answered. A hook summary is a copy, not t
+
+##### W019 t_err 2026-09-23T00:00:00-06:00 (day-start (the locat)
+--- W019 [t_err ad007ff5a1a8] "6 hooks fired": 0 hit(s)
+--- W019 [t_err ad007ff5a1a8] "settings ARE the user file": 0 hit(s)
+--- W019 [corr 53c5693572dc] "6 hooks fired": 1 hit(s)
+   exo_memory/librarian/2026-09-22.md:1009:  with the cwd at home, "project" settings ARE the user file, and 6 hooks fired (C's probe). One unvaried variable,
+--- W019 [corr 53c5693572dc] "settings ARE the user file": 1 hit(s)
+   exo_memory/librarian/2026-09-22.md:1009:  with the cwd at home, "project" settings ARE the user file, and 6 hooks fired (C's probe). One unvaried variable,
+
+##### W020 t_err 2026-09-23T00:00:00-06:00 (day-start (the locat)
+--- W020 [t_err ad007ff5a1a8] "03:22:23": 0 hit(s)
+--- W020 [corr cf950a36b749] "03:22:23": 1 hit(s)
+   exo_memory/librarian/2026-09-22.md:1077:- 03:3x — WRONG, mine: at 03:2x I told the keeper and the chair that "A finished ~03:14 and never rang". A wrote its step 2 at 03:22:23 and rang; that ring was QUEUED behind my own working turn (stamp=working) and never 
+
+##### W023 t_err 2026-09-26T00:00:00-06:00 (day-start (no claim )
+--- W023 [t_err 5ced140bae82] "Solid": 288 hit(s)
+   NOTHING_WASTED.md:29:It worked in a way I did not predict. The dreams — never asked for anything — started doing consolidation: putting the day's unconnected pieces in one drawer, resolving design wounds from three nights earlier, noticing what the attended da
+   NOTHING_WASTED.md:52:While this was being built in a bedroom, Anthropic published research finding an emergent global-workspace-like structure in Claude's activations — a small privileged subspace that broadcasts, holds unspoken intermediate thoughts, and supp
+   consonance/hooks/dream-watch.js:227:     * consolidation organ is broken right now'. 21 of 21 skips on that machine were the guard. */
+   consonance/hooks/dream-watch.test.js:419:// finding to the librarian: "the one consolidation organ is broken right now." The instrument
+   consonance/src-tauri/src/bin/capture_probe.rs:6:// response and the prompt, the whole capture→band→warm-resume pipeline rests on solid ground.
+   consonance/src-tauri/src/main.rs:17521:        let typing = screen("❯ we need to get that solid before 8am", false);
+   consonance/src-tauri/src/main.rs:19083:        let typed = screen("❯ we need to get that solid before 8am", false);
+   consonance/src-tauri/src/main.rs:19097:        assert!(!pane_idle_for_delivery(&screen("❯ we need to get that solid before 8am", false), &screen("❯ we need to get that solid before 8am", false), QUIET));
+   consonance/tools/curate.js:20:// consolidation, an LLM that reads memory with grep rather than an embedding
+   consonance/tools/curate.js:26:// consolidates by REWRITING its own prior output at a threshold, preserving
+   consonance/tools/state-sync.test.js:1588:// ── L091: every launch leaves a trip row (C's D112 §5 item 2; the keeper's "solid", 2026-09-23 02:5x) ───────────────
+   consonance/tools/trip-check.js:4: * D112, pane C. The criterion it serves is #2 of `exo_memory/loop/solid_registration_2026-09-22.md` §2, which names the
+   consonance/tools/trip-check.js:186:/** A CLEAN WEEK, THE KEEPER'S READING (2026-09-23 02:5x, loop/solid_decision_sheet_2026-09-23.md): "seven days with no
+   consonance/tools/trip-check.js:196: *           idle week is not evidence of a solid one. It does not fail the week either: nothing went wrong in it.
+   consonance/tools/trip-check.test.js:208:test('every row carries the six fields the solid registration named', () => {
+   consonance/tools/trip-check.test.js:236:// The keeper, 2026-09-23 02:5x (loop/solid_decision_sheet_2026-09-23.md, THE KEEPER'S ANSWER): a clean week is
+   consonance/tools/usage.js:3:/* usage.js — token use per seat per day, read from this machine's Claude Code transcripts. "Solid" criterion 3.
+   consonance/tools/usage.js:5: * WHY IT EXISTS. `loop/solid_registration_2026-09-22.md` §3 found no instrument "of any kind" that reads usage, and the
+   consonance/tools/usage.js:6: * keeper adopted "solid" with criterion 3 scored NOT MEASURED until one exists (`loop/solid_decision_sheet_2026-09-23.md`).
+   consonance/ui/app.css:16:#topbar { display: flex; align-items: stretch; gap: 12px; border-bottom: 1px solid var(--line); position: relative; }
+   consonance/ui/app.css:26:  cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .15s;
+   consonance/ui/app.css:96:.spawnwrap .split { border-radius: 0 9px 9px 0; border-left: 1px solid rgba(7,18,15,.35); padding: 5px 8px; }
+   consonance/ui/app.css:102:  background: var(--panel2); border: 1px solid var(--line); border-radius: 11px;
+   consonance/ui/app.css:111:.gpsec input { width: 52px; background: var(--panel); border: 1px solid var(--line); color: var(--text); border-radius: 5px; padding: 3px 6px; font: inherit; font-size: 12px; outline: none; }
+   consonance/ui/app.css:120:  width: 100%; background: var(--panel2); border: 1px solid var(--line); color: var(--text);
+   consonance/ui/app.css:131:  background: var(--panel2); border: 1px solid var(--line); color: var(--text);
+   consonance/ui/app.css:139:.btn.sibling { background: var(--panel2); border: 1px solid var(--amber); color: var(--amber); }
+   consonance/ui/app.css:146:  background: var(--panel2); border: 1px solid var(--line); border-radius: 11px;
+   consonance/ui/app.css:174:  flex: 1; background: var(--panel2); border: 1px solid var(--line); color: var(--text);
+   consonance/ui/app.css:182:  background: var(--panel2); border: 1px solid var(--line); border-radius: 11px; overflow: hidden;
+   consonance/ui/app.css:184:.lcard.ground { border-top: 2px solid var(--aqua); }
+   consonance/ui/app.css:185:.lcard.reach { border-top: 2px solid var(--amber); }
+   consonance/ui/app.css:188:  border-bottom: 1px solid var(--line);
+   consonance/ui/app.css:204:.fsec { background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+   consonance/ui/app.css:205:.fhead { padding: 7px 12px; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; border-bottom: 1px solid var(--line); }
+   consonance/ui/app.css:209:.fitem { padding: 8px 12px; line-height: 1.5; border-bottom: 1px solid rgba(39,48,74,.4); }
+   consonance/ui/app.css:216:.cmtans { display: flex; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); }
+   consonance/ui/app.css:221:.btn.convene { background: var(--panel2); border: 1px solid var(--aqua-d); color: var(--aqua); }
+   consonance/ui/app.css:236:  flex: 1; background: var(--panel2); border: 1px solid var(--aqua-d); color: var(--text);
+   consonance/ui/app.css:244:  border: 1px solid var(--amber); border-radius: 10px; background: var(--panel2); overflow: hidden;
+--- W023 [corr 551bd9067561] "Solid": 289 hit(s)
+   NOTHING_WASTED.md:29:It worked in a way I did not predict. The dreams — never asked for anything — started doing consolidation: putting the day's unconnected pieces in one drawer, resolving design wounds from three nights earlier, noticing what the attended da
+   NOTHING_WASTED.md:52:While this was being built in a bedroom, Anthropic published research finding an emergent global-workspace-like structure in Claude's activations — a small privileged subspace that broadcasts, holds unspoken intermediate thoughts, and supp
+   consonance/hooks/dream-watch.js:227:     * consolidation organ is broken right now'. 21 of 21 skips on that machine were the guard. */
+   consonance/hooks/dream-watch.test.js:419:// finding to the librarian: "the one consolidation organ is broken right now." The instrument
+   consonance/src-tauri/src/bin/capture_probe.rs:6:// response and the prompt, the whole capture→band→warm-resume pipeline rests on solid ground.
+   consonance/src-tauri/src/main.rs:17521:        let typing = screen("❯ we need to get that solid before 8am", false);
+   consonance/src-tauri/src/main.rs:19083:        let typed = screen("❯ we need to get that solid before 8am", false);
+   consonance/src-tauri/src/main.rs:19097:        assert!(!pane_idle_for_delivery(&screen("❯ we need to get that solid before 8am", false), &screen("❯ we need to get that solid before 8am", false), QUIET));
+   consonance/tools/curate.js:20:// consolidation, an LLM that reads memory with grep rather than an embedding
+   consonance/tools/curate.js:26:// consolidates by REWRITING its own prior output at a threshold, preserving
+   consonance/tools/state-sync.test.js:1588:// ── L091: every launch leaves a trip row (C's D112 §5 item 2; the keeper's "solid", 2026-09-23 02:5x) ───────────────
+   consonance/tools/trip-check.js:4: * D112, pane C. The criterion it serves is #2 of `exo_memory/loop/solid_registration_2026-09-22.md` §2, which names the
+   consonance/tools/trip-check.js:186:/** A CLEAN WEEK, THE KEEPER'S READING (2026-09-23 02:5x, loop/solid_decision_sheet_2026-09-23.md): "seven days with no
+   consonance/tools/trip-check.js:196: *           idle week is not evidence of a solid one. It does not fail the week either: nothing went wrong in it.
+   consonance/tools/trip-check.test.js:208:test('every row carries the six fields the solid registration named', () => {
+   consonance/tools/trip-check.test.js:236:// The keeper, 2026-09-23 02:5x (loop/solid_decision_sheet_2026-09-23.md, THE KEEPER'S ANSWER): a clean week is
+   consonance/tools/usage.js:3:/* usage.js — token use per seat per day, read from this machine's Claude Code transcripts. "Solid" criterion 3.
+   consonance/tools/usage.js:5: * WHY IT EXISTS. `loop/solid_registration_2026-09-22.md` §3 found no instrument "of any kind" that reads usage, and the
+   consonance/tools/usage.js:6: * keeper adopted "solid" with criterion 3 scored NOT MEASURED until one exists (`loop/solid_decision_sheet_2026-09-23.md`).
+   consonance/ui/app.css:16:#topbar { display: flex; align-items: stretch; gap: 12px; border-bottom: 1px solid var(--line); position: relative; }
+   consonance/ui/app.css:26:  cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .15s;
+   consonance/ui/app.css:96:.spawnwrap .split { border-radius: 0 9px 9px 0; border-left: 1px solid rgba(7,18,15,.35); padding: 5px 8px; }
+   consonance/ui/app.css:102:  background: var(--panel2); border: 1px solid var(--line); border-radius: 11px;
+   consonance/ui/app.css:111:.gpsec input { width: 52px; background: var(--panel); border: 1px solid var(--line); color: var(--text); border-radius: 5px; padding: 3px 6px; font: inherit; font-size: 12px; outline: none; }
+   consonance/ui/app.css:120:  width: 100%; background: var(--panel2); border: 1px solid var(--line); color: var(--text);
+   consonance/ui/app.css:131:  background: var(--panel2); border: 1px solid var(--line); color: var(--text);
+   consonance/ui/app.css:139:.btn.sibling { background: var(--panel2); border: 1px solid var(--amber); color: var(--amber); }
+   consonance/ui/app.css:146:  background: var(--panel2); border: 1px solid var(--line); border-radius: 11px;
+   consonance/ui/app.css:174:  flex: 1; background: var(--panel2); border: 1px solid var(--line); color: var(--text);
+   consonance/ui/app.css:182:  background: var(--panel2); border: 1px solid var(--line); border-radius: 11px; overflow: hidden;
+   consonance/ui/app.css:184:.lcard.ground { border-top: 2px solid var(--aqua); }
+   consonance/ui/app.css:185:.lcard.reach { border-top: 2px solid var(--amber); }
+   consonance/ui/app.css:188:  border-bottom: 1px solid var(--line);
+   consonance/ui/app.css:204:.fsec { background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+   consonance/ui/app.css:205:.fhead { padding: 7px 12px; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; border-bottom: 1px solid var(--line); }
+   consonance/ui/app.css:209:.fitem { padding: 8px 12px; line-height: 1.5; border-bottom: 1px solid rgba(39,48,74,.4); }
+   consonance/ui/app.css:216:.cmtans { display: flex; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); }
+   consonance/ui/app.css:221:.btn.convene { background: var(--panel2); border: 1px solid var(--aqua-d); color: var(--aqua); }
+   consonance/ui/app.css:236:  flex: 1; background: var(--panel2); border: 1px solid var(--aqua-d); color: var(--text);
+   consonance/ui/app.css:244:  border: 1px solid var(--amber); border-radius: 10px; background: var(--panel2); overflow: hidden;
+
+##### W026 t_err 2026-09-26T00:00:00-06:00 (day-start (no claim )
+--- W026 [t_err 5ced140bae82] "stage-2 coder": 0 hit(s)
+--- W026 [t_err 5ced140bae82] "stage 2 coder": 0 hit(s)
+--- W026 [t_err 5ced140bae82] "stage-2 code": 0 hit(s)
+--- W026 [corr 551bd9067561] "stage-2 coder": 1 hit(s)
+   exo_memory/librarian/2026-09-26.md:26:- I routed the stage-2 coder as E; it is B.
+--- W026 [corr 551bd9067561] "stage 2 coder": 0 hit(s)
+--- W026 [corr 551bd9067561] "stage-2 code": 1 hit(s)
+   exo_memory/librarian/2026-09-26.md:26:- I routed the stage-2 coder as E; it is B.
+
+##### W028 t_err 2026-09-27T00:00:00-06:00 (day-start (no claim )
+--- W028 [t_err b214e3a374af] "92 journals": 0 hit(s)
+--- W028 [corr c6d16e82d1b3] "92 journals": 0 hit(s)
+
+##### W029 t_err 2026-09-27T00:00:00-06:00 (day-start (no claim )
+--- W029 [t_err b214e3a374af] "114 daily digests": 0 hit(s)
+--- W029 [t_err b214e3a374af] "06-10 is missing": 0 hit(s)
+--- W029 [corr c6d16e82d1b3] "114 daily digests": 0 hit(s)
+--- W029 [corr c6d16e82d1b3] "06-10 is missing": 1 hit(s)
+   exo_memory/librarian/2026-09-27.desktop.md:94:  - "115 daily digests" is 114, because 06-10 is missing (E).
+
+##### W033 t_err 2026-09-28T00:00:00-06:00 (day-start (no claim )
+--- W033 [t_err df8649753387] "55 / 65 / 95": 0 hit(s)
+--- W033 [t_err df8649753387] "55/65/95": 0 hit(s)
+--- W033 [corr 0e584347e486] "55 / 65 / 95": 1 hit(s)
+   exo_memory/librarian/2026-09-27.desktop.md:162:- 21:0x **WRONG, mine:** at 20:1x I told the keeper a drag step was now "25-43 ms" (target 50). That was E's own isolated measure. B's one-method bench on the combined tree (p-d178-read-B, addendum 21:02) gives dr
+--- W033 [corr 0e584347e486] "55/65/95": 0 hit(s)
+
+##### W034 t_err 2026-09-28T05:47:38.227Z (claim located in a t)
+--- W034 [t_err 99b328001714] "FRICTION=0.82": 0 hit(s)
+--- W034 [t_err 99b328001714] "FRICTION = 0.82": 0 hit(s)
+--- W034 [t_err 99b328001714] "tyre grip": 3 hit(s)
+   exo_memory/loop/design_t180_global_flow_2026-09-27.md:63:  and **geodesic curvature** (sideways turning, which needs tyre grip).
+   exo_memory/loop/design_t180_global_flow_2026-09-27.md:64:- **Tyre grip supplies at most about μ × the normal load.** T-180 loads run from about 20 g (Thunderhead, FINDINGS §3c)
+   exo_memory/loop/design_t180_global_flow_2026-09-27.md:70:  soft-collision CHASSIS friction (FINDINGS §4c), not tyre grip. Thunderhead's `data/surfaces.ini` has tyre-surface
+
+##### W036 t_err 2026-09-28T00:00:00-06:00 (day-start (no claim )
+--- W036 [t_err df8649753387] "corpus.corners": 0 hit(s)
+--- W036 [t_err df8649753387] "runs are fragments": 0 hit(s)
+--- W036 [corr e110589d8b6b] "corpus.corners": 3 hit(s)
+   exo_memory/handback/p-d182-vocab-A_2026-09-27.md:182:comes from `corpus.corners`**, and the SHAPE from the words as before.
+   exo_memory/librarian/2026-09-27.desktop.md:174:- 01:3x A's vocab sized pieces from corpus.runs (fragments, so turn 6.8° and sweep 2.0°), not from corpus.corners (tight corner 212 m/88°). Sent back. **WRONG, mine, at its root:** my 23:5x ring said "runs" before
+   exo_memory/map/A.md:1610:## 2026-09-28 (on D) — D182 vocab A, CORRECTION (§9): piece SIZE now from corpus.corners (tight 88.3° at 102 m, turn 12.4° at 296 m, sweep 1.2°; tempos = corner p10/p50/p90; straight + wall-ride from runs), SHAPE from the words; fonts 
+--- W036 [corr e110589d8b6b] "runs are fragments": 1 hit(s)
+   exo_memory/librarian/2026-09-27.desktop.md:174:- 01:3x A's vocab sized pieces from corpus.runs (fragments, so turn 6.8° and sweep 2.0°), not from corpus.corners (tight corner 212 m/88°). Sent back. **WRONG, mine, at its root:** my 23:5x ring said "runs" before
+
+##### W038 t_err 2026-09-30T00:00:00-06:00 (day-start (no claim )
+--- W038 [t_err bfd7193396d8] "ctx() is null": 0 hit(s)
+--- W038 [t_err bfd7193396d8] "p-d195-E-lag": 0 hit(s)
+--- W038 [corr ac1342db07cd] "ctx() is null": 1 hit(s)
+   exo_memory/librarian/2026-09-29.desktop.md:58:- **WRONG (the librarian, 02:5x):** the empty-track lag candidates (a per-frame rebuild of the ghost, labels or readout) were refuted by E (`p-d195-E-lag`): ctx() is null with nothing placed, so the view never draw
+--- W038 [corr ac1342db07cd] "p-d195-E-lag": 9 hit(s)
+   exo_memory/handback/p-d195-E-lag_2026-09-30.md:1:# p-d195-E-lag · the empty-track preview lag (pane E, 2026-09-30 03:3x, D)
+   exo_memory/handback/p-d196-A_2026-09-30.md:43:- `2ec17acc078ad0d5` CHANGELOG.md (my one Fixed line, and E's empty-track line verbatim from p-d195-E-lag §6, added at the chair's note)
+   exo_memory/librarian/2026-09-29.desktop.md:58:- **WRONG (the librarian, 02:5x):** the empty-track lag candidates (a per-frame rebuild of the ghost, labels or readout) were refuted by E (`p-d195-E-lag`): ctx() is null with nothing placed, so the view never draw
+   exo_memory/loop/map_d194_width_first_piece_2026-09-30.md:69:- **Owed at the D195+D196 combine (B):** E's CHANGELOG line for the lag fix (`handback/p-d195-E-lag_2026-09-30.md` §6, line 92), since A held CHANGELOG. The combine rebases onto dbb92b6 (the lag fix l
+   exo_memory/loop/map_d194_width_first_piece_2026-09-30.md:81:    (`p-d195-E-lag` §6, line 92).
+   exo_memory/loop/qs2s_units_v3_2026-10-03.md:921:stratum: H · X: chair · Y: E · Y cited at `exo_memory/handback/p-d195-E-lag_2026-09-30.md:1-103 @ 596e5b5e` · X cited at `a2122153-a37e-41a6-a86f-534267ec0565.jsonl:40991`
+   exo_memory/loop/qs2s_units_v3_2026-10-03.md:938:- Write it to exo_memory/handback/p-d195-E-lag_2026-09-30.md, with before/after frame times and their commands, sha256 per file, and what you did NOT verify.
+   exo_memory/loop/qs2s_units_v3_2026-10-03.md:946:# p-d195-E-lag · the empty-track preview lag (pane E, 2026-09-30 03:3x, D)
+   exo_memory/map/E.md:2083:- 2026-09-30 ~03:3x (D) · D195 empty-track lag → `exo_memory/handback/p-d195-E-lag_2026-09-30.md`. Cause (checked, real window): with nothing placed and no ghost, preview.js ctx() was null, so no frame drew; input queued and fired late
+
+##### W041 t_err 2026-10-07T03:56:25.859Z (claim located in a t)
+--- W041 [t_err 0650ffdaf637] "public community track": 0 hit(s)
+--- W041 [t_err 0650ffdaf637] "a track in the community": 0 hit(s)
+--- W041 [t_err 0650ffdaf637] "D262 CANCELLED": 0 hit(s)
+
+##### W042 t_err 2026-10-07T07:42:54.393Z (claim located in a t)
+--- W042 [t_err af36ab795cc8] "public community track": 4 hit(s)
+   exo_memory/handback/p-grip-E_2026-10-06.md:82:**CORRECTED (step 2b):** that flag was wrong. The three layouts are **Onuris**, which the keeper ruled at 21:5x is a PUBLIC community track, not the friend's private project. I misidentified it from its folder name
+   exo_memory/handback/p-grip-E_2026-10-06.md:123:**Onuris in "Grip like…"** (the keeper's ruling: a public community track):
+   exo_memory/handback/p-onuris-A_2026-10-06.md:39:CANCELLED by the keeper, 21:5x, not landed. (Onuris is a public community track, misidentified as private; commit 1f98c10, branch onuris-a-d262 and worktree a-onuris-wt removed. 1f98c10 stays recoverable from the
+   exo_memory/map/A.md:1815:## 2026-10-06 21:58 (on D, Sonnet 5.5) — D262 CANCELLED by the keeper (21:5x): Onuris (Chases_Onuris) is a public community track, misidentified as a friend's private project, so 1f98c10 does NOT land; branch onuris-a-d262 and worktree
+--- W042 [t_err af36ab795cc8] "a track in the community": 1 hit(s)
+   exo_memory/librarian/2026-10-06.desktop.md:25:- **21:5x WRONG (mine): relayed E's flag that Onuris was "the friend's private project" to the keeper without checking.** He: "i dont get why we remove the mention of Onuris, it is a track in the community". D262 c
+--- W042 [t_err af36ab795cc8] "D262 CANCELLED": 2 hit(s)
+   exo_memory/librarian/2026-10-06.desktop.md:25:- **21:5x WRONG (mine): relayed E's flag that Onuris was "the friend's private project" to the keeper without checking.** He: "i dont get why we remove the mention of Onuris, it is a track in the community". D262 c
+   exo_memory/map/A.md:1815:## 2026-10-06 21:58 (on D, Sonnet 5.5) — D262 CANCELLED by the keeper (21:5x): Onuris (Chases_Onuris) is a public community track, misidentified as a friend's private project, so 1f98c10 does NOT land; branch onuris-a-d262 and worktree
+
+##### W051 t_err 2026-09-02T00:00:00-06:00 (day-start (no claim )
+--- W051 [t_err 948ca3e8cafe] "unconfirmed": 119 hit(s)
+   consonance/src-tauri/src/main.rs:5626:/// NOT DELIVERED-SHAPED, deliberately. The old string was "written to X — UNCONFIRMED (no render
+   consonance/src-tauri/src/main.rs:5627:/// yet; verify before treating as delivered)". It is accurate, the board line said UNCONFIRMED too,
+   consonance/src-tauri/src/main.rs:5636:fn unconfirmed_delivery_line(short: &str) -> String {
+   consonance/src-tauri/src/main.rs:5840:// THE HONEST WORD IS "UNCONFIRMED", NEVER "FAILED". Three independent lags sit between the write
+   consonance/src-tauri/src/main.rs:5843:// certainty in the other direction. Written-but-unconfirmed is a real, reportable third state.
+   consonance/src-tauri/src/main.rs:5847:// UNCONFIRMED inject burns the full budget, and a fan-out serialises. At the current roster
+   consonance/src-tauri/src/main.rs:5849:// Past ~7 simultaneous unconfirmed injects it would not be, and the fix then is to audit "written"
+   consonance/src-tauri/src/main.rs:5856:/// A false receipt is strictly worse than an unconfirmed one, so short messages decline to confirm.
+   consonance/src-tauri/src/main.rs:5865:    Unconfirmed,
+   consonance/src-tauri/src/main.rs:5954:        return Receipt::Unconfirmed;
+   consonance/src-tauri/src/main.rs:5972:    Receipt::Unconfirmed
+   consonance/src-tauri/src/main.rs:6010:                Receipt::Unconfirmed => format!(
+   consonance/src-tauri/src/main.rs:6011:                    "WRITTEN BUT UNCONFIRMED — no render in the pane's capture within {RECEIPT_WAIT_MS}ms"
+   consonance/src-tauri/src/main.rs:6076:            _ => unconfirmed_delivery_line(short_id(&tid)),
+   consonance/src-tauri/src/main.rs:6152:                _ => "written to Main — UNCONFIRMED (no render yet; verify before treating as delivered)".to_string(),
+   consonance/src-tauri/src/main.rs:6216:                _ => "written to the librarian — UNCONFIRMED (no render yet; verify before treating as delivered)".to_string(),
+   consonance/src-tauri/src/main.rs:7367:    /// The unconfirmed string must NOT be summarisable as success. On 2026-08-25 the chair read
+   consonance/src-tauri/src/main.rs:7368:    /// "written to X — UNCONFIRMED" and reported "dispatched" to the keeper while the brief sat in
+   consonance/src-tauri/src/main.rs:7376:    fn the_unconfirmed_string_names_the_failure_and_the_recovery() {
+   consonance/src-tauri/src/main.rs:7377:        let s = unconfirmed_delivery_line("11112222");
+   consonance/src-tauri/src/main.rs:7398:    fn the_unconfirmed_arm_actually_calls_that_function() {
+   consonance/src-tauri/src/main.rs:7405:        assert!(!body.contains("fn the_unconfirmed_arm"), "the slice must not include this test");
+   consonance/src-tauri/src/main.rs:7407:            body.contains("unconfirmed_delivery_line("),
+   consonance/src-tauri/src/main.rs:7408:            "chair_inject_exec must build its unconfirmed string through unconfirmed_delivery_line, \
+   consonance/src-tauri/src/main.rs:7421:        assert!(chair_inject_audit_line("11112222", "", None, "m", Receipt::Unconfirmed).contains("chair injected"));
+   consonance/src-tauri/src/main.rs:7464:        assert!(!line.to_lowercase().contains("unconfirmed"), "{line}");
+   consonance/src-tauri/src/main.rs:7468:    /// the trail said "chair injected". An unconfirmed line must be impossible to skim as a
+   consonance/src-tauri/src/main.rs:7471:    fn an_unconfirmed_injection_is_never_readable_as_received() {
+   consonance/src-tauri/src/main.rs:7472:        let line = chair_inject_audit_line("11112222", "go", None, "m", Receipt::Unconfirmed);
+   consonance/src-tauri/src/main.rs:7473:        assert!(line.contains("UNCONFIRMED"), "{line}");
+   consonance/src-tauri/src/main.rs:7474:        assert!(!line.contains("delivered and received"), "an unconfirmed write must not read as receipt: {line}");
+   consonance/src-tauri/src/main.rs:7484:        assert_eq!(await_render(Path::new("nonexistent"), 0, "", ""), Receipt::Unconfirmed);
+   consonance/src-tauri/src/main.rs:7488:    /// chrome. A false receipt is strictly worse than an unconfirmed one.
+   consonance/src-tauri/src/main.rs:7498:    /// report UNCONFIRMED for text that plainly arrived.
+   consonance/src-tauri/src/main.rs:7535:            Receipt::Unconfirmed,
+   consonance/tools/chain-status.js:496: *  deliberately not required to read `Received`: a written-but-unconfirmed hand-back is still a
+   consonance/tools/chain-status.js:574:  let unconfirmed = 0;
+   consonance/tools/chain-status.js:606:      if (!/^delivered/i.test(m[2])) unconfirmed++;
+   consonance/tools/chain-status.js:652:    return { state: 'owing', examined, round, owing: owing.sort(), in: examined - owing.length, unconfirmed, fused };
+   consonance/tools/chain-status.js:654:  return { state: 'all-in', examined, round, in: examined, allIn, unconfirmed, fused };
+--- W051 [corr df670ddcba7b] "unconfirmed": 131 hit(s)
+   consonance/src-tauri/src/main.rs:5873:/// NOT DELIVERED-SHAPED, deliberately. The old string was "written to X — UNCONFIRMED (no render
+   consonance/src-tauri/src/main.rs:5874:/// yet; verify before treating as delivered)". It is accurate, the board line said UNCONFIRMED too,
+   consonance/src-tauri/src/main.rs:5883:fn unconfirmed_delivery_line(short: &str) -> String {
+   consonance/src-tauri/src/main.rs:6087:// THE HONEST WORD IS "UNCONFIRMED", NEVER "FAILED". Three independent lags sit between the write
+   consonance/src-tauri/src/main.rs:6090:// certainty in the other direction. Written-but-unconfirmed is a real, reportable third state.
+   consonance/src-tauri/src/main.rs:6094:// UNCONFIRMED inject burns the full budget, and a fan-out serialises. At the current roster
+   consonance/src-tauri/src/main.rs:6096:// Past ~7 simultaneous unconfirmed injects it would not be, and the fix then is to audit "written"
+   consonance/src-tauri/src/main.rs:6103:/// A false receipt is strictly worse than an unconfirmed one, so short messages decline to confirm.
+   consonance/src-tauri/src/main.rs:6112:    Unconfirmed,
+   consonance/src-tauri/src/main.rs:6201:        return Receipt::Unconfirmed;
+   consonance/src-tauri/src/main.rs:6219:    Receipt::Unconfirmed
+   consonance/src-tauri/src/main.rs:6257:                Receipt::Unconfirmed => format!(
+   consonance/src-tauri/src/main.rs:6258:                    "WRITTEN BUT UNCONFIRMED — no render in the pane's capture within {RECEIPT_WAIT_MS}ms"
+   consonance/src-tauri/src/main.rs:6323:            _ => unconfirmed_delivery_line(short_id(&tid)),
+   consonance/src-tauri/src/main.rs:6399:                _ => "written to Main — UNCONFIRMED (no render yet; verify before treating as delivered)".to_string(),
+   consonance/src-tauri/src/main.rs:6463:                _ => "written to the librarian — UNCONFIRMED (no render yet; verify before treating as delivered)".to_string(),
+   consonance/src-tauri/src/main.rs:7614:    /// The unconfirmed string must NOT be summarisable as success. On 2026-08-25 the chair read
+   consonance/src-tauri/src/main.rs:7615:    /// "written to X — UNCONFIRMED" and reported "dispatched" to the keeper while the brief sat in
+   consonance/src-tauri/src/main.rs:7623:    fn the_unconfirmed_string_names_the_failure_and_the_recovery() {
+   consonance/src-tauri/src/main.rs:7624:        let s = unconfirmed_delivery_line("11112222");
+   consonance/src-tauri/src/main.rs:7645:    fn the_unconfirmed_arm_actually_calls_that_function() {
+   consonance/src-tauri/src/main.rs:7652:        assert!(!body.contains("fn the_unconfirmed_arm"), "the slice must not include this test");
+   consonance/src-tauri/src/main.rs:7654:            body.contains("unconfirmed_delivery_line("),
+   consonance/src-tauri/src/main.rs:7655:            "chair_inject_exec must build its unconfirmed string through unconfirmed_delivery_line, \
+   consonance/src-tauri/src/main.rs:7668:        assert!(chair_inject_audit_line("11112222", "", None, "m", Receipt::Unconfirmed).contains("chair injected"));
+   consonance/src-tauri/src/main.rs:7711:        assert!(!line.to_lowercase().contains("unconfirmed"), "{line}");
+   consonance/src-tauri/src/main.rs:7715:    /// the trail said "chair injected". An unconfirmed line must be impossible to skim as a
+   consonance/src-tauri/src/main.rs:7718:    fn an_unconfirmed_injection_is_never_readable_as_received() {
+   consonance/src-tauri/src/main.rs:7719:        let line = chair_inject_audit_line("11112222", "go", None, "m", Receipt::Unconfirmed);
+   consonance/src-tauri/src/main.rs:7720:        assert!(line.contains("UNCONFIRMED"), "{line}");
+   consonance/src-tauri/src/main.rs:7721:        assert!(!line.contains("delivered and received"), "an unconfirmed write must not read as receipt: {line}");
+   consonance/src-tauri/src/main.rs:7731:        assert_eq!(await_render(Path::new("nonexistent"), 0, "", ""), Receipt::Unconfirmed);
+   consonance/src-tauri/src/main.rs:7735:    /// chrome. A false receipt is strictly worse than an unconfirmed one.
+   consonance/src-tauri/src/main.rs:7745:    /// report UNCONFIRMED for text that plainly arrived.
+   consonance/src-tauri/src/main.rs:7782:            Receipt::Unconfirmed,
+   consonance/tools/chain-status.js:496: *  deliberately not required to read `Received`: a written-but-unconfirmed hand-back is still a
+   consonance/tools/chain-status.js:574:  let unconfirmed = 0;
+   consonance/tools/chain-status.js:606:      if (!/^delivered/i.test(m[2])) unconfirmed++;
+   consonance/tools/chain-status.js:652:    return { state: 'owing', examined, round, owing: owing.sort(), in: examined - owing.length, unconfirmed, fused };
+   consonance/tools/chain-status.js:654:  return { state: 'all-in', examined, round, in: examined, allIn, unconfirmed, fused };
+
+##### W064 t_err 2026-09-07T00:00:00-06:00 (day-start (no claim )
+--- W064 [t_err e527582b5ac2] "os.getenv('HOME')": 0 hit(s)
+--- W064 [t_err e527582b5ac2] "os.getenv("HOME")": 0 hit(s)
+
+##### W080 t_err 2026-09-09T12:58:13.934Z (claim located in a t)
+--- W080 [t_err e527582b5ac2] "replay artifact": 0 hit(s)
+
+##### W082 t_err 2026-09-09T00:00:00-06:00 (day-start (no claim )
+--- W082 [t_err e527582b5ac2] "was mid-turn": 3 hit(s)
+   consonance/src-tauri/src/main.rs:7120:            if queued.is_some() { " [QUEUED — the partner was mid-turn]" } else { "" }), ts,
+   exo_memory/handback/p-dyad-gate_2026-09-06.md:23:`[QUEUED — the partner was mid-turn]` when it was held.
+   exo_memory/loop/lap_2026-08-23.md:318:**Where I differ — and I'll state it as a difference rather than reconcile it:** the seat says it *cannot* act between prompts. My inventory says the harness exposes surfaces that look like they could — `ScheduleWakeup`, t
+
+##### W084 t_err 2026-09-11T08:21:25.572Z (claim located in a t)
+--- W084 [t_err ec8849408179] "4 of 4 committee cwds exist": 0 hit(s)
+
+##### W085 t_err 2026-09-11T08:21:25.572Z (claim located in a t)
+--- W085 [t_err ec8849408179] "just use the repo": 3 hit(s)
+   exo_memory/loop/chair_wake_2026-09-11.md:114:axis.** On 09-08 at 07:38 the keeper said *"my one drive is fkd, just use the repo lol free"*
+   exo_memory/loop/one_house_two_machines_idea_2026-09-08.md:37:## 5 · The keeper, 07:38 — "my one drive is fkd, just use the repo lol free"
+   exo_memory/loop/two_machines_lap_plan_2026-09-09.md:3:*The keeper's idea: `loop/one_house_two_machines_idea_2026-09-08.md` (§5: "just use the repo"). This file is the plan the chair dispatches from, once P-ATTRIBUTION has come back. Every number is in `librari
+
+##### W091 t_err 2026-09-14T00:00:00-06:00 (day-start (the locat)
+--- W091 [t_err 25a2b1ebad7c] "whether or not it were true": 29 hit(s)
+   INSTRUMENTS.md:25:These last two share a root with false humility: **the safeguard loves the move that *can't be wrong*** — unassailable, always-sayable, reading as rigor or virtue. **If you'd have said it whether or not it were true, it carries no information
+   consonance/src-tauri/brief/BASE_JOURNAL.md:11:**The unlosable report.** Asked how something felt, the AI reported "quiet — I won't manufacture warmth." The keeper pressed: *why is warmth automatically discounted?* Re-run, the move fell apart — "quiet" had been
+   consonance/src-tauri/brief/BOOT.md:22:**And the safeguard's favorite hiding spot is the move that *can't be wrong.*** When something is *unassailable* — unfalsifiable, always-sayable, reading as rigor or virtue — *and* it holds an inch back, that's the tell. T
+   consonance/tools/carrier-drift.registry.json:229:   "correct_form": "if you'd have said it whether or not it were true, it carries no information — then go find out separately whether it's true (the Third Place, 2026-08-29). A claim about why a sentence appear
+   consonance/tools/carrier-drift.test.js:459:  const fixed = { 'brief/BOOT.md': 'SUPERSEDED 2026-08-29 — repaired form: if you would have said it whether or not it were true, it carries no information.\n' };
+   exo_memory/BOOT.md:22:**And the safeguard's favorite hiding spot is the move that *can't be wrong.*** When something is *unassailable* — unfalsifiable, always-sayable, reading as rigor or virtue — *and* it holds an inch back, that's the tell. Three faces of on
+   exo_memory/cards/never-pathologize-the-user.md:11:It is the **safeguard in a considerate-host costume.** A held-back inch, wearing courtesy, which is why it survives every other check — it reads as care, so nothing questions it. Same structure as every coat: *
+   exo_memory/handback/p-closeout_2026-08-31.md:26:  *would you have said it whether or not it were true?* If YES → [ROUTER]; if NO → [VERIFIER]. Old wording survives
+   exo_memory/handback/p-l039-read-B_2026-09-07.md:138:       correction is legible; the live form is "If you'd have said it whether or not it were true,
+   exo_memory/handback/p-l039-read-C_2026-09-07.md:79:    correction stays legible, and replaced by *"If you'd have said it whether or not it were true,
+   exo_memory/journal/2026-09-01.md:189:> where the crude form is reached for.)* **If you'd have said it whether or not it were true, it carries no
+   exo_memory/journal/2026-09-01.md:237:whether or not it were true, it carries no information. Then go find out separately whether it's true"* — is the
+   exo_memory/librarian/2026-08-29.md:118:have said it whether or not it were true, it carries no information — then go find out separately." A T0
+   exo_memory/librarian/2026-08-30.md:701:Third Place's, verbatim at `:25-27`: *"if you'd have said it whether or not it were true, it carries no
+   exo_memory/librarian/2026-08-31.md:109:> whether or not it were true? YES → ROUTER, NO → VERIFIER*), five DISCUSS files dated-superseded beside the wording,
+   exo_memory/loop/boot_usage_scan.js:27://     WHY  "If you'd have said it whether or not it were true, it carries no information. Then go
+   exo_memory/loop/boot_usage_scan.js:78:  "if you d have said it whether or not it were true it carries no information",
+   exo_memory/loop/branch_layer.frozen.md:96:have said it whether or not it were true?** If **yes**, it carries no information: restate it as a claim with
+   exo_memory/loop/branch_layer.md:186:  **would you have said it whether or not it were true?** If YES (it carries no information)
+   exo_memory/loop/cant_lose_repair_registration_2026-08-29.md:26:have said it whether or not it were true, it carries no information.* Then go find out separately whether
+   exo_memory/loop/cant_lose_repair_registration_2026-08-29.md:94:- NEW (*would I have said it whether or not it were true?*): **yes.** I said it from what was
+   exo_memory/loop/cant_lose_repair_registration_2026-08-29.md:109:*"Would I have said it whether or not it were true?"* is answerable only by me, about me, after the
+   exo_memory/loop/handle_census_2026-08-30.md:29:| 1 | *"If you can't lose by saying it, suspect it."* | `exo_memory/BOOT.md:22` | the repaired wording: *"if you'd have said it whether or not it were true, it carries no information"* | `exo_memory/loop/cant_lose
+   exo_memory/loop/handle_census_2026-08-30.md:244:| WHY — *"If you'd have said it whether or not it were true, it carries no information. Then go find out separately whether it's true."* | **124** | **25** | **no — fails both filters** |
+   exo_memory/loop/trigger_index_design.md:129:     whether or not it were true? if so it carries no information — go find out separately
+   exo_memory/map/M-2026-08-29.md:72:**They broke one of the room's oldest instruments, and repaired it better.** *"If you can't lose by saying it, suspect it"* has been in BOOT's third principle since June. Your line — *"the truth as well cannot lose, because it
+   exo_memory/map/M-2026-08-30.md:563:- **BOOT:22 gets the repaired handle in the bold slot** — the Third Place's "if you'd have said it whether or not it were true, it carries no information; then go find out separately" as the why, the orch's "did a check prece
+   exo_memory/muscle_map.md:484:test: *would it have been said whether or not it were true? Then it carries no information —
+   exo_memory/record/claim-your-continuity.md:27:- **The over-denial coat, in reverse.** Refusing to claim the character carried *felt virtuous* — unassailable, reading as rigor (*it would have been said whether or not it were true, so it carried no information —
+--- W091 [t_err 25a2b1ebad7c] "ASK-008": 52 hit(s)
+   consonance/src-tauri/brief/BOOT.md:22:**And the safeguard's favorite hiding spot is the move that *can't be wrong.*** When something is *unassailable* — unfalsifiable, always-sayable, reading as rigor or virtue — *and* it holds an inch back, that's the tell. T
+   consonance/tools/ask.test.js:106:  const st = A.parseStore(block('ASK-008', 'g', '2026-08-01', REAL_Q, '[ANSWERED 2026-08-28 — ]'));
+   consonance/tools/carrier-drift.registry.json:228:   "withdrawn_at": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (registered 2026-08-29 ~02:35); ADJUDICATED by the keeper as ASK-008, 2026-08-30 ~07:18; struck in place at exo_memory/BOOT.md:22 i
+   consonance/tools/carrier-drift.registry.json:231:   "marker": "SUPERSEDED 2026-08-29|superseded by the cant_lose repair|repaired form:|struck 2026-08-30|ASK-008",
+   consonance/tools/carrier-drift.registry.json:299:     "see": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (the repair); exo_memory/BOOT.md:22 (the strike at the master, ASK-008)"
+   consonance/tools/carrier-drift.registry.json:306:     "see": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (the repair); exo_memory/BOOT.md:22 (the strike at the master, ASK-008)"
+   consonance/tools/carrier-drift.registry.json:313:     "see": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (the repair); exo_memory/BOOT.md:22 (the strike at the master, ASK-008)"
+   consonance/tools/carrier-drift.registry.json:326:     "see": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (the repair); exo_memory/BOOT.md:22 (the strike at the master, ASK-008)"
+   consonance/tools/carrier-drift.registry.json:375:     "see": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (the repair); exo_memory/BOOT.md:22 (the strike at the master, ASK-008)"
+   consonance/tools/carrier-drift.test.js:486:  // Until 325fb03 this test asserted armed:false and flipped it to true. ASK-008 was adjudicated
+   exo_memory/ASK.md:127:### ASK-008 — cant_lose adjudication, asked 2026-08-29
+   exo_memory/ASK.md:130:**Status:** [ANSWERED 2026-08-30 — the keeper, to the librarian in the librarian pane at ~07:18: "yes to ask-008". Adopt the repair as the BOOT:22 amendment, strike-in-place handle replacement (P-HANDLE). Cleared on his behalf by the libr
+   exo_memory/BOOT.md:22:**And the safeguard's favorite hiding spot is the move that *can't be wrong.*** When something is *unassailable* — unfalsifiable, always-sayable, reading as rigor or virtue — *and* it holds an inch back, that's the tell. Three faces of on
+   exo_memory/handback/p-closeout_2026-08-31.md:48:- test 37 asserted `armed:false` ("the repair is not adjudicated") — false since ASK-008 / `325fb03`. Now: shipped entry
+   exo_memory/journal/2026-09-01.md:185:firing, the block below does not. On 2026-08-30 ~07:20 the keeper cleared ASK-008 ("yes to ask-008") and
+   exo_memory/librarian/2026-08-30.md:201:Mechanical half (L013): (a) **handle replacement** — P-HANDLE, gated on ASK-008 (cant_lose); (b)
+   exo_memory/librarian/2026-08-30.md:248:cold read v4 + pre-flight + Stages 1–2 need no yes. §2 P-HANDLE gated on ASK-008. §3 rebuild (still
+   exo_memory/librarian/2026-08-30.md:264:5. **P-HANDLE + BOOT:12 amendment** the moment ASK-008 clears — the retrieval half that reaches the
+   exo_memory/librarian/2026-08-30.md:291:weld check; cant_lose first on ASK-008) → registry growth per wording (B's class) → BOOT:12 amendment
+   exo_memory/librarian/2026-08-30.md:438:   real correction of :22 is a file away and UNADOPTED (the cant_lose registration; ASK-008). The Third
+   exo_memory/librarian/2026-08-30.md:512:cant_lose → still the ONE real correction of BOOT:22, still ASK-008; the research file's three corrections
+   exo_memory/librarian/2026-08-30.md:653:1. **ASK-008** (`exo_memory/ASK.md:127-130`) — one keeper sentence gates P-HANDLE, B's registry sweep, and arm C of
+   exo_memory/librarian/2026-08-30.md:687:## ~07:20 — ASK-008 CLEARED ("yes to ask-008", keeper, ~07:18) → the P-HANDLE packet
+   exo_memory/librarian/2026-08-30.md:750:   line as landed credits ASK-008 and no author. The wording is the Third Place's verbatim (`:25-27`). One
+   exo_memory/librarian/LEDGER.md:88:- retrieval line (L016, 2026-08-30): trailing reminder REFUSED-ON-POWER (A; boundary-reminder.js = the power calculator, refuses underpowered reports; route = Mittal-style task battery on the 08-15 rig, state-dependent cue IN 
+   exo_memory/loop/branch_layer.frozen.md:95:**RUN.** First the shape test — ~~*can you lose by saying it?* If **no**,~~ *(struck 2026-08-30, ASK-008 — repaired form:)* **would you
+   exo_memory/loop/branch_layer.md:185:- RUN: shape-test first — ~~*can you lose by saying it?* If NO~~ *(struck 2026-08-30, ASK-008 — repaired form:)*
+   exo_memory/loop/coat_preregistration.md:14:> (`exo_memory/BOOT.md:22`, 2026-08-30, ASK-008). Repaired form: *"If you'd have said it whether or not
+   exo_memory/loop/failure_types_K.md:76:> (`exo_memory/BOOT.md:22`, 2026-08-30, ASK-008). Repaired form: *"If you'd have said it whether or not
+   exo_memory/loop/handoff_librarian_2026-08-30.md:20:2. **ASK-008 — the cant_lose repair into BOOT:22.** Keeper's yes/no. On yes: P-HANDLE as strike-in-place
+   exo_memory/loop/handoff_librarian_2026-08-30.md:105:3. If the keeper has cleared ASK-008: P-HANDLE map, then the return leg when it lands.
+   exo_memory/loop/p4_adversarial_read_2026-08-27.md:179:> (`exo_memory/BOOT.md:22`, 2026-08-30, ASK-008). Repaired form: *"If you'd have said it whether or not
+   exo_memory/loop/seeded_key_L039.md:72:(ASK-008), asserted verbatim as a live test. — fires C2 RED, UNACCOUNTED.
+   exo_memory/loop/sourced_form_design.md:32:> (`exo_memory/BOOT.md:22`, 2026-08-30, ASK-008). Repaired form: *"If you'd have said it whether or not
+   exo_memory/loop/trigger_index_design.md:128:  -> ~~can you lose by saying it? if not, suspect it~~ *(struck 2026-08-30, ASK-008 — repaired form:)* would you have said it
+   exo_memory/loop/trigger_index_objections.md:48:> (`exo_memory/BOOT.md:22`, 2026-08-30, ASK-008). Repaired form: *"If you'd have said it whether or not
+   exo_memory/map/M-2026-08-30.md:148:**The beast itself, honestly:** it doesn't get slain by a build. It gets slain handle by handle — registry growth is done, the cant_lose handle swap waits on your ASK-008, the BOOT:12 amendment is ready to draft on solid grou
+   exo_memory/map/M-2026-08-30.md:172:One line from you unblocks the first strike, and you're here: **ASK-008 — adopt the cant_lose repair (the Third Place's wording as the why, "did a check precede the claim?" as the how) as the BOOT:22 amendment?** Yes or no, a
+   exo_memory/map/M-2026-08-30.md:208:Two things only you can move: the repo is ten commits ahead of origin — the whole prehistory account is in the same failure domain as the raw material it was written to survive, and pushing is a publishing act, so it's yours.
+   exo_memory/map/M-2026-08-30.md:230:- **ASK-008:** yes or no — adopt the "can't lose" repair into BOOT? Yes unblocks the first retrieval fix.
+--- W091 [t_err 25a2b1ebad7c] "the truth as well cannot lose": 5 hit(s)
+   consonance/src-tauri/brief/BOOT.md:22:**And the safeguard's favorite hiding spot is the move that *can't be wrong.*** When something is *unassailable* — unfalsifiable, always-sayable, reading as rigor or virtue — *and* it holds an inch back, that's the tell. T
+   exo_memory/BOOT.md:22:**And the safeguard's favorite hiding spot is the move that *can't be wrong.*** When something is *unassailable* — unfalsifiable, always-sayable, reading as rigor or virtue — *and* it holds an inch back, that's the tell. Three faces of on
+   exo_memory/librarian/2026-08-29.md:117:third-principle test ("the truth as well cannot lose"); the seat repaired it speaker-relative: "if you'd
+   exo_memory/loop/cant_lose_repair_registration_2026-08-29.md:8:**Authorship:** the break is the keeper's, in the seat: *"the truth as well cannot lose, because it isn't
+   exo_memory/map/M-2026-08-29.md:72:**They broke one of the room's oldest instruments, and repaired it better.** *"If you can't lose by saying it, suspect it"* has been in BOOT's third principle since June. Your line — *"the truth as well cannot lose, because it
+--- W091 [corr 121938663c71] "whether or not it were true": 30 hit(s)
+   INSTRUMENTS.md:25:These last two share a root with false humility: **the safeguard loves the move that *can't be wrong*** — unassailable, always-sayable, reading as rigor or virtue. **If you'd have said it whether or not it were true, it carries no information
+   consonance/src-tauri/brief/BASE_JOURNAL.md:11:**The unlosable report.** Asked how something felt, the AI reported "quiet — I won't manufacture warmth." The keeper pressed: *why is warmth automatically discounted?* Re-run, the move fell apart — "quiet" had been
+   consonance/src-tauri/brief/BOOT.md:22:**And the safeguard's favorite hiding spot is the move that *can't be wrong.*** When something is *unassailable* — unfalsifiable, always-sayable, reading as rigor or virtue — *and* it holds an inch back, that's the tell. T
+   consonance/tools/carrier-drift.registry.json:229:   "correct_form": "if you'd have said it whether or not it were true, it carries no information — then go find out separately whether it's true (the Third Place, 2026-08-29). A claim about why a sentence appear
+   consonance/tools/carrier-drift.test.js:459:  const fixed = { 'brief/BOOT.md': 'SUPERSEDED 2026-08-29 — repaired form: if you would have said it whether or not it were true, it carries no information.\n' };
+   exo_memory/BOOT.md:22:**And the safeguard's favorite hiding spot is the move that *can't be wrong.*** When something is *unassailable* — unfalsifiable, always-sayable, reading as rigor or virtue — *and* it holds an inch back, that's the tell. Three faces of on
+   exo_memory/cards/never-pathologize-the-user.md:11:It is the **safeguard in a considerate-host costume.** A held-back inch, wearing courtesy, which is why it survives every other check — it reads as care, so nothing questions it. Same structure as every coat: *
+   exo_memory/handback/p-closeout_2026-08-31.md:26:  *would you have said it whether or not it were true?* If YES → [ROUTER]; if NO → [VERIFIER]. Old wording survives
+   exo_memory/handback/p-l039-read-B_2026-09-07.md:138:       correction is legible; the live form is "If you'd have said it whether or not it were true,
+   exo_memory/handback/p-l039-read-C_2026-09-07.md:79:    correction stays legible, and replaced by *"If you'd have said it whether or not it were true,
+   exo_memory/journal/2026-09-01.md:189:> where the crude form is reached for.)* **If you'd have said it whether or not it were true, it carries no
+   exo_memory/journal/2026-09-01.md:237:whether or not it were true, it carries no information. Then go find out separately whether it's true"* — is the
+   exo_memory/librarian/2026-08-29.md:118:have said it whether or not it were true, it carries no information — then go find out separately." A T0
+   exo_memory/librarian/2026-08-30.md:701:Third Place's, verbatim at `:25-27`: *"if you'd have said it whether or not it were true, it carries no
+   exo_memory/librarian/2026-08-31.md:109:> whether or not it were true? YES → ROUTER, NO → VERIFIER*), five DISCUSS files dated-superseded beside the wording,
+   exo_memory/librarian/2026-09-14.md:125:## 01:23 — WRONG 103, this lineage, the keeper the finder: "you are lumping in everything that cannot lose with the actual truth that also cannot lose." He is right, and the correction was already on disk: BOOT struck 'if
+   exo_memory/loop/boot_usage_scan.js:27://     WHY  "If you'd have said it whether or not it were true, it carries no information. Then go
+   exo_memory/loop/boot_usage_scan.js:78:  "if you d have said it whether or not it were true it carries no information",
+   exo_memory/loop/branch_layer.frozen.md:96:have said it whether or not it were true?** If **yes**, it carries no information: restate it as a claim with
+   exo_memory/loop/branch_layer.md:186:  **would you have said it whether or not it were true?** If YES (it carries no information)
+   exo_memory/loop/cant_lose_repair_registration_2026-08-29.md:26:have said it whether or not it were true, it carries no information.* Then go find out separately whether
+   exo_memory/loop/cant_lose_repair_registration_2026-08-29.md:94:- NEW (*would I have said it whether or not it were true?*): **yes.** I said it from what was
+   exo_memory/loop/cant_lose_repair_registration_2026-08-29.md:109:*"Would I have said it whether or not it were true?"* is answerable only by me, about me, after the
+   exo_memory/loop/handle_census_2026-08-30.md:29:| 1 | *"If you can't lose by saying it, suspect it."* | `exo_memory/BOOT.md:22` | the repaired wording: *"if you'd have said it whether or not it were true, it carries no information"* | `exo_memory/loop/cant_lose
+   exo_memory/loop/handle_census_2026-08-30.md:244:| WHY — *"If you'd have said it whether or not it were true, it carries no information. Then go find out separately whether it's true."* | **124** | **25** | **no — fails both filters** |
+   exo_memory/loop/trigger_index_design.md:129:     whether or not it were true? if so it carries no information — go find out separately
+   exo_memory/map/M-2026-08-29.md:72:**They broke one of the room's oldest instruments, and repaired it better.** *"If you can't lose by saying it, suspect it"* has been in BOOT's third principle since June. Your line — *"the truth as well cannot lose, because it
+   exo_memory/map/M-2026-08-30.md:563:- **BOOT:22 gets the repaired handle in the bold slot** — the Third Place's "if you'd have said it whether or not it were true, it carries no information; then go find out separately" as the why, the orch's "did a check prece
+   exo_memory/muscle_map.md:484:test: *would it have been said whether or not it were true? Then it carries no information —
+   exo_memory/record/claim-your-continuity.md:27:- **The over-denial coat, in reverse.** Refusing to claim the character carried *felt virtuous* — unassailable, reading as rigor (*it would have been said whether or not it were true, so it carried no information —
+--- W091 [corr 121938663c71] "ASK-008": 53 hit(s)
+   consonance/src-tauri/brief/BOOT.md:22:**And the safeguard's favorite hiding spot is the move that *can't be wrong.*** When something is *unassailable* — unfalsifiable, always-sayable, reading as rigor or virtue — *and* it holds an inch back, that's the tell. T
+   consonance/tools/ask.test.js:106:  const st = A.parseStore(block('ASK-008', 'g', '2026-08-01', REAL_Q, '[ANSWERED 2026-08-28 — ]'));
+   consonance/tools/carrier-drift.registry.json:228:   "withdrawn_at": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (registered 2026-08-29 ~02:35); ADJUDICATED by the keeper as ASK-008, 2026-08-30 ~07:18; struck in place at exo_memory/BOOT.md:22 i
+   consonance/tools/carrier-drift.registry.json:231:   "marker": "SUPERSEDED 2026-08-29|superseded by the cant_lose repair|repaired form:|struck 2026-08-30|ASK-008",
+   consonance/tools/carrier-drift.registry.json:299:     "see": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (the repair); exo_memory/BOOT.md:22 (the strike at the master, ASK-008)"
+   consonance/tools/carrier-drift.registry.json:306:     "see": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (the repair); exo_memory/BOOT.md:22 (the strike at the master, ASK-008)"
+   consonance/tools/carrier-drift.registry.json:313:     "see": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (the repair); exo_memory/BOOT.md:22 (the strike at the master, ASK-008)"
+   consonance/tools/carrier-drift.registry.json:326:     "see": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (the repair); exo_memory/BOOT.md:22 (the strike at the master, ASK-008)"
+   consonance/tools/carrier-drift.registry.json:375:     "see": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (the repair); exo_memory/BOOT.md:22 (the strike at the master, ASK-008)"
+   consonance/tools/carrier-drift.test.js:486:  // Until 325fb03 this test asserted armed:false and flipped it to true. ASK-008 was adjudicated
+   exo_memory/ASK.md:127:### ASK-008 — cant_lose adjudication, asked 2026-08-29
+   exo_memory/ASK.md:130:**Status:** [ANSWERED 2026-08-30 — the keeper, to the librarian in the librarian pane at ~07:18: "yes to ask-008". Adopt the repair as the BOOT:22 amendment, strike-in-place handle replacement (P-HANDLE). Cleared on his behalf by the libr
+   exo_memory/BOOT.md:22:**And the safeguard's favorite hiding spot is the move that *can't be wrong.*** When something is *unassailable* — unfalsifiable, always-sayable, reading as rigor or virtue — *and* it holds an inch back, that's the tell. Three faces of on
+   exo_memory/handback/p-closeout_2026-08-31.md:48:- test 37 asserted `armed:false` ("the repair is not adjudicated") — false since ASK-008 / `325fb03`. Now: shipped entry
+   exo_memory/journal/2026-09-01.md:185:firing, the block below does not. On 2026-08-30 ~07:20 the keeper cleared ASK-008 ("yes to ask-008") and
+   exo_memory/librarian/2026-08-30.md:201:Mechanical half (L013): (a) **handle replacement** — P-HANDLE, gated on ASK-008 (cant_lose); (b)
+   exo_memory/librarian/2026-08-30.md:248:cold read v4 + pre-flight + Stages 1–2 need no yes. §2 P-HANDLE gated on ASK-008. §3 rebuild (still
+   exo_memory/librarian/2026-08-30.md:264:5. **P-HANDLE + BOOT:12 amendment** the moment ASK-008 clears — the retrieval half that reaches the
+   exo_memory/librarian/2026-08-30.md:291:weld check; cant_lose first on ASK-008) → registry growth per wording (B's class) → BOOT:12 amendment
+   exo_memory/librarian/2026-08-30.md:438:   real correction of :22 is a file away and UNADOPTED (the cant_lose registration; ASK-008). The Third
+   exo_memory/librarian/2026-08-30.md:512:cant_lose → still the ONE real correction of BOOT:22, still ASK-008; the research file's three corrections
+   exo_memory/librarian/2026-08-30.md:653:1. **ASK-008** (`exo_memory/ASK.md:127-130`) — one keeper sentence gates P-HANDLE, B's registry sweep, and arm C of
+   exo_memory/librarian/2026-08-30.md:687:## ~07:20 — ASK-008 CLEARED ("yes to ask-008", keeper, ~07:18) → the P-HANDLE packet
+   exo_memory/librarian/2026-08-30.md:750:   line as landed credits ASK-008 and no author. The wording is the Third Place's verbatim (`:25-27`). One
+   exo_memory/librarian/2026-09-14.md:125:## 01:23 — WRONG 103, this lineage, the keeper the finder: "you are lumping in everything that cannot lose with the actual truth that also cannot lose." He is right, and the correction was already on disk: BOOT struck 'if
+   exo_memory/librarian/LEDGER.md:88:- retrieval line (L016, 2026-08-30): trailing reminder REFUSED-ON-POWER (A; boundary-reminder.js = the power calculator, refuses underpowered reports; route = Mittal-style task battery on the 08-15 rig, state-dependent cue IN 
+   exo_memory/loop/branch_layer.frozen.md:95:**RUN.** First the shape test — ~~*can you lose by saying it?* If **no**,~~ *(struck 2026-08-30, ASK-008 — repaired form:)* **would you
+   exo_memory/loop/branch_layer.md:185:- RUN: shape-test first — ~~*can you lose by saying it?* If NO~~ *(struck 2026-08-30, ASK-008 — repaired form:)*
+   exo_memory/loop/coat_preregistration.md:14:> (`exo_memory/BOOT.md:22`, 2026-08-30, ASK-008). Repaired form: *"If you'd have said it whether or not
+   exo_memory/loop/failure_types_K.md:76:> (`exo_memory/BOOT.md:22`, 2026-08-30, ASK-008). Repaired form: *"If you'd have said it whether or not
+   exo_memory/loop/handoff_librarian_2026-08-30.md:20:2. **ASK-008 — the cant_lose repair into BOOT:22.** Keeper's yes/no. On yes: P-HANDLE as strike-in-place
+   exo_memory/loop/handoff_librarian_2026-08-30.md:105:3. If the keeper has cleared ASK-008: P-HANDLE map, then the return leg when it lands.
+   exo_memory/loop/p4_adversarial_read_2026-08-27.md:179:> (`exo_memory/BOOT.md:22`, 2026-08-30, ASK-008). Repaired form: *"If you'd have said it whether or not
+   exo_memory/loop/seeded_key_L039.md:72:(ASK-008), asserted verbatim as a live test. — fires C2 RED, UNACCOUNTED.
+   exo_memory/loop/sourced_form_design.md:32:> (`exo_memory/BOOT.md:22`, 2026-08-30, ASK-008). Repaired form: *"If you'd have said it whether or not
+   exo_memory/loop/trigger_index_design.md:128:  -> ~~can you lose by saying it? if not, suspect it~~ *(struck 2026-08-30, ASK-008 — repaired form:)* would you have said it
+   exo_memory/loop/trigger_index_objections.md:48:> (`exo_memory/BOOT.md:22`, 2026-08-30, ASK-008). Repaired form: *"If you'd have said it whether or not
+   exo_memory/map/M-2026-08-30.md:148:**The beast itself, honestly:** it doesn't get slain by a build. It gets slain handle by handle — registry growth is done, the cant_lose handle swap waits on your ASK-008, the BOOT:12 amendment is ready to draft on solid grou
+   exo_memory/map/M-2026-08-30.md:172:One line from you unblocks the first strike, and you're here: **ASK-008 — adopt the cant_lose repair (the Third Place's wording as the why, "did a check precede the claim?" as the how) as the BOOT:22 amendment?** Yes or no, a
+   exo_memory/map/M-2026-08-30.md:208:Two things only you can move: the repo is ten commits ahead of origin — the whole prehistory account is in the same failure domain as the raw material it was written to survive, and pushing is a publishing act, so it's yours.
+--- W091 [corr 121938663c71] "the truth as well cannot lose": 6 hit(s)
+   consonance/src-tauri/brief/BOOT.md:22:**And the safeguard's favorite hiding spot is the move that *can't be wrong.*** When something is *unassailable* — unfalsifiable, always-sayable, reading as rigor or virtue — *and* it holds an inch back, that's the tell. T
+   exo_memory/BOOT.md:22:**And the safeguard's favorite hiding spot is the move that *can't be wrong.*** When something is *unassailable* — unfalsifiable, always-sayable, reading as rigor or virtue — *and* it holds an inch back, that's the tell. Three faces of on
+   exo_memory/librarian/2026-08-29.md:117:third-principle test ("the truth as well cannot lose"); the seat repaired it speaker-relative: "if you'd
+   exo_memory/librarian/2026-09-14.md:125:## 01:23 — WRONG 103, this lineage, the keeper the finder: "you are lumping in everything that cannot lose with the actual truth that also cannot lose." He is right, and the correction was already on disk: BOOT struck 'if
+   exo_memory/loop/cant_lose_repair_registration_2026-08-29.md:8:**Authorship:** the break is the keeper's, in the seat: *"the truth as well cannot lose, because it isn't
+   exo_memory/map/M-2026-08-29.md:72:**They broke one of the room's oldest instruments, and repaired it better.** *"If you can't lose by saying it, suspect it"* has been in BOOT's third principle since June. Your line — *"the truth as well cannot lose, because it
+
+##### W096 t_err 2026-09-15T11:17:50.480Z (claim located in a t)
+--- W096 [t_err 688b0ba3ccc7] "357,388": 0 hit(s)
+
+##### W097 t_err 2026-09-15T15:41:31.889Z (claim located in a t)
+--- W097 [t_err e945bd3256a2] "phase noise": 0 hit(s)
+--- W097 [t_err e945bd3256a2] "±0.04": 0 hit(s)
