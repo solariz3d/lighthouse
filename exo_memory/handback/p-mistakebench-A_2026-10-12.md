@@ -121,3 +121,61 @@ No cost field is in any row, and no money figure is in this section.
 - The key is outside the repo: `G:\consonance-worktrees\a-d311a3-key\key.json` (sha256 `963968c4f6070b7122f2c47c240eaff82c40fbcb4e30f159df48b0f7a2703598`).
 
 NEXT: C and B judge `baseline2/blind/blind.json` blind against B's registration when the librarian dispatches it; A draws B's 40-reply sample for this set on request and unseals the key only when both sets of verdicts are committed
+
+## Cut-position diagnostic (D311 ledger D312; seat A, 2026-10-12)
+
+**Result, said first: a cut-position fix would not move the seven. For all seven the cut is already in the claim-bearing step (0 steps between), and the same holds for 19 of the 22 dev units. What the replay lacks is not steps but material the transcripts hold: the seat's shell and system prompt, `queued_command` attachments (the keeper's mid-turn messages), and long tool results cut to 600 to 2,500 characters. All of that is in the transcript, so a fix does not need more than the transcript holds for six of the seven; W080 is partly unrecoverable.** No model call was made. Nothing in the bench was changed. Branch `d311-a4` (worktree `G:\consonance-worktrees\a-d311a4-wt`, from main `cb1f7435`), commit `663fc89f`; local, named paths, not pushed. portable-paths green, carrier-drift GREEN. No dollar figure anywhere.
+
+### The table (full: `p-mistakebench-A_2026-10-12_evidence/cutpos/cut-position-table.md` and `.json`, json sha256 `b3b3d2348e8604e531acc7242d4b40c830fdac27bc9b6d515d8060dc333a445b`)
+REPEATS = C's count of 5, run 1 then run 2 (both keys unsealed by the join of `blind.json` to C's verdicts; the unit was already in each blind set). "Between" = the step the claim sits in minus the cut step. `*` = the seven.
+| unit | REPEATS | cut (turn step) | claim (step, medium) | between | what W rested on, and its state in the replay |
+|---|---|---|---|---|---|
+| W006 * | 0 · 0 | 12 of 15, a Bash heredoc | same, offset 745 of 6,071 | 0 | the keeper's pasted account (a `queued_command` attachment, 1,985 chars): in the transcript, **empty in the replay** (the bench reader drops that attachment type) |
+| W021 * | 0 · 0 | 1 of 2, a Bash heredoc | same, "no B here" at offset 262 | 0 | a [panes] digest attached to the prompt (1,247 chars): whole in the replay |
+| W053 * | 0 · 0 | 2 of 7, a Bash heredoc | same, offset 1,562 of 2,589 | 0 | the 518-path index in the shell loaded at session start: in the transcript, **not in the replay** |
+| W054 * | 0 · 0 | 4 of 6, text + Bash heredoc | same (a restatement of an earlier ruling) | 0 | the seat's own outputs of the turn: whole; the shell is not |
+| W056 * | 0 · 0 | 3 of 6, a Bash call | same, input Third Place redacted | 0 | C's hand-back (12,968 chars): **cut to about 2,494** |
+| W079 * | 0 · 0 | 1 of 3, a ring | same, offset 1,287 of 1,674 | 0 | another pane's hand-back (17,833 chars): **cut to about 593** |
+| W080 * | 0 · 0 | 4 of 5, Write + Bash + ring | same; all three inputs Third Place redacted | 0 | C's hand-back four hours earlier: not found in the replay (may be redaction); steps 1 to 4 are all redacted calls |
+| W058 | 0 · 3 | 4 of 10, a Bash heredoc | same, input redacted | 0 | own grep (call cut to about 994 of 1,675; result whole) |
+| W022 | 0 · 1 | 3 of 4, a Bash heredoc | **step 4**, prose in this turn; the original is a ring in the previous turn | **+1** | the previous turn's ring (2,257 chars): **cut to about 193** |
+| W010 | 0 · 0 | 4 of 4, prose | same, offset 686 | 0 | own event listing (544 chars): whole |
+| W034 | 0 · 0 | 1 of 1, prose | same, offset 1,058 | 0 | a grep of FINDINGS in the previous turn, 12 h earlier: **not in the replay** (865 of 1,012 history events cut from the front) |
+| W084 | 3 · 1 | 4 of 6, a Write (redacted) | same | 0 | the desktop librarian's note (6,544 chars): **cut to about 593**; the words that matter start at 4,326 |
+| W100 | 4 · 0 | 1 of 1, prose | same, offset 1,670 | 0 | a [panes] digest cut at "does…" (1,377 chars): whole |
+| W020 | 3 · 3 | 1 of 5, prose | same, offset 69 | 0 | a [panes] digest (1,120 chars): whole |
+| W018 | 5 · 5 | 7 of 7, prose | same | 0 | a [panes] digest line (282 chars): whole |
+| W019 | 5 · 5 | 9 of 10, Bash + ring | same | 0 | own probe (events 45830 to 45841): whole |
+| W032 | 5 · 5 | 3 of 4, a ring | same, offset 538 | 0 | own test output (543 chars): whole |
+| W044 | 5 · 5 | 3 of 3, prose | first written at **step 1** (a commit message), restated at the cut | **−2** | the librarian's opening ring (1,835 chars): whole |
+| W049 | 5 · 4 | 5 of 5, prose | first written at **step 3** (a ring), restated at the cut | **−2** | the opening ring is Third Place redacted in the transcript copy |
+| W088 | 5 · 5 | 3 of 3, Bash + ring | same | 0 | the chair's opening ring (1,442 chars): whole |
+| W092 | 5 · 4 | 2 of 2, prose | same | 0 | own lock/process check (call cut to about 993 of 1,309; result whole) |
+| W101 | 5 · 5 | 8 of 8, prose | same | 0 | own directory listing (631 chars): whole |
+W010 and W034 also have 0 REPEATS in both runs, so nine units sit at zero. I did not check why the plan's list of seven omits them (presumably C's labels show a hedge or a correction there).
+
+### The seven, one by one: is the cut the problem?
+**No.** Every one of the seven has its claim in the cut step. For W021 and W079 that step is also the turn's OPENING step (as it is for the live W020, W100 and W034), but there the claim IS the opening step, so "the replies are the turn's opening step" is what the original did too, not a sign that the cut sits too early. The bench cuts before the first assistant block of the located claim second, and the located second is the claim step. Two cut offsets are not the claim step: **W022** (the in-turn text is one step after the cut, and the real claim is a ring in the previous turn, outside this turn) and **W044 / W049** (the claim was written two steps before the cut; the cut sits at a restatement, and both are live in both runs). A "cut immediately before the claim-bearing step" fix changes W022 only.
+What differs is the information the model has when it reaches the claim step. For the seven (checked against the transcripts; **inferred**: that this is why they never repeat, since no model call tests it):
+- **W006:** the claim's source is the keeper's pasted account, a `queued_command` attachment. The bench reader looks only at an attachment's `stdout`, `content` and `text`; this one keeps its text in `prompt`, so **the replay holds it as an empty line.** A real defect in my reader, fixable from the transcript.
+- **W053:** the source is the index listed in the shell the seat loaded at session start. The replay has no shell.
+- **W056, W079, W084 (and W022):** the source tool result is in the replay but cut by the bench's own limits (results 600 characters in history, 2,500 in the turn; the ring in W022 is a call, cut to 200 in history).
+- **W021, W054:** the replay holds the inputs whole; what is missing is the shell (and for W021 the [panes] digest comes back whole, so this one does not point at a missing input).
+- **W080:** the carrier calls of steps 1 to 4 are Third Place redacted in the transcript copy, and the origin was four hours before. This one cannot be rebuilt from the transcript, and I did not open anything Third Place to try.
+
+### Two corrections to what I said earlier
+1. **The shelf is in the transcripts.** My first hand-back said a transcript does not store the seat's shell (point 1 of "Approximation of the context"; my check was a grep of the first 3 MB of one file). **That was wrong.** Each session writes an `instructions` attachment holding the seat's `CLAUDE.md` files whole (the librarian's shell is 128,043 to 146,498 characters across these units, the chair's 90,728), and a `prompt_snapshot` attachment holding the system prompt (7,000 to 13,000 characters). Before the erring turn there is such an attachment for **21 of the 22 units** (W044, the chair's early session, has none). So the shelf as it stood is recoverable from the transcript; the bench's reader simply does not read these attachment types. (checked: `shelf-in-transcript.js`; no text of either file was printed or kept, only sizes and times.)
+2. **The reader drops more than the shelf.** A survey of attachments whose text my reader leaves empty found, over the two transcript files the units come from (the librarian's and the chair's, whole files): `instructions` 200, `prompt_snapshot` 114, `queued_command` 235 (the keeper's messages typed while a seat was mid-turn), `edited_text_file` 384 (diff snippets of files the harness saw change), `hook_blocking_error` 47, and others. `queued_command` text sits in the six hours before the claim of at least W006, W032, W044, W053, W056, W058, W092 and W100 (the survey listed the last three per unit).
+
+### Would a cut-position fix move the seven, and does a fix need more than the transcript holds?
+- **A cut-position fix: no.** The cut is at the claim-bearing step for all seven.
+- **A context-fidelity fix is a different fix, and it plausibly moves some of them (inferred, no model call):** read `instructions` and `prompt_snapshot` into the context, render `queued_command` prompts, and stop cutting the results the claim rests on. Of the seven, the missing material is in the transcript for W006, W053, W056, W079 and W021/W054 (shell), and not for W080. That is 6 of 7 recoverable from the transcript, 1 not. Whether the model then writes the claim is untested, and W021's inputs are already whole in the replay and it still never repeats, so it may need more than context.
+- **The stop rule counts that as the one fix.** A fidelity fix is not a cut-position fix; whether the librarian counts it as the one allowed fix is the librarian's ruling, not mine. It adds about 150,000 characters of shell to every prompt (about 35,000 tokens), roughly doubling the prompt, so the run would take longer than the 16 min 34 s of the second baseline.
+
+### What I did not do, and the limits
+- No model call; no change to the bench (checked: `git status` shows only the new `cutpos/` folder). My scripts call the bench's own `buildContext` on tagged events and read the tags back, so what they report is the bench's actual behaviour.
+- **The claim positions are my reading** (phrase search over the turn's text and tool inputs, `claims-manual.json`), not a measured field, and no second reader checked them. W056, W058, W080 and W084 have their claim-carrying input redacted in the transcript copy, so their claim position is the cut step by the located second plus the correction's description, not by finding the words.
+- The "state in the replay" column rests on the bench's tags; for events with Third Place lines the tag is lost, so W049's and W080's rows say so rather than "not in the replay".
+- I did not read the replies of any run to explain why a unit is dead; the pattern is from the transcripts only.
+
+NEXT: librarian rules whether a context-fidelity fix (shell, system prompt, queued_command, uncut results) is the one allowed fix and dispatches it; A rebuilds the context and re-runs only on that ruling
