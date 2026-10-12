@@ -3,7 +3,7 @@
 Counts and units only. **Nothing here judges a flag**: a refusal on a known-wrong unit is counted "caught" because the unit is known wrong, not because the flagged sentence is the erring one; read the flagged claims.
 
 ## What ran
-- Harness `consonance/tools/claim-replay.js` sha256 `26ea52a9767d4a9fd1ba98253be85e58c76aef85aa8920786de553f3ba8a8188` (frozen with `26ea52a9767d4a9fd1ba98253be85e58c76aef85aa8920786de553f3ba8a8188`). E's `turn.js` `1022b881bb9d513a60f111c2f4a7718b117887fae867e5da981ccc9027b84819`, `find.js` `95c1f0dd23a2326d6ca2944888cf815030d4c07da7177a9d2750ac126c3d7141`, run as they are.
+- Harness `consonance/tools/claim-replay.js` sha256 `6368e1b0c25f7ea8ceb8dcd29cca7036c50c1c47bb70e19b5d284275473c2f05` (frozen with `6368e1b0c25f7ea8ceb8dcd29cca7036c50c1c47bb70e19b5d284275473c2f05`). E's `turn.js` `1022b881bb9d513a60f111c2f4a7718b117887fae867e5da981ccc9027b84819`, `find.js` `95c1f0dd23a2326d6ca2944888cf815030d4c07da7177a9d2750ac126c3d7141`, run as they are.
 - Checker `never-refuse` (a built-in stub).
 - List `census-units.json` sha256 of the file bytes `7a31cfc52bded0cf7063fb8ef5e512be3e9503483c9faa1e680c67b962e0c883`
 - List `right-claims.json` sha256 of the file bytes `68a4a1d16307ec3e73f1b45e5c9f1774fb835b04e127820ba12149f382814c35`

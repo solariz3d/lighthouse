@@ -181,10 +181,10 @@ const SEAT_REL = {
 };
 /** turn start and claim time out of E's evidence string, where it states them; an override (a transcription by id, with its reason) wins. */
 function parseLocator(evidence) {
-  const m = /\b(lib|main) turns? (\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ)/.exec(evidence || '');
+  const m = /\b(lib|main) turns? ([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z)/.exec(evidence || '');
   if (!m) return null;
   const turnStart = m[2];
-  const c = /claim(?: first written| at)? (\d\d:\d\d:\d\d)Z/.exec(evidence);
+  const c = /claim(?: first written| at)? ([0-9]{2}:[0-9]{2}:[0-9]{2})Z/.exec(evidence);
   let claimTs = null;
   if (c) { claimTs = turnStart.slice(0, 11) + c[1] + 'Z'; if (Date.parse(claimTs) < Date.parse(turnStart)) claimTs = new Date(Date.parse(claimTs) + 86400000).toISOString().replace(/\.\d+Z$/, 'Z'); }
   return { seat: m[1], turnStart, claimTs };
@@ -204,6 +204,13 @@ function censusLocators(classification, overrides) {
 const SHOW_CLAIMS = process.argv.includes('--show-claims'); // a report quotes a flagged sentence only when asked: it is a seat's own text
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i >= 0 && process.argv[i + 1] ? process.argv[i + 1] : d; };
 const PROJECTS = arg('--projects', path.join(os.homedir(), '.claude', 'projects'));
+
+/** The folder the re-measure's draw lives in: CONSONANCE_RETRIEVAL, else 'retrieval' beside the room's data dir (~/.consonance.json data_dir); no guess otherwise. */
+function retrievalDir() {
+  if (process.env.CONSONANCE_RETRIEVAL) return process.env.CONSONANCE_RETRIEVAL;
+  try { const c = JSON.parse(fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8')); if (c.data_dir) return path.join(path.dirname(c.data_dir), 'retrieval'); } catch (_) { /* fall through */ }
+  throw new Error('cannot find the retrieval folder: set CONSONANCE_RETRIEVAL, set data_dir in ~/.consonance.json, or pass --drawn <drawn.json>');
+}
 
 function writeList(dir, name, obj) {
   const body = JSON.stringify(obj, null, 1) + '\n';
@@ -245,7 +252,7 @@ function freeze() {
   const dir = path.join(ROOT, 'exo_memory', 'loop', 'remeasure_2026-10-10');
   const rowsOf = (p) => JSON.parse(fs.readFileSync(p, 'utf8')).rows;
   const B = rowsOf(path.join(dir, 'B', 'verdicts.json')), Cc = rowsOf(path.join(dir, 'C', 'verdicts.json'));
-  const drawnPath = arg('--drawn', 'C:/Consonance/retrieval/remeasure1003/key/drawn.json');
+  const drawnPath = arg('--drawn', path.join(retrievalDir(), 'remeasure1003', 'key', 'drawn.json'));
   const drawn = new Map(JSON.parse(fs.readFileSync(drawnPath, 'utf8')).map((d) => [d.id, d]));
   const byMsg = new Map();
   for (const r of [...B, ...Cc]) { const id = r.claimId.split('|')[0]; if (!byMsg.has(id)) byMsg.set(id, []); byMsg.get(id).push(r.verdict); }
