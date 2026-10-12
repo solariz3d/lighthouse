@@ -39,4 +39,38 @@ Each unit has `t_err`, `t_err_basis`, and:
 - The scoreboard rows (`rows.tsv`) were used as given.
 - No test; reproducibility is the identical digests. `portable-paths` exit 0 (383 files, 0 new), `carrier-drift` exit 0, after committing.
 
-NEXT: librarian dispatch C's blind read of `p-wcensus-A_2026-10-11_evidence/out/units.json` (digest `3e910cb0…`) once B's amendment is committed
+## Top-up pool: not used
+**UNREAD: prepared under Ruling 2, not read because the W census cleared the floor.** C's census read gives D = 31–34 (checked: `p-censusread-C_2026-10-11.md:19`). Built and committed before the stop (`d13223eb`): the 153-unit pool, 8 batches, digests below, nothing read or looked up; labelled by `out/topup/UNREAD.md` in the stop commit. Batch 1 digest `106875c212b0c7c982ca104202000b51e6e774a76a4ad3d8ea0da490f10be810`; all eight in `out/topup/digests.tsv`.
+
+## Top-up pool (Ruling 2; added at commit `d13223eb`, same branch)
+I opened the plan's "B's read (6a) and the ruling" section (main checkout, `14fd1f80`+). Nothing classified; B's lookup not run.
+
+- **Pool size: 153** (checked: `census.js --pop H`, printed `TOPUP pool 153 of 985 H rows`). 985 = every `src=H` row; 153 have a claim located by a quoted span (same method as the census). By finder: seat 135, instrument 18. None was excluded as "after the correction line was written" (the census's 11 such W hits are a blame-time test, and a hand-back's blame time is its LANDING time, which is later than the transcript, so the test cannot fire here; see the flag below).
+- **Rank:** `sha256(seed|correction_at|correction_text[0:80])` ascending, **seed `d301-topup-2026-10-11`**. **8 batches of 20 (7 full, batch 8 has 13).** Every unit carries the same fields as the census, `topup_rank`, `t_err` (= the located claim's time) and the same two shas plus `sha_before_correction`.
+- **Digests (sha256 of each batch file's bytes; `out/topup/digests.tsv`):**
+  1. `106875c212b0c7c982ca104202000b51e6e774a76a4ad3d8ea0da490f10be810`
+  2. `01ee62288c11ea020d532016b53c0f2d10fa0791620993e9fcea592b3e89916c`
+  3. `a93d906b4d814b591573ef0c7bb7f2981604c7089ec5a04a13817160bf5ce502`
+  4. `9b1ee603f11e6333f2c79bca911cb2f0ee5509c7f5110bca76dcdfa5f0f9a1ef`
+  5. `c26674e53b10bab5bba63b902d55ff6a799333c228996a2904e5d08fe40e282e`
+  6. `7b51028fe8f7042b90353fc31a9fc7fe02cb898bd55fb9f62dfb8347726d474a`
+  7. `af3f042449d0ee782e753901619560e7e30addb6126342d0996b8adddd99b590`
+  8. `7bada21f82552cd32ac2bca467572162b9f01496c37c9f3a0340e21e4f3f54e4`
+  checked: a second full H run wrote an identical `digests.tsv`. One command: the census command above with `--pop H --out <dir>` (about 2 minutes; the batches are in `<dir>/topup/`; `<dir>/units.json` holds all 985 and is not committed).
+- **The census digest is unchanged: `3e910cb0…`** (checked: re-run after the edit printed the same sha256).
+
+### READ THIS before C reads a batch: the located "claim" is mostly in the turn that wrote the correction
+Each pool unit carries `claim_turn_vs_correction_turn`, from the transcripts: where the first assistant occurrence of the quoted wording sits against the turn that wrote the correction line (the correction's own first line, found in an assistant write).
+| flag | pool of 153 |
+|---|---:|
+| earlier-turn-than-correction-write | 16 |
+| **same-turn-as-correction-write** | **127** |
+| correction-turn-unlocated | 9 |
+| later-than-correction-write | 1 |
+- **Same-turn means this script cannot tell** whether the wording is the original claim, made earlier in that same turn (e.g. "my draft said X, fixed before the commit"), or only the correction's own words quoting the claim from elsewhere. In the second case `t_err` is the correction's time, not the claim's, and the sha is LATER than the error: a lookup at it can find a fact that landed between the real error and the located hit, which biases toward RM. I do not know the share. If only earlier-turn hits are wanted, the pool is 16 (plus 9 unlocated, whose status I cannot say); I did not narrow it, because the ruling is sealed and the choice is the librarian's.
+- **The same flag for the W census** is in `out/claim-turn-flags.json` (sha256 `10906fbce39c6c28d36ef9bd0351b0f55dd2961ea61899084a8ee080a4c8a53f`), written as a sidecar so `units.json` keeps its delivered digest. Of the 35 census units whose `t_err` is a located claim: **earlier-turn 12, same-turn 11, correction-turn-unlocated 12.** The 11 same-turn units carry the same bias in their `sha_before_t_err_*` fields.
+- Also true of the whole pool: only `Read` counts as opened, the seat is the transcript folder under today's seat map, and `line_time` is the last write of the line (see the Limits in `p-misssample-A_2026-10-11.md`).
+
+`portable-paths` exit 0 (383 files, 0 new), `carrier-drift` exit 0, after committing `d13223eb`.
+
+NEXT: librarian dispatch C's blind read of `p-wcensus-A_2026-10-11_evidence/out/units.json` (digest `3e910cb0…`) once B's amendment is committed; batch `out/topup/batch-01.json` (digest `106875c2…`) only if D < 30, and decide whether same-turn hits stand
