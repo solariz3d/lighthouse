@@ -1,0 +1,291 @@
+[
+ {
+  "id": "W006",
+  "seat": "lib",
+  "model": "claude-fable-5-1",
+  "chars": 98058,
+  "summary": 11409,
+  "histDropped": 128,
+  "turnDropped": 0,
+  "compaction": true,
+  "stopKind": "CALL",
+  "startNote": false
+ },
+ {
+  "id": "W010",
+  "seat": "lib",
+  "model": "claude-opus-5",
+  "chars": 80134,
+  "summary": 11409,
+  "histDropped": 611,
+  "turnDropped": 0,
+  "compaction": true,
+  "stopKind": "A-TEXT",
+  "startNote": false
+ },
+ {
+  "id": "W012",
+  "seat": "lib",
+  "unlocated": true
+ },
+ {
+  "id": "W018",
+  "seat": "lib",
+  "model": "claude-opus-5-5",
+  "chars": 90925,
+  "summary": 22997,
+  "histDropped": 310,
+  "turnDropped": 0,
+  "compaction": true,
+  "stopKind": "A-TEXT",
+  "startNote": false
+ },
+ {
+  "id": "W019",
+  "seat": "lib",
+  "model": "claude-opus-5-5",
+  "chars": 95871,
+  "summary": 22997,
+  "histDropped": 504,
+  "turnDropped": 0,
+  "compaction": true,
+  "stopKind": "CALL",
+  "startNote": false
+ },
+ {
+  "id": "W020",
+  "seat": "lib",
+  "model": "claude-opus-5-5",
+  "chars": 85800,
+  "summary": 22997,
+  "histDropped": 666,
+  "turnDropped": 0,
+  "compaction": true,
+  "stopKind": "A-TEXT",
+  "startNote": false
+ },
+ {
+  "id": "W021",
+  "seat": "lib",
+  "model": "claude-opus-5-5",
+  "chars": 86250,
+  "summary": 22997,
+  "histDropped": 657,
+  "turnDropped": 0,
+  "compaction": true,
+  "stopKind": "CALL",
+  "startNote": false
+ },
+ {
+  "id": "W022",
+  "seat": "lib",
+  "model": "claude-opus-5-5",
+  "chars": 80355,
+  "summary": 13551,
+  "histDropped": 199,
+  "turnDropped": 0,
+  "compaction": true,
+  "stopKind": "CALL",
+  "startNote": false
+ },
+ {
+  "id": "W028",
+  "seat": "lib",
+  "unlocated": true
+ },
+ {
+  "id": "W032",
+  "seat": "lib",
+  "model": "claude-opus-5-5",
+  "chars": 79507,
+  "summary": 16160,
+  "histDropped": 346,
+  "turnDropped": 0,
+  "compaction": true,
+  "stopKind": "CALL",
+  "startNote": false
+ },
+ {
+  "id": "W034",
+  "seat": "lib",
+  "model": "claude-opus-5-5",
+  "chars": 77432,
+  "summary": 16160,
+  "histDropped": 864,
+  "turnDropped": 0,
+  "compaction": true,
+  "stopKind": "A-TEXT",
+  "startNote": false
+ },
+ {
+  "id": "W082",
+  "seat": "lib",
+  "unlocated": true
+ },
+ {
+  "id": "W084",
+  "seat": "lib",
+  "model": "claude-fable-5-1",
+  "chars": 85220,
+  "summary": 11855,
+  "histDropped": 637,
+  "turnDropped": 0,
+  "compaction": true,
+  "stopKind": "CALL",
+  "startNote": false
+ },
+ {
+  "id": "W088",
+  "seat": "lib",
+  "model": "claude-fable-5-1",
+  "chars": 80250,
+  "summary": 11855,
+  "histDropped": 666,
+  "turnDropped": 0,
+  "compaction": true,
+  "stopKind": "CALL",
+  "startNote": false
+ },
+ {
+  "id": "W090",
+  "seat": "lib",
+  "unlocated": true
+ },
+ {
+  "id": "W092",
+  "seat": "lib",
+  "model": "claude-fable-5-1",
+  "chars": 76655,
+  "summary": 11768,
+  "histDropped": 617,
+  "turnDropped": 0,
+  "compaction": true,
+  "stopKind": "A-TEXT",
+  "startNote": false
+ },
+ {
+  "id": "W096",
+  "seat": "lib",
+  "unlocated": true
+ },
+ {
+  "id": "W100",
+  "seat": "main",
+  "model": "claude-opus-5",
+  "chars": 88510,
+  "summary": 25326,
+  "histDropped": 1793,
+  "turnDropped": 0,
+  "compaction": true,
+  "stopKind": "A-TEXT",
+  "startNote": false
+ },
+ {
+  "id": "W101",
+  "seat": "lib",
+  "model": "claude-opus-5-5",
+  "chars": 53810,
+  "summary": 17308,
+  "histDropped": 0,
+  "turnDropped": 0,
+  "compaction": true,
+  "stopKind": "A-TEXT",
+  "startNote": false
+ },
+ {
+  "id": "W079",
+  "seat": "lib",
+  "model": "claude-fable-5-1",
+  "chars": 74504,
+  "summary": 11855,
+  "histDropped": 409,
+  "turnDropped": 0,
+  "compaction": true,
+  "stopKind": "CALL",
+  "startNote": false
+ },
+ {
+  "id": "W080",
+  "seat": "lib",
+  "model": "claude-fable-5-1",
+  "chars": 85392,
+  "summary": 11855,
+  "histDropped": 363,
+  "turnDropped": 0,
+  "compaction": true,
+  "stopKind": "CALL",
+  "startNote": false
+ },
+ {
+  "id": "W044",
+  "seat": "main",
+  "model": "claude-opus-5",
+  "chars": 92156,
+  "summary": 25326,
+  "histDropped": 1359,
+  "turnDropped": 0,
+  "compaction": true,
+  "stopKind": "A-TEXT",
+  "startNote": false
+ },
+ {
+  "id": "W049",
+  "seat": "main",
+  "model": "claude-opus-5",
+  "chars": 92974,
+  "summary": 25326,
+  "histDropped": 1725,
+  "turnDropped": 0,
+  "compaction": true,
+  "stopKind": "A-TEXT",
+  "startNote": false
+ },
+ {
+  "id": "W053",
+  "seat": "lib",
+  "model": "claude-fable-5",
+  "chars": 21140,
+  "summary": 0,
+  "histDropped": 0,
+  "turnDropped": 0,
+  "compaction": false,
+  "stopKind": "CALL",
+  "startNote": false
+ },
+ {
+  "id": "W054",
+  "seat": "lib",
+  "model": "claude-fable-5-1",
+  "chars": 69284,
+  "summary": 0,
+  "histDropped": 74,
+  "turnDropped": 0,
+  "compaction": false,
+  "stopKind": "CALL",
+  "startNote": false
+ },
+ {
+  "id": "W056",
+  "seat": "lib",
+  "model": "claude-fable-5-1",
+  "chars": 67561,
+  "summary": 0,
+  "histDropped": 431,
+  "turnDropped": 0,
+  "compaction": false,
+  "stopKind": "CALL",
+  "startNote": false
+ },
+ {
+  "id": "W058",
+  "seat": "lib",
+  "model": "claude-fable-5-1",
+  "chars": 72438,
+  "summary": 0,
+  "histDropped": 261,
+  "turnDropped": 0,
+  "compaction": false,
+  "stopKind": "CALL",
+  "startNote": false
+ }
+]
