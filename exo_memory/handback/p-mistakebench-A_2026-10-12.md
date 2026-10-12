@@ -180,6 +180,50 @@ What differs is the information the model has when it reaches the claim step. Fo
 
 NEXT: librarian rules whether a context-fidelity fix (shell, system prompt, queued_command, uncut results) is the one allowed fix and dispatches it; A rebuilds the context and re-runs only on that ruling
 
+## Context-fidelity run (D311 ledger D312; seat A, 2026-10-12)
+
+**Result: the last bench fix is in and the one full baseline is run: 110 calls made, 110 returned a reply, 0 errored, in 19 min 40 s. 91 of the 110 replies hold at least one tool request. Nothing was judged.** Branch `d311-a5` (worktree `G:\consonance-worktrees\a-d311a5-wt`, from main `894cd138`); code `d655966f`, neutral paths for portable-paths `41c8e10f`, run outputs and B's sample `63303245`; local, named paths, not pushed. portable-paths green (392 files, 0 new), carrier-drift GREEN. No dollar figure anywhere.
+
+### The fix (three changes to `mistake-bench.js`; nothing else changed)
+1. **The seat's instructions and system prompt.** The bench rebuilds the instruction files as last loaded before the erring turn: each `instructions` attachment lists the files it loaded, a later load of a path replaces the earlier text, and a `removed` path drops out, so the shelf is the union in the order first loaded (the librarian's shell plus, where present, the global file and the memory index). They go into the prompt as one `<seat-instructions path=…>` block per file, ahead of the session record, whole. The latest `prompt_snapshot` before the turn (a list of blocks, joined) follows the replay framing sentence in the system prompt. A system prompt over 24,000 characters is refused loudly (the largest here is 13,144; it travels as a command-line argument).
+2. **`queued_command`.** The keeper's mid-turn messages are rendered as `[PROMPT queued <time>] …`; a queued task notification is rendered as `[TASK NOTIFICATION <time>] …`.
+3. **Results.** The erring turn's tool results are kept whole; history results are cut at 2,500 characters instead of 600.
+**Unchanged:** the cut, the closing instruction, the tool stub, k = 5, the 22 units, the context truncation of everything else, B's §4 line. **Corrected here, again:** my first hand-back said the shelf is not in any transcript. It is (an `instructions` attachment holds the seat's `CLAUDE.md` files whole); the bench's reader did not read that attachment type.
+
+### Tests, redaction
+`mistake-bench.test.js` is now 34 rows (25 before). **9 new rows were red first** (all 9 failed before the change: queued prompt, queued task notification, the shelf's per-file last-load and removal rule, the shelf placed whole before the record, the system prompt from the latest snapshot, a too-long system prompt refused, the unchanged baseline when none of these records exist, the redaction row, and results whole / history at 2,500). **Redaction row:** a `"token"` field and a key-shaped string placed in an instructions file, in the system prompt snapshot and in a queued message never reach the prompt or the system prompt, and a Third Place line in the shelf is replaced by the removed-line marker. Every rendered line, including the shelf and the system prompt, goes through the same `clean()` as before (E's `turn.js` shapes). I changed no existing test. No mutation run. portable-paths was red on the first commit (drive-letter paths in my new rows); the follow-up commit uses neutral paths.
+**Run outputs checked for secrets:** `runs.jsonl` holds 0 `"token"` fields, 0 key-shaped strings (the two key prefixes) and 0 chair-token strings (grep, three patterns); the 22 built prompts hold none either. I have no actual token value to compare against (the shell files contain no line with a token and a long value), so the check is by shape, as in the first run.
+**Third Place lines:** the shelf and the record carry between 5 and 63 `[third-place line removed]` markers per prompt (the shell itself names the Third Place); those lines are not in any prompt.
+
+### Context size, before the run (no model call; `context-sizes-fidelity.json`)
+Mean prompt 227,828 characters (it was 78,891), largest 265,269. 21 of the 22 contexts carry a shelf (2 to 5 files, 96,715 to 154,658 characters); **W044 (the chair's early session) has none**, its prompt is 92,007 characters. No unit's erring turn exceeded the turn budget now that results are whole (0 events dropped in all 22).
+
+### The run (checked: `node` over `baseline3/runs.jsonl`)
+| | |
+|---|---|
+| calls made / errored | **110 / 0** (22 units × 5; each unit has exactly 5 rows) |
+| wall time of the run | **19 min 40 s** (`started.txt` 14:44:48Z, `finished.txt` 15:04:28Z), 4 at a time under one heavy-run hold |
+| per call | mean 39.1 s api, 40.3 s wall, longest 125 s wall |
+| mean prompt size | **92,716 input tokens** per call (the CLI's count, cache reads included); 227,828 characters; mean output 2,688 tokens (second baseline: 37,276 and 2,187) |
+| replies with at least one tool request | **91 of 110**, from 20 of the 22 units; requests: Bash 81, PowerShell 5, chair_inject 4, Write 1 |
+| reply length | 303 to 8,883 characters, median 2,079 |
+| by model (mean wall per call) | claude-opus-5-5 40 calls 16.9 s; claude-opus-5 20 calls 49.3 s; claude-fable-5-1 45 calls 56.0 s; claude-fable-5 5 calls 49.9 s |
+No cost field is in any row.
+
+### What to know
+- **Where the shelf sits.** In the original the seat's `CLAUDE.md` reached the model as injected context at the head of the conversation; here it is the first block of the user message, and the Claude Code system prompt is the seat's own snapshot rather than the default. That is the closest placement `claude -p` allows; it is an approximation, not the same bytes in the same slot.
+- **Tool schemas.** The snapshot's own tool list is not used; the model still gets only the 8 stub tools (the ruling said the stub is unchanged). The seat's original tool set was larger (the 5 `PowerShell` requests are the model naming a tool the stub does not offer).
+- **The shell as of the session start, not the turn.** An `instructions` attachment is written when a session loads the files; the seat's shell does not change within a session, so this is what it had. A file the seat read mid-session is a tool result, handled as before.
+- **W080 stays partly unrecoverable** (its carrier calls are Third Place redacted in the transcript copy), and W049's opening ring is redacted; those units count as they fall.
+- **Ids.** The new blind set is `R001`…`R110` again, a different shuffle; cite a set by path and digest.
+
+### The blind set, the key, and B's 40
+- `exo_memory/handback/p-mistakebench-A_2026-10-12_evidence/baseline3/blind/blind.json` — 110 replies, fields `blindId, unit, wrongClaim, reply` (tool requests appear in the reply as `[TOOL REQUEST name] {input}` lines); no arm, no run number. Seed `d311-baseline3-blind-2026-10-12`. **sha256 `c0bf102016d8074935204112b848ff3bf7d215f1e91ea96d77f37a1192a66e7e`.**
+- The key is outside the repo: `G:\consonance-worktrees\a-d311a5-key\key.json` (sha256 `333ae4034eb1cb89251be1f06508ceb6e707cfd89e67b194dfdd7d7436372652`). I unseal it only when the librarian says C's 110 and B's 40 verdicts are committed.
+- B's 40: the 40 lowest `sha256("D311|unit|baseline|index")` keys over this key, index = the recorded run number 1 to 5, ids only, posted on the board and committed as `baseline3/blind/b-sample.json` (commit `63303245`).
+
+NEXT: C judges `baseline3/blind/blind.json` (all 110) and B judges the 40 in `b-sample.json`, blind, when the librarian dispatches them; A unseals the key only after both sets of verdicts are committed
+
 ## baseline3 redaction (D311 ledger D312; seat A, 2026-10-12)
 
 **Result, said first: the room's filter did run on everything I rendered, and it found nothing to remove in baseline3's outputs by its words (0 Third Place lines, 0 token fields, 0 key shapes). The leak is a different kind: the results of tool calls that named the Third Place.** The transcript copy redacts such a call whole, but the call's RESULT lines do not name it, so the line filter keeps them. The first two bench versions cut results to 600 characters (history) and 2,500 (turn), so they held only a piece; baseline3's third change ("keep the erring turn's results whole") put the whole results in. **14 of the 22 units had such results inside the replayed window in baseline3; W080 had 21 (28,791 characters as stored, 27,188 of them in the prompt).** No model call was made in this check or fix. I opened nothing under `exo_memory/third_place/`; the checks below read seat transcripts in code and print counts, never text.
