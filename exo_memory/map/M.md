@@ -982,3 +982,10 @@ The substrate step, measured on our own work: a pinned 5.5 reads the L2 drift qu
   item 5, run every README/GUIDE command as written in a fresh clone, is now required before any consumer push. The keeper: "how did u miss".
 - **The keeper's corrections this lap:** "the keeper" always means the creator (12:55 10-08); the consumer is tested by someone else, never here
   (02:49 10-09); the README's "one voice" number measures traffic, not vantage (09:41 10-09).
+
+## 2026-10-11 (D) — the room's errors, by cause, measured on one frozen census
+- **Census:** A's 101 W entries + T1, T2 (`handback/p-wcensus-A_2026-10-11_evidence/out/units.json`, sha256 3e910cb0…). First draw from correction rows was NOT MEASURED (D = 2 of 60): most corrections are conduct, not claims (`loop/plan_retrieval_misses_d301_2026-10-11.md`, wave 2 read).
+- **D301 (ledger D302), retrieval:** missed lookups 27.3–36.4% of decidable errors (D = 33), scattered over 9 directories, no plurality; handback/ 1 of 12. My prediction (≥ 40%, handback, stale) WRONG on all three; B's (~25%) held. Score at `plan_retrieval_misses_d301_2026-10-11.md:65-86`.
+- **D303 (ledger D304), checks and rules:** check at hand not run 61.4–72.7% of claim errors (C 0/47 disagree), no source holds half → habit, enforce at the point of claim. Rules on disk broken 47.6% of identifiable conduct, 6 of 10 in plans/handoffs never loaded → carrying. Joint: CN 27 vs RM 9. Score at `plan_unchecked_claims_d303_2026-10-11.md:32-62`.
+- **Why the gates caught 0 of 383:** SOURCES asks what was OPENED; the dominant error is a STATE not checked. The next check must test the second.
+- **Surfaced this day (my count, misses included):** D300 part 3 duplicate (miss, chair caught); T1 re-pointed before C's read (held, C confirmed); E's Chases rule stale (held by `map/A.md:1815`); top-up sealed before the census (held). WRONG column left to others.
