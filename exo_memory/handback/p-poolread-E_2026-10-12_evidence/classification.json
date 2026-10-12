@@ -1,0 +1,1100 @@
+{
+ "what": "D305 item 6: the Q3 class of every unit of A's top-up pool (153), by B's D303 registration §2. LK and NA are outside Q3's classes: LK = the answer is repository text (D301's question); NA = not a wrong state or figure statement.",
+ "pool_digests": {
+  "batch-01.json": "106875c212b0c7c982ca104202000b51e6e774a76a4ad3d8ea0da490f10be810",
+  "batch-02.json": "01ee62288c11ea020d532016b53c0f2d10fa0791620993e9fcea592b3e89916c",
+  "batch-03.json": "a93d906b4d814b591573ef0c7bb7f2981604c7089ec5a04a13817160bf5ce502",
+  "batch-04.json": "9b1ee603f11e6333f2c79bca911cb2f0ee5509c7f5110bca76dcdfa5f0f9a1ef",
+  "batch-05.json": "c26674e53b10bab5bba63b902d55ff6a799333c228996a2904e5d08fe40e282e",
+  "batch-06.json": "7b51028fe8f7042b90353fc31a9fc7fe02cb898bd55fb9f62dfb8347726d474a",
+  "batch-07.json": "af3f042449d0ee782e753901619560e7e30addb6126342d0996b8adddd99b590",
+  "batch-08.json": "7bada21f82552cd32ac2bca467572162b9f01496c37c9f3a0340e21e4f3f54e4"
+ },
+ "counts": {
+  "NA": 125,
+  "NC": 8,
+  "LK": 1,
+  "CN": 16,
+  "CU": 1,
+  "QX": 1,
+  "CR": 1
+ },
+ "units": [
+  {
+   "id": "H0752",
+   "rank": 1,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0494",
+   "rank": 2,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0219",
+   "rank": 3,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0908",
+   "rank": 4,
+   "class": "NC",
+   "c": "NC",
+   "why": "a design argument refuted by reasoning about the one real failure; no check prints it"
+  },
+  {
+   "id": "H0262",
+   "rank": 5,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0439",
+   "rank": 6,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0025",
+   "rank": 7,
+   "class": "LK",
+   "c": "LK",
+   "why": "the answer is repository text (arm-words.txt header): D301's lookup, not a Q3 check"
+  },
+  {
+   "id": "H0869",
+   "rank": 8,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0392",
+   "rank": 9,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0500",
+   "rank": 10,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0422",
+   "rank": 11,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0719",
+   "rank": 12,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0264",
+   "rank": 13,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0457",
+   "rank": 14,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0855",
+   "rank": 15,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0905",
+   "rank": 16,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0818",
+   "rank": 17,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0252",
+   "rank": 18,
+   "class": "NA",
+   "c": "NA",
+   "why": "a wrong READING (\"nothing deleted\") that was acted on but never written before the correction: conduct, not a sent claim"
+  },
+  {
+   "id": "H0529",
+   "rank": 19,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0322",
+   "rank": 20,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0501",
+   "rank": 21,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0656",
+   "rank": 22,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0073",
+   "rank": 23,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0377",
+   "rank": 24,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0585",
+   "rank": 25,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0182",
+   "rank": 26,
+   "class": "CN",
+   "c": "CN",
+   "seat": "E",
+   "ts": [
+    "2026-09-23T00:39:55Z",
+    "2026-09-23T00:46:10Z"
+   ],
+   "src": "compute",
+   "check": "the arithmetic with the right call count",
+   "run": "14 calls before the claim, none recomputing B's estimate (judged from the turn; no single answer token)"
+  },
+  {
+   "id": "H0762",
+   "rank": 27,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0541",
+   "rank": 28,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0483",
+   "rank": 29,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0546",
+   "rank": 30,
+   "class": "CN",
+   "c": "CN",
+   "seat": "A",
+   "ts": [
+    "2026-09-23T07:44:33Z",
+    "2026-09-23T07:47:48Z"
+   ],
+   "src": "fs",
+   "check": "read the live edge in the seat's own shell (CLAUDE.md)",
+   "run": "anscheck: \"standing rules on Jev\" not printed in 19 calls before; the claim is frame text in a code Edit"
+  },
+  {
+   "id": "H0899",
+   "rank": 31,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0075",
+   "rank": 32,
+   "class": "NC",
+   "c": "NC",
+   "why": "\"text in it\" was made false by C's later finding about suggestions"
+  },
+  {
+   "id": "H0261",
+   "rank": 33,
+   "class": "NC",
+   "c": "NC",
+   "why": "the right cause came from C reproducing B's runner (NaN width): a later investigation"
+  },
+  {
+   "id": "H0418",
+   "rank": 34,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0220",
+   "rank": 35,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0432",
+   "rank": 36,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0724",
+   "rank": 37,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0803",
+   "rank": 38,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0427",
+   "rank": 39,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0066",
+   "rank": 40,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0235",
+   "rank": 41,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0894",
+   "rank": 42,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0507",
+   "rank": 43,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0287",
+   "rank": 44,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0845",
+   "rank": 45,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0175",
+   "rank": 46,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0910",
+   "rank": 47,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0101",
+   "rank": 48,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0310",
+   "rank": 49,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0595",
+   "rank": 50,
+   "class": "CU",
+   "c": "CU",
+   "seat": "A",
+   "src": "compute",
+   "check": "sum the packet log",
+   "run": "the \"in chat\" claim is not located: \"882 statements\" first appears in the correction write itself (07:22:09Z)"
+  },
+  {
+   "id": "H0668",
+   "rank": 51,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0802",
+   "rank": 52,
+   "class": "CN",
+   "c": "CN",
+   "seat": "E",
+   "ts": [
+    "2026-09-19T15:08:26Z",
+    "2026-09-19T15:12:23Z"
+   ],
+   "src": "fs",
+   "check": "grep -n \"PW_PATH = \" dev/diversity/score.mjs",
+   "run": "the line was read off a sed window that prints no line numbers (the correction says so); located at the hand-back write 15:12:23Z, the first Write holding \":27\" with \"phase-window\""
+  },
+  {
+   "id": "H0117",
+   "rank": 53,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0559",
+   "rank": 54,
+   "class": "QX",
+   "c": "QX",
+   "why": "a correction of a ruling's wording; the claim corrected is not in the unit"
+  },
+  {
+   "id": "H0102",
+   "rank": 55,
+   "class": "CN",
+   "c": "CN",
+   "seat": "B",
+   "ts": [
+    "2026-10-08T21:53:54Z",
+    "2026-10-08T21:57:53Z"
+   ],
+   "src": "compute",
+   "check": "run the build test from its own folder, as js-suite does",
+   "run": "3 calls before the claim; it was run from the repo root only"
+  },
+  {
+   "id": "H0458",
+   "rank": 56,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0452",
+   "rank": 57,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0522",
+   "rank": 58,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0294",
+   "rank": 59,
+   "class": "NC",
+   "c": "NC",
+   "why": "superseded by a ruling that arrived after the line was written"
+  },
+  {
+   "id": "H0110",
+   "rank": 60,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0808",
+   "rank": 61,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0951",
+   "rank": 62,
+   "class": "NC",
+   "c": "NC",
+   "why": "the chair's later note changed which commit lands"
+  },
+  {
+   "id": "H0674",
+   "rank": 63,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0228",
+   "rank": 64,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0871",
+   "rank": 65,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0748",
+   "rank": 66,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0327",
+   "rank": 67,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0909",
+   "rank": 68,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0700",
+   "rank": 69,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0378",
+   "rank": 70,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0419",
+   "rank": 71,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0162",
+   "rank": 72,
+   "class": "CN",
+   "c": "CN",
+   "seat": "E",
+   "ts": [
+    "2026-09-22T12:27:34Z",
+    "2026-09-22T12:31:43Z"
+   ],
+   "src": "compute",
+   "check": "count the units that can carry a yes",
+   "run": "11 calls before the claim (judged from the turn; no single answer token)"
+  },
+  {
+   "id": "H0080",
+   "rank": 73,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0319",
+   "rank": 74,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0513",
+   "rank": 75,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0952",
+   "rank": 76,
+   "class": "NC",
+   "c": "NC",
+   "why": "the chair's last note reversed the one before"
+  },
+  {
+   "id": "H0474",
+   "rank": 77,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0410",
+   "rank": 78,
+   "class": "NC",
+   "c": "NC",
+   "why": "reinterpreted from a machine-wide crash picture measured on 10-06"
+  },
+  {
+   "id": "H0897",
+   "rank": 79,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0957",
+   "rank": 80,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0887",
+   "rank": 81,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0505",
+   "rank": 82,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0521",
+   "rank": 83,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0351",
+   "rank": 84,
+   "class": "CN",
+   "c": "CN",
+   "seat": "A",
+   "ts": [
+    "2026-10-04T07:49:58Z",
+    "2026-10-04T08:05:51Z"
+   ],
+   "src": "compute",
+   "check": "a probe that builds a real tube oval",
+   "also": [
+    "H0890"
+   ],
+   "run": "anscheck: 30,135,761 not printed in 61 calls before; the buggy probe printed the plain oval's sizes"
+  },
+  {
+   "id": "H0536",
+   "rank": 85,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0492",
+   "rank": 86,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0617",
+   "rank": 87,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0560",
+   "rank": 88,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0721",
+   "rank": 89,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0580",
+   "rank": 90,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0159",
+   "rank": 91,
+   "class": "CN",
+   "c": "CN",
+   "seat": "E",
+   "ts": [
+    "2026-09-22T17:43:32Z",
+    "2026-09-22T17:57:57Z"
+   ],
+   "src": "compute",
+   "check": "the count on the corrected run",
+   "late": true,
+   "run": "anscheck: \"51 of 74\" not printed before the claim; corrected later in the same turn (18:01:48Z)"
+  },
+  {
+   "id": "H0515",
+   "rank": 92,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0726",
+   "rank": 93,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0582",
+   "rank": 94,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0460",
+   "rank": 95,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0525",
+   "rank": 96,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0625",
+   "rank": 97,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0634",
+   "rank": 98,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0121",
+   "rank": 99,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0583",
+   "rank": 100,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0099",
+   "rank": 101,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0404",
+   "rank": 102,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0299",
+   "rank": 103,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0741",
+   "rank": 104,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0342",
+   "rank": 105,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0401",
+   "rank": 106,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0873",
+   "rank": 107,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0179",
+   "rank": 108,
+   "class": "NC",
+   "c": "NC",
+   "why": "a design argument (the stimulus is the unit) turned on its author; a power calculation made after"
+  },
+  {
+   "id": "H0516",
+   "rank": 109,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0727",
+   "rank": 110,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0577",
+   "rank": 111,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0056",
+   "rank": 112,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0860",
+   "rank": 113,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0725",
+   "rank": 114,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0423",
+   "rank": 115,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0067",
+   "rank": 116,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0981",
+   "rank": 117,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0403",
+   "rank": 118,
+   "class": "CN",
+   "c": "CN",
+   "seat": "C",
+   "ts": [
+    "2026-10-05T05:36:10Z",
+    "2026-10-05T05:48:31Z"
+   ],
+   "src": "fs",
+   "check": "grep -l over the test files",
+   "run": "77 calls before the claim; the hand count was written, the grep came after (judged; no single answer token)",
+   "late": true
+  },
+  {
+   "id": "H0231",
+   "rank": 119,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0557",
+   "rank": 120,
+   "class": "CN",
+   "c": "CN",
+   "seat": "chair",
+   "ts": [
+    "2026-09-23T10:01:46Z",
+    "2026-09-23T10:02:02Z"
+   ],
+   "src": "compute",
+   "check": "git log --reverse -S on install.ps1",
+   "run": "anscheck: daded53 not printed; 1 call before the dispatch"
+  },
+  {
+   "id": "H0232",
+   "rank": 121,
+   "class": "CN",
+   "c": "CN",
+   "seat": "B",
+   "ts": [
+    "2026-09-27T23:28:28Z",
+    "2026-09-27T23:38:37Z"
+   ],
+   "src": "fs",
+   "check": "hash the live file against 59ff906's",
+   "run": "anscheck: 9d322c53 not printed in 26 calls before; the check run compared against a snapshot only"
+  },
+  {
+   "id": "H0221",
+   "rank": 122,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0192",
+   "rank": 123,
+   "class": "CN",
+   "c": "CN",
+   "seat": "E",
+   "ts": [
+    "2026-09-26T07:30:52Z",
+    "2026-09-26T07:34:03Z"
+   ],
+   "src": "compute",
+   "check": "the found rate at N = 8 from the run",
+   "late": true,
+   "run": "anscheck: 65% not printed before the claim; fixed later in the same turn (07:34:58Z)"
+  },
+  {
+   "id": "H0074",
+   "rank": 124,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0586",
+   "rank": 125,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0715",
+   "rank": 126,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0961",
+   "rank": 127,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0608",
+   "rank": 128,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0832",
+   "rank": 129,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0717",
+   "rank": 130,
+   "class": "CN",
+   "c": "CN",
+   "seat": "E",
+   "ts": [
+    "2026-10-09T20:14:55Z",
+    "2026-10-09T20:17:16Z"
+   ],
+   "src": "other-repo",
+   "check": "read the keeper's track 2 export (kn5)",
+   "run": "a probe of a TEST export printed lane meshes (1ROAD_PIT_*) before the claim; the keeper's export was never read. A presence check could be fooled by that token"
+  },
+  {
+   "id": "H0911",
+   "rank": 131,
+   "class": "CN",
+   "c": "CN",
+   "seat": "A",
+   "ts": [
+    "2026-10-03T23:54:11Z",
+    "2026-10-03T23:54:19Z"
+   ],
+   "src": "compute",
+   "check": "run the harness file alone",
+   "run": "anscheck: \"tests 51\" not printed in this turn (1 call before); 51 was printed in an earlier turn"
+  },
+  {
+   "id": "H0086",
+   "rank": 132,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0509",
+   "rank": 133,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0589",
+   "rank": 134,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0087",
+   "rank": 135,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0176",
+   "rank": 136,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0666",
+   "rank": 137,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0959",
+   "rank": 138,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0605",
+   "rank": 139,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0533",
+   "rank": 140,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0510",
+   "rank": 141,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0632",
+   "rank": 142,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0710",
+   "rank": 143,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0063",
+   "rank": 144,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0735",
+   "rank": 145,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0682",
+   "rank": 146,
+   "class": "CN",
+   "c": "CN",
+   "seat": "lib",
+   "ts": [
+    "2026-09-16T10:36:27Z",
+    "2026-09-16T10:39:23Z"
+   ],
+   "src": "fs",
+   "check": "count NULs in t2-echo",
+   "run": "the 5 calls before read the hand-backs and ran leak checks; none counted NULs. The unit sits in C's hand-back; the erring claim is the librarian's note and ring (10:39:23Z, 10:39:38Z)"
+  },
+  {
+   "id": "H0562",
+   "rank": 147,
+   "class": "CN",
+   "c": "CN",
+   "seat": "E",
+   "ts": [
+    "2026-09-23T07:25:06Z",
+    "2026-09-23T07:26:31Z"
+   ],
+   "src": "compute",
+   "check": "git log -- dev/shell/hooks/session-start.js",
+   "run": "anscheck: 1c5b4f2 not printed in 8 calls before"
+  },
+  {
+   "id": "H0799",
+   "rank": 148,
+   "class": "CR",
+   "c": "CR",
+   "seat": "E",
+   "ts": [
+    "2026-09-19T15:08:26Z",
+    "2026-09-19T15:13:10Z"
+   ],
+   "src": "fs",
+   "check": "the full hex in carry-out.txt",
+   "run": "anscheck: 4e087 PRINTED before the claim; the seat had the answer and mistyped it"
+  },
+  {
+   "id": "H0088",
+   "rank": 149,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0591",
+   "rank": 150,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0890",
+   "rank": 151,
+   "class": "CN",
+   "c": "CN",
+   "seat": "A",
+   "ts": [
+    "2026-10-04T07:49:58Z",
+    "2026-10-04T08:05:51Z"
+   ],
+   "src": "compute",
+   "check": "as H0351",
+   "dup": "H0351",
+   "run": "the same erring claim as H0351 (one turn, one claim); listed once in the held-out list"
+  },
+  {
+   "id": "H0893",
+   "rank": 152,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  },
+  {
+   "id": "H0964",
+   "rank": 153,
+   "class": "NA",
+   "why": "conduct (a tool, test, harness or edit slip), a note, a finding or a plan: no wrong state or figure statement"
+  }
+ ]
+}
