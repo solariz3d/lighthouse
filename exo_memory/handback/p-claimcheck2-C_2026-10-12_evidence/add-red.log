@@ -1,0 +1,15 @@
+== C d305r addition red · asked 2026-10-12T06:35:50.483Z · lock held 2026-10-12T06:35:50.516Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd G:/worktrees/c-d305b-wt && git diff --stat -- dev/shell/install.ps1 consonance/README.md; node --test --test-reporter=tap consonance/tools/install-only.test.js 2>&1 | grep -E '^not ok|UNDECLARED|^# (tests|pass|fail)' | head -8; JS_SUITE_TIMEOUT_MS=400000 node --test --test-reporter=tap --test-name-pattern='README hook count' consonance/tools/gen-consumer.test.js 2>&1 | grep -E '^not ok|hook count is not|^# (tests|pass|fail)' | head -6
+#                    1 UNDECLARED  installable, on no manifest entry AND on no unmanaged declaration -- nobody has ruled
+#                    1 UNDECLARED  installable, on no manifest entry AND on no unmanaged declaration -- nobody has ruled
+#                    1 UNDECLARED  installable, on no manifest entry AND on no unmanaged declaration -- nobody has ruled
+not ok 1 - consonance\\tools\\install-only.test.js
+# tests 1
+# pass 0
+# fail 1
+not ok 1 - D273 lap 6 (A4): what the docs say about jev-flags.js is true in a generated copy: not "in the repo", and the README hook count matches the tree
+  error: 'the README hook count is not stated for a generated copy, which has 23'
+# tests 1
+# pass 0
+# fail 1
+== exit 0 · done 2026-10-12T06:36:40.351Z
