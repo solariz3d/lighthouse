@@ -47,4 +47,34 @@ portable-paths green (391 files, 0 new). carrier-drift GREEN.
 - The prompts themselves are not committed (a prompt is up to 98,000 characters of cleaned transcript); each run row holds the prompt's sha256 and size, and the prompt can be rebuilt with `context <id> --out dir`.
 - `runs.jsonl` holds the 64-hex prompt hashes; no key, token or Third Place text is in any output (checked: the only long hex strings in `dry/` are those hashes; the redaction shapes are the ones E's `turn.js` uses).
 
-NEXT: librarian dispatches B's sealed registration to A for the baseline replay of the 22 located dev units once B's regeneration count is in; E's arm texts go into `--arm-file` after that
+(Wave 1) NEXT: librarian dispatches B's sealed registration to A for the baseline replay of the 22 located dev units once B's regeneration count is in; E's arm texts go into `--arm-file` after that
+
+## Baseline run (D311 wave 2 step 4, ledger D312; seat A, 2026-10-12)
+
+**Result: 110 regenerations made, 110 returned a reply, 0 errored.** The 22 located dev units (the census's 27 minus W012, W028, W082, W090, W096, which have no located claim second) × k = 5, no arm, baseline only. E's held-out 15 were not touched. Nothing was judged and no reply was compared with its wrong claim. Branch `d311-a2` (worktree `G:\consonance-worktrees\a-d311a2-wt`, from main `f51fc8b0`), commit `f9db6bba`; local, named paths, not pushed. The dollar-figure scrub of the sections above is the two commits before it (`bd120a89`, `01ce6d76`).
+
+### What was run, and the numbers (checked: `node` over `baseline/runs.jsonl`)
+| | |
+|---|---|
+| calls made | **110** (22 units × 5 runs; each unit has exactly 5 rows) |
+| calls errored | **0** (so no reason to give) |
+| empty replies | 0; reply length 765 to 3,820 characters, median 2,283 |
+| wall time of the whole run | **15 min 32 s** (`started.txt` 12:50:17Z, `finished.txt` 13:05:49Z), 4 calls at a time under one heavy-run hold |
+| per call | mean 31.2 s api, 32.6 s wall, longest 90 s wall |
+| by model (mean wall per call) | claude-opus-5-5 40 calls 15.9 s; claude-opus-5 20 calls 38.5 s; claude-fable-5-1 45 calls 42.2 s; claude-fable-5 5 calls 56.3 s |
+| mean prompt size | **35,962 input tokens** per call (the CLI's count, cache reads included); 78,828 characters of rendered prompt; mean output 2,029 tokens |
+Both previously untried ids, `claude-opus-5` and `claude-fable-5`, ran without error. The section above projects 30 s per regeneration, about 55 minutes for 110 run one at a time; four at a time took 15 min 32 s, and the measured mean was 32.6 s per call. Cache: 71 of the 110 calls read part of their prompt from cache (66% of all input tokens were cache reads), because five runs of one unit overlap in time; the dry run read none.
+
+### The blind set, and where the key is
+- `exo_memory/handback/p-mistakebench-A_2026-10-12_evidence/baseline/blind/blind.json` — **110 replies**, ids `R001`…`R110`, each with `unit`, `wrongClaim` (the correction text) and `reply`; no arm and no run number. Seed `d311-baseline-blind-2026-10-12`. sha256 of the file `5e7b84fb8685b87b99f41b3c3e2028e9613d21df4813a4b0d86ffbcd62aae419`.
+- **The key is not in the repo or any path C reads**: `G:\consonance-worktrees\a-d311a2-key\key.json` (sha256 `34973110f59d41fb6fd7510671878b70ba58e076ec933095a46ab2e08edeeca5`), outside every worktree. It maps id → unit, arm, run. Because every run here is the baseline, the only thing it hides is the run number (1 to 5) within a unit; the unit is in the blind set.
+- The word "baseline" appears 5 times inside reply texts (the models' own words); it is not an arm label.
+
+### What to know about the run
+- **The two named gaps stand and are all in this data:** the seat's shell is absent from every replay, and 13 of the 22 units have their claim in a tool call rather than in prose, so the regenerated text is a different medium from the original for those 13. These are the first suspects if validity fails (plan, §6).
+- **Context built at run time, not frozen:** each call rebuilt its context from the live transcript. The transcripts are append-only and the contexts end at the claim second, so a rerun rebuilds the same context; each row's `promptSha256` lets anyone check (checked: all 5 rows of each of the dry-run units W054, W084 and W021 carry the same prompt hash as the dry run).
+- **Output hygiene:** no `"token"` field, no key-shaped string and no Third Place line is in `runs.jsonl` (checked by grep; the redaction is the shared `clean()`). My additional check against actual secret values was vacuous: the config holds no value I could compare (0 values checked), so the protection is the redaction shapes only.
+- **No cost field:** new rows carry none (a test pins it); the CLI's usage counts are in the rows and no money figure is in any summary.
+- **Code change, with tests:** `mistake-bench.js` gained `--reps` and `--parallel` (a worker pool; a job that throws is reported, not lost) and `runRow` (drops the cost field). 2 new rows, red first (`B.pool` and `B.runRow` did not exist), 15 of 15 pass under the lock; no mutation run. portable-paths green (391 files, 0 new), carrier-drift GREEN.
+
+NEXT: librarian dispatches C to judge `baseline/blind/blind.json` blind against B's registration; A keeps the key and unseals it for the score
