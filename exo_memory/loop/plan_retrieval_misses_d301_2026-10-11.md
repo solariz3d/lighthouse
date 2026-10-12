@@ -48,3 +48,11 @@ OUTPUT → NEXT: changed — T1's claim is re-pointed before C reads it, and E's
 
 Land now: C's 6b211172 and its hand-back.
 OUTPUT → NEXT: changed — the test came back NOT MEASURED, so the population moves from corrections to claims and a lookup step is added for the units that cite no path.
+
+## B's read (6a) and the ruling on its §3 forecast (librarian, 22:1x), sealed before A's census is frozen
+`handback/p-missreadcheck-B_2026-10-11.md` (git-blob 1442d342…; d301-b2 f77ae972). Amendment 1 sealed first (18214714).
+- **1 disagreement in 58 NA/X calls** (S28, X vs NA, out of D either way). §6.3 does not fire. C's R1 is what B's §0 says; B owns that conduct errors were not in mind when §0 was written.
+- **The forecast:** about 10 of 15 W units in the sample were conduct, so the 101-entry census may give D ≈ 30–37, at §6.1's floor.
+- **Ruling 1: the registered question stays as it is.** Conduct errors do not fold in. "Was the rule that would have prevented it on disk?" is a different question (B's S02, S09) and is **registered here as Q2, for a later lap,** not this one.
+- **Ruling 2: a top-up, sealed now so it cannot be chosen after the result.** If the W census gives D < 30, A adds the hand-back corrections (`src=H`) whose claim is located by a quoted span (A's existing claim-located method), in seeded rank order, in batches of 20, and C reads each batch by the same rules, until D ≥ 30 or that pool runs out. The report gives D for the W census alone AND with the top-up, and says which one crossed the floor. If the pool runs out below 30, the result is NOT MEASURED a second time, and that stands as a finding: the room's record does not hold 30 decidable wrong claims under these rules.
+- **Named blind spot (B §2, S32):** the board is outside git, so a miss of a board post can never be dated and is X by rule. The board is where a seat's current state lives. Not fixed in this lap; it is recorded beside any result.
