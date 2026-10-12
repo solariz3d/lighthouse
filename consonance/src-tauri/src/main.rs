@@ -7634,6 +7634,45 @@ fn index_title(head: &str) -> String {
     format!("{kept} ...")
 }
 
+/// D301 part 3 (E): THE HAND-BACK INDEX SWITCH, `"handback_index": true` in ~/.consonance.json, read the way `gates_mode` is.
+/// OFF unless the key is the JSON boolean `true`: absent, unreadable, not JSON, a string, a number or `false` all read OFF, and
+/// with it off both shelves are today's byte for byte, because every branch it adds is skipped. ON, handback/ is indexed, never
+/// carried: the strict shelf lists the MAPPED top-level hand-backs too (D296 already lists the unmapped ones, unswitched), and
+/// the light shelf gains handback/ as one more directory line. Turning it on is the keeper's ~10-17 decision
+/// (`exo_memory/loop/plan_retrieval_misses_d301_2026-10-11.md`, part 3).
+fn handback_index_from(raw: &str) -> bool {
+    match serde_json::from_str::<serde_json::Value>(raw.trim_start_matches('\u{feff}')) {
+        Ok(v) => v.get("handback_index").and_then(|b| b.as_bool()) == Some(true),
+        Err(_) => false,
+    }
+}
+// Under `cargo test` the live ~/.consonance.json is NOT read (as for `intake_light`): a test sets the switch it means, off by default.
+#[cfg(test)]
+thread_local! { static TEST_HANDBACK_INDEX: std::cell::Cell<bool> = const { std::cell::Cell::new(false) }; }
+fn handback_index() -> bool {
+    #[cfg(test)]
+    {
+        TEST_HANDBACK_INDEX.with(|m| m.get())
+    }
+    #[cfg(not(test))]
+    {
+        handback_index_from(&fs::read_to_string(config_path()).unwrap_or_default())
+    }
+}
+
+/// The top-level `.md` files in handback/, sorted by path. Top level only, as in `unmapped_handbacks`: an `_evidence/` folder's
+/// `.md` files are outputs, not hand-backs. A missing handback/ yields nothing.
+fn top_level_handbacks(root: &Path) -> Vec<PathBuf> {
+    let mut out: Vec<PathBuf> = Vec::new();
+    let Ok(rd) = fs::read_dir(root.join("handback")) else { return out };
+    for e in rd.flatten() {
+        let p = e.path();
+        if p.is_file() && p.extension().and_then(|x| x.to_str()) == Some("md") { out.push(p); }
+    }
+    out.sort();
+    out
+}
+
 /// The top-level hand-backs that no `map/*.md` names, by path or by bare basename (D296; pane B's
 /// rule from D294, `loop/shelf_budget_registration_2026-10-11.md` §1). Top level only: the `.md`
 /// files inside `<hand-back>_evidence/` folders are outputs, not hand-backs, and are never listed.
@@ -8002,13 +8041,35 @@ fn corpus_shelf_at_with_index(budget: usize, index_budget: usize) -> String {
     // the window drops, and they are exactly the ones nothing else reaches.
     let unmapped = unmapped_handbacks(&root);
     let handbacks_unmapped = unmapped.len();
-    for f in unmapped {
-        let Ok(body) = fs::read_to_string(&f) else { continue };
+    for f in &unmapped {
+        let Ok(body) = fs::read_to_string(f) else { continue };
         let name = f.file_name().and_then(|x| x.to_str()).unwrap_or("?").to_string();
         let label = format!("handback/{name}");
         let line = index_entry_line(&label, &body);
         index_tier.push(IndexEntry { group: 1, date: label_date(&label), seq: index_seq, label, line });
         index_seq += 1;
+    }
+
+    // THE MAPPED HAND-BACKS (D301 part 3), only with `handback_index` on. The unmapped ones are above, in group 1, so this pass
+    // skips them: one hand-back, one line. A mapped one is reached one hop out through its map, so it does not jump the queue: it
+    // goes in with the dated loop/ record (group 2), newest first by the date in its name, and an undated one with the undated
+    // record (group 3). The window then spends the one index budget over all of it, and its drop line counts what did not fit.
+    let mut handbacks_mapped = 0usize;
+    let mut handback_mapped_lines: Vec<String> = Vec::new();
+    if handback_index() {
+        for f in top_level_handbacks(&root) {
+            if unmapped.contains(&f) { continue; }
+            let Ok(body) = fs::read_to_string(&f) else { continue };
+            let name = f.file_name().and_then(|x| x.to_str()).unwrap_or("?").to_string();
+            let label = format!("handback/{name}");
+            let line = index_entry_line(&label, &body);
+            let date = label_date(&label);
+            let group = if date.is_some() { 2 } else { 3 };
+            handbacks_mapped += 1;
+            handback_mapped_lines.push(line.clone());
+            index_tier.push(IndexEntry { group, date, seq: index_seq, label, line });
+            index_seq += 1;
+        }
     }
 
     // THE INDEX WINDOW. Ordered newest-first by the date in the label, then spent as a PREFIX.
@@ -8090,10 +8151,20 @@ fn corpus_shelf_at_with_index(budget: usize, index_budget: usize) -> String {
     }
     // Reported always, zero included: a count that appears only when it is non-zero cannot tell
     // "no hand-back is unmapped" from "hand-backs were never looked at".
-    let handbacks_listed = indexed.iter().filter(|l| l.starts_with("- handback/")).count();
+    let handbacks_listed = indexed.iter().filter(|l| l.starts_with("- handback/") && !handback_mapped_lines.contains(l)).count();
     s.push_str(&format!(
         "{handbacks_unmapped} hand-back(s) that no map/*.md line names are indexed with the record ({handbacks_listed} listed).\n"
     ));
+    // D301 part 3: said only when the switch is on, so the shelf with it off is today's byte for byte. The drop count is the
+    // mapped hand-backs' own, beside the window's total above, so the cost of the switch is readable on the shelf itself.
+    if handback_index() {
+        let mapped_listed = indexed.iter().filter(|l| handback_mapped_lines.contains(l)).count();
+        s.push_str(&format!(
+            "handback_index is on: {handbacks_mapped} hand-back(s) a map/*.md line names are indexed with the dated record \
+             ({mapped_listed} listed, {} dropped by the index window).\n",
+            handbacks_mapped - mapped_listed
+        ));
+    }
     s.push_str(&librarian_window_line(&window_rule, &window_delivered, librarian_leftover));
     if !indexed.is_empty() {
         s.push_str("\n## NOT CARRIED -- open these by path\n\n");
@@ -8239,11 +8310,13 @@ fn librarian_shelf_light_at(root: &Path, today: chrono::NaiveDate) -> String {
         }
     }
     s.push_str("\n## BY DIRECTORY -- open these by path\n\n");
-    for dir in LIGHT_SHELF_DIRS {
+    // D301 part 3: handback/ is one more directory line with `handback_index` on, counted at the TOP LEVEL only, so an
+    // `_evidence/` folder's `.md` is neither counted nor named as the newest. Off, the list is LIGHT_SHELF_DIRS exactly.
+    for dir in LIGHT_SHELF_DIRS.into_iter().chain(handback_index().then_some("handback")) {
         let d = if dir.is_empty() { root.to_path_buf() } else { root.join(dir) };
         if !d.is_dir() { continue; }
         let mut files: Vec<PathBuf> = Vec::new();
-        collect_md(&d, !dir.is_empty(), &mut files);
+        collect_md(&d, !dir.is_empty() && dir != "handback", &mut files);
         let newest = files
             .iter()
             .filter_map(|f| fs::metadata(f).and_then(|m| m.modified()).ok().map(|t| (t, f)))
@@ -8254,7 +8327,7 @@ fn librarian_shelf_light_at(root: &Path, today: chrono::NaiveDate) -> String {
             "- `{}` -- {} .md file(s){}{newest}. List: `ls \"{}\"`\n",
             d.display(),
             files.len(),
-            if dir.is_empty() { " at the top level (BOOT is above)" } else { "" },
+            if dir.is_empty() { " at the top level (BOOT is above)" } else if dir == "handback" { " at the top level" } else { "" },
             d.display()
         ));
     }
@@ -16346,6 +16419,146 @@ mod shelf_handback_tests {
         // by count too: a walk that recursed and labelled by file name alone would print
         // `handback/notes.md` and never show the folder
         assert_eq!(shelf.lines().filter(|l| l.starts_with("- handback/")).count(), 1, "an evidence-folder .md is listed");
+    }
+
+    // ---- D301 part 3: the hand-back index switch (`handback_index`), on both shelves ---------------
+    // Off by default; the byte-identity of both shelves with it off is shown on the real room by the intake dump, base tree
+    // against this one (`handback/p-handbackindex-E_2026-10-11.md`). These rows pin what the switch does on a fixture.
+
+    /// Turns the switch on for this thread and puts it back OFF on drop, even when an assertion fails.
+    struct Switch;
+    impl Switch {
+        fn on() -> Self {
+            TEST_HANDBACK_INDEX.with(|m| m.set(true));
+            Switch
+        }
+    }
+    impl Drop for Switch {
+        fn drop(&mut self) { TEST_HANDBACK_INDEX.with(|m| m.set(false)); }
+    }
+
+    /// Two mapped hand-backs (one named by path, one by stem), one unmapped, an evidence folder under a mapped one, and a dated
+    /// loop/ note whose date falls between the two mapped ones.
+    fn handback_room(tag: &str) -> Room {
+        let r = room(tag);
+        put(&r.root, "map/C.md", "- a finding: `handback/p-mapped-a_2026-10-03.md`\n- another, by stem: p-mapped-b_2026-10-01\n");
+        put(&r.root, "handback/p-mapped-a_2026-10-03.md", "# mapped by path\n");
+        put(&r.root, "handback/p-mapped-b_2026-10-01.md", "# mapped by stem\n");
+        put(&r.root, "handback/p-free_2026-10-02.md", "# named by no map\n");
+        put(&r.root, "handback/p-mapped-a_2026-10-03_evidence/notes.md", "# evidence notes\n");
+        put(&r.root, "handback/p-mapped-a_2026-10-03_evidence/out/report.md", "# evidence report\n");
+        put(&r.root, "loop/plan_2026-10-02.md", "# a plan\n");
+        put(&r.root, "handback/p-notes_2026-10-04.txt", "not a hand-back: not .md\n");
+        r
+    }
+
+    fn lines_for(shelf: &str, name: &str) -> usize {
+        shelf.lines().filter(|l| l.starts_with(&format!("- handback/{name}.md  ("))).count()
+    }
+
+    #[test]
+    fn the_handback_index_switch_reads_on_only_for_json_true() {
+        for raw in ["", "{ not json", "{}", r#"{"handback_index":false}"#, r#"{"handback_index":"true"}"#, r#"{"handback_index":1}"#,
+            r#"{"handback_index":"on"}"#, r#"{"handback_index":null}"#, r#"{"gates_mode":"light"}"#] {
+            assert!(!handback_index_from(raw), "read ON from {raw:?}");
+        }
+        for raw in [r#"{"handback_index":true}"#, "\u{feff}{\"handback_index\":true}", r#"{"gates_mode":"light","handback_index":true}"#] {
+            assert!(handback_index_from(raw), "read OFF from {raw:?}");
+        }
+        assert!(!handback_index(), "the switch is not off by default under test");
+    }
+
+    #[test]
+    fn with_the_switch_off_the_strict_shelf_lists_only_the_unmapped_hand_back() {
+        let r = handback_room("hbi_off");
+        let shelf = corpus_shelf_at_with_index(0, 100_000);
+        assert_eq!(lines_for(&shelf, "p-free_2026-10-02"), 1, "D296's unmapped hand-back, which is not behind the switch, is gone");
+        // by line, not by substring: map/C.md's own index title can quote a hand-back's name
+        assert_eq!(lines_for(&shelf, "p-mapped-a_2026-10-03") + lines_for(&shelf, "p-mapped-b_2026-10-01"), 0,
+            "a mapped hand-back is listed with the switch off");
+        assert_eq!(shelf.lines().filter(|l| l.starts_with("- handback/")).count(), 1, "a second hand-back line with the switch off");
+        assert!(!shelf.contains("handback_index"), "the switch's header line is printed with the switch off");
+        drop(r);
+    }
+
+    #[test]
+    fn with_the_switch_on_every_hand_back_is_listed_once_by_path_and_no_evidence_md() {
+        let r = handback_room("hbi_on");
+        let _s = Switch::on();
+        let shelf = corpus_shelf_at_with_index(0, 100_000);
+        for name in ["p-free_2026-10-02", "p-mapped-a_2026-10-03", "p-mapped-b_2026-10-01"] {
+            assert_eq!(lines_for(&shelf, name), 1, "{name} is not listed exactly once:\n{shelf}");
+        }
+        assert_eq!(shelf.lines().filter(|l| l.starts_with("- handback/")).count(), 3, "a fourth hand-back line: an evidence .md?");
+        assert!(!shelf.contains("_evidence"), "an evidence-folder .md is listed");
+        assert!(shelf.contains("1 hand-back(s) that no map/*.md line names are indexed with the record (1 listed).\n"),
+            "D296's line no longer counts the unmapped ones alone");
+        assert!(shelf.contains("handback_index is on: 2 hand-back(s) a map/*.md line names are indexed with the dated record \
+            (2 listed, 0 dropped by the index window).\n"), "the switch's line is wrong or missing:\n{shelf}");
+        // The unmapped one rides first (group 1); the mapped ones go in with the dated loop/ record, newest first.
+        let at = |n: &str| shelf.find(n).unwrap_or_else(|| panic!("{n} missing"));
+        let (free, a, plan, b) = (at("- handback/p-free_"), at("- handback/p-mapped-a_"), at("- loop/plan_2026-10-02"), at("- handback/p-mapped-b_"));
+        assert!(free < a && a < plan && plan < b, "order is not unmapped, then dated newest first: {free} {a} {plan} {b}");
+        drop(r);
+    }
+
+    #[test]
+    fn with_the_switch_on_the_index_budget_holds_and_its_drops_are_counted() {
+        let r = handback_room("hbi_budget");
+        let _s = Switch::on();
+        let full = corpus_shelf_at_with_index(0, 100_000);
+        let cost = |p: &str| full.lines().find(|l| l.starts_with(p)).map(|l| l.len() + 1).unwrap_or_else(|| panic!("{p} missing"));
+        // Room for map/C.md (group 0), the unmapped hand-back and the newest mapped one only: the loop/ note and the older
+        // mapped one drop.
+        let budget = cost("- map/C.md") + cost("- handback/p-free_") + cost("- handback/p-mapped-a_");
+        let shelf = corpus_shelf_at_with_index(0, budget);
+        assert!(shelf.contains("(1 listed, 1 dropped by the index window).\n"), "the mapped drop is not counted:\n{shelf}");
+        assert!(shelf.contains("2 index-tier entries ("), "the window's own total does not count both drops:\n{shelf}");
+        for budget in [0usize, 1, 40, budget - 1, budget, budget + 1, 5_000, 100_000] {
+            let shelf = corpus_shelf_at_with_index(0, budget);
+            let spent: usize = tier(&shelf).iter().map(|l| l.len() + 1).sum();
+            assert!(spent <= budget, "the index tier spent {spent} B against a budget of {budget}");
+        }
+        drop(r);
+    }
+
+    #[test]
+    fn the_light_shelf_gains_one_top_level_handback_line_with_the_switch_on_and_nothing_else() {
+        let root = std::env::temp_dir().join(format!("consonance_d301_light_{}", std::process::id()));
+        let _ = fs::remove_dir_all(&root);
+        put(&root, "cards/a.md", "CARD-A body");
+        put(&root, "loop/plan_2026-10-02.md", "# a plan\n");
+        put(&root, "handback/p-x_2026-10-01.md", "# x\n");
+        put(&root, "handback/p-y_2026-10-02.md", "# y\n");
+        put(&root, "handback/p-y_2026-10-02_evidence/z.md", "# written last, so the newest if it were counted\n");
+        let today = chrono::NaiveDate::from_ymd_opt(2026, 10, 11).unwrap();
+        let off = librarian_shelf_light_at(&root, today);
+        let on = { let _s = Switch::on(); librarian_shelf_light_at(&root, today) };
+        let _ = fs::remove_dir_all(&root);
+        assert!(!off.contains("handback"), "the light shelf names handback/ with the switch off");
+        let lines: Vec<&str> = on.lines().filter(|l| l.contains("handback")).collect();
+        assert_eq!(lines.len(), 1, "not one handback/ line: {lines:#?}");
+        assert!(lines[0].contains(" -- 2 .md file(s) at the top level"), "the evidence .md is counted: {}", lines[0]);
+        assert!(!lines[0].contains("_evidence"), "an evidence .md is named as the newest: {}", lines[0]);
+        assert_eq!(on.replacen(&format!("{}\n", lines[0]), "", 1), off, "the switch changed more than the one line");
+    }
+
+    /// MEASUREMENT, not a gate: the librarian intake in both modes WITH THE SWITCH ON, to $INTAKE_DUMP_DIR, on this tree's room.
+    /// With it off, `intake_light_tests::dump_intakes_for_measure` is the dump to compare byte for byte with the base tree's.
+    #[test]
+    #[ignore]
+    fn dump_intakes_with_the_handback_index_on() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let out = PathBuf::from(std::env::var("INTAKE_DUMP_DIR").expect("INTAKE_DUMP_DIR"));
+        fs::create_dir_all(&out).unwrap();
+        let _s = Switch::on();
+        for light in [false, true] {
+            TEST_INTAKE_LIGHT.with(|m| m.set(light));
+            let i = librarian_intake();
+            TEST_INTAKE_LIGHT.with(|m| m.set(false));
+            let tag = if light { "light" } else { "strict" };
+            fs::write(out.join(format!("librarian.{tag}.handback-on.md")), i.expect("intake")).unwrap();
+        }
     }
 }
 
