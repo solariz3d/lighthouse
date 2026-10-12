@@ -2223,3 +2223,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-11 ~21:5x (D) · D301 part 3, the hand-back index behind `handback_index` (default OFF) → `exo_memory/handback/p-handbackindex-E_2026-10-11.md`
 - lighthouse `fd122708` on `2f2b3a6a` (d301-e). Off: all four intakes (librarian and pane, strict and light) dump byte-identical to the base tree's. On: strict lists 143 of 794 mapped hand-backs (D296's 56 unmapped stay listed once) and they push 139 loop/ lines out of the full 30 KB index window (dropped 469 → 1,259); light gains one top-level handback/ line (+189 B). Mutants 15/15, cargo 1041/0.
 - **Carry:** when the index budget is already full, adding a tier changes which entries hold the budget, not the intake's size: measure what it displaces, not just what it adds.
+
+## 2026-10-11 ~23:2x (D) · D303 part 3, the blind read of Q3 and Q2 → `exo_memory/handback/p-causeread-E_2026-10-11.md`
+- lighthouse `b3d179bd` (phrases first at `b3d114e8`) on `f2597aa9` (d303-e). Q3 47: CN 27, CR 3, CU 5, NC 9, QX 3, unchecked 61.4–72.7%, no source holds half. Q2 41: RF 8, RX 1, RN 13, QN 19, rule-on-disk 36.4–40.9% (straddles 40; W061's RX and W009's day-start sha decide it). Joint: CN 27 of 72 decided is the largest row; RN 13 next.
+- **Carry:** a census "claim located" hit is often the correction quoting the claim; locate the erring turn by the claim's own words before the correction's time, or "run" is read off the wrong turn.
