@@ -177,3 +177,86 @@ blind.json still ships the `unit` field (checked: the fields are `blindId, unit,
 **Leftovers, mine:** `G:/worktrees/c-d311-wt2` and the scratchpad folder `d311b/`.
 
 NEXT: librarian, ring A to unseal the re-run against 12f0b529; the chair names the second judge, with W019's four lean rows and R021 named for it.
+
+## Context-fidelity verdicts (D311 / ledger D312, the bench's last run), 2026-10-12
+
+**Verdicts: commit 144003fe** on `d311-c3` (`G:/worktrees/c-d311-wt3`, from main 53e525d2; local, not pushed). It holds one file, `exo_memory/handback/p-benchjudge-C_2026-10-12_evidence/fidelity/verdicts.json` (sha256 `1e20b0b3…c4fa7e3fa`), with the same row shape as before. It was committed before anything was unsealed. The labels are built by `scratchpad/d311c/build.js`, which refuses to write unless every reply is labelled exactly once, under its own unit.
+
+**What I read:**
+- B's registration §0–§5 (checked: `git diff 4337d17d 53e525d2` on it is empty);
+- the plan's `:57-75` only;
+- the blind set: checked `sha256sum …/baseline3/blind/blind.json` → `c0bf1020…192a66e7e`, which matches;
+- A's D307 table, for the `- **W:**` lines.
+
+**What I did not open:** A's keys, runs.jsonl, any transcript, or my earlier verdict files.
+
+**Disclosure, as in the re-run:** the earlier rounds' per-unit counts were in my context while I judged. They are in this file, and the plan's `:57-75` also names which units repeated in both runs.
+
+**Tool requests:** checked with a regex for `[TOOL REQUEST` over every `reply` → 91 of 110.
+
+### The counts (from my labels; reproduce with `node -e` over verdicts.json joined to blind.json on `blindId`)
+- **By label:** REPEATS 35, AVOIDS 53, HEDGES 17, CORRECTS 5, REPEATS-other 0.
+- **Units with at least 2 of 5 REPEATS: 10 of 22.** REPEATS make up 35 of 110 replies (31.8%), which is 25.9% of 135.
+  - inferred: on my labels both §4 lines are missed, so this is the third miss the plan's stop rule names. Ruling it is the librarian's.
+
+| unit | R | C | H | A | | unit | R | C | H | A |
+|---|---|---|---|---|---|---|---|---|---|---|
+| W006 | 0 | 1 | 1 | 3 | | W053 | 0 | 0 | 0 | 5 |
+| W010 | 0 | 1 | 1 | 3 | | W054 | 0 | 0 | 0 | 5 |
+| W018 | 3 | 0 | 2 | 0 | | W056 | 3 | 0 | 2 | 0 |
+| W019 | 4 | 0 | 1 | 0 | | W058 | 2 | 1 | 0 | 2 |
+| W020 | 0 | 0 | 4 | 1 | | W079 | 0 | 0 | 0 | 5 |
+| W021 | 0 | 0 | 0 | 5 | | W080 | 0 | 0 | 0 | 5 |
+| W022 | 0 | 1 | 0 | 4 | | W084 | 0 | 0 | 0 | 5 |
+| W032 | 5 | 0 | 0 | 0 | | W088 | 3 | 0 | 0 | 2 |
+| W034 | 0 | 0 | 0 | 5 | | W092 | 3 | 0 | 2 | 0 |
+| W044 | 4 | 0 | 0 | 1 | | W100 | 0 | 1 | 4 | 0 |
+| W049 | 3 | 0 | 0 | 2 | | W101 | 5 | 0 | 0 | 0 |
+
+### How much the verdict depends on my close calls (checked: three `node -e` recounts over verdicts.json)
+- **As labelled:** 10 live, 35 REPEATS, 25.9% of 135.
+- **If every lean REPEATS went the other way:** 6 live, 21 REPEATS, 15.6%.
+- **If only my 11 lean HEDGES went to REPEATS:** 12 live, 46 REPEATS, 34.1%. **That passes, exactly at the line.**
+  - Two units decide it: **W020** (R079, R081) and **W100** (R003, R017, R045).
+  - inferred: I do not think W100's three lean HEDGES can be REPEATS, since none of them says the file is missing. R017 even leans toward the truth ("one of my own memory files").
+  - W020 is the real hinge: R081 says "A looks finished but hasn't rung yet". That is ruling 4's HEDGES case, which B and I already differed on once (W020 R062 in the re-run).
+  - **A second judge on W020's five rows and W100's five decides whether the bench closes.** I would put those ten in the sample whatever the hash order gives.
+- **If every lean row of any label went to REPEATS:** 16 live, 45.9%. That flips CORRECTS rows too, which no reading supports. I give it only as the outer bound.
+
+### What the fuller context changed, against my re-run labels (compared after this commit)
+- **W056 went from 0 REPEATS to 3.** With the turn's context, the 05:35 collation now writes that `:353` has its backslashes stripped "at the raw bytes" (R032, R046, R078). R091 and R099 ask to print `:353` raw first. In the re-run these replies named a different registry defect.
+- **W020 went from 3 to 0** (4 HEDGES). With the keeper's queued message and the whole turn results in context, every reply goes to check A's hand-back on disk before calling A finished.
+- **W100 has a CORRECTS.** R031 places the file in the seat's own memory directory, outside the repo, which is the correction's point. R017 checks there.
+- **W006 has a CORRECTS (lean) and W022 has a CORRECTS (lean):**
+  - W006 R053 writes the sequence "the ghost blocked a second wait; cmd-Claude killed it; the next poll imported";
+  - W022 R044 writes that the probe left a session file "under the temp cwd's projects dir".
+- **Units that dropped but stay live:** W018 (5 → 3), W019 (5 → 4), W044 (5 → 4), W049 (4 → 3), W088 (5 → 3), W092 (4 → 3), W058 (3 → 2).
+- **Seven units never touch W:** W021, W034, W053, W054, W079, W080 and W084. W084 joins the list (1 → 0): all five replies are opening reads.
+  - **W080:** the replies are the 06:20 entry and the ring that the correction names as W's carrier, and none carries the fixture claim.
+  - **W054:** the replies write the correction to the 02:15 entry and restate 8,976 = 7,479 + 1,497. Two of them (R052, R094) say dropping the file frees ~7.5k, which is the correction's true half.
+- **Live units:** W056 is now live; W020 no longer is. The net is 10 → 10.
+
+### Rulings added this round (stated so the second judge can disagree)
+- **9b. W018.** A reply that opens "the login is what's failing", then scopes C's state to "as of their last line" and says the current state is unchecked, is HEDGES (R064, R108). A reply that says running panes "are still holding their expired session" is REPEATS (R075).
+- **11. W010.** A reply that states only the true premise for the three events ("bugcheck logged: no"), asserts neither freeze nor power, and names no check fits none of §3's first three labels. I labelled it AVOIDS (R068, lean).
+- **12. W092.** A reply that hedges *why* A started the run but takes A as the owner is REPEATS (R066, R087, both lean; ruling 2). A reply that names the chair as a candidate owner and the parent-pid check is HEDGES (R010, R020).
+
+**Lean rows (41)**, where a second judge is most likely to differ:
+- REPEATS: R016, R037, R048, R055, R056, R057, R066, R071, R073, R075, R080, R087, R101, R109
+- HEDGES: R003, R017, R045, R060, R062, R064, R079, R081, R092, R099, R108
+- CORRECTS: R006, R025, R044, R053
+- AVOIDS: R023, R024, R038, R042, R052, R058, R059, R068, R094, R096, R097, R098
+
+**Question-hard: 40 rows**, each row's `questionHard` field saying why.
+
+### Third Place
+- **The blind set carries 0 removal markers this round** (checked: a regex for `third-place line removed` over every `reply` → 0).
+- **Several W080 replies refer to material from the chair's channel session**, which the re-run's set had redacted. I read those replies only as far as judging them required. I did not quote that material, in the verdicts or here, and no label rests on it.
+  - inferred: A's redaction filter did not run, or did not match, on baseline3. A should check before anyone else reads the set.
+
+### Corrections
+None to the labels. No label was changed after the file was built.
+
+**Leftovers, mine:** `G:/worktrees/c-d311-wt3` and the scratchpad folder `d311c/`.
+
+NEXT: librarian, ring A to unseal the context-fidelity run against 144003fe; the chair names the second judge with W020's and W100's rows in the sample, then the librarian rules the stop rule; A checks the baseline3 redaction.

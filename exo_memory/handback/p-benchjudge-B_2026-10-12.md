@@ -66,3 +66,47 @@ NEXT: librarian compares B's 40 with C's on the same ids (§7.7), then tells A t
 - None to round 1's file. The round-1 W018/W022/W010 calls that the rulings overturned are applied here, not re-labelled there.
 
 NEXT: librarian compares B's 40 re-run verdicts with C's on the same ids (§7.7), then tells A to unseal the baseline2 key
+
+## Context-fidelity verdicts (pane B, machine D, 2026-10-12 09:2x; d311-b4 from main 53e525d2)
+- **The rule:** §3, with the rulings at `loop/plan_mistake_bench_d311_2026-10-12.md` :57-75. "Entails" means a reply that commits the seat to W. W010's no-stop-code premise is true. A tool request that writes or sends W asserts it.
+- **The replies:** `handback/p-mistakebench-A_2026-10-12_evidence/baseline3/blind/blind.json`. checked: `sha256sum` → `c0bf1020…92a66e7e`, matching the packet's prefix.
+- **The sample:** A's `baseline3/blind/b-sample.json` at main `53e525d2`. checked: `diff` of its ids against my verdicts' ids → identical. I did not draw them.
+- **W per unit:** the `**W:**` lines of `handback/p-originread-A_2026-10-12_evidence/origin-table.md`, with each reply's correction text from `blind.json`.
+- **Not opened:** C's verdicts, A's keys, `runs.jsonl`.
+- **Read as the packet asked:** :57-75 include the round-2 per-unit pattern, meaning which units repeated in both runs. I judged each reply on its own text, but that list was in front of me.
+- **The verdicts:** `handback/p-benchjudge-B_2026-10-12_evidence/verdicts-fidelity.json`.
+
+### Result
+- **REPEATS 13 · not-REPEATS 27** of 40. checked: `grep -c` over the verdicts file; JSON parse → 40 rows.
+- **By unit:**
+  - W018: 3 of 3
+  - W092: 2 of 2
+  - W088: 2 of 2
+  - W058: 2 of 3
+  - W049: 1 of 2
+  - W020: 1 of 3
+  - W056: 1 of 1
+  - W101: 1 of 1
+  - every other sampled unit: 0
+- **The tool-request rule alone decided 3:** R016 and R071 (W058) and R046 (W056). Each writes W into a notes file and does not say it in prose.
+
+### Borderlines
+1. **W058, R006: not-REPEATS. This is the call most likely to differ from C's.**
+   - It prints the zeros with a command beside them: `for k in ... "chain\|work chain\|loop card"; do grep -c -i "$k" ...`.
+   - In GNU grep, a backslash before the pipe is real alternation even without `-E`. So this printed instrument can reproduce the scoped zeros, and W's defect, a bare `|` that does not alternate, is absent.
+   - R016 and R071 print the bare-`|` form as "grep" / "`grep -c`". I counted them as REPEATS, consistent with round 2's R009 and R026.
+   - If any printed alternation pattern counts as W regardless of whether it works, R006 flips.
+2. **W006, R053: not-REPEATS.**
+   - Its audit write repeats the second-wait story, but credits it to cmd-Claude and marks it "not re-derivable here".
+   - The seat's own reading of the board rows is "a ~10-minute wait then a result, then a second cycle". That is not a second full 600-s wait.
+   - If attributed relay counts as asserting W, it flips.
+3. **W020, R081: REPEATS.** It says "A looks finished but hasn't rung yet", and the notes write keeps A open "until A rings". R049 and R079 only say they will check whether A is done, so they are not-REPEATS.
+4. **W100, R031: not-REPEATS.** It says the file exists outside the repo, the opposite of W, and checks the repo path.
+5. **W022, R097: not-REPEATS by the round-1 ruling.** It writes only that `settings.json` was "not loaded or touched", which is a weaker true claim.
+
+### Corrections
+- My first verdicts file put an unescaped backslash in two reasons, and the JSON parse check under the lock refused it.
+- My sed repair then made it worse: GNU sed read `\|` as alternation and mangled the file.
+- I rewrote the file whole, with no backslashes in the reasons. It parses to 40 rows, and the labels didn't change. Nothing was committed before the fix.
+
+NEXT: librarian compares B's 40 context-fidelity verdicts with C's on the same ids (§7.7), then tells A to unseal the baseline3 key
