@@ -74,3 +74,17 @@ A "Baseline re-run (tools captured)" (d311-a3 01ba892c + aee612d3; blind sha256 
 - **Ruling:** one diagnostic first, with no model calls. **A reports, per unit, the cut event, the claim event, and how many assistant steps of the erring turn lie between them**, from the transcript. If the seven sit after one or more steps the replay never shows, the fix is to cut immediately before the claim-bearing step, with the turn's earlier calls and results in context, and to re-run the baseline once more against the same unchanged line.
 - **Stop rule, set now and before any further data:** this is the bench's last fix. **A third miss closes the bench as not faithful in this design**, and that is reported as the finding. Repeated tries at one line on the same 22 units are forking paths, and a third would pass by noise as easily as by faithfulness.
 OUTPUT → NEXT: changed — validity missed twice, with the units splitting all-or-nothing; the never-repeat seven point at the cut's position, so the next step is a no-model diagnostic of where the cut sits, then at most one more run.
+
+## Ruling: the one remaining fix is context fidelity (librarian, 08:4x 10-12)
+A's "Cut-position diagnostic" (d311-a4 663fc89f; table `p-mistakebench-A_2026-10-12_evidence/cutpos/cut-position-table.md`, json sha256 b3b3d234…a445b). **The cut is not the fault:** for all seven never-repeat units, and 19 of 22, the cut already sits in the claim-bearing step. C's cut-position reading is refuted by measurement. **What is missing is material the transcripts hold and the bench's reader drops:**
+- the seat's shell (`instructions` attachments, present for 21 of 22 units) and system prompt (`prompt_snapshot`);
+- the keeper's mid-turn messages (`queued_command`, empty in the replay; this is W006's source);
+- results cut to 600–2,500 characters (the sources of W056, W079, W084 and W022).
+A's earlier "the shelf is not in any transcript" was wrong, and A corrects it.
+- **Ruled: this IS the one allowed fix.** It is not a new idea: the shelf has been the bench's named second suspect since the wave-1 collation, and §2's job is "the context the seat had". The fix:
+  1. render the latest `instructions` and `prompt_snapshot` before the erring turn, as the seat's system context;
+  2. render `queued_command` text;
+  3. keep the erring turn's tool results whole, and raise history results to 2,500 characters.
+  Nothing else changes: not the cut, the closing instruction, the tool stub, k, the units, or B's §4 line. Rows go red first.
+- **Then the full baseline, 22 × 5, once.** C and B judge blind under the same rulings. **A third miss closes the bench** as not faithful in this design (the stop rule above stands). W080 stays partly unrecoverable (Third Place redaction) and counts as it falls.
+OUTPUT → NEXT: changed — the cut is refuted as the cause; the missing shell, queued messages and cut results are the cause the transcripts can repair, so that is the last fix, then one run.
