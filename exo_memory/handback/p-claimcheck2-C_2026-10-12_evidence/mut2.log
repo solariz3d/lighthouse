@@ -1,0 +1,39 @@
+== C d305r mutants run 2 · asked 2026-10-12T06:33:55.854Z · lock held 2026-10-12T06:33:55.885Z · NODE_OPTIONS=--max-old-space-size=4096
+$ node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d305r/mut.js
+C0 control: SURVIVED
+S1 the switch: any truthy value is ON: caught by rows 1,2,5
+S2 the switch: a parse failure is ON: caught by rows 1
+S3 OFF does not exit early (it runs as shadow): caught by rows 2
+S4 the once-per-turn guard never fires: caught by rows 3
+S5 refuses even when its row was not written: caught by rows 4
+F1 literal: no whole-token boundary: caught by rows 12
+F2 a result after the message backs it: caught by rows 15
+F3 an errored result backs it: caught by rows 15
+F4 the prompt does not back: caught by rows 16,32
+F5 computed accepts any arithmetic: caught by rows 17
+F6 rounded needs no approximation marker: caught by rows 12,18
+F7 no empty-result backing: caught by rows 19
+F8 colour codes not stripped: caught by rows 13
+F9 thousands separators kept: caught by rows 12,17
+F10 masked spans ignored (dates, ids, paths become figures): caught by rows 14
+R1 any call reads the board: caught by rows 20
+R2 an fs read need not name the path: caught by rows 21
+R3 pushed backed without the remote: caught by rows 23
+R4 a state word needs no object: caught by rows 22
+K1 inferred: lines are not skipped: caught by rows 24
+K2 plans are not skipped: caught by rows 24
+K3 quotes are not taken out: caught by rows 24
+V1 a Bash redirect anywhere is a record write: caught by rows 26
+V2 the via scope is ignored: caught by rows 27
+V3 the adapter: any Write is a record write: caught by rows 28,29
+N1 a bare single digit is a figure again: caught by rows 8
+N2 a label number is a figure again: caught by rows 8
+N3 an enumerator (n) is a figure again: caught by rows 8
+N4 zero is dropped with the single digits: caught by rows 8,19
+N5 a run word said of a seat keeps need process: caught by rows 9
+N6 any seat's ring backs any seat: caught by rows 9
+N7 any run backs a run state, named or not: caught by rows 10
+N8 conditions are not skipped: caught by rows 11
+N9 a condition anywhere in the unit skips the state: caught by rows 11
+applied 34 / caught 34 / NOT APPLIED 0; base dirty after: 0
+== exit 0 · done 2026-10-12T06:34:09.193Z

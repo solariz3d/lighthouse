@@ -81,6 +81,18 @@ function maskedSpans(u) {
 const inSpans = (spans, a, b) => spans.some(([s, e]) => a >= s && b <= e);
 
 /** Figure flags of one unit: [{ kind, token }]. */
+// REVISION (D305 wave 3; B's read: bare `number` flags were 194 of the week's flags, and list numbers a named misfire). A bare number is not a figure when it
+// is a single digit 1-9 with no unit and no decimal ("2 rules", "7 commits": prose counting, the number words E already left out, written as digits), or a
+// LABEL: the number after part, item, step, lap, row and the like, or an enumerator "(3)". Zero stays a figure ("0 hits" is a claim), as do multi-digit counts,
+// decimals and anything with a unit.
+const LABEL_BEFORE = /\b(?:part|item|step|lap|wave|phase|round|chunk|row|line|column|section|chapter|cycle|attempt|option|pass|day|week|rule|point|case|level|stage|tier|arm|group|question|page|no\.|number|packet|unit|lane|slot)\s*\(?$/i;
+function notAFigure(u, tok, a, b) {
+  const bare = /^\d+$/.test(tok);
+  if (bare && Number(tok) >= 1 && Number(tok) <= 9) return true;
+  if (bare && LABEL_BEFORE.test(u.slice(0, a))) return true;
+  if (u[a - 1] === '(' && u[b] === ')') return true;
+  return false;
+}
 function figuresIn(u) {
   if (/^\s*#{1,6}\s/.test(u)) u = u.replace(/^(\s*#{1,6}\s+)\d+(?:\.\d+)*\.?\s/, '$1');   // an ordinal heading number is not a figure
   u = u.replace(/^(\s*)\d+[.)](\s)/, (m, a, b) => a + ' '.repeat(m.length - a.length - b.length) + b);   // nor is a list item's own number (units.js merges the marker into the item); same length, so spans stay put
@@ -92,7 +104,9 @@ function figuresIn(u) {
       const a = kind === 'time' && m[1] ? m.index + m[0].lastIndexOf(m[1]) : m.index, b = a + tok.length;
       if (kind !== 'sha' && kind !== 'commit' && inSpans(spans, a, b)) continue;
       if (taken.some(([s, e]) => a < e && b > s)) continue;   // one flag per stretch of text: the first (most specific) kind wins
-      taken.push([a, b]); out.push({ kind, token: tok.replace(/[.,;:!?)\]'"]+$/, '') });
+      taken.push([a, b]);
+      if (kind === 'number' && notAFigure(u, tok, a, b)) continue;   // the stretch stays taken, so no later kind re-flags it
+      out.push({ kind, token: tok.replace(/[.,;:!?)\]'"]+$/, '') });
     }
   }
   return out;
@@ -108,6 +122,26 @@ const STATE_WORDS = [
   ['board', /\b(?:filed|dispatched|closed)\b/i],
   ['process', /\b(?:started|finished)\b/i],
 ];
+// REVISION: the seat a unit is about (a letter, or chair / librarian), so a run word said of a SEAT ("B has finished") is read as a board state, and a
+// seat's own ring in the turn's prompt backs it. Process words said of anything else keep need `process`, now also backed by a run in the turn that names it.
+const SEAT_IN_UNIT = /\b(?:pane|seat)\s+([A-E])\b|\b([A-E])'s\b|\b([A-E])(?=\s+(?:is|was|has|hasn't|had|finished|started|rang|never|logged|is still)\b)|\b(chair|librarian)\b/;
+function seatOfUnit(u) { const m = SEAT_IN_UNIT.exec(u); return m ? (m[1] || m[2] || m[3] || m[4]).toLowerCase() : null; }
+/** Does the turn's prompt come from that seat (a `[pane:X]` ring, or the chair's / librarian's own ring)? */
+function promptFromSeat(prompt, seat) {
+  const head = String(prompt || '').replace(/<[^>]+>/g, ' ').trim().slice(0, 200);
+  if (!seat) return false;
+  if (seat.length === 1) return new RegExp(`^\\[pane:${seat}\\]`, 'i').test(head);
+  return new RegExp(`^\\[${seat === 'chair' ? '(?:chair|orchestrator)' : 'librarian'}[:\\]]`, 'i').test(head);
+}
+const CONDITION_BEFORE = /\b(?:if|when|whenever|once|after|until|unless)\b/i;
+const STOP = new Set(['that', 'this', 'with', 'from', 'have', 'been', 'into', 'then', 'there', 'they', 'their', 'what', 'which', 'when', 'will', 'were', 'still', 'running', 'finished', 'started', 'stopped', 'exited', 'killed', 'alive', 'now', 'just', 'about', 'after', 'before']);
+/** A run call that names the unit's object: a Bash/PowerShell command (not a printer) sharing a word of 4+ characters with the unit. */
+function runNamesUnit(call, u) {
+  if (!(call.tool === 'Bash' || call.tool === 'PowerShell') || PRINTERS.has((call.cmd.trim().split(/\s+/)[0] || '').toLowerCase())) return false;
+  const words = (u.toLowerCase().match(/[a-z0-9][\w.-]{3,}/g) || []).map((w) => w.replace(/[.,;:]+$/, '')).filter((w) => w.length >= 4 && !STOP.has(w));
+  const cmd = call.cmd.toLowerCase();
+  return words.some((w) => cmd.includes(w));
+}
 // "About a named object" (E §2.3): a path, a sha, a seat, a pid or a tool name. A state word with no object is skipped as no-object.
 const OBJECT = /(?:\b[A-Za-z]:[\\/]|\b[\w.-]+[\\/][\w.-]+|\b(?=[0-9a-f]*[a-f])(?=[0-9a-f]*\d)[0-9a-f]{7,40}\b|\b(?:pane|seat)\s+[A-E]\b|\b[A-E]'s\b|\b[A-E](?=\s+(?:is|was|has|hasn't|had|finished|started|rang|never|logged|is still)\b)|\b(?:chair|librarian|orchestrator|keeper's machine)\b|\bpid\s*\d+|\b(?:node|cargo|npm|git|js-suite|harness|mutants?|suite|test|tests|hook|lock|board\.jsonl|persist\.log|panes\.json|origin\/main|main|branch|worktree)\b|\b[\w-]+\.(?:js|rs|md|json|jsonl|ps1|log|txt|py)\b)/i;
 
@@ -238,8 +272,11 @@ function check(turn, opts = {}) {
     const comp = computedTokens(u, isBacked);
     const flags = [];
     for (const f of figuresIn(u)) flags.push({ unit, text: u0, kind: 'figure', token: f.token, figureKind: f.kind, need: 'literal' });
-    for (const [need, re] of STATE_WORDS) {
+    const seat = seatOfUnit(u);
+    for (const [need0, re] of STATE_WORDS) {
       const m = u.match(re); if (!m) continue;
+      if (CONDITION_BEFORE.test(u.slice(0, m.index))) { res.skipped.push({ unit, reason: 'conditional' }); continue; }   // REVISION: "if/when/after X has finished" states no state
+      const need = need0 === 'process' && seat ? 'board' : need0;   // REVISION: a run word said of a seat is the seat's state
       if (flags.some((f) => f.kind === 'state' && f.need === need)) continue;
       if (!OBJECT.test(u)) { res.skipped.push({ unit, reason: 'no-object' }); continue; }
       flags.push({ unit, text: u0, kind: 'state', token: m[0], need, why: '' });
@@ -258,6 +295,9 @@ function check(turn, opts = {}) {
       } else {
         const c = calls.find((x) => NEED_READS[f.need](x) && (f.need !== 'fs' || namesUnitPath(x, u)) && (f.need !== 'git' || !/\b(?:un)?pushed\b/i.test(f.token) || /origin|ls-remote|\.\.HEAD|push/.test(x.cmd)));
         if (c) by = { eventIndex: c.i, tool: c.tool, how: 'read' };
+        // REVISION: a seat's state is backed by that seat's own ring in the prompt; a run state by a run in the turn that names the thing
+        else if (f.need === 'board' && promptFromSeat(prompt, seat)) by = { eventIndex: -1, how: 'prompt' };
+        else if (f.need === 'process') { const r = calls.find((x) => runNamesUnit(x, u)); if (r) by = { eventIndex: r.i, tool: r.tool, how: 'run' }; }
         f.why = by ? '' : `a state (${f.need}): nothing in this turn read that state`;
       }
       if (by) res.backed.push({ unit, token: f.token, by });

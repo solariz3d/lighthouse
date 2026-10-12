@@ -84,6 +84,29 @@ test('not figures: dates, ledger and lap ids, path:line, section signs, a headin
   assert.deepStrictEqual(C.figuresIn('2. Third, read consonance/tools/a1b2.js'), []);
 });
 
+// ---- the revision (D305 wave 3): the cost targets from B's read, by category ----
+test('revision: a bare single-digit count and a label number are not figures; zero, multi-digit counts, decimals and figures with a unit still are', () => {
+  assert.deepStrictEqual(C.figuresIn('It marks 2 rules and 7 commits, in part 4 and step (3).'), []);
+  assert.deepStrictEqual(C.figuresIn('Item 12 and lap 41 are labels, and so is (14) in a list.'), []);
+  assert.deepStrictEqual(C.figuresIn('There are 0 hits, 23 files, 3 s, 2.5 rows and 4 of 4 pass.').map((x) => x.token), ['4 of 4', '0', '23', '3 s', '2.5']);
+});
+test("revision: a seat's state is backed when the turn's prompt is that seat's own ring; another seat's ring does not back it", () => {
+  assert.strictEqual(C.check(turn('B has finished the tidy.', [], '[pane:B] D9 hand-back: exo_memory/handback/x.md')).verdict, 'allow');
+  assert.strictEqual(C.check(turn('B has finished the tidy.', [], '[pane:C] D9 hand-back: exo_memory/handback/x.md')).verdict, 'refuse');
+});
+test('revision: a run state is backed by a run in the turn that names the thing; not by an unrelated call, and not with no call', () => {
+  const run = [call('Bash', { command: 'node consonance/tools/js-suite.js --quiet' }), result('Command running in background with ID: b1')];
+  assert.strictEqual(C.check(turn('The js-suite is running now.', run)).verdict, 'allow');
+  assert.strictEqual(C.check(turn('The js-suite is running now.', [call('Bash', { command: 'ls docs' }), result('a.md')])).verdict, 'refuse');
+  assert.strictEqual(C.check(turn('The js-suite is running now.')).verdict, 'refuse');
+});
+test('revision: a state word inside a condition (if, when, once, after, until, unless) is not a state claim', () => {
+  const r = C.check(turn('If the harness run has finished by then, the lock is free.'));
+  assert.strictEqual(r.verdict, 'allow'); assert.ok(r.skipped.some((s) => s.reason === 'conditional'));
+  assert.strictEqual(C.check(turn('The harness run has finished.')).verdict, 'refuse', 'the same words stated as a fact are still a claim');
+  assert.strictEqual(C.check(turn('The harness run has finished, and B reads it when ready.')).verdict, 'refuse', 'a condition AFTER the state word does not make it conditional');
+});
+
 // ---- backing a figure (E §3.1) ----
 test('literal: the figure as a whole token in an earlier result backs it; 600 is not backed by 600000; colour codes and thousands separators are ignored', () => {
   assert.strictEqual(C.check(turn('There are 98 entries.', [call('Bash', { command: 'ls | wc -l' }), result('98 entries')])).verdict, 'allow');

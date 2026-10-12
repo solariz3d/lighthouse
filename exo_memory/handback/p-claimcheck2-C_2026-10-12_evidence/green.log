@@ -1,0 +1,6 @@
+== C d305r green · asked 2026-10-12T06:30:36.279Z · lock held 2026-10-12T06:30:36.315Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd G:/worktrees/c-d305b-wt && node --test --test-reporter=tap consonance/hooks/claim-check.test.js consonance/tools/claim-check-adapter.test.js consonance/tools/claim-replay.test.js 2>&1 | grep -E '^not ok|^# (tests|pass|fail)|expected|actual' | head -20
+# tests 51
+# pass 51
+# fail 0
+== exit 0 · done 2026-10-12T06:30:36.828Z
