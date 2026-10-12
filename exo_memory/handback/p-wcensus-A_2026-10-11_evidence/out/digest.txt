@@ -1,0 +1,4 @@
+units.json sha256 3e910cb0397c651ba763a653a00e4247e6c6a13895ab90f41342cfa0d499e7e4
+function: sha256 over the UTF-8 bytes of out/units.json
+strata: W census: all 101
+units: 104 (101 W rows + 3 extra)
