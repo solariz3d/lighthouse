@@ -15,7 +15,7 @@
 
 **With my three classes in place of A's:**
 - PROXY 14, RING 14, INFER 5, DIGEST 4, CARRY 2, OWN-NOTE 1, NONE 1, NT 1.
-- PROXY and RING tie at 33.3%. The carrier set is still 21, still with 18 `as-of = no` (W082 leaves RING, W092 enters).
+- PROXY and RING tie at 33.3%. The carrier set is still 21. It has 18 `as-of = no` with A's flags (W082, a "no", leaves RING; W092, a "no", enters), and 19 with W100's flag moved (below).
 - These are counts, not a score.
 
 ## The units A asked me to look at hardest
