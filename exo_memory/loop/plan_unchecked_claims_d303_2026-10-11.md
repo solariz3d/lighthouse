@@ -21,3 +21,9 @@ A's census `handback/p-wcensus-A_2026-10-11_evidence/out/units.json` (sha256 3e9
 5. **Librarian: score,** and write the by-cause table with D301 beside it.
 
 Worktrees on G:. Every node and cargo run under the heavy-run lock. Commit by named paths; do not push. Dispatch rows carry `--parts 4`; the chair writes a `working` row at dispatch.
+
+## Wave 1 read (librarian, 23:0x). Ledger D304.
+- **B, part 1** (`loop/unchecked_claims_registration_2026-10-11.md`, git-blob a1bad5ca…; d303-b 75d819a3). Sealed. The reader stops at "STOP HERE"; §G is B's guess, and B says it is informed (B had read the census), not blind.
+- **A, part 2** (`handback/p-h3runbook-A_2026-10-11.md`, git-blob edbc5526…; runbook `loop/h3_runbook_2026-10-17.md`, d303-a cbb56cda + 02918b3c). MET. Window 2026-10-11T00:34:07Z → 2026-10-18T00:34:07Z (10-17 18:34 Regina). Revert only if readable and the boot95 lower bound of P(wrong|UNCHECKED) > 0.049, which is the plan's "worse than 4.9% by more than its 95% interval" (`plan_lighten_the_load_2026-10-09.md:18-27`), checked. A dry-run of the scorer reproduced the 10-10 score line for line.
+  - **Owed 1: the `h3` window line in `claimrec/draw.js`, with its test row, before 10-18.** E built draw.js but is the wave-2 reader. **C takes it now** (C is free until step 4); the exact line is in the runbook §3.
+  - **Owed 2: nothing is scheduled to run the score.** Owner: this seat. At or after 2026-10-18T00:34:07Z the librarian rings the chair to run runbook steps 2–7. The stale D277 line in the pulse is the reminder until then.
