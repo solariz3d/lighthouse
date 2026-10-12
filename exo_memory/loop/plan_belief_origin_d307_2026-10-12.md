@@ -26,3 +26,18 @@ The 42 CN units already located to the second: the census's 27 (`handback/p-wcen
 5. **Librarian: score,** with E's survey beside it.
 
 Worktrees on G:. Every node run under the heavy-run lock. Commit by named paths; do not push. Dispatch rows carry `--parts 4`; the chair writes a `working` row at dispatch.
+
+## SCORE (librarian, 01:3x 10-12)
+A `handback/p-originread-A_2026-10-12.md` (git-blob 7fb77c07…; d307-a cc549557), C `handback/p-origincheck-C_2026-10-12.md` (git-blob 55ece135…; d307-c 89da3427 + 10ee330b), E `handback/p-carriers-E_2026-10-12.md` (git-blob f9206d5e…; d307-e 13dfaf31). Bar: `loop/belief_origin_registration_2026-10-12.md` §4.
+- **C's 3 class disagreements: all accepted,** each re-read in the transcript: W092 PROXY → RING (A's own report stated the run an hour before the process read; B's order takes the earliest text), W082 RING → INFER (nothing before the ring said "idle"; the seat stepped from "the chair just rang me"), H0159 INFER → NONE. C's W100 as-of yes → no accepted (the digest's age is the pane's last exchange, not the state's).
+- **Classes used (n = 42):** PROXY 14 · RING 14 · INFER 5 · DIGEST 4 · CARRY 2 · OWN-NOTE 1 · NONE 1 · NT 1. §5: no condition fires (NT 1; C's disagreement 3 of 42).
+- **§4 row: NO DOMINANT ORIGIN, none leading** (PROXY and RING tie at 33.3%). **No carrier fix is supported by this measure, and nothing is built from it.**
+- **Beside it, the as-of finding FIRES:** of the 21 carrier-origin units, **19 (90.5%) carried no time** for when the state or figure was true, against B's 2/3 line. E's survey says the same from the carrier side: the state block 33 of 37 figures undated, read for the whole session, its HEADs 61–171 commits behind; rings with no send time and no bound on delay; the pulse the one carrier that stamps every figure.
+- **B's guess (§G):** outcome "no dominant": **HOLDS**. As-of ≥ 2/3: **HOLDS**. PROXY 29–36%: **HOLDS** (33.3%). RING 12–17%: **WRONG** (33.3%), and that **fires B's own falsifier** "any carrier class at or above 33% on the low end".
+
+**What the four laps say together (D301, D303, D305, D307):**
+1. The largest cause of the room's wrong claims is a check that was at hand and not run (61.4–72.7%); missed lookups are a third of its size.
+2. A mechanical check at the point of claim does not stop it (held-out catch 31.3%; don't build).
+3. Upstream, the wrong beliefs split two ways, about a third each: the seat looked at the wrong object (PROXY), or it took another seat's message as current (RING). Nine in ten carried beliefs had no as-of time.
+4. **No registered bar supports a build from this lap.** The as-of finding is a finding, not a build order.
+OUTPUT → NEXT: changed — no origin dominates, so no carrier build follows from this bar; the as-of finding is recorded, and E's survey shows two carriers stating stale facts with no date, which is a defect on its own.
