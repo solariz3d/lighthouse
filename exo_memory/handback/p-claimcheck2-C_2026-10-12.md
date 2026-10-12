@@ -73,6 +73,23 @@ On the right sample, the figure class alone would refuse 29 → 28 messages, and
 ## Corrections
 - 50a9f71f's message says "Rows: 5 new". **It is 4 new rows (8–11)**, plus one added assertion in row 11 and a widened row 8. The message is not amended; this line corrects it.
 
+## Addition (the chair, 00:3x): the two suite files my first build left red — ce0900b0
+The landing js-suite at 71c59758 had 2 red files, which held main unpushed. Both were caused by my first build; both are fixed on `d305-c2` as **ce0900b0**.
+
+**`install-only.test.js`:** "1 UNDECLARED — consonance\hooks\claim-check.js".
+- I added an entry to `dev/shell/install.ps1`'s `$unmanaged` list, keyed `Src` like the others, with a Why line. The Why says it is built and OFF, that wiring is the keeper's call after the held-out replay, that it needs `units.js` beside it once installed or it fails open, that it carries the dream guard, and it gives this hand-back as the pointer.
+- It is not in `$register`.
+
+**`gen-consumer.test.js`, row "D273 lap 6 (A4) … the README hook count matches the tree":**
+- The count is stated at `consonance/README.md:190`: "23 non-test `.js` files under hooks/ (22 in a generated copy, …)".
+- The tree now has 24 (checked: `ls consonance/hooks/*.js` minus test and mutants files → 24), so a generated copy has 23. Changed to "24 … (23 in a generated copy, …)". Nothing else on that line changed.
+
+**Checks:**
+- **Red first** (`add-red.log`, both files unchanged at that point): install-only 0/1 with "1 UNDECLARED"; the gen-consumer row 0/1 with "…which has 23".
+- **After** (`add-green.log`): install-only **1/1**; gen-consumer.test.js, the whole file, **107/107**; every `consonance/hooks/*.test.js` green (25 files, including claim-check 27/27). All under the heavy-run lock.
+- After committing: portable-paths green (389 files / 0 new), carrier-drift GREEN.
+- I touched only the `$unmanaged` entry and README:190, as the addition allowed.
+
 ## Not opened
 A's top-up pool (`p-wcensus-A_2026-10-11_evidence/out/topup/`); E's pool classification (`p-poolread-E`); B's §G. I read B's read, which lists the catches by id in its §2 (to know which catches not to lose), and its judging sheet's §3a/§3b only (lines 31–81). I did not read the sheet's §2.
 
