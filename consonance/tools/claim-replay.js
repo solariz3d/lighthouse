@@ -104,6 +104,17 @@ const textOfBlocks = (content) => (Array.isArray(content) ? content : []).flatMa
   if (/^mcp__consonance__/.test(b.name)) return Object.values(b.input).filter((v) => typeof v === 'string');
   return [];
 }).join('\n');
+// D305 part 4 (seat C, the adapter's one need): the same claim-bearing text, kept per PART with the place it was written, so a checker can tell a reply
+// from a ring, a record write or a Bash write (E's design §3.4). textOfBlocks above is unchanged; claimParts rides beside claimText.
+const partsOfBlocks = (content) => (Array.isArray(content) ? content : []).flatMap((b) => {
+  if (b.type === 'text') return [{ tool: 'text', target: null, text: b.text || '' }];
+  if (b.type !== 'tool_use' || !b.input) return [];
+  if (b.name === 'Write' || b.name === 'Edit' || b.name === 'MultiEdit') return [{ tool: b.name, target: String(b.input.file_path || ''), text: textOfBlocks([b]) }];
+  if (b.name === 'Bash') return [{ tool: 'Bash', target: String(b.input.command || ''), text: textOfBlocks([b]) }];
+  if (/^mcp__consonance__/.test(b.name)) return [{ tool: b.name, target: null, text: textOfBlocks([b]) }];
+  return [];
+});
+const promptText = (o) => { const c = o.message && o.message.content; return typeof c === 'string' ? c : Array.isArray(c) ? c.filter((p) => p && p.type === 'text').map((p) => p.text || '').join('\n') : ''; };
 const resultText = (b) => (Array.isArray(b.content) ? b.content.map((x) => x.text || '').join(' ') : String(b.content || ''));
 const callOf = (o, b) => ({ ts: o.timestamp, name: b.name, input: clip(redact(JSON.stringify(b.input || {})), 2000) });
 
@@ -111,14 +122,14 @@ const callOf = (o, b) => ({ ts: o.timestamp, name: b.name, input: clip(redact(JS
 function turnsByMessageId(file, wanted) {
   const found = new Map();
   let cur = { start: null, calls: [], results: [] }, active = null;
-  const finish = () => { if (active) { active.turn.claimText = clean(active.text.join('\n')); found.set(active.id, active.turn); active = null; } };
+  const finish = () => { if (active) { active.turn.claimText = clean(active.text.join('\n')); active.turn.claimParts = active.parts.map((p) => ({ ...p, target: p.target == null ? null : clean(p.target), text: clean(p.text) })); found.set(active.id, active.turn); active = null; } };
   F.eachLine(file, (line) => {
     if (!(line.includes('"type":"assistant"') || line.includes('"type":"user"'))) return;
     let o; try { o = JSON.parse(line); } catch (_) { return; }
     if (o.isSidechain) return;
     if (o.type === 'user') {
       finish();
-      if (F.isRealPrompt(o)) { cur = { start: o.timestamp, calls: [], results: [] }; return; }
+      if (F.isRealPrompt(o)) { cur = { start: o.timestamp, prompt: clean(promptText(o)), calls: [], results: [] }; return; }
       const c = o.message && o.message.content;
       if (Array.isArray(c)) for (const b of c) if (b.type === 'tool_result') cur.results.push({ ts: o.timestamp, text: clean(clip(resultText(b), 4000)), error: !!b.is_error });
       return;
@@ -126,9 +137,9 @@ function turnsByMessageId(file, wanted) {
     const m = o.message; if (!m || !Array.isArray(m.content)) return;
     if (active && m.id !== active.id) finish();
     if (!active && wanted.has(m.id) && !found.has(m.id)) {
-      active = { id: m.id, text: [], turn: { id: m.id, turnStart: cur.start, claimTs: o.timestamp, calls: cur.calls.map((x) => ({ ...x, input: clean(x.input) })), results: cur.results.slice() } };
+      active = { id: m.id, text: [], parts: [], turn: { id: m.id, turnStart: cur.start, prompt: cur.prompt || '', claimTs: o.timestamp, calls: cur.calls.map((x) => ({ ...x, input: clean(x.input) })), results: cur.results.slice() } };
     }
-    if (active && m.id === active.id) active.text.push(textOfBlocks(m.content));
+    if (active && m.id === active.id) { active.text.push(textOfBlocks(m.content)); active.parts.push(...partsOfBlocks(m.content)); }
     // every message's calls join the turn; a wanted message's snapshot was taken above, before its own calls, so it never sees them, and a LATER message does
     for (const b of m.content) if (b.type === 'tool_use') cur.calls.push(callOf(o, b));
   });
@@ -137,16 +148,22 @@ function turnsByMessageId(file, wanted) {
 }
 
 /** The claim-bearing text of the assistant rows whose timestamp is in the given second (E's claim times have second precision). */
-function claimTextsAtSeconds(file, wantedByUnit) {
+// `extra` (D305 part 4, optional): a Map the same pass fills with { parts, prompt } per unit: the claim text per part (partsOfBlocks) and the last real prompt before it.
+function claimTextsAtSeconds(file, wantedByUnit, extra) {
   const out = new Map(); const keys = [...wantedByUnit.values()].map((s) => s.slice(0, 19));
+  let lastPrompt = '';
   F.eachLine(file, (line) => {
+    if (extra && line.includes('"type":"user"') && !line.includes('"tool_use_id"')) { try { const u = JSON.parse(line); if (u.type === 'user' && !u.isSidechain && F.isRealPrompt(u)) lastPrompt = promptText(u); } catch (_) { /* a partial line */ } return; }
     if (!line.includes('"type":"assistant"')) return;
     const m = /"timestamp":"([^"]+)"/.exec(line); if (!m) return;
     const sec = m[1].slice(0, 19);
     if (!keys.includes(sec)) return;
     let o; try { o = JSON.parse(line); } catch (_) { return; }
     if (o.type !== 'assistant' || !o.message) return;
-    for (const [id, want] of wantedByUnit) if (want.slice(0, 19) === sec) out.set(id, (out.get(id) ? out.get(id) + '\n' : '') + textOfBlocks(o.message.content));
+    for (const [id, want] of wantedByUnit) if (want.slice(0, 19) === sec) {
+      out.set(id, (out.get(id) ? out.get(id) + '\n' : '') + textOfBlocks(o.message.content));
+      if (extra) { const e = extra.get(id) || { parts: [], prompt: clean(lastPrompt) }; e.parts.push(...partsOfBlocks(o.message.content).map((p) => ({ ...p, target: p.target == null ? null : clean(p.target), text: clean(p.text) }))); extra.set(id, e); }
+    }
   });
   for (const [k, v] of out) out.set(k, clean(v));
   return out;
@@ -284,12 +301,12 @@ async function loadGroup(name, lists) {
     const located = doc.filter((u) => u.status === 'located');
     const byFile = {};
     for (const u of located) (byFile[u.transcript] = byFile[u.transcript] || new Map()).set(u.id, u.claim_ts);
-    const texts = new Map();
-    for (const [rel, m] of Object.entries(byFile)) for (const [k, v] of claimTextsAtSeconds(path.join(PROJECTS, rel), m)) texts.set(k, v);
+    const texts = new Map(), extra = new Map();
+    for (const [rel, m] of Object.entries(byFile)) for (const [k, v] of claimTextsAtSeconds(path.join(PROJECTS, rel), m, extra)) texts.set(k, v);
     return doc.map((u) => {
       if (u.status !== 'located') return { id: u.id, group: 'census:' + u.class, status: 'unlocated', why: u.why };
       const t = runTurnJs(PROJECTS, u.transcript, u.turn_start, u.claim_ts.replace('Z', '.000Z'));
-      return { id: u.id, group: 'census:' + u.class, seat: u.seat, turnStart: u.turn_start, claimTs: u.claim_ts, claimText: texts.get(u.id) || '', calls: t.calls, results: t.results };
+      return { id: u.id, group: 'census:' + u.class, seat: u.seat, turnStart: u.turn_start, claimTs: u.claim_ts, claimText: texts.get(u.id) || '', claimParts: (extra.get(u.id) || {}).parts || [], prompt: (extra.get(u.id) || {}).prompt || '', calls: t.calls, results: t.results };
     });
   }
   const items = name === 'right' ? JSON.parse(fs.readFileSync(path.join(lists, 'right-claims.json'), 'utf8')).messages : JSON.parse(fs.readFileSync(path.join(lists, 'week-replies.json'), 'utf8')).replies;

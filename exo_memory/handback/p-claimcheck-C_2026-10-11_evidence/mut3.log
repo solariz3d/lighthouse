@@ -1,0 +1,30 @@
+== C d305 mutants run 3 · asked 2026-10-12T06:07:26.223Z · lock held 2026-10-12T06:07:26.254Z · NODE_OPTIONS=--max-old-space-size=4096
+$ node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d305/mut.js
+C0 control: SURVIVED
+S1 the switch: any truthy value is ON: caught by rows 1,2,5
+S2 the switch: a parse failure is ON: caught by rows 1
+S3 OFF does not exit early (it runs as shadow): caught by rows 2
+S4 the once-per-turn guard never fires: caught by rows 3
+S5 refuses even when its row was not written: caught by rows 4
+F1 literal: no whole-token boundary: caught by rows 8
+F2 a result after the message backs it: caught by rows 11
+F3 an errored result backs it: caught by rows 11
+F4 the prompt does not back: caught by rows 12,28
+F5 computed accepts any arithmetic: caught by rows 13
+F6 rounded needs no approximation marker: caught by rows 8,14
+F7 no empty-result backing: caught by rows 15
+F8 colour codes not stripped: caught by rows 9
+F9 thousands separators kept: caught by rows 8,13
+F10 masked spans ignored (dates, ids, paths become figures): caught by rows 10
+R1 any call reads the board: caught by rows 16
+R2 an fs read need not name the path: caught by rows 17
+R3 pushed backed without the remote: caught by rows 19
+R4 a state word needs no object: caught by rows 18
+K1 inferred: lines are not skipped: caught by rows 20
+K2 plans are not skipped: caught by rows 20
+K3 quotes are not taken out: caught by rows 20
+V1 a Bash redirect anywhere is a record write: caught by rows 22
+V2 the via scope is ignored: caught by rows 23
+V3 the adapter: any Write is a record write: caught by rows 24,25
+applied 25 / caught 25 / NOT APPLIED 0; base dirty after: 0
+== exit 0 · done 2026-10-12T06:07:36.197Z

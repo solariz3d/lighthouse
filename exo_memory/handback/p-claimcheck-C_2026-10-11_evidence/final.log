@@ -1,0 +1,11 @@
+== C d305 final tests · asked 2026-10-12T06:12:16.095Z · lock held 2026-10-12T06:12:16.127Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd G:/worktrees/c-d305-wt && node --test --test-reporter=tap consonance/hooks/claim-check.test.js consonance/tools/claim-check-adapter.test.js consonance/tools/claim-replay.test.js 2>&1 | grep -E '^not ok|^# (tests|pass|fail)'; for f in consonance/hooks/dream-gate.test.js consonance/hooks/dirs.test.js consonance/hooks/gate-mode.test.js consonance/hooks/reply-slot.test.js consonance/hooks/sources-gate.test.js; do printf '%s: ' $f; node --test --test-reporter=tap $f 2>&1 | grep -E '^# (pass|fail)' | tr '\n' ' '; echo; done
+# tests 47
+# pass 47
+# fail 0
+consonance/hooks/dream-gate.test.js: # pass 1 # fail 0 
+consonance/hooks/dirs.test.js: # pass 5 # fail 0 
+consonance/hooks/gate-mode.test.js: # pass 6 # fail 0 
+consonance/hooks/reply-slot.test.js: # pass 38 # fail 0 
+consonance/hooks/sources-gate.test.js: # pass 64 # fail 0 
+== exit 0 · done 2026-10-12T06:12:33.760Z

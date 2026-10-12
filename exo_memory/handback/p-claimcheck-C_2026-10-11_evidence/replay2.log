@@ -1,0 +1,9 @@
+== C d305 replay 2 + by class · asked 2026-10-12T06:10:17.697Z · lock held 2026-10-12T06:10:17.731Z · NODE_OPTIONS=--max-old-space-size=4096
+$ bash C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d305/replay.sh; node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d305/byclass.js exo_memory/handback/p-claimharness-A_2026-10-11_evidence/lists all
+all exit 0 22 s
+all claims exit 0
+v1 exit 0 22 s
+v1 claims exit 0
+right {"n":73,"any":35,"figureOnly":15,"stateOnly":6,"both":14,"wouldRefuseFigureClass":29,"wouldRefuseStateClass":20,"figKinds":{"sha":17,"percentage":14,"number":156,"count":8,"time":2,"multiplier":1,"version":3},"needs":{"process":13,"git":7,"board":11,"fs":2}}
+week {"n":300,"any":202,"figureOnly":69,"stateOnly":69,"both":64,"wouldRefuseFigureClass":133,"wouldRefuseStateClass":133,"figKinds":{"number":194,"time":15,"multiplier":3,"count":44,"percentage":15,"version":13,"sha":17},"needs":{"git":25,"board":58,"process":88,"compute":11,"fs":3}}
+== exit 0 · done 2026-10-12T06:11:49.634Z

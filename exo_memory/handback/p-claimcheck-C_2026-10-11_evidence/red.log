@@ -1,0 +1,19 @@
+== C d305 red-first · asked 2026-10-12T06:03:41.679Z · lock held 2026-10-12T06:03:41.718Z · NODE_OPTIONS=--max-old-space-size=4096
+$ bash C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d305/red.sh
+## (a) fe566fbc + the two test files only
+not ok 1 - consonance\\hooks\\claim-check.test.js
+not ok 2 - consonance\\tools\\claim-check-adapter.test.js
+# tests 2
+# pass 0
+# fail 2
+## (b) + the hook and the adapter, claim-replay.js as at fe566fbc
+not ok 26 - the harness keeps each claim part with its place, and the turn prompt, beside claimText (by message id and by claim second)
+# tests 26
+# pass 25
+# fail 1
+?? consonance/hooks/claim-check.js
+?? consonance/hooks/claim-check.test.js
+?? consonance/tools/claim-check-adapter.js
+?? consonance/tools/claim-check-adapter.test.js
+base after: 0 dirty
+== exit 0 · done 2026-10-12T06:03:42.804Z

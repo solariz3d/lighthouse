@@ -1,0 +1,7 @@
+== C d305 flake base · asked 2026-10-12T06:05:31.247Z · lock held 2026-10-12T06:05:31.279Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd G:/worktrees/c-d305-base && for i in 1 2 3 4; do node --test --test-reporter=tap consonance/hooks/claim-check.test.js 2>&1 | grep -E '^not ok' -A14 | head -30; echo "run $i"; done
+run 1
+run 2
+run 3
+run 4
+== exit 0 · done 2026-10-12T06:05:32.959Z
