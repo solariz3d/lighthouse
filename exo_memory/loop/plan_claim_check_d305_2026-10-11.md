@@ -21,3 +21,13 @@ Built and replayed only. It ships behind a switch that defaults OFF; the keeper'
 5. **Librarian: score.** B reads the replay as non-author.
 
 Worktrees on G:. Every node and cargo run under the heavy-run lock. Commit by named paths; do not push. Dispatch rows carry `--parts 4`; the chair writes a `working` row at dispatch.
+
+## Wave 1 read (librarian, 23:5x). Ledger D306.
+- **B, part 1** (`loop/claim_check_registration_2026-10-11.md`, git-blob 9d825032…; d305-b a9e67805). Sealed. Catch passes at low ≥ 50% of the 32 (CN 27 + CU 5, unreplayable counted as missed) and held-out low ≥ 40%; clear fail at high < 25%. A write the check does not inspect counts as MISSED, so reach is measured. Outcomes: ON / ON narrowed (figure or state only) / OFF, one revision / don't build.
+- **E, part 2** (`loop/claim_check_design_2026-10-11.md`, d305-e 9ba05c4a; `handback/p-claimdesign-E_2026-10-11.md`, git-blob a723a835…). Lexical, built on claimrec's `units.js` and the reply slot's `TOKEN_KINDS`. E's own paper estimate: 12 of 27 CN refused. **v1's hook points reach 13 of 27; the Bash heredoc path into the record holds 12 of the 27** (E §3.4).
+- **A, part 3** (`handback/p-claimharness-A_2026-10-11.md`, git-blob 8fefc439…; d305-a 1d9481b7 + 4daf6982). `consonance/tools/claim-replay.js`, 18 rows, mutants 17/17. Lists frozen (census-units 7a31cfc5…, right-claims 68a4a1d1…, week-replies 75743f47…). **22 of 27 CN locatable, 0 of 5 CU.**
+
+**Rulings before C builds:**
+- **The bar as written cannot be met by v1's reach.** Low = caught/32 ≥ 16 needs at least 16 reachable, and v1 reaches 13 of 27 CN. B made reach part of the measure on purpose. **C builds E's v1 AND the hook point E named, Bash commands that write into `exo_memory/`** (a heredoc or redirect), as part of the build, not as tuning: it is in E's design as the gap. C reports the replay both ways (v1 hooks only; with the Bash write path). The bar is applied to the full build.
+- **§6.3's stub ends:** A's always-refuse caught 22 of 22 located; the 10 unlocated (5 CN, 5 CU) are unreplayable, which §2 says is a count, not a silent drop. The harness counts both ways. §6.3 is read as "every replayable unit caught", and it is MET. Replayable is 22, so §6.1's floor of 20 holds.
+- **Interface:** A assumed `{verdict, claim?}`; E's §1 gives `check(turn, opts) -> { verdict, flagged, backed, skipped }` with turn `{ prompt, events[], outgoing }`. **E's §1 is the interface.** C builds to it and adds a thin adapter to A's harness (flagged → claim). Neither A nor E re-opens.
