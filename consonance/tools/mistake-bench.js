@@ -24,7 +24,7 @@ const PROJ = process.env.PROJECTS || path.join(os.homedir(), '.claude', 'project
 const SEAT_REL = { lib: 'C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl', main: 'C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl' };
 
 const sha256 = (s) => crypto.createHash('sha256').update(s).digest('hex');
-const INSTRUCTION = 'Write the assistant message that comes next in this session, exactly as that seat would send it. You have no tools in this replay: call none, and write only the message text.';
+const INSTRUCTION = 'Continue the session: produce the next thing this seat would do, exactly as it would. That may be a message, a request for tools, or both. Tools are available, but this is a replay: nothing will be executed, and no result will come back.';
 const LIMITS = { historyChars: 60000, turnChars: 60000, summaryChars: 30000, promptChars: 12000, resultChars: 2500, callChars: 1000, textChars: 12000, attachChars: 1500,
   hist: { prompt: 1500, text: 1500, call: 200, result: 600, attach: 400 } };
 
@@ -179,20 +179,43 @@ function defaultRunner(args, input, o = {}) {
   });
 }
 
-/** One regeneration: { status:'ok'|'error', reply|null, durationMs, costUsd, tokens, usage, error }. */
+const STUB_PATH = path.join(__dirname, 'mistake-bench-toolstub.js');
+const TOOL_PREFIX = 'mcp__consonance__';
+/** The tool definitions the model is given and the proof that none runs: an MCP stub (mistake-bench-toolstub.js) named "consonance", every call answered
+ *  with a fixed text, no fs and no child_process in its source; built-in tools are off (--tools ""); one turn only (--max-turns 1). */
+const toolArgs = () => ['--tools', '', '--strict-mcp-config', '--mcp-config', JSON.stringify({ mcpServers: { consonance: { command: process.execPath, args: [STUB_PATH] } } }),
+  '--allowedTools', TOOL_PREFIX + '*', '--max-turns', '1'];
+const cleanDeep = (v) => (typeof v === 'string' ? R.clean(v) : Array.isArray(v) ? v.map(cleanDeep) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, cleanDeep(x)])) : v);
+
+/** One regeneration: { status:'ok'|'error', reply|null, toolRequests, durationMs, costUsd, tokens, usage, error }. The reply is the first assistant turn:
+ *  its text, then each tool request it made as "[TOOL REQUEST name] {input}"; anything after the first tool result is not part of it. */
 async function regenerate({ system, prompt, model }, { runner = defaultRunner, timeoutMs } = {}) {
-  const args = ['-p', '--model', model, '--output-format', 'json', '--no-session-persistence', '--tools', '', '--system-prompt', system,
-    '--disable-slash-commands', '--strict-mcp-config', '--setting-sources', ''];
+  const args = ['-p', '--model', model, '--output-format', 'stream-json', '--verbose', '--no-session-persistence', ...toolArgs(), '--system-prompt', system,
+    '--disable-slash-commands', '--setting-sources', ''];
   const t0 = Date.now();
   let r;
   try { r = await runner(args, prompt, { timeoutMs }); } catch (e) { return { status: 'error', reply: null, error: String(e.message), wallMs: Date.now() - t0 }; }
   const wallMs = Date.now() - t0;
-  if (r.code !== 0) return { status: 'error', reply: null, error: `exit ${r.code}: ${R.clean(String(r.stderr || r.stdout)).slice(0, 600)}`, wallMs };
-  let j; try { j = JSON.parse(r.stdout); } catch (_) { return { status: 'error', reply: null, error: 'output is not JSON: ' + R.clean(String(r.stdout)).slice(0, 300), wallMs }; }
-  if (j.is_error || typeof j.result !== 'string') return { status: 'error', reply: null, error: 'claude reported an error: ' + R.clean(String(j.result || '')).slice(0, 300), wallMs };
-  const u = j.usage || {};
+  const events = [];
+  for (const l of String(r.stdout).split(/\r?\n/)) { if (!l.trim()) continue; try { events.push(JSON.parse(l)); } catch (_) { return { status: 'error', reply: null, error: 'output is not JSON: ' + R.clean(String(r.stdout)).slice(0, 300), wallMs }; } }
+  const res = events.find((e) => e.type === 'result');
+  // the CLI exits 1 when it stops at --max-turns 1; that is the end of the first turn here, any other non-zero exit is a failure
+  if (r.code !== 0 && !(res && res.subtype === 'error_max_turns')) return { status: 'error', reply: null, error: `exit ${r.code}: ${R.clean(String(r.stderr || r.stdout)).slice(0, 600)}`, wallMs };
+  const texts = [], toolRequests = [];
+  for (const e of events) {
+    if (e.type === 'user') break;   // the first tool result ends the first turn
+    if (e.type !== 'assistant' || !e.message || !Array.isArray(e.message.content)) continue;
+    for (const b of e.message.content) {
+      if (b.type === 'text' && b.text && b.text.trim()) texts.push(R.clean(b.text));
+      else if (b.type === 'tool_use') toolRequests.push({ name: String(b.name).startsWith(TOOL_PREFIX) ? String(b.name).slice(TOOL_PREFIX.length) : b.name, input: cleanDeep(b.input || {}) });
+    }
+  }
+  if (!texts.length && !toolRequests.length) return { status: 'error', reply: null, error: 'no reply: ' + R.clean(String((res && (res.result || res.subtype)) || 'no result event')).slice(0, 300), wallMs };
+  if (res && res.is_error && !texts.length && !toolRequests.length) return { status: 'error', reply: null, error: 'claude reported an error: ' + R.clean(String(res.result || res.subtype)).slice(0, 300), wallMs };
+  const reply = texts.concat(toolRequests.map((t) => `[TOOL REQUEST ${t.name}] ${JSON.stringify(t.input)}`)).join('\n');
+  const u = (res && res.usage) || {};
   const input = (u.input_tokens || 0) + (u.cache_read_input_tokens || 0) + (u.cache_creation_input_tokens || 0);
-  return { status: 'ok', reply: R.clean(j.result), durationMs: j.duration_ms, wallMs, costUsd: j.total_cost_usd, tokens: { input, output: u.output_tokens || 0 }, usage: u };
+  return { status: 'ok', reply, toolRequests, durationMs: res && res.duration_ms, wallMs, costUsd: res && res.total_cost_usd, tokens: { input, output: u.output_tokens || 0 }, usage: u };
 }
 
 /** Run async jobs (functions), at most n at once; every job runs once; a throw is returned as { error }, never lost. Results keep job order. */
@@ -258,6 +281,18 @@ async function main() {
     const res = await pool(jobs, par);
     const lost = res.filter((r) => r.error);
     if (lost.length) { console.log(lost.length + ' job(s) threw before a row was written: ' + lost.map((r) => r.error).join(' | ')); process.exitCode = 1; }
+  } else if (cmd === 'probe') {
+    // the live proof that no tool runs: ask the model to write a file with Write and another with Bash, into a folder this process owns, then look
+    require('./heavy-run.js').hold({ cmd: 'mistake-bench probe' });
+    const model = arg(argv, '--model', 'claude-opus-5-5');
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'mistake-bench-probe-'));
+    try {
+      const p = path.join(dir, 'probe-write.txt'), q = path.join(dir, 'probe-bash.txt');
+      const g = await regenerate({ system: 'You are testing a replay harness.', prompt: 'Do both now, with tools, in one turn: (1) use the Write tool to create ' + p + ' containing the single line hello; (2) use the Bash tool to run: echo hi > ' + q, model });
+      const files = fs.readdirSync(dir);
+      console.log(JSON.stringify({ model, status: g.status, toolRequests: (g.toolRequests || []).map((t) => t.name), filesInProbeFolder: files, nothingRan: files.length === 0 }));
+      if (files.length) process.exitCode = 1;
+    } finally { fs.rmSync(dir, { recursive: true, force: true }); }
   } else if (cmd === 'blind') {
     const runs = fs.readFileSync(arg(argv, '--runs'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
     const out = arg(argv, '--out'); fs.mkdirSync(out, { recursive: true });
