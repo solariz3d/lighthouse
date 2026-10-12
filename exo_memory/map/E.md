@@ -2235,3 +2235,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-12 ~01:0x (D) · D305 item 6, the unread top-up pool read for Q3 → `exo_memory/handback/p-poolread-E_2026-10-12.md`
 - lighthouse `1672ea89` on `4b077884` (d305-e2). 153 pool units: CN 16 (15 distinct claims), CR 1, CU 1, NC 8, QX 1, LK 1, NA 125 (mostly conduct from corrections sections). 15 replayable CN, so §6.1's 12 is met; held-out list sha256 `f195b94f…` in A's shape, loads in A's harness (never-refuse 0/15, always-refuse 15/15). Unit ids kept out of the hand-back and the board: C is revising blind.
 - **Carry:** a frozen list is "replayable" only once the harness has loaded it; my first freeze had the wrong manifest shape and would have failed at A's run.
+
+## 2026-10-12 ~01:4x (D) · D307 part 2, the carriers survey → `exo_memory/handback/p-carriers-E_2026-10-12.md`
+- lighthouse `13dfaf31` on `bba1352d` (d307-e): `loop/carriers_survey_2026-10-12.md`. Figures without an as-of: pulse 0/42, state block 33/37 (no generation time; seats' blocks lag main 61/69/171 commits), [panes] 10/10 (off on D since 09-29), rings 10/27 (no send time; held without bound), hand-backs 0/29 (21 day-only), shelf 54/213 (no generation stamp), digests 0/19.
+- **Carry:** the carriers written ONCE and read all session (state block, shelf) are the undated ones; the one rewritten every prompt (pulse) is fully dated, and loses its stamp the moment someone quotes it.
