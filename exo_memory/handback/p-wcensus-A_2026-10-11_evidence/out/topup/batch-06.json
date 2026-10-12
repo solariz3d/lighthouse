@@ -1,0 +1,1511 @@
+{
+ "batch": 6,
+ "of": 8,
+ "seed": "d301-topup-2026-10-11",
+ "rev": "b2e0c4ca",
+ "until": "2026-10-11T21:36:00-06:00",
+ "units": [
+  {
+   "topup_rank": 101,
+   "id": "H0099",
+   "correction_at": "exo_memory/handback/p-consumer-parity-B_2026-10-08.md:414",
+   "row_at": "exo_memory/handback/p-consumer-parity-B_2026-10-08.md:414",
+   "row_at_line_matches": true,
+   "correction_text": "- **A `\\n` inside a `String.raw` test name became a real newline in the name.** Caught in the red listing; fixed to `\\\\n` before the green run.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "B",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-10-08",
+   "correction_file": "exo_memory/handback/p-consumer-parity-B_2026-10-08.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-08T13:13:12-06:00",
+    "sha": "60b1aef3"
+   },
+   "correction_line_time": {
+    "sha": "6b33daa8",
+    "t": "2026-10-09T08:55:19.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "test name became a real newline in the name.** Caught in the red listing; fixed to"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "B",
+     "ts": "2026-10-08T23:28:29.186Z",
+     "file": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+     "turn_start": "2026-10-08T23:27:46.849Z",
+     "matched_span": "test name became a real newline in the name.** Caught in the red listing; fixed to",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-consumer-parity-B_2026-10-08.md"
+     ],
+     "after_correction_file_first_commit": true,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "B",
+     "ts": "2026-10-08T23:28:29.186Z",
+     "file": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+     "turn_start": "2026-10-08T23:27:46.849Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-consumer-parity-B_2026-10-08.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   },
+   "t_err": "2026-10-08T23:28:29.186Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "c6d466291f6d",
+   "sha_before_t_err_author_date": "f912f6a2ddcb",
+   "sha_before_correction": "6b33daa875f2",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "topup_rank": 102,
+   "id": "H0404",
+   "correction_at": "exo_memory/handback/p-evidencecopy-C_2026-10-10.md:64",
+   "row_at": "exo_memory/handback/p-evidencecopy-C_2026-10-10.md:64",
+   "row_at_line_matches": true,
+   "correction_text": "- **Two node one-liners failed:**\n  - a regex with `\\\\` mangled through a bash heredoc, rewritten as a file;\n  - a `/c/…` path given to node, which resolves it to `C:\\c\\…`.\n  Neither wrote anything.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "C",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-10-10",
+   "correction_file": "exo_memory/handback/p-evidencecopy-C_2026-10-10.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-10T18:33:31-06:00",
+    "sha": "be4ccafd"
+   },
+   "correction_line_time": {
+    "sha": "be4ccafd",
+    "t": "2026-10-11T00:33:31.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "path given to node, which resolves it to"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "C",
+     "ts": "2026-10-10T18:51:48.775Z",
+     "file": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+     "turn_start": "2026-10-10T18:44:43.641Z",
+     "matched_span": "path given to node, which resolves it to",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": null,
+    "why": null
+   },
+   "t_err": "2026-10-10T18:51:48.775Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "69d89696362a",
+   "sha_before_t_err_author_date": "b03d73205e2b",
+   "sha_before_correction": "be4ccafdbd55",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "correction-turn-unlocated"
+  },
+  {
+   "topup_rank": 103,
+   "id": "H0299",
+   "correction_at": "exo_memory/handback/p-d186-brush-E_2026-09-28.md:68",
+   "row_at": "exo_memory/handback/p-d186-brush-E_2026-09-28.md:68",
+   "row_at_line_matches": true,
+   "correction_text": "2. The cause was a real bug in `offset.js`. The geometry's samples are LAZY objects: `s`, `seg` and `roll` are getters on their\n   prototype, and my `{ ...x }` copy dropped them. It now keeps the prototype and every own descriptor, and a unit test holds it\n   (mutant O2).",
+   "correction_text_source": "rev",
+   "seat_by_filename": "E",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-09-28",
+   "correction_file": "exo_memory/handback/p-d186-brush-E_2026-09-28.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-28T12:14:52-06:00",
+    "sha": "b4300c99"
+   },
+   "correction_line_time": {
+    "sha": "b4300c99",
+    "t": "2026-09-28T18:14:52.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "offset.js",
+     "resolved": null,
+     "how": "not tracked at rev",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    ". The geometry's samples are LAZY objects:"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "E",
+     "ts": "2026-09-28T15:51:35.849Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-09-28T14:55:42.261Z",
+     "matched_span": ". The geometry's samples are LAZY objects:",
+     "opened_before_claim_in_turn": [
+      "C:/Users/nname/Desktop/t180-track-builder/src/core/sculpt.js",
+      "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/d186/proto.js",
+      "C:/Users/nname/Desktop/t180-track-builder/test/core_offset.test.js",
+      "C:/Users/nname/Desktop/t180-track-builder/.claude/skills/track-equations/references/10_sculpt_close.md"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/t180-track-builder/src/core/sculpt.js",
+      "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/d186/proto.js",
+      "C:/Users/nname/Desktop/t180-track-builder/test/core_offset.test.js",
+      "C:/Users/nname/Desktop/t180-track-builder/.claude/skills/track-equations/references/10_sculpt_close.md"
+     ],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "E",
+     "ts": "2026-09-28T15:51:35.849Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-09-28T14:55:42.261Z",
+     "opened_before_in_turn": [
+      "C:/Users/nname/Desktop/t180-track-builder/src/core/sculpt.js",
+      "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/d186/proto.js",
+      "C:/Users/nname/Desktop/t180-track-builder/test/core_offset.test.js",
+      "C:/Users/nname/Desktop/t180-track-builder/.claude/skills/track-equations/references/10_sculpt_close.md"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/t180-track-builder/src/core/sculpt.js",
+      "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/d186/proto.js",
+      "C:/Users/nname/Desktop/t180-track-builder/test/core_offset.test.js",
+      "C:/Users/nname/Desktop/t180-track-builder/.claude/skills/track-equations/references/10_sculpt_close.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   },
+   "t_err": "2026-09-28T15:51:35.849Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "574f14fd0315",
+   "sha_before_t_err_author_date": "574f14fd0315",
+   "sha_before_correction": "b4300c99ce22",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "topup_rank": 104,
+   "id": "H0741",
+   "correction_at": "exo_memory/handback/p-pittexture-E_2026-10-09.md:187",
+   "row_at": "exo_memory/handback/p-pittexture-E_2026-10-09.md:187",
+   "row_at_line_matches": true,
+   "correction_text": "- **My test bug, fixed before the commit:** my rows first read the material from `walkScene`'s world-space records, which carry none, so the read gave `undefined`. They now read the\n  scene's own nodes, as the pit-texture rows do.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "E",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-10-09",
+   "correction_file": "exo_memory/handback/p-pittexture-E_2026-10-09.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-09T23:01:49-06:00",
+    "sha": "8fa65769"
+   },
+   "correction_line_time": {
+    "sha": "8fa65769",
+    "t": "2026-10-10T05:01:49.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "'s world-space records, which carry none, so the read gave"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "E",
+     "ts": "2026-10-10T00:07:28.583Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-10-10T00:06:32.095Z",
+     "matched_span": "'s world-space records, which carry none, so the read gave",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-pittexture-E_2026-10-09.md"
+     ],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "E",
+     "ts": "2026-10-10T00:07:28.583Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-10-10T00:06:32.095Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-pittexture-E_2026-10-09.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   },
+   "t_err": "2026-10-10T00:07:28.583Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "9b5f40ba50da",
+   "sha_before_t_err_author_date": "f22df81bbd7d",
+   "sha_before_correction": "8fa65769459f",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "topup_rank": 105,
+   "id": "H0342",
+   "correction_at": "exo_memory/handback/p-d277fix-C_2026-10-10.md:50",
+   "row_at": "exo_memory/handback/p-d277fix-C_2026-10-10.md:50",
+   "row_at_line_matches": true,
+   "correction_text": "- **A wrong filter, caught after launch:** the first mutant run's filter, `intake_light::light_every_pointer`, matched nothing (the module is `intake_light_tests`). It would have reported \"0 passed\" as a pass. I stopped it after ~20 s with TaskStop. It had applied M0 to the generated tree; I restored that with `git checkout`, checked both trees clean apart from cargo's untracked `src-tauri/gen/`, fixed the filter to `light_every_pointer`, and re-ran. Its partial log is kept as `mut.stopped.log`. The stopped run's lock file was left for heavy-run's stale-lock takeover; the re-run got the lock at once.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "C",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-10-10",
+   "correction_file": "exo_memory/handback/p-d277fix-C_2026-10-10.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-10T18:33:31-06:00",
+    "sha": "be4ccafd"
+   },
+   "correction_line_time": {
+    "sha": "be4ccafd",
+    "t": "2026-10-11T00:33:31.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "). It would have reported \"0 passed\" as a pass. I stopped it after ~20 s with TaskStop. It had applied M0 to the generated tree; I restored that with",
+    ", checked both trees clean apart from cargo's untracked",
+    ", and re-ran. Its partial log is kept as"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "C",
+     "ts": "2026-10-10T17:41:42.713Z",
+     "file": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+     "turn_start": "2026-10-10T17:41:00.690Z",
+     "matched_span": "). It would have reported \"0 passed\" as a pass. I stopped it after ~20 s with TaskStop. It had applied M0 to the generat",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d277fix-C_2026-10-10.md",
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d277parity-B_2026-10-10.md"
+     ],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "C",
+     "ts": "2026-10-10T17:41:42.713Z",
+     "file": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+     "turn_start": "2026-10-10T17:41:00.690Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d277fix-C_2026-10-10.md",
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d277parity-B_2026-10-10.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   },
+   "t_err": "2026-10-10T17:41:42.713Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "9d755c7bfae4",
+   "sha_before_t_err_author_date": "15c555b1f335",
+   "sha_before_correction": "be4ccafdbd55",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "topup_rank": 106,
+   "id": "H0401",
+   "correction_at": "exo_memory/handback/p-eqonly-C_2026-10-04.md:126",
+   "row_at": "exo_memory/handback/p-eqonly-C_2026-10-04.md:126",
+   "row_at_line_matches": true,
+   "correction_text": "- **`src/core/document.js parse` throws a TypeError on a malformed field** (`\"pieces\": \"no\"` → `(o.pieces || []).map is not a function`),\n  not a CoreError. Found by my own test. For codes, a parse TypeError (only that) is refused at the boundary (`coreFromCode` →\n  `CODE_MALFORMED`); **opening such a FILE would still throw** — not fixed, the parse is A's / B's ground.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "C",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-10-04",
+   "correction_file": "exo_memory/handback/p-eqonly-C_2026-10-04.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-05T10:07:56-06:00",
+    "sha": "903af3aa"
+   },
+   "correction_line_time": {
+    "sha": "903af3aa",
+    "t": "2026-10-05T16:07:56.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "src/core/document.js",
+     "resolved": null,
+     "how": "ambiguous (22)",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "throws a TypeError on a malformed field** ("
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "C",
+     "ts": "2026-10-05T15:01:35.620Z",
+     "file": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+     "turn_start": "2026-10-05T14:21:40.924Z",
+     "matched_span": "throws a TypeError on a malformed field** (",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/worktrees/c-eqonly-wt/src/doc/code.js",
+      "C:/Users/nname/Desktop/worktrees/c-eqonly-wt/app/index.html",
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-eqonly-C_2026-10-04.md"
+     ],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "C",
+     "ts": "2026-10-05T15:01:35.620Z",
+     "file": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+     "turn_start": "2026-10-05T14:21:40.924Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/worktrees/c-eqonly-wt/src/doc/code.js",
+      "C:/Users/nname/Desktop/worktrees/c-eqonly-wt/app/index.html",
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-eqonly-C_2026-10-04.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   },
+   "t_err": "2026-10-05T15:01:35.620Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "9e210522f2b3",
+   "sha_before_t_err_author_date": "9e210522f2b3",
+   "sha_before_correction": "903af3aa85a8",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "topup_rank": 107,
+   "id": "H0873",
+   "correction_at": "exo_memory/handback/p-suggestion-off-A_2026-09-19.md:120",
+   "row_at": "exo_memory/handback/p-suggestion-off-A_2026-09-19.md:120",
+   "row_at_line_matches": true,
+   "correction_text": "- **My wiring test passed with no wiring, on the red run.** Its anchor, the literal `\"fn spawn_claude_pane(\"`, first\n  occurs INSIDE the test itself, which sits above the real function. So `split(…).nth(1)` read the test's own text and\n  found its own needles. Fixed with `concat!`, the idiom this file already uses for exactly this (`concat!(\"fn\n  leave_run\", \"(\")`); the next red run was 0/3. **The red-first step is what caught it. Written green-first, this test\n  would have shipped non-discriminating.** It is the D066 lesson — a comment that trips the sweep it describes — met a\n  third time in a new form.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "A",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-09-19",
+   "correction_file": "exo_memory/handback/p-suggestion-off-A_2026-09-19.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-19T02:46:05-06:00",
+    "sha": "f2fe77c7"
+   },
+   "correction_line_time": {
+    "sha": "f2fe77c7",
+    "t": "2026-09-19T08:46:05.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    ", the idiom this file already uses for exactly this ("
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "A",
+     "ts": "2026-09-19T08:40:39.626Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-19T08:33:45.025Z",
+     "matched_span": ", the idiom this file already uses for exactly this (",
+     "opened_before_claim_in_turn": [
+      "C:/Users/nname/Desktop/lighthouse/consonance/src-tauri/src/main.rs",
+      "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/suggestion_off_mutants.js"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/consonance/src-tauri/src/main.rs",
+      "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/suggestion_off_mutants.js"
+     ],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "A",
+     "ts": "2026-09-19T08:40:39.626Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-19T08:33:45.025Z",
+     "opened_before_in_turn": [
+      "C:/Users/nname/Desktop/lighthouse/consonance/src-tauri/src/main.rs",
+      "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/suggestion_off_mutants.js"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/consonance/src-tauri/src/main.rs",
+      "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/suggestion_off_mutants.js"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   },
+   "t_err": "2026-09-19T08:40:39.626Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "7cd755f2fcfd",
+   "sha_before_t_err_author_date": "7cd755f2fcfd",
+   "sha_before_correction": "f2fe77c7ece7",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "topup_rank": 108,
+   "id": "H0179",
+   "correction_at": "exo_memory/handback/p-d120-relayinj-E_2026-09-22.md:172",
+   "row_at": "exo_memory/handback/p-d120-relayinj-E_2026-09-22.md:172",
+   "row_at_line_matches": true,
+   "correction_text": "- **FATAL-1 is my own argument turned on me.** I wrote that the stimulus is the unit and then spent the budget on\n  repeats; my 0.41/0.76/0.97 measured \"at least one follow inside a stimulus\", which is not what the sign test decides.\n  **At 12 × 5, an effect on half the stimuli was found 9% of the time; at 30 × 2, 83%.**",
+   "correction_text_source": "rev",
+   "seat_by_filename": "E",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-09-22",
+   "correction_file": "exo_memory/handback/p-d120-relayinj-E_2026-09-22.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-22T19:09:05-06:00",
+    "sha": "23491374"
+   },
+   "correction_line_time": {
+    "sha": "23491374",
+    "t": "2026-09-23T01:09:05.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "at least one follow inside a stimulus"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "E",
+     "ts": "2026-09-23T01:08:05.701Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-09-23T01:00:30.837Z",
+     "matched_span": "at least one follow inside a stimulus",
+     "opened_before_claim_in_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/loop/relay_injection_registration_2026-09-22.md"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/loop/relay_injection_registration_2026-09-22.md"
+     ],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "E",
+     "ts": "2026-09-23T01:08:05.701Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-09-23T01:00:30.837Z",
+     "opened_before_in_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/loop/relay_injection_registration_2026-09-22.md"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/loop/relay_injection_registration_2026-09-22.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   },
+   "t_err": "2026-09-23T01:08:05.701Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "4dc8236f7f48",
+   "sha_before_t_err_author_date": "4dc8236f7f48",
+   "sha_before_correction": "234913748685",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "topup_rank": 109,
+   "id": "H0516",
+   "correction_at": "exo_memory/handback/p-l070-fastforward-A-correction_2026-09-21.md:56",
+   "row_at": "exo_memory/handback/p-l070-fastforward-A-correction_2026-09-21.md:56",
+   "row_at_line_matches": true,
+   "correction_text": "1. **`TRACKED_RESULT`** is still a placeholder in the L070 hand-back §3. `node consonance/tools/state-sync.mutants.js`\n   was started twice on L. The first run was killed by my own `timeout 580`. The second (task `bxkk3lr1e`) was stopped\n   when the session ended, with no summary line. **The tracked harness has not completed against the L070 change.**\n   Run it with no timeout.",
+   "correction_text_source": "rev",
+   "seat_by_filename": null,
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-09-21",
+   "correction_file": "exo_memory/handback/p-l070-fastforward-A-correction_2026-09-21.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-21T08:50:27-06:00",
+    "sha": "ead6e8d9"
+   },
+   "correction_line_time": {
+    "sha": "ead6e8d9",
+    "t": "2026-09-21T14:50:27.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "consonance/tools/state-sync.mutants.js",
+     "resolved": "consonance/tools/state-sync.mutants.js",
+     "how": "exact",
+     "first_commit": "2026-09-09T04:46:18-06:00",
+     "first_commit_sha": "977b7b08",
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "** is still a placeholder in the L070 hand-back §3."
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "A",
+     "ts": "2026-09-21T14:49:37.096Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-21T14:47:24.054Z",
+     "matched_span": "** is still a placeholder in the L070 hand-back §3.",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "A",
+     "ts": "2026-09-21T14:49:37.096Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-21T14:47:24.054Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": [
+      {
+       "path": "consonance/tools/state-sync.mutants.js",
+       "first_read_in_this_transcript": "2026-09-15T11:23:21.888Z"
+      }
+     ]
+    },
+    "why": null
+   },
+   "t_err": "2026-09-21T14:49:37.096Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "06bf966452e5",
+   "sha_before_t_err_author_date": "06bf966452e5",
+   "sha_before_correction": "06bf966452e5",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "topup_rank": 110,
+   "id": "H0727",
+   "correction_at": "exo_memory/handback/p-pittexture-E_2026-10-09.md:147",
+   "row_at": "exo_memory/handback/p-pittexture-E_2026-10-09.md:147",
+   "row_at_line_matches": true,
+   "correction_text": "- **(3)** is committed (`e003c59`, the Follow-up above) and holds on the TRACK 2 copy: `PAINT_PIT_0/1` wear the floor.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "E",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-10-09",
+   "correction_file": "exo_memory/handback/p-pittexture-E_2026-10-09.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-09T23:01:49-06:00",
+    "sha": "8fa65769"
+   },
+   "correction_line_time": {
+    "sha": "8fa65769",
+    "t": "2026-10-10T05:01:49.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    ", the Follow-up above) and holds on the TRACK 2 copy:"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "E",
+     "ts": "2026-10-09T22:39:10.883Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-10-09T22:29:15.119Z",
+     "matched_span": ", the Follow-up above) and holds on the TRACK 2 copy:",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-pittexture-E_2026-10-09.md",
+      "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/pitbox/track2-lane.txt",
+      "C:/Users/nname/Desktop/worktrees/e-pitbox-wt/src/export/pitlane.js"
+     ],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "E",
+     "ts": "2026-10-09T22:39:10.883Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-10-09T22:29:15.119Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-pittexture-E_2026-10-09.md",
+      "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/pitbox/track2-lane.txt",
+      "C:/Users/nname/Desktop/worktrees/e-pitbox-wt/src/export/pitlane.js"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   },
+   "t_err": "2026-10-09T22:39:10.883Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "9b5f40ba50da",
+   "sha_before_t_err_author_date": "f22df81bbd7d",
+   "sha_before_correction": "8fa65769459f",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "topup_rank": 111,
+   "id": "H0577",
+   "correction_at": "exo_memory/handback/p-l114-prompt-A_2026-09-23.md:25",
+   "row_at": "exo_memory/handback/p-l114-prompt-A_2026-09-23.md:25",
+   "row_at_line_matches": true,
+   "correction_text": "- `jev/METHOD.md` = the room's `METHOD.md` at `ba11406` (3,855 B), under **line 1:\n  `<!-- jev: copied from the Consonance repo's METHOD.md at ba11406… (HEAD e1b3eb6), 2026-09-23. … -->`**.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "A",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-09-23",
+   "correction_file": "exo_memory/handback/p-l114-prompt-A_2026-09-23.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-23T08:00:53-06:00",
+    "sha": "74e2b4bb"
+   },
+   "correction_line_time": {
+    "sha": "74e2b4bb",
+    "t": "2026-09-23T14:00:53.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "jev/METHOD.md",
+     "resolved": "jev/METHOD.md",
+     "how": "exact",
+     "first_commit": "2026-09-23T08:00:53-06:00",
+     "first_commit_sha": "74e2b4bb",
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "METHOD.md",
+     "resolved": "METHOD.md",
+     "how": "exact",
+     "first_commit": "2026-06-24T08:00:25-06:00",
+     "first_commit_sha": "31974c8d",
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "<!-- jev: copied from the Consonance repo's METHOD.md at ba11406… (HEAD e1b3eb6), 2026-09-23. … -->"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "A",
+     "ts": "2026-09-23T13:32:26.823Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-23T13:27:48.259Z",
+     "matched_span": "<!-- jev: copied from the Consonance repo's METHOD.md at ba11406… (HEAD e1b3eb6), 2026-09-23. … -->",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "A",
+     "ts": "2026-09-23T13:32:26.823Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-23T13:27:48.259Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   },
+   "t_err": "2026-09-23T13:32:26.823Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "5ef92352d20e",
+   "sha_before_t_err_author_date": "5ef92352d20e",
+   "sha_before_correction": "74e2b4bb290f",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "topup_rank": 112,
+   "id": "H0056",
+   "correction_at": "exo_memory/handback/p-carry-exclude-C_2026-09-16.md:277",
+   "row_at": "exo_memory/handback/p-carry-exclude-C_2026-09-16.md:277",
+   "row_at_line_matches": true,
+   "correction_text": "4. **Node read `/d/…` as `C:\\d\\…`** and one inspection threw ENOENT on a path that exists. Rerun with `D:/`.\n   No wrong figure resulted, but a first read of that error would have said the manifest was missing.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "C",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-09-16",
+   "correction_file": "exo_memory/handback/p-carry-exclude-C_2026-09-16.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-16T12:20:14-06:00",
+    "sha": "f67b57a7"
+   },
+   "correction_line_time": {
+    "sha": "f67b57a7",
+    "t": "2026-09-16T18:20:14.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "** and one inspection threw ENOENT on a path that exists. Rerun with"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "C",
+     "ts": "2026-09-16T18:02:24.482Z",
+     "file": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+     "turn_start": "2026-09-16T17:58:34.550Z",
+     "matched_span": "** and one inspection threw ENOENT on a path that exists. Rerun with",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "C",
+     "ts": "2026-09-16T18:02:24.482Z",
+     "file": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+     "turn_start": "2026-09-16T17:58:34.550Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   },
+   "t_err": "2026-09-16T18:02:24.482Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "cb7fa008facd",
+   "sha_before_t_err_author_date": "cb7fa008facd",
+   "sha_before_correction": "f67b57a7f453",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "topup_rank": 113,
+   "id": "H0860",
+   "correction_at": "exo_memory/handback/p-stick-A_2026-09-14.md:170",
+   "row_at": "exo_memory/handback/p-stick-A_2026-09-14.md:170",
+   "row_at_line_matches": true,
+   "correction_text": "- **I corrupted `tail-carry.test.js` mid-session.** A scripted rewrite used `String.replace` with a replacement\n  containing `$` followed by a backtick, which JavaScript expands to *the text before the match* — it spliced\n  the file's head into the middle. Caught by the syntax error on the next run; the file was restored from\n  `HEAD` (only I had touched it — `git diff` showed nothing but my change), the rewrite re-applied with a\n  function replacement, and the diff re-checked at **+50 / −13** before going on. Then a second layer of shell\n  escaping silently turned `\\d` into `d` in a regex; I stopped scripting edits through the shell and made them\n  directly.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "A",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-09-14",
+   "correction_file": "exo_memory/handback/p-stick-A_2026-09-14.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-14T02:31:44-06:00",
+    "sha": "59e65f64"
+   },
+   "correction_line_time": {
+    "sha": "59e65f64",
+    "t": "2026-09-14T08:31:44.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "tail-carry.test.js",
+     "resolved": "dev/tail-carry.test.js",
+     "how": "unique basename",
+     "first_commit": "2026-09-12T04:56:15-06:00",
+     "first_commit_sha": "da5d1788",
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "mid-session.** A scripted rewrite used"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "A",
+     "ts": "2026-09-14T08:01:25.963Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-14T07:30:45.678Z",
+     "matched_span": "mid-session.** A scripted rewrite used",
+     "opened_before_claim_in_turn": [
+      "C:/Consonance/lighthouse/dev/tail-carry.js"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Consonance/lighthouse/dev/tail-carry.js"
+     ],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "A",
+     "ts": "2026-09-14T08:01:25.963Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-14T07:30:45.678Z",
+     "opened_before_in_turn": [
+      "C:/Consonance/lighthouse/dev/tail-carry.js"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Consonance/lighthouse/dev/tail-carry.js"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   },
+   "t_err": "2026-09-14T08:01:25.963Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "862ff73a311c",
+   "sha_before_t_err_author_date": "862ff73a311c",
+   "sha_before_correction": "59e65f64368d",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "topup_rank": 114,
+   "id": "H0725",
+   "correction_at": "exo_memory/handback/p-pittexture-E_2026-10-09.md:140",
+   "row_at": "exo_memory/handback/p-pittexture-E_2026-10-09.md:140",
+   "row_at_line_matches": true,
+   "correction_text": "- **Why the keeper's export showed `t180b_road`:** his installed build (14:02) predates `9d7e94c` / `0dc10dc` (~15:10). Once his source lands on main, its lane gets the floor\n  through `withLaneFloor`, IF it reaches the export as `meta.pitLane` (the names say it does).",
+   "correction_text_source": "rev",
+   "seat_by_filename": "E",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-10-09",
+   "correction_file": "exo_memory/handback/p-pittexture-E_2026-10-09.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-09T23:01:49-06:00",
+    "sha": "8fa65769"
+   },
+   "correction_line_time": {
+    "sha": "8fa65769",
+    "t": "2026-10-10T05:01:49.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    ":** his installed build (14:02) predates"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "E",
+     "ts": "2026-10-09T22:39:10.883Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-10-09T22:29:15.119Z",
+     "matched_span": ":** his installed build (14:02) predates",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-pittexture-E_2026-10-09.md",
+      "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/pitbox/track2-lane.txt",
+      "C:/Users/nname/Desktop/worktrees/e-pitbox-wt/src/export/pitlane.js"
+     ],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "E",
+     "ts": "2026-10-09T22:39:10.883Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-10-09T22:29:15.119Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-pittexture-E_2026-10-09.md",
+      "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/pitbox/track2-lane.txt",
+      "C:/Users/nname/Desktop/worktrees/e-pitbox-wt/src/export/pitlane.js"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   },
+   "t_err": "2026-10-09T22:39:10.883Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "9b5f40ba50da",
+   "sha_before_t_err_author_date": "f22df81bbd7d",
+   "sha_before_correction": "8fa65769459f",
+   "times_in_text": [
+    "14:02",
+    "~15:10"
+   ],
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "topup_rank": 115,
+   "id": "H0423",
+   "correction_at": "exo_memory/handback/p-gate-switch-E_2026-10-09.md:75",
+   "row_at": "exo_memory/handback/p-gate-switch-E_2026-10-09.md:75",
+   "row_at_line_matches": true,
+   "correction_text": "- **portable-paths went red** on my `\"data_dir\":\"C:/d\"` fixtures in `mcp.rs`. They are now `\"some/data\"`; no baseline change.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "E",
+   "finder": "instrument",
+   "rule": "instrument",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-10-09",
+   "correction_file": "exo_memory/handback/p-gate-switch-E_2026-10-09.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-09T12:16:55-06:00",
+    "sha": "9b5f40ba"
+   },
+   "correction_line_time": {
+    "sha": "9b5f40ba",
+    "t": "2026-10-09T18:16:55.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "mcp.rs",
+     "resolved": "consonance/src-tauri/src/mcp.rs",
+     "how": "unique basename",
+     "first_commit": "2026-06-29T02:06:34-06:00",
+     "first_commit_sha": "42e13e6b",
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "` fixtures in `mcp.rs`. They are now `"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "E",
+     "ts": "2026-10-09T18:06:51.568Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-10-09T18:05:06.740Z",
+     "matched_span": "` fixtures in `mcp.rs`. They are now `",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-gate-switch-E_2026-10-09.md"
+     ],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "E",
+     "ts": "2026-10-09T18:06:51.568Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-10-09T18:05:06.740Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-gate-switch-E_2026-10-09.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   },
+   "t_err": "2026-10-09T18:06:51.568Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "776e96f40fc6",
+   "sha_before_t_err_author_date": "f22df81bbd7d",
+   "sha_before_correction": "9b5f40ba50da",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "topup_rank": 116,
+   "id": "H0067",
+   "correction_at": "exo_memory/handback/p-close-B_2026-10-04.md:168",
+   "row_at": "exo_memory/handback/p-close-B_2026-10-04.md:168",
+   "row_at_line_matches": true,
+   "correction_text": "- **A1 and A2 were `ENOBUFS`:** a failing mutant printed whole documents past spawnSync's default buffer. The harness now uses `maxBuffer`.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "B",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-10-04",
+   "correction_file": "exo_memory/handback/p-close-B_2026-10-04.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-05T10:06:17-06:00",
+    "sha": "fd8bdc38"
+   },
+   "correction_line_time": {
+    "sha": "fd8bdc38",
+    "t": "2026-10-05T16:06:17.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    ":** a failing mutant printed whole documents past spawnSync's default buffer. The harness now uses"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "B",
+     "ts": "2026-10-05T16:04:55.791Z",
+     "file": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+     "turn_start": "2026-10-05T15:50:52.853Z",
+     "matched_span": ":** a failing mutant printed whole documents past spawnSync's default buffer. The harness now uses",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-close-B_2026-10-04.md"
+     ],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "B",
+     "ts": "2026-10-05T16:04:55.791Z",
+     "file": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+     "turn_start": "2026-10-05T15:50:52.853Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-close-B_2026-10-04.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   },
+   "t_err": "2026-10-05T16:04:55.791Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "9e210522f2b3",
+   "sha_before_t_err_author_date": "9e210522f2b3",
+   "sha_before_correction": "fd8bdc38cd69",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "topup_rank": 117,
+   "id": "H0981",
+   "correction_at": "exo_memory/handback/step0-redact-A_2026-09-15.md:221",
+   "row_at": "exo_memory/handback/step0-redact-A_2026-09-15.md:221",
+   "row_at_line_matches": true,
+   "correction_text": "- **M17, M18, M19 and M29 were caught only by the leak-checker test or the CLI test** on the first run, because\n  `leaks()` shares `redact()`'s patterns: a pattern dropped from both passes any check that goes through `leaks()`.\n  The same exact-output test and a `parseWords` test now catch each one directly.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "A",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-09-15",
+   "correction_file": "exo_memory/handback/step0-redact-A_2026-09-15.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-15T13:14:09-06:00",
+    "sha": "9ad0e5ec"
+   },
+   "correction_line_time": {
+    "sha": "9ad0e5ec",
+    "t": "2026-09-15T19:14:09.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "'s patterns: a pattern dropped from both passes any check that goes through"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "A",
+     "ts": "2026-09-15T19:02:42.257Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-15T18:51:52.803Z",
+     "matched_span": "'s patterns: a pattern dropped from both passes any check that goes through",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "A",
+     "ts": "2026-09-15T19:02:42.257Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-15T18:51:52.803Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   },
+   "t_err": "2026-09-15T19:02:42.257Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "09c3a54d2b54",
+   "sha_before_t_err_author_date": "09c3a54d2b54",
+   "sha_before_correction": "c1e5d20fb187",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "topup_rank": 118,
+   "id": "H0403",
+   "correction_at": "exo_memory/handback/p-eqonly-C_2026-10-04.md:131",
+   "row_at": "exo_memory/handback/p-eqonly-C_2026-10-04.md:131",
+   "row_at_line_matches": true,
+   "correction_text": "- My corrections this lap: a `sed -i` silently stripped a whole test file's CRLF (all 116 lines) — caught by a byte count, restored; a\n  heredoc mangled escapes in a scripted edit (refused by its own anchor count, redone with the Edit tool); a hand count (\"some 27 test\n  files\") in the README replaced with the grep's 23 + 3 before commit; my guide-wording test first banned \"handle\", which the legitimate\n  symmetry \"centre handle\" uses — narrowed, with the reason in the test.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "C",
+   "finder": "instrument",
+   "rule": "instrument",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-10-04",
+   "correction_file": "exo_memory/handback/p-eqonly-C_2026-10-04.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-05T10:07:56-06:00",
+    "sha": "903af3aa"
+   },
+   "correction_line_time": {
+    "sha": "903af3aa",
+    "t": "2026-10-05T16:07:56.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    ") in the README replaced with the grep's 23 + 3 before commit; my guide-wording test first banned"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "C",
+     "ts": "2026-10-05T15:01:35.620Z",
+     "file": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+     "turn_start": "2026-10-05T14:21:40.924Z",
+     "matched_span": ") in the README replaced with the grep's 23 + 3 before commit; my guide-wording test first banned",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/worktrees/c-eqonly-wt/src/doc/code.js",
+      "C:/Users/nname/Desktop/worktrees/c-eqonly-wt/app/index.html",
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-eqonly-C_2026-10-04.md"
+     ],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "C",
+     "ts": "2026-10-05T15:01:35.620Z",
+     "file": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+     "turn_start": "2026-10-05T14:21:40.924Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/worktrees/c-eqonly-wt/src/doc/code.js",
+      "C:/Users/nname/Desktop/worktrees/c-eqonly-wt/app/index.html",
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-eqonly-C_2026-10-04.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   },
+   "t_err": "2026-10-05T15:01:35.620Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "9e210522f2b3",
+   "sha_before_t_err_author_date": "9e210522f2b3",
+   "sha_before_correction": "903af3aa85a8",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "topup_rank": 119,
+   "id": "H0231",
+   "correction_at": "exo_memory/handback/p-d172-read-widened-B-SUPERSEDED_2026-09-27.md:199",
+   "row_at": "exo_memory/handback/p-d172-read-widened-B-SUPERSEDED_2026-09-27.md:199",
+   "row_at_line_matches": true,
+   "correction_text": "- **W3:** my first-packet suite runner printed no counts, because its filter ran on text with ANSI codes. Counts here\n  come from `sed 's/\\x1b\\[[0-9;]*m//g' suite.full.txt | grep \"^ℹ \"`. The full output's sha256 is\n  `7cd00d87e197d302…`.",
+   "correction_text_source": "rev",
+   "seat_by_filename": null,
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-09-27",
+   "correction_file": "exo_memory/handback/p-d172-read-widened-B-SUPERSEDED_2026-09-27.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-27T17:58:53-06:00",
+    "sha": "2a2f81d0"
+   },
+   "correction_line_time": {
+    "sha": "2a2f81d0",
+    "t": "2026-09-27T23:58:53.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "suite.full.txt",
+     "resolved": null,
+     "how": "not tracked at rev",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "sed 's/\\x1b\\[[0-9;]*m//g' suite.full.txt | grep \"^ℹ \""
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "B",
+     "ts": "2026-09-27T23:27:55.785Z",
+     "file": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+     "turn_start": "2026-09-27T23:16:30.181Z",
+     "matched_span": "sed 's/\\x1b\\[[0-9;]*m//g' suite.full.txt | grep \"^ℹ \"",
+     "opened_before_claim_in_turn": [
+      "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d172/mixed.js"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d172/mixed.js"
+     ],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "B",
+     "ts": "2026-09-27T23:38:37.690Z",
+     "file": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+     "turn_start": "2026-09-27T23:28:28.612Z",
+     "opened_before_in_turn": [
+      "C:/Users/nname/AppData/Local/Temp/b-d174land-wt/CHANGELOG.md"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/AppData/Local/Temp/b-d174land-wt/CHANGELOG.md",
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/map/B.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   },
+   "t_err": "2026-09-27T23:27:55.785Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "6c3153aa3efe",
+   "sha_before_t_err_author_date": "6c3153aa3efe",
+   "sha_before_correction": "2a2f81d0ca1f",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "earlier-turn-than-correction-write"
+  },
+  {
+   "topup_rank": 120,
+   "id": "H0557",
+   "correction_at": "exo_memory/handback/p-l094-carriers-E_2026-09-23.md:14",
+   "row_at": "exo_memory/handback/p-l094-carriers-E_2026-09-23.md:14",
+   "row_at_line_matches": true,
+   "correction_text": "- **\"The installer now manages them\" is not the change.** Both have been in `install.ps1`'s manifest since\n  `daded53` (2026-08-17), eight days **before** the ruling. `git log --reverse -S\"<the From = line>\" --\n  dev/shell/install.ps1` returns `daded53` first for each, and for session-start's `$register` line too. Today they\n  sit at `install.ps1:98`, `:179` and `:118`.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "E",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "H-census",
+   "stratum_pop": 985,
+   "stratum_n": 985,
+   "day": "2026-09-23",
+   "correction_file": "exo_memory/handback/p-l094-carriers-E_2026-09-23.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-23T04:24:58-06:00",
+    "sha": "4e88f0f1"
+   },
+   "correction_line_time": {
+    "sha": "4e88f0f1",
+    "t": "2026-09-23T10:24:58.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "install.ps1",
+     "resolved": "dev/shell/install.ps1",
+     "how": "unique basename",
+     "first_commit": "2026-07-25T07:47:54-06:00",
+     "first_commit_sha": "b00ee979",
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "dev/shell/install.ps1",
+     "resolved": "dev/shell/install.ps1",
+     "how": "exact",
+     "first_commit": "2026-07-25T07:47:54-06:00",
+     "first_commit_sha": "b00ee979",
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "install.ps1:98",
+     "resolved": "dev/shell/install.ps1",
+     "how": "unique basename",
+     "first_commit": "2026-07-25T07:47:54-06:00",
+     "first_commit_sha": "b00ee979",
+     "line_time": "2026-08-17T18:02:36.000Z",
+     "line_commit": "daded538"
+    }
+   ],
+   "quoted_spans": [
+    "The installer now manages them",
+    "(2026-08-17), eight days **before** the ruling.",
+    "first for each, and for session-start's"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "E",
+     "ts": "2026-09-23T10:04:04.857Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-09-23T10:02:03.048Z",
+     "matched_span": "The installer now manages them",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "E",
+     "ts": "2026-09-23T10:04:04.857Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-09-23T10:02:03.048Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   },
+   "t_err": "2026-09-23T10:04:04.857Z",
+   "t_err_basis": "claim located in a transcript (earliest assistant occurrence of a quoted span)",
+   "sha_before_t_err_committer_date": "9d79261cbdfc",
+   "sha_before_t_err_author_date": "9d79261cbdfc",
+   "sha_before_correction": "4e88f0f124e9",
+   "times_in_text": [],
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  }
+ ]
+}

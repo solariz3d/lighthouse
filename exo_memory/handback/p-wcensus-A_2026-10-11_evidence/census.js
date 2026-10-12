@@ -28,6 +28,8 @@ const arg = (n, d) => { const i = process.argv.indexOf(n); return i > -1 ? proce
 const REPO = arg('--repo'), REV = arg('--rev', 'HEAD'), ROWS = arg('--rows'), PROJ = arg('--projects'), OUT = arg('--out'), TODAY = arg('--today');
 const FALLBACK = arg('--fallback-checkout'); // a checkout with UNCOMMITTED lines that a row cites; read only where the line is not at --rev
 const SEED = arg('--seed', 'd301-2026-10-11');
+const POP = arg('--pop', 'W'); // W = the census (default). H = the Ruling 2 top-up pool: every hand-back correction, then filtered to those with a located claim and cut into batches
+const TOPUP_SEED = arg('--topup-seed', 'd301-topup-2026-10-11');
 const ALLOC = { W: 0 }; // unused: the census has no allocation
 const UNTIL = Date.parse(arg('--until', '2026-10-11T21:36:00-06:00'));
 if (!REPO || !ROWS || !PROJ || !OUT) { console.error('need --repo --rows --projects --out'); process.exit(2); }
@@ -41,12 +43,12 @@ const norm = (s) => s.replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replac
 const lines = fs.readFileSync(ROWS, 'utf8').split('\n').filter(Boolean);
 const head = lines[0].split('\t');
 const rows = lines.slice(1).map((l) => { const c = l.split('\t'); const o = {}; head.forEach((h, i) => { o[h] = c[i]; }); return o; });
-const pop = rows.filter((r) => r.src === 'W');
-const popCounts = { W: pop.length };
-const drawn = pop.map((r) => ({ ...r, stratum: 'W-census', stratum_pop: pop.length, stratum_n: pop.length })); // no draw: every W row
+const pop = rows.filter((r) => r.src === POP);
+const popCounts = { [POP]: pop.length };
+const drawn = pop.map((r) => ({ ...r, stratum: POP + '-census', stratum_pop: pop.length, stratum_n: pop.length })); // no draw: every W row
 const today = TODAY ? JSON.parse(fs.readFileSync(TODAY, 'utf8')) : [];
 const units = [
-  ...drawn.map((r, i) => ({ id: `W${String(i + 1).padStart(3, '0')}`, row: r })),
+  ...drawn.map((r, i) => ({ id: `${POP}${String(i + 1).padStart(POP === 'W' ? 3 : 4, '0')}`, row: r })),
   ...today.map((t, i) => ({ id: t.id || `T${i + 1}`, row: null, today: t })),
 ];
 
@@ -275,6 +277,17 @@ async function scan(t) {
   if (first && (!c.first || first < c.first)) c.first = first;
   if (last && (!c.last || last > c.last)) c.last = last;
 }
+// Where the located "claim" sits against the turn that WROTE the correction. same-turn means the quoted wording first appears in the very turn that wrote the correction:
+// it may be the original claim made earlier in that turn, or only the correction's own words. This script cannot tell; the reader must.
+const flagOf = (u) => {
+  const t = u.transcript;
+  if (!t.claim) return 'no-claim-located';
+  const ct = t.correction_turn;
+  if (!ct) return 'correction-turn-unlocated';
+  if (t.claim.file === ct.file && t.claim.turn_start === ct.turn_start) return 'same-turn-as-correction-write';
+  return Date.parse(t.claim.ts) >= Date.parse(ct.ts) ? 'later-than-correction-write' : 'earlier-turn-than-correction-write';
+};
+const countBy = (arr, f) => arr.reduce((m, x) => { const k = f(x); m[k] = (m[k] || 0) + 1; return m; }, {});
 const dedupe = (a) => [...new Set((a || []).map((p) => p.replace(/\\/g, '/')))];
 const folderOf = (l) => { const k = Object.entries(FOLDERS).find(([, v]) => l && l.startsWith(v)); return k ? k[0] : null; };
 (async () => {
@@ -324,10 +337,41 @@ const folderOf = (l) => { const k = Object.entries(FOLDERS).find(([, v]) => l &&
   }
   fs.writeFileSync(path.join(OUT, 'units.tsv'), tsv.join('\n') + '\n');
   const dg = sha(json);
-  const strataTxt = `W census: all ${popCounts.W}`;
+  const strataTxt = `${POP} census: all ${popCounts[POP]}`;
   const digest = `units.json sha256 ${dg}\nfunction: sha256 over the UTF-8 bytes of out/units.json\nstrata: ${strataTxt}\nunits: ${units.length} (${drawn.length} W rows + ${today.length} extra)\n`;
   fs.writeFileSync(path.join(OUT, 'digest.txt'), digest);
   console.log(digest);
   const st = {}; units.forEach((u) => { st[u.transcript.status] = (st[u.transcript.status] || 0) + 1; });
+  if (POP === 'W') {
+    // a sidecar, NOT part of units.json (whose digest is already delivered): the same flag, per unit, for the units whose t_err came from a located claim
+    const fl = units.map((u) => ({ id: u.id, t_err_basis: u.t_err_basis.split(' (')[0], claim_turn_vs_correction_turn: flagOf(u) }));
+    const body = JSON.stringify({ about: 'derived from units.json; units.json is unchanged', summary_all: countBy(fl, (x) => x.claim_turn_vs_correction_turn), summary_where_t_err_is_a_located_claim: countBy(fl.filter((x) => x.t_err_basis.startsWith('claim located')), (x) => x.claim_turn_vs_correction_turn), units: fl }, null, 1) + String.fromCharCode(10);
+    fs.writeFileSync(path.join(OUT, 'claim-turn-flags.json'), body);
+    console.log('claim-turn-flags.json sha256 ' + sha(body) + ' ' + JSON.stringify(countBy(fl.filter((x) => x.t_err_basis.startsWith('claim located')), (x) => x.claim_turn_vs_correction_turn)));
+  }
+  if (POP === 'H') {
+    // Ruling 2 top-up pool: a hand-back correction whose claim was located by a quoted span, and not by a hit after the correction line was written (that is the correction's own quote).
+    units.forEach((u) => { u.claim_turn_vs_correction_turn = flagOf(u); });
+    const pool = units.filter((u) => u.transcript.claim && u.transcript.claim.after_correction_line_time !== true);
+    const rk = (u) => sha(TOPUP_SEED + '|' + u.correction_at + '|' + (u.correction_text || '').slice(0, 80));
+    pool.sort((a, b) => (rk(a) < rk(b) ? -1 : 1));
+    fs.mkdirSync(path.join(OUT, 'topup'), { recursive: true });
+    const lines = ['batch' + String.fromCharCode(9) + 'file' + String.fromCharCode(9) + 'units' + String.fromCharCode(9) + 'sha256'];
+    const summary = { seed: TOPUP_SEED, rank_function: 'sha256(seed|correction_at|correction_text[0:80]), ascending', batch_size: 20, h_rows: units.length,
+      claim_located: units.filter((u) => u.transcript.claim).length,
+      claim_hit_after_correction_line_excluded: units.filter((u) => u.transcript.claim && u.transcript.claim.after_correction_line_time === true).length, pool_size: pool.length, pool_by_flag: countBy(pool, (u) => u.claim_turn_vs_correction_turn), pool_by_finder: countBy(pool, (u) => u.finder), batches: [] };
+    for (let b = 0; b * 20 < pool.length; b++) {
+      const part = pool.slice(b * 20, b * 20 + 20).map((u, k) => ({ topup_rank: b * 20 + k + 1, ...u }));
+      const name = 'batch-' + String(b + 1).padStart(2, '0') + '.json';
+      const body = JSON.stringify({ batch: b + 1, of: Math.ceil(pool.length / 20), seed: TOPUP_SEED, rev: REV, until: frozen.until, units: part }, null, 1) + String.fromCharCode(10);
+      fs.writeFileSync(path.join(OUT, 'topup', name), body);
+      summary.batches.push({ batch: b + 1, file: name, units: part.length, sha256: sha(body) });
+      lines.push([b + 1, name, part.length, sha(body)].join(String.fromCharCode(9)));
+    }
+    fs.writeFileSync(path.join(OUT, 'topup', 'pool.json'), JSON.stringify(summary, null, 1) + String.fromCharCode(10));
+    fs.writeFileSync(path.join(OUT, 'topup', 'digests.tsv'), lines.join(String.fromCharCode(10)) + String.fromCharCode(10));
+    console.log('TOPUP pool ' + pool.length + ' of ' + units.length + ' H rows (' + summary.claim_located + ' claim-located, ' + summary.claim_hit_after_correction_line_excluded + ' excluded as after the correction line); ' + summary.batches.length + ' batches');
+    summary.batches.forEach((x) => console.log('  batch ' + x.batch + ' sha256 ' + x.sha256));
+  }
   console.log('transcript status:', JSON.stringify(st));
 })().catch((e) => { console.error(e); process.exit(1); });
