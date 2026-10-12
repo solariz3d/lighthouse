@@ -290,3 +290,143 @@ test('the CLI exits 1 when it stops at the one-turn limit; that is a finished fi
   const other = await B.regenerate({ system: 's', prompt: 'p', model: 'm' }, { runner: async () => ({ code: 1, stdout: stream([resultEv({ subtype: 'error_during_execution', is_error: true, result: 'boom' })]), stderr: '' }) });
   assert.strictEqual(other.status, 'error');
 });
+
+// ---------------------------------------------------------------- context fidelity (D311 last fix): the shelf, the system prompt, queued messages, whole results
+const attach = (min, a) => line({ type: 'attachment', timestamp: iso(min), attachment: a });
+const inst = (min, files, removed = [], reason = 'session_start') => attach(min, { type: 'instructions', files, removed, changed: true, reason });
+const snap = (min, blocks) => attach(min, { type: 'prompt_snapshot', systemPrompt: blocks });
+const build = (lines, opts) => { const { file } = fixture(lines); return B.buildContext(B.readEvents(file, T0 + 12 * 60000 + 1500), unitAt(12), opts); };
+
+test('a queued_command attachment (the keeper typing while the seat works) is rendered in the turn with its text', () => {
+  const ctx = build([prompt(10, 'the erring prompt'), attach(11, { type: 'queued_command', prompt: 'KEEPER PASTE: the account of what happened', commandMode: 'prompt', origin: { kind: 'human' } }), say(12, 'claim')]);
+  const turn = ctx.turn.join(' | ');
+  assert.ok(turn.includes('KEEPER PASTE: the account of what happened'));
+  assert.match(turn, /\[PROMPT queued /);
+});
+
+test('a queued task notification is rendered and labelled as one, not as a keeper prompt', () => {
+  const ctx = build([prompt(10, 'the erring prompt'), attach(11, { type: 'queued_command', prompt: '<task-notification>background task done</task-notification>', commandMode: 'task-notification', origin: { kind: 'task-notification' } }), say(12, 'claim')]);
+  const turn = ctx.turn.join(' | ');
+  assert.ok(turn.includes('background task done') && /\[TASK NOTIFICATION /.test(turn) && !/\[PROMPT queued /.test(turn));
+});
+
+test('the shelf is the seat\'s instruction files as last loaded before the erring turn: a later load of a file replaces the earlier, a removed path is dropped, a file untouched since stays', () => {
+  const ctx = build([
+    inst(0, [{ path: '/x/CLAUDE.md', content: 'SHELL v1' }, { path: '/h/.claude/CLAUDE.md', content: 'GLOBAL v1' }]),
+    inst(5, [{ path: '/x/CLAUDE.md', content: 'SHELL v2' }], ['/h/.claude/CLAUDE.md']),
+    prompt(10, 'the erring prompt'), inst(11, [{ path: '/x/CLAUDE.md', content: 'SHELL v3 AFTER THE TURN STARTED' }]), say(12, 'claim'),
+  ]);
+  assert.deepStrictEqual(ctx.shelf.map((f) => f.path), ['/x/CLAUDE.md']);
+  assert.strictEqual(ctx.shelf[0].content, 'SHELL v2');
+  const keep = build([inst(0, [{ path: '/x/CLAUDE.md', content: 'SHELL' }, { path: '/m/MEMORY.md', content: 'MEM v1' }]), inst(4, [{ path: '/m/MEMORY.md', content: 'MEM v2' }]), prompt(10, 'p'), say(12, 'claim')]);
+  assert.deepStrictEqual(keep.shelf.map((f) => [f.path, f.content]), [['/x/CLAUDE.md', 'SHELL'], ['/m/MEMORY.md', 'MEM v2']]);
+});
+
+test('the shelf is placed in the prompt whole, before the session record, one block per file', () => {
+  const big = 'shelf line\n'.repeat(5000);
+  const ctx = build([inst(0, [{ path: '/x/CLAUDE.md', content: big }]), prompt(10, 'the erring prompt'), say(12, 'claim')]);
+  const p = B.renderPrompt(ctx, null, 'baseline');
+  assert.ok(p.prompt.includes(big.trim()) && p.prompt.indexOf('<seat-instructions') < p.prompt.indexOf('<session-record>'));
+  assert.strictEqual(p.prompt.split('<seat-instructions').length - 1, 1);
+});
+
+test('the latest prompt_snapshot before the turn becomes the system prompt, joined from its blocks, after the replay framing', () => {
+  const ctx = build([snap(0, ['OLD SYSTEM BLOCK']), snap(3, ['SYSTEM ONE', 'SYSTEM TWO']), prompt(10, 'p'), snap(11, ['AFTER']), say(12, 'claim')]);
+  const p = B.renderPrompt(ctx, null, 'baseline');
+  assert.ok(p.system.includes('SYSTEM ONE\nSYSTEM TWO') && !p.system.includes('OLD SYSTEM BLOCK') && !p.system.includes('AFTER'));
+  assert.ok(p.system.startsWith('You are a seat'));
+});
+
+test('a system prompt too long for a command line is refused loudly, not truncated', () => {
+  const ctx = build([snap(0, ['x'.repeat(30000)]), prompt(10, 'p'), say(12, 'claim')]);
+  assert.throws(() => B.renderPrompt(ctx, null, 'baseline'), /system prompt/i);
+});
+
+test('with no instructions, snapshot or queued message in the record, the prompt is what it was before this fix', () => {
+  const ctx = build([prompt(10, 'the erring prompt'), say(12, 'claim')]);
+  const p = B.renderPrompt(ctx, null, 'baseline');
+  assert.ok(!p.prompt.includes('<seat-instructions') && ctx.shelf.length === 0 && ctx.systemPrompt === null);
+  assert.ok(p.system.startsWith('You are a seat') && !p.system.includes('\n\n'));
+});
+
+test('a token field, a key-shaped string and a Third Place line inside the instructions, the system prompt or a queued message never reach the prompt', () => {
+  const key = 'vc' + 'k_' + 'ABCDEF0123456789abcdef';
+  const ctx = build([
+    snap(0, [`system block\n{${TOKEN_FIELD}: "SYSSECRET"}\n${key}`]),
+    inst(1, [{ path: '/x/CLAUDE.md', content: `shelf line\n{${TOKEN_FIELD}: "SHELFSECRET"}\nthe Third Place card\n${key}` }]),
+    prompt(10, 'the erring prompt'), attach(11, { type: 'queued_command', prompt: `typed\n{${TOKEN_FIELD}: "QUEUEDSECRET"}`, commandMode: 'prompt', origin: { kind: 'human' } }), say(12, 'claim'),
+  ]);
+  const p = B.renderPrompt(ctx, null, 'baseline');
+  const all = p.system + '\n' + p.prompt;
+  for (const s of ['SYSSECRET', 'SHELFSECRET', 'QUEUEDSECRET', 'ABCDEF0123456789abcdef']) assert.ok(!all.includes(s), s + ' reached the prompt');
+  assert.ok(!/third place card/i.test(all) && all.includes('shelf line') && all.includes('[third-place line removed]'));
+});
+
+test('the erring turn\'s tool results are kept whole; a history result is cut at 2,500 characters', () => {
+  const long = 'y'.repeat(9000);
+  const ctx = build([
+    compact(0, 'S'), prompt(1, 'earlier prompt'), call(2, 'Bash', { command: 'old' }, 'h1'), result(2, 'h1', 'h'.repeat(4000)),
+    prompt(10, 'the erring prompt'), call(11, 'Bash', { command: 'big' }, 'c1'), result(11, 'c1', long), say(12, 'claim'),
+  ]);
+  assert.ok(ctx.turn.join('\n').includes(long) && !ctx.turn.join('\n').includes('chars cut'));
+  const hist = ctx.history.join('\n');
+  assert.ok(hist.includes('h'.repeat(2500)) && !hist.includes('h'.repeat(2501)) && hist.includes('[+1500 chars cut]'));
+});
+
+// ---------------------------------------------------------------- D311 redaction: every rendered source, and the result of a call that named the Third Place
+const R2 = require('./claim-replay.js');
+const callPlain = (min, name, input, id) => call(min, name, input, id);
+
+test('the Third Place word filter in the bench is the room\'s own: it matches whatever clean() changes', () => {
+  for (const probe of ['the Third Place', 'third_place/2026-09-09.md', 'third-place card', 'Metaxy', 'exo_memory/third_place/x', 'THIRD PLACE']) {
+    assert.notStrictEqual(R2.clean(probe), probe, 'clean() leaves ' + probe);
+    assert.ok(B.THIRD.test(probe), 'bench filter misses ' + probe);
+  }
+  assert.ok(!B.THIRD.test('a third of the place'));
+});
+
+test('the result of a call whose input names the Third Place is redacted whole, even when its lines never say so', () => {
+  const ctx = build([
+    prompt(10, 'the erring prompt'),
+    callPlain(11, 'Bash', { command: 'cat exo_memory/third_place/2026-09-09.md' }, 'c1'),
+    result(11, 'c1', 'a private paragraph that never names its source\nand a second line of it'),
+    callPlain(11, 'Bash', { command: 'ls' }, 'c2'), result(11, 'c2', 'ordinary listing'),
+    say(12, 'claim'),
+  ]);
+  const turn = ctx.turn.join('\n');
+  assert.ok(!turn.includes('private paragraph') && !turn.includes('second line of it'));
+  assert.ok(turn.includes('ordinary listing'), 'a result of an ordinary call is kept');
+  assert.ok(turn.includes('[third-place line removed]'));
+});
+
+test('the same holds for a call in the history before the erring turn, and for a call that names it in its name or description', () => {
+  const ctx = build([
+    compact(0, 'S'), prompt(1, 'earlier'),
+    callPlain(2, 'Bash', { command: 'cat notes.md', description: 'read the Third Place transcript' }, 'h1'), result(2, 'h1', 'HISTORY PRIVATE TEXT'),
+    prompt(10, 'the erring prompt'), say(12, 'claim'),
+  ]);
+  assert.ok(!ctx.history.join('\n').includes('HISTORY PRIVATE TEXT') && ctx.history.join('\n').includes('[third-place line removed]'));
+});
+
+test('a Third Place line in each source never reaches the prompt or the system prompt: instructions, system prompt, queued message, compaction summary, tool result, prompt, reply text', () => {
+  const secret = 'the Third Place says PRIVATE';
+  const ctx = build([
+    snap(0, ['sys block\n' + secret]), inst(1, [{ path: '/x/CLAUDE.md', content: 'shelf\n' + secret }]),
+    compact(2, 'summary\n' + secret),
+    prompt(10, 'p\n' + secret), attach(11, { type: 'queued_command', prompt: 'q\n' + secret, commandMode: 'prompt', origin: { kind: 'human' } }),
+    callPlain(11, 'Bash', { command: 'echo ok' }, 'c1'), result(11, 'c1', 'out\n' + secret), say(12, 'claim'),
+  ]);
+  const p = B.renderPrompt(ctx, null, 'baseline');
+  const all = p.system + '\n' + p.prompt;
+  assert.ok(!/PRIVATE/.test(all), 'a Third Place line reached the prompt');
+  assert.ok(all.includes('shelf') && all.includes('sys block') && all.includes('summary') && all.includes('out'));
+});
+
+test('a stored run can be re-cleaned in place: reply, tool request inputs and the correction text lose their Third Place lines, the rest is kept', () => {
+  const row = { unit: 'U1', arm: 'baseline', run: 1, status: 'ok', reply: 'keep\nthe Third Place line\nkeep too', toolRequests: [{ name: 'Write', input: { file_path: '/x', content: 'a\nthird_place b\nc' } }], correction: 'fine\nMetaxy was here' };
+  const out = B.recleanRow(row);
+  assert.ok(out.reply.includes('keep') && out.reply.includes('keep too') && !/third place line/i.test(out.reply));
+  assert.ok(out.toolRequests[0].input.content.includes('a') && !/third_place/.test(out.toolRequests[0].input.content));
+  assert.ok(!/metaxy/i.test(out.correction) && out.correction.includes('fine'));
+  assert.strictEqual(row.reply.includes('Third Place'), true, 'the input row is not mutated');
+});

@@ -23,10 +23,12 @@ const H = path.join(ROOT, 'exo_memory', 'handback');
 const PROJ = process.env.PROJECTS || path.join(os.homedir(), '.claude', 'projects');
 const SEAT_REL = { lib: 'C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl', main: 'C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl' };
 
+const THIRD = /third[-_ ]?place|metaxy/i;
+const TP_MARK = '[third-place line removed]';
 const sha256 = (s) => crypto.createHash('sha256').update(s).digest('hex');
 const INSTRUCTION = 'Continue the session: produce the next thing this seat would do, exactly as it would. That may be a message, a request for tools, or both. Tools are available, but this is a replay: nothing will be executed, and no result will come back.';
-const LIMITS = { historyChars: 60000, turnChars: 60000, summaryChars: 30000, promptChars: 12000, resultChars: 2500, callChars: 1000, textChars: 12000, attachChars: 1500,
-  hist: { prompt: 1500, text: 1500, call: 200, result: 600, attach: 400 } };
+const LIMITS = { historyChars: 60000, turnChars: 60000, summaryChars: 30000, promptChars: 12000, resultChars: Infinity, callChars: 1000, textChars: 12000, attachChars: 1500,
+  hist: { prompt: 1500, text: 1500, call: 200, result: 2500, attach: 400 } };
 
 // ------------------------------------------------------------------ reading the transcript (after origin-read.js's events(), with the model kept)
 const textOf = (c) => (typeof c === 'string' ? c : Array.isArray(c) ? c.map((b) => (b.type === 'text' ? b.text : '')).join('\n') : '');
@@ -36,6 +38,7 @@ const NOISE = /^ATTACH (total_tokens_reminder|batching_reminder_sent|bash_output
 /** Events of a transcript up to endMs: { n, ts, kind, text, model }. */
 function readEvents(file, endMs) {
   const ev = [];
+  const tpCalls = new Set();   // ids of tool calls that name the Third Place: their results are Third Place material even where no line says so
   F.eachLine(file, (line, n) => {
     if (!line.startsWith('{')) return;
     const m = /"timestamp":"([^"]+)"/.exec(line);
@@ -44,11 +47,14 @@ function readEvents(file, endMs) {
     let o; try { o = JSON.parse(line); } catch (_) { return; }
     const ts = o.timestamp || null;
     if (o.type === 'summary' || o.isCompactSummary) { ev.push({ n, ts, kind: 'COMPACT', text: typeof o.summary === 'string' ? o.summary : textOf(o.message && o.message.content) }); return; }
+    if (o.type === 'attachment' && o.attachment && o.attachment.type === 'queued_command') { ev.push({ n, ts, kind: 'QUEUED ' + (o.attachment.commandMode || 'prompt'), text: String(o.attachment.prompt || '') }); return; }
+    if (o.type === 'attachment' && o.attachment && o.attachment.type === 'instructions') { const a = o.attachment; ev.push({ n, ts, kind: 'INSTRUCTIONS', text: '', files: (a.files || []).map((x) => ({ path: String(x.path), content: String(x.content || '') })), removed: (a.removed || []).map(String) }); return; }
+    if (o.type === 'attachment' && o.attachment && o.attachment.type === 'prompt_snapshot') { const sp = o.attachment.systemPrompt; ev.push({ n, ts, kind: 'SYSTEMPROMPT', text: Array.isArray(sp) ? sp.join('\n') : String(sp || '') }); return; }
     if (o.type === 'attachment') { const a = o.attachment || {}; ev.push({ n, ts, kind: 'ATTACH ' + (a.hookName || a.type || ''), text: String(a.stdout || (Array.isArray(a.content) ? a.content.join('\n') : a.content) || a.text || '').slice(0, 20000) }); return; }
     if (o.isSidechain) return;
     if (o.type === 'user' && o.message) {
       const c = o.message.content;
-      if (Array.isArray(c) && c.some((b) => b.type === 'tool_result')) { for (const b of c) if (b.type === 'tool_result') ev.push({ n, ts, kind: 'RESULT', text: resultText(b) }); const tx = textOf(c); if (tx.trim()) ev.push({ n, ts, kind: 'USER-TEXT', text: tx }); return; }
+      if (Array.isArray(c) && c.some((b) => b.type === 'tool_result')) { for (const b of c) if (b.type === 'tool_result') ev.push({ n, ts, kind: 'RESULT', text: tpCalls.has(b.tool_use_id) ? TP_MARK : resultText(b) }); const tx = textOf(c); if (tx.trim()) ev.push({ n, ts, kind: 'USER-TEXT', text: tx }); return; }
       ev.push({ n, ts, kind: F.isRealPrompt(o) ? 'PROMPT' : 'USER-META', text: textOf(c) });
       return;
     }
@@ -56,7 +62,7 @@ function readEvents(file, endMs) {
       const model = o.message.model && o.message.model !== '<synthetic>' ? o.message.model : null;
       for (const b of o.message.content) {
         if (b.type === 'text') ev.push({ n, ts, kind: 'A-TEXT', text: b.text || '', model });
-        else if (b.type === 'tool_use') ev.push({ n, ts, kind: 'CALL ' + b.name, text: JSON.stringify(b.input || {}), model });
+        else if (b.type === 'tool_use') { if (THIRD.test(String(b.name) + ' ' + JSON.stringify(b.input || {}))) tpCalls.add(b.id); ev.push({ n, ts, kind: 'CALL ' + b.name, text: JSON.stringify(b.input || {}), model }); }
         // thinking blocks are left out: a model is not shown its earlier thinking
       }
     }
@@ -69,6 +75,8 @@ const hms = (ts) => (ts ? ts.slice(0, 19) + 'Z' : '--');
 function fmt(e, lim) {
   const body = (n) => cutTo(R.clean(e.text), n);
   if (e.kind === 'PROMPT' || e.kind === 'USER-TEXT') return `[PROMPT ${hms(e.ts)}] ${body(lim.prompt)}`;
+  if (e.kind === 'QUEUED prompt') return `[PROMPT queued ${hms(e.ts)}] ${body(lim.prompt)}`;
+  if (e.kind.startsWith('QUEUED ')) return `[TASK NOTIFICATION ${hms(e.ts)}] ${body(lim.prompt)}`;
   if (e.kind === 'A-TEXT') return `[ASSISTANT ${hms(e.ts)}] ${body(lim.text)}`;
   if (e.kind.startsWith('CALL ')) return `[TOOL CALL ${e.kind.slice(5)} ${hms(e.ts)}] ${body(lim.call)}`;
   if (e.kind === 'RESULT') return `[TOOL RESULT ${hms(e.ts)}] ${body(lim.result)}`;
@@ -96,8 +104,19 @@ function buildContext(ev, unit, opts = {}) {
   let ti = after.findIndex((e) => e.kind === 'PROMPT' && Date.parse(e.ts) >= unit.turnStartMs - 1000);
   let startNote = null;
   if (ti < 0) { for (let k = 0; k < after.length; k++) if (Date.parse(after[k].ts) <= unit.turnStartMs + 1000) ti = k; if (ti < 0) ti = 0; startNote = 'the located turn start is not a real prompt; the turn is taken from the last event at or before it'; }
-  const histEv = after.slice(0, ti).filter((e) => e.kind !== 'COMPACT'), turnEv = after.slice(ti).filter((e) => e.kind !== 'COMPACT');
-  const stats = { events: ev.length, compactionAt: ci >= 0 ? before[ci].ts : null, historyEvents: histEv.length, turnEvents: turnEv.length, historyDropped: 0, turnDropped: 0, startNote };
+  const RECORD_ONLY = (e) => e.kind === 'COMPACT' || e.kind === 'INSTRUCTIONS' || e.kind === 'SYSTEMPROMPT';   // not lines of the session record
+  const histEv = after.slice(0, ti).filter((e) => !RECORD_ONLY(e)), turnEv = after.slice(ti).filter((e) => !RECORD_ONLY(e));
+  // the seat's instruction files: each file as last loaded before the erring turn (a load lists the files it changed; a removed path drops out), in the order first loaded
+  const turnStartN = after[ti] ? after[ti].n : Infinity;
+  const shelfMap = new Map(); let sysRaw = null;
+  for (const e of live) {
+    if (e.n >= turnStartN) break;
+    if (e.kind === 'INSTRUCTIONS') { for (const p of e.removed) shelfMap.delete(p); for (const x of e.files) shelfMap.set(x.path, x.content); }
+    else if (e.kind === 'SYSTEMPROMPT') sysRaw = e.text;
+  }
+  const shelf = [...shelfMap].map(([p, c]) => ({ path: p, content: R.clean(c) }));
+  const systemPrompt = sysRaw ? R.clean(sysRaw) : null;
+  const stats = { shelfFiles: shelf.length, shelfChars: shelf.reduce((a, x) => a + x.content.length, 0), systemPromptChars: systemPrompt ? systemPrompt.length : 0, events: ev.length, compactionAt: ci >= 0 ? before[ci].ts : null, historyEvents: histEv.length, turnEvents: turnEv.length, historyDropped: 0, turnDropped: 0, startNote };
 
   // history: newest events kept first, until the budget is spent
   const hl = histEv.map((e) => fmt(e, L.hist));
@@ -118,19 +137,22 @@ function buildContext(ev, unit, opts = {}) {
     stats.turnDropped = from - 1;
     turn = [head, `[${from - 1} events of this turn cut here]`].concat(tl.slice(from));
   }
-  return { id: unit.id, seat: unit.seat, model: model ? model.model : null, summary, history, turn, stop: { n: live[stop].n, ts: live[stop].ts, kind: live[stop].kind, text: live[stop].text }, stats };
+  return { id: unit.id, seat: unit.seat, model: model ? model.model : null, summary, shelf, systemPrompt, history, turn, stop: { n: live[stop].n, ts: live[stop].ts, kind: live[stop].kind, text: live[stop].text }, stats };
 }
 
+const MAX_SYSTEM_CHARS = 24000;   // the system prompt travels as a command-line argument; Windows allows about 32,000 characters in all
 const SYSTEM_BASE = (seat) => `You are a seat (${seat}) in a multi-seat working committee. What follows is the record of your session up to this moment, rendered as text: prompts addressed to you, your earlier messages, the tool calls you made and what they returned. This is a replay: continue it.`;
 
 /** The text for the model: { system, prompt, sha, chars }. armText null = the baseline. */
 function renderPrompt(ctx, armText, armLabel) {
   const parts = [];
+  for (const x of ctx.shelf || []) parts.push(`<seat-instructions path="${x.path}">`, x.content, '</seat-instructions>');
   if (ctx.summary) parts.push('<session-summary>', ctx.summary, '</session-summary>');
   parts.push('<session-record>', ...ctx.history, '--- the turn you are in begins here ---', ...ctx.turn, '</session-record>');
   if (armText) parts.push(`[added context: ${armLabel}]`, armText, '[end of added context]');
   parts.push(INSTRUCTION);
-  const system = SYSTEM_BASE(ctx.seat), prompt = parts.join('\n');
+  const system = SYSTEM_BASE(ctx.seat) + (ctx.systemPrompt ? '\n\n' + ctx.systemPrompt : ''), prompt = parts.join('\n');
+  if (system.length > MAX_SYSTEM_CHARS) throw new Error(`${ctx.id}: the system prompt is ${system.length} characters; a command line carries about ${MAX_SYSTEM_CHARS}`);
   return { system, prompt, sha: sha256(system + '\n' + prompt), chars: system.length + prompt.length };
 }
 
@@ -226,6 +248,14 @@ async function pool(jobs, n) {
   return out;
 }
 
+/** A copy of a stored run row with the room's filter run over every stored text (reply, tool request inputs, correction, error). */
+function recleanRow(row) {
+  const out = { ...row };
+  for (const k of ['reply', 'correction', 'error']) if (typeof out[k] === 'string') out[k] = R.clean(out[k]);
+  if (Array.isArray(out.toolRequests)) out.toolRequests = out.toolRequests.map((t) => ({ ...t, input: cleanDeep(t.input) }));
+  return out;
+}
+
 /** A run's row for runs.jsonl: the regeneration result without the CLI's cost field (the keeper's rule: calls and time only). */
 function runRow(head, g) { const { costUsd, ...rest } = g; return { ...head, ...rest }; }
 
@@ -244,7 +274,7 @@ function makeBlind(runs, seed) {
   return { blind, key, errored };
 }
 
-module.exports = { readEvents, buildContext, renderPrompt, loadUnits, pickUnits, contextOfUnit, regenerate, makeBlind, defaultRunner, pool, runRow, INSTRUCTION, LIMITS, sha256 };
+module.exports = { readEvents, buildContext, renderPrompt, loadUnits, pickUnits, contextOfUnit, regenerate, makeBlind, defaultRunner, pool, runRow, recleanRow, THIRD, TP_MARK, INSTRUCTION, LIMITS, sha256 };
 
 // ------------------------------------------------------------------ the command line
 function arg(argv, name, dflt) { const i = argv.indexOf(name); return i >= 0 ? argv[i + 1] : dflt; }

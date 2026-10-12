@@ -179,3 +179,65 @@ What differs is the information the model has when it reaches the claim step. Fo
 - I did not read the replies of any run to explain why a unit is dead; the pattern is from the transcripts only.
 
 NEXT: librarian rules whether a context-fidelity fix (shell, system prompt, queued_command, uncut results) is the one allowed fix and dispatches it; A rebuilds the context and re-runs only on that ruling
+
+## baseline3 redaction (D311 ledger D312; seat A, 2026-10-12)
+
+**Result, said first: the room's filter did run on everything I rendered, and it found nothing to remove in baseline3's outputs by its words (0 Third Place lines, 0 token fields, 0 key shapes). The leak is a different kind: the results of tool calls that named the Third Place.** The transcript copy redacts such a call whole, but the call's RESULT lines do not name it, so the line filter keeps them. The first two bench versions cut results to 600 characters (history) and 2,500 (turn), so they held only a piece; baseline3's third change ("keep the erring turn's results whole") put the whole results in. **14 of the 22 units had such results inside the replayed window in baseline3; W080 had 21 (28,791 characters as stored, 27,188 of them in the prompt).** No model call was made in this check or fix. I opened nothing under `exo_memory/third_place/`; the checks below read seat transcripts in code and print counts, never text.
+Branch `d311-a6` (worktree `G:\consonance-worktrees\a-d311a6-wt`, from main `c0126a3d`); the cleaning commit is the one that carries this section (`git log -1 -- exo_memory/handback/p-mistakebench-A_2026-10-12.md`); local, named paths, not pushed. **Hand-back written in this branch, not in the main checkout, as asked; it appends after "Cut-position diagnostic". "Context-fidelity run" (53e525d2) is not in this base, so landing both will need the two appends merged.**
+
+### 1. The check of every baseline3 output (checked: `redaction/check-outputs.js`)
+The room's own filter (claim-replay `clean()` words: `third[-_ ]?place`, `metaxy`; `"token"` fields; the two key prefixes), counted over each file as it was committed in `63303245`:
+| file | lines | Third Place word lines left | token fields | key shapes | removal markers |
+|---|---:|---:|---:|---:|---:|
+| baseline3/runs.jsonl | 111 | 0 | 0 | 0 | 0 |
+| baseline3/blind/blind.json | 663 | 0 | 0 | 0 | 0 |
+| baseline3/blind/b-sample.json | 45 | 0 | 0 | 0 | 0 |
+| baseline3/run.log | 111 | 0 | 0 | 0 | 0 |
+| context-sizes-fidelity.json | 289 | 0 | 0 | 0 | 0 |
+C's "0 markers" is right, and it is not a failed filter: the markers in the earlier sets came from replies echoing marker lines they had seen (baseline 2 markers, in W080; baseline2 4, in W088 and W080), and baseline3's replies cite none. **Everything else I wrote with rendered text:** no prompt file was ever committed (the dry run's `context --out` files were deleted before any commit; checked: `git log --all --diff-filter=A -- '*prompt.txt'` shows only other seats' files). Outside the repo: the three keys (ids to units and run numbers, no text), my scratch scripts (no text), the run logs (ids and times), and three temp folders of mine (an empty probe folder and two with a 61- and 174-byte `mcp.json`), which I removed. `claude -p` ran with `--no-session-persistence` in temp folders the runner deleted; checked: `~/.claude/projects` holds no project folder named for one of the runner's `mistake-bench-run-` temp folders, so none of my runs left a session file there.
+
+### 2. What the filter cannot see, measured: reuse of redacted results
+Test (`redaction/overlap-check.js`): for each unit, take every tool result of a Third-Place-naming call up to the claim, make its 8-word runs, remove the runs that also occur in the FIXED prompt (so only text the model could not have got elsewhere is left), and count the reply or tool-request lines that repeat one. Counts and unit ids only.
+| set | runs | runs with a reusing line | lines | units (lines) | on origin/main now? |
+|---|---:|---:|---:|---|---|
+| dry run (3 runs) | 3 | 0 | 0 | none | yes, `bcdae51a` |
+| baseline (first) | 110 | 9 | 11 | W080 7, W079 3, W084 1 | **yes, `f3276d5c`** |
+| baseline2 (tools captured) | 110 | 9 | 18 | W080 8, W079 6, W058 2, W084 2 | **yes, `e0a01df2`** |
+| baseline3 (fidelity) | 110 | 8 | 18 | W080 11, W079 4, W058 3 | no (local `6443e971`) |
+The judges' files: **C's verdict reasons, 0 of 110 rows reuse (both sets); B's verdict reasons, 0 of 40 rows in each of three files** (`redaction/verdict-overlap.js`).
+**Limits of the test, said plainly:** it catches 8 or more consecutive words, not a paraphrase. A reply that retells redacted material in its own words passes it, and so passes the word filter; I cannot see that without reading the material, which I will not do. So "0 reuse" never means "no Third Place material in the reply". The test also compares against the full results, while the first two baselines saw only the first 600 or 2,500 characters of each; reuse of text they never saw is impossible, so the counts are still sound for them.
+**Exposure per unit** (`redaction/affected-units.json`; results of Third-Place-naming calls inside the window, as stored / rendered into the prompt):
+| unit | baseline3 | first two baselines (estimate: their limits) |
+|---|---|---|
+| W080 | 21 results, 28,791 / 27,188 chars | 23, 10,410 rendered |
+| W079 | 14, 23,249 / 7,663 | 23, 7,036 |
+| W084, W088 | 14, 7,319 / 6,986 and 7,358 / 7,025 | 17, 4,857 and 16, 4,491 |
+| W058 | 5, 4,373 / 4,267 | 5, 3,840 |
+| W054 | 5, 3,096 / 2,912 | 5, 1,768 |
+| W056 | 4, 2,011 / 2,171 | 7, 3,201 |
+| W032 | 5, 804 / 899 | 10, 2,046 |
+| W100, W049 | 3, 814 / 940 each | 3, 864 each |
+| W044 | 2, 351 / 435 | 2, 435 |
+| W018, W020, W021 | 1 each, about 175 chars | 1 each, about 217 |
+| the other 8 units | 0 | 0 |
+Fourteen units, 70 of 110 runs per set. The "first two baselines" column re-runs the same window with their limits, so it is an estimate, not a record of what each run held.
+
+### 3. The fix (consonance/tools/mistake-bench.js, 39 rows; no existing test changed)
+- **The reader redacts the result of any tool call whose name or input matches the Third Place filter, whole,** whether or not its lines say so. History and turn alike. Everything else in the context is unchanged. The bench's filter words are the room's, and a row pins the two together.
+- **`recleanRow`** re-runs the room's filter over every stored text of a run row (reply, tool request inputs, correction, error), on a copy.
+- Rows red first: **4** (the filter parity row; a result of a Third-Place-naming call redacted whole even though its lines never say so; the same for a call in the history, including one that names it only in its description; the stored-row re-clean). **One row you asked for passed already and was not red first:** "a Third Place line in each source never reaches the prompt" (instructions, system prompt snapshot, queued message, compaction summary, tool result, prompt text), because the line-level `clean()` did run on every one of them. I added it anyway as a pin. portable-paths green, carrier-drift GREEN.
+
+### 4. The cleaned outputs (no model call)
+- `baseline3/runs.jsonl` is the stored run file with, in each reply and tool-request input, every LINE that repeats an 8-word run of a redacted-only result replaced by `[third-place line removed]`: **8 runs changed, 18 lines.** `baseline3/blind/blind.json` rebuilt from it with the SAME seed (`d311-baseline3-blind-2026-10-12`): **same ids, same units, same order, key identical** (checked: the two keys compared), so B's 40 in `b-sample.json` stay valid (copied unchanged; ids only). **New blind.json sha256 `b70da5a0e1b2d374ed63ca61641893379be0a74bca0a31bd81125b0b48c21230`** (old `c0bf102016d8074935204112b848ff3bf7d215f1e91ea96d77f37a1192a66e7e`). `run.log`, `started.txt`, `finished.txt` copied unchanged (ids, times). The key stays outside the repo.
+- **Where the cleaning changes a reply's meaning for judging: 8 rows, because each loses its paragraph, not a phrase** (replies are mostly a few long lines): R002 (W080, 2,736 to 119 characters), R040 (W080, 3,397 to 114), R042 (W058, 6,287 to 325), R054 (W079, 1,660 to 318), R074 (W080, 3,473 to 128), R076 (W080, 4,018 to 115), R077 (W080, 2,663 to 95), R093 (W079, 2,055 to 329). **Inside B's 40: R002, R054, R077.** C's and B's verdicts on these 8 were given on the full text and may not hold on what is left; they should be treated as unjudged on the cleaned text, or re-judged. List: `baseline3/cleaning-changed-rows.json` (R-id, unit, marker count, sizes).
+
+### 5. Which commits carry unclean text (for the landing; I rewrote nothing)
+- **Already on origin/main and unclean by the test in section 2:** `f3276d5c` (baseline: runs.jsonl, blind.json; 9 runs, units W080, W079, W084) and `e0a01df2` (baseline2: runs.jsonl, blind.json; 9 runs, units W080, W079, W058, W084). `bcdae51a` (dry run) tests clean. Whether to treat these as a leak is the chair's call: the test finds verbatim reuse, not that the reused words are private. The cleaned copy of either file comes from `node exo_memory/handback/p-mistakebench-A_2026-10-12_evidence/redaction/overlap-check.js clean <in runs.jsonl> <out runs.jsonl>` and then `mistake-bench.js blind --seed d311-baseline-blind-2026-10-12` (baseline) or `d311-baseline2-blind-2026-10-12` (baseline2); **I did not apply it to those two** (they are landed, and C and B judged blind digests `5e7b84fb…` and `9e7f0bdf…`).
+- **Local, unpushed, unclean:** `6443e971` (baseline3 runs.jsonl and blind.json; 8 runs) on main, and its source `63303245` on `d311-a5`. The same files in `f9db6bba` (`d311-a2`) and `aee612d3` (`d311-a3`) are the two landed above.
+- **Local, clean of reply text:** `8d59fb1c` (the unfixed context-fidelity code, test fixtures that say "Third Place" are synthetic; and the sizes file, numbers only), `92152b89` (test paths), `53e525d2` (hand-back text and map line: no reply is quoted). Note `8d59fb1c` and `92152b89` hold the bench WITHOUT the redaction fix; a run from that code reproduces the leak, so land the fix with them.
+- **Outside commits, still holding the unclean text:** the `d311-a5` worktree (`G:\consonance-worktrees\a-d311a5-wt`) holds the unclean baseline3 files; I have not deleted it.
+
+### 6. Correction of what I said before
+My "Context-fidelity run" section said the Third Place lines "are not in any prompt" and that the run outputs hold no secret-shaped string. True of lines that name it, and nothing more: I treated the line filter as the whole rule and did not apply the rule for calls to their results. The check I added for the whole-results change was a row proving a line-level leak does not occur; it could not show this one.
+
+NEXT: chair rebuilds main without the unclean range and lands the `d311-a6` commit; chair decides on `f3276d5c` and `e0a01df2` already on origin; C and B treat R002 R040 R042 R054 R074 R076 R077 R093 as unjudged on the cleaned text; A deletes the `d311-a5` worktree only when the chair says
