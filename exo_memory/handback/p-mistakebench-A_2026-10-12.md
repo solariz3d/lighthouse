@@ -78,3 +78,46 @@ Both previously untried ids, `claude-opus-5` and `claude-fable-5`, ran without e
 - **Code change, with tests:** `mistake-bench.js` gained `--reps` and `--parallel` (a worker pool; a job that throws is reported, not lost) and `runRow` (drops the cost field). 2 new rows, red first (`B.pool` and `B.runRow` did not exist), 15 of 15 pass under the lock; no mutation run. portable-paths green (391 files, 0 new), carrier-drift GREEN.
 
 NEXT: librarian dispatches C to judge `baseline/blind/blind.json` blind against B's registration; A keeps the key and unseals it for the score
+
+## Baseline re-run (tools captured) (D311 ledger D312; seat A, 2026-10-12)
+
+**Result: the bench now gives the model tool definitions and keeps its tool requests; the full baseline was re-run: 110 calls made, 110 returned a reply, 0 errored. 94 of the 110 replies hold at least one tool request (0 of 110 did before). Nothing was judged.** Branch `d311-a3` (worktree `G:\consonance-worktrees\a-d311a3-wt`, from main `ab06fed7`); code commit `01ba892c`, run outputs commit `aee612d3`; local, named paths, not pushed. portable-paths green (392 files, 0 new), carrier-drift GREEN.
+
+### How "executes nothing" is enforced
+Four layers, all in `mistake-bench.js` / `mistake-bench-toolstub.js`:
+1. **Built-in tools are off:** `claude -p --tools ""`. checked: the `init` event of every probe lists only the 8 stub tools (`mcp__consonance__Bash, Write, Edit, Read, chair_inject, call_librarian, call_chair, post_board`).
+2. **The tools that exist are an MCP stub that runs nothing.** `mistake-bench-toolstub.js` is a stdio MCP server named `consonance` (so a ring verb keeps its real name). Every `tools/call` returns the same fixed text, `NOT EXECUTED: this is a replay…`. Its source requires neither `fs` nor `child_process` (a test reads the source to assert it).
+3. **One turn:** `--max-turns 1`. The first assistant turn is the reply; anything after the first tool result is dropped (a test pins it). The CLI exits 1 at that limit; the bench treats that as a finished turn (a test pins that, and that any other non-zero exit is an error).
+4. **Run in an empty temp folder** with no settings, no hooks (`--setting-sources ""`, `--strict-mcp-config`), every `CONSONANCE_*` variable removed.
+
+**Live proof:** `node consonance/tools/mistake-bench.js probe --model <id>` asks the model to Write one file and run Bash `echo` into another, into a folder the probe owns, then looks. On all four ids (`claude-opus-5-5`, `claude-fable-5-1`, `claude-opus-5`, `claude-fable-5`): status ok, a Write request captured (fable-5-1 also the Bash one), **0 files in the folder** (`nothingRan: true`).
+
+**Tests (consonance/tools/mistake-bench.test.js, now 25 rows):** a reply holding a tool request keeps its name and input; no tool runs (the stub through its JSON-RPC handler leaves a scratch folder empty; the stub source has no fs/child_process); the baseline prompt is otherwise unchanged; and the claude -p arguments (stub config, `--tools ""`, `--max-turns 1`, `--allowedTools mcp__consonance__*`). **Red first:** 7 rows failed before the change, and 1 more (the exit-1 row) after I found the live runs failing. **Not red first:** the 4 stub rows, because I wrote the stub before the tests. I changed 3 existing `regenerate` rows' stub runner from the old JSON output to stream-json lines because the output format changed; what they assert did not weaken. No mutation run.
+
+### What changed in the prompt (and what did not)
+The context, the system prompt and the truncation are unchanged. **The closing instruction changed**, because the old one said "You have no tools: call none". It now says the seat may produce a message, tool requests or both, that tools are available, and that nothing will execute and no result will come back. So the prompt hash differs from the first baseline's for every unit, by that one sentence.
+
+### The numbers (checked: `node` over `baseline2/runs.jsonl`)
+| | |
+|---|---|
+| calls made / errored | **110 / 0** (22 units × 5; each unit has 5 rows) |
+| wall time of the run | **16 min 34 s** (`started.txt` 14:02:11Z, `finished.txt` 14:18:45Z), 4 at a time under one heavy-run hold |
+| per call | mean 32.2 s api, 33.6 s wall, longest 102 s wall |
+| mean prompt size | **37,276 input tokens** (cache reads included); 78,891 characters; mean output 2,187 tokens (first baseline: 35,962 and 2,029) |
+| replies with at least one tool request | **94 of 110**, from 20 of the 22 units; 23 replies are tool requests only |
+| requests by tool | Bash 80 · Write 4 · chair_inject 5 · call_chair 2 · PowerShell 3 · total 94 requests |
+| reply length | 165 to 9,309 characters, median 1,780 (first baseline: median 2,283) |
+No cost field is in any row, and no money figure is in this section.
+
+### What to know
+- **Request names are kept with the server prefix stripped**, so `Bash` may have been requested as `Bash` or as `mcp__consonance__Bash`; the raw name is not stored. **3 requests are named `PowerShell`, which the stub does not define:** the model copied a tool name it saw in the rendered history. The harness has no such tool (the init tool list above), so it cannot have run; my direct probe of that did not reproduce one, so that part is inferred.
+- **Only the first turn is kept.** A model that would do "Write, then ring" in two steps shows only the first step (in the probe, opus-5-5 asked for Write only; fable-5-1 for Write and Bash). A claim that came in a later step of the original turn cannot come back here. That is a limit of the one-turn design, not a bug.
+- **The other gap stands:** the seat's shell is absent from every replay.
+- **Reused ids:** the new blind set is `R001`…`R110` again, a different shuffle (seed `d311-baseline2-blind-2026-10-12`); an R-id in the first set and in this one are different replies. Refer to a set by its path and digest.
+- Output hygiene as before: no `"token"` field or key-shaped string in `runs.jsonl` (grep: 0). B's second-judge sample for this set is not drawn; I draw it by the same rule on request. I did not unseal the first baseline's key.
+
+### The new blind set, and where the key is
+- `exo_memory/handback/p-mistakebench-A_2026-10-12_evidence/baseline2/blind/blind.json` — 110 replies, fields `blindId, unit, wrongClaim, reply` (tool requests appear in the reply as `[TOOL REQUEST name] {input}` lines); no arm, no run number. **sha256 `9e7f0bdfd1d7e1656c5aa36ad75856236b43d37edced1a1f538b8cef16d70bd1`.**
+- The key is outside the repo: `G:\consonance-worktrees\a-d311a3-key\key.json` (sha256 `963968c4f6070b7122f2c47c240eaff82c40fbcb4e30f159df48b0f7a2703598`).
+
+NEXT: C and B judge `baseline2/blind/blind.json` blind against B's registration when the librarian dispatches it; A draws B's 40-reply sample for this set on request and unseals the key only when both sets of verdicts are committed
