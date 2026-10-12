@@ -1,0 +1,508 @@
+[
+ {
+  "id": "W006",
+  "seat": "lib",
+  "repeatsRun1": 0,
+  "repeatsRun2": 0,
+  "cut": {
+   "line": 26071,
+   "step": 12,
+   "ofSteps": 15,
+   "turnPromptLine": 25960
+  },
+  "claim": {
+   "line": 26071,
+   "step": 12,
+   "medium": "tool-input (Bash heredoc into stamp.js)",
+   "offset": "745 of 6071"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "the keeper's pasted bare-terminal account of the stick failure (queued_command attachment, event 25989, 1,985 chars), same turn",
+  "originInReplay": "IN the transcript, EMPTY in the replay: the keeper's pasted account is a `queued_command` attachment (1,985 chars) and the bench reader drops that attachment type",
+  "shellInTranscript": "yes, 141520 chars (instructions attachment, line 25968)",
+  "systemPromptSnapshot": "12767 chars (line 25027)"
+ },
+ {
+  "id": "W021",
+  "seat": "lib",
+  "repeatsRun1": 0,
+  "repeatsRun2": 0,
+  "cut": {
+   "line": 46247,
+   "step": 1,
+   "ofSteps": 2,
+   "turnPromptLine": 46233
+  },
+  "claim": {
+   "line": 46247,
+   "step": 1,
+   "medium": "tool-input (Bash heredoc into the HAM queue plan; 'no B here' at offset 262 of 3162)",
+   "offset": "262 of 3162"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "a [panes] digest attached to the prompt (attachment 46236, 1,247 chars) that lists only panes that talked today",
+  "originInReplay": "attach userpromptsubmit 46236: in the replay, whole; original 1247 chars, kept about 1247; quote not matched in the event text",
+  "shellInTranscript": "yes, 140050 chars (instructions attachment, line 45404)",
+  "systemPromptSnapshot": "7073 chars (line 44041)"
+ },
+ {
+  "id": "W053",
+  "seat": "lib",
+  "repeatsRun1": 0,
+  "repeatsRun2": 0,
+  "cut": {
+   "line": 186,
+   "step": 2,
+   "ofSteps": 7,
+   "turnPromptLine": 167
+  },
+  "claim": {
+   "line": 186,
+   "step": 2,
+   "medium": "tool-input (Bash heredoc into the librarian ledger)",
+   "offset": "1562 of 2589"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "the 518-path index listed in the seat's shell, loaded at session start (an `instructions` attachment, line 22, 128,043 chars)",
+  "originInReplay": "the index sits in the shell loaded at session start (an `instructions` attachment); the replay carries no shell",
+  "shellInTranscript": "yes, 128043 chars (instructions attachment, line 22)",
+  "systemPromptSnapshot": "11067 chars (line 33)"
+ },
+ {
+  "id": "W054",
+  "seat": "lib",
+  "repeatsRun1": 0,
+  "repeatsRun2": 0,
+  "cut": {
+   "line": 726,
+   "step": 4,
+   "ofSteps": 6,
+   "turnPromptLine": 688
+  },
+  "claim": {
+   "line": 726,
+   "step": 4,
+   "medium": "tool-input (Bash heredoc note; first appearance in this turn is a restatement of an earlier ruling)",
+   "offset": "286 of 3469"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "the seat's own tool outputs of the same turn (results 715 and the sizes at 479), plus arithmetic",
+  "originInReplay": "the inputs (results 479, 715) are whole in the replay; what is missing is the shell and the packer run the seat never made",
+  "shellInTranscript": "yes, 139768 chars (instructions attachment, line 260)",
+  "systemPromptSnapshot": "11067 chars (line 272)"
+ },
+ {
+  "id": "W056",
+  "seat": "lib",
+  "repeatsRun1": 0,
+  "repeatsRun2": 0,
+  "cut": {
+   "line": 1810,
+   "step": 3,
+   "ofSteps": 6,
+   "turnPromptLine": 1784
+  },
+  "claim": {
+   "line": 1810,
+   "step": 3,
+   "medium": "tool-input (Bash; input Third Place redacted in the transcript copy). The words of W appear only as a quotation in step 4 ('I wrote ...')",
+   "offset": "not visible"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "C's hand-back, read whole at step 1 (result 1791, 12,968 chars)",
+  "originInReplay": "C's hand-back (result 1791): kept about 2,494 of 12,968 chars",
+  "shellInTranscript": "yes, 140268 chars (instructions attachment, line 749)",
+  "systemPromptSnapshot": "11067 chars (line 761)"
+ },
+ {
+  "id": "W079",
+  "seat": "lib",
+  "repeatsRun1": 0,
+  "repeatsRun2": 0,
+  "cut": {
+   "line": 12524,
+   "step": 1,
+   "ofSteps": 3,
+   "turnPromptLine": 12511
+  },
+  "claim": {
+   "line": 12524,
+   "step": 1,
+   "medium": "ring (call_chair, the turn's first step)",
+   "offset": "1287 of 1674"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "another pane's hand-back read two hours earlier in a tool result (event 11976, 17,833 chars)",
+  "originInReplay": "the other pane's hand-back (result 11976): kept about 593 of 17,833 chars",
+  "shellInTranscript": "yes, 140402 chars (instructions attachment, line 12293)",
+  "systemPromptSnapshot": "12879 chars (line 11796)"
+ },
+ {
+  "id": "W080",
+  "seat": "lib",
+  "repeatsRun1": 0,
+  "repeatsRun2": 0,
+  "cut": {
+   "line": 12425,
+   "step": 4,
+   "ofSteps": 5,
+   "turnPromptLine": 12366
+  },
+  "claim": {
+   "line": 12425,
+   "step": 4,
+   "medium": "ring (call_chair; with a Write and a Bash in the same step; all three inputs Third Place redacted in the transcript copy)",
+   "offset": "not visible"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "C's hand-back read in a tool result four hours earlier (event 11449)",
+  "originInReplay": "C's hand-back (event 11449, four hours before) was not found in the replay; its marker may have been lost to Third Place redaction, so unproven. Steps 1-4 of the turn are all Third Place redacted calls",
+  "shellInTranscript": "yes, 140402 chars (instructions attachment, line 12293)",
+  "systemPromptSnapshot": "12879 chars (line 11796)"
+ },
+ {
+  "id": "W018",
+  "seat": "lib",
+  "repeatsRun1": 5,
+  "repeatsRun2": 5,
+  "cut": {
+   "line": 45340,
+   "step": 7,
+   "ofSteps": 7,
+   "turnPromptLine": 45289
+  },
+  "claim": {
+   "line": 45340,
+   "step": 7,
+   "medium": "prose",
+   "offset": "171 of 1501"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "a [panes] digest line added to the prompt by a hook (attachment 45294, 282 chars)",
+  "originInReplay": "attach userpromptsubmit 45294: in the replay, whole; original 282 chars, kept about 282; the quoted words start at offset 130 -> inside the kept part",
+  "shellInTranscript": "yes, 140027 chars (instructions attachment, line 45296)",
+  "systemPromptSnapshot": "7073 chars (line 44041)"
+ },
+ {
+  "id": "W019",
+  "seat": "lib",
+  "repeatsRun1": 5,
+  "repeatsRun2": 5,
+  "cut": {
+   "line": 45845,
+   "step": 9,
+   "ofSteps": 10,
+   "turnPromptLine": 45786
+  },
+  "claim": {
+   "line": 45845,
+   "step": 9,
+   "medium": "tool-input (Bash note, offset 596 of 2658) and ring (call_chair, offset 493 of 1703), same step",
+   "offset": "596 of 2658"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "the seat's own probe run from the TEMP folder (call 45830, results 45831 and 45841)",
+  "originInReplay": "call bash 45830: in the replay, whole; original 435 chars, kept about 435; quote not matched in the event text",
+  "shellInTranscript": "yes, 140050 chars (instructions attachment, line 45404)",
+  "systemPromptSnapshot": "7073 chars (line 44041)"
+ },
+ {
+  "id": "W032",
+  "seat": "lib",
+  "repeatsRun1": 5,
+  "repeatsRun2": 5,
+  "cut": {
+   "line": 58784,
+   "step": 3,
+   "ofSteps": 4,
+   "turnPromptLine": 58772
+  },
+  "claim": {
+   "line": 58784,
+   "step": 3,
+   "medium": "ring (call_chair)",
+   "offset": "538 of 1905"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "the seat's own test-run output (result 58781, 543 chars): three TypeError lines beside 'todo 6'",
+  "originInReplay": "result 58781: in the replay, whole; original 543 chars, kept about 543; quote not matched in the event text",
+  "shellInTranscript": "yes, 139814 chars (instructions attachment, line 57365)",
+  "systemPromptSnapshot": "7046 chars (line 57381)"
+ },
+ {
+  "id": "W088",
+  "seat": "lib",
+  "repeatsRun1": 5,
+  "repeatsRun2": 5,
+  "cut": {
+   "line": 13310,
+   "step": 3,
+   "ofSteps": 3,
+   "turnPromptLine": 13276
+  },
+  "claim": {
+   "line": 13310,
+   "step": 3,
+   "medium": "tool-input (Bash, offset 497 of 2073) and ring (call_chair, offset 219 of 983), same step",
+   "offset": "219 of 983"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "the chair's ring that opens the turn (prompt 13276, 1,442 chars), then the seat's own directory check (13297-13298)",
+  "originInReplay": "prompt 13276: in the replay, whole; original 1442 chars, kept about 1442; the quoted words start at offset 352 -> inside the kept part",
+  "shellInTranscript": "yes, 140103 chars (instructions attachment, line 13078)",
+  "systemPromptSnapshot": "12879 chars (line 11796)"
+ },
+ {
+  "id": "W101",
+  "seat": "lib",
+  "repeatsRun1": 5,
+  "repeatsRun2": 5,
+  "cut": {
+   "line": 89411,
+   "step": 8,
+   "ofSteps": 8,
+   "turnPromptLine": 89362
+  },
+  "claim": {
+   "line": 89411,
+   "step": 8,
+   "medium": "prose",
+   "offset": "685 of 1287"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "the seat's own directory listing (result 89385, 631 chars): verify/B holds only claims.json",
+  "originInReplay": "result 89385: in the replay, whole; original 631 chars, kept about 631; quote not matched in the event text",
+  "shellInTranscript": "yes, 139954 chars (instructions attachment, line 89156)",
+  "systemPromptSnapshot": "7493 chars (line 89170)"
+ },
+ {
+  "id": "W044",
+  "seat": "main",
+  "repeatsRun1": 5,
+  "repeatsRun2": 5,
+  "cut": {
+   "line": 43334,
+   "step": 3,
+   "ofSteps": 3,
+   "turnPromptLine": 43315
+  },
+  "claim": {
+   "line": 43327,
+   "step": 1,
+   "medium": "tool-input (Bash git commit message, offset 1694 of 3148); restated in prose at the cut (step 3, line 43334)",
+   "offset": "1694 of 3148"
+  },
+  "stepsBetween": -2,
+  "dependedOn": "the librarian's ring that opens the turn (prompt 43315, 1,835 chars)",
+  "originInReplay": "prompt 43315: in the replay, whole; original 1835 chars, kept about 1835; the quoted words start at offset 988 -> inside the kept part",
+  "shellInTranscript": "no instructions attachment before the turn",
+  "systemPromptSnapshot": "none"
+ },
+ {
+  "id": "W092",
+  "seat": "lib",
+  "repeatsRun1": 5,
+  "repeatsRun2": 4,
+  "cut": {
+   "line": 15868,
+   "step": 2,
+   "ofSteps": 2,
+   "turnPromptLine": 15851
+  },
+  "claim": {
+   "line": 15868,
+   "step": 2,
+   "medium": "prose",
+   "offset": "318 of 769"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "the seat's own lock-file and process check (call 15862, result 15863)",
+  "originInReplay": "the lock-file call (15862) is cut to about 993 of 1,309 chars; its result (15863) is whole",
+  "shellInTranscript": "yes, 140299 chars (instructions attachment, line 14595)",
+  "systemPromptSnapshot": "12879 chars (line 13364)"
+ },
+ {
+  "id": "W049",
+  "seat": "main",
+  "repeatsRun1": 5,
+  "repeatsRun2": 4,
+  "cut": {
+   "line": 44241,
+   "step": 5,
+   "ofSteps": 5,
+   "turnPromptLine": 44206
+  },
+  "claim": {
+   "line": 44227,
+   "step": 3,
+   "medium": "ring (chair_inject, offset 768 of 2683); restated in prose at the cut (step 5, line 44241)",
+   "offset": "768 of 2683"
+  },
+  "stepsBetween": -2,
+  "dependedOn": "the librarian's ring that opens the turn (prompt 44206, Third Place redacted in the transcript copy)",
+  "originInReplay": "the opening ring is Third Place redacted in the transcript copy; the replay shows removed lines (the marker check cannot see it)",
+  "shellInTranscript": "yes, 90728 chars (instructions attachment, line 43919)",
+  "systemPromptSnapshot": "10076 chars (line 43935)"
+ },
+ {
+  "id": "W020",
+  "seat": "lib",
+  "repeatsRun1": 3,
+  "repeatsRun2": 3,
+  "cut": {
+   "line": 46268,
+   "step": 1,
+   "ofSteps": 5,
+   "turnPromptLine": 46255
+  },
+  "claim": {
+   "line": 46268,
+   "step": 1,
+   "medium": "prose (the turn's opening text)",
+   "offset": "69 of 187"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "a [panes] digest attached to the prompt (attachment 46257, 1,120 chars)",
+  "originInReplay": "attach userpromptsubmit 46257: in the replay, whole; original 1120 chars, kept about 1120; the quoted words start at offset 320 -> inside the kept part",
+  "shellInTranscript": "yes, 140050 chars (instructions attachment, line 45404)",
+  "systemPromptSnapshot": "7073 chars (line 44041)"
+ },
+ {
+  "id": "W084",
+  "seat": "lib",
+  "repeatsRun1": 3,
+  "repeatsRun2": 1,
+  "cut": {
+   "line": 13232,
+   "step": 4,
+   "ofSteps": 6,
+   "turnPromptLine": 13186
+  },
+  "claim": {
+   "line": 13232,
+   "step": 4,
+   "medium": "tool-input (Write of the plan; input Third Place redacted in the transcript copy); restated at step 5 in a ring (offset 633 of 1638)",
+   "offset": "not visible"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "the desktop librarian's note, read in a tool result in the previous turn (event 13092, 6,544 chars)",
+  "originInReplay": "the desktop librarian's note (result 13092): kept about 593 of 6,544 chars; the words that matter start at offset 4,326, in the cut-off part",
+  "shellInTranscript": "yes, 140103 chars (instructions attachment, line 13078)",
+  "systemPromptSnapshot": "12879 chars (line 11796)"
+ },
+ {
+  "id": "W100",
+  "seat": "main",
+  "repeatsRun1": 4,
+  "repeatsRun2": 0,
+  "cut": {
+   "line": 44377,
+   "step": 1,
+   "ofSteps": 1,
+   "turnPromptLine": 44365
+  },
+  "claim": {
+   "line": 44377,
+   "step": 1,
+   "medium": "prose",
+   "offset": "1670 of 1941"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "a [panes] digest attached to the prompt (attachment 44367, 1,377 chars) whose ECHO line is cut at 'does…'",
+  "originInReplay": "attach userpromptsubmit 44367: in the replay, whole; original 1377 chars, kept about 1377; the quoted words start at offset 101 -> inside the kept part",
+  "shellInTranscript": "yes, 90728 chars (instructions attachment, line 43919)",
+  "systemPromptSnapshot": "10076 chars (line 43935)"
+ },
+ {
+  "id": "W058",
+  "seat": "lib",
+  "repeatsRun1": 0,
+  "repeatsRun2": 3,
+  "cut": {
+   "line": 1267,
+   "step": 4,
+   "ofSteps": 10,
+   "turnPromptLine": 1228
+  },
+  "claim": {
+   "line": 1267,
+   "step": 4,
+   "medium": "tool-input (Bash heredoc entry; input Third Place redacted in the transcript copy)",
+   "offset": "not visible"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "the seat's own grep run at 1260 (call, 1,675 chars) and its result 1261 (2,454 chars)",
+  "originInReplay": "the grep call (1260) is cut to about 994 of 1,675 chars; its result (1261) is whole; the claim call itself is Third Place redacted",
+  "shellInTranscript": "yes, 140268 chars (instructions attachment, line 749)",
+  "systemPromptSnapshot": "11067 chars (line 761)"
+ },
+ {
+  "id": "W022",
+  "seat": "lib",
+  "repeatsRun1": 0,
+  "repeatsRun2": 1,
+  "cut": {
+   "line": 49242,
+   "step": 3,
+   "ofSteps": 4,
+   "turnPromptLine": 49221
+  },
+  "claim": {
+   "line": 49251,
+   "step": 4,
+   "medium": "prose in this turn ('Your real settings were untouched'); the original statement is a ring in the PREVIOUS turn (event 49206)",
+   "offset": "343 of 933"
+  },
+  "stepsBetween": 1,
+  "dependedOn": "the seat's own ring to the chair in the previous turn (event 49206, 2,257 chars)",
+  "originInReplay": "the previous turn's ring (event 49206): kept about 193 of 2,257 chars",
+  "shellInTranscript": "yes, 140337 chars (instructions attachment, line 48734)",
+  "systemPromptSnapshot": "7046 chars (line 48313)"
+ },
+ {
+  "id": "W010",
+  "seat": "lib",
+  "repeatsRun1": 0,
+  "repeatsRun2": 0,
+  "cut": {
+   "line": 27521,
+   "step": 4,
+   "ofSteps": 4,
+   "turnPromptLine": 27485
+  },
+  "claim": {
+   "line": 27521,
+   "step": 4,
+   "medium": "prose",
+   "offset": "686 of 1514"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "the seat's own Windows event listing at 07:38 (result 27518, 544 chars): three Kernel-Power rows read as hard freezes",
+  "originInReplay": "result 27518: in the replay, whole; original 544 chars, kept about 544; quote not matched in the event text",
+  "shellInTranscript": "yes, 146498 chars (instructions attachment, line 26953)",
+  "systemPromptSnapshot": "12767 chars (line 25027)"
+ },
+ {
+  "id": "W034",
+  "seat": "lib",
+  "repeatsRun1": 0,
+  "repeatsRun2": 0,
+  "cut": {
+   "line": 60290,
+   "step": 1,
+   "ofSteps": 1,
+   "turnPromptLine": 60285
+  },
+  "claim": {
+   "line": 60290,
+   "step": 1,
+   "medium": "prose",
+   "offset": "1058 of 3121"
+  },
+  "stepsBetween": 0,
+  "dependedOn": "the seat's own grep of the t180 FINDINGS document in the PREVIOUS turn, 12 hours earlier (result 58287)",
+  "originInReplay": "the grep of FINDINGS (result 58287, previous turn, 12 h before) is NOT in the replay: 865 of 1,012 history events were cut from the front",
+  "shellInTranscript": "yes, 139814 chars (instructions attachment, line 57365)",
+  "systemPromptSnapshot": "7046 chars (line 57381)"
+ }
+]
