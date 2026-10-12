@@ -8466,9 +8466,34 @@ mod intake_light_tests {
         }
         assert!(!light.contains("## The live edge"), "the live-edge claims still ride");
         assert!(!light.contains("# THE MEMORY — topic map"), "the topic summaries still ride");
-        // ~93 KB was the target with B's COMMITTEE draft (-748 B); on today's brief the same build is ~0.7 KB more.
-        assert!(light.len() <= 95_000, "light pane intake is {} B", light.len());
-        assert!(light.len() + 14_000 <= strict.len(), "light {} B is not ~14 KB+ under strict {} B", light.len(), strict.len());
+        // D313 (E): THE BOUND IS SPLIT, because one byte total over live files was wrong by design. Under light the own-map
+        // allowance is `a.min(reserve)` (map_allowance_mode) and `reserve` is the map's NEWEST entry plus its wrapper, so the
+        // intake grew with whatever entry a seat last wrote: the old `light.len() <= 95_000` (measured on 10-09 data) went red at
+        // 95,693 B on C's long D311 entry while the product was right. So: the REST (everything before the map section) under a
+        // fixed bound, and the MAP SECTION under what the design allows it, `reserve + MAP_SECTION_OVERHEAD`.
+        // The rest's bound: measured 85,472 B on 2026-10-12 (main 894cd138, pane C's map), plus a 2,528 B margin for edits to
+        // the room and the briefs. Under light the optional seat is capped (LIGHT_OPTIONAL_CAP), so the rest does not grow
+        // with the map.
+        const LIGHT_PANE_REST_MAX: usize = 88_000;
+        let own = fs::read_to_string(own_map_path("C")).ok();
+        let reserve = map_reserve(own.as_deref());
+        let rest_at = |r: usize, light: bool| {
+            let _m = Mode::light(light);
+            assemble_intake_within(r)
+        };
+        let rest = rest_at(reserve, true);
+        assert!(light.starts_with(rest.as_str()), "the light intake is the rest followed by the map section");
+        let map_len = light.len() - rest.len();
+        eprintln!("PANE INTAKE light rest {} B, map section {map_len} B, reserve {reserve} B", rest.len());
+        assert!(rest.len() <= LIGHT_PANE_REST_MAX, "light pane intake without its map section is {} B, over {LIGHT_PANE_REST_MAX}", rest.len());
+        assert!(map_len <= reserve + MAP_SECTION_OVERHEAD, "the light map section is {map_len} B, over reserve {reserve} + {MAP_SECTION_OVERHEAD}");
+        // THE ~14 KB ROW, at a FIXED reserve, for the same cause. Strict's optional seat shrinks byte for byte as the reserve
+        // grows (optional_budget) while light's stays at its cap, so the whole-intake gap closed with C's long entry: on
+        // 2026-10-12 light 96,544 B against strict 104,900 B, rests 85,472 against 98,359 at reserve 11,651. The saving the row
+        // states is the light rest's, so it is measured at the floor every non-empty map reserves (SHELL_MAP_FLOOR).
+        let (light_floor, strict_floor) = (rest_at(SHELL_MAP_FLOOR, true).len(), rest_at(SHELL_MAP_FLOOR, false).len());
+        eprintln!("PANE INTAKE rests at the floor reserve: light {light_floor} B, strict {strict_floor} B");
+        assert!(light_floor + 14_000 <= strict_floor, "at the floor reserve, light {light_floor} B is not ~14 KB+ under strict {strict_floor} B");
     }
 
     #[test]
