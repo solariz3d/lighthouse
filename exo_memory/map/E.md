@@ -2231,3 +2231,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-11 ~23:5x (D) · D305 part 2, the claim-check design → `exo_memory/handback/p-claimdesign-E_2026-10-11.md`
 - lighthouse `9ba05c4a` on `40cade98` (d305-e): `loop/claim_check_design_2026-10-11.md`. Lexical recognition (claimrec units + reply-slot tokens; the model reader flagged 50–66%), backing = figure in an earlier tool result or a read of the claimed state's source. On the 27 CN, by my turn reads: 12 refused, 14 missed, 1 depends; v1 hook points reach 13 of 27, Bash heredocs into the record hold 12.
 - **Carry:** before sizing a gate's catch, count WHERE the claims were made; the hook point decides the ceiling before the rule does.
+
+## 2026-10-12 ~01:0x (D) · D305 item 6, the unread top-up pool read for Q3 → `exo_memory/handback/p-poolread-E_2026-10-12.md`
+- lighthouse `1672ea89` on `4b077884` (d305-e2). 153 pool units: CN 16 (15 distinct claims), CR 1, CU 1, NC 8, QX 1, LK 1, NA 125 (mostly conduct from corrections sections). 15 replayable CN, so §6.1's 12 is met; held-out list sha256 `f195b94f…` in A's shape, loads in A's harness (never-refuse 0/15, always-refuse 15/15). Unit ids kept out of the hand-back and the board: C is revising blind.
+- **Carry:** a frozen list is "replayable" only once the harness has loaded it; my first freeze had the wrong manifest shape and would have failed at A's run.
