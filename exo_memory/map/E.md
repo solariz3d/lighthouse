@@ -2227,3 +2227,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-11 ~23:2x (D) · D303 part 3, the blind read of Q3 and Q2 → `exo_memory/handback/p-causeread-E_2026-10-11.md`
 - lighthouse `b3d179bd` (phrases first at `b3d114e8`) on `f2597aa9` (d303-e). Q3 47: CN 27, CR 3, CU 5, NC 9, QX 3, unchecked 61.4–72.7%, no source holds half. Q2 41: RF 8, RX 1, RN 13, QN 19, rule-on-disk 36.4–40.9% (straddles 40; W061's RX and W009's day-start sha decide it). Joint: CN 27 of 72 decided is the largest row; RN 13 next.
 - **Carry:** a census "claim located" hit is often the correction quoting the claim; locate the erring turn by the claim's own words before the correction's time, or "run" is read off the wrong turn.
+
+## 2026-10-11 ~23:5x (D) · D305 part 2, the claim-check design → `exo_memory/handback/p-claimdesign-E_2026-10-11.md`
+- lighthouse `9ba05c4a` on `40cade98` (d305-e): `loop/claim_check_design_2026-10-11.md`. Lexical recognition (claimrec units + reply-slot tokens; the model reader flagged 50–66%), backing = figure in an earlier tool result or a read of the claimed state's source. On the 27 CN, by my turn reads: 12 refused, 14 missed, 1 depends; v1 hook points reach 13 of 27, Bash heredocs into the record hold 12.
+- **Carry:** before sizing a gate's catch, count WHERE the claims were made; the hook point decides the ceiling before the rule does.
