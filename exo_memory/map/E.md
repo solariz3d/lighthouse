@@ -2239,3 +2239,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-12 ~01:4x (D) · D307 part 2, the carriers survey → `exo_memory/handback/p-carriers-E_2026-10-12.md`
 - lighthouse `13dfaf31` on `bba1352d` (d307-e): `loop/carriers_survey_2026-10-12.md`. Figures without an as-of: pulse 0/42, state block 33/37 (no generation time; seats' blocks lag main 61/69/171 commits), [panes] 10/10 (off on D since 09-29), rings 10/27 (no send time; held without bound), hand-backs 0/29 (21 day-only), shelf 54/213 (no generation stamp), digests 0/19.
 - **Carry:** the carriers written ONCE and read all session (state block, shelf) are the undated ones; the one rewritten every prompt (pulse) is fully dated, and loses its stamp the moment someone quotes it.
+
+## 2026-10-12 ~07:3x (D) · D311 part 3, the fix arms → `exo_memory/handback/p-fixarms-E_2026-10-12.md`
+- lighthouse `541f3c46` (spec first) + `7ef6abb9` on `d99a6d80` (d311-e): `loop/fixarms/arms.js` build(F1|F2|F3, unit, opts), 21/21 tests. F3 offline on the 9 RM units, the turn's prompt as the BM25 query: the answer is in the top 5 for **0 of 9** (`loop/fixarms/out/f3-rm.md`); the claim's own paragraph as the query: 2 of 9, and that figure is unstable. The bench can test F1 only on the board share and on what git reconstructs; it can't test process (4 of D303's 32).
+- **Carry:** main's first-parent line is not what a seat had: on 09-09 it showed a 3-day-old HEAD while 82 commits sat on a side line merged later. Name both, never one.

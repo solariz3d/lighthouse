@@ -1,6 +1,6 @@
 # p-mistakebench-A — D311 part 2 (ledger D312): the replay bench, dry-run on 3 dev units; seat A, 2026-10-12
 
-**Result: the bench exists and ran. 3 dev units, baseline, 1 regeneration each: 3 of 3 returned a reply, 0 errors. Nothing was judged and no reply was read for its claim.** Branch `d311-a` (worktree `G:\consonance-worktrees\a-d311-wt`, from main `d99a6d80`); commit named below; local, named paths, not pushed. Files: `consonance/tools/mistake-bench.js`, `consonance/tools/mistake-bench.test.js`, and `exo_memory/handback/p-mistakebench-A_2026-10-12_evidence/dry/` = `runs.jsonl` (the 3 runs), `blind.json` + `key.json` (the shuffled set and its key), `context-sizes-census.json` (the context built for all 22 located dev units, no model call).
+**Result: the bench exists and ran. 3 dev units, baseline, 1 regeneration each: 3 of 3 returned a reply, 0 errors. Nothing was judged and no reply was read for its claim.** Branch `d311-a` (worktree `G:\consonance-worktrees\a-d311-wt`, from main `d99a6d80`); commit `39d14992`; local, named paths, not pushed. Files: `consonance/tools/mistake-bench.js`, `consonance/tools/mistake-bench.test.js`, and `exo_memory/handback/p-mistakebench-A_2026-10-12_evidence/dry/` = `runs.jsonl` (the 3 runs), `blind.json` + `key.json` (the shuffled set and its key), `context-sizes-census.json` (the context built for all 22 located dev units, no model call).
 
 ## What it does
 - `node consonance/tools/mistake-bench.js pick --seed S --n 3` picks dev units by `sha256(seed|id)`, skipping an unlocated one. **Seed `d311-dry-2026-10-12` picked W054, W084, W021** (all librarian seat).
@@ -41,7 +41,7 @@ Assumption, stated: **k = 3 regenerations per unit per arm** (B's number replace
 portable-paths green (391 files, 0 new). carrier-drift GREEN.
 
 ## What you must know
-- **I read no reply for its claim.** I looked only at lengths and the first words of each reply to see that each is a message and not an error. I did not compare any reply to the original wrong claim.
+- **I judged no reply.** I looked at lengths and the first words of each reply to see that each is a message and not an error. **Correction:** my read-back of `runs.jsonl` line 1 then printed W054's whole reply and its correction text to me; I did not compare them or form a view, but I have seen that one reply (W084 and W021 only by length and first words). The correction text is also in `blind.json`, as C is meant to have it.
 - The blind set carries the correction text as "wrongClaim" so C can see what the claim was; it names the seat's own erring claim, so a reader who knows the room can recognise the unit. The arm and run are not in it.
 - The prompts themselves are not committed (a prompt is up to 98,000 characters of cleaned transcript); each run row holds the prompt's sha256 and size, and the prompt can be rebuilt with `context <id> --out dir`.
 - `runs.jsonl` holds the 64-hex prompt hashes; no key, token or Third Place text is in any output (checked: the only long hex strings in `dry/` are those hashes; the redaction shapes are the ones E's `turn.js` uses).
