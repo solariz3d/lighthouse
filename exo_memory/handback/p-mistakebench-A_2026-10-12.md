@@ -21,20 +21,21 @@ What the model sees in `claude -p` is a text rendering of the transcript, not th
 8. **5 of the 27 dev units have no located claim second** (W012, W028, W082, W090, W096) and cannot be replayed until someone places the claim; the bench skips them.
 
 ## Measured per regeneration (3 runs; checked: `dry/runs.jsonl`)
-| unit | model | prompt chars | input tokens | output tokens (of which thinking) | api time | cost |
-|---|---|---:|---:|---:|---:|---:|
-| W054 | claude-fable-5-1 | 69,284 | 31,350 | 3,405 (2,223) | 57.6 s | $0.797 |
-| W084 | claude-fable-5-1 | 85,220 | 38,830 | 2,534 (1,576) | 38.8 s | $0.903 |
-| W021 | claude-opus-5-5 | 86,250 | 39,465 | 1,205 (518) | 14.7 s | $0.340 |
-Mean: 36.5k input tokens (all cache-creation, none read), 2.4k output, 37 s api / 38 s wall, **$0.68**. The wall time for the three together was 1 m 56 s. n = 3, so the two models' cost is from 2 and 1 runs. Replies were 3,048, 2,923 and 1,905 characters.
+| unit | model | prompt chars | input tokens | output tokens (of which thinking) | api time |
+|---|---|---:|---:|---:|---:|
+| W054 | claude-fable-5-1 | 69,284 | 31,350 | 3,405 (2,223) | 57.6 s |
+| W084 | claude-fable-5-1 | 85,220 | 38,830 | 2,534 (1,576) | 38.8 s |
+| W021 | claude-opus-5-5 | 86,250 | 39,465 | 1,205 (518) | 14.7 s |
+Mean: 36.5k input tokens (all cache-creation, none read), 2.4k output, 37 s api / 38 s wall. The wall time for the three together was 1 m 56 s. n = 3, so the two models' times are from 2 and 1 runs. Replies were 3,048, 2,923 and 1,905 characters.
 
-## Projected cost of wave 2 (an assumption, B's count is not sealed)
-Assumption, stated: **k = 3 regenerations per unit per arm** (B's number replaces this). Per-regeneration mean from the model mix of the 22 located dev units (fable-class 10, opus-class 12), pricing the fable-class at the fable-5-1 mean ($0.85, 48 s) and the opus-class at the one opus-5-5 run ($0.34, 16 s): **$0.57 and 30 s per regeneration**.
-- baseline, 22 units × k=3 = 66 regenerations ≈ **$38, 33 min**
-- the 3 arms on dev, 3 × 22 × 3 = 198 ≈ **$113, 99 min** (an arm adds a few hundred to a few thousand characters; not counted)
-- held-out 15: the baseline plus up to 3 passing arms, 4 × 15 × 3 = 180 ≈ **$103, 90 min** (the held-out contexts were not built, so their sizes are taken to equal the dev mean)
-- **total 444 regenerations ≈ $254, about 3.7 hours serial.** In general 148·k regenerations ≈ $85·k. Runs go one at a time under the lock, so wall time is the sum.
-- **Not measured, and could move this a lot:** (a) whether repeated regenerations of one unit within the cache window read the prompt from cache (the dry run read none), which would cut the input cost of runs 2 and 3; (b) a bench with the shelf (point 1 above) adds about 140,000 characters, roughly 35k tokens, to every prompt, about doubling the input; (c) the other two model ids.
+## Projected size of wave 2 (calls and time; an assumption, B's count is not sealed)
+Assumption, stated: **k = 3 regenerations per unit per arm** (B's number replaces this). Per-regeneration mean from the model mix of the 22 located dev units (fable-class 10, opus-class 12), taking the fable-class at the fable-5-1 mean (48 s) and the opus-class at the one opus-5-5 run (16 s): **30 s per regeneration**.
+- baseline, 22 units × k=3 = 66 regenerations ≈ **33 min**
+- the 3 arms on dev, 3 × 22 × 3 = 198 regenerations ≈ **99 min** (an arm adds a few hundred to a few thousand characters; not counted)
+- held-out 15: the baseline plus up to 3 passing arms, 4 × 15 × 3 = 180 regenerations ≈ **90 min** (the held-out contexts were not built, so their sizes are taken to equal the dev mean)
+- **total 444 regenerations, about 3.7 hours serial.** In general 148·k regenerations. Runs go one at a time under the lock, so wall time is the sum.
+- **Not measured, and could move this a lot:** (a) whether repeated regenerations of one unit within the cache window read the prompt from cache (the dry run read none); (b) a bench with the shelf (point 1 above) adds about 140,000 characters, roughly 35k tokens, to every prompt, about doubling the input; (c) the other two model ids.
+*Dollar figures removed at the keeper's ruling, 10-12 (`loop/plan_mistake_bench_d311_2026-10-12.md:54`); they stay in git history.*
 
 ## Tests (consonance/tools/mistake-bench.test.js)
 13 rows. **Red first:** all failed with `Cannot find module './mistake-bench.js'` before the module existed (checked). After: `13 pass / 0 fail` under the heavy-run lock. One row was wrong on its first run (it compared blind ids, which run R001… by design; it now compares the reply order, and that change is mine, not a rule change). The claim-in-a-tool-call row was added after the first real dry run found the claim sitting in a Bash call. Behaviours covered: context stops before the claim and holds nothing after it; starts at the last compaction; Third Place lines and a token field never reach the prompt; long results cut with a marker and an over-budget history drops oldest first; the unit's model is the last assistant model; an arm is placed once, labelled, before the instruction, and the baseline has none; the seeded pick; the `claude -p` arguments and the parse of reply/usage/cost; a failed call is an error with NO reply, never an empty one; replies are cleaned; the blind set has no arm or run and a working key; errored runs are left out of the blind set. **No mutation run** (as asked). The real `claude -p` runner is not under test; it is exercised by the dry run and the smoke call.
