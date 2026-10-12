@@ -1,0 +1,7 @@
+== C d309 green · asked 2026-10-12T07:27:37.191Z · lock held 2026-10-12T07:27:37.223Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd G:/worktrees/c-d309-wt && node --test --test-reporter=tap consonance/tools/state-block.test.js consonance/hooks/sessionstart-state.test.js dev/shell/hooks/third-place-gate.test.js 2>&1 | grep -E '^not ok|^# (tests|pass|fail)'
+not ok 39 - D309: every section whose figures can go stale says "as of" the stamp, beside its own check command; the name line does not
+# tests 46
+# pass 45
+# fail 1
+== exit 0 · done 2026-10-12T07:27:47.060Z

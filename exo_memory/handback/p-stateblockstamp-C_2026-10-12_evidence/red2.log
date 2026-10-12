@@ -1,0 +1,14 @@
+== C d309 red-first again (row 3 fixed) · asked 2026-10-12T07:28:15.546Z · lock held 2026-10-12T07:28:15.647Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd G:/worktrees/c-d309-wt && git stash push -q -- consonance/tools/state-block.js && git diff --stat -- consonance/tools/state-block.js; node --test --test-reporter=tap --test-name-pattern=D309 consonance/tools/state-block.test.js 2>&1 | grep -E '^not ok|error:|^# (tests|pass|fail)'; git stash pop -q && git diff --stat -- consonance/tools/state-block.js
+not ok 1 - D309: the header carries its generation time, UTC and machine-local with the offset, and both parse to the same instant
+  error: |-
+not ok 2 - D309: a block generated at t says t (the clock is injected), through render and through the CLI
+  error: "Cannot read properties of null (reading 'utc')"
+not ok 3 - D309: every section whose figures can go stale says "as of" the stamp, beside its own check command; the name line does not
+  error: 'REPO does not say as of 07:25Z beside its check'
+# tests 3
+# pass 0
+# fail 3
+ consonance/tools/state-block.js | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
+== exit 0 · done 2026-10-12T07:28:18.133Z

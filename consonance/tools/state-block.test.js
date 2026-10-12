@@ -408,3 +408,41 @@ test('D273 lap 3: a fresh history with NO origin/main is said in words, not FAIL
     assert.match(repoBlock, /no origin\/main/, 'the missing upstream is not named:\n' + repoBlock);
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });
+
+/* ── D309 part 1: THE STAMP. The block said "HEAD 029082ec … 0 commit(s) unpushed" hours after both were false, and its last three readers met
+ * HEADs 61, 69 and 171 commits behind main (handback/p-carriers-E_2026-10-12.md). The pulse stamps every figure; this block now says WHEN. ── */
+const T1 = new Date('2026-10-12T07:25:03Z'), T2 = new Date('2026-03-01T23:59:58Z');
+const FAKE = () => [{ title: 'repo', cmd: 'git status --short', lines: ['HEAD abc1234 x'] }, { title: 'name', cmd: 'type cfg', lines: ['no chair_name'] }];
+/** The header's stamp line, parsed independently of the generator: { utc: ms, local: ms rebuilt from the local fields and the offset }. */
+function parseStampLine(text) {
+  const line = text.split('\n')[1] || '';
+  const m = line.match(/^generated (\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z) \((\w{3}) (\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2}):(\d{2}) (AM|PM) local, UTC([+-])(\d{2}):(\d{2})\)/);
+  if (!m) return null;
+  const h12 = Number(m[6]) % 12 + (m[8] === 'PM' ? 12 : 0);
+  const offMin = (m[9] === '-' ? -1 : 1) * (Number(m[10]) * 60 + Number(m[11]));
+  return { utc: Date.parse(m[1]), local: Date.UTC(Number(m[5]), Number(m[3]) - 1, Number(m[4]), h12, Number(m[7])) - offMin * 60000, weekday: m[2] };
+}
+
+test('D309: the header carries its generation time, UTC and machine-local with the offset, and both parse to the same instant', () => {
+  const t = sb.render(FAKE(), { now: T1 }).text;
+  assert.match(t.split('\n')[0], /^\[state-block: machine-generated, regenerate with/, 'the first header line is unchanged');
+  const p = parseStampLine(t);
+  assert.ok(p, 'no parseable stamp on the second header line:\n' + t.split('\n')[1]);
+  assert.strictEqual(p.utc, T1.getTime());
+  assert.strictEqual(p.local, Math.floor(T1.getTime() / 60000) * 60000, 'the local time and its offset name the same minute');
+  assert.strictEqual(p.weekday, T1.toLocaleDateString('en-US', { weekday: 'short' }));
+});
+
+test('D309: a block generated at t says t (the clock is injected), through render and through the CLI', () => {
+  for (const t of [T1, T2]) assert.strictEqual(parseStampLine(sb.render(FAKE(), { now: t }).text).utc, t.getTime());
+  const out = cp.execFileSync(process.execPath, [require.resolve('./state-block.js')], { env: { ...process.env, STATE_BLOCK_NOW: T2.toISOString() }, encoding: 'utf8' });
+  assert.strictEqual(parseStampLine(out).utc, T2.getTime(), 'STATE_BLOCK_NOW did not set the stamp');
+});
+
+test('D309: every section whose figures can go stale says "as of" the stamp, beside its own check command; the name line does not', () => {
+  const t = sb.render(undefined, { now: T1 }).text;
+  for (const title of ['REPO', 'JOURNAL', 'INSTRUMENTS', 'TRIGGERS', 'LIVE']) {
+    assert.match(t, new RegExp('^' + title + '  as of 07:25Z  \\(check: ', 'm'), title + ' does not say as of 07:25Z beside its check');
+  }
+  assert.match(t, /^NAME  \(check: /m, 'the name line carries no figure and no stamp');
+});

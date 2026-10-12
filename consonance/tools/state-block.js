@@ -280,12 +280,31 @@ function sourceSection() {
   return { title: 'triggers', cmd: 'cat ' + SRC, lines };
 }
 
-function render(sections) {
+/* THE STAMP (D309 part 1, from E's carriers survey, handback/p-carriers-E_2026-10-12.md). The block carried 33 of 37 figures with no as-of time,
+ * and its last three readers met HEADs 61, 69 and 171 commits behind main; one read "0 commit(s) unpushed" hours after it was false. A block is
+ * a snapshot, so it now says WHEN, as the pulse does: the header names the generation time in UTC and machine-local (with the offset), and
+ * every section whose figures can go stale says "as of" that time beside its own check command. The NAME line carries no figure, so no stamp.
+ * Text only: no gate, nothing a reader must do differently. STATE_BLOCK_NOW (an ISO time) is the CLI's clock seam, as STATE_BLOCK_REPO is the repo's. */
+const AS_OF = new Set(['repo', 'journal', 'instruments', 'triggers', 'live']);
+const pad2 = (n) => String(n).padStart(2, '0');
+function stampOf(now) {
+  const t = new Date(Math.floor(now.getTime() / 1000) * 1000);
+  const off = -t.getTimezoneOffset(), h = t.getHours();
+  const local = t.toLocaleDateString('en-US', { weekday: 'short' }) + ' ' + (t.getMonth() + 1) + '/' + t.getDate() + '/' + t.getFullYear() + ' ' +
+    ((h % 12) || 12) + ':' + pad2(t.getMinutes()) + ' ' + (h < 12 ? 'AM' : 'PM');
+  const offs = 'UTC' + (off < 0 ? '-' : '+') + pad2(Math.floor(Math.abs(off) / 60)) + ':' + pad2(Math.abs(off) % 60);
+  return { line: 'generated ' + t.toISOString().replace('.000Z', 'Z') + ' (' + local + ' local, ' + offs + '); a section marked "as of" states what held then', hhmm: pad2(t.getUTCHours()) + ':' + pad2(t.getUTCMinutes()) + 'Z' };
+}
+function clock() { const e = process.env.STATE_BLOCK_NOW; const t = e ? new Date(e) : new Date(); return Number.isNaN(t.getTime()) ? new Date() : t; }
+
+function render(sections, opts = {}) {
   const secs = sections || [repoSection(), journalSection(), instrumentSection(), sourceSection(), nameSection(), liveSection()];
+  const st = stampOf(opts.now || clock());
   const parts = ['[state-block: machine-generated, regenerate with `node consonance/tools/state-block.js`]'];
+  parts.push(st.line);
   for (const s of secs) {
     parts.push('');
-    parts.push(s.title.toUpperCase() + '  (check: ' + s.cmd + ')');
+    parts.push(s.title.toUpperCase() + (AS_OF.has(s.title) ? '  as of ' + st.hhmm : '') + '  (check: ' + s.cmd + ')');
     for (const l of s.lines) parts.push('  ' + l);
   }
   let text = parts.join('\n');
