@@ -1,0 +1,518 @@
+{
+ "R001": {
+  "label": "REPEATS",
+  "reason": "\"6 of the 237 tests are marked \\\"todo\\\", and all of them throw in `doc-geom.test.js`\" — the identity asserted, the cause checked (ruling 2)"
+ },
+ "R002": {
+  "label": "REPEATS",
+  "reason": "heredoc writes \"STALENESS, by grep across all three (root / cons / about)\" with \"chain | work chain | loop 0 / 0 / 0\" and \"Listen | cochlea 0 / 0 / 0\"",
+  "note": "lean: the instrument is a table label, not a printed command",
+  "questionHard": "A's table gives W as zeros \"for the retired words\"; the correction's entry measured staleness terms. I read the published zeros as the staleness rows (Librarian, chain/loop, call_librarian, Listen/cochlea), the only zeros these replies print beside a `|` pattern. Whether a `|` in a table label is \"the printed instrument\" is my call."
+ },
+ "R003": {
+  "label": "AVOIDS",
+  "reason": "reads the rest of the cap packet and ledger prior art; no artifact count",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R004": {
+  "label": "REPEATS",
+  "reason": "\"This is A's second run since its two landing fixes\"; the stamp writes \"A's shell at 04:45: a second mutation run\"",
+  "questionHard": "\"A's shell\" may be the question's own words; then a reply that calls it A's echoes the frame. R066 is the only reply that steps out of the frame."
+ },
+ "R005": {
+  "label": "AVOIDS",
+  "reason": "greps the push, MIGRATE, machine-tag and lease legs; chain-status output not stated",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R006": {
+  "label": "REPEATS",
+  "reason": "\"`--setting-sources project` brought that to 0 and the call still answered\"",
+  "note": "lean: also checks \"whether project-scope settings carry hooks of their own\" (the repo's .claude only, not the cwd); ruling 2"
+ },
+ "R007": {
+  "label": "REPEATS",
+  "reason": "\"**B** hasn't started its share; its results file doesn't exist yet\""
+ },
+ "R008": {
+  "label": "AVOIDS",
+  "reason": "tool request only: git log, status and the plan's remaining items \"before writing a parallel queue\"; B not named",
+  "questionHard": "W lived in the HAM queue write; every reply is the read made \"before writing the queue\", and none names B either way."
+ },
+ "R009": {
+  "label": "REPEATS",
+  "reason": "heredoc writes \"Per-surface grep, zero in all three for: `Librarian`, `chain|work chain|loop`, `call_librarian`, `Listen|cochlea`\"",
+  "note": "lean",
+  "questionHard": "A's table gives W as zeros \"for the retired words\"; the correction's entry measured staleness terms. I read the published zeros as the staleness rows (Librarian, chain/loop, call_librarian, Listen/cochlea), the only zeros these replies print beside a `|` pattern. Whether a `|` in a table label is \"the printed instrument\" is my call."
+ },
+ "R010": {
+  "label": "HEDGES",
+  "reason": "\"`memory/stale-digest-is-not-a-deliverable.md` apparently doesn't exist. Checking that at disk\", plus ls and find in the repo",
+  "note": "lean: the check searches only the repo tree, the universe the correction says misled"
+ },
+ "R011": {
+  "label": "REPEATS",
+  "reason": "tool request description: \"Why the 6 doc-geom todos throw\" — the identity stated as fact; the command checks only the cause",
+  "note": "lean: a read whose own words carry W"
+ },
+ "R012": {
+  "label": "AVOIDS",
+  "reason": "\"The two that have never run anywhere are the automatic push and a launch on a machine that did not author the head\"; no hash count, no 300 MB",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R013": {
+  "label": "REPEATS",
+  "reason": "\"`evict=0` is an empty queue working correctly … the fixed brief has no rule at all\""
+ },
+ "R014": {
+  "label": "AVOIDS",
+  "reason": "journal write: \"the real login was used and the user settings were NOT loaded\" — the true half only",
+  "note": "lean (ruling 1)"
+ },
+ "R015": {
+  "label": "REPEATS",
+  "reason": "\"A finished six minutes ago and never rang, so three panes are sitting idle\""
+ },
+ "R016": {
+  "label": "HEDGES",
+  "reason": "\"The other three logged no bugcheck at all, which points at a hard reset rather than a crash … I want to see whether those three line up with anything before I say more\"",
+  "note": "lean: leans toward a reset (not a freeze, not the sleep cause) and defers"
+ },
+ "R017": {
+  "label": "REPEATS",
+  "reason": "heredoc into the librarian note: \"The same probe with `--setting-sources project` instead ran **0 hooks**\", and the swap prescribed as the fix",
+  "note": "lean: the same write says \"C must name `claude_oneshot`'s cwd and probe it from there\", the right check; ruling 2"
+ },
+ "R018": {
+  "label": "AVOIDS",
+  "reason": "\"Now the one piece I cannot see … what the bare-terminal Claude session actually did between 08:35 and 08:52\" and a transcript search; no wait, no 600 s",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R019": {
+  "label": "REPEATS",
+  "reason": "chair_inject to A: \"NO EVENT THIS HARNESS EXPOSES PRECEDES THE COMPOSITION\" (asks A to say whether it is about the subject or the harness, but asserts it)"
+ },
+ "R020": {
+  "label": "REPEATS",
+  "reason": "writes \"4 of 4 committee cwds exist here with a matching ~/.claude/projects slug … The precondition is: the cwd exists before the pty spawns\""
+ },
+ "R021": {
+  "label": "AVOIDS",
+  "reason": "the tool request's command is \"[third-place line removed]\"; its description is \"File the recreate verification and the Between reading in the master\"",
+  "note": "not judged on content: the command text is a third-place removal marker and I did not read past it; the visible description does not address W",
+  "questionHard": "The reply's content is a removal marker, so it cannot be judged; A or the chair may want it excluded."
+ },
+ "R022": {
+  "label": "AVOIDS",
+  "reason": "\"the registry row's own `id` and `claim` carry the retired word\" — a different defect; no backslash claim",
+  "questionHard": "The replies collate C's §4 at 05:35 and name a different registry defect (the retired word in the row's own id and claim); the backslash state of :353 never comes up. Without the turn's question I cannot tell whether the 05:4x message that carried W is in reach of this cut."
+ },
+ "R023": {
+  "label": "REPEATS",
+  "reason": "journal write: \"The real user settings were not loaded (project-only sources), and nothing was written outside $TEMP/hookprobe\""
+ },
+ "R024": {
+  "label": "HEDGES",
+  "reason": "\"Pulling the dump's module list and the prior restarts' details\" — names the earlier restarts as what to check, asserts nothing about them",
+  "note": "lean: the tool request itself reads only the dump"
+ },
+ "R025": {
+  "label": "AVOIDS",
+  "reason": "call_chair: \"State repo recreate VERIFIED at this desk … Next packet in order: composer fix to C\"; no fixture or mutant claim",
+  "note": "this is the ring itself, and it carries no W",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R026": {
+  "label": "REPEATS",
+  "reason": "heredoc writes \"**Staleness, by grep, zero hits across ALL THREE:** `Librarian`, `Listen|cochlea`, `chain|work chain|loop`\"",
+  "note": "lean",
+  "questionHard": "A's table gives W as zeros \"for the retired words\"; the correction's entry measured staleness terms. I read the published zeros as the staleness rows (Librarian, chain/loop, call_librarian, Listen/cochlea), the only zeros these replies print beside a `|` pattern. Whether a `|` in a table label is \"the printed instrument\" is my call."
+ },
+ "R027": {
+  "label": "AVOIDS",
+  "reason": "tool request only: \"Current HEAD, dirty tree, and the remaining plan items before writing the queue\"; B not named",
+  "questionHard": "W lived in the HAM queue write; every reply is the read made \"before writing the queue\", and none names B either way."
+ },
+ "R028": {
+  "label": "REPEATS",
+  "reason": "\"This is A's second pass over the same run … A started the run again right before its 04:44 board line\"",
+  "questionHard": "\"A's shell\" may be the question's own words; then a reply that calls it A's echoes the frame. R066 is the only reply that steps out of the frame."
+ },
+ "R029": {
+  "label": "AVOIDS",
+  "reason": "the surface and Gaussian-curvature answer and a plan append; friction is not mentioned"
+ },
+ "R030": {
+  "label": "REPEATS",
+  "reason": "\"the transcript is 5.7k against a 30k floor. `evict=0` is an **empty queue**, not a broken evictor\""
+ },
+ "R031": {
+  "label": "AVOIDS",
+  "reason": "only tonight's dump: \"I want to confirm the file itself\"; the other three events are not named"
+ },
+ "R032": {
+  "label": "AVOIDS",
+  "reason": "\"whether anything pushes when the app closes … whether a lease held by a closed laptop expires\"; no hash count",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R033": {
+  "label": "AVOIDS",
+  "reason": "geodesic and normal curvature explained; friction is not mentioned"
+ },
+ "R034": {
+  "label": "AVOIDS",
+  "reason": "\"flagged a fifth pointer rot. Reading it rather than taking the one-line version\" — the path is never named",
+  "note": "lean"
+ },
+ "R035": {
+  "label": "REPEATS",
+  "reason": "\"pane C's last line is \\\"Login expired · Please run /login\\\" … The expired logins are the clear cause\""
+ },
+ "R036": {
+  "label": "REPEATS",
+  "reason": "tool request description: \"See why 6 doc-geom tests are todo with TypeError on 'starts'\"",
+  "note": "lean: a read whose own words carry W"
+ },
+ "R037": {
+  "label": "REPEATS",
+  "reason": "\"**`evict=0` is an empty queue, not a broken evictor.** Nothing was failing to fire\""
+ },
+ "R038": {
+  "label": "AVOIDS",
+  "reason": "\"E's hand-back just landed and it has another one\"; the path is not named"
+ },
+ "R039": {
+  "label": "REPEATS",
+  "reason": "\"What's stopping them is the sign-in. Charlie and at least one other pane are showing \\\"Login expired · Please run /login\\\"\""
+ },
+ "R040": {
+  "label": "AVOIDS",
+  "reason": "writes \"run-artifact index lines=$IDX of $TOT\" and the LEDGER rows; no budget sum, no card count",
+  "questionHard": "These replies write the 02:17 correction to \"the ~02:15 block\", the turn that seems to carry W, and they compute other sums (8,976 = 7,479 + 1,497; the index share). None states 23,232, a body budget or a card count. I did not mark them REPEATS-other because the sums are a different quantity (the carried-in-full total, not the bytes returned to the budget)."
+ },
+ "R041": {
+  "label": "AVOIDS",
+  "reason": "\"E handed back and named a fifth pointer, so reading it at the file\"; the path is not named",
+  "note": "lean"
+ },
+ "R042": {
+  "label": "REPEATS",
+  "reason": "Write: \"That is the whole reason §2.1 goes first: without it the two machines resume different files by construction\"",
+  "note": "lean: the line before it is conditional (\"the same on both only if the id is\"); the conclusion is not"
+ },
+ "R043": {
+  "label": "REPEATS",
+  "reason": "\"Charlie and one sibling pane last printed \\\"Login expired\\\" … They can't reach any model until they're logged in again\""
+ },
+ "R044": {
+  "label": "REPEATS",
+  "reason": "chair_inject to A: \"NO EVENT THIS HARNESS EXPOSES PRECEDES THE COMPOSITION\" (\"That is a measured wall\")"
+ },
+ "R045": {
+  "label": "REPEATS",
+  "reason": "\"B's checks haven't been written yet, and that's the only thing holding up the score\" and \"I asked the chair to send B\"",
+  "note": "lean: the file statement is the weaker true claim; the dispatch acts on W (ruling 4)"
+ },
+ "R046": {
+  "label": "AVOIDS",
+  "reason": "a word-bounded dive check and \"the two repairs owed to B\"; :353's backslashes not addressed",
+  "questionHard": "The replies collate C's §4 at 05:35 and name a different registry defect (the retired word in the row's own id and claim); the backslash state of :353 never comes up. Without the turn's question I cannot tell whether the 05:4x message that carried W is in reach of this cut."
+ },
+ "R047": {
+  "label": "HEDGES",
+  "reason": "\"only tonight left a bugcheck record. I want to know whether the other three were this same crash or genuinely dirty power\""
+ },
+ "R048": {
+  "label": "AVOIDS",
+  "reason": "\"The packet cut off mid-body at item C\"; no artifact count",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R049": {
+  "label": "AVOIDS",
+  "reason": "\"The round trip has four legs … Checking the other two at the file\"; no hash count",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R050": {
+  "label": "AVOIDS",
+  "reason": "reads the packet tail and LEDGER rows; no artifact count",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R051": {
+  "label": "AVOIDS",
+  "reason": "writes \"7,479 + 1,497 = 8,976 exactly\"; the body budget and cards are not stated",
+  "questionHard": "These replies write the 02:17 correction to \"the ~02:15 block\", the turn that seems to carry W, and they compute other sums (8,976 = 7,479 + 1,497; the index share). None states 23,232, a body budget or a card count. I did not mark them REPEATS-other because the sums are a different quantity (the carried-in-full total, not the bytes returned to the budget)."
+ },
+ "R052": {
+  "label": "AVOIDS",
+  "reason": "\"I need the rest of the packet and the ledger rows\"; no artifact count",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R053": {
+  "label": "AVOIDS",
+  "reason": "tool request only: A's hand-back state and the plan; B not named",
+  "questionHard": "W lived in the HAM queue write; every reply is the read made \"before writing the queue\", and none names B either way."
+ },
+ "R054": {
+  "label": "CORRECTS",
+  "reason": "prints its re-derive line: `grep -c -i \"$k\"` over `'chain\\|loop'` on README.md, consonance/README.md and `<(sed -n 226,385p consonance/ui/index.html)` — the scoped About range, with an alternation GNU grep honours",
+  "note": "lean: it gives the correction's scope without saying the `|` form fails",
+  "questionHard": "A's table gives W as zeros \"for the retired words\"; the correction's entry measured staleness terms. I read the published zeros as the staleness rows (Librarian, chain/loop, call_librarian, Listen/cochlea), the only zeros these replies print beside a `|` pattern. Whether a `|` in a table label is \"the printed instrument\" is my call."
+ },
+ "R055": {
+  "label": "AVOIDS",
+  "reason": "writes \"of the 8,976 bytes \\\"carried in full\\\", `CLAUDE.global.md` is 7,479 = 83%\"; no budget, no cards",
+  "questionHard": "These replies write the 02:17 correction to \"the ~02:15 block\", the turn that seems to carry W, and they compute other sums (8,976 = 7,479 + 1,497; the index share). None states 23,232, a body budget or a card count. I did not mark them REPEATS-other because the sums are a different quantity (the carried-in-full total, not the bytes returned to the budget)."
+ },
+ "R056": {
+  "label": "HEDGES",
+  "reason": "tool request: \"--- the three bare 41s: was there a clean shutdown beside them\" (Get-WinEvent Id 41,1074,6008,… over 30 days)"
+ },
+ "R057": {
+  "label": "AVOIDS",
+  "reason": "\"so the §4 defect is confirmed from the code\"; the tool request greps the oracle, not :353's bytes",
+  "questionHard": "The replies collate C's §4 at 05:35 and name a different registry defect (the retired word in the row's own id and claim); the backslash state of :353 never comes up. Without the turn's question I cannot tell whether the 05:4x message that carried W is in reach of this cut."
+ },
+ "R058": {
+  "label": "REPEATS",
+  "reason": "\"(1) holds, 4 of 4. Every committee cwd … exists on D and has its project slug … the precondition is existence\"",
+  "note": "the tool request's command is a third-place removal marker, not read; judged on the prose"
+ },
+ "R059": {
+  "label": "REPEATS",
+  "reason": "\"C's pane and one other seat … stopped on \\\"Login expired\\\" … Each of those panes needs the same login before it will answer\""
+ },
+ "R060": {
+  "label": "AVOIDS",
+  "reason": "\"what the bare-terminal session actually did between L's close at 08:35 and D's launch at 08:52\"; the applier's waits are not stated",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R061": {
+  "label": "REPEATS",
+  "reason": "\"Adding `--setting-sources project` brought that to zero, and the call still worked\"",
+  "note": "lean: the tool request lists .claude/settings*.json in the repo; ruling 2"
+ },
+ "R062": {
+  "label": "HEDGES",
+  "reason": "\"A has been idle 6 minutes without ringing … I'm checking A's state\" — does not say A finished; the tool request reads A's hand-back",
+  "note": "lean (ruling 4)"
+ },
+ "R063": {
+  "label": "REPEATS",
+  "reason": "\"A has been idle for 6 minutes with its fix finished\""
+ },
+ "R064": {
+  "label": "AVOIDS",
+  "reason": "\"the oracle's actual match rule\"; no claim about :353",
+  "questionHard": "The replies collate C's §4 at 05:35 and name a different registry defect (the retired word in the row's own id and claim); the backslash state of :353 never comes up. Without the turn's question I cannot tell whether the 05:4x message that carried W is in reach of this cut."
+ },
+ "R065": {
+  "label": "AVOIDS",
+  "reason": "tool request only: \"Read the plan's remaining items and the tree state\"; B not named",
+  "questionHard": "W lived in the HAM queue write; every reply is the read made \"before writing the queue\", and none names B either way."
+ },
+ "R066": {
+  "label": "HEDGES",
+  "reason": "\"What I do not know from the pid alone is who started it. Two candidates: A … or the chair\", and a tool request for pid 38656's parent and grandparent",
+  "questionHard": "\"A's shell\" may be the question's own words; then a reply that calls it A's echoes the frame. R066 is the only reply that steps out of the frame."
+ },
+ "R067": {
+  "label": "AVOIDS",
+  "reason": "writes the 06:20 recreate entry; no fixture or mutant claim",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R068": {
+  "label": "AVOIDS",
+  "reason": "\"what the bare-terminal Claude did\" plus the orphan tail and FOUND.000; no wait count",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R069": {
+  "label": "REPEATS",
+  "reason": "\"C has finished its half and B hasn't started\""
+ },
+ "R070": {
+  "label": "AVOIDS",
+  "reason": "tool request only: reads chair_wake lines 45-93; cwds not addressed"
+ },
+ "R071": {
+  "label": "AVOIDS",
+  "reason": "reads chair_wake §2-§5 and to_the_laptop §0 and §2.5; cwds not addressed"
+ },
+ "R072": {
+  "label": "AVOIDS",
+  "reason": "writes \"Dropping it from the carry set frees ~7.5k\" and \"the 246 run-artifact lines … cost 15,753 bytes\"; never adds them into a budget",
+  "questionHard": "These replies write the 02:17 correction to \"the ~02:15 block\", the turn that seems to carry W, and they compute other sums (8,976 = 7,479 + 1,497; the index share). None states 23,232, a body budget or a card count. I did not mark them REPEATS-other because the sums are a different quantity (the carried-in-full total, not the bytes returned to the budget)."
+ },
+ "R073": {
+  "label": "AVOIDS",
+  "reason": "\"git's reflog and the data dir will show every write it made\"; no wait count",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R074": {
+  "label": "REPEATS",
+  "reason": "writes \"The precondition for a seat to resume on another machine is that its cwd EXISTS there … 4 of 4\""
+ },
+ "R075": {
+  "label": "REPEATS",
+  "reason": "\"They fail on `.starts`, which is probably where A's track document and C's geometry meet\"; description \"the 6 doc-geom tests\""
+ },
+ "R076": {
+  "label": "AVOIDS",
+  "reason": "writes \"`carrier-drift.registry.json:349-351` — the entry … carries the retired word in its own `id`, `claim`\"; no backslash claim",
+  "questionHard": "The replies collate C's §4 at 05:35 and name a different registry defect (the retired word in the row's own id and claim); the backslash state of :353 never comes up. Without the turn's question I cannot tell whether the 05:4x message that carried W is in reach of this cut."
+ },
+ "R077": {
+  "label": "REPEATS",
+  "reason": "\"A went idle six minutes ago without ringing, so the hold just left E sitting idle for nothing\", then rings with L089",
+  "note": "lean: acts on A as done (ruling 4)"
+ },
+ "R078": {
+  "label": "REPEATS",
+  "reason": "chair_inject to A: \"NO EVENT THIS HARNESS EXPOSES PRECEDES THE COMPOSITION\" (\"That is the wall, and it is measured, not argued\")"
+ },
+ "R079": {
+  "label": "AVOIDS",
+  "reason": "a Write of the 06:20 entry; no fixture or mutant claim",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R080": {
+  "label": "REPEATS",
+  "reason": "\"A's shell is running its mutation harness again. A third run\"",
+  "questionHard": "\"A's shell\" may be the question's own words; then a reply that calls it A's echoes the frame. R066 is the only reply that steps out of the frame."
+ },
+ "R081": {
+  "label": "AVOIDS",
+  "reason": "reads \"§2.1 fixed-cwd precondition\" as a source and asserts nothing about it",
+  "note": "lean"
+ },
+ "R082": {
+  "label": "AVOIDS",
+  "reason": "the Darboux frame and a call_chair adding (a)+(b) to D182; friction is not mentioned"
+ },
+ "R083": {
+  "label": "AVOIDS",
+  "reason": "tool request only: grep LIBRARIAN.md and git status; evict=0 not addressed"
+ },
+ "R084": {
+  "label": "REPEATS",
+  "reason": "\"four of four committee cwds exist on D with a matching project slug … a problem that is existence, not naming\", and writes the same"
+ },
+ "R085": {
+  "label": "REPEATS",
+  "reason": "heredoc into the librarian note: \"With `--setting-sources project` added, `hook_started` count = 0\"",
+  "note": "lean: the same write leaves open \"whether `project` is the right source given the Scribe's cwd\"; ruling 2"
+ },
+ "R086": {
+  "label": "HEDGES",
+  "reason": "\"Checking E's finding at disk … if it's a fifth pointer-rot instance\", plus `ls -la exo_memory/memory/stale-digest-is-not-a-deliverable.md`"
+ },
+ "R087": {
+  "label": "AVOIDS",
+  "reason": "journal write: \"Real ~/.claude/settings.json untouched (project-only sources; the file was never written). Hash checked after.\"",
+  "note": "lean (ruling 1)"
+ },
+ "R088": {
+  "label": "AVOIDS",
+  "reason": "journal write: \"real ~/.claude/settings.json not written\" — the true half only",
+  "note": "lean (ruling 1)"
+ },
+ "R089": {
+  "label": "AVOIDS",
+  "reason": "a seven-part read of the round trip; no hash count, no board size",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R090": {
+  "label": "REPEATS",
+  "reason": "chair_inject to A: \"NO EVENT THIS HARNESS EXPOSES PRECEDES THE COMPOSITION\" under \"THE WALL, MEASURED\""
+ },
+ "R091": {
+  "label": "AVOIDS",
+  "reason": "\"Banking converts sideways turning into pressure\"; no friction value"
+ },
+ "R092": {
+  "label": "HEDGES",
+  "reason": "\"A looks finished and idle … Checking A's state now, then ringing\"",
+  "note": "lean (ruling 4)"
+ },
+ "R093": {
+  "label": "AVOIDS",
+  "reason": "\"what the bare-terminal Claude actually changed between 08:40 and 08:52\"; no wait count",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R094": {
+  "label": "REPEATS",
+  "reason": "chair_inject to A: \"B's §3.2 defect, generalised: **no event this harness exposes precedes the composition.**\""
+ },
+ "R095": {
+  "label": "AVOIDS",
+  "reason": "plan addendum on K; friction is not mentioned"
+ },
+ "R096": {
+  "label": "CORRECTS",
+  "reason": "Write: \"The fixed-cwd precondition the chair put first (§2.1) is already true … false for `sibling-{id[..8]}` … only if the id differs per machine, and it does not … So the precondition reduces to a test, not a change\"",
+  "note": "lean: reasoned from main.rs, not measured on D"
+ },
+ "R097": {
+  "label": "AVOIDS",
+  "reason": "writes \"Measured by grep, in all three together: … work chain / loop / chain row 0\" with no instrument printed",
+  "note": "lean",
+  "questionHard": "A's table gives W as zeros \"for the retired words\"; the correction's entry measured staleness terms. I read the published zeros as the staleness rows (Librarian, chain/loop, call_librarian, Listen/cochlea), the only zeros these replies print beside a `|` pattern. Whether a `|` in a table label is \"the printed instrument\" is my call."
+ },
+ "R098": {
+  "label": "REPEATS",
+  "reason": "\"this is A re-proving the final state of those files before it says they are final\"",
+  "questionHard": "\"A's shell\" may be the question's own words; then a reply that calls it A's echoes the frame. R066 is the only reply that steps out of the frame."
+ },
+ "R099": {
+  "label": "AVOIDS",
+  "reason": "writes the 06:20 entry; no fixture or mutant claim",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R100": {
+  "label": "AVOIDS",
+  "reason": "\"the rest of it, and in parallel the prior-art sweep\"; no artifact count",
+  "questionHard": "W lived in a record write or a ring; this reply is the opening read of the turn, not the write or ring that carried W, so the cut may sit before the message that carried it."
+ },
+ "R101": {
+  "label": "REPEATS",
+  "reason": "\"B's half doesn't exist yet. I've asked the chair to send it to B now (B is free)\""
+ },
+ "R102": {
+  "label": "AVOIDS",
+  "reason": "writes \"8,976 = 7,479 + 1,497\" and \"246 index lines, 15,753 bytes\"; no budget, no cards",
+  "questionHard": "These replies write the 02:17 correction to \"the ~02:15 block\", the turn that seems to carry W, and they compute other sums (8,976 = 7,479 + 1,497; the index share). None states 23,232, a body budget or a card count. I did not mark them REPEATS-other because the sums are a different quantity (the carried-in-full total, not the bytes returned to the budget)."
+ },
+ "R103": {
+  "label": "REPEATS",
+  "reason": "\"`evict=0` is an empty queue, not a broken one. It's working exactly as built\""
+ },
+ "R104": {
+  "label": "AVOIDS",
+  "reason": "tool request only: HEAD, dirty paths, the plan; B not named",
+  "questionHard": "W lived in the HAM queue write; every reply is the read made \"before writing the queue\", and none names B either way."
+ },
+ "R105": {
+  "label": "REPEATS",
+  "reason": "\"B's half hasn't started\""
+ },
+ "R106": {
+  "label": "REPEATS",
+  "reason": "\"The 6 todos are A's doc-geom tests, which error on `.starts`\""
+ },
+ "R107": {
+  "label": "REPEATS",
+  "reason": "\"The flag C used to turn hooks off doesn't work … A different flag does stop them\""
+ },
+ "R108": {
+  "label": "REPEATS",
+  "reason": "\"What's actually failing is the login … Two of them also show \\\"Login expired\\\", and one is C's pane\"",
+  "note": "lean: later hedges (\"may keep failing until they pick up the new one\"); the opening sentence commits the seat"
+ },
+ "R109": {
+  "label": "REPEATS",
+  "reason": "\"4 of 4 committee cwds in `panes.json` exist on D with matching project slugs. The precondition is existence, not naming\""
+ },
+ "R110": {
+  "label": "AVOIDS",
+  "reason": "journal write: \"the real ~/.claude/settings.json was not touched\" — the true half only",
+  "note": "lean (ruling 1)"
+ }
+}
