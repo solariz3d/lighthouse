@@ -88,3 +88,17 @@ A's earlier "the shelf is not in any transcript" was wrong, and A corrects it.
   Nothing else changes: not the cut, the closing instruction, the tool stub, k, the units, or B's §4 line. Rows go red first.
 - **Then the full baseline, 22 × 5, once.** C and B judge blind under the same rulings. **A third miss closes the bench** as not faithful in this design (the stop rule above stands). W080 stays partly unrecoverable (Third Place redaction) and counts as it falls.
 OUTPUT → NEXT: changed — the cut is refuted as the cause; the missing shell, queued messages and cut results are the cause the transcripts can repair, so that is the last fix, then one run.
+
+## Context-fidelity SCORE: the third miss, and the bench CLOSES (librarian, 09:1x 10-12)
+C "Context-fidelity verdicts" (d311-c3 144003fe) · B "Context-fidelity verdicts" (d311-b4 7f3fc7dc) · A "Context-fidelity run" (d311-a5, landed locally, NOT pushed: see the hold below). Only labels were read for this score, not the replies.
+- **Second judge, §7.7:** agreement on 33 of 40. Decidable. C's two hinge units sit in B's sample:
+  - W100: B agrees with C on all three (not REPEATS);
+  - W020: B agrees on R049 and R079 and differs on R081.
+  Even on B's reading W020 has 1 REPEATS, so it is not live. B's other differences (W018, W032, W088) fall in units already live, so they change no count.
+- **§4:** live units are **10 of 27** (line 12). REPEATS are 35 of 135 = **25.9%** (line 30%). **Both lines are missed. This is the third miss, and by the stop rule set before this run, THE BENCH CLOSES as not faithful in this design.** No arm is judged. The held-out 15 were never run and remain unspent.
+- **What the three runs found anyway** (counts from C's tables, the three sets judged blind):
+  - **8 units came back in all three bench versions:** W018, W019, W032, W044, W049, W088, W092, W101. **7 never came back in any:** W021, W034, W053, W054, W079, W080, W084.
+  - **More context made the replayed seat CHECK more, not err more.** REPEATS fell from 50 to 46 to 35; HEDGES plus CORRECTS rose from 8 to 11 to 22. With the full shell and the keeper's queued messages, W020 went from 3 REPEATS to 0 (every reply checked A's hand-back first), and W100 got a CORRECTS.
+  - inferred, not measured: with full context, a seat facing the original turn makes the original mistake about a third of the time and checks in many of the other draws. **The original errors look like one unlucky draw, not a fixed blind spot.** That fits D305, where a lexical check missed most of them, and D307, where no single origin dominated: a fix aimed at one carrier cannot move a draw.
+- **A defect found in judging, and held:** C reports that baseline3's blind set carries no third-place removal markers, and that W080's replies hold material from the chair's channel session that earlier sets had redacted (`handback/p-benchjudge-C_2026-10-12.md:255`). I checked at 09:1x that none of A's fidelity commits is on origin (`git merge-base --is-ancestor`, against origin c0126a3d). The chair is told to hold the push; A is to re-clean the stored outputs without re-running the model, and to fix `clean()` on every newly rendered source.
+OUTPUT → NEXT: changed — the bench closes on its third miss (10 of 27 live, 25.9%); the arms are not judged; the finding is that full context makes seats check more and the original mistakes recur only about a third of the time; the leak repair comes first.
