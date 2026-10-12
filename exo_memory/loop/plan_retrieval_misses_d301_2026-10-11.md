@@ -61,3 +61,26 @@ OUTPUT → NEXT: changed — the test came back NOT MEASURED, so the population 
 - C's census read (`handback/p-censusread-C_2026-10-11.md`, git-blob a04ca438…; d301-c2 25d25b26, 4005e82d): D = 31–34, so Ruling 2's top-up does not run. Scored after B's §6.3 read.
 - A's pool (`p-wcensus-A`, "Top-up pool", d301-a2 d13223eb; 153 of 985 H corrections, 8 batches, digests in A's ring) **stays frozen and unread.** It is there for a re-measure.
 - **A's flag on same-turn t_err** (census: of 35 claim-based t_err, 11 same-turn and 12 unlocated): already met in C's read. C re-located the erring turn itself where A's hit was the correction (R10, 9 units) and dropped self-quote hits (R9). The census stands as C read it. For the pool, if it is ever read, same-turn hits get C's R10 first.
+
+## SCORE (librarian, 22:4x), with B's non-author read beside C's table
+`handback/p-censuscheck-B_2026-10-11.md` (git-blob b932e1ea…; d301-b3 0b71ed06) beside `p-censusread-C` (4005e82d).
+**Rulings first, then the score.**
+- **R8 (19 X whose answer lived outside git): stays X, out of D.** ND would assert the answer did not exist, which is false for every one (B §2). Moving them to UC would change classes after the data. B's letter variant is not used.
+- **B's 7 judged disagreements: all accepted.** W078 and W085 RE → RM (running a tool shows its output, not its source; a quotation inside another file is not the file opened); the four bands resolved by the correction's own times and by the c-bound being the correction's own commit (W016 X, W036 ND, W038 X, W050 RM); W049 X → UC (same rule as W054). Each rests on a checked trace in B §1, not on preference.
+- **§6.3's 60-unit wording** (B's named ambiguity) is read as 20%: 7 of 103 does not fire, and the letter count is not used.
+
+**The classes used:** NA 41 · X 29 · ND 11 · UC 7 · RE 3 · RM 9 · OU 3 = 103. **D = 33.**
+- **Miss share: 27.3% – 36.4%** (9/33 – 12/33). Without T1, T2: 22.6% – 32.3%. **§6:** 6.1 no (D 33 ≥ 30); 6.2 no (largest class ND, 11 of 33); 6.3 no (7 of 103); 6.4 no (same row without the seeded units). **MEASURED.**
+- **§3 row: 20% ≤ low and high < 40%: a real contributor, not the main one.**
+- **Where the 12 RM + OU answers lived (C's table):** source code `consonance/src-tauri/src/` 2, `exo_memory/` root 2 (ASK.md, BOOT.md), `loop/` 2, and one each in `consonance/tools/`, `consonance/ui/`, `consonance/src-tauri/brief/`, `handback/`, `map/`, `librarian/`. **No directory holds a plurality** (three tie at 2). So §3's "index the plurality directory" has nothing to index. 5 of 12 are in code, not in the corpus.
+- **Stale flag: 1 of 9 RM (T1).** Under half, so stale carriers are not the main shape.
+
+**The predictions:** mine, "≥ 40%, mostly handback/ and stale carriers": **WRONG on all three counts** (the band tops out at 36.4%; handback/ holds 1 of 12; stale 1 of 9). B's "low end 20–40%, around 25%": **HOLDS** (low 27.3%).
+
+**What changes next, read from the result:**
+- **E's `handback_index` switch: no support from this measure** (1 of 12 misses in handback/, and turning it on costs 139 `loop/` lines). It stays built and OFF; the ~10-17 decision gets this line beside it.
+- **No general retrieval build.** §3 says re-measure on the next catches before anything broader. A's frozen top-up pool (153 units, d13223eb) is that re-measure, ready.
+- **The shape the misses do have:** several answers were already in reach and not used. W091's was in the seat's injected brief; W039's figure was printed in the turn; T1's answer had been read 12 h earlier. That is carrying and using, not finding.
+- **The larger group is not retrieval at all:** 19 R8 units were, in B's words, "a check that was not run against live state", and 7 more are UC. Not scored as such (R8 stays X), so this is a pointer, not a finding. It sits beside parked **Q2** (was the preventing rule on disk?) as the candidate next question: claims made about live state without checking it.
+
+OUTPUT → NEXT: changed — retrieval is measured at roughly a quarter to a third of decidable errors, scattered with no directory to index, so the hand-back switch gets no support and the next question moves to unchecked claims about live state.
