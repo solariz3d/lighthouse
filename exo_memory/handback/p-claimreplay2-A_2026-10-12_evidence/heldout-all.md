@@ -1,0 +1,32 @@
+# D305 part 3 - claim-check REPLAY (seat A): checker `claim-check (v1 + Bash write path)`
+
+Counts and units only. **Nothing here judges a flag**: a refusal on a known-wrong unit is counted "caught" because the unit is known wrong, not because the flagged sentence is the erring one; read the flagged claims.
+
+## What ran
+- Harness `consonance/tools/claim-replay.js` sha256 `f655c3673843b921d4574542c4cbc0a6074048ced731ffdb5a620ca121314755` (frozen with `8a2d40325c12d4d1151209af2597d8720878b0db1031f348cf9b48266ebb686f`). E's `turn.js` `1022b881bb9d513a60f111c2f4a7718b117887fae867e5da981ccc9027b84819`, `find.js` `95c1f0dd23a2326d6ca2944888cf815030d4c07da7177a9d2750ac126c3d7141`, run as they are.
+- Checker `claim-check (v1 + Bash write path)` sha256 `ef8bb8683ff4ea1ace5f6802eb95e1b63c232501e17eda0d67a3dd575e6d9b78`.
+- List `census-units.json` sha256 of the file bytes `f195b94f0e58a616ab772ac87ed196eb463e68dcf4d369e909e2cc06965fae1b`
+- Hygiene: Third Place lines removed from every text the checker saw: 21; secrets redacted by turn.js's shapes; the report quotes a flagged claim, whole and unclipped, only with --show-claims: ON.
+
+## Census (known-wrong claims): caught = refused
+- **CN:** 15 units - caught 10, missed 5, unlocated 0, errored 0. Caught of the located: 10/15 = 66.7% (Wilson 95% 41.7%-84.8%).
+- **CU:** 1 units - caught 0, missed 0, unlocated 1, errored 0. Caught of the located: 0/0.
+
+| unit | class | result | flagged claim |
+|---|---|---|---|
+| H0182 | CN | refuse | [record-write] 80 / [record-write] d5bd9b1 / [record-write] 46 / [record-write] 20,000 / [record-write] 0b247df0 / [record-write] 9,323 / [record-write] 0f742975 / [record-write] 6,103 / [record-write] 1d5fb0ee / [record-write] 5,647 / [record-write] 34fb5b04 / [record-write] 9,192 / [record-write] 35131ccb / [record-write] 14,847 / [record-write] 3f90addf / [record-write] 9,157 / [record-write] 41240a3f / [record-write] 7,481 / [record-write] 463e7006 / [record-write] 7,838 / [record-write] 5137d864 / [record-write] 10,658 / [record-write] 55a01a12 / [record-write] 6,605 / [record-write] 5745ef5a / [record-write] 13,042 / [record-write] 6556f70f75578360ba90480860f451f0e2640a21113dd6f94c500bb3edc22c8f / [record-write] 104,721 B / [record-write] 8,727 B / [record-write] 70% / [record-write] 10 of 12 / [record-write] 2,000 / [record-write] 6 of 35 / [record-write] 0.10 / [record-write] 0.25 / [record-write] 0.50 / [record-write] 0.68 / [record-write] 0.82 / [record-write] 96 / [record-write] 480 / [record-write] 528 / [record-write] 10 of 12 / [record-write] 10 of 12 / [record-write] 528 / [record-write] 1.5× / [record-write] 8,727 B / [record-write] 2,871 / [record-write] 9.1k / [record-write] 18.2k / [record-write] 75,565 / [record-write] 6,170 / [record-write] 9.1k / [record-write] 18.2k / [record-write] 0.38% / [record-write] 528 / [record-write] 80 / [record-write] 1.5× / [record-write] 9.1k :: If the room does not think its pointer question is worth about 5.8M tokens and ~80 minutes, not building is a real answer. |
+| H0546 | CN | allow |  |
+| H0595 | CU | unlocated |  |
+| H0802 | CN | refuse | [record-write] 147 MB :: Do not run it inside `dev/diversity/`: it writes `results-step0.json` beside itself, and it needs the 147 MB encoder beside itself too. |
+| H0102 | CN | refuse | [bash-write] ea4f5bcf / [bash-write] 102d5ebb / [bash-write] 32 / [bash-write] 155 / [bash-write] 42 / [bash-write] 154 / [bash-write] 121 / [bash-write] 33 / [bash-write] 24 / [bash-write] 367 / [bash-write] 36 / [bash-write] 147 / [bash-write] 22 / [bash-write] 192 / [bash-write] 269 / [bash-write] 103 / [bash-write] 4185 / [bash-write] 24 / [bash-write] 20 / [bash-write] 13 / [bash-write] 100644 / [bash-write] 23 / [bash-write] 70 of 71 :: **Branch `b-gen-lap2` in my lighthouse worktree `C:\Users\nname\Desktop\worktrees\b-d273-src`, from `ea4f5bcf`. |
+| H0162 | CN | refuse | [record-write] 5b9cf7b / [record-write] 96 / [record-write] 34 / [record-write] 0.80 / [record-write] 96 / [record-write] 34 / [record-write] 96 / [record-write] 34 / [record-write] 2.9 / [record-write] 1.00 :: I also wrote the L3 re-measure registration (`5b9cf7b`). |
+| H0351 | CN | refuse | [record-write] 5.5 / [record-write] pushed / [record-write] closed / [record-write] 10.33 m / [record-write] 40 / [record-write] 37 / [record-write] closed / [record-write] 4096 / [record-write] 40 / [record-write] 5,593,032 :: Seat A, Sonnet 5.5, on D. t180 is public; nothing pushed; no AC launched; exports only into temp folders. |
+| H0159 | CN | refuse | [record-write] working / [record-write] 79a369b / [record-write] a8b39e9c00f10631c5d6641031846b5d237c451177a7c5311de3b46b0f7b9a67 / [record-write] 130 / [record-write] 96 / [record-write] 4d934c2ab7795f77930333a143979ca3f4f3ef10f34012830cbae3d64b2ad7ce / [record-write] 09:12 / [record-write] 158 / [record-write] 265b08f / [record-write] 96 / [record-write] 97.5% / [record-write] 1.00 / [record-write] 0.00 / [record-write] 47 of 74 :: **Why there is a v2.** v1 (`exo_memory/loop/tj1_registration_2026-09-22.md`, amended `b35507c`) was built, attacked by B (`fbe5549`), amended, and then **its own member file read NOT TESTED** (`exo_memory/loop/tj1_members_2026-09-22.json`, `bec101d`): 186 universe lines → 20 located → 13 members, no class near 20 positives, because **157 of the 186 adjudication lines carry no locator at all.** That is v1's amended §5 (FATAL-1) working as written: a data shortage must read NOT TESTED, never a strike. |
+| H0403 | CN | allow |  |
+| H0557 | CN | refuse | [ring] 83d36dd0 / [ring] bd835b15e13a / [ring] a1250a4 / [ring] 0 :: 83d36dd0-6ed7-4ae4-a81f-bd835b15e13a E E — L094 (batch 3, small carriers), on L. Your L090 sheets are in (hand-back ce95f926). |
+| H0232 | CN | refuse | [record-write] 337942 :: - **The suite in the worktree, under the heavy-run lock, `--test-concurrency=4` (`npm test`):** **806 tests · 800 pass · 0 fail · 6 todo, exit 0**, 17:31:22–17:37:01, `duration_ms 337942`. |
+| H0192 | CN | refuse | [record-write] 22 / [record-write] 6 of 10 / [record-write] 6 of 10 / [record-write] 6 of 10 / [record-write] 6 of 10 / [record-write] 6 of 10 / [record-write] 6 of 10 / [record-write] 72% / [record-write] 0.34% / [record-write] 99.0% / [record-write] 0.15% / [record-write] 99.9% :: **Total: 42 calls at most, 22 if the control fails.** |
+| H0717 | CN | allow |  |
+| H0911 | CN | refuse | [reply] 59 of 59 :: The cup harness is green: 59 of 59 tests, with all 50 mutants applied and caught. |
+| H0682 | CN | allow |  |
+| H0562 | CN | allow |  |

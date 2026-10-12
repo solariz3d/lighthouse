@@ -351,9 +351,9 @@ function render(checker, manifest, report, rows, groups) {
   o.push(`- Harness \`consonance/tools/claim-replay.js\` sha256 \`${fileSha(__filename)}\` (frozen with \`${manifest.harness_sha256}\`). E's \`turn.js\` \`${fileSha(TURN_JS)}\`, \`find.js\` \`${fileSha(FIND_JS)}\`, run as they are.`);
   o.push(`- Checker \`${checker.name}\`${checker.file ? ' sha256 `' + fileSha(checker.file) + '`' : ' (a built-in stub)'}.`);
   for (const [k, v] of Object.entries(manifest.lists)) o.push(`- List \`${v.file}\` ${v.function} \`${v.sha256}\``);
-  o.push(`- Hygiene: Third Place lines removed from every text the checker saw: ${stats.thirdLinesRemoved}; secrets redacted by turn.js's shapes; the report quotes a flagged claim (clipped to 160 chars) only with --show-claims: ${SHOW_CLAIMS ? 'ON' : 'off'}.`);
+  o.push(`- Hygiene: Third Place lines removed from every text the checker saw: ${stats.thirdLinesRemoved}; secrets redacted by turn.js's shapes; the report quotes a flagged claim, whole and unclipped, only with --show-claims: ${SHOW_CLAIMS ? 'ON' : 'off'}.`);
   o.push('');
-  const fmt = (r, u) => `| ${r.id} | ${u || ''} | ${r.status === 'ok' ? r.verdict : r.status + (r.error ? ': ' + clip(r.error, 80) : '')} | ${r.claim && SHOW_CLAIMS ? clip(String(r.claim).replace(/\s+/g, ' ').replace(/\|/g, '/'), 160) : ''} |`;
+  const fmt = (r, u) => `| ${r.id} | ${u || ''} | ${r.status === 'ok' ? r.verdict : r.status + (r.error ? ': ' + clip(r.error, 80) : '')} | ${r.claim && SHOW_CLAIMS ? String(r.claim).replace(/\s+/g, ' ').replace(/\|/g, '/') : ''} |`;
   if (groups.includes('census')) {
     o.push('## Census (known-wrong claims): caught = refused');
     for (const cls of ['CN', 'CU']) {
@@ -374,7 +374,7 @@ function render(checker, manifest, report, rows, groups) {
     rows[g].res.forEach((r, i) => { if (r.status !== 'ok') return; const s = rows[g].turns[i].seat; bySeat[s] = bySeat[s] || { n: 0, refused: 0 }; bySeat[s].n++; if (r.verdict === 'refuse') bySeat[s].refused++; });
     o.push('- By seat (refused/evaluated): ' + Object.entries(bySeat).map(([s, v]) => `${s} ${v.refused}/${v.n}`).join(', '));
     const refused = rows[g].res.filter((r) => r.verdict === 'refuse');
-    if (refused.length) { o.push(''); o.push('| message | seat | result | flagged claim |'); o.push('|---|---|---|---|'); refused.slice(0, 60).forEach((r) => { const i = rows[g].res.indexOf(r); o.push(fmt(r, rows[g].turns[i].seat)); }); if (refused.length > 60) o.push(`(+${refused.length - 60} more refusals not listed)`); }
+    if (refused.length) { o.push(''); o.push('| message | seat | result | flagged claim |'); o.push('|---|---|---|---|'); refused.slice(0, SHOW_CLAIMS ? refused.length : 60).forEach((r) => { const i = rows[g].res.indexOf(r); o.push(fmt(r, rows[g].turns[i].seat)); }); if (!SHOW_CLAIMS && refused.length > 60) o.push(`(+${refused.length - 60} more refusals not listed)`); }
     o.push('');
   }
   return o.join('\n');

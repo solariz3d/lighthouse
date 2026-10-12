@@ -216,3 +216,40 @@ test('a report hides the flagged sentence unless --show-claims is given', () => 
 test('a Wilson bound is never printed below zero', () => {
   assert.match(R.rate(0, 73), /0\.0% \(Wilson 95% 0\.0%-5\.0%\)/);
 });
+
+test('--show-claims lists EVERY refusal, not only the first 60; without it the long list is still cut', () => {
+  const d = scratch.mkdtemp('claim-replay-many-');
+  const rel = 'C--Consonance-instances-librarian/many.jsonl';
+  fs.mkdirSync(path.join(d, path.dirname(rel)), { recursive: true });
+  const rows = [row({ type: 'user', timestamp: '2026-10-10T10:00:00.000Z', message: { role: 'user', content: 'go' } })];
+  const ids = [];
+  for (let i = 0; i < 65; i++) {
+    const id = 'm' + String(i).padStart(3, '0'); ids.push(id);
+    rows.push(row({ type: 'assistant', timestamp: `2026-10-10T10:01:${String(i % 60).padStart(2, '0')}.000Z`, message: { id, role: 'assistant', stop_reason: 'end_turn', content: [{ type: 'text', text: 'claim number ' + id }] } }));
+  }
+  fs.writeFileSync(path.join(d, rel), rows.join('\n') + '\n');
+  const lists = path.join(d, 'lists'); fs.mkdirSync(lists);
+  fs.writeFileSync(path.join(lists, 'week-replies.json'), JSON.stringify({ replies: ids.map((messageId) => ({ messageId, seat: 'chair', transcript: rel })) }));
+  fs.writeFileSync(path.join(lists, 'manifest.json'), JSON.stringify({ harness_sha256: 'x', lists: {} }));
+  const run = (...more) => cp.spawnSync(process.execPath, [path.join(__dirname, 'claim-replay.js'), 'run', '--lists', lists, '--checker', 'always-refuse', '--groups', 'week', '--projects', d, ...more], { encoding: 'utf8', maxBuffer: 1 << 24 }).stdout;
+  const rowsIn = (s) => s.split('\n').filter((l) => /^\| m\d{3} \|/.test(l)).length;
+  const full = run('--show-claims'), cut = run();
+  assert.strictEqual(rowsIn(full), 65, 'every refusal is listed with --show-claims');
+  assert.strictEqual(rowsIn(cut), 60, 'without it the list stops at 60');
+  assert.match(cut, /\+5 more refusals not listed/);
+  assert.doesNotMatch(full, /more refusals not listed/, 'nothing is cut, so no note says so');
+});
+
+test('--show-claims prints a flagged claim whole, a long one included; without it nothing of the claim is printed', () => {
+  const { d, rel } = fixture();
+  const lists = path.join(d, 'lists3'); fs.mkdirSync(lists);
+  fs.writeFileSync(path.join(lists, 'right-claims.json'), JSON.stringify({ messages: [{ messageId: 'm2', seat: 'chair', transcript: rel }] }));
+  fs.writeFileSync(path.join(lists, 'manifest.json'), JSON.stringify({ harness_sha256: 'x', lists: {} }));
+  const ck = path.join(d, 'long.js');
+  const long = 'START ' + 'word '.repeat(120) + 'END';
+  fs.writeFileSync(ck, `module.exports = () => ({ verdict: 'refuse', claim: ${JSON.stringify(long)} });`);
+  const run = (...more) => cp.spawnSync(process.execPath, [path.join(__dirname, 'claim-replay.js'), 'run', '--lists', lists, '--checker', ck, '--groups', 'right', '--projects', d, ...more], { encoding: 'utf8' }).stdout;
+  const full = run('--show-claims');
+  assert.ok(full.includes('START word') && full.includes('word END'), 'the whole claim, start and end');
+  assert.ok(!run().includes('START'), 'hidden without the flag');
+});
