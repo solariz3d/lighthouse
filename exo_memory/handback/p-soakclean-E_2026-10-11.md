@@ -88,4 +88,56 @@ To cover it:
 Once that holds, the existing 1,260 go at the next run (all are older than the 2-day floor), and the fix above stops new ones. Without it they
 stay; at about 66 KB of data they cost inodes, not space.
 
-NEXT: librarian collate D300 part 3 when this hand-back is read; the janitor coverage (§5) is a ruling for the keeper
+### 4a. Addendum, ~23:5xZ: the old folders have gone since, and not by me
+- **The count now:** `ls -d /tmp/t180-soak-* | wc -l` → **100**, all dated 2026-10-11. Every 10-09 and 10-10 folder is gone.
+- **Other prefixes fell over the same span:** rc2-home- 205 → 80 and claimrec-ask- 66 → 33. Here 205 and 66 are the janitor's 10-10 dry run, and 80 and 33 are counted now.
+  Other old entries remain: 22,140 dated 10-09 and 38,897 dated 10-10.
+- **Not the janitor:** its last row is 11:40Z (`janitor.jsonl`), before my 1,260 count.
+- **`delete-gate.jsonl` shows one candidate:** the librarian session, 21:06:00Z, an `rm -r` over `…\AppData\Local\Temp\$1` (a templated loop), refused (`deny`).
+- inferred, not checked: that deletion went through afterwards in a form the delete gate does not inspect. I did not look further, and I deleted
+  nothing.
+
+## D284 owed suite
+The ruling: `plan_queue_sweep_d300_2026-10-11.md`, `d1a1191e`. The record of the debt: `p-stalelaps-A_2026-10-11.md:24`, and `p-startline-B_2026-10-10.md:68`, "Not run: the full suite and the core
+harnesses. They are owed at landing".
+- **The tree:** T-180 main, `f5a5f56`, which contains `9bdd10d` (`git merge-base --is-ancestor 9bdd10d f5a5f56` → true). It was checked out clean as a
+  detached worktree, `G:\worktrees\e-d284-t180`.
+- **Not the keeper's checkout, and why.** Its working tree is not at HEAD: 152 tracked files deleted (all of `app/core/` among them), 95 modified,
+  24 untracked. The modified files are dated 09-27 and 09-28, while HEAD is `f5a5f56` (10-10).
+  - inferred: `main` was moved on without a checkout there, so its files are a ~09-28 tree. I touched nothing in it. **A `git commit -a` there would commit a
+    revert of two weeks**, and a build from it would ship the old app.
+- **`reads/`:** copied into the worktree, not linked: 52 entries, the four `Chases_*` files left out by the standing rule.
+- **The command,** under the heavy-run lock: `node --test --test-concurrency=1 --test-reporter=tap "test/*.test.js" "app/test/*.test.js"` (the README's
+  suite at concurrency 1).
+- **The core harnesses are in that glob:** the 14 `*mutation*.test.js` files in `test/` and `app/test/`, each run as part of the suite.
+
+| run | tree | tests | pass | fail | skip | todo | mutant rows "applied, and caught" | controls | runtime | TAP sha256 |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|
+| before my soak change | `f5a5f56` | 2,706 | 2,693 | **3** | 3 | 7 | **533 / 533** | 16 / 16 | 75.4 min (4,525,603 ms), lock wait apart | `c8d3edb2816fd4e6…` |
+| after it (`perf_soak.test.js` is covered) | `a19798e` (`d300-e`) | 2,708 | 2,695 | **3** | 3 | 7 | **533 / 533** | 16 / 16 | 81.3 min (4,876,903 ms) | `3b4b500a6879f228…` |
+
+- **The 3 reds, by name, identical in both runs, and none is `9bdd10d`'s:**
+  - `test/corpus.test.js:60`, "the corpus is what tools/corpus.cjs makes from the reads";
+  - `test/geom_fonts.test.js:51`, "fonts: src/geom/fontshape.json is what tools/fontshape.cjs makes from the reads";
+  - `test/vocab-corpus.test.js:124`, "BANK_RATE is what tools/bankrate.cjs measures from reads/".
+
+  Each error is `ENOENT … reads\Chases_Onuris__layout_long.read.json`: the file I did not copy, by the standing rule. These three check derived
+  numbers against the full reads, and so cannot be green in a run that may not use those files. The README's own rule says "when the reads are here".
+  **The keeper's or a seat's run with the full `reads/` is what closes these three.**
+- **The 7 todo rows are the suite's own known TODOs, unchanged:**
+  - one `list: the preview's material and texture list EQUALS the kn5's`;
+  - six `round-trip: …` rows (`read_track.cjs` heading lock, `p-d166-roundtrip-C` §3).
+
+  The 3 skips are: no T180_AC_ROOT (grips), the partial reads (widths row 4), and the hill brush.
+- **9bdd10d's own rows: all 6 green** in `app/test/core-startline-creep.test.js`. That includes "a CLOSED lap keeps its automatic start where it was",
+  which is B's closed-track choice, unchanged.
+- **Mutation, as applied / caught / NOT APPLIED:** 533 / 533 / 0 in each run.
+  - These are the mutant rows of the 14 harnesses; each row's name is its verdict ("applied, and caught by …"), and a row fails if its mutant does not apply or is not caught.
+  - 0 rows mention "survived" or "not applied".
+- **The soak cleanup, in the after-run:** the two new rows passed (`ok 2308`, `ok 2309`). The real `%TEMP%` count stayed at 100 across the whole
+  suite. The before-run, on the old code, had added one (`t180-soak-ra1qKn`, 22:24Z).
+
+inferred: D284's owed suite and harnesses are green except for the three reads-derived rows. Those fail only on the excluded `Chases_*` reads, and
+that is the librarian's to rule on before D284 files.
+
+NEXT: librarian collate D300 part 3 and rule on D284's three reads-derived rows when this hand-back is read; the janitor coverage (§5) is a ruling for the keeper
