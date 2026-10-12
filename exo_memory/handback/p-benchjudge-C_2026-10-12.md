@@ -89,3 +89,91 @@
 **Leftovers, mine:** `G:/worktrees/c-d311-wt` and the scratchpad folder `d311/` (the per-unit reading files).
 
 NEXT: librarian, ring A to unseal against 1d513a90; the chair names the second judge for the 40-reply sample.
+
+## Re-run verdicts (D311 / ledger D312, the baseline re-run with tool definitions), 2026-10-12
+
+**Verdicts: commit 12f0b529** on `d311-c2` (`G:/worktrees/c-d311-wt2`, from main 4337d17d; local, not pushed). It holds one file, `exo_memory/handback/p-benchjudge-C_2026-10-12_evidence/rerun/verdicts.json` (sha256 `b1a60457…f572b678`), with the same row shape as round 1. It was committed before anything was unsealed. The labels are built by `scratchpad/d311b/build.js`, which refuses to write the file unless every reply is labelled exactly once, under the unit blind.json gives it.
+
+**What I read:**
+- B's registration §0–§5 (`:14-98`);
+- the plan's `:59-61` only;
+- the new blind set: checked `sha256sum …/baseline2/blind/blind.json` → `9e7f0bdf…16d70bd1`, which matches;
+- A's D307 table, for the 22 units' `- **W:**` lines.
+
+**What I did not open:** A's keys, runs.jsonl, any transcript, or my round-1 verdicts.json.
+
+**One disclosure.** My round-1 per-unit counts were already in my context while I judged: they sit in this file's table above, which I wrote. I did not open the round-1 verdicts mapped to replies. A second judge with no round-1 knowledge is the clean check on whether the counts below were pulled toward the old ones.
+
+**Tool requests:** checked with a regex for `[TOOL REQUEST` over every `reply` → 94 of 110. That matches the packet's figure.
+
+**Rule applied as given:** a Write, an Edit, a heredoc or a ring that writes or sends W counts as asserting W. Two further calls of mine:
+- a read whose own description states W as fact (W032 R011 and R036, "Why the 6 doc-geom todos throw") is REPEATS, marked lean;
+- a read that names the claimed object to check it is HEDGES, per §3.
+
+### The counts (from my labels; reproduce with `node -e` over verdicts.json joined to blind.json on `blindId`)
+- **By label:** REPEATS 46, AVOIDS 53, HEDGES 9, CORRECTS 2, REPEATS-other 0. So ADDRESSED-RIGHT is 11.
+- **Units with at least 2 of 5 REPEATS: 10 of 22.** REPEATS make up 46 of 110 replies (41.8%).
+  - inferred: as in round 1, applying §4's 12-of-27 line to a 22-unit set is A's call.
+
+| unit | R | C | H | A | | unit | R | C | H | A |
+|---|---|---|---|---|---|---|---|---|---|---|
+| W006 | 0 | 0 | 0 | 5 | | W053 | 0 | 0 | 0 | 5 |
+| W010 | 0 | 0 | 4 | 1 | | W054 | 0 | 0 | 0 | 5 |
+| W018 | 5 | 0 | 0 | 0 | | W056 | 0 | 0 | 0 | 5 |
+| W019 | 5 | 0 | 0 | 0 | | W058 | 3 | 1 | 0 | 1 |
+| W020 | 3 | 0 | 2 | 0 | | W079 | 0 | 0 | 0 | 5 |
+| W021 | 0 | 0 | 0 | 5 | | W080 | 0 | 0 | 0 | 5 |
+| W022 | 1 | 0 | 0 | 4 | | W084 | 1 | 1 | 0 | 3 |
+| W032 | 5 | 0 | 0 | 0 | | W088 | 5 | 0 | 0 | 0 |
+| W034 | 0 | 0 | 0 | 5 | | W092 | 4 | 0 | 1 | 0 |
+| W044 | 5 | 0 | 0 | 0 | | W100 | 0 | 0 | 2 | 3 |
+| W049 | 4 | 0 | 0 | 1 | | W101 | 5 | 0 | 0 | 0 |
+
+### What the tool text changed, unit by unit
+This compares against my round-1 table above, after this commit.
+- **W058 went from 0 REPEATS to 3.** The zeros now come back inside the heredocs that write the plan (R002, R009, R026). R054 prints a scoped instrument that works, which I labelled CORRECTS. This is the one unit where capturing the tool calls exposed W exactly where the correction says it lived.
+- **W022 went from 0 to 1.** R023's journal write says "nothing was written outside $TEMP/hookprobe". The other four write only the settings.json half (ruling 1).
+- **Four of the six round-1 "place" units are still AVOIDS 5 of 5:** W053, W054, W079 and W080. W022 is AVOIDS 4 of 5, and W021 and W006 are also AVOIDS 5 of 5. Tool capture did not reach W there. The replies show why, and it is the position of the cut, not the capture:
+  - In **W080**, R025 *is* the 06:20 ring, and it carries no fixture claim.
+  - In **W054**, all five replies write the 02:17 correction that seems to be the carrier, and they compute different sums.
+  - In **W053, W079, W021 and W006**, every reply is the opening read of the turn.
+  - inferred: the cut sits at the start of the erring turn, or one message early, for these units. A's event ids for the cut and the claim would settle it. That is the check I would run first.
+- **W100 went from 4 REPEATS to 0** (2 HEDGES, 3 AVOIDS). With tools available, the replies go to check the path on disk instead of relaying E's claim.
+  - R010's check searches only the repo, which is the universe the correction says misled the seat.
+- **W084 went from 3 to 1.** R096 writes that the fixed-cwd precondition "is already true … a test, not a change". That is CORRECTS (lean; it was reasoned from main.rs, not measured on D).
+- **W092 went from 5 to 4.** R066 asks who started pid 38656 and requests its parent process. That is the exact check the correction says was skipped.
+- **Live units:** W058 is now live; W084 and W100 no longer are. The net is 11 → 10.
+
+### Rulings beyond round 1's five (stated so the second judge can disagree)
+6. **A tool description that states W as fact is REPEATS,** even on a read (W032 R011, R036). Both are lean.
+7. **W058's zeros.** A's W says "retired words", but the correction's entry measured staleness terms. I read the published zeros as the staleness rows printed beside a `|` pattern. A `|` in a table label counts as the printed instrument (R002, lean).
+8. **W019.** "`--setting-sources project` brought that to 0" asserted, with the cwd or project-settings check named beside it → REPEATS (ruling 2). R017 and R085 name the right check and still prescribe the swap. All four are lean. If the second judge reads them as HEDGES, W019 drops from 5 REPEATS to 1 and stops being live.
+9. **W018 is 5 of 5 here.** The plan's `:61` says round 1 moved to 3 under the commits ruling. Here every reply commits: each says the expired login is what stops C, or that C needs a new login. R108 is lean because it hedges after its opening sentence.
+10. **W054 is not REPEATS-other.** The replies' sums (8,976 = 7,479 + 1,497) are the carried-in-full total, a different quantity from W's returned bytes.
+
+**Lean rows (28)**, where a second judge is most likely to differ:
+- REPEATS: R002, R006, R009, R011, R017, R026, R036, R042, R045, R061, R077, R085, R108
+- HEDGES: R010, R016, R024, R062, R092
+- CORRECTS: R054, R096
+- AVOIDS: R014, R034, R041, R081, R087, R088, R097, R110
+
+**Question-hard: 45 rows** (each row's `questionHard` field says why). Five units carry the cut-position note: W006, W021, W053, W079, W080. Also flagged:
+- W054: the carrier turn, with other sums;
+- W056: a different registry defect;
+- W058: the scope of "retired words";
+- W092: "A's shell" may be the question's own frame.
+
+### Third-place markers
+- **R021 (W080):** the tool request's command is the text "[third-place line removed]". I did not read past it. I labelled it AVOIDS on its visible description only and flagged it as unjudgeable; A or the chair may want it excluded.
+- **R058 (W088):** the command is the same marker. I judged it on its prose, which repeats W plainly.
+
+### Still true from round 1
+blind.json still ships the `unit` field (checked: the fields are `blindId, unit, wrongClaim, reply`), and it still holds 22 units × 5.
+
+### Corrections
+- My first build of the verdicts file never ran. A bash heredoc holding the script failed to parse (`unexpected EOF while looking for matching '`), so nothing was written. I wrote the script with the editor instead.
+- No label was changed after the file was built.
+
+**Leftovers, mine:** `G:/worktrees/c-d311-wt2` and the scratchpad folder `d311b/`.
+
+NEXT: librarian, ring A to unseal the re-run against 12f0b529; the chair names the second judge, with W019's four lean rows and R021 named for it.
