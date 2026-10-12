@@ -1,0 +1,27 @@
+== C d303 red-first (draw.js at f2597aa9) · asked 2026-10-12T05:01:15.670Z · lock held 2026-10-12T05:01:15.705Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd G:/worktrees/c-d303-wt/exo_memory/loop/claimrec && git diff --stat -- draw.js; node --test --test-reporter=tap draw.test.js 2>&1 | grep -E '^(not )?ok|^# (tests|pass|fail|skipped)'
+ok 1 - orderKey is sha256("L119|" + message.id), and the draw is ascending by it whatever order the input comes in
+ok 2 - claimId is message.id|n
+ok 3 - capK keeps the K statements first in sha256(id|n) order, returned by n; fewer than K keeps all; none keeps none
+ok 4 - assignment: B and C never see their own seat; the others split by parity of the first byte; the overlap is the second byte < 64 and only for librarian, chair, A, E
+ok 5 - assignment over 4,000 synthetic claims: about a quarter overlap, an even B/C split, and no B or C seat in the overlap
+ok 6 - the re-measure window refuses to be drawn one millisecond before it closes, and runs at the closing instant; the original window is never refused
+ok 7 - the registered re-measure window is 2026-10-03T11:55:00Z to 2026-10-10T11:55:00Z, seven days (05:55 Regina local)
+ok 8 - a turn is [the real prompt at or before the line, the next real prompt)
+ok 9 - extractReply: [label] lines, one blank line between parts, thinking and non-writing tools left out, CRLF -> LF
+ok 10 - extractReply keeps a duplicated uuid once
+ok 11 - echo and printf strings redirected with > or >> are written text; an echo with no redirect is not
+ok 12 - draw: takes the first 100 in order-key order across seats, writes one reply per id, ids sorted by order key, turn lines recorded, no id twice
+ok 13 - draw refuses with fewer than M eligible messages
+ok 14 - a cited line removes every frame message of its turn and no other
+ok 15 - the original window refuses a frame that is not the sealed 5,023
+ok 16 - assign: three claims per message by the cap, B gets none of its own, the overlap is on both files, claim ids are id|n, and the private index lists every claim once
+not ok 17 - the h3 window is 2026-10-11T00:34:07Z to 2026-10-18T00:34:07Z, seven days, closing at its end; draw refuses one millisecond before the close and runs at it
+not ok 18 - `draw --window h3` REFUSES before the window closes, exits 2, and writes nothing
+not ok 19 - `frame --window h3` runs: exit 0, and it prints the h3 window
+ok 20 - REAL DATA: the original window, drawn with the 24 cited turns, reproduces L119: frame 5,023, 43 excluded (20 librarian, 23 B), eligible 4,980, the seat split 31/17/14/14/14/10, and drawn_ids.txt sha256 23282ca2…
+# tests 20
+# pass 17
+# fail 3
+# skipped 0
+== exit 0 · done 2026-10-12T05:01:20.526Z

@@ -28,6 +28,8 @@ const WINDOWS = {
   original: { name: 'original', from: '2026-09-14T00:00:00Z', to: '2026-09-24T00:00:00Z', expectFrame: 5023, expectExcluded: 43, closes: null },
   // remeasure_registration_2026-10-03.md: start 2026-10-03 05:55 local (Regina, UTC-6) = 11:55Z; end seven days later (the 100-message floor is already met).
   remeasure: { name: 'remeasure', from: '2026-10-03T11:55:00Z', to: '2026-10-10T11:55:00Z', expectFrame: null, expectExcluded: null, closes: '2026-10-10T11:55:00Z' },
+  // h3_runbook_2026-10-17.md §3: the H3 light week, 2026-10-11T00:34:07Z for seven days; no draw before it closes.
+  h3: { name: 'h3', from: '2026-10-11T00:34:07Z', to: '2026-10-18T00:34:07Z', expectFrame: null, expectExcluded: null, closes: '2026-10-18T00:34:07Z' },
 };
 
 const shaHex = (s) => crypto.createHash('sha256').update(s).digest('hex');

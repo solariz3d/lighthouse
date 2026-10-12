@@ -152,6 +152,39 @@ test('assign: three claims per message by the cap, B gets none of its own, the o
   assert.deepStrictEqual(Object.keys(B[0]).sort(), ['claimId', 'lines', 'messageId', 'nextPromptLine', 'seat', 'statement', 'transcript', 'ts', 'turnStartLine'].sort());
 });
 
+// ---- the H3 window (h3_runbook_2026-10-17.md §3): frame runs any time, draw refuses before it closes ----
+// The CLI rows run draw.js against a synthetic home, so they never read this machine's real transcripts.
+function cli(args) {
+  const home = fs.mkdtempSync(path.join(tmp, 'home-'));
+  fs.mkdirSync(path.join(home, '.claude')); fs.renameSync(mkRoot(5), path.join(home, '.claude', 'projects'));
+  const r = require('child_process').spawnSync(process.execPath, [path.join(__dirname, 'draw.js'), ...args],
+    { encoding: 'utf8', env: { ...process.env, HOME: home, USERPROFILE: home } });
+  return { status: r.status, out: r.stdout, err: r.stderr, home };
+}
+
+test('the h3 window is 2026-10-11T00:34:07Z to 2026-10-18T00:34:07Z, seven days, closing at its end; draw refuses one millisecond before the close and runs at it', () => {
+  const w = D.WINDOWS.h3;
+  assert.deepStrictEqual(w, { name: 'h3', from: '2026-10-11T00:34:07Z', to: '2026-10-18T00:34:07Z', expectFrame: null, expectExcluded: null, closes: '2026-10-18T00:34:07Z' });
+  assert.strictEqual(Date.parse(w.to) - Date.parse(w.from), 7 * 86400e3);
+  assert.throws(() => D.guard(w, Date.parse(w.closes) - 1), /the h3 window closes at 2026-10-18T00:34:07Z/);
+  assert.doesNotThrow(() => D.guard(w, Date.parse(w.closes)));
+});
+
+test('`draw --window h3` REFUSES before the window closes, exits 2, and writes nothing', (t) => {
+  if (Date.now() >= Date.parse('2026-10-18T00:34:07Z')) return t.skip('the h3 window has closed; the guard row above still pins the refusal');
+  const out = path.join(tmp, 'h3-out');
+  const r = cli(['draw', '--window', 'h3', '--out', out]);
+  assert.strictEqual(r.status, 2, r.err);
+  assert.match(r.err, /the h3 window closes at 2026-10-18T00:34:07Z/);
+  assert.ok(!fs.existsSync(out), 'nothing is written before the close');
+});
+
+test('`frame --window h3` runs: exit 0, and it prints the h3 window', () => {
+  const r = cli(['frame', '--window', 'h3']);
+  assert.strictEqual(r.status, 0, r.err);
+  assert.match(r.out, /window h3 \[2026-10-11T00:34:07Z, 2026-10-18T00:34:07Z\): frame \d+/);
+});
+
 // ---- REAL DATA: the rebuilt draw reproduces L119's, byte for byte ----
 test('REAL DATA: the original window, drawn with the 24 cited turns, reproduces L119: frame 5,023, 43 excluded (20 librarian, 23 B), eligible 4,980, the seat split 31/17/14/14/14/10, and drawn_ids.txt sha256 23282ca2…', (t) => {
   const absent = Object.keys(F.SEATS).filter((s) => !fs.existsSync(F.seatFile(s)));
