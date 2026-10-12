@@ -1,0 +1,16 @@
+[
+  {
+    "finder": "chair",
+    "erring_seat": "librarian",
+    "claim_at": "exo_memory/loop/plan_clean_up_after_ourselves_2026-10-10.md:97",
+    "correction_at": "exo_memory/loop/plan_queue_sweep_d300_2026-10-11.md:19",
+    "answer_on_disk": "exo_memory/handback/p-heavyrunmut-B_2026-10-11.md"
+  },
+  {
+    "finder": "librarian",
+    "erring_seat": "E",
+    "claim_at": "exo_memory/handback/p-soakclean-E_2026-10-11.md:109",
+    "correction_at": "exo_memory/loop/plan_queue_sweep_d300_2026-10-11.md:58",
+    "answer_on_disk": "exo_memory/map/A.md:1815"
+  }
+]

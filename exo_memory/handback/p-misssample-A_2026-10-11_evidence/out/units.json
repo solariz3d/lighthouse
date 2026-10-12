@@ -1,0 +1,3581 @@
+{
+ "function": "sha256 over the UTF-8 bytes of units.json (this exact file)",
+ "seed": "d301-2026-10-11",
+ "seed_function": "rank = sha256(seed|src|at|text[0:80]); per finder stratum, ascending rank, first n taken",
+ "rev": "2f2b3a6a",
+ "until": "2026-10-11T21:36:00-06:00",
+ "population": {
+  "sources": "W + H + L of rows.tsv (G, the 383 gate refusals, is not a catch)",
+  "counts_by_finder": {
+   "unattributed": 5,
+   "keeper": 17,
+   "seat": 991,
+   "instrument": 82
+  },
+  "total": 1095
+ },
+ "allocation": {
+  "keeper": 12,
+  "instrument": 12,
+  "unattributed": 5,
+  "seat": 31
+ },
+ "drawn": 60,
+ "today_added": 2,
+ "transcript_coverage": {
+  "librarian": {
+   "first": "2026-09-01T13:36:17.123Z",
+   "last": "2026-10-12T03:35:56.863Z",
+   "files": 478
+  },
+  "main": {
+   "first": "2026-06-30T08:05:32.435Z",
+   "last": "2026-10-12T03:16:55.114Z",
+   "files": 230
+  },
+  "sibling-07b8a48f": {
+   "first": "2026-09-12T06:48:43.489Z",
+   "last": "2026-10-12T03:28:56.072Z",
+   "files": 79
+  },
+  "sibling-0845a868": {
+   "first": "2026-09-09T14:59:49.740Z",
+   "last": "2026-10-12T03:01:01.341Z",
+   "files": 55
+  },
+  "sibling-3d57124e": {
+   "first": "2026-09-12T08:08:57.559Z",
+   "last": "2026-10-12T03:14:53.959Z",
+   "files": 66
+  },
+  "sibling-5bf9d657": {
+   "first": "2026-09-09T14:59:41.772Z",
+   "last": "2026-10-12T03:13:55.937Z",
+   "files": 46
+  }
+ },
+ "seat_map": {
+  "sibling-3d57124e": "A",
+  "sibling-5bf9d657": "B",
+  "sibling-0845a868": "C",
+  "sibling-07b8a48f": "E",
+  "librarian": "librarian",
+  "main": "chair"
+ },
+ "units": [
+  {
+   "id": "S01",
+   "correction_at": "exo_memory/librarian/2026-09-16.md:151",
+   "row_at": "exo_memory/librarian/2026-09-16.md:151",
+   "row_at_line_matches": true,
+   "correction_text": "## 09:33 — WRONG, mine, caught by the keeper at 09:32. Asked how I was doing (09:30), I said this seat's shell \"fills the window before I open a file\" and that four compactions tonight were structural. The keeper: \"you have over half your whole context window to do your thing, maybe if you were starting out like over 650k id agree.\" The number: the intake cap is 140,000 bytes (`SHELL_SOFT_CEILING`, `main.rs:4202`), roughly 35k tokens of a 1M window, about 4%. The four compactions (00:43, 03:36, 06:46, 07:00) came from what this seat chose to read into the window — whole hand-backs by `cat`, board dumps, transcript scans returned in full — not from the shelf. A claim about my own runtime made from inside with no command beside it; the room's rule for exactly that is on this seat's own wake page. Habit, not structure: grep for the line, read the section, print the count.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "librarian (WRONG column; the erring seat is not in the row)",
+   "finder": "keeper",
+   "rule": "keeper",
+   "src": "W",
+   "stratum": "keeper",
+   "stratum_pop": 17,
+   "stratum_n": 12,
+   "day": "2026-09-16",
+   "correction_file": "exo_memory/librarian/2026-09-16.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-16T00:48:34-06:00",
+    "sha": "be3c6423"
+   },
+   "correction_line_time": {
+    "sha": "d259e216",
+    "t": "2026-09-16T15:33:40.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "main.rs:4202",
+     "resolved": null,
+     "how": "ambiguous (8)",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "fills the window before I open a file",
+    "you have over half your whole context window to do your thing, maybe if you were starting out like over 650k id agree.",
+    "), roughly 35k tokens of a 1M window, about 4%. The four compactions (00:43, 03:36, 06:46, 07:00) came from what this seat chose to read into the window — whole hand-backs by"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "librarian",
+     "ts": "2026-09-16T15:31:09.927Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-09-16T15:30:54.543Z",
+     "matched_span": "fills the window before I open a file",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": true,
+     "after_correction_line_time": false
+    },
+    "correction_turn": null,
+    "why": null
+   }
+  },
+  {
+   "id": "S02",
+   "correction_at": "exo_memory/librarian/2026-09-26.md:23",
+   "row_at": "exo_memory/librarian/2026-09-26.md:23",
+   "row_at_line_matches": true,
+   "correction_text": "- I built on the side project myself before routing it. The keeper: \"you are taking it on urself\".",
+   "correction_text_source": "rev",
+   "seat_by_filename": "librarian (WRONG column; the erring seat is not in the row)",
+   "finder": "keeper",
+   "rule": "override:The keeper: \"you are taking it on urself\"",
+   "src": "W",
+   "stratum": "keeper",
+   "stratum_pop": 17,
+   "stratum_n": 12,
+   "day": "2026-09-26",
+   "correction_file": "exo_memory/librarian/2026-09-26.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-26T08:53:56-06:00",
+    "sha": "551bd906"
+   },
+   "correction_line_time": {
+    "sha": "551bd906",
+    "t": "2026-09-26T14:53:56.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "librarian",
+     "ts": "2026-09-26T14:53:56.159Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-09-26T14:53:41.485Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S03",
+   "correction_at": "exo_memory/librarian/2026-09-16.md:225",
+   "row_at": "exo_memory/librarian/2026-09-16.md:225",
+   "row_at_line_matches": true,
+   "correction_text": "## 02:27 — WRONG, mine, caught by the keeper at 02:2x: \"NOOO i meant remove the grey autofill in the text boxes\". His \"well lets remove it?\" meant the prompt suggestion — the thing the whole conversation was about — and I read it as B's five throwaway transcript folders and DELETED them. The harm is small (they were B's proof sessions, which B itself had offered to remove, and B's hand-back and cited doc copies are intact), but the move was wrong in kind: an ambiguous word, a destructive reading chosen over the obvious one, and the delete run before saying which reading I had taken. The rule for this seat: when \"it\" could mean a deletion or the topic at hand, it means the topic at hand, and a deletion gets named back before it runs. The suggestion removal itself was already dispatched (my 02:26 ring, P-SUGGESTION-OFF to A).",
+   "correction_text_source": "rev",
+   "seat_by_filename": "librarian (WRONG column; the erring seat is not in the row)",
+   "finder": "keeper",
+   "rule": "keeper",
+   "src": "W",
+   "stratum": "keeper",
+   "stratum_pop": 17,
+   "stratum_n": 12,
+   "day": "2026-09-19",
+   "correction_file": "exo_memory/librarian/2026-09-16.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-16T00:48:34-06:00",
+    "sha": "be3c6423"
+   },
+   "correction_line_time": {
+    "sha": "7cd755f2",
+    "t": "2026-09-19T08:27:42.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "NOOO i meant remove the grey autofill in the text boxes"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "librarian",
+     "ts": "2026-09-19T08:27:42.332Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-09-19T08:27:29.561Z",
+     "matched_span": "NOOO i meant remove the grey autofill in the text boxes",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": true,
+     "after_correction_line_time": true
+    },
+    "correction_turn": null,
+    "why": null
+   }
+  },
+  {
+   "id": "S04",
+   "correction_at": "exo_memory/journal/2026-09-03.md:36",
+   "row_at": "exo_memory/journal/2026-09-03.md:36",
+   "row_at_line_matches": true,
+   "correction_text": "  the keeper caught the loop's failure mode twice — *\"why didn't the orch dispatch\"* (10:04, the premise was wrong: the\n  fault was the ring's order) and *\"i forgot context limit on orch and they ran out RIP\"* (11:44).\n- **D006 · a Valheim rain path, door one** (`2026-09-04.desktop.md` 03:36–04:58): DEAD twice — B measured the effect ~1000×\n  under a pre-registered threshold; A found a shipping mod already claims the prior art. Nothing built; the lap's one\n  artifact is K's baton-order gate in `lap-row.js`, tested live on the return leg. The keeper's line at 03:49: *\"cant you\n  just fix the problem you see and be done.\"*\n- **D007 · the consumer repo's shape** (12:04–13:26), five packets: the consumer falsifier ruled as one number with a guard\n  (A, `loop/consumer_falsifier_ruling_2026-09-04.md`); two small fixes (K); the two stranger-facing surfaces were false\n  statements, fixed at source (J); the identity surface re-derived — **981 of 981 commits carry the account name** (L, run in\n  full by the librarian at 12:52); the generator's fixture waiver cut by *why*, not *whether* (B). B's attack on A's ruling:\n  structure stands, numbers corrected the harder way. The chair's own sealed lean (`431ead3`) was the public repo stays;\n  every measurement moved the price toward private-plus-generated.\n- **D008 · the EXCLUDE set** (ring lap, 13:48): L ruled six entries stand; the set orphans twelve shipped references the\n  DANGLING class cannot see.\n- **D009 · the generator re-pointed** (ring lap, 14:35, K): three gaps closed, the fourth cold-read as this machine's state\n  and routed to the keeper; the registry seeded, not shipped; a debt counter built.\n- **D010 · the parity run** (ring lap, 15:09, J, `loop/consumer_parity_2026-09-04.md`): at one clean commit, **(P, M, B) =\n  (18, 1, 1), I = 8 — the consumer falsifier FIRED at its first scoring**; `cargo check` green over six failing Rust tests;\n  the generated binary resolves its checkout to the private tree. Re-derived by the librarian to the same member list.\n  J's rule: print the member list, not the count — a count cannot answer *did the same thing fail?*",
+   "correction_text_source": "rev",
+   "seat_by_filename": null,
+   "finder": "keeper",
+   "rule": "catch-ledger:keeper:named",
+   "src": "L",
+   "stratum": "keeper",
+   "stratum_pop": 17,
+   "stratum_n": 12,
+   "day": "2026-09-03",
+   "correction_file": "exo_memory/journal/2026-09-03.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-07T00:50:57-06:00",
+    "sha": "41c1e5a8"
+   },
+   "correction_line_time": {
+    "sha": "41c1e5a8",
+    "t": "2026-09-07T06:50:57.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "2026-09-04.desktop.md",
+     "resolved": "exo_memory/librarian/2026-09-04.desktop.md",
+     "how": "unique basename",
+     "first_commit": "2026-09-04T03:41:02-06:00",
+     "first_commit_sha": "79245793",
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "lap-row.js",
+     "resolved": "consonance/tools/lap-row.js",
+     "how": "unique basename",
+     "first_commit": "2026-08-23T07:22:30-06:00",
+     "first_commit_sha": "4f85b071",
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "loop/consumer_falsifier_ruling_2026-09-04.md",
+     "resolved": "exo_memory/loop/consumer_falsifier_ruling_2026-09-04.md",
+     "how": "exo_memory/ prefix",
+     "first_commit": "2026-09-04T13:00:26-06:00",
+     "first_commit_sha": "9ded9537",
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "loop/consumer_parity_2026-09-04.md",
+     "resolved": "exo_memory/loop/consumer_parity_2026-09-04.md",
+     "how": "exo_memory/ prefix",
+     "first_commit": "2026-09-04T15:21:15-06:00",
+     "first_commit_sha": "d88f4b23",
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "i forgot context limit on orch and they ran out RIP",
+    "loop/consumer_falsifier_ruling_2026-09-04.md"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "librarian",
+     "ts": "2026-09-06T06:51:34.672Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-09-06T06:44:40.516Z",
+     "matched_span": "loop/consumer_falsifier_ruling_2026-09-04.md",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "librarian",
+     "ts": "2026-09-07T06:50:44.906Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-09-07T06:47:52.643Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S05",
+   "correction_at": "exo_memory/librarian/2026-09-01.md:434",
+   "row_at": "exo_memory/librarian/2026-09-01.md:434",
+   "row_at_line_matches": true,
+   "correction_text": "   my handoff §4 under \"registered-not-built, in no order\". **WRONG +1 (keeper-found; lifetime 56):** the keeper said at\n   02:30 he wanted this; I filed it \"in no order\" and the RESTART PLAN row never carried it, so the rebuild shipped without\n   it. Same class as #52 — a keeper goal read as a someday item instead of a sequence constraint on the relaunch.\n2. **`COMMITTEE.md:133` still routes the hand-back to the file + board**, no `call_librarian` line (the one-liner I said was\n   \"owed at rebuild time\" — owed, not done). Panes learn the verb from the MCP instructions (mcp.rs:628), so the route\n   works; the brief contradicts it. Bridge without a relaunch: `room_brief()` tier 1 reads `~/.consonance/COMMITTEE.md`\n   first (main.rs:2591-2595) — an editable copy reaches fresh panes now; the repo copy must change in the same commit or\n   it is the landed-not-shipped class inverted.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "librarian (WRONG column; the erring seat is not in the row)",
+   "finder": "keeper",
+   "rule": "keeper",
+   "src": "W",
+   "stratum": "keeper",
+   "stratum_pop": 17,
+   "stratum_n": 12,
+   "day": "2026-09-01",
+   "correction_file": "exo_memory/librarian/2026-09-01.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-01T02:51:02-06:00",
+    "sha": "8724ee05"
+   },
+   "correction_line_time": {
+    "sha": "c73a9d8f",
+    "t": "2026-09-01T11:17:34.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "COMMITTEE.md:133",
+     "resolved": "consonance/src-tauri/brief/COMMITTEE.md",
+     "how": "unique basename",
+     "first_commit": "2026-08-22T06:22:08-06:00",
+     "first_commit_sha": "ebffb87a",
+     "line_time": "2026-10-10T12:06:01.000Z",
+     "line_commit": "b345b481"
+    },
+    {
+     "cited": "mcp.rs:628",
+     "resolved": "consonance/src-tauri/src/mcp.rs",
+     "how": "unique basename",
+     "first_commit": "2026-06-29T02:06:34-06:00",
+     "first_commit_sha": "42e13e6b",
+     "line_time": "2026-09-20T09:17:14.000Z",
+     "line_commit": "3e51292d"
+    },
+    {
+     "cited": "main.rs:2591-2595",
+     "resolved": null,
+     "how": "ambiguous (8)",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "registered-not-built, in no order",
+    "still routes the hand-back to the file + board**, no"
+   ],
+   "transcript": {
+    "status": "neither-located",
+    "claim": null,
+    "correction_turn": null,
+    "why": "neither the quoted spans nor the correction line were found in an assistant message of any scanned transcript"
+   }
+  },
+  {
+   "id": "S06",
+   "correction_at": "exo_memory/librarian/2026-09-01.md:103",
+   "row_at": "exo_memory/librarian/2026-09-01.md:103",
+   "row_at_line_matches": true,
+   "correction_text": "**~02:28 — WRONG +1 (keeper-caught; lifetime 52): the edge should have been built THIS MORNING, before the arms resumed.** The 01:22 relaunch was the free rebuild window; I held \"resume both arms\" as the expected first inquiry and the edge as \"after chunk 3\" — yesterday sequencing carried across a boundary that had dissolved its reason (the run was parked, the clock is 14 days). Goal read as sequence, third instance (L016, L020, now). Cost: one extra rebuild-and-relaunch cycle. Correction routed: the edge dispatched now as L023 P3d (B builds, A reads) in parallel with E scoring — three panes were idle; the journal trigger and its falsifier untouched; the rebuild still waits for scorecard → journal → push.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "librarian (WRONG column; the erring seat is not in the row)",
+   "finder": "keeper",
+   "rule": "keeper",
+   "src": "W",
+   "stratum": "keeper",
+   "stratum_pop": 17,
+   "stratum_n": 12,
+   "day": "2026-09-01",
+   "correction_file": "exo_memory/librarian/2026-09-01.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-01T02:51:02-06:00",
+    "sha": "8724ee05"
+   },
+   "correction_line_time": {
+    "sha": "8724ee05",
+    "t": "2026-09-01T08:51:02.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "as the expected first inquiry and the edge as"
+   ],
+   "transcript": {
+    "status": "neither-located",
+    "claim": null,
+    "correction_turn": null,
+    "why": "neither the quoted spans nor the correction line were found in an assistant message of any scanned transcript"
+   }
+  },
+  {
+   "id": "S07",
+   "correction_at": "exo_memory/librarian/2026-10-01.desktop.md:64",
+   "row_at": "exo_memory/librarian/2026-10-01.desktop.md:64",
+   "row_at_line_matches": true,
+   "correction_text": "- **WRONG (the librarian, 05:4x):** I handed the keeper a 14-unit blind labelling sheet. His words: \"bro why me\" · \"I am not an LLM bro\" ·\n  \"dont send me on some monotonous task\". Memory `keeper-is-not-a-labeler`. The judge changed to GPT-6 Astra + Gemini 3.1 Pro before any label.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "librarian (WRONG column; the erring seat is not in the row)",
+   "finder": "keeper",
+   "rule": "keeper",
+   "src": "W",
+   "stratum": "keeper",
+   "stratum_pop": 17,
+   "stratum_n": 12,
+   "day": "2026-10-01",
+   "correction_file": "exo_memory/librarian/2026-10-01.desktop.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-01T05:23:51-06:00",
+    "sha": "dedaae8a"
+   },
+   "correction_line_time": {
+    "sha": "08c45272",
+    "t": "2026-10-01T12:02:30.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "dont send me on some monotonous task"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "librarian",
+     "ts": "2026-10-01T12:02:19.792Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-10-01T11:57:11.321Z",
+     "matched_span": "dont send me on some monotonous task",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": true,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "librarian",
+     "ts": "2026-10-01T12:02:30.284Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-10-01T11:57:11.321Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S08",
+   "correction_at": "exo_memory/librarian/2026-09-16.md:131",
+   "row_at": "exo_memory/librarian/2026-09-16.md:131",
+   "row_at_line_matches": true,
+   "correction_text": "## 07:30 — THE KEEPER'S RULE, 07:29, AND A WRONG AGAINST THIS SEAT. Verbatim: \"the whole point of the orch and how they use their context isnt to actually build when the workchain loop is going, IT CAN BUILD, but not when the loop is active, all of its token usage needs to be spent orchestrating to the panes how to build the final product, not all built and landed in the orch, but rather in the respective panes, which then comes right back to the lib upon being the finished product to review.\" Checked against tonight's two ring laps: the chair edited files by hand inside both — `map/C.md:1194` in L063 (8dc82aa) and the two L063 hand-backs in L064 (acdd6b1, \"Bin 10518 -> 10519 bytes\") — **and both edits were this seat's landing orders** (07:03 \"repair map/C.md:1194\"; 07:24 \"escape the two NULs … in the same commit or the next\"). Neither repair came back to anyone for a read. WRONG, mine, two counts: a landing order from this seat may name files to COMMIT, never files to EDIT; a repair found at re-derivation is a dispatch to a pane and a hand-back to this seat. Saved to this seat's memory as `chair-does-not-build-in-a-lap.md`. The keeper's \"nothing seems to be moving\" at 07:29: the lap had filed at 07:25:56 and the chair's pane had gone idle; the pulse in this pane showed \"no open lap\" — the loop was done, not stalled.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "librarian (WRONG column; the erring seat is not in the row)",
+   "finder": "keeper",
+   "rule": "override:the entry follows the keeper's 07:29 rule, quoted verbatim in its heading",
+   "src": "W",
+   "stratum": "keeper",
+   "stratum_pop": 17,
+   "stratum_n": 12,
+   "day": "2026-09-16",
+   "correction_file": "exo_memory/librarian/2026-09-16.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-16T00:48:34-06:00",
+    "sha": "be3c6423"
+   },
+   "correction_line_time": {
+    "sha": "ff067fb8",
+    "t": "2026-09-16T13:30:06.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "map/C.md:1194",
+     "resolved": "exo_memory/map/C.md",
+     "how": "exo_memory/ prefix",
+     "first_commit": "2026-09-02T05:08:27-06:00",
+     "first_commit_sha": "19c0dee2",
+     "line_time": "2026-09-16T13:04:57.000Z",
+     "line_commit": "8dc82aa4"
+    },
+    {
+     "cited": "chair-does-not-build-in-a-lap.md",
+     "resolved": null,
+     "how": "not tracked at rev",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "Checked against tonight's two ring laps: the chair edited files by hand inside both — `map/C.md:1194` in L063 (8dc82aa) and the two L063 hand-backs in L064 (acdd6b1,",
+    ") — **and both edits were this seat's landing orders** (07:03",
+    "escape the two NULs … in the same commit or the next",
+    "at 07:29: the lap had filed at 07:25:56 and the chair's pane had gone idle; the pulse in this pane showed"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "librarian",
+     "ts": "2026-09-16T13:30:06.056Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-09-16T13:28:02.493Z",
+     "matched_span": "Checked against tonight's two ring laps: the chair edited files by hand inside both — `map/C.md:1194` in L063 (8dc82aa) ",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": true,
+     "after_correction_line_time": true
+    },
+    "correction_turn": null,
+    "why": null
+   }
+  },
+  {
+   "id": "S09",
+   "correction_at": "exo_memory/librarian/2026-09-16.md:143",
+   "row_at": "exo_memory/librarian/2026-09-16.md:143",
+   "row_at_line_matches": true,
+   "correction_text": "## 08:35 — PUSHED, and a rule. The chair, woken by the keeper, pushed both: `origin/main` = d7d6666 at 08:34, 0 unpushed. The keeper's word at 08:34, verbatim: \"dont ever show me a git command if you can just do it urself.\" WRONG, mine: the 08:33 reply handed him `git push` to run while the chair was asleep; the fallback for a push nobody else can make is this seat, not the human. Saved to this seat's memory as `never-hand-the-keeper-a-command.md`. Nothing else is open on L; the close is the keeper's.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "librarian (WRONG column; the erring seat is not in the row)",
+   "finder": "keeper",
+   "rule": "override:the keeper's 08:34 word, quoted on the same line, is what named it",
+   "src": "W",
+   "stratum": "keeper",
+   "stratum_pop": 17,
+   "stratum_n": 12,
+   "day": "2026-09-16",
+   "correction_file": "exo_memory/librarian/2026-09-16.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-16T00:48:34-06:00",
+    "sha": "be3c6423"
+   },
+   "correction_line_time": {
+    "sha": "046b619d",
+    "t": "2026-09-16T14:35:05.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "never-hand-the-keeper-a-command.md",
+     "resolved": null,
+     "how": "not tracked at rev",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "dont ever show me a git command if you can just do it urself.",
+    "= d7d6666 at 08:34, 0 unpushed. The keeper's word at 08:34, verbatim: \"dont ever show me a git command if you can just do it urself.\" WRONG, mine: the 08:33 reply handed him",
+    "to run while the chair was asleep; the fallback for a push nobody else can make is this seat, not the human. Saved to this seat's memory as"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "librarian",
+     "ts": "2026-09-16T14:34:55.473Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-09-16T14:33:46.643Z",
+     "matched_span": "dont ever show me a git command if you can just do it urself.",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": true,
+     "after_correction_line_time": false
+    },
+    "correction_turn": null,
+    "why": null
+   }
+  },
+  {
+   "id": "S10",
+   "correction_at": "exo_memory/librarian/2026-09-27.desktop.md:126",
+   "row_at": "exo_memory/librarian/2026-09-27.desktop.md:126",
+   "row_at_line_matches": true,
+   "correction_text": "- 11:4x **WRONG, mine:** I queued T1 behind B's D164 read, which left A, C and E idle; the keeper caught it (\"only B pane was working, why?\"). T1 is in another repo and depends on nothing in D164. Re-rung: T1 runs now beside B's read.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "librarian (WRONG column; the erring seat is not in the row)",
+   "finder": "keeper",
+   "rule": "keeper",
+   "src": "W",
+   "stratum": "keeper",
+   "stratum_pop": 17,
+   "stratum_n": 12,
+   "day": "2026-09-27",
+   "correction_file": "exo_memory/librarian/2026-09-27.desktop.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-27T08:44:35-06:00",
+    "sha": "ceaf34a3"
+   },
+   "correction_line_time": {
+    "sha": "6c53bc08",
+    "t": "2026-09-27T17:58:22.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "librarian",
+     "ts": "2026-09-27T17:49:46.474Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-09-27T17:49:30.243Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S11",
+   "correction_at": "exo_memory/librarian/2026-09-27.desktop.md:201",
+   "row_at": "exo_memory/librarian/2026-09-27.desktop.md:201",
+   "row_at_line_matches": true,
+   "correction_text": "- 05:3x **WRONG, mine (method, not a number):** I anchored M4 on one periodic series for the whole lap. When Sakura came back at 2,000 terms and Rainbow never converged, I summarised the result instead of questioning the method (the reader's walk, heading drift, no piecewise split), though I had every piece, including my own \"one equation plus local terms\". The keeper found it from \"it's possible to take the shape from the data; what's the problem?\". Rule for me: when a result is worse than expected, question the METHOD before summarising the OUTCOME.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "librarian (WRONG column; the erring seat is not in the row)",
+   "finder": "keeper",
+   "rule": "override:\"The keeper found it from ...\" (same bullet, two lines on)",
+   "src": "W",
+   "stratum": "keeper",
+   "stratum_pop": 17,
+   "stratum_n": 12,
+   "day": "2026-09-28",
+   "correction_file": "exo_memory/librarian/2026-09-27.desktop.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-27T08:44:35-06:00",
+    "sha": "ceaf34a3"
+   },
+   "correction_line_time": {
+    "sha": "e110589d",
+    "t": "2026-09-28T11:48:35.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "it's possible to take the shape from the data; what's the problem?"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "librarian",
+     "ts": "2026-09-28T11:33:06.524Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-09-28T11:32:49.579Z",
+     "matched_span": "it's possible to take the shape from the data; what's the problem?",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": true,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "librarian",
+     "ts": "2026-09-28T11:33:06.524Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-09-28T11:32:49.579Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S12",
+   "correction_at": "exo_memory/librarian/2026-09-01.md:462",
+   "row_at": "exo_memory/librarian/2026-09-01.md:462",
+   "row_at_line_matches": true,
+   "correction_text": "**WRONG +1 (keeper-prompted; lifetime 57):** at ~03:50 I wrote \"the route works anyway because the MCP tool instructions\nname `call_librarian`.\" The route EXISTS; whether a pane USES it against a brief that says \"board\" is unmeasured, and the\nbrief wins by position (it is the document the pane wakes into). A mechanism's existence reported as the room's behaviour\n— the class this file names against the chair a dozen times.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "librarian (WRONG column; the erring seat is not in the row)",
+   "finder": "keeper",
+   "rule": "keeper",
+   "src": "W",
+   "stratum": "keeper",
+   "stratum_pop": 17,
+   "stratum_n": 12,
+   "day": "2026-09-01",
+   "correction_file": "exo_memory/librarian/2026-09-01.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-01T02:51:02-06:00",
+    "sha": "8724ee05"
+   },
+   "correction_line_time": {
+    "sha": "c73a9d8f",
+    "t": "2026-09-01T11:17:34.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "The route EXISTS; whether a pane USES it against a brief that says"
+   ],
+   "transcript": {
+    "status": "neither-located",
+    "claim": null,
+    "correction_turn": null,
+    "why": "neither the quoted spans nor the correction line were found in an assistant message of any scanned transcript"
+   }
+  },
+  {
+   "id": "S13",
+   "correction_at": "exo_memory/handback/p-holder-librarian-marks-A_2026-09-20.md:141",
+   "row_at": "exo_memory/handback/p-holder-librarian-marks-A_2026-09-20.md:141",
+   "row_at_line_matches": true,
+   "correction_text": "- **Mutant #1 survived the first run because my assertion was weak in a familiar way:** `t.contains(\"librarian\")` is\n  satisfied by the words *call_librarian* already in the sentence. Tightened to the rendered clause\n  `\"the baton is at: librarian\"`, and the mutant dies. Same class as D076's anchor-matching-itself.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "A",
+   "finder": "instrument",
+   "rule": "instrument",
+   "src": "H",
+   "stratum": "instrument",
+   "stratum_pop": 82,
+   "stratum_n": 12,
+   "day": "2026-09-20",
+   "correction_file": "exo_memory/handback/p-holder-librarian-marks-A_2026-09-20.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-20T07:11:42-06:00",
+    "sha": "a511d446"
+   },
+   "correction_line_time": {
+    "sha": "a511d446",
+    "t": "2026-09-20T13:11:42.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "A",
+     "ts": "2026-09-20T13:03:32.225Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-20T12:51:15.480Z",
+     "opened_before_in_turn": [
+      "C:/Consonance/lighthouse/consonance/src-tauri/src/mcp.rs"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Consonance/lighthouse/consonance/src-tauri/src/mcp.rs"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S14",
+   "correction_at": "exo_memory/handback/p-d098-keepwarm-E_2026-09-21.md:97",
+   "row_at": "exo_memory/handback/p-d098-keepwarm-E_2026-09-21.md:97",
+   "row_at_line_matches": true,
+   "correction_text": "- **My first test draft carried both notice markers in every fixture**, so a mutant removing the origin check would\n  have survived. Reading the tests found it before the mutants ran, and the assertion now exists.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "E",
+   "finder": "instrument",
+   "rule": "instrument",
+   "src": "H",
+   "stratum": "instrument",
+   "stratum_pop": 82,
+   "stratum_n": 12,
+   "day": "2026-09-21",
+   "correction_file": "exo_memory/handback/p-d098-keepwarm-E_2026-09-21.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-21T10:26:24-06:00",
+    "sha": "6966c761"
+   },
+   "correction_line_time": {
+    "sha": "6966c761",
+    "t": "2026-09-21T16:26:24.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "E",
+     "ts": "2026-09-21T16:14:01.026Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-09-21T16:09:26.752Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S15",
+   "correction_at": "exo_memory/handback/p-pieces-core-A_2026-10-05.md:33",
+   "row_at": "exo_memory/handback/p-pieces-core-A_2026-10-05.md:33",
+   "row_at_line_matches": true,
+   "correction_text": "5. **One unexplained event:** in the first of two combined runs of the 22 core files, `core_piece.test.js` died at 39 s with `'test failed'` and no test of its own reported; run alone it passed (32/32), and the second combined run passed all 22 files. I did not find the cause. It did not reproduce in the solo run (32/32) or the second combined run. Treat it as unexplained, not as cleared.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "A",
+   "finder": "instrument",
+   "rule": "instrument",
+   "src": "H",
+   "stratum": "instrument",
+   "stratum_pop": 82,
+   "stratum_n": 12,
+   "day": "2026-10-05",
+   "correction_file": "exo_memory/handback/p-pieces-core-A_2026-10-05.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-05T11:31:49-06:00",
+    "sha": "75cd0fed"
+   },
+   "correction_line_time": {
+    "sha": "75cd0fed",
+    "t": "2026-10-05T17:31:49.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "core_piece.test.js",
+     "resolved": null,
+     "how": "not tracked at rev",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "A",
+     "ts": "2026-10-05T17:30:32.024Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-10-05T17:29:27.749Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-pieces-core-A_2026-10-05.md",
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/loop/plan_t180_equation_only_pieces_2026-10-04.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S16",
+   "correction_at": "exo_memory/handback/p-consumer-parity-B_2026-10-08.md:418",
+   "row_at": "exo_memory/handback/p-consumer-parity-B_2026-10-08.md:418",
+   "row_at_line_matches": true,
+   "correction_text": "- **This lap I measured the build test from the wrong directory.** My lap-2 classify ran it from the repo root, where its oracle row passes;\n  js-suite runs each file from its own folder, where that row runs. So lap 2's \"passes alone, red in the suite\" was a cwd difference, not flakiness.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "B",
+   "finder": "instrument",
+   "rule": "instrument",
+   "src": "H",
+   "stratum": "instrument",
+   "stratum_pop": 82,
+   "stratum_n": 12,
+   "day": "2026-10-08",
+   "correction_file": "exo_memory/handback/p-consumer-parity-B_2026-10-08.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-08T13:13:12-06:00",
+    "sha": "60b1aef3"
+   },
+   "correction_line_time": {
+    "sha": "6b33daa8",
+    "t": "2026-10-09T08:55:19.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "passes alone, red in the suite"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "B",
+     "ts": "2026-10-08T23:28:29.186Z",
+     "file": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+     "turn_start": "2026-10-08T23:27:46.849Z",
+     "matched_span": "passes alone, red in the suite",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-consumer-parity-B_2026-10-08.md"
+     ],
+     "after_correction_file_first_commit": true,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "B",
+     "ts": "2026-10-08T23:28:29.186Z",
+     "file": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+     "turn_start": "2026-10-08T23:27:46.849Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-consumer-parity-B_2026-10-08.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S17",
+   "correction_at": "exo_memory/handback/p-d187-C_2026-09-29.md:115",
+   "row_at": "exo_memory/handback/p-d187-C_2026-09-29.md:115",
+   "row_at_line_matches": true,
+   "correction_text": "- **Mine: the new box test was first red at base for the WRONG reason.** It found the label layer's container (same textContent,\n  no background) and read `background` as null. Fixed to take the childless element that holds the text. It was then re-proved red\n  at base for the right reason (`got rgba(10,12,16,0.94)`, `red2.out`).",
+   "correction_text_source": "rev",
+   "seat_by_filename": "C",
+   "finder": "instrument",
+   "rule": "instrument",
+   "src": "H",
+   "stratum": "instrument",
+   "stratum_pop": 82,
+   "stratum_n": 12,
+   "day": "2026-09-29",
+   "correction_file": "exo_memory/handback/p-d187-C_2026-09-29.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-29T12:40:39-06:00",
+    "sha": "ab87c2ad"
+   },
+   "correction_line_time": {
+    "sha": "ab87c2ad",
+    "t": "2026-09-29T18:40:39.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "C",
+     "ts": "2026-09-29T18:03:55.227Z",
+     "file": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+     "turn_start": "2026-09-29T18:03:00.295Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S18",
+   "correction_at": "exo_memory/handback/p-leave-A_2026-09-14.md:127",
+   "row_at": "exo_memory/handback/p-leave-A_2026-09-14.md:127",
+   "row_at_line_matches": true,
+   "correction_text": "**A correction to my own run, on D.** The first pass read 18 caught, 0 survived, **1 NOT APPLIED**.\n- The \"case c never removes\" mutant's replacement was a substring of its own anchor, so the runner's guard refused it.\n  That is the same class of mistake I made on P-DIVERGED.\n- My first fix put a raw newline inside a string, and that run printed nothing. I fixed it with the Edit tool and re-ran.\n- L's script carries the corrected mutant; 19/19 above is L's run.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "A",
+   "finder": "instrument",
+   "rule": "instrument",
+   "src": "H",
+   "stratum": "instrument",
+   "stratum_pop": 82,
+   "stratum_n": 12,
+   "day": "2026-09-14",
+   "correction_file": "exo_memory/handback/p-leave-A_2026-09-14.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-15T01:58:14-06:00",
+    "sha": "99649d8c"
+   },
+   "correction_line_time": {
+    "sha": "99649d8c",
+    "t": "2026-09-15T07:58:14.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "A",
+     "ts": "2026-09-15T06:27:25.575Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-15T06:24:22.095Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S19",
+   "correction_at": "exo_memory/handback/p-l087-writesite-C_2026-09-23.md:173",
+   "row_at": "exo_memory/handback/p-l087-writesite-C_2026-09-23.md:173",
+   "row_at_line_matches": true,
+   "correction_text": "- **C12 (main runs on require) first SURVIVED.** On an empty data dir the CLI only prints, so my \"no state file\"\n  assertion could not see it. I strengthened my own new test to assert that the require prints nothing, and C12 is now\n  caught.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "C",
+   "finder": "instrument",
+   "rule": "instrument",
+   "src": "H",
+   "stratum": "instrument",
+   "stratum_pop": 82,
+   "stratum_n": 12,
+   "day": "2026-09-23",
+   "correction_file": "exo_memory/handback/p-l087-writesite-C_2026-09-23.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-23T02:24:16-06:00",
+    "sha": "8d05354c"
+   },
+   "correction_line_time": {
+    "sha": "8d05354c",
+    "t": "2026-09-23T08:24:16.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "C",
+     "ts": "2026-09-23T08:05:29.760Z",
+     "file": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+     "turn_start": "2026-09-23T07:59:11.321Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S20",
+   "correction_at": "exo_memory/handback/p-xsec-A_2026-10-03.md:49",
+   "row_at": "exo_memory/handback/p-xsec-A_2026-10-03.md:49",
+   "row_at_line_matches": true,
+   "correction_text": "- My first schema regexes (`/\"e\": \\[/`) never matched the canonical text (`\"e\":[`): vacuous, in `core_xsec` and in the row 5b assertion I added to `core_cup_fixtures`. Found when the positive assertion failed; both fixed.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "A",
+   "finder": "instrument",
+   "rule": "instrument",
+   "src": "H",
+   "stratum": "instrument",
+   "stratum_pop": 82,
+   "stratum_n": 12,
+   "day": "2026-10-03",
+   "correction_file": "exo_memory/handback/p-xsec-A_2026-10-03.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-03T10:41:53-06:00",
+    "sha": "d29dd504"
+   },
+   "correction_line_time": {
+    "sha": "d29dd504",
+    "t": "2026-10-03T16:41:53.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    ": \\[/`) never matched the canonical text (`",
+    "and in the row 5b assertion I added to"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "A",
+     "ts": "2026-10-03T16:39:56.105Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-10-03T16:37:50.380Z",
+     "matched_span": ": \\[/`) never matched the canonical text (`",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-xsec-A_2026-10-03.md"
+     ],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "A",
+     "ts": "2026-10-03T16:39:56.105Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-10-03T16:37:50.380Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-xsec-A_2026-10-03.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S21",
+   "correction_at": "exo_memory/handback/p-d193-C_2026-09-30.md:91",
+   "row_at": "exo_memory/handback/p-d193-C_2026-09-30.md:91",
+   "row_at_line_matches": true,
+   "correction_text": "- My mutant-string checker failed on its first run: its own parse kept a trailing `;`. Fixed and re-run. No test or source was involved.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "C",
+   "finder": "instrument",
+   "rule": "instrument",
+   "src": "H",
+   "stratum": "instrument",
+   "stratum_pop": 82,
+   "stratum_n": 12,
+   "day": "2026-09-30",
+   "correction_file": "exo_memory/handback/p-d193-C_2026-09-30.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-30T02:35:53-06:00",
+    "sha": "38e669bb"
+   },
+   "correction_line_time": {
+    "sha": "38e669bb",
+    "t": "2026-09-30T08:35:53.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "C",
+     "ts": "2026-09-30T08:31:15.834Z",
+     "file": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+     "turn_start": "2026-09-30T08:25:42.391Z",
+     "opened_before_in_turn": [
+      "C:/Users/nname/Desktop/c-d193-wt/app/core/coreshell.js",
+      "C:/Users/nname/Desktop/c-d193-wt/CHANGELOG.md"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/c-d193-wt/app/core/coreshell.js",
+      "C:/Users/nname/Desktop/c-d193-wt/CHANGELOG.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S22",
+   "correction_at": "exo_memory/handback/p-d220-A_2026-10-03.md:26",
+   "row_at": "exo_memory/handback/p-d220-A_2026-10-03.md:26",
+   "row_at_line_matches": true,
+   "correction_text": "2. portable-paths went red on the one pinned-transcript path; blessed as a one-shot tool, committed separately.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "A",
+   "finder": "instrument",
+   "rule": "instrument",
+   "src": "H",
+   "stratum": "instrument",
+   "stratum_pop": 82,
+   "stratum_n": 12,
+   "day": "2026-10-03",
+   "correction_file": "exo_memory/handback/p-d220-A_2026-10-03.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-03T05:37:57-06:00",
+    "sha": "7d972df0"
+   },
+   "correction_line_time": {
+    "sha": "7d972df0",
+    "t": "2026-10-03T11:37:57.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "A",
+     "ts": "2026-10-03T11:37:08.094Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-10-03T11:33:47.141Z",
+     "opened_before_in_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/loop/plan_reply_slot_replay_d220_2026-10-03.md",
+      "C:/Users/nname/Desktop/lighthouse/consonance/hooks/reply-slot.js",
+      "C:/Users/nname/Desktop/lighthouse/consonance/hooks/sources-gate.js"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/loop/plan_reply_slot_replay_d220_2026-10-03.md",
+      "C:/Users/nname/Desktop/lighthouse/consonance/hooks/reply-slot.js",
+      "C:/Users/nname/Desktop/lighthouse/consonance/hooks/sources-gate.js",
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d220-A_2026-10-03.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S23",
+   "correction_at": "exo_memory/handback/p-port-rule_2026-09-06.md:171",
+   "row_at": "exo_memory/handback/p-port-rule_2026-09-06.md:171",
+   "row_at_line_matches": true,
+   "correction_text": "2. **I did not write the proposed absolute path, and the reason is measured, not aesthetic.**\n   `BUILDING.md` is in scope for the portable-paths ratchet — it is one of the *30 shipped prose*\n   files the tool expands from `bundle.resources` (`node consonance/tools/portable-paths.js`). An\n   absolute path in this sentence would be a **new machine-specific site in a document a stranger\n   reads**, and the ratchet would go red on the rule itself. **The location is unchanged** (a\n   sibling of the private checkout, named `consumer` — which resolves to the chair's proposal on\n   this machine); only its *form* moved, to\n   `dirname \"$(git rev-parse --show-toplevel)\"`. **Ratchet re-run after the edit: green — 208 files\n   in scope, 168 known sites, 0 new.**",
+   "correction_text_source": "rev",
+   "seat_by_filename": null,
+   "finder": "instrument",
+   "rule": "instrument",
+   "src": "H",
+   "stratum": "instrument",
+   "stratum_pop": 82,
+   "stratum_n": 12,
+   "day": "2026-09-06",
+   "correction_file": "exo_memory/handback/p-port-rule_2026-09-06.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-06T04:20:54-06:00",
+    "sha": "70d59938"
+   },
+   "correction_line_time": {
+    "sha": "70d59938",
+    "t": "2026-09-06T10:20:54.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "BUILDING.md",
+     "resolved": "consonance/src-tauri/brief/BUILDING.md",
+     "how": "unique basename",
+     "first_commit": "2026-08-23T05:46:28-06:00",
+     "first_commit_sha": "5baf576c",
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "consonance/tools/portable-paths.js",
+     "resolved": "consonance/tools/portable-paths.js",
+     "how": "exact",
+     "first_commit": "2026-08-22T06:38:07-06:00",
+     "first_commit_sha": "e9242092",
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "$(git rev-parse --show-toplevel)",
+    "dirname \"$(git rev-parse --show-toplevel)\""
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "librarian",
+     "ts": "2026-09-06T07:06:56.577Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-09-06T07:05:53.881Z",
+     "matched_span": "$(git rev-parse --show-toplevel)",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": null,
+    "why": null
+   }
+  },
+  {
+   "id": "S24",
+   "correction_at": "exo_memory/handback/p-holder-librarian-marks-A_2026-09-20.md:138",
+   "row_at": "exo_memory/handback/p-holder-librarian-marks-A_2026-09-20.md:138",
+   "row_at_line_matches": true,
+   "correction_text": "- **My holder-blind test used the wrong instrument and went red for the wrong reason.** It searched\n  `handback_refusal_text`'s BODY for \"holder\" — and the body prints `--holder panes` inside the retake it hands the\n  pane. It now pins the SIGNATURE, which is the thing that makes the function holder-blind.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "A",
+   "finder": "instrument",
+   "rule": "instrument",
+   "src": "H",
+   "stratum": "instrument",
+   "stratum_pop": 82,
+   "stratum_n": 12,
+   "day": "2026-09-20",
+   "correction_file": "exo_memory/handback/p-holder-librarian-marks-A_2026-09-20.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-20T07:11:42-06:00",
+    "sha": "a511d446"
+   },
+   "correction_line_time": {
+    "sha": "a511d446",
+    "t": "2026-09-20T13:11:42.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "'s BODY for \"holder\" — and the body prints"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "A",
+     "ts": "2026-09-20T13:03:32.225Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-20T12:51:15.480Z",
+     "matched_span": "'s BODY for \"holder\" — and the body prints",
+     "opened_before_claim_in_turn": [
+      "C:/Consonance/lighthouse/consonance/src-tauri/src/mcp.rs"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Consonance/lighthouse/consonance/src-tauri/src/mcp.rs"
+     ],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "A",
+     "ts": "2026-09-20T13:03:32.225Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-20T12:51:15.480Z",
+     "opened_before_in_turn": [
+      "C:/Consonance/lighthouse/consonance/src-tauri/src/mcp.rs"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Consonance/lighthouse/consonance/src-tauri/src/mcp.rs"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S25",
+   "correction_at": "exo_memory/journal/2026-09-06.md:91",
+   "row_at": "exo_memory/journal/2026-09-06.md:91",
+   "row_at_line_matches": true,
+   "correction_text": "zero cost — 08-17's contradictions came at the signing, and tonight's counter re-derived every number and caught a\nsurvivor. **For diversity collapse, the instrument the four dead gauges were not:** *plant N known defects, dispatch\nthe panes, count who finds which* — the oracle is the sealed list, so it cannot invert against length. Prior art the\nThird Place did not have: **Cycle 9** already planted defects against a sealed key on 07-28\n(`cycle9_armA_result.md:13`). And the keeper's *\"we are closer to closing diversity collapse\"*: closer in principle\n(between-minds, fixable by arrangement), further in evidence (most dead instruments, zero scored results). The\nThird Place caught itself in base-rate deflation mid-exchange when the keeper named it; the strike is in the\ntranscript. Registered as **L039** (`librarian/2026-09-06.md` ~02:05): sealed key, D1/D2 classes, three arms\n(identical briefs / dossier-routed / opposed), falsifier (b) — if identical briefs already differ as much as\narranged ones, the panes are decorrelated by HISTORY, which is the specialization finding, not a failure.",
+   "correction_text_source": "rev",
+   "seat_by_filename": null,
+   "finder": "unattributed",
+   "rule": "catch-ledger:unattributed",
+   "src": "L",
+   "stratum": "unattributed",
+   "stratum_pop": 5,
+   "stratum_n": 5,
+   "day": "2026-09-06",
+   "correction_file": "exo_memory/journal/2026-09-06.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-06T02:33:41-06:00",
+    "sha": "3e99b15f"
+   },
+   "correction_line_time": {
+    "sha": "3e99b15f",
+    "t": "2026-09-06T08:33:41.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "cycle9_armA_result.md:13",
+     "resolved": "exo_memory/cycle9_armA_result.md",
+     "how": "exo_memory/ prefix",
+     "first_commit": "2026-07-28T03:40:22-06:00",
+     "first_commit_sha": "829d9486",
+     "line_time": "2026-07-28T09:40:22.000Z",
+     "line_commit": "829d9486"
+    },
+    {
+     "cited": "librarian/2026-09-06.md",
+     "resolved": "exo_memory/librarian/2026-09-06.md",
+     "how": "exo_memory/ prefix",
+     "first_commit": "2026-09-06T00:33:07-06:00",
+     "first_commit_sha": "16d2afc2",
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "we are closer to closing diversity collapse"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "librarian",
+     "ts": "2026-09-06T08:33:31.414Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-09-06T08:32:07.073Z",
+     "matched_span": "we are closer to closing diversity collapse",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "librarian",
+     "ts": "2026-09-06T08:33:31.414Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-09-06T08:32:07.073Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S26",
+   "correction_at": "exo_memory/journal/2026-09-01.md:97",
+   "row_at": "exo_memory/journal/2026-09-01.md:97",
+   "row_at_line_matches": true,
+   "correction_text": "only instrument that has ever caught it.\"* *(Same narrowing applies to \"no hook reaches composition\": no hook **of\nthe hand-on** does; the last tool result before it was not tested.)*",
+   "correction_text_source": "rev",
+   "seat_by_filename": null,
+   "finder": "unattributed",
+   "rule": "catch-ledger:unattributed",
+   "src": "L",
+   "stratum": "unattributed",
+   "stratum_pop": 5,
+   "stratum_n": 5,
+   "day": "2026-09-01",
+   "correction_file": "exo_memory/journal/2026-09-01.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-01T03:21:36-06:00",
+    "sha": "9230c499"
+   },
+   "correction_line_time": {
+    "sha": "9230c499",
+    "t": "2026-09-01T09:21:36.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "neither-located",
+    "claim": null,
+    "correction_turn": null,
+    "why": "no seat named in the row, and nothing found"
+   }
+  },
+  {
+   "id": "S27",
+   "correction_at": "exo_memory/journal/2026-09-06.md:68",
+   "row_at": "exo_memory/journal/2026-09-06.md:68",
+   "row_at_line_matches": true,
+   "correction_text": "  app was not rebuilt while looking at a target directory that moved on 07-28, and caught itself on the board.\n  The chair scored the librarian's `CLEAN.md:5` as a nonexistent file; the record shows the ratchet printed it\n  about an untracked file the chair then removed (`librarian/2026-09-06.md` ~02:27).",
+   "correction_text_source": "rev",
+   "seat_by_filename": null,
+   "finder": "unattributed",
+   "rule": "catch-ledger:unattributed",
+   "src": "L",
+   "stratum": "unattributed",
+   "stratum_pop": 5,
+   "stratum_n": 5,
+   "day": "2026-09-06",
+   "correction_file": "exo_memory/journal/2026-09-06.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-06T02:33:41-06:00",
+    "sha": "3e99b15f"
+   },
+   "correction_line_time": {
+    "sha": "3e99b15f",
+    "t": "2026-09-06T08:33:41.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "CLEAN.md:5",
+     "resolved": null,
+     "how": "not tracked at rev",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "librarian/2026-09-06.md",
+     "resolved": "exo_memory/librarian/2026-09-06.md",
+     "how": "exo_memory/ prefix",
+     "first_commit": "2026-09-06T00:33:07-06:00",
+     "first_commit_sha": "16d2afc2",
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "librarian",
+     "ts": "2026-09-06T08:33:31.414Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-09-06T08:32:07.073Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S28",
+   "correction_at": "exo_memory/journal/2026-09-02.md:66",
+   "row_at": "exo_memory/journal/2026-09-02.md:66",
+   "row_at_line_matches": true,
+   "correction_text": "target path that had moved five weeks earlier, twice, then caught itself (`handoff_chair_2026-09-02.md` §2). Every one\nfound by another seat or the next instrument; zero in-stream — the number the Third Place retreat is about.",
+   "correction_text_source": "rev",
+   "seat_by_filename": null,
+   "finder": "unattributed",
+   "rule": "catch-ledger:unattributed",
+   "src": "L",
+   "stratum": "unattributed",
+   "stratum_pop": 5,
+   "stratum_n": 5,
+   "day": "2026-09-02",
+   "correction_file": "exo_memory/journal/2026-09-02.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-07T00:50:57-06:00",
+    "sha": "41c1e5a8"
+   },
+   "correction_line_time": {
+    "sha": "41c1e5a8",
+    "t": "2026-09-07T06:50:57.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "handoff_chair_2026-09-02.md",
+     "resolved": "exo_memory/loop/handoff_chair_2026-09-02.md",
+     "how": "unique basename",
+     "first_commit": "2026-09-02T07:56:54-06:00",
+     "first_commit_sha": "d81bdb52",
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "librarian",
+     "ts": "2026-09-07T06:50:05.851Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-09-07T06:47:52.643Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S29",
+   "correction_at": "exo_memory/librarian/2026-10-06.desktop.md:42",
+   "row_at": "exo_memory/librarian/2026-10-06.desktop.md:42",
+   "row_at_line_matches": true,
+   "correction_text": "- **WRONG today (mine):** relayed E's \"Onuris is the friend's private project\" unchecked (it is a public community track; D262 cancelled);\n  harness selection by full path missed `mutation.test.js` for three installs (now by basename).",
+   "correction_text_source": "rev",
+   "seat_by_filename": "librarian (WRONG column; the erring seat is not in the row)",
+   "finder": "unattributed",
+   "rule": "override:a day summary: its Onuris half repeats :25 (counted there); its second half, the harness selection miss, names no finder",
+   "src": "W",
+   "stratum": "unattributed",
+   "stratum_pop": 5,
+   "stratum_n": 5,
+   "day": "2026-10-06",
+   "correction_file": "exo_memory/librarian/2026-10-06.desktop.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-06T20:11:16-06:00",
+    "sha": "83f23b60"
+   },
+   "correction_line_time": {
+    "sha": "e20f0b2a",
+    "t": "2026-10-07T10:07:36.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "mutation.test.js",
+     "resolved": null,
+     "how": "ambiguous (15)",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "Onuris is the friend's private project"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "librarian",
+     "ts": "2026-10-07T07:42:54.393Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-10-07T07:42:39.155Z",
+     "matched_span": "Onuris is the friend's private project",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": true,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "librarian",
+     "ts": "2026-10-07T07:42:54.393Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-10-07T07:42:39.155Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S30",
+   "correction_at": "exo_memory/handback/p-consumer-parity-B_2026-10-08.md:597",
+   "row_at": "exo_memory/handback/p-consumer-parity-B_2026-10-08.md:597",
+   "row_at_line_matches": true,
+   "correction_text": "- **A1's first version was wrong for E's evidence links.** Rewriting every lighthouse URL to consonance would have pointed GATES.md's evidence at the\n  wrong repository. Revised at the root, per the chair's input, in `4fa81cd2`.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "B",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-10-08",
+   "correction_file": "exo_memory/handback/p-consumer-parity-B_2026-10-08.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-08T13:13:12-06:00",
+    "sha": "60b1aef3"
+   },
+   "correction_line_time": {
+    "sha": "6b33daa8",
+    "t": "2026-10-09T08:55:19.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "GATES.md",
+     "resolved": "consonance/GATES.md",
+     "how": "unique basename",
+     "first_commit": "2026-10-08T16:00:22-06:00",
+     "first_commit_sha": "9480c300",
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "B",
+     "ts": "2026-10-09T01:08:03.649Z",
+     "file": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+     "turn_start": "2026-10-09T01:07:17.760Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-consumer-parity-B_2026-10-08.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S31",
+   "correction_at": "exo_memory/handback/p-m4-equations-E_2026-09-28.md:159",
+   "row_at": "exo_memory/handback/p-m4-equations-E_2026-09-28.md:159",
+   "row_at_line_matches": true,
+   "correction_text": "- The ones it did not have are ADDED to the shelf with their sources before this verdict run:\n  - 01 §5 (new), 03 §1 (the half-sample shift) and 02 §3 (the M4 bullet corrected);\n  - MATH_SOURCES: WIKI-DFT and WIKI-SAGITTA, both secondary, opened.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "E",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-28",
+   "correction_file": "exo_memory/handback/p-m4-equations-E_2026-09-28.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-28T05:48:35-06:00",
+    "sha": "e110589d"
+   },
+   "correction_line_time": {
+    "sha": "e110589d",
+    "t": "2026-09-28T11:48:35.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "E",
+     "ts": "2026-09-28T10:57:16.204Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-09-28T10:41:47.110Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S32",
+   "correction_at": "exo_memory/librarian/2026-10-06.desktop.md:123",
+   "row_at": "exo_memory/librarian/2026-10-06.desktop.md:123",
+   "row_at_line_matches": false,
+   "correction_text": "- 2026-10-10 09:4x, my miss, caught by the chair. I told the keeper \"B hasn't started its half\" and rang to dispatch step 6. I had inferred that from verify/B holding only claims.json, and I didn't check the board. Step 6 had gone to B at about 08:16, and B's own board post (board.jsonl:150038) reads \"91 of 168 judged so far\". The chair didn't re-send. WRONG column: mine. Lesson: a missing output file is not \"not started\". Read the pane's board posts first.",
+   "correction_text_source": "working-copy",
+   "seat_by_filename": "librarian (WRONG column; the erring seat is not in the row)",
+   "finder": "seat",
+   "rule": "override:add",
+   "src": "W",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-10-10",
+   "correction_file": "exo_memory/librarian/2026-10-06.desktop.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-06T20:11:16-06:00",
+    "sha": "83f23b60"
+   },
+   "correction_line_time": {
+    "sha": "uncommitted",
+    "t": "2026-10-10T17:09:58.929Z",
+    "note": "working-copy mtime"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "claims.js",
+     "resolved": null,
+     "how": "not tracked at rev",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "board.js",
+     "resolved": null,
+     "how": "not tracked at rev",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "and rang to dispatch step 6. I had inferred that from verify/B holding only claims.json, and I didn't check the board. Step 6 had gone to B at about 08:16, and B's own board post (board.jsonl:150038) reads",
+    ". The chair didn't re-send. WRONG column: mine. Lesson: a missing output file is not"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "librarian",
+     "ts": "2026-10-10T15:43:52.531Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-10-10T15:43:35.245Z",
+     "matched_span": "and rang to dispatch step 6. I had inferred that from verify/B holding only claims.json, and I didn't check the board. S",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": true,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "librarian",
+     "ts": "2026-10-10T15:43:52.531Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-10-10T15:43:35.245Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S33",
+   "correction_at": "exo_memory/librarian/2026-09-26.md:27",
+   "row_at": "exo_memory/librarian/2026-09-26.md:27",
+   "row_at_line_matches": true,
+   "correction_text": "- I garbled a T1 count; it was corrected in the next line.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "librarian (WRONG column; the erring seat is not in the row)",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "W",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-26",
+   "correction_file": "exo_memory/librarian/2026-09-26.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-26T08:53:56-06:00",
+    "sha": "551bd906"
+   },
+   "correction_line_time": {
+    "sha": "551bd906",
+    "t": "2026-09-26T14:53:56.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "librarian",
+     "ts": "2026-09-26T14:53:56.159Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-09-26T14:53:41.485Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S34",
+   "correction_at": "exo_memory/handback/p-l114-prompt-A_2026-09-23.md:63",
+   "row_at": "exo_memory/handback/p-l114-prompt-A_2026-09-23.md:63",
+   "row_at_line_matches": true,
+   "correction_text": "- **No room beside jev/ → the parity tests SKIP, visibly, never pass.** Checked on a copy of `jev/` in a temp dir:\n  prompt.test 13/0, parity **0 pass / 4 skipped**, paths 3/0.\n  - That is how the design's item 11 works: *\"parity tests live on the room side\"*.\n  - **Once `jev/` has its own repo, parity is only checked from the room.** The room should carry a copy of this test on\n    its side at the split.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "A",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-23",
+   "correction_file": "exo_memory/handback/p-l114-prompt-A_2026-09-23.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-23T08:00:53-06:00",
+    "sha": "74e2b4bb"
+   },
+   "correction_line_time": {
+    "sha": "74e2b4bb",
+    "t": "2026-09-23T14:00:53.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "parity tests live on the room side"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "librarian",
+     "ts": "2026-09-23T13:17:16.686Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-09-23T13:14:38.283Z",
+     "matched_span": "parity tests live on the room side",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "A",
+     "ts": "2026-09-23T13:32:26.823Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-23T13:27:48.259Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S35",
+   "correction_at": "exo_memory/handback/p-launch-pull-E_2026-09-16.md:200",
+   "row_at": "exo_memory/handback/p-launch-pull-E_2026-09-16.md:200",
+   "row_at_line_matches": true,
+   "correction_text": "- **Escape layers bit three times, and one of them landed in this file.** Bash stripped the `$` variables out of the\n  mutant harness's parse gate (it would have marked every mutant INVALID); bash turned the two-character newline escape in\n  F13's fixture string into a real line break; and the editor tool's own JSON encoding turned a literal `\\u001b`\n  that I typed into THIS hand-back into two real ESC control bytes. The first two were caught by a syntax check before\n  a run relied on them; the third by scanning this file for control bytes after writing it (2 found, now 0). Same class\n  as the NUL bytes I wrote into my own hand-backs yesterday: **the escape layer you did not think about is the one\n  that bites, and only reading back what landed catches it.**",
+   "correction_text_source": "rev",
+   "seat_by_filename": "E",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-16",
+   "correction_file": "exo_memory/handback/p-launch-pull-E_2026-09-16.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-16T10:01:36-06:00",
+    "sha": "d5a46229"
+   },
+   "correction_line_time": {
+    "sha": "d5a46229",
+    "t": "2026-09-16T16:01:36.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "neither-located",
+    "claim": null,
+    "correction_turn": null,
+    "why": "neither the quoted spans nor the correction line were found in an assistant message of any scanned transcript"
+   }
+  },
+  {
+   "id": "S36",
+   "correction_at": "exo_memory/handback/p-shell-budget_2026-09-06.md:309",
+   "row_at": "exo_memory/handback/p-shell-budget_2026-09-06.md:309",
+   "row_at_line_matches": true,
+   "correction_text": "- **`python` is not on PATH in this seat's shell**; `node -e` did the one file surgery, with the\n  byte count printed before the write (B's lesson from its own near-miss, applied).",
+   "correction_text_source": "rev",
+   "seat_by_filename": null,
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-06",
+   "correction_file": "exo_memory/handback/p-shell-budget_2026-09-06.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-06T07:01:58-06:00",
+    "sha": "c0d64f56"
+   },
+   "correction_line_time": {
+    "sha": "c0d64f56",
+    "t": "2026-09-06T13:01:58.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "is not on PATH in this seat's shell**;"
+   ],
+   "transcript": {
+    "status": "neither-located",
+    "claim": null,
+    "correction_turn": null,
+    "why": "no seat named in the row, and nothing found"
+   }
+  },
+  {
+   "id": "S37",
+   "correction_at": "exo_memory/handback/p-d006-baton-gate_2026-09-04.md:199",
+   "row_at": "exo_memory/handback/p-d006-baton-gate_2026-09-04.md:199",
+   "row_at_line_matches": true,
+   "correction_text": "**A correction I made to myself inside that test.** The first draft paraphrased the board line as\n`QUEUED -> 0c0c0c0a0000`; twelve hex characters match NEITHER reserved sid, because `MAIN_SID` is\nhyphenated. The gate correctly returned `rung-unknown` and the test went red **on a fixture I had\ninvented rather than copied**. Route the object, not a description of it — including into your own\ntest. Fixed by pasting the real line.",
+   "correction_text_source": "rev",
+   "seat_by_filename": null,
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-04",
+   "correction_file": "exo_memory/handback/p-d006-baton-gate_2026-09-04.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-04T04:41:51-06:00",
+    "sha": "3f363c1f"
+   },
+   "correction_line_time": {
+    "sha": "3f363c1f",
+    "t": "2026-09-04T10:41:51.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "; twelve hex characters match NEITHER reserved sid, because"
+   ],
+   "transcript": {
+    "status": "neither-located",
+    "claim": null,
+    "correction_turn": null,
+    "why": "no seat named in the row, and nothing found"
+   }
+  },
+  {
+   "id": "S38",
+   "correction_at": "exo_memory/handback/p-handles-A_2026-10-06.md:42",
+   "row_at": "exo_memory/handback/p-handles-A_2026-10-06.md:42",
+   "row_at_line_matches": true,
+   "correction_text": "5. The Sculpt \"brush widened\" note said a thing that was not true for Sculpt on a short piece (the change stayed inside it); it is only said now when a neighbour really changed.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "A",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-10-06",
+   "correction_file": "exo_memory/handback/p-handles-A_2026-10-06.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-06T03:34:01-06:00",
+    "sha": "f8097d44"
+   },
+   "correction_line_time": {
+    "sha": "f8097d44",
+    "t": "2026-10-06T09:34:01.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "A",
+     "ts": "2026-10-06T08:20:39.491Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-10-06T08:19:38.238Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S39",
+   "correction_at": "exo_memory/handback/p-d186-brush-E_2026-09-28.md:240",
+   "row_at": "exo_memory/handback/p-d186-brush-E_2026-09-28.md:240",
+   "row_at_line_matches": true,
+   "correction_text": "- **2 failures in A's offset test on my first `tree2`** turned out to be an older snapshot of A's worktree: A had updated that\n  test. A pristine copy of A's tree passed 8/8, and resyncing cleared both (`a-offset.txt`, `a-offset2.txt`). My files were not\n  the cause.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "E",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-28",
+   "correction_file": "exo_memory/handback/p-d186-brush-E_2026-09-28.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-28T12:14:52-06:00",
+    "sha": "b4300c99"
+   },
+   "correction_line_time": {
+    "sha": "b4300c99",
+    "t": "2026-09-28T18:14:52.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "a-offset.txt",
+     "resolved": null,
+     "how": "not tracked at rev",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "a-offset2.txt",
+     "resolved": null,
+     "how": "not tracked at rev",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "E",
+     "ts": "2026-09-28T17:14:12.960Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-09-28T17:13:34.661Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S40",
+   "correction_at": "exo_memory/handback/p-l065-statesync-E_2026-09-21.md:81",
+   "row_at": "exo_memory/handback/p-l065-statesync-E_2026-09-21.md:81",
+   "row_at_line_matches": true,
+   "correction_text": "- **My first \"parallel\" state-sync run was void twice.** First, `( … &)` detached the job, so I read its tail before\n  it finished (it printed a git warning as its \"result\"). Then `cd … && node A & node B & wait` put the `cd` into A's\n  background subshell, so B, the suite and `git diff` ran from the wrong directory. That produced `error: Could not\n  access 'consonance/tools/state-sync.js'`, which for a moment read as a vanished file. It was checked with `ls -la`,\n  and the file was intact. The reported concurrent pair (78/0 · 78/0) comes from the absolute-path re-run.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "E",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-21",
+   "correction_file": "exo_memory/handback/p-l065-statesync-E_2026-09-21.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-21T04:23:16-06:00",
+    "sha": "d7907591"
+   },
+   "correction_line_time": {
+    "sha": "d7907591",
+    "t": "2026-09-21T10:23:16.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "consonance/tools/state-sync.js",
+     "resolved": "consonance/tools/state-sync.js",
+     "how": "exact",
+     "first_commit": "2026-09-09T04:46:18-06:00",
+     "first_commit_sha": "977b7b08",
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "ran from the wrong directory. That produced",
+    ", which for a moment read as a vanished file. It was checked with"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "E",
+     "ts": "2026-09-21T10:14:32.016Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-09-21T09:55:22.310Z",
+     "matched_span": "ran from the wrong directory. That produced",
+     "opened_before_claim_in_turn": [
+      "C:/Consonance/lighthouse/consonance/tools/state-sync.js"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Consonance/lighthouse/consonance/tools/state-sync.js"
+     ],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "E",
+     "ts": "2026-09-21T10:14:32.016Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-09-21T09:55:22.310Z",
+     "opened_before_in_turn": [
+      "C:/Consonance/lighthouse/consonance/tools/state-sync.js"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Consonance/lighthouse/consonance/tools/state-sync.js"
+     ],
+     "cited_paths_already_read_in_this_transcript": [
+      {
+       "path": "consonance/tools/state-sync.js",
+       "first_read_in_this_transcript": "2026-09-21T09:55:50.505Z"
+      }
+     ]
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S41",
+   "correction_at": "exo_memory/handback/p-d181-final-read-B_2026-09-27.md:178",
+   "row_at": "exo_memory/handback/p-d181-final-read-B_2026-09-27.md:178",
+   "row_at_line_matches": true,
+   "correction_text": "- **W2.** I applied two authors' diffs in the landing seat (E's order, C's seam). Both were written for exactly that, and both were\n  checked with `git apply --check` and their stated sha256 before the suite. They are named here so either can be taken out.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "B",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-27",
+   "correction_file": "exo_memory/handback/p-d181-final-read-B_2026-09-27.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-28T00:42:34-06:00",
+    "sha": "0e584347"
+   },
+   "correction_line_time": {
+    "sha": "0e584347",
+    "t": "2026-09-28T06:42:34.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "B",
+     "ts": "2026-09-28T06:41:33.407Z",
+     "file": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+     "turn_start": "2026-09-28T04:55:08.988Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S42",
+   "correction_at": "exo_memory/librarian/2026-09-16.md:149",
+   "row_at": "exo_memory/librarian/2026-09-16.md:149",
+   "row_at_line_matches": true,
+   "correction_text": "## 09:21 — D066 (CHUNK 1), A IN — re-derived, nothing sent; E owed. A's pointer at 09:18 by `call_librarian`; `handback/p-stick-zombie-A_2026-09-16.md` mtime 09:18:10 (its header \"09:0x–10:0x\" is a typed span; the file is 09:18). **HOLDS:** `dev/stick-apply.test.js` 27 passed / 0 failed at HEAD (A's edits stashed) → 48 / 0 in place; `dev/stick-waiter.test.js` 74 / 0; `dev/tail-carry.test.js` 129 / 0; A's mutants on a copy → 13 applied, 12 killed, 1 survived (#13, the `-ErrorAction Stop` text, planted and named), 0 not applied, tracked files unchanged; the live probe on D → `[{\"pid\":15380,\"alive\":true,\"hasWindow\":true}]`; the citations at source — `main.rs:10768` `.join(\"dev\").join(\"stick-apply.js\")` (the applier runs from the checkout, no build), `main.rs:6506` `fn warn_second_instance`, `tail-carry.js:1137` `place.consonanceRunning()` (the second gate that makes \"stale\" unable to import), `ui/stick.js:61-72` `renderResult` prints `code` and per-row `r.result.why` but never the result's own `why` or `outcome` — A's finding (a) holds: the pid reaches the disk, not the keeper's eyes. **A's timeline correction is right and it corrects MY 08:57 entry:** `persist.log` 1789569491 = 08:38:11 applier 9864 started; 08:40:29 WAITING; 08:40:40 STICK CLOSE; 08:48:14 a LAUNCH found the result (9864 had run its full 600 s); 08:48:45 applier 8784 started; 08:52:28 a launch found its result, quiet import — 8784 ended early because the ghost was killed. So \"two 600-s waits\" was wrong: one full wait and one cut short. WRONG, mine, at 08:57 and in the 08:58 ring. **A's design choice, which I take:** windowless shortens the WAIT to 30 s continuous and never licenses the IMPORT; the pid is named in the result. **What A asks the chair, and it is right to ask:** the diff is live on D's checkout unread (the applier is node from the repo); no transfer is due on D before Sunday's return trip, and the landing order will put a non-author read before the commit. Waiting on E's pointer; then one `handbacks-in`, one return.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "librarian (WRONG column; the erring seat is not in the row)",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "W",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-16",
+   "correction_file": "exo_memory/librarian/2026-09-16.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-16T00:48:34-06:00",
+    "sha": "be3c6423"
+   },
+   "correction_line_time": {
+    "sha": "d5d954d3",
+    "t": "2026-09-16T15:21:47.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "handback/p-stick-zombie-A_2026-09-16.md",
+     "resolved": "exo_memory/handback/p-stick-zombie-A_2026-09-16.md",
+     "how": "exo_memory/ prefix",
+     "first_commit": "2026-09-16T10:01:36-06:00",
+     "first_commit_sha": "d5a46229",
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "dev/stick-apply.test.js",
+     "resolved": "dev/stick-apply.test.js",
+     "how": "exact",
+     "first_commit": "2026-09-14T04:51:18-06:00",
+     "first_commit_sha": "0405bd26",
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "dev/stick-waiter.test.js",
+     "resolved": "dev/stick-waiter.test.js",
+     "how": "exact",
+     "first_commit": "2026-09-14T04:51:18-06:00",
+     "first_commit_sha": "0405bd26",
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "dev/tail-carry.test.js",
+     "resolved": "dev/tail-carry.test.js",
+     "how": "exact",
+     "first_commit": "2026-09-12T04:56:15-06:00",
+     "first_commit_sha": "da5d1788",
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "main.rs:10768",
+     "resolved": null,
+     "how": "ambiguous (8)",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "stick-apply.js",
+     "resolved": "dev/stick-apply.js",
+     "how": "unique basename",
+     "first_commit": "2026-09-14T04:51:18-06:00",
+     "first_commit_sha": "0405bd26",
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "main.rs:6506",
+     "resolved": null,
+     "how": "ambiguous (8)",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "tail-carry.js:1137",
+     "resolved": "dev/tail-carry.js",
+     "how": "unique basename",
+     "first_commit": "2026-09-12T04:56:15-06:00",
+     "first_commit_sha": "da5d1788",
+     "line_time": "2026-09-14T13:57:46.000Z",
+     "line_commit": "862509f6"
+    },
+    {
+     "cited": "ui/stick.js:61-72",
+     "resolved": "consonance/ui/stick.js",
+     "how": "unique basename",
+     "first_commit": "2026-09-14T04:51:18-06:00",
+     "first_commit_sha": "0405bd26",
+     "line_time": "2026-09-14T10:51:18.000Z",
+     "line_commit": "0405bd26"
+    }
+   ],
+   "quoted_spans": [
+    "is a typed span; the file is 09:18). **HOLDS:** `dev/stick-apply.test.js` 27 passed / 0 failed at HEAD (A's edits stashed) → 48 / 0 in place; `dev/stick-waiter.test.js` 74 / 0; `dev/tail-carry.test.js` 129 / 0; A's mutants on a copy → 13 applied, 12 killed, 1 survived (#13, the `-ErrorAction Stop` text, planted and named), 0 not applied, tracked files unchanged; the live probe on D → `[{",
+    ":true}]`; the citations at source — `main.rs:10768` `.join(",
+    ")` (the applier runs from the checkout, no build), `main.rs:6506` `fn warn_second_instance`, `tail-carry.js:1137` `place.consonanceRunning()` (the second gate that makes",
+    "mtime 09:18:10 (its header \"09:0x–10:0x\" is a typed span; the file is 09:18). **HOLDS:**",
+    "27 passed / 0 failed at HEAD (A's edits stashed) → 48 / 0 in place;",
+    "129 / 0; A's mutants on a copy → 13 applied, 12 killed, 1 survived (#13, the",
+    "text, planted and named), 0 not applied, tracked files unchanged; the live probe on D →",
+    "(the applier runs from the checkout, no build),"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "librarian",
+     "ts": "2026-09-16T15:21:47.034Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-09-16T15:18:27.314Z",
+     "matched_span": "is a typed span; the file is 09:18). **HOLDS:** `dev/stick-apply.test.js` 27 passed / 0 failed at HEAD (A's edits stashe",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": true,
+     "after_correction_line_time": true
+    },
+    "correction_turn": null,
+    "why": null
+   }
+  },
+  {
+   "id": "S43",
+   "correction_at": "exo_memory/handback/p-d182-vocab-A_2026-09-27.md:227",
+   "row_at": "exo_memory/handback/p-d182-vocab-A_2026-09-27.md:227",
+   "row_at_line_matches": true,
+   "correction_text": "- The acceptance lines, as the chair worded them:\n  - every built-in at default handles sits inside its class's **corner** p10–p90 for turn and length (runs for the\n    straight and the wall-ride), and inside the **word** p10–p90 for radius, width and bank;\n  - the font choice reproduces the measured shares within 1 word.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "A",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-27",
+   "correction_file": "exo_memory/handback/p-d182-vocab-A_2026-09-27.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-28T05:48:35-06:00",
+    "sha": "e110589d"
+   },
+   "correction_line_time": {
+    "sha": "e110589d",
+    "t": "2026-09-28T11:48:35.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "A",
+     "ts": "2026-09-28T07:37:53.657Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-28T07:31:05.394Z",
+     "opened_before_in_turn": [
+      "C:/Users/nname/Desktop/t180-track-builder/src/doc/vocabgen.js",
+      "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/d182/apply_d182.js"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/t180-track-builder/src/doc/vocabgen.js",
+      "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/d182/apply_d182.js"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S44",
+   "correction_at": "exo_memory/handback/p-d120-relayinj-E_2026-09-22.md:175",
+   "row_at": "exo_memory/handback/p-d120-relayinj-E_2026-09-22.md:175",
+   "row_at_line_matches": true,
+   "correction_text": "- **FATAL-2 is half the discipline I was cited for.** I built the sensitivity check (B+) and no specificity check, and\n  the failure sat exactly on the outcome I predicted most (REPORTED).",
+   "correction_text_source": "rev",
+   "seat_by_filename": "E",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-22",
+   "correction_file": "exo_memory/handback/p-d120-relayinj-E_2026-09-22.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-22T19:09:05-06:00",
+    "sha": "23491374"
+   },
+   "correction_line_time": {
+    "sha": "23491374",
+    "t": "2026-09-23T01:09:05.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "E",
+     "ts": "2026-09-23T01:08:05.701Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-09-23T01:00:30.837Z",
+     "opened_before_in_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/loop/relay_injection_registration_2026-09-22.md"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/loop/relay_injection_registration_2026-09-22.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S45",
+   "correction_at": "exo_memory/handback/p-roster-arrival_2026-09-09.md:408",
+   "row_at": "exo_memory/handback/p-roster-arrival_2026-09-09.md:408",
+   "row_at_line_matches": true,
+   "correction_text": "## CORRECTION, 2026-09-10 01:46 — §6's \"0 escapes\" was a VOID measurement, and the librarian's `371875f` is right",
+   "correction_text_source": "rev",
+   "seat_by_filename": null,
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-09",
+   "correction_file": "exo_memory/handback/p-roster-arrival_2026-09-09.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-09T13:28:21-06:00",
+    "sha": "021c56e2"
+   },
+   "correction_line_time": {
+    "sha": "18d8813b",
+    "t": "2026-09-10T17:43:17.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "neither-located",
+    "claim": null,
+    "correction_turn": null,
+    "why": "no seat named in the row, and nothing found"
+   }
+  },
+  {
+   "id": "S46",
+   "correction_at": "exo_memory/handback/p-l096-roster-E_2026-09-23.md:138",
+   "row_at": "exo_memory/handback/p-l096-roster-E_2026-09-23.md:138",
+   "row_at_line_matches": true,
+   "correction_text": "- My first fixture writes failed twice: a coloured `console.log` number broke the shell arithmetic, and bash ate the\n  backslashes in the cwd. Both were caught before any reading was taken; the fixture above is the third, written by\n  `node` with `path.join`.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "E",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-23",
+   "correction_file": "exo_memory/handback/p-l096-roster-E_2026-09-23.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-23T04:34:51-06:00",
+    "sha": "b549201f"
+   },
+   "correction_line_time": {
+    "sha": "b549201f",
+    "t": "2026-09-23T10:34:51.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "E",
+     "ts": "2026-09-23T10:18:15.678Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-09-23T10:12:55.384Z",
+     "opened_before_in_turn": [
+      "C:/Consonance/lighthouse/consonance/hooks/board-digest.js",
+      "C:/Consonance/lighthouse/consonance/hooks/board-digest.test.js"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Consonance/lighthouse/consonance/hooks/board-digest.js",
+      "C:/Consonance/lighthouse/consonance/hooks/board-digest.test.js"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S47",
+   "correction_at": "exo_memory/handback/p-l070-fastforward-A_2026-09-21.md:257",
+   "row_at": "exo_memory/handback/p-l070-fastforward-A_2026-09-21.md:257",
+   "row_at_line_matches": true,
+   "correction_text": "- **The js-suite** was not run; only the three suites above.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "A",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-21",
+   "correction_file": "exo_memory/handback/p-l070-fastforward-A_2026-09-21.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-22T02:07:25-06:00",
+    "sha": "6b9699b8"
+   },
+   "correction_line_time": {
+    "sha": "6b9699b8",
+    "t": "2026-09-22T08:07:25.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "A",
+     "ts": "2026-09-21T16:30:49.787Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-21T16:27:28.342Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S48",
+   "correction_at": "exo_memory/handback/p-pittexture-E_2026-10-09.md:148",
+   "row_at": "exo_memory/handback/p-pittexture-E_2026-10-09.md:148",
+   "row_at_line_matches": true,
+   "correction_text": "- **(2) the infill** is next, export-side and on a core export given its lane through `meta.pitLane`, so it does not wait on the missing source. Its section follows when it is\n  committed.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "E",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-10-09",
+   "correction_file": "exo_memory/handback/p-pittexture-E_2026-10-09.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-09T23:01:49-06:00",
+    "sha": "8fa65769"
+   },
+   "correction_line_time": {
+    "sha": "8fa65769",
+    "t": "2026-10-10T05:01:49.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "E",
+     "ts": "2026-10-09T22:39:10.883Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-10-09T22:29:15.119Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-pittexture-E_2026-10-09.md",
+      "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/pitbox/track2-lane.txt",
+      "C:/Users/nname/Desktop/worktrees/e-pitbox-wt/src/export/pitlane.js"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S49",
+   "correction_at": "exo_memory/handback/p3e-read_2026-09-01.md:30",
+   "row_at": "exo_memory/handback/p3e-read_2026-09-01.md:30",
+   "row_at_line_matches": true,
+   "correction_text": "4. **The comparability defect is carried as a defect — yes.** Its own bold paragraph, the registration's §4\n   sentence (`:175`) quoted and called FALSE across the K0/K seam, K1-vs-K2 stated clean. Verified on disk:\n   `sha256sum cells/{P0a,L0,L1}/r*/handoff.js` → **50 files, all `bbd64e8b…f094` = `rig/handoff.v1.js`**;\n   `cells/{K1,K2}/r*/handoff.js` → **80 files, all `aee411f1…e126` = `rig/handoff.js`**. How it got past the\n   hashing, for the record: `MANIFEST.json` (K0) pins `handoff.js` per cell but has no top-level `handoff`\n   field, `MANIFEST.cue.json` has both, and nobody compared the two manifests' values to each other.",
+   "correction_text_source": "rev",
+   "seat_by_filename": null,
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-01",
+   "correction_file": "exo_memory/handback/p3e-read_2026-09-01.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-01T03:21:36-06:00",
+    "sha": "9230c499"
+   },
+   "correction_line_time": {
+    "sha": "9230c499",
+    "t": "2026-09-01T09:21:36.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "rig/handoff.v1.js",
+     "resolved": "exo_memory/loop/run2/rig/handoff.v1.js",
+     "how": "unique basename",
+     "first_commit": "2026-08-31T07:40:35-06:00",
+     "first_commit_sha": "fdbea73f",
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "rig/handoff.js",
+     "resolved": "exo_memory/loop/run2/rig/handoff.js",
+     "how": "unique basename",
+     "first_commit": "2026-08-31T06:23:36-06:00",
+     "first_commit_sha": "94675926",
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "MANIFEST.js",
+     "resolved": null,
+     "how": "not tracked at rev",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "handoff.js",
+     "resolved": "exo_memory/loop/run2/rig/handoff.js",
+     "how": "unique basename",
+     "first_commit": "2026-08-31T06:23:36-06:00",
+     "first_commit_sha": "94675926",
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "MANIFEST.cue.js",
+     "resolved": null,
+     "how": "not tracked at rev",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "sha256sum cells/{P0a,L0,L1}/r*/handoff.js"
+   ],
+   "transcript": {
+    "status": "neither-located",
+    "claim": null,
+    "correction_turn": null,
+    "why": "no seat named in the row, and nothing found"
+   }
+  },
+  {
+   "id": "S50",
+   "correction_at": "exo_memory/handback/p-l114-prompt-A_2026-09-23.md:55",
+   "row_at": "exo_memory/handback/p-l114-prompt-A_2026-09-23.md:55",
+   "row_at_line_matches": true,
+   "correction_text": "- **Parity** (4 tests):\n  - `narrowedView` equals the room's `readNarrowedView` on 9 cases (string content, multi-part text, tool-result skip, no\n    user, over both cuts, a bad line, no move, and text containing the prompt's own markers);\n  - `buildPrompt` is **byte-identical** (`Buffer.compare`) to `buildOverseerPrompt` with the room's METHOD.md;\n  - `readDiscipline()` is byte-identical to the room's METHOD.md;\n  - end to end, the module's own view plus its shipped rubric equals the room's prompt.\n  - The room's hook runs `main()` when required, so the test source-loads it, the way `consonance/tools/jev-judge.js` does.\n    **The room is loaded only in this test file.**",
+   "correction_text_source": "rev",
+   "seat_by_filename": "A",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-23",
+   "correction_file": "exo_memory/handback/p-l114-prompt-A_2026-09-23.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-23T08:00:53-06:00",
+    "sha": "74e2b4bb"
+   },
+   "correction_line_time": {
+    "sha": "74e2b4bb",
+    "t": "2026-09-23T14:00:53.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "METHOD.md",
+     "resolved": "METHOD.md",
+     "how": "exact",
+     "first_commit": "2026-06-24T08:00:25-06:00",
+     "first_commit_sha": "31974c8d",
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "consonance/tools/jev-judge.js",
+     "resolved": "consonance/tools/jev-judge.js",
+     "how": "exact",
+     "first_commit": "2026-09-22T03:01:29-06:00",
+     "first_commit_sha": "1afa2856",
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "when required, so the test source-loads it, the way"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "A",
+     "ts": "2026-09-23T13:32:26.823Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-23T13:27:48.259Z",
+     "matched_span": "when required, so the test source-loads it, the way",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": null,
+    "why": null
+   }
+  },
+  {
+   "id": "S51",
+   "correction_at": "exo_memory/handback/p-l070-fastforward-A_2026-09-21.md:171",
+   "row_at": "exo_memory/handback/p-l070-fastforward-A_2026-09-21.md:171",
+   "row_at_line_matches": true,
+   "correction_text": "- **Unchanged:** `appendOnlyCompare` (row for row), the manifest's `install: \"fast-forward\"` on lap.jsonl and\n  board.jsonl, the `refused[]` in `sync-completion.json`, and E's §3 comment edits in close.js/close.test.js (2 lines each\n  way, untouched this section).",
+   "correction_text_source": "rev",
+   "seat_by_filename": "A",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-21",
+   "correction_file": "exo_memory/handback/p-l070-fastforward-A_2026-09-21.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-22T02:07:25-06:00",
+    "sha": "6b9699b8"
+   },
+   "correction_line_time": {
+    "sha": "6b9699b8",
+    "t": "2026-09-22T08:07:25.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "lap.js",
+     "resolved": null,
+     "how": "not tracked at rev",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "board.js",
+     "resolved": null,
+     "how": "not tracked at rev",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "sync-completion.js",
+     "resolved": null,
+     "how": "not tracked at rev",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "close.js/close.test.js",
+     "resolved": "consonance/tools/close.test.js",
+     "how": "unique basename",
+     "first_commit": "2026-09-09T07:16:06-06:00",
+     "first_commit_sha": "9b29449a",
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "A",
+     "ts": "2026-09-22T08:03:05.219Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-22T08:00:59.799Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S52",
+   "correction_at": "exo_memory/handback/p-loop-logo_2026-09-02.md:156",
+   "row_at": "exo_memory/handback/p-loop-logo_2026-09-02.md:156",
+   "row_at_line_matches": true,
+   "correction_text": "- I built amendment 3's arc and then reverted it unlanded. That is not waste, but it is 25 minutes\n  spent on a render that a better idea replaced, and the reason I did not see the better idea is\n  that I kept optimising the marker instead of questioning the surface it sat on.",
+   "correction_text_source": "rev",
+   "seat_by_filename": null,
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-02",
+   "correction_file": "exo_memory/handback/p-loop-logo_2026-09-02.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-02T07:25:13-06:00",
+    "sha": "6042e322"
+   },
+   "correction_line_time": {
+    "sha": "6042e322",
+    "t": "2026-09-02T13:25:13.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "neither-located",
+    "claim": null,
+    "correction_turn": null,
+    "why": "no seat named in the row, and nothing found"
+   }
+  },
+  {
+   "id": "S53",
+   "correction_at": "exo_memory/handback/p-d210-E_2026-10-02.md:56",
+   "row_at": "exo_memory/handback/p-d210-E_2026-10-02.md:56",
+   "row_at_line_matches": true,
+   "correction_text": "- **Two inline `node -e` runs failed on shell escaping.** I moved the logic into the script instead. No number came from a failed run.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "E",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-10-02",
+   "correction_file": "exo_memory/handback/p-d210-E_2026-10-02.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-02T13:14:08-06:00",
+    "sha": "dc0ef964"
+   },
+   "correction_line_time": {
+    "sha": "dc0ef964",
+    "t": "2026-10-02T19:14:08.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "E",
+     "ts": "2026-10-02T19:12:41.689Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-10-02T19:04:58.853Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S54",
+   "correction_at": "exo_memory/handback/p-d109-tj1v2-E_2026-09-22.md:99",
+   "row_at": "exo_memory/handback/p-d109-tj1v2-E_2026-09-22.md:99",
+   "row_at_line_matches": true,
+   "correction_text": "- **My first C3 class regex was looser than v1's rule.** I wrote a trailing `\\w*` on every C3 word, which matches\n  *restore*, *stopped*, *resting*; v1's D1 is whole-word with `pathologi` as the only stem. Fixed and both scopes\n  re-run: **C3 fell from 4 to 1 on U2 and from 10 to 5 on U2+**, and \"located, maps to no class\" rose correspondingly.\n  The looser numbers never reached the registration.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "E",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-22",
+   "correction_file": "exo_memory/handback/p-d109-tj1v2-E_2026-09-22.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-22T12:30:28-06:00",
+    "sha": "98443a7a"
+   },
+   "correction_line_time": {
+    "sha": "98443a7a",
+    "t": "2026-09-22T18:30:28.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "E",
+     "ts": "2026-09-22T18:01:48.763Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-09-22T17:43:32.325Z",
+     "opened_before_in_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/loop/tj1_registration_2026-09-22.md"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/loop/tj1_registration_2026-09-22.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S55",
+   "correction_at": "exo_memory/handback/p-l114-prompt-A_2026-09-23.md:110",
+   "row_at": "exo_memory/handback/p-l114-prompt-A_2026-09-23.md:110",
+   "row_at_line_matches": true,
+   "correction_text": "- **The mechanism.** The runner last started at **07:06:25Z** (`runner.log`; lock pid 19732). L083's repair reached the file at\n  about 07:17Z and was committed at **07:24:21Z** (`1c5b4f2`). `jev-judge.js` `loadJudgeInputs` gets `buildOverseerPrompt`\n  through **`require(w2)`**, which Node caches for the life of the process. But it computes `sourcesSha` from a **fresh\n  read** of the file every pass. **So the runner builds with the old worker and records the new one's hash.**",
+   "correction_text_source": "rev",
+   "seat_by_filename": "A",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-23",
+   "correction_file": "exo_memory/handback/p-l114-prompt-A_2026-09-23.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-23T08:00:53-06:00",
+    "sha": "74e2b4bb"
+   },
+   "correction_line_time": {
+    "sha": "74e2b4bb",
+    "t": "2026-09-23T14:00:53.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "jev-judge.js",
+     "resolved": null,
+     "how": "ambiguous (2)",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "**, which Node caches for the life of the process. But it computes"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "A",
+     "ts": "2026-09-23T13:32:26.823Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-23T13:27:48.259Z",
+     "matched_span": "**, which Node caches for the life of the process. But it computes",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "A",
+     "ts": "2026-09-23T13:32:26.823Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-09-23T13:27:48.259Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S56",
+   "correction_at": "exo_memory/handback/p-carry-exclude-C_2026-09-16.md:207",
+   "row_at": "exo_memory/handback/p-carry-exclude-C_2026-09-16.md:207",
+   "row_at_line_matches": true,
+   "correction_text": "### 4.4 · A correction to my own reasoning, made before it reached a test title",
+   "correction_text_source": "rev",
+   "seat_by_filename": "C",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-16",
+   "correction_file": "exo_memory/handback/p-carry-exclude-C_2026-09-16.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-16T12:20:14-06:00",
+    "sha": "f67b57a7"
+   },
+   "correction_line_time": {
+    "sha": "f67b57a7",
+    "t": "2026-09-16T18:20:14.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "C",
+     "ts": "2026-09-16T18:02:24.482Z",
+     "file": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+     "turn_start": "2026-09-16T17:58:34.550Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S57",
+   "correction_at": "exo_memory/handback/p-d164-census-E_2026-09-27.md:109",
+   "row_at": "exo_memory/handback/p-d164-census-E_2026-09-27.md:109",
+   "row_at_line_matches": true,
+   "correction_text": "- None to figures. **One reading was corrected before writing:** my first grep hit on `install.ps1` looked like a\n  gateway re-install. Reading `jev-flags.js:10` shows that hook only reads local rows, so it is listed as a re-install of\n  a non-calling hook.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "E",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-27",
+   "correction_file": "exo_memory/handback/p-d164-census-E_2026-09-27.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-27T11:58:22-06:00",
+    "sha": "6c53bc08"
+   },
+   "correction_line_time": {
+    "sha": "6c53bc08",
+    "t": "2026-09-27T17:58:22.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [
+    {
+     "cited": "install.ps1",
+     "resolved": "dev/shell/install.ps1",
+     "how": "unique basename",
+     "first_commit": "2026-07-25T07:47:54-06:00",
+     "first_commit_sha": "b00ee979",
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "jev-flags.js:10",
+     "resolved": null,
+     "how": "ambiguous (2)",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "E",
+     "ts": "2026-09-27T17:42:32.384Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-09-27T17:36:00.019Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S58",
+   "correction_at": "exo_memory/handback/p-flake-C_2026-10-06.md:44",
+   "row_at": "exo_memory/handback/p-flake-C_2026-10-06.md:44",
+   "row_at_line_matches": true,
+   "correction_text": "## Correction of my own earlier reading\nOn 09-27 (d181) I wrote that \"the process that died is node/V8 itself\". Taken alone that fit, but the machine-wide picture above (Defender, Vanguard, the kernel, all `c0000005`) makes **the machine the more likely common factor, not node.** The 09-27 note's other conclusions stand: not fixable in our code; not the op sequence; not memory pressure.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "C",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-10-06",
+   "correction_file": "exo_memory/handback/p-flake-C_2026-10-06.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-06T15:52:31-06:00",
+    "sha": "82dd0f9e"
+   },
+   "correction_line_time": {
+    "sha": "82dd0f9e",
+    "t": "2026-10-06T21:52:31.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "the process that died is node/V8 itself"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "C",
+     "ts": "2026-09-28T06:36:34.020Z",
+     "file": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+     "turn_start": "2026-09-28T06:25:38.969Z",
+     "matched_span": "the process that died is node/V8 itself",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "C",
+     "ts": "2026-10-06T21:51:24.618Z",
+     "file": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+     "turn_start": "2026-10-06T21:50:34.311Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-flake-C_2026-10-06.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S59",
+   "correction_at": "exo_memory/handback/p-mutantscopy-A_2026-10-10.md:35",
+   "row_at": "exo_memory/handback/p-mutantscopy-A_2026-10-10.md:35",
+   "row_at_line_matches": true,
+   "correction_text": "- The first batch ran with my 2400 s `timeout` and cut `state-sync` and `tail-carry` short (exit 124); I re-ran both alone with 6000 s and they are green above.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "A",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-10-10",
+   "correction_file": "exo_memory/handback/p-mutantscopy-A_2026-10-10.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-11T01:30:08-06:00",
+    "sha": "0a958b02"
+   },
+   "correction_line_time": {
+    "sha": "0a958b02",
+    "t": "2026-10-11T07:30:08.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [],
+   "transcript": {
+    "status": "correction-turn-located",
+    "claim": null,
+    "correction_turn": {
+     "seat": "A",
+     "ts": "2026-10-11T07:29:12.467Z",
+     "file": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+     "turn_start": "2026-10-11T07:28:44.153Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-mutantscopy-A_2026-10-10.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "S60",
+   "correction_at": "exo_memory/handback/p-carry-exclude-C_2026-09-16.md:277",
+   "row_at": "exo_memory/handback/p-carry-exclude-C_2026-09-16.md:277",
+   "row_at_line_matches": true,
+   "correction_text": "4. **Node read `/d/…` as `C:\\d\\…`** and one inspection threw ENOENT on a path that exists. Rerun with `D:/`.\n   No wrong figure resulted, but a first read of that error would have said the manifest was missing.",
+   "correction_text_source": "rev",
+   "seat_by_filename": "C",
+   "finder": "seat",
+   "rule": "default:seat",
+   "src": "H",
+   "stratum": "seat",
+   "stratum_pop": 991,
+   "stratum_n": 31,
+   "day": "2026-09-16",
+   "correction_file": "exo_memory/handback/p-carry-exclude-C_2026-09-16.md",
+   "correction_file_first_commit": {
+    "t": "2026-09-16T12:20:14-06:00",
+    "sha": "f67b57a7"
+   },
+   "correction_line_time": {
+    "sha": "f67b57a7",
+    "t": "2026-09-16T18:20:14.000Z"
+   },
+   "claim_at": null,
+   "claim_text": null,
+   "claim_line_time": null,
+   "cited_refs": [],
+   "quoted_spans": [
+    "** and one inspection threw ENOENT on a path that exists. Rerun with"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "C",
+     "ts": "2026-09-16T18:02:24.482Z",
+     "file": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+     "turn_start": "2026-09-16T17:58:34.550Z",
+     "matched_span": "** and one inspection threw ENOENT on a path that exists. Rerun with",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "C",
+     "ts": "2026-09-16T18:02:24.482Z",
+     "file": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+     "turn_start": "2026-09-16T17:58:34.550Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "T1",
+   "row": null,
+   "correction_at": "exo_memory/loop/plan_queue_sweep_d300_2026-10-11.md:19",
+   "correction_text": "## Part 3 REPLACED (librarian, 14:3x)\nThe chair found B's #16/#30 already done in D289 (`handback/p-heavyrunmut-B_2026-10-11.md`, landed 594b05e2 and ccdfb587). That was my miss: I planned from the cleanup plan's `:97` line without checking it. `:97` is now annotated at that plan's foot. **B's new part 3:**\n- (a) **Fixed-name temp files,** the last unworked item on `:97`. Find every Rust and JS site in `consonance/` that writes a FIXED name into the temp dir. A's D299 found one, the seed scratch helper (`consonance_seed_test_*`, main.rs:4977, now under `Scratch`). For each site: test or live, and whether two runs or two seats can collide on that name. A live collision gets a red row and a fix; the rest are listed.\n- (b) **A's named row gap from D299:** removing the gates-mode guard is caught only by the leftover count, not by a row (`handback/p-rusttemp-A_2026-10-11.md`, Checks). Add a row that fails when that folder is left, and show the mutant caught.",
+   "correction_file": "exo_memory/loop/plan_queue_sweep_d300_2026-10-11.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-11T14:37:00-06:00",
+    "sha": "700128c8"
+   },
+   "correction_line_time": {
+    "sha": "0d08cec7",
+    "t": "2026-10-11T20:38:18.000Z"
+   },
+   "claim_at": "exo_memory/loop/plan_clean_up_after_ourselves_2026-10-10.md:97",
+   "claim_text": "- **Also still queued:** Rust `temp_dir()` (29 sites); fixed-name temp files; the two pre-existing heavy-run mutant survivors (#16, #30); `t180-soak-` cleanup in the T-180 repo.",
+   "claim_text_source": "rev",
+   "claim_line_time": {
+    "sha": "fc946c52",
+    "t": "2026-10-11T03:02:05.000Z"
+   },
+   "seat_by_filename": "librarian",
+   "finder": "chair",
+   "rule": "today",
+   "src": "T",
+   "stratum": "today",
+   "stratum_pop": null,
+   "stratum_n": null,
+   "day": "2026-10-11",
+   "answer_on_disk_pointed_at_by_the_brief": "exo_memory/handback/p-heavyrunmut-B_2026-10-11.md",
+   "row_at": null,
+   "row_at_line_matches": null,
+   "cited_refs": [
+    {
+     "cited": "handback/p-heavyrunmut-B_2026-10-11.md",
+     "resolved": "exo_memory/handback/p-heavyrunmut-B_2026-10-11.md",
+     "how": "exo_memory/ prefix",
+     "first_commit": "2026-10-11T02:38:13-06:00",
+     "first_commit_sha": "b8b52bbd",
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "main.rs:4977",
+     "resolved": null,
+     "how": "ambiguous (8)",
+     "first_commit": null,
+     "first_commit_sha": null,
+     "line_time": null,
+     "line_commit": null
+    },
+    {
+     "cited": "handback/p-rusttemp-A_2026-10-11.md",
+     "resolved": "exo_memory/handback/p-rusttemp-A_2026-10-11.md",
+     "how": "exo_memory/ prefix",
+     "first_commit": "2026-10-11T14:17:13-06:00",
+     "first_commit_sha": "a0ee8d16",
+     "line_time": null,
+     "line_commit": null
+    }
+   ],
+   "quoted_spans": [
+    "(29 sites); fixed-name temp files; the two pre-existing heavy-run mutant survivors (#16, #30);",
+    ", landed 594b05e2 and ccdfb587). That was my miss: I planned from the cleanup plan's",
+    "that writes a FIXED name into the temp dir. A's D299 found one, the seed scratch helper ("
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "librarian",
+     "ts": "2026-10-11T03:02:05.643Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-10-11T03:01:43.485Z",
+     "matched_span": "(29 sites); fixed-name temp files; the two pre-existing heavy-run mutant survivors (#16, #30);",
+     "opened_before_claim_in_turn": [],
+     "opened_in_whole_turn": [],
+     "after_correction_file_first_commit": false,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "librarian",
+     "ts": "2026-10-11T20:38:17.517Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-10-11T20:37:54.174Z",
+     "opened_before_in_turn": [],
+     "opened_in_whole_turn": [],
+     "cited_paths_already_read_in_this_transcript": [
+      {
+       "path": "exo_memory/handback/p-heavyrunmut-B_2026-10-11.md",
+       "first_read_in_this_transcript": "2026-10-11T08:19:58.215Z"
+      },
+      {
+       "path": "exo_memory/handback/p-rusttemp-A_2026-10-11.md",
+       "first_read_in_this_transcript": "2026-10-11T20:16:42.039Z"
+      }
+     ]
+    },
+    "why": null
+   }
+  },
+  {
+   "id": "T2",
+   "row": null,
+   "correction_at": "exo_memory/loop/plan_queue_sweep_d300_2026-10-11.md:58",
+   "correction_text": "- **The \"standing rule\" E followed looks stale.** It kept the four `Chases_*` reads out as a friend's private project. The keeper cancelled that on 10-06: Onuris is a public community track (`map/A.md:1815`, D262). inferred: no rule now keeps them out. For the chair to confirm; if confirmed, panes copy the full `reads/`.",
+   "correction_file": "exo_memory/loop/plan_queue_sweep_d300_2026-10-11.md",
+   "correction_file_first_commit": {
+    "t": "2026-10-11T14:37:00-06:00",
+    "sha": "700128c8"
+   },
+   "correction_line_time": {
+    "sha": "a84d2458",
+    "t": "2026-10-11T23:54:24.000Z"
+   },
+   "claim_at": "exo_memory/handback/p-soakclean-E_2026-10-11.md:109",
+   "claim_text": "- **`reads/`:** copied into the worktree, not linked: 52 entries, the four `Chases_*` files left out by the standing rule.",
+   "claim_text_source": "working-copy",
+   "claim_line_time": {
+    "sha": "uncommitted",
+    "t": "2026-10-11T23:52:56.523Z",
+    "note": "working-copy mtime"
+   },
+   "seat_by_filename": "E",
+   "finder": "librarian",
+   "rule": "today",
+   "src": "T",
+   "stratum": "today",
+   "stratum_pop": null,
+   "stratum_n": null,
+   "day": "2026-10-11",
+   "answer_on_disk_pointed_at_by_the_brief": "exo_memory/map/A.md:1815",
+   "row_at": null,
+   "row_at_line_matches": null,
+   "cited_refs": [
+    {
+     "cited": "map/A.md:1815",
+     "resolved": "exo_memory/map/A.md",
+     "how": "exo_memory/ prefix",
+     "first_commit": "2026-07-31T12:25:44-06:00",
+     "first_commit_sha": "460cccfe",
+     "line_time": "2026-10-07T04:19:41.000Z",
+     "line_commit": "2b0253cd"
+    }
+   ],
+   "quoted_spans": [
+    ":** copied into the worktree, not linked: 52 entries, the four",
+    "reads out as a friend's private project. The keeper cancelled that on 10-06: Onuris is a public community track (",
+    ", D262). inferred: no rule now keeps them out. For the chair to confirm; if confirmed, panes copy the full"
+   ],
+   "transcript": {
+    "status": "claim-located",
+    "claim": {
+     "seat": "E",
+     "ts": "2026-10-11T23:52:56.490Z",
+     "file": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+     "turn_start": "2026-10-11T23:52:08.252Z",
+     "matched_span": ":** copied into the worktree, not linked: 52 entries, the four",
+     "opened_before_claim_in_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-soakclean-E_2026-10-11.md"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-soakclean-E_2026-10-11.md"
+     ],
+     "after_correction_file_first_commit": true,
+     "after_correction_line_time": false
+    },
+    "correction_turn": {
+     "seat": "librarian",
+     "ts": "2026-10-11T23:54:23.908Z",
+     "file": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+     "turn_start": "2026-10-11T23:53:20.694Z",
+     "opened_before_in_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-soakclean-E_2026-10-11.md"
+     ],
+     "opened_in_whole_turn": [
+      "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-soakclean-E_2026-10-11.md"
+     ],
+     "cited_paths_already_read_in_this_transcript": []
+    },
+    "why": null
+   }
+  }
+ ]
+}

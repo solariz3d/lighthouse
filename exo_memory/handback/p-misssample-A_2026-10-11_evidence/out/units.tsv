@@ -1,0 +1,63 @@
+id	stratum	stratum_pop	finder	src	day	correction_at	correction_line_time	correction_file_first_commit	n_refs	n_refs_with_first_commit	claim_at	transcript_status	claim_seat	claim_ts	n_opened_before_claim_in_turn	correction_turn_ts	n_cited_paths_already_read
+S01	keeper	17	keeper	W	2026-09-16	exo_memory/librarian/2026-09-16.md:151	2026-09-16T15:33:40.000Z	2026-09-16T00:48:34-06:00	1	0		claim-located	librarian	2026-09-16T15:31:09.927Z	0		
+S02	keeper	17	keeper	W	2026-09-26	exo_memory/librarian/2026-09-26.md:23	2026-09-26T14:53:56.000Z	2026-09-26T08:53:56-06:00	0	0		correction-turn-located				2026-09-26T14:53:56.159Z	0
+S03	keeper	17	keeper	W	2026-09-19	exo_memory/librarian/2026-09-16.md:225	2026-09-19T08:27:42.000Z	2026-09-16T00:48:34-06:00	0	0		claim-located	librarian	2026-09-19T08:27:42.332Z	0		
+S04	keeper	17	keeper	L	2026-09-03	exo_memory/journal/2026-09-03.md:36	2026-09-07T06:50:57.000Z	2026-09-07T00:50:57-06:00	4	4		claim-located	librarian	2026-09-06T06:51:34.672Z	0	2026-09-07T06:50:44.906Z	0
+S05	keeper	17	keeper	W	2026-09-01	exo_memory/librarian/2026-09-01.md:434	2026-09-01T11:17:34.000Z	2026-09-01T02:51:02-06:00	3	2		neither-located					
+S06	keeper	17	keeper	W	2026-09-01	exo_memory/librarian/2026-09-01.md:103	2026-09-01T08:51:02.000Z	2026-09-01T02:51:02-06:00	0	0		neither-located					
+S07	keeper	17	keeper	W	2026-10-01	exo_memory/librarian/2026-10-01.desktop.md:64	2026-10-01T12:02:30.000Z	2026-10-01T05:23:51-06:00	0	0		claim-located	librarian	2026-10-01T12:02:19.792Z	0	2026-10-01T12:02:30.284Z	0
+S08	keeper	17	keeper	W	2026-09-16	exo_memory/librarian/2026-09-16.md:131	2026-09-16T13:30:06.000Z	2026-09-16T00:48:34-06:00	2	1		claim-located	librarian	2026-09-16T13:30:06.056Z	0		
+S09	keeper	17	keeper	W	2026-09-16	exo_memory/librarian/2026-09-16.md:143	2026-09-16T14:35:05.000Z	2026-09-16T00:48:34-06:00	1	0		claim-located	librarian	2026-09-16T14:34:55.473Z	0		
+S10	keeper	17	keeper	W	2026-09-27	exo_memory/librarian/2026-09-27.desktop.md:126	2026-09-27T17:58:22.000Z	2026-09-27T08:44:35-06:00	0	0		correction-turn-located				2026-09-27T17:49:46.474Z	0
+S11	keeper	17	keeper	W	2026-09-28	exo_memory/librarian/2026-09-27.desktop.md:201	2026-09-28T11:48:35.000Z	2026-09-27T08:44:35-06:00	0	0		claim-located	librarian	2026-09-28T11:33:06.524Z	0	2026-09-28T11:33:06.524Z	0
+S12	keeper	17	keeper	W	2026-09-01	exo_memory/librarian/2026-09-01.md:462	2026-09-01T11:17:34.000Z	2026-09-01T02:51:02-06:00	0	0		neither-located					
+S13	instrument	82	instrument	H	2026-09-20	exo_memory/handback/p-holder-librarian-marks-A_2026-09-20.md:141	2026-09-20T13:11:42.000Z	2026-09-20T07:11:42-06:00	0	0		correction-turn-located				2026-09-20T13:03:32.225Z	0
+S14	instrument	82	instrument	H	2026-09-21	exo_memory/handback/p-d098-keepwarm-E_2026-09-21.md:97	2026-09-21T16:26:24.000Z	2026-09-21T10:26:24-06:00	0	0		correction-turn-located				2026-09-21T16:14:01.026Z	0
+S15	instrument	82	instrument	H	2026-10-05	exo_memory/handback/p-pieces-core-A_2026-10-05.md:33	2026-10-05T17:31:49.000Z	2026-10-05T11:31:49-06:00	1	0		correction-turn-located				2026-10-05T17:30:32.024Z	0
+S16	instrument	82	instrument	H	2026-10-08	exo_memory/handback/p-consumer-parity-B_2026-10-08.md:418	2026-10-09T08:55:19.000Z	2026-10-08T13:13:12-06:00	0	0		claim-located	B	2026-10-08T23:28:29.186Z	0	2026-10-08T23:28:29.186Z	0
+S17	instrument	82	instrument	H	2026-09-29	exo_memory/handback/p-d187-C_2026-09-29.md:115	2026-09-29T18:40:39.000Z	2026-09-29T12:40:39-06:00	0	0		correction-turn-located				2026-09-29T18:03:55.227Z	0
+S18	instrument	82	instrument	H	2026-09-14	exo_memory/handback/p-leave-A_2026-09-14.md:127	2026-09-15T07:58:14.000Z	2026-09-15T01:58:14-06:00	0	0		correction-turn-located				2026-09-15T06:27:25.575Z	0
+S19	instrument	82	instrument	H	2026-09-23	exo_memory/handback/p-l087-writesite-C_2026-09-23.md:173	2026-09-23T08:24:16.000Z	2026-09-23T02:24:16-06:00	0	0		correction-turn-located				2026-09-23T08:05:29.760Z	0
+S20	instrument	82	instrument	H	2026-10-03	exo_memory/handback/p-xsec-A_2026-10-03.md:49	2026-10-03T16:41:53.000Z	2026-10-03T10:41:53-06:00	0	0		claim-located	A	2026-10-03T16:39:56.105Z	0	2026-10-03T16:39:56.105Z	0
+S21	instrument	82	instrument	H	2026-09-30	exo_memory/handback/p-d193-C_2026-09-30.md:91	2026-09-30T08:35:53.000Z	2026-09-30T02:35:53-06:00	0	0		correction-turn-located				2026-09-30T08:31:15.834Z	0
+S22	instrument	82	instrument	H	2026-10-03	exo_memory/handback/p-d220-A_2026-10-03.md:26	2026-10-03T11:37:57.000Z	2026-10-03T05:37:57-06:00	0	0		correction-turn-located				2026-10-03T11:37:08.094Z	0
+S23	instrument	82	instrument	H	2026-09-06	exo_memory/handback/p-port-rule_2026-09-06.md:171	2026-09-06T10:20:54.000Z	2026-09-06T04:20:54-06:00	2	2		claim-located	librarian	2026-09-06T07:06:56.577Z	0		
+S24	instrument	82	instrument	H	2026-09-20	exo_memory/handback/p-holder-librarian-marks-A_2026-09-20.md:138	2026-09-20T13:11:42.000Z	2026-09-20T07:11:42-06:00	0	0		claim-located	A	2026-09-20T13:03:32.225Z	1	2026-09-20T13:03:32.225Z	0
+S25	unattributed	5	unattributed	L	2026-09-06	exo_memory/journal/2026-09-06.md:91	2026-09-06T08:33:41.000Z	2026-09-06T02:33:41-06:00	2	2		claim-located	librarian	2026-09-06T08:33:31.414Z	0	2026-09-06T08:33:31.414Z	0
+S26	unattributed	5	unattributed	L	2026-09-01	exo_memory/journal/2026-09-01.md:97	2026-09-01T09:21:36.000Z	2026-09-01T03:21:36-06:00	0	0		neither-located					
+S27	unattributed	5	unattributed	L	2026-09-06	exo_memory/journal/2026-09-06.md:68	2026-09-06T08:33:41.000Z	2026-09-06T02:33:41-06:00	2	1		correction-turn-located				2026-09-06T08:33:31.414Z	0
+S28	unattributed	5	unattributed	L	2026-09-02	exo_memory/journal/2026-09-02.md:66	2026-09-07T06:50:57.000Z	2026-09-07T00:50:57-06:00	1	1		correction-turn-located				2026-09-07T06:50:05.851Z	0
+S29	unattributed	5	unattributed	W	2026-10-06	exo_memory/librarian/2026-10-06.desktop.md:42	2026-10-07T10:07:36.000Z	2026-10-06T20:11:16-06:00	1	0		claim-located	librarian	2026-10-07T07:42:54.393Z	0	2026-10-07T07:42:54.393Z	0
+S30	seat	991	seat	H	2026-10-08	exo_memory/handback/p-consumer-parity-B_2026-10-08.md:597	2026-10-09T08:55:19.000Z	2026-10-08T13:13:12-06:00	1	1		correction-turn-located				2026-10-09T01:08:03.649Z	0
+S31	seat	991	seat	H	2026-09-28	exo_memory/handback/p-m4-equations-E_2026-09-28.md:159	2026-09-28T11:48:35.000Z	2026-09-28T05:48:35-06:00	0	0		correction-turn-located				2026-09-28T10:57:16.204Z	0
+S32	seat	991	seat	W	2026-10-10	exo_memory/librarian/2026-10-06.desktop.md:123	2026-10-10T17:09:58.929Z	2026-10-06T20:11:16-06:00	2	0		claim-located	librarian	2026-10-10T15:43:52.531Z	0	2026-10-10T15:43:52.531Z	0
+S33	seat	991	seat	W	2026-09-26	exo_memory/librarian/2026-09-26.md:27	2026-09-26T14:53:56.000Z	2026-09-26T08:53:56-06:00	0	0		correction-turn-located				2026-09-26T14:53:56.159Z	0
+S34	seat	991	seat	H	2026-09-23	exo_memory/handback/p-l114-prompt-A_2026-09-23.md:63	2026-09-23T14:00:53.000Z	2026-09-23T08:00:53-06:00	0	0		claim-located	librarian	2026-09-23T13:17:16.686Z	0	2026-09-23T13:32:26.823Z	0
+S35	seat	991	seat	H	2026-09-16	exo_memory/handback/p-launch-pull-E_2026-09-16.md:200	2026-09-16T16:01:36.000Z	2026-09-16T10:01:36-06:00	0	0		neither-located					
+S36	seat	991	seat	H	2026-09-06	exo_memory/handback/p-shell-budget_2026-09-06.md:309	2026-09-06T13:01:58.000Z	2026-09-06T07:01:58-06:00	0	0		neither-located					
+S37	seat	991	seat	H	2026-09-04	exo_memory/handback/p-d006-baton-gate_2026-09-04.md:199	2026-09-04T10:41:51.000Z	2026-09-04T04:41:51-06:00	0	0		neither-located					
+S38	seat	991	seat	H	2026-10-06	exo_memory/handback/p-handles-A_2026-10-06.md:42	2026-10-06T09:34:01.000Z	2026-10-06T03:34:01-06:00	0	0		correction-turn-located				2026-10-06T08:20:39.491Z	0
+S39	seat	991	seat	H	2026-09-28	exo_memory/handback/p-d186-brush-E_2026-09-28.md:240	2026-09-28T18:14:52.000Z	2026-09-28T12:14:52-06:00	2	0		correction-turn-located				2026-09-28T17:14:12.960Z	0
+S40	seat	991	seat	H	2026-09-21	exo_memory/handback/p-l065-statesync-E_2026-09-21.md:81	2026-09-21T10:23:16.000Z	2026-09-21T04:23:16-06:00	1	1		claim-located	E	2026-09-21T10:14:32.016Z	1	2026-09-21T10:14:32.016Z	1
+S41	seat	991	seat	H	2026-09-27	exo_memory/handback/p-d181-final-read-B_2026-09-27.md:178	2026-09-28T06:42:34.000Z	2026-09-28T00:42:34-06:00	0	0		correction-turn-located				2026-09-28T06:41:33.407Z	0
+S42	seat	991	seat	W	2026-09-16	exo_memory/librarian/2026-09-16.md:149	2026-09-16T15:21:47.000Z	2026-09-16T00:48:34-06:00	9	7		claim-located	librarian	2026-09-16T15:21:47.034Z	0		
+S43	seat	991	seat	H	2026-09-27	exo_memory/handback/p-d182-vocab-A_2026-09-27.md:227	2026-09-28T11:48:35.000Z	2026-09-28T05:48:35-06:00	0	0		correction-turn-located				2026-09-28T07:37:53.657Z	0
+S44	seat	991	seat	H	2026-09-22	exo_memory/handback/p-d120-relayinj-E_2026-09-22.md:175	2026-09-23T01:09:05.000Z	2026-09-22T19:09:05-06:00	0	0		correction-turn-located				2026-09-23T01:08:05.701Z	0
+S45	seat	991	seat	H	2026-09-09	exo_memory/handback/p-roster-arrival_2026-09-09.md:408	2026-09-10T17:43:17.000Z	2026-09-09T13:28:21-06:00	0	0		neither-located					
+S46	seat	991	seat	H	2026-09-23	exo_memory/handback/p-l096-roster-E_2026-09-23.md:138	2026-09-23T10:34:51.000Z	2026-09-23T04:34:51-06:00	0	0		correction-turn-located				2026-09-23T10:18:15.678Z	0
+S47	seat	991	seat	H	2026-09-21	exo_memory/handback/p-l070-fastforward-A_2026-09-21.md:257	2026-09-22T08:07:25.000Z	2026-09-22T02:07:25-06:00	0	0		correction-turn-located				2026-09-21T16:30:49.787Z	0
+S48	seat	991	seat	H	2026-10-09	exo_memory/handback/p-pittexture-E_2026-10-09.md:148	2026-10-10T05:01:49.000Z	2026-10-09T23:01:49-06:00	0	0		correction-turn-located				2026-10-09T22:39:10.883Z	0
+S49	seat	991	seat	H	2026-09-01	exo_memory/handback/p3e-read_2026-09-01.md:30	2026-09-01T09:21:36.000Z	2026-09-01T03:21:36-06:00	5	3		neither-located					
+S50	seat	991	seat	H	2026-09-23	exo_memory/handback/p-l114-prompt-A_2026-09-23.md:55	2026-09-23T14:00:53.000Z	2026-09-23T08:00:53-06:00	2	2		claim-located	A	2026-09-23T13:32:26.823Z	0		
+S51	seat	991	seat	H	2026-09-21	exo_memory/handback/p-l070-fastforward-A_2026-09-21.md:171	2026-09-22T08:07:25.000Z	2026-09-22T02:07:25-06:00	4	1		correction-turn-located				2026-09-22T08:03:05.219Z	0
+S52	seat	991	seat	H	2026-09-02	exo_memory/handback/p-loop-logo_2026-09-02.md:156	2026-09-02T13:25:13.000Z	2026-09-02T07:25:13-06:00	0	0		neither-located					
+S53	seat	991	seat	H	2026-10-02	exo_memory/handback/p-d210-E_2026-10-02.md:56	2026-10-02T19:14:08.000Z	2026-10-02T13:14:08-06:00	0	0		correction-turn-located				2026-10-02T19:12:41.689Z	0
+S54	seat	991	seat	H	2026-09-22	exo_memory/handback/p-d109-tj1v2-E_2026-09-22.md:99	2026-09-22T18:30:28.000Z	2026-09-22T12:30:28-06:00	0	0		correction-turn-located				2026-09-22T18:01:48.763Z	0
+S55	seat	991	seat	H	2026-09-23	exo_memory/handback/p-l114-prompt-A_2026-09-23.md:110	2026-09-23T14:00:53.000Z	2026-09-23T08:00:53-06:00	1	0		claim-located	A	2026-09-23T13:32:26.823Z	0	2026-09-23T13:32:26.823Z	0
+S56	seat	991	seat	H	2026-09-16	exo_memory/handback/p-carry-exclude-C_2026-09-16.md:207	2026-09-16T18:20:14.000Z	2026-09-16T12:20:14-06:00	0	0		correction-turn-located				2026-09-16T18:02:24.482Z	0
+S57	seat	991	seat	H	2026-09-27	exo_memory/handback/p-d164-census-E_2026-09-27.md:109	2026-09-27T17:58:22.000Z	2026-09-27T11:58:22-06:00	2	1		correction-turn-located				2026-09-27T17:42:32.384Z	0
+S58	seat	991	seat	H	2026-10-06	exo_memory/handback/p-flake-C_2026-10-06.md:44	2026-10-06T21:52:31.000Z	2026-10-06T15:52:31-06:00	0	0		claim-located	C	2026-09-28T06:36:34.020Z	0	2026-10-06T21:51:24.618Z	0
+S59	seat	991	seat	H	2026-10-10	exo_memory/handback/p-mutantscopy-A_2026-10-10.md:35	2026-10-11T07:30:08.000Z	2026-10-11T01:30:08-06:00	0	0		correction-turn-located				2026-10-11T07:29:12.467Z	0
+S60	seat	991	seat	H	2026-09-16	exo_memory/handback/p-carry-exclude-C_2026-09-16.md:277	2026-09-16T18:20:14.000Z	2026-09-16T12:20:14-06:00	0	0		claim-located	C	2026-09-16T18:02:24.482Z	0	2026-09-16T18:02:24.482Z	0
+T1	today		chair	T	2026-10-11	exo_memory/loop/plan_queue_sweep_d300_2026-10-11.md:19	2026-10-11T20:38:18.000Z	2026-10-11T14:37:00-06:00	3	2	exo_memory/loop/plan_clean_up_after_ourselves_2026-10-10.md:97	claim-located	librarian	2026-10-11T03:02:05.643Z	0	2026-10-11T20:38:17.517Z	2
+T2	today		librarian	T	2026-10-11	exo_memory/loop/plan_queue_sweep_d300_2026-10-11.md:58	2026-10-11T23:54:24.000Z	2026-10-11T14:37:00-06:00	1	1	exo_memory/handback/p-soakclean-E_2026-10-11.md:109	claim-located	E	2026-10-11T23:52:56.490Z	1	2026-10-11T23:54:23.908Z	0
