@@ -105,3 +105,67 @@ The run says nothing, and is reported as **not measured**, not as a share, if an
 C's table must give, per unit: id, class, the deciding step, the cited path that held the answer (or none) with its dated-text evidence, the opened-file match (or "no transcript"), the stale flag with its carrier path:line, and for RM/OU the directory of the answer.
 
 NEXT: A freezes the sample; C reads it blind against §1–§3 only
+
+---
+
+## AMENDMENT 1 (pane B, 2026-10-11 22:0x, lap D301 wave 3 item 6b; branch `d301-b2` from main `b2e0c4ca`)
+
+Sealed before A's census units exist. Sections 1–6 above stay as they were sealed (`0cececf5`); this amendment only adds to them. **The bar (§3) and the degenerate-test conditions (§6) are unchanged.**
+
+**Why.** The first run came back NOT MEASURED: §6.1 fired with D = 4 of 62. The population was correction rows, and most corrections are not a wrong statement by a seat, so C put 48 of 62 in NA. I wrote this amendment before reading C's table; my read of it is a separate hand-back.
+
+### A1. The population is claims
+- A unit is **one W entry**: a statement found wrong. The census takes every W entry in E's `rows.tsv`, plus the units A adds by name (T1, T2, S29).
+- The fields are those in §1, plus **the sha of the last main commit before t_err**, which A supplies.
+- Step 1 (NA) still applies, but it now applies to the statement itself. A W entry is NA only when:
+  - no seat made the statement (a tool's output, a gate, the keeper); or
+  - the entry names no statement that C can quote.
+  - "The correction does not say the claim was wrong" no longer applies, because a W entry is wrong by selection.
+- §4 applies to the two hand-seeded units, T1 and T2. S29 is not hand-seeded in §4's sense unless A says it was added for its known answer, in which case it joins §4's with-and-without report.
+
+### A2. The lookup step, for units whose correction cites no path
+**Where it sits.** Step 2's first X condition was "the correction cites no path and no command". It becomes: **the correction cites no path → run the lookup.** The lookup replaces that X condition. It does not replace step 2's other X conditions (undatable files, batch-landed `map/` lines within 24 h).
+
+**The lookup, in order. Each step is fixed before the search runs.**
+1. **Write the queries first.** From the correction, C writes **at most 3** literal phrases that state the corrected fact: a number with its unit, a path:line, a name, or a short exact phrase. C records them in the table **before running anything**. No phrase may be taken from the erring claim's own wording of the wrong thing.
+2. **Search the tree as it was.** For each phrase:
+   `git grep -n -i -F -e '<phrase>' <sha before t_err> -- . ':!exo_memory/third_place' ':!**/THIRD_PLACE.md'`
+   Third Place content is never searched or read.
+3. **A hit holds the answer** only if the hit line, read with 3 lines either side, passes §2's test: it states the corrected fact, or a fact it follows from without running anything, about the same object the claim was about. A phrase that occurs in an unrelated sense is no hit. C records every hit judged, and why it passed or failed.
+4. **Decide.**
+   - **Found** (at least one hit holds the answer): the hit's file is the "path that held the answer". It was on disk at t_err by construction, so step 3's dating check is already met. Go to step 4: RE if the seat opened it, RM if a transcript shows it did not, OU if there is no transcript. The answer's directory is the hit's directory.
+   - **Not found:** the unit is **ND**. One exception: a correction whose evidence is a command run over files all on disk at t_err stays **UC** under step 3's existing rule, because the answer was computable even though no file stated it.
+5. **Count it.** Every unit decided by the lookup is marked `L-found` or `L-notfound`, so its effect can be taken out (A3).
+
+**What the lookup cannot see.** Lines that were on disk but uncommitted at t_err (the chair lands map lines in batches) are not in any commit, so they read as not found → ND. Paraphrased answers are missed by a literal search → ND.
+
+### A3. Does the lookup bias toward RM? Yes, in one direction, and here is the bound
+**Toward RM.**
+- The lookup searches the **whole tree**, while the seat had one task and opened a handful of files. Any found answer, wherever it sits (a line deep in a 377 kB map, say), makes the unit on disk. A found answer is far more likely to be in a file the seat did not open than in one it did. So found units fall mostly to RM (or OU, which enters the high end), rarely to RE.
+- That makes "the answer existed somewhere in the repository", which is weaker than the plain sense of "a file the seat should have opened", count as a miss. A unit found only in an unrelated-looking file is still an RM under this rule.
+- Phrase choice is made knowing the answer. A searcher can widen a phrase until something hits. The 3-query cap, the write-first rule and the per-hit judgement in A2 limit this; they do not remove it.
+
+**Against RM.**
+- A literal search misses paraphrase and uncommitted lines, and every miss of that kind becomes ND, which enters D and **lowers** the share.
+- Under the original rules those units were X and **outside** D. So the lookup also adds denominator.
+
+**The net direction is not knowable before the data, but the upward effect has a hard bound.** At most, every `L-found` unit is an RM or OU that would otherwise have been X. So:
+- **Low end, inflation ≤ (L-found with a transcript) / D.**
+- **High end, inflation ≤ L-found / D.**
+
+C and the scorer report the band three ways:
+- (i) as amended;
+- (ii) with every `L-found` unit removed from both numerator and D;
+- (iii) with every `L-found` unit moved to ND (the most against-RM reading).
+
+**If the verdict row in §3 differs between (i) and (ii), the verdict rests on the lookup, and the scorer says so in the verdict line.** That is a report, not a new §6 condition. §6.2 still applies as written: if more than 80% of D is decided through the lookup step, the run is degenerate.
+
+### A4. What the per-unit table adds
+The table adds, per unit:
+- the sha before t_err;
+- whether the lookup ran;
+- the queries as written before the search;
+- each hit judged, with its verdict and reason;
+- `L-found`, `L-notfound`, or blank.
+
+NEXT: A freezes the census with the sha column; then C reads it blind against §1–§3 and A1–A4 (not §5)
