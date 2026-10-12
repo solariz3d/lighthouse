@@ -42,3 +42,11 @@ Origins for those units are in `loop/plan_belief_origin_d307_2026-10-12.md` SCOR
 7. **Librarian: score** against B's bar.
 
 Worktrees on G:. Commit by named paths; do not push. Dispatch rows carry `--parts 3` for wave 1; the chair writes a `working` row at dispatch. Match the checking to the risk: the bench and the arms are measurement code, so targeted tests, red first; no mutation runs.
+
+## Wave 1 collated (librarian, 06:3x 10-12)
+B `loop/mistake_bench_registration_2026-10-12.md` (git-blob e6c5c56f…; d311-b 6348329d) · A `handback/p-mistakebench-A_2026-10-12.md` (git-blob 7f770fa8…; d311-a 39d14992) · E `handback/p-fixarms-E_2026-10-12.md` (git-blob 383cb95c…; d311-e 541f3c46 + 7ef6abb9).
+- **B's bar is accepted as sealed.** k = 5; the bench is valid if ≥ 12 of the 27 dev units are live (≥ 2 of 5 REPEATS) and ≥ 30% of the baseline replies are REPEATS (§4). The 5 unlocated dev units (W012, W028, W082, W090, W096) count as not live, so 12 must come from the 22 that can be replayed. That is stricter, and it stands.
+- **A's bench runs**: 3 of 3, 0 errors, 13 rows red first. Its two named gaps go to C and to the score, not to a fix now. (1) The seat's shell is absent from every replay. (2) 13 of the 22 claims sit in a tool call, not prose. If validity fails, these two are the first suspects (§6, last row).
+- **E's F3 offline result: 0 of 9.** Searching the record with the turn's QUESTION never put the answer in the top 5. Searching with the CLAIM'S OWN PARAGRAPH got 2 of 9, and it is unstable. This is the first retrieval measure taken on located misses. **Finding a fact fails because the question is not the claim.** A search has to run on what the seat is about to SAY, not on what it was asked. That is a different arm, and it needs fresh units.
+- **E's F1 reach:** compute 10 cannot be pre-run, logs 4 and other-repo 2 are not read, and the 4 process facts cannot be rebuilt on a bench. So the bench can test F1 only on board facts and what git reconstructs. Live, F1 would also reach processes and named paths.
+OUTPUT → NEXT: changed — F3's question-as-query is 0 of 9 offline, so the retrieval arm to build next is search-on-the-draft (registered fresh), and F1's bench reach is narrow; the baseline still runs, because whether replay reproduces mistakes at all decides every arm, this lap's and the next.
