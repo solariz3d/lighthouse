@@ -1,0 +1,11 @@
+{
+  "_what": "Locators transcribed by seat A from E's evidence strings in classification.json where parseLocator() cannot read them. Each carries the words it came from. A unit not listed and not parsed stays unlocated.",
+  "W010": { "seat": "lib", "turnStart": "2026-09-18T07:37:41Z", "claimTs": "2026-09-18T07:38:35Z", "from": "lib turns 07:37:41Z and 07:40:11Z (09-18); ... claim first written 07:38:35Z" },
+  "W021": { "seat": "lib", "turnStart": "2026-09-23T09:19:12Z", "claimTs": "2026-09-23T09:19:36Z", "from": "no call before the 09:19:36Z write naming 'no B here'" },
+  "W084": { "seat": "lib", "turnStart": "2026-09-11T08:12:35Z", "claimTs": "2026-09-11T08:14:24Z", "from": "no listing before the plan write at 08:14:24Z" },
+  "W079": { "seat": "lib", "turnStart": "2026-09-09T12:25:12Z", "claimTs": "2026-09-09T12:26:00Z", "from": "the only call is the plan Write at 12:26:00Z" },
+  "W080": { "seat": "lib", "turnStart": "2026-09-09T12:17:15Z", "claimTs": "2026-09-09T12:19:39Z", "from": "no fixture listing before the ring at 12:19:39Z" },
+  "W053": { "seat": "lib", "turnStart": "2026-09-01T13:45:39Z", "claimTs": "2026-09-01T13:46:48Z", "from": "only the packet read before the 13:46:48Z entry" },
+  "W056": { "seat": "lib", "turnStart": "2026-09-02T11:32:36Z", "claimTs": "2026-09-02T11:34:21Z", "from": "the entry was written by the same command as the check (11:34:21Z)" },
+  "W058": { "seat": "lib", "turnStart": "2026-09-02T10:04:05Z", "claimTs": "2026-09-02T10:06:43Z", "from": "not run before the 10:06:43Z entry" }
+}

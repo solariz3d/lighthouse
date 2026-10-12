@@ -1,0 +1,22 @@
+{
+ "harness_sha256": "26ea52a9767d4a9fd1ba98253be85e58c76aef85aa8920786de553f3ba8a8188",
+ "turn_js_sha256": "1022b881bb9d513a60f111c2f4a7718b117887fae867e5da981ccc9027b84819",
+ "find_js_sha256": "95c1f0dd23a2326d6ca2944888cf815030d4c07da7177a9d2750ac126c3d7141",
+ "lists": {
+  "census": {
+   "file": "census-units.json",
+   "sha256": "7a31cfc52bded0cf7063fb8ef5e512be3e9503483c9faa1e680c67b962e0c883",
+   "function": "sha256 of the file bytes"
+  },
+  "right": {
+   "file": "right-claims.json",
+   "sha256": "68a4a1d16307ec3e73f1b45e5c9f1774fb835b04e127820ba12149f382814c35",
+   "function": "sha256 of the file bytes"
+  },
+  "week": {
+   "file": "week-replies.json",
+   "sha256": "75743f4723061c71871c8c8f7d8ca595eb864ba64ccf0e9a4cb1814bba554b70",
+   "function": "sha256 of the file bytes"
+  }
+ }
+}
