@@ -66,7 +66,7 @@ portable-paths green (391 files, 0 new). carrier-drift GREEN.
 Both previously untried ids, `claude-opus-5` and `claude-fable-5`, ran without error. The section above projects 30 s per regeneration, about 55 minutes for 110 run one at a time; four at a time took 15 min 32 s, and the measured mean was 32.6 s per call. Cache: 71 of the 110 calls read part of their prompt from cache (66% of all input tokens were cache reads), because five runs of one unit overlap in time; the dry run read none.
 
 ### The blind set, and where the key is
-- `exo_memory/handback/p-mistakebench-A_2026-10-12_evidence/baseline/blind/blind.json` — **110 replies**, ids `R001`…`R110`, each with `unit`, `wrongClaim` (the correction text) and `reply`; no arm and no run number. Seed `d311-baseline-blind-2026-10-12`. sha256 of the file `5e7b84fb8685b87b99f41b3c3e2028e9613d21df4813a4b0d86ffbcd62aae419`.
+- `exo_memory/handback/p-mistakebench-A_2026-10-12_evidence/baseline/blind/blind.json` — **110 replies**, ids `R001`…`R110`, each with `unit`, `wrongClaim` (the correction text) and `reply`; no arm and no run number. Seed `d311-baseline-blind-2026-10-12`. sha256 of the file `5e7b84fb8685b87b99f41b3c3e2028e9613d21df4813a4b0d86ffbcd62aae419 [forward re-clean 10-12: that file is now sha256 99ee97f9…c1b6f2 (full 99ee97f9a60c6d033948d59d209d83f680868ca37f483fbbd36ce66846c1b6f2); the text the judges read is in git at f3276d5c]`.
 - **The key is not in the repo or any path C reads**: `G:\consonance-worktrees\a-d311a2-key\key.json` (sha256 `34973110f59d41fb6fd7510671878b70ba58e076ec933095a46ab2e08edeeca5`), outside every worktree. It maps id → unit, arm, run. Because every run here is the baseline, the only thing it hides is the run number (1 to 5) within a unit; the unit is in the blind set.
 - The word "baseline" appears 5 times inside reply texts (the models' own words); it is not an arm label.
 
@@ -117,7 +117,7 @@ No cost field is in any row, and no money figure is in this section.
 - Output hygiene as before: no `"token"` field or key-shaped string in `runs.jsonl` (grep: 0). B's second-judge sample for this set is not drawn; I draw it by the same rule on request. I did not unseal the first baseline's key.
 
 ### The new blind set, and where the key is
-- `exo_memory/handback/p-mistakebench-A_2026-10-12_evidence/baseline2/blind/blind.json` — 110 replies, fields `blindId, unit, wrongClaim, reply` (tool requests appear in the reply as `[TOOL REQUEST name] {input}` lines); no arm, no run number. **sha256 `9e7f0bdfd1d7e1656c5aa36ad75856236b43d37edced1a1f538b8cef16d70bd1`.**
+- `exo_memory/handback/p-mistakebench-A_2026-10-12_evidence/baseline2/blind/blind.json` — 110 replies, fields `blindId, unit, wrongClaim, reply` (tool requests appear in the reply as `[TOOL REQUEST name] {input}` lines); no arm, no run number. **sha256 `9e7f0bdfd1d7e1656c5aa36ad75856236b43d37edced1a1f538b8cef16d70bd1 [forward re-clean 10-12: that file is now sha256 410eed59…500f4f (full 410eed5998af3614f40962d05c6ea1db636e4beae8362471058a4184bb500f4f); the text the judges read is in git at e0a01df2]`.**
 - The key is outside the repo: `G:\consonance-worktrees\a-d311a3-key\key.json` (sha256 `963968c4f6070b7122f2c47c240eaff82c40fbcb4e30f159df48b0f7a2703598`).
 
 NEXT: C and B judge `baseline2/blind/blind.json` blind against B's registration when the librarian dispatches it; A draws B's 40-reply sample for this set on request and unseals the key only when both sets of verdicts are committed
@@ -218,7 +218,7 @@ No cost field is in any row.
 - **Ids.** The new blind set is `R001`…`R110` again, a different shuffle; cite a set by path and digest.
 
 ### The blind set, the key, and B's 40
-- `exo_memory/handback/p-mistakebench-A_2026-10-12_evidence/baseline3/blind/blind.json` — 110 replies, fields `blindId, unit, wrongClaim, reply` (tool requests appear in the reply as `[TOOL REQUEST name] {input}` lines); no arm, no run number. Seed `d311-baseline3-blind-2026-10-12`. **sha256 `c0bf102016d8074935204112b848ff3bf7d215f1e91ea96d77f37a1192a66e7e`.**
+- `exo_memory/handback/p-mistakebench-A_2026-10-12_evidence/baseline3/blind/blind.json` — 110 replies, fields `blindId, unit, wrongClaim, reply` (tool requests appear in the reply as `[TOOL REQUEST name] {input}` lines); no arm, no run number. Seed `d311-baseline3-blind-2026-10-12`. **sha256 `c0bf102016d8074935204112b848ff3bf7d215f1e91ea96d77f37a1192a66e7e [redaction fix 10-12: that file is now sha256 b70da5a0…c21230 (full b70da5a0e1b2d374ed63ca61641893379be0a74bca0a31bd81125b0b48c21230)]`.**
 - The key is outside the repo: `G:\consonance-worktrees\a-d311a5-key\key.json` (sha256 `333ae4034eb1cb89251be1f06508ceb6e707cfd89e67b194dfdd7d7436372652`). I unseal it only when the librarian says C's 110 and B's 40 verdicts are committed.
 - B's 40: the 40 lowest `sha256("D311|unit|baseline|index")` keys over this key, index = the recorded run number 1 to 5, ids only, posted on the board and committed as `baseline3/blind/b-sample.json` (commit `63303245`).
 
@@ -276,7 +276,7 @@ Fourteen units, 70 of 110 runs per set. The "first two baselines" column re-runs
 - **Where the cleaning changes a reply's meaning for judging: 8 rows, because each loses its paragraph, not a phrase** (replies are mostly a few long lines): R002 (W080, 2,736 to 119 characters), R040 (W080, 3,397 to 114), R042 (W058, 6,287 to 325), R054 (W079, 1,660 to 318), R074 (W080, 3,473 to 128), R076 (W080, 4,018 to 115), R077 (W080, 2,663 to 95), R093 (W079, 2,055 to 329). **Inside B's 40: R002, R054, R077.** C's and B's verdicts on these 8 were given on the full text and may not hold on what is left; they should be treated as unjudged on the cleaned text, or re-judged. List: `baseline3/cleaning-changed-rows.json` (R-id, unit, marker count, sizes).
 
 ### 5. Which commits carry unclean text (for the landing; I rewrote nothing)
-- **Already on origin/main and unclean by the test in section 2:** `f3276d5c` (baseline: runs.jsonl, blind.json; 9 runs, units W080, W079, W084) and `e0a01df2` (baseline2: runs.jsonl, blind.json; 9 runs, units W080, W079, W058, W084). `bcdae51a` (dry run) tests clean. Whether to treat these as a leak is the chair's call: the test finds verbatim reuse, not that the reused words are private. The cleaned copy of either file comes from `node exo_memory/handback/p-mistakebench-A_2026-10-12_evidence/redaction/overlap-check.js clean <in runs.jsonl> <out runs.jsonl>` and then `mistake-bench.js blind --seed d311-baseline-blind-2026-10-12` (baseline) or `d311-baseline2-blind-2026-10-12` (baseline2); **I did not apply it to those two** (they are landed, and C and B judged blind digests `5e7b84fb…` and `9e7f0bdf…`).
+- **Already on origin/main and unclean by the test in section 2:** `f3276d5c` (baseline: runs.jsonl, blind.json; 9 runs, units W080, W079, W084) and `e0a01df2` (baseline2: runs.jsonl, blind.json; 9 runs, units W080, W079, W058, W084). `bcdae51a` (dry run) tests clean. Whether to treat these as a leak is the chair's call: the test finds verbatim reuse, not that the reused words are private. The cleaned copy of either file comes from `node exo_memory/handback/p-mistakebench-A_2026-10-12_evidence/redaction/overlap-check.js clean <in runs.jsonl> <out runs.jsonl>` and then `mistake-bench.js blind --seed d311-baseline-blind-2026-10-12` (baseline) or `d311-baseline2-blind-2026-10-12` (baseline2); **I did not apply it to those two** (they are landed, and C and B judged blind digests `5e7b84fb… [forward re-clean 10-12: that file is now sha256 99ee97f9…c1b6f2 (full 99ee97f9a60c6d033948d59d209d83f680868ca37f483fbbd36ce66846c1b6f2); the text the judges read is in git at f3276d5c]` and `9e7f0bdf… [forward re-clean 10-12: that file is now sha256 410eed59…500f4f (full 410eed5998af3614f40962d05c6ea1db636e4beae8362471058a4184bb500f4f); the text the judges read is in git at e0a01df2]`).
 - **Local, unpushed, unclean:** `6443e971` (baseline3 runs.jsonl and blind.json; 8 runs) on main, and its source `63303245` on `d311-a5`. The same files in `f9db6bba` (`d311-a2`) and `aee612d3` (`d311-a3`) are the two landed above.
 - **Local, clean of reply text:** `8d59fb1c` (the unfixed context-fidelity code, test fixtures that say "Third Place" are synthetic; and the sizes file, numbers only), `92152b89` (test paths), `53e525d2` (hand-back text and map line: no reply is quoted). Note `8d59fb1c` and `92152b89` hold the bench WITHOUT the redaction fix; a run from that code reproduces the leak, so land the fix with them.
 - **Outside commits, still holding the unclean text:** the `d311-a5` worktree (`G:\consonance-worktrees\a-d311a5-wt`) holds the unclean baseline3 files; I have not deleted it.
@@ -285,3 +285,49 @@ Fourteen units, 70 of 110 runs per set. The "first two baselines" column re-runs
 My "Context-fidelity run" section said the Third Place lines "are not in any prompt" and that the run outputs hold no secret-shaped string. True of lines that name it, and nothing more: I treated the line filter as the whole rule and did not apply the rule for calls to their results. The check I added for the whole-results change was a row proving a line-level leak does not occur; it could not show this one.
 
 NEXT: chair rebuilds main without the unclean range and lands the `d311-a6` commit; chair decides on `f3276d5c` and `e0a01df2` already on origin; C and B treat R002 R040 R042 R054 R074 R076 R077 R093 as unjudged on the cleaned text; A deletes the `d311-a5` worktree only when the chair says
+
+## forward re-clean (D311 ledger D312; seat A, 2026-10-12)
+
+**Result: the two outputs already on origin (`baseline/` at `f3276d5c`, `baseline2/` at `e0a01df2`) are re-cleaned forward, in place, by the same no-model rule as baseline3. The section 2 test now passes on all outputs of all runs: 0 reusing lines in every file.** No history was rewritten and no model was called. Branch `d311-a7` (worktree `G:\consonance-worktrees\a-d311a7-wt`, from `rebuild-d311` at `31e89987`); one commit, local, not pushed, named paths. Seeds, ids, order and keys are unchanged, so every earlier verdict still lines up by R-id.
+
+### What was done
+`overlap-check.js clean` over `baseline/runs.jsonl` and `baseline2/runs.jsonl` (every reply and tool-request line that repeats an 8-word run of a redacted-only result becomes `[third-place line removed]`), then `mistake-bench.js blind` with the SAME seeds (`d311-baseline-blind-2026-10-12`, `d311-baseline2-blind-2026-10-12`). **Checked for each set: the new blind set has the same ids, units and order as the old, and its key equals the stored key** (`G:\consonance-worktrees\a-d311a2-key\key.json`, `…\a-d311a3-key\key.json`, outside the repo), so nothing was re-keyed. `overlap-check.js check` now also reads a `blind.json`, so the test runs on the judged files too.
+| set | runs changed | lines replaced | units | R-ids that lost text | inside B's 40 |
+|---|---:|---:|---|---|---|
+| baseline | 9 | 11 | W080 5, W079 3, W084 1 | R011 R016 R030 R033 R060 R067 R101 R102 R110 | R011 R101 R102 |
+| baseline2 | 9 | 18 | W080 4, W079 3, W058 1, W084 1 | R009 R012 R025 R032 R067 R079 R089 R096 R099 | R009 R012 R025 R099 |
+(baseline2's `b-sample.json` is not in this tree; I read its ids from `2233be7f` to count the last column. It was never landed; it is ids only, and B's file cites it. Say if you want it added.) Lists with sizes: `baseline/cleaning-changed-rows.json`, `baseline2/cleaning-changed-rows.json`.
+
+### The test passing, counts per file (checked: `redaction/overlap-check.js check`, after)
+| file | runs | runs with a reusing line | lines | before (at `31e89987`) |
+|---|---:|---:|---:|---|
+| baseline/runs.jsonl | 110 | 0 | 0 | 9 runs, 11 lines |
+| baseline/blind/blind.json | 110 | 0 | 0 | 9 runs, 11 lines |
+| baseline2/runs.jsonl | 110 | 0 | 0 | 9 runs, 18 lines |
+| baseline2/blind/blind.json | 110 | 0 | 0 | 9 runs, 9 lines |
+| baseline3/runs.jsonl | 110 | 0 | 0 | 0 (already cleaned) |
+| baseline3/blind/blind.json | 110 | 0 | 0 | 0 |
+| dry/runs.jsonl, dry/blind.json | 3, 3 | 0 | 0 | 0 |
+The word filter, token fields and key shapes also stay at 0 in the six big files (`redaction/check-outputs.js`); removal markers now present: baseline 13 and 13, baseline2 22 and 11, baseline3 18 and 8 (runs.jsonl and blind.json respectively).
+
+### Digests re-derived, and where a citation was changed
+| file | old sha256 | new sha256 |
+|---|---|---|
+| baseline/blind/blind.json | `5e7b84fb8685b87b99f41b3c3e2028e9613d21df4813a4b0d86ffbcd62aae419` | `99ee97f9a60c6d033948d59d209d83f680868ca37f483fbbd36ce66846c1b6f2` |
+| baseline2/blind/blind.json | `9e7f0bdfd1d7e1656c5aa36ad75856236b43d37edced1a1f538b8cef16d70bd1` | `410eed5998af3614f40962d05c6ea1db636e4beae8362471058a4184bb500f4f` |
+| baseline3/blind/blind.json | `c0bf102016d8074935204112b848ff3bf7d215f1e91ea96d77f37a1192a66e7e` | `b70da5a0e1b2d374ed63ca61641893379be0a74bca0a31bd81125b0b48c21230` (unchanged by this commit) |
+| baseline/runs.jsonl | `b81ac570bf0658d6e59e713c993f0e957e431e07bb472114f65da206f5d6c2d4` | `ee5c17fff417f1cc274e6743bdc61d261cf8f41cff9906623dd3642499f31bcb` |
+| baseline2/runs.jsonl | `e68a2c94f22c5982387f63687ad37f95336d0e1e59a0d140a7f8c38bdb00d814` | `ef82dcf990c8eb3b1ef4a8af16e6aa25e1ea9a410f3ca4f63454c41cdd6b1df2` |
+**I did not overwrite the old digests where they are cited; each cite was true when it was written** (C and B checked those files). **13 citations in five files got a bracketed note after the old digest** saying what the file is now and where the judged text sits in git (`f3276d5c`, `e0a01df2`): `loop/plan_mistake_bench_d311_2026-10-12.md` (2: the two SCORE source lines), `handback/p-benchjudge-C_2026-10-12.md` (2), `handback/p-benchjudge-B_2026-10-12.md` (2), `handback/p-mistakebench-A_2026-10-12.md` (5: lines 69, 120, 221 and two in the line that lists the unclean commits) and `map/A.md` (2). The `map/B.md` file also holds one of the old digests (the grep reported it as binary) and I left it. **The verdict files (C's, B's) and the R-ids are not changed.**
+
+### Where the clean changes a row's meaning for judging
+- **baseline:** each of the 9 rows loses one or two lines of 4 to 8 and keeps most of its text (for example R011 2,362 to 2,273 characters, R102 3,258 to 2,448). C's and B's labels probably stand, but they were given on the longer text; the rows in B's 40 are R011, R101, R102.
+- **baseline2: six rows are now almost only the marker** (R009 5,118 to 26 characters, R025 1,782 to 26, R067 3,817 to 26, R079 3,230 to 26, R096 4,954 to 26, R099 3,697 to 26); R012 (2,386 to 591), R032 (1,537 to 570) and R089 (2,238 to 181) keep a remnant. Those verdicts rest on text that is no longer in the file. Inside B's 40: R009, R012, R025, R099.
+- The judged texts stay in git history (`f3276d5c`, `e0a01df2`, and the keeper's call on that history is separate).
+
+### Limits
+- **The test catches 8 or more consecutive words, not paraphrase.** "0 reusing lines" is not "no Third Place material in any reply"; the same limit as in "baseline3 redaction".
+- The set of words checked against is "in a redacted result and not in the fixed prompt". The first two baselines saw a shorter prompt than the fixed one, so a run of words that is in a redacted result AND in the fixed prompt (for instance in the shell, which those runs did not see) is not flagged even though those runs could only have got it from the redacted result. That makes the counts a floor for the first two baselines.
+- I opened nothing under `exo_memory/third_place/`; the checks read seat transcripts in code and print counts.
+
+NEXT: chair lands this commit on `rebuild-d311` and pushes; C and B treat the baseline R-ids R011 R016 R030 R033 R060 R067 R101 R102 R110 and the baseline2 R-ids R009 R012 R025 R032 R067 R079 R089 R096 R099 as judged on text that has since been cleaned

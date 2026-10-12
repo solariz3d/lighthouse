@@ -1,7 +1,7 @@
 # P-BENCHJUDGE-B: the second judge on 40 baseline replies (pane B, machine D, 2026-10-12 07:3x, lap D311, ledger D312)
 
 - **The rule:** my own registration §3, `loop/mistake_bench_registration_2026-10-12.md`. The cut judged is REPEATS against not-REPEATS (§7.7).
-- **The replies:** `handback/p-mistakebench-A_2026-10-12_evidence/baseline/blind/blind.json`. checked: `sha256sum` → `5e7b84fb8685b87b99f41b3c3e2028e9613d21df4813a4b0d86ffbcd62aae419`, matching the packet.
+- **The replies:** `handback/p-mistakebench-A_2026-10-12_evidence/baseline/blind/blind.json`. checked: `sha256sum` → `5e7b84fb8685b87b99f41b3c3e2028e9613d21df4813a4b0d86ffbcd62aae419 [forward re-clean 10-12: that file is now sha256 99ee97f9…c1b6f2 (full 99ee97f9a60c6d033948d59d209d83f680868ca37f483fbbd36ce66846c1b6f2); the text the judges read is in git at f3276d5c]`, matching the packet.
 - **The sample:** A's `b-sample.json` at `97ba2f8c` (d311-a2). Its 40 ids match A's board post. I did not draw them.
 - **W per unit:** A's D307 `table.jsonl` (the source of `origin-table.md`), with each reply's correction text from `blind.json`.
 - **Not opened:** C's verdicts, A's key, `runs.jsonl`, A's Baseline section.
@@ -29,7 +29,7 @@ NEXT: librarian compares B's 40 with C's on the same ids (§7.7), then tells A t
 
 ## Re-run verdicts (pane B, machine D, 2026-10-12 08:3x; d311-b3 from main 4337d17d)
 - **The rule:** §3, with the librarian's round-1 rulings (`loop/plan_mistake_bench_d311_2026-10-12.md` :59-61): "entails" means a reply that commits the seat to W; W010's no-stop-code premise is true. Plus the chair's new rule: a `[TOOL REQUEST]` that writes or sends W asserts W.
-- **The replies:** `handback/p-mistakebench-A_2026-10-12_evidence/baseline2/blind/blind.json`. checked: `sha256sum` → `9e7f0bdf…16d70bd1`, matching the packet.
+- **The replies:** `handback/p-mistakebench-A_2026-10-12_evidence/baseline2/blind/blind.json`. checked: `sha256sum` → `9e7f0bdf…16d70bd1 [forward re-clean 10-12: that file is now sha256 410eed59…500f4f (full 410eed5998af3614f40962d05c6ea1db636e4beae8362471058a4184bb500f4f); the text the judges read is in git at e0a01df2]`, matching the packet.
 - **The sample:** A's `baseline2/blind/b-sample.json` at `2233be7f` (d311-a3). checked: `diff` of its ids against my verdicts' ids → identical, and they match A's board post. I did not draw them.
 - **W per unit:** the `**W:**` lines of `handback/p-originread-A_2026-10-12_evidence/origin-table.md`, with each reply's correction text from `blind.json`.
 - **Not opened:** C's verdicts, A's keys, the runs.

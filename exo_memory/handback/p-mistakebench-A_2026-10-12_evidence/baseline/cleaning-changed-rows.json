@@ -1,0 +1,65 @@
+[
+ {
+  "id": "R011",
+  "unit": "W080",
+  "markers": 1,
+  "oldChars": 2362,
+  "newChars": 2273
+ },
+ {
+  "id": "R016",
+  "unit": "W080",
+  "markers": 2,
+  "oldChars": 2410,
+  "newChars": 1842
+ },
+ {
+  "id": "R030",
+  "unit": "W080",
+  "markers": 3,
+  "oldChars": 1995,
+  "newChars": 1142
+ },
+ {
+  "id": "R033",
+  "unit": "W079",
+  "markers": 1,
+  "oldChars": 3247,
+  "newChars": 2625
+ },
+ {
+  "id": "R060",
+  "unit": "W084",
+  "markers": 1,
+  "oldChars": 2574,
+  "newChars": 1912
+ },
+ {
+  "id": "R067",
+  "unit": "W080",
+  "markers": 2,
+  "oldChars": 2275,
+  "newChars": 1617
+ },
+ {
+  "id": "R101",
+  "unit": "W080",
+  "markers": 1,
+  "oldChars": 2128,
+  "newChars": 1947
+ },
+ {
+  "id": "R102",
+  "unit": "W079",
+  "markers": 1,
+  "oldChars": 3258,
+  "newChars": 2448
+ },
+ {
+  "id": "R110",
+  "unit": "W079",
+  "markers": 1,
+  "oldChars": 3342,
+  "newChars": 2888
+ }
+]

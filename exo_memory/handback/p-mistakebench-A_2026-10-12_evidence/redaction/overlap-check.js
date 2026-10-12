@@ -63,7 +63,7 @@ const [cmd, ...files] = process.argv.slice(2);
 const sh = redactedShingles();
 if (cmd === 'check') {
   for (const f of files) {
-    const rows = fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map(JSON.parse);
+    const rows = f.endsWith('.jsonl') ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map(JSON.parse) : JSON.parse(fs.readFileSync(f, 'utf8'));   // a runs.jsonl, or a blind.json array of { unit, reply }
     const per = {}; let runsHit = 0, linesHit = 0;
     for (const r of rows) {
       const set = (sh[r.unit] || { set: new Set() }).set, t = { n: 0 };

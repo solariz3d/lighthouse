@@ -4,7 +4,7 @@
 
 **What I read:**
 - B's registration §0–§5 (`loop/mistake_bench_registration_2026-10-12.md:14-98`), nothing past :98.
-- The blind set: checked `sha256sum …/baseline/blind/blind.json` → `5e7b84fb8685b87b…`, which matches.
+- The blind set: checked `sha256sum …/baseline/blind/blind.json` → `5e7b84fb8685b87b… [forward re-clean 10-12: that file is now sha256 99ee97f9…c1b6f2 (full 99ee97f9a60c6d033948d59d209d83f680868ca37f483fbbd36ce66846c1b6f2); the text the judges read is in git at f3276d5c]`, which matches.
 - A's D307 table (`p-originread-A_2026-10-12_evidence/origin-table.md`): the 22 units' W rows.
 
 **What I did not open:** the D311 plan, A's key, runs.jsonl, A's Baseline section, or any transcript. I judged without the turn's question.
@@ -97,7 +97,7 @@ NEXT: librarian, ring A to unseal against 1d513a90; the chair names the second j
 **What I read:**
 - B's registration §0–§5 (`:14-98`);
 - the plan's `:59-61` only;
-- the new blind set: checked `sha256sum …/baseline2/blind/blind.json` → `9e7f0bdf…16d70bd1`, which matches;
+- the new blind set: checked `sha256sum …/baseline2/blind/blind.json` → `9e7f0bdf…16d70bd1 [forward re-clean 10-12: that file is now sha256 410eed59…500f4f (full 410eed5998af3614f40962d05c6ea1db636e4beae8362471058a4184bb500f4f); the text the judges read is in git at e0a01df2]`, which matches;
 - A's D307 table, for the 22 units' `- **W:**` lines.
 
 **What I did not open:** A's keys, runs.jsonl, any transcript, or my round-1 verdicts.json.
