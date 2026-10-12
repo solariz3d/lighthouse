@@ -161,3 +161,19 @@ test('makeBlind leaves an errored run out of the set and lists it in the key as 
   assert.strictEqual(out.blind.length, 1);
   assert.strictEqual(out.errored.length, 1);
 });
+
+test('pool runs at most n jobs at once, runs every job once, and keeps going past a job that throws', async () => {
+  let live = 0, peak = 0; const seen = [];
+  const jobs = Array.from({ length: 9 }, (_, i) => async () => { live++; peak = Math.max(peak, live); await new Promise((r) => setTimeout(r, 5)); live--; seen.push(i); if (i === 4) throw new Error('job 4 failed'); return i; });
+  const out = await B.pool(jobs, 3);
+  assert.strictEqual(peak, 3);
+  assert.deepStrictEqual(seen.slice().sort((a, b) => a - b), [0, 1, 2, 3, 4, 5, 6, 7, 8]);
+  assert.strictEqual(out.length, 9);
+  assert.strictEqual(out[4].error, 'job 4 failed');
+  assert.strictEqual(out[8].value, 8);
+});
+
+test('a run row keeps no cost field', () => {
+  const row = B.runRow({ unit: 'U1', arm: 'baseline', run: 1 }, { status: 'ok', reply: 'r', costUsd: 1.5, tokens: { input: 1, output: 2 }, usage: {} });
+  assert.ok(!('costUsd' in row) && row.reply === 'r' && row.unit === 'U1');
+});

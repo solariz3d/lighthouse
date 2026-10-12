@@ -195,6 +195,17 @@ async function regenerate({ system, prompt, model }, { runner = defaultRunner, t
   return { status: 'ok', reply: R.clean(j.result), durationMs: j.duration_ms, wallMs, costUsd: j.total_cost_usd, tokens: { input, output: u.output_tokens || 0 }, usage: u };
 }
 
+/** Run async jobs (functions), at most n at once; every job runs once; a throw is returned as { error }, never lost. Results keep job order. */
+async function pool(jobs, n) {
+  const out = new Array(jobs.length); let next = 0;
+  const worker = async () => { while (next < jobs.length) { const i = next++; try { out[i] = { value: await jobs[i]() }; } catch (e) { out[i] = { error: String(e && e.message || e) }; } } };
+  await Promise.all(Array.from({ length: Math.max(1, Math.min(n, jobs.length)) }, worker));
+  return out;
+}
+
+/** A run's row for runs.jsonl: the regeneration result without the CLI's cost field (the keeper's rule: calls and time only). */
+function runRow(head, g) { const { costUsd, ...rest } = g; return { ...head, ...rest }; }
+
 // ------------------------------------------------------------------ the shuffled set and its key
 /** runs: [{unit, arm, run, status, reply, correction}] -> { blind:[{blindId, unit, wrongClaim, reply}], key:{blindId:{unit,arm,run}}, errored:[{unit,arm,run}] } */
 function makeBlind(runs, seed) {
@@ -210,7 +221,7 @@ function makeBlind(runs, seed) {
   return { blind, key, errored };
 }
 
-module.exports = { readEvents, buildContext, renderPrompt, loadUnits, pickUnits, contextOfUnit, regenerate, makeBlind, defaultRunner, INSTRUCTION, LIMITS, sha256 };
+module.exports = { readEvents, buildContext, renderPrompt, loadUnits, pickUnits, contextOfUnit, regenerate, makeBlind, defaultRunner, pool, runRow, INSTRUCTION, LIMITS, sha256 };
 
 // ------------------------------------------------------------------ the command line
 function arg(argv, name, dflt) { const i = argv.indexOf(name); return i >= 0 ? argv[i + 1] : dflt; }
@@ -232,15 +243,21 @@ async function main() {
     fs.mkdirSync(out, { recursive: true });
     const armFile = arg(argv, '--arm-file'), armLabel = armFile ? arg(argv, '--arm-label', path.basename(armFile)) : 'baseline';
     const armText = armFile ? fs.readFileSync(armFile, 'utf8') : null;
-    const run = Number(arg(argv, '--run', 1));
-    for (const id of String(arg(argv, '--units', '')).split(',').filter(Boolean)) {
+    const reps = Number(arg(argv, '--reps', 0)), runNo = Number(arg(argv, '--run', 1)), par = Number(arg(argv, '--parallel', 1));
+    const runs = reps > 0 ? Array.from({ length: reps }, (_, i) => i + 1) : [runNo];
+    const ids = String(arg(argv, '--units', '')).split(',').filter(Boolean);
+    const jobs = [];
+    for (const run of runs) for (const id of ids) jobs.push(async () => {
       const u = units.find((x) => x.id === id); if (!u) throw new Error('unknown dev unit ' + id);
       const ctx = contextOfUnit(u), p = renderPrompt(ctx, armText, armLabel);
       const g = await regenerate({ system: p.system, prompt: p.prompt, model: ctx.model });
-      const row = { unit: id, arm: armLabel, run, model: ctx.model, seat: u.seat, promptSha256: p.sha, promptChars: p.chars, contextStats: ctx.stats, startedAt: new Date().toISOString(), correction: R.clean(u.correction || '').slice(0, 3000), ...g };
-      fs.appendFileSync(path.join(out, 'runs.jsonl'), JSON.stringify(row) + '\n');
-      console.log(`${id} ${armLabel} run ${run}: ${g.status} ${g.status === 'ok' ? `in ${g.tokens.input} out ${g.tokens.output} tok, ${(g.durationMs / 1000).toFixed(1)} s api, $${g.costUsd}` : g.error}`);
-    }
+      const row = runRow({ unit: id, arm: armLabel, run, model: ctx.model, seat: u.seat, promptSha256: p.sha, promptChars: p.chars, contextStats: ctx.stats, startedAt: new Date().toISOString(), correction: R.clean(u.correction || '').slice(0, 3000) }, g);
+      fs.appendFileSync(path.join(out, 'runs.jsonl'), JSON.stringify(row) + String.fromCharCode(10));
+      console.log(id + ' ' + armLabel + ' run ' + run + ': ' + g.status + (g.status === 'ok' ? ' in ' + g.tokens.input + ' out ' + g.tokens.output + ' tok, ' + (g.durationMs / 1000).toFixed(1) + ' s api' : ' ' + g.error));
+    });
+    const res = await pool(jobs, par);
+    const lost = res.filter((r) => r.error);
+    if (lost.length) { console.log(lost.length + ' job(s) threw before a row was written: ' + lost.map((r) => r.error).join(' | ')); process.exitCode = 1; }
   } else if (cmd === 'blind') {
     const runs = fs.readFileSync(arg(argv, '--runs'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
     const out = arg(argv, '--out'); fs.mkdirSync(out, { recursive: true });
