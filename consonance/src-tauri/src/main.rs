@@ -11025,6 +11025,48 @@ fn pane_state(emus: &PaneEmus, pane_id: &str) -> (PaneGate, bool, bool, Composer
     }
 }
 
+/// D309 (seat A): THE SEND TIME ON A RING. The app wrote who sent a message and never when, so a seat that read a relayed figure
+/// had no way to tell a minute-old fact from a day-old one (D307: 14 of 42 wrong beliefs came from another seat's message, and
+/// 18 of the 21 carried beliefs carried no time).
+///
+/// WHERE THE LINE GOES, and why it is a LAST line: every reader of a ring anchors on its HEAD. `reply-slot.js` classes a prompt
+/// by `^s*[(chair:|pane:|librarian:|...)`, `claim-check.js` and `blind.js` match `^[pane:X]`, `chain-status.js` pairs a
+/// ring to its receiver row by the tag plus the first 60 characters, `isSealedDispatch` reads the opening words. A leading
+/// `[sent ...]` line would make a pane ring read as a keeper message; a stamp inside the label would break every one of them. A
+/// trailing line breaks none, and it is where the app already appends its own notes (the digest at ring, the NEXT-trailer note).
+/// TEXT ONLY: no gate, no refusal, nothing a seat must do differently.
+///
+/// UTC to the second, and the local civil time as the pulse's compact stamp shows it (`pulse_stamp`).
+fn send_stamp_text(t: chrono::DateTime<chrono::Utc>) -> String {
+    format!("{} · {} local", t.format("%Y-%m-%dT%H:%M:%SZ"), pulse_stamp(chrono::DateTime::<chrono::Local>::from(t)))
+}
+
+/// The message with its send time as a final line. The text before it is untouched.
+fn with_send_stamp(msg: &str, sent: chrono::DateTime<chrono::Utc>) -> String {
+    format!("{msg}\n[sent {}]", send_stamp_text(sent))
+}
+
+/// A QUEUED message is written later than it was sent. Rewrites the final send line to say so: both times, and how long it was
+/// held. Applies only to a message whose last line is a well-formed send stamp that has not been rewritten (a keep-warm, a pull
+/// or a dyad message carries none, and is returned as it came); applying it twice changes nothing more.
+fn with_delivery_stamp(text: &str, now: chrono::DateTime<chrono::Utc>) -> String {
+    let Some((head, last)) = text.rsplit_once('\n') else { return text.to_string() };
+    let Some(inner) = last.strip_prefix("[sent ").and_then(|l| l.strip_suffix(']')) else { return text.to_string() };
+    if inner.contains(" · HELD ") || !inner.ends_with(" local") {
+        return text.to_string();
+    }
+    let Some(sent) = inner
+        .split(' ')
+        .next()
+        .and_then(|t| chrono::DateTime::parse_from_rfc3339(t).ok())
+        .map(|t| t.with_timezone(&chrono::Utc))
+    else {
+        return text.to_string();
+    };
+    let held = (now - sent).num_seconds().max(0);
+    format!("{head}\n[sent {inner} · HELD {held} s · delivered {}]", send_stamp_text(now))
+}
+
 /// The one call every delivery site makes before it writes. `Some(reply)` means the message was
 /// QUEUED and the caller must return that reply instead of writing; `None` means go ahead.
 fn gate_or_queue(app: &AppHandle, pane_id: &str, msg: &str, preview: &str) -> Option<String> {
@@ -11255,6 +11297,9 @@ fn drain_inboxes(app: &AppHandle) {
             Instant::now(),
             enabled,
         ) {
+            // D309: a message that waited says when it was sent AND when it arrived (the send line of the three ring senders;
+            // anything else queued is returned unchanged).
+            let text = with_delivery_stamp(&text, chrono::Utc::now());
             let ok = inject_to_pane(&app.state::<Panes>(), &pane, &text).is_ok();
             chair_audit(app, format!(
                 "DELIVERED -> {} {}{}: {}",
@@ -12307,6 +12352,7 @@ fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
     // provenance is marked by the SYSTEM, not the sender — a pane must never be unsure
     // whether the chair or the human is speaking to it
     let msg = format!("[chair:MAIN] {text}");
+    let msg = with_send_stamp(&msg, chrono::Utc::now());
     // Receipt: the capture's length BEFORE the write, so only bytes that arrive after it can count
     // as this write's render. Taken before inject_to_pane, never after — the gap is the whole point.
     let cap = capture_path(&tid);
@@ -12396,6 +12442,7 @@ fn librarian_call_exec(app: &AppHandle, text: &str) -> String {
         return out;
     }
     let msg = format!("[librarian:LIB] {text}");
+    let msg = with_send_stamp(&msg, chrono::Utc::now());
     // Receipt taken BEFORE the write, so only bytes arriving after it can count as this
     // write's render — the same discipline as chair_inject_exec, and for the same reason:
     // inject_to_pane returning Ok means the bytes left our pipe and nothing more.
@@ -12471,6 +12518,7 @@ fn pane_call_librarian_exec(app: &AppHandle, from: Option<&str>, text: &str) -> 
         return out;
     }
     let msg = format!("[pane:{letter}] {text}");
+    let msg = with_send_stamp(&msg, chrono::Utc::now());
     // Receipt taken BEFORE the write, so only bytes arriving after it can count as this write's
     // render — same discipline as chair_inject_exec and librarian_call_exec.
     let cap = capture_path(dest);
@@ -22351,5 +22399,87 @@ mod config_merge_tests {
         let mut owned = SETTINGS_KEYS.to_vec();
         owned.sort();
         assert_eq!(fields, owned);
+    }
+}
+
+// D309 (seat A): the send time on a ring. The label stays the first thing in the message, the time goes on a LAST line, and a held
+// delivery says both times. Pure functions, so the tests do not need a pane; the three delivery sites and the drain are pinned by
+// source shape, like their neighbours, because they take an AppHandle.
+#[cfg(test)]
+mod ring_stamp_tests {
+    use super::*;
+
+    fn at(s: &str) -> chrono::DateTime<chrono::Utc> {
+        chrono::DateTime::parse_from_rfc3339(s).unwrap().with_timezone(&chrono::Utc)
+    }
+    const RING: &str = "[pane:B] D9 hand-back: exo_memory/handback/x.md\nNEXT: librarian collate when read";
+
+    #[test]
+    fn a_stamped_ring_keeps_its_text_as_a_prefix_and_ends_on_one_send_line() {
+        let s = with_send_stamp(RING, at("2026-10-12T07:25:51Z"));
+        assert!(s.starts_with(RING), "the label, the text and its NEXT line are untouched, so every head-anchored reader still sees them");
+        assert_eq!(s.lines().count(), RING.lines().count() + 1, "exactly one line is added");
+        let last = s.lines().last().unwrap();
+        assert!(last.starts_with("[sent 2026-10-12T07:25:51Z · ") && last.ends_with(" local]"), "{last}");
+    }
+
+    #[test]
+    fn the_stamp_is_never_a_leading_line_because_every_ring_reader_anchors_on_the_head() {
+        let s = with_send_stamp("[chair:MAIN] go", at("2026-10-12T07:25:51Z"));
+        assert!(s.starts_with("[chair:MAIN] go"));
+        assert!(!s.trim_start().starts_with("[sent"));
+    }
+
+    #[test]
+    fn a_held_delivery_says_both_times_and_how_long_it_waited() {
+        let sent = with_send_stamp(RING, at("2026-10-12T07:25:51Z"));
+        let held = with_delivery_stamp(&sent, at("2026-10-12T07:31:03Z"));
+        let last = held.lines().last().unwrap();
+        assert!(held.starts_with(RING));
+        assert!(last.contains("[sent 2026-10-12T07:25:51Z"), "{last}");
+        assert!(last.contains("HELD 312 s"), "{last}");
+        assert!(last.contains("delivered 2026-10-12T07:31:03Z"), "{last}");
+        assert_eq!(held.lines().count(), sent.lines().count(), "the line is rewritten, not added to");
+    }
+
+    #[test]
+    fn the_delivery_stamp_is_applied_once_and_only_to_a_message_that_carries_the_send_stamp() {
+        let sent = with_send_stamp(RING, at("2026-10-12T07:25:51Z"));
+        let once = with_delivery_stamp(&sent, at("2026-10-12T07:31:03Z"));
+        assert_eq!(with_delivery_stamp(&once, at("2026-10-12T09:00:00Z")), once, "a second pass must not rewrite it");
+        for plain in ["ok", RING, "x\n[sent not a time]", "x\n[sent 2026-10-12T07:25:51Z · fake", "x\n[sent 2026-10-12T07:25:51Z · fake]"] {
+            assert_eq!(with_delivery_stamp(plain, at("2026-10-12T07:31:03Z")), plain, "{plain:?}");
+        }
+    }
+
+    #[test]
+    fn a_clock_that_moved_back_reads_zero_seconds_not_a_negative_wait() {
+        let sent = with_send_stamp(RING, at("2026-10-12T07:25:51Z"));
+        assert!(with_delivery_stamp(&sent, at("2026-10-12T07:20:00Z")).lines().last().unwrap().contains("HELD 0 s"));
+    }
+
+    fn body_of(src: &'static str, name: &str) -> &'static str {
+        src.split(name).nth(1).and_then(|b| b.split("\nfn ").next()).unwrap_or_else(|| panic!("{name} exists"))
+    }
+
+    #[test]
+    fn the_three_ring_senders_stamp_the_message_after_writing_the_label_and_before_the_gate() {
+        let src = include_str!("main.rs");
+        for (func, label) in [("fn chair_inject_exec(", "format!(\"[chair:MAIN] {text}\")"), ("fn librarian_call_exec(", "format!(\"[librarian:LIB] {text}\")"), ("fn pane_call_librarian_exec(", "format!(\"[pane:{letter}] {text}\")")] {
+            let b = body_of(src, func);
+            let l = b.find(&format!("let msg = {label};")).unwrap_or_else(|| panic!("{func}: the label line is gone or changed (the mutation harness anchors on it)"));
+            let s = b.find("let msg = with_send_stamp(&msg, chrono::Utc::now());").unwrap_or_else(|| panic!("{func}: the send stamp is not applied"));
+            let g = b.find("gate_or_queue(").unwrap();
+            assert!(l < s && s < g, "{func}: label, then stamp, then the gate");
+        }
+    }
+
+    #[test]
+    fn the_drain_rewrites_the_stamp_to_say_delivered_just_before_it_writes() {
+        let src = include_str!("main.rs");
+        let b = body_of(src, "fn drain_inboxes(");
+        let w = b.find("with_delivery_stamp(&text, chrono::Utc::now())").expect("the drain stamps the delivery time");
+        let i = b.find("inject_to_pane(&app.state::<Panes>(), &pane, &text").expect("the drain writes");
+        assert!(w < i, "the held message is stamped BEFORE it is written");
     }
 }

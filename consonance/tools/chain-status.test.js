@@ -1708,3 +1708,16 @@ test('WAITING — the chair is "chair" even where letters.json gives its session
   assert.match(t, /chair waiting on YOUR answer/, t);
   assert.doesNotMatch(t, /\bD waiting on YOUR answer/, t);
 });
+
+// D309 (seat A): the receiver's row now ends on the app's send line. The pairing reads the tag plus the first 60 characters, so a
+// trailing line must not unpair a ring from its receipt.
+test('UNRECEIVED — a receipt row that ends on the send line (sent, or sent and held) still pays for its ring (D309)', () => {
+  for (const stamp of ['\n[sent 2026-10-12T07:25:51Z · Oct 12, 1:25 AM local]',
+    '\n[sent 2026-10-12T07:25:51Z · Oct 12, 1:25 AM local · HELD 312 s · delivered 2026-10-12T07:31:03Z · Oct 12, 1:31 AM local]']) {
+    const row = RECV(T0 + 2 * MIN, RING2); row.text += stamp;
+    const t = qline([SEND(T0, 'Unconfirmed', RING2), row], T0 + 15 * MIN);
+    assert.doesNotMatch(t, /UNRECEIVED/, t);
+  }
+  const row = RECV(T0 + 2 * MIN, RING2, 'B'); row.text += '\n[sent 2026-10-12T07:25:51Z · Oct 12, 1:25 AM local]';
+  assert.doesNotMatch(qline([SEND(T0, 'Unconfirmed', RING2, 'B'), row], T0 + 15 * MIN), /UNRECEIVED/, 'a pane ring too');
+});

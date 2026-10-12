@@ -360,3 +360,14 @@ test('SEALED: a prompt that only QUOTES a sealed read but is not a chair dispatc
   assert.match(out, /\[panes\]/);
   assert.ok(!fs.existsSync(sealedFile(b)));
 });
+
+// D309 (seat A): a hand-back ring that ends on the app's send line still ends the reader's own sealed window.
+test('SEALED END: the reader\'s own ring ends the window when it carries the send line, and another seat\'s ring with it still does not (D309)', () => {
+  const SENT = '\n[sent 2026-10-12T07:25:51Z · Oct 12, 1:25 AM local · HELD 312 s · delivered 2026-10-12T07:31:03Z · Oct 12, 1:31 AM local]';
+  const b = sealedBed();
+  runAs(b, READER, SEALED_PACKET);
+  ring(b, 'S', { text: '<pasted_content id="d7d4">\n[pane:S] hand-back: exo_memory/handback/x.md' + SENT });
+  assert.match(runAs(b, READER, KEEPWARM), /a sealed window is open for R/);
+  ring(b, 'R', { text: '<pasted_content id="d7d4">\n[pane:R] hand-back: exo_memory/handback/x.md' + SENT });
+  assert.match(runAs(b, READER, KEEPWARM), /sealed window for R ended — its hand-back rang at/);
+});

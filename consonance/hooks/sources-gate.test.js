@@ -631,3 +631,13 @@ test('D288 strict is unchanged: a bare path is still matched by any opening segm
   assert.strictEqual(decideIn('strict', 'SOURCES: C:/work/a.md', bashCall('t1', 'node tools/x.js C:/work/a.md')).decision, 'allow', 'a program that is not a read verb still opens the path it is given');
   assert.strictEqual(decideIn('strict', 'SOURCES: `cd /c/Users/x/repo && git log --oneline -1 main`', bashCall('t1', 'cd /c/Users/x/repo && git log --oneline -1 main')).decision, 'deny', 'strict never accepted a quoted chain');
 });
+
+// D309 (seat A): a ring that ends on the app's send line is still a ring (a boundary of the turn) and is not read as keeper text.
+test('D309 STAMP: a PANE or CHAIR ring that ends on the send line is still a boundary between the Read and the ring', () => {
+  const dir = tmpDir();
+  const SENT = '\n[sent 2026-10-12T07:25:51Z · Oct 12, 1:25 AM local]';
+  for (const text of ['[pane:B] D210 hand-back is at exo_memory/handback/p-x.md' + SENT, '\n\n<pasted_content id="e589">\n[chair:MAIN] D214 a 4th commit' + SENT + '\n</pasted_content id="e589">']) {
+    const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF(), HUMAN(text)], { text: SRC_A }));
+    assert.ok(isDeny(r), 'a stamped ring did not cut the turn: ' + text.slice(0, 30));
+  }
+});

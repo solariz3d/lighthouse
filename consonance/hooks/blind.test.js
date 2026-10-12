@@ -257,3 +257,11 @@ test('SEALED GATE: a window whose expiry is unusable fails CLOSED, not open', ()
   assert.strictEqual(g.mute, true);
   assert.match(g.line, /no usable expiry, so this failed CLOSED/);
 });
+
+// D309 (seat A): the app ends a ring on a send-time line. The sealed detector reads the head, so it must not move.
+test('SEALED DETECTOR: a packet that ends on the send line is still detected, and a chair packet with no sealed read is still not (D309)', () => {
+  const SENT = '\n[sent 2026-10-12T07:25:51Z · Oct 12, 1:25 AM local]';
+  assert.ok(isSealedDispatch('\n\n<pasted_content id="465e">\n[chair:MAIN] B — L113, on L: you are one of TWO SEALED READERS again.' + SENT));
+  assert.ok(isSealedDispatch('[chair:MAIN] D117 packet B — the second blind read, and it is your kind of question.' + SENT));
+  assert.ok(!isSealedDispatch('[chair:MAIN] E — D125, on D: FIX THE README the stranger couldn\'t follow.' + SENT));
+});

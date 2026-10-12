@@ -348,3 +348,17 @@ test('D287 LIGHT: with gates_mode light in the home, a would-block reply WARNS i
   const row = last(dir); assert.strictEqual(row.wouldBlock, true); assert.strictEqual(row.blocked, false); assert.strictEqual(row.mode, 'light');
   assert.strictEqual(run(dir, stopPayload(dir, KEEPER_TURN(), 'Sources: none'), { USERPROFILE: light, HOME: light }).stdout, '', 'light warned on a reply that needs nothing');
 });
+
+// D309 (seat A): the app now ends a ring on a send-time line ("[sent <UTC> · <local> local]", and, once a queued ring is written,
+// "... · HELD <n> s · delivered <UTC> · <local> local]"). It is a LAST line, so the head-anchored ring classes must not move.
+test('D309 STAMP: a pane ring and a chair ring that end on the send line (sent, or sent and held) are classed exactly as before', () => {
+  const dir = tmpDir();
+  const SENT = '\n[sent 2026-10-12T07:25:51Z · Oct 12, 1:25 AM local]';
+  const HELD = '\n[sent 2026-10-12T07:25:51Z · Oct 12, 1:25 AM local · HELD 312 s · delivered 2026-10-12T07:31:03Z · Oct 12, 1:31 AM local]';
+  for (const s of [SENT, HELD]) {
+    run(dir, stopPayload(dir, [USER('earlier'), HUMAN('[pane:B] D210 hand-back is at exo_memory/handback/p-x.md, 47/47' + s)], 'B is at 47/47.'));
+    assert.strictEqual(last(dir).prompt, 'pane-ring'); assert.strictEqual(last(dir).kind, 'would-block-missing');
+    run(dir, stopPayload(dir, [USER('x'), HUMAN('\n\n<pasted_content id="e1">\n[chair:MAIN] D218 go' + s + '\n</pasted_content id="e1">')], '47/47'));
+    assert.strictEqual(last(dir).kind, 'skip-not-keeper-ring');
+  }
+});

@@ -195,3 +195,10 @@ test('the v1 scope leaves the Bash write path out; the full build checks it', ()
   assert.strictEqual(C.check(t, { vias: C.V1_VIAS }).verdict, 'allow');
   assert.strictEqual(C.check(t).verdict, 'refuse');
 });
+
+// D309 (seat A): the prompt now ends on the app's send line. The seat of a ring is read from its head, so a seat's own ring still backs its state.
+test('D309: a ring that ends on the send line backs the same seat and no other', () => {
+  const stamped = (l) => `[pane:${l}] D9 hand-back: exo_memory/handback/x.md\n[sent 2026-10-12T07:25:51Z · Oct 12, 1:25 AM local]`;
+  assert.strictEqual(C.check(turn('B has finished the tidy.', [], stamped('B'))).verdict, 'allow');
+  assert.strictEqual(C.check(turn('B has finished the tidy.', [], stamped('C'))).verdict, 'refuse');
+});
