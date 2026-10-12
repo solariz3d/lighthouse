@@ -126,7 +126,7 @@ test('empty-result: a zero claim is backed by a call whose result is empty', () 
 test('a state of a seat needs a board read: read_board or board.jsonl backs it; a listing of a folder does not', () => {
   assert.deepStrictEqual(C.check(turn('pane C is idle.')).flagged.map((f) => [f.kind, f.need]), [['state', 'board']]);
   assert.strictEqual(C.check(turn('pane C is idle.', [call('mcp__consonance__read_board', {}), result('[pane C] working')])).verdict, 'allow', 'a read of the right source backs it, whatever it printed (E §3.2)');
-  assert.strictEqual(C.check(turn('pane C is idle.', [call('Bash', { command: 'tail -5 C:/data/board.jsonl' }), result('rows')])).verdict, 'allow');
+  assert.strictEqual(C.check(turn('pane C is idle.', [call('Bash', { command: 'tail -5 data/board.jsonl' }), result('rows')])).verdict, 'allow');
   assert.strictEqual(C.check(turn('pane C is idle.', [call('Bash', { command: 'ls verify/C' }), result('claims.json')])).verdict, 'refuse');
 });
 test('existence needs a read naming the path: ls of that file backs it; ls of another folder does not', () => {
@@ -159,8 +159,8 @@ test('a refusal names every unbacked flag at once and the three ways out', () =>
 // ---- where a claim is made (E §3.4) ----
 test('places: rings, record writes and Bash writes into exo_memory/ are seen; a write elsewhere, a plain command and a redirect elsewhere are not', () => {
   assert.strictEqual(C.outgoingOfTool('mcp__consonance__chair_inject', { text: 'x', token: 'secret' }).via, 'ring');
-  assert.strictEqual(C.outgoingOfTool('Write', { file_path: 'C:/r/exo_memory/handback/h.md', content: 'x' }).via, 'record-write');
-  assert.strictEqual(C.outgoingOfTool('Write', { file_path: 'C:/scratch/h.md', content: 'x' }), null);
+  assert.strictEqual(C.outgoingOfTool('Write', { file_path: 'r/exo_memory/handback/h.md', content: 'x' }).via, 'record-write');
+  assert.strictEqual(C.outgoingOfTool('Write', { file_path: 'scratch/h.md', content: 'x' }), null);
   const heredoc = "cat >> exo_memory/librarian/day.md <<'EOF'\n- 41 rows waited\nEOF\n";
   assert.deepStrictEqual(C.outgoingOfTool('Bash', { command: heredoc }), { via: 'bash-write', text: '- 41 rows waited', target: 'bash' });
   assert.strictEqual(C.outgoingOfTool('Bash', { command: 'echo "7 left" >> exo_memory/map/C.md' }).text, '7 left');

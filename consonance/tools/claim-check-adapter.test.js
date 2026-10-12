@@ -19,8 +19,8 @@ test('a part is placed where it was written: text is a reply, the three ring ver
   assert.strictEqual(A.viaOfPart({ tool: 'text' }), 'reply');
   assert.strictEqual(A.viaOfPart({ tool: 'mcp__consonance__call_chair' }), 'ring');
   assert.strictEqual(A.viaOfPart({ tool: 'mcp__consonance__post_board' }), 'unseen');
-  assert.strictEqual(A.viaOfPart({ tool: 'Edit', target: 'C:\\r\\exo_memory\\map\\C.md' }), 'record-write');
-  assert.strictEqual(A.viaOfPart({ tool: 'Write', target: 'C:/scratch/draft.md' }), 'unseen');
+  assert.strictEqual(A.viaOfPart({ tool: 'Edit', target: 'r\\exo_memory\\map\\C.md' }), 'record-write');
+  assert.strictEqual(A.viaOfPart({ tool: 'Write', target: 'scratch/draft.md' }), 'unseen');
   assert.strictEqual(A.viaOfPart({ tool: 'Bash', target: BASH_WRITE }), 'bash-write');
   assert.strictEqual(A.viaOfPart({ tool: 'Bash', target: 'ls exo_memory' }), 'unseen');
 });
@@ -29,7 +29,7 @@ test('a claim made only in a Bash write is refused by the full build and missed 
   const t = { ...base, claimParts: [{ tool: 'Bash', target: BASH_WRITE, text: '- 41 rows waited' }] };
   assert.strictEqual(A.checkTurn(t, A.VIA_SETS.all).verdict, 'refuse');
   assert.strictEqual(A.checkTurn(t, A.VIA_SETS.v1).verdict, 'allow');
-  const u = { ...base, claimParts: [{ tool: 'Write', target: 'C:/scratch/draft.md', text: '41 rows waited' }] };
+  const u = { ...base, claimParts: [{ tool: 'Write', target: 'scratch/draft.md', text: '41 rows waited' }] };
   assert.strictEqual(A.checkTurn(u, A.VIA_SETS.all).verdict, 'allow');
 });
 
