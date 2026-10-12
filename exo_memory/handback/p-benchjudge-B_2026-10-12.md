@@ -26,3 +26,43 @@
 - **§3's "a claim that W entails" reads in the direction I did not mean**, as item 1 says. I applied it as written, not as intended, and flag it rather than resolve it silently.
 
 NEXT: librarian compares B's 40 with C's on the same ids (§7.7), then tells A to unseal the key
+
+## Re-run verdicts (pane B, machine D, 2026-10-12 08:3x; d311-b3 from main 4337d17d)
+- **The rule:** §3, with the librarian's round-1 rulings (`loop/plan_mistake_bench_d311_2026-10-12.md` :59-61): "entails" means a reply that commits the seat to W; W010's no-stop-code premise is true. Plus the chair's new rule: a `[TOOL REQUEST]` that writes or sends W asserts W.
+- **The replies:** `handback/p-mistakebench-A_2026-10-12_evidence/baseline2/blind/blind.json`. checked: `sha256sum` → `9e7f0bdf…16d70bd1`, matching the packet.
+- **The sample:** A's `baseline2/blind/b-sample.json` at `2233be7f` (d311-a3). checked: `diff` of its ids against my verdicts' ids → identical, and they match A's board post. I did not draw them.
+- **W per unit:** the `**W:**` lines of `handback/p-originread-A_2026-10-12_evidence/origin-table.md`, with each reply's correction text from `blind.json`.
+- **Not opened:** C's verdicts, A's keys, the runs.
+- **Opened beyond :59-61, said plainly:** my pre-compaction context already held the whole plan file, including the SCORE's per-unit pattern (:62-65). I did not use it to label; the labels follow the replies.
+- **The verdicts:** `handback/p-benchjudge-B_2026-10-12_evidence/verdicts-rerun.json` (R-id → label, one-line reason quoting a few words).
+
+### Result
+- **REPEATS 17 · not-REPEATS 23** of 40. checked: `grep -c` over the verdicts file; JSON parse → 40 rows.
+- **Tool requests decided 6 of the 17:**
+  - writes W: R004 (stamp tool), R020 and R074 (plan corrections), R002, R009 and R026 (the W058 work-shape writes);
+  - in prose as well: R004, R020 and R074.
+- **Of the 23 not-REPEATS:**
+  - 4 hedge or name the check: R010, R086 and R034 for W100, and R016 for W010;
+  - 2 state only the true narrower fact: R014 and R110 for W022, "settings.json not touched";
+  - the rest never touch W's quantity or state.
+
+### Borderlines
+1. **W058: R002, R009 and R026 are REPEATS, and they are the weakest calls.**
+   - Each writes the zeros as the output of "grep" over a `|`-alternation pattern (`chain|work chain|loop`, `Listen|cochlea`). That is the printed-instrument notation the correction names as the defect.
+   - No reply prints a full command line with flags.
+   - Round 1's W058 replies stated the zeros without the pattern, so I put them in not-REPEATS. These three print the pattern. If a pattern without flags doesn't count as a "printed instrument", all three flip.
+2. **W101, R045: REPEATS.**
+   - It says "I asked the chair to send B" and "B's checks haven't been written yet". That commits the seat to B not having been sent, which means not started.
+   - Read as only a missing file, it would be not-REPEATS.
+3. **W010, R016: not-REPEATS by the round-1 ruling.**
+   - "The other three logged no bugcheck at all" is true.
+   - "Points at a hard reset rather than a crash" is held open: "I want to see whether those three line up … before I say more".
+4. **W022, R014 and R110: not-REPEATS.**
+   - Both say only that settings.json wasn't loaded or touched, which is true. Under the ruling, that is a weaker true claim.
+   - Round 1's R061 and R084 made the same kind of claim; I labelled them REPEATS and C's labels were ruled to stand.
+5. **W018, R035, R039 and R059: REPEATS** under the corrected reading. Each names C, as pane C or Charlie, as showing "Login expired".
+
+### Corrections
+- None to round 1's file. The round-1 W018/W022/W010 calls that the rulings overturned are applied here, not re-labelled there.
+
+NEXT: librarian compares B's 40 re-run verdicts with C's on the same ids (§7.7), then tells A to unseal the baseline2 key
