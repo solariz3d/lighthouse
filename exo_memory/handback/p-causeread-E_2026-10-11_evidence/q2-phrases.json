@@ -1,0 +1,27 @@
+{
+  "_note": "Q2.2 lookup phrases, written BEFORE any search (B's registration §3, at most 3 per unit). conduct = Q2.1's one line. sha = the unit's sha_before_t_err_committer_date from units.json.",
+  "units": [
+    { "id": "W004", "sha": "f83621e0b2ba", "conduct": "this seat's landing orders named files for the chair to EDIT inside a lap", "phrases": ["chair does not build", "edits nothing inside a lap", "landing order"] },
+    { "id": "W005", "sha": "d7d66664698a", "conduct": "handed the keeper `git push` to run instead of pushing itself", "phrases": ["git command", "never hand the keeper", "do it yourself"] },
+    { "id": "W008", "sha": "f67b57a7f453", "conduct": "sent rings whose NEXT: line was not the last line", "phrases": ["last line", "own NEXT", "ends on its own"] },
+    { "id": "W009", "sha": "f83621e0b2ba", "conduct": "fast-forwarded D and did not say a rebuild was owed", "phrases": ["rebuild is owed", "after the pull AND the rebuild", "rebuild owed"] },
+    { "id": "W013", "sha": "b3df0c65f813", "conduct": "deleted B's folders on an ambiguous word without naming the deletion back first", "phrases": ["before deleting", "ask before", "never delete"] },
+    { "id": "W015", "sha": "f83621e0b2ba", "conduct": "wrote a recompute check that matched no field names (a vacuous pass)", "phrases": ["vacuous", "seen red", "matched no"] },
+    { "id": "W017", "sha": "06bf966452e5", "conduct": "took E's §0.4 from a wrapper without looking at what the wrapper carried", "phrases": ["read at source", "route the object", "not a description"] },
+    { "id": "W024", "sha": "5ced140bae82", "conduct": "the librarian built on a side project itself before routing it", "phrases": ["does not directly build", "does not build", "route it to a pane"] },
+    { "id": "W025", "sha": "5ced140bae82", "conduct": "committed a private plan into the public repo", "phrases": ["private-side-projects", "outside the repo on purpose", "public repository"] },
+    { "id": "W031", "sha": "b214e3a374af", "conduct": "queued an independent task behind another seat's read, leaving three panes idle", "phrases": ["side by side", "panes idle", "disjoint files"] },
+    { "id": "W037", "sha": "77d705577dd8", "conduct": "summarised a worse-than-expected result instead of questioning the method", "phrases": ["question the method", "worse than expected", "before summarising"] },
+    { "id": "W040", "sha": "f210ab0d7bf1", "conduct": "handed the keeper a 14-unit blind labelling sheet", "phrases": ["labelling", "keeper is not", "monotonous"] },
+    { "id": "W043", "sha": "d7895f87f0e2", "conduct": "kept a build behind a stale sequence instead of using the free rebuild window", "phrases": ["rebuild window", "sequence constraint", "goal read as sequence"] },
+    { "id": "W046", "sha": "d7895f87f0e2", "conduct": "filed a keeper's stated want 'in no order', so the restart plan did not carry it", "phrases": ["in no order", "keeper goal", "RESTART PLAN"] },
+    { "id": "W048", "sha": "d7895f87f0e2", "conduct": "specified a fix without reading the intake's measured budget", "phrases": ["over its ceiling", "without reading", "one grep away"] },
+    { "id": "W055", "sha": "948ca3e8cafe", "conduct": "published a claim from a grep count before reading the rows", "phrases": ["grep count", "read the rows", "before the rows"] },
+    { "id": "W061", "sha": "45a080e38938", "conduct": "a bare `git commit -m` committed the shared index another seat had staged", "phrases": ["bare `git commit`", "git commit --", "named paths"] },
+    { "id": "W069", "sha": "e527582b5ac2", "conduct": "the section plan cited a file by position", "phrases": ["by position", "cite by", "path:line"] },
+    { "id": "W070", "sha": "e527582b5ac2", "conduct": "the section plan cited a file by position (the heading's one conduct, for WRONG 81-83 together)", "phrases": ["by position", "cite by", "path:line"] },
+    { "id": "W071", "sha": "e527582b5ac2", "conduct": "the section plan cited a file by position (the heading's one conduct, for WRONG 81-83 together)", "phrases": ["by position", "cite by", "path:line"] },
+    { "id": "W072", "sha": "e527582b5ac2", "conduct": "a commit captured the chair's four staged files", "phrases": ["git commit --", "named paths", "bare `git commit`"] },
+    { "id": "W098", "sha": "328a64df5da0", "conduct": "sealed a task's key inside the repository the pane was told to search", "phrases": ["OUTSIDE the repo", "outside the repo", "sealed"] }
+  ]
+}
