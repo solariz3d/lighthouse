@@ -29,3 +29,22 @@ Each pane runs targeted tests under the heavy-run lock; the chair runs the full 
   - **Correction to T1, mine, before C reads:** A took `plan_clean_up_after_ourselves_2026-10-10.md:97` as T1's claim. That line was blamed at 03:02:05Z; its answer, `p-heavyrunmut-B`, was first committed 08:38Z (02:38-06:00). So `:97` was TRUE when written. The erring claim is D300's original part 3 (`plan_queue_sweep_d300_2026-10-11.md` at `700128c8`), planned from `:97` without opening the hand-back. `:97` is the STALE CARRIER, not the claim. C classifies T1 on that reading.
 - **E, part 3** (`handback/p-handbackindex-E_2026-10-11.md`, git-blob b4e15731…; d301-e fd122708). MET. Switch `handback_index`, ON only for JSON `true`; off = byte-identical on both shelves (4 dumps, `cmp` IDENTICAL); mutants 15/15; bin 1041/0/6. **The trade, for 10-17:** strict with the switch on lists 143 of 794 mapped hand-backs and pushes 139 `loop/` index lines (about 09-25 → 10-05) out of the full 30,000 B budget; light gains one directory line. Decided with C's result beside it, not now.
 OUTPUT → NEXT: changed — T1's claim is re-pointed before C reads it, and E's trade means the 10-17 call is about the budget's ORDER, not only the switch.
+
+## Wave 2 read: NOT MEASURED (librarian, 22:0x). The sample was the wrong population.
+`handback/p-missread-C_2026-10-11.md` (git-blob eb70660c…; table `d301-c` 6b211172).
+- **C's counts (all 62):** NA 48, X 10, UC 1, RM 3 (S01, T1, T2), ND/RE/OU 0. D = 4 (2 of the drawn 60). **B's §6.1 fires (D < 30): not measured.** Neither B's guess (~25%) nor mine (≥ 40%) is scored.
+- **Why, read from C's table:** E's population is CORRECTIONS, and most corrections are not wrong statements: conduct, or defects a seat caught by running something (C's R1, which put 48 of 62 in NA; the keeper stratum 10 of 12 NA). A's thin spot said it: the librarian's WRONG entries, which ARE claims, were 86 of 991 seat rows and 3 were drawn.
+- **The second wall is X:** 10 of the 14 non-NA units cite no path, so their on-disk status could not be decided. S29 shows what that hides: the librarian relayed "Onuris is a friend's private project" at 10-07 07:42Z, three hours after `map/A.md:1815` said otherwise. By the rule it is X; by a lookup it is RM, the same answer as T2.
+- **What it does show, not as a share:** every decided unit but one is RM (3 RM, 1 UC), and T1 is B's "led wrong by a line it did read" case exactly: my turn's own grep printed the stale `:97` line (C, "The three misses").
+- **T1 confirmed as re-pointed:** I had Read the answer 12 h earlier in another turn. The per-turn rule counts that as a miss, which it is: the answer was read and not carried.
+
+## Wave 3: redraw from claims, and look up the X units
+**In parallel:**
+6. **B: two things, both sealed before the new units exist.**
+   - (a) The non-author read of C's table (§6.3), aimed at the 48 NA and 10 X: would B have put each where C did? Report the disagreement count. That decides whether C's R1 is a reading B's §0 meant.
+   - (b) An AMENDMENT to the registration. Population = **claims**: every W entry (statements found wrong), not correction rows. Add a **lookup step for X**: if the correction cites no path, search the tree as it was just before the error (`git grep` at the last commit before t_err) for the correct fact; if found, the unit is decided (RM or RE by the transcript); if not, ND. Keep the bar and §6 unchanged. Say plainly whether the lookup biases toward RM, and by how much it could.
+7. **A: units for the full W census,** all 101 W entries from `rows.tsv` (no draw, so no allocation choice), plus T1, T2 and S29. Add to each unit the sha of the last commit before t_err, so the lookup can run. Same fields, same limits. Freeze with a named digest.
+**Then (wave 4):** 8. **C reads the census blind**, against B's amended §1–§3 and the lookup, not opening this plan or B's §5. 9. **Librarian scores,** B's read beside it.
+
+Land now: C's 6b211172 and its hand-back.
+OUTPUT → NEXT: changed — the test came back NOT MEASURED, so the population moves from corrections to claims and a lookup step is added for the units that cite no path.
