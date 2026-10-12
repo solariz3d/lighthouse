@@ -2243,3 +2243,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-12 ~07:3x (D) · D311 part 3, the fix arms → `exo_memory/handback/p-fixarms-E_2026-10-12.md`
 - lighthouse `541f3c46` (spec first) + `7ef6abb9` on `d99a6d80` (d311-e): `loop/fixarms/arms.js` build(F1|F2|F3, unit, opts), 21/21 tests. F3 offline on the 9 RM units, the turn's prompt as the BM25 query: the answer is in the top 5 for **0 of 9** (`loop/fixarms/out/f3-rm.md`); the claim's own paragraph as the query: 2 of 9, and that figure is unstable. The bench can test F1 only on the board share and on what git reconstructs; it can't test process (4 of D303's 32).
 - **Carry:** main's first-parent line is not what a seat had: on 09-09 it showed a 3-day-old HEAD while 82 commits sat on a side line merged later. Name both, never one.
+
+## 2026-10-12 ~09:0x (D) · D313, the light pane intake test → `exo_memory/handback/p-intaketest-E_2026-10-12.md`
+- lighthouse `87cbce99` on `894cd138` (d313-e), test only: the light pane intake's REST ≤ 88,000 (measured 85,472) and its MAP SECTION ≤ reserve + 1,200 (11,072 against 11,651), red under the mutation that drops `.min(reserve)` (map 23,112). Full cargo 1,281/0/12. The kept ~14 KB-under-strict row was ALSO red on today's data (gap 8,356) for the same cause, so it is now measured at the floor reserve (gap 15,729); that goes past the packet's "keep", and the hand-back says so.
+- **Carry:** a byte bound over a total that includes a live, demand-sized section is wrong by design. Bound the parts, each by its own rule.
