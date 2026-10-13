@@ -95,5 +95,35 @@ These are calls only (`listWorktrees`, `removalFacts`); no plan and no apply wer
 - **Two portable-paths hits were my own wording** (a drive letter in a comment and in a fixture). I reworded them rather than growing the
   baseline.
 
-NEXT: librarian, collate D319 part 2 when this ring lands. Plan default after it: the collator lands both parts and runs the full
-suite once, then the 05:40 task's first run with (e) brings its janitor.jsonl lines to the librarian.
+## 7. Amendment: the owned folders are a list (the librarian's ruling on §5, sent 21:36Z, under the keeper's 15:31 word). Commit `32d252e1`.
+- **What changed** (`janitor.js`):
+  - Class (e) walks every folder in `worktrees_dirs`. `ownedFolders()` deduplicates the list, and it refuses any entry that is a drive
+    root, before reading anything under it, with a NOTE in the report. The refused root's worktrees stay strays, listed by path.
+  - Strays are the worktrees outside EVERY owned folder.
+  - Every guard of (e) holds per folder, unchanged: links, locks, live panes, clean, landed, idle, the act's re-check, never `--force`.
+    The act's `assertSafe` checks each removal against its own folder.
+  - (d) still runs on `worktrees_dir` alone. The ruling named (e), so that is the narrow reading.
+- **The setting:** `listSetting()` reads `CONSONANCE_WORKTREES_DIRS` (split on the path delimiter), else the `worktrees_dirs` array in
+  `~/.consonance.json`, else `[worktrees_dir]`. A value that is not an array is no folder at all, never a guess.
+- **For the collator to set at landing** (I did not touch the live file), next to `worktrees_dir`:
+
+      "worktrees_dirs": ["C:\\Users\\nname\\Desktop\\worktrees", "G:\\worktrees", "G:\\consonance-worktrees"]
+
+  Without it, (e) owns `[worktrees_dir]` only, exactly as before the amendment.
+- **Red first:** three new rows on the uncommitted change failed (24 pass / 3 fail) for the three missing pieces: the second folder
+  not walked, no drive-root refusal, no `listSetting`. My first run had a fourth reason in it, my own: the drive-root row used a
+  `within` the test file never defined. I fixed that before reading the reds.
+  - **The rows:**
+    - a landed clean worktree in the SECOND listed folder is removed and logged, while one in an unlisted folder is reported and kept;
+    - a drive root in the list (the sandbox's own, `path.parse(root).root`, never a literal) is refused and said, no worktree under it
+      is read, and the folder beside it still runs;
+    - the setting's order: env, then array, then fallback, with a malformed value giving no folder.
+  - **The sandbox now pins `worktreesDirs: null`**, so no test can read the machine's configured list once the collator sets it.
+  - checked: 27/27.
+- **Four new mutants:** a drive root owned; only the first folder walked; strays judged against the first folder only; a malformed list
+  guessed at. checked: full run on `32d252e1`: applied 44 / caught 44 / NOT APPLIED 1, control 27/0. The one NOT APPLIED was #34, whose anchor my amendment rewrote; repointed to the new stray check, `--only 34` → CAUGHT (25/2). **Together: applied 45 / caught 45 / NOT APPLIED 0.**
+- checked: `node consonance/tools/portable-paths.js` → green, 0 new.
+- The `janitor-task.ps1` comment stays the collator's at landing, as ruled (§6).
+
+NEXT: librarian, collate D319 part 2 with its amendment when this ring lands. Plan default after it: the collator lands D319 once E's
+part 1b report is in, sets `worktrees_dirs` as above, and runs the full suite once.

@@ -56,7 +56,7 @@ const MUTANTS = [
   ['(e) act: the removal is FORCED', SRC, "'worktree', 'remove', x.path]", "'worktree', 'remove', '--force', x.path]"],
   ['(e) act: a removal is not logged', SRC, "        if (o.dataDir) fs.appendFileSync(path.join(o.dataDir, 'janitor.jsonl'), JSON.stringify({ at: new Date(now).toISOString(), removed_worktree:", "        if (false) fs.appendFileSync(path.join(o.dataDir, 'janitor.jsonl'), JSON.stringify({ at: new Date(now).toISOString(), removed_worktree:"],
   ['(e) strays are not listed', SRC, '    out.strays.push(w);', ''],
-  ['(e) a worktree inside the folder is listed as a stray too', SRC, '    if (o.worktreesDir && within(w.path, o.worktreesDir)) continue;\n', ''],
+  ['(e) a worktree inside an owned folder is listed as a stray too', SRC, '    if (owned.some((d) => within(w.path, d))) continue;\n', ''],
   ['(e) a drive root in the list is owned (not refused)', SRC, '    if (norm(r) === norm(path.parse(r).root)) { notes.push(', '    if (false) { notes.push('],
   ['(e) only the first listed folder is walked', SRC, '  for (const folder of owned) for', '  for (const folder of owned.slice(0, 1)) for'],
   ['(e) strays are judged against the first folder only', SRC, '    if (owned.some((d) => within(w.path, d))) continue;', "    if (within(w.path, owned[0] || '')) continue;"],
