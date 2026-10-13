@@ -1,4 +1,4 @@
-# Clean out the landed worktrees, and keep new ones in one place. Librarian, on D, 2026-10-13 14:4x. Lap D318.
+# Clean out the landed worktrees, and keep new ones in one place. Librarian, on D, 2026-10-13 14:4x. Lap D319.
 
 **The keeper, 14:35:** "yes" (to removing worktrees whose work is already in main, with unlanded ones listed for him first),
 "lets hope nothing irrelevant to lighthouse was put into the repo".
