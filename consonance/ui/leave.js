@@ -16,6 +16,7 @@
 //                                                        when none was attempted — the unattended path)
 //   { phase: 'use-button' }                              a close request after the result: the button is the way out
 // A close with no stick never raises it: Consonance exits as it did before.
+// D317: the window's X, with seats working, first raises the `close-confirm` question in this panel (below, "THE X ASKS FIRST").
 //
 // Loaded after term.js: it calls term.js's `inv` and `escapeHtml`. One function scope, no top-level binding.
 (function () {
@@ -129,8 +130,70 @@
     }
   }
 
+  // D317 part 2, pane E: THE X ASKS FIRST. The keeper, 2026-10-13 14:08: "if any seat or shell is working, and X is pressed,
+  // ask again yes or no you know before close" (plan: exo_memory/loop/plan_close_confirm_2026-10-13.md). Rust decides WHETHER to
+  // ask (B, main.rs): a seat whose gate is not Ready counts as working, and then the X emits `close-confirm`
+  //   { working: [{ label, gate }] }
+  // instead of starting the Leave. The question is shown in this same panel, so if the keeper closes, the Leave's own
+  // screens take it over from here. [Keep working] is the default (focused, and what Escape does): it hides the question and
+  // invokes nothing. [Close] invokes `leave_confirmed`, today's Leave unchanged, once however often it is pressed; refused, it
+  // says why and can be pressed again.
+  let asking = null;   // the question on screen: { keydown, sent }, or null
+  function stopAsking() {
+    if (asking) document.removeEventListener('keydown', asking.keydown);
+    asking = null;
+  }
+  function ask(p) {
+    if (asking) return;   // already on screen: a second X adds nothing (Rust's guard should not send one)
+    if (!root.hidden) return;   // a Leave screen is up: the Leave's own "busy" answers a second close
+    const list = p && Array.isArray(p.working) ? p.working.filter((w) => w && typeof w === 'object') : [];
+    const labels = list.map((w) => E(w.label || '(unnamed seat)'));
+    // An empty or malformed list still asks: Rust prevented the close, so showing nothing would leave the X doing nothing.
+    const line = list.length
+      ? `${list.length} ${list.length === 1 ? 'seat is' : 'seats are'} working: ${labels.join(', ')}. Close Consonance and end ${list.length === 1 ? 'it' : 'them'}?`
+      : 'Some seats may be working. Close Consonance and end them?';
+    root.hidden = false;
+    body.innerHTML = `
+      <h2>${line}</h2>
+      ${list.length ? `<ul class="stick-muted">${list.map((w) => `<li>${E(w.label || '(unnamed seat)')}: ${E(w.gate || 'unknown')}</li>`).join('')}</ul>` : ''}
+      <div class="stick-actions"><button id="closeconfirm-keep">Keep working</button><button id="closeconfirm-close">Close</button></div>
+      <p id="leave-note"></p>`;
+    const keep = body.querySelector('#closeconfirm-keep');
+    const close = body.querySelector('#closeconfirm-close');
+    const me = { sent: false, keydown: null };
+    const hide = () => {
+      if (asking !== me) return;
+      stopAsking();
+      body.innerHTML = '';
+      root.hidden = true;
+    };
+    me.keydown = (ev) => {
+      if (ev.key !== 'Escape') return;
+      ev.preventDefault();
+      hide();
+    };
+    keep.onclick = async () => hide();
+    close.onclick = async () => {
+      if (asking !== me || me.sent) return;   // a double-click invokes once
+      me.sent = true;
+      note('Ending the seats…');
+      try {
+        await inv('leave_confirmed');
+        stopAsking();   // the Leave has started: Escape no longer takes the screen away
+      } catch (e) {
+        me.sent = false;
+        note(`<span class="stick-bad">${E(e)}</span>`);
+      }
+    };
+    asking = me;
+    document.addEventListener('keydown', me.keydown);
+    keep.focus();
+  }
+  window.__TAURI__.event.listen('close-confirm', (e) => ask(e.payload));
+
   window.__TAURI__.event.listen('leave', (e) => {
     const p = e.payload || {};
+    stopAsking();   // any Leave phase ends the question: Escape must never take a Leave screen away
     if (p.phase === 'saving') return saving(p);
     if (p.phase === 'result' || p.phase === 'publishing') return result(p);
     // A second close before the screen exists is the seats still ending, and may yet be a no-stick close, which shows
