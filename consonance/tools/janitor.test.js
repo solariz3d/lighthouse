@@ -323,7 +323,7 @@ test('(e) kept, each with its reason and still on disk: dirty, untracked, unland
     for (const f of [path.join(w.young.wt, 'fresh.txt'), w.young.wt]) fs.utimesSync(f, new Date(NOW - 3600e3), new Date(NOW - 3600e3));   // the folder too: the real clock is after NOW, and a future mtime would make it young whatever the rule
     ageGit(w.young.wt, 0.04);
     fs.writeFileSync(path.join(s.data, 'heavy-run.3.lock'), JSON.stringify({ pid: process.pid, tree: w.locked.wt.toLowerCase(), token: 't' }));
-    const paneText = JSON.stringify({ cwd: 'C:/x', message: `cd ${w.pane.wt} && git status` });   // a transcript line: JSON doubles the backslashes
+    const paneText = JSON.stringify({ cwd: 'elsewhere', message: `cd ${w.pane.wt} && git status` });   // a transcript line: JSON doubles the backslashes
     const p = J.plan(s.opts({ paneText: () => paneText }));
     assert.deepEqual(p.classes.e, []);
     const why = Object.fromEntries(Object.entries(p.kept.e).flatMap(([r, xs]) => xs.map((x) => [x, r])));

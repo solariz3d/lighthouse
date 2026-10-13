@@ -191,7 +191,7 @@ function listWorktrees(repo) {
   const r = git(repo, ['worktree', 'list', '--porcelain']);
   if (!r.ok) return [];
   return r.out.split(/\n\s*\n/).map((b) => {
-    const w = ((b.match(/^worktree (.+)$/m) || [])[1] || '').trim();   // git prints C:/…; resolved to the native form the rest of the janitor compares
+    const w = ((b.match(/^worktree (.+)$/m) || [])[1] || '').trim();   // git prints forward slashes; resolved to the native form the rest of the janitor compares
     return { path: w ? path.resolve(w) : '', head: (b.match(/^HEAD (\w+)$/m) || [])[1] || null, branch: (b.match(/^branch refs\/heads\/(.+)$/m) || [])[1] || null };
   }).filter((x) => x.path);
 }
