@@ -327,11 +327,37 @@ test('a question while a Leave screen shows is ignored', () => {
   assert.ok(/don't unplug/.test(r.text()) && !/seats are working/.test(r.text()), r.text());
 });
 
-test('a second question while the first is up shows one question, with one Escape listener', () => {
+// D317 amendment (the chair, 14:21; B's hand-back :33-41): the contract has no dismiss signal, so B's guard holds a repeat X
+// for 2 s only and a later X sends close-confirm again. Was: a second question was ignored, and its list could go stale.
+// Now it refreshes the one question in place. (This test replaces 'a second question while the first is up shows one
+// question, with one Escape listener', whose rule changed.)
+test('a second question while the first is up refreshes it in place: the second list, one question, one Escape listener', () => {
   const r = load();
   r.ask(WORKING);
+  r.ask({ working: [{ label: 'pane B', gate: 'Working' }] });
+  const t = r.text();
+  assert.deepStrictEqual([/1 seat is working: pane B/.test(t), t.includes('pane E'), t.includes('the librarian'), (t.match(/working:/g) || []).length, r.keys.size],
+    [true, false, false, 1, 1], t);
+  const ev = r.key('Escape');
+  assert.deepStrictEqual([r.root.hidden, r.calls, ev.prevented, r.keys.size], [true, [], true, 0]);
+});
+
+test('a refresh keeps the focus on [Keep working]', () => {
+  const r = load();
   r.ask(WORKING);
-  assert.deepStrictEqual([r.keys.size, (r.body.innerHTML.match(/seats are working/g) || []).length], [1, 1]);
+  const keep = r.body.querySelector('#closeconfirm-keep');
+  keep.focused = false;
+  r.ask({ working: [{ label: 'pane B', gate: 'Working' }] });
+  assert.strictEqual(r.body.querySelector('#closeconfirm-keep').focused, true);
+});
+
+test('a refresh does not reset a [Close] already in flight', () => {
+  const r = load({ leave_confirmed: new Promise(() => {}) });   // the Leave is starting and has not answered yet
+  r.ask(WORKING);
+  r.body.querySelector('#closeconfirm-close').onclick();
+  r.ask({ working: [{ label: 'pane B', gate: 'Working' }] });
+  r.body.querySelector('#closeconfirm-close').onclick();
+  assert.deepStrictEqual([r.calls.map((c) => c.cmd), /Ending the seats/.test(r.text())], [['leave_confirmed'], true], r.text());
 });
 
 test('an empty or malformed list still asks, and never closes by itself', () => {
@@ -345,7 +371,7 @@ test('an empty or malformed list still asks, and never closes by itself', () => 
 test('seat labels are escaped, never markup', () => {
   const r = load();
   r.ask({ working: [{ label: '<img src=x onerror=alert(1)>', gate: '<b>x</b>' }] });
-  assert.ok(!/<img|<b>x/.test(r.body.innerHTML), r.body.innerHTML);
+  assert.ok(!/<img|<b>x/.test(r.text()), r.text());   // r.text(): the question is written into its own elements (the refresh)
 });
 
 Promise.all(pending).then(() => {

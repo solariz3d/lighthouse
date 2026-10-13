@@ -138,26 +138,38 @@
   // screens take it over from here. [Keep working] is the default (focused, and what Escape does): it hides the question and
   // invokes nothing. [Close] invokes `leave_confirmed`, today's Leave unchanged, once however often it is pressed; refused, it
   // says why and can be pressed again.
+  // A close-confirm while the question is up REFRESHES it in place (the chair's amendment, 14:21; B's hand-back :33-41): the
+  // contract has no dismiss signal, so B's guard holds a repeat X for 2 s only (CLOSE_ASK_HOLD) and a later X asks again, with
+  // the gates as they are now. One question, one Escape listener, the focus kept on [Keep working], a [Close] in flight kept.
   let asking = null;   // the question on screen: { keydown, sent }, or null
   function stopAsking() {
     if (asking) document.removeEventListener('keydown', asking.keydown);
     asking = null;
   }
-  function ask(p) {
-    if (asking) return;   // already on screen: a second X adds nothing (Rust's guard should not send one)
-    if (!root.hidden) return;   // a Leave screen is up: the Leave's own "busy" answers a second close
+  // the question's words and its list, written into their own elements, so a refresh rewrites them and nothing else
+  function fill(p) {
     const list = p && Array.isArray(p.working) ? p.working.filter((w) => w && typeof w === 'object') : [];
     const labels = list.map((w) => E(w.label || '(unnamed seat)'));
     // An empty or malformed list still asks: Rust prevented the close, so showing nothing would leave the X doing nothing.
-    const line = list.length
+    body.querySelector('#closeconfirm-q').innerHTML = list.length
       ? `${list.length} ${list.length === 1 ? 'seat is' : 'seats are'} working: ${labels.join(', ')}. Close Consonance and end ${list.length === 1 ? 'it' : 'them'}?`
       : 'Some seats may be working. Close Consonance and end them?';
+    body.querySelector('#closeconfirm-list').innerHTML = list.map((w) => `<li>${E(w.label || '(unnamed seat)')}: ${E(w.gate || 'unknown')}</li>`).join('');
+  }
+  function ask(p) {
+    if (asking) {   // already on screen: the list as it is now, in place
+      fill(p);
+      body.querySelector('#closeconfirm-keep').focus();
+      return;
+    }
+    if (!root.hidden) return;   // a Leave screen is up: the Leave's own "busy" answers a second close
     root.hidden = false;
     body.innerHTML = `
-      <h2>${line}</h2>
-      ${list.length ? `<ul class="stick-muted">${list.map((w) => `<li>${E(w.label || '(unnamed seat)')}: ${E(w.gate || 'unknown')}</li>`).join('')}</ul>` : ''}
+      <h2 id="closeconfirm-q"></h2>
+      <ul class="stick-muted" id="closeconfirm-list"></ul>
       <div class="stick-actions"><button id="closeconfirm-keep">Keep working</button><button id="closeconfirm-close">Close</button></div>
       <p id="leave-note"></p>`;
+    fill(p);
     const keep = body.querySelector('#closeconfirm-keep');
     const close = body.querySelector('#closeconfirm-close');
     const me = { sent: false, keydown: null };
