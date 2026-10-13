@@ -40,7 +40,8 @@ function fixture() {
   fs.mkdirSync(path.join(linked, 'reads'));
   fs.symlinkSync(shared, path.join(linked, 'reads', 'shared'), 'junction');
   fs.writeFileSync(path.join(data, 'heavy-run.lock'), JSON.stringify({ pid: 1, tree: locked.toLowerCase() }));
-  const procs = [{ pid: 424242, text: `c:\\program files\\nodejs\\node.exe node server.js --root ${busy.toLowerCase()}` }];
+  // a live server naming the worktree on its command line; its executable is this run's own, so no machine path is written here
+  const procs = [{ pid: 424242, text: `${process.execPath.toLowerCase()} server.js --root ${busy.toLowerCase()}` }];
   return { root, repo, data, shared, landed, picked, dirty, unlanded, detached, locked, busy, gitlocked, linked, procs };
 }
 function cleanup(f) {

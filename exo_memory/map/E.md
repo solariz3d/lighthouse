@@ -2257,3 +2257,4 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - lighthouse `dc7639e7` (d319-e): worktree-sweep.js, dry run by default. Real run: 163 worktrees, 143 removed with plain `git worktree remove` (0 refused), 14.19 GB; kept 11 unlanded, 7 dirty, 1 locked, main. Tests 8/0 (red with the link guard off), mutants 11/11/0.
 - **Carry:** a PLAIN `git worktree remove` (no --force) of a clean worktree holding a junction under an ignored path empties the junction target on Git for Windows 2.40: scan for reparse points before any worktree removal, forced or not.
 - 2026-10-13 ~15:5x part 1b `e1f866e6`/`5204590e`: --only on the keeper's 17; 7 rescue branches (11 files), 10 unlanded already on branches; removed 17, 0 refused, 1.67 GB. Worktrees left: main, c-d319-wt, e-d319-wt.
+- 2026-10-13 ~16:1x portable-paths fix (d319fix-e): the process fixture names `process.execPath`, not a drive path; portable-paths green, 13/0, mutants 13/13/0.

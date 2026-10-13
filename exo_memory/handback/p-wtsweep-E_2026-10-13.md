@@ -180,3 +180,21 @@ checked: git worktree list, after → C:/Users/nname/Desktop/lighthouse [main] �
 
 SOURCES: exo_memory/loop/plan_worktree_cleanup_2026-10-13.md · exo_memory/loop/worktree_sweep_apply_2026-10-13.txt · exo_memory/loop/worktree_sweep_1b_apply_2026-10-13.txt · consonance/tools/worktree-sweep.js
 NEXT: librarian read §6 when it lands; then the collator lands D319 parts 1 and 2 once C's janitor is in (plan default)
+
+## 7. Fix: portable-paths red on main (the chair, 16:03)
+
+`node consonance/tools/portable-paths.js` flagged `consonance/tools/worktree-sweep.test.js:43`. It was my process fixture's
+command line, a hard-coded `c:\program files\nodejs\node.exe` (from `057bbed2`). It now reads
+`` `${process.execPath.toLowerCase()} server.js --root ${busy.toLowerCase()}` ``: this run's own node, and the worktree's
+temp path. No machine path is written in the source, it still names the worktree the way a live server would, and it is not
+baselined. Worktree `Desktop/worktrees/e-d319fix-wt`, branch `d319fix-e`, off main `ef5e7c67`. Main carries `bd3d6bcb`
+as `ef5e7c67`, the same subject.
+```
+checked: node consonance/tools/portable-paths.js, before the edit → red, the site above
+checked: node consonance/tools/portable-paths.js, after → exit 0 (no new site; 53 baselined, unchanged)
+checked: node --test consonance/tools/worktree-sweep.test.js → 13 pass, 0 fail
+checked: mutants (scratchpad mut_d319f.sh, under the lock) → applied 13 / caught 13 / NOT APPLIED 0; the process guard's (M5) is caught
+```
+
+SOURCES: consonance/tools/worktree-sweep.test.js · consonance/tools/portable-paths.js
+NEXT: the chair lands it, runs the full suite and pushes (plan default)
