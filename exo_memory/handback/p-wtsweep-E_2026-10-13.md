@@ -127,5 +127,56 @@ nothing to remove.
 **Calls and wall time:** 1 dry run (3 m 47 s), 1 real run (7 m 48 s), 3 test runs and 11 mutants under the lock, 1 junction probe;
 about 70 min including the lock waits.
 
-SOURCES: exo_memory/loop/plan_worktree_cleanup_2026-10-13.md · exo_memory/loop/worktree_sweep_apply_2026-10-13.txt · consonance/tools/worktree-sweep.js
-NEXT: librarian read this when it lands, and bring the keeper the 10 unlanded and 7 dirty for keep or drop (plan default)
+## 6. Part 1b: the keeper's go on the 17 (15:3x–15:5x)
+
+**The keeper, 15:31:** "delete the garbage and stuff we dont need boss". Plan: `plan_worktree_cleanup_2026-10-13.md:42-50`
+(`b6adb32c`); the chair's part 1b ring, 15:32. Zero loss first, then removal.
+
+**Rescue branches (the 7 dirty).** Each worktree's uncommitted files were committed with `git add -A` (which honours .gitignore) onto
+a new branch at its HEAD. No file was over 10 MB, so none was held back. A credential scan of each file found nothing.
+- **Naming.** Two pairs share a folder name (`base-red-wt`, `base-wt` under different scratchpad folders), so those branch names
+  carry the parent folder.
+
+| rescue branch | sha | files | base (HEAD) |
+|---|---|---|---|
+| `rescue/cfgmerge-base-red-wt-2026-10-13` | `ab083d8312` | 1 (`consonance/src-tauri/src/main.rs`) | `9b172cb5c1` |
+| `rescue/install-base-wt-2026-10-13` | `4679942711` | 2 (`consonance/hooks/dirs.test.js`, `dev/shell/install-fresh-home.test.js`) | `ea4f5bcfde` |
+| `rescue/lap3-base-wt-2026-10-13` | `d99ee37a81` | 1 (`dev/shell/install-fresh-home.test.js`) | `ab25d588a6` |
+| `rescue/usb-base-red-wt-2026-10-13` | `88e672ed7d` | 1 (`consonance/src-tauri/src/main.rs`) | `c6d466291f` |
+| `rescue/usb-base-wt-2026-10-13` | `edff4eb08e` | 1 (`consonance/ui/usb-mode-wiring.test.js`) | `c6d466291f` |
+| `rescue/a-cw-wt-2026-10-13` | `a0d2ce7c01` | 4 (the screen fixtures) | `ea4f5bcfde` |
+| `rescue/e-d288base-2026-10-13` | `bc568aacc7` | 1 (`consonance/hooks/reply-slot.test.js`) | `57ef433d24` |
+
+**Keep branches (the 10 unlanded).** None was needed: each HEAD was already on its own named branch, and `git for-each-ref --contains`
+named it.
+- `d317-b` `a8fcfa7016` · `assembly-c` `db2d7b0474` · `startdigest-a` `0794577d18` · `d277margin-c` `b59f01d6da` · `d311-b4` `7f3fc7dc5e`
+- `d294-a` `1b4cb7c014` · `d296-a` `873d8239ef` · `d311-a3` `2233be7f27` · `d311-a5` `63303245ab` · `d311-c3` `144003fee9`
+
+**The removal.** For this run `worktree-sweep.js` got `--only <list>` (`e1f866e6`, the report fix `5204590e`). Only the listed
+worktrees are touched. For them, an unlanded HEAD is no bar if a branch holds it; a HEAD no branch holds stays UNLANDED and kept.
+Every other guard is unchanged, with re-classification before the act and never --force.
+```
+checked: node --test consonance/tools/worktree-sweep.test.js → before --only: 8 pass, 5 fail (the new --only tests); after: 13 pass, 0 fail
+checked: mutants → applied 13 / caught 13 / NOT APPLIED 0 (the 11 above, the unlanded-guard mutant retargeted after its line moved,
+         plus "held without a branch" and "--only ignores its list")
+checked: the report-reason assertion against e1f866e6's script → fails (it printed "every patch is in main" for commits that are not);
+         against 5204590e → passes
+checked: worktree-sweep.js --only <the 17> (dry run) → 17 REMOVE, 1.67 GB
+checked: worktree-sweep.js --apply --only <the 17> (39 s) → removed 17, refused 0; git worktree prune: ok; 1.67 GB measured before removal
+checked: drive free space → C: 182.90 → 183.79 GB (+0.89), G: 855.94 → 856.92 GB (+0.98)
+checked: every rescue and unlanded branch afterwards (git rev-parse) → all 17 present at the shas above
+checked: git worktree list, after → C:/Users/nname/Desktop/lighthouse [main] · Desktop/worktrees/c-d319-wt [d319-c] ·
+         Desktop/worktrees/e-d319-wt [d319-e]
+```
+- **Skips:** none of the 17 held a link, a lock or a running process. Not touched, by the packet: `c-d319-wt` (C, live), `e-d319-wt`
+  (mine, until part 1 lands) and the main checkout.
+- **Records:** the list run is `exo_memory/loop/worktree_sweep_1b_list_2026-10-13.txt`, its output
+  `worktree_sweep_1b_apply_2026-10-13.txt`.
+- **Across parts 1 and 1b:** 160 worktrees removed, 15.86 GB measured before removal, 0 refused, 0 forced. Every commit is on a branch.
+- **Corrections, mine:**
+  - Two regexes in my --only patch were broken by my own string escaping and the file failed to load once; fixed before any run.
+  - The first --only dry run said "every patch is in main (git cherry)" for worktrees whose commits are not in main; the reason now
+    says the commits stay on the branch, and a test pins it, seen red first against the previous script.
+
+SOURCES: exo_memory/loop/plan_worktree_cleanup_2026-10-13.md · exo_memory/loop/worktree_sweep_apply_2026-10-13.txt · exo_memory/loop/worktree_sweep_1b_apply_2026-10-13.txt · consonance/tools/worktree-sweep.js
+NEXT: librarian read §6 when it lands; then the collator lands D319 parts 1 and 2 once C's janitor is in (plan default)

@@ -1,0 +1,18 @@
+# D319 part 1b: the keeper's go, 15:31. The 7 rescued (their uncommitted files now on rescue/<name>-2026-10-13) and the 10 unlanded (each on its branch).
+C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/cfgmerge/base-red-wt
+C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/install/base-wt
+C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/lap3/base-wt
+C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/usb/base-red-wt
+C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/usb/base-wt
+C:/Users/nname/Desktop/worktrees/a-cw-wt
+G:/worktrees/e-d288base
+C:/Users/nname/Desktop/b-d317-wt
+C:/Users/nname/Desktop/c-assembly-wt
+C:/Users/nname/Desktop/worktrees/a-sd-wt
+C:/Users/nname/Desktop/worktrees/c-d277margin-wt
+G:/b-d311b4-wt
+G:/consonance-worktrees/a-d294-wt
+G:/consonance-worktrees/a-d296-wt
+G:/consonance-worktrees/a-d311a3-wt
+G:/consonance-worktrees/a-d311a5-wt
+G:/worktrees/c-d311-wt3
