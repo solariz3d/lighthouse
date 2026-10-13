@@ -57,6 +57,10 @@ const MUTANTS = [
   ['(e) act: a removal is not logged', SRC, "        if (o.dataDir) fs.appendFileSync(path.join(o.dataDir, 'janitor.jsonl'), JSON.stringify({ at: new Date(now).toISOString(), removed_worktree:", "        if (false) fs.appendFileSync(path.join(o.dataDir, 'janitor.jsonl'), JSON.stringify({ at: new Date(now).toISOString(), removed_worktree:"],
   ['(e) strays are not listed', SRC, '    out.strays.push(w);', ''],
   ['(e) a worktree inside the folder is listed as a stray too', SRC, '    if (o.worktreesDir && within(w.path, o.worktreesDir)) continue;\n', ''],
+  ['(e) a drive root in the list is owned (not refused)', SRC, '    if (norm(r) === norm(path.parse(r).root)) { notes.push(', '    if (false) { notes.push('],
+  ['(e) only the first listed folder is walked', SRC, '  for (const folder of owned) for', '  for (const folder of owned.slice(0, 1)) for'],
+  ['(e) strays are judged against the first folder only', SRC, '    if (owned.some((d) => within(w.path, d))) continue;', "    if (within(w.path, owned[0] || '')) continue;"],
+  ['(e) a malformed worktrees_dirs is guessed at, not refused', SRC, ' ? cfg[key].map((x) => String(x).trim()).filter(Boolean) : [];', ' ? cfg[key].map((x) => String(x).trim()).filter(Boolean) : [String(cfg[key])];'],
   // ---- the act ----
   ['act: no re-check (a folder that turned young is deleted)', SRC, "if (s.links || now - s.newest < minAge[cls]) { res.skipped.push", "if (false) { res.skipped.push"],
   ['act: assertSafe is not called', SRC, '      assertSafe(x.path, x.root);\n      if (cls === \'b\') {', "      if (cls === 'b') {"],

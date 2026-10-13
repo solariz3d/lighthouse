@@ -26,12 +26,15 @@
 //   (d) WORKTREE the cargo `target*` of a worktree under the worktrees folder (worktrees_dir in ~/.consonance.json, or CONSONANCE_WORKTREES; none
 //                configured: not run, said) whose HEAD is already in its repository's main and which has been idle
 //                more than 24 h. Never a main checkout; never a worktree a heavy-run lock is held in (or any, while a lock records no tree).
-//   (e) WORKTREE the worktree ITSELF, under the same worktrees folder (D319, exo_memory/loop/plan_worktree_cleanup_2026-10-13.md:33-38), when it is
+//   (e) WORKTREE the worktree ITSELF, in one of the OWNED folders (D319, exo_memory/loop/plan_worktree_cleanup_2026-10-13.md:33-38), when it is
 //       REMOVED  clean (no change, no untracked file), every patch of its HEAD is in main (`git cherry`: landed by cherry-pick under a new id
 //                counts), idle more than 24 h, holds no heavy-run lock, holds no link, and no live pane works in it (a pane's own folder under
 //                instances_dir, or a path a room transcript written in the last 24 h names). Plain `git worktree remove`, NEVER --force; the
 //                branch is kept, and each removal is logged to <data>/janitor.jsonl with its HEAD, so `git worktree add` undoes it. A worktree of
-//                the room's repository OUTSIDE the worktrees folder is never removed: the report lists it as a stray.
+//                the room's repository OUTSIDE every owned folder is never removed: the report lists it as a stray.
+//                THE OWNED FOLDERS (D319 amendment, the librarian's ruling under the keeper's 15:31 word): worktrees_dirs in ~/.consonance.json
+//                (an array; CONSONANCE_WORKTREES_DIRS overrides, a path-delimiter list), else [worktrees_dir]. A drive root in the list is
+//                refused and said, never read: the janitor never owns a drive root.
 //
 // SAFETY, in order of what would hurt most. Never on D: (the USB stick). Never Downloads, Documents, app data, or a main checkout. Never a
 // drive root. Never through a link: a candidate with a symlink or junction anywhere inside is KEPT and named, because removing a junction can
@@ -238,6 +241,7 @@ function defaults() {
     // D287-e2: the two roots that are THIS machine's, read from its config, never written into the code (portable-paths): an env override, then
     // ~/.consonance.json. Neither set: that class is not run, and the report says so and names the key (it degrades loudly, never to a guess).
     worktreesDir: setting('CONSONANCE_WORKTREES', 'worktrees_dir', cfg),
+    worktreesDirs: listSetting('CONSONANCE_WORKTREES_DIRS', 'worktrees_dirs', cfg, setting('CONSONANCE_WORKTREES', 'worktrees_dir', cfg)),
     repo: REPO, exo: exo.filter((d, i, a) => a.findIndex((x) => norm(x) === norm(d)) === i), dataDir,
     archiveRoot: setting('CONSONANCE_ARCHIVE', 'archive_dir', cfg),
     mainCheckouts: [REPO],
@@ -247,6 +251,26 @@ function defaults() {
     claudeProjects: path.join(os.homedir(), '.claude', 'projects'),
   };
 }
+/** A LIST setting: the env override (split on the path delimiter), else the ~/.consonance.json array, else [fallback] (none: []). A value that
+ *  is not an array is no folder at all, never a guess; blank entries are dropped. */
+function listSetting(env, key, cfg = config(), fallback = null) {
+  const e = process.env[env] && String(process.env[env]).trim();
+  if (e) return e.split(path.delimiter).map((x) => x.trim()).filter(Boolean);
+  if (cfg && cfg[key] != null) return Array.isArray(cfg[key]) ? cfg[key].map((x) => String(x).trim()).filter(Boolean) : [];
+  return fallback ? [fallback] : [];
+}
+/** (e) The owned folders: the list, deduplicated, with every drive root refused (and said in the notes). */
+function ownedFolders(list, notes) {
+  const out = [];
+  for (const d of list || []) {
+    if (!d) continue;
+    const r = path.resolve(d);
+    if (norm(r) === norm(path.parse(r).root)) { notes.push(`(e) refuses ${d}: a drive root is never an owned folder (its worktrees are listed as strays)`); continue; }
+    if (!out.some((x) => norm(x) === norm(r))) out.push(r);
+  }
+  return out;
+}
+
 /** ~/.consonance.json, parsed loosely (a BOM is tolerated); {} when absent or unreadable. */
 function config() {
   try { return JSON.parse(fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^﻿/, '')) || {}; } catch (_) { return {}; }
@@ -351,7 +375,8 @@ function plan(opts = {}) {
   // (e) WORKTREE REMOVED: the worktree itself; then every worktree of the room's repositories outside the folder, listed as a stray
   let paneText = null;
   const panes = () => { if (paneText === null) paneText = o.paneText ? slashes(o.paneText()) : (o.claudeProjects ? recentPaneText(o.claudeProjects, now) : ''); return paneText; };
-  for (const wt of safeDirs(o.worktreesDir)) {
+  const owned = ownedFolders(o.worktreesDirs || (o.worktreesDir ? [o.worktreesDir] : []), out.notes);
+  for (const folder of owned) for (const wt of safeDirs(folder)) {
     const f = (o.removalFacts || removalFacts)(wt);
     const s = f.git ? survey(wt) : null;
     const isMain = f.git && o.mainCheckouts.concat(f.mainCheckout ? [f.mainCheckout] : []).some((m) => norm(m) === norm(wt));
@@ -366,10 +391,10 @@ function plan(opts = {}) {
       : paneIn(wt, o.paneDirs, panes()) ? 'a live pane is working in it'
       : null;
     if (why) { keep('e', why, wt); continue; }
-    out.classes.e.push({ path: wt, root: o.worktreesDir, bytes: s.bytes, newest: Math.max(s.newest, f.touched || 0), act: 'remove', main: f.mainCheckout, head: f.head });
+    out.classes.e.push({ path: wt, root: folder, bytes: s.bytes, newest: Math.max(s.newest, f.touched || 0), act: 'remove', main: f.mainCheckout, head: f.head });
   }
   for (const repo of o.worktreeRepos || []) for (const w of listWorktrees(repo).slice(1)) {
-    if (o.worktreesDir && within(w.path, o.worktreesDir)) continue;
+    if (owned.some((d) => within(w.path, d))) continue;
     out.strays.push(w);
   }
 
@@ -452,4 +477,4 @@ function main(argv = process.argv.slice(2)) {
 }
 
 if (require.main === module) main();
-module.exports = { plan, apply, report, setting, removalFacts, listWorktrees, recentPaneText, paneIn, sourcePrefixes, roomTempName, survey, findTargets, citedTokens, heldLocks, worktreeFacts, assertSafe, isCargoTarget, TEMP_MIN_AGE, LOG_MIN_AGE, SCRATCH_MIN_IDLE, WORKTREE_MIN_IDLE, CARGO_TAG };
+module.exports = { plan, apply, report, setting, listSetting, ownedFolders, removalFacts, listWorktrees, recentPaneText, paneIn, sourcePrefixes, roomTempName, survey, findTargets, citedTokens, heldLocks, worktreeFacts, assertSafe, isCargoTarget, TEMP_MIN_AGE, LOG_MIN_AGE, SCRATCH_MIN_IDLE, WORKTREE_MIN_IDLE, CARGO_TAG };

@@ -28,7 +28,7 @@ function sandbox() {
   const root = scratch.mkdtemp('janitor-test-');
   const s = { root, tmp: path.join(root, 'tmp'), claude: path.join(root, 'tmp', 'claude'), wts: path.join(root, 'worktrees'), exo: path.join(root, 'exo'), arch: path.join(root, 'archive'), data: path.join(root, 'data') };
   for (const d of [s.tmp, s.claude, s.wts, s.exo, s.data]) fs.mkdirSync(d, { recursive: true });
-  s.opts = (extra = {}) => ({ tempDirs: [s.tmp], claudeTemp: s.claude, worktreesDir: s.wts, exo: s.exo, dataDir: s.data, archiveRoot: s.arch, mainCheckouts: [], prefixes: { js: ['jt-'], rust: ['rshead_'] }, now: NOW, repo: root, worktreeRepos: [], paneDirs: [], paneText: () => '', ...extra });
+  s.opts = (extra = {}) => ({ tempDirs: [s.tmp], claudeTemp: s.claude, worktreesDir: s.wts, exo: s.exo, dataDir: s.data, archiveRoot: s.arch, mainCheckouts: [], prefixes: { js: ['jt-'], rust: ['rshead_'] }, now: NOW, repo: root, worktreesDirs: null, worktreeRepos: [], paneDirs: [], paneText: () => '', ...extra });   // worktreesDirs null: only the sandbox's own folder, never the machine's configured list
   return s;
 }
 /** A repo with main and one worktree whose HEAD is `merged` into main or not; returns the worktree path. */
@@ -412,4 +412,50 @@ test('(e) git\'s own refusal is the last line: facts that say clean cannot remov
     assert.match(r.errors[0].error, /git worktree remove refused/);
     assert.equal(fs.existsSync(path.join(w.wt, 'work-in-progress.txt')), true);
   } finally { scratch.rm(s.root); }
+});
+
+// ---- (e) D319 amendment: the owned folders are a LIST (worktrees_dirs in ~/.consonance.json, default [worktrees_dir]); never a drive root ----
+test('(e) a landed clean worktree in the SECOND listed folder is removed; one in an unlisted folder is only reported', () => {
+  const s = sandbox();
+  try {
+    const second = path.join(s.root, 'g-worktrees'), unlisted = path.join(s.root, 'g-loose');
+    const a = repoWithWorktree(s, 'second', true), wt2 = path.join(second, 'c-old-wt'), loose = path.join(unlisted, 'b-loose-wt');
+    git(a.repo, 'worktree', 'add', '-q', '-b', 'old', wt2); git(a.repo, 'worktree', 'add', '-q', '-b', 'loose', loose);
+    for (const w of [a.wt, wt2, loose]) ageWt(w, 3);
+    const o = s.opts({ worktreesDirs: [s.wts, second], worktreeRepos: [a.repo] });
+    const p = J.plan(o);
+    assert.deepEqual(paths(p.classes.e), [a.wt, wt2].sort());
+    assert.deepEqual(p.strays.map((x) => x.path), [loose]);
+    const r = J.apply(p, o);
+    assert.equal(r.done.e.n, 2, JSON.stringify(r.errors));
+    assert.equal(fs.existsSync(wt2), false);
+    assert.equal(fs.existsSync(loose), true, 'an unlisted folder is reported, never removed');
+    assert.ok(ledger(s).some((l) => l.removed_worktree === wt2));
+  } finally { scratch.rm(s.root); }
+});
+
+test('(e) a drive root in the list is refused and said: nothing under it is read, the rest of the list still runs', () => {
+  const s = sandbox();
+  try {
+    const w = repoWithWorktree(s, 'beside', true); ageWt(w.wt, 3);
+    const driveRoot = path.parse(s.root).root;   // the sandbox's own drive root, never written as a literal
+    const within = (p, r) => path.resolve(p).toLowerCase().startsWith(path.resolve(r).toLowerCase() + path.sep);
+    let looked = 0; const facts = (wt) => { if (!within(wt, s.root)) looked++; return J.removalFacts(wt); };
+    const p = J.plan(s.opts({ worktreesDirs: [driveRoot, s.wts], removalFacts: facts }));
+    assert.equal(looked, 0, 'a worktree under the drive root was read');
+    assert.deepEqual(paths(p.classes.e), [w.wt], 'the listed folder beside it still runs');
+    assert.ok(p.notes.some((n) => /drive root/.test(n) && n.includes(driveRoot)), JSON.stringify(p.notes));
+  } finally { scratch.rm(s.root); }
+});
+
+test('(e) worktrees_dirs config: the env override (path-list), else the ~/.consonance.json array, else [worktrees_dir]', () => {
+  const was = process.env.JANITOR_TEST_DIRS;
+  try {
+    process.env.JANITOR_TEST_DIRS = ['/e1', '/e2'].join(path.delimiter);
+    assert.deepEqual(J.listSetting('JANITOR_TEST_DIRS', 'k', { k: ['/c1'] }, '/one'), ['/e1', '/e2']);
+    delete process.env.JANITOR_TEST_DIRS;
+    assert.deepEqual(J.listSetting('JANITOR_TEST_DIRS', 'k', { k: ['/c1', ' ', '/c2'] }, '/one'), ['/c1', '/c2']);
+    assert.deepEqual(J.listSetting('JANITOR_TEST_DIRS', 'k', {}, '/one'), ['/one']);
+    assert.deepEqual(J.listSetting('JANITOR_TEST_DIRS', 'k', { k: 'not-a-list' }, null), [], 'a malformed value is no folder, never a guess');
+  } finally { if (was === undefined) delete process.env.JANITOR_TEST_DIRS; else process.env.JANITOR_TEST_DIRS = was; }
 });
