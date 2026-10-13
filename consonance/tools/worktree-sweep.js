@@ -26,6 +26,11 @@
 //              refusal is listed (REFUSED), never forced.
 //   REMOVE     clean, and HEAD in main or every patch in main by `git cherry`. Removed with `git worktree remove` (never --force, never rm -rf).
 // Branches are kept, so any removal is undone by `git worktree add <path> <branch or sha>`.
+//
+// --only <file> (D319 part 1b, the keeper's go on named worktrees, 2026-10-13 15:31; plan_worktree_cleanup_2026-10-13.md:42-50): only the
+// worktrees listed in <file> (one path a line) are classified and acted on; every other worktree is left alone and not listed. For a listed
+// worktree an unlanded HEAD is no bar IF A BRANCH HOLDS IT (`git for-each-ref --contains`), since the branch keeps every commit after the
+// removal; a HEAD no branch holds stays UNLANDED and kept. Every other guard is unchanged. A listed path git does not know is reported.
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
@@ -117,7 +122,11 @@ function classify(wt, ctx) {
         const m = l.match(/^\+ ([0-9a-f]+)/); if (!m) continue;
         r.unlanded.push({ sha: m[1].slice(0, 10), subject: git(ctx.repo, ['log', '-1', '--format=%s', m[1]]).out });
       }
-      if (r.unlanded.length) set('UNLANDED', `${r.unlanded.length} commit(s) whose patch is not in ${ctx.mainRef}`);
+      if (r.unlanded.length) {
+        const held = ctx.branchesHold ? git(ctx.repo, ['for-each-ref', '--contains', wt.head, '--format=%(refname:short)', 'refs/heads']).out.split(/\r?\n/).filter(Boolean) : [];
+        if (held.length) { r.heldBy = held; r.reasons.push(`${r.unlanded.length} unlanded commit(s), all kept by branch ${held.join(', ')}`); }
+        else set('UNLANDED', `${r.unlanded.length} commit(s) whose patch is not in ${ctx.mainRef}${ctx.branchesHold ? ', and no branch holds HEAD' : ''}`);
+      }
     }
   }
   const sv = ctx.survey(wt.path);
@@ -143,9 +152,11 @@ function sweep(opts) {
   const all = listWorktrees(repo);
   const mainPath = all[0].path;
   const locks = heldLocks(opts.data);
-  const ctx = { repo: mainPath, mainRef: opts.mainRef || 'main', mainPath, locks, procs: (opts.listProcesses || listProcesses)(), survey: opts.survey || survey };
-  const rows = all.map((wt) => classify(wt, ctx));
-  const out = { apply: !!opts.apply, repo: mainPath, untreedLock: locks.untreed, rows, removed: [], refused: [], prune: null, freedBytes: 0 };
+  const only = opts.only ? opts.only.map(norm) : null;
+  const ctx = { repo: mainPath, mainRef: opts.mainRef || 'main', mainPath, locks, procs: (opts.listProcesses || listProcesses)(), survey: opts.survey || survey, branchesHold: !!only };
+  const chosen = only ? all.filter((wt) => only.includes(norm(wt.path))) : all;
+  const rows = chosen.map((wt) => classify(wt, ctx));
+  const out = { apply: !!opts.apply, repo: mainPath, only: !!only, notFound: only ? opts.only.filter((p) => !all.some((wt) => norm(wt.path) === norm(p))) : [], untreedLock: locks.untreed, rows, removed: [], refused: [], prune: null, freedBytes: 0 };
   if (!opts.apply) return out;
   if (locks.untreed) { out.refusedAll = 'a heavy-run lock records no tree, so any worktree may hold it: nothing removed'; return out; }
   for (const r of rows.filter((x) => x.class === 'REMOVE')) {
@@ -167,7 +178,8 @@ function report(o) {
   const L = [];
   const by = {};
   for (const r of o.rows) (by[r.class] = by[r.class] || []).push(r);
-  L.push(`worktree-sweep ${o.apply ? '--apply' : '(dry run: nothing changes)'} · ${o.repo} · ${o.rows.length} worktrees`);
+  L.push(`worktree-sweep ${o.apply ? '--apply' : '(dry run: nothing changes)'}${o.only ? ' --only' : ''} · ${o.repo} · ${o.rows.length} worktrees`);
+  for (const p of o.notFound || []) L.push(`NOT A WORKTREE (listed, not known to git): ${p}`);
   L.push('classes: ' + Object.keys(by).sort().map((c) => `${c} ${by[c].length}`).join(' · '));
   if (o.untreedLock) L.push('NOTE: a heavy-run lock records no tree; --apply removes nothing while it is there');
   for (const r of o.rows) {
@@ -195,7 +207,9 @@ if (require.main === module) {
   const val = (k) => { const i = a.indexOf(k); return i >= 0 ? a[i + 1] : null; };
   let data = val('--data');
   if (!data) { try { data = require('./state-manifest.js').dataDir(); } catch (_) { data = null; } }
-  const opts = { apply: a.includes('--apply'), repo: val('--repo') || path.join(__dirname, '..', '..'), data };
+  const onlyFile = val('--only');
+  const only = onlyFile ? fs.readFileSync(onlyFile, 'utf8').split(/\r?\n/).map((l) => l.trim()).filter((l) => l && !l.startsWith('#')) : null;
+  const opts = { apply: a.includes('--apply'), repo: val('--repo') || path.join(__dirname, '..', '..'), data, only };
   try {
     const o = sweep(opts);
     console.log(a.includes('--json') ? JSON.stringify(o, null, 1) : report(o));

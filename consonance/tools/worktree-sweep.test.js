@@ -33,13 +33,15 @@ function fixture() {
   const unlanded = wt('unlanded'); commit(unlanded, 'u.txt', 'work that is not in main');
   const locked = wt('locked');
   const busy = wt('busy');
+  const detached = path.join(wts, 'detached'); git(repo, 'worktree', 'add', '-q', '--detach', detached);   // a commit no branch holds
+  commit(detached, 'd.txt', 'work only on a detached HEAD');
   const gitlocked = wt('gitlocked'); git(repo, 'worktree', 'lock', gitlocked);   // landed and clean, but `git worktree lock` is on it
   const linked = wt('linked');                              // clean: the junction sits under the ignored reads/
   fs.mkdirSync(path.join(linked, 'reads'));
   fs.symlinkSync(shared, path.join(linked, 'reads', 'shared'), 'junction');
   fs.writeFileSync(path.join(data, 'heavy-run.lock'), JSON.stringify({ pid: 1, tree: locked.toLowerCase() }));
   const procs = [{ pid: 424242, text: `c:\\program files\\nodejs\\node.exe node server.js --root ${busy.toLowerCase()}` }];
-  return { root, repo, data, shared, landed, picked, dirty, unlanded, locked, busy, gitlocked, linked, procs };
+  return { root, repo, data, shared, landed, picked, dirty, unlanded, detached, locked, busy, gitlocked, linked, procs };
 }
 function cleanup(f) {
   try { fs.unlinkSync(path.join(f.linked, 'reads', 'shared')); } catch (_) {}   // the junction alone, never through it
@@ -128,5 +130,52 @@ test('a worktree that changed between the classification and the act is not remo
     const o = W.sweep({ repo: f.repo, data: f.data, apply: true, listProcesses: () => (++calls === 1 ? f.procs : [...f.procs, { pid: 7, text: f.landed.toLowerCase() }]) });
     assert.ok(fs.existsSync(f.landed));
     assert.ok(o.refused.some((r) => r.path.toLowerCase() === f.landed.toLowerCase() && /PROCESS/.test(r.why)), JSON.stringify(o.refused));
+  } finally { cleanup(f); }
+});
+
+// ---- D319 part 1b: --only <list>, the keeper's go on named worktrees (plan_worktree_cleanup_2026-10-13.md:42-50) ----
+const runOnly = (f, only, apply) => W.sweep({ repo: f.repo, data: f.data, apply, only, listProcesses: () => f.procs });
+
+test('--only removes a listed unlanded worktree whose HEAD a branch holds, and the branch keeps its commits', () => {
+  const f = fixture();
+  try {
+    const head = git(f.unlanded, 'rev-parse', 'HEAD');
+    const o = runOnly(f, [f.unlanded], true);
+    assert.deepEqual([o.removed.length, fs.existsSync(f.unlanded), git(f.repo, 'rev-parse', 'unlanded')], [1, false, head]);
+  } finally { cleanup(f); }
+});
+
+test('--only keeps a listed worktree whose unlanded commit only a detached HEAD holds', () => {
+  const f = fixture();
+  try {
+    const o = runOnly(f, [f.detached], true);
+    const row = o.rows.find((r) => r.path.toLowerCase() === f.detached.toLowerCase());
+    assert.deepEqual([row.class, o.removed.length, fs.existsSync(f.detached)], ['UNLANDED', 0, true]);
+    assert.match(row.reasons.join('; '), /no branch/);
+  } finally { cleanup(f); }
+});
+
+test('--only never touches a worktree it does not list, landed or not', () => {
+  const f = fixture();
+  try {
+    const o = runOnly(f, [f.unlanded], true);
+    assert.deepEqual([fs.existsSync(f.landed), fs.existsSync(f.picked), o.rows.length], [true, true, 1]);
+  } finally { cleanup(f); }
+});
+
+test('--only keeps the guards: a listed dirty, linked, locked, busy or git-locked worktree stays', () => {
+  const f = fixture();
+  try {
+    const o = runOnly(f, [f.dirty, f.linked, f.locked, f.busy, f.gitlocked], true);
+    assert.deepEqual([o.removed.length, ...[f.dirty, f.linked, f.locked, f.busy, f.gitlocked].map((p) => fs.existsSync(p))], [0, true, true, true, true, true]);
+    assert.equal(fs.readFileSync(path.join(f.shared, 'keep.txt'), 'utf8'), 'the shared reads');
+  } finally { cleanup(f); }
+});
+
+test('--only names a listed path that is not a worktree, and removes nothing for it', () => {
+  const f = fixture();
+  try {
+    const o = runOnly(f, [path.join(f.root, 'no-such-worktree')], true);
+    assert.deepEqual([o.removed.length, o.notFound.length], [0, 1]);
   } finally { cleanup(f); }
 });
