@@ -127,3 +127,20 @@ These are calls only (`listWorktrees`, `removalFacts`); no plan and no apply wer
 
 NEXT: librarian, collate D319 part 2 with its amendment when this ring lands. Plan default after it: the collator lands D319 once E's
 part 1b report is in, sets `worktrees_dirs` as above, and runs the full suite once.
+
+## 8. Follow-up: janitor-task.ps1's text (the chair's packet, 22:02Z). Commit `bd3d6bcb` on `d319-c2`, from main `48e647e3`.
+- `:8`: the comment now says a run appends one ledger line per run AND one per worktree it removes, with its HEAD and branch, so
+  `git worktree add` undoes it.
+- `:113`: the `-Description` now says it removes landed, clean, idle worktrees in the owned folders (`worktrees_dirs`, never --force),
+  reports the strays outside them, and writes one ledger line per removed worktree.
+- Text only: the diff touches those two places and nothing else; the schedule, trigger and command are unchanged.
+  checked: `git diff HEAD~1` → 2 removed lines, 3 added, all comment or -Description.
+  checked: PowerShell's parser on the file → 0 parse errors.
+  checked: no other file reads its text (`grep -rl janitor-task` → only itself).
+- **portable-paths is RED, and not from this commit.** checked: `node consonance/tools/portable-paths.js`, in this worktree and on the main
+  checkout at `48e647e3` → the same single hit, `consonance/tools/worktree-sweep.test.js:43`, a `c:\program files\…` string in a test
+  fixture. `git log -1` on that file → `057bbed2`, E's D319 part 1b. E's to reword (or to baseline as a BENIGN-TEST), and the full suite
+  on 216dc89e..48e647e3 will show it red there too. My two lines carry no drive letter or user path.
+
+NEXT: librarian, collate §8 when this ring lands. Plan default after it: the chair lands bd3d6bcb as a records-only commit, and E rewords
+worktree-sweep.test.js:43 so portable-paths is green on main again.
