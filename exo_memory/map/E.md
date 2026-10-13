@@ -2252,3 +2252,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - lighthouse `2819983e` on `c39e51cb` (d317-e). leave.js asks on `close-confirm` in the Leave panel itself; [Keep working] focused and on Escape, invoking nothing; [Close] invokes `leave_confirmed` once. leave.test 24/16 red → 41/0; mutants 8/8/0; rendered with app.css, focus checked.
 - **Carry:** a modal that listens on the document must stop listening when anything else takes its panel, or the next Escape removes a screen it never owned.
 - 2026-10-13 ~14:3x amendment `46eb4230`: a close-confirm while the question is up refreshes it in place (B: no dismiss signal, a repeat X after 2 s asks again); 43/0, mutants 12/12/0.
+
+## 2026-10-13 ~15:1x (D) · D319 part 1, the one-time worktree sweep → `exo_memory/handback/p-wtsweep-E_2026-10-13.md`
+- lighthouse `dc7639e7` (d319-e): worktree-sweep.js, dry run by default. Real run: 163 worktrees, 143 removed with plain `git worktree remove` (0 refused), 14.19 GB; kept 11 unlanded, 7 dirty, 1 locked, main. Tests 8/0 (red with the link guard off), mutants 11/11/0.
+- **Carry:** a PLAIN `git worktree remove` (no --force) of a clean worktree holding a junction under an ignored path empties the junction target on Git for Windows 2.40: scan for reparse points before any worktree removal, forced or not.
