@@ -5,7 +5,8 @@
 #   powershell -ExecutionPolicy Bypass -File consonance\tools\janitor-task.ps1 -Check       is it registered, and its last result
 #   powershell -ExecutionPolicy Bypass -File consonance\tools\janitor-task.ps1 -Uninstall   remove it (the one-line removal)
 #
-# WHAT IT RUNS: node consonance\tools\janitor.js --apply, which appends one line per run to <data>\janitor.jsonl.
+# WHAT IT RUNS: node consonance\tools\janitor.js --apply, which appends one line per run to <data>\janitor.jsonl, and one more per worktree
+# it removes (with its HEAD and branch, so `git worktree add` undoes it; D319).
 # INSTALLED BY THE CHAIR AFTER LANDING, once the librarian has seen a dry run (exo_memory/loop/plan_clean_up_after_ourselves_2026-10-10.md).
 #
 # THE LESSONS CARRIED FROM dev\vantage\install_vantage.ps1 AND dev\headwatch\install_headwatch.ps1, not re-derived (read those):
@@ -110,7 +111,7 @@ $action  = New-ScheduledTaskAction -Execute "wscript.exe" -Argument "//B //Nolog
 $trigger = New-ScheduledTaskTrigger -Daily -At $At
 $taskSettings = New-ScheduledTaskSettingsSet -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Minutes 60) -MultipleInstances IgnoreNew
 Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger -Settings $taskSettings `
-  -Description "janitor.js --apply (D287): removes the room's old temp test folders, idle cargo targets in scratchpads and merged worktrees, and moves old task-output logs to the archive_dir set in ~/.consonance.json. One line per run in <data>\janitor.jsonl. Remove: powershell -ExecutionPolicy Bypass -File consonance\tools\janitor-task.ps1 -Uninstall" `
+  -Description "janitor.js --apply (D287): removes the room's old temp test folders, idle cargo targets in scratchpads and merged worktrees, removes landed, clean, idle worktrees in the owned folders (worktrees_dirs in ~/.consonance.json; never --force) and reports the stray worktrees outside them, and moves old task-output logs to the archive_dir set in ~/.consonance.json. One line per run in <data>\janitor.jsonl, and one per removed worktree. Remove: powershell -ExecutionPolicy Bypass -File consonance\tools\janitor-task.ps1 -Uninstall" `
   -Force | Out-Null
 
 Write-Host "Registered '$TaskName': daily at $At (machine must already be awake; WakeToRun is off)." -ForegroundColor Green
