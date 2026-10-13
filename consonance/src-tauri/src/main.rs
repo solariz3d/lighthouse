@@ -13924,6 +13924,121 @@ fn leave_close_requested(app: &AppHandle) {
     }
 }
 
+// ---------------------------------------------------------------------------------------------------------------------------
+// D317 (pane B; plan `exo_memory/loop/plan_close_confirm_2026-10-13.md`): THE WINDOW'S X ASKS BEFORE IT ENDS WORKING SEATS. The
+// keeper, 14:08: "if any seat or shell is working, and X is pressed, ask again yes or no you know before close". Before, the X
+// went straight into `leave_close_requested`, which ends every seat.
+
+/// The seats whose gate is not Ready, in the order given, or None when the X may close as today (every seat Ready, or no seats).
+/// Unknown counts as working (fail-safe): Stale, Unstamped and Contradicted ask exactly as Working does.
+fn close_needs_confirm(seats: &[(String, PaneGate)]) -> Option<Vec<(String, PaneGate)>> {
+    let working: Vec<(String, PaneGate)> = seats.iter().filter(|(_, g)| *g != PaneGate::Ready).cloned().collect();
+    if working.is_empty() { None } else { Some(working) }
+}
+
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+enum CloseRoute {
+    /// A Leave is under way: today's path, which answers "busy" (or "use-button" once the Leave screen is up).
+    Leave,
+    /// A check is in flight, or the question went out under CLOSE_ASK_HOLD ago: this X adds nothing.
+    Swallow,
+    /// Read the seats' gates and either ask or close.
+    Check,
+}
+
+/// How long after the question goes out a further X is swallowed. The contract (`close-confirm`, `leave_confirmed`) has no
+/// signal for [Keep working], which "does nothing at all", so the app cannot know the question was dismissed: a guard that held
+/// until an answer would swallow every X after a [Keep working] for good. So the guard stops STACKING (a double click, a held
+/// key) and a later X asks again; the modal treats a repeat `close-confirm` as a refresh. A judgement, not a measurement.
+const CLOSE_ASK_HOLD: Duration = Duration::from_secs(2);
+
+/// What an X on the main window does, from the Leave's phase, whether a check is in flight, and how long ago the question went out.
+fn close_route(leave_idle: bool, checking: bool, since_asked: Option<Duration>) -> CloseRoute {
+    if !leave_idle {
+        return CloseRoute::Leave;
+    }
+    if checking || since_asked.is_some_and(|d| d < CLOSE_ASK_HOLD) {
+        return CloseRoute::Swallow;
+    }
+    CloseRoute::Check
+}
+
+/// A check is in flight: set by the X that starts it, cleared when it has asked or handed over to the Leave.
+static CLOSE_CHECKING: AtomicBool = AtomicBool::new(false);
+/// When the question last went out (CLOSE_ASK_HOLD).
+static CLOSE_ASKED_AT: Mutex<Option<Instant>> = Mutex::new(None);
+
+/// Every seat's gate, the way the inbox and keep-warm read it (`pane_state`), labelled by the seat's name when it has one
+/// (PaneNames), else its short id. Sorted, so the question lists the seats in a stable order.
+fn close_seat_gates(app: &AppHandle) -> Vec<(String, PaneGate)> {
+    let mut ids: Vec<String> = app.state::<Panes>().0.lock().map(|m| m.keys().cloned().collect()).unwrap_or_default();
+    ids.sort();
+    ids.into_iter()
+        .map(|pane| {
+            let mut names: Vec<String> = app.state::<PaneNames>().0.lock()
+                .map(|m| m.iter().filter(|(_, id)| **id == pane).map(|(n, _)| n.clone()).collect())
+                .unwrap_or_default();
+            names.sort();
+            let label = names.into_iter().next().unwrap_or_else(|| short_id(&pane).to_string());
+            (label, pane_state(&app.state::<PaneEmus>(), &pane).0)
+        })
+        .collect()
+}
+
+/// THE MAIN WINDOW'S X (D317), already prevented by the caller. During a Leave: today's path ("busy"). Otherwise read every
+/// seat's gate OFF the event loop (the emulators' locks are the PTY readers' too) and either ask with `close-confirm` or, when
+/// nothing is working, run today's Leave. A second X while the check runs, or just after the question, adds nothing.
+fn close_on_x(app: &AppHandle) {
+    let since = CLOSE_ASKED_AT.lock().ok().and_then(|g| g.map(|t| t.elapsed()));
+    match close_route(LEAVE_PHASE.load(Ordering::SeqCst) == LEAVE_IDLE, CLOSE_CHECKING.load(Ordering::SeqCst), since) {
+        CloseRoute::Leave => leave_close_requested(app),
+        CloseRoute::Swallow => plog("CLOSE X — swallowed: the question is being asked or was just asked"),
+        CloseRoute::Check => {
+            if CLOSE_CHECKING.compare_exchange(false, true, Ordering::SeqCst, Ordering::SeqCst).is_err() {
+                return;
+            }
+            let app = app.clone();
+            std::thread::spawn(move || {
+                let seats = close_seat_gates(&app);
+                match close_needs_confirm(&seats) {
+                    None => {
+                        plog(&format!("CLOSE X — {} seat(s), none working: the Leave runs as before", seats.len()));
+                        CLOSE_CHECKING.store(false, Ordering::SeqCst);
+                        leave_close_requested(&app);
+                    }
+                    Some(working) => {
+                        if let Ok(mut g) = CLOSE_ASKED_AT.lock() {
+                            *g = Some(Instant::now());
+                        }
+                        let rows: Vec<serde_json::Value> = working.iter().map(|(l, g)| serde_json::json!({ "label": l, "gate": gate_word(*g) })).collect();
+                        plog(&format!("CLOSE X — asked: {} working ({})", working.len(), working.iter().map(|(l, g)| format!("{l}={}", gate_word(*g))).collect::<Vec<_>>().join(", ")));
+                        let _ = app.emit("close-confirm", serde_json::json!({ "working": rows }));
+                        CLOSE_CHECKING.store(false, Ordering::SeqCst);
+                    }
+                }
+            });
+        }
+    }
+}
+
+/// [Close] in the question (D317): today's Leave path, unchanged. A second call meets the Leave already running ("busy").
+#[tauri::command]
+fn leave_confirmed(app: AppHandle) {
+    plog("CLOSE CONFIRMED — the keeper chose [Close] with seats working");
+    leave_close_requested(&app);
+}
+
+/// The `gate` word in `close-confirm`'s `working` rows.
+fn gate_word(g: PaneGate) -> &'static str {
+    match g {
+        PaneGate::Ready => "ready",
+        PaneGate::Working => "working",
+        PaneGate::Stale => "stale",
+        PaneGate::Unstamped => "unstamped",
+        PaneGate::Contradicted => "contradicted",
+    }
+}
+
 /// §2.2, in order: end every seat and wait (1), find the stick (2), save (3–4), write the result (5), show it (6).
 fn leave_run(app: &AppHandle, b: LeaveBounds) {
     // 0 · §2.9 B2-1: THE PHASE IS ALREADY SET (leave_close_requested), so no new spawn can pass the funnel. Wait for the
@@ -14356,6 +14471,93 @@ fn leave_cleanup_at_launch() {
             Ok(()) => plog(&format!("LEAVE FILE STALE removed {} — {why}", f.display())),
             Err(e) => plog(&format!("LEAVE FILE STALE {} could not be removed ({e}) — {why}", f.display())),
         }
+    }
+}
+
+#[cfg(test)]
+mod close_confirm_tests {
+    use super::*;
+
+    fn seats(gs: &[(&str, PaneGate)]) -> Vec<(String, PaneGate)> { gs.iter().map(|(l, g)| (l.to_string(), *g)).collect() }
+
+    #[test]
+    fn every_seat_ready_closes_as_today() {
+        assert_eq!(close_needs_confirm(&seats(&[("A", PaneGate::Ready), ("librarian", PaneGate::Ready)])), None);
+    }
+
+    #[test]
+    fn no_seats_closes_as_today() {
+        assert_eq!(close_needs_confirm(&[]), None);
+    }
+
+    #[test]
+    fn each_gate_that_is_not_ready_asks_and_names_the_seat() {
+        for g in [PaneGate::Working, PaneGate::Stale, PaneGate::Unstamped, PaneGate::Contradicted] {
+            assert_eq!(close_needs_confirm(&seats(&[("A", PaneGate::Ready), ("C", g)])), Some(seats(&[("C", g)])), "{g:?} must ask");
+        }
+    }
+
+    #[test]
+    fn the_question_names_every_working_seat_in_order_and_no_ready_one() {
+        let s = seats(&[("A", PaneGate::Working), ("B", PaneGate::Ready), ("librarian", PaneGate::Unstamped), ("E", PaneGate::Ready)]);
+        assert_eq!(close_needs_confirm(&s), Some(seats(&[("A", PaneGate::Working), ("librarian", PaneGate::Unstamped)])));
+    }
+
+    #[test]
+    fn an_x_during_the_leave_keeps_todays_busy() {
+        assert_eq!(close_route(false, false, None), CloseRoute::Leave);
+        assert_eq!(close_route(false, true, Some(Duration::from_millis(100))), CloseRoute::Leave);
+    }
+
+    #[test]
+    fn a_second_x_while_the_check_runs_or_just_after_the_question_does_not_stack() {
+        assert_eq!(close_route(true, true, None), CloseRoute::Swallow);
+        assert_eq!(close_route(true, false, Some(CLOSE_ASK_HOLD - Duration::from_millis(1))), CloseRoute::Swallow);
+    }
+
+    #[test]
+    fn an_x_with_nothing_pending_checks_and_a_later_x_after_keep_working_asks_again() {
+        assert_eq!(close_route(true, false, None), CloseRoute::Check);
+        assert_eq!(close_route(true, false, Some(CLOSE_ASK_HOLD)), CloseRoute::Check);
+    }
+
+    #[test]
+    fn the_gate_words_are_the_contracts() {
+        let w: Vec<_> = [PaneGate::Ready, PaneGate::Working, PaneGate::Stale, PaneGate::Unstamped, PaneGate::Contradicted].into_iter().map(gate_word).collect();
+        assert_eq!(w, ["ready", "working", "stale", "unstamped", "contradicted"]);
+    }
+
+    // THE WIRING, read at the one place it can be: the window event, the handler list and the two new functions.
+    fn src() -> String { std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/main.rs")).unwrap() }
+    fn body_of(src: &str, sig: &str) -> String {
+        let after = src.split(sig).nth(1).unwrap_or_else(|| panic!("no {sig} — re-point this test"));
+        after[..after.find("\n}\n").expect("no end of function")].to_string()
+    }
+
+    #[test]
+    fn the_main_windows_x_goes_to_the_question_not_straight_to_the_leave() {
+        let s = src();
+        let ev = &s[s.rfind(".on_window_event(").expect("on_window_event")..];   // rfind: this test's own text comes first
+        let ev = &ev[..ev.find("\n        })").expect("end of on_window_event")];
+        assert!(ev.contains("close_on_x(window.app_handle())"), "the X must go through close_on_x:\n{ev}");
+        assert!(!ev.contains("leave_close_requested("), "the X must not reach the Leave without the question:\n{ev}");
+    }
+
+    #[test]
+    fn leave_confirmed_is_a_command_and_runs_todays_leave() {
+        let s = src();
+        let list = &s[s.rfind("tauri::generate_handler![").expect("handler list")..];   // rfind: this test's own text comes first
+        let list = &list[..list.find("])").expect("end of handler list")];
+        assert!(list.contains("leave_confirmed"), "leave_confirmed is not in the handler list");
+        let b = body_of(&s, "fn leave_confirmed(app: AppHandle)");
+        assert!(b.contains("leave_close_requested(&app)"), "leave_confirmed must run today's Leave path:\n{b}");
+    }
+
+    #[test]
+    fn the_check_asks_with_close_confirm_or_runs_the_leave() {
+        let b = body_of(&src(), "fn close_on_x(app: &AppHandle)");
+        assert!(b.contains("close_needs_confirm(") && b.contains("\"close-confirm\"") && b.contains("leave_close_requested("), "close_on_x:\n{b}");
+        assert!(b.contains("CloseRoute::Swallow"), "close_on_x must honour the guard:\n{b}");
     }
 }
 
@@ -14907,16 +15109,16 @@ fn main() {
             pane_scrollback,
             audio_sources, audio_start, audio_stop, audio_status, audio_snapshot,
             stick_state, stick_rehearse, stick_start_applier, stick_release, stick_ack_result, stick_close_app,
-            leave_exit
+            leave_exit, leave_confirmed
         ])
-        // P-LEAVE §2.2: the main window's close is PREVENTED and becomes the Leave. `app.exit` (the applier's confirm,
+        // P-LEAVE §2.2: the main window's close is PREVENTED and becomes the Leave (D317: after the question, when a seat is working). `app.exit` (the applier's confirm,
         // the Leave's own button) raises ExitRequested, not CloseRequested, so it does not come back through here —
         // which is §2.4's first guard: the applier never runs a Leave.
         .on_window_event(|window, event| {
             if let tauri::WindowEvent::CloseRequested { api, .. } = event {
                 if window.label() == "main" {
                     api.prevent_close();
-                    leave_close_requested(window.app_handle());
+                    close_on_x(window.app_handle());   // D317: it asks first when a seat is working
                 }
             }
         })
