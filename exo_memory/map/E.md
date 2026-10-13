@@ -2247,3 +2247,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-12 ~09:0x (D) · D313, the light pane intake test → `exo_memory/handback/p-intaketest-E_2026-10-12.md`
 - lighthouse `87cbce99` on `894cd138` (d313-e), test only: the light pane intake's REST ≤ 88,000 (measured 85,472) and its MAP SECTION ≤ reserve + 1,200 (11,072 against 11,651), red under the mutation that drops `.min(reserve)` (map 23,112). Full cargo 1,281/0/12. The kept ~14 KB-under-strict row was ALSO red on today's data (gap 8,356) for the same cause, so it is now measured at the floor reserve (gap 15,729); that goes past the packet's "keep", and the hand-back says so.
 - **Carry:** a byte bound over a total that includes a live, demand-sized section is wrong by design. Bound the parts, each by its own rule.
+
+## 2026-10-13 ~14:4x (D) · D317 part 2, the X asks before ending working seats (UI) → `exo_memory/handback/p-closeconfirm-E_2026-10-13.md`
+- lighthouse `2819983e` on `c39e51cb` (d317-e). leave.js asks on `close-confirm` in the Leave panel itself; [Keep working] focused and on Escape, invoking nothing; [Close] invokes `leave_confirmed` once. leave.test 24/16 red → 41/0; mutants 8/8/0; rendered with app.css, focus checked.
+- **Carry:** a modal that listens on the document must stop listening when anything else takes its panel, or the next Escape removes a screen it never owned.
