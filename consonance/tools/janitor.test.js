@@ -28,7 +28,7 @@ function sandbox() {
   const root = scratch.mkdtemp('janitor-test-');
   const s = { root, tmp: path.join(root, 'tmp'), claude: path.join(root, 'tmp', 'claude'), wts: path.join(root, 'worktrees'), exo: path.join(root, 'exo'), arch: path.join(root, 'archive'), data: path.join(root, 'data') };
   for (const d of [s.tmp, s.claude, s.wts, s.exo, s.data]) fs.mkdirSync(d, { recursive: true });
-  s.opts = (extra = {}) => ({ tempDirs: [s.tmp], claudeTemp: s.claude, worktreesDir: s.wts, exo: s.exo, dataDir: s.data, archiveRoot: s.arch, mainCheckouts: [], prefixes: { js: ['jt-'], rust: ['rshead_'] }, now: NOW, repo: root, ...extra });
+  s.opts = (extra = {}) => ({ tempDirs: [s.tmp], claudeTemp: s.claude, worktreesDir: s.wts, exo: s.exo, dataDir: s.data, archiveRoot: s.arch, mainCheckouts: [], prefixes: { js: ['jt-'], rust: ['rshead_'] }, now: NOW, repo: root, worktreeRepos: [], paneDirs: [], paneText: () => '', ...extra });
   return s;
 }
 /** A repo with main and one worktree whose HEAD is `merged` into main or not; returns the worktree path. */
@@ -276,5 +276,140 @@ test('(b)(c) only the room\'s Claude projects: another project\'s old log and id
     const p = J.plan(s.opts());
     assert.deepEqual([p.classes.b, p.classes.c], [[], []]);
     assert.deepEqual([p.kept.b, p.kept.c], [{}, {}], 'not even counted as kept: it is not looked at');
+  } finally { scratch.rm(s.root); }
+});
+
+// ---- (e) D319: a landed worktree is REMOVED (plain `git worktree remove`), and a worktree outside worktrees_dir is reported ----
+/** Every file of a worktree and its git timestamps `days` old, so only what a row changes afterwards is young. */
+function ageWt(wt, days) { age(wt, days); ageGit(wt, days); }
+const ledger = (s) => { try { return fs.readFileSync(path.join(s.data, 'janitor.jsonl'), 'utf8').trim().split('\n').filter(Boolean).map((l) => JSON.parse(l)); } catch (_) { return []; } };
+
+test('(e) a clean worktree whose every patch is in main, idle over 24 h, is removed with git, logged, and its branch kept', () => {
+  const s = sandbox();
+  try {
+    const anc = repoWithWorktree(s, 'ancestor', true);
+    const cp = repoWithWorktree(s, 'picked', false);   // its one commit lands on main under a NEW id, the way the chair lands: not an ancestor, but git cherry says every patch is in
+    put(path.join(cp.repo, 'other.txt')); git(cp.repo, 'add', 'other.txt'); git(cp.repo, 'commit', '-q', '-m', 'main moved on');   // else the pick, same second and parent, is the SAME commit
+    git(cp.repo, 'cherry-pick', git(cp.wt, 'rev-parse', 'HEAD'));
+    assert.notEqual(spawnSync('git', ['-C', cp.wt, 'merge-base', '--is-ancestor', 'HEAD', 'main']).status, 0, 'the row needs a HEAD that is NOT an ancestor of main');
+    for (const w of [anc, cp]) ageWt(w.wt, 3);
+    const p = J.plan(s.opts());
+    assert.deepEqual(paths(p.classes.e), [anc.wt, cp.wt].sort());
+    const r = J.apply(p, s.opts());
+    assert.equal(r.done.e.n, 2, JSON.stringify(r.errors));
+    for (const w of [anc, cp]) {
+      assert.equal(fs.existsSync(w.wt), false, w.wt);
+      assert.ok(!J.listWorktrees(w.repo).some((x) => path.resolve(x.path).toLowerCase() === path.resolve(w.wt).toLowerCase()), 'git no longer lists it');
+      assert.ok(git(w.repo, 'branch', '--list', 'b-' + path.basename(w.wt)), 'the branch is kept, so `git worktree add` undoes it');
+    }
+    const lines = ledger(s).filter((l) => l.removed_worktree);
+    assert.deepEqual(lines.map((l) => l.removed_worktree).sort(), [anc.wt, cp.wt].sort());
+    assert.ok(lines.every((l) => /^[0-9a-f]{40}$/.test(l.head)), 'each removal logs the HEAD it can be restored from');
+  } finally { scratch.rm(s.root); }
+});
+
+test('(e) kept, each with its reason and still on disk: dirty, untracked, unlanded, locked, link-holding, young, and a live pane\'s', () => {
+  const s = sandbox();
+  try {
+    const w = {};
+    for (const k of ['dirty', 'untracked', 'unlanded', 'locked', 'linked', 'young', 'pane']) w[k] = repoWithWorktree(s, k, k === 'unlanded' ? false : true);
+    fs.writeFileSync(path.join(w.dirty.wt, 'a.txt'), 'changed');
+    put(path.join(w.untracked.wt, 'new.txt'));
+    const outside = put(path.join(s.root, 'shared-reads', 'keep.txt'));
+    fs.symlinkSync(path.dirname(outside), path.join(w.linked.wt, 'reads'), 'junction');
+    for (const k of Object.keys(w)) ageWt(w[k].wt, 3);
+    put(path.join(w.young.wt, 'fresh.txt'), 'x'); git(w.young.wt, 'add', 'fresh.txt'); git(w.young.wt, 'commit', '-q', '-m', 'fresh');
+    git(w.young.repo, 'merge', '-q', '--ff-only', 'b-young');   // landed, clean, but worked in an hour ago
+    for (const f of [path.join(w.young.wt, 'fresh.txt'), w.young.wt]) fs.utimesSync(f, new Date(NOW - 3600e3), new Date(NOW - 3600e3));   // the folder too: the real clock is after NOW, and a future mtime would make it young whatever the rule
+    ageGit(w.young.wt, 0.04);
+    fs.writeFileSync(path.join(s.data, 'heavy-run.3.lock'), JSON.stringify({ pid: process.pid, tree: w.locked.wt.toLowerCase(), token: 't' }));
+    const paneText = JSON.stringify({ cwd: 'C:/x', message: `cd ${w.pane.wt} && git status` });   // a transcript line: JSON doubles the backslashes
+    const p = J.plan(s.opts({ paneText: () => paneText }));
+    assert.deepEqual(p.classes.e, []);
+    const why = Object.fromEntries(Object.entries(p.kept.e).flatMap(([r, xs]) => xs.map((x) => [x, r])));
+    assert.match(why[w.dirty.wt], /not clean/);
+    assert.match(why[w.untracked.wt], /not clean/);
+    assert.match(why[w.unlanded.wt], /not in main/);
+    assert.match(why[w.locked.wt], /heavy-run lock/);
+    assert.match(why[w.linked.wt], /link/);
+    assert.match(why[w.young.wt], /young/);
+    assert.match(why[w.pane.wt], /live pane/);
+    J.apply(p, s.opts());
+    for (const k of Object.keys(w)) assert.equal(fs.existsSync(w[k].wt), true, k);
+    assert.equal(fs.existsSync(outside), true, 'the junction\'s target survives');
+  } finally { scratch.rm(s.root); }
+});
+
+test('(e) a live pane\'s own working directory is never a candidate', () => {
+  const s = sandbox();
+  try {
+    const w = repoWithWorktree(s, 'seat', true); ageWt(w.wt, 3);
+    const p = J.plan(s.opts({ paneDirs: [w.wt] }));
+    assert.deepEqual(p.classes.e, []); assert.deepEqual(p.kept.e['a live pane is working in it'], [w.wt]);
+    assert.deepEqual(paths(J.plan(s.opts()).classes.e), [w.wt], 'control: with no pane there, it is a candidate');
+  } finally { scratch.rm(s.root); }
+});
+
+test('(e) the act re-checks: a worktree that turned dirty after the plan is kept, never forced', () => {
+  const s = sandbox();
+  try {
+    const w = repoWithWorktree(s, 'race', true); ageWt(w.wt, 3);
+    const p = J.plan(s.opts());
+    assert.deepEqual(paths(p.classes.e), [w.wt]);
+    fs.writeFileSync(path.join(w.wt, 'a.txt'), 'edited since the plan');
+    const r = J.apply(p, s.opts());
+    assert.equal(r.done.e.n, 0);
+    assert.equal(fs.readFileSync(path.join(w.wt, 'a.txt'), 'utf8'), 'edited since the plan');
+    // clean but no longer landed: git itself would remove this one, so it is the re-check that keeps it
+    const v = repoWithWorktree(s, 'race2', true); ageWt(v.wt, 3);
+    const p2 = J.plan(s.opts());
+    assert.ok(paths(p2.classes.e).includes(v.wt));
+    put(path.join(v.wt, 'late.txt')); git(v.wt, 'add', 'late.txt'); git(v.wt, 'commit', '-q', '-m', 'late work');
+    const r2 = J.apply({ classes: { a: [], b: [], c: [], d: [], e: p2.classes.e.filter((x) => x.path === v.wt) } }, s.opts());
+    assert.equal(r2.done.e.n, 0); assert.deepEqual(r2.skipped.map((x) => x.why), ['changed since the plan']);
+    assert.equal(fs.existsSync(path.join(v.wt, 'late.txt')), true);
+  } finally { scratch.rm(s.root); }
+});
+
+test('(e) a worktree outside worktrees_dir is reported as a stray and never removed', () => {
+  const s = sandbox();
+  try {
+    const w = repoWithWorktree(s, 'home', true);
+    const stray = path.join(s.root, 'g-drive', 'c-stray-wt');
+    git(w.repo, 'worktree', 'add', '-q', '-b', 'stray', stray); ageWt(stray, 3);
+    const p = J.plan(s.opts({ worktreeRepos: [w.repo] }));
+    assert.deepEqual(p.strays.map((x) => x.path), [stray]);
+    assert.ok(!paths(p.classes.e).includes(stray));
+    const lines = []; J.report(p, (l) => lines.push(l));
+    assert.ok(lines.some((l) => l.includes(stray)), 'the report names the stray');
+    J.apply(p, s.opts({ worktreeRepos: [w.repo] }));
+    assert.equal(fs.existsSync(stray), true);
+  } finally { scratch.rm(s.root); }
+});
+
+test('(e) a main checkout under the folder, and any worktree while a lock records no tree, are kept', () => {
+  const s = sandbox();
+  try {
+    const w = repoWithWorktree(s, 'mainish', true); ageWt(w.wt, 3);
+    assert.deepEqual(J.plan(s.opts({ mainCheckouts: [w.wt] })).kept.e['a main checkout'], [w.wt]);
+    fs.writeFileSync(path.join(s.data, 'heavy-run.lock'), JSON.stringify({ pid: 1, token: 'old-style' }));
+    assert.deepEqual(J.plan(s.opts()).kept.e['a heavy-run lock records no tree'], [w.wt]);
+    fs.unlinkSync(path.join(s.data, 'heavy-run.lock'));
+    assert.deepEqual(paths(J.plan(s.opts()).classes.e), [w.wt], 'control: with neither, it is a candidate');
+  } finally { scratch.rm(s.root); }
+});
+
+test('(e) git\'s own refusal is the last line: facts that say clean cannot remove a worktree with an untracked file (no --force)', () => {
+  const s = sandbox();
+  try {
+    const w = repoWithWorktree(s, 'liar', true); ageWt(w.wt, 3);
+    const p = J.plan(s.opts());
+    assert.deepEqual(paths(p.classes.e), [w.wt]);
+    put(path.join(w.wt, 'work-in-progress.txt')); age(path.join(w.wt, 'work-in-progress.txt'), 3); ageWt(w.wt, 3);
+    const liar = (wt) => ({ ...J.removalFacts(wt), clean: true });   // a facts reader that is wrong about cleanliness
+    const r = J.apply(p, s.opts({ removalFacts: liar }));
+    assert.equal(r.done.e.n, 0);
+    assert.match(r.errors[0].error, /git worktree remove refused/);
+    assert.equal(fs.existsSync(path.join(w.wt, 'work-in-progress.txt')), true);
   } finally { scratch.rm(s.root); }
 });

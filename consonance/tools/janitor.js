@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 'use strict';
 // janitor.js — what the room leaves on disk, removed on a schedule (D287 part 2). DRY-RUN BY DEFAULT: it prints what it WOULD free per class
-// and in total and changes nothing. `--apply` acts, and appends one line per run to <data>/janitor.jsonl.
+// and in total and changes nothing. `--apply` acts, and appends one line per run to <data>/janitor.jsonl, and one per worktree it removes (e).
 //
 // WHY. On 2026-10-10 12:13 C: hit 0 bytes (exo_memory/loop/plan_clean_up_after_ourselves_2026-10-10.md): ~3,800 gen-consumer staging trees
 // (~21 GB), cargo targets left in worktrees (24 GB), pane scratchpads (~60 GB) and ~260,000 small test folders in %TEMP%. Part 1 (pane A,
 // scratch.js) stops new leaks; a run that is killed still leaves its folder, and what is already there stays. This catches both.
 //
 //   node consonance/tools/janitor.js            dry run: what each class would free, what it keeps and why
-//   node consonance/tools/janitor.js --apply    act: delete (a)(c)(d), MOVE (b) to the archive; one ledger line
+//   node consonance/tools/janitor.js --apply    act: delete (a)(c)(d), MOVE (b) to the archive, `git worktree remove` (e); ledger lines
 //   node consonance/tools/janitor.js --json     the plan as JSON (dry run unless --apply)
 //
 // THE FOUR CLASSES, and nothing else (the plan's Part 2 and its amendments):
@@ -26,6 +26,12 @@
 //   (d) WORKTREE the cargo `target*` of a worktree under the worktrees folder (worktrees_dir in ~/.consonance.json, or CONSONANCE_WORKTREES; none
 //                configured: not run, said) whose HEAD is already in its repository's main and which has been idle
 //                more than 24 h. Never a main checkout; never a worktree a heavy-run lock is held in (or any, while a lock records no tree).
+//   (e) WORKTREE the worktree ITSELF, under the same worktrees folder (D319, exo_memory/loop/plan_worktree_cleanup_2026-10-13.md:33-38), when it is
+//       REMOVED  clean (no change, no untracked file), every patch of its HEAD is in main (`git cherry`: landed by cherry-pick under a new id
+//                counts), idle more than 24 h, holds no heavy-run lock, holds no link, and no live pane works in it (a pane's own folder under
+//                instances_dir, or a path a room transcript written in the last 24 h names). Plain `git worktree remove`, NEVER --force; the
+//                branch is kept, and each removal is logged to <data>/janitor.jsonl with its HEAD, so `git worktree add` undoes it. A worktree of
+//                the room's repository OUTSIDE the worktrees folder is never removed: the report lists it as a stray.
 //
 // SAFETY, in order of what would hurt most. Never on D: (the USB stick). Never Downloads, Documents, app data, or a main checkout. Never a
 // drive root. Never through a link: a candidate with a symlink or junction anywhere inside is KEPT and named, because removing a junction can
@@ -39,6 +45,8 @@ const { spawnSync } = require('child_process');
 
 const DAY = 24 * 60 * 60 * 1000;
 const TEMP_MIN_AGE = 2 * DAY, LOG_MIN_AGE = 7 * DAY, SCRATCH_MIN_IDLE = 2 * DAY, WORKTREE_MIN_IDLE = 1 * DAY;
+const REMOVE_MIN_IDLE = 1 * DAY;   // (e): a worktree is removed only when nothing in it, and nothing git wrote for it, is younger than this
+const PANE_TAIL = 4 * 1024 * 1024;   // (e): how much of each room transcript written in the last 24 h is read for a worktree's path
 const MKDTEMP_SUFFIX = /^[A-Za-z0-9]{6}$/;   // Node's mkdtemp appends exactly six of these
 const CARGO_TAG = 'Signature: 8a477f597d28d172789f06886806bc55';   // the first line of the CACHEDIR.TAG cargo writes in every target dir
 const SKIP_DIRS = new Set(['node_modules', '.git', 'target', 'exo_memory']);
@@ -167,6 +175,53 @@ function worktreeFacts(wt) {
   return { git: true, mainCheckout, branch, merged, touched };
 }
 
+/** (e) What a worktree's removal needs: worktreeFacts, plus HEAD, whether it is clean (untracked files count) and how many of its patches are
+ *  NOT in main (`git cherry main HEAD`: a '+' line; null when git cannot say, which keeps it). Unreadable to git: { git: false }. */
+function removalFacts(wt) {
+  const f = worktreeFacts(wt);
+  if (!f.git) return f;
+  const head = git(wt, ['rev-parse', 'HEAD']).out;
+  const st = git(wt, ['--no-optional-locks', 'status', '--porcelain', '--untracked-files=all']);   // --no-optional-locks: a plain status REWRITES the index, which made every worktree young to the next run
+  const ch = f.branch ? git(wt, ['cherry', f.branch, 'HEAD']) : { ok: false, out: '' };
+  const unlanded = ch.ok ? ch.out.split('\n').filter((l) => l.startsWith('+')).length : null;
+  return { ...f, head, clean: st.ok && st.out === '', unlanded };
+}
+/** (e) The worktrees git knows of in a repository: [{ path, head, branch }], the main checkout first, as git lists it. */
+function listWorktrees(repo) {
+  const r = git(repo, ['worktree', 'list', '--porcelain']);
+  if (!r.ok) return [];
+  return r.out.split(/\n\s*\n/).map((b) => {
+    const w = ((b.match(/^worktree (.+)$/m) || [])[1] || '').trim();   // git prints C:/…; resolved to the native form the rest of the janitor compares
+    return { path: w ? path.resolve(w) : '', head: (b.match(/^HEAD (\w+)$/m) || [])[1] || null, branch: (b.match(/^branch refs\/heads\/(.+)$/m) || [])[1] || null };
+  }).filter((x) => x.path);
+}
+const slashes = (t) => String(t).toLowerCase().replace(/\\+/g, '/');
+/** (e) The tails of the room's Claude transcripts written in the last 24 h, as one lower-cased text with every backslash run as '/'. */
+function recentPaneText(projectsDir, now) {
+  let text = '';
+  for (const proj of safeDirs(projectsDir).filter((d) => ROOM_PROJECT.test(path.basename(d)))) {
+    let es; try { es = fs.readdirSync(proj, { withFileTypes: true }); } catch (_) { continue; }
+    for (const e of es) {
+      if (!e.isFile() || !e.name.endsWith('.jsonl')) continue;
+      const f = path.join(proj, e.name);
+      try {
+        const st = fs.statSync(f); if (now - st.mtimeMs > REMOVE_MIN_IDLE) continue;
+        const n = Math.min(st.size, PANE_TAIL), buf = Buffer.alloc(n), fd = fs.openSync(f, 'r');
+        try { fs.readSync(fd, buf, 0, n, st.size - n); } finally { fs.closeSync(fd); }
+        text += buf.toString('utf8') + '\n';
+      } catch (_) { /* a transcript mid-rotation: the idle rule still guards */ }
+    }
+  }
+  return slashes(text);
+}
+/** (e) Does a pane work in `wt`: its own folder is wt or inside it, or the recent transcript text names wt (as c:/…, or Git Bash's /c/…). */
+function paneIn(wt, paneDirs, text) {
+  if ((paneDirs || []).some((d) => norm(d) === norm(wt) || within(d, wt))) return true;
+  if (!text) return false;
+  const w = slashes(path.resolve(wt)), bash = w.replace(/^([a-z]):/, '/$1');
+  return text.includes(w) || text.includes(bash);
+}
+
 /** The real roots. Every one can be replaced (the tests run on fake trees, never the real disk). */
 function defaults() {
   let scratch = null; try { scratch = require('./scratch.js').scratchRoot(); } catch (_) {}
@@ -186,6 +241,10 @@ function defaults() {
     repo: REPO, exo: exo.filter((d, i, a) => a.findIndex((x) => norm(x) === norm(d)) === i), dataDir,
     archiveRoot: setting('CONSONANCE_ARCHIVE', 'archive_dir', cfg),
     mainCheckouts: [REPO],
+    // (e): the repositories whose worktrees are listed for strays; the panes' own folders (instances_dir); the room transcripts read for a path
+    worktreeRepos: [REPO],
+    paneDirs: safeDirs(setting('CONSONANCE_INSTANCES', 'instances_dir', cfg)),
+    claudeProjects: path.join(os.homedir(), '.claude', 'projects'),
   };
 }
 /** ~/.consonance.json, parsed loosely (a BOM is tolerated); {} when absent or unreadable. */
@@ -212,11 +271,11 @@ function assertSafe(p, root) {
 /** The plan: every candidate of every class, what would happen to it, and what is kept and why. Changes nothing. */
 function plan(opts = {}) {
   const o = { ...defaults(), ...opts }, now = o.now !== undefined ? o.now : Date.now();
-  const out = { at: new Date(now).toISOString(), classes: { a: [], b: [], c: [], d: [] }, kept: { a: {}, b: {}, c: {}, d: {} }, unmatched: {}, notes: [] };
+  const out = { at: new Date(now).toISOString(), classes: { a: [], b: [], c: [], d: [], e: [] }, kept: { a: {}, b: {}, c: {}, d: {}, e: {} }, strays: [], unmatched: {}, notes: [] };
   const keep = (cls, why, p) => { (out.kept[cls][why] = out.kept[cls][why] || []).push(p); };
 
   if (!o.archiveRoot) out.notes.push('(b) moves nothing: no archive is configured. Set archive_dir in ~/.consonance.json (or CONSONANCE_ARCHIVE) to the folder logs are moved to.');
-  if (!o.worktreesDir) out.notes.push('(d) is not run: no worktrees folder is configured. Set worktrees_dir in ~/.consonance.json (or CONSONANCE_WORKTREES).');
+  if (!o.worktreesDir) out.notes.push('(d) is not run, nor (e): no worktrees folder is configured. Set worktrees_dir in ~/.consonance.json (or CONSONANCE_WORKTREES).');
 
   // (a) TEMP
   const prefixes = o.prefixes || sourcePrefixes(o.repo);
@@ -289,6 +348,31 @@ function plan(opts = {}) {
     }
   }
 
+  // (e) WORKTREE REMOVED: the worktree itself; then every worktree of the room's repositories outside the folder, listed as a stray
+  let paneText = null;
+  const panes = () => { if (paneText === null) paneText = o.paneText ? slashes(o.paneText()) : (o.claudeProjects ? recentPaneText(o.claudeProjects, now) : ''); return paneText; };
+  for (const wt of safeDirs(o.worktreesDir)) {
+    const f = (o.removalFacts || removalFacts)(wt);
+    const s = f.git ? survey(wt) : null;
+    const isMain = f.git && o.mainCheckouts.concat(f.mainCheckout ? [f.mainCheckout] : []).some((m) => norm(m) === norm(wt));
+    const held = locks.untreed ? 'a heavy-run lock records no tree' : locks.trees.some((t) => t === norm(wt) || t.startsWith(norm(wt) + path.sep.toLowerCase())) ? 'a heavy-run lock is held in it' : null;
+    const why = !f.git ? 'not a git worktree'
+      : isMain ? 'a main checkout'
+      : held ? held
+      : s.links ? 'a link inside'
+      : !f.clean ? 'not clean'
+      : f.unlanded !== 0 ? 'patches not in main'
+      : now - Math.max(s.newest, f.touched || 0) < REMOVE_MIN_IDLE ? 'young'
+      : paneIn(wt, o.paneDirs, panes()) ? 'a live pane is working in it'
+      : null;
+    if (why) { keep('e', why, wt); continue; }
+    out.classes.e.push({ path: wt, root: o.worktreesDir, bytes: s.bytes, newest: Math.max(s.newest, f.touched || 0), act: 'remove', main: f.mainCheckout, head: f.head });
+  }
+  for (const repo of o.worktreeRepos || []) for (const w of listWorktrees(repo).slice(1)) {
+    if (o.worktreesDir && within(w.path, o.worktreesDir)) continue;
+    out.strays.push(w);
+  }
+
   out.total = Object.values(out.classes).flat().reduce((a, x) => a + x.bytes, 0);
   return out;
 }
@@ -301,9 +385,9 @@ function archiveReady(root) { try { return fs.existsSync(path.parse(path.resolve
 /** Do what the plan says. Each act re-checks its target first (still under its root, still old, still no link); a failure is recorded, never fatal. */
 function apply(p, opts = {}) {
   const o = { ...defaults(), ...opts }, now = o.now !== undefined ? o.now : Date.now();
-  const res = { done: { a: { n: 0, bytes: 0 }, b: { n: 0, bytes: 0 }, c: { n: 0, bytes: 0 }, d: { n: 0, bytes: 0 } }, skipped: [], errors: [] };
-  const minAge = { a: TEMP_MIN_AGE, b: LOG_MIN_AGE, c: SCRATCH_MIN_IDLE, d: WORKTREE_MIN_IDLE };
-  for (const cls of ['a', 'b', 'c', 'd']) for (const x of p.classes[cls]) {
+  const res = { done: { a: { n: 0, bytes: 0 }, b: { n: 0, bytes: 0 }, c: { n: 0, bytes: 0 }, d: { n: 0, bytes: 0 }, e: { n: 0, bytes: 0 } }, skipped: [], errors: [] };
+  const minAge = { a: TEMP_MIN_AGE, b: LOG_MIN_AGE, c: SCRATCH_MIN_IDLE, d: WORKTREE_MIN_IDLE, e: REMOVE_MIN_IDLE };
+  for (const cls of ['a', 'b', 'c', 'd', 'e']) for (const x of p.classes[cls] || []) {
     try {
       assertSafe(x.path, x.root);
       if (cls === 'b') {
@@ -314,6 +398,17 @@ function apply(p, opts = {}) {
         fs.copyFileSync(x.path, x.to, fs.constants.COPYFILE_EXCL);
         if (fs.statSync(x.to).size !== st.size) throw new Error('the archived copy is not the same size; the original is kept');
         fs.unlinkSync(x.path);
+      } else if (cls === 'e') {
+        // the act re-reads what the plan decided on; git itself refuses a worktree that is not clean, and nothing here can force it
+        const f = (o.removalFacts || removalFacts)(x.path), s = survey(x.path), locks = heldLocks(o.dataDir);
+        const changed = !f.git || !f.clean || f.unlanded !== 0 || s.links || now - Math.max(s.newest, f.touched || 0) < minAge.e
+          || locks.untreed || locks.trees.some((t) => t === norm(x.path) || t.startsWith(norm(x.path) + path.sep.toLowerCase()));
+        if (changed) { res.skipped.push({ path: x.path, why: 'changed since the plan' }); continue; }
+        const main = f.mainCheckout || x.main;
+        const branch = git(main, ['for-each-ref', '--points-at', f.head, '--format=%(refname:short)', 'refs/heads']).out.split('\n')[0] || null;
+        const r = spawnSync('git', ['-C', main, 'worktree', 'remove', x.path], { encoding: 'utf8', timeout: 60000, windowsHide: true });
+        if (r.status !== 0) throw new Error('git worktree remove refused: ' + String(r.stderr || '').trim());
+        if (o.dataDir) fs.appendFileSync(path.join(o.dataDir, 'janitor.jsonl'), JSON.stringify({ at: new Date(now).toISOString(), removed_worktree: x.path, head: f.head, branch, repo: main }) + '\n');
       } else {
         const s = survey(x.path);
         if (s.links || now - s.newest < minAge[cls]) { res.skipped.push({ path: x.path, why: s.links ? 'a link inside' : 'changed since the plan' }); continue; }
@@ -326,15 +421,18 @@ function apply(p, opts = {}) {
 }
 
 function report(p, log = console.log) {
-  const name = { a: '(a) temp test folders (%TEMP%, scratch root), older than 2 days', b: '(b) task-output logs older than 7 days, MOVED to the archive', c: '(c) cargo targets in Claude scratchpads, idle over 2 days', d: '(d) cargo targets of merged worktrees idle over 24 h' };
+  const name = { a: '(a) temp test folders (%TEMP%, scratch root), older than 2 days', b: '(b) task-output logs older than 7 days, MOVED to the archive', c: '(c) cargo targets in Claude scratchpads, idle over 2 days', d: '(d) cargo targets of merged worktrees idle over 24 h', e: '(e) worktrees REMOVED: clean, every patch in main, idle over 24 h' };
   log(`janitor ${p.at}`);
-  for (const cls of ['a', 'b', 'c', 'd']) {
-    const xs = p.classes[cls], bytes = xs.reduce((a, x) => a + x.bytes, 0);
+  for (const cls of ['a', 'b', 'c', 'd', 'e']) {
+    const xs = p.classes[cls] || [], bytes = xs.reduce((a, x) => a + x.bytes, 0);
     log(`  ${name[cls]}: ${xs.length} → ${gb(bytes)} GB`);
     const kept = Object.entries(p.kept[cls]).map(([why, v]) => `${why} ${v.length}`).join(', ');
     if (kept) log(`      kept: ${kept}`);
-    for (const x of cls === 'a' ? [] : xs) log(`      ${x.act === 'move' ? 'move' : 'delete'} ${x.path}  (${gb(x.bytes)} GB)${x.to ? ' → ' + x.to : ''}`);
+    for (const x of cls === 'a' ? [] : xs) log(`      ${x.act === 'move' ? 'move' : x.act === 'remove' ? 'git worktree remove' : 'delete'} ${x.path}  (${gb(x.bytes)} GB)${x.to ? ' → ' + x.to : ''}`);
   }
+  const strays = p.strays || [];
+  log(`  worktrees OUTSIDE the worktrees folder (never removed; move or land them): ${strays.length}`);
+  for (const w of strays) log(`      stray ${w.path}  ${w.branch ? '[' + w.branch + ']' : '(detached ' + String(w.head || '').slice(0, 8) + ')'}`);
   log(`  TOTAL: ${gb(p.total)} GB`);
   for (const n of p.notes || []) log(`  NOTE: ${n}`);
   const top = Object.entries(p.unmatched).sort((a, b) => b[1] - a[1]).slice(0, 8);
@@ -346,7 +444,7 @@ function main(argv = process.argv.slice(2)) {
   const p = plan();
   if (!doApply) { if (json) console.log(JSON.stringify(p, null, 1)); else { report(p); console.log('  DRY RUN — nothing changed. --apply to act.'); } return; }
   const r = apply(p);
-  const line = { at: p.at, apply: true, freed_gb: +gb(Object.values(r.done).reduce((a, x) => a + x.bytes, 0)), classes: Object.fromEntries(Object.entries(r.done).map(([k, v]) => [k, { n: v.n, gb: +gb(v.bytes) }])), skipped: r.skipped.length, errors: r.errors.length };
+  const line = { at: p.at, apply: true, freed_gb: +gb(Object.values(r.done).reduce((a, x) => a + x.bytes, 0)), strays: (p.strays || []).length, classes: Object.fromEntries(Object.entries(r.done).map(([k, v]) => [k, { n: v.n, gb: +gb(v.bytes) }])), skipped: r.skipped.length, errors: r.errors.length };
   const dir = defaults().dataDir;
   if (dir) fs.appendFileSync(path.join(dir, 'janitor.jsonl'), JSON.stringify(line) + '\n');
   if (json) console.log(JSON.stringify({ plan: p, result: r }, null, 1)); else { report(p); console.log(`  APPLIED: freed ${line.freed_gb} GB · skipped ${r.skipped.length} · errors ${r.errors.length}`); for (const e of r.errors.slice(0, 20)) console.log(`    error ${e.path}: ${e.error}`); }
@@ -354,4 +452,4 @@ function main(argv = process.argv.slice(2)) {
 }
 
 if (require.main === module) main();
-module.exports = { plan, apply, report, setting, sourcePrefixes, roomTempName, survey, findTargets, citedTokens, heldLocks, worktreeFacts, assertSafe, isCargoTarget, TEMP_MIN_AGE, LOG_MIN_AGE, SCRATCH_MIN_IDLE, WORKTREE_MIN_IDLE, CARGO_TAG };
+module.exports = { plan, apply, report, setting, removalFacts, listWorktrees, recentPaneText, paneIn, sourcePrefixes, roomTempName, survey, findTargets, citedTokens, heldLocks, worktreeFacts, assertSafe, isCargoTarget, TEMP_MIN_AGE, LOG_MIN_AGE, SCRATCH_MIN_IDLE, WORKTREE_MIN_IDLE, CARGO_TAG };

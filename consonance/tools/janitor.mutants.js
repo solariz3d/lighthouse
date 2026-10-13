@@ -4,7 +4,7 @@
 //
 // A WRONG KEEP-RULE DELETES EVIDENCE. janitor.js removes folders on a schedule, unattended; every line that decides to KEEP something (young,
 // cited, locked, unmerged, a main checkout, a link inside, not cargo's, the act's re-check, the refusals of D:, drive roots and the keeper's
-// folders) is broken here one at a time, and janitor.test.js must go RED for each. heavy-run.mutants.js is the pattern.
+// folders, and since D319 every rule that keeps a WORKTREE from removal: unclean, unlanded, locked, linked, young, a live pane's, never --force) is broken here one at a time, and janitor.test.js must go RED for each. heavy-run.mutants.js is the pattern.
 //
 // THE TRACKED SOURCES ARE NEVER WRITTEN. A temp tree mirrors what the suite reads (janitor.js, its test, scratch.js, state-manifest.js, and the
 // sources its prefix row reads: gen-consumer.js, main.rs and mcp.rs); the copy is mutated, the copy's suite runs, the tree is removed. Every anchor
@@ -40,6 +40,23 @@ const MUTANTS = [
   ['(d) a main checkout is not kept', SRC, "      : (o.mainCheckouts.concat(f.mainCheckout ? [f.mainCheckout] : []).some((m) => norm(m) === norm(wt))) ? 'a main checkout'\n", ''],
   ['(d) idle ignores git: only the target\'s own age counts', SRC, 'const idle = now - Math.max(s.newest, f.touched || 0);', 'const idle = now - s.newest;'],
   ['(d) an unreadable lock is not counted as untreed', SRC, "catch (_) { untreed = true; continue; }", 'catch (_) { continue; }'],
+  // ---- (e) worktrees removed (D319) ----
+  ['(e) REMOVE_MIN_IDLE is zero: a worktree worked in an hour ago is removed', SRC, 'REMOVE_MIN_IDLE = 1 * DAY;', 'REMOVE_MIN_IDLE = 0;'],
+  ['(e) a worktree that is not clean is not kept', SRC, "      : !f.clean ? 'not clean'\n", ''],
+  ['(e) untracked files do not count as unclean', SRC, "'--untracked-files=all'", "'--untracked-files=no'"],
+  ['(e) a worktree with patches not in main is not kept', SRC, "      : f.unlanded !== 0 ? 'patches not in main'\n", ''],
+  ['(e) landed means an ancestor of main only (git cherry not read)', SRC, "      : f.unlanded !== 0 ? 'patches not in main'", "      : !f.merged ? 'patches not in main'"],
+  ['(e) a link inside does not keep the worktree', SRC, "      : s.links ? 'a link inside'\n", ''],
+  ['(e) a held or untreed heavy-run lock does not keep it', SRC, "      : held ? held\n", ''],
+  ['(e) a main checkout is not kept', SRC, "      : isMain ? 'a main checkout'\n", ''],
+  ['(e) a live pane does not keep it', SRC, "      : paneIn(wt, o.paneDirs, panes()) ? 'a live pane is working in it'\n", ''],
+  ['(e) the transcripts are not read for the worktree\'s path', SRC, "  if (!text) return false;\n  const w", "  return false;\n  const w"],
+  ['(e) status rewrites the index (no --no-optional-locks): the plan makes every worktree young', SRC, "['--no-optional-locks', 'status',", "['status',"],
+  ['(e) act: no re-check before the removal', SRC, "        if (changed) { res.skipped.push({ path: x.path, why: 'changed since the plan' }); continue; }", ''],
+  ['(e) act: the removal is FORCED', SRC, "'worktree', 'remove', x.path]", "'worktree', 'remove', '--force', x.path]"],
+  ['(e) act: a removal is not logged', SRC, "        if (o.dataDir) fs.appendFileSync(path.join(o.dataDir, 'janitor.jsonl'), JSON.stringify({ at: new Date(now).toISOString(), removed_worktree:", "        if (false) fs.appendFileSync(path.join(o.dataDir, 'janitor.jsonl'), JSON.stringify({ at: new Date(now).toISOString(), removed_worktree:"],
+  ['(e) strays are not listed', SRC, '    out.strays.push(w);', ''],
+  ['(e) a worktree inside the folder is listed as a stray too', SRC, '    if (o.worktreesDir && within(w.path, o.worktreesDir)) continue;\n', ''],
   // ---- the act ----
   ['act: no re-check (a folder that turned young is deleted)', SRC, "if (s.links || now - s.newest < minAge[cls]) { res.skipped.push", "if (false) { res.skipped.push"],
   ['act: assertSafe is not called', SRC, '      assertSafe(x.path, x.root);\n      if (cls === \'b\') {', "      if (cls === 'b') {"],
