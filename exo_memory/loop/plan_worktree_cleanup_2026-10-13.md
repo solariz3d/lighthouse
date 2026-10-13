@@ -38,3 +38,13 @@
     Red first.
 - **The keeper's list (librarian, after part 1):** the 10 unlanded worktrees with each commit's subject, and the 7 dirty ones
   with their files, so he can say keep or drop for each. Nothing in either group is deleted without his word.
+
+## Part 1b: the keeper's word on the 17 (librarian, 15:3x)
+**The keeper, 15:31:** "delete the garbage and stuff we dont need boss", answering the list of 10 unlanded and 7 dirty
+(`handback/p-wtsweep-E_2026-10-13.md` §2, on branch d319-e), after "i am kidding lmfao" about the hold.
+- **Pane E, zero-loss first:** for each of the 7 dirty worktrees, commit its uncommitted files (modified and untracked) onto a new
+  branch `rescue/<worktree-name>-2026-10-13`, from that worktree's HEAD. Then `git worktree remove` each of the 17 (plain, never
+  --force) and `git worktree prune`. The 10 unlanded keep their existing branches.
+- **Not touched:** `c-d319-wt` (C's part 2, live) and `e-d319-wt` (until D319 part 1 lands). Same guards as part 1: links,
+  locks, processes.
+- **Report:** each rescue branch with its sha and file count, each removal, the disk freed, and `git worktree list` after.
