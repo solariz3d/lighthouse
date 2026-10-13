@@ -135,7 +135,7 @@ function classify(wt, ctx) {
   const lp = norm(wt.path);
   r.pids = ctx.procs.filter((p) => p.text.includes(lp)).map((p) => p.pid).filter((pid) => pid !== process.pid);
   if (r.pids.length) set('PROCESS', `a running process names it (pid ${r.pids.join(', ')})`);
-  if (!r.class) { r.class = 'REMOVE'; r.reasons.push(inMain ? `clean; HEAD is in ${ctx.mainRef}` : `clean; every patch is in ${ctx.mainRef} (git cherry)`); }
+  if (!r.class) { r.class = 'REMOVE'; r.reasons.push(inMain ? `clean; HEAD is in ${ctx.mainRef}` : r.heldBy ? 'clean; its commits stay on the branch above' : `clean; every patch is in ${ctx.mainRef} (git cherry)`); }
   return r;
 }
 

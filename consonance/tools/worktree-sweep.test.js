@@ -142,6 +142,9 @@ test('--only removes a listed unlanded worktree whose HEAD a branch holds, and t
     const head = git(f.unlanded, 'rev-parse', 'HEAD');
     const o = runOnly(f, [f.unlanded], true);
     assert.deepEqual([o.removed.length, fs.existsSync(f.unlanded), git(f.repo, 'rev-parse', 'unlanded')], [1, false, head]);
+    // the report says where the commits are, never that they are in main
+    assert.match(o.rows[0].reasons.join('; '), /kept by branch unlanded[\s\S]*stay on the branch/);
+    assert.doesNotMatch(o.rows[0].reasons.join('; '), /every patch is in main/);
   } finally { cleanup(f); }
 });
 
