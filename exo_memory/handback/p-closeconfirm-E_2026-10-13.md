@@ -20,15 +20,16 @@ The keeper's words are at its :3-4. The plan named C for this part; the chair ga
 - **Edges:**
   - Any `leave` event ends the question, so Escape can never hide a Leave screen.
   - A question that arrives while a Leave screen is up is ignored; the Leave's own "busy" answers a second close.
-  - A second question while one is up adds nothing (one question, one Escape listener).
+  - A second question while one is up refreshes it in place: the new list and count, still one question and one Escape listener,
+    the focus kept on [Keep working], and a [Close] already in flight not reset (§5, the amendment; it first read "adds nothing").
   - Labels and gates are escaped.
 - **Two choices of mine, beyond the plan's words:**
   - One seat reads "1 seat is working: … end it?" instead of "1 seats are working".
   - An empty or malformed `working` still asks ("Some seats may be working. Close Consonance and end them?"). Rust has already
     prevented the close by then, so showing nothing would leave the X doing nothing at all. The contract says Rust sends the
     event only when some seat isn't Ready, so this path should not occur.
-- **Not touched:** `index.html` (no new file, so no script tag), `main.rs` (B's), `app.css`, `consonance/CHANGELOG.md`. The plan
-  asks for the changelog's Added line, and it isn't in my file list; it is for whoever lands D317.
+- **Not touched:** `index.html` (no new file, so no script tag), `main.rs` (B's), `app.css`, `consonance/CHANGELOG.md`. The
+  changelog line was later dropped from the landing (the chair, 14:21: the room keeps its record in the hand-backs).
 
 ## 2. Checks
 
@@ -63,5 +64,32 @@ question will not show.
 
 **Calls and wall time:** 2 test runs and 8 mutants under the lock, 1 headless render; about 30 min.
 
+## 5. The amendment: a second question refreshes the first (`46eb4230`, on `d5c819d1`)
+
+- **Why.** B's hand-back (`Desktop/b-d317-wt/exo_memory/handback/p-d317-close-B_2026-10-13.md:33-41`): the contract has no dismiss
+  signal. B's guard therefore holds a repeat X for 2 s only (`CLOSE_ASK_HOLD`), and a later X sends `close-confirm` again. My
+  first version ignored it, so the list could go stale. The chair's amendment, 14:21.
+- **What changed (`leave.js`).** The question's sentence and its list are written into their own elements (`#closeconfirm-q`,
+  `#closeconfirm-list`), and a `close-confirm` while the question is up rewrites only those.
+  - The buttons, the note, the Escape listener and the in-flight state of [Close] are untouched, and the focus goes back to
+    [Keep working].
+  - A Leave screen still wins (§1, the edges).
+  - No dismiss command was added; B named it for a later revision of the contract.
+```
+checked: node consonance/ui/leave.test.js, with the new tests and before leave.js changed → 41 passed, 2 failed (the refresh, and
+         its focus; "a [Close] in flight is not reset" passed already, since ignoring cannot reset anything)
+checked: node consonance/ui/leave.test.js, after → 43 passed, 0 failed; scripts-load 4 passed, 0 failed
+checked: mutants on the amended leave.js → applied 12 / caught 12 / NOT APPLIED 0 (the 8 above, plus: no refill on refresh; no focus
+         on refresh; a refresh that rebuilds the question; a refresh that re-arms a [Close] in flight)
+checked: headless Chrome with app.css, two close-confirms (3 seats, then 1) → one question reading "1 seat is working: pane B…",
+         focus on [Keep working], Escape hides it and invokes nothing (evidence/confirm_refresh.png)
+```
+- **Tests amended, by name.** "a second question while the first is up shows one question, with one Escape listener" is replaced by
+  "a second question while the first is up refreshes it in place: the second list, one question, one Escape listener" (its rule
+  changed; the reason is in the file). "seat labels are escaped" now reads the question's own elements.
+- **Corrections, mine.** The mutant meant to reset a [Close] in flight by rebuilding the question did not reach the in-flight test:
+  with the panel visible, the rebuild falls into the "Leave screen is up" guard and becomes the old ignore, so only the refresh tests
+  caught it. A direct reset of the in-flight flag (mutant 12) is what the in-flight test catches.
+
 SOURCES: exo_memory/loop/plan_close_confirm_2026-10-13.md · consonance/ui/leave.js · consonance/ui/leave.test.js
-NEXT: librarian read this when it lands; then the collator's full suite once B's part 1 is in (plan default)
+NEXT: librarian read this when it lands; then the collator's full suite and the landing of both parts (plan default)

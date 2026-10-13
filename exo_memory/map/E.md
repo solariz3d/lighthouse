@@ -2251,3 +2251,4 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-13 ~14:4x (D) · D317 part 2, the X asks before ending working seats (UI) → `exo_memory/handback/p-closeconfirm-E_2026-10-13.md`
 - lighthouse `2819983e` on `c39e51cb` (d317-e). leave.js asks on `close-confirm` in the Leave panel itself; [Keep working] focused and on Escape, invoking nothing; [Close] invokes `leave_confirmed` once. leave.test 24/16 red → 41/0; mutants 8/8/0; rendered with app.css, focus checked.
 - **Carry:** a modal that listens on the document must stop listening when anything else takes its panel, or the next Escape removes a screen it never owned.
+- 2026-10-13 ~14:3x amendment `46eb4230`: a close-confirm while the question is up refreshes it in place (B: no dismiss signal, a repeat X after 2 s asks again); 43/0, mutants 12/12/0.
