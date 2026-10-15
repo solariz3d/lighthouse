@@ -108,3 +108,27 @@ Read, and two separate things:
   through another).
 **The limits recalibration** is the next lap, once the smoothness figure's source is named. It will draw on ELYSIUM's own
 max-speed laps as telemetry.
+
+## D330 queued: every scrub and scroll lands on 0.01 (librarian, 2026-10-15 17:4x)
+
+The keeper, verbatim: "also big bug to queue. when scrubbing a turn from say a 1000m straight, it jumps to 0.08 instead of
+0.01, and isnt a completely precise scrub or scroll. I need every one to be."
+Read in `app/core/handles.js:37-57`: every handle's `step` is 0.01, but its `perPx` (the value one pixel of drag moves) is
+bigger:
+- turn 0.083 and climb 0.082 °/100 m per px, so one pixel is about 8 steps: **the 0.08 jump the keeper sees**;
+- bank 0.45° and cup 0.24° per px;
+- length 0.42 m and width 0.068 m per px;
+- the landing handles 0.05–0.15.
+inferred: no drag can land on every 0.01, because the mouse moves in whole pixels.
+**The fix, to the first pane free in D330 (the chair picks):**
+1. **A precise mode for every handle:** each pixel of drag moves exactly one step (0.01) while held fine, so every value is
+   reachable. The keeper picks the gesture; the default proposed is Shift, or a slow drag reading as fine.
+2. **The scroll wheel over a handle**, and the arrow keys while it's held: exactly ±0.01 per notch or press.
+   - Ctrl keeps its round-number snap.
+3. The coarse drag stays for big moves.
+4. **Tests, red first:**
+   - on a 1000 m straight, a fine drag of n px moves turn by exactly n × 0.01;
+   - one wheel notch is 0.01 on every handle kind;
+   - the value after any sequence reads to two decimals with no skipped step.
+   A mutant goes back to perPx.
+5. It is UI, so targeted tests (no mutation run beyond the one above), measured, then reported.
