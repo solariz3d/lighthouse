@@ -81,3 +81,30 @@ read. Nothing is pushed.
 
 Then the librarian reads all four, the chair lands them, the full suite runs on the landed branch, and an install waits
 until the builder is closed.
+
+## D330 addendum: the keeper on the reds (librarian, 2026-10-15 17:4x)
+
+The keeper, verbatim: "those reds shouldnt be real, the whole track works perfect at max speed, except for the part obv
+that is at the end not being connected, which means the part that tells us what is too much or detrimental was based on
+the track geometry made by hand from other creators, dogeish was the best, and we measured our surface to be 7x as
+smooth, meaning we can take more Gs than the system says we could since the tracks are made better than where the
+telemetry came from where we based our assumptions upon".
+Read, and two separate things:
+1. **The load and roll limits are calibrated on hand-made tracks.** That is true: FINDINGS.md §4–5 sets the ~20 g and the
+   proven ~90 g from laps on the learning library, which is ohyeah2389's, Dogeish's and Onuris (FINDINGS.md:280). On a
+   smoother surface the same car sees lower peak loads, so those bars are conservative for builder-made roads. **The
+   librarian could not find the "7x as smooth" measurement on disk** (searched docs/, CHANGELOG and the room's corpus).
+   The keeper is asked where it lives, so the recalibration stands on it.
+2. **ELYSIUM's two remaining reds are a different check:** `stacked-within-2m` at about 22.7 and 23.7 km
+   (ARCHITECTURE.md:85, "drivable surfaces stacked within about 2 m", under "red, for known breakage"). It is geometric,
+   not a G limit. The keeper drove the whole track at max speed, so at those two places either the clearance is enough for
+   the T-180 and the 2 m is too strict, or the check is pairing surfaces that don't really overlap.
+**To B, added to its wave 1 part:**
+- Find what pairs the stacked check makes at 22.7 and 23.7 km on harness/fx/eq-ELYSIUM.t180track: the two stations, their
+  vertical and lateral gap, and which surfaces they are.
+- Measure the T-180's actual clearance need from its open config (car height plus a margin), and set the check against
+  it.
+- If the reds are false at those places, fix the check, red first on a fixture, and keep the true case red (a road laid
+  through another).
+**The limits recalibration** is the next lap, once the smoothness figure's source is named. It will draw on ELYSIUM's own
+max-speed laps as telemetry.
