@@ -132,3 +132,24 @@ inferred: no drag can land on every 0.01, because the mouse moves in whole pixel
    - the value after any sequence reads to two decimals with no skipped step.
    A mutant goes back to perPx.
 5. It is UI, so targeted tests (no mutation run beyond the one above), measured, then reported.
+
+## D330 queued, same pane: a long length drag gets interrupted (librarian, 2026-10-15 17:5x)
+
+The keeper, verbatim: "and then when I continue to lengthen the track, sometimes my mouse move gets interrupted by
+something and ruins the smooth flow making the track longer, i have to let go of click, and click the drag again to continue
+making it longer instead of doing it in one smooth motion".
+Read in `app/core/handles.js:260-269`, "a drag never runs out of screen": when the hidden cursor has travelled WARP_PX, it is
+put back at the grab point through the native window, and the travel is kept in `acc`. **Moves are ignored until the
+cursor is seen back at the grab.** If it isn't seen within WARP_WAIT_MS, or the native call fails, the travel is given back
+(`giveBack`) and **the drag stops warping for the rest of the grab** (`noWarp`). Then it stalls at the screen edge, which
+matches "I have to let go and click again".
+- inferred, the librarian's hypothesis to test, not a finding: on a long piece the window thread is busy rebuilding the
+  preview, so the "back at the grab" move arrives after WARP_WAIT_MS, and one late frame switches warping off for the whole
+  drag. It also takes back the travel, which reads as a hitch.
+**To the same pane as the precise-scrub fix** (both live in handles.js, so one pane avoids a conflict):
+- Reproduce with a test that delays the cursor's return past WARP_WAIT_MS on a long drag; it should fail now. The drag
+  must keep going.
+- Then the fix: a late return keeps the travel and keeps warping (retry, never a permanent noWarp from one miss), and moves
+  in the gap are not lost.
+- Measure it headless on a long piece with harness/closefreeze.js-style frame gaps: one continuous drag of several km.
+- If the hypothesis is wrong, the pane says so and finds the real interrupt.
