@@ -397,3 +397,29 @@ To C, folded into the same build:
 - Tests mirrored: a "10°" climb comes out 10.00° and ends at rate 0, and the symmetry row.
 - One check that heading and pitch still compose past an inversion (path.js:14, θ keeps its meaning past ±90°), so a
   loop's climb isn't broken by the new ending rule.
+
+## D331 C Part 2 read: turn and climb as corners (librarian, 2026-10-16 00:5x)
+
+Read C:\Users\nname\Downloads\t180-wt-c2\HANDBACK_C.md Part 2 (d332-c, b60166d). Accepted:
+- **A:** "corner" and "climb corner" readout rows, with "ends turning at" and what the next piece adds.
+- **D:** bank to gravity.
+- **B:** "turn & climb as: corner °, ends straight", as the default. The rate meaning is byte-identical behind the switch.
+- **C:** a symmetric ease for corners, Turn by, Turn to grid and the new extendClimbBy. The peak goes from 73.9% to 50.0%,
+  with the build-up equal to the let-go, flat and banked. Every corner lands within 1e-4° of the angle asked.
+- The inversion check passes (180° plus 180° of climb, θ composing exactly).
+- **Old documents byte-identical**, by hashes pinned before B and C (the save's own segments and path).
+- A real bug found by the suite: A + D's panel would not load in the webview. Fixed, so the panel reads through the shell.
+- Amended tests named with why (B6; the panel helpers set to rate).
+- Mutants 33/33.
+- **The full suite on b60166d: 2,874 tests, 2,860 pass, 0 fail.**
+**Correction carried:** the keeper's hand corner is p41 + p42 = **99.64°**, not the 101.6° I relayed (that was part 1's
+sum over p40–p42, which C withdraws here). p40's 1.99° belongs to the corner before.
+**One thing before it lands, ruled:** in corner mode, the default, the turn and climb DRAG HANDLES are not offered (§B,
+"the handles drag a rate"). The keeper scrubs turns with those handles: his 0.01 bug this evening was exactly that. Hiding
+them by default takes away his main gesture.
+- **To C, before landing:** in corner mode the turn and climb handles drag the corner's degrees, with A2's rules (Shift is
+  0.01 a pixel, the wheel and arrows one step, Ctrl snaps), labelled in degrees.
+- Tests: a corner-mode drag of n px with Shift is n × 0.01° of corner, and the placed piece turns exactly that and ends
+  straight.
+Then the chair lands d332-c, the full suite runs, and the install waits for A's Close fix on the same save, so the keeper
+gets one build.
