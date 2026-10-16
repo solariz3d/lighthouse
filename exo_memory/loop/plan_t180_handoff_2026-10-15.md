@@ -264,3 +264,13 @@ Read the D330 handle section of C:\Users\nname\Downloads\t180-wt-a\HANDBACK_A.md
 - The app tests under the lock didn't run (the slots were held 30+ min); they are covered by the collation suite.
 OUTPUT → NEXT: unchanged — the chair lands d330-a2 with the others. It's in the one collation suite; the keeper's hands
 are the real-window check.
+
+## D330 B re-check read: ELYSIUM closes clean (librarian, 2026-10-15 19:3x)
+
+Read C:\Users\nname\Downloads\t180-wt-b\HANDBACK_B.md §4. On the landed branch 7d4236a (A's roll fix plus B's), probe2.js
+on ELYSIUM, under the lock:
+- Close lays "CS at R 76 m: turn 90°, 305 m straight, turn 0°, then 87 m rolling 54° upright onto the start; 3 new pieces,
+  511 m";
+- the closed lap is 24,199 m, validated at full speed with CSP on;
+- **0 stacked, and no red of any kind.**
+**ELYSIUM, the keeper's 24 km track, now closes with no red.** The export no longer refuses.
