@@ -49,6 +49,9 @@ windows = { version = "0.61", features = [
   "Media_Control",
   "Foundation",
   "Win32_Media_KernelStreaming",
+  # D338 (priority.rs): CreateToolhelp32Snapshot / Process32FirstW / Process32NextW, to list the WebView2 children of this process. A feature flag on the
+  # crate already compiled in the tree, nothing new to download; the Threading feature above already carries SetPriorityClass and SetProcessInformation.
+  "Win32_System_Diagnostics_ToolHelp",
 ] }
 # The #[implement] macro expands to windows_core:: paths, so the crate must be nameable.
 windows-core = "0.61"
