@@ -153,3 +153,24 @@ matches "I have to let go and click again".
   in the gap are not lost.
 - Measure it headless on a long piece with harness/closefreeze.js-style frame gaps: one continuous drag of several km.
 - If the hypothesis is wrong, the pane says so and finds the real interrupt.
+
+## D330 A read: the Finish roll (librarian, 2026-10-15 18:1x)
+
+Read C:\Users\nname\Downloads\t180-wt-a\HANDBACK_A.md (d330-a, 977fba7). Accepted:
+- The roll is sized by its measured peak: a first guess at 1.5× the mean, then the laid roll is read with the validator's own
+  rollRates and lengthened until under amber, with a named FINISH_ROLL refusal after 6 tries.
+- The supplied row 8 failed on 6c37902 to the digit (1.131°/m) and passes now; row 9 added.
+- **ELYSIUM: before, a 64 m roll with 3 red and 12 amber, worst 1.224°/m. After, an 87 m roll with 0 red and 0 amber,
+  worst 0.914°/m (bar 0.9338).**
+- Mutants 5/5 after row 9 was strengthened.
+- The full suite on 977fba7: 2824 tests, 2810 pass, 0 fail, 7 skipped, 7 todo.
+- No install, no push, no browser.
+Two notes:
+- **BANK_RATE skipped in A's worktree and failed in the main clone. The librarian read why**
+  (test/vocab-corpus.test.js:124-125): it skips only when `reads/` is absent. A worktree has no reads/ at all, while the
+  main clone has a partial reads/ without rainbow_rd. So the skip must test for the file it reads, not the folder. Added to
+  B's part.
+- **CHANGELOG.md already carries "the keeper" in 83 older entries**, against the public-text rule. They are pushed. Whether
+  to reword them is the keeper's call.
+OUTPUT → NEXT: changed — A is free, so A takes the queued handle bugs (precise scrub, interrupted drag; :112-155). The chair
+lands d330-a.
