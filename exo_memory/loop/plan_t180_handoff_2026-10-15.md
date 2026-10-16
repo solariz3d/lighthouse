@@ -335,3 +335,29 @@ Read by the librarian:
      UI readout that shows both. The proposal comes to the librarian before code changes the core.
    Core maths: red first; the full suite at landing.
 Same rules as D330: headless, no push, no install without the read, his data never written.
+
+## D331 C read: the crooked 90°, measured (librarian, 2026-10-15 22:2x)
+
+Read C:\Users\nname\Downloads\t180-wt-c2\HANDBACK_C.md (d332-c, uncommitted; the fixture's sha256 matches the original).
+**My hypothesis is refuted, by citation and test:** kh turns about WORLD up (src/geom/path.js:9-14, "a 'turn left' word
+turns left on the map, whatever the pitch"). Bank is applied afterwards about T and never enters the heading. The readout
+is that heading (readout.js:12, :95). test/turn_corner.test.js row 1 pins bank-independence.
+What the save measures:
+- **"Not 90":** the corner turned **101.6°**. p41 read 90.00° but ends still turning at 171°/100 m (the turn channel is a
+  rate). p42's "turn 0 at start" ramps that out and adds 9.64°, and p40 adds 1.99°. Nothing on screen sums the corner.
+  Row 2 reproduces it from scratch (99.65°, red).
+- **"Crooked":** the curvature builds over 105 m and collapses in about 13 m, eight times faster, with the apex at the
+  joint (R 33 m). On a 53.5° bank only cos 53.5° = 0.59 of a turn lies in the road's plane, and the rest bends through its
+  up. So the abrupt let-go shows as a twist-and-dip.
+- The doc's bank −234° and pitch 186° are the flipped form. The road is a 53.5° bank on a 6° descent, upright.
+**Ruling:**
+- **Now, UI only, no core maths:**
+  - **A:** the readout shows the corner's turn since the road was last straight, "ends turning at …", and what the next
+    piece's ease-out will add;
+  - **D:** a "gravity bank" readout (path.js bankG), so a steep banked turn reads 53.5°, not −234°.
+  To C, test first.
+- **For the keeper's word:**
+  - **B,** "end straight" on Extend's turn, so a hand-made turn comes out exact. He built this corner by hand with Extend's
+    fields, so B may be the one he'd use.
+  - **C,** a symmetric ease in and out for Turn by and Turn to grid, which fixes "crooked". It changes an existing tool.
+  C waits for his choice on B and C.
