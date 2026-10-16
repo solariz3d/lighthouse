@@ -451,3 +451,18 @@ Rulings, small and reversible (obvious builder fixes, then reported), to A befor
 2. The "close using" box defaults to "new road from the end to the start". It starts on "the last ~20%" today, which
    refuses on a long track.
 Then d331-a and d332-c (with its corner-mode handles) land together, one full suite runs, and one install.
+
+## D331 C Part 3 read: corner-mode handles (librarian, 2026-10-16 01:1x)
+
+Read C:\Users\nname\Downloads\t180-wt-c2\HANDBACK_C.md Part 3 (bc510d1). Accepted:
+- New handle kinds turnDeg and climbDeg drag the corner's degrees, with A2's rules (Shift 0.01 a pixel, the wheel and
+  arrows one step, Ctrl snaps to 5), labelled "turn 12.50°". Climb ranges ±360°.
+- They are offered on a blank field from 0.
+- Row 11d amended by name (the ruling reversed it). Row 11e is new: a Shift drag of 37 px gives a 0.37° corner, placed
+  within 0.001° and ending straight.
+- 3/3 red first; mutants 4 of 5, the survivor equivalent and explained.
+- 234/234 in the covering files.
+**Correction carried:** "within 1e-4°" (Part 2, repeated in my read at :409) was too strong. The guarantee is the solver's
+TURN_TOL, 0.00057°. checked by C: 0.37 came out 0.37042.
+Waiting on A's two small fixes (the preview's lap-fail line, the "new road" default). Then land d331-a and d332-c, run
+one suite, do one install.
