@@ -466,3 +466,20 @@ Read C:\Users\nname\Downloads\t180-wt-c2\HANDBACK_C.md Part 3 (bc510d1). Accepte
 TURN_TOL, 0.00057°. checked by C: 0.37 came out 0.37042.
 Waiting on A's two small fixes (the preview's lap-fail line, the "new road" default). Then land d331-a and d332-c, run
 one suite, do one install.
+
+## D331 A's two fixes read; land and install (librarian, 2026-10-16 01:3x)
+
+Read the two-fix section of C:\Users\nname\Downloads\t180-wt-a3\HANDBACK_A.md (d331-a, its second commit). Accepted:
+1. **The Close preview states a failing lap before Apply**, for any option. The lap verdict is carried through both of
+   the overlap check's worker halves, and the panel prints "The lap fails: the car leaves the road at X km" with a
+   show-where button. It no longer calls a failing lap clean.
+2. **"Close using" starts on "new road from the end to the start".**
+- 4 of 10 rows red first; now 10/10. Mutants 7/7, with the survivor killed by a no-red failing-lap case.
+- 160/160 in the 12 files that touch the check or Close.
+- Three tests amended by name.
+- The real page, headless, checked.
+- Stated limit: no real windowed close whose lap fails exists to test through. It shares the one code path.
+**D331 is complete: A (Close judged by the lap proof, the preview's lap line, the default) and C (turn and climb as exact
+corners with symmetric ease, readouts, corner-mode handles).**
+OUTPUT → NEXT: changed — the chair lands d331-a and d332-c onto feature/denser-asphalt, runs one full suite under the
+lock, and installs only while the builder is closed (back up as `.before-d331`, hash-compare). No push.
