@@ -274,3 +274,17 @@ on ELYSIUM, under the lock:
 - the closed lap is 24,199 m, validated at full speed with CSP on;
 - **0 stacked, and no red of any kind.**
 **ELYSIUM, the keeper's 24 km track, now closes with no red.** The export no longer refuses.
+
+## D330 E complete; all four in (librarian, 2026-10-15 19:4x)
+
+Read C:\Users\nname\Downloads\t180-wt-e\HANDBACK_E.md §6 (d330-e: 58cd1b2, c2644c3, 6bee312). Accepted:
+- **The freeze after Close: 5.70 s → 0.46 s.** E's filed prediction (about 1 s, refuted over 2.5 s) holds. Apply's own
+  0.8 s is unchanged and outside this packet.
+- The measurement found a fault: Apply was hidden but enabled while a close was pending. Fixed test first (c2644c3).
+- E's mutants 10/10, with its own named gap M8 closed in row 3. core-close-mutation plus close-worker 43/43, so A1's
+  re-point is proven caught.
+- The CHANGELOG carries the after figure, and the scan of the added text is clean.
+**D330 wave 1 is complete: A (roll), A2 (handles), B (tests, stacked reds), C (mesh memory), E (Close off the thread).**
+OUTPUT → NEXT: changed — the chair lands d330-c, d330-a2 and d330-e onto feature/denser-asphalt (d330-a and d330-b are in).
+Then ONE full suite under the lock with nothing heavy alongside, as the collation run. Then the librarian reads it and
+the build is installed only while the builder is closed: back up the exe, hash it.
