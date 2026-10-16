@@ -423,3 +423,31 @@ them by default takes away his main gesture.
   straight.
 Then the chair lands d332-c, the full suite runs, and the install waits for A's Close fix on the same save, so the keeper
 gets one build.
+
+## D331 A read: Close on the newest save (librarian, 2026-10-16 01:0x)
+
+Read C:\Users\nname\Downloads\t180-wt-a3\HANDBACK_A.md (d331-a, 55 lines). Accepted, measured in the real page headless:
+- **What "didn't work" was:**
+  - the three windowed options refuse with their words;
+  - "whole lap" closes onto 8 overlaps;
+  - **"new road" closed and then the checker said "lap FAILS"**: the car leaves the surface on the new road.
+- **The cause:** Finish judged a route only by Close converging. The laid road ended 20 m or more off, Close bent it into
+  −55 g, and on a 54° bank that lifts the car off. It is not D330's roll fix (it fails the same at the same station before
+  it).
+- **The fix:** re-aim each route by where its road really ends, judge it by the lap proof's own centreline test, skip
+  failing routes, lay the roll first as the fallback, otherwise refuse by name. Row 10 is red on the installed build; 13/13
+  now; mutants 8/8.
+- A sweep of 72 tracks: banked ends that left the road went from 48 of 48 to 0, with 6 refused by name.
+- The full suite: 2,847, 0 fail. The real page on the newest save now reads **"lap proved"**.
+For the keeper, plainly:
+- the road that proves is a 2.4 km loop, because the compact one leaves the surface: his end is pitched down 6.2°, 8.4 m
+  below the start, on a 54° bank;
+- levelling the last pieces first would give a short closing road;
+- **the 2 stacked reds that remain are his own track's:** the hand-made turn p41 passes 0.43 m from p38's road a kilometre
+  earlier. That's a real crossing, not Close's.
+Rulings, small and reversible (obvious builder fixes, then reported), to A before landing:
+1. The Close preview says when the lap fails ("the lap fails: the car leaves the road at X km"), from overlapjob's v.lap,
+   so he knows before Apply. It applies to every option.
+2. The "close using" box defaults to "new road from the end to the start". It starts on "the last ~20%" today, which
+   refuses on a long track.
+Then d331-a and d332-c (with its corner-mode handles) land together, one full suite runs, and one install.
