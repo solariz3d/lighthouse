@@ -611,3 +611,24 @@ So the known cause is fixed, and **another path loses a key-up.** Inferences to 
   is never dropped, since key-repeat only fires for the last key pressed. If that can't be made safe, C says so and drops
   it.
 - Headless only, tests red first, and the keeper's hands are the real check.
+
+## Lap D337, FIRST: Close on the 06:59 save, one pixel from closed (librarian, 2026-10-16 07:0x)
+
+The keeper, verbatim: "FUCK, i am like one pixel away from completeing the loop by hand, so ii try close the loop, then it
+does some fucked shit that doesnt even make sense, i saved it so you can look at it elysium".
+**The save, read only:** `%APPDATA%\com.solariz3d.t180-track-builder\tracks\eq-ELYSIUM.t180track` (06:59, 104,381 B,
+sha256 a7e90543…) and its `.t180undo` (2,402,155 B). The librarian's copy is in its scratchpad (ely/ely0659.t180track).
+The case: the end sits about a pixel from the start, so every Close option should be a tiny correction. Instead it "does
+something that doesn't make sense".
+inferred, to test: Finish (now the default, D331) treats this as "lay new road" and builds a loop, when the end is already
+at the start. Or a windowed Close bends the hand-made end against a 54° bank. **A near-closed end must close with a
+near-zero change.**
+**To B, now. D333's wording pauses** (it is lower priority, and B commits what's done first):
+1. Measure the end-to-start gap: position, heading, pitch and bank, from the path samples (`A.toPath(doc).samples`, as
+   rollprobe.js reads them).
+2. Run every Close option on a fixture copy, headless (harness/serve.js and the page, or the core shell as otheropts.js
+   does). Name what each does: the pieces it moves and how far, the road it lays, its reds, its lap verdict.
+3. Fix it, red first on this fixture: an end within a small gap of the start closes by the smallest change (a tiny Close
+   bend, or snapping the seam), never by laying a loop. Finish should not be chosen for a near-closed end.
+   - Measure that the closed lap proves and that nothing moves more than the gap needs.
+4. The keeper gets it in the next build. The full suite at landing.
