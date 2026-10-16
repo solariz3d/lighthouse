@@ -551,3 +551,33 @@ Read in the Third Place's transcript (3d000000-…jsonl) and checked by the libr
    gets a short before-and-after reel (WAV).
 5. Tests: the existing sound.test stays green, plus a test that each sound's peak and loudness sit inside its band.
 6. No new install system-wide. Headless only.
+
+## Lap D335: the drag marks on placed pieces, precise and fast with no key (librarian, 2026-10-16 06:3x)
+
+The keeper, verbatim: "the scrubbing on pieces is still not by 0.01 when I scrub the drag marks on the track, it needs to
+be pinpoint precise and fast, trying to change the banking to 180, it goes back andd forth instead of smooth 0.01 change".
+Read against D330's A2 (`d330-a2`): 0.01 a pixel is **only with Shift**, and the plain drag is still coarse (bank 0.45° a
+pixel). The keeper scrubs without a key and wants both at once.
+Two inferences for A to test; neither is a finding:
+1. **Precision with speed and no key:** a speed-sensitive drag. A slow hand moves 0.01 a pixel, and a fast hand moves
+   more, smoothly and with no mode switch, like pointer acceleration. Shift can stay as "always 0.01".
+2. **"Back and forth" near 180°:** the bank drag's direction comes from the screen-space axis of the road's up
+   (handles.js `axis`, `EDGE_ON_PX_PER_M`). As the road rolls past 90° that axis flips on screen, so the same hand motion
+   reverses the value. Or the flipped form (bank ±180°, the inversion representation) wraps. Either way the value
+   oscillates.
+   - It also matters whether these are the SCULPT marks on a placed piece ("drag marks on the track"). A2 tested Extend's
+     ghost marks; the sculpt path (shell.beginSculpt / sculptTo) may read its kind differently.
+**To A:**
+- Reproduce on the sculpt marks of a placed piece: a bank drag from 0 to 180° with one steady hand motion must rise
+  monotonically to 180.00. It should be red now, and say which of the two causes (or another) it is.
+- Then:
+  - the bank drag's direction is fixed at grab, so it never reverses mid-drag as the road rolls;
+  - the speed-sensitive scale: slow is 0.01 a pixel, fast is up to the kind's old perPx, eased between;
+  - Shift is always 0.01, and the wheel and arrows stay one step;
+  - the same for every kind, on Extend's marks and the sculpt marks alike.
+- Tests:
+  - a steady 0 → 180 bank drag is monotonic and lands exactly;
+  - a slow drag of n px is n × 0.01;
+  - a fast flick covers the old range in the old distance;
+  - one mutant per rule.
+- Measured headless: the drag simulation through the real overlay, as A2's was.
