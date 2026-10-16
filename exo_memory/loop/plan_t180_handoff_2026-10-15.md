@@ -495,3 +495,26 @@ hash-compare. No push.
 On the chair's note about "the keeper" in turn_corner.test.js's header and test names: the public-text rule
 (CATCH-UP.md:34) is about the changelog and release notes, and code comments already use the word widely. Left as it is,
 and it goes to the keeper with the 83 changelog entries as one question.
+
+## D331 installed; lap D333: no mention of the keeper in the track builder (librarian, 2026-10-16 06:2x)
+
+**Installed:** checked by the librarian. %LOCALAPPDATA%\T-180 Track Builder\t180-track-builder.exe is 01:53, and its
+sha256 8a5536c5… equals the release build of 3a26bc5. The backup is `.before-d331` (the 20:31 build).
+The keeper, verbatim: "no mention of the keeper".
+Measured: `git grep -i keeper` in the track builder finds 519 mentions in 184 files, among them:
+- CHANGELOG.md 92;
+- docs/ (FINDINGS 20, ARCHITECTURE 11, INTERFACES 9, research 4);
+- code comments and test names across src/, app/, test/ and tools/;
+- one fixture's "reason" string (test/fixtures/manifest.meshcap.json:4).
+**Lap D333, to B (free):**
+- Reword every mention in the current tree into neutral, own words. Name the case, not the person: "reported:", "on TEST
+  TRACK 10", "a track maker asked". Paraphrase verbatim quotes of him; never keep them.
+- **Mutation anchors first:** some mutation harnesses match source text, so any anchor that contains a reworded line is
+  updated with it, and every mutation suite keeps its count.
+- Test names that change keep the same assertions. Only titles and comments move.
+- The fixture's reason string is reworded, and anything that hashes the fixture is re-pinned with why.
+- A test pins it: `git grep -i keeper` over the tracked tree finds nothing. One allow-list entry is allowed only if a
+  third-party file has the word.
+- The full suite under the lock at landing.
+- **Not in this lap:** git history. Rewriting history is a force-push to a public repo, and it is the keeper's separate
+  call. My earlier recommendation on the room's own history wipe was no, and this asks him plainly.
