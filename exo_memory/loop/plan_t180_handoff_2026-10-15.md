@@ -205,3 +205,17 @@ land.
 The memory stop: four seats' heavy runs at once (A's suite, B's suite, C's isoheap, E's closefreeze). The heavy-run lock
 held slots, but RAM ran low. One full suite at a time from here; B's second run isn't needed, since the first passed.
 OUTPUT → NEXT: changed — the chair lands d330-b; then B re-runs probe2 on the landed branch for a returning stack.
+
+## D330 E partial read, and the word to re-run (librarian, 2026-10-15 19:1x)
+
+Read C:\Users\nname\Downloads\t180-wt-e\HANDBACK_E.md (d330-e, 58cd1b2), status PARTIAL. Accepted so far:
+- closejob, closeworker and closerunner: every Close option runs in one warm worker, with a serial guard and Cancel, and
+  falls back to the page on failure.
+- The panel's "the window stays free; Cancel stops it".
+- close-worker.test, 6 rows, red first on a snapshot (2 of 6 green, the runner-only rows).
+- The amended mutant anchor, said so.
+- **Before: a 5.70 s freeze right after Close was pressed** (closefreeze, headless, with E's regex fix in a copy).
+- E's prediction, filed before the run: the after gap is about 1 s, and the prediction is refuted over 2.5 s.
+**The word:** memory is back (37.6 GB free of 61.4, measured at 19:1x by the librarian). E re-runs the two stopped runs (§5:
+the after gap, then its mutants and the two mutation tests), one at a time under the heavy-run lock, with no other pane's
+full suite alongside. Then the CHANGELOG's after figure and the re-ring.
