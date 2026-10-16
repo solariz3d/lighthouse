@@ -361,3 +361,25 @@ What the save measures:
     fields, so B may be the one he'd use.
   - **C,** a symmetric ease in and out for Turn by and Turn to grid, which fixes "crooked". It changes an existing tool.
   C waits for his choice on B and C.
+
+## D331, the keeper's word on B and C (librarian, 2026-10-15 22:3x)
+
+The keeper, verbatim: "i guess it the turn angle should take into account the banking to make the turns more intuitive for
+the user to manage, but then turns that have less banking or no banking also just work how it should to convey the proper
+degrees to line up with the grid".
+Read against C's measurement: the map heading is already bank-independent, so a number that lines up with the grid has
+to stay the map heading. What a bank changes is how an abrupt turn feels and looks: the twist-and-dip. So "takes the
+banking into account" and "proper degrees to line up with the grid" are met together by:
+- **B, as the default:** Extend's turn number means the corner's exact heading change on the map, ending straight. 90
+  is 90 on the grid, banked or flat. The rate meaning stays one switch away, so nothing the keeper built changes.
+- **C:** the corner eases in and out symmetrically, so on a steep bank the bend through the road's up spreads evenly
+  instead of collapsing in 13 m. The steeper the bank, the more that matters, and on a flat road it is just a clean corner.
+  It applies to Extend with B, Turn by and Turn to grid.
+- **Plus A and D** (already ruled): the corner's total and the gravity bank in the readout.
+To C, core maths:
+- red first: row 2 of turn_corner.test.js (a "90°" corner comes out 90.00°, ending straight), and the symmetry row (the
+  peak within 10% of the middle, the exit no faster than the entry), on a flat road and on a 53.5° bank;
+- a mutant per rule;
+- the full suite at landing.
+Existing Turn by tests and readout figures that move are amended by name, with why. Old documents open unchanged, because
+the stored channels are not reinterpreted. Only new placements use the new meaning.
