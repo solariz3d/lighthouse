@@ -240,3 +240,27 @@ Read C:\Users\nname\Downloads\t180-wt-c\HANDBACK_C.md (d330-c, 138c383). Accepte
 `feature/denser-asphalt` under the lock, once E's after-measurement is done and with no other heavy run alongside. That
 serves as C's owed run and as the lap's collation run, mutation counts included. If it reads red on C's files, d330-c is
 reverted, not patched in place.
+
+## D330 A2 read: the handle bugs (librarian, 2026-10-15 19:3x)
+
+Read the D330 handle section of C:\Users\nname\Downloads\t180-wt-a\HANDBACK_A.md (d330-a2, dac5ee0). Accepted:
+1. **Exact scrub:**
+   - Shift (`PRECISE_MOD`, one constant) is one pixel = one 0.01 step, with no hold, for every handle kind.
+   - The wheel over a handle is one step a notch, and the camera doesn't also zoom.
+   - The arrow keys while a handle is held are one step a press.
+   - Ctrl's snap and the coarse drag are unchanged.
+   - The reported case: turn from a 1000 m straight, a Shift drag of 37 px is 0.37 exactly.
+   - 7 tests red first, now 34/34; mutants 12/12, the chair's back-to-perPx among them.
+   - Five Shift tests amended by name, because the rule itself changed (a tenth of the speed, now one step a pixel).
+2. **The long drag:** my hypothesis reproduced (a late return turned warping off at the second warp, and a 3 km drag sat
+   at 258 m). A found more:
+   - **A plain fast hand does the same.** The return was only recognised within 2 px of the grab, so a hand faster than
+     2 px an event never matched, then gave up. That fits "sometimes" better than a busy thread.
+   - The fix recognises the return by distance, counts the moves in the gap, asks again when late, and stops warping only
+     after 3 misses in a row.
+   - Every simulated scenario (fast hand, busy thread, both) now follows the hand exactly with no stall.
+   - Stated limit: it's a simulation through the real overlay code, not the real window on a long track.
+- No core maths was touched. Targeted runs: 161/161, and 132 with 0 fail.
+- The app tests under the lock didn't run (the slots were held 30+ min); they are covered by the collation suite.
+OUTPUT → NEXT: unchanged — the chair lands d330-a2 with the others. It's in the one collation suite; the keeper's hands
+are the real-window check.
