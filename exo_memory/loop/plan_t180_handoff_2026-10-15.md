@@ -219,3 +219,24 @@ Read C:\Users\nname\Downloads\t180-wt-e\HANDBACK_E.md (d330-e, 58cd1b2), status 
 **The word:** memory is back (37.6 GB free of 61.4, measured at 19:1x by the librarian). E re-runs the two stopped runs (§5:
 the after gap, then its mutants and the two mutation tests), one at a time under the heavy-run lock, with no other pane's
 full suite alongside. Then the CHANGELOG's after figure and the re-ring.
+
+## D330 C read: the mesh rows packed (librarian, 2026-10-15 19:2x)
+
+Read C:\Users\nname\Downloads\t180-wt-c\HANDBACK_C.md (d330-c, 138c383). Accepted:
+- The boundary rows are packed into a Float64Array (p and n). The seams read only those; q stays transient. rowVertices
+  is exported.
+- **The whole 24 km mesh is byte-identical:** sha256 ac711306…0bed04670 before and after, and pinned in a new test on
+  five cases; row 2 is red first.
+- **ELYSIUM, headless:**
+  - page at rest 784 → 354 MB, and `vertex`'s 426 MB is gone;
+  - mesh heap 958 → 269 MB;
+  - through Close, the page peaked at 2,150 MB and then stopped answering before; after, 1,084 MB, answering throughout;
+  - buildMesh 12.2 → 11.6 s.
+- Four test files read the rows through rowVertices. They are said plainly as test changes, because each reached into an
+  internal whose form changed; no check was loosened.
+- The 7 load-only fails (roundtrip, aclook) pass alone on both the change and the base.
+**Owed:** the full suite with the final code (run 2 was stopped by the memory reaper), and the mesh mutation counts.
+**Ruling, to save a run:** the chair lands d330-c after d330-a and d330-b. Then **one** full suite runs on the landed
+`feature/denser-asphalt` under the lock, once E's after-measurement is done and with no other heavy run alongside. That
+serves as C's owed run and as the lap's collation run, mutation counts included. If it reads red on C's files, d330-c is
+reverted, not patched in place.
