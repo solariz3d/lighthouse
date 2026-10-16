@@ -174,3 +174,34 @@ Two notes:
   to reword them is the keeper's call.
 OUTPUT → NEXT: changed — A is free, so A takes the queued handle bugs (precise scrub, interrupted drag; :112-155). The chair
 lands d330-a.
+
+## D330 B read: the test faults and ELYSIUM's stacked reds (librarian, 2026-10-15 19:1x)
+
+Read C:\Users\nname\Downloads\t180-wt-b\HANDBACK_B.md (d330-b, 593a9a8). Accepted:
+- **BANK_RATE:** `inputDiff(dir, manifest)`. The test runs only on the exact 16 read files, by sha256, that its constant
+  was measured from, and otherwise skips naming what is missing or changed.
+  - Red first: a changed set expected 0.849 and got 0.85.
+  - Note: the main clone's own 3 matching names have different bytes, so it skips rather than check the wrong data.
+- **The water mutation test:** no change, with the evidence:
+  - no wall clock anywhere;
+  - 4 copies under 16 CPU burners passed 20/20, about 15× slower;
+  - peak RSS 342 MB;
+  - it passed inside a full suite (2,810 pass, 0 fail).
+  The one failure kept no output, so changing the test would be a guess. The catch count stays 19/19.
+- **ELYSIUM's stacked reds were real, and they were on the closing road.**
+  - They exist only on the route Close laid before 7c433a6: 6.3, 22.7, 23.7 and 24.3 km, and every pair involves the
+    closing road, which the keeper never drove because his track was open at the end.
+  - Measured against the T-180's own collider (colliders.ini, and collider.kn5 parsed: the body reaches about 1.48 m above
+    the road):
+    - at 6.3 km the closing road's lip passes 1.16 m over the main floor, inside the body;
+    - at 22.7↔23.7 km two cup lips come within 0.70 m along one normal.
+  - The 2 m rule is the body plus about 0.5 m, so it is not loose. The check is unchanged, and rightly.
+  - **At HEAD (6c37902) Close lays a different closing road with no stacked red.**
+- B's own corrections (a priority slip in a stress script, caught in a minute; a CHANGELOG edit lost to CRLF, then added).
+For the keeper, plainly: his drive proves the track he drove. The stacked reds were on the joining road that didn't exist
+when he drove, and the current Close lays a different one with none.
+Watch, as B names: A's roll fix moves the closing route again, so B re-runs probe2.js on ELYSIUM once d330-a and d330-b
+land.
+The memory stop: four seats' heavy runs at once (A's suite, B's suite, C's isoheap, E's closefreeze). The heavy-run lock
+held slots, but RAM ran low. One full suite at a time from here; B's second run isn't needed, since the first passed.
+OUTPUT → NEXT: changed — the chair lands d330-b; then B re-runs probe2 on the landed branch for a returning stack.
