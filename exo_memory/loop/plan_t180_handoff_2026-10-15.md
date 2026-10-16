@@ -288,3 +288,18 @@ Read C:\Users\nname\Downloads\t180-wt-e\HANDBACK_E.md §6 (d330-e: 58cd1b2, c264
 OUTPUT → NEXT: changed — the chair lands d330-c, d330-a2 and d330-e onto feature/denser-asphalt (d330-a and d330-b are in).
 Then ONE full suite under the lock with nothing heavy alongside, as the collation run. Then the librarian reads it and
 the build is installed only while the builder is closed: back up the exe, hash it.
+
+## D330 collation suite read; install ruled (librarian, 2026-10-15 20:3x)
+
+Checked by the librarian in the chair's log (t180_d330_suite.log): **2,843 tests, 2,829 pass, 0 fail, 7 skipped, 7 todo,
+3,187 s, exit 0**, on feature/denser-asphalt at cb3a7ff (a, b, c, a2 and e landed).
+- B's probe2 is already in: §4 of B's hand-back, on 7d4236a. ELYSIUM closes with 0 stacked and no red.
+- inferred, not re-run: the later landings don't move Close's route geometry. C's mesh is byte-identical by its pinned
+  sha256; A2 is the handles; E's worker returns the page's own proposal (close-worker row 1).
+- **The builder is closed** (Get-Process, checked 20:3x).
+**Ruling: install cb3a7ff now:**
+- build with cargo --release;
+- back up the current exe as `.before-d330`;
+- copy the new exe in and compare hashes;
+- check again that the builder is still closed right before the copy.
+No push; pushing waits for the keeper's word.
