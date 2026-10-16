@@ -483,3 +483,15 @@ Read the two-fix section of C:\Users\nname\Downloads\t180-wt-a3\HANDBACK_A.md (d
 corners with symmetric ease, readouts, corner-mode handles).**
 OUTPUT → NEXT: changed — the chair lands d331-a and d332-c onto feature/denser-asphalt, runs one full suite under the
 lock, and installs only while the builder is closed (back up as `.before-d331`, hash-compare). No push.
+
+## D331 collation suite read; install ruled (librarian, 2026-10-16 01:5x)
+
+Checked by the librarian in the chair's log (t180_d331_suite.log), at 3a26bc5: **2,884 tests, 2,868 pass, 0 fail, 9
+skipped, exit 0.** The 2 extra skips are the rows that need the keeper's save. The chair ran them on a read-only copy
+(sha256 matching): 16/16, then deleted the copy.
+The builder is closed (Get-Process, checked 01:5x).
+**Install 3a26bc5:** release build, back up as `.before-d331`, re-check that the builder is closed right before the copy,
+hash-compare. No push.
+On the chair's note about "the keeper" in turn_corner.test.js's header and test names: the public-text rule
+(CATCH-UP.md:34) is about the changelog and release notes, and code comments already use the word widely. Left as it is,
+and it goes to the keeper with the 83 changelog entries as one question.
