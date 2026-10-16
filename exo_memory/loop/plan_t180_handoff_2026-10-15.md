@@ -383,3 +383,17 @@ To C, core maths:
 - the full suite at landing.
 Existing Turn by tests and readout figures that move are amended by name, with why. Old documents open unchanged, because
 the stored channels are not reinterpreted. Only new placements use the new meaning.
+
+## D331, climb too (librarian, 2026-10-15 22:4x)
+
+The keeper, verbatim: "i wonder, the climb might need to do the same?"
+Read: yes, it has the same structure. src/geom/path.js:10 makes pitch a ramped curvature kp(s), a rate, exactly like
+heading, and readout.js:12 reads climbDeg = ∫κv ds. So a climb piece eased to a rate ends still climbing, and the next
+piece's ease-out adds pitch the readout didn't show. The fix is the same.
+To C, folded into the same build:
+- **B for climb:** Extend's climb number is the exact pitch change, ending level-rate.
+- **C:** a symmetric ease in and out for climb too.
+- **A:** the readout's corner total for climb as well.
+- Tests mirrored: a "10°" climb comes out 10.00° and ends at rate 0, and the symmetry row.
+- One check that heading and pitch still compose past an inversion (path.js:14, θ keeps its meaning past ±90°), so a
+  loop's climb isn't broken by the new ending rule.
