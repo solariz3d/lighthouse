@@ -632,3 +632,31 @@ near-zero change.**
    bend, or snapping the seam), never by laying a loop. Finish should not be chosen for a near-closed end.
    - Measure that the closed lap proves and that nothing moves more than the gap needs.
 4. The keeper gets it in the next build. The full suite at landing.
+
+## D335 A read: placed-piece scrub by speed, bank lands on 180 (librarian, 2026-10-16 07:0x)
+
+Read C:\Users\nname\Downloads\t180-wt-a4\HANDBACK_A.md (d335-a, 85f79cd). Accepted:
+- **The cause, measured, and neither of my guesses:** the drag read the pointer along the mark's screen axis FIXED AT THE
+  GRAB. The bank mark swings about 100° on screen as the road rolls, so a hand following it stalled near 164° and would
+  fall back: the back and forth.
+- **The fix:**
+  - each pointer step is projected on the mark's axis as it is now;
+  - a speed-sensitive gain with no key: at 0.1 px/ms or slower, one pixel is 0.01; at 1 px/ms or faster, the old rate;
+    smoothstep between;
+  - Shift is always 0.01, and the wheel and arrows are unchanged;
+  - the 6 px holds are gone.
+- **A second find:** a Sculpt drag never landed on its label (asked 180, read 179.10). It is now divided by the brush's
+  measured ratio, and lands on 10, 90, 180, 270 and −135.
+- 218/218; mutants 9/9; tests amended by name (the holds are gone, and moves carry times).
+- Stated limit: a pointer pushed straight up past the roll's apex, not following the mark, gets little from the live axis
+  there.
+OUTPUT → NEXT: unchanged — the chair lands d335-a with the next build's other branches.
+
+## Consonance priority, at the keeper's word (librarian, 2026-10-16 07:0x)
+
+The keeper, verbatim: "CONSONANCE MUST BE PRIORITZED TO NOT BE THROTTLWED" (after "I HAVE FUCKING 64GB OF RAMN").
+Measured: 43.4 GB free of 61.4 and CPU at 28%, so the machine wasn't short.
+Done by the librarian: consonance.exe (23068) and its 7 msedgewebview2 children were set from Normal to **High** priority.
+This is reversible, and it lasts until Consonance restarts.
+Owed, a small lap for a pane when one is free: Consonance sets its own priority, and opts out of Windows' EcoQoS/efficiency
+throttling for itself and its WebView2 at startup (consonance/src-tauri), so it holds across restarts.
