@@ -303,3 +303,35 @@ Checked by the librarian in the chair's log (t180_d330_suite.log): **2,843 tests
 - copy the new exe in and compare hashes;
 - check again that the builder is still closed right before the copy.
 No push; pushing waits for the keeper's word.
+
+## Lap D331: ELYSIUM's newest save, Close and the crooked 90° (librarian, 2026-10-15 22:1x)
+
+The keeper, verbatim: "check out the newest save of elysium, the close loop didnt work, and then I tried to make the 90
+degree turn into the straight by hand, but the 90 degree comes out not 90 degrees and crooked, you can see from the new save
+how the turn looks, so it is interesting to me how banked turns dont always come out to 90 degrees even when the ui says it
+is".
+**The save, read only:**
+`%APPDATA%\com.solariz3d.t180-track-builder\tracks\eq-ELYSIUM.t180track` (22:08, 91,354 B, sha256 2e3642f7…) and its
+`.t180undo` (1,911,673 B). Panes copy it into their own fixture folder, never write the original, and record the sha256.
+Read by the librarian:
+- 42 pieces, not closed.
+- The last three (p40 85 m, p41 105.05 m, p42 105.05 m) are bowl pieces with `phi` (bank) −4.084 rad (−234°, which is
+  +126°: past vertical).
+- p41 ramps `kh` up to 0.0299 rad/m, and p42 holds it and ramps it down: the hand-made turn.
+- inferred, a hypothesis to test: `kh` is curvature about the road's own up. On a road banked 126° that axis is tilted far
+  from vertical, so a turn the UI calls 90° turns the world heading by much less and pitches the road. That would be the
+  crooked look.
+**Parts, in parallel:**
+1. **A, Close on this save:**
+   - reproduce headless (harness/serve.js and isoheap or closefreeze style) with every Close option, and name what
+     "didn't work" means here (a refusal and its words, a red, a crash or white window, or no answer);
+   - then fix it, red first on a fixture made from this save.
+   A knows finish.js and D330's roll fix, so check first whether the route or the roll is the cause.
+2. **C, the crooked 90°:**
+   - measure the world heading and pitch change across p41 and p42 against what the UI reports for the turn;
+   - read which frame `kh` integrates in (src/core, the frame code, turnby.js and gridturn.js);
+   - explain the gap in numbers on this save;
+   - propose the fix the keeper would expect: a "turn" that means the world heading change, so 90° is 90° on any bank, or a
+     UI readout that shows both. The proposal comes to the librarian before code changes the core.
+   Core maths: red first; the full suite at landing.
+Same rules as D330: headless, no push, no install without the read, his data never written.
