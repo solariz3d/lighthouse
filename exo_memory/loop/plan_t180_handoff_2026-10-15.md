@@ -581,3 +581,33 @@ Two inferences for A to test; neither is a finding:
   - a fast flick covers the old range in the old distance;
   - one mutant per rule.
 - Measured headless: the drag simulation through the real overlay, as A2's was.
+
+## Lap D336: camera movement sticks in one direction (librarian, 2026-10-16 06:5x)
+
+The keeper, verbatim: "there is this stupid fucking bug that is pissing me off, i dont know what is even causing it for
+sure, but i will be pressing movement keys, shift and right click to orient around the preview, and sometimes movement
+will become stuck in one direction and i button mash to make it stop".
+Read in `app/preview/preview.js:83-240`:
+- held keys are already keyed by the physical key (e.code), so a 'w' released as 'W' lets go;
+- every held key is dropped on blur and hidden (`letGo`, `onVis`), for the 2026-09-29 runaway camera.
+So the known cause is fixed, and **another path loses a key-up.** Inferences to test, not findings:
+- a key-up that another listener swallows first;
+  - A2's new arrow-key step on a held handle stops arrow keys in the capture phase (handles.js);
+  - the in-page ask dialog or a focused field;
+- a key-up that lands while the right-button look holds pointer capture, or while the custom title bar's
+  `startDragging` has the OS moving the window, with no blur;
+- the order Shift-down, W-down, right-down, Shift-up, W-up, right-up, or any order through `keyAction`, adding a held entry
+  under one id and deleting under another (heldKey against the Ctrl or Space special cases);
+- the right button's own release (`onRelease`) clearing `buttons` but not `drag` in some order.
+**To C (free since D331):**
+- Write a fuzz harness on the real preview mount (fake window and document, as the camera tests do): random interleavings
+  of keydown and keyup for WASD, QE, Space, Ctrl and Shift, right-button down and up, pointer capture, blur, focus,
+  visibilitychange, and the title bar's drag.
+- After every sequence where every key has been released, `held` must be empty and the camera still.
+- Find the sequences that leave it moving. That is the red test.
+- Fix each found path at its cause.
+- **Plus a safety net**, whatever is found: a held movement key the camera hasn't seen re-confirmed (by an OS key-repeat
+  or any keydown) for a short while, while no keydown events arrive at all, is let go. C sets the timing so a real held key
+  is never dropped, since key-repeat only fires for the last key pressed. If that can't be made safe, C says so and drops
+  it.
+- Headless only, tests red first, and the keeper's hands are the real check.
