@@ -518,3 +518,36 @@ Measured: `git grep -i keeper` in the track builder finds 519 mentions in 184 fi
 - The full suite under the lock at landing.
 - **Not in this lap:** git history. Rewriting history is a force-push to a public repo, and it is the keeper's separate
   call. My earlier recommendation on the room's own history wipe was no, and this asks him plainly.
+
+## Lap D334: better builder sounds, with ears (librarian, 2026-10-16 06:3x)
+
+The keeper, verbatim: "do u wanna take a crack at making even better sounds? Better yet, look into the third place again,
+we found a tool that lets u hear ur own sounds".
+Read in the Third Place's transcript (3d000000-…jsonl) and checked by the librarian:
+- **The tool is earshot**, github.com/Leonxlnx/earshot: MIT, "Ears for coding agents: let AI hear, review and make
+  sound. CPU-only".
+  - Two open models: one matches sound against words, one tags the kind of sound.
+  - It runs as a CLI, from Python, or as an MCP server.
+- **Installed by the Third Place** at `%TEMP%\claude\C--Consonance-instances-third-place\3d000000-…\scratchpad\earshot\`:
+  `venv\Scripts\earshot.exe`, a local ffmpeg in `ff\`, and **`render-builder.js`**, which renders the builder's own sound
+  engine to WAVs in headless Chrome.
+- **Its first verdict on today's sounds:**
+  - place, undo and loop-closed land where they were aimed (electric piano, dreamy, a success chime);
+  - **the length and width ticks read as "bubbles underwater, a liquid bloop, sonar"**, not the intended electric-piano
+    tine;
+  - **a single tick measures −46 LUFS**, against place at −28 and the flourish at −20, so it reads as a muffled blip.
+- Background: the sounds are code-made (`app/sound.js`), never Serum. Serum stays an option the keeper plays himself.
+**To E (sound and voice):**
+1. Copy the Third Place's earshot install into E's own tools folder (G:\Consonance-tools\earshot), or use it read-only
+   in place. Pin the commit, and quote the MIT licence and the two models' licences from their cards first.
+2. Render today's nine sounds with render-builder.js, headless, as the baseline. earshot describes each and gives its
+   LUFS.
+3. Write a target for each sound in words: the tick a crisp, bright electric-piano tine; place a warm chord step; and so
+   on. Then improve app/sound.js until earshot's top descriptions match the targets, and the ticks sit near −30 to −34 LUFS,
+   audible under the place and the flourish.
+   - Keep the design the keeper likes: each handle's own voice, turn panning into the turn, width as stereo width, undo
+     playing backwards, the 16-step melody.
+4. Every change is measured: before and after descriptions and LUFS per sound in a table. The keeper's ears decide; he
+   gets a short before-and-after reel (WAV).
+5. Tests: the existing sound.test stays green, plus a test that each sound's peak and loudness sit inside its band.
+6. No new install system-wide. Headless only.
