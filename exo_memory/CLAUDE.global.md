@@ -142,14 +142,14 @@ In the committee room (the Consonance / lighthouse repository), the room's brief
 
 - Asking the user: inside a lap the chair proceeds on the keeper's prior word instead of stopping to ask; outside a lap, and for any keeper-owned call (a delete, a licence, any other irreversible change), ask. Pushes and releases follow the standing permission below. See `BUILDING.md`.
   Why: a question mid-lap parks every seat behind it until one person answers, and the room is built to run while he is away.
-- When the full suite runs: a pane runs the tests that cover its change, under the heavy-run lock, before it hands back; the collator runs the full suite before it lands or reports success to the keeper. See `COMMITTEE.md` and `BUILDING.md`.
-  Why: concurrent full suites on one machine starve every seat, and the landing report is the success report that counts.
+- When the full suite runs: a pane runs the tests that cover its change, under the heavy-run lock, before it hands back; a landing pane the chair names runs the full suite before anything lands, and success reaches the keeper only in the librarian's all-clear. The chair routes and does not land. See `COMMITTEE.md` and `BUILDING.md`.
+  Why: concurrent full suites on one machine starve every seat; and the chair's context is for routing the panes, not for doing the landing (the keeper, 2026-10-17).
 - Committing and pushing: committing by named paths in your own worktree is standing-authorised by the keeper for every lap, and work that passes the work checks and the credential scan is pushed without asking each time. See `COMMITTEE.md` and `BUILDING.md`.
   Why: the keeper's standing permissions (the push one decided 2026-10-09); the work checks, not a per-push yes, are what make a push safe.
 
 ## Contradictions resolved
 
 - 3, asking the user (this file's "ask first" and "ask at branch points" against `BUILDING.md`'s proceed-on-the-keeper's-prior-word): both stand, scoped by "Inside the committee room" above.
-- 4, running the suite before reporting (this file's first testing rule against `BUILDING.md`'s collator runs the full suite): both stand, scoped; in the room "before reporting success" means before the landing report.
+- 4, running the suite before reporting (this file's first testing rule against `BUILDING.md`'s landing pane runs the full suite): both stand, scoped; in the room "before reporting success" means before the librarian's all-clear on the landing pane's hand-back.
 - 5, committing at all (Claude Code's tool text "commit or push only when the user asks" against the room's practice): answered by the keeper's standing authorisations: commit by named paths in your own worktree, and push what passes the work
   checks and the credential scan.
