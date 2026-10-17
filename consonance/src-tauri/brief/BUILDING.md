@@ -23,13 +23,10 @@ chair, do. It began from measurements taken on 2026-08-23; where a rule rests on
          │  `call_librarian`             6. hand-backs go straight to the Librarian, as a pointer
          ▼                                  to the file; the orchestrator is not in this hop
       Librarian ──────► Orchestrator     7. checked; silence is a valid answer; the orchestrator
-         │                 │                names a landing pane for what the librarian collated
-         │                 │                (the branches, the order), and composes nothing
-         │                 └──► back to 4   A landing is a pane's packet like any other: its
-         │                                  hand-back returns to the librarian, which verifies it and
-         │                                  gives you the all-clear. The ring (orch → panes → lib →
-         │                                  orch) repeats on its own. The user is the entry, not a
-         │                                  station it returns to.
+         │                 │                names a landing pane for what the librarian collated,
+         │                 │                and composes nothing; a landing hands back like any pane
+         │                 └──► back to 4   The ring (orch → panes → lib → orch) repeats on its
+         │                                  own. The user is the entry, not a station it returns to.
          ▼
         you                              8. only on direction, never on state: an off-ramp the loop
                                             takes when there is something to say, never a stop it
@@ -54,8 +51,8 @@ second orchestrator nobody needs.
   Panes follow `COMMITTEE.md` for writing the hand-back and ringing the librarian.
 - Landings go to a pane. Merging, conflict fixes, the full suite plus TAP, installs, the credential scan, pushes and
   releases are a landing pane's work. You name the pane, the branches and the order; the landing pane hands back to the
-  librarian with its suite totals, the hashes and the pushed sha; the librarian verifies them and gives the keeper the
-  all-clear. Your context goes to routing: which pane, what depends on what, who is idle.
+  librarian with its suite totals, the hashes and the pushed sha; the librarian verifies them and
+  gives the keeper the all-clear. Your context goes to routing: which pane, what depends on what, who is idle.
   Why: the keeper, 2026-10-17: *"isnt the orchs job simply to ORCHESTRATE the plan you give them to the panes to work it
   through????????? The sole context bulk of the orch should be spent thinking and reasoning about the panes themselves and how
   the work relates to where they should go."* Standing from the first landing after the 0.4.0 release
@@ -110,8 +107,8 @@ that made the finding worth having. **Route the object, never a description of i
 **The Librarian.** Carries the corpus and does the planning and context work — *not* the building. The
 plan is its deliverable; the artifact is not. It may run an instrument to check a claim before
 planning against it: that costs a subprocess and returns a number, and it never costs the window.
-It reads a landing pane's hand-back (the suite totals, the hashes, the pushed sha) and gives the keeper
-the all-clear.
+It reads a landing pane's hand-back (the suite totals, the hashes, the pushed sha) and
+gives the keeper the all-clear.
 
 **The panes.** Build. Each wakes holding the room — BOOT and the full deck of cards, ~138KB — so a
 citation handed to a pane lands somewhere that already has the tools to judge it. They own disjoint,
@@ -462,9 +459,8 @@ checks it passed (no instrument records pushes; the check is the keeper noticing
 - 4. Running the suite before reporting (the global "run the tests before reporting success" vs "the full suites are the
   collator's" and "a pane does not hold its turn open on the suite"). Both hold, scoped: a pane runs the tests that cover its
   change, under the lock, before it hands back (`COMMITTEE.md`); the landing pane runs the full suite plus TAP before anything
-  lands; success reaches the keeper only in the librarian's all-clear on that pane's hand-back. (Amended 2026-10-17: it read
-  "the collator runs the full suite … you report success … in the landing report", which the keeper's "landings go to a pane"
-  superseded, `exo_memory/loop/plan_t180_handoff_2026-10-15.md:2040-2050`.)
+  lands; success reaches the keeper only in the librarian's all-clear on that pane's hand-back (amended 2026-10-17,
+  `exo_memory/loop/plan_t180_handoff_2026-10-15.md:2040-2050`).
 - 5. Committing at all (the tool text "commit or push only when the user asks" vs the room's practice). Answered by the
   keeper's standing authorisation in `COMMITTEE.md`: committing by named paths in your own worktree is authorised for every lap;
   pushing follows the keeper's standing permission of 2026-10-09 (what passes the work checks and the credential scan is pushed

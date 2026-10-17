@@ -44,13 +44,10 @@ librarian (two doors, 2026-09-02, `0714963`, `c177984`), and once a lap is open 
          │  `call_librarian`             6. hand-backs go straight to the Librarian, as a pointer
          ▼                                  to the file; the orchestrator is not in this hop
       Librarian ──────► Orchestrator     7. checked; silence is a valid answer; the orchestrator
-         │                 │                names a landing pane for what the librarian collated
-         │                 │                (the branches, the order), and composes nothing
-         │                 └──► back to 4   A landing is a pane's packet like any other: its
-         │                                  hand-back returns to the librarian, which verifies it and
-         │                                  gives you the all-clear. The ring (orch → panes → lib →
-         │                                  orch) repeats on its own. The user is the entry, not a
-         │                                  station it returns to.
+         │                 │                names a landing pane for what the librarian collated,
+         │                 │                and composes nothing; a landing hands back like any pane
+         │                 └──► back to 4   The ring (orch → panes → lib → orch) repeats on its
+         │                                  own. The user is the entry, not a station it returns to.
          ▼
         you                              8. only on direction, never on state: an off-ramp the loop
                                             takes when there is something to say, never a stop it
@@ -100,12 +97,8 @@ librarian (two doors, 2026-09-02, `0714963`, `c177984`), and once a lap is open 
   attribution surface that works (cycle 8 F2, `muscle_map.md`).
 - The keeper's standing authorisation: in this room, committing by named paths in your own worktree is authorised on
   every lap. Pushing is the landing pane's: work that passes the work checks and the credential scan is pushed without
-  asking each time (`BUILDING.md`, "Pushing and publishing"). A pane the chair names as the landing pane merges, runs the
-  full suite plus TAP, installs, scans and pushes, and hands back to the librarian with the suite totals, the hashes and
-  the pushed sha (`BUILDING.md`, "Landings go to a pane"); no other pane pushes.
+  asking each time (`BUILDING.md`, "Landings go to a pane").
   Why: the keeper's standing permissions; the push one is decision 2 of 2026-10-09 (`exo_memory/loop/plan_lighten_the_load_2026-10-09.md`, "The keeper's decisions on B's drafts", decision 2).
-  Landings and pushes moved from the chair to a landing pane at his word of 2026-10-17, general and not T-180 only
-  (`exo_memory/loop/plan_t180_handoff_2026-10-15.md:2040-2065`).
 - Refer to a credential by its name or length, never its value, in a hand-back, a commit, a board post or a reply.
   Why: the source repository is public (`BUILDING.md`, "Dev and consumer: the port rule") and `gh` is authenticated machine-wide, so a quoted
   key is a published key.
@@ -214,14 +207,12 @@ because it reads like corroboration.
 
 1. Who commits (the old `COMMITTEE.md:113` "Nothing committed … the seat holding the shared checkout commits" and
    `:210` "Do not commit; the chair commits with attribution", against the amendments at `:116-163` and `:240-243`).
-   The 2026-08-26 amendment wins: you commit by named paths in your own worktree, and a landing pane the chair names lands
-   on main (2026-10-17: it read "the chair lands on main"). Why: it
+   The 2026-08-26 amendment wins: you commit by named paths in your own worktree, and a landing pane lands on main. Why: it
    is the practice every lap since has used, and a seat should not read a rule and its repeal in one file.
 4. When tests run (the global instructions' "run the tests that cover the change before reporting success" against
    `BUILDING.md:178-189`, "the whole suite is the collator's"). Both stand, scoped: you run the tests that cover your
-   change, under the lock, before you hand back; the landing pane runs the full suite plus TAP before it lands, and success
-   reaches the keeper in the librarian's all-clear on its hand-back (2026-10-17: it read "the collator runs the full suite
-   before it lands or reports success to the keeper"). The chair half lives in `BUILDING.md`.
+   change, under the lock, before you hand back; the landing pane runs the full suite before it lands; the librarian reports success to
+   the keeper. The chair half lives in `BUILDING.md`.
 5. Committing at all (Claude Code's tool text, "commit or push only when the user asks", against the room). The
    keeper's standing authorisation, stated above, is the answer: committing by named paths in your own worktree is
    authorised on every lap; pushing follows his standing permission (the landing pane pushes what passes the work checks

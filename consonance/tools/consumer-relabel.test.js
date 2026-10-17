@@ -64,9 +64,11 @@ test('provenance stays byte for byte: the keeper\'s quoted rules and decisions a
 test('the role uses read "the person you\'re with" afterwards, and none of the old role wording survives', () => {
   const b = R.relabel('consonance/src-tauri/brief/BUILDING.md', read('consonance/src-tauri/brief/BUILDING.md')).text;
   // D277 repair: re-pinned on B's rewrite; the per-push sentences are gone from dev with the per-push rule (the standing permission replaced it)
-  for (const gone of ["the keeper's typing included", 'report success to the keeper', 'when the keeper switches the', "keeper's prior word", 'keeper-owned call',
+  // AMENDED D370 (pane C): D366 moved landings to a pane, so "report success … in the landing report" left dev; its role use is now "success
+  // reaches … only in the librarian's all-clear", and "gives … the all-clear" is a new one (consumer-relabel.js BUILDING)
+  for (const gone of ["the keeper's typing included", 'report success to the keeper', 'success reaches the keeper', 'gives the keeper the all-clear', 'when the keeper switches the', "keeper's prior word", 'keeper-owned call',
     'he is away.', 'a credential only the keeper holds', 'the check is the keeper noticing', "same turn's message to the keeper does not describe"]) assert.ok(!b.includes(gone), `role wording survived: ${gone}`);
-  for (const now of ["the typing of the person you're with included", "report success to the person you're with only in the landing report",
+  for (const now of ["the typing of the person you're with included", "success reaches the person you're with only in the librarian's all-clear", "gives the person you're with the all-clear",
     "when the person you're with switches the", "prior word of the person you're with on disk", "a credential only the person you're with holds",
     "the check is the person you're with noticing", "the hours\n  the person you're with is away."]) assert.ok(b.includes(now), `missing: ${now}`);
   const seed = R.relabel('exo_memory/SEED.md', read('consonance/src-tauri/brief/SEED.md'), { fork: FORK }).text;

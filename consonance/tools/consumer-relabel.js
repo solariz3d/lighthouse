@@ -53,7 +53,10 @@ const P = "the person you're with";
 const BUILDING = [
   ["the keeper's typing included.", `the typing of ${P} included.`, 1],
   ["the same turn's message to the keeper does not describe", `the same turn's message to ${P} does not describe`, 1],
-  ['report success to the keeper only in the landing report', `report success to ${P} only in the landing report`, 2],
+  // D370 (pane C): D366 moved landings to a pane (BUILDING.md "Landings go to a pane"); success now reaches whoever keeps the room in the
+  // librarian's all-clear. Both are ROLE uses, as the line they replace was; the ruling's quote and its date are provenance (see the count below)
+  ["success reaches the keeper only in the librarian's all-clear", `success reaches ${P} only in the librarian's all-clear`, 2],
+  ['gives the keeper the all-clear', `gives ${P} the all-clear`, 2],
   ['when the keeper switches the\n   gates', `when ${P} switches the\n   gates`, 2],
   ["find the\n  keeper's prior word on disk", `find the\n  prior word of ${P} on disk`, 1],
   ["you find the keeper's prior word and proceed", `you find the prior word of ${P} and proceed`, 1],
@@ -218,7 +221,7 @@ const SOURCE_OF = Object.freeze({ 'exo_memory/BOOT.md': 'consonance/src-tauri/br
 // (deidentify turns the handle into "the keeper", so these run one or two above lap 2's dev-source pins). A changed number means a
 // keeper line was added or removed in dev: classify it.
 const EXPECTED_KEEPER_LINES = Object.freeze({
-  'consonance/src-tauri/brief/BUILDING.md': 20,   // D277 repair: 42 -> 20 on B's rewrite; each of the 20 is provenance (listed in p-d277repair-E_2026-10-10.md)
+  'consonance/src-tauri/brief/BUILDING.md': 22,   // D277 repair: 42 -> 20 on B's rewrite; each of the 20 is provenance (listed in p-d277repair-E_2026-10-10.md). D370: +2 provenance, "Why: the keeper, 2026-10-17: …" (his words) and "at the keeper's word of 2026-10-17" (D366's "Landings go to a pane")
   'consonance/src-tauri/brief/COMMITTEE.md': 5,
   'consonance/src-tauri/brief/LIBRARIAN.md': 6,   // D277 repair: 7 -> 6 on B's rewrite; likewise
   'consonance/src-tauri/brief/THIRD_PLACE.md': 1,
