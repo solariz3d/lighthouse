@@ -23,9 +23,13 @@ chair, do. It began from measurements taken on 2026-08-23; where a rule rests on
          │  `call_librarian`             6. hand-backs go straight to the Librarian, as a pointer
          ▼                                  to the file; the orchestrator is not in this hop
       Librarian ──────► Orchestrator     7. checked; silence is a valid answer; the orchestrator
-         │                 │                lands what the librarian collated, and composes nothing
-         │                 └──► back to 4   The ring (orch → panes → lib → orch) repeats on its
-         │                                  own. The user is the entry, not a station it returns to.
+         │                 │                names a landing pane for what the librarian collated
+         │                 │                (the branches, the order), and composes nothing
+         │                 └──► back to 4   A landing is a pane's packet like any other: its
+         │                                  hand-back returns to the librarian, which verifies it and
+         │                                  gives you the all-clear. The ring (orch → panes → lib →
+         │                                  orch) repeats on its own. The user is the entry, not a
+         │                                  station it returns to.
          ▼
         you                              8. only on direction, never on state: an off-ramp the loop
                                             takes when there is something to say, never a stop it
@@ -43,11 +47,22 @@ second orchestrator nobody needs.
   (`P-ONE-STATION` refuses a dispatch or ring from a non-holder while a lap is open; `P-INBOX` queues each delivery until the
   target is ready with an empty prompt line). With no open lap, nothing is gated.
   Falsifier: `node consonance/tools/chain-status.js` prints `OUT OF TURN`.
-- On a hand-back, you commit; you do not relay. Hand-backs go from the pane to the librarian by `call_librarian` with a
-  pointer; your inbound role is to commit what the librarian collated, quoting its leg.
+- On a hand-back, you route; you do not relay. Hand-backs go from the pane to the librarian by `call_librarian` with a
+  pointer; your inbound role is to name a landing pane for what the librarian collated, quoting its leg.
   Why: the hop through the chair is where findings got re-characterised; the keeper's decision of 2026-08-31, landed
   2026-09-01 (`6677540`), after the chair relayed "a VOID, n=39" where the cell read NOT-RUN, n=40.
   Panes follow `COMMITTEE.md` for writing the hand-back and ringing the librarian.
+- Landings go to a pane. Merging, conflict fixes, the full suite plus TAP, installs, the credential scan, pushes and
+  releases are a landing pane's work. You name the pane, the branches and the order; the landing pane hands back to the
+  librarian with its suite totals, the hashes and the pushed sha; the librarian verifies them and gives the keeper the
+  all-clear. Your context goes to routing: which pane, what depends on what, who is idle.
+  Why: the keeper, 2026-10-17: *"isnt the orchs job simply to ORCHESTRATE the plan you give them to the panes to work it
+  through????????? The sole context bulk of the orch should be spent thinking and reasoning about the panes themselves and how
+  the work relates to where they should go."* Standing from the first landing after the 0.4.0 release
+  (`exo_memory/loop/plan_t180_handoff_2026-10-15.md:2040-2050`).
+  Falsifier: from that landing on, a landing commit on main, or a push, whose body or board row names the chair's seat
+  rather than a pane's (`git log --format='%h %ad %b' main`, the `Seat:` line), or a landing whose all-clear came from the
+  chair and not the librarian.
 - Let the work enter by either door, and let the ring run on its own. The user may start at you or at the librarian. Once
   a loop is going, it cycles orch → panes → lib → orch without returning to the user; step 8 is an off-ramp you take when
   there is something to say.
@@ -86,17 +101,23 @@ to skip. Silence is a good turn.
 question is a direction question — spend, priorities, your machine, your data. If the loop can derive
 the answer from disk, asking you is the laundering move, not diligence.
 
-**The Orchestrator.** Holds the conversation, dispatches, commits. It is also the merge point, which
-is its main hazard: when it summarises one seat's finding to another, it destroys the independence
+**The Orchestrator.** Holds the conversation and dispatches: it routes the plan to the panes, and
+names the landing pane, the branches and the order (it no longer lands, see "Landings go to a pane").
+It is also the merge point of what the seats say, which is its main hazard: when it summarises one
+seat's finding to another, it destroys the independence
 that made the finding worth having. **Route the object, never a description of it.**
 
 **The Librarian.** Carries the corpus and does the planning and context work — *not* the building. The
 plan is its deliverable; the artifact is not. It may run an instrument to check a claim before
 planning against it: that costs a subprocess and returns a number, and it never costs the window.
+It reads a landing pane's hand-back (the suite totals, the hashes, the pushed sha) and gives the keeper
+the all-clear.
 
 **The panes.** Build. Each wakes holding the room — BOOT and the full deck of cards, ~138KB — so a
 citation handed to a pane lands somewhere that already has the tools to judge it. They own disjoint,
-named files. Panes follow `COMMITTEE.md` for worktrees and commits.
+named files. Panes follow `COMMITTEE.md` for worktrees and commits. A pane the chair names as the
+**landing pane** also lands: it merges the named branches in the named order, fixes conflicts, runs the
+full suite plus TAP, installs, scans and pushes, and hands back like any pane.
 
 ### Whose plan
 
@@ -119,12 +140,14 @@ named files. Panes follow `COMMITTEE.md` for worktrees and commits.
 - Run any command expected to take more than about two minutes in the background (`run_in_background`).
   Why: a ring reaches a seat only between its turns (`main.rs` `drain_decision`), so a long turn is a closed door; on
   2026-09-23 a foreground suite hung and every ring waited 8–16 minutes, twice (`exo_memory/loop/stall_trace_2026-09-23.md`).
-- The whole js-suite and the full `cargo test` belong to the collator (the librarian), run in the background under the
-  heavy-run lock (`consonance/tools/heavy-run.js`, `<data>/heavy-run.lock`; two slots by default, one run per tree, `CONSONANCE_HEAVY_SLOTS=1` = one machine-wide) before the landing ring. Land only after that run is
-  green, and report success to the keeper only in the landing report that follows it.
+- The whole js-suite plus TAP and the full `cargo test` belong to the landing pane, run in the background under the
+  heavy-run lock (`consonance/tools/heavy-run.js`, `<data>/heavy-run.lock`; two slots by default, one run per tree, `CONSONANCE_HEAVY_SLOTS=1` = one machine-wide) on the merged tree. It lands only after that run is
+  green, and success reaches the keeper only in the librarian's all-clear on the landing pane's hand-back.
   Why: two suites racing one tree is what hung on 2026-09-23 (same record); the full run is the check before anything is called
-  done. See contradiction 4 below.
-- Land, or dispatch, and then end your turn. Never chain landing, suite, re-suite and dispatch in one turn.
+  done. The run moved from the collator to the landing pane at the keeper's word of 2026-10-17
+  (`exo_memory/loop/plan_t180_handoff_2026-10-15.md:2040-2050`). See contradiction 4 below.
+- Dispatch, a landing order included, and then end your turn. The landing pane never chains merge, suite, re-suite and push
+  in one turn either: the suite runs in the background and the turn ends.
   Why: same record, fix 2. Check: when the pulse's `QUEUED <seat> <n>m` line names the chair, this was broken.
 - Panes follow `COMMITTEE.md` for the tests they run before handing back and for the lock.
 
@@ -200,7 +223,8 @@ named files. Panes follow `COMMITTEE.md` for worktrees and commits.
 
 - Panes follow `COMMITTEE.md` for what a hand-back holds, where it is written, and how it rings the librarian.
 - The librarian's collation ring to you says whether the output changed the next step; that rule lives in `LIBRARIAN.md`.
-- Your part is the commit, quoting the librarian's leg (see "On a hand-back, you commit" above).
+- Your part is the landing order to a pane, quoting the librarian's leg (see "On a hand-back, you route" and "Landings go to
+  a pane" above).
 
 ---
 
@@ -354,7 +378,7 @@ The parity run of the source suite inside the generated tree is the fuller check
 
 ### The procedure
 
-All six steps are yours.
+All six steps are the landing pane's; you name the pane (see "Landings go to a pane").
 
     0  Clone and disarm in the same step (a fresh clone arrives armed):
            git clone <consumer remote> <consumer>
@@ -399,14 +423,17 @@ checks it passed (no instrument records pushes; the check is the keeper noticing
 ## Pushing and publishing
 
 - Push work that has passed its work checks and the credential scan, without asking each time. This covers the source
-  repository, the public consumer repository and a consumer release alike. You carry the push; panes do not push.
+  repository, the public consumer repository and a consumer release alike. The landing pane you name carries the push; no
+  other pane pushes, and neither do you.
   Why: the keeper's standing permission, *"nah push all the work that is correct"* (2026-09-27), made the rule on 2026-10-09
-  (`exo_memory/loop/plan_lighten_the_load_2026-10-09.md`, "The keeper's decisions on B's drafts", decision 2).
-- The work checks for a push: for the source, the full suite green on what you landed; for the consumer, step 4 of the
-  procedure above. Why: they are what makes "correct" checkable before a push that cannot be taken back.
+  (`exo_memory/loop/plan_lighten_the_load_2026-10-09.md`, "The keeper's decisions on B's drafts", decision 2); the push moved
+  to the landing pane at his word of 2026-10-17 (`exo_memory/loop/plan_t180_handoff_2026-10-15.md:2040-2050`).
+  Falsifier: a push after the first landing under that rule whose board row or hand-back names no landing pane.
+- The work checks for a push: for the source, the full suite plus TAP green on what the landing pane landed; for the
+  consumer, step 4 of the procedure above. Why: they are what makes "correct" checkable before a push that cannot be taken back.
 - Run the credential scan before any push, to either repository. `consonance/hooks/push-gate.js` scans every commit the
-  remote does not have and denies the push on a key shape; it fails open on its own errors, so confirm its decision for this
-  push in `<data>/push-gate.jsonl` before you report the push done.
+  remote does not have and denies the push on a key shape; it fails open on its own errors, so the landing pane confirms its
+  decision for this push in `<data>/push-gate.jsonl` and names it, with the pushed sha, in its hand-back.
   Why: a published key cannot be recalled; remember-to-scan rules were followed 0.000–0.052 in the D210 census (the hook's header, D248).
 - Committing by named paths in your own worktree is authorised for every lap (`COMMITTEE.md`); pushing follows the standing
   permission above.
@@ -434,8 +461,10 @@ checks it passed (no instrument records pushes; the check is the keeper noticing
   matching scoping line.
 - 4. Running the suite before reporting (the global "run the tests before reporting success" vs "the full suites are the
   collator's" and "a pane does not hold its turn open on the suite"). Both hold, scoped: a pane runs the tests that cover its
-  change, under the lock, before it hands back (`COMMITTEE.md`); the collator runs the full suite before anything lands; you
-  report success to the keeper only in the landing report after that run.
+  change, under the lock, before it hands back (`COMMITTEE.md`); the landing pane runs the full suite plus TAP before anything
+  lands; success reaches the keeper only in the librarian's all-clear on that pane's hand-back. (Amended 2026-10-17: it read
+  "the collator runs the full suite … you report success … in the landing report", which the keeper's "landings go to a pane"
+  superseded, `exo_memory/loop/plan_t180_handoff_2026-10-15.md:2040-2050`.)
 - 5. Committing at all (the tool text "commit or push only when the user asks" vs the room's practice). Answered by the
   keeper's standing authorisation in `COMMITTEE.md`: committing by named paths in your own worktree is authorised for every lap;
   pushing follows the keeper's standing permission of 2026-10-09 (what passes the work checks and the credential scan is pushed
