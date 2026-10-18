@@ -149,7 +149,11 @@ const scratch = require('./scratch.js');
 // else. A test runner that is itself untested is the oldest version of the vacuity problem here.
 const ROOT = process.env.JS_SUITE_ROOT || path.resolve(__dirname, '..', '..');
 const SKIP_DIRS = new Set(['node_modules', '.git', 'target', 'gen', '__pycache__', 'attic']);
-const TIMEOUT_MS = Number(process.env.JS_SUITE_TIMEOUT_MS || 120000);
+// D390 (2026-10-18): the default was 120000 until gen-consumer.test.js outgrew it. Alone on an idle machine it took 123,200 ms (at dfe05087)
+// and 124,819 ms (at 13b7d3b4), passing 107/107, so every full run reported it crashed. Most of that is ~45 tests each generating the real
+// tree (~1.9 s a build). 300000 gives it 2.4x room. A file that hangs is still killed and reported crashed, now after 5 minutes rather than 2;
+// splitting gen-consumer.test.js instead would need a new EXCLUDE entry in gen-consumer.js, since a new test file under tools/ ships.
+const TIMEOUT_MS = Number(process.env.JS_SUITE_TIMEOUT_MS || 300000);
 
 // A directory named *_evidence holds a hand-back's COPIES of old scratchpad files (D287 part 3). They are
 // records of what was run then, not tests of this tree, and some fail here by design. Skip the directory,
