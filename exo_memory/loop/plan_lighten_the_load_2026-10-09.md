@@ -104,3 +104,8 @@ The census (`loop/instruction_load_census_2026-10-09.md` §2) measured two loads
   + windowed notes) → ~102 KB; pane P1+P2+P3 (pointers for the topic-map and live-edge text, plus a NEW cap for optional briefs) → ~92.9 KB.
   **Next (librarian ruling):** C implements L1+L2 and P1–P3 in main.rs, BEHIND `gates_mode: light` (inert while the key is absent, as E's switch
   is), committed before the 10-10 timer, so it lands and flips with the rest. Red first, cargo test green.
+
+## The keeper on E's OPEN push-frame call (2026-10-10 11:19)
+"no no i meant push to the lighthouse repo, once it is all established, then we go to translating the work to the consumer version".
+- The standing permission to push is for OUR lighthouse repo. It is not a rule for anyone's copy.
+- E's OPEN call (`handback/p-d277repair-E_2026-10-10.md:131–138`) is deferred to the consumer translation lap, after H3. When that lap is planned, the translation keeps the consumer's push gate. The standing-permission lines read as the original room's, which is E's option (a), in line with the keeper's intent.
