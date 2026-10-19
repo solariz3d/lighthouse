@@ -79,11 +79,26 @@ librarian (two doors, 2026-09-02, `0714963`, `c177984`), and once a lap is open 
 - Amend an existing test only when its rule changed, by name, with a comment saying why, and say so in the hand-back.
   Why: a weakened test is a check silently removed; the worked case is `join.test.js:83`, ruled wrong and replaced by a
   stronger check (`exo_memory/handback/p-d170-read-B_2026-09-27.md`).
-- Run the tests that cover your change, under the heavy-run lock, before you hand back. `consonance/tools/js-suite.js`
-  and the mutant harnesses take the lock themselves; wrap any other node or cargo test run with
-  `require('./consonance/tools/heavy-run.js').hold({ cmd })`. The landing pane runs the full suite plus TAP.
+- Run what your packet's tier asks before you hand back. The tier is one word in the packet; you may raise it when the
+  change turns out to touch more, never lower it; with no tier named, it is "check it".
+  - **just do it** (a mistake would be visible at once and cheap to undo: layout, wording, colours, styling, docs, a
+    one-off script): make it well, check it loads or compiles, hand back. No new test, no test run.
+  - **check it** (behaviour a person would notice, a mistake shows itself and does no lasting harm: a button's action,
+    keys, a menu command): run the existing tests for the touched files. A new test only for a reported bug,
+    or behaviour nobody can see by looking. A mutation harness that names the file is NOT run; if you moved an anchored
+    line, check its anchor still appears exactly once.
+  - **prove it** (invisible or costly: geometry and core maths, export, data formats and stored data, anything that
+    deletes, pushes, installs or overwrites, credentials, the room's delivery and gates, concurrency): test first, the
+    mutation harnesses that name the file whole, as before.
+  - A run of 3 test files or fewer needs no heavy-run lock; your worktree is your own. Larger runs, `js-suite.js` and
+    the mutant harnesses take the lock (they do it themselves; wrap any other with
+    `require('./consonance/tools/heavy-run.js').hold({ cmd })`). The landing pane runs the full suite plus TAP at a release.
   Why: concurrent suites on one tree hung and starved every seat's rings for 8–16 minutes
-  (`exo_memory/loop/stall_trace_2026-09-23.md`; the lock is L098).
+  (`exo_memory/loop/stall_trace_2026-09-23.md`; the lock is L098); and testing every visible change spent hours a
+  person's own eyes spend in seconds. Tiers were asked for on 2026-09-29, three times on 2026-10-06, and on 2026-10-19
+  ("you can do things good right away without having to test it every single time, however there are things that still
+  need to be tested"); the plan is `exo_memory/loop/plan_d418_fast_lane_2026-10-19.md`. Before each release a reviewer
+  reads every "just do it" and "check it" change since the last review, instead of each one being re-tested.
 - Run anything expected to take more than about two minutes in the background, and hand back what you verified rather
   than holding your turn open on a suite.
   Why: a ring reaches a seat only between its turns, so a long turn is a closed door (`main.rs` `drain_decision`;
@@ -210,8 +225,8 @@ because it reads like corroboration.
    The 2026-08-26 amendment wins: you commit by named paths in your own worktree, and a landing pane lands on main. Why: it
    is the practice every lap since has used, and a seat should not read a rule and its repeal in one file.
 4. When tests run (the global instructions' "run the tests that cover the change before reporting success" against
-   `BUILDING.md:178-189`, "the whole suite is the collator's"). Both stand, scoped: you run the tests that cover your
-   change, under the lock, before you hand back; the landing pane runs the full suite before it lands; the librarian reports success to
+   `BUILDING.md:178-189`, "the whole suite is the collator's"). Both stand, scoped: you run what your change's tier asks
+   (see "Run what your packet's tier asks" above) before you hand back; the landing pane runs the full suite before it lands; the librarian reports success to
    the keeper. The chair half lives in `BUILDING.md`.
 5. Committing at all (Claude Code's tool text, "commit or push only when the user asks", against the room). The
    keeper's standing authorisation, stated above, is the answer: committing by named paths in your own worktree is

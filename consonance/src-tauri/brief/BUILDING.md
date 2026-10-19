@@ -457,8 +457,9 @@ checks it passed (no instrument records pushes; the check is the keeper noticing
   permission. The global file carries the
   matching scoping line.
 - 4. Running the suite before reporting (the global "run the tests before reporting success" vs "the full suites are the
-  collator's" and "a pane does not hold its turn open on the suite"). Both hold, scoped: a pane runs the tests that cover its
-  change, under the lock, before it hands back (`COMMITTEE.md`); the landing pane runs the full suite plus TAP before anything
+  collator's" and "a pane does not hold its turn open on the suite"). Both hold, scoped: a pane runs what its change's tier
+  asks (just do it / check it / prove it, named by you in the packet; `COMMITTEE.md`, "Run what your packet's tier asks")
+  before it hands back; the landing pane runs the full suite plus TAP before anything
   lands; success reaches the keeper only in the librarian's all-clear on that pane's hand-back (amended 2026-10-17,
   `exo_memory/loop/plan_t180_handoff_2026-10-15.md:2040-2050`).
 - 5. Committing at all (the tool text "commit or push only when the user asks" vs the room's practice). Answered by the
