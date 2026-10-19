@@ -1,0 +1,48 @@
+old      new       subject
+ba1918d0 DROPPED  Librarian notes: a private side project waves L and O (librarian seat)
+223f4c44 DROPPED  Librarian notes: a private side project D320/D321 delivered (librarian seat)
+d4e751c6 DROPPED  Librarian notes: a private side project wave P planned, D322 (librarian seat)
+a49e520e DROPPED  Librarian notes: a private side project D322 delivered (librarian seat)
+c896d200 DROPPED  Librarian notes: a private side project D323 planned (librarian seat)
+5ef16488 DROPPED  Librarian notes: a private side project D323 delivered (librarian seat)
+b9efca2d DROPPED  Librarian notes: a private side project D324 planned (librarian seat)
+84e28c5d DROPPED  Librarian notes: a private side project pivot to the p5.brush kit, D327 (librarian seat)
+9d3861f2 DROPPED  Librarian notes: a private side project paused (librarian seat)
+cdc745d9 41a6c6c9 Librarian notes: audit of the Third Place's T-180 work (librarian seat)
+4bc4f50b 5ce5f1ab T-180 back to the panes: D330 plan from the Third Place's catch-up (finish roll first, tes
+ae29a76f ff575583 D330 addendum: ELYSIUM's stacked reds to B (a geometry check, measured against the T-180's
+3e9efe3d 6db3385f D330 queued: every handle scrub and scroll lands on exact 0.01 steps (perPx is 8x the step
+97214f13 65a81a9a D330 queued: long length drags interrupted (the warp-back gives up after one late frame, h
+3afc650f a262cda7 D330: A's finish-roll fix read (ELYSIUM 3 red to 0, suite 2810/0 fail); BANK_RATE skip cau
+8aedecbe dda3b78c D330: B's read (BANK_RATE exact-set skip, water test unchanged with evidence, ELYSIUM's st
+d2a7c0ef 144914a3 D330: E's close-worker partial read; the word to re-run its stopped runs one at a time; li
+bc65aa09 14b47f56 D330: C's packed mesh rows read (page 784 to 354 MB, mesh byte-identical); land, then one 
+caa300d9 48a820e6 D330: A's handle bugs read (Shift = exact 0.01 per px, wheel and arrows one step; long-dra
+adc98821 6e1c62f7 D330: ELYSIUM closes with no red of any kind on the landed branch (B's re-check); libraria
+b9e96d2d ca43332f D330: E's close worker complete (freeze 5.70 s to 0.46 s); all wave-1 work in; land, one c
+4cf56d41 e369d660 D330: collation suite 2829 pass / 0 fail read; install ruled while the builder is closed; 
+583db431 8b4cb5f9 D331 planned: ELYSIUM's 22:08 save, Close failing (A) and the crooked banked 90 (C, frame 
+ac9be565 01cc5717 D331: C's measure read (my frame hypothesis refuted; the corner is 101.6 because a rate-ea
+4039b60f 765cc2f7 D331: the keeper's word ruled as B default (turn = exact map heading, ends straight) plus 
+750db0d4 f30efe02 D331: climb gets the same exact-angle and symmetric-ease rule as turn; librarian seat
+a26b7827 61ad1aa3 D331: C's corner build read (suite 2860/0 fail, old docs byte-identical); corner-mode hand
+45623584 97965535 D331: A's Close fix read (lap proof judges Finish's routes; newest save now lap proved); p
+1cac4488 1f82a91a D331: C's corner-mode handles read (degrees, exact 0.01 rules); tolerance corrected to 0.0
+a1e579a4 f0fd64c4 D331 complete: A's preview lap line and new-road default read; land A and C, one suite, in
+046399e3 e566a977 D331: collation suite 2868/0 fail read; install ruled while closed; librarian seat
+e6a2b185 0d62316b D331 installed (hash checked); D333 planned: remove every mention of the keeper from the t
+367c6413 fd10725a Lap D334 planned: better builder sounds with earshot as the ear (ticks read as bubbles at 
+7d81cbcd e7b5935b Lap D335 planned: placed-piece drag marks precise and fast without a key (speed-sensitive)
+5f9f7c68 0ca522fe Lap D336 planned: camera stuck moving (a lost key-up path beyond the known e.code and blur
+3da8f52e f1646657 Lap D337 planned, first: Close on a near-closed ELYSIUM (06:59 save) must be a near-zero c
+f4485ee1 641119b2 D335 read (scrub by speed, live axis, sculpt lands on value); Consonance raised to High pr
+567633d3 121688e0 D366: BUILDING.md, landings go to a pane, at the keeper's word
+baf850cc e8940896 D367: COMMITTEE.md, landings go to a pane, matching BUILDING.md
+0895238b fcf52ad3 CLAUDE.global.md: the keeper's global file now says a landing pane runs the full suite; th
+dfe05087 f8431f52 D370: the lighthouse suite green again after D366/D367
+ec054b92 d41c9000 D390: js-suite's per-file limit 120 s -> 300 s, so gen-consumer.test.js stops crashing eve
+fc9caec0 42485627 D413: file the panes' hand-backs and evidence that were sitting uncommitted
+2466b90d 02edef9e D413: commit pane E's map appends
+fec86ffe d5707346 D413: commit the librarian's loop plans (D411-D413, Ponytail, the T-180 README sections) a
+3ba2249a b5d0db92 D413: commit the Third Place seat's own notes, 2026-09-26 to 2026-10-16
+5756accf 68040336 D413: commit the librarian seat's notes for 2026-10-06 (desktop) and 2026-10-17
