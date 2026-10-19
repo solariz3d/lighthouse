@@ -15,7 +15,7 @@ happened, makes me think, if any seat or shell is working, and X is pressed, ask
 - The UI's Leave panel is `consonance/ui/leave.js` (listens on `leave`, `:132`), with `#leave` in `ui/index.html:27` and tests in
   `ui/leave.test.js`.
 - Cost of today's accident (checked): none lost on D316. A's whole-film stagecheck finished at 14:04
-  (`Downloads/fungi_samurai/out/stagecheck_final2.log`) and the render hadn't started.
+  (`Downloads/a private side project/out/stagecheck_final2.log`) and the render hadn't started.
 
 ## The rule
 - On X (CloseRequested on `main`): if **any seat's gate is not Ready** (Working, Contradicted, Stale, Unstamped: unknown counts
