@@ -90,7 +90,9 @@ librarian (two doors, 2026-09-02, `0714963`, `c177984`), and once a lap is open 
   - **prove it** (invisible or costly: geometry and core maths, export, data formats and stored data, anything that
     deletes, pushes, installs or overwrites, credentials, the room's delivery and gates, concurrency): test first, the
     mutation harnesses that name the file whole, as before.
-  - A run of 3 test files or fewer needs no heavy-run lock; your worktree is your own. Larger runs, `js-suite.js` and
+  - A run of 3 test files or fewer needs no heavy-run lock; your worktree is your own. EXCEPT while a lock's `cmd` names
+    a timing session: then run nothing at all (no test, no build, no browser) until it is gone, because any process
+    spoils its quiet windows (A's D407b session, 2026-10-19, rejected window after window on small lockless runs). Larger runs, `js-suite.js` and
     the mutant harnesses take the lock (they do it themselves; wrap any other with
     `require('./consonance/tools/heavy-run.js').hold({ cmd })`). The landing pane runs the full suite plus TAP at a release.
   Why: concurrent suites on one tree hung and starved every seat's rings for 8–16 minutes
