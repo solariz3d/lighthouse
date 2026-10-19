@@ -10011,17 +10011,19 @@ fn dyad_spot(app: AppHandle, panes: State<Panes>, names: State<PaneNames>, board
     let preview = format!("dyad-spot -> {} ({partner_lens}-forward, catch {catch})",
         &partner[..8.min(partner.len())]);
     let queued = gate_or_queue(&app, &partner, &msg, &preview);
-    if queued.is_none() {
-        inject_to_pane(&panes, &partner, &msg)?;
-    }
+    let wrote = if queued.is_none() {
+        Ok(inject_to_pane(&panes, &partner, &msg, &app.state::<PaneEmus>())?)
+    } else {
+        Err(String::new())
+    };
     let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
     board_push(&board.0, BoardEntry { pane: "dyad".to_string(), role: "committee".to_string(),
-        text: format!("chair spotted {} -> partner {} ({}-forward) asked to catch {}{}",
+        text: format!("chair spotted {} -> partner {} ({}-forward) asked to catch {}{}{}",
             &tid[..8.min(tid.len())], &partner[..8.min(partner.len())], partner_lens, catch,
-            if queued.is_some() { " [QUEUED — the partner was mid-turn]" } else { "" }), ts,
+            if queued.is_some() { " [QUEUED — the partner was mid-turn]" } else { "" }, submit_note(&wrote)), ts,
             ts_source: TsSource::Push });
     Ok(queued.unwrap_or_else(||
-        format!("spot delivered to partner ({partner_lens}-forward → catch {catch})")))
+        format!("spot delivered to partner ({partner_lens}-forward → catch {catch}){}", submit_note(&wrote))))
 }
 
 // Actuator plane (main.rs legitimately holds the writer; gate.rs never does): the only path that
@@ -11325,12 +11327,14 @@ fn drain_inboxes(app: &AppHandle) {
             // D309: a message that waited says when it was sent AND when it arrived (the send line of the three ring senders;
             // anything else queued is returned unchanged).
             let text = with_delivery_stamp(&text, chrono::Utc::now());
-            let ok = inject_to_pane(&app.state::<Panes>(), &pane, &text).is_ok();
+            let wrote = inject_to_pane(&app.state::<Panes>(), &pane, &text, &app.state::<PaneEmus>());
+            let ok = wrote.is_ok();
             chair_audit(app, format!(
-                "DELIVERED -> {} {}{}: {}",
+                "DELIVERED -> {} {}{}{}: {}",
                 short_id(&pane),
                 delivery_note_with(gate, forced, Some(&reads)),
                 if ok { "" } else { " [WRITE FAILED]" },
+                submit_note(&wrote),
                 label,
             ));
             /* THE FALLBACK MUST SAY IT FIRED. A forced delivery on an UNSTAMPED pane is the
@@ -11382,13 +11386,135 @@ fn drain_inboxes(app: &AppHandle) {
     }
 }
 
-fn inject_to_pane(panes: &State<Panes>, pane_id: &str, text: &str) -> Result<(), String> {
-    let mut map = panes.0.lock().unwrap();
-    let sess = map.get_mut(pane_id).ok_or_else(|| "pane not found".to_string())?;
+/// The one write into a pane: `deliver` over the pane's PTY writer and its live screen. Every caller
+/// gets the submit check, because there is one function (D415; the reason is `deliver_pull`'s).
+fn inject_to_pane(panes: &State<Panes>, pane_id: &str, text: &str, emus: &PaneEmus) -> Result<Submit, String> {
+    deliver(
+        &mut |f| {
+            let mut map = panes.0.lock().unwrap();
+            let sess = map.get_mut(pane_id).ok_or_else(|| "pane not found".to_string())?;
+            f(&mut *sess.writer)
+        },
+        &mut || live_screen(emus, pane_id).map(|(rendered, typed, _)| (rendered, typed)),
+        &mut |d| std::thread::sleep(d),
+        text,
+    )
+}
+
+// ---------------------------------------------------------------- THE SUBMIT CHECK (D415, 2026-10-19)
+//
+// A WRITTEN MESSAGE IS NOT A SUBMITTED ONE. `inject_to_pane` pasted, waited, pressed Enter once and
+// returned Ok, and nothing checked that the Enter was taken. Every ring's "delivered" came from the
+// render check, and text sitting unsent in the composer renders too. The keeper found the librarian's
+// 14:53 ring in the Main tab's input box 38 minutes later ("it didnt auto send"), the second that day
+// (`exo_memory/loop/plan_d415_delivery_submits_2026-10-19.md`). So after the Enter the composer is
+// READ: our text gone is a submit; our text still there gets the Enter again, never the paste; text
+// that is not ours is never touched.
+
+/// How long to wait before each reading of the composer after an Enter, in order. One reading per
+/// entry, and every reading but the last may be followed by one more lone Enter, so the retries are
+/// `len() - 1`.
+///
+/// THE NUMBERS. 200 ms first: a taken Enter clears the composer within a frame or two, and the first
+/// reading should not itself be a race. Then doubling from 300 ms, because the observed cause is a TUI
+/// still digesting a paste, and a busy TUI needs longer, not more often. Three retries and 2.3 s in
+/// all: two and a half times `submit_delay_ms`'s 900 ms ceiling, the wait that was not enough on
+/// 2026-08-25, and short enough that a stuck ring's whole wait plus its render check stays well inside
+/// the MCP caller's 15 s (this runs on the actuator thread; see `RECEIPT_WAIT_MS`).
+const SUBMIT_CHECK_GAPS_MS: [u64; 4] = [200, 300, 600, 1_200];
+
+/// The submit, as the composer showed it after the Enter(s).
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+enum Submit {
+    /// The composer read empty: the Enter was taken. `retries` lone Enters followed the first.
+    Submitted { retries: u32 },
+    /// Our text was still in the composer at the last reading, after every retry. It stays there:
+    /// nothing here clears or edits a composer.
+    NotSubmitted { retries: u32 },
+    /// The composer holds text that is not ours (the keeper's typing, or a suggestion read as text).
+    /// No Enter was sent on it; that case is the inbox gate's (`gate_or_queue`), not this check's.
+    NotOurs,
+    /// No reading could decide: no screen, no composer row, or two grids that disagree.
+    Unknown,
+}
+
+/// One reading's decision. Pure, the way `submit_delay_ms` and `ring_reply` are, so every row is a
+/// unit test with no PTY.
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+enum SubmitStep {
+    Submitted,
+    RetryEnter,
+    NotSubmitted,
+    NotOurs,
+    Unknown,
+}
+
+/// EMPTY IS A SUBMIT, and it is the composer rule's EMPTY, so a dim suggestion left behind reads empty
+/// (`typed_only`). UNREADABLE IS NEVER A SUBMIT and never gets an Enter: a key pressed on a box nobody
+/// can see is the splice the inbox exists to prevent. TEXT THAT IS NOT OURS STOPS IT, with no Enter.
+fn submit_step(reading: Composer, ours: bool, retries_sent: u32) -> SubmitStep {
+    match reading {
+        Composer::Empty => SubmitStep::Submitted,
+        Composer::Unreadable(_) => SubmitStep::Unknown,
+        Composer::HasText if !ours => SubmitStep::NotOurs,
+        Composer::HasText if (retries_sent as usize) < SUBMIT_CHECK_GAPS_MS.len() - 1 => SubmitStep::RetryEnter,
+        Composer::HasText => SubmitStep::NotSubmitted,
+    }
+}
+
+/// Is THIS message in the composer? The composer is the row `composer_row` finds and the rows under it
+/// down to the next separator rule, since a paste that wraps fills several. Ours when it holds the
+/// message's head or tail needle (the render check's own, `receipt_needle`), or, for a paste the TUI
+/// collapsed, `[Pasted text #<k> +<n> lines]` where n is the message's newline count. Measured
+/// 2026-10-19 on seat C's capture: the D415 packet, 14 newlines, showed `+14 lines`; the 12:59 heads-up,
+/// 5, showed `+5 lines`. A message too short for a needle and with no newline is never ours, so it
+/// gets no retry: unconfirmable stays unconfirmed.
+fn ours_in_box(rendered: &[String], text: &str) -> bool {
+    let Some(i) = composer_row(rendered) else { return false };
+    let end = rendered[i + 1..].iter().position(|l| is_separator_rule(l)).map_or(rendered.len(), |k| i + 1 + k);
+    let region = squeeze(&rendered[i..end].concat());
+    let (head, tail) = (receipt_needle(text), receipt_needle_tail(text));
+    if (!head.is_empty() && region.contains(&head)) || (!tail.is_empty() && region.contains(&tail)) {
+        return true;
+    }
+    let lines = text.matches('\n').count();
+    lines > 0 && pasted_placeholder_lines(&region).contains(&lines)
+}
+
+/// The `<n>` of every `[Pasted text #<k> +<n> lines]` in a squeezed region (whitespace already gone).
+fn pasted_placeholder_lines(squeezed: &str) -> Vec<usize> {
+    let mut out = Vec::new();
+    for part in squeezed.split("[Pastedtext#").skip(1) {
+        let Some((k, rest)) = part.split_once('+') else { continue };
+        let n: String = rest.chars().take_while(|c| c.is_ascii_digit()).collect();
+        let after = &rest[n.len()..];
+        if !k.is_empty() && k.chars().all(|c| c.is_ascii_digit()) && (after.starts_with("lines]") || after.starts_with("line]")) {
+            if let Ok(n) = n.parse() {
+                out.push(n);
+            }
+        }
+    }
+    out
+}
+
+/// The whole delivery over a writer, with no PTY: one bracketed paste, the wait, one Enter, then the
+/// composer read on `SUBMIT_CHECK_GAPS_MS` and a lone Enter again while our text is still there.
+///
+/// `with_writer` runs one write under the pane's lock. The paste, its wait and the first Enter go in ONE
+/// call, exactly as before this lap, so nothing the keeper types can land between them; each retried
+/// Enter goes in its own, so the lock is not held while we wait to read.
+///
+/// WHAT IS NEVER WRITTEN: a second paste (a paste APPENDS, see `unconfirmed_delivery_line`), and any key
+/// that edits the composer — no backspace, no ctrl-u, no escape. Consonance never edits the keeper's box;
+/// a message that will not submit is reported, and left where he can see it.
+fn deliver(
+    with_writer: &mut dyn FnMut(&mut dyn FnMut(&mut dyn Write) -> Result<(), String>) -> Result<(), String>,
+    read: &mut dyn FnMut() -> Option<(Vec<String>, Vec<String>)>,
+    sleep: &mut dyn FnMut(Duration),
+    text: &str,
+) -> Result<Submit, String> {
     // bracketed paste keeps the message one input (newlines and all)…
     let payload = format!("\x1b[200~{}\x1b[201~", text);
-    sess.writer.write_all(payload.as_bytes()).map_err(|e| e.to_string())?;
-    sess.writer.flush().map_err(|e| e.to_string())?;
     // …then the submit as a SEPARATE write after a gap. An Enter arriving in the same chunk as
     // the paste-end can be eaten by the TUI while it is still processing the paste — found live
     // 2026-07-27: the chair's first fan-out lodged unsubmitted in two idle panes' composers
@@ -11401,10 +11527,73 @@ fn inject_to_pane(panes: &State<Panes>, pane_id: &str, text: &str) -> Result<(),
     // work for the TUI to process before it can accept a submit, so the wait is now a function of
     // the payload. Bounded at both ends: never below the July value, never long enough to make a
     // dispatch feel hung.
-    std::thread::sleep(Duration::from_millis(submit_delay_ms(payload.len())));
-    sess.writer.write_all(b"\r").map_err(|e| e.to_string())?;
-    sess.writer.flush().map_err(|e| e.to_string())?;
-    Ok(())
+    //
+    // AND NO WAIT CLOSES IT, 2026-10-19 (D415): the wait is the first attempt, and the reading
+    // below is what says whether it worked.
+    let delay = Duration::from_millis(submit_delay_ms(payload.len()));
+    with_writer(&mut |w| {
+        w.write_all(payload.as_bytes()).map_err(|e| e.to_string())?;
+        w.flush().map_err(|e| e.to_string())?;
+        sleep(delay);
+        w.write_all(b"\r").map_err(|e| e.to_string())?;
+        w.flush().map_err(|e| e.to_string())
+    })?;
+    let mut retries = 0u32;
+    for gap in SUBMIT_CHECK_GAPS_MS {
+        sleep(Duration::from_millis(gap));
+        let (reading, ours) = match read() {
+            Some((rendered, typed)) => (composer_state(&rendered, &typed), ours_in_box(&rendered, text)),
+            None => (Composer::Unreadable(Unreadable::NoScreen), false),
+        };
+        match submit_step(reading, ours, retries) {
+            SubmitStep::Submitted => return Ok(Submit::Submitted { retries }),
+            SubmitStep::NotSubmitted => return Ok(Submit::NotSubmitted { retries }),
+            SubmitStep::NotOurs => return Ok(Submit::NotOurs),
+            SubmitStep::Unknown => {}
+            SubmitStep::RetryEnter => {
+                with_writer(&mut |w| {
+                    w.write_all(b"\r").map_err(|e| e.to_string())?;
+                    w.flush().map_err(|e| e.to_string())
+                })
+                .map_err(|e| format!("the text was written, and a retried Enter could not be: {e}"))?;
+                retries += 1;
+            }
+        }
+    }
+    // Every reading was spent and the last one did not decide (unreadable, or an Enter pressed
+    // with no reading after it): nothing is claimed.
+    Ok(Submit::Unknown)
+}
+
+/// The receipt a sender is told: the render check AND the submit check. `Received` needs both, so
+/// "delivered" can no longer be said of a message sitting in the composer, which renders too. Text
+/// still in the box is NotSubmitted whatever the render check saw. An empty box with no render is not
+/// proof (the paste may never have arrived), and a box nobody could read proves nothing either way.
+fn delivery_receipt(render: Receipt, submit: Submit) -> Receipt {
+    match (render, submit) {
+        (Receipt::NotAttempted, _) => Receipt::NotAttempted,
+        (_, Submit::NotSubmitted { .. }) => Receipt::NotSubmitted,
+        (Receipt::Received, Submit::Submitted { .. }) => Receipt::Received,
+        _ => Receipt::Unconfirmed,
+    }
+}
+
+/// What the sender and the board are told when our text is still in the receiver's input box.
+fn not_submitted_line(dest: &str) -> String {
+    format!(
+        "NOT SUBMITTED — the text is in {dest}'s input box: the Enter was not taken, after retries. \
+         Press Enter there; do NOT re-send (a second write APPENDS to what is in the box)."
+    )
+}
+
+/// A note for the rows that say DELIVERED without a render check (the drain, a pull, a dyad spot).
+fn submit_note(wrote: &Result<Submit, String>) -> &'static str {
+    match wrote {
+        Ok(Submit::NotSubmitted { .. }) => {
+            " [NOT SUBMITTED — the text is in the input box: the Enter was not taken, after retries; press Enter there, do NOT re-send]"
+        }
+        _ => "",
+    }
 }
 
 // Compose the directed message FROM the pull (never the raiser's PTY) and inject it — but only
@@ -11453,7 +11642,8 @@ fn deliver_pull(app: &AppHandle, pull: &mcp::PullRequest) -> String {
     if let Some(queued) = gate_or_queue(app, &tid, &msg, &preview) {
         return queued;
     }
-    match inject_to_pane(&panes, &tid, &msg) {
+    match inject_to_pane(&panes, &tid, &msg, &app.state::<PaneEmus>()) {
+        Ok(Submit::NotSubmitted { .. }) => not_submitted_line(short),
         Ok(_) => format!("delivered to {short}"),
         Err(e) => format!("delivery failed: {e}"),
     }
@@ -11630,6 +11820,9 @@ enum Receipt {
     Unconfirmed,
     /// Nothing was written (refused or delivery error), so there is nothing to confirm.
     NotAttempted,
+    /// D415: written, and the text is STILL IN THE RECEIVER'S INPUT BOX after every retried Enter
+    /// (`deliver`). It rendered, so the render check alone would have called it Received.
+    NotSubmitted,
 }
 
 /// Drop ANSI escape sequences so their letters (`[0m`, `[38;5;12m`) can't pollute the comparison.
@@ -12257,13 +12450,18 @@ fn keep_warm_send(app: &AppHandle, pane: &str, role: &str, idle: Duration, conte
         ));
         return;
     }
-    let ok = inject_to_pane(&app.state::<Panes>(), pane, KEEP_WARM_TEXT).is_ok();
+    let wrote = inject_to_pane(&app.state::<Panes>(), pane, KEEP_WARM_TEXT, &app.state::<PaneEmus>());
+    let ok = wrote.is_ok();
     if ok {
         if let Ok(mut m) = app.state::<KeepWarmPinged>().0.lock() {
             m.insert(pane.to_string(), Instant::now());
         }
     }
     chair_audit(app, keep_warm_row(short_id(pane), role, idle, context, ok));
+    // D415: a ping left in the box is in the keeper's way, so it gets its own row.
+    if let Ok(Submit::NotSubmitted { .. }) = wrote {
+        chair_audit(app, format!("keep-warm -> {}: {}", short_id(pane), not_submitted_line(short_id(pane))));
+    }
 }
 
 fn chair_audit(app: &AppHandle, text: String) {
@@ -12307,6 +12505,10 @@ fn chair_inject_audit_line(
                 // unreachable on the success path; rendered rather than panicked, because an audit
                 // line that can panic is an audit line that can go missing.
                 Receipt::NotAttempted => "written; receipt not checked".to_string(),
+                Receipt::NotSubmitted => {
+                    "WRITTEN BUT NOT SUBMITTED — the text is in the pane's input box; the Enter was not taken, after retries"
+                        .to_string()
+                }
             };
             format!("chair injected (chair: {chair_model}) -> {id} [{state}]: {preview}")
         }
@@ -12390,9 +12592,9 @@ fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
         return queued;
     }
     let before = fs::metadata(&cap).map(|m| m.len()).unwrap_or(0);
-    let delivered = inject_to_pane(&panes, &tid, &msg);
+    let delivered = inject_to_pane(&panes, &tid, &msg, &app.state::<PaneEmus>());
     let receipt = match delivered {
-        Ok(_) => await_render(&cap, before, &receipt_needle(text), &receipt_needle_tail(text)),
+        Ok(submit) => delivery_receipt(await_render(&cap, before, &receipt_needle(text), &receipt_needle_tail(text)), submit),
         Err(_) => Receipt::NotAttempted,
     };
     chair_audit(
@@ -12410,6 +12612,7 @@ fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
             // The caller is the chair's own loop, and it acts on this string. It must learn the
             // difference here rather than discovering it later in its own audit trail.
             Receipt::Received => format!("delivered to {} (rendered in pane — not proof it was read)", short_id(&tid)),
+            Receipt::NotSubmitted => not_submitted_line(short_id(&tid)),
             _ => unconfirmed_delivery_line(short_id(&tid)),
         },
         Err(e) => format!("delivery failed: {e}"),
@@ -12481,9 +12684,9 @@ fn librarian_call_exec(app: &AppHandle, text: &str) -> String {
         return queued;
     }
     let before = fs::metadata(&cap).map(|m| m.len()).unwrap_or(0);
-    let delivered = inject_to_pane(&panes, MAIN_SID, &msg);
+    let delivered = inject_to_pane(&panes, MAIN_SID, &msg, &app.state::<PaneEmus>());
     let receipt = match delivered {
-        Ok(_) => await_render(&cap, before, &receipt_needle(text), &receipt_needle_tail(text)),
+        Ok(submit) => delivery_receipt(await_render(&cap, before, &receipt_needle(text), &receipt_needle_tail(text)), submit),
         Err(_) => Receipt::NotAttempted,
     };
     match delivered {
@@ -12502,10 +12705,16 @@ fn librarian_call_exec(app: &AppHandle, text: &str) -> String {
 /// `Receipt::Received` and nothing else — the text was found rendered in the receiver's capture after the write — so a
 /// write that merely succeeded can never be reported to the sender as a delivery. One function so the rule is pinned
 /// once (`ring_reply_tests`); the words are unchanged from the two inline copies it replaced.
+///
+/// D415: three words. "delivered … and submitted" only when the composer was seen to empty (`delivery_receipt`);
+/// NOT SUBMITTED when our text is still in the receiver's input box; UNCONFIRMED otherwise.
 fn ring_reply(dest: &str, receipt: Receipt) -> String {
     match receipt {
-        Receipt::Received => format!("delivered to {dest} (rendered in its pane — not proof it was read)"),
-        _ => format!("written to {dest} — UNCONFIRMED (no render yet; verify before treating as delivered)"),
+        Receipt::Received => format!("delivered to {dest} and submitted (rendered in its pane — not proof it was read)"),
+        Receipt::NotSubmitted => not_submitted_line(dest),
+        _ => format!(
+            "written to {dest} — UNCONFIRMED (no render yet, or its input box could not be read; verify before treating as delivered)"
+        ),
     }
 }
 
@@ -12556,9 +12765,9 @@ fn pane_call_librarian_exec(app: &AppHandle, from: Option<&str>, text: &str) -> 
         return queued;
     }
     let before = fs::metadata(&cap).map(|m| m.len()).unwrap_or(0);
-    let delivered = inject_to_pane(&panes, dest, &msg);
+    let delivered = inject_to_pane(&panes, dest, &msg, &app.state::<PaneEmus>());
     let receipt = match delivered {
-        Ok(_) => await_render(&cap, before, &receipt_needle(text), &receipt_needle_tail(text)),
+        Ok(submit) => delivery_receipt(await_render(&cap, before, &receipt_needle(text), &receipt_needle_tail(text)), submit),
         Err(_) => Receipt::NotAttempted,
     };
     match delivered {
@@ -22232,13 +22441,27 @@ mod ring_reply_tests {
         after[..after.find("\n}\n").expect("no end of function")].to_string()
     }
 
+    /// AMENDED D415 (pane C), because the rule changed: `Received` now means rendered AND submitted (`delivery_receipt`),
+    /// and the plan's step 6 has the reply say so. The words senders already read stay at the front, unchanged.
     #[test]
     fn a_rendered_ring_says_delivered_in_the_words_senders_already_read() {
-        assert_eq!(ring_reply("Main", Receipt::Received), "delivered to Main (rendered in its pane — not proof it was read)");
+        assert_eq!(ring_reply("Main", Receipt::Received), "delivered to Main and submitted (rendered in its pane — not proof it was read)");
         assert_eq!(
             ring_reply("the librarian", Receipt::Received),
-            "delivered to the librarian (rendered in its pane — not proof it was read)"
+            "delivered to the librarian and submitted (rendered in its pane — not proof it was read)"
         );
+    }
+
+    /// D415: our text still in the receiver's input box says so, loudly, says where it is, and never says delivered.
+    #[test]
+    fn a_ring_left_in_the_input_box_says_not_submitted_and_where_it_is() {
+        for dest in ["Main", "the librarian"] {
+            let s = ring_reply(dest, Receipt::NotSubmitted);
+            assert!(s.starts_with("NOT SUBMITTED"), "{s}");
+            assert!(s.contains(&format!("{dest}'s input box")), "{s}");
+            assert!(s.contains("do NOT re-send"), "a re-send appends: {s}");
+            assert!(!s.contains("delivered to"), "{s}");
+        }
     }
 
     #[test]
@@ -22268,6 +22491,212 @@ mod ring_reply_tests {
             assert!(!body.contains(concat!("\"delivered", " to")), "{sig}: builds its own \"delivered to\" string");
             let call = &body[reply..body[reply..].find(')').map(|i| reply + i + 1).unwrap()];
             assert!(call.ends_with(", receipt)"), "{sig}: the reply is not built from the render check's receipt: {call}");
+        }
+    }
+}
+
+/// D415 (pane C) — a delivered message must SUBMIT, or say plainly that it did not. The decision is pure and the
+/// writer is faked, so nothing here needs a PTY: `deliver` is run over a byte sink and a scripted list of screens.
+#[cfg(test)]
+mod submit_check_tests {
+    use super::*;
+
+    const RULE: &str = "────────────────────────────────────────";
+    const MSG: &str = "[pane:C] D415 hand-back: exo_memory/handback/p-d415-submit-C_2026-10-19.md\nNEXT: librarian checks it";
+
+    /// A screen with a composer: scrollback, the rule, the composer rows, the rule, a status row. `typed` is the
+    /// same grid unless `dim` blanks the composer's text the way `typed_only` blanks a grey suggestion.
+    fn screen(composer: &[&str], dim: bool) -> (Vec<String>, Vec<String>) {
+        let mut rendered: Vec<String> = vec!["● an earlier reply".into(), String::new(), RULE.into()];
+        rendered.extend(composer.iter().map(|s| s.to_string()));
+        rendered.push(RULE.into());
+        rendered.push("  ? for shortcuts".into());
+        let mut typed = rendered.clone();
+        if dim {
+            let i = composer_row(&rendered).expect("premise: the composer is found");
+            typed[i] = "\u{276f} ".to_string();
+        }
+        (rendered, typed)
+    }
+    fn empty() -> (Vec<String>, Vec<String>) {
+        screen(&["\u{276f} "], false)
+    }
+    /// Our message, shown inline and wrapped the way the composer wraps a paste.
+    fn ours() -> (Vec<String>, Vec<String>) {
+        screen(&["\u{276f} [pane:C] D415 hand-back: exo_memory/handback/p-d415-sub", "  mit-C_2026-10-19.md", "  NEXT: librarian checks it"], false)
+    }
+    fn keepers() -> (Vec<String>, Vec<String>) {
+        screen(&["\u{276f} sup brah"], false)
+    }
+
+    /// Runs `deliver` over a recording writer and a scripted screen per reading (None = no screen).
+    fn run(text: &str, screens: Vec<Option<(Vec<String>, Vec<String>)>>) -> (Result<Submit, String>, Vec<u8>, Vec<Duration>, usize) {
+        let mut bytes: Vec<u8> = Vec::new();
+        let mut slept: Vec<Duration> = Vec::new();
+        let mut script = screens.into_iter();
+        let mut reads = 0usize;
+        let out = deliver(
+            &mut |f| f(&mut bytes),
+            &mut || {
+                reads += 1;
+                script.next().unwrap_or(None)
+            },
+            &mut |d| slept.push(d),
+            text,
+        );
+        (out, bytes, slept, reads)
+    }
+
+    fn pastes(b: &[u8]) -> usize {
+        b.windows(6).filter(|w| *w == b"\x1b[200~").count()
+    }
+    /// The bytes after the one paste: only lone Enters may follow it.
+    fn after_paste(b: &[u8]) -> Vec<u8> {
+        let end = b.windows(6).position(|w| w == b"\x1b[201~").expect("premise: a paste was written") + 6;
+        b[end..].to_vec()
+    }
+    fn assert_only_enters(b: &[u8], n: usize) {
+        assert_eq!(pastes(b), 1, "exactly one paste, never a second (a paste APPENDS)");
+        let tail = after_paste(b);
+        assert_eq!(tail, vec![b'\r'; n], "after the paste: {n} lone Enter(s) and nothing else — no backspace, ctrl-u or escape");
+    }
+
+    #[test]
+    fn our_text_gone_after_the_first_enter_is_submitted_with_no_retry() {
+        let (out, bytes, _, _) = run(MSG, vec![Some(empty())]);
+        assert_eq!(out, Ok(Submit::Submitted { retries: 0 }));
+        assert_only_enters(&bytes, 1);
+    }
+
+    #[test]
+    fn our_text_stuck_after_the_enter_and_gone_after_one_retry_is_submitted_after_one_retry() {
+        let (out, bytes, _, _) = run(MSG, vec![Some(ours()), Some(empty())]);
+        assert_eq!(out, Ok(Submit::Submitted { retries: 1 }));
+        assert_only_enters(&bytes, 2);
+    }
+
+    #[test]
+    fn our_text_there_through_every_retry_is_not_submitted_and_nothing_is_pasted_or_cleared() {
+        let (out, bytes, _, reads) = run(MSG, vec![Some(ours()); 10]);
+        let retries = (SUBMIT_CHECK_GAPS_MS.len() - 1) as u32;
+        assert_eq!(out, Ok(Submit::NotSubmitted { retries }));
+        assert_only_enters(&bytes, 1 + retries as usize);
+        assert_eq!(reads, SUBMIT_CHECK_GAPS_MS.len(), "bounded: one reading per gap, then it stops");
+    }
+
+    #[test]
+    fn a_collapsed_paste_of_ours_is_ours_and_gets_the_enter_again() {
+        let n = MSG.matches('\n').count();
+        let stuck = screen(&[&format!("\u{276f} [Pasted text #88 +{n} lines]")], false);
+        assert!(ours_in_box(&stuck.0, MSG), "the placeholder with our newline count is ours");
+        let (out, bytes, _, _) = run(MSG, vec![Some(stuck), Some(empty())]);
+        assert_eq!(out, Ok(Submit::Submitted { retries: 1 }));
+        assert_only_enters(&bytes, 2);
+    }
+
+    #[test]
+    fn a_collapsed_paste_with_another_line_count_is_not_ours() {
+        let n = MSG.matches('\n').count();
+        let other = screen(&[&format!("\u{276f} [Pasted text #3 +{} lines]", n + 7)], false);
+        assert!(!ours_in_box(&other.0, MSG));
+        let (out, bytes, _, _) = run(MSG, vec![Some(other)]);
+        assert_eq!(out, Ok(Submit::NotOurs));
+        assert_only_enters(&bytes, 1);
+    }
+
+    #[test]
+    fn the_keepers_text_in_the_composer_is_not_ours_and_no_enter_is_sent_on_it() {
+        let (out, bytes, _, reads) = run(MSG, vec![Some(keepers()); 10]);
+        assert_eq!(out, Ok(Submit::NotOurs));
+        assert_only_enters(&bytes, 1);
+        assert_eq!(reads, 1, "it stops at the first reading of text that is not ours");
+    }
+
+    #[test]
+    fn a_dim_suggestion_only_reads_as_empty_and_is_submitted() {
+        let dim = screen(&["\u{276f} Try \"how do I log an error?\""], true);
+        assert_eq!(composer_state(&dim.0, &dim.1), Composer::Empty, "premise: the colour rule blanks it");
+        let (out, bytes, _, _) = run(MSG, vec![Some(dim)]);
+        assert_eq!(out, Ok(Submit::Submitted { retries: 0 }));
+        assert_only_enters(&bytes, 1);
+    }
+
+    #[test]
+    fn an_unreadable_composer_is_unknown_never_submitted_and_gets_no_enter() {
+        let dialog: (Vec<String>, Vec<String>) = (vec!["\u{276f} No, exit".into()], vec!["\u{276f} No, exit".into()]);
+        let (out, bytes, _, reads) = run(MSG, vec![None, Some(dialog.clone()), Some(dialog), None]);
+        assert_eq!(out, Ok(Submit::Unknown));
+        assert_only_enters(&bytes, 1);
+        assert_eq!(reads, SUBMIT_CHECK_GAPS_MS.len());
+    }
+
+    #[test]
+    fn the_decision_table() {
+        let max = (SUBMIT_CHECK_GAPS_MS.len() - 1) as u32;
+        assert_eq!(submit_step(Composer::Empty, false, 0), SubmitStep::Submitted);
+        assert_eq!(submit_step(Composer::Empty, true, max), SubmitStep::Submitted);
+        assert_eq!(submit_step(Composer::HasText, true, 0), SubmitStep::RetryEnter);
+        assert_eq!(submit_step(Composer::HasText, true, max - 1), SubmitStep::RetryEnter);
+        assert_eq!(submit_step(Composer::HasText, true, max), SubmitStep::NotSubmitted);
+        assert_eq!(submit_step(Composer::HasText, false, 0), SubmitStep::NotOurs);
+        for u in [Unreadable::NoRow, Unreadable::GridMismatch, Unreadable::NoScreen] {
+            assert_eq!(submit_step(Composer::Unreadable(u), true, 0), SubmitStep::Unknown, "{u:?}");
+        }
+    }
+
+    /// The paste, its wait and the first Enter are as before this lap; the whole check adds at most the gaps.
+    #[test]
+    fn the_wait_is_bounded_by_the_submit_delay_plus_the_gaps() {
+        let (_, _, slept, _) = run(MSG, vec![Some(ours()); 10]);
+        let payload = format!("\x1b[200~{MSG}\x1b[201~");
+        assert_eq!(slept[0], Duration::from_millis(submit_delay_ms(payload.len())), "the first wait is the old one");
+        let gaps: Vec<u64> = slept[1..].iter().map(|d| d.as_millis() as u64).collect();
+        assert_eq!(gaps, SUBMIT_CHECK_GAPS_MS.to_vec());
+    }
+
+    #[test]
+    fn a_ring_is_received_only_when_rendered_and_submitted() {
+        let s = Submit::Submitted { retries: 0 };
+        let n = Submit::NotSubmitted { retries: 3 };
+        assert_eq!(delivery_receipt(Receipt::Received, s), Receipt::Received);
+        assert_eq!(delivery_receipt(Receipt::Received, n), Receipt::NotSubmitted, "rendered in the box is not submitted");
+        assert_eq!(delivery_receipt(Receipt::Unconfirmed, n), Receipt::NotSubmitted);
+        assert_eq!(delivery_receipt(Receipt::Received, Submit::Unknown), Receipt::Unconfirmed);
+        assert_eq!(delivery_receipt(Receipt::Received, Submit::NotOurs), Receipt::Unconfirmed);
+        assert_eq!(delivery_receipt(Receipt::Unconfirmed, s), Receipt::Unconfirmed, "an empty box with no render is not proof");
+        assert_eq!(delivery_receipt(Receipt::NotAttempted, s), Receipt::NotAttempted);
+    }
+
+    /// Every write into a pane is the one paste in `deliver`: no other bracketed paste and no edit key is written
+    /// anywhere outside the tests.
+    #[test]
+    fn the_source_writes_one_paste_and_no_clear_or_delete_key() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        // The live code: every line outside a `#[cfg(test)] mod`, which ends at its column-0 `}` (the walk
+        // `every_write_into_a_pane_asks_the_inbox_first` uses, for the reason it gives).
+        let (mut live, mut in_test, mut pending, mut skipped) = (String::new(), false, false, 0);
+        for line in src.lines() {
+            if in_test {
+                in_test = !line.starts_with('}');
+                continue;
+            }
+            if line.starts_with("#[cfg(test)]") {
+                pending = true;
+                continue;
+            }
+            if pending && line.starts_with("mod ") {
+                (pending, in_test, skipped) = (false, true, skipped + 1);
+                continue;
+            }
+            pending = false;
+            live.push_str(line);
+            live.push('\n');
+        }
+        assert!(skipped >= 2, "premise: the test modules were recognised ({skipped})");
+        assert!(live.contains("fn deliver("), "premise: the live code holds the delivery");
+        assert_eq!(live.matches("\\x1b[200~").count(), 1, "one bracketed paste in the live code");
+        for key in ["b\"\\x7f\"", "b\"\\x08\"", "b\"\\x15\"", "b\"\\x1b\"", "b\"\\x03\""] {
+            assert!(!live.contains(key), "a pane write of {key} edits or interrupts the composer");
         }
     }
 }
