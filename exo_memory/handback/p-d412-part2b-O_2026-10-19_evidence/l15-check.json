@@ -1,0 +1,58 @@
+{
+ "at": "2026-10-19T16:28:34.342Z",
+ "harness": "app\\test\\mutation.test.js",
+ "mutations": 103,
+ "mutant": "L15 a property is read from the wrong material",
+ "caughtBy": "list: every mesh the preview draws is in the kn5",
+ "tests": null,
+ "rows": [
+  {
+   "label": "control whole",
+   "total_ms": 14441,
+   "inner_ms": 14318,
+   "copy_and_rest_ms": 123,
+   "tests": 206,
+   "suites": 0,
+   "fail": 0,
+   "applied": true,
+   "caught": false,
+   "error": null
+  },
+  {
+   "label": "mutant whole: L15 a property is read from the wrong material",
+   "total_ms": 14417,
+   "inner_ms": 14283,
+   "copy_and_rest_ms": 134,
+   "tests": 206,
+   "suites": 0,
+   "fail": 7,
+   "applied": true,
+   "caught": true,
+   "error": null
+  },
+  {
+   "label": "mutant narrowed: L15 a property is read from the wrong material",
+   "total_ms": 12813,
+   "inner_ms": 12687,
+   "copy_and_rest_ms": 126,
+   "tests": 9,
+   "suites": 0,
+   "fail": 1,
+   "applied": true,
+   "caught": true,
+   "error": null
+  },
+  {
+   "label": "control narrowed to the mutant's caughtBy",
+   "total_ms": 12726,
+   "inner_ms": 12610,
+   "copy_and_rest_ms": 116,
+   "tests": 9,
+   "suites": 0,
+   "fail": 0,
+   "applied": true,
+   "caught": false,
+   "error": null
+  }
+ ]
+}

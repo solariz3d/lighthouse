@@ -1,0 +1,93 @@
+[32m✔ control: the unmutated temp copy passes every core-shell test [90m(53958.0863ms)[39m[39m
+[34mℹ D412 wide: "the layout" runs 3 rows[39m
+[34mℹ D412 wide: "the rate brush" runs 3 rows[39m
+[34mℹ D412 wide: "extendOptions" runs 3 rows[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(500.8818ms)[39m[39m
+[32m✔ a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353) [90m(1037.3814ms)[39m[39m
+[32m✔ a load throw in a run of several files reads NOT TESTED and names the files (the load-throw stand-in, D354) [90m(506.7575ms)[39m[39m
+[32m✔ a load throw in one file does not hide a crash after a failing row in another: NOT TESTED (F1, D354) [90m(992.1717ms)[39m[39m
+[32m✔ mutation R1 the sign of an angle flipped: applied, and caught by "the strings…" [90m(686.1245ms)[39m[39m
+[32m✔ mutation R2 zero is signed: applied, and caught by "the strings…" [90m(676.2418ms)[39m[39m
+[32m✔ mutation R3 bank shown as its end value, not the change: applied, and caught by "the strings…" [90m(685.3172ms)[39m[39m
+[32m✔ mutation R4 rounding without the binary guard: applied, and caught by "the strings…" [90m(692.2586ms)[39m[39m
+[32m✔ mutation R5 the head keep-out ignored: applied, and caught by "the layout…" [90m(680.1873ms)[39m[39m
+[32m✔ mutation R6 labels may overlap: applied, and caught by "the layout…" [90m(684.3597ms)[39m[39m
+[32m✔ mutation R7 anchors cached by the path object: applied, and caught by "the labels follow a path the preview extends IN PLACE…" [90m(726.3161ms)[39m[39m
+[32m✔ mutation R8 the layer is not put back in the page: applied, and caught by "the labels follow a path the preview extends IN PLACE…" [90m(717.8609ms)[39m[39m
+[32m✔ mutation R11 a label never slides off its piece's middle: applied, and caught by "a piece whose middle is behind the camera…" [90m(687.6782ms)[39m[39m
+[32m✔ mutation R13 the head's label may be culled: applied, and caught by "the layout: the head's own label is never culled…" [90m(678.5545ms)[39m[39m
+[32m✔ mutation R14 a head piece with nothing on screen has no label: applied, and caught by "the head's own piece is labelled even when none of it is on screen…" [90m(697.5239ms)[39m[39m
+[32m✔ mutation R15 the road bleeds through the label: applied, and caught by "the label box holds only…" [90m(792.3983ms)[39m[39m
+[32m✔ mutation R16 the label box has a border and round corners again: applied, and caught by "the label box holds only…" [90m(814.6664ms)[39m[39m
+[32m✔ mutation R17 the head's fallback place may cover the head: applied, and caught by "the layout: the head's own label is never culled…" [90m(809.6261ms)[39m[39m
+[32m✔ mutation R12 no ring clears a large head keep-out: applied, and caught by "the layout: a label anchored on a large head keep-out…" [90m(794.7593ms)[39m[39m
+[32m✔ mutation R9 the panel readout waits for the next state change: applied, and caught by "the panel shows the ghost…" [90m(703.2634ms)[39m[39m
+[32m✔ mutation R10 the ghost readout is the LAST placed piece, not the candidate: applied, and caught by "the panel shows the ghost…" [90m(679.061ms)[39m[39m
+[32m✔ mutation U1 the cup field is not sent to the core: applied, and caught by "extendOptions: the cup field is the target c…" [90m(681.5663ms)[39m[39m
+[32m✔ mutation U2 the cup is sent in radians: applied, and caught by "extendOptions: the cup field is the target c…" [90m(678.4372ms)[39m[39m
+[32m✔ mutation U3 the panel clamps the cup, hiding the core guard: applied, and caught by "extendOptions: the cup field is the target c…" [90m(676.3305ms)[39m[39m
+[32m✔ mutation U4 the cup cell shows the typed target, not the document: applied, and caught by "the readout shows cup from → to…" [90m(688.8975ms)[39m[39m
+[32m✔ mutation U5 (K7-4) the cup cell wired to the bank values: applied, and caught by "the readout shows cup from → to…" [90m(682.6276ms)[39m[39m
+[32m✔ mutation U6 (K7-3) the cup shown in radians: applied, and caught by "the readout shows cup from → to…" [90m(692.8572ms)[39m[39m
+[32m✔ mutation U7 the cup field does not redraw the readout: applied, and caught by "the cup cell follows the cup field…" [90m(682.0906ms)[39m[39m
+[32m✔ mutation U8 the brush has no cup channel: applied, and caught by "the brush's channel list gains cup…" [90m(677.1981ms)[39m[39m
+[32m✔ mutation U9 the cup field is not on the panel: applied, and caught by "the Extend panel has a "cup °" field…" [90m(679.3731ms)[39m[39m
+[32m✔ mutation V1 the at-start boxes are ignored: applied, and caught by "extendOptions "at start"…" [90m(704.906ms)[39m[39m
+[32m✔ mutation V2 an untouched field is sent at start: applied, and caught by "extendOptions "at start"…" [90m(678.2558ms)[39m[39m
+[32m✔ mutation V3 the span is not held to the piece: applied, and caught by "extendOptions "at start"…" [90m(684.575ms)[39m[39m
+[32m✔ mutation V4 transition sent as one number for all channels: applied, and caught by "extendOptions "at start"…" [90m(696.006ms)[39m[39m
+[32m✔ mutation V5 a field sent on the wrong channel: applied, and caught by "extendOptions "at start"…" [90m(682.7245ms)[39m[39m
+[32m✔ mutation V6 the panel never passes the boxes: applied, and caught by "the panel: an "at start" box…" [90m(674.7387ms)[39m[39m
+[32m✔ mutation V7 ticking a box does not redraw: applied, and caught by "the panel: an "at start" box…" [90m(694.7101ms)[39m[39m
+[32m✔ mutation C1 a brush frame builds on the last frame, not the drag's base: applied, and caught by "the rate brush…" [90m(815.5407ms)[39m[39m
+[32m✔ mutation C2 the drag never ends in the history: applied, and caught by "the rate brush…" [90m(891.1899ms)[39m[39m
+[32m✔ mutation C3 the local brush is not the default: applied, and caught by "the local (height / sideways) brush…" [90m(692.4136ms)[39m[39m
+[32m✔ mutation C20 sideways is sent as a hill: applied, and caught by "the local (height / sideways) brush…" [90m(692.2803ms)[39m[39m
+[32m✔ mutation C21 with E's brush, every channel is sent as rate: applied, and caught by "with E's brush, the rate brush goes through it…" [90m(731.6967ms)[39m[39m
+[32m✔ mutation C4 a second close runs again: applied, and caught by "close: one click…" [90m(875.319ms)[39m[39m
+[32m✔ mutation C5 the heading brush may open a closed loop: applied, and caught by "close: one click…" [90m(815.6124ms)[39m[39m
+[32m✔ mutation C7 export runs on an open track: applied, and caught by "export: an open track is refused…" [90m(845.1699ms)[39m[39m
+[32m✔ mutation C8 the list shows the piece builder's tracks too: applied, and caught by "save and open use their own prefix…" [90m(678.6811ms)[39m[39m
+[32m✔ mutation C12 turn is degrees per metre, not per 100 m: applied, and caught by "extendOptions…" [90m(672.9705ms)[39m[39m
+[32m✔ mutation C14 the pick takes the farthest station: applied, and caught by "the pick…" [90m(702.4972ms)[39m[39m
+[32m✔ mutation C15 the pick sees through the back of the camera: applied, and caught by "the pick…" [90m(691.2418ms)[39m[39m
+[32m✔ mutation C16 the ghost is not what extend builds: applied, and caught by "the ghost of an extension…" [90m(734.4447ms)[39m[39m
+[32m✔ mutation C17 export goes to the word exporter: applied, and caught by "export: an open track is refused…" [90m(920.9547ms)[39m[39m
+[32m✔ mutation C18 the close does not go round the user's straights: applied, and caught by "close: one click…" [90m(838.9126ms)[39m[39m
+[32m✔ mutation C19 the export is handed no start layout: applied, and caught by "export: an open track is refused…" [90m(1387.9555ms)[39m[39m
+[32m✔ mutation C22 the widened radius is not shown: applied, and caught by "a brush E widened says so…" [90m(735.6309ms)[39m[39m
+[32m✔ mutation L1 the track model ignores the lift: applied, and caught by "the track model draws the LIFTED road…" [90m(994.8822ms)[39m[39m
+[32m✔ mutation L2 a lift-only change is taken as the same track: applied, and caught by "the track model draws the LIFTED road…" [90m(890.5738ms)[39m[39m
+[32m✔ mutation L3 the mesh is not keyed by the lift: applied, and caught by "the track model draws the LIFTED road…" [90m(983.8881ms)[39m[39m
+[32m✔ mutation L4 the export does not lift the path: applied, and caught by "the export lifts the path…" [90m(2798.7419ms)[39m[39m
+[32m✔ mutation C23 the radiusUsed E reports is not read: applied, and caught by "landed core: a narrow brush…" [90m(1982.4799ms)[39m[39m
+[32m✔ mutation C24 sharp is never passed to E: applied, and caught by "the sharp opt-in…" [90m(853.5591ms)[39m[39m
+[32m✔ mutation P1 the export starts at the origin: applied, and caught by "a lap that starts pitched…" [90m(1269.1004ms)[39m[39m
+[32m✔ mutation P2 the preview starts at the origin: applied, and caught by "a lap that starts pitched…" [90m(1077.2948ms)[39m[39m
+[32m✔ mutation P3 the shell does not hand on the start: applied, and caught by "a lap that starts pitched…" [90m(1059.8981ms)[39m[39m
+[32m✔ a test file that dies natively is a crash, with its code, and reads NOT TESTED; spec alone shows only its ✖ line [90m(114.7886ms)[39m[39m
+[32m✔ a crash after a passing row is still a crash: no failing test of its own [90m(106.351ms)[39m[39m
+[32m✔ a failing row, a module that throws on load, and a passing file are not crashes (exit 1 is a verdict, as before) [90m(206.1569ms)[39m[39m
+[32m✔ in a run of several files only the dead one is named; the others still report [90m(200.07ms)[39m[39m
+[32m✔ boundaries: empty TAP has no crash; a missing TAP copy, a non-string and an empty list throw [90m(0.6835ms)[39m[39m
+[32m✔ the code is read from TAP as node writes it: exitCode 3221225477 or a fault signal is native; exitCode 1 and a SIGTERM kill are not [90m(0.215ms)[39m[39m
+[32m✔ a file that reported a failing test of its own before it died was tested: it is not a crash to report [90m(0.1024ms)[39m[39m
+[32m✔ a crash after an unrelated failing row: the named row never reports, and no exit of the file is left to read [90m(428.9267ms)[39m[39m
+[32m✔ a module that throws on load leaves its file's own exit (exitCode 1), which is a verdict as before; a passing file leaves none [90m(174.5753ms)[39m[39m
+[32m✔ reported: a top-level ✔ or ✖ line naming the test; an indented subtest line, another name or no output is not [90m(0.3096ms)[39m[39m
+[32m✔ F1's shape: one file throws on load, another fails a row and dies; only the first leaves an exit, and the message names it [90m(489.859ms)[39m[39m
+[32m✔ neverReported names every file that ended on its own and the file count, beside any crash; with none it reads as before (D354) [90m(0.3497ms)[39m[39m
+[32m✔ narrowArgs runs only the test whose name holds caughtBy, read literally: regex characters in the name are escaped (D412) [90m(662.4575ms)[39m[39m
+[32m✔ ran counts the top-level rows that ran: not a file's own row, not the failing-tests recap; no summary reads suites null (D412) [90m(0.1277ms)[39m[39m
+[32m✔ narrowedFirst: a narrowed catch stands, and the whole run is never started (D412) [90m(0.1967ms)[39m[39m
+[32m✔ narrowedFirst: a narrowed miss is re-run whole, and the whole run's verdict stands, caught or not (D412) [90m(0.172ms)[39m[39m
+[32m✔ narrowedFirst: a narrowed run that throws (NOT TESTED) is no verdict; the whole run decides, and its throw still throws (D412) [90m(0.1953ms)[39m[39m
+[32m✔ narrowedFirst runs whole only: a pattern whose narrowed control failed, a control, and a mutant NOT APPLIED narrowed (D412) [90m(0.2053ms)[39m[39m
+[34mℹ tests 82[39m
+[34mℹ suites 0[39m
+[34mℹ pass 82[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 105861.2517[39m

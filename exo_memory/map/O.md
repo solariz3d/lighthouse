@@ -27,3 +27,11 @@ commit; 0 added lines and 0 messages remain, and every remaining match is alread
 (191 files, 2.2 MB); the inner run 20.0–22.5 s for all 76 tests; narrowed to the caughtBy test 127–536 ms, 2–4 tests, all caught.
 Could be wrong for the other two big harnesses, which copy differently and were not measured.
 → `exo_memory/handback/p-d412-part2a-O_2026-10-19.md`
+
+### Narrowing each mutant to its named test took the big three harnesses from 4,354 s to 649 s with all 579 verdicts unchanged; the suite is now bound by total work, ~21 min
+2026-10-19, D412 part 2 (b) — d412-suite-speed 35e8628..5bb6d41; two plain full runs, 1,270 s and 1,274.5 s; 579/579 per mutant against
+0.4.8 (compare-mutants.js); harness-time.js for the per-harness sums. Could be wrong about "bound by total work" if the largest
+remaining harness also sits on a critical path; core_piece_mutation (513 s) is the one to look at.
+Also: node 24 reports a file in which --test-name-pattern matches nothing as ONE passing test named by its path, so "ℹ tests" cannot
+say whether a named test ran (test/inner_run.js `ran`).
+→ `exo_memory/handback/p-d412-part2b-O_2026-10-19.md`

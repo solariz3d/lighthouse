@@ -1,0 +1,659 @@
+TAP version 13
+# Subtest: control: the unmutated temp copy passes every test the mutants are run against
+ok 1 - control: the unmutated temp copy passes every test the mutants are run against
+  ---
+  duration_ms: 72170.2247
+  type: 'test'
+  ...
+# D412 wide: "renderer: after a sculpt" runs 2 rows
+# D412 wide: "overhead fit" runs 2 rows
+# D412 wide: "soak:" runs 4 rows
+# D412 wide: "W1: W held and REPEATING" runs 2 rows
+# D412 wide: "overhead zoomed in (0.05 to 50)" runs 3 rows
+# D412 wide: "on one axis the NEWER key wins" runs 6 rows
+# D412 wide: "on its release the" runs 6 rows
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 2 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 3411.7677
+  type: 'test'
+  ...
+# Subtest: a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+ok 3 - a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+  ---
+  duration_ms: 13398.6074
+  type: 'test'
+  ...
+# Subtest: a load throw in a run of several files reads NOT TESTED and names the files (the load-throw stand-in, D354)
+ok 4 - a load throw in a run of several files reads NOT TESTED and names the files (the load-throw stand-in, D354)
+  ---
+  duration_ms: 3258.9204
+  type: 'test'
+  ...
+# Subtest: mutation A1 the build view looks backward: applied, and caught by "build view (default)…"
+ok 5 - mutation A1 the build view looks backward: applied, and caught by "build view (default)…"
+  ---
+  duration_ms: 477.0447
+  type: 'test'
+  ...
+# Subtest: mutation A2 the build key does nothing from free mode: applied, and caught by "the build view is ONE key away…"
+ok 6 - mutation A2 the build key does nothing from free mode: applied, and caught by "the build view is ONE key away…"
+  ---
+  duration_ms: 497.014
+  type: 'test'
+  ...
+# Subtest: mutation A3 the switch key skips a mode: applied, and caught by "the switch key walks…"
+ok 7 - mutation A3 the switch key skips a mode: applied, and caught by "the switch key walks…"
+  ---
+  duration_ms: 479.9625
+  type: 'test'
+  ...
+# Subtest: mutation A4 chase ignores its lag (sits on the head): applied, and caught by "chase: 25 m behind…"
+ok 8 - mutation A4 chase ignores its lag (sits on the head): applied, and caught by "chase: 25 m behind…"
+  ---
+  duration_ms: 470.1911
+  type: 'test'
+  ...
+# Subtest: mutation A5 chase lifts along world up, not the road's up: applied, and caught by "chase through a loop-the-loop…"
+ok 9 - mutation A5 chase lifts along world up, not the road's up: applied, and caught by "chase through a loop-the-loop…"
+  ---
+  duration_ms: 469.1151
+  type: 'test'
+  ...
+# Subtest: mutation A6 overhead's loop fallback is a fixed north: applied, and caught by "overhead: inside a loop…"
+ok 10 - mutation A6 overhead's loop fallback is a fixed north: applied, and caught by "overhead: inside a loop…"
+  ---
+  duration_ms: 473.4946
+  type: 'test'
+  ...
+# Subtest: mutation A7 free mode follows the head like the build view: applied, and caught by "after an append…"
+ok 11 - mutation A7 free mode follows the head like the build view: applied, and caught by "after an append…"
+  ---
+  duration_ms: 482.3989
+  type: 'test'
+  ...
+# Subtest: mutation A8 entering free does not take over the view: applied, and caught by "entering free keeps the view…"
+ok 12 - mutation A8 entering free does not take over the view: applied, and caught by "entering free keeps the view…"
+  ---
+  duration_ms: 479.6607
+  type: 'test'
+  ...
+# Subtest: mutation A9 the shown pose snaps instead of easing: applied, and caught by "the shown pose eases…"
+ok 13 - mutation A9 the shown pose snaps instead of easing: applied, and caught by "the shown pose eases…"
+  ---
+  duration_ms: 478.8667
+  type: 'test'
+  ...
+# Subtest: mutation A10 the renderer re-uploads every array every frame: applied, and caught by "renderer: every array is uploaded once…"
+ok 14 - mutation A10 the renderer re-uploads every array every frame: applied, and caught by "renderer: every array is uploaded once…"
+  ---
+  duration_ms: 502.228
+  type: 'test'
+  ...
+# Subtest: mutation A11 the renderer never deletes a stale buffer: applied, and caught by "renderer: after a sculpt…"
+ok 15 - mutation A11 the renderer never deletes a stale buffer: applied, and caught by "renderer: after a sculpt…"
+  ---
+  duration_ms: 595.6156
+  type: 'test'
+  ...
+# Subtest: mutation A12 batches copy the arrays (a sculpt re-uploads everything): applied, and caught by "renderer: after a sculpt…"
+ok 16 - mutation A12 batches copy the arrays (a sculpt re-uploads everything): applied, and caught by "renderer: after a sculpt…"
+  ---
+  duration_ms: 592.7777
+  type: 'test'
+  ...
+# Subtest: mutation A13 the track model never extends (always a full build): applied, and caught by "track model: append…"
+ok 17 - mutation A13 the track model never extends (always a full build): applied, and caught by "track model: append…"
+  ---
+  duration_ms: 495.7964
+  type: 'test'
+  ...
+# Subtest: mutation A14 the model matrix transposed: applied, and caught by "batches: the node matrix…"
+ok 18 - mutation A14 the model matrix transposed: applied, and caught by "batches: the node matrix…"
+  ---
+  duration_ms: 490.8293
+  type: 'test'
+  ...
+# Subtest: mutation A15 the backing store ignores devicePixelRatio: applied, and caught by "DPR: the backing store is the css size…"
+ok 19 - mutation A15 the backing store ignores devicePixelRatio: applied, and caught by "DPR: the backing store is the css size…"
+  ---
+  duration_ms: 492.4433
+  type: 'test'
+  ...
+# Subtest: mutation A16 the size cap drops the aspect (one side clamped alone): applied, and caught by "DPR edges…"
+ok 20 - mutation A16 the size cap drops the aspect (one side clamped alone): applied, and caught by "DPR edges…"
+  ---
+  duration_ms: 476.9503
+  type: 'test'
+  ...
+# Subtest: mutation A17 Ctrl/Alt/Meta ignored by keyAction: applied, and caught by "keys: Ctrl, Alt or Meta…"
+ok 21 - mutation A17 Ctrl/Alt/Meta ignored by keyAction: applied, and caught by "keys: Ctrl, Alt or Meta…"
+  ---
+  duration_ms: 493.6594
+  type: 'test'
+  ...
+# Subtest: mutation A18 the frame loop passes no modifiers (Ctrl+C cycles the camera): applied, and caught by "keys in the frame loop…"
+ok 22 - mutation A18 the frame loop passes no modifiers (Ctrl+C cycles the camera): applied, and caught by "keys in the frame loop…"
+  ---
+  duration_ms: 492.3391
+  type: 'test'
+  ...
+# Subtest: mutation A19 a failed mount is swallowed: applied, and caught by "mount failure…"
+ok 23 - mutation A19 a failed mount is swallowed: applied, and caught by "mount failure…"
+  ---
+  duration_ms: 511.5909
+  type: 'test'
+  ...
+# Subtest: mutation A20 the probe skips the perspective divide: applied, and caught by "probe: the head lands in the middle…"
+ok 24 - mutation A20 the probe skips the perspective divide: applied, and caught by "probe: the head lands in the middle…"
+  ---
+  duration_ms: 470.6871
+  type: 'test'
+  ...
+# Subtest: mutation A21 the judge accepts a view with nothing drawn: applied, and caught by "judge: each failure…"
+ok 25 - mutation A21 the judge accepts a view with nothing drawn: applied, and caught by "judge: each failure…"
+  ---
+  duration_ms: 479.0134
+  type: 'test'
+  ...
+# Subtest: mutation A22 the judge never checks DPR: applied, and caught by "judge: each failure…"
+ok 26 - mutation A22 the judge never checks DPR: applied, and caught by "judge: each failure…"
+  ---
+  duration_ms: 516.541
+  type: 'test'
+  ...
+# Subtest: mutation B1 no key light (only ambient and fill): applied, and caught by "light: a floor and a vertical wall…"
+ok 27 - mutation B1 no key light (only ambient and fill): applied, and caught by "light: a floor and a vertical wall…"
+  ---
+  duration_ms: 486.1762
+  type: 'test'
+  ...
+# Subtest: mutation B2 one-sided light (an overhang goes dark): applied, and caught by "light: two-sided…"
+ok 28 - mutation B2 one-sided light (an overhang goes dark): applied, and caught by "light: two-sided…"
+  ---
+  duration_ms: 484.6234
+  type: 'test'
+  ...
+# Subtest: mutation B3 the shader key strength drifts from look.js: applied, and caught by "light: the fragment shader carries…"
+ok 29 - mutation B3 the shader key strength drifts from look.js: applied, and caught by "light: the fragment shader carries…"
+  ---
+  duration_ms: 504.9306
+  type: 'test'
+  ...
+# Subtest: mutation B4 the edge lines one vertex in from the edges: applied, and caught by "edge lines: through the two edge vertices…"
+ok 30 - mutation B4 the edge lines one vertex in from the edges: applied, and caught by "edge lines: through the two edge vertices…"
+  ---
+  duration_ms: 494.4226
+  type: 'test'
+  ...
+# Subtest: mutation B5 the lines not lifted off the surface (they would z-fight): applied, and caught by "edge lines: through the two edge vertices…"
+ok 31 - mutation B5 the lines not lifted off the surface (they would z-fight): applied, and caught by "edge lines: through the two edge vertices…"
+  ---
+  duration_ms: 509.7464
+  type: 'test'
+  ...
+# Subtest: mutation B6 no ties across the road: applied, and caught by "edge lines: a tie across the road…"
+ok 32 - mutation B6 no ties across the road: applied, and caught by "edge lines: a tie across the road…"
+  ---
+  duration_ms: 514.1326
+  type: 'test'
+  ...
+# Subtest: mutation B7 the overhead fit ignores the aspect: applied, and caught by "overhead fit (aspect 0.6)…"
+ok 33 - mutation B7 the overhead fit ignores the aspect: applied, and caught by "overhead fit (aspect 0.6)…"
+  ---
+  duration_ms: 508.3827
+  type: 'test'
+  ...
+# Subtest: mutation B8 the overhead fit measures from the box bottom (the top is clipped): applied, and caught by "overhead fit…"
+ok 34 - mutation B8 the overhead fit measures from the box bottom (the top is clipped): applied, and caught by "overhead fit…"
+  ---
+  duration_ms: 621.0134
+  type: 'test'
+  ...
+# Subtest: mutation B9 the world box takes one corner of each local box: applied, and caught by "overhead fit…"
+ok 35 - mutation B9 the world box takes one corner of each local box: applied, and caught by "overhead fit…"
+  ---
+  duration_ms: 594.9346
+  type: 'test'
+  ...
+# Subtest: mutation B10 the ghost is built on the live path (no copy): applied, and caught by "ghost: the ghost of a segment tail…"
+ok 36 - mutation B10 the ghost is built on the live path (no copy): applied, and caught by "ghost: the ghost of a segment tail…"
+  ---
+  duration_ms: 497.5935
+  type: 'test'
+  ...
+# Subtest: mutation B11 placing the word does not retire its ghost: applied, and caught by "preview: showGhost draws the ghost…"
+ok 37 - mutation B11 placing the word does not retire its ghost: applied, and caught by "preview: showGhost draws the ghost…"
+  ---
+  duration_ms: 490.9905
+  type: 'test'
+  ...
+# Subtest: mutation B12 the candidate ignores the font picker: applied, and caught by "ghost through A…"
+ok 38 - mutation B12 the candidate ignores the font picker: applied, and caught by "ghost through A…"
+  ---
+  duration_ms: 509.5187
+  type: 'test'
+  ...
+# Subtest: mutation B13 the grid floats above y = 0: applied, and caught by "grid: every vertex at y = 0…"
+ok 39 - mutation B13 the grid floats above y = 0: applied, and caught by "grid: every vertex at y = 0…"
+  ---
+  duration_ms: 554.7035
+  type: 'test'
+  ...
+# Subtest: mutation B14 the ghost is never drawn: applied, and caught by "preview: showGhost draws the ghost…"
+ok 40 - mutation B14 the ghost is never drawn: applied, and caught by "preview: showGhost draws the ghost…"
+  ---
+  duration_ms: 513.0351
+  type: 'test'
+  ...
+# Subtest: mutation B16 the head marker does not grow with distance (a speck from overhead): applied, and caught by "head marker: it grows…"
+ok 41 - mutation B16 the head marker does not grow with distance (a speck from overhead): applied, and caught by "head marker: it grows…"
+  ---
+  duration_ms: 486.4709
+  type: 'test'
+  ...
+# Subtest: mutation B15 the head marker is never drawn: applied, and caught by "preview: a frame draws the grid and the head marker…"
+ok 42 - mutation B15 the head marker is never drawn: applied, and caught by "preview: a frame draws the grid and the head marker…"
+  ---
+  duration_ms: 504.7814
+  type: 'test'
+  ...
+# Subtest: mutation P1 a sculpt re-places the path but keeps the old mesh: applied, and caught by "soak:…"
+ok 43 - mutation P1 a sculpt re-places the path but keeps the old mesh: applied, and caught by "soak:…"
+  ---
+  duration_ms: 577.1453
+  type: 'test'
+  ...
+# Subtest: mutation P2 every change rebuilds the whole track (no per-cell reuse): applied, and caught by "per-cell rebuild: a length sculpt…"
+ok 44 - mutation P2 every change rebuilds the whole track (no per-cell reuse): applied, and caught by "per-cell rebuild: a length sculpt…"
+  ---
+  duration_ms: 491.5602
+  type: 'test'
+  ...
+# Subtest: mutation P3 the preview reaches for the native side: applied, and caught by "no mesh over IPC: app/preview and app/camera…"
+ok 45 - mutation P3 the preview reaches for the native side: applied, and caught by "no mesh over IPC: app/preview and app/camera…"
+  ---
+  duration_ms: 504.304
+  type: 'test'
+  ...
+# Subtest: mutation T1 the editor ignores the value it is given: applied, and caught by "editor: an accepted edit changes the canonical text…"
+ok 46 - mutation T1 the editor ignores the value it is given: applied, and caught by "editor: an accepted edit changes the canonical text…"
+  ---
+  duration_ms: 475.9062
+  type: 'test'
+  ...
+# Subtest: mutation T2 the panel never calls onChange: applied, and caught by "panel: an accepted edit calls onChange…"
+ok 47 - mutation T2 the panel never calls onChange: applied, and caught by "panel: an accepted edit calls onChange…"
+  ---
+  duration_ms: 499.5345
+  type: 'test'
+  ...
+# Subtest: mutation L1 ksAmbient is read from ksDiffuse: applied, and caught by "mapping: ksAmbient, ksDiffuse…"
+ok 48 - mutation L1 ksAmbient is read from ksDiffuse: applied, and caught by "mapping: ksAmbient, ksDiffuse…"
+  ---
+  duration_ms: 483.5791
+  type: 'test'
+  ...
+# Subtest: mutation L2 a missing property reads 1, not 0: applied, and caught by "mapping: a property the material lacks reads 0…"
+ok 49 - mutation L2 a missing property reads 1, not 0: applied, and caught by "mapping: a property the material lacks reads 0…"
+  ---
+  duration_ms: 487.9764
+  type: 'test'
+  ...
+# Subtest: mutation L3 the multilayer R and G scales are swapped: applied, and caught by "mapping: ksMultilayer takes…"
+ok 50 - mutation L3 the multilayer R and G scales are swapped: applied, and caught by "mapping: ksMultilayer takes…"
+  ---
+  duration_ms: 487.9876
+  type: 'test'
+  ...
+# Subtest: mutation L4 ksPerPixelNM falls to ksPerPixel: applied, and caught by "mapping: the shader picks the program…"
+ok 51 - mutation L4 ksPerPixelNM falls to ksPerPixel: applied, and caught by "mapping: the shader picks the program…"
+  ---
+  duration_ms: 494.7615
+  type: 'test'
+  ...
+# Subtest: mutation L5 the renderer never sets ksSpecular: applied, and caught by "renderer: an AC material…"
+ok 52 - mutation L5 the renderer never sets ksSpecular: applied, and caught by "renderer: an AC material…"
+  ---
+  duration_ms: 497.2378
+  type: 'test'
+  ...
+# Subtest: mutation L6 every sampler gets the white texel: applied, and caught by "renderer: a named texture is uploaded…"
+ok 53 - mutation L6 every sampler gets the white texel: applied, and caught by "renderer: a named texture is uploaded…"
+  ---
+  duration_ms: 485.9801
+  type: 'test'
+  ...
+# Subtest: mutation L7 the multilayer scales never reach the shader: applied, and caught by "renderer: the multilayer scales…"
+ok 54 - mutation L7 the multilayer scales never reach the shader: applied, and caught by "renderer: the multilayer scales…"
+  ---
+  duration_ms: 485.9586
+  type: 'test'
+  ...
+# Subtest: mutation L8 textures are never deleted: applied, and caught by "renderer: a texture no longer drawn…"
+ok 55 - mutation L8 textures are never deleted: applied, and caught by "renderer: a texture no longer drawn…"
+  ---
+  duration_ms: 492.0739
+  type: 'test'
+  ...
+# Subtest: mutation L9 a shader loses a uniform declaration: applied, and caught by "shaders: every uniform the renderer sets…"
+ok 56 - mutation L9 a shader loses a uniform declaration: applied, and caught by "shaders: every uniform the renderer sets…"
+  ---
+  duration_ms: 490.8246
+  type: 'test'
+  ...
+# Subtest: mutation L10 an untextured set slot replaces the exported material: applied, and caught by "textured: an untextured floor…"
+ok 57 - mutation L10 an untextured set slot replaces the exported material: applied, and caught by "textured: an untextured floor…"
+  ---
+  duration_ms: 497.9702
+  type: 'test'
+  ...
+# Subtest: mutation L11 the set is ignored: applied, and caught by "textured: a word whose floor names…"
+ok 58 - mutation L11 the set is ignored: applied, and caught by "textured: a word whose floor names…"
+  ---
+  duration_ms: 551.6246
+  type: 'test'
+  ...
+# Subtest: mutation L12 textures are keyed by name, not by the kn5 file: applied, and caught by "textured: the preview's texels…"
+ok 59 - mutation L12 textures are keyed by name, not by the kn5 file: applied, and caught by "textured: the preview's texels…"
+  ---
+  duration_ms: 545.7862
+  type: 'test'
+  ...
+# Subtest: mutation L13 the default look is the word colours: applied, and caught by "preview: the AC look is the default…"
+ok 60 - mutation L13 the default look is the word colours: applied, and caught by "preview: the AC look is the default…"
+  ---
+  duration_ms: 498.4889
+  type: 'test'
+  ...
+# Subtest: mutation L14 setTextureSet drops the set: applied, and caught by "preview: a texture set with a made floor…"
+ok 61 - mutation L14 setTextureSet drops the set: applied, and caught by "preview: a texture set with a made floor…"
+  ---
+  duration_ms: 540.7405
+  type: 'test'
+  ...
+# Subtest: mutation L15 a property is read from the wrong material: applied, and caught by "list: every mesh the preview draws is in the kn5…"
+ok 62 - mutation L15 a property is read from the wrong material: applied, and caught by "list: every mesh the preview draws is in the kn5…"
+  ---
+  duration_ms: 12250.8269
+  type: 'test'
+  ...
+# Subtest: mutation L16 L does not change the look (the colour per word is unreachable): applied, and caught by "preview: L toggles the look…"
+ok 63 - mutation L16 L does not change the look (the colour per word is unreachable): applied, and caught by "preview: L toggles the look…"
+  ---
+  duration_ms: 544.7645
+  type: 'test'
+  ...
+# Subtest: mutation L17 the ties never fade (they hatch the road dark at a distance): applied, and caught by "renderer: the ties fade out…"
+ok 64 - mutation L17 the ties never fade (they hatch the road dark at a distance): applied, and caught by "renderer: the ties fade out…"
+  ---
+  duration_ms: 511.9461
+  type: 'test'
+  ...
+# Subtest: mutation K1 a kept chunk ignores the matrices of its cells (a moved piece is drawn where it was): applied, and caught by "renderer: after a sculpt that moves later pieces, the drawn road equals…"
+ok 65 - mutation K1 a kept chunk ignores the matrices of its cells (a moved piece is drawn where it was): applied, and caught by "renderer: after a sculpt that moves later pieces, the drawn road equals…"
+  ---
+  duration_ms: 592.9842
+  type: 'test'
+  ...
+# Subtest: mutation K2 the cells are never merged (one draw per cell again): applied, and caught by "renderer: merged chunks draw the triangles…"
+ok 66 - mutation K2 the cells are never merged (one draw per cell again): applied, and caught by "renderer: merged chunks draw the triangles…"
+  ---
+  duration_ms: 507.7228
+  type: 'test'
+  ...
+# Subtest: mutation K3 the indices of a merged cell are not moved past the cells before it: applied, and caught by "renderer: merged chunks draw the triangles…"
+ok 67 - mutation K3 the indices of a merged cell are not moved past the cells before it: applied, and caught by "renderer: merged chunks draw the triangles…"
+  ---
+  duration_ms: 521.2615
+  type: 'test'
+  ...
+# Subtest: mutation K4 normals are baked as points (translated with the cell): applied, and caught by "renderer: merged chunks draw the triangles…"
+ok 68 - mutation K4 normals are baked as points (translated with the cell): applied, and caught by "renderer: merged chunks draw the triangles…"
+  ---
+  duration_ms: 534.4969
+  type: 'test'
+  ...
+# Subtest: mutation K5 a chunk may outgrow its vertex limit: applied, and caught by "renderer: merged chunks draw the triangles…"
+ok 69 - mutation K5 a chunk may outgrow its vertex limit: applied, and caught by "renderer: merged chunks draw the triangles…"
+  ---
+  duration_ms: 538.007
+  type: 'test'
+  ...
+# Subtest: mutation L18 the canvas is cleared to the fog colour again: applied, and caught by "renderer: the canvas is cleared to CLEAR…"
+ok 70 - mutation L18 the canvas is cleared to the fog colour again: applied, and caught by "renderer: the canvas is cleared to CLEAR…"
+  ---
+  duration_ms: 479.1684
+  type: 'test'
+  ...
+# Subtest: mutation N3 a repeated key-down makes the key the newest again: applied, and caught by "a held key that repeats…"
+ok 71 - mutation N3 a repeated key-down makes the key the newest again: applied, and caught by "a held key that repeats…"
+  ---
+  duration_ms: 489.7351
+  type: 'test'
+  ...
+# Subtest: mutation N4 a key-up lets go of every key: applied, and caught by "releasing the OLDER…"
+ok 72 - mutation N4 a key-up lets go of every key: applied, and caught by "releasing the OLDER…"
+  ---
+  duration_ms: 507.9888
+  type: 'test'
+  ...
+# Subtest: mutation N5 the takeover re-fires every frame a key is held (C and B are undone): applied, and caught by "P3: C or B pressed while a movement key is held…"
+ok 73 - mutation N5 the takeover re-fires every frame a key is held (C and B are undone): applied, and caught by "P3: C or B pressed while a movement key is held…"
+  ---
+  duration_ms: 488.1321
+  type: 'test'
+  ...
+# Subtest: mutation E1 an OS key-repeat re-arms the takeover (W1: after C or B, a held W snaps back to free): applied, and caught by "W1: W held and REPEATING…"
+ok 74 - mutation E1 an OS key-repeat re-arms the takeover (W1: after C or B, a held W snaps back to free): applied, and caught by "W1: W held and REPEATING…"
+  ---
+  duration_ms: 493.1998
+  type: 'test'
+  ...
+# Subtest: mutation E2 deltaX counts without Shift (W2: a sideways trackpad swipe zooms, or moves the lens): applied, and caught by "W2: a trackpad swipe SIDEWAYS…"
+ok 75 - mutation E2 deltaX counts without Shift (W2: a sideways trackpad swipe zooms, or moves the lens): applied, and caught by "W2: a trackpad swipe SIDEWAYS…"
+  ---
+  duration_ms: 484.8954
+  type: 'test'
+  ...
+# Subtest: mutation N6 the wheel ignores deltaX (Shift+wheel is dead on a device that reports it there): applied, and caught by "P5: Shift+wheel is ×4…"
+ok 76 - mutation N6 the wheel ignores deltaX (Shift+wheel is dead on a device that reports it there): applied, and caught by "P5: Shift+wheel is ×4…"
+  ---
+  duration_ms: 507.6819
+  type: 'test'
+  ...
+# Subtest: mutation N7 the key action is looked up by the physical key name, not fixed at key-down: applied, and caught by "P2: a key that flies by its label…"
+ok 77 - mutation N7 the key action is looked up by the physical key name, not fixed at key-down: applied, and caught by "P2: a key that flies by its label…"
+  ---
+  duration_ms: 487.4391
+  type: 'test'
+  ...
+# Subtest: mutation N8 the overhead never slides to the head (a black view on a curved track): applied, and caught by "overhead zoomed in (0.05 to 50)…"
+ok 78 - mutation N8 the overhead never slides to the head (a black view on a curved track): applied, and caught by "overhead zoomed in (0.05 to 50)…"
+  ---
+  duration_ms: 489.4117
+  type: 'test'
+  ...
+# Subtest: mutation N9 the overhead slides to the head at half the rate: applied, and caught by "overhead zoomed in (0.05 to 50)…"
+ok 79 - mutation N9 the overhead slides to the head at half the rate: applied, and caught by "overhead zoomed in (0.05 to 50)…"
+  ---
+  duration_ms: 505.1333
+  type: 'test'
+  ...
+# Subtest: mutation N10 the overhead slides past the box centre when zoomed OUT: applied, and caught by "overhead at zoom 1 and out is unchanged…"
+ok 80 - mutation N10 the overhead slides past the box centre when zoomed OUT: applied, and caught by "overhead at zoom 1 and out is unchanged…"
+  ---
+  duration_ms: 479.6764
+  type: 'test'
+  ...
+# Subtest: mutation N11 the sprint never ramps (×4 for as long as Shift is held): applied, and caught by "keys: Shift held ramps the speed…"
+ok 81 - mutation N11 the sprint never ramps (×4 for as long as Shift is held): applied, and caught by "keys: Shift held ramps the speed…"
+  ---
+  duration_ms: 490.1497
+  type: 'test'
+  ...
+# Subtest: mutation N12 the ramp never resets on release (a second press starts at ×20): applied, and caught by "releasing Shift returns to ×1…"
+ok 82 - mutation N12 the ramp never resets on release (a second press starts at ×20): applied, and caught by "releasing Shift returns to ×1…"
+  ---
+  duration_ms: 561.679
+  type: 'test'
+  ...
+# Subtest: mutation N13 a blur does not reset the ramp: applied, and caught by "a blur resets the ramp…"
+ok 83 - mutation N13 a blur does not reset the ramp: applied, and caught by "a blur resets the ramp…"
+  ---
+  duration_ms: 490.1097
+  type: 'test'
+  ...
+# Subtest: mutation N14 the ramp is twice too slow (5 s to full): applied, and caught by "the sprint curve…"
+ok 84 - mutation N14 the ramp is twice too slow (5 s to full): applied, and caught by "the sprint curve…"
+  ---
+  duration_ms: 483.4959
+  type: 'test'
+  ...
+# Subtest: mutation N15 the ramp stops at ×10: applied, and caught by "the sprint curve…"
+ok 85 - mutation N15 the ramp stops at ×10: applied, and caught by "the sprint curve…"
+  ---
+  duration_ms: 498.6591
+  type: 'test'
+  ...
+# Subtest: mutation N16 Enter blurs a text area too (it is a new line there): applied, and caught by "Enter in a text AREA…"
+ok 86 - mutation N16 Enter blurs a text area too (it is a new line there): applied, and caught by "Enter in a text AREA…"
+  ---
+  duration_ms: 492.677
+  type: 'test'
+  ...
+# Subtest: mutation N17 Esc does not blur a field: applied, and caught by "Esc in a field lets go…"
+ok 87 - mutation N17 Esc does not blur a field: applied, and caught by "Esc in a field lets go…"
+  ---
+  duration_ms: 508.8364
+  type: 'test'
+  ...
+# Subtest: mutation N18 Enter does not blur a field: applied, and caught by "Enter in a text field or a number field…"
+ok 88 - mutation N18 Enter does not blur a field: applied, and caught by "Enter in a text field or a number field…"
+  ---
+  duration_ms: 494.1269
+  type: 'test'
+  ...
+# Subtest: mutation N19 a click on the canvas leaves the field focused: applied, and caught by "a mouse-down on the canvas…"
+ok 89 - mutation N19 a click on the canvas leaves the field focused: applied, and caught by "a mouse-down on the canvas…"
+  ---
+  duration_ms: 487.9869
+  type: 'test'
+  ...
+# Subtest: mutation N20 a number field swallows the camera keys: applied, and caught by "a NUMBER field lets the camera keys through…"
+ok 90 - mutation N20 a number field swallows the camera keys: applied, and caught by "a NUMBER field lets the camera keys through…"
+  ---
+  duration_ms: 502.1636
+  type: 'test'
+  ...
+# Subtest: mutation N21 a text field lets the camera keys through (typing moves the camera): applied, and caught by "a TEXT field swallows every camera key…"
+ok 91 - mutation N21 a text field lets the camera keys through (typing moves the camera): applied, and caught by "a TEXT field swallows every camera key…"
+  ---
+  duration_ms: 483.6328
+  type: 'test'
+  ...
+# Subtest: mutation N22 Ctrl+wheel dollies instead of zooming the lens: applied, and caught by "Ctrl+wheel is the LENS…"
+ok 92 - mutation N22 Ctrl+wheel dollies instead of zooming the lens: applied, and caught by "Ctrl+wheel is the LENS…"
+  ---
+  duration_ms: 483.7641
+  type: 'test'
+  ...
+# Subtest: mutation N23 the plain wheel is the lens: applied, and caught by "the plain wheel is unchanged…"
+ok 93 - mutation N23 the plain wheel is the lens: applied, and caught by "the plain wheel is unchanged…"
+  ---
+  duration_ms: 501.0997
+  type: 'test'
+  ...
+# Subtest: mutation N24 the middle click does not reset the lens: applied, and caught by "a middle click resets the lens…"
+ok 94 - mutation N24 the middle click does not reset the lens: applied, and caught by "a middle click resets the lens…"
+  ---
+  duration_ms: 504.0233
+  type: 'test'
+  ...
+# Subtest: mutation N25 the HUD never shows the fov: applied, and caught by "the HUD shows the fov…"
+ok 95 - mutation N25 the HUD never shows the fov: applied, and caught by "the HUD shows the fov…"
+  ---
+  duration_ms: 507.9027
+  type: 'test'
+  ...
+# Subtest: mutation N26 the lens zooms the wrong way: applied, and caught by "the lens: a notch in narrows…"
+ok 96 - mutation N26 the lens zooms the wrong way: applied, and caught by "the lens: a notch in narrows…"
+  ---
+  duration_ms: 505.5983
+  type: 'test'
+  ...
+# Subtest: mutation N27 the lens is not clamped at 10°: applied, and caught by "the lens: a notch in narrows…"
+ok 97 - mutation N27 the lens is not clamped at 10°: applied, and caught by "the lens: a notch in narrows…"
+  ---
+  duration_ms: 484.5626
+  type: 'test'
+  ...
+# Subtest: mutation N28 the pose ignores the lens: applied, and caught by "the lens changes the pose…"
+ok 98 - mutation N28 the pose ignores the lens: applied, and caught by "the lens changes the pose…"
+  ---
+  duration_ms: 508.1489
+  type: 'test'
+  ...
+# Subtest: mutation D1 movement is newest-key-only again (a newer key zeroes the other axes: no diagonal): applied, and caught by "keys: W then D goes diagonally…"
+ok 99 - mutation D1 movement is newest-key-only again (a newer key zeroes the other axes: no diagonal): applied, and caught by "keys: W then D goes diagonally…"
+  ---
+  duration_ms: 509.6761
+  type: 'test'
+  ...
+# Subtest: mutation D2 on one axis the OLDER key wins: applied, and caught by "on one axis the NEWER key wins…"
+ok 100 - mutation D2 on one axis the OLDER key wins: applied, and caught by "on one axis the NEWER key wins…"
+  ---
+  duration_ms: 510.9334
+  type: 'test'
+  ...
+# Subtest: mutation D3 both keys of an axis cancel (W and S held: stand still): applied, and caught by "on one axis the NEWER key wins…"
+ok 101 - mutation D3 both keys of an axis cancel (W and S held: stand still): applied, and caught by "on one axis the NEWER key wins…"
+  ---
+  duration_ms: 517.8596
+  type: 'test'
+  ...
+# Subtest: mutation D4 a diagonal is not normalised (√2 times a straight line): applied, and caught by "keys: W then D goes diagonally…"
+ok 102 - mutation D4 a diagonal is not normalised (√2 times a straight line): applied, and caught by "keys: W then D goes diagonally…"
+  ---
+  duration_ms: 516.6171
+  type: 'test'
+  ...
+# Subtest: mutation D5 a diagonal is normalised to the wrong length (÷ n², not ÷ n): applied, and caught by "three axes at once…"
+ok 103 - mutation D5 a diagonal is normalised to the wrong length (÷ n², not ÷ n): applied, and caught by "three axes at once…"
+  ---
+  duration_ms: 501.6887
+  type: 'test'
+  ...
+# Subtest: mutation D6 a newer key on an axis drops the older for good (no handover on release): applied, and caught by "on its release the…"
+ok 104 - mutation D6 a newer key on an axis drops the older for good (no handover on release): applied, and caught by "on its release the…"
+  ---
+  duration_ms: 498.899
+  type: 'test'
+  ...
+# Subtest: mutation D7 a key-up lets go of every key (the other axis stops too): applied, and caught by "releasing one key of a diagonal…"
+ok 105 - mutation D7 a key-up lets go of every key (the other axis stops too): applied, and caught by "releasing one key of a diagonal…"
+  ---
+  duration_ms: 554.2493
+  type: 'test'
+  ...
+# Subtest: mutation D8 a repeated key-down makes the key the newer again: applied, and caught by "a held key that repeats…"
+ok 106 - mutation D8 a repeated key-down makes the key the newer again: applied, and caught by "a held key that repeats…"
+  ---
+  duration_ms: 526.6086
+  type: 'test'
+  ...
+# Subtest: mutation D9 the arrow keys stop turning while a movement key is held: applied, and caught by "the arrow (look) keys are not movement keys…"
+ok 107 - mutation D9 the arrow keys stop turning while a movement key is held: applied, and caught by "the arrow (look) keys are not movement keys…"
+  ---
+  duration_ms: 493.3741
+  type: 'test'
+  ...
+1..107
+# tests 107
+# suites 0
+# pass 107
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 156155.6557

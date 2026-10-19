@@ -1,0 +1,58 @@
+{
+ "at": "2026-10-19T14:41:50.637Z",
+ "harness": "app\\test\\mutation.test.js",
+ "mutations": 103,
+ "mutant": "D8 a repeated key-down makes the key the newer again",
+ "caughtBy": "a held key that repeats",
+ "tests": null,
+ "rows": [
+  {
+   "label": "control whole",
+   "total_ms": 14607,
+   "inner_ms": 14493,
+   "copy_and_rest_ms": 114,
+   "tests": 206,
+   "suites": 0,
+   "fail": 0,
+   "applied": true,
+   "caught": false,
+   "error": null
+  },
+  {
+   "label": "mutant whole: D8 a repeated key-down makes the key the newer again",
+   "total_ms": 14086,
+   "inner_ms": 13947,
+   "copy_and_rest_ms": 138,
+   "tests": 206,
+   "suites": 0,
+   "fail": 1,
+   "applied": true,
+   "caught": true,
+   "error": null
+  },
+  {
+   "label": "mutant narrowed: D8 a repeated key-down makes the key the newer again",
+   "total_ms": 705,
+   "inner_ms": 565,
+   "copy_and_rest_ms": 140,
+   "tests": 9,
+   "suites": 0,
+   "fail": 1,
+   "applied": true,
+   "caught": true,
+   "error": null
+  },
+  {
+   "label": "control narrowed to the mutant's caughtBy",
+   "total_ms": 592,
+   "inner_ms": 453,
+   "copy_and_rest_ms": 139,
+   "tests": 9,
+   "suites": 0,
+   "fail": 0,
+   "applied": true,
+   "caught": false,
+   "error": null
+  }
+ ]
+}

@@ -1,0 +1,60 @@
+{
+ "at": "2026-10-19T14:42:11.004Z",
+ "harness": "app\\test\\core-close-mutation.test.js",
+ "mutations": 45,
+ "mutant": "U1 Undo shows the head only (the bug)",
+ "caughtBy": "D242 item 7",
+ "tests": [
+  "app/test/core-readout-display.test.js"
+ ],
+ "rows": [
+  {
+   "label": "control whole",
+   "total_ms": 9433,
+   "inner_ms": 9195,
+   "copy_and_rest_ms": 239,
+   "tests": 48,
+   "suites": 0,
+   "fail": 0,
+   "applied": true,
+   "caught": false,
+   "error": null
+  },
+  {
+   "label": "mutant whole: U1 Undo shows the head only (the bug)",
+   "total_ms": 9026,
+   "inner_ms": 8807,
+   "copy_and_rest_ms": 219,
+   "tests": 48,
+   "suites": 0,
+   "fail": 3,
+   "applied": true,
+   "caught": true,
+   "error": null
+  },
+  {
+   "label": "mutant narrowed: U1 Undo shows the head only (the bug)",
+   "total_ms": 790,
+   "inner_ms": 583,
+   "copy_and_rest_ms": 207,
+   "tests": 2,
+   "suites": 0,
+   "fail": 2,
+   "applied": true,
+   "caught": true,
+   "error": null
+  },
+  {
+   "label": "control narrowed to the mutant's caughtBy",
+   "total_ms": 1011,
+   "inner_ms": 765,
+   "copy_and_rest_ms": 246,
+   "tests": 2,
+   "suites": 0,
+   "fail": 0,
+   "applied": true,
+   "caught": false,
+   "error": null
+  }
+ ]
+}
