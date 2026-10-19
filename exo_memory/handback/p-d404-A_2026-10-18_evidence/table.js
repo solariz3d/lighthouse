@@ -1,0 +1,7 @@
+// table.js: out/*.json -> a markdown table: per case the drag's work frames (a frame in which the page's animation-frame callbacks ran > 1 ms)
+const fs = require('fs'), path = require('path'); const OUT = path.join(__dirname, 'out');
+const R = fs.readdirSync(OUT).filter((f) => f.endsWith('.json') && !f.startsWith('_')).map((f) => JSON.parse(fs.readFileSync(path.join(OUT, f), 'utf8')));
+const by = (p) => R.filter((r) => r.id.startsWith(p)).sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
+const row = (r) => { if (r.error) return `| ${r.id} | ERROR ${r.error.slice(0, 60)} |`; const w = r.work; if (!w) return `| ${r.id} | no work frames | |`; const s = w.script, c = w.cost; return `| ${r.id} | ${w.frames} | ${s.median} | ${s.p95} | ${s.p99} | ${s.max} | ${Math.round(100 * s.over69)}% | ${Math.round(100 * s.over42)}% | ${c.median} | ${c.p95} | ${(r.moves / (r.dragMs / 1000)).toFixed(0)} |`; };
+const head = '| case | work frames | script median ms | p95 | p99 | max | >6.9 ms | >4.2 ms | frame-to-frame median | p95 | moves/s |\n|---|---|---|---|---|---|---|---|---|---|---|';
+for (const [title, p] of [['looks (1000 m)', 'looks-'], ['ladder (aqua)', 'ladder-'], ['blur and animation off', 'noblur-'], ['60 Hz capped', 'capped-'], ['older releases (turn, stretch at 1000 m, default look)', 'old-'], ['trace runs', 'trace-']]) { console.log(`\n### ${title}\n${head}\n${by(p).map(row).join('\n')}`); }

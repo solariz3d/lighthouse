@@ -1,0 +1,27 @@
+// anaq.js: tables from out-q/ (windows proved quiet by quiet.js)
+const fs = require('fs'), path = require('path'); const dir = path.join(__dirname, 'out-q');
+const all = fs.readdirSync(dir).filter((f) => f.endsWith('.json') && !f.startsWith('_')).map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')));
+const R = all.filter((r) => !r.invalid && !r.error);
+const mean = (a, f) => a.reduce((s, x) => s + x[f], 0) / a.length, sd = (a, f) => { const m = mean(a, f); return Math.sqrt(a.reduce((s, x) => s + (x[f] - m) ** 2, 0) / a.length); };
+const g = (tag, look, kind, L) => R.filter((r) => new RegExp(`^${tag}-${look}-${kind}-${L}-r\\d`).test(r.id)).map((r) => r.work && r.work.script).filter(Boolean);
+const cell = (a) => a.length ? `${mean(a, 'median').toFixed(1)} / ${mean(a, 'p95').toFixed(1)} / ${mean(a, 'p99').toFixed(1)}` : 'n/a';
+const share = (a, f) => a.length ? Math.round(100 * mean(a, f)) + '%' : '';
+const LOOKS = ['aqua', 'skyline', 'glass', 'aurora', 'sigil'];
+const out = [];
+out.push('**A. Before (v0.4.7, c2d7cb5) and after (d404-a), per look. Script ms of the work frames: median / p95 / p99 (mean of 3 quiet runs); share of frames over 6.0 ms is not stored per bar, so over 6.9 and over 4.2 are given**');
+out.push('| case | before | after | before >6.9 / >4.2 | after >6.9 / >4.2 |\n|---|---|---|---|---|');
+for (const [kind, L] of [['turn', 1000], ['turn', 2000], ['stretch', 1000], ['stretch', 2000]]) for (const look of LOOKS) { const b = g('v047', look, kind, L), a = g('d404', look, kind, L); out.push(`| ${look} ${kind} ${L} m | ${cell(b)} | ${cell(a)} | ${share(b, 'over69')} / ${share(b, 'over42')} | ${share(a, 'over69')} / ${share(a, 'over42')} |`); }
+out.push('\n**B. D399 textures: v0.4.7 + D404 fix against fc8c445 + D404 fix (turn handle), median / p95 / p99, and the difference**');
+out.push('| case | v0.4.7+fix | fc8c445+fix | difference median / p95 | runs |\n|---|---|---|---|---|');
+for (const L of [1000, 2000]) for (const look of LOOKS) { const a = g('d404', look, 'turn', L), b = g('d399fix', look, 'turn', L); if (a.length && b.length) out.push(`| ${look} turn ${L} m | ${cell(a)} | ${cell(b)} | ${(mean(b, 'median') - mean(a, 'median')).toFixed(2)} / ${(mean(b, 'p95') - mean(a, 'p95')).toFixed(2)} | ${a.length}+${b.length} |`); }
+const sp = []; for (const look of LOOKS) for (const L of [1000, 2000]) { const a = g('d404', look, 'turn', L); if (a.length > 1) sp.push(sd(a, 'p95')); } out.push(`\nrun-to-run sd of p95 across the 10 cases of the fixed tree: mean ${(sp.reduce((a, b) => a + b, 0) / sp.length).toFixed(2)} ms, max ${Math.max(...sp).toFixed(2)} ms`);
+out.push('\n**C. Ladder (aqua), median / p95 / p99, >6.9, >4.2**\n| case | v0.4.7 | d404-a |\n|---|---|---|');
+for (const kind of ['turn', 'stretch']) for (const L of [100, 500, 1000, 2000, 5000, 10000, 20000]) { const f = (tag) => { const r = R.find((x) => x.id === `ladder-${tag}-${kind}-${L}`); return r && r.work ? `${r.work.script.median} / ${r.work.script.p95} / ${r.work.script.p99}; ${Math.round(100 * r.work.script.over69)}% / ${Math.round(100 * r.work.script.over42)}%` : 'n/a'; }; out.push(`| ${kind} ${L} m | ${f('v047')} | ${f('d404')} |`); }
+out.push('\n**D. Blur and animation off (d404-a), turn: median / p95 against the blur-on mean**\n| case | blur on | blur off |\n|---|---|---|');
+for (const L of [1000, 2000]) for (const look of LOOKS) { const on = g('d404', look, 'turn', L), off = R.filter((r) => r.id === `noblur-d404-${look}-turn-${L}`).map((r) => r.work.script); if (on.length && off.length) out.push(`| ${look} turn ${L} m | ${cell(on)} | ${cell(off)} |`); }
+out.push('\n**E. Traces (Aurora, 60 Hz limit, 5 s): per frame cost off the main thread, blur on / off**\n| tree, length | frames | main script ms | compositor DrawAndSwap ms/frame | GPU flush ms/frame | raster ms |\n|---|---|---|---|---|---|');
+for (const r of all.filter((x) => x.id.startsWith('trace-') && x.traceSummary)) { const T = r.traceSummary.threads, get = (th, n) => { const l = T[th] && T[th].find((x) => x[0] === n); return l ? l[2] : 0; }; out.push(`| ${r.id.replace('trace-', '')} | ${r.frames} | ${get('Renderer/CrRendererMain', 'v8.callFunction').toFixed(0)} | ${(get('GPU Process/VizCompositorThread', 'DisplayScheduler::DrawAndSwap') / r.frames).toFixed(3)} | ${(get('GPU Process/CrGpuMain', 'CommandBuffer::Flush') / r.frames).toFixed(3)} | ${get('Renderer/ThreadPoolForegroundWorker', 'RasterizerTaskImpl::RunOnWorkerThread').toFixed(1)} |`); }
+// quiet statistics
+const w = all.map((r) => r.attempts || []); const nCases = all.length, nAtt = w.reduce((s, a) => s + a.length, 0), rej = w.reduce((s, a) => s + a.filter((x) => !x.quiet).length, 0), fcpu = R.map((r) => r.quietWindow.foreignCpu).sort((a, b) => a - b), hcpu = R.map((r) => r.quietWindow.hostCpu || 0).sort((a, b) => a - b);
+out.push(`\n**Quiet statistics:** ${nCases} cases, ${nAtt} windows timed, ${rej} rejected (re-run), ${all.filter((r) => r.invalid).length} case(s) with no quiet window. Accepted windows: foreign non-host CPU median ${fcpu[fcpu.length >> 1]} s, p95 ${fcpu[Math.floor(fcpu.length * 0.95)]} s, max ${fcpu[fcpu.length - 1]} s (each about 12 to 20 s long); host-service CPU median ${hcpu[hcpu.length >> 1]} s. Every accepted window had both heavy-run slots held by this session's two live pids at its start and end (${R.every((r) => r.quietWindow.locksStart.every((l) => /D404 timing/.test(l)) && r.quietWindow.locksEnd.every((l) => /D404 timing/.test(l))) ? 'checked for all' : 'NOT all'}).`);
+console.log(out.join('\n'));

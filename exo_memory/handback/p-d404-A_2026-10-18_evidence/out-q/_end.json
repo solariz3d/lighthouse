@@ -1,0 +1,227 @@
+{
+ "ended": "2026-10-19T10:15:18.490Z",
+ "cases": 16,
+ "invalidCases": 0,
+ "standingAtEnd": [
+  {
+   "pid": 16336,
+   "name": "msedgewebview2.exe",
+   "cpu": 47.2,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --embedded-browser-webview=1 --webview-exe-name=SearchHost.exe --web"
+  },
+  {
+   "pid": 15248,
+   "name": "msedgewebview2.exe",
+   "cpu": 1.5,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --type=crashpad-handler --user-data-dir=C:\\Users\\nname\\AppData\\Local"
+  },
+  {
+   "pid": 2908,
+   "name": "msedgewebview2.exe",
+   "cpu": 11.5,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --type=utility --utility-sub-type=network.mojom.NetworkService --lan"
+  },
+  {
+   "pid": 3336,
+   "name": "msedgewebview2.exe",
+   "cpu": 11.5,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --type=gpu-process --gpu-recent-crash-count=0 --noerrdialogs --user-"
+  },
+  {
+   "pid": 4856,
+   "name": "msedgewebview2.exe",
+   "cpu": 1.2,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --type=utility --utility-sub-type=storage.mojom.StorageService --lan"
+  },
+  {
+   "pid": 14008,
+   "name": "msedgewebview2.exe",
+   "cpu": 12.2,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --type=renderer --noerrdialogs --user-agent=\"Mozilla/5.0 (Windows NT"
+  },
+  {
+   "pid": 3440,
+   "name": "msedgewebview2.exe",
+   "cpu": 67,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --embedded-browser-webview=1 --webview-exe-name=WidgetBoard.exe --we"
+  },
+  {
+   "pid": 16904,
+   "name": "msedgewebview2.exe",
+   "cpu": 1.4,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --type=crashpad-handler --user-data-dir=C:\\Users\\nname\\AppData\\Local"
+  },
+  {
+   "pid": 20516,
+   "name": "msedgewebview2.exe",
+   "cpu": 77.4,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --type=gpu-process --gpu-recent-crash-count=0 --noerrdialogs --user-"
+  },
+  {
+   "pid": 20524,
+   "name": "msedgewebview2.exe",
+   "cpu": 20.5,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --type=utility --utility-sub-type=network.mojom.NetworkService --lan"
+  },
+  {
+   "pid": 20660,
+   "name": "msedgewebview2.exe",
+   "cpu": 1.9,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --type=utility --utility-sub-type=storage.mojom.StorageService --lan"
+  },
+  {
+   "pid": 20752,
+   "name": "msedgewebview2.exe",
+   "cpu": 142.3,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --type=renderer --noerrdialogs --user-data-dir=\"C:\\Users\\nname\\AppDa"
+  },
+  {
+   "pid": 23116,
+   "name": "msedgewebview2.exe",
+   "cpu": 2352.5,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --embedded-browser-webview=1 --webview-exe-name=consonance.exe --web"
+  },
+  {
+   "pid": 23152,
+   "name": "msedgewebview2.exe",
+   "cpu": 1.5,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --type=crashpad-handler --user-data-dir=C:\\Users\\nname\\AppData\\Local"
+  },
+  {
+   "pid": 23344,
+   "name": "msedgewebview2.exe",
+   "cpu": 48452,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --type=gpu-process --gpu-recent-crash-count=0 --noerrdialogs --user-"
+  },
+  {
+   "pid": 23360,
+   "name": "msedgewebview2.exe",
+   "cpu": 88.4,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --type=utility --utility-sub-type=network.mojom.NetworkService --lan"
+  },
+  {
+   "pid": 23428,
+   "name": "msedgewebview2.exe",
+   "cpu": 0.7,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --type=utility --utility-sub-type=storage.mojom.StorageService --lan"
+  },
+  {
+   "pid": 23528,
+   "name": "msedgewebview2.exe",
+   "cpu": 32189.5,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --type=renderer --noerrdialogs --user-data-dir=\"C:\\Users\\nname\\AppDa"
+  },
+  {
+   "pid": 22436,
+   "name": "node.exe",
+   "cpu": 60.3,
+   "cmd": "\"node\" C:\\Users\\nname\\Desktop\\lighthouse\\dev\\stick-waiter.js --data C:\\Consonance\\data --app-pid 23068 --app-image consonance.exe --app-started-at 2026-10-14T11"
+  },
+  {
+   "pid": 23800,
+   "name": "msedgewebview2.exe",
+   "cpu": 3.4,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en"
+  },
+  {
+   "pid": 2696,
+   "name": "node.exe",
+   "cpu": 61.3,
+   "cmd": "\"C:\\Program Files (x86)\\Adobe\\Adobe Creative Cloud\\CCXProcess\\libs\\node.exe\" \"C:\\Program Files (x86)\\Adobe\\Adobe Creative Cloud\\CCXProcess\\js\\main.js\""
+  },
+  {
+   "pid": 28852,
+   "name": "msedgewebview2.exe",
+   "cpu": 3.7,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\155.0.4283.45\\msedgewebview2.exe\" --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en"
+  },
+  {
+   "pid": 30440,
+   "name": "node.exe",
+   "cpu": 2.6,
+   "cmd": "\"C:\\Program Files\\nodejs\\node.exe\" harness/serve.js C:/Users/nname/Downloads/t180-wt-a3 C:/Users/nname/Downloads/t180-d331/fx 8771"
+  },
+  {
+   "pid": 19008,
+   "name": "node.exe",
+   "cpu": 0.9,
+   "cmd": "\"C:\\Program Files\\nodejs\\node.exe\" harness/serve.js C:/Users/nname/Downloads/t180-wt-a3 C:/Users/nname/Downloads/t180-d331/fx_h39 8772"
+  },
+  {
+   "pid": 32584,
+   "name": "node.exe",
+   "cpu": 0.9,
+   "cmd": "\"C:\\Program Files\\nodejs\\node.exe\" harness/serve.js C:/Users/nname/Downloads/t180-wt-a3 C:/Users/nname/Downloads/t180-d331/fx_h40 8773"
+  },
+  {
+   "pid": 29072,
+   "name": "node.exe",
+   "cpu": 1.1,
+   "cmd": "\"C:\\Program Files\\nodejs\\node.exe\" harness/serve.js C:/Users/nname/Downloads/t180-wt-a3 C:/Users/nname/Downloads/t180-d331/fx_h41 8774"
+  },
+  {
+   "pid": 9160,
+   "name": "node.exe",
+   "cpu": 0.5,
+   "cmd": "node C:/Users/nname/.claude/shell/mcp/world-sense/server.js"
+  },
+  {
+   "pid": 33024,
+   "name": "msedge.exe",
+   "cpu": 3.3,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --no-startup-window /prefetch:5"
+  },
+  {
+   "pid": 27108,
+   "name": "msedge.exe",
+   "cpu": 0,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --type=crashpad-handler \"--user-data-dir=C:\\Users\\nname\\AppData\\Local\\Microsoft\\Edge\\User Data\" /"
+  },
+  {
+   "pid": 18988,
+   "name": "msedge.exe",
+   "cpu": 0.4,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --type=gpu-process --gpu-recent-crash-count=0 --gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQ"
+  },
+  {
+   "pid": 8768,
+   "name": "msedge.exe",
+   "cpu": 0.6,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-typ"
+  },
+  {
+   "pid": 38748,
+   "name": "msedge.exe",
+   "cpu": 0.2,
+   "cmd": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-typ"
+  },
+  {
+   "pid": 2136,
+   "name": "node.exe",
+   "cpu": 0.2,
+   "cmd": "\"C:\\Program Files\\nodejs\\node.exe\" C:/Users/nname/Downloads/t180-d408/lockrun.js \"D408 geom_mutation\" node --max-old-space-size=4096 --test --test-concurrency=1"
+  },
+  {
+   "pid": 15012,
+   "name": "node.exe",
+   "cpu": 0.2,
+   "cmd": "\"C:\\Program Files\\nodejs\\node.exe\" C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratc"
+  }
+ ],
+ "locksAtEnd": [
+  {
+   "file": "heavy-run.lock",
+   "cmd": "t180 A D404 timing session",
+   "pid": 5680,
+   "alive": true,
+   "mine": true
+  },
+  {
+   "file": "heavy-run.2.lock",
+   "cmd": "t180 A D404 timing session (second slot)",
+   "pid": 37040,
+   "alive": true,
+   "mine": true
+  }
+ ]
+}
