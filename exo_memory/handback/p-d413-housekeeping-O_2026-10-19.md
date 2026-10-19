@@ -152,3 +152,14 @@ Nothing pushes them today, but a landing from any of them onto main would bring 
 
 SOURCES: plan_d413 · librarian/2026-10-18.md 07:55–08:13 · grep-landings-for-private-projects memory · git as printed · step3-tests.out.txt · sha-map.txt
 NEXT: librarian — rule on the push gate's form (above); on a yes I push main and paste the push-gate.jsonl "allow" line.
+
+## Addendum, 14:27Z: pushed, on the librarian's ruling (entry 08:26)
+
+The section "THE PUSH IS NOT DONE" above is superseded. The librarian ruled the gate of record correct (added lines, messages,
+HEAD); the chair re-checked and sent the push.
+
+    checked: git fetch; origin/main is an ancestor of main (fast-forward) · 40 ahead at ccbd0d23
+    checked: added lines matching either word 0 · messages 0 · git grep HEAD 0 · credential scan of the added lines 0
+    checked: git push origin main → b89f0d6e..ccbd0d23  main -> main
+    checked: push-gate.jsonl 2026-10-19T14:27:22.902Z, seat c88002b1, decision "allow", scanned lighthouse origin main
+    checked: after: origin/main = main = ccbd0d23 · git ls-remote --heads origin | grep -cE 'backup/|hold/' → 0

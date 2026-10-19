@@ -21,3 +21,9 @@ Could be wrong if that file's time was inflated by other seats' load in the wind
 commit; 0 added lines and 0 messages remain, and every remaining match is already public at origin. The count that answers
 "does this push publish anything new" is the ADDED lines plus the messages, not every line the log prints.
 → `exo_memory/handback/p-d413-housekeeping-O_2026-10-19.md`
+
+### In core-mutation.test.js a mutant's time is its inner run, not its copy: ~21 s running 76 tests, against ~100 ms copying
+2026-10-19, D412 part 2 (a) — `measure-one-mutant.js` on a control and three mutants at b306309, under the lock: copy 97–121 ms
+(191 files, 2.2 MB); the inner run 20.0–22.5 s for all 76 tests; narrowed to the caughtBy test 127–536 ms, 2–4 tests, all caught.
+Could be wrong for the other two big harnesses, which copy differently and were not measured.
+→ `exo_memory/handback/p-d412-part2a-O_2026-10-19.md`
