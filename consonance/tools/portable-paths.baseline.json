@@ -2,7 +2,7 @@
   "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
-    "BENIGN-TEST": 386,
+    "BENIGN-TEST": 387,
     "BENIGN-FIXTURE": 12,
     "REVIEW": 15,
     "DISGUISED": 15,
@@ -1272,6 +1272,13 @@
       "verdict": "BENIGN-TEST",
       "text": "const t2 = [USER('go'), ...readCall('t1', 'C:/work/a.md'), { ...USER('caveat text'), isMeta: true }, ...readCall('t2', 'C:/work/b.md')];",
       "key": "consonance/hooks/sources-gate.test.js\u0000const t2 = [USER('go'), ...readCall('t1', 'C:/work/a.md'), { ...USER('caveat text'), isMeta: true }, ...readCall('t2', 'C:/work/b.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const turn = [USER('go'), ...readCall('t1', 'C:/work/a.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const turn = [USER('go'), ...readCall('t1', 'C:/work/a.md')];\u0000#1"
     },
     {
       "file": "consonance/hooks/sources-gate.test.js",
