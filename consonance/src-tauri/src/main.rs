@@ -3891,6 +3891,26 @@ fn own_map_path(letter: &str) -> PathBuf {
     map_dir().join(format!("{letter}.md"))
 }
 
+/// D423 part 5: what a pane with NO map file is told. It used to get no section and no log line, so a new seat could not tell
+/// "nothing recorded yet" from "a map that failed to ride". Deliberately NOT headed "YOUR OWN MAP": `grep -c "YOUR OWN MAP"`
+/// is the room's count of carried maps (see `map_section`), and a notice of absence must not add to it.
+fn no_map_section(path: &Path) -> String {
+    format!(
+        "\n---\n\n# Your map: not written yet\n\nThere is no `{}` yet; this seat has recorded no findings of its own. \
+         Your first append creates it, in the shape `exo_memory/map/README.md` states, and from then on it rides here \
+         when you wake.\n",
+        path.display().to_string().replace('\\', "/")
+    )
+}
+
+/// D423 part 4 (1): the letter the Third Place holds once it is open. The UI names every non-main pane from the backend registry
+/// (term.js letterFor), but `spawn_third_place` never registered this seat, so the UI's fallback invented its letter (N) and the
+/// backend, which picks every MOUNT letter, handed the same N to the next sibling: two allocators, one letter, two seats. Now it
+/// registers through `pane_letter`, the one allocator: assigned once, kept for life, and read back by the UI like any other.
+fn third_place_letter_at_open() -> Option<String> {
+    Some(pane_letter(THIRD_PLACE_SID))
+}
+
 fn pane_letter(pane: &str) -> String {
     let mut m = read_letters();
     if let Some(l) = m.get(pane) {
@@ -5281,6 +5301,46 @@ mod shell_budget_tests {
         assert!(empty.contains(FAILED));
     }
 
+    /// D423 part 5: a pane with no map file is TOLD so, with the path its first append creates. Before, it got no section at
+    /// all and no log line, and a new seat could not tell "no map yet" from "a map that failed to ride" (the librarian,
+    /// 2026-10-19 07:47: O found it alone at 13:41Z). The notice must not read as a carried map to the room's own count.
+    /// D423 part 4 (1): the live machine's shape. A–M were taken; the Third Place opened and was never registered, so the backend gave
+    /// the next sibling N, the letter the UI was showing for the Third Place. Opening it must leave it holding N, and the next
+    /// sibling must get O.
+    #[test]
+    fn the_third_place_holds_its_letter_so_the_next_sibling_is_not_given_it() {
+        let _serial = DirsGuard::take();
+        let root = crate::test_scratch::Scratch::owning(
+            crate::test_scratch::root().join(format!("consonance_thirdletter_{}", std::process::id())),
+        );
+        let data = root.join("data");
+        fs::create_dir_all(&data).unwrap();
+        let reg: BTreeMap<String, String> = (b'A'..=b'M')
+            .enumerate()
+            .map(|(i, c)| (format!("00000000-0000-4000-8000-{i:012}"), (c as char).to_string()))
+            .collect();
+        fs::write(data.join("letters.json"), serde_json::to_string_pretty(&reg).unwrap()).unwrap();
+        *DIRS.lock().unwrap() = Some(Dirs {
+            room: root.join("BOOT.md").display().to_string(),
+            instances: root.join("instances").display().to_string(),
+            data: data.display().to_string(),
+        });
+        assert_eq!(third_place_letter_at_open().as_deref(), Some("N"), "the Third Place holds no letter once open");
+        assert_eq!(read_letters().get(THIRD_PLACE_SID).map(String::as_str), Some("N"), "the registry does not hold it");
+        assert_eq!(pane_letter("fbf98f8e-29da-4fb2-8610-c038d6372249"), "O", "the next sibling was given the Third Place's letter");
+        assert_eq!(third_place_letter_at_open().as_deref(), Some("N"), "opening it again must not move its letter");
+    }
+
+    #[test]
+    fn a_pane_with_no_map_is_told_its_first_append_creates_the_file() {
+        let s = no_map_section(Path::new("exo_memory/map/O.md"));
+        assert!(s.contains("exo_memory/map/O.md"), "the path the first append creates is missing");
+        assert!(s.contains("first append creates"), "it must say the file does not exist yet and how it comes to");
+        assert!(!s.contains("YOUR OWN MAP"), "`grep -c \"YOUR OWN MAP\"` counts carried maps; a no-map notice must not add to it");
+        assert!(!s.contains("NOTHING FROM YOUR MAP COULD RIDE"), "no map is not a failed carry");
+        assert!(s.len() < 700, "a short notice, not a scaffold: {} chars", s.len());
+    }
+
     /// The index tier states the three numbers that make the failure diagnosable from inside the
     /// pane, so the seat knows to Read before it claims or denies what it knew.
     #[test]
@@ -5759,6 +5819,11 @@ fn intake_with_map(pane: &str, cwd: &str) -> String {
                 ));
             }
             brief.push_str(&section);
+        } else {
+            // D423 part 5: no map file yet. Say so in the pane and outside it, as the carry above does.
+            let path = own_map_path(&pane_letter(pane));
+            plog(&format!("MAP NONE pane={pane} path={} — no findings recorded yet; the first append creates it", path.display()));
+            brief.push_str(&no_map_section(&path));
         }
     }
     brief
@@ -8741,6 +8806,9 @@ fn spawn_third_place(
     let session = spawn_claude_pane(app.clone(), THIRD_PLACE_SID.to_string(), cwd.clone(), resume, true)?;
     start_tailer(app, THIRD_PLACE_SID.to_string(), cwd.clone(), cost.0.clone(), board.0.clone());
     insert_pane(&panes, THIRD_PLACE_SID.to_string(), session);
+    // D423 part 4 (1): the Third Place holds its letter in the registry like any pane, so no sibling is handed the letter the UI
+    // shows for it. A letter is a NAME, not an address: it stays out of PaneNames below, and stays unaddressable.
+    let _ = third_place_letter_at_open();
     roles.0.lock().unwrap().insert(THIRD_PLACE_SID.to_string(), "third_place".to_string());
     // deliberately NOT inserted into PaneNames: an unaddressable seat needs no address
     Ok(SiblingInfo { pane: THIRD_PLACE_SID.to_string(), cwd, role: "third_place".to_string() })
