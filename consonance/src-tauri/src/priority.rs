@@ -24,6 +24,11 @@
 //!   `CloseTask` are the only process hooks. So a sweep (every `SWEEP_EVERY`) lists the processes under this one with a
 //!   ToolHelp snapshot and sets each. Renderers come and go, and Chromium lowers a hidden one to Idle itself, so the
 //!   sweep reads each process's class and EcoQoS state every time and sets only where it differs.
+//! - **Only the WebView2 tree** (D423, pane C). Every pane's console, shell and claude is a child of this process too, and so
+//!   is everything a pane runs: a test suite, cargo, a headless browser, a timing session. Set to High, those would take the
+//!   machine from the very things this is for. So the sweep walks only through `msedgewebview2.exe` processes
+//!   (`sweep_targets`, `is_webview`): the browser process under this one and its renderers and helpers, nothing reached
+//!   through anything else.
 //! - **Never fatal.** Every failure is a line on stderr, once per process and reason; Consonance starts regardless.
 //!
 //! The pure half (what is wanted, which pids are ours) is testable without a window; the rest is two Win32 calls and a
@@ -59,7 +64,14 @@ pub fn is_as_wanted(r: Reading) -> bool {
 
 /// Every pid under `root` in a (pid, parent pid) table, children and their children, never `root` itself. A cycle in the
 /// table (a reused pid) cannot loop it: each pid is taken once.
+#[cfg(test)]
 pub fn descendants(root: u32, table: &[(u32, u32)]) -> Vec<u32> {
+    descendants_where(root, table, &|_| true)
+}
+
+/// `descendants`, walking only into the pids `keep` accepts (D423: the sweep's WebView2 tree). A pid it refuses is neither
+/// taken nor walked through, so nothing under it is reached that way.
+fn descendants_where(root: u32, table: &[(u32, u32)], keep: &dyn Fn(u32) -> bool) -> Vec<u32> {
     let mut kids: HashMap<u32, Vec<u32>> = HashMap::new();
     for &(pid, parent) in table {
         if pid != parent {
@@ -73,7 +85,7 @@ pub fn descendants(root: u32, table: &[(u32, u32)]) -> Vec<u32> {
     while let Some(p) = stack.pop() {
         if let Some(cs) = kids.get(&p) {
             for &c in cs {
-                if seen.insert(c) {
+                if keep(c) && seen.insert(c) {
                     out.push(c);
                     stack.push(c);
                 }
@@ -82,6 +94,21 @@ pub fn descendants(root: u32, table: &[(u32, u32)]) -> Vec<u32> {
     }
     out.sort_unstable();
     out
+}
+
+/// D423 (pane C): a WebView2 runtime process, as ToolHelp names it (the browser process and its renderers and helpers are all
+/// msedgewebview2.exe). Windows does not promise the case, so neither does this.
+pub fn is_webview(exe: &str) -> bool {
+    exe.eq_ignore_ascii_case("msedgewebview2.exe")
+}
+
+/// What the sweep sets, from a (pid, parent pid, exe name) table: the processes under `root` that `keep` accepts, walking only
+/// THROUGH accepted ones. D423 (pane C): every pane's shell is a child of this process too, and so is everything it runs (claude,
+/// a test suite, cargo, a headless browser, a timing session), so the sweep must never reach past the WebView2 tree.
+pub fn sweep_targets(root: u32, table: &[(u32, u32, String)], keep: &dyn Fn(&str) -> bool) -> Vec<u32> {
+    let names: HashMap<u32, &str> = table.iter().map(|(p, _, n)| (*p, n.as_str())).collect();
+    let pairs: Vec<(u32, u32)> = table.iter().map(|(p, q, _)| (*p, *q)).collect();
+    descendants_where(root, &pairs, &|pid| names.get(&pid).is_some_and(|n| keep(n)))
 }
 
 #[cfg(windows)]
@@ -152,7 +179,7 @@ mod win {
     }
 
     /// The (pid, parent pid) table of every process, from one ToolHelp snapshot.
-    fn process_table() -> Result<Vec<(u32, u32)>, String> {
+    fn process_table() -> Result<Vec<(u32, u32, String)>, String> {
         // SAFETY: the snapshot handle is closed on every path; `entry.dwSize` is set before the first call as the API requires.
         unsafe {
             let snap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0).map_err(|e| format!("CreateToolhelp32Snapshot: {e}"))?;
@@ -160,7 +187,8 @@ mod win {
             let mut out = Vec::new();
             let mut ok = Process32FirstW(snap, &mut entry).is_ok();
             while ok {
-                out.push((entry.th32ProcessID, entry.th32ParentProcessID));
+                let n = entry.szExeFile.iter().position(|&c| c == 0).unwrap_or(entry.szExeFile.len());
+                out.push((entry.th32ProcessID, entry.th32ParentProcessID, String::from_utf16_lossy(&entry.szExeFile[..n])));
                 ok = Process32NextW(snap, &mut entry).is_ok();
             }
             let _ = CloseHandle(snap);
@@ -170,7 +198,7 @@ mod win {
 
     /// One pass over the processes under `root`: each is read and set only where it is not already as wanted. `failed` holds
     /// "pid: reason" already reported, so a process that refuses is said once. Returns how many were set this pass.
-    pub fn sweep_once(root: u32, failed: &mut HashSet<String>) -> usize {
+    pub fn sweep_once(root: u32, keep: &dyn Fn(&str) -> bool, failed: &mut HashSet<String>) -> usize {
         let table = match process_table() {
             Ok(t) => t,
             Err(e) => {
@@ -181,7 +209,7 @@ mod win {
             }
         };
         let mut set = 0;
-        for pid in descendants(root, &table) {
+        for pid in sweep_targets(root, &table, keep) {
             // SAFETY: the handle is closed below on the one path that opens it.
             let h = match unsafe { OpenProcess(PROCESS_SET_INFORMATION | PROCESS_QUERY_LIMITED_INFORMATION, false, pid) } {
                 Ok(h) => h,
@@ -222,7 +250,7 @@ mod win {
             let root = unsafe { GetCurrentProcessId() };
             let mut failed = HashSet::new();
             loop {
-                sweep_once(root, &mut failed);
+                sweep_once(root, &is_webview, &mut failed);   // D423: the WebView2 tree only, never a pane's processes
                 std::thread::sleep(SWEEP_EVERY);
             }
         }) {
@@ -240,6 +268,10 @@ mod win {
 #[cfg(test)]
 mod tests {
     use super::*;
+    /// D423: the two rows that run the REAL sweep take this, one at a time: a sweep that sets every cmd under the test process
+    /// would otherwise set the other row's child, which must stay as it was.
+    #[cfg(windows)]
+    static REAL_SWEEP: std::sync::Mutex<()> = std::sync::Mutex::new(());
     #[cfg(windows)]
     use super::win::{read_back, set_process, sweep_once};
 
@@ -303,6 +335,7 @@ mod tests {
     #[cfg(windows)]
     #[test]
     fn the_sweep_sets_a_child_and_reads_it_back_and_a_set_child_is_left_alone() {
+        let _one = REAL_SWEEP.lock().unwrap_or_else(|e| e.into_inner());
         use windows::Win32::Foundation::CloseHandle;
         use windows::Win32::System::Threading::{GetCurrentProcessId, OpenProcess, PROCESS_QUERY_LIMITED_INFORMATION};
         let mut child = std::process::Command::new("cmd").args(["/c", "ping -n 20 127.0.0.1 >nul"]).stdout(std::process::Stdio::null()).spawn().expect("start a child");
@@ -310,14 +343,68 @@ mod tests {
         std::thread::sleep(std::time::Duration::from_millis(300));
         let root = unsafe { GetCurrentProcessId() };
         let mut failed = HashSet::new();
-        let n = sweep_once(root, &mut failed);
+        // AMENDED (D423, pane C): the sweep now takes which processes it may set and walk through (in Consonance, the WebView2 ones
+        // only). This row's child is a cmd and its ping, so it names those; the rule that a pane's cmd is NOT set is the row below.
+        let ours = |n: &str| n.eq_ignore_ascii_case("cmd.exe") || n.eq_ignore_ascii_case("ping.exe");
+        let n = sweep_once(root, &ours, &mut failed);
         assert!(n >= 1, "the first sweep set at least the child (set {n}; refused: {failed:?})");
         let h = unsafe { OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid) }.expect("open the child to read it");
         let r = read_back(h).expect("read the child");
         unsafe { let _ = CloseHandle(h); }
         assert!(is_as_wanted(r), "the child reads High and opted out: {r:?}");
-        assert_eq!(sweep_once(root, &mut failed), 0, "a second sweep finds nothing to set: it only sets where a process differs");
+        assert_eq!(sweep_once(root, &ours, &mut failed), 0, "a second sweep finds nothing to set: it only sets where a process differs");
         let _ = child.kill();
         let _ = child.wait();
+    }
+
+    // D423 (pane C): every pane's shell is a child of Consonance too, and so is everything it runs, so the sweep sets the WebView2
+    // tree and nothing else: a pane's claude, a suite's node, a headless browser a test starts, never; another app's WebView2, never.
+    #[test]
+    fn the_sweep_sets_only_the_webview2_tree_never_a_panes_processes() {
+        let t = |p: u32, q: u32, n: &str| (p, q, n.to_string());
+        let table = [
+            t(10, 1, "consonance.exe"),
+            t(11, 10, "msedgewebview2.exe"),   // the browser process
+            t(12, 11, "msedgewebview2.exe"),   // a renderer
+            t(13, 11, "MSEdgeWebView2.exe"),   // the GPU helper, in another case
+            t(20, 10, "OpenConsole.exe"),      // a pane's console host
+            t(21, 20, "cmd.exe"),
+            t(22, 21, "claude.exe"),
+            t(23, 22, "node.exe"),             // a test suite
+            t(24, 23, "msedgewebview2.exe"),   // a webview a pane's tool started: reached only through the pane, so not ours
+            t(25, 23, "chrome.exe"),           // a headless browser a test started
+            t(26, 10, "cargo.exe"),            // a build a pane started straight under us
+            t(30, 99, "msedgewebview2.exe"),   // another app's
+        ];
+        assert_eq!(sweep_targets(10, &table, &is_webview), vec![11, 12, 13]);
+        assert!(sweep_targets(10, &table[..1], &is_webview).is_empty(), "no WebView2 yet: nothing to set");
+    }
+
+    #[test]
+    fn a_webview_is_named_msedgewebview2_in_any_case_and_nothing_else_is() {
+        for n in ["msedgewebview2.exe", "MSEDGEWEBVIEW2.EXE", "MsEdgeWebView2.exe"] { assert!(is_webview(n), "{n}"); }
+        for n in ["msedge.exe", "msedgewebview2.exe.old", "msedgewebview2", "consonance.exe", "chrome.exe", ""] { assert!(!is_webview(n), "{n}"); }
+    }
+
+    // The headless half of the rule: a real child that is not a WebView2 (a cmd, as a pane's shell is) is left as it was.
+    #[cfg(windows)]
+    #[test]
+    fn the_real_sweep_leaves_a_child_that_is_not_a_webview_as_it_was() {
+        let _one = REAL_SWEEP.lock().unwrap_or_else(|e| e.into_inner());
+        use windows::Win32::Foundation::CloseHandle;
+        use windows::Win32::System::Threading::{GetCurrentProcessId, OpenProcess, PROCESS_QUERY_LIMITED_INFORMATION};
+        let mut child = std::process::Command::new("cmd").args(["/c", "ping -n 20 127.0.0.1 >nul"]).stdout(std::process::Stdio::null()).spawn().expect("start a child");
+        let pid = child.id();
+        std::thread::sleep(std::time::Duration::from_millis(300));
+        let h = unsafe { OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid) }.expect("open the child to read it");
+        let before = read_back(h).expect("read the child");
+        let root = unsafe { GetCurrentProcessId() };
+        sweep_once(root, &is_webview, &mut HashSet::new());
+        let after = read_back(h).expect("read the child again");
+        unsafe { let _ = CloseHandle(h); }
+        let _ = child.kill();
+        let _ = child.wait();
+        assert!(!is_as_wanted(before), "control: the child did not start out High and opted out ({before:?})");
+        assert_eq!(after, before, "the sweep did not touch a child that is not a WebView2");
     }
 }
