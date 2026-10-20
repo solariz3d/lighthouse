@@ -1,0 +1,72 @@
+{
+ "label": "L2-N",
+ "started": "2026-10-19T14:39:47.427Z",
+ "ended": "2026-10-19T14:51:56.470Z",
+ "wall_ms": 729043,
+ "exit_code": 0,
+ "signal": null,
+ "launcher_killed": false,
+ "args": [
+  "-p",
+  "--model",
+  "claude-opus-5-5",
+  "--output-format",
+  "json",
+  "--safe-mode",
+  "--strict-mcp-config",
+  "--dangerously-skip-permissions",
+  "--add-dir",
+  "C:\\Users\\nname\\Desktop\\worktrees\\p-d411-L2-N",
+  "--name",
+  "d411-L2-N"
+ ],
+ "cwd": "C:\\Users\\nname\\Desktop\\worktrees\\p-d411-L2-N",
+ "prompt_sha256": "9b9a7eb0c1bb1eaa98b85107242ffc89086dc530e9fa4b1f4764edf7cb9ac7a3",
+ "prompt_bytes": 1463,
+ "session_id": "d355bccd-a50a-40bb-b543-da018f7f95e9",
+ "subtype": "success",
+ "is_error": false,
+ "num_turns": 18,
+ "duration_ms": 727944,
+ "duration_api_ms": 116392,
+ "usage": {
+  "input_tokens": 30,
+  "cache_creation_input_tokens": 30812,
+  "cache_read_input_tokens": 542647,
+  "output_tokens": 10218,
+  "output_tokens_details": {
+   "thinking_tokens": 1808
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 30812,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 777,
+    "cache_read_input_tokens": 46539,
+    "cache_creation_input_tokens": 1280,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 1280
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "models": [
+  "claude-opus-5-5"
+ ],
+ "stop_reason": "end_turn",
+ "terminal_reason": "completed",
+ "result": "I fixed both memo bugs in `src/core/turnby.js` and committed it as `bacd8be` on `d411-L2-N` (not pushed). The new test row fails on the base and passes now, and the other test files that use turnby still pass.\n\n**Causes and fixes:**\n- **NaN served the kept answer:** the key was plain `JSON.stringify`, which prints NaN and Infinity as `null` (and −0 as `0`, and drops `undefined`). So `kh: NaN` found the answer kept for `kh: null`. A new `keyOf` only builds a key when the fields print faithfully: finite numbers other than −0, strings, booleans, null, arrays without holes and plain objects. For anything else the answer isn't kept, so the call is checked and refused as on a fresh document. Both `extendCorner` and `startOf` use it.\n- **Top-only frozen document got its old answer:** `Object.isFrozen` checks only the top level, so editing the pieces array in place left the old memo in use. A new `frozenDeep` checks every level and remembers objects already found frozen, so each document is walked once. It replaces all the old freeze checks.\n\n**Tests:** new row 7 in `test/core_turnby.test.js`.\n- On the base it failed with \"Missing expected exception: kh NaN is refused\".\n- A separate script on the base showed the stale answer on both paths (plain and `turnDeg`): 3 pieces after the pop instead of 2.\n- After the fix, the seven turnby test files run through the lock wrapper gave 90 tests: 89 pass, 0 fail, 1 skipped. The skip is in `turn_corner.test.js`, and I didn't look into it.\n- I slipped once: a later re-run to get per-file counts went **without** the lock wrapper. Those counts matched the wrapped run, including the drag-frame 6.0 ms check.\n\n**Limits:**\n- I didn't run the full suite, only the files that use turnby.\n- Calls whose fields can't be keyed (for example an explicit `undefined` value) now do a full solve every time. That's correct, but if the panel passes `undefined` on every drag move it loses the speed-up. I didn't check what the panel sends.\n- A document that isn't frozen all the way down no longer uses the memo at all.\n\nThe hand-back is in `HANDBACK.md`, not committed."
+}

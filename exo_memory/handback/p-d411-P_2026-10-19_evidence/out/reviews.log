@@ -1,0 +1,20 @@
+worktree C:\Users\nname\Desktop\worktrees\p-d411-L1-review at d582c9e
+mute commit ebb6142 in C:\Users\nname\Desktop\worktrees\p-d411-L1-review
+[review-L1] exit 0  wall 2454 s (others held the lock 40 min) turns 16 
+worktree C:\Users\nname\Desktop\worktrees\p-d411-L2-review at 16b7170
+mute commit 3edc62a in C:\Users\nname\Desktop\worktrees\p-d411-L2-review
+[review-L2] exit 0  wall 507 s (others held the lock 6 min) turns 17 
+worktree C:\Users\nname\Desktop\worktrees\p-d411-L3-review at 6e2050d
+mute commit ac7ab4a in C:\Users\nname\Desktop\worktrees\p-d411-L3-review
+[review-L3] exit 0  wall 1622 s (others held the lock 23 min) turns 5 
+worktree C:\Users\nname\Desktop\worktrees\p-d411-L4-review at cbd7a40
+mute commit d192255 in C:\Users\nname\Desktop\worktrees\p-d411-L4-review
+[review-L4] exit 0  wall 698 s (others held the lock 10 min) turns 13 
+extract C:\Users\nname\Desktop\worktrees\p-d411-L5-review; leak guard hits:
+C:\Users\nname\Desktop\worktrees\p-d411-L5-review/consonance/src-tauri/tests/fixture-adagio-op11-956.jsonl
+C:\Users\nname\Desktop\worktrees\p-d411-L5-review/consonance/tools/essay-provenance.test.js
+C:\Users\nname\Desktop\worktrees\p-d411-L5-review/consonance/tools/guard-census.js
+C:\Users\nname\Desktop\worktrees\p-d411-L5-review/consonance/tools/lap-row.test.js
+
+[review-L5] exit 0  wall 149 s (others held the lock 1 min) turns 8 
+reviews rc=0

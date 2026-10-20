@@ -1,0 +1,76 @@
+diff --git a/src/core/turnby.js b/src/core/turnby.js
+index fab64dd..83b45a1 100644
+--- a/src/core/turnby.js
++++ b/src/core/turnby.js
+@@ -32,6 +32,13 @@ const TURN_TOL = 1e-5;         // rad (0.00057°): the bar is 0.01°; kh's stora
+ const MAX_ITER = 4;
+ const q = (x, dec) => { const v = Number(x.toFixed(dec)); return Object.is(v, -0) ? 0 : v; };   // document.js's quantisation (what is stored is what is measured)
+ const freeze = (o) => { if (o && typeof o === 'object' && !Object.isFrozen(o)) { Object.freeze(o); for (const k of Object.keys(o)) freeze(o[k]); } return o; };
++/** A document frozen all the way down (a frozen document whose pieces array can still be edited is not): only those keep answers. Checked once per object, as
++ *  what is frozen stays frozen. */
++const DEEP = new WeakSet();
++const deepFrozen = (o) => o === null || typeof o !== 'object' || DEEP.has(o) || (Object.isFrozen(o) && Object.values(o).every(deepFrozen) && !!DEEP.add(o));
++/** A memo key for the fields, or null (not kept) when JSON would not write them faithfully: NaN, ±Infinity and null all write "null", -0 writes 0, and a field
++ *  set to undefined is dropped (it is not a field left out: 'turnDeg' in opts). */
++const keyOf = (x) => { try { return JSON.stringify(x, (k, v) => { if (v === undefined || typeof v === 'function' || typeof v === 'symbol' || (typeof v === 'number' && (!Number.isFinite(v) || Object.is(v, -0)))) throw 0; return v; }); } catch (e) { return null; } };
+ 
+ /** The heading change over the piece as weights on its turn control points (the adapter's trapezoid on its 2 m segments): Δθ = Σ w[i]·c[i]. */
+ function turnWeights(P) {
+@@ -84,11 +91,11 @@ function symmetricEase(P, ch) {
+  *  answer that did not throw): the next move starts from them. Nothing here is changed by a solve: the weights are read, and every document it makes is a new one. */
+ const START = new WeakMap(), START_MAX = 4;
+ function startOf(doc, opts, chs) {
+-  let key = null; try { key = JSON.stringify([opts, chs]); } catch (e) { key = null; }
+-  let memo = key === null || !Object.isFrozen(doc) ? null : START.get(doc);
++  const key = keyOf([opts, chs]);
++  let memo = key === null || !deepFrozen(doc) ? null : START.get(doc);
+   if (memo && memo.has(key)) return memo.get(key);
+   const d0 = easedPiece(doc, opts, chs), P0 = headOf(d0), out = { d0, P0, w: turnWeights(P0), free: freeOf(P0.channels.kh.length) };
+-  if (key !== null && Object.isFrozen(doc) && Object.isFrozen(d0)) {
++  if (key !== null && deepFrozen(doc) && Object.isFrozen(d0)) {
+     if (!memo) START.set(doc, memo = new Map());
+     if (memo.size >= START_MAX) memo.delete(memo.keys().next().value);
+     memo.set(key, out);
+@@ -152,11 +159,11 @@ function extendCorner(doc, opts = {}) {
+   // D404: the panel asks for the same piece three times for every move of a handle drag (the readout's numbers, the corner's, the ghost), and each is the solve below
+   // (about 2.5 ms on a 2,000 m piece). The last few answers for one document are kept by its fields, so the move costs one solve. A document is frozen and so is
+   // what this returns, and an answer that throws is never kept: the same call is the same document, or the same error.
+-  let key = null; try { key = JSON.stringify(opts); } catch (e) { key = null; }
+-  let memo = key === null ? null : MEMO.get(doc);
++  const key = keyOf(opts);
++  let memo = key === null || !deepFrozen(doc) ? null : MEMO.get(doc);
+   if (memo && memo.has(key)) return memo.get(key);
+   const out = cornerOf(doc, opts);
+-  if (key !== null && Object.isFrozen(out) && Object.isFrozen(doc)) {
++  if (key !== null && Object.isFrozen(out) && deepFrozen(doc)) {
+     if (!memo) MEMO.set(doc, memo = new Map());
+     if (memo.size >= MEMO_MAX) memo.delete(memo.keys().next().value);
+     memo.set(key, out);
+diff --git a/test/core_turnby.test.js b/test/core_turnby.test.js
+index 4dbd05d..d61d0a0 100644
+--- a/test/core_turnby.test.js
++++ b/test/core_turnby.test.js
+@@ -85,3 +85,23 @@ test('row 6 (B6, amended D331 C): Turn by −90 over 750 m eases in and out symm
+   assert.ok(down <= up * 1.001, `lets go at ${down.toExponential(3)} rad/m², builds up at ${up.toExponential(3)}`);
+   assert.ok(pk * 100 / DEG <= 24 * 1.02, `the peak rate ${(pk * 100 / DEG).toFixed(2)}°/100 m against the −24°/100 m today's −90° piece ends at`);
+ });
++
++// The kept answers (D404: extendCorner's, and solve's start) are kept only for what they were made from: a field that JSON would write the same as another (NaN and
++// null both "null") is not the same call, and a document frozen at the top only can still have its pieces changed under it.
++test('row 7: a kept answer is never given for a different call: NaN is not null, and a document whose pieces were edited in place is solved again', () => {
++  const doc = straight(), refuses = (f) => assert.throws(f, (e) => e.code === 'BAD_TARGET' || e.code === 'NOT_FINITE', 'a NaN target is refused as on a fresh document');
++  refuses(() => TB.extendCorner(straight(), { length: 400, targets: { kh: NaN } }));
++  TB.extendCorner(doc, { length: 400, targets: { kh: null } });
++  refuses(() => TB.extendCorner(doc, { length: 400, targets: { kh: NaN } }));
++  refuses(() => TB.extendTurnBy(straight(), { length: 400, targets: { kv: NaN } }, 30 * DEG));
++  TB.extendTurnBy(doc, { length: 400, targets: { kv: null } }, 30 * DEG);
++  refuses(() => TB.extendTurnBy(doc, { length: 400, targets: { kv: NaN } }, 30 * DEG));
++
++  const other = extend(D.createDoc('other'), { length: 300, targets: { kh: 0.002 } }).pieces[0];
++  const top = Object.freeze({ ...straight(), pieces: straight().pieces.slice() }), fresh = () => ({ ...top, pieces: top.pieces.slice() });
++  const kh = (d) => d.pieces.at(-1).channels.kh.join();
++  TB.extendCorner(top, { length: 400, turnDeg: 45 }); TB.extendTurnBy(top, { length: 400 }, 30 * DEG);
++  top.pieces[0] = other;
++  assert.equal(kh(TB.extendCorner(top, { length: 400, turnDeg: 45 })), kh(TB.extendCorner(fresh(), { length: 400, turnDeg: 45 })), 'extendCorner answers the pieces as they are now');
++  assert.equal(kh(TB.extendTurnBy(top, { length: 400 }, 30 * DEG)), kh(TB.extendTurnBy(fresh(), { length: 400 }, 30 * DEG)), 'Turn by starts from the pieces as they are now');
++});

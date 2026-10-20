@@ -1,0 +1,189 @@
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and a2122153 pid 33588 (t180 E D414 local-0.4.9 merge 1: tests and build (muted), since 2026-10-19T15:51:44.405Z) — all 2 slots are held
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and a2122153 pid 33588 (t180 E D414 local-0.4.9 merge 1: tests and build (muted), since 2026-10-19T15:51:44.405Z) — all 2 slots are held
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and a2122153 pid 33588 (t180 E D414 local-0.4.9 merge 1: tests and build (muted), since 2026-10-19T15:51:44.405Z) — all 2 slots are held
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and 0845a868 pid 39312 (t180 C D409 texture, since 2026-10-19T15:56:23.013Z) — all 2 slots are held
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and 0845a868 pid 39312 (t180 C D409 texture, since 2026-10-19T15:56:23.013Z) — all 2 slots are held
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and c88002b1 pid 18664 (t180 O D412 2b (second slot), since 2026-10-19T15:58:24.554Z) — all 2 slots are held
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and c88002b1 pid 18664 (t180 O D412 2b (second slot), since 2026-10-19T15:58:24.554Z) — all 2 slots are held
+lock held 2026-10-19T16:01:06.575Z
+[32m✔ light: the floor gets exactly ambient + key·key.y + fill·fill.y [90m(0.659ms)[39m[39m
+[32m✔ light: a floor and a vertical wall, and a bank toward and away from the key, differ by at least 0.15 [90m(0.1699ms)[39m[39m
+[32m✔ light: two-sided (an overhang facing down is lit like the floor facing up), and never below ambient or above 1 [90m(0.6768ms)[39m[39m
+[32m✔ light: the fragment shader carries look.js's own constants (the test of shade() is a test of the shader) [90m(0.1171ms)[39m[39m
+[32m✔ edge lines: through the two edge vertices and the centre vertex, lifted 3 cm, on the geometry's own surface [90m(39.4329ms)[39m[39m
+[32m✔ edge lines: a tie across the road at least every 10 m of the cell, and none on seams [90m(47.9336ms)[39m[39m
+[32m✔ overhead fit (aspect 1.7): every vertex of the whole track projects inside the view, and the head is in frame [90m(127.3205ms)[39m[39m
+[32m✔ overhead fit (aspect 0.6): every vertex of the whole track projects inside the view, and the head is in frame [90m(104.3225ms)[39m[39m
+[32m✔ ghost: the ghost of a segment tail equals what placing it builds, and the placed track is untouched by the ghost [90m(18.1549ms)[39m[39m
+[32m✔ ghost: a candidate that does not extend the placed track is refused; on an empty track the ghost stands alone [90m(6.4708ms)[39m[39m
+[32m✔ ghost through A's real shell: the candidate for a word equals what shell.place() then builds [90m(27.6798ms)[39m[39m
+[32m✔ preview: showGhost draws the ghost, clearGhost removes it, and placing the word retires it [90m(25.0323ms)[39m[39m
+[32m✔ preview: a frame draws the grid and the head marker as lines (the grid only with ground: true) [90m(8.2187ms)[39m[39m
+[32m✔ preview: by default there is no ground grid, only the track and the head marker [90m(8.6589ms)[39m[39m
+[32m✔ grid: every vertex at y = 0, covering the track's box, and the spacing widens so a long track stays a few hundred lines [90m(84.4591ms)[39m[39m
+[32m✔ head marker: it grows with the camera distance (2%, never under 3 m), and its ring surrounds the head in the road plane [90m(0.5471ms)[39m[39m
+[32m✔ head marker: a 10 m mast from the head along the road's up [90m(0.5753ms)[39m[39m
+[32m✔ control: the unmutated temp copy passes every test the mutants are run against [90m(16886.7722ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(3950.8156ms)[39m[39m
+[32m✔ a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353) [90m(15768.5543ms)[39m[39m
+[32m✔ a load throw in a run of several files reads NOT TESTED and names the files (the load-throw stand-in, D354) [90m(3784.1682ms)[39m[39m
+[32m✔ mutation A1 the build view looks backward: applied, and caught by "build view (default)…" [90m(15375.9762ms)[39m[39m
+[32m✔ mutation A2 the build key does nothing from free mode: applied, and caught by "the build view is ONE key away…" [90m(12780.5867ms)[39m[39m
+[32m✔ mutation A3 the switch key skips a mode: applied, and caught by "the switch key walks…" [90m(12823.9822ms)[39m[39m
+[32m✔ mutation A4 chase ignores its lag (sits on the head): applied, and caught by "chase: 25 m behind…" [90m(13042.1908ms)[39m[39m
+[32m✔ mutation A5 chase lifts along world up, not the road's up: applied, and caught by "chase through a loop-the-loop…" [90m(12949.531ms)[39m[39m
+[32m✔ mutation A6 overhead's loop fallback is a fixed north: applied, and caught by "overhead: inside a loop…" [90m(12840.9042ms)[39m[39m
+[32m✔ mutation A7 free mode follows the head like the build view: applied, and caught by "after an append…" [90m(12934.0131ms)[39m[39m
+[32m✔ mutation A8 entering free does not take over the view: applied, and caught by "entering free keeps the view…" [90m(12789.9768ms)[39m[39m
+[32m✔ mutation A9 the shown pose snaps instead of easing: applied, and caught by "the shown pose eases…" [90m(12878.6302ms)[39m[39m
+[32m✔ mutation A10 the renderer re-uploads every array every frame: applied, and caught by "renderer: every array is uploaded once…" [90m(13033.8899ms)[39m[39m
+[32m✔ mutation A11 the renderer never deletes a stale buffer: applied, and caught by "renderer: after a sculpt…" [90m(12915.305ms)[39m[39m
+[32m✔ mutation A12 batches copy the arrays (a sculpt re-uploads everything): applied, and caught by "renderer: after a sculpt…" [90m(12955.822ms)[39m[39m
+[32m✔ mutation A13 the track model never extends (always a full build): applied, and caught by "track model: append…" [90m(12755.3324ms)[39m[39m
+[32m✔ mutation A14 the model matrix transposed: applied, and caught by "batches: the node matrix…" [90m(13158.3795ms)[39m[39m
+[32m✔ mutation A15 the backing store ignores devicePixelRatio: applied, and caught by "DPR: the backing store is the css size…" [90m(12736.5248ms)[39m[39m
+[32m✔ mutation A16 the size cap drops the aspect (one side clamped alone): applied, and caught by "DPR edges…" [90m(13000.3901ms)[39m[39m
+[32m✔ mutation A17 Ctrl/Alt/Meta ignored by keyAction: applied, and caught by "keys: Ctrl, Alt or Meta…" [90m(12481.6799ms)[39m[39m
+[32m✔ mutation A18 the frame loop passes no modifiers (Ctrl+C cycles the camera): applied, and caught by "keys in the frame loop…" [90m(12762.9139ms)[39m[39m
+[32m✔ mutation A19 a failed mount is swallowed: applied, and caught by "mount failure…" [90m(12929.938ms)[39m[39m
+[32m✔ mutation A20 the probe skips the perspective divide: applied, and caught by "probe: the head lands in the middle…" [90m(13246.0378ms)[39m[39m
+[32m✔ mutation A21 the judge accepts a view with nothing drawn: applied, and caught by "judge: each failure…" [90m(13158.9665ms)[39m[39m
+[32m✔ mutation A22 the judge never checks DPR: applied, and caught by "judge: each failure…" [90m(12695.6788ms)[39m[39m
+[32m✔ mutation B1 no key light (only ambient and fill): applied, and caught by "light: a floor and a vertical wall…" [90m(12745.3363ms)[39m[39m
+[32m✔ mutation B2 one-sided light (an overhang goes dark): applied, and caught by "light: two-sided…" [90m(12775.5188ms)[39m[39m
+[32m✔ mutation B3 the shader key strength drifts from look.js: applied, and caught by "light: the fragment shader carries…" [90m(12851.0682ms)[39m[39m
+[32m✔ mutation B4 the edge lines one vertex in from the edges: applied, and caught by "edge lines: through the two edge vertices…" [90m(12765.8517ms)[39m[39m
+[32m✔ mutation B5 the lines not lifted off the surface (they would z-fight): applied, and caught by "edge lines: through the two edge vertices…" [90m(12667.1495ms)[39m[39m
+[32m✔ mutation B6 no ties across the road: applied, and caught by "edge lines: a tie across the road…" [90m(13181.6615ms)[39m[39m
+[32m✔ mutation B7 the overhead fit ignores the aspect: applied, and caught by "overhead fit (aspect 0.6)…" [90m(12920.5854ms)[39m[39m
+[32m✔ mutation B8 the overhead fit measures from the box bottom (the top is clipped): applied, and caught by "overhead fit…" [90m(13546.0186ms)[39m[39m
+[32m✔ mutation B9 the world box takes one corner of each local box: applied, and caught by "overhead fit…" [90m(13142.03ms)[39m[39m
+[32m✔ mutation B10 the ghost is built on the live path (no copy): applied, and caught by "ghost: the ghost of a segment tail…" [90m(12862.4895ms)[39m[39m
+[32m✔ mutation B11 placing the word does not retire its ghost: applied, and caught by "preview: showGhost draws the ghost…" [90m(12703.2135ms)[39m[39m
+[32m✔ mutation B12 the candidate ignores the font picker: applied, and caught by "ghost through A…" [90m(12848.5167ms)[39m[39m
+[32m✔ mutation B13 the grid floats above y = 0: applied, and caught by "grid: every vertex at y = 0…" [90m(12603.6997ms)[39m[39m
+[32m✔ mutation B14 the ghost is never drawn: applied, and caught by "preview: showGhost draws the ghost…" [90m(12553.4201ms)[39m[39m
+[32m✔ mutation B16 the head marker does not grow with distance (a speck from overhead): applied, and caught by "head marker: it grows…" [90m(12483.8146ms)[39m[39m
+[32m✔ mutation B15 the head marker is never drawn: applied, and caught by "preview: a frame draws the grid and the head marker…" [90m(12764.1543ms)[39m[39m
+[32m✔ mutation P1 a sculpt re-places the path but keeps the old mesh: applied, and caught by "soak:…" [90m(12776.8638ms)[39m[39m
+[32m✔ mutation P2 every change rebuilds the whole track (no per-cell reuse): applied, and caught by "per-cell rebuild: a length sculpt…" [90m(12773.4837ms)[39m[39m
+[32m✔ mutation P3 the preview reaches for the native side: applied, and caught by "no mesh over IPC: app/preview and app/camera…" [90m(12577.3559ms)[39m[39m
+[32m✔ mutation T1 the editor ignores the value it is given: applied, and caught by "editor: an accepted edit changes the canonical text…" [90m(12928.0638ms)[39m[39m
+[32m✔ mutation T2 the panel never calls onChange: applied, and caught by "panel: an accepted edit calls onChange…" [90m(12593.9111ms)[39m[39m
+[32m✔ mutation L1 ksAmbient is read from ksDiffuse: applied, and caught by "mapping: ksAmbient, ksDiffuse…" [90m(12593.9406ms)[39m[39m
+[32m✔ mutation L2 a missing property reads 1, not 0: applied, and caught by "mapping: a property the material lacks reads 0…" [90m(12647.9799ms)[39m[39m
+[32m✔ mutation L3 the multilayer R and G scales are swapped: applied, and caught by "mapping: ksMultilayer takes…" [90m(12585.945ms)[39m[39m
+[32m✔ mutation L4 ksPerPixelNM falls to ksPerPixel: applied, and caught by "mapping: the shader picks the program…" [90m(12878.1336ms)[39m[39m
+[32m✔ mutation L5 the renderer never sets ksSpecular: applied, and caught by "renderer: an AC material…" [90m(12629.1633ms)[39m[39m
+[32m✔ mutation L6 every sampler gets the white texel: applied, and caught by "renderer: a named texture is uploaded…" [90m(13032.4584ms)[39m[39m
+[32m✔ mutation L7 the multilayer scales never reach the shader: applied, and caught by "renderer: the multilayer scales…" [90m(13490.7843ms)[39m[39m
+[32m✔ mutation L8 textures are never deleted: applied, and caught by "renderer: a texture no longer drawn…" [90m(13011.2048ms)[39m[39m
+[32m✔ mutation L9 a shader loses a uniform declaration: applied, and caught by "shaders: every uniform the renderer sets…" [90m(12911.7193ms)[39m[39m
+[32m✔ mutation L10 an untextured set slot replaces the exported material: applied, and caught by "textured: an untextured floor…" [90m(12742.6826ms)[39m[39m
+[32m✔ mutation L11 the set is ignored: applied, and caught by "textured: a word whose floor names…" [90m(13126.8533ms)[39m[39m
+[32m✔ mutation L12 textures are keyed by name, not by the kn5 file: applied, and caught by "textured: the preview's texels…" [90m(12719.6891ms)[39m[39m
+[32m✔ mutation L13 the default look is the word colours: applied, and caught by "preview: the AC look is the default…" [90m(12585.2391ms)[39m[39m
+[32m✔ mutation L14 setTextureSet drops the set: applied, and caught by "preview: a texture set with a made floor…" [90m(12616.9156ms)[39m[39m
+[32m✔ mutation L15 a property is read from the wrong material: applied, and caught by "list: every mesh the preview draws is in the kn5…" [90m(12457.804ms)[39m[39m
+[32m✔ mutation L16 L does not change the look (the colour per word is unreachable): applied, and caught by "preview: L toggles the look…" [90m(12715.9079ms)[39m[39m
+[32m✔ mutation L17 the ties never fade (they hatch the road dark at a distance): applied, and caught by "renderer: the ties fade out…" [90m(12765.1186ms)[39m[39m
+[32m✔ mutation K1 a kept chunk ignores the matrices of its cells (a moved piece is drawn where it was): applied, and caught by "renderer: after a sculpt that moves later pieces, the drawn road equals…" [90m(12649.0277ms)[39m[39m
+[32m✔ mutation K2 the cells are never merged (one draw per cell again): applied, and caught by "renderer: merged chunks draw the triangles…" [90m(12637.9063ms)[39m[39m
+[32m✔ mutation K3 the indices of a merged cell are not moved past the cells before it: applied, and caught by "renderer: merged chunks draw the triangles…" [90m(12799.1554ms)[39m[39m
+[32m✔ mutation K4 normals are baked as points (translated with the cell): applied, and caught by "renderer: merged chunks draw the triangles…" [90m(12375.4316ms)[39m[39m
+[32m✔ mutation K5 a chunk may outgrow its vertex limit: applied, and caught by "renderer: merged chunks draw the triangles…" [90m(12337.1896ms)[39m[39m
+[32m✔ mutation L18 the canvas is cleared to the fog colour again: applied, and caught by "renderer: the canvas is cleared to CLEAR…" [90m(12371.2292ms)[39m[39m
+[32m✔ mutation N3 a repeated key-down makes the key the newest again: applied, and caught by "a held key that repeats…" [90m(12480.6578ms)[39m[39m
+[32m✔ mutation N4 a key-up lets go of every key: applied, and caught by "releasing the OLDER…" [90m(12386.3207ms)[39m[39m
+[32m✔ mutation N5 the takeover re-fires every frame a key is held (C and B are undone): applied, and caught by "P3: C or B pressed while a movement key is held…" [90m(12388.5253ms)[39m[39m
+[32m✔ mutation E1 an OS key-repeat re-arms the takeover (W1: after C or B, a held W snaps back to free): applied, and caught by "W1: W held and REPEATING…" [90m(12427.8537ms)[39m[39m
+[32m✔ mutation E2 deltaX counts without Shift (W2: a sideways trackpad swipe zooms, or moves the lens): applied, and caught by "W2: a trackpad swipe SIDEWAYS…" [90m(12343.7206ms)[39m[39m
+[32m✔ mutation N6 the wheel ignores deltaX (Shift+wheel is dead on a device that reports it there): applied, and caught by "P5: Shift+wheel is ×4…" [90m(12551.7943ms)[39m[39m
+[32m✔ mutation N7 the key action is looked up by the physical key name, not fixed at key-down: applied, and caught by "P2: a key that flies by its label…" [90m(12445.4175ms)[39m[39m
+[32m✔ mutation N8 the overhead never slides to the head (a black view on a curved track): applied, and caught by "overhead zoomed in (0.05 to 50)…" [90m(12325.7129ms)[39m[39m
+[32m✔ mutation N9 the overhead slides to the head at half the rate: applied, and caught by "overhead zoomed in (0.05 to 50)…" [90m(12488.7664ms)[39m[39m
+[32m✔ mutation N10 the overhead slides past the box centre when zoomed OUT: applied, and caught by "overhead at zoom 1 and out is unchanged…" [90m(12343.2802ms)[39m[39m
+[32m✔ mutation N11 the sprint never ramps (×4 for as long as Shift is held): applied, and caught by "keys: Shift held ramps the speed…" [90m(12455.2968ms)[39m[39m
+[32m✔ mutation N12 the ramp never resets on release (a second press starts at ×20): applied, and caught by "releasing Shift returns to ×1…" [90m(12378.2535ms)[39m[39m
+[32m✔ mutation N13 a blur does not reset the ramp: applied, and caught by "a blur resets the ramp…" [90m(12408.6721ms)[39m[39m
+[32m✔ mutation N14 the ramp is twice too slow (5 s to full): applied, and caught by "the sprint curve…" [90m(12351.4335ms)[39m[39m
+[32m✔ mutation N15 the ramp stops at ×10: applied, and caught by "the sprint curve…" [90m(12390.2394ms)[39m[39m
+[32m✔ mutation N16 Enter blurs a text area too (it is a new line there): applied, and caught by "Enter in a text AREA…" [90m(12420.051ms)[39m[39m
+[32m✔ mutation N17 Esc does not blur a field: applied, and caught by "Esc in a field lets go…" [90m(12571.1661ms)[39m[39m
+[32m✔ mutation N18 Enter does not blur a field: applied, and caught by "Enter in a text field or a number field…" [90m(12351.7322ms)[39m[39m
+[32m✔ mutation N19 a click on the canvas leaves the field focused: applied, and caught by "a mouse-down on the canvas…" [90m(12358.7831ms)[39m[39m
+[32m✔ mutation N20 a number field swallows the camera keys: applied, and caught by "a NUMBER field lets the camera keys through…" [90m(12426.5488ms)[39m[39m
+[32m✔ mutation N21 a text field lets the camera keys through (typing moves the camera): applied, and caught by "a TEXT field swallows every camera key…" [90m(12394.8038ms)[39m[39m
+[32m✔ mutation N22 Ctrl+wheel dollies instead of zooming the lens: applied, and caught by "Ctrl+wheel is the LENS…" [90m(12405.4713ms)[39m[39m
+[32m✔ mutation N23 the plain wheel is the lens: applied, and caught by "the plain wheel is unchanged…" [90m(12372.6102ms)[39m[39m
+[32m✔ mutation N24 the middle click does not reset the lens: applied, and caught by "a middle click resets the lens…" [90m(12472.0536ms)[39m[39m
+[32m✔ mutation N25 the HUD never shows the fov: applied, and caught by "the HUD shows the fov…" [90m(12486.21ms)[39m[39m
+[32m✔ mutation N26 the lens zooms the wrong way: applied, and caught by "the lens: a notch in narrows…" [90m(12345.7157ms)[39m[39m
+[32m✔ mutation N27 the lens is not clamped at 10°: applied, and caught by "the lens: a notch in narrows…" [90m(12445.4181ms)[39m[39m
+[32m✔ mutation N28 the pose ignores the lens: applied, and caught by "the lens changes the pose…" [90m(12475.2458ms)[39m[39m
+[32m✔ mutation D1 movement is newest-key-only again (a newer key zeroes the other axes: no diagonal): applied, and caught by "keys: W then D goes diagonally…" [90m(12988.6074ms)[39m[39m
+[32m✔ mutation D2 on one axis the OLDER key wins: applied, and caught by "on one axis the NEWER key wins…" [90m(13538.9245ms)[39m[39m
+[32m✔ mutation D3 both keys of an axis cancel (W and S held: stand still): applied, and caught by "on one axis the NEWER key wins…" [90m(13285.9292ms)[39m[39m
+[32m✔ mutation D4 a diagonal is not normalised (√2 times a straight line): applied, and caught by "keys: W then D goes diagonally…" [90m(13433.262ms)[39m[39m
+[32m✔ mutation D5 a diagonal is normalised to the wrong length (÷ n², not ÷ n): applied, and caught by "three axes at once…" [90m(13398.1933ms)[39m[39m
+[32m✔ mutation D6 a newer key on an axis drops the older for good (no handover on release): applied, and caught by "on its release the…" [90m(13308.3539ms)[39m[39m
+[32m✔ mutation D7 a key-up lets go of every key (the other axis stops too): applied, and caught by "releasing one key of a diagonal…" [90m(13382.7188ms)[39m[39m
+[32m✔ mutation D8 a repeated key-down makes the key the newer again: applied, and caught by "a held key that repeats…" [90m(13107.6467ms)[39m[39m
+[32m✔ mutation D9 the arrow keys stop turning while a movement key is held: applied, and caught by "the arrow (look) keys are not movement keys…" [90m(13264.044ms)[39m[39m
+[32m✔ row 1: the mesh is byte for byte what v0.4.8 made: placed, placed after four more pieces, and the full ghosts [90m(3097.8171ms)[39m[39m
+[32m✔ row 2: samplesAcrossFor is samplesAcross exactly, and a frozen profile is worked out once [90m(16.1975ms)[39m[39m
+[32m✔ row 3: the answer follows the numbers; the array handed back is the caller own [90m(6.2901ms)[39m[39m
+[32m✔ row 4: a full ghost of 1,000 m walks the cross-section a handful of times, and the cache is bounded [90m(177.0991ms)[39m[39m
+[32m✔ row 5: the exact ghost in slices is ghostFor to the byte, and yields at least once a chord [90m(217.8142ms)[39m[39m
+[32m✔ row 6: the road lines are byte for byte what v0.4.8 made [90m(950.2368ms)[39m[39m
+[32m✔ row 7: profileAt keeps one frozen profile per family, width and rate, and refuses bad input every time [90m(1.4713ms)[39m[39m
+[32m✔ row 8: placing the ghost on show takes its work, and the track is the same to the byte; undo and a second placement too; a cheap or stale ghost is never taken [90m(5104.3778ms)[39m[39m
+[32m✔ row 9: spawnsInfo on a growing track is what it is built afresh, and an answer given is never changed by a growth [90m(160.2171ms)[39m[39m
+[32m✔ harness: a try that crashed natively is printed with its number; a try without a crash prints nothing (D353) [90m(1.431ms)[39m[39m
+[32m✔ harness: the verdict is the own line of the named test (✖ caught, ✔ not caught), and a file-level failure alone is NO verdict [90m(0.2652ms)[39m[39m
+[32m✔ control: the unmutated copy passes every geometry test [90m(10397.9894ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(551.7999ms)[39m[39m
+[32m✔ mutation M1 the unrolled left from up × T (the level left): undefined at a vertical tangent: applied, and caught by "gravity frame at EXACTLY ±90° pitch…" [90m(324.6915ms)[39m[39m
+[32m✔ mutation M2 the unrolled left does not follow the heading (it stays the start's): applied, and caught by "gravity frame: on an open non-planar curve…" [90m(350.702ms)[39m[39m
+[32m✔ mutation M3 fold check disabled (margin ≤ 0 never fires): applied, and caught by "fold check: a crafted fold fires…" [90m(359.1987ms)[39m[39m
+[32m✔ mutation M4 chord-error limit removed from the adaptive step: applied, and caught by "chord error:…" [90m(328.0855ms)[39m[39m
+[32m✔ mutation M5 normals clamped at 90° (ψ past vertical treated as vertical): applied, and caught by "ψ past 90°…" [90m(309.5324ms)[39m[39m
+[32m✔ mutation M6 zero-length word accepted: applied, and caught by "edge: a zero-length word is refused…" [90m(371.6437ms)[39m[39m
+[32m✔ mutation M7 cell vertex cap removed: applied, and caught by "cells: no cell at or over 65,536…" [90m(1211.953ms)[39m[39m
+[32m✔ mutation M8 extendPath keeps the old open end (the seam sample is not re-emitted): applied, and caught by "match: extending by one word…" [90m(691.3312ms)[39m[39m
+[32m✔ mutation M9 extendMesh makes no seam onto the first new piece: applied, and caught by "match: growing word by word…" [90m(713.7244ms)[39m[39m
+[32m✔ mutation M10 extendMesh remeshes every piece (right answer, cost grows with the track): applied, and caught by "cost: a one-word extension…" [90m(2422.5886ms)[39m[39m
+[32m✔ mutation M11 sculptMesh never reuses a downstream piece (right answer, cost grows with the track): applied, and caught by "sculpt cost:…" [90m(1862.1021ms)[39m[39m
+[32m✔ mutation M12 sculpt reuse ignores the start pitch: applied, and caught by "sculpt: a start-pitch change with NO bank change…" [90m(352.665ms)[39m[39m
+[32m✔ mutation M13 a moved piece's seam keeps its old placement: applied, and caught by "sculpt: editing one piece's length…" [90m(663.6011ms)[39m[39m
+[32m✔ mutation M14 a moved piece's boundary rows are not recomputed for the seam beside the sculpted piece: applied, and caught by "sculpt: editing one piece's length…" [90m(715.6834ms)[39m[39m
+[32m✔ mutation M15 rebuildPathFrom regrows from the path start instead of segment g (right answer, path cost grows): applied, and caught by "sculpt: path re-placement…" [90m(291.9276ms)[39m[39m
+[32m✔ mutation M16 coplanar triangles never meet (the 2D branch disabled): applied, and caught by "figure-8, same height…" [90m(273.3504ms)[39m[39m
+[32m✔ mutation M17 the same-pass rule dropped (neighbouring cells tested against each other): applied, and caught by "figure-8, 6 m separation…" [90m(318.0807ms)[39m[39m
+[32m✔ mutation M18 the BVH skips the last triangle of every leaf: applied, and caught by "BVH = brute force…" [90m(371.8965ms)[39m[39m
+[32m✔ mutation M19 the stacked reach is misread (gap scaled ×4): applied, and caught by "figure-8, 1.5 m separation…" [90m(248.0738ms)[39m[39m
+[32m✔ mutation M20 ramps ignored in the mesh (a font jumps at the seam): applied, and caught by "no step at the seam, flat → half-pipe…" [90m(288.5007ms)[39m[39m
+[32m✔ mutation M21 the width does not ramp (the blend jumps to the new width): applied, and caught by "no step at the seam, flat 26 m → flat 36 m…" [90m(306.5795ms)[39m[39m
+[32m✔ mutation M22 a piece never inherits the previous font: applied, and caught by "no step at the seam, half-pipe → flat…" [90m(289.1053ms)[39m[39m
+[32m✔ mutation M23 the ramp ends early (w reaches 1 at half the ramp): applied, and caught by "the ramp ends on the entering font…" [90m(267.3769ms)[39m[39m
+[32m✔ mutation M26 the self-check finds cell records by NAME again: applied, and caught by "names repeat (two adjacent pieces…" [90m(251.9393ms)[39m[39m
+[32m✔ mutation M27 the self-check groups findings by cell NAME: applied, and caught by "names repeat: a real same-height crossing…" [90m(345.962ms)[39m[39m
+[32m✔ mutation M24 the document blend offset s0 ignored (a transition split across segments restarts): applied, and caught by "document blend: a transition split across two segments…" [90m(301.498ms)[39m[39m
+[32m✔ mutation M25 blend: null overridden by the geometry's own inheritance: applied, and caught by "document blend: null means no ramp…" [90m(276.0254ms)[39m[39m
+[32m✔ mutation R1 the tail is always regrown (nothing is ever re-placed): applied, and caught by "rigid: a straight's length edit on a 1° climb re-places…" [90m(405.6864ms)[39m[39m
+[32m✔ mutation R2 a re-placed block keeps its old placement (its views never move): applied, and caught by "rigid: the re-placed path equals a full rebuild…" [90m(413.1237ms)[39m[39m
+[32m✔ mutation R3 the tail test ignores the start pitch: applied, and caught by "sculpt: a start-pitch change with NO bank change…" [90m(379.7991ms)[39m[39m
+[32m✔ mutation R4 the tail's first-sample indices are not advanced: applied, and caught by "rigid: every downstream cell keeps its local arrays…" [90m(442.8898ms)[39m[39m
+[32m✔ mutation R5 the tail stops regrowing after one block (the rest is re-placed although its inputs differ): applied, and caught by "rigid: a pitch edit upstream is NOT rigid…" [90m(369.6325ms)[39m[39m
+[32m✔ mutation R7 an append does not drop the old open end from its block's count: applied, and caught by "rigid: an append, then a sculpt upstream…" [90m(363.2597ms)[39m[39m
+[32m✔ mutation R8 a segment's roll is not part of its path handles (a roll edit downstream is taken as unchanged tail): applied, and caught by "rigid: a later segment whose ROLL changed…" [90m(290.891ms)[39m[39m
+[32m✔ mutation R9 a placed sample turns its y component too (the bank against gravity drifts): applied, and caught by "rigid: the displayed bank after the move…" [90m(442.3609ms)[39m[39m
+[34mℹ tests 172[39m
+[34mℹ suites 0[39m
+[34mℹ pass 172[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 1355871.5681[39m
+set exit [33m0[39m 2026-10-19T16:23:42.488Z

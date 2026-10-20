@@ -1,0 +1,59 @@
+{"t":"2026-10-19T19:58:00.436Z","others":["a2122153 t180 t180 E D414 merge 3 inner_run + build"]}
+{"t":"2026-10-19T19:58:30.447Z","others":[]}
+{"t":"2026-10-19T19:59:00.457Z","others":[]}
+{"t":"2026-10-19T19:59:30.475Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:00:00.480Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:00:30.493Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:01:00.506Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:01:30.517Z","others":["a2122153 t180 t180 E D414 merge 4 D407 tests + build","L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:02:00.519Z","others":["a2122153 t180 t180 E D414 merge 4 D407 tests + build","L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:02:30.533Z","others":["a2122153 t180 t180 E D414 merge 4 D407 tests + build","L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:03:00.546Z","others":["a2122153 t180 t180 E D414 merge 4 D407 tests + build","L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:03:30.545Z","others":["a2122153 t180 t180 E D414 merge 4 D407 tests + build","L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:04:00.552Z","others":["a2122153 t180 t180 E D414 merge 4 D407 tests + build","L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:04:30.563Z","others":["a2122153 t180 t180 E D414 merge 4 D407 tests + build","L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:05:00.575Z","others":["a2122153 t180 t180 E D414 merge 4 D407 tests + build","L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:05:30.578Z","others":["a2122153 t180 t180 E D414 merge 4 D407 tests + build","L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:06:00.581Z","others":["a2122153 t180 t180 E D414 merge 4 D407 tests + build","L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:06:30.598Z","others":["a2122153 t180 t180 E D414 merge 4 D407 tests + build","L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:07:00.608Z","others":["a2122153 t180 t180 E D414 merge 4 D407 tests + build","L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:07:30.623Z","others":["a2122153 t180 t180 E D414 merge 4 D407 tests + build","L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:08:00.642Z","others":["a2122153 t180 t180 E D414 merge 4 D407 tests + build","L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:08:30.650Z","others":["a2122153 t180 t180 E D414 merge 4 D407 tests + build","L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:09:00.650Z","others":["a2122153 t180 t180 E D414 merge 4 D407 tests + build","L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:09:30.662Z","others":["a2122153 t180 t180 E D414 merge 4 D407 tests + build","L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:10:00.665Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:10:30.668Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:11:00.680Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:11:30.681Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:12:00.694Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:12:30.708Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:13:00.717Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:13:30.728Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:14:00.734Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:14:30.749Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:15:00.759Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:15:30.764Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:16:00.768Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:16:30.772Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:17:00.772Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:17:30.786Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:18:00.787Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:18:30.792Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:19:00.806Z","others":["L3-R-2dd L3-R: npm test"]}
+{"t":"2026-10-19T20:19:30.813Z","others":["L3-N-318 L3-N: node --test --test-reporter=tap test/core_extend.test.js test/core_piece.test.js test/core_edgesplit.test.js test/core_cup_seam.test.js test/core_tube_open.test.js test/core_cup.test.js"]}
+{"t":"2026-10-19T20:20:00.826Z","others":["L3-N-318 L3-N: node --test --test-reporter=tap test/core_extend.test.js test/core_piece.test.js test/core_edgesplit.test.js test/core_cup_seam.test.js test/core_tube_open.test.js test/core_cup.test.js"]}
+{"t":"2026-10-19T20:20:30.839Z","others":["L3-N-318 L3-N: node --test --test-reporter=tap test/core_extend.test.js test/core_piece.test.js test/core_edgesplit.test.js test/core_cup_seam.test.js test/core_tube_open.test.js test/core_cup.test.js"]}
+{"t":"2026-10-19T20:21:00.847Z","others":["L3-N-318 L3-N: node --test --test-reporter=tap test/core_extend.test.js test/core_piece.test.js test/core_edgesplit.test.js test/core_cup_seam.test.js test/core_tube_open.test.js test/core_cup.test.js"]}
+{"t":"2026-10-19T20:21:30.864Z","others":["L3-R-2dd L3-R: node --test test/core_edgeneg.test.js test/core_xsec_mutation.test.js test/core_cup_mutation.test.js test/core_ramp_mutation.test.js test/core_xsec.test.js test/core_edgesplit.test.js test/core_piece.test.js test/core_ramp.test.js"]}
+{"t":"2026-10-19T20:22:00.865Z","others":["L3-R-2dd L3-R: node --test test/core_edgeneg.test.js test/core_xsec_mutation.test.js test/core_cup_mutation.test.js test/core_ramp_mutation.test.js test/core_xsec.test.js test/core_edgesplit.test.js test/core_piece.test.js test/core_ramp.test.js"]}
+{"t":"2026-10-19T20:22:30.875Z","others":["L3-R-2dd L3-R: node --test test/core_edgeneg.test.js test/core_xsec_mutation.test.js test/core_cup_mutation.test.js test/core_ramp_mutation.test.js test/core_xsec.test.js test/core_edgesplit.test.js test/core_piece.test.js test/core_ramp.test.js"]}
+{"t":"2026-10-19T20:23:00.878Z","others":["L3-R-2dd L3-R: node --test test/core_edgeneg.test.js test/core_xsec_mutation.test.js test/core_cup_mutation.test.js test/core_ramp_mutation.test.js test/core_xsec.test.js test/core_edgesplit.test.js test/core_piece.test.js test/core_ramp.test.js"]}
+{"t":"2026-10-19T20:23:30.889Z","others":["L3-R-2dd L3-R: node --test test/core_edgeneg.test.js test/core_xsec_mutation.test.js test/core_cup_mutation.test.js test/core_ramp_mutation.test.js test/core_xsec.test.js test/core_edgesplit.test.js test/core_piece.test.js test/core_ramp.test.js"]}
+{"t":"2026-10-19T20:24:00.895Z","others":["L3-R-2dd L3-R: node --test test/core_edgeneg.test.js test/core_xsec_mutation.test.js test/core_cup_mutation.test.js test/core_ramp_mutation.test.js test/core_xsec.test.js test/core_edgesplit.test.js test/core_piece.test.js test/core_ramp.test.js"]}
+{"t":"2026-10-19T20:24:30.907Z","others":["L3-R-2dd L3-R: node --test test/core_edgeneg.test.js test/core_xsec_mutation.test.js test/core_cup_mutation.test.js test/core_ramp_mutation.test.js test/core_xsec.test.js test/core_edgesplit.test.js test/core_piece.test.js test/core_ramp.test.js"]}
+{"t":"2026-10-19T20:25:00.915Z","others":["L3-R-2dd L3-R: node --test test/core_edgeneg.test.js test/core_xsec_mutation.test.js test/core_cup_mutation.test.js test/core_ramp_mutation.test.js test/core_xsec.test.js test/core_edgesplit.test.js test/core_piece.test.js test/core_ramp.test.js"]}
+{"t":"2026-10-19T20:25:30.916Z","others":["L3-R-2dd L3-R: node --test test/core_edgeneg.test.js test/core_xsec_mutation.test.js test/core_cup_mutation.test.js test/core_ramp_mutation.test.js test/core_xsec.test.js test/core_edgesplit.test.js test/core_piece.test.js test/core_ramp.test.js"]}
+{"t":"2026-10-19T20:26:00.927Z","others":["L3-R-2dd L3-R: node --test test/core_edgeneg.test.js test/core_xsec_mutation.test.js test/core_cup_mutation.test.js test/core_ramp_mutation.test.js test/core_xsec.test.js test/core_edgesplit.test.js test/core_piece.test.js test/core_ramp.test.js"]}
+{"t":"2026-10-19T20:26:30.937Z","others":["L3-R-2dd L3-R: node --test test/core_edgeneg.test.js test/core_xsec_mutation.test.js test/core_cup_mutation.test.js test/core_ramp_mutation.test.js test/core_xsec.test.js test/core_edgesplit.test.js test/core_piece.test.js test/core_ramp.test.js"]}
+{"t":"2026-10-19T20:27:00.951Z","others":[]}

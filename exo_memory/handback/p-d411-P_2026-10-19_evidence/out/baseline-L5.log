@@ -1,0 +1,9 @@
+extract C:\Users\nname\Desktop\worktrees\p-d411-L5-base; leak guard hits:
+C:\Users\nname\Desktop\worktrees\p-d411-L5-base/consonance/src-tauri/tests/fixture-adagio-op11-956.jsonl
+C:\Users\nname\Desktop\worktrees\p-d411-L5-base/consonance/tools/essay-provenance.test.js
+C:\Users\nname\Desktop\worktrees\p-d411-L5-base/consonance/tools/guard-census.js
+C:\Users\nname\Desktop\worktrees\p-d411-L5-base/consonance/tools/lap-row.test.js
+
+[L5-base] gen-consumer.test.js pass 66 / fail 41 (exit 1)
+[L5-base] js-suite.test.js ok 45 / FAIL 0 (exit 0)
+baseline rc=0

@@ -1,0 +1,95 @@
+$ node --test "app/test/theme-mutation.test.js"
+(exit 0)
+[32m✔ control: the unmutated copy passes theme.test.js [90m(668.0621ms)[39m[39m
+[32m✔ control: the unmutated copy passes sky.test.js [90m(708.9746ms)[39m[39m
+[32m✔ mutation T1 any name sets a skin: applied, and caught by "each melody sets its own skin…" [90m(547.0146ms)[39m[39m
+[32m✔ mutation T2 the head rounds the pick: applied, and caught by "the page sets the skin in its head…" [90m(545.8293ms)[39m[39m
+[32m✔ mutation T3 the head names the melodies in another order: applied, and caught by "the page sets the skin in its head…" [90m(522.0631ms)[39m[39m
+[32m✔ mutation T4 the boot does not follow the player: applied, and caught by "the page sets the skin in its head…" [90m(557.5802ms)[39m[39m
+[32m✔ mutation T14 the head ignores a saved theme: applied, and caught by "D394: the head reads the saved theme…" [90m(541.8709ms)[39m[39m
+[32m✔ mutation T15 the head takes any saved text as a theme: applied, and caught by "D394: the head reads the saved theme…" [90m(550.3071ms)[39m[39m
+[32m✔ mutation T16 sigil shows a skin: applied, and caught by "D394: Settings ▸ Theme has six choices…" [90m(585.5607ms)[39m[39m
+[32m✔ mutation T5 a skin change keeps the old colours: applied, and caught by "the reader reads again…" [90m(575.1013ms)[39m[39m
+[32m✔ mutation T6 the reader watches the wrong attribute: applied, and caught by "the reader reads again…" [90m(565.2679ms)[39m[39m
+[32m✔ mutation T7 a translucent token comes back opaque: applied, and caught by "the reader understands every colour form…" [90m(573.2264ms)[39m[39m
+[32m✔ mutation T8 color(srgb) floats are rounded to bytes: applied, and caught by "the reader understands every colour form…" [90m(564.0312ms)[39m[39m
+[32m✔ mutation T9 solid keeps a skin's alpha: applied, and caught by "the reader understands every colour form…" [90m(580.9563ms)[39m[39m
+[32m✔ mutation T10 a missing token is black, not today's colour: applied, and caught by "the reader falls back…" [90m(558.1302ms)[39m[39m
+[32m✔ mutation T11 an unreadable token is not reported: applied, and caught by "the reader falls back…" [90m(570.261ms)[39m[39m
+[32m✔ mutation T12 the 3D sky ignores the skin: applied, and caught by "SIGIL's 3D frame is the same…" [90m(583.5887ms)[39m[39m
+[32m✔ mutation T13 SIGIL's grid token drifts from the literal: applied, and caught by "SIGIL's tokens are today's literals…" [90m(584.7469ms)[39m[39m
+[32m✔ mutation S1 the sky follows the camera's position: applied, and caught by "moving or zooming without turning…" [90m(669.0494ms)[39m[39m
+[32m✔ mutation S2 the rays turn the other way: applied, and caught by "a sky feature moves on screen…" [90m(719.3889ms)[39m[39m
+[32m✔ mutation S3 the shader builds its rays without the basis: applied, and caught by "the sky pass runs before the track…" [90m(700.9899ms)[39m[39m
+[32m✔ mutation S4 the sky writes depth: applied, and caught by "the sky pass runs before the track…" [90m(669.2142ms)[39m[39m
+[32m✔ mutation S5 the pattern gets no time: applied, and caught by "the sky pass runs before the track…" [90m(648.3995ms)[39m[39m
+[32m✔ mutation S6 none still draws a sky: applied, and caught by "'none' draws the very calls cbd7a40 drew…" [90m(709.7919ms)[39m[39m
+[32m✔ mutation S7 going back to none keeps the old sky: applied, and caught by "'none' draws the very calls cbd7a40 drew…" [90m(709.1876ms)[39m[39m
+[32m✔ mutation S8 an unknown style is quietly none: applied, and caught by "an unknown sky style fails loudly…" [90m(661.7882ms)[39m[39m
+[32m✔ mutation S9 --sky-a falls back to black-ish, not the skin's sky: applied, and caught by "the skin names its sky…" [90m(673.5801ms)[39m[39m
+[32m✔ mutation S10 the style word keeps its quotes: applied, and caught by "the skin names its sky…" [90m(662.3386ms)[39m[39m
+[32m✔ mutation S11 reduced motion still drifts: applied, and caught by "the drift stops under prefers-reduced-motion…" [90m(662.4868ms)[39m[39m
+[32m✔ mutation S12 the preview hands the sky no time: applied, and caught by "the drift stops under prefers-reduced-motion…" [90m(672.0813ms)[39m[39m
+[32m✔ mutation S13 Skyline names no sky: applied, and caught by "the skin names its sky…" [90m(667.4396ms)[39m[39m
+[32m✔ mutation S14 Glass names no sky (D384 widened): applied, and caught by "Glass names the prism sky…" [90m(667.0488ms)[39m[39m
+[32m✔ mutation S15 the registry leaves prism out (D384 widened): applied, and caught by "Glass names the prism sky…" [90m(677.3069ms)[39m[39m
+[32m✔ mutation S16 the sky pass does not dither (D398): applied, and caught by "D398: the shared sky pass dithers…" [90m(680.1072ms)[39m[39m
+[34mℹ tests 34[39m
+[34mℹ suites 0[39m
+[34mℹ pass 34[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 21330.0471[39m
+
+heavy-run: waiting on measure- pid 31880 (measure-L5-base: node consonance/tools/js-suite.test.js, since 2026-10-20T01:24:23.457Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 6840 (t180 A D407 covering set 4becdd5, since 2026-10-20T01:24:51.511Z) — one heavy run at a time

@@ -1,0 +1,54 @@
+diff --git a/src/core/extend.js b/src/core/extend.js
+index 2c98222..4dba24f 100644
+--- a/src/core/extend.js
++++ b/src/core/extend.js
+@@ -161,10 +161,13 @@ function extend(doc, opts = {}) {
+     if (!from0) { under("first piece's edge", f0.e, 0, 'at its start'); under("first piece's right edge", f0.er, 0, 'at its start'); }
+     for (const ch of ['e', 'er']) {
+       // the fit's ringing never leaves [0, cap], as before, unless the side is asked below 0 (D406): then it may ring down to the lower of the value it starts at and its target,
+-      // never under the floor. The asked values, not the fitted end: a fit to a target of 0 can end a hair under it (-0.0069 measured), which must still clamp to 0
+-      const lo = Math.min(0, C[ch][0], given(targets[ch]) ? targets[ch] : 0);
+-      C[ch] = C[ch].map((x, i) => Math.min(Math.max(0, cap(i)), Math.max(Math.max(lo, floor(i)), x)));
+-      const ne = C[ch].length; if (C[ch][ne - 1] <= 1e-3) C[ch][ne - 2] = C[ch][ne - 1];   // an edge that ends at 0 ends flat, so the piece after it starts clean
++      // never under the floor. The asked values, not the fitted end: a fit to a target of 0 can end a hair under it (-0.0069 measured), which must still clamp to 0.
++      // The mirror: a side asked from at or below 0 to a target at or below 0 never rings above 0 (from -45.5 to 0 over a short transition it rang to +8.277 and ended at +0.670)
++      const tg = given(targets[ch]) ? targets[ch] : null, lo = Math.min(0, C[ch][0], tg === null ? 0 : tg), below = tg !== null && tg <= 0 && C[ch][0] <= 0;
++      C[ch] = C[ch].map((x, i) => Math.min(below ? 0 : Math.max(0, cap(i)), Math.max(Math.max(lo, floor(i)), x)));
++      const ne = C[ch].length;
++      if (tg === 0) C[ch][ne - 1] = 0;   // a side asked back to 0 lands at exactly 0, from below (where lo does not catch a fit that ends under it, -0.209 measured) as from above
++      if (C[ch][ne - 1] <= 1e-3) C[ch][ne - 2] = C[ch][ne - 1];   // an edge that ends at 0 ends flat, so the piece after it starts clean
+     }
+     C.s = C.s.map((x) => Math.min(D.S_MAX, Math.max(D.S_MIN, x)));
+   }
+diff --git a/test/core_edgeneg.test.js b/test/core_edgeneg.test.js
+index edba209..1753467 100644
+--- a/test/core_edgeneg.test.js
++++ b/test/core_edgeneg.test.js
+@@ -11,6 +11,8 @@
+ //   5  every file made before reads and saves byte for byte: the fixtures and core/4 and core/5 documents (edge, split, cup, tube) written by this builder
+ //      equal what the 0.4.7 builder writes; a fit between two positive edges never rings below 0 (so it stays core/4)
+ //   5b a fit down to an edge of 0 never rings below 0, though the raw fit ends a hair under it (the shape of core_piece.test.js row 8b)
++//   5c a side brought back to 0 from below over a numeric transition shorter than the piece lands at exactly 0 and never rings above it (it rang to +8.277°
++//      and ended at +0.670°, slope 0.585, so the next piece was an edge piece), the mirror of 5b
+ //   6  the edge is sampled by the steeper side counted by its size: an edge of -60° gets as many samples as one of +60° (on a cup of 60°)
+ //   7  the piece after a negative edge continues each side from it with no step at the joint, and stays an edge piece
+ //   8  the panel: a typed negative edge reaches the core as that target, on its side only
+@@ -108,6 +110,18 @@ test('row 5b: a fit down to an edge of 0 never rings below it, though the fit it
+   assert.ok(!extend(d, { length: 100 }).pieces[2].edge, 'the next piece is no edge piece');
+ });
+ 
++test('row 5c: a side brought back to 0 from below over a short numeric transition lands at exactly 0, never above it, so the piece after it is no edge piece', () => {
++  // the measured shape: a bowl whose edge starts at -45.5, then 60 m with a 40 m transition to 0 (rang to +8.277, ended +0.670 with slope 0.585); and others alike
++  for (const [L, T] of [[60, 40], [50, 30], [30, 20], [150, 60], [200, 40]]) {
++    let d = extend(D.createDoc('z'), { length: 200, family: 'bowl', first: { e: -45.5 } }); d = extend(d, { length: L, transition: T, targets: { e: 0 } });
++    const P = d.pieces[1], end = D.pieceEnd(P);
++    for (const ch of ['e', 'er']) assert.ok(P.channels[ch].every((v) => v <= 0), `${L}/${T} ${ch}: ${P.channels[ch]}`);
++    assert.equal(end.e.v, 0, `${L}/${T}: the left side ends at 0`); assert.equal(end.e.m, 0, `${L}/${T}: and flat`);
++    assert.equal(end.er.v, 0, `${L}/${T}: the right side ends at 0`); assert.equal(end.er.m, 0, `${L}/${T}: and flat`);
++    assert.ok(!extend(d, { length: 100 }).pieces[2].edge, `${L}/${T}: the next piece is no edge piece`);
++  }
++});
++
+ test('row 6: the edge is sampled by the steeper side counted by its size: -60° gets as many samples as +60°', () => {
+   // the sampling grows only above 43° (adapter.js EDGE_MIN_N), so on a cup of 60°, where -60 takes the rim to 0, inside the floor
+   const n = (e) => lastProfile(extend(cup(60), { length: 200, targets: { e: 0, er: e } })).u.length;

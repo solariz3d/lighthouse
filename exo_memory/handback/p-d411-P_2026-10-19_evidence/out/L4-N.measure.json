@@ -1,0 +1,44 @@
+{
+ "label": "L4-N",
+ "base": "c34bcd2",
+ "dir": "C:\\Users\\nname\\Desktop\\worktrees\\p-d411-L4-N",
+ "commits": "c2b4c8b A missing file of an unpicked melody costs nothing (D411)",
+ "status": "?? HANDBACK.md",
+ "stat": "app/sound.js                   | 14 +++++++++-----\n app/test/sound-samples.test.js | 34 ++++++++++++++++++++++++++++++----\n 2 files changed, 39 insertions(+), 9 deletions(-)",
+ "numstat": "9\t5\tapp/sound.js\n30\t4\tapp/test/sound-samples.test.js",
+ "files": [
+  "app/sound.js",
+  "app/test/sound-samples.test.js"
+ ],
+ "added": 39,
+ "removed": 9,
+ "changed_lines": 48,
+ "test_files": [
+  "app/test/sound-samples.test.js"
+ ],
+ "source_files": [
+  "app/sound.js"
+ ],
+ "rows": {
+  "app/test/sound-samples.test.js": {
+   "added": [
+    "row 12: a 404 on a melody the launch did not pick costs nothing: the tick, the loop close and the picked melody play their samples, nothing logged"
+   ],
+   "deleted": [],
+   "rewritten": []
+  }
+ },
+ "rows_added": 1,
+ "rows_deleted": 0,
+ "rows_rewritten": 0,
+ "test_runs": [
+  {
+   "file": "app/test/sound-samples.test.js",
+   "cmd": "node --test \"app/test/sound-samples.test.js\"",
+   "exit": 0,
+   "counts": "pass 13 / fail 0",
+   "counts_from": "saved output of the first measure pass, re-parsed"
+  }
+ ],
+ "harness_runs": []
+}

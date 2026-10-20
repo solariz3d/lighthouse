@@ -1,0 +1,44 @@
+{
+ "label": "L2-R",
+ "base": "fd6db07",
+ "dir": "C:\\Users\\nname\\Desktop\\worktrees\\p-d411-L2-R",
+ "commits": "77fc955 turnby: kept answers only for the same call (NaN is not null) and a document frozen all the way down",
+ "status": "?? HANDBACK.md",
+ "stat": "src/core/turnby.js       | 19 +++++++++++++------\n test/core_turnby.test.js | 20 ++++++++++++++++++++\n 2 files changed, 33 insertions(+), 6 deletions(-)",
+ "numstat": "13\t6\tsrc/core/turnby.js\n20\t0\ttest/core_turnby.test.js",
+ "files": [
+  "src/core/turnby.js",
+  "test/core_turnby.test.js"
+ ],
+ "added": 33,
+ "removed": 6,
+ "changed_lines": 39,
+ "test_files": [
+  "test/core_turnby.test.js"
+ ],
+ "source_files": [
+  "src/core/turnby.js"
+ ],
+ "rows": {
+  "test/core_turnby.test.js": {
+   "added": [
+    "row 7: a kept answer is never given for a different call: NaN is not null, and a document whose pieces were edited in place is solved again"
+   ],
+   "deleted": [],
+   "rewritten": []
+  }
+ },
+ "rows_added": 1,
+ "rows_deleted": 0,
+ "rows_rewritten": 0,
+ "test_runs": [
+  {
+   "file": "test/core_turnby.test.js",
+   "cmd": "node --test \"test/core_turnby.test.js\"",
+   "exit": 0,
+   "counts": "pass 7 / fail 0",
+   "counts_from": "saved output of the first measure pass, re-parsed"
+  }
+ ],
+ "harness_runs": []
+}

@@ -1,0 +1,45 @@
+$ node --test "test/core_ramp_mutation.test.js"
+(exit 0)
+[32m✔ CONTROL: the whole of core_ramp.test.js passes on an unmutated copy of src/ and tools/ [90m(675.6235ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(290.8318ms)[39m[39m
+[32m✔ mutant R2 'start' is the whole piece, not the first span: applied, and caught by "2/3" [90m(344.684ms)[39m[39m
+[34mℹ R2 'start' is the whole piece, not the first span: 9 of 9 run tests failed[39m
+[32m✔ mutant R3 startRampM is a fixed 20 m even on a short piece: applied, and caught by "4 ·" [90m(301.7295ms)[39m[39m
+[34mℹ R3 startRampM is a fixed 20 m even on a short piece: 2 of 5 run tests failed[39m
+[32m✔ mutant R4 the extra ramp knots are not added: applied, and caught by "4 ·|2/3" [90m(335.4535ms)[39m[39m
+[34mℹ R4 the extra ramp knots are not added: 9 of 14 run tests failed[39m
+[32m✔ mutant R5 the short-ramp channel is left as the least-squares fit (it rings): applied, and caught by "2/3" [90m(336.179ms)[39m[39m
+[34mℹ R5 the short-ramp channel is left as the least-squares fit (it rings): 9 of 9 run tests failed[39m
+[32m✔ mutant R6 the ideal ramp is not compressed (the curve completes later than R): applied, and caught by "2/3" [90m(336.3476ms)[39m[39m
+[34mℹ R6 the ideal ramp is not compressed (the curve completes later than R): 9 of 9 run tests failed[39m
+[32m✔ mutant R7 the Greville abscissae are shifted (the hold is not exact and the ramp lags): applied, and caught by "2 ·|2/3" [90m(346.2647ms)[39m[39m
+[34mℹ R7 the Greville abscissae are shifted (the hold is not exact and the ramp lags): 1 of 11 run tests failed[39m
+[32m✔ mutant R8 the joint's first two control points are overwritten too (C1 lost): applied, and caught by "3 ·|5 ·" [90m(394.7169ms)[39m[39m
+[34mℹ R8 the joint's first two control points are overwritten too (C1 lost): 13 of 13 run tests failed[39m
+[32m✔ mutant R9 the range clamp is dropped (a continued slope can carry the ramp past its target): applied, and caught by "3 ·" [90m(345.9684ms)[39m[39m
+[34mℹ R9 the range clamp is dropped (a continued slope can carry the ramp past its target): 1 of 10 run tests failed[39m
+[32m✔ mutant R10 a ramp as long as the piece counts as short (the whole-piece blend is replaced): applied, and caught by "4 ·" [90m(304.7645ms)[39m[39m
+[34mℹ R10 a ramp as long as the piece counts as short (the whole-piece blend is replaced): 1 of 5 run tests failed[39m
+[32m✔ mutant R11 a channel with no target still gets the ramp treatment: applied, and caught by "4 ·" [90m(326.7466ms)[39m[39m
+[34mℹ R11 a channel with no target still gets the ramp treatment: 1 of 5 run tests failed[39m
+[32m✔ mutant R12 an unknown channel in the map is accepted: applied, and caught by "6 ·" [90m(330.6998ms)[39m[39m
+[34mℹ R12 an unknown channel in the map is accepted: 1 of 7 run tests failed[39m
+[32m✔ mutant R13 a map value longer than the piece is accepted: applied, and caught by "6 ·" [90m(307.3342ms)[39m[39m
+[34mℹ R13 a map value longer than the piece is accepted: 1 of 7 run tests failed[39m
+[32m✔ mutant R14 a map value of zero or less is accepted: applied, and caught by "6 ·" [90m(311.6214ms)[39m[39m
+[34mℹ R14 a map value of zero or less is accepted: 2 of 7 run tests failed[39m
+[32m✔ mutant R15 the number path no longer refuses a transition past the length: applied, and caught by "6 ·|1 ·" [90m(321.4905ms)[39m[39m
+[34mℹ R15 the number path no longer refuses a transition past the length: 1 of 13 run tests failed[39m
+[32m✔ mutant R16 the number path uses a different default (half the piece) for no transition: applied, and caught by "1 ·" [90m(312.606ms)[39m[39m
+[34mℹ R16 the number path uses a different default (half the piece) for no transition: 3 of 6 run tests failed[39m
+[32m✔ mutant R17 the ramp control points are not rounded to the channel quantum (the document would not round-trip): applied, and caught by "5 ·" [90m(614.7911ms)[39m[39m
+[34mℹ R17 the ramp control points are not rounded to the channel quantum (the document would not round-trip): 1 of 3 run tests failed[39m
+[34mℹ tests 18[39m
+[34mℹ suites 0[39m
+[34mℹ pass 18[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 6616.3714[39m
+

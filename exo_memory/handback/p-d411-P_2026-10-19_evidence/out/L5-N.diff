@@ -1,0 +1,214 @@
+diff --git a/consonance/tools/gen-consumer.test.js b/consonance/tools/gen-consumer.test.js
+index 65a0625..57abfb3 100644
+--- a/consonance/tools/gen-consumer.test.js
++++ b/consonance/tools/gen-consumer.test.js
+@@ -19,6 +19,9 @@
+  *
+  * Run: node consonance/tools/gen-consumer.test.js
+  */
++// Measured 123-157 s alone (2026-10-19), past js-suite's 120 s default, so every full run CRASHED it.
++// About twice the slowest measured run; js-suite still kills past it. See js-suite.js THE TIME BUDGET.
++// JS-SUITE: TIMEOUT-MS=300000
+ 'use strict';
+ const assert = require('node:assert');
+ const test = require('node:test');
+diff --git a/consonance/tools/js-suite.js b/consonance/tools/js-suite.js
+index e5213cc..e7a9fca 100644
+--- a/consonance/tools/js-suite.js
++++ b/consonance/tools/js-suite.js
+@@ -133,6 +133,24 @@
+ // what it does not establish. A file that deliberately lies about its own gate defeats all of this,
+ // and no runner catches that; the defence there is that the gate is a few lines under review.
+ //
++// ── THE TIME BUDGET (2026-10-19) ─────────────────────────────────────────────────────────────────
++//
++// Every file is killed at TIMEOUT_MS (120 s). gen-consumer.test.js takes 123-157 s ALONE, so every
++// full run CRASHED on it: a healthy file reported as dead, every run, which is the permanently-red
++// channel the canary paragraph warns about. Raising the default for everyone would buy that one file
++// its time by giving every other file's hang the same extra minutes, so the budget is per file:
++//
++//   // JS-SUITE: TIMEOUT-MS=300000
++//
++// on its own line, starting `//` or `#`, in the header window — the same declaration rule as above.
++// It buys TIME, never an exemption, and that is what keeps a real hang visible:
++//   - a declared budget is still a kill. A file that outruns it is CRASHED exactly as before.
++//   - every kill is reported as `TIMED OUT after N ms`, so a hang no longer reads like any crash.
++//   - the budget is capped at MAX_TIMEOUT_MS (600 s). Above the cap, or not a positive integer, is a
++//     CLASS ERROR: never honoured, never quietly clamped, never a fallback to the default.
++//   - a raised budget is printed on the file's row with the time it took, so a file creeping toward
++//     its budget is visible before it crosses it.
++//
+ // Usage:
+ //   node js-suite.js              run everything, exit non-zero if anything is not green
+ //   node js-suite.js --list       show what would run, run nothing
+@@ -150,6 +168,8 @@ const scratch = require('./scratch.js');
+ const ROOT = process.env.JS_SUITE_ROOT || path.resolve(__dirname, '..', '..');
+ const SKIP_DIRS = new Set(['node_modules', '.git', 'target', 'gen', '__pycache__', 'attic']);
+ const TIMEOUT_MS = Number(process.env.JS_SUITE_TIMEOUT_MS || 120000);
++// The ceiling on a file's declared TIMEOUT-MS (THE TIME BUDGET above). A budget is time, not an exemption.
++const MAX_TIMEOUT_MS = Number(process.env.JS_SUITE_MAX_TIMEOUT_MS || 600000);
+ 
+ // A directory named *_evidence holds a hand-back's COPIES of old scratchpad files (D287 part 3). They are
+ // records of what was run then, not tests of this tree, and some fail here by design. Skip the directory,
+@@ -266,6 +286,27 @@ function header(file) {
+ }
+ function declares(file, re) { return re.test(header(file)); }
+ 
++// THE TIME BUDGET. Returns { ms, declared }, with `why` set for a declaration the runner refuses (and
++// then ms is the default). The value is captured loosely so a malformed one is SEEN and refused,
++// rather than failing to match and falling back to the default unseen.
++const TIMEOUT_DECL = /^\s*(?:\/\/|#)\s*JS-SUITE:\s*TIMEOUT-MS\b(.*)$/m;
++function budgetDecl(file) {
++  const m = TIMEOUT_DECL.exec(header(file));
++  if (!m) return { ms: TIMEOUT_MS, declared: false };
++  const v = (/^\s*=\s*(\S*)\s*$/.exec(m[1]) || [])[1] || '';
++  if (!/^\d+$/.test(v) || Number(v) <= 0) {
++    return { ms: TIMEOUT_MS, declared: true, why: 'declares TIMEOUT-MS but `' + m[1].trim() + '` is not ' +
++      '`=<positive integer ms>`. The form is `// JS-SUITE: TIMEOUT-MS=300000`; a budget the runner ' +
++      'cannot read is refused, not replaced by the default' };
++  }
++  if (Number(v) > MAX_TIMEOUT_MS) {
++    return { ms: TIMEOUT_MS, declared: true, why: `declares TIMEOUT-MS=${v}, above the cap of ${MAX_TIMEOUT_MS} ms. ` +
++      'A budget is time, not an exemption: past the cap a hang is indistinguishable from a slow file. ' +
++      'Make the file faster, or split it' };
++  }
++  return { ms: Number(v), declared: true };
++}
++
+ // Returns null when undeclared, else { home, root } — either may be null, and a missing one is a
+ // class error rather than a default. A default here would be the exemption granting itself the
+ // terms of its own audit.
+@@ -312,16 +353,19 @@ const UNIVERSE_LINE = /^[ \t]*JS-SUITE:[ \t]*UNIVERSE\b[ \t]*(?:[-–—:]+[ \t]
+ // either: the folder belongs to this runner, not to the child. CONSONANCE_SCRATCH points INTO it too, so a child's scratch.mkdtemp folders (which
+ // its exit hook removes) are ALSO inside the folder this runner removes: a child killed by the timeout never runs its exit hook, and would leak otherwise.
+ function runFile(f, extraEnv) {
+-  let code = 0, out = '', err = '';
++  let code = 0, out = '', err = '', timedOut = false;
+   const tmp = scratch.mkdtemp('js-suite-tmp-');
++  const budget = budgetDecl(f).ms;
++  const t0 = Date.now();
+   try {
+     out = execFileSync(process.execPath, [f], {
+-      cwd: path.dirname(f), encoding: 'utf8', timeout: TIMEOUT_MS,
++      cwd: path.dirname(f), encoding: 'utf8', timeout: budget,
+       stdio: ['ignore', 'pipe', 'pipe'],
+       env: { ...process.env, CONSONANCE_OS_TMP: process.env.CONSONANCE_OS_TMP || os.tmpdir(), ...scratch.tempEnv(tmp), CONSONANCE_SCRATCH: tmp, ...(extraEnv || {}) },
+     });
+   } catch (e) {
+     code = e.status === undefined || e.status === null ? 'timeout/signal' : e.status;
++    timedOut = e.code === 'ETIMEDOUT';
+     out = e.stdout || '';
+     err = e.stderr || '';
+   } finally {
+@@ -332,7 +376,7 @@ function runFile(f, extraEnv) {
+   const vacuous = /^\s*[ℹ#]\s*pass\s+0\s*$/im.test(clean)
+     ? VACUOUS_NODETEST.test(clean)
+     : VACUOUS.test(clean);
+-  return { code, out, err, clean, completed: SUMMARY.test(clean) && !vacuous };
++  return { code, out, err, clean, completed: SUMMARY.test(clean) && !vacuous, timedOut, budget, ms: Date.now() - t0 };
+ }
+ 
+ for (const f of files) {
+@@ -340,11 +384,17 @@ for (const f of files) {
+   const declaredRed = declares(f, EXPECTED_RED);
+   const decl = machineBoundDecl(f);
+   const declaredBound = !!decl;
++  const bud = budgetDecl(f);
+   const r = runFile(f);
+-  const { code, out, err, clean, completed } = r;
+-  const entry = { rel, code, out, err, completed };
++  const { code, out, err, clean, completed, timedOut, budget, ms } = r;
++  const entry = { rel, code, out, err, completed, timedOut, budget };
+   let tag;
+-  if (declaredRed && declaredBound) {
++  if (bud.why) {
++    // A refused budget fails the run whatever the file did: a declaration that cannot be honoured
++    // is the suppression bucket again, and running it on the default anyway must not read as green.
++    classErr.push({ ...entry, why: bud.why });
++    tag = 'CLASS';
++  } else if (declaredRed && declaredBound) {
+     // Two classes is not a stronger exemption, it is an unreadable one: which bucket does a red
+     // land in, and which rule decided? Refuse rather than pick.
+     classErr.push({ ...entry, why: 'declares BOTH EXPECTED-RED and MACHINE-BOUND — pick one; ' +
+@@ -443,7 +493,8 @@ for (const f of files) {
+   } else {
+     crashed.push(entry); tag = 'CRASH';
+   }
+-  if (!quiet) console.log(`${tag}  ${rel}${code === 0 ? '' : '  (exit ' + code + ')'}`);
++  if (!quiet) console.log(`${tag}  ${rel}${code === 0 ? '' : '  (exit ' + code + ')'}` +
++    (bud.declared && !bud.why ? `  (budget ${budget} ms, took ${ms} ms)` : ''));
+ }
+ 
+ // canarySang IS ON THE LINE (pane E, E-4). It never was, so the buckets did not sum to the total and
+@@ -490,6 +541,7 @@ if (!notRunFiles.length) {
+ 
+ for (const e of crashed) {
+   console.log(`\nCRASHED — died before its summary, so an unknown number of assertions never ran: ${e.rel}`);
++  if (e.timedOut) console.log(`  TIMED OUT after ${e.budget} ms — killed by this runner: a hang, or a file slower than its budget.`);
+   console.log('  ' + (e.err || e.out).trim().split('\n').slice(-3).join('\n  '));
+ }
+ for (const e of failed) {
+diff --git a/consonance/tools/js-suite.test.js b/consonance/tools/js-suite.test.js
+index 7134372..bdb0700 100644
+--- a/consonance/tools/js-suite.test.js
++++ b/consonance/tools/js-suite.test.js
+@@ -584,5 +584,59 @@ test('CARRIER: the two narrowings the paragraph names are the two the runner app
+     'a marker below the header window must not declare the file');
+ });
+ 
++// ── PER-FILE TIME BUDGET ─────────────────────────────────────────────────────────────────────────
++// gen-consumer.test.js takes 123-157 s alone and the runner killed every file at 120 s, so every
++// full run CRASHED on it. The fix may not hide a real hang: a declared budget is still a kill, it is
++// capped, and a kill says it was a timeout. These run with a 1.5 s default so the fixtures are fast.
++// Marker built by concatenation, for the reason MARK is.
++const BUDGET = (ms) => '// JS-SUITE:' + ' TIMEOUT-MS=' + ms + '\n';
++const SLOW = 'setTimeout(()=>{' + GREEN + '},3000);';
++const HANG = 'setInterval(()=>{},1000);';
++const FAST_ENV = { JS_SUITE_TIMEOUT_MS: '1500', JS_SUITE_MAX_TIMEOUT_MS: '10000' };
++
++test('BUDGET: a slow file with NO declaration is killed and reported as a TIMEOUT, not a bare crash', () => {
++  const r = runWith(tree({ 'a.test.js': SLOW }), FAST_ENV);
++  assert.strictEqual(r.code, 1, r.out);
++  assert.match(r.out, /1 crashed/, r.out);
++  assert.match(r.out, /TIMED OUT after 1500 ms/, 'a kill must name itself, or a hang reads like any crash:\n' + r.out);
++});
++
++test('BUDGET: a slow file that DECLARES a longer budget runs to green', () => {
++  const r = runWith(tree({ 'a.test.js': BUDGET(8000) + SLOW }), FAST_ENV);
++  assert.strictEqual(r.code, 0, r.out + r.err);
++  assert.match(r.out, /1 green/, r.out);
++  assert.match(r.out, /budget 8000 ms/, 'a raised budget is printed on the file\'s row, not granted silently:\n' + r.out);
++});
++
++test('BUDGET: a declared budget is still a kill — a file that HANGS is still crashed, as a timeout', () => {
++  const r = runWith(tree({ 'a.test.js': BUDGET(3000) + HANG }), FAST_ENV);
++  assert.strictEqual(r.code, 1, r.out);
++  assert.match(r.out, /1 crashed/, r.out);
++  assert.match(r.out, /TIMED OUT after 3000 ms/, r.out);
++});
++
++test('BUDGET: a budget above the cap is a CLASS ERROR, never honoured and never quietly clamped', () => {
++  const r = runWith(tree({ 'a.test.js': BUDGET(999999) + GREEN }), FAST_ENV);
++  assert.strictEqual(r.code, 1, r.out);
++  assert.match(r.out, /1 class-error/, r.out);
++  assert.match(r.out, /cap/i, r.out);
++});
++
++test('BUDGET: a malformed budget is a CLASS ERROR, not a fallback to the default', () => {
++  const r = runWith(tree({ 'a.test.js': BUDGET('soon') + GREEN }), FAST_ENV);
++  assert.strictEqual(r.code, 1, r.out);
++  assert.match(r.out, /1 class-error/, r.out);
++});
++
++test('BUDGET: gen-consumer.test.js declares a budget above the default and within the cap', () => {
++  const src = fs.readFileSync(TOOL, 'utf8');
++  const def = Number(src.match(/JS_SUITE_TIMEOUT_MS \|\| (\d+)/)[1]);
++  const cap = Number((src.match(/JS_SUITE_MAX_TIMEOUT_MS \|\| (\d+)/) || [])[1]);
++  const head = fs.readFileSync(path.join(__dirname, 'gen-consumer.test.js'), 'utf8').split('\n').slice(0, 40).join('\n');
++  const m = /^\s*\/\/\s*JS-SUITE:\s*TIMEOUT-MS=(\d+)\s*$/m.exec(head);
++  assert.ok(m, 'gen-consumer.test.js takes 123-157 s alone; it must declare its budget in its header');
++  assert.ok(Number(m[1]) > def && Number(m[1]) <= cap, `budget ${m[1]} must sit in (${def}, ${cap}]`);
++});
++
+ console.log(`\njs-suite-self: ${pass} passed, ${fail} failed`);
+ process.exit(fail ? 1 : 0);

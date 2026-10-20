@@ -1,0 +1,71 @@
+{
+ "label": "L5-N",
+ "base": "9f3719a1216316c3b43ef3560ca953e35c616f39",
+ "dir": "C:\\Users\\nname\\Desktop\\worktrees\\p-d411-L5-N",
+ "commits": "1dbb1d9 js-suite: per-file TIME BUDGET so gen-consumer.test.js stops crashing every full run",
+ "status": "?? HANDBACK.md",
+ "stat": "consonance/tools/gen-consumer.test.js |  3 ++\n consonance/tools/js-suite.js          | 66 +++++++++++++++++++++++++++++++----\n consonance/tools/js-suite.test.js     | 54 ++++++++++++++++++++++++++++\n 3 files changed, 116 insertions(+), 7 deletions(-)",
+ "numstat": "3\t0\tconsonance/tools/gen-consumer.test.js\n59\t7\tconsonance/tools/js-suite.js\n54\t0\tconsonance/tools/js-suite.test.js",
+ "files": [
+  "consonance/tools/gen-consumer.test.js",
+  "consonance/tools/js-suite.js",
+  "consonance/tools/js-suite.test.js"
+ ],
+ "added": 116,
+ "removed": 7,
+ "changed_lines": 123,
+ "test_files": [
+  "consonance/tools/gen-consumer.test.js",
+  "consonance/tools/js-suite.test.js"
+ ],
+ "source_files": [
+  "consonance/tools/js-suite.js"
+ ],
+ "rows": {
+  "consonance/tools/gen-consumer.test.js": {
+   "added": [],
+   "deleted": [],
+   "rewritten": []
+  },
+  "consonance/tools/js-suite.test.js": {
+   "added": [
+    "BUDGET: a slow file with NO declaration is killed and reported as a TIMEOUT, not a bare crash",
+    "BUDGET: a slow file that DECLARES a longer budget runs to green",
+    "BUDGET: a declared budget is still a kill — a file that HANGS is still crashed, as a timeout",
+    "BUDGET: a budget above the cap is a CLASS ERROR, never honoured and never quietly clamped",
+    "BUDGET: a malformed budget is a CLASS ERROR, not a fallback to the default",
+    "BUDGET: gen-consumer.test.js declares a budget above the default and within the cap"
+   ],
+   "deleted": [],
+   "rewritten": []
+  }
+ },
+ "rows_added": 6,
+ "rows_deleted": 0,
+ "rows_rewritten": 0,
+ "test_runs": [
+  {
+   "file": "consonance/tools/gen-consumer.test.js",
+   "cmd": "node \"consonance/tools/gen-consumer.test.js\"",
+   "exit": 1,
+   "counts": "pass 66 / fail 41",
+   "counts_from": "saved output of the first measure pass, re-parsed"
+  },
+  {
+   "file": "consonance/tools/js-suite.test.js",
+   "cmd": "node \"consonance/tools/js-suite.test.js\"",
+   "exit": 0,
+   "counts": "ok 51 / FAIL 0",
+   "counts_from": "saved output of the first measure pass, re-parsed"
+  }
+ ],
+ "harness_runs": [
+  {
+   "file": "consonance/tools/heavy-run.mutants.js",
+   "cmd": "node \"consonance/tools/heavy-run.mutants.js\"",
+   "exit": 0,
+   "counts": "ok 0 / FAIL 0",
+   "mutants": "applied 73 / caught 73 / survived 0 / NOT APPLIED 0"
+  }
+ ]
+}

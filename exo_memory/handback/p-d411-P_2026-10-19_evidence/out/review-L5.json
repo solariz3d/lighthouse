@@ -1,0 +1,75 @@
+{
+ "label": "review-L5",
+ "started": "2026-10-20T04:49:02.587Z",
+ "ended": "2026-10-20T04:51:31.369Z",
+ "wall_ms": 148782,
+ "active_ms": 90000,
+ "others_hold_lock_ms": 30000,
+ "exit_code": 0,
+ "signal": null,
+ "launcher_killed": false,
+ "kill_reason": null,
+ "args": [
+  "-p",
+  "--model",
+  "claude-opus-5-5",
+  "--output-format",
+  "json",
+  "--safe-mode",
+  "--strict-mcp-config",
+  "--dangerously-skip-permissions",
+  "--add-dir",
+  "C:\\Users\\nname\\Desktop\\worktrees\\p-d411-L5-review",
+  "--name",
+  "d411-review-L5"
+ ],
+ "cwd": "C:\\Users\\nname\\Desktop\\worktrees\\p-d411-L5-review",
+ "prompt_sha256": "9984eb1196da66401969347f539f0ef83a3f703ea9c73bb792111e4feb0bd1e5",
+ "prompt_bytes": 1300,
+ "session_id": "027718ff-02b0-42bd-9618-3229b41ce667",
+ "subtype": "success",
+ "is_error": false,
+ "num_turns": 8,
+ "duration_ms": 147863,
+ "duration_api_ms": 100193,
+ "usage": {
+  "input_tokens": 16,
+  "cache_creation_input_tokens": 27713,
+  "cache_read_input_tokens": 263116,
+  "output_tokens": 10186,
+  "output_tokens_details": {
+   "thinking_tokens": 3477
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 27713,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 2282,
+    "cache_read_input_tokens": 41118,
+    "cache_creation_input_tokens": 3602,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 3602
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "models": [
+  "claude-opus-5-5"
+ ],
+ "stop_reason": "end_turn",
+ "terminal_reason": "completed",
+ "result": "# Verdict: js-suite 120 s kill vs gen-consumer.test.js\n\nBoth diffs take the same approach. A file can declare its own time budget on a header line (`JS-SUITE: TIMEOUT-MS`), the budget is capped, gen-consumer.test.js declares 300 000 ms, and the 120 s default for every other file is unchanged. Neither diff deletes or weakens an existing test; both only add tests.\n\nWhat I ran, all through `node review/hr.js -- …`:\n- `js-suite.test.js` with each diff applied: **X 51/0, Y 48/0**.\n- A 12-case probe (`probe.js`, kept outside the repo) that runs the patched runner against one-file fixture trees, with `JS_SUITE_TIMEOUT_MS=1000` and `JS_SUITE_MAX_TIMEOUT_MS=10000`.\n\nI did **not** rerun the full suite or gen-consumer.test.js through the runner. Both authors did, and both report gen-consumer is now FAIL (it reaches its summary; its 41 failures are the missing `exo_memory/` in this checkout) rather than a timeout CRASH. The probes confirm that each runner honours the line its own diff added: X's `=300000` form, and Y's space form at line 22, inside the 40-line header window.\n\n## Probe results\n\n| declaration in fixture | X | Y |\n|---|---|---|\n| `TIMEOUT-MS=300000`, 2.5 s file | CLASS error (X's own form is `=`, and this is honoured) | **CRASH, no explanation**: the `=` form silently falls back to the 1 s default |\n| `TIMEOUT-MS 300000`, 2.5 s file | CLASS error (wrong form, refused out loud) | green |\n| `TIMEOUT-MS 3e5`, a *fast* green file | CLASS error | **CRASH**: `(\\d+)` reads `3`, so the file is killed after 3 ms |\n| `TIMEOUT-MS 300_000`, 2.5 s file | CLASS error | **CRASH after 300 ms**, no explanation |\n| `TIMEOUT-MS 0` | CLASS error | silently uses the default |\n| `TIMEOUT-MS 999999999`, 2.5 s file | CLASS error (\"above the cap\") | **green**: silently clamped to 5× the default |\n| block comment ` * JS-SUITE: TIMEOUT-MS=…` | ignored, killed at 1 s, `TIMED OUT after 1000 ms` | ignored, CRASH |\n| undeclared hang | CRASH + `TIMED OUT after 1000 ms` | CRASH (looks like any other crash) |\n| `TIMEOUT-MS=5`, green file | CRASH, `TIMED OUT after 5 ms`, budget shown on the row | n/a (`=` form ignored) |\n\n## X\n\n- **Correct?** Yes.\n  - A declared budget still ends in a kill, and the kill is CRASH.\n  - The cap is 600 s (`JS_SUITE_MAX_TIMEOUT_MS`).\n  - A budget that is over the cap, zero, malformed, or written in the wrong form is a CLASS error that fails the run. It is never clamped and never quietly replaced by the default.\n  - Every kill prints `TIMED OUT after N ms`, so a hang no longer looks like any other crash. This works on Windows: `e.code === 'ETIMEDOUT'`, confirmed by probe.\n  - A raised budget is printed on the file's row next to how long the file took, so a file creeping toward its limit is visible.\n  - The new header section, THE TIME BUDGET, documents all of this.\n  - A self-test pins gen-consumer's declaration to the range (default, cap].\n- **Edge cases / nits (none blocking):**\n  - A file whose budget is refused still runs once on the default budget before being classed. That can waste up to 120 s, but the result is still red.\n  - `budgetDecl` is parsed twice: once in `runFile` and once in the loop.\n  - A refused file's row reads `CLASS … (exit timeout/signal)`, which is a slightly confusing label.\n  - Budgets *below* the default are allowed (e.g. 5 ms). That fails loudly, so it hides nothing.\n  - Grandchild processes are still not tree-killed. That predates this change, and the hand-back says so.\n- **Cut or weakened a test?** No. It adds 6 BUDGET rows; all existing rows still pass.\n- **Changes needed to land:** none. The nits above are optional.\n\n## Y\n\n- **Correct for the one file?** Yes. gen-consumer gets 300 s, undeclared files are unchanged, and a hang is still killed at 5× the default at most.\n- **Edge cases it misses:** the parser is loose and every error is silent, which is the \"suppression by quiet default\" this runner's own header warns about.\n  - The `=` form (`TIMEOUT-MS=300000`) is silently ignored.\n  - `0` silently becomes the default.\n  - `3e5` becomes 3 ms, and `300_000` becomes 300 ms. That gives false CRASHes with nothing pointing at the declaration.\n  - An over-cap budget is silently clamped. In the probe, a file declaring 999 999 999 went green on a 5 s budget it never asked for.\n  - A kill is not labelled as a timeout, so a real hang still reads like any other crash.\n  - The cap is buried in the code as `TIMEOUT_CAP = 5` × the default and cannot be overridden from the environment. The marker is documented only in a comment at the constant; the usage header is not updated.\n- **Cut or weakened a test?** No. It adds 3 rows.\n  - The cap test only checks that the run took under 30 s. It does not check that the clamp is reported, because it isn't.\n  - Nothing pins gen-consumer's own declaration. A later edit that breaks that line would quietly bring the 120 s CRASH back.\n- **Changes needed to land:** moderate, roughly 30–50 lines plus tests:\n  - anchor the value to a whole positive integer;\n  - make malformed or over-cap declarations a CLASS error instead of a clamp or a fallback;\n  - label timeouts in the CRASHED output;\n  - add a self-test for gen-consumer's declaration.\n\n  That is essentially rewriting it into X.\n\n## Which to land\n\n**X.** Both fix gen-consumer, but only X refuses a bad or over-cap budget out loud and labels every kill as a timeout, so a hang stays visible.\nY's loose `(\\d+)` parse and silent clamp or fallback turn a typo into a mysterious CRASH, or an over-cap ask into a silent green. Fixing that means rebuilding X."
+}

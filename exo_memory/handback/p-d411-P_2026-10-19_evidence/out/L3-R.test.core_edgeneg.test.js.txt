@@ -1,0 +1,21 @@
+$ node --test "test/core_edgeneg.test.js"
+(exit 0)
+[32m✔ row 1: a negative left edge on a banked turn turns the left rim down by that angle, and the right rim stays the profile's [90m(36.7384ms)[39m[39m
+[32m✔ row 2: the floor is a total of -30°: -30 accepted and -30.01 refused by name, on a flat cup and on a cup of 10°; checkDoc refuses a hand-built one [90m(23.3205ms)[39m[39m
+[32m✔ row 3: a symmetric negative edge turns both rims down alike, writes no er, and round-trips [90m(11.8552ms)[39m[39m
+[32m✔ row 4: core/6 exactly when a negative edge appears; the 0.4.7 builder refuses it by name, and this one the next [90m(3.931ms)[39m[39m
+[32m✔ row 5: every file made before reads and saves byte for byte, as the 0.4.7 builder writes it; a fit between positive edges never rings below 0 [90m(23.0079ms)[39m[39m
+[32m✔ row 5b: a fit down to an edge of 0 never rings below it, though the fit itself ends a hair under 0, so the piece after it is no edge piece [90m(2.2644ms)[39m[39m
+[32m✔ row 5c: a side brought from -45.5° back to 0 over a short transition never rings above 0 and ends at exactly 0, flat; the piece after it is plain [90m(3.5838ms)[39m[39m
+[32m✔ row 6: the edge is sampled by the steeper side counted by its size: -60° gets as many samples as +60° [90m(55.054ms)[39m[39m
+[32m✔ row 7: the piece after a negative edge continues each side from it with no step, and stays an edge piece [90m(2.5891ms)[39m[39m
+[32m✔ row 8: the panel sends a typed negative edge to the core on its side only [90m(0.3083ms)[39m[39m
+[34mℹ tests 10[39m
+[34mℹ suites 0[39m
+[34mℹ pass 10[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 440.5188[39m
+

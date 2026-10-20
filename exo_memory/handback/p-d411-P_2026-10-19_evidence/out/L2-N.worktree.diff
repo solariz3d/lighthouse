@@ -1,0 +1,89 @@
+diff --git a/src/core/turnby.js b/src/core/turnby.js
+index fab64dd..8344491 100644
+--- a/src/core/turnby.js
++++ b/src/core/turnby.js
+@@ -32,6 +32,28 @@ const TURN_TOL = 1e-5;         // rad (0.00057°): the bar is 0.01°; kh's stora
+ const MAX_ITER = 4;
+ const q = (x, dec) => { const v = Number(x.toFixed(dec)); return Object.is(v, -0) ? 0 : v; };   // document.js's quantisation (what is stored is what is measured)
+ const freeze = (o) => { if (o && typeof o === 'object' && !Object.isFrozen(o)) { Object.freeze(o); for (const k of Object.keys(o)) freeze(o[k]); } return o; };
++/** D411: the key a kept answer is found by, or null (not kept) for fields JSON would print alike when they are not alike. Only null, booleans, strings, finite
++ *  numbers but −0, arrays without holes and plain objects of those are keyed: NaN and ±Infinity print as null, −0 as 0, an undefined value as nothing. */
++function keyOf(v) {
++  const ok = (x) => {
++    if (x === null || typeof x === 'boolean' || typeof x === 'string') return true;
++    if (typeof x === 'number') return Number.isFinite(x) && !Object.is(x, -0);
++    if (typeof x !== 'object') return false;
++    if (Array.isArray(x)) { for (let i = 0; i < x.length; i++) if (!(i in x) || !ok(x[i])) return false; return true; }
++    const pr = Object.getPrototypeOf(x);
++    return (pr === Object.prototype || pr === null) && Object.keys(x).every((k) => ok(x[k]));
++  };
++  try { return ok(v) ? JSON.stringify(v) : null; } catch (e) { return null; }
++}
++/** D411: frozen all the way down (Object.isFrozen reads the top only: a pieces array edited in place is another document under the same object). A frozen
++ *  object stays frozen, so the ones found so are remembered and a document is walked once. */
++const DEEP = new WeakSet();
++function frozenDeep(o) {
++  if (!o || typeof o !== 'object' || DEEP.has(o)) return true;
++  if (!Object.isFrozen(o) || !Object.keys(o).every((k) => frozenDeep(o[k]))) return false;
++  DEEP.add(o);
++  return true;
++}
+ 
+ /** The heading change over the piece as weights on its turn control points (the adapter's trapezoid on its 2 m segments): Δθ = Σ w[i]·c[i]. */
+ function turnWeights(P) {
+@@ -84,11 +106,11 @@ function symmetricEase(P, ch) {
+  *  answer that did not throw): the next move starts from them. Nothing here is changed by a solve: the weights are read, and every document it makes is a new one. */
+ const START = new WeakMap(), START_MAX = 4;
+ function startOf(doc, opts, chs) {
+-  let key = null; try { key = JSON.stringify([opts, chs]); } catch (e) { key = null; }
+-  let memo = key === null || !Object.isFrozen(doc) ? null : START.get(doc);
++  const key = frozenDeep(doc) ? keyOf([opts, chs]) : null;
++  let memo = key === null ? null : START.get(doc);
+   if (memo && memo.has(key)) return memo.get(key);
+   const d0 = easedPiece(doc, opts, chs), P0 = headOf(d0), out = { d0, P0, w: turnWeights(P0), free: freeOf(P0.channels.kh.length) };
+-  if (key !== null && Object.isFrozen(doc) && Object.isFrozen(d0)) {
++  if (key !== null && frozenDeep(d0)) {
+     if (!memo) START.set(doc, memo = new Map());
+     if (memo.size >= START_MAX) memo.delete(memo.keys().next().value);
+     memo.set(key, out);
+@@ -152,11 +174,11 @@ function extendCorner(doc, opts = {}) {
+   // D404: the panel asks for the same piece three times for every move of a handle drag (the readout's numbers, the corner's, the ghost), and each is the solve below
+   // (about 2.5 ms on a 2,000 m piece). The last few answers for one document are kept by its fields, so the move costs one solve. A document is frozen and so is
+   // what this returns, and an answer that throws is never kept: the same call is the same document, or the same error.
+-  let key = null; try { key = JSON.stringify(opts); } catch (e) { key = null; }
++  const key = frozenDeep(doc) ? keyOf(opts) : null;
+   let memo = key === null ? null : MEMO.get(doc);
+   if (memo && memo.has(key)) return memo.get(key);
+   const out = cornerOf(doc, opts);
+-  if (key !== null && Object.isFrozen(out) && Object.isFrozen(doc)) {
++  if (key !== null && frozenDeep(out)) {
+     if (!memo) MEMO.set(doc, memo = new Map());
+     if (memo.size >= MEMO_MAX) memo.delete(memo.keys().next().value);
+     memo.set(key, out);
+diff --git a/test/core_turnby.test.js b/test/core_turnby.test.js
+index 4dbd05d..e34847c 100644
+--- a/test/core_turnby.test.js
++++ b/test/core_turnby.test.js
+@@ -85,3 +85,22 @@ test('row 6 (B6, amended D331 C): Turn by −90 over 750 m eases in and out symm
+   assert.ok(down <= up * 1.001, `lets go at ${down.toExponential(3)} rad/m², builds up at ${up.toExponential(3)}`);
+   assert.ok(pk * 100 / DEG <= 24 * 1.02, `the peak rate ${(pk * 100 / DEG).toFixed(2)}°/100 m against the −24°/100 m today's −90° piece ends at`);
+ });
++
++// D411: extendCorner's kept answers (and solve's start) are kept by a key of the fields and only for a document frozen all the way down. JSON.stringify read
++// NaN as null, so a refused call was served the accepted call's answer; and Object.isFrozen(doc) read only the top, so a document whose pieces array was then
++// edited in place was served its old answer.
++test('row 7 (D411): a kept answer is never served to fields that only print alike (NaN, null), nor to a document frozen only at the top whose pieces then change', () => {
++  const refuses = (d, kh) => assert.throws(() => TB.extendCorner(d, { length: 400, targets: { kh } }), (e) => e.code === 'BAD_TARGET', `kh ${kh} is refused`);
++  refuses(straight(), NaN);
++  const d = straight();
++  assert.equal(TB.extendCorner(d, { length: 400, targets: { kh: null } }).pieces.length, 2);
++  refuses(d, NaN); refuses(d, Infinity);
++  for (const corner of [{}, { turnDeg: -45 }]) {
++    const full = eased90(straight()), top = Object.freeze({ ...full, pieces: [...full.pieces] }), opts = { length: 400, ...corner };
++    assert.equal(TB.extendCorner(top, opts).pieces.length, 3);
++    top.pieces.pop();
++    const again = TB.extendCorner(top, opts), fresh = TB.extendCorner(straight(), opts);
++    assert.equal(again.pieces.length, 2, `${JSON.stringify(corner)}: the edited pieces are read`);
++    assert.deepEqual(again.pieces[1].channels, fresh.pieces[1].channels, `${JSON.stringify(corner)}: the same piece as a fresh document's`);
++  }
++});

@@ -1,0 +1,33 @@
+$ node --test "app/test/menubar-page.test.js"
+(exit 0)
+[32m✔ row 1: the bar reads File, Edit, Build, Track, Pieces, View, Settings, then Export to Assetto Corsa; the ⋯ menu is gone and every control keeps its id [90m(6377.2288ms)[39m[39m
+[32m✔ row 2: one menu open at a time; Esc, a press outside it and a command each close it [90m(2380.9117ms)[39m[39m
+[32m✔ row 3: the moved controls work from their new place [90m(3180.2069ms)[39m[39m
+[32m✔ row 4: a choice in Settings and a tick in View survive a reload, saved as t180.settings.<key> [90m(6035.373ms)[39m[39m
+[32m✔ row 5: with localStorage refused, the page starts, the menus open, and a setting holds for the session [90m(2245.7318ms)[39m[39m
+[32m✔ row 6: Reset the guide forgets that the guide was finished [90m(2161.2639ms)[39m[39m
+[32m✔ row 7: Build and Track open and say something, never an error [90m(1963.4664ms)[39m[39m
+[32m✔ row 8: the bar fits at 1400 px: the seven menus and Export to Assetto Corsa each on one line and inside the window, the status and install note giving way [90m(2326.4655ms)[39m[39m
+[32m✔ row 9: Settings ▸ Wall raycasting and the checker's CSP box follow each other both ways, and the choice survives a reload [90m(3611.3663ms)[39m[39m
+[32m✔ row 10: with the Track part, the road surface has one controller, alive before the Track menu is opened [90m(1768.4691ms)[39m[39m
+[32m✔ row 11: with the Build part, Build ▸ Brush shows the brush strip under the bar, keeps it there across an edit, and hides it again [90m(3254.0583ms)[39m[39m
+[32m✔ row 12: with the Track part, a menu panel gives its controls back when the menu closes [90m(2834.2479ms)[39m[39m
+[32m✔ row 13: a part that fails to load says why in its menu, and the other menus still work [90m(1926.3102ms)[39m[39m
+[32m✔ row 14: File holds Export layouts…, its modules load on the page, and off the app it says it needs the native side instead of doing nothing [90m(1725.0539ms)[39m[39m
+[32m✔ row 15: Settings ▸ Sound: the volume slider shows 45 on a fresh start, and a saved volume shows as saved [90m(3042.3105ms)[39m[39m
+[32m✔ row 16 (D394): Settings ▸ Theme: a fixed theme sets the look at once and fetches its own melody's two files; it survives a reload as that look and melody; SIGIL says its melody stays random [90m(4451.1813ms)[39m[39m
+[32m✔ row 17 (D396): the bar fits at 900, 1100, 1280 and 1400 px and on both sides of each fold: no overflow, the window buttons wholly inside the window, a grab strip of at least 24 px, every menu and Export on one line left of them; at 125% scaling too, where a window can be a fraction of a pixel wide [90m(33072.4039ms)[39m[39m
+[32m✔ row 18 (D401): Settings ▸ Theme starts with Random, not Music, and it is the default; choosing it picks another look at once and that look's melody follows; a saved music loads as Random [90m(5069.1998ms)[39m[39m
+[34mℹ tests 18[39m
+[34mℹ suites 0[39m
+[34mℹ pass 18[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 88160.6718[39m
+
+heavy-run: waiting on 6fe15f0a pid 38360 (t180 A D407b core-readout-display, since 2026-10-19T23:45:26.162Z) and 0845a868 pid 9328 (t180 C D417 red, since 2026-10-19T23:45:30.307Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 17896 (lighthouse O D415 landing cargo test, since 2026-10-19T23:45:45.040Z) and c88002b1 pid 17896 (lighthouse O D415 landing cargo test (second slot), since 2026-10-19T23:45:47.084Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 17896 (lighthouse O D415 landing cargo test, since 2026-10-19T23:45:45.040Z) and c88002b1 pid 17896 (lighthouse O D415 landing cargo test (second slot), since 2026-10-19T23:45:47.084Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 17896 (lighthouse O D415 landing cargo test, since 2026-10-19T23:45:45.040Z) and c88002b1 pid 17896 (lighthouse O D415 landing cargo test (second slot), since 2026-10-19T23:45:47.084Z) — one heavy run at a time
