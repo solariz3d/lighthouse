@@ -329,23 +329,16 @@ async function refreshPaneLetters() {
   try { paneLetters = (await inv('pane_letters')) || {}; } catch (_) { /* keep what we have */ }
 }
 
-function letterFor(id) {
+// D423 (the librarian's ruling 02:2x): ONE allocator. A pane's letter is the backend's (pane_letter, letters.json), or none.
+// This used to invent one for a pane missing from the cached copy (the first letter not shown on an open pane), and the
+// backend, which never saw it, handed the same letter to the next sibling: the crossed O/N labels of 2026-10-19. A pane the
+// cache lacks is asked for again; one the backend has not lettered (no mount: a fresh pane) is shown without a letter.
+async function letterFor(id) {
   if (paneLetters[id]) return paneLetters[id];
-  // Fallback only: a pane the backend has no record of (an older build, or a pane created
-  // before this shipped). Skip every letter already spoken for, live or retired, so the
-  // stopgap still cannot hand out a name that belonged to someone else.
-  const used = new Set([
-    ...[...panes.values()].map((p) => p.name),
-    ...Object.values(paneLetters),
-  ]);
-  for (let gen = 1; gen < 99; gen++) {
-    for (let i = 0; i < 26; i++) {
-      const n = String.fromCharCode(65 + i) + (gen === 1 ? '' : String(gen));
-      if (!used.has(n)) { paneLetters[id] = n; return n; }
-    }
-  }
-  return '#';
+  await refreshPaneLetters();
+  return paneLetters[id] || null;
 }
+const NO_LETTER = '–';   // shown for a pane the backend gave no letter; never sent as its name
 
 function makePaneEl(id, name, cwd, container, role) {
   const el = document.createElement('div');
@@ -446,7 +439,8 @@ function flashCopied(id, n) {
 function attachPane(id, label, cwd, role, container, kept) {
   ensureListeners();
   role = role || 'human';
-  const name = role === 'main' ? 'M' : letterFor(id);
+  // D423: the backend's letter, from the cached registry when it is there, else asked for below; never one worked out here
+  const name = role === 'main' ? 'M' : (paneLetters[id] || NO_LETTER);
   const el = makePaneEl(id, name, label, container, role);
   // Reading-first type: Cascadia Mono (ships with Win11, built for long terminal reading,
   // better Il1/O0) at 14/1.25; no blink (N panes pulsing in peripheral vision is noise) —
@@ -518,7 +512,13 @@ function attachPane(id, label, cwd, role, container, kept) {
   }, true);
 
   panes.set(id, { term, fit, el, cwd, role, name, label: label || '', kept: !!kept });
-  inv('set_pane_name', { pane: id, name }).catch(() => {});
+  if (name !== NO_LETTER) inv('set_pane_name', { pane: id, name }).catch(() => {});
+  else letterFor(id).then((l) => {   // D423: not in the cached registry yet: the backend's letter, once read
+    const p = panes.get(id), tag = el.querySelector('.pname');
+    if (!p || !l) { if (tag) tag.title = 'no letter: the backend gave this pane none (it has no mount) · ' + id.slice(0, 8); return; }
+    p.name = l; if (tag) tag.textContent = l;
+    inv('set_pane_name', { pane: id, name: l }).catch(() => {});
+  });
   if (role !== 'human') {
     const rb = el.querySelector('.prole');
     if (rb) { rb.textContent = role; rb.classList.toggle('committee', role === 'committee'); }
@@ -763,9 +763,87 @@ function toggleRole(id) {
 }
 
 // inject text as a bracketed paste (preserves newlines) then submit — robust for live panes
-function injectAndSend(pane, text) {
-  inv('pty_write', { pane, data: '\x1b[200~' + text + '\x1b[201~' });
-  setTimeout(() => inv('pty_write', { pane, data: '\r' }), 70);
+// D423 part 2: and CONFIRM the submit, by D415's rules (main.rs `deliver`, `submit_step`, `ours_in_box`), read on the screen this pane
+// shows. The paste, 70 ms, one Enter as before; then the composer is read at 200, 300, 600 and 1,200 ms. Gone is a submit. OUR text still
+// there gets a lone Enter again, up to 3 times, never a second paste (a paste appends). Text that is not ours gets no key, and the keeper's
+// text already in the box gets nothing pasted onto it. Unreadable is never called submitted and never gets a retried Enter. No key that
+// edits the box (backspace, escape, ctrl-u) is ever written. Resolves { outcome: 'submitted' | 'not-submitted' | 'not-ours' | 'occupied'
+// | 'unknown', retries }; the callers say NOT SUBMITTED or NOT DELIVERED when it is either.
+const SUBMIT_CHECK_GAPS_MS = [200, 300, 600, 1200];
+const RECEIPT_NEEDLE_CHARS = 40, RECEIPT_NEEDLE_MIN = 8;   // main.rs receipt_needle: the squeezed head and tail, none under 8 characters
+const squeezeText = (s) => String(s).replace(/\s+/g, '');
+const isRuleRow = (s) => { const t = s.replace(/\s+$/, ''); return t.length > 0 && /^─+$/.test(t); };
+/** The visible screen as two grids, cell for cell: `rendered` (every glyph) and `typed` (default-colour cells only, so a dim suggestion is blank). null: nothing to read. */
+function paneScreen(pane) {
+  const p = panes.get(pane), term = p && p.term;
+  if (!term || !term.buffer || !term.buffer.active) return null;
+  const buf = term.buffer.active, rendered = [], typed = [];
+  for (let y = buf.baseY; y < buf.baseY + term.rows; y++) {
+    const line = buf.getLine(y); if (!line) continue;
+    let r = '', ty = '';
+    for (let x = 0; x < line.length; x++) {
+      const c = line.getCell(x); if (!c || c.getWidth() === 0) continue;
+      const ch = c.getChars() || ' ';
+      r += ch; ty += c.isFgDefault() ? ch : ' '.repeat(ch.length);
+    }
+    rendered.push(r); typed.push(ty);
+  }
+  return { rendered, typed };
+}
+/** main.rs composer_row: the last ❯ row, and only when a full-width rule is directly above it. */
+function composerRowOf(rendered) {
+  let i = -1; for (let k = rendered.length - 1; k >= 0; k--) if (/^\s*❯/.test(rendered[k])) { i = k; break; }
+  return i > 0 && isRuleRow(rendered[i - 1]) ? i : -1;
+}
+/** main.rs composer_state: 'empty' | 'text' | 'unreadable'. */
+function composerStateOf(s) {
+  if (!s) return 'unreadable';
+  const i = composerRowOf(s.rendered); if (i < 0) return 'unreadable';
+  const m = s.rendered[i].indexOf('❯');
+  return s.typed[i].slice(m + 1).trim() === '' ? 'empty' : 'text';
+}
+/** main.rs ours_in_box: the composer row and the rows under it to the next rule hold our head or tail needle, or a collapsed paste of our line count. */
+function oursInBox(s, text) {
+  const i = composerRowOf(s.rendered); if (i < 0) return false;
+  let end = s.rendered.length; for (let k = i + 1; k < s.rendered.length; k++) if (isRuleRow(s.rendered[k])) { end = k; break; }
+  const box = squeezeText(s.rendered.slice(i, end).join('')), sq = squeezeText(text);
+  if (sq.length >= RECEIPT_NEEDLE_MIN && (box.includes(sq.slice(0, RECEIPT_NEEDLE_CHARS)) || box.includes(sq.slice(-RECEIPT_NEEDLE_CHARS)))) return true;
+  const lines = (String(text).match(/\n/g) || []).length;
+  return lines > 0 && [...box.matchAll(/\[Pastedtext#\d+\+(\d+)lines?\]/g)].some((m) => Number(m[1]) === lines);
+}
+/** main.rs submit_step, one reading's decision. */
+function submitStepOf(reading, ours, retriesSent) {
+  if (reading === 'empty') return 'submitted';
+  if (reading === 'unreadable') return 'unknown';
+  if (!ours) return 'not-ours';
+  return retriesSent < SUBMIT_CHECK_GAPS_MS.length - 1 ? 'retry' : 'not-submitted';
+}
+async function injectAndSend(pane, text) {
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  const write = (data) => inv('pty_write', { pane, data });
+  // the keeper's own text in the box: nothing goes onto it (a paste would append to it, and the Enter would send both)
+  const before = paneScreen(pane);
+  if (composerStateOf(before) === 'text' && !oursInBox(before, text)) return { outcome: 'occupied', retries: 0 };
+  write('\x1b[200~' + text + '\x1b[201~');
+  await wait(70);
+  write('\r');
+  let retries = 0;
+  for (const gap of SUBMIT_CHECK_GAPS_MS) {
+    await wait(gap);
+    const s = paneScreen(pane), step = submitStepOf(composerStateOf(s), !!s && oursInBox(s, text), retries);
+    if (step !== 'retry') return { outcome: step, retries };
+    write('\r'); retries++;
+  }
+  return { outcome: 'unknown', retries };   // unreachable: the last gap's reading is never a retry
+}
+/** The status words for an outcome that did not go in, or '' when it did. */
+function notSentWords(pane, out) {
+  const who = 'pane ' + String(pane).slice(0, 8);
+  if (!out || out.outcome === 'submitted') return '';
+  if (out.outcome === 'not-submitted') return `NOT SUBMITTED: the text is in ${who}'s input box after ${out.retries} retried Enter${out.retries === 1 ? '' : 's'}. Press Enter there; do not send it again`;
+  if (out.outcome === 'occupied') return `NOT DELIVERED: ${who}'s input box already had text in it, so nothing was pasted`;
+  if (out.outcome === 'not-ours') return `NOT CONFIRMED: other text is in ${who}'s input box now; no Enter was pressed on it`;
+  return `UNCONFIRMED: ${who}'s input box could not be read after the Enter`;
 }
 
 function openConvene() {
@@ -791,9 +869,20 @@ function broadcast() {
     if (pid === focusPaneId) return;
     const lt = lastTurn.get(pid);
     if (lt && lt.role === 'user') return;          // busy: awaiting its own reply — skip
-    injectAndSend(pid, msg);
+    const sent = injectAndSend(pid, msg);
     expecting.add(pid);
     p.el.classList.add('convening');
+    // D423: a pane whose box held other text got nothing, so it is not waited for; one left NOT SUBMITTED still is (an Enter there sends it)
+    sent.then((out) => {
+      const why = notSentWords(pid, out); if (!why) return;
+      const c = convene && convene.expecting === expecting ? convene : null;
+      if (out.outcome === 'occupied') {
+        expecting.delete(pid); p.el.classList.remove('convening');
+        if (c && !expecting.size) { convene = null; setStatus(why + '; nobody left to convene'); return; }
+        if (c && c.got.size >= expecting.size) { finishConvene(); return; }
+      }
+      setStatus(why);
+    });
   });
   if (!expecting.size) { setStatus('all other panes are busy — try again shortly'); return; }
   convene = { question, expecting, got: new Map() };
@@ -858,11 +947,13 @@ function formingToText(f) {
   return s;
 }
 
-function giveToFocus() {
+async function giveToFocus() {
   if (!lastForming || !focusPaneId) { setStatus('no focus pane to give to'); return; }
-  injectAndSend(focusPaneId, formingToText(lastForming));
+  const pane = focusPaneId, sent = injectAndSend(pane, formingToText(lastForming));
   document.getElementById('cmtpanel').classList.remove('show');
-  setStatus('committee input given to focus ' + focusPaneId.slice(0, 8));
+  setStatus('committee input given to focus ' + pane.slice(0, 8));
+  const out = await sent, why = notSentWords(pane, out);   // D423: say so when it did not go in
+  if (why) setStatus(why);
 }
 
 function dismissCommittee() { document.getElementById('cmtpanel').classList.remove('show'); }
@@ -1122,9 +1213,10 @@ if (skb) skb.onclick = () => {
   // No longer cites a gauge as the reason: the chair pressed this, and the chair is the
   // discriminator. Asserting "low perspective diversity, few referents" told the pane a broken
   // measurement had detected something, which is a worse input than the plain request.
-  injectAndSend(focusPaneId, "[committee] the chair is asking for a skeptic's vantage on this. Find the flaw, the hidden assumption, the place this breaks. If the agreement here is real, say why it holds — but do not agree because everyone else did.");
+  const pane = focusPaneId, sent = injectAndSend(pane, "[committee] the chair is asking for a skeptic's vantage on this. Find the flaw, the hidden assumption, the place this breaks. If the agreement here is real, say why it holds — but do not agree because everyone else did.");
   skb.style.display = 'none';
-  setStatus('skeptic vantage offered to focus ' + focusPaneId.slice(0, 8));
+  setStatus('skeptic vantage offered to focus ' + pane.slice(0, 8));
+  sent.then((out) => { const why = notSentWords(pane, out); if (why) setStatus(why); });   // D423: say so when it did not go in
 };
 const cmx = document.getElementById('cmtclose'); if (cmx) cmx.onclick = dismissCommittee;
 const setGateMode = (l) => { const el = document.getElementById('gatemode'); if (el) el.textContent = l; };

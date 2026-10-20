@@ -32,6 +32,7 @@ mod nowplaying;  // what is actually playing, from Windows' own media session �
 mod harvest_guard;  // the capture watcher's recovery + liveness policy; one mutex, one policy (E, L043)
 mod sync_launch;  // pull-verify-then-start, and the retire rule for a second machine (C, L052)
 mod pane_exit;  // a pane's claude process ending by itself: shown, recorded, a fixed seat reopened ONCE (A, D143)
+mod priority;  // High class and no EcoQoS for this process and its WebView2 children, set at startup and kept (A, D338)
 #[cfg(test)]
 mod test_scratch;  // test folders that remove themselves on drop (A, D299)
 
@@ -14920,6 +14921,8 @@ fn main() {
         warn_second_instance();
         return;
     }
+    // D338: Consonance keeps its own priority (High) and opts out of EcoQoS, and so do its WebView2 children; a failure is logged and never stops the start.
+    priority::start();
     // P-LEAVE-2 (a): the session's start time, recorded here and nowhere later — see APP_STARTED_AT.
     let _ = app_started_at();
     // Stage 7a/7b: the pull queue. pull_tx → the MCP control plane (bodies' raise_pull);
