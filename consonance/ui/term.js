@@ -329,23 +329,16 @@ async function refreshPaneLetters() {
   try { paneLetters = (await inv('pane_letters')) || {}; } catch (_) { /* keep what we have */ }
 }
 
-function letterFor(id) {
+// D423 (the librarian's ruling 02:2x): ONE allocator. A pane's letter is the backend's (pane_letter, letters.json), or none.
+// This used to invent one for a pane missing from the cached copy (the first letter not shown on an open pane), and the
+// backend, which never saw it, handed the same letter to the next sibling: the crossed O/N labels of 2026-10-19. A pane the
+// cache lacks is asked for again; one the backend has not lettered (no mount: a fresh pane) is shown without a letter.
+async function letterFor(id) {
   if (paneLetters[id]) return paneLetters[id];
-  // Fallback only: a pane the backend has no record of (an older build, or a pane created
-  // before this shipped). Skip every letter already spoken for, live or retired, so the
-  // stopgap still cannot hand out a name that belonged to someone else.
-  const used = new Set([
-    ...[...panes.values()].map((p) => p.name),
-    ...Object.values(paneLetters),
-  ]);
-  for (let gen = 1; gen < 99; gen++) {
-    for (let i = 0; i < 26; i++) {
-      const n = String.fromCharCode(65 + i) + (gen === 1 ? '' : String(gen));
-      if (!used.has(n)) { paneLetters[id] = n; return n; }
-    }
-  }
-  return '#';
+  await refreshPaneLetters();
+  return paneLetters[id] || null;
 }
+const NO_LETTER = '–';   // shown for a pane the backend gave no letter; never sent as its name
 
 function makePaneEl(id, name, cwd, container, role) {
   const el = document.createElement('div');
@@ -446,7 +439,8 @@ function flashCopied(id, n) {
 function attachPane(id, label, cwd, role, container, kept) {
   ensureListeners();
   role = role || 'human';
-  const name = role === 'main' ? 'M' : letterFor(id);
+  // D423: the backend's letter, from the cached registry when it is there, else asked for below; never one worked out here
+  const name = role === 'main' ? 'M' : (paneLetters[id] || NO_LETTER);
   const el = makePaneEl(id, name, label, container, role);
   // Reading-first type: Cascadia Mono (ships with Win11, built for long terminal reading,
   // better Il1/O0) at 14/1.25; no blink (N panes pulsing in peripheral vision is noise) —
@@ -518,7 +512,13 @@ function attachPane(id, label, cwd, role, container, kept) {
   }, true);
 
   panes.set(id, { term, fit, el, cwd, role, name, label: label || '', kept: !!kept });
-  inv('set_pane_name', { pane: id, name }).catch(() => {});
+  if (name !== NO_LETTER) inv('set_pane_name', { pane: id, name }).catch(() => {});
+  else letterFor(id).then((l) => {   // D423: not in the cached registry yet: the backend's letter, once read
+    const p = panes.get(id), tag = el.querySelector('.pname');
+    if (!p || !l) { if (tag) tag.title = 'no letter: the backend gave this pane none (it has no mount) · ' + id.slice(0, 8); return; }
+    p.name = l; if (tag) tag.textContent = l;
+    inv('set_pane_name', { pane: id, name: l }).catch(() => {});
+  });
   if (role !== 'human') {
     const rb = el.querySelector('.prole');
     if (rb) { rb.textContent = role; rb.classList.toggle('committee', role === 'committee'); }
