@@ -102,6 +102,8 @@ const MUTANTS = [
   ['token: redaction applies to a one-character token (ordinary text is eaten)', HOOK, "token.length >= 4 ?", "token.length >= 1 ?"],
   ['token: the pointer line is not redacted', HOOK, "pointer: clip(scrub(R(first.trim())), 400)", "pointer: clip(scrub(first.trim()), 400)"],
   ['token: the unmatched items are not redacted', HOOK, "unmatched: d.unmatched.slice(0, 12).map((x) => clip(scrub(R(x)), 200))", "unmatched: d.unmatched.slice(0, 12).map((x) => clip(scrub(x), 200))"],
+  ['D418 warn: the warn row unmatched items are not scrubbed (a key shape)', HOOK, "unmatched: d.unmatched.slice(0, 12).map((w) => clip(scrub(R(w)), 200))", "unmatched: d.unmatched.slice(0, 12).map((w) => clip(R(w), 200))"],
+  ['D418 warn: light refuses again instead of warning', HOOK, "if (mode === 'light') { record(dir, { ...base, decision: 'warn',", "if (false) { record(dir, { ...base, decision: 'warn',"],
   ['token: the allowed items are not redacted', HOOK, "items: d.items.slice(0, 12).map((x) => clip(scrub(R(x)), 200))", "items: d.items.slice(0, 12).map((x) => clip(scrub(x), 200))"],
   ['token: the deny reason is not redacted', HOOK, "return emitDeny(R(d.reason));", "return emitDeny(d.reason);"],
   ['token: the token itself is written into the row', HOOK, "const base = { seat, tool, ringSha,", "const base = { token, seat, tool, ringSha,"],

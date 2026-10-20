@@ -379,6 +379,15 @@ test('LEDGER: a key shape in the pointer line or an item is redacted in the row'
   assert.ok(!raw.includes(OR_TOKEN), 'a key reached the ledger'); assert.ok(raw.includes('<redacted>'));
 });
 
+test('D418 LEDGER: in light, a key shape in an unmatched item is redacted in the warn row too', () => {
+  const dir = tmpDir(), light = homeWith({ gates_mode: 'light' }), text = 'pointer\nSOURCES: `echo ' + OR_TOKEN + '`';
+  const r = runGate(dir, payloadOf(dir, [USER('go')], { text }), { USERPROFILE: light, HOME: light });
+  assert.ok(!isDeny(r), 'light delivers');
+  const row = rows(dir).pop(); assert.strictEqual(row.decision, 'warn');
+  const raw = fs.readFileSync(path.join(dir, 'sources-gate.jsonl'), 'utf8');
+  assert.ok(!raw.includes(OR_TOKEN), 'a key reached the ledger through a warn row'); assert.ok(raw.includes('<redacted>'));
+});
+
 test('LEDGER: the secret shapes are the second reader worker\'s, byte for byte (drift guard)', () => {
   assert.deepStrictEqual(G.SECRET_SHAPES.map(String), W.SECRET_SHAPES.map(String));
 });
@@ -589,7 +598,22 @@ test('D287 LIGHT: with gates_mode light in the home, the hook allows a quoted cd
   const r = runGate(dir, payloadOf(dir, turn, { text: chain }), { USERPROFILE: light, HOME: light });
   assert.strictEqual(r.out, null, JSON.stringify(r.out));
   const row = rows(dir).pop(); assert.strictEqual(row.decision, 'allow'); assert.strictEqual(row.mode, 'light');
-  assert.ok(isDeny(runGate(dir, payloadOf(dir, turn, { text: withSources('SOURCES: exo_memory/handback/never-opened.md') }), { USERPROFILE: light, HOME: light })), 'light let through an item nothing in the turn touched');
+  // AMENDED by name (D418 part 5, the keeper 2026-10-19 "just do what we need to do to make it work"): light no longer REFUSES an item nothing touched;
+  // it delivers the ring and records a 'warn' row naming the item. The check stays, the bounce goes. Strict still refuses (the row above).
+  const w = runGate(dir, payloadOf(dir, turn, { text: withSources('SOURCES: exo_memory/handback/never-opened.md') }), { USERPROFILE: light, HOME: light });
+  assert.ok(!isDeny(w), 'light must deliver, not refuse: ' + JSON.stringify(w.out));
+  const wr = rows(dir).pop(); assert.strictEqual(wr.decision, 'warn'); assert.strictEqual(wr.mode, 'light');
+  assert.deepStrictEqual(wr.unmatched, ['exo_memory/handback/never-opened.md'], 'the warn row names what was missing');
+});
+
+test('D418 part 5 WARN: in light, a ring with NO SOURCES line is delivered and logged as warn; in strict it is still refused', () => {
+  const dir = tmpDir(), light = homeWith({ gates_mode: 'light' });
+  const turn = [USER('go'), ...readCall('t1', 'C:/work/a.md')];
+  const bare = 'a hand-back with no sources line\nNEXT: librarian read it when it lands';
+  assert.ok(isDeny(runGate(dir, payloadOf(dir, turn, { text: bare }))), 'strict must still refuse a ring with no SOURCES line');
+  const r = runGate(dir, payloadOf(dir, turn, { text: bare }), { USERPROFILE: light, HOME: light });
+  assert.ok(!isDeny(r), 'light must deliver: ' + JSON.stringify(r.out));
+  const row = rows(dir).pop(); assert.strictEqual(row.decision, 'warn'); assert.strictEqual(row.kind, 'missing');
 });
 
 // ------------------------------------------------------------------ D288 F1: light matches what a command OPENED, not the command's text

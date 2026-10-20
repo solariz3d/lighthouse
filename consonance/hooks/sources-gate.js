@@ -385,6 +385,10 @@ function main() {
 
   const base = { seat, tool, ringSha, sessionId: payload.session_id || null, kind: d.kind, nItems: d.items.length, nCalls: calls.length, ...(mode === 'light' ? { mode } : {}), ...(tool === DISPATCH_TOOL ? { target: clip(scrub(R(String((payload.tool_input && payload.tool_input.target) || ''))), 20) } : {}) };
   if (d.decision === 'allow') { record(dir, { ...base, decision: 'allow', items: d.items.slice(0, 12).map((x) => clip(scrub(R(x)), 200)) }); return process.exit(0); }
+  // D418 part 5 (the keeper, 2026-10-19: "just do what we need to do to make it work"): in light the gate WARNS instead of refusing. The ring is
+  // delivered and the row says what was missing, so the instrument keeps its record and the seat loses no turn to a re-send. 37 of 246 rings were
+  // refused on 2026-10-19 (sources-gate.jsonl), each a re-send; strict still refuses, byte for byte.
+  if (mode === 'light') { record(dir, { ...base, decision: 'warn', unmatched: d.unmatched.slice(0, 12).map((w) => clip(scrub(R(w)), 200)) }); return process.exit(0); }
 
   const first = text.split(/\r?\n/).find((l) => l.trim()) || '';
   const pointerPaths = (text.match(/[\w./\\:~-]*exo_memory[\w./\\-]*\.\w+/g) || []).slice(0, 5).map((x) => clip(scrub(R(x)), 200));
