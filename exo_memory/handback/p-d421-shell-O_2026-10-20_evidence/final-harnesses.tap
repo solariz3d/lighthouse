@@ -1,0 +1,1804 @@
+TAP version 13
+# Subtest: control: the unmutated temp copy passes every test file the mutants use
+not ok 1 - control: the unmutated temp copy passes every test file the mutants use
+  ---
+  duration_ms: 191307.7092
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o1\\app\\test\\core-close-mutation.test.js:111:1'
+  failureType: 'testCodeFailure'
+  error: 'native crash 3221225477 in core_close_best.test.js: the mutant was NOT TESTED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    runMutant (C:\Users\nname\Downloads\t180-wt-o1\app\test\core-close-mutation.test.js:94:42)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o1\app\test\core-close-mutation.test.js:112:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.start (node:internal/test_runner/test:1015:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)
+  ...
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 2 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 592.6782
+  type: 'test'
+  ...
+# Subtest: a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+ok 3 - a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+  ---
+  duration_ms: 915.9935
+  type: 'test'
+  ...
+# Subtest: a load throw in a run of one file reads NOT CAUGHT as before, never NOT TESTED (the load-throw stand-in, D354)
+ok 4 - a load throw in a run of one file reads NOT CAUGHT as before, never NOT TESTED (the load-throw stand-in, D354)
+  ---
+  duration_ms: 557.0907
+  type: 'test'
+  ...
+# Subtest: mutation K1 the columns outside the window are not fixed: applied, and caught by "row 1: a close confined to the LAST piece…"
+ok 5 - mutation K1 the columns outside the window are not fixed: applied, and caught by "row 1: a close confined to the LAST piece…"
+  ---
+  duration_ms: 1977.9643
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation K2 the pieces outside the window are recomputed, not kept: applied, and caught by "row 1: a close confined to the LAST piece…"
+ok 6 - mutation K2 the pieces outside the window are recomputed, not kept: applied, and caught by "row 1: a close confined to the LAST piece…"
+  ---
+  duration_ms: 4966.5835
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation K3 a local close that does not close is handed back, not refused: applied, and caught by "row 3: a window that cannot close the loop…"
+ok 7 - mutation K3 a local close that does not close is handed back, not refused: applied, and caught by "row 3: a window that cannot close the loop…"
+  ---
+  duration_ms: 4010.38
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation K4 the roll-rate bar is not read: applied, and caught by "row 4: a local close may not push the window past the roll-rate bar…"
+ok 8 - mutation K4 the roll-rate bar is not read: applied, and caught by "row 4: a local close may not push the window past the roll-rate bar…"
+  ---
+  duration_ms: 3891.5798
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation K5 the window is not named for a person: applied, and caught by "row 1: a close confined to the LAST piece…"
+ok 9 - mutation K5 the window is not named for a person: applied, and caught by "row 1: a close confined to the LAST piece…"
+  ---
+  duration_ms: 3795.7855
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation K6 the default window ignores the fraction (the last piece only): applied, and caught by "row 2: the default window…"
+ok 10 - mutation K6 the default window ignores the fraction (the last piece only): applied, and caught by "row 2: the default window…"
+  ---
+  duration_ms: 3168.049
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation K7 an empty window is accepted: applied, and caught by "row 5: a window with no road piece…"
+ok 11 - mutation K7 an empty window is accepted: applied, and caught by "row 5: a window with no road piece…"
+  ---
+  duration_ms: 3617.9728
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation A6 the refused export keeps the export's own message (ids): applied, and caught by "row 6: a refused export names EVERY red…"
+ok 12 - mutation A6 the refused export keeps the export's own message (ids): applied, and caught by "row 6: a refused export names EVERY red…"
+  ---
+  duration_ms: 9100.4407
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation A9 the press writes no copy from before the close: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…"
+ok 13 - mutation A9 the press writes no copy from before the close: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…"
+  ---
+  duration_ms: 6662.6839
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation A10 a failed copy still closes: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…"
+ok 14 - mutation A10 a failed copy still closes: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…"
+  ---
+  duration_ms: 7266.7933
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation A11 an edit while the copy is written is closed over: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…"
+ok 15 - mutation A11 an edit while the copy is written is closed over: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…"
+  ---
+  duration_ms: 10007.3809
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation B1 a way that does not prove is picked: applied, and caught by "row 4: when no way proves…"
+ok 16 - mutation B1 a way that does not prove is picked: applied, and caught by "row 4: when no way proves…"
+  ---
+  duration_ms: 62732.5078
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation B2 a way that adds a red is picked: applied, and caught by "row 4: when no way proves…"
+ok 17 - mutation B2 a way that adds a red is picked: applied, and caught by "row 4: when no way proves…"
+  ---
+  duration_ms: 64613.2687
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation B3 new road is not put last: applied, and caught by "row 8: the order…"
+ok 18 - mutation B3 new road is not put last: applied, and caught by "row 8: the order…"
+  ---
+  duration_ms: 61767.4228
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation B4 the most movement is tried first: applied, and caught by "row 7: the pick is the least-moving way that proves…"
+ok 19 - mutation B4 the most movement is tried first: applied, and caught by "row 7: the pick is the least-moving way that proves…"
+  ---
+  duration_ms: 54211.428
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation B5 Finish is tried when the end is already at the start: applied, and caught by "row 1: an end already at the start…"
+ok 20 - mutation B5 Finish is tried when the end is already at the start: applied, and caught by "row 1: an end already at the start…"
+  ---
+  duration_ms: 62985.7975
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation B6 a bend may reshape the track (no move cap): applied, and caught by "row 5: a bend that would move the track further…"
+ok 21 - mutation B6 a bend may reshape the track (no move cap): applied, and caught by "row 5: a bend that would move the track further…"
+  ---
+  duration_ms: 61103.7615
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation B7 a press that finds no way still applies: applied, and caught by "row 2: when no way of closing proves, nothing changes…"
+ok 22 - mutation B7 a press that finds no way still applies: applied, and caught by "row 2: when no way of closing proves, nothing changes…"
+  ---
+  duration_ms: 9709.683
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation B8 the press commits the open track: applied, and caught by "row 1: one press closes a near lap AT ONCE…"
+ok 23 - mutation B8 the press commits the open track: applied, and caught by "row 1: one press closes a near lap AT ONCE…"
+  ---
+  duration_ms: 6181.9537
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation N1 a laid road Close refuses is never taken as laid (the lone straight is lost to a loop again): applied, and caught by "row 17: an end straight behind the start…"
+ok 24 - mutation N1 a laid road Close refuses is never taken as laid (the lone straight is lost to a loop again): applied, and caught by "row 17: an end straight behind the start…"
+  ---
+  duration_ms: 22566.209
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation N2 a route that is only a straight is not laid under 10 m: applied, and caught by "row 17: an end straight behind the start…"
+ok 25 - mutation N2 a route that is only a straight is not laid under 10 m: applied, and caught by "row 17: an end straight behind the start…"
+  ---
+  duration_ms: 19282.4344
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation F5 the worker's document is not frozen (the residual memo misses): applied, and caught by "row 13: the worker's press on a structuredClone…"
+ok 26 - mutation F5 the worker's document is not frozen (the residual memo misses): applied, and caught by "row 13: the worker's press on a structuredClone…"
+  ---
+  duration_ms: 63467.3936
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation B9 a tie is not broken by the route order (micro-metres decide): applied, and caught by "row 8: the order…"
+ok 27 - mutation B9 a tie is not broken by the route order (micro-metres decide): applied, and caught by "row 8: the order…"
+  ---
+  duration_ms: 37426.6861
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation F1 the near bend is not checked first (every route runs): applied, and caught by "row 9: when the end is at the start…"
+ok 28 - mutation F1 the near bend is not checked first (every route runs): applied, and caught by "row 9: when the end is at the start…"
+  ---
+  duration_ms: 60233.0063
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation F2 the given open-track reds are ignored (it is checked again): applied, and caught by "row 11: given the open track…"
+ok 29 - mutation F2 the given open-track reds are ignored (it is checked again): applied, and caught by "row 11: given the open track…"
+  ---
+  duration_ms: 59308.6314
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation F3 the press hands the worker no reds: applied, and caught by "row 7: a press hands the worker the reds…"
+ok 30 - mutation F3 the press hands the worker no reds: applied, and caught by "row 7: a press hands the worker the reds…"
+  ---
+  duration_ms: 37706.3123
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation F4 a check made with CSP off is used: applied, and caught by "row 7: a press hands the worker the reds…"
+ok 31 - mutation F4 a check made with CSP off is used: applied, and caught by "row 7: a press hands the worker the reds…"
+  ---
+  duration_ms: 39374.5021
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation G1 a ray red on an overlap keeps its own words: applied, and caught by "the overlap is ONE group…"
+ok 32 - mutation G1 a ray red on an overlap keeps its own words: applied, and caught by "the overlap is ONE group…"
+  ---
+  duration_ms: 432.6635
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation G2 every ray red is called an overlap: applied, and caught by "a downforce-ray-gap with NO overlap near it…"
+ok 33 - mutation G2 every ray red is called an overlap: applied, and caught by "a downforce-ray-gap with NO overlap near it…"
+  ---
+  duration_ms: 435.0371
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation G3 the text names only the first place of a group: applied, and caught by "groupsText names one line per PLACE…"
+ok 34 - mutation G3 the text names only the first place of a group: applied, and caught by "groupsText names one line per PLACE…"
+  ---
+  duration_ms: 422.267
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation G6 places are never merged: applied, and caught by "D248: overlapping reds on one piece are ONE place…"
+ok 35 - mutation G6 places are never merged: applied, and caught by "D248: overlapping reds on one piece are ONE place…"
+  ---
+  duration_ms: 432.0781
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation G7 places merge across pieces: applied, and caught by "D248: TOUCHING reds merge…"
+ok 36 - mutation G7 places merge across pieces: applied, and caught by "D248: TOUCHING reds merge…"
+  ---
+  duration_ms: 438.8829
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation G10 places merge only on the same STARTING piece (the rule the real window caught): applied, and caught by "D248: a red inside a place that spans two pieces…"
+ok 37 - mutation G10 places merge only on the same STARTING piece (the rule the real window caught): applied, and caught by "D248: a red inside a place that spans two pieces…"
+  ---
+  duration_ms: 435.1933
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation G8 touching reds do not merge (no tolerance): applied, and caught by "D248: TOUCHING reds merge…"
+ok 38 - mutation G8 touching reds do not merge (no tolerance): applied, and caught by "D248: TOUCHING reds merge…"
+  ---
+  duration_ms: 432.8331
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation G9 the count is of reds, not places: applied, and caught by "D248: overlapping reds on one piece are ONE place…"
+ok 39 - mutation G9 the count is of reds, not places: applied, and caught by "D248: overlapping reds on one piece are ONE place…"
+  ---
+  duration_ms: 432.1914
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation G4 the piece is read at the range's end: applied, and caught by "where: s in km and the piece…"
+ok 40 - mutation G4 the piece is read at the range's end: applied, and caught by "where: s in km and the piece…"
+  ---
+  duration_ms: 432.7521
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation G5 s past the lap does not wrap: applied, and caught by "pieceAt wraps…"
+ok 41 - mutation G5 s past the lap does not wrap: applied, and caught by "pieceAt wraps…"
+  ---
+  duration_ms: 433.525
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation L1 every piece is labelled again: applied, and caught by "the labels on the track…"
+ok 42 - mutation L1 every piece is labelled again: applied, and caught by "the labels on the track…"
+  ---
+  duration_ms: 11454.8267
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation L2 the hovered piece is never labelled: applied, and caught by "the labels on the track…"
+ok 43 - mutation L2 the hovered piece is never labelled: applied, and caught by "the labels on the track…"
+  ---
+  duration_ms: 12642.1543
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation L3 a still pointer is not asked again after the track changes: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+ok 44 - mutation L3 a still pointer is not asked again after the track changes: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+  ---
+  duration_ms: 13035.4379
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation U1 Undo shows the head only (the bug): applied, and caught by "D242 item 7…"
+ok 45 - mutation U1 Undo shows the head only (the bug): applied, and caught by "D242 item 7…"
+  ---
+  duration_ms: 13712.6469
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation U2 the ticks are not put back: applied, and caught by "D242 item 7…"
+ok 46 - mutation U2 the ticks are not put back: applied, and caught by "D242 item 7…"
+  ---
+  duration_ms: 14350.5603
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation S1 Straight does not tick turn "at start": applied, and caught by "D242: after a 30°/100m turn, Straight…"
+ok 47 - mutation S1 Straight does not tick turn "at start": applied, and caught by "D242: after a 30°/100m turn, Straight…"
+  ---
+  duration_ms: 13534.5985
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation S2 Straight leaves the boxes ticked: applied, and caught by "D242: after a 30°/100m turn, Straight…"
+ok 48 - mutation S2 Straight leaves the boxes ticked: applied, and caught by "D242: after a 30°/100m turn, Straight…"
+  ---
+  duration_ms: 13188.8039
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: mutation S3 the straight hint never shows: applied, and caught by "D242: after a 30°/100m turn, Straight…"
+ok 49 - mutation S3 the straight hint never shows: applied, and caught by "D242: after a 30°/100m turn, Straight…"
+  ---
+  duration_ms: 13342.7525
+  type: 'test'
+  ...
+# D412 path: whole
+# Subtest: control: the unmutated temp copy passes every core-shell test
+ok 50 - control: the unmutated temp copy passes every core-shell test
+  ---
+  duration_ms: 91188.3374
+  type: 'test'
+  ...
+# D412 wide: "the layout" runs 4 rows
+# D412 wide: "the rate brush" runs 3 rows
+# D412 wide: "extendOptions" runs 3 rows
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 51 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 954.0513
+  type: 'test'
+  ...
+# Subtest: a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+ok 52 - a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+  ---
+  duration_ms: 1657.5197
+  type: 'test'
+  ...
+# Subtest: a load throw in a run of several files reads NOT TESTED and names the files (the load-throw stand-in, D354)
+ok 53 - a load throw in a run of several files reads NOT TESTED and names the files (the load-throw stand-in, D354)
+  ---
+  duration_ms: 1063.8496
+  type: 'test'
+  ...
+# Subtest: a load throw in one file does not hide a crash after a failing row in another: NOT TESTED (F1, D354)
+ok 54 - a load throw in one file does not hide a crash after a failing row in another: NOT TESTED (F1, D354)
+  ---
+  duration_ms: 1707.4436
+  type: 'test'
+  ...
+# Subtest: mutation R1 the sign of an angle flipped: applied, and caught by "the strings…"
+ok 55 - mutation R1 the sign of an angle flipped: applied, and caught by "the strings…"
+  ---
+  duration_ms: 1482.8141
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R2 zero is signed: applied, and caught by "the strings…"
+ok 56 - mutation R2 zero is signed: applied, and caught by "the strings…"
+  ---
+  duration_ms: 1443.6881
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R3 bank shown as its end value, not the change: applied, and caught by "the strings…"
+ok 57 - mutation R3 bank shown as its end value, not the change: applied, and caught by "the strings…"
+  ---
+  duration_ms: 1385.4867
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R4 rounding without the binary guard: applied, and caught by "the strings…"
+ok 58 - mutation R4 rounding without the binary guard: applied, and caught by "the strings…"
+  ---
+  duration_ms: 1488.818
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R5 the head keep-out ignored: applied, and caught by "the layout…"
+ok 59 - mutation R5 the head keep-out ignored: applied, and caught by "the layout…"
+  ---
+  duration_ms: 1483.5952
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R6 labels may overlap: applied, and caught by "the layout…"
+ok 60 - mutation R6 labels may overlap: applied, and caught by "the layout…"
+  ---
+  duration_ms: 1453.8774
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R7 anchors cached by the path object: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+ok 61 - mutation R7 anchors cached by the path object: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+  ---
+  duration_ms: 1502.327
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R8 the layer is not put back in the page: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+ok 62 - mutation R8 the layer is not put back in the page: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+  ---
+  duration_ms: 1503.3162
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R11 a label never slides off its piece's middle: applied, and caught by "a piece whose middle is behind the camera…"
+ok 63 - mutation R11 a label never slides off its piece's middle: applied, and caught by "a piece whose middle is behind the camera…"
+  ---
+  duration_ms: 1437.0378
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R13 the head's label may be culled: applied, and caught by "the layout: the head's own label is never culled…"
+ok 64 - mutation R13 the head's label may be culled: applied, and caught by "the layout: the head's own label is never culled…"
+  ---
+  duration_ms: 1381.2155
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R14 a head piece with nothing on screen has no label: applied, and caught by "the head's own piece is labelled even when none of it is on screen…"
+ok 65 - mutation R14 a head piece with nothing on screen has no label: applied, and caught by "the head's own piece is labelled even when none of it is on screen…"
+  ---
+  duration_ms: 1398.9303
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R15 the road bleeds through the label: applied, and caught by "the label box holds only…"
+ok 66 - mutation R15 the road bleeds through the label: applied, and caught by "the label box holds only…"
+  ---
+  duration_ms: 1491.9769
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R16 the label box has a border and round corners again: applied, and caught by "the label box holds only…"
+ok 67 - mutation R16 the label box has a border and round corners again: applied, and caught by "the label box holds only…"
+  ---
+  duration_ms: 1429.4879
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R17 the head's fallback place may cover the head: applied, and caught by "the layout: the head's own label is never culled…"
+ok 68 - mutation R17 the head's fallback place may cover the head: applied, and caught by "the layout: the head's own label is never culled…"
+  ---
+  duration_ms: 1404.3983
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R18 a label may be placed under a panel: applied, and caught by "the layout: no label is placed under a panel…"
+ok 69 - mutation R18 a label may be placed under a panel: applied, and caught by "the layout: no label is placed under a panel…"
+  ---
+  duration_ms: 1410.9611
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R12 no ring clears a large head keep-out: applied, and caught by "the layout: a label anchored on a large head keep-out…"
+ok 70 - mutation R12 no ring clears a large head keep-out: applied, and caught by "the layout: a label anchored on a large head keep-out…"
+  ---
+  duration_ms: 1433.9203
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R9 the panel readout waits for the next state change: applied, and caught by "the panel shows the ghost…"
+ok 71 - mutation R9 the panel readout waits for the next state change: applied, and caught by "the panel shows the ghost…"
+  ---
+  duration_ms: 1407.0933
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R10 the ghost readout is the LAST placed piece, not the candidate: applied, and caught by "the panel shows the ghost…"
+ok 72 - mutation R10 the ghost readout is the LAST placed piece, not the candidate: applied, and caught by "the panel shows the ghost…"
+  ---
+  duration_ms: 1443.0318
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U1 the cup field is not sent to the core: applied, and caught by "extendOptions: the cup field is the target c…"
+ok 73 - mutation U1 the cup field is not sent to the core: applied, and caught by "extendOptions: the cup field is the target c…"
+  ---
+  duration_ms: 1387.1862
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U2 the cup is sent in radians: applied, and caught by "extendOptions: the cup field is the target c…"
+ok 74 - mutation U2 the cup is sent in radians: applied, and caught by "extendOptions: the cup field is the target c…"
+  ---
+  duration_ms: 1404.0189
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U3 the panel clamps the cup, hiding the core guard: applied, and caught by "extendOptions: the cup field is the target c…"
+ok 75 - mutation U3 the panel clamps the cup, hiding the core guard: applied, and caught by "extendOptions: the cup field is the target c…"
+  ---
+  duration_ms: 1450.8265
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U4 the cup cell shows the typed target, not the document: applied, and caught by "the readout shows cup from → to…"
+ok 76 - mutation U4 the cup cell shows the typed target, not the document: applied, and caught by "the readout shows cup from → to…"
+  ---
+  duration_ms: 1425.8368
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U5 (K7-4) the cup cell wired to the bank values: applied, and caught by "the readout shows cup from → to…"
+ok 77 - mutation U5 (K7-4) the cup cell wired to the bank values: applied, and caught by "the readout shows cup from → to…"
+  ---
+  duration_ms: 1396.7327
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U6 (K7-3) the cup shown in radians: applied, and caught by "the readout shows cup from → to…"
+ok 78 - mutation U6 (K7-3) the cup shown in radians: applied, and caught by "the readout shows cup from → to…"
+  ---
+  duration_ms: 1425.8723
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U7 the cup field does not redraw the readout: applied, and caught by "the cup cell follows the cup field…"
+ok 79 - mutation U7 the cup field does not redraw the readout: applied, and caught by "the cup cell follows the cup field…"
+  ---
+  duration_ms: 1432.6716
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U8 the brush has no cup channel: applied, and caught by "the brush's channel list gains cup…"
+ok 80 - mutation U8 the brush has no cup channel: applied, and caught by "the brush's channel list gains cup…"
+  ---
+  duration_ms: 1412.6558
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U9 the cup field is not on the panel: applied, and caught by "the Extend panel has a "cup °" field…"
+ok 81 - mutation U9 the cup field is not on the panel: applied, and caught by "the Extend panel has a "cup °" field…"
+  ---
+  duration_ms: 1472.8014
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V1 the at-start boxes are ignored: applied, and caught by "extendOptions "at start"…"
+ok 82 - mutation V1 the at-start boxes are ignored: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 1416.8984
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V2 an untouched field is sent at start: applied, and caught by "extendOptions "at start"…"
+ok 83 - mutation V2 an untouched field is sent at start: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 1476.2177
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V3 the span is not held to the piece: applied, and caught by "extendOptions "at start"…"
+ok 84 - mutation V3 the span is not held to the piece: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 1395.4281
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V4 transition sent as one number for all channels: applied, and caught by "extendOptions "at start"…"
+ok 85 - mutation V4 transition sent as one number for all channels: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 1405.8667
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V5 a field sent on the wrong channel: applied, and caught by "extendOptions "at start"…"
+ok 86 - mutation V5 a field sent on the wrong channel: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 1462.1368
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V6 the panel never passes the boxes: applied, and caught by "the panel: an "at start" box…"
+ok 87 - mutation V6 the panel never passes the boxes: applied, and caught by "the panel: an "at start" box…"
+  ---
+  duration_ms: 1441.2924
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V7 ticking a box does not redraw: applied, and caught by "the panel: an "at start" box…"
+ok 88 - mutation V7 ticking a box does not redraw: applied, and caught by "the panel: an "at start" box…"
+  ---
+  duration_ms: 1473.7316
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C1 a brush frame builds on the last frame, not the drag's base: applied, and caught by "the rate brush…"
+ok 89 - mutation C1 a brush frame builds on the last frame, not the drag's base: applied, and caught by "the rate brush…"
+  ---
+  duration_ms: 1633.9368
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C2 the drag never ends in the history: applied, and caught by "the rate brush…"
+ok 90 - mutation C2 the drag never ends in the history: applied, and caught by "the rate brush…"
+  ---
+  duration_ms: 1686.6988
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C3 the local brush is not the default: applied, and caught by "the local (height / sideways) brush…"
+ok 91 - mutation C3 the local brush is not the default: applied, and caught by "the local (height / sideways) brush…"
+  ---
+  duration_ms: 1475.4775
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C20 sideways is sent as a hill: applied, and caught by "the local (height / sideways) brush…"
+ok 92 - mutation C20 sideways is sent as a hill: applied, and caught by "the local (height / sideways) brush…"
+  ---
+  duration_ms: 1466.9423
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C21 with E's brush, every channel is sent as rate: applied, and caught by "with E's brush, the rate brush goes through it…"
+ok 93 - mutation C21 with E's brush, every channel is sent as rate: applied, and caught by "with E's brush, the rate brush goes through it…"
+  ---
+  duration_ms: 1494.8776
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C4 a second close runs again: applied, and caught by "close: one click…"
+ok 94 - mutation C4 a second close runs again: applied, and caught by "close: one click…"
+  ---
+  duration_ms: 1741.7336
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C5 the heading brush may open a closed loop: applied, and caught by "close: one click…"
+ok 95 - mutation C5 the heading brush may open a closed loop: applied, and caught by "close: one click…"
+  ---
+  duration_ms: 1656.4843
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C7 export runs on an open track: applied, and caught by "export: an open track is refused…"
+ok 96 - mutation C7 export runs on an open track: applied, and caught by "export: an open track is refused…"
+  ---
+  duration_ms: 1740.0769
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C8 the list shows the piece builder's tracks too: applied, and caught by "save and open use their own prefix…"
+ok 97 - mutation C8 the list shows the piece builder's tracks too: applied, and caught by "save and open use their own prefix…"
+  ---
+  duration_ms: 1455.1429
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C12 turn is degrees per metre, not per 100 m: applied, and caught by "extendOptions…"
+ok 98 - mutation C12 turn is degrees per metre, not per 100 m: applied, and caught by "extendOptions…"
+  ---
+  duration_ms: 1452.2934
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C14 the pick takes the farthest station: applied, and caught by "the pick…"
+ok 99 - mutation C14 the pick takes the farthest station: applied, and caught by "the pick…"
+  ---
+  duration_ms: 1549.5206
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C15 the pick sees through the back of the camera: applied, and caught by "the pick…"
+ok 100 - mutation C15 the pick sees through the back of the camera: applied, and caught by "the pick…"
+  ---
+  duration_ms: 1446.8489
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C16 the ghost is not what extend builds: applied, and caught by "the ghost of an extension…"
+ok 101 - mutation C16 the ghost is not what extend builds: applied, and caught by "the ghost of an extension…"
+  ---
+  duration_ms: 1573.3101
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C17 export goes to the word exporter: applied, and caught by "export: an open track is refused…"
+ok 102 - mutation C17 export goes to the word exporter: applied, and caught by "export: an open track is refused…"
+  ---
+  duration_ms: 1909.8106
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C18 the close does not go round the user's straights: applied, and caught by "close: one click…"
+ok 103 - mutation C18 the close does not go round the user's straights: applied, and caught by "close: one click…"
+  ---
+  duration_ms: 1635.2987
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C19 the export is handed no start layout: applied, and caught by "export: an open track is refused…"
+ok 104 - mutation C19 the export is handed no start layout: applied, and caught by "export: an open track is refused…"
+  ---
+  duration_ms: 2689.0657
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C22 the widened radius is not shown: applied, and caught by "a brush E widened says so…"
+ok 105 - mutation C22 the widened radius is not shown: applied, and caught by "a brush E widened says so…"
+  ---
+  duration_ms: 1493.6985
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation L1 the track model ignores the lift: applied, and caught by "the track model draws the LIFTED road…"
+ok 106 - mutation L1 the track model ignores the lift: applied, and caught by "the track model draws the LIFTED road…"
+  ---
+  duration_ms: 1523.866
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation L2 a lift-only change is taken as the same track: applied, and caught by "the track model draws the LIFTED road…"
+ok 107 - mutation L2 a lift-only change is taken as the same track: applied, and caught by "the track model draws the LIFTED road…"
+  ---
+  duration_ms: 1499.147
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation L3 the mesh is not keyed by the lift: applied, and caught by "the track model draws the LIFTED road…"
+ok 108 - mutation L3 the mesh is not keyed by the lift: applied, and caught by "the track model draws the LIFTED road…"
+  ---
+  duration_ms: 1568.3516
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation L4 the export does not lift the path: applied, and caught by "the export lifts the path…"
+ok 109 - mutation L4 the export does not lift the path: applied, and caught by "the export lifts the path…"
+  ---
+  duration_ms: 4183.201
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C23 the radiusUsed E reports is not read: applied, and caught by "landed core: a narrow brush…"
+ok 110 - mutation C23 the radiusUsed E reports is not read: applied, and caught by "landed core: a narrow brush…"
+  ---
+  duration_ms: 1482.4384
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C24 sharp is never passed to E: applied, and caught by "the sharp opt-in…"
+ok 111 - mutation C24 sharp is never passed to E: applied, and caught by "the sharp opt-in…"
+  ---
+  duration_ms: 1488.5235
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation P1 the export starts at the origin: applied, and caught by "a lap that starts pitched…"
+ok 112 - mutation P1 the export starts at the origin: applied, and caught by "a lap that starts pitched…"
+  ---
+  duration_ms: 2145.0253
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation P2 the preview starts at the origin: applied, and caught by "a lap that starts pitched…"
+ok 113 - mutation P2 the preview starts at the origin: applied, and caught by "a lap that starts pitched…"
+  ---
+  duration_ms: 1997.8996
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation P3 the shell does not hand on the start: applied, and caught by "a lap that starts pitched…"
+ok 114 - mutation P3 the shell does not hand on the start: applied, and caught by "a lap that starts pitched…"
+  ---
+  duration_ms: 1961.9193
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: control: the unmutated temp copy passes every cross-section test
+ok 115 - control: the unmutated temp copy passes every cross-section test
+  ---
+  duration_ms: 2588.0111
+  type: 'test'
+  ...
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 116 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 1496.864
+  type: 'test'
+  ...
+# Subtest: a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+ok 117 - a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+  ---
+  duration_ms: 2280.06
+  type: 'test'
+  ...
+# Subtest: a load throw in a run of one file reads NOT CAUGHT as before, never NOT TESTED (the load-throw stand-in, D354)
+ok 118 - a load throw in a run of one file reads NOT CAUGHT as before, never NOT TESTED (the load-throw stand-in, D354)
+  ---
+  duration_ms: 1454.3938
+  type: 'test'
+  ...
+# Subtest: mutation X1 the edge angle sent in radians: applied, and caught by "xsec extendOptions: each field is its channel target…"
+ok 119 - mutation X1 the edge angle sent in radians: applied, and caught by "xsec extendOptions: each field is its channel target…"
+  ---
+  duration_ms: 2357.2553
+  type: 'test'
+  ...
+# Subtest: mutation X2 the panel clamps the edge, hiding the core guard (KE2-2): applied, and caught by "xsec extendOptions: nothing is clamped…"
+ok 120 - mutation X2 the panel clamps the edge, hiding the core guard (KE2-2): applied, and caught by "xsec extendOptions: nothing is clamped…"
+  ---
+  duration_ms: 2438.3026
+  type: 'test'
+  ...
+# Subtest: mutation X3 the tube field is not sent: applied, and caught by "xsec extendOptions: each field is its channel target…"
+ok 121 - mutation X3 the tube field is not sent: applied, and caught by "xsec extendOptions: each field is its channel target…"
+  ---
+  duration_ms: 2299.6667
+  type: 'test'
+  ...
+# Subtest: mutation X4 the edge start sent on the edge channel: applied, and caught by "xsec extendOptions: each field is its channel target…"
+ok 122 - mutation X4 the edge start sent on the edge channel: applied, and caught by "xsec extendOptions: each field is its channel target…"
+  ---
+  duration_ms: 2367.0101
+  type: 'test'
+  ...
+# Subtest: mutation X5 the bank wrapped to ±180 (S1): applied, and caught by "xsec extendOptions: bank winds past…"
+ok 123 - mutation X5 the bank wrapped to ±180 (S1): applied, and caught by "xsec extendOptions: bank winds past…"
+  ---
+  duration_ms: 2243.4262
+  type: 'test'
+  ...
+# Subtest: mutation X6 (KS1-2) max="180" on the bank input: applied, and caught by "xsec panel: the bank field takes any number…"
+ok 124 - mutation X6 (KS1-2) max="180" on the bank input: applied, and caught by "xsec panel: the bank field takes any number…"
+  ---
+  duration_ms: 2059.3157
+  type: 'test'
+  ...
+# Subtest: mutation X7 (KE7-1, UI) the edge cell shows the typed target: applied, and caught by "xsec panel: a changed field is a target…"
+ok 125 - mutation X7 (KE7-1, UI) the edge cell shows the typed target: applied, and caught by "xsec panel: a changed field is a target…"
+  ---
+  duration_ms: 2142.9377
+  type: 'test'
+  ...
+# Subtest: mutation X8 (KE7-2) the edge cell wired to the cup values: applied, and caught by "xsec panel (A…"
+ok 126 - mutation X8 (KE7-2) the edge cell wired to the cup values: applied, and caught by "xsec panel (A…"
+  ---
+  duration_ms: 2035.2819
+  type: 'test'
+  ...
+# Subtest: mutation X9 the edge start shown to one decimal: applied, and caught by "xsec panel: a changed field is a target…"
+ok 127 - mutation X9 the edge start shown to one decimal: applied, and caught by "xsec panel: a changed field is a target…"
+  ---
+  duration_ms: 2013.5363
+  type: 'test'
+  ...
+# Subtest: mutation X10 the edge field is not on the panel: applied, and caught by "xsec panel: the three fields are on the panel…"
+ok 128 - mutation X10 the edge field is not on the panel: applied, and caught by "xsec panel: the three fields are on the panel…"
+  ---
+  duration_ms: 1875.5592
+  type: 'test'
+  ...
+# Subtest: mutation X11 the new fields do not redraw the readout: applied, and caught by "xsec panel: the edge angle and the edge start each redraw…"
+ok 129 - mutation X11 the new fields do not redraw the readout: applied, and caught by "xsec panel: the edge angle and the edge start each redraw…"
+  ---
+  duration_ms: 1980.4248
+  type: 'test'
+  ...
+# Subtest: mutation X12 an untouched edge field is sent as a target: applied, and caught by "xsec panel: the three fields are on the panel…"
+ok 130 - mutation X12 an untouched edge field is sent as a target: applied, and caught by "xsec panel: the three fields are on the panel…"
+  ---
+  duration_ms: 2289.5571
+  type: 'test'
+  ...
+# Subtest: mutation X13 the edge has no "at start": applied, and caught by "xsec extendOptions: the new fields take the "at start" box…"
+ok 131 - mutation X13 the edge has no "at start": applied, and caught by "xsec extendOptions: the new fields take the "at start" box…"
+  ---
+  duration_ms: 2078.9007
+  type: 'test'
+  ...
+# Subtest: mutation X14 the head state drops the cross-section channels: applied, and caught by "xsec headState…"
+ok 132 - mutation X14 the head state drops the cross-section channels: applied, and caught by "xsec headState…"
+  ---
+  duration_ms: 2046.7007
+  type: 'test'
+  ...
+# Subtest: mutation X15 the default edge start is the plan's stale 0.70: applied, and caught by "xsec headState…"
+ok 133 - mutation X15 the default edge start is the plan's stale 0.70: applied, and caught by "xsec headState…"
+  ---
+  duration_ms: 2037.137
+  type: 'test'
+  ...
+# Subtest: mutation X16 (X2 ii) the mast stands on world y: applied, and caught by "xsec head marker: the mast follows the road's U…"
+ok 134 - mutation X16 (X2 ii) the mast stands on world y: applied, and caught by "xsec head marker: the mast follows the road's U…"
+  ---
+  duration_ms: 2100.5083
+  type: 'test'
+  ...
+# Subtest: mutation X17 the mast is not held below the roof: applied, and caught by "xsec head marker: inside a closed tube…"
+ok 135 - mutation X17 the mast is not held below the roof: applied, and caught by "xsec head marker: inside a closed tube…"
+  ---
+  duration_ms: 2315.8562
+  type: 'test'
+  ...
+# Subtest: mutation X18 the cross and ring reach through the wall: applied, and caught by "xsec head marker: inside a closed tube…"
+ok 136 - mutation X18 the cross and ring reach through the wall: applied, and caught by "xsec head marker: inside a closed tube…"
+  ---
+  duration_ms: 2072.5173
+  type: 'test'
+  ...
+# Subtest: mutation X19 an open tube read as closed: applied, and caught by "xsec head marker: the clearance of a closed tube…"
+ok 137 - mutation X19 an open tube read as closed: applied, and caught by "xsec head marker: the clearance of a closed tube…"
+  ---
+  duration_ms: 2106.1048
+  type: 'test'
+  ...
+# Subtest: mutation X20 the roof read sideways: applied, and caught by "xsec head marker: the clearance of a closed tube…"
+ok 138 - mutation X20 the roof read sideways: applied, and caught by "xsec head marker: the clearance of a closed tube…"
+  ---
+  duration_ms: 3138.4953
+  type: 'test'
+  ...
+# Subtest: mutation X21 the preview never hands the room to the marker: applied, and caught by "xsec head marker: the preview hands…"
+ok 139 - mutation X21 the preview never hands the room to the marker: applied, and caught by "xsec head marker: the preview hands…"
+  ---
+  duration_ms: 2645.293
+  type: 'test'
+  ...
+# Subtest: mutation X22 the tube-too-narrow red has no words: applied, and caught by "xsec validation words…"
+ok 140 - mutation X22 the tube-too-narrow red has no words: applied, and caught by "xsec validation words…"
+  ---
+  duration_ms: 2130.0393
+  type: 'test'
+  ...
+# Subtest: mutation X23 the roll-rate red has no words: applied, and caught by "xsec validation words…"
+ok 141 - mutation X23 the roll-rate red has no words: applied, and caught by "xsec validation words…"
+  ---
+  duration_ms: 2327.4879
+  type: 'test'
+  ...
+# Subtest: mutation X24 the readout swallows the refusal's name: applied, and caught by "xsec panel: a core refusal is shown by its name…"
+ok 142 - mutation X24 the readout swallows the refusal's name: applied, and caught by "xsec panel: a core refusal is shown by its name…"
+  ---
+  duration_ms: 2146.924
+  type: 'test'
+  ...
+# Subtest: mutation X25 a typed tube leaves the cup enabled: applied, and caught by "xsec panel: a piece is a cup OR a tube…"
+ok 143 - mutation X25 a typed tube leaves the cup enabled: applied, and caught by "xsec panel: a piece is a cup OR a tube…"
+  ---
+  duration_ms: 2026.9064
+  type: 'test'
+  ...
+# Subtest: mutation X29 a non-tube head shows the sweep the core keeps internally (RULING 2): applied, and caught by "xsec headState…"
+ok 144 - mutation X29 a non-tube head shows the sweep the core keeps internally (RULING 2): applied, and caught by "xsec headState…"
+  ---
+  duration_ms: 4223.2405
+  type: 'test'
+  ...
+# Subtest: mutation X30 the head piece is never read as a tube: applied, and caught by "xsec headState…"
+ok 145 - mutation X30 the head piece is never read as a tube: applied, and caught by "xsec headState…"
+  ---
+  duration_ms: 2173.5167
+  type: 'test'
+  ...
+# Subtest: mutation X31 the tube-too-narrow words keep the first, wrong 9.43 m: applied, and caught by "xsec validation words…"
+ok 146 - mutation X31 the tube-too-narrow words keep the first, wrong 9.43 m: applied, and caught by "xsec validation words…"
+  ---
+  duration_ms: 2396.9279
+  type: 'test'
+  ...
+# Subtest: mutation X27 a new document leaves a field disabled: applied, and caught by "xsec panel: a piece is a cup OR a tube…"
+ok 147 - mutation X27 a new document leaves a field disabled: applied, and caught by "xsec panel: a piece is a cup OR a tube…"
+  ---
+  duration_ms: 2075.9626
+  type: 'test'
+  ...
+# Subtest: mutation X28 the cup-or-tube rule is never wired: applied, and caught by "xsec panel: a piece is a cup OR a tube…"
+ok 148 - mutation X28 the cup-or-tube rule is never wired: applied, and caught by "xsec panel: a piece is a cup OR a tube…"
+  ---
+  duration_ms: 2112.2846
+  type: 'test'
+  ...
+# Subtest: CONTROL: the whole of core_cup.test.js and core_cup_readers.test.js pass on an unmutated copy of src/, tools/ and app/
+ok 149 - CONTROL: the whole of core_cup.test.js and core_cup_readers.test.js pass on an unmutated copy of src/, tools/ and app/
+  ---
+  duration_ms: 32476.6874
+  type: 'test'
+  ...
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 150 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 645.5424
+  type: 'test'
+  ...
+# Subtest: mutant M1 (K1a-1) a cup piece renders the legacy profile (the r cap applies): applied, and caught by "row 1a"
+ok 151 - mutant M1 (K1a-1) a cup piece renders the legacy profile (the r cap applies): applied, and caught by "row 1a"
+  ---
+  duration_ms: 882.1157
+  type: 'test'
+  ...
+# M1 (K1a-1) a cup piece renders the legacy profile (the r cap applies): 1 of 2 run tests failed
+# Subtest: mutant M2 (K1a-2) only the left edge is cupped: applied, and caught by "row 1a"
+ok 152 - mutant M2 (K1a-2) only the left edge is cupped: applied, and caught by "row 1a"
+  ---
+  duration_ms: 820.4242
+  type: 'test'
+  ...
+# M2 (K1a-2) only the left edge is cupped: 2 of 2 run tests failed
+# Subtest: mutant M3 (K1a-3) c is taken as radians: applied, and caught by "row 1a"
+ok 153 - mutant M3 (K1a-3) c is taken as radians: applied, and caught by "row 1a"
+  ---
+  duration_ms: 920.6666
+  type: 'test'
+  ...
+# M3 (K1a-3) c is taken as radians: 2 of 2 run tests failed
+# Subtest: mutant M4 (K2-3) a non-cumulative shape: each quarter's own rise, not the running total: applied, and caught by "row 1a"
+ok 154 - mutant M4 (K2-3) a non-cumulative shape: each quarter's own rise, not the running total: applied, and caught by "row 1a"
+  ---
+  duration_ms: 891.5233
+  type: 'test'
+  ...
+# M4 (K2-3) a non-cumulative shape: each quarter's own rise, not the running total: 2 of 2 run tests failed
+# Subtest: mutant M5 (K2-1) MAX raised to 165: applied, and caught by "row 2"
+ok 155 - mutant M5 (K2-1) MAX raised to 165: applied, and caught by "row 2"
+  ---
+  duration_ms: 833.4957
+  type: 'test'
+  ...
+# M5 (K2-1) MAX raised to 165: 4 of 7 run tests failed
+# Subtest: mutant M6 (K2-2) no guard on the document: applied, and caught by "row 2"
+ok 156 - mutant M6 (K2-2) no guard on the document: applied, and caught by "row 2"
+  ---
+  duration_ms: 1160.5574
+  type: 'test'
+  ...
+# M6 (K2-2) no guard on the document: 3 of 7 run tests failed
+# Subtest: mutant M7 the fit's ringing is not clamped after the Extend fit: applied, and caught by "row 2"
+ok 157 - mutant M7 the fit's ringing is not clamped after the Extend fit: applied, and caught by "row 2"
+  ---
+  duration_ms: 815.1173
+  type: 'test'
+  ...
+# M7 the fit's ringing is not clamped after the Extend fit: 3 of 7 run tests failed
+# Subtest: mutant M8 Extend does not refuse a typed cup past 150: applied, and caught by "row 2 \\(iii\\)"
+ok 158 - mutant M8 Extend does not refuse a typed cup past 150: applied, and caught by "row 2 \\(iii\\)"
+  ---
+  duration_ms: 1132.1553
+  type: 'test'
+  ...
+# M8 Extend does not refuse a typed cup past 150: 1 of 3 run tests failed
+# Subtest: mutant M9 Extend does not refuse a first-piece cup past 150: applied, and caught by "row 2 PLANTED"
+ok 159 - mutant M9 Extend does not refuse a first-piece cup past 150: applied, and caught by "row 2 PLANTED"
+  ---
+  duration_ms: 774.912
+  type: 'test'
+  ...
+# M9 Extend does not refuse a first-piece cup past 150: 1 of 1 run tests failed
+# Subtest: mutant M10 the brush has no cup channel: applied, and caught by "row 2 \\(iii\\)"
+ok 160 - mutant M10 the brush has no cup channel: applied, and caught by "row 2 \\(iii\\)"
+  ---
+  duration_ms: 1205.1757
+  type: 'test'
+  ...
+# M10 the brush has no cup channel: 1 of 3 run tests failed
+# Subtest: mutant M10b a cup that ends at a limit is not made flat (the next piece would need a control point past it): applied, and caught by "ends flat"
+ok 161 - mutant M10b a cup that ends at a limit is not made flat (the next piece would need a control point past it): applied, and caught by "ends flat"
+  ---
+  duration_ms: 999.8537
+  type: 'test'
+  ...
+# M10b a cup that ends at a limit is not made flat (the next piece would need a control point past it): 1 of 1 run tests failed
+# Subtest: mutant M10c the document guard has no tolerance for a solver's float noise at the limit: applied, and caught by "ends flat"
+ok 162 - mutant M10c the document guard has no tolerance for a solver's float noise at the limit: applied, and caught by "ends flat"
+  ---
+  duration_ms: 871.4652
+  type: 'test'
+  ...
+# M10c the document guard has no tolerance for a solver's float noise at the limit: 1 of 1 run tests failed
+# Subtest: mutant M29 (R2) no morph: a cup after a legacy piece starts on the cup shape, not the legacy one: applied, and caught by "R2"
+ok 163 - mutant M29 (R2) no morph: a cup after a legacy piece starts on the cup shape, not the legacy one: applied, and caught by "R2"
+  ---
+  duration_ms: 2405.7798
+  type: 'test'
+  ...
+# M29 (R2) no morph: a cup after a legacy piece starts on the cup shape, not the legacy one: 4 of 8 run tests failed
+# Subtest: mutant M30 (R2) the morph carries no difference (the legacy shape is dropped inside the road): applied, and caught by "R2"
+ok 164 - mutant M30 (R2) the morph carries no difference (the legacy shape is dropped inside the road): applied, and caught by "R2"
+  ---
+  duration_ms: 2615.5521
+  type: 'test'
+  ...
+# M30 (R2) the morph carries no difference (the legacy shape is dropped inside the road): 4 of 8 run tests failed
+# Subtest: mutant M31 (R2) the morph never fades (the legacy difference stays for the whole piece): applied, and caught by "R2"
+ok 165 - mutant M31 (R2) the morph never fades (the legacy difference stays for the whole piece): applied, and caught by "R2"
+  ---
+  duration_ms: 3186.3528
+  type: 'test'
+  ...
+# M31 (R2) the morph never fades (the legacy difference stays for the whole piece): 1 of 8 run tests failed
+# Subtest: mutant M11 (K3-1) c is left out of the joint test between two cup pieces: applied, and caught by "row 3"
+ok 166 - mutant M11 (K3-1) c is left out of the joint test between two cup pieces: applied, and caught by "row 3"
+  ---
+  duration_ms: 2558.6972
+  type: 'test'
+  ...
+# M11 (K3-1) c is left out of the joint test between two cup pieces: 1 of 11 run tests failed
+# Subtest: mutant M12 (K3-2) c is reset after a flight, like the heading rate: applied, and caught by "row 3"
+ok 167 - mutant M12 (K3-2) c is reset after a flight, like the heading rate: applied, and caught by "row 3"
+  ---
+  duration_ms: 2809.9481
+  type: 'test'
+  ...
+# M12 (K3-2) c is reset after a flight, like the heading rate: 1 of 11 run tests failed
+# Subtest: mutant M13 (K3-3) c is left out of the closure rows: applied, and caught by "row 3 \\(iii\\)"
+ok 168 - mutant M13 (K3-3) c is left out of the closure rows: applied, and caught by "row 3 \\(iii\\)"
+  ---
+  duration_ms: 1235.3705
+  type: 'test'
+  ...
+# M13 (K3-3) c is left out of the closure rows: 1 of 1 run tests failed
+# Subtest: mutant M14 (K3-4) a legacy piece hands over the family's nominal edge, not the one it renders: applied, and caught by "row 3|row 7"
+ok 169 - mutant M14 (K3-4) a legacy piece hands over the family's nominal edge, not the one it renders: applied, and caught by "row 3|row 7"
+  ---
+  duration_ms: 2663.0361
+  type: 'test'
+  ...
+# M14 (K3-4) a legacy piece hands over the family's nominal edge, not the one it renders: 1 of 13 run tests failed
+# Subtest: mutant M15 the legacy ↔ cup joint is not checked: applied, and caught by "row 3 \\(iv\\)"
+ok 170 - mutant M15 the legacy ↔ cup joint is not checked: applied, and caught by "row 3 \\(iv\\)"
+  ---
+  duration_ms: 3968.6167
+  type: 'test'
+  ...
+# M15 the legacy ↔ cup joint is not checked: 1 of 8 run tests failed
+# Subtest: mutant M16 a piece extended after a cup piece is a legacy piece: applied, and caught by "row 3"
+ok 171 - mutant M16 a piece extended after a cup piece is a legacy piece: applied, and caught by "row 3"
+  ---
+  duration_ms: 3316.5237
+  type: 'test'
+  ...
+# M16 a piece extended after a cup piece is a legacy piece: 2 of 11 run tests failed
+# Subtest: mutant M17 (K1b-1) the blend is dropped: each segment steps to its own profile: applied, and caught by "row 1b"
+ok 172 - mutant M17 (K1b-1) the blend is dropped: each segment steps to its own profile: applied, and caught by "row 1b"
+  ---
+  duration_ms: 2616.5285
+  type: 'test'
+  ...
+# M17 (K1b-1) the blend is dropped: each segment steps to its own profile: 12 of 13 run tests failed
+# Subtest: mutant M18 the weight inversion is wrong (z = y, no Newton polish): applied, and caught by "row 1b"
+ok 173 - mutant M18 the weight inversion is wrong (z = y, no Newton polish): applied, and caught by "row 1b"
+  ---
+  duration_ms: 5607.4767
+  type: 'test'
+  ...
+# M18 the weight inversion is wrong (z = y, no Newton polish): 6 of 13 run tests failed
+# Subtest: mutant M19 a segment where c falls does not swap the pair: applied, and caught by "row 1b"
+ok 174 - mutant M19 a segment where c falls does not swap the pair: applied, and caught by "row 1b"
+  ---
+  duration_ms: 4900.3712
+  type: 'test'
+  ...
+# M19 a segment where c falls does not swap the pair: 6 of 13 run tests failed
+# Subtest: mutant M20 a width change is not a chord: the run keeps the start width: applied, and caught by "row 1b"
+ok 175 - mutant M20 a width change is not a chord: the run keeps the start width: applied, and caught by "row 1b"
+  ---
+  duration_ms: 5443.8527
+  type: 'test'
+  ...
+# M20 a width change is not a chord: the run keeps the start width: 1 of 13 run tests failed
+# Subtest: mutant M33 (R1) atSegment ignores the distance into the segment: applied, and caught by "atSegment"
+ok 176 - mutant M33 (R1) atSegment ignores the distance into the segment: applied, and caught by "atSegment"
+  ---
+  duration_ms: 1651.6977
+  type: 'test'
+  ...
+# M33 (R1) atSegment ignores the distance into the segment: 2 of 2 run tests failed
+# Subtest: mutant M34 (R1) the marker layout reads segment.profile: applied, and caught by "marker layout"
+ok 177 - mutant M34 (R1) the marker layout reads segment.profile: applied, and caught by "marker layout"
+  ---
+  duration_ms: 1645.4941
+  type: 'test'
+  ...
+# M34 (R1) the marker layout reads segment.profile: 1 of 1 run tests failed
+# Subtest: mutant M35 (R1) validation reads segment.profile: applied, and caught by "validation"
+ok 178 - mutant M35 (R1) validation reads segment.profile: applied, and caught by "validation"
+  ---
+  duration_ms: 1611.3465
+  type: 'test'
+  ...
+# M35 (R1) validation reads segment.profile: 1 of 2 run tests failed
+# Subtest: mutant M36 (R1) the export sections read segment.profile: applied, and caught by "export sections"
+ok 179 - mutant M36 (R1) the export sections read segment.profile: applied, and caught by "export sections"
+  ---
+  duration_ms: 1613.6934
+  type: 'test'
+  ...
+# M36 (R1) the export sections read segment.profile: 1 of 1 run tests failed
+# Subtest: mutant M37 (R1) the water reads segment.profile: applied, and caught by "water"
+ok 180 - mutant M37 (R1) the water reads segment.profile: applied, and caught by "water"
+  ---
+  duration_ms: 1591.8064
+  type: 'test'
+  ...
+# M37 (R1) the water reads segment.profile: 1 of 1 run tests failed
+# Subtest: mutant M38 (R1) the camera's span reads segment.profile: applied, and caught by "camera"
+ok 181 - mutant M38 (R1) the camera's span reads segment.profile: applied, and caught by "camera"
+  ---
+  duration_ms: 1546.2799
+  type: 'test'
+  ...
+# M38 (R1) the camera's span reads segment.profile: 1 of 1 run tests failed
+# Subtest: mutant M39 (R1) the readers evaluate a word document font-transition blend too (its validation and layout change): applied, and caught by "font-transition"
+ok 182 - mutant M39 (R1) the readers evaluate a word document font-transition blend too (its validation and layout change): applied, and caught by "font-transition"
+  ---
+  duration_ms: 1712.1196
+  type: 'test'
+  ...
+# M39 (R1) the readers evaluate a word document font-transition blend too (its validation and layout change): 1 of 1 run tests failed
+# Subtest: mutant M40 (R1) the adapter does not mark a cup segment (the readers then take its target for the whole segment): applied, and caught by "validation"
+ok 183 - mutant M40 (R1) the adapter does not mark a cup segment (the readers then take its target for the whole segment): applied, and caught by "validation"
+  ---
+  duration_ms: 1629.0972
+  type: 'test'
+  ...
+# M40 (R1) the adapter does not mark a cup segment (the readers then take its target for the whole segment): 1 of 2 run tests failed
+# Subtest: mutant M41 (R3) no reverse morph: a cup that closes onto a legacy start is drawn to its own shape: applied, and caught by "R3"
+ok 184 - mutant M41 (R3) no reverse morph: a cup that closes onto a legacy start is drawn to its own shape: applied, and caught by "R3"
+  ---
+  duration_ms: 6159.5028
+  type: 'test'
+  ...
+# M41 (R3) no reverse morph: a cup that closes onto a legacy start is drawn to its own shape: 8 of 12 run tests failed
+# Subtest: mutant M42 (R3) the reverse morph never fades in (the tail keeps the cup shape): applied, and caught by "R3"
+ok 185 - mutant M42 (R3) the reverse morph never fades in (the tail keeps the cup shape): applied, and caught by "R3"
+  ---
+  duration_ms: 5914.6746
+  type: 'test'
+  ...
+# M42 (R3) the reverse morph never fades in (the tail keeps the cup shape): 8 of 12 run tests failed
+# Subtest: mutant M43 (R3) the reverse morph carries no difference (the legacy shape is dropped): applied, and caught by "R3"
+ok 186 - mutant M43 (R3) the reverse morph carries no difference (the legacy shape is dropped): applied, and caught by "R3"
+  ---
+  duration_ms: 6005.1923
+  type: 'test'
+  ...
+# M43 (R3) the reverse morph carries no difference (the legacy shape is dropped): 8 of 12 run tests failed
+# Subtest: mutant M44 (R3) close() does not hold the cup at the legacy start edge: applied, and caught by "R3"
+ok 187 - mutant M44 (R3) close() does not hold the cup at the legacy start edge: applied, and caught by "R3"
+  ---
+  duration_ms: 14397.9963
+  type: 'test'
+  ...
+# M44 (R3) close() does not hold the cup at the legacy start edge: 3 of 12 run tests failed
+# Subtest: mutant M45 (R3) close() never refuses a seam it cannot fade: applied, and caught by "R3"
+ok 188 - mutant M45 (R3) close() never refuses a seam it cannot fade: applied, and caught by "R3"
+  ---
+  duration_ms: 13929.8067
+  type: 'test'
+  ...
+# M45 (R3) close() never refuses a seam it cannot fade: 1 of 12 run tests failed
+# Subtest: mutant M47 (R3) the mirror: a cup START does not fade out of the legacy END: applied, and caught by "R3"
+ok 189 - mutant M47 (R3) the mirror: a cup START does not fade out of the legacy END: applied, and caught by "R3"
+  ---
+  duration_ms: 13740.9419
+  type: 'test'
+  ...
+# M47 (R3) the mirror: a cup START does not fade out of the legacy END: 1 of 12 run tests failed
+# Subtest: mutant M50 (R3) a cup followed by a legacy piece inside the track is not faded (only the lap seam is): applied, and caught by "R3"
+ok 190 - mutant M50 (R3) a cup followed by a legacy piece inside the track is not faded (only the lap seam is): applied, and caught by "R3"
+  ---
+  duration_ms: 13819.5168
+  type: 'test'
+  ...
+# M50 (R3) a cup followed by a legacy piece inside the track is not faded (only the lap seam is): 1 of 12 run tests failed
+# Subtest: mutant M48 (R3) validation does not red a joint step: applied, and caught by "R3"
+ok 191 - mutant M48 (R3) validation does not red a joint step: applied, and caught by "R3"
+  ---
+  duration_ms: 14874.0567
+  type: 'test'
+  ...
+# M48 (R3) validation does not red a joint step: 1 of 12 run tests failed
+# Subtest: mutant M49 (R3) jointSteps ignores the lap seam: applied, and caught by "R3"
+ok 192 - mutant M49 (R3) jointSteps ignores the lap seam: applied, and caught by "R3"
+  ---
+  duration_ms: 13659.8688
+  type: 'test'
+  ...
+# M49 (R3) jointSteps ignores the lap seam: 2 of 12 run tests failed
+# Subtest: mutant M21 a legacy piece is rendered as a cup piece at c = 0: applied, and caught by "row 5"
+ok 193 - mutant M21 a legacy piece is rendered as a cup piece at c = 0: applied, and caught by "row 5"
+  ---
+  duration_ms: 745.2483
+  type: 'test'
+  ...
+# M21 a legacy piece is rendered as a cup piece at c = 0: 1 of 4 run tests failed
+# Subtest: mutant M22 a /2 piece is read as a cup piece: applied, and caught by "row 5"
+ok 194 - mutant M22 a /2 piece is read as a cup piece: applied, and caught by "row 5"
+  ---
+  duration_ms: 801.3428
+  type: 'test'
+  ...
+# M22 a /2 piece is read as a cup piece: 2 of 4 run tests failed
+# Subtest: mutant M23 a legacy piece's text carries a c array: applied, and caught by "row 5"
+ok 195 - mutant M23 a legacy piece's text carries a c array: applied, and caught by "row 5"
+  ---
+  duration_ms: 755.685
+  type: 'test'
+  ...
+# M23 a legacy piece's text carries a c array: 2 of 4 run tests failed
+# Subtest: mutant M24 (K5-2) the schema is still core/2: applied, and caught by "row 5"
+ok 196 - mutant M24 (K5-2) the schema is still core/2: applied, and caught by "row 5"
+  ---
+  duration_ms: 768.3249
+  type: 'test'
+  ...
+# M24 (K5-2) the schema is still core/2: 1 of 4 run tests failed
+# Subtest: mutant M25 a cup brush is allowed to reach a legacy piece: applied, and caught by "row 5e"
+ok 197 - mutant M25 a cup brush is allowed to reach a legacy piece: applied, and caught by "row 5e"
+  ---
+  duration_ms: 718.5116
+  type: 'test'
+  ...
+# M25 a cup brush is allowed to reach a legacy piece: 1 of 1 run tests failed
+# Subtest: mutant M26 (K6-3) the cup feeds the roll: applied, and caught by "row 6"
+ok 198 - mutant M26 (K6-3) the cup feeds the roll: applied, and caught by "row 6"
+  ---
+  duration_ms: 1413.7361
+  type: 'test'
+  ...
+# M26 (K6-3) the cup feeds the roll: 2 of 2 run tests failed
+# Subtest: mutant M27 (K7-1) cupToDeg reads the wrong station of the document: applied, and caught by "row 7"
+ok 199 - mutant M27 (K7-1) cupToDeg reads the wrong station of the document: applied, and caught by "row 7"
+  ---
+  duration_ms: 781.8529
+  type: 'test'
+  ...
+# M27 (K7-1) cupToDeg reads the wrong station of the document: 2 of 2 run tests failed
+# Subtest: mutant M28 (K7-2) a legacy piece reads the nominal edge (w and r ignored): applied, and caught by "row 7"
+ok 200 - mutant M28 (K7-2) a legacy piece reads the nominal edge (w and r ignored): applied, and caught by "row 7"
+  ---
+  duration_ms: 735.256
+  type: 'test'
+  ...
+# M28 (K7-2) a legacy piece reads the nominal edge (w and r ignored): 1 of 2 run tests failed
+# Subtest: CONTROL: core_xsec, core_xsec_math and validate_xsec pass whole on an unmutated copy of src/, tools/ and app/
+ok 201 - CONTROL: core_xsec, core_xsec_math and validate_xsec pass whole on an unmutated copy of src/, tools/ and app/
+  ---
+  duration_ms: 188335.3984
+  type: 'test'
+  ...
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 202 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 512.9159
+  type: 'test'
+  ...
+# Subtest: mutant KE1-1 G = t (the slice is a kink): applied, and caught by "slice is no kink|analytic"
+ok 203 - mutant KE1-1 G = t (the slice is a kink): applied, and caught by "slice is no kink|analytic"
+  ---
+  duration_ms: 782.9253
+  type: 'test'
+  ...
+# KE1-1 G = t (the slice is a kink): 1 of 2 run tests failed
+# Subtest: mutant KE1-2 the edge term is signed by the side (right side −e): applied, and caught by "E1 \\(i\\)"
+ok 204 - mutant KE1-2 the edge term is signed by the side (right side −e): applied, and caught by "E1 \\(i\\)"
+  ---
+  duration_ms: 811.5508
+  type: 'test'
+  ...
+# KE1-2 the edge term is signed by the side (right side −e): 1 of 1 run tests failed
+# Subtest: mutant KE1-3 e is taken as radians: applied, and caught by "E1 \\(i\\)"
+ok 205 - mutant KE1-3 e is taken as radians: applied, and caught by "E1 \\(i\\)"
+  ---
+  duration_ms: 791.6185
+  type: 'test'
+  ...
+# KE1-3 e is taken as radians: 1 of 1 run tests failed
+# Subtest: mutant KE1-4 four intervals for the outer zone: applied, and caught by "E4 \\(v\\)"
+ok 206 - mutant KE1-4 four intervals for the outer zone: applied, and caught by "E4 \\(v\\)"
+  ---
+  duration_ms: 826.7909
+  type: 'test'
+  ...
+# KE1-4 four intervals for the outer zone: 1 of 1 run tests failed
+# Subtest: mutant KE1-5 the slice is placed at the full width, not the half-width (the edge is never reached): applied, and caught by "E1 \\(i\\)"
+ok 207 - mutant KE1-5 the slice is placed at the full width, not the half-width (the edge is never reached): applied, and caught by "E1 \\(i\\)"
+  ---
+  duration_ms: 677.0369
+  type: 'test'
+  ...
+# KE1-5 the slice is placed at the full width, not the half-width (the edge is never reached): 1 of 1 run tests failed
+# Subtest: mutant KE2-1 the cap is applied to e alone, not the total: applied, and caught by "DOMAIN"
+ok 208 - mutant KE2-1 the cap is applied to e alone, not the total: applied, and caught by "DOMAIN"
+  ---
+  duration_ms: 768.0127
+  type: 'test'
+  ...
+# KE2-1 the cap is applied to e alone, not the total: 1 of 1 run tests failed
+# Subtest: mutant KE2-2 no guard on the edge in the document: applied, and caught by "DOMAIN"
+ok 209 - mutant KE2-2 no guard on the edge in the document: applied, and caught by "DOMAIN"
+  ---
+  duration_ms: 715.5247
+  type: 'test'
+  ...
+# KE2-2 no guard on the edge in the document: 1 of 1 run tests failed
+# Subtest: mutant KE2-3 s has no lower bound: applied, and caught by "DOMAIN"
+ok 210 - mutant KE2-3 s has no lower bound: applied, and caught by "DOMAIN"
+  ---
+  duration_ms: 719.736
+  type: 'test'
+  ...
+# KE2-3 s has no lower bound: 1 of 1 run tests failed
+# Subtest: mutant KE2-4 the floor is not checked (a side may turn down past -30°, a lip): applied, and caught by "DOMAIN"
+ok 211 - mutant KE2-4 the floor is not checked (a side may turn down past -30°, a lip): applied, and caught by "DOMAIN"
+  ---
+  duration_ms: 723.4733
+  type: 'test'
+  ...
+# KE2-4 the floor is not checked (a side may turn down past -30°, a lip): 1 of 1 run tests failed
+# Subtest: mutant KE2-5 extend does not refuse a target the cap cannot hold: applied, and caught by "EXTEND: e, s and t targets"
+ok 212 - mutant KE2-5 extend does not refuse a target the cap cannot hold: applied, and caught by "EXTEND: e, s and t targets"
+  ---
+  duration_ms: 744.4377
+  type: 'test'
+  ...
+# KE2-5 extend does not refuse a target the cap cannot hold: 1 of 1 run tests failed
+# Subtest: mutant KE2-6 the fit's ringing is not clamped (e): applied, and caught by "ringing"
+ok 213 - mutant KE2-6 the fit's ringing is not clamped (e): applied, and caught by "ringing"
+  ---
+  duration_ms: 742.0809
+  type: 'test'
+  ...
+# KE2-6 the fit's ringing is not clamped (e): 1 of 1 run tests failed
+# Subtest: mutant KE2-7 a legacy piece's total cap ignores its own edge angle (e alone against 150): applied, and caught by "DOMAIN"
+ok 214 - mutant KE2-7 a legacy piece's total cap ignores its own edge angle (e alone against 150): applied, and caught by "DOMAIN"
+  ---
+  duration_ms: 711.6252
+  type: 'test'
+  ...
+# KE2-7 a legacy piece's total cap ignores its own edge angle (e alone against 150): 1 of 1 run tests failed
+# Subtest: mutant KE3-3 the schema is still /3: applied, and caught by "SCHEMA"
+ok 215 - mutant KE3-3 the schema is still /3: applied, and caught by "SCHEMA"
+  ---
+  duration_ms: 718.7581
+  type: 'test'
+  ...
+# KE3-3 the schema is still /3: 1 of 2 run tests failed
+# Subtest: mutant KE3-4 every piece's text carries e, s and t: applied, and caught by "SCHEMA: new documents"
+ok 216 - mutant KE3-4 every piece's text carries e, s and t: applied, and caught by "SCHEMA: new documents"
+  ---
+  duration_ms: 708.3069
+  type: 'test'
+  ...
+# KE3-4 every piece's text carries e, s and t: 1 of 1 run tests failed
+# Subtest: mutant KE3-5 a /3 file is not read: applied, and caught by "SCHEMA: new documents"
+ok 217 - mutant KE3-5 a /3 file is not read: applied, and caught by "SCHEMA: new documents"
+  ---
+  duration_ms: 699.8342
+  type: 'test'
+  ...
+# KE3-5 a /3 file is not read: 1 of 1 run tests failed
+# Subtest: mutant KE3-6 a text with an edge array is not read as an edge piece: applied, and caught by "SCHEMA: an edge piece"
+ok 218 - mutant KE3-6 a text with an edge array is not read as an edge piece: applied, and caught by "SCHEMA: an edge piece"
+  ---
+  duration_ms: 487.624
+  type: 'test'
+  ...
+# KE3-6 a text with an edge array is not read as an edge piece: 1 of 1 run tests failed
+# Subtest: mutant KE4-1 e is left out of the joint test: applied, and caught by "JOINT \\(E4 i"
+ok 219 - mutant KE4-1 e is left out of the joint test: applied, and caught by "JOINT \\(E4 i"
+  ---
+  duration_ms: 717.4802
+  type: 'test'
+  ...
+# KE4-1 e is left out of the joint test: 1 of 1 run tests failed
+# Subtest: mutant KE4-2 e is reset after a flight, like the heading rate: applied, and caught by "E4 \\(ii\\)"
+ok 220 - mutant KE4-2 e is reset after a flight, like the heading rate: applied, and caught by "E4 \\(ii\\)"
+  ---
+  duration_ms: 731.0145
+  type: 'test'
+  ...
+# KE4-2 e is reset after a flight, like the heading rate: 1 of 1 run tests failed
+# Subtest: mutant KE4-3 one blend start for the whole piece (the cup's run trick on a moving slice): applied, and caught by "E4 \\(v\\)|E4 \\(vi"
+ok 221 - mutant KE4-3 one blend start for the whole piece (the cup's run trick on a moving slice): applied, and caught by "E4 \\(v\\)|E4 \\(vi"
+  ---
+  duration_ms: 812.7599
+  type: 'test'
+  ...
+# KE4-3 one blend start for the whole piece (the cup's run trick on a moving slice): 2 of 2 run tests failed
+# Subtest: mutant KE4-4 no blend: one profile per segment (the stair-step): applied, and caught by "E4 \\(vi"
+ok 222 - mutant KE4-4 no blend: one profile per segment (the stair-step): applied, and caught by "E4 \\(vi"
+  ---
+  duration_ms: 758.477
+  type: 'test'
+  ...
+# KE4-4 no blend: one profile per segment (the stair-step): 1 of 1 run tests failed
+# Subtest: mutant KE4-5 the mesh ignores the piece's shared row grid (each segment samples its own rows: a zip inside the piece): applied, and caught by "E4 \\(vi"
+ok 223 - mutant KE4-5 the mesh ignores the piece's shared row grid (each segment samples its own rows: a zip inside the piece): applied, and caught by "E4 \\(vi"
+  ---
+  duration_ms: 1051.7532
+  type: 'test'
+  ...
+# KE4-5 the mesh ignores the piece's shared row grid (each segment samples its own rows: a zip inside the piece): 1 of 1 run tests failed
+# Subtest: mutant KE4-6 the chords do not share one fraction array: applied, and caught by "E4 \\(vi"
+ok 224 - mutant KE4-6 the chords do not share one fraction array: applied, and caught by "E4 \\(vi"
+  ---
+  duration_ms: 1028.6383
+  type: 'test'
+  ...
+# KE4-6 the chords do not share one fraction array: 1 of 1 run tests failed
+# Subtest: mutant KE5-1 the csp-off steep check is dropped: applied, and caught by "E5 "
+ok 225 - mutant KE5-1 the csp-off steep check is dropped: applied, and caught by "E5 "
+  ---
+  duration_ms: 144208.436
+  type: 'test'
+  ...
+# KE5-1 the csp-off steep check is dropped: 4 of 4 run tests failed
+# Subtest: mutant KE6-2 e is fed into the roll: applied, and caught by "E6"
+ok 226 - mutant KE6-2 e is fed into the roll: applied, and caught by "E6"
+  ---
+  duration_ms: 730.1137
+  type: 'test'
+  ...
+# KE6-2 e is fed into the roll: 1 of 2 run tests failed
+# Subtest: mutant KE7-1 edgeToDeg reads the start of the piece: applied, and caught by "READOUT"
+ok 227 - mutant KE7-1 edgeToDeg reads the start of the piece: applied, and caught by "READOUT"
+  ---
+  duration_ms: 668.3151
+  type: 'test'
+  ...
+# KE7-1 edgeToDeg reads the start of the piece: 1 of 1 run tests failed
+# Subtest: mutant KE7-3 a plain piece reads the wrong default slice: applied, and caught by "READOUT"
+ok 228 - mutant KE7-3 a plain piece reads the wrong default slice: applied, and caught by "READOUT"
+  ---
+  duration_ms: 666.9458
+  type: 'test'
+  ...
+# KE7-3 a plain piece reads the wrong default slice: 1 of 1 run tests failed
+# Subtest: mutant KT1-1 the tube's edge angle is t, not t/2: applied, and caught by "TUBE"
+ok 229 - mutant KT1-1 the tube's edge angle is t, not t/2: applied, and caught by "TUBE"
+  ---
+  duration_ms: 512.4539
+  type: 'test'
+  ...
+# KT1-1 the tube's edge angle is t, not t/2: 1 of 1 run tests failed
+# Subtest: mutant KT1-2 a tube HELD in the slot is not refused: applied, and caught by "DOMAIN"
+ok 230 - mutant KT1-2 a tube HELD in the slot is not refused: applied, and caught by "DOMAIN"
+  ---
+  duration_ms: 670.8022
+  type: 'test'
+  ...
+# KT1-2 a tube HELD in the slot is not refused: 1 of 1 run tests failed
+# Subtest: mutant KT1-3 the closure is 20 mm short of closing: applied, and caught by "T1 \\(ii"
+ok 231 - mutant KT1-3 the closure is 20 mm short of closing: applied, and caught by "T1 \\(ii"
+  ---
+  duration_ms: 678.208
+  type: 'test'
+  ...
+# KT1-3 the closure is 20 mm short of closing: 1 of 1 run tests failed
+# Subtest: mutant KT1-4 the slot formula has no factor 2: applied, and caught by "tube slot"
+ok 232 - mutant KT1-4 the slot formula has no factor 2: applied, and caught by "tube slot"
+  ---
+  duration_ms: 534.8468
+  type: 'test'
+  ...
+# KT1-4 the slot formula has no factor 2: 1 of 1 run tests failed
+# Subtest: mutant KT1-5 a sweep past 360 is accepted: applied, and caught by "DOMAIN"
+ok 233 - mutant KT1-5 a sweep past 360 is accepted: applied, and caught by "DOMAIN"
+  ---
+  duration_ms: 669.4456
+  type: 'test'
+  ...
+# KT1-5 a sweep past 360 is accepted: 1 of 1 run tests failed
+# Subtest: mutant KT2-1 no morph into a tube from another kind (a zip with no fade): applied, and caught by "T1 \\(ii"
+ok 234 - mutant KT2-1 no morph into a tube from another kind (a zip with no fade): applied, and caught by "T1 \\(ii"
+  ---
+  duration_ms: 1253.6645
+  type: 'test'
+  ...
+# KT2-1 no morph into a tube from another kind (a zip with no fade): 1 of 1 run tests failed
+# Subtest: mutant KT3-1 CUP_MAX is applied to an open tube's t/2 + e: applied, and caught by "DOMAIN"
+ok 235 - mutant KT3-1 CUP_MAX is applied to an open tube's t/2 + e: applied, and caught by "DOMAIN"
+  ---
+  duration_ms: 676.713
+  type: 'test'
+  ...
+# KT3-1 CUP_MAX is applied to an open tube's t/2 + e: 1 of 1 run tests failed
+# Subtest: mutant KT3-2 a closed tube takes an edge: applied, and caught by "DOMAIN"
+ok 236 - mutant KT3-2 a closed tube takes an edge: applied, and caught by "DOMAIN"
+  ---
+  duration_ms: 662.4645
+  type: 'test'
+  ...
+# KT3-2 a closed tube takes an edge: 1 of 1 run tests failed
+# Subtest: mutant KT4-1 a cup and a tube are allowed together (extend): applied, and caught by "CUP OR A TUBE"
+ok 237 - mutant KT4-1 a cup and a tube are allowed together (extend): applied, and caught by "CUP OR A TUBE"
+  ---
+  duration_ms: 667.6989
+  type: 'test'
+  ...
+# KT4-1 a cup and a tube are allowed together (extend): 1 of 1 run tests failed
+# Subtest: mutant KT4-2 a tube starts at the wrong edge after another kind (t = edge, not 2·edge): applied, and caught by "A TUBE JOINT"
+ok 238 - mutant KT4-2 a tube starts at the wrong edge after another kind (t = edge, not 2·edge): applied, and caught by "A TUBE JOINT"
+  ---
+  duration_ms: 660.8266
+  type: 'test'
+  ...
+# KT4-2 a tube starts at the wrong edge after another kind (t = edge, not 2·edge): 1 of 1 run tests failed
+# Subtest: mutant KT4-4 endState reports t at a non-tube head (twice the edge, the internal value leaks): applied, and caught by "ENDSTATE"
+ok 239 - mutant KT4-4 endState reports t at a non-tube head (twice the edge, the internal value leaks): applied, and caught by "ENDSTATE"
+  ---
+  duration_ms: 653.5705
+  type: 'test'
+  ...
+# KT4-4 endState reports t at a non-tube head (twice the edge, the internal value leaks): 1 of 1 run tests failed
+# Subtest: mutant KT4-5 a tube after another kind starts from the head's t (0), not from tNext: applied, and caught by "A TUBE JOINT|ENDSTATE"
+ok 240 - mutant KT4-5 a tube after another kind starts from the head's t (0), not from tNext: applied, and caught by "A TUBE JOINT|ENDSTATE"
+  ---
+  duration_ms: 668.3615
+  type: 'test'
+  ...
+# KT4-5 a tube after another kind starts from the head's t (0), not from tNext: 2 of 2 run tests failed
+# Subtest: mutant KT4-3 a cup after a closed tube is not refused by name: applied, and caught by "X1 and T2"
+ok 241 - mutant KT4-3 a cup after a closed tube is not refused by name: applied, and caught by "X1 and T2"
+  ---
+  duration_ms: 1338.5936
+  type: 'test'
+  ...
+# KT4-3 a cup after a closed tube is not refused by name: 1 of 1 run tests failed
+# Subtest: mutant KS2-1 the roll stays the per-segment smoothstep under a heartline: applied, and caught by "S2 \\(iii\\)"
+ok 242 - mutant KS2-1 the roll stays the per-segment smoothstep under a heartline: applied, and caught by "S2 \\(iii\\)"
+  ---
+  duration_ms: 1360.2546
+  type: 'test'
+  ...
+# KS2-1 the roll stays the per-segment smoothstep under a heartline: 1 of 1 run tests failed
+# Subtest: mutant KS2-2 the heartline is a constant per segment (a step between segments): applied, and caught by "S2 \\(i, ii\\)|S2 \\(vi\\)"
+ok 243 - mutant KS2-2 the heartline is a constant per segment (a step between segments): applied, and caught by "S2 \\(i, ii\\)|S2 \\(vi\\)"
+  ---
+  duration_ms: 1394.7259
+  type: 'test'
+  ...
+# KS2-2 the heartline is a constant per segment (a step between segments): 1 of 2 run tests failed
+# Subtest: mutant KS2-3 a closed tube carries heartline 0: applied, and caught by "S2 \\(i, ii\\)"
+ok 244 - mutant KS2-3 a closed tube carries heartline 0: applied, and caught by "S2 \\(i, ii\\)"
+  ---
+  duration_ms: 1355.8859
+  type: 'test'
+  ...
+# KS2-3 a closed tube carries heartline 0: 1 of 1 run tests failed
+# Subtest: mutant KS2-4 the heartline ramp starts at 180 (a step where a tube hands over to a cup): applied, and caught by "X1 and T2|S2 \\(vii\\)"
+ok 245 - mutant KS2-4 the heartline ramp starts at 180 (a step where a tube hands over to a cup): applied, and caught by "X1 and T2|S2 \\(vii\\)"
+  ---
+  duration_ms: 5826.9836
+  type: 'test'
+  ...
+# KS2-4 the heartline ramp starts at 180 (a step where a tube hands over to a cup): 1 of 2 run tests failed
+# Subtest: mutant KS2-5 water over a heartline is an anonymous throw: applied, and caught by "S2 \\(iv\\)"
+ok 246 - mutant KS2-5 water over a heartline is an anonymous throw: applied, and caught by "S2 \\(iv\\)"
+  ---
+  duration_ms: 1428.3728
+  type: 'test'
+  ...
+# KS2-5 water over a heartline is an anonymous throw: 1 of 1 run tests failed
+# Subtest: mutant KS3-1 the roll rate is read over a 0.5 m chord: applied, and caught by "S3: a full 360"
+ok 247 - mutant KS3-1 the roll rate is read over a 0.5 m chord: applied, and caught by "S3: a full 360"
+  ---
+  duration_ms: 1474.4378
+  type: 'test'
+  ...
+# KS3-1 the roll rate is read over a 0.5 m chord: 1 of 1 run tests failed
+# Subtest: mutant KS3-2 the bar is raised to 2.0: applied, and caught by "S3: a full 360"
+ok 248 - mutant KS3-2 the bar is raised to 2.0: applied, and caught by "S3: a full 360"
+  ---
+  duration_ms: 1433.8132
+  type: 'test'
+  ...
+# KS3-2 the bar is raised to 2.0: 1 of 1 run tests failed
+# Subtest: mutant KS3-3 the gravity-frame φ′ is read instead of the frame-intrinsic rate (blind on a climbing turn at constant bank): applied, and caught by "S3 \\(KS3-3\\)"
+ok 249 - mutant KS3-3 the gravity-frame φ′ is read instead of the frame-intrinsic rate (blind on a climbing turn at constant bank): applied, and caught by "S3 \\(KS3-3\\)"
+  ---
+  duration_ms: 1407.6205
+  type: 'test'
+  ...
+# KS3-3 the gravity-frame φ′ is read instead of the frame-intrinsic rate (blind on a climbing turn at constant bank): 1 of 1 run tests failed
+# Subtest: mutant KS3-4 the amber bar is dropped: applied, and caught by "S3: a full 360"
+ok 250 - mutant KS3-4 the amber bar is dropped: applied, and caught by "S3: a full 360"
+  ---
+  duration_ms: 1494.8713
+  type: 'test'
+  ...
+# KS3-4 the amber bar is dropped: 1 of 1 run tests failed
+# Subtest: mutant KS3-5 the roll rate is never checked: applied, and caught by "S3: a full 360"
+ok 251 - mutant KS3-5 the roll rate is never checked: applied, and caught by "S3: a full 360"
+  ---
+  duration_ms: 1324.2005
+  type: 'test'
+  ...
+# KS3-5 the roll rate is never checked: 1 of 1 run tests failed
+# Subtest: mutant KS4-1 the spiral's curvature is not given to the validator (kvec of the integrated curve): applied, and caught by "S4"
+ok 252 - mutant KS4-1 the spiral's curvature is not given to the validator (kvec of the integrated curve): applied, and caught by "S4"
+  ---
+  duration_ms: 1665.8696
+  type: 'test'
+  ...
+# KS4-1 the spiral's curvature is not given to the validator (kvec of the integrated curve): 1 of 1 run tests failed
+# Subtest: mutant KS4-2 a lifted sample keeps only its own fields (spread of a view): applied, and caught by "S4|S2 \\(i, ii\\)"
+ok 253 - mutant KS4-2 a lifted sample keeps only its own fields (spread of a view): applied, and caught by "S4|S2 \\(i, ii\\)"
+  ---
+  duration_ms: 1403.5628
+  type: 'test'
+  ...
+# KS4-2 a lifted sample keeps only its own fields (spread of a view): 2 of 2 run tests failed
+# Subtest: mutant KV1 tube-too-narrow is never raised: applied, and caught by "T1 iv"
+ok 254 - mutant KV1 tube-too-narrow is never raised: applied, and caught by "T1 iv"
+  ---
+  duration_ms: 1516.2998
+  type: 'test'
+  ...
+# KV1 tube-too-narrow is never raised: 1 of 1 run tests failed
+# Subtest: mutant KV2 the narrowest tube bar is 5 m: applied, and caught by "T1 iv"
+ok 255 - mutant KV2 the narrowest tube bar is 5 m: applied, and caught by "T1 iv"
+  ---
+  duration_ms: 1493.8737
+  type: 'test'
+  ...
+# KV2 the narrowest tube bar is 5 m: 1 of 1 run tests failed
+# Subtest: mutant KV2b the narrowest tube bar is the old 9.43 (the eye on the ceiling): applied, and caught by "T1 iv"
+ok 256 - mutant KV2b the narrowest tube bar is the old 9.43 (the eye on the ceiling): applied, and caught by "T1 iv"
+  ---
+  duration_ms: 1713.2767
+  type: 'test'
+  ...
+# KV2b the narrowest tube bar is the old 9.43 (the eye on the ceiling): 1 of 1 run tests failed
+# Subtest: mutant KV3 edge-past-cap is never raised: applied, and caught by "E2: the validator"
+ok 257 - mutant KV3 edge-past-cap is never raised: applied, and caught by "E2: the validator"
+  ---
+  duration_ms: 1772.146
+  type: 'test'
+  ...
+# KV3 edge-past-cap is never raised: 1 of 1 run tests failed
+# Subtest: mutant KC1 close does not refuse a seam that joins a tube to another kind: applied, and caught by "CLOSE \\(E4 iii"
+ok 258 - mutant KC1 close does not refuse a seam that joins a tube to another kind: applied, and caught by "CLOSE \\(E4 iii"
+  ---
+  duration_ms: 715.662
+  type: 'test'
+  ...
+# KC1 close does not refuse a seam that joins a tube to another kind: 1 of 1 run tests failed
+# Subtest: mutant KC2 close does not refuse an edge active at one end only: applied, and caught by "CLOSE \\(E4 iii"
+ok 259 - mutant KC2 close does not refuse an edge active at one end only: applied, and caught by "CLOSE \\(E4 iii"
+  ---
+  duration_ms: 733.7067
+  type: 'test'
+  ...
+# KC2 close does not refuse an edge active at one end only: 1 of 1 run tests failed
+# Subtest: mutant KC3 close moves e (it joins e at a seam where only one end has it): applied, and caught by "CLOSE: a lap whose edge ends"
+ok 260 - mutant KC3 close moves e (it joins e at a seam where only one end has it): applied, and caught by "CLOSE: a lap whose edge ends"
+  ---
+  duration_ms: 1161.057
+  type: 'test'
+  ...
+# KC3 close moves e (it joins e at a seam where only one end has it): 1 of 1 run tests failed
+# Subtest: mutant KB1 an e brush may reach a piece without an edge: applied, and caught by "BRUSH"
+ok 261 - mutant KB1 an e brush may reach a piece without an edge: applied, and caught by "BRUSH"
+  ---
+  duration_ms: 684.2052
+  type: 'test'
+  ...
+# KB1 an e brush may reach a piece without an edge: 1 of 1 run tests failed
+1..261
+# tests 261
+# suites 0
+# pass 260
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1084200.9692

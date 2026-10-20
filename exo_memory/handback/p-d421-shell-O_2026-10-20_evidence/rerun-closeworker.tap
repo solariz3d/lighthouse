@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: row 1: through the worker one press closes the track exactly as on the page, near and far, with the same words; new road keeps the user's pieces as the very same objects
+ok 1 - row 1: through the worker one press closes the track exactly as on the page, near and far, with the same words; new road keeps the user's pieces as the very same objects
+  ---
+  duration_ms: 5225.6434
+  type: 'test'
+  ...
+# Subtest: row 2: when no way of closing proves, the worker says the same words as the page, and nothing changes
+ok 2 - row 2: when no way of closing proves, the worker says the same words as the page, and nothing changes
+  ---
+  duration_ms: 4769.7305
+  type: 'test'
+  ...
+# Subtest: row 3: while the worker works the close is pending; an edit drops the answer by name; Cancel and a newer press cancel it; no runner or a failed job closes on the page
+ok 3 - row 3: while the worker works the close is pending; an edit drops the answer by name; Cancel and a newer press cancel it; no runner or a failed job closes on the page
+  ---
+  duration_ms: 4770.8561
+  type: 'test'
+  ...
+# Subtest: row 4: the runner: one warm worker; a reply that is not the current job's is ignored; a refusal resolves; cancel and a failure make a fresh worker; no Worker throws
+ok 4 - row 4: the runner: one warm worker; a reply that is not the current job's is ignored; a refusal resolves; cancel and a failure make a fresh worker; no Worker throws
+  ---
+  duration_ms: 1.0009
+  type: 'test'
+  ...
+# Subtest: row 5: the worker SCRIPT loads closejob.js through the app's loader and answers as runClose does (a route, and the one press); a refusal and a bad job are answered
+ok 5 - row 5: the worker SCRIPT loads closejob.js through the app's loader and answers as runClose does (a route, and the one press); a refusal and a bad job are answered
+  ---
+  duration_ms: 22921.6759
+  type: 'test'
+  ...
+# Subtest: row 6: the panel has ONE Close button (no "close using" box, no Apply); while the worker works it says so and Cancel stops it; then the line says what was done
+ok 6 - row 6: the panel has ONE Close button (no "close using" box, no Apply); while the worker works it says so and Cancel stops it; then the line says what was done
+  ---
+  duration_ms: 996.3473
+  type: 'test'
+  ...
+# Subtest: row 7: a press hands the worker the reds the live checker found for this very track with CSP on, and no others
+ok 7 - row 7: a press hands the worker the reds the live checker found for this very track with CSP on, and no others
+  ---
+  duration_ms: 122.3802
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 38947.9363
