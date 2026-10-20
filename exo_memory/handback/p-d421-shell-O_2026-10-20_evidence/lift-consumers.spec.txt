@@ -1,0 +1,344 @@
+[32m✔ a lean mesh is the same scene, cells and folds as the full one, and keeps no piece's spare rows [90m(18817.4927ms)[39m[39m
+[32m✔ the validator with leanLines keeps each station's centreline and hardest-hit line, and judges the track and draws the graph exactly as without [90m(14787.1412ms)[39m[39m
+[32m✔ the track checker's worker job makes no colour map and lean lines, and answers what the page's own check answers [90m(11180.7387ms)[39m[39m
+[32m✔ the overlap check (lean) answers exactly what the full mesh and full validator answer [90m(26320.0236ms)[39m[39m
+[32m✔ the strings: two decimals (2026-10-15: "everything to 0.00"), the unit written, a sign on angles, 0.00° bare, half away from zero, no wrap [90m(5.0177ms)[39m[39m
+[32m✔ the layout: never over the head's keep-out, never two labels overlapping, the priority one placed first, a crowded one culled [90m(3.4549ms)[39m[39m
+[32m✔ the layout: a label anchored on a large head keep-out is placed clear of it, not culled [90m(0.2068ms)[39m[39m
+[32m✔ the layout: the head's own label is never culled, even where no ring around its anchor fits; it stays clear of the head [90m(1.2021ms)[39m[39m
+[32m✔ the layout: no label is placed under a panel over the view, the head's own label included [90m(0.4933ms)[39m[39m
+[32m✔ a piece whose middle is behind the camera is labelled, when hovered, on the part of it that is in view [90m(494.5226ms)[39m[39m
+[32m✔ the head's own piece is labelled even when none of it is on screen (the camera looks ahead, past the head) [90m(137.0745ms)[39m[39m
+[32m✔ the label box holds only an opaque background and its text: no border, square corners, contrast ≥ 4.5 : 1 [90m(19.8253ms)[39m[39m
+[32m✔ a skin change recolours the label boxes already made, and their background stays opaque [90m(337.5882ms)[39m[39m
+[32m✔ the shell's readouts are A's, once per document; the ghost's strings are the placed piece's strings [90m(172.6384ms)[39m[39m
+[32m✔ the panel shows the ghost's four numbers, and they follow every field inside its input handler (no timer, no frame) [90m(613.6711ms)[39m[39m
+[32m✔ the panel: a field set extend refuses shows — (and says why in the title); a closed loop shows —; after Extend the ghost is the NEXT piece [90m(39.803ms)[39m[39m
+[32m✔ the labels on the track: the head's own piece always, any other only when hovered; the text A's numbers, clear of the head; a flight and an empty track draw none and throw nothing [90m(503.2201ms)[39m[39m
+[32m✔ the head's own piece is labelled in the build view, where its middle is behind the camera [90m(63.4867ms)[39m[39m
+[32m✔ the labels follow a path the preview extends IN PLACE (a hovered later piece is labelled), and survive the preview clearing #preview after they mounted [90m(478.5885ms)[39m[39m
+[32m✔ extendOptions: the cup field is the target c, in DEGREES, typed as it is (0 is a target; empty continues; never clamped here) [90m(0.2295ms)[39m[39m
+[32m✔ the Extend panel has a "cup °" field beside bank, 0 to 150, and Extend hands its value to the core as c [90m(174.6185ms)[39m[39m
+[32m✔ the readout shows cup from → to: the DOCUMENT's values with the bank cell's rounding, never the typed target, never bank's [90m(169.2255ms)[39m[39m
+[32m✔ the cup cell follows the cup field inside its input handler, and a cup the core refuses shows — and says why [90m(88.4273ms)[39m[39m
+[32m✔ the brush's channel list gains cup (channel c), with a drag rate in degrees [90m(2.7519ms)[39m[39m
+[32m✔ the brush's channel list offers the cross-section channels e, s and t (D225), each with a drag rate [90m(27.0152ms)[39m[39m
+[32m✔ on an EMPTY track the fields show the first piece's start (level, straight, the bowl's 31 m and the edge it renders), not blanks [90m(4.7433ms)[39m[39m
+[32m✔ after Extend and Redo the fields show the head's END state in their own units (°/100m, °, m); after Undo, the undone piece's own values (D242 item 7) [90m(93.7782ms)[39m[39m
+[32m✔ on OPENING a saved track the fields show its head [90m(16.9028ms)[39m[39m
+[32m✔ a CHANGED value is a target in the core's units; a value typed back to exactly what was shown is untouched again [90m(98.1502ms)[39m[39m
+[32m✔ a field left as shown builds the SAME piece, ghost and readout as a blank, even where turn and bank are still changing at the head; a literal target would not [90m(194.1137ms)[39m[39m
+[32m✔ the first piece is the typed WIDTH along its whole length, from s = 0 (no bottleneck); untyped channels keep their default start [90m(66.4221ms)[39m[39m
+[32m✔ the first piece is the typed BANK, TURN and CLIMB from s = 0 [90m(84.7166ms)[39m[39m
+[32m✔ a typed CUP makes the first piece a cup piece from its start, and the rendered edge equals c on both sides from s = 0 (seal row 1) [90m(17.5123ms)[39m[39m
+[32m✔ the SECOND piece is unchanged: it starts where the first ends and ramps to its target, exactly as before [90m(90.3311ms)[39m[39m
+[32m✔ a lap whose first piece was typed (width 40, cup 30) closes, and exports through the app's route with no red (csp on) [90m(12229.4989ms)[39m[39m
+[32m✔ extendOptions "at start": a ticked field WITH a target goes in transition as { channel: 20 m }; unticked or untouched fields do not [90m(0.9312ms)[39m[39m
+[32m✔ the panel: an "at start" box beside each field, OFF by default; ticking one redraws the ghost and readout inside its handler, and Extend sends it [90m(54.9574ms)[39m[39m
+[32m✔ "at start" on a field left as shown sends nothing (no target, D193); the box stays ticked for the next piece [90m(42.9283ms)[39m[39m
+[32m✔ no water: the panel has no Water section, the shell no pour and no water state, an edit pours and draws nothing, and no file of the app names the water [90m(349.655ms)[39m[39m
+[32m✔ Close the loop writes a copy of the track as it was BEFORE closing it (shell.backupNow), then closes, in one press [90m(8449.5967ms)[39m[39m
+[32m✔ Close says it is working at once, and a refusal shows in the Close box, in red [90m(18380.6442ms)[39m[39m
+[32m✔ if that copy cannot be written, the press changes nothing and says why [90m(5691.496ms)[39m[39m
+[32m✔ D271: Level ends the piece straight and level; To floor too short says the length that works, which then works; each is one undo step [90m(1332.1667ms)[39m[39m
+[32m✔ D280: Turn by places a piece that turns exactly the typed angle and ends straight; a Straight after it turns 0.0°; one undo step; too short names the length [90m(145.5694ms)[39m[39m
+[32m✔ Turn to grid: the line under the buttons says how far the end is off the grid, and the button turns onto it (90 by default, 45 when picked) [90m(171.199ms)[39m[39m
+[32m✔ D282: Sharp places a corner of the typed angle at the typed radius as ONE undo step; too tight a radius names the tightest at this width and places nothing [90m(9676.9718ms)[39m[39m
+[32m✔ D242: after a 30°/100m turn, Straight extends a piece whose turn and climb are 0 from 20 m on, and puts the "at start" boxes back; turn 0 without "at start" shows the hint [90m(47.3585ms)[39m[39m
+[32m✔ D242 item 7: Undo gives back the undone piece's values: the fields read what it was extended with, and Extend again rebuilds it byte-identical; Redo shows the head as before [90m(159.4359ms)[39m[39m
+[32m✔ the piece labels equal a fresh read after a placement, an undo, a redo, a bend in the middle and a moved start [90m(126.7576ms)[39m[39m
+[32m✔ the panel shows the corner (its turn, "ends turning at …", what turn 0 at start would add) and the gravity bank, for the piece Extend would add [90m(44.9083ms)[39m[39m
+[32m✔ D331 B: by default the turn field is a corner: it shows nothing at the head, a typed 90 is the ghost's and the placed piece's exact 90.00°, ending straight [90m(60.662ms)[39m[39m
+[32m✔ D331 B: "turn as" rate is the old field (°/100 m, the head's rate shown); switching back puts the field back; Level, To floor and Jump refuse a corner by name and place nothing [90m(20.9273ms)[39m[39m
+[32m✔ D331 climb: by default the climb field is a corner: blank at the head, a typed 10 is the ghost's and the placed piece's exact 10.00°, at a steady pitch after; the climb corner cell reads it [90m(36.3638ms)[39m[39m
+[32m✔ the core loads through the WEBVIEW's loader with the node shim, builds the same track as node's, and is refused without the shim [90m(553.8827ms)[39m[39m
+[32m✔ extend: a piece is added at the head, the segments are the adapter's, and undo / redo walk it back and forth exactly [90m(327.5697ms)[39m[39m
+[32m✔ the ghost of an extension is exactly what the click then builds [90m(5.3184ms)[39m[39m
+[32m✔ extendOptions: empty fields continue; turn and climb are degrees per 100 m, bank degrees, width metres [90m(2.5824ms)[39m[39m
+[32m✔ a failed extend changes nothing and says why [90m(3.1726ms)[39m[39m
+[32m✔ the rate brush: one drag is one undo step, every frame applies the WHOLE delta to the drag's base, and undo restores the track exactly [90m(138.6355ms)[39m[39m
+[32m✔ the local (height / sideways) brush: refused by name while E's brush is not in the build; E's hill and swerve when it is [90m(94.2873ms)[39m[39m
+[32m✔ with E's brush, the rate brush goes through it: kh and kv as its rate mode, bank, width and rise as its value mode [90m(10.717ms)[39m[39m
+[32m✔ a brush E widened says so, with the radius it really used (the chair's ruling 2: always shown) [90m(160.479ms)[39m[39m
+[32m✔ the sharp opt-in reaches E's brush only when asked; the default is off (the chair's ruling 2: widen by default) [90m(10.3477ms)[39m[39m
+[32m✔ E's refusal (a hill with no offset channel yet) is the message, and nothing changes [90m(20.8508ms)[39m[39m
+[32m✔ close: one click closes the lap; extending a closed loop is refused; the rate brush on heading refuses to open it [90m(1148.1841ms)[39m[39m
+[32m✔ export: an open track is refused before anything runs; a closed lap goes through the SAME exporter and its files are written [90m(11897.3675ms)[39m[39m
+[32m✔ save and open use their own prefix, so the piece builder's tracks are neither listed nor opened here [90m(14.4615ms)[39m[39m
+[32m✔ openExample refuses files that are not a fit and a read, and changes nothing [90m(7.2949ms)[39m[39m
+[32m✔ the track model draws the LIFTED road, re-meshes a lift-only change to exactly a full build, and keeps the lift through an extend [90m(1163.5302ms)[39m[39m
+[32m✔ the export lifts the path before it meshes it (meta.liftPath), so an exported hill is in the kn5 [90m(13198.8947ms)[39m[39m
+[32m✔ landed core: a 1 m hill brushed in the app is in the preview's path and the export's [90m(2140.4629ms)[39m[39m
+[32m✔ landed core: a narrow brush that E widened says so, with the radius it used (E reports radiusUsed) [90m(63.5352ms)[39m[39m
+[32m✔ a lap that starts pitched, turned and off the origin: the preview starts and ends where the adapter does, and it closes and exports [90m(9296.8592ms)[39m[39m
+[32m✔ the pick: the station under a canvas point, as the renderer projects it; nothing when the point is off the track [90m(8.9996ms)[39m[39m
+[32m✔ D226 export (core): an EMPTY folder made directly in content\tracks exports to content\tracks and is removed; a folder with anything in it is refused and kept [90m(5981.3675ms)[39m[39m
+[32m✔ D234 an OPEN loop exported into an EMPTY picked folder is refused, the message and the refusal are shown, and the folder is GONE [90m(79.5341ms)[39m[39m
+[32m✔ D234 a REFUSED GRID (a tube too narrow for even one slot) and a RED lap into an empty picked folder: refused, shown, folder gone [90m(5597.6ms)[39m[39m
+[32m✔ D234 a NON-EMPTY foreign folder is untouched in every case (open loop, refused grid, red): the target is refused first, nothing is removed or written [90m(10612.4321ms)[39m[39m
+[32m✔ D234 a successful export is unchanged: written to content\tracks, the empty folder removed once, no refusal left; and a failed WRITE still removes the empty folder [90m(8333.3681ms)[39m[39m
+[32m✔ D243a the TEST export of an OPEN lap goes through the shell and the exporter: written open as a test folder, its reds listed, the loop not refused [90m(4226.8469ms)[39m[39m
+[32m✔ D243a the TEST export of a CLOSED lap is refused by name, and nothing is written (the lap would be built open with its end wall at the seam) [90m(3940.7052ms)[39m[39m
+[32m✔ a hand-placed line (along 100 on a 400 m first piece) does not move when a Straight, a broad turn, Turn by and Sharp are added [90m(1754.8554ms)[39m[39m
+[32m✔ the automatic line on an open track stays put when a Straight is added to the straight it is on (the keeper's case: it followed the head) [90m(262.609ms)[39m[39m
+[32m✔ the automatic line stays put through a broad turn, Turn by and Sharp: none of them makes a longer straight [90m(1816.2237ms)[39m[39m
+[32m✔ the automatic line moves when a genuinely longer straight is added, and the panel still says the start is automatic [90m(195.371ms)[39m[39m
+[32m✔ save, reopen, append: neither the hand-placed nor the automatic line moves [90m(198.6484ms)[39m[39m
+[32m✔ a CLOSED lap keeps its automatic start where it was: 15 m before the end of the longest straight run (the export of a finished track is unchanged) [90m(1584.6619ms)[39m[39m
+[32m✔ row 1: a flat track draws the ground grid only: no lattice, no levels, no labels, no drop lines [90m(31.8535ms)[39m[39m
+[32m✔ row 2: a track with height draws the lattice, and it spans the track's lowest to its highest point, with level labels, verticals, rings and drop lines [90m(6.3035ms)[39m[39m
+[32m✔ row 3: the line count stays bounded however long the track is (a 14 km one is about a thousand pairs, the grid itself well under) [90m(175.3946ms)[39m[39m
+[32m✔ row 4: the modes force what they say; off draws nothing; the guides can run without the grid; a bad mode is refused [90m(13.4275ms)[39m[39m
+[32m✔ row 5: the centre is the box's middle unless set; the two axes and the vertical pass through it, three strokes each [90m(2.0017ms)[39m[39m
+[32m✔ row 6: the gap reads a KNOWN offset: a straight at x = 10 mirrored about x = 0 is 20 m away everywhere; a line at z = 60 mirrored about z = 50 is 20 m [90m(4.4045ms)[39m[39m
+[32m✔ row 7: an oval's mirror gap is about 0 about its own centre, for left/right, front/back and both [90m(2791.4092ms)[39m[39m
+[32m✔ row 8: the mirror modes flip what they say: x flips x, z flips z, both is the half turn, and height never changes [90m(1.306ms)[39m[39m
+[32m✔ row 9: the dashes alternate on and off along the line, never stall on a boundary, and cover about half of it [90m(0.9141ms)[39m[39m
+[32m✔ row 10: a point projects and the pointer ray through it lands back on it on the base plane (the centre handle's drag) [90m(3.6963ms)[39m[39m
+[32m✔ row 11: through the real shell and the preview: a flat track draws the ground grid, a hilly one the lattice; the modes and the mirror follow setGuides, and each change is announced once [90m(985.4102ms)[39m[39m
+[32m✔ row 11b: the plan follows the track: a flat track replaced by a hilly one is drawn as the lattice, with no setGuides call; the layer is given every frame's plan and is disposed with the preview [90m(563.9602ms)[39m[39m
+[32m✔ row 12: with no gridMode and no ground the preview draws no grid, as before; ground: true is the old grid at y = 0 [90m(858.9705ms)[39m[39m
+[32m✔ row 13: the layer puts a label at each level in view and the handle at the centre, and dragging the handle moves the centre to the point under the pointer [90m(10.6192ms)[39m[39m
+[32m✔ row 14: the camera panel's buttons send the events the preview takes, follow its state, and say the numbers in words [90m(2.9772ms)[39m[39m
+[32m✔ row 15: the whole lap is the preview's: nothing in src/, the export or the document changed (the diff against the base), and the sealed fixtures are untouched [90m(315.3155ms)[39m[39m
+[32m✔ row 16: the gap search is EXACT: the same largest, mean and count as measuring every mirrored point against every segment, on asymmetric, open, closed, lifted, far-centre and long tracks [90m(59626.6317ms)[39m[39m
+[32m✔ row 17: the search is CHEAP and does not depend on how far the mirror lies: a few dozen segment tests per point, not every segment (B: 95 to 230 ms a rebuild) [90m(127.2575ms)[39m[39m
+[32m✔ row 18: the segment tree is built once per path: a centre drag or a change of mirror reuses it; a new path builds its own, and the answer is the same either way [90m(108.9189ms)[39m[39m
+[32m✔ row 19: the mirror ghost's line count is BOUNDED however long the track is (B: 3,249 lines on 14 km coiled into a 300 m box, 8,316 on 40 km), and a short track keeps its short dashes [90m(1528.8894ms)[39m[39m
+[32m✔ row 21 (B's regression): through the real shell and track model, an open track's gap is right after every extend and brush, though the path object is the same one edited in place [90m(534.5793ms)[39m[39m
+[32m✔ row 22: an open track WITH a lift (a hill from the height brush) too: the gap is right after every extend and height brush [90m(389.8664ms)[39m[39m
+[32m✔ row 23: what the memo keys on: every in-place change of a path gives it a NEW head (the geometry's own finish), so a tree for the old head is never used; and a changed path with no head still gets a new tree [90m(131.6807ms)[39m[39m
+[32m✔ row 1: coarsen thins the row grid, keeps the road's two edges, keeps shared grids shared and unchanged segments the same objects; detail 1 is the same array [90m(8.5225ms)[39m[39m
+[32m✔ row 2: the model meshes far fewer vertices at a coarse detail, comes back to EXACTLY a fresh full build, returns the real segments, builds nothing for the same document [90m(8747.3182ms)[39m[39m
+[32m✔ row 2b: a change of detail on an OPEN track is a full rebuild, not an incremental one; and a closed loop's same-document update is the same build (it used to rebuild in full every time) [90m(7953.1273ms)[39m[39m
+[32m✔ row 3: batchesOf(mesh, from) is the batches of the pieces from there on, equal to the full list filtered; the ghost builds only the new pieces [90m(3175.8705ms)[39m[39m
+[32m✔ row 4: a brush drag makes the preview coarse; full detail comes back ONCE, shortly after the drag ends, and not if another drag starts first [90m(11967.1889ms)[39m[39m
+[32m✔ row 5: the panel coalesces pointer moves to ONE brushTo per animation frame with the LATEST position, and the release applies the last position still waiting [90m(502.8435ms)[39m[39m
+[32m✔ row 6: the fast change key is the JSON key's equality, hashed: equal content equal keys, any one-bit change differs, and on real segments it finds exactly the segments JSON finds [90m(3257.9444ms)[39m[39m
+[32m✔ row 7: a cup or plain segment gets a coarse row grid too (shared across a held cross-section, the road's two edges kept) and the coarse mesh is a fraction of the vertices [90m(3008.7544ms)[39m[39m
+[32m✔ row 8: a closed loop rebuilt from the pieces that changed EQUALS a full rebuild: every coarse drag step, the release, an undo; and it meshes only what the brush reached [90m(53832.8409ms)[39m[39m
+[32m✔ row 8b: a brush across the loop's own joint (the last piece to the first), a hill (a lifted path) and a heading brush that re-closes the whole loop: all equal a full rebuild [90m(5706.933ms)[39m[39m
+[32m✔ row 9: reuseMesh does not change the mesh it was given, refuses a different number of segments, and an unflagged piece is remeshed [90m(748.8089ms)[39m[39m
+[32m✔ row 9b: a piece that takes its font from the piece before it (a word segment, no blend of its own) is remeshed when that one changes [90m(830.01ms)[39m[39m
+[32m✔ row 9c: reuseMesh checks a piece's start pitch and bank itself: a flag that says "same" for a piece whose start changed does not keep a stale shape [90m(1079.261ms)[39m[39m
+[32m✔ row 9d: a seam between two pieces that only MOVED moves with them (a step in the font with no ramp makes a real seam) [90m(759.6344ms)[39m[39m
+[32m✔ row 9e: a closed loop whose number of segments changed is built in full, not reused (the model checks the count before it trusts a slot) [90m(2998.9169ms)[39m[39m
+[32m✔ row 4 (i): a closed bowl lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(25719.8535ms)[39m[39m
+[32m✔ row 4 (i): a closed bowl lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(22198.764ms)[39m[39m
+[32m✔ row 4 (i): a closed half-pipe lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(13866.4873ms)[39m[39m
+[32m✔ row 4 (i): a closed half-pipe lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(14509.3947ms)[39m[39m
+[32m✔ row 4 (i): a closed flat lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(10479.9178ms)[39m[39m
+[32m✔ row 4 (i): a closed flat lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(10967.0529ms)[39m[39m
+[32m✔ row 4 (ii): the same bowl lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(8030.9826ms)[39m[39m
+[32m✔ row 4 (ii): the same half-pipe lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(5387.7952ms)[39m[39m
+[32m✔ row 4 (ii): the same flat lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(6350.1588ms)[39m[39m
+[32m✔ row 4 (iii): a start straight cupped to 150° (a 4.45 m floor: not two columns, one slot) exports with a single-column grid and says so, not a crash [90m(8017.9843ms)[39m[39m
+[32m✔ row 4 / row 2: a bowl cup of 165° (walls crossed) is refused at the DOCUMENT by name, so the export's incidental raygap red is never what stops it [90m(0.8144ms)[39m[39m
+[32m✔ row 1: every route the solver gives, laid out arc, straight, arc, ends on the start pose [90m(3.5918ms)[39m[39m
+[32m✔ row 2: an end behind the start and pointing at it is one straight of the gap, with no turn [90m(0.235ms)[39m[39m
+[32m✔ row 3: a track is finished with new pieces only, closed, and the new road ends on the start [90m(3057.1994ms)[39m[39m
+[32m✔ row 4: refusals by name: a closed loop, an empty track [90m(1970.1455ms)[39m[39m
+[32m✔ row 5: an end upside down rolls back upright on a straight of its own (last onto the start, or first when that keeps the car on the road), never in a turn, and the lap closes with the bank of the start [90m(10871.4347ms)[39m[39m
+[32m✔ row 8: the roll Finish lays, read as the checker reads it, is under the amber bar everywhere on the new road (54° and 180°) [90m(13703.6606ms)[39m[39m
+[32m✔ row 9: a roll whose first guess is too short (factor 1, and the old 1.1) is measured and lengthened until it is under the amber bar [90m(17101.9494ms)[39m[39m
+[32m✔ row 10: a banked end: the road Finish lays keeps the car on it (the lap proof of the checker passes), at 54° and at 126° [90m(22425.8449ms)[39m[39m
+[32m✔ row 11: F.roadHold is the own test of the lap proof: the same place on the road the old Finish laid at a banked end, and nothing on the new road [90m(11089.2499ms)[39m[39m
+[32m✔ row 13: an end Finish cannot close onto a road the car stays on is refused by name, with where the car leaves the road and what to change [90m(2836.664ms)[39m[39m
+[32m✔ row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror) [90m(3576.1324ms)[39m[39m
+[32m✔ row 6: an end a quarter turn short of the lap is finished with one turn and one straight, not a detour [90m(485.1286ms)[39m[39m
+[32m✔ row 7: the one-turn routes, laid out, end on the start pose; none tighter than the floor [90m(1.9313ms)[39m[39m
+[32m✔ row 14: an end already at the start is closed by bending its last pieces, with no new road and no loop [90m(977.8227ms)[39m[39m
+[90m﹣ row 15: the reported near-closed save closes by bending its last pieces: no new road, nothing else moves, the lap proves [90m(0.1723ms)[39m # fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)[39m
+[32m✔ row 16: an end at the start whose every bend leaves the road is refused by name (FINISH_NEAR), never given new road [90m(2634.0865ms)[39m[39m
+[32m✔ row 17: an end straight behind the start, on its line and pointing the same way, is finished with that straight (8, 20 and 40 m), not a loop [90m(10367.3916ms)[39m[39m
+[32m✔ row 1: Jump (the button) places the current piece as Extend would, then a landing 40 m ahead at the same height, lined up, level: a 60 m straight [90m(315.0623ms)[39m[39m
+[32m✔ row 1: the landing starts EXACTLY at its pose: forward, left and up in the take-off's heading frame, its heading turn, its pitch and its bank [90m(325.4166ms)[39m[39m
+[32m✔ row 1: the landing is ordinary road NOT C1 with the take-off: its own width and cross-section; only a level start at the flight's bank is asked (LANDING) [90m(7.2673ms)[39m[39m
+[32m✔ row 1: the landing MOVES while it is the head (a partial pose keeps the rest, the bank follows); LANDING_NOT_HEAD once road is extended from it; deleting back frees it [90m(36.4791ms)[39m[39m
+[32m✔ row 1: deleting the LANDING itself leaves the jump waiting for one: the flight is the head, movable, and Jump's landing can be laid again [90m(178.328ms)[39m[39m
+[32m✔ row 1: refused by name: no road to take off from, a closed track, a landing too close, pitched to vertical, a turn past 180°, not a number [90m(4.194ms)[39m[39m
+[32m✔ row 1: LAND ON ROAD FIRST is a rule of the document: two flights in a row are refused by name; road between them is accepted [90m(41.0452ms)[39m[39m
+[32m✔ row 1: a free jump ROUND-TRIPS: serialize, reopen gives the same text and track, and the reopened one extends the same [90m(102.8443ms)[39m[39m
+[32m✔ row 2: the free jump's gap is INTENDED: no red over the flight; no arcs, no landing zone, no reach; the lap proof says nothing about it [90m(3200.2728ms)[39m[39m
+[32m✔ row 2: a landing placed BEHIND its take-off WARNS (jump-gap-not-forward, amber): he put it there; it is not red [90m(65.1583ms)[39m[39m
+[32m✔ row 2: a real HOLE in the core's road is still red: a stretch of the landing road made into a gap (no flight pose on it) [90m(820.5321ms)[39m[39m
+[32m✔ row 2: a flight with NO landing yet is red: the open end is over nothing (head-in-the-air) [90m(62.0715ms)[39m[39m
+[32m✔ row 4: a lap with a free jump CLOSES (whole lap): the flight is the very same piece, the landing's start is held in every channel, it is stored closed [90m(924.8429ms)[39m[39m
+[32m✔ row 4: a free-jump lap closes through B's LOCAL window too: only the window moves, every piece before it is the same object [90m(2026.5371ms)[39m[39m
+[32m✔ row 4: a jump that LANDS turned, to the side and ON A SLOPE closes in pitch and heading too: the measured tangent at the seam closes [90m(1207.4522ms)[39m[39m
+[32m✔ row 4: the close's position model predicts the adapter ACROSS a free jump: a control point bumped before it (heading and pitch) and after it moves the end as J says [90m(435.786ms)[39m[39m
+[32m✔ row 4: a lap that ENDS in a jump is refused by name, FLIGHT_AT_END (its seam would join the air to the start) [90m(11.7653ms)[39m[39m
+[32m✔ row 5: a CLOSED free-jump lap exports through the app's route (kn5, AI line, no red, no jump warning); an OPEN one is still refused, by name [90m(20631.2398ms)[39m[39m
+[32m✔ row 6: a saved run with a free flight re-adds as the same pieces, and its mirror lands on the other side, turned and banked the other way [90m(71.6864ms)[39m[39m
+[32m✔ row 6: a saved piece with an OLD jump (gap, drop, land) is refused by name, OLD_FLIGHT [90m(16.9765ms)[39m[39m
+[32m✔ row 6: an OLD document jump opens as the free flight that lands where the road after it was, the end of its generated ramp, and saves as one [90m(157.0855ms)[39m[39m
+[32m✔ row 7: the readout of a flight gives its pose for the number boxes, its turn, climb and the landing's bank [90m(131.9335ms)[39m[39m
+[32m✔ a 5 m hill on a level straight: grade = h′ and |κ| = |h″|/(1 + h′²)^{3/2} at every sample (ref 09 §7, the plane-graph curvature of ref 02 §1) [90m(201.1544ms)[39m[39m
+[32m✔ outside the hill NOTHING changes: every sample is the SAME object (bit for bit), and the path length is the base's [90m(93.5502ms)[39m[39m
+[32m✔ the frame is RECOMPUTED, not shifted: T, L, U orthonormal, the roll about T kept, and bankG and grade read from the new frame [90m(35.7788ms)[39m[39m
+[32m✔ a swerve (l) on a CURVED base: the exact κ̃ agrees with a finite difference of the lifted tangent (the R′ and R″ terms, ref 09 §7) [90m(263.1925ms)[39m[39m
+[32m✔ the mesh closes every segment on a LIFTED end sample (path.segEnd), and the build head is the lifted last sample [90m(764.9002ms)[39m[39m
+[32m✔ h and l serialise canonically, undo removes a hill, and a core/1 file opens with both at zero [90m(10.023ms)[39m[39m
+[32m✔ checkDoc: an offset channel of the wrong length is refused; offsets must fade to 0 before a jump (FLIGHT_OFFSET) and start at 0 after it [90m(7.3234ms)[39m[39m
+[32m✔ with no offset set anywhere the adapter returns the geometry's own path object untouched [90m(15.0252ms)[39m[39m
+[32m✔ row 1: a hill on ONE piece of a long track: bit for bit the old lift, and every sample outside it the very same object as the base path's [90m(1386.2883ms)[39m[39m
+[32m✔ row 2: a swerve across a joint, and offsets on every piece: bit for bit the old lift [90m(1316.2888ms)[39m[39m
+[32m✔ row 3: no offset anywhere: the very same path object back [90m(233.8935ms)[39m[39m
+[32m✔ row 1: the relative form: a state is its change from the run's start (first point 0) plus the start, a rate is as the document holds it, and putting them back is EXACT, on real adjusted laps of all three kinds [90m(4617.3009ms)[39m[39m
+[32m✔ row 1b: the text is canonical: a stable key order, one piece to a line, a final newline; parse(serialize(p)) is p and serialize of it is the same text; the piece is frozen [90m(1418.636ms)[39m[39m
+[32m✔ row 2 (REQUIRED, legacy): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice [90m(39008.8915ms)[39m[39m
+[32m✔ row 2 (REQUIRED, cup): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice [90m(38877.8911ms)[39m[39m
+[32m✔ row 2 (REQUIRED, tube): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice [90m(78539.9868ms)[39m[39m
+[32m✔ row 2b: put where the run does NOT already start (a different head) the export of the result is still the document's own: it exports, and builds the same as the same document made by hand would [90m(143.8257ms)[39m[39m
+[32m✔ row 3: at a DIFFERENT head the run continues from it: the document accepts it, the joint's values and slopes meet, the change across the run is the saved one, and the rates after the first span are the saved ones [90m(1452.0451ms)[39m[39m
+[32m✔ row 3b: it can be added again and again: a saved bend added three times in a row is a valid track and each copy continues the one before [90m(113.4173ms)[39m[39m
+[32m✔ row 3c: what a head does not carry is continued as Extend continues it: a tube after a cup starts at twice the cup's edge, a cup after a tube at t/2, and a hill or swerve that has not faded carries on into the run (the rest of the run is as saved) [90m(1421.5809ms)[39m[39m
+[32m✔ row 4: "keep its own start values" adds the pieces exactly as saved: refused by name (PIECE_START) where they do not meet the head, accepted where they do; on an empty track a run goes in as saved [90m(97.4691ms)[39m[39m
+[32m✔ row 4b: refused by name: a legacy run after a cup or a tube (PIECE_KIND), a closed track (CLOSED), a run that starts with a jump on an empty track, a jump after offsets that have not faded [90m(311.2886ms)[39m[39m
+[32m✔ row 5: the mirror: a mirrored run's path is the mirror image of the original's (x flips; height, distance along and the bank's size do not), with a bank, a hill and a swerve in it; and at a head it is still a valid track [90m(97.7042ms)[39m[39m
+[32m✔ row 6: jumps in a run: a run with a flight in the middle and one that starts with a flight are saved with their flights as they were, and go in at another head [90m(9.6044ms)[39m[39m
+[32m✔ row 6c: a run that starts with a jump goes in exactly as saved after a curving, climbing, banked head (mirrored too); a landing that does not start level is refused by name (LANDING) [90m(2.7879ms)[39m[39m
+[32m✔ row 7: NO PIECE MAKES A DOCUMENT THE DOCUMENT WOULD REFUSE: every kind of run against every kind of head either goes in as a valid track or is refused by a CoreError, never a crash and never a bad document [90m(5620.2107ms)[39m[39m
+[32m✔ row 8: a malformed file is refused BY NAME, case by case (the good one still reads) [90m(5267.1951ms)[39m[39m
+[32m✔ row 8b: a mixed run is refused at SAVE too (MIXED_RUN), and a run of one kind with an edge is a kind of its own [90m(1.7705ms)[39m[39m
+[32m✔ row 9: ranges, names, limits and the summary a library list shows [90m(326.24ms)[39m[39m
+[32m✔ row 8c: numbers are quantised as they enter, like a document's: a value finer than its channel's step is snapped [90m(172.7008ms)[39m[39m
+[32m✔ row 1c: the start is the FIRST road's first values (states that change from piece to piece, a jump before the road), every stored state number is on its grid, and random pieces come back exactly [90m(19.4426ms)[39m[39m
+[32m✔ row 5b: a mirror flips the bank EXACTLY, the start bank included (a run that starts banked), the turn and the swerve; width and rise stay [90m(1.036ms)[39m[39m
+[32m✔ row 6b: a run that starts with a jump, put at a head that is TURNING and CLIMBING, has its road after the jump start level (turn and climb 0) with its own saved width [90m(0.6515ms)[39m[39m
+[32m✔ row 4c: a closed track says CLOSED whatever the run is: a legacy run into a closed CUP track is CLOSED, not PIECE_KIND (the kind is the second question) [90m(158.1261ms)[39m[39m
+[32m✔ row 10a: at the open end the pieces simply go: the same document with fewer pieces, the ids kept and not reused, and inserting a saved run then deleting it gets back the track [90m(7.7538ms)[39m[39m
+[32m✔ row 10b: in the middle, when the two sides already join (the deleted run began and ended in the same state) nothing is changed anywhere [90m(0.5509ms)[39m[39m
+[32m✔ row 10c (legacy): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved [90m(1.1136ms)[39m[39m
+[32m✔ row 10c (cup): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved [90m(1.4636ms)[39m[39m
+[32m✔ row 10c (tube): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved [90m(1.1569ms)[39m[39m
+[32m✔ row 10h: a tube after a CUP head starts at twice the edge of the cup (tNext), so the rendered edge is continuous across the re-join [90m(0.6998ms)[39m[39m
+[32m✔ row 10d: jumps: deleting the road before a jump, a jump itself, and the road after it each give a valid track with the jump kept (or its own refusal), the far side untouched [90m(0.8784ms)[39m[39m
+[32m✔ row 10i: deleting the road between two jumps is REFUSED BY NAME (DELETE_REJOIN, naming land on road first), and nothing is touched [90m(0.8706ms)[39m[39m
+[32m✔ row 10j: a run that starts with a jump, added at a head that IS a jump, is refused by name (JUMP_AFTER_JUMP); at a road head it goes in (control) [90m(0.9226ms)[39m[39m
+[32m✔ row 11a: across a closed lap's start line the run is the pieces either side of it, in lap order, and putting it back gives those very pieces (legacy, cup, tube) [90m(1153.2422ms)[39m[39m
+[32m✔ row 11b: a lap whose bank turns WHOLE times round (TEST 1 ends at -4π): across the line the bank is carried on by those turns, so the run is kept, C1, leaning as the lap leans [90m(121.8024ms)[39m[39m
+[32m✔ row 11c: a closed lap whose road is NOT smooth across its start line (a hand-edited width step there) is refused BY NAME across it (SEAM_RUN); either side alone is kept [90m(77.7777ms)[39m[39m
+[32m✔ row 11d: on an OPEN track from > to is still BAD_RANGE, and a closed lap's out-of-range ends are too [90m(80.8369ms)[39m[39m
+[32m✔ row 10k: a piece FILE that starts with two jumps is refused when it is READ (JUMP_AFTER_JUMP), so the library lists why; one leading jump reads (control) [90m(2.1204ms)[39m[39m
+[32m✔ row 10e: REFUSED BY NAME (DELETE_REJOIN), nothing deleted and nothing reshaped: a jump left with no road before it, and a re-join a limit of the document refuses (a tube held in the slot band) [90m(1.9585ms)[39m[39m
+[32m✔ row 10f: a closed track has no open end (CLOSED); a range that is not in the track is BAD_RANGE [90m(78.0459ms)[39m[39m
+[32m✔ row 10g: EVERY range of every kind of track either goes through as a valid document with only the joint touched, or is refused by name (DELETE_REJOIN): never another error, never an invalid document [90m(8.0798ms)[39m[39m
+[32m✔ row 9b: a run at the limit (2,000 pieces) parses in well under 2 s, and a broken joint at its last piece is still refused BY NAME [90m(87.7175ms)[39m[39m
+[32m✔ a 90° cup lap refuses a pit lane; flattened beside it, the same lane builds [90m(1710.5594ms)[39m[39m
+[32m✔ the route does not move: every centreline station is where it was, to the bit [90m(1376.6945ms)[39m[39m
+[32m✔ only the shape beside the lane changes: the cup is 0 under the lane, untouched past the ramp, and no other channel moves [90m(1081.2436ms)[39m[39m
+[32m✔ a closed TUBE lap opens beside the lane, and the lane builds [90m(4657.7442ms)[39m[39m
+[32m✔ a plain road has nothing to flatten, and says so [90m(1958.6097ms)[39m[39m
+[32m✔ the result saves and opens byte for byte (a valid document) [90m(1411.2909ms)[39m[39m
+[32m✔ the weight is 1 on the stretch, eases to 0 over the ramp, and is 0 beyond it [90m(0.2511ms)[39m[39m
+[32m✔ row 1: adding a tube after a cup leaves every placed segment byte for byte as it was [90m(176.1063ms)[39m[39m
+[32m✔ row 2: the handover is seamless: the tube morphs out of the cup's own end, the rows meet, the centre is on the curve, no self-intersection, stacking or red [90m(27353.5269ms)[39m[39m
+[32m✔ row 3: an EDGE piece after a cup leaves the placed cup as it was and morphs out of the cup's own end [90m(492.7725ms)[39m[39m
+[32m✔ row 1: the road's centre stays on the curve the user drew at every station of the closing and opening pieces (≤ 1 cm) [90m(2.7246ms)[39m[39m
+[32m✔ row 2: the floor is level through the closing and opening pieces: its centre's height moves ≤ 1 cm (no climb anywhere, no hump) [90m(0.2624ms)[39m[39m
+[32m✔ row 2b: the keeper's own case (the panel's fields, widths 44 and 30): a track that is a closed 45 m tube from its start, still turning, opened in 254.1 m [90m(58339.3104ms)[39m[39m
+[32m✔ row 3: in the opening piece the walls rise above the floor no more than a fixed-width circular arc must at the row's sweep, and the self-check finds no self-intersection [90m(15.2197ms)[39m[39m
+[32m✔ row 4: the cross-sections are the adapter's, untouched, and the open end is on the curve, as before [90m(0.4158ms)[39m[39m
+[32m✔ row 5: a ROLLED closed tube still turns about its own axis, hl above the curve; the word builder's constant heartline is as it was [90m(5459.0935ms)[39m[39m
+[32m✔ row 1: which cells: off none, all every core road cell, ranges the overlapping cells widened by the pad, an empty list none [90m(3.8087ms)[39m[39m
+[32m✔ row 2: a catch cell is the road's own surface CATCH_OFFSET_M below it: its normals and winding, about 32 columns, a seam row whole, never visible [90m(3.0267ms)[39m[39m
+[32m✔ row 3: with no sustained load, the default export is the very kn5 of before (and so is 'off') [90m(15349.6197ms)[39m[39m
+[32m✔ row 4: 'all' lays a closed underside under every road chunk, in 1ROAD_CATCH_ chunks of their own, and nothing else in the kn5 changes [90m(23444.8925ms)[39m[39m
+[32m✔ row 5: explicit ranges catch only the cells there, and surfaces.ini is the file of before [90m(11737.6485ms)[39m[39m
+[32m✔ row 1: a grip key is GRIP and three digits, none at 100, and no key is the start of another (nor of ROAD or PIT) [90m(12.0501ms)[39m[39m
+[32m✔ row 2: surfaces.ini is the file it was without grips; with grips, a GRIPnnn surface each, AC's ROAD but KEY and FRICTION, and the MESHES line names 1GRIP? [90m(1.2724ms)[39m[39m
+[32m✔ row 3: the merge splits at grip boundaries: a chunk is one surface, never 1ROAD_ with 1GRIPnnn_ or two grips [90m(44.8535ms)[39m[39m
+[32m✔ row 4: a low and a high piece export as 1GRIP070_/1GRIP125_ meshes on two surfaces; the triangles are the all-100 export's; back at 100, byte for byte [90m(41079.2855ms)[39m[39m
+[32m✔ row 1: the merge keeps every vertex and every triangle (position, normal, uv), byte for byte, and joins consecutive road cells and skins [90m(23.207ms)[39m[39m
+[32m✔ row 2b: with the default budget no chunk passes 32,768 vertices (AC left the keeper's two chunks near 65,536 undrawn: the road went invisible but drivable) [90m(44.8878ms)[39m[39m
+[32m✔ row 2: a chunk never passes the 16-bit index budget or its length; a lone mesh stays as it was; another material or other flags never join [90m(39.1371ms)[39m[39m
+[32m✔ row 3: markers, walls, paint and the pit lane stay where they were, unchanged; a chunk sits where its first mesh sat [90m(2.8242ms)[39m[39m
+[32m✔ row 4: an exported closed lap has a few meshes instead of hundreds, the SAME triangle set as the unmerged export, and every road chunk is a 1ROAD physics name [90m(27850.8371ms)[39m[39m
+[32m✔ row 1: asphalt: every pit box wears the road's floor material and the same diffuse texture, in the scene and in the kn5 [90m(13137.6384ms)[39m[39m
+[32m✔ row 2: image: every pit box wears the road's floor material and the same diffuse texture, in the scene and in the kn5 [90m(7736.5419ms)[39m[39m
+[32m✔ row 3: solid colour: the pit boxes wear the road's own t180b_road, so they no longer show (what was asked, and named here) [90m(5128.3403ms)[39m[39m
+[32m✔ row 4: the start line and grid paint, the AC_PIT_n spawn markers and the read-back are unchanged [90m(8650.1328ms)[39m[39m
+[32m✔ row 5: a box's texture coordinates are the road's there: v = (s + offset) / tileLength, within the box's own stretch of road [90m(4079.5056ms)[39m[39m
+[32m✔ row 1: the infill is there, drivable, and wears the lane's floor (the road's), in the scene and in the kn5 [90m(12540.5721ms)[39m[39m
+[32m✔ row 2: NO GAP: the car's downforce ray over the road, the lane and the infill finds no gap in the lane's span [90m(6755.0113ms)[39m[39m
+[32m✔ row 3: untextured (solid): the infill wears t180b_road, as the lane and the road do [90m(5440.1933ms)[39m[39m
+[32m✔ row 4: the lane's self-check and its check against the road stay clean, and the full export of the closed lap passes [90m(5033.1953ms)[39m[39m
+[32m✔ a NORMAL export of an open track still refuses (unchanged): NOT_CLOSED, nothing written [90m(47.2884ms)[39m[39m
+[32m✔ the TEST export of the same open track writes a folder marked unfinished, in name and folder [90m(2112.0936ms)[39m[39m
+[32m✔ D256: the TEST export checks the open track at FULL speed, so where F7's hill lets the car leave the road is LISTED (and does not block) [90m(69.3362ms)[39m[39m
+[32m✔ in TEST mode a red is LISTED and does not block: a hole's gap-in-road red is in the TEST file and the warnings [90m(1952.1896ms)[39m[39m
+[32m✔ the TEST folder carries point-to-point gates and the named end wall in its kn5 [90m(0.7421ms)[39m[39m
+[32m✔ the TEST folder's AI line is OPEN and reads back [90m(0.7313ms)[39m[39m
+[32m✔ an open AI line is written only when asked for: the same line without open still refuses NOT_CLOSED [90m(479.9998ms)[39m[39m
+[32m✔ row 1: a tube oval 40 m wide exports, with a single-column grid on the centreline, nose to tail, and a warning that names it [90m(25993.3944ms)[39m[39m
+[32m✔ row 1: the same at 31 m and 60 m (a wider tube has a wider floor, and still one column) [90m(42662.1739ms)[39m[39m
+[32m✔ row 2: a tube too narrow for even one slot is refused BY NAME at the grid, with the floor it measured (not a crash, not a one-slot grid) [90m(2207.2522ms)[39m[39m
+[32m✔ row 3: the one-slot bar is the slot's half width plus 0.1 m, and the two-column bar did not move [90m(8303.1797ms)[39m[39m
+[32m✔ row 4: gridSlots and resolveLayout: a 1-column grid is one u per slot, 8 m apart, and only it carries the amber note [90m(1.9042ms)[39m[39m
+[32m✔ row 5: the two-column layout of an ordinary road is unchanged (2-staggered, a 6 m gap, a 16 m row), and no single-column note appears [90m(2016.1377ms)[39m[39m
+[32m✔ row 5b: the grid's length need is the same for the single column as for the staggered pair (the last slot is 34 m behind the line in both) [90m(0.4208ms)[39m[39m
+[32m✔ row 1a: a lap whose ONLY findings are a jump's reach (a fall not caught, a landing too deep) PASSES, and they are warnings [90m(2.3737ms)[39m[39m
+[32m✔ row 1b: a STALL (a road station at 0 km/h) still FAILS the lap proof, in where (not a warning) [90m(0.2294ms)[39m[39m
+[32m✔ row 1b: the car LEAVING THE SURFACE (a negative normal load on the centreline) still FAILS the lap proof, in where (not a warning) [90m(0.3789ms)[39m[39m
+[32m✔ row 1b: a jump whose landing is NOT AHEAD of its take-off still FAILS the lap proof, in where (not a warning) [90m(0.0963ms)[39m[39m
+[32m✔ row 2: a real HOLE (a road segment of the landing road made a gap, no ramp) in a closed jump lap is RED and refused; the lap without it exports [90m(8930.7205ms)[39m[39m
+[32m✔ the row no longer starts at the lane's midpoint: pit 1 (AC_PIT_0) is the first box after the entry, and each next box is further on [90m(235.5849ms)[39m[39m
+[32m✔ 2 boxes: the gap before the first box equals the gap after the last (within one spacing), and no box stands on a taper [90m(145.0616ms)[39m[39m
+[32m✔ 6 boxes: the gap before the first box equals the gap after the last (within one spacing), and no box stands on a taper [90m(146.5052ms)[39m[39m
+[32m✔ 12 boxes: the gap before the first box equals the gap after the last (within one spacing), and no box stands on a taper [90m(119.2448ms)[39m[39m
+[32m✔ the boxes stand on the lane, with the count asked for, and the checks pass [90m(258.9966ms)[39m[39m
+[32m✔ a row longer than the lane's straight is still centred, and an amber says the end boxes stand on the tapers [90m(148.927ms)[39m[39m
+[32m✔ a closed lap: AC_TIME_1 and AC_TIME_2 a third and two thirds of the lap past the start line, on road [90m(143.8634ms)[39m[39m
+[32m✔ an open track has no sector gates [90m(38.6746ms)[39m[39m
+[32m✔ row 1: a core export WITH a texture set writes its DDS and its material, and the kn5 reads back with the road wearing it [90m(7749.2524ms)[39m[39m
+[32m✔ row 2: WITHOUT a set nothing changes: the scene is returned as it is and flowUvs has nothing to do [90m(6909.8937ms)[39m[39m
+[32m✔ row 3: with a set the coordinates FLOW: v is the path's arc length over 10, continuous through every segment and seam; mesh.js restarts it every segment [90m(687.1949ms)[39m[39m
+[32m✔ row 4: a CLOSED TUBE wraps a whole number of repeats round the ring, evenly: no stretch beyond the rounding, and the ends meet at the ceiling [90m(36863.7879ms)[39m[39m
+[32m✔ row 5: an open road keeps u = arc / 10 across (only v flows), and an OPEN tube is not wrapped [90m(644.553ms)[39m[39m
+[32m✔ row 5b: the seam rows of a tube that changes carry the path's arc length at the seam, one value for the whole row [90m(9675.4115ms)[39m[39m
+[32m✔ row 6: a WORD document's coordinates are untouched by a set (flow is for the equation core only) [90m(15.8304ms)[39m[39m
+[32m✔ closedRing gives a frozen segment the answer of reading it, ring or not, and reads an unfrozen segment again after it changes [90m(4789.6662ms)[39m[39m
+[32m✔ row 7 (35 m): fit 'fit' runs u from -0.5 to 0.5 across every row of an open road, whatever tileWidth says [90m(432.814ms)[39m[39m
+[32m✔ row 7 (60 m): fit 'fit' runs u from -0.5 to 0.5 across every row of an open road, whatever tileWidth says [90m(579.5561ms)[39m[39m
+[32m✔ row 8: fit 'fit' follows a road that changes width: every row spans -0.5 to 0.5 from 35 m to 60 m, and the seam rows stay inside [90m(904.9776ms)[39m[39m
+[32m✔ row 9: fit 'fit' on a closed tube is one repeat round the ring (u from -0.5 to 0.5); tile keeps its whole-number wrap [90m(13459.2007ms)[39m[39m
+[32m✔ row 10: fit 'tile' and no fit setting are what they were: the coordinates of the 31 m lap pinned by digest [90m(1427.1218ms)[39m[39m
+[32m✔ row 10b: a floor whose settings carry no fit at all (a hand-made set) is mapped as tile, not as fit [90m(576.8118ms)[39m[39m
+[32m✔ row 1: a closed tube export has an underside skin on every cell: the road's own normal, 0.5 m away from the driver (outward), normals out, castShadows, its own dark material [90m(30845.5132ms)[39m[39m
+[32m✔ row 2: on an OPEN road the skin is BELOW it: the road keeps its light material, the skin is under every cell, and on the flat start straight it is 0.5 m down [90m(3559.4099ms)[39m[39m
+[32m✔ row 3: the DARK interior (ksAmbient 0.02) is on closed-ring cells only, the textured ones too; the set's shared material is untouched; the skin runs under the slot zone, the dark does not [90m(35907.9496ms)[39m[39m
+[32m✔ row 4: the ROAD nodes are the ones mesh.js made (the same objects): only skin nodes and materials are added; a word document comes back as the very same scene [90m(13077.1829ms)[39m[39m
+[32m✔ row 5: the skin is not a physics surface: no leading digit, no 1ROAD, no "seam", no surfaces.ini MESHES pattern matches it, and the 1ROAD meshes are as many as before [90m(17063.5734ms)[39m[39m
+[32m✔ row 6: the skin is light: about SKIN_COLUMNS vertices across, a fraction of the road's (under 60% on an open road, under 15% on a tube) [90m(14860.0042ms)[39m[39m
+[32m✔ row 7: the ring rule on a synthetic mesh: a seam row is a ring only when BOTH its segments are, and the lap's first seam joins the last piece to the first [90m(1392.9761ms)[39m[39m
+[32m✔ row 8: a seam row's skin (every vertex kept, no grid) is the road's triangles reversed and its vertices moved 0.5 m against the normal, on a zipper with area [90m(0.2978ms)[39m[39m
+[32m✔ row 1a: on synthetic roads, rayGaps is the first form, gap for gap (slits, holes, welds across a bucket boundary, degenerates, several meshes) [90m(1090.9298ms)[39m[39m
+[32m✔ row 1b: on built roads (an open coil that runs into itself, a closed lap, a tube) rayGaps is the first form, gap for gap [90m(20556.845ms)[39m[39m
+[32m✔ row 2: the check's lean mesh gives the check on buildMesh's own self-checked mesh, on a coil that overlaps itself; its two parts are the one-piece check [90m(11759.8146ms)[39m[39m
+[32m✔ row 3: on a closed 6 × 1000 m tube oval, each part of the overlap check and the whole check finish within a 1,500 MB heap [90m(76334.4673ms)[39m[39m
+[32m✔ S1: bank 360° over 300 m is accepted and read back as 360, then −540 (nothing wraps, clamps or refuses); the adapter rolls continuously [90m(54.8396ms)[39m[39m
+[32m✔ S3: a full 360° of bank is RED over 300 m (the keeper's own example, 1.80°/m), AMBER over 450 m (1.20), clear over 600 m (0.90): the bar is 1.2144 red, 0.9338 amber, read over a 20 m chord [90m(532.2764ms)[39m[39m
+[32m✔ S3: the rate is the frame-intrinsic one: a plain climbing turn (constant bank, the frame twisting) reads 0, and revalidate equals validate (the check is recomputed whole) [90m(246.9421ms)[39m[39m
+[32m✔ S3 (KS3-3): on a climbing turn at constant bank the validator's roll rate EQUALS §1's frame-intrinsic rate value for value (worst difference < 1e-9 °/m), and is not the gravity-frame φ′, which is 0 there [90m(16.5678ms)[39m[39m
+[32m✔ T1 iv (ruling 1, corrected to 9.74 m): a CLOSED tube narrower than 9.74 m is red by name (tube-too-narrow), 9.8 m, 12 m and 31 m are not: the 3 m chase eye plus the seal's 0.1 m margin must fit under the ceiling 2R = w/π [90m(2313.8901ms)[39m[39m
+[32m✔ E2: the validator reds an edge past the cap by name (edge-past-cap) on a segment built past it, and not on any a document can hold [90m(1148.131ms)[39m[39m
+[32m✔ S2 (i, ii): every segment of the closed tube carries the heartline R = w/2π, and the road centre steps at most 1 mm at every segment joint, including where the tube closes [90m(299.6729ms)[39m[39m
+[32m✔ S2 (iii): the floor of the spiral is a smooth helix: the road centre has curvature (finite differences) at most 1.1 × the helix R·ω²/(1 + R²ω²) + 1e-3, and lies at radius R from the tube axis within 5 mm [90m(237.274ms)[39m[39m
+[32m✔ S2 (vi): a tube that CLOSES WHILE BANKED (60°): the road centre steps at most 1 mm at every segment joint (the heartline is continuous along the road, never a step per segment) [90m(170.534ms)[39m[39m
+[32m✔ S2 (vii): an OPEN tube (sweep below 300°) has no roll axis of its own: rolled 90°, its road centre stays on the drawn curve within 1 mm (the heartline grows in from 300° only) [90m(201.1515ms)[39m[39m
+[32m✔ S4: the validator reads the spiral's load: the floor centre's normal load is 1 g·(gravity along the floor normal) + v²·κ_helix/g within 0.05 g at 460 km/h (KS4-1: from kvec of the integrated curve it would read 1 g) [90m(687.6373ms)[39m[39m
+[32m✔ S2 (iv): water over a heartline offset is refused BY NAME (WATER_HEARTLINE), never an anonymous throw [90m(238.7543ms)[39m[39m
+[32m✔ E5 (a) bowl c 135 + e 15 at s 0.64: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast [90m(34582.8191ms)[39m[39m
+[32m✔ E5 (b) flat + e 147 at s 0.5: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast [90m(65459.746ms)[39m[39m
+[32m✔ E5 (c) flat + e 147 at s 0.95: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast [90m(55706.7927ms)[39m[39m
+[32m✔ E5 (d) half-pipe c 120 + e 30 at s 0.95: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast [90m(14998.9675ms)[39m[39m
+[32m✔ X1 and T2 iv (ruling 3): a lap whose tube CLOSES along the road is refused by downforce-ray-gap over the slot zone ONLY (no exemption, no other red); the ceiling meshes of a closed tube are drivable road (1ROAD), not wall [90m(4558.9772ms)[39m[39m
+[34mℹ tests 336[39m
+[34mℹ suites 0[39m
+[34mℹ pass 335[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 1[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 236995.1345[39m

@@ -49,3 +49,9 @@ step re-check the precondition itself, which is what saved this one.
 writing ${Var}: wherever a variable meets a colon. Could be wrong for PowerShell 7, which reads UTF-8 by default.
 General form: dry-run a staged script on the target machine's own shell before handing it to the person who will run it at a bad moment.
 → `exo_memory/handback/p-d423-landing-O_2026-10-20.md`
+
+### A route tool's own window rarely re-closes a lap: on a test lap only a 5-piece window did; narrower ones fall back to the whole-lap close
+2026-10-20, D421 Part 2 — the real close on a closed 6-piece lap, Bend at s0/r 450/80, 700/300, 900/500, 1100/700: windows [1], [1-3], [1-4] refused, [1-5] closed.
+So the design's "only the window's pieces move" holds for wide windows; a small route edit usually gets the whole-lap fallback. Could be wrong on a lap shaped
+differently (the window close's freedom grows with the turns inside it). Also: the shell's share of a Bend step on 10 km is ~4.5 ms; the page frame's ~155 ms is the preview's.
+→ `exo_memory/handback/p-d421-shell-O_2026-10-20.md`

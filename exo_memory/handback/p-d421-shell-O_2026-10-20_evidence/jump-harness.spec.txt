@@ -1,0 +1,29 @@
+[32m✔ control: the unmutated copy passes every row of core_jump.test.js [90m(5841.3361ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(658.4999ms)[39m[39m
+[32m✔ mutation J1 a core flight's gap is a hole again (gap-in-road): applied, and caught by row 2 [90m(1684.3693ms)[39m[39m
+[32m✔ mutation J2 any core gap followed by road counts as a flight, with no pose on it (a planted hole is exempt): applied, and caught by row 2 [90m(1996.4452ms)[39m[39m
+[32m✔ mutation J2b a landing behind its take-off is red again: applied, and caught by row 2 [90m(2029.0556ms)[39m[39m
+[32m✔ mutation J3 a track with a jump is refused again (NOT_YET): applied, and caught by row 4 [90m(1470.9726ms)[39m[39m
+[32m✔ mutation J4 the landing is linked across the jump (its start not held): applied, and caught by row 4 [90m(1569.9109ms)[39m[39m
+[32m✔ mutation J5 the close's model skips the flight (no displacement, no heading or pitch reset): applied, and caught by row 4 [90m(3197.6071ms)[39m[39m
+[32m✔ mutation J6 the net pitch is not counted again from a jump, nor its turn added: applied, and caught by row 4 [90m(2028.0101ms)[39m[39m
+[32m✔ mutation J7 the landing pitch and the jumps' turns are left out of the net angles: applied, and caught by row 4 [90m(1953.6721ms)[39m[39m
+[32m✔ mutation J8 the model's pitch is not cut at the flight: applied, and caught by row 4 [90m(3180.4282ms)[39m[39m
+[32m✔ mutation J8c the model leaves out the landing's sideways offset turning with the take-off: applied, and caught by row 4 [90m(1815.2416ms)[39m[39m
+[32m✔ mutation J9 a lap that ends in a jump is not refused by name: applied, and caught by row 4 [90m(2106.2947ms)[39m[39m
+[32m✔ mutation J11 two jumps in a row are accepted by the document (land on road first not enforced): applied, and caught by row 1 [90m(1293.2043ms)[39m[39m
+[32m✔ mutation J12 a landing that does not start level at its flight's bank is accepted: applied, and caught by row 1 [90m(1300.4327ms)[39m[39m
+[32m✔ mutation J13 a landing pitch past vertical is accepted: applied, and caught by row 1 [90m(1227.4477ms)[39m[39m
+[32m✔ mutation J14 an empty track is not refused by name: applied, and caught by row 1 [90m(1218.1525ms)[39m[39m
+[32m✔ mutation J15 a landing that is not the head is moved anyway: applied, and caught by row 1 [90m(1211.4101ms)[39m[39m
+[32m✔ mutation J16 the landing is not where its pose says (a metre further on): applied, and caught by row 1 [90m(1206.374ms)[39m[39m
+[32m✔ mutation J17 an old jump opens at its lip, its ramp forgotten (the roads after it move): applied, and caught by row 6 [90m(1182.49ms)[39m[39m
+[32m✔ mutation J18 the mirror of a saved jump does not cross to the other side: applied, and caught by row 6 [90m(1169.2388ms)[39m[39m
+[34mℹ tests 21[39m
+[34mℹ suites 0[39m
+[34mℹ pass 21[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 39427.2104[39m
