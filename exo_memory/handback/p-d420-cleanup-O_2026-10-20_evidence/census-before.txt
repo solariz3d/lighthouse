@@ -1,0 +1,202 @@
+census of C:/Users/nname/Downloads/t180-track-builder at 2026-10-20T08:03:42.386Z · bases: v0.4.9, origin/main, main (v0.4.9=409d3f83 origin/main=409d3f83 main=dbb92b65)
+worktrees: 113 · branches: 81 · dirty worktrees: 31 · worktrees holding links: 0 · missing dirs: 0
+
+## worktrees
+path	HEAD	branch	dirty	reachable-from	links	keep
+C:/Users/nname/Downloads/t180-track-builder	b306309a	land-0.4.8	0	v0.4.9+origin/main	-	the repo main checkout
+C:/Users/nname/Downloads/t180-d331/wt-6c37902	6c37902e	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-pt-343	72c34462	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a	dac5ee0b	d330-a2	1	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-a10	c29524b0	d371-a	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a10-base	2e0a98d7	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a11	be4a527c	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a12	cbd7a401	(detached)	1	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a13	276d086b	(detached)	1	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a14	6292f78a	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a15	e18a9c5d	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a16	d77bcd73	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a17	d88bca23	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a18	70434ee9	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a19	83b7b412	(detached)	0	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-a20	e46d5a1b	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a21	0cec64af	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a22	0cec64af	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a23	e1f98c95	(detached)	0	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-a24	c2d7cb58	(detached)	3	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a25	ce65aa0f	d404-a	0	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-a26	fc8c445d	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a28	fc8c445d	(detached)	10	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a29	4becdd56	d407b-a	0	UNREACHABLE	-	open lap branch d407b-a
+C:/Users/nname/Downloads/t180-wt-a3	73d45ee1	d331-a	1	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-a30	b306309a	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a31	18b8fd85	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a4	85f79cdc	d335-a	1	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-a5	ab0f1d15	d341-a	1	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-a6	7abf52eb	d344-a	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a7	a7b17a30	d355-a	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a8	7a785d68	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-a9	1030bd8b	d364-a	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b	593a9a88	d330-b	1	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-b049	409d3f83	rel-0.4.9	0	v0.4.9+origin/main	-	kept by path
+C:/Users/nname/Downloads/t180-wt-b10	7fd341c7	d356-b	1	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b11	d7c57730	d357-b	2	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b12	918e55b7	d359-b	1	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b13	1e77ca92	d359-final	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b14	2e0a98d7	d369-b	1	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b15	03af53be	d372-b	1	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b16	be4a527c	d373-land	1	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b17	9ad6d41b	d381	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b17-base	d7a6975d	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b18	03f5c097	d384-b	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b18-base	cbd7a401	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b3	46e46fd0	d333-b	1	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-b3base	3a26bc52	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b4	ecb7a629	d337-b	2	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-b400	a7c9fbd8	d400-b	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b408p	9a92f3ac	(detached)	1	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b410	68e505cf	d410-b	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b416	9138734f	d416-b	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b5	b55119ca	d339-b	2	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-b6	13bd1518	d343-b	2	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b7	ebd6ee4a	d350-b	2	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b8	ecd68379	d355-b	2	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-b9	b2a49bd8	d355-int	6	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-c	138c3830	d330-c	0	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-c10	8909b686	d354-c	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c11	38bc93fe	d355-c	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c11-before	0a11fb42	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c12	5c390c2a	d356-c	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c13	ea655867	d361-c	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c14	5d5a4a80	d375-c	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c15	d7a6975d	d380-land	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c16	51d3de11	d382-c	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c17	4e61acbe	d385-c	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c18	40404ff5	d388-c	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c19	d772db68	d395-c	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c2	bc510d15	d332-c	2	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-c20	70434ee9	d396-c	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c21	91908ab2	d401-c	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c22	511609d8	d406-c	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c24	e4b38ee6	d404-c	0	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-c25	645520a0	d409-c	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c26	79c6ea3e	d417-c	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c27	52558e3b	d421-c	3	v0.4.9+origin/main	-	open lap branch d421-c
+C:/Users/nname/Downloads/t180-wt-c27-base	52558e3b	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c3	6fd25379	d336-c	1	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-c4	e66e827d	d340-c	1	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-c5	6dc19a41	d337-c-fix	1	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-c6	4298cfcc	d345-c	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c7	b51a6ad7	d349-c	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c8	7d1cd1ee	d352-c	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-c9	42ac276f	d353-c	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-e	6bee3126	d330-e	1	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-e10	516e5211	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-e11	4ca68a94	d361-e	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-e12	e655ace1	d365-e	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-e13	dd405a16	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-e15	e4eb95f9	d381-e	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-e16	2896e6e3	d384-e	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-e17-review	6591b737	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-e18	7b76491d	d391-e	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-e2	eb371bbd	d337-e-fix	1	UNREACHABLE	-	-
+C:/Users/nname/Downloads/t180-wt-e23	58abf771	d403-a	0	UNREACHABLE	-	open lap branch d403-a
+C:/Users/nname/Downloads/t180-wt-e25	52558e3b	local-0.4.9	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-e3	de7b5cbf	d342-e	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-e4	72c34462	(detached)	4	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-e5	218c661e	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-e6	e15db439	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-e7	0f12e6dd	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-e8	447800b0	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-e9	516e5211	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-o-d412	5bb6d41d	d412-suite-speed	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-old-v0.3.1	b33bac5e	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-old-v0.3.6	5aa226d0	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-old-v0.4.0	2e0a98d7	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-old-v0.4.2	d7a6975d	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-old-v0.4.3	cbd7a401	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-old-v0.4.4	6591b737	(detached)	0	v0.4.9+origin/main	-	-
+C:/Users/nname/Downloads/t180-wt-old-v0.4.6	63515d06	(detached)	0	v0.4.9+origin/main	-	-
+
+## branches
+branch	sha	worktree	reachable-from	keep
+d330-a	977fba7f	-	v0.4.9+origin/main	-
+d330-a2	dac5ee0b	C:/Users/nname/Downloads/t180-wt-a	UNREACHABLE	-
+d330-b	593a9a88	C:/Users/nname/Downloads/t180-wt-b	UNREACHABLE	-
+d330-c	138c3830	C:/Users/nname/Downloads/t180-wt-c	UNREACHABLE	-
+d330-e	6bee3126	C:/Users/nname/Downloads/t180-wt-e	UNREACHABLE	-
+d331-a	73d45ee1	C:/Users/nname/Downloads/t180-wt-a3	UNREACHABLE	-
+d332-c	bc510d15	C:/Users/nname/Downloads/t180-wt-c2	UNREACHABLE	-
+d333-b	46e46fd0	C:/Users/nname/Downloads/t180-wt-b3	UNREACHABLE	-
+d334-e	5bd25343	-	UNREACHABLE	-
+d335-a	85f79cdc	C:/Users/nname/Downloads/t180-wt-a4	UNREACHABLE	-
+d336-c	6fd25379	C:/Users/nname/Downloads/t180-wt-c3	UNREACHABLE	-
+d337-b	ecb7a629	C:/Users/nname/Downloads/t180-wt-b4	UNREACHABLE	-
+d337-c-fix	6dc19a41	C:/Users/nname/Downloads/t180-wt-c5	UNREACHABLE	-
+d337-e-fix	eb371bbd	C:/Users/nname/Downloads/t180-wt-e2	UNREACHABLE	-
+d339-b	b55119ca	C:/Users/nname/Downloads/t180-wt-b5	UNREACHABLE	-
+d340-c	e66e827d	C:/Users/nname/Downloads/t180-wt-c4	UNREACHABLE	-
+d341-a	ab0f1d15	C:/Users/nname/Downloads/t180-wt-a5	UNREACHABLE	-
+d342-e	de7b5cbf	C:/Users/nname/Downloads/t180-wt-e3	v0.4.9+origin/main	-
+d343-b	13bd1518	C:/Users/nname/Downloads/t180-wt-b6	v0.4.9+origin/main	-
+d344-a	7abf52eb	C:/Users/nname/Downloads/t180-wt-a6	v0.4.9+origin/main	-
+d345-c	4298cfcc	C:/Users/nname/Downloads/t180-wt-c6	v0.4.9+origin/main	-
+d349-c	b51a6ad7	C:/Users/nname/Downloads/t180-wt-c7	v0.4.9+origin/main	-
+d350-b	ebd6ee4a	C:/Users/nname/Downloads/t180-wt-b7	v0.4.9+origin/main	-
+d352-c	7d1cd1ee	C:/Users/nname/Downloads/t180-wt-c8	v0.4.9+origin/main	-
+d353-c	42ac276f	C:/Users/nname/Downloads/t180-wt-c9	v0.4.9+origin/main	-
+d354-c	8909b686	C:/Users/nname/Downloads/t180-wt-c10	v0.4.9+origin/main	-
+d355-a	a7b17a30	C:/Users/nname/Downloads/t180-wt-a7	v0.4.9+origin/main	-
+d355-b	ecd68379	C:/Users/nname/Downloads/t180-wt-b8	v0.4.9+origin/main	-
+d355-c	38bc93fe	C:/Users/nname/Downloads/t180-wt-c11	v0.4.9+origin/main	-
+d355-int	b2a49bd8	C:/Users/nname/Downloads/t180-wt-b9	UNREACHABLE	-
+d356-b	7fd341c7	C:/Users/nname/Downloads/t180-wt-b10	v0.4.9+origin/main	-
+d356-c	5c390c2a	C:/Users/nname/Downloads/t180-wt-c12	v0.4.9+origin/main	-
+d357-b	d7c57730	C:/Users/nname/Downloads/t180-wt-b11	v0.4.9+origin/main	-
+d359-b	918e55b7	C:/Users/nname/Downloads/t180-wt-b12	v0.4.9+origin/main	-
+d359-final	1e77ca92	C:/Users/nname/Downloads/t180-wt-b13	v0.4.9+origin/main	-
+d361-c	ea655867	C:/Users/nname/Downloads/t180-wt-c13	v0.4.9+origin/main	-
+d361-e	4ca68a94	C:/Users/nname/Downloads/t180-wt-e11	v0.4.9+origin/main	-
+d364-a	1030bd8b	C:/Users/nname/Downloads/t180-wt-a9	v0.4.9+origin/main	-
+d365-e	e655ace1	C:/Users/nname/Downloads/t180-wt-e12	v0.4.9+origin/main	-
+d369-b	2e0a98d7	C:/Users/nname/Downloads/t180-wt-b14	v0.4.9+origin/main	-
+d371-a	c29524b0	C:/Users/nname/Downloads/t180-wt-a10	v0.4.9+origin/main	-
+d372-b	03af53be	C:/Users/nname/Downloads/t180-wt-b15	v0.4.9+origin/main	-
+d373-land	be4a527c	C:/Users/nname/Downloads/t180-wt-b16	v0.4.9+origin/main	-
+d374-c	61f2ec71	-	v0.4.9+origin/main	-
+d375-c	5d5a4a80	C:/Users/nname/Downloads/t180-wt-c14	v0.4.9+origin/main	-
+d380-land	d7a6975d	C:/Users/nname/Downloads/t180-wt-c15	v0.4.9+origin/main	-
+d381	9ad6d41b	C:/Users/nname/Downloads/t180-wt-b17	v0.4.9+origin/main	-
+d381-e	e4eb95f9	C:/Users/nname/Downloads/t180-wt-e15	v0.4.9+origin/main	-
+d382-c	51d3de11	C:/Users/nname/Downloads/t180-wt-c16	v0.4.9+origin/main	-
+d384-b	03f5c097	C:/Users/nname/Downloads/t180-wt-b18	v0.4.9+origin/main	-
+d384-e	2896e6e3	C:/Users/nname/Downloads/t180-wt-e16	v0.4.9+origin/main	-
+d385-c	4e61acbe	C:/Users/nname/Downloads/t180-wt-c17	v0.4.9+origin/main	-
+d388-c	40404ff5	C:/Users/nname/Downloads/t180-wt-c18	v0.4.9+origin/main	-
+d391-e	7b76491d	C:/Users/nname/Downloads/t180-wt-e18	v0.4.9+origin/main	-
+d395-c	d772db68	C:/Users/nname/Downloads/t180-wt-c19	v0.4.9+origin/main	-
+d396-c	70434ee9	C:/Users/nname/Downloads/t180-wt-c20	v0.4.9+origin/main	-
+d400-b	a7c9fbd8	C:/Users/nname/Downloads/t180-wt-b400	v0.4.9+origin/main	-
+d401-c	91908ab2	C:/Users/nname/Downloads/t180-wt-c21	v0.4.9+origin/main	-
+d403-a	58abf771	C:/Users/nname/Downloads/t180-wt-e23	UNREACHABLE	open lap
+d404-a	ce65aa0f	C:/Users/nname/Downloads/t180-wt-a25	UNREACHABLE	-
+d404-a-memo	8ec1b39a	-	UNREACHABLE	-
+d404-c	e4b38ee6	C:/Users/nname/Downloads/t180-wt-c24	UNREACHABLE	-
+d404-land	5aa0c57f	-	v0.4.9+origin/main	-
+d405-e	294cacdc	-	v0.4.9+origin/main	-
+d406-c	511609d8	C:/Users/nname/Downloads/t180-wt-c22	v0.4.9+origin/main	-
+d407-a	18b8fd85	-	v0.4.9+origin/main	-
+d407b-a	4becdd56	C:/Users/nname/Downloads/t180-wt-a29	UNREACHABLE	open lap
+d409-c	645520a0	C:/Users/nname/Downloads/t180-wt-c25	v0.4.9+origin/main	-
+d410-b	68e505cf	C:/Users/nname/Downloads/t180-wt-b410	v0.4.9+origin/main	-
+d412-suite-speed	5bb6d41d	C:/Users/nname/Downloads/t180-wt-o-d412	v0.4.9+origin/main	-
+d416-b	9138734f	C:/Users/nname/Downloads/t180-wt-b416	v0.4.9+origin/main	-
+d417-c	79c6ea3e	C:/Users/nname/Downloads/t180-wt-c26	v0.4.9+origin/main	-
+d421-c	52558e3b	C:/Users/nname/Downloads/t180-wt-c27	v0.4.9+origin/main	open lap
+feature/denser-asphalt	b306309a	-	v0.4.9+origin/main	-
+feature/start-grid	4353ac88	-	UNREACHABLE	-
+fix/ac-export-in-game	527ed0e6	-	v0.4.9+origin/main	-
+land-0.4.8	b306309a	C:/Users/nname/Downloads/t180-track-builder	v0.4.9+origin/main	open lap
+local-0.4.9	52558e3b	C:/Users/nname/Downloads/t180-wt-e25	v0.4.9+origin/main	-
+main	dbb92b65	-	v0.4.9+origin/main+main	-
+rel-0.4.9	409d3f83	C:/Users/nname/Downloads/t180-wt-b049	v0.4.9+origin/main	open lap
+rel-0.4.9-bump1	5ff959bf	-	UNREACHABLE	-

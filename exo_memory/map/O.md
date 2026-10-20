@@ -35,3 +35,11 @@ remaining harness also sits on a critical path; core_piece_mutation (513 s) is t
 Also: node 24 reports a file in which --test-name-pattern matches nothing as ONE passing test named by its path, so "ℹ tests" cannot
 say whether a named test ran (test/inner_run.js `ran`).
 → `exo_memory/handback/p-d412-part2b-O_2026-10-19.md`
+
+### A side-effecting shell loop piped into `| head -N` stops doing its work once N lines are printed, not only stops printing
+2026-10-20, D420 part 2 — my d411 archive loop (`for w in …; do archive; echo; done | head -12`) archived 7 of 12 worktrees; the
+removal step's own "not archived: stop" check caught it before any unarchived worktree went. Could be wrong in detail (which
+iteration the pipe closes on varies with output), not in kind.
+General form: never truncate the output of a loop that writes; truncate a separate read of its results, and make the destructive
+step re-check the precondition itself, which is what saved this one.
+→ `exo_memory/handback/p-d420-cleanup-O_2026-10-20.md`

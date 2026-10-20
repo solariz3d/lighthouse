@@ -1,0 +1,2 @@
+heavy-run: waiting on 0845a868 pid 24296 (t180 C D421 xsecmut, since 2026-10-20T08:02:58.555Z) and c88002b1 pid 10780 (O D420 cleanup: worktree removals (disk load), since 2026-10-20T08:06:12.962Z) — all 2 slots are held
+heavy-run: waiting on 0845a868 pid 32144 (t180 C D421 mine, since 2026-10-20T08:06:54.418Z) and c88002b1 pid 10780 (O D420 cleanup: worktree removals (disk load), since 2026-10-20T08:06:12.962Z) — all 2 slots are held

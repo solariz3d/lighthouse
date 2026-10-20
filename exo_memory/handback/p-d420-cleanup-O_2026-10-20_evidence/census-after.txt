@@ -1,0 +1,19 @@
+census of C:/Users/nname/Downloads/t180-track-builder at 2026-10-20T08:09:33.346Z · bases: v0.4.9, origin/main, main (v0.4.9=409d3f83 origin/main=409d3f83 main=dbb92b65)
+worktrees: 5 · branches: 6 · dirty worktrees: 1 · worktrees holding links: 0 · missing dirs: 0
+
+## worktrees
+path	HEAD	branch	dirty	reachable-from	links	keep
+C:/Users/nname/Downloads/t180-track-builder	b306309a	land-0.4.8	0	v0.4.9+origin/main	-	the repo main checkout
+C:/Users/nname/Downloads/t180-wt-a29	4becdd56	d407b-a	0	UNREACHABLE	-	open lap branch d407b-a
+C:/Users/nname/Downloads/t180-wt-b049	409d3f83	rel-0.4.9	0	v0.4.9+origin/main	-	kept by path
+C:/Users/nname/Downloads/t180-wt-c27	52558e3b	d421-c	3	v0.4.9+origin/main	-	open lap branch d421-c
+C:/Users/nname/Downloads/t180-wt-e23	58abf771	d403-a	0	UNREACHABLE	-	open lap branch d403-a
+
+## branches
+branch	sha	worktree	reachable-from	keep
+d403-a	58abf771	C:/Users/nname/Downloads/t180-wt-e23	UNREACHABLE	open lap
+d407b-a	4becdd56	C:/Users/nname/Downloads/t180-wt-a29	UNREACHABLE	open lap
+d421-c	52558e3b	C:/Users/nname/Downloads/t180-wt-c27	v0.4.9+origin/main	open lap
+land-0.4.8	b306309a	C:/Users/nname/Downloads/t180-track-builder	v0.4.9+origin/main	open lap
+main	dbb92b65	-	v0.4.9+origin/main+main	-
+rel-0.4.9	409d3f83	C:/Users/nname/Downloads/t180-wt-b049	v0.4.9+origin/main	open lap

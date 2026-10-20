@@ -1,0 +1,275 @@
+HEAD a19798e8b0674f28258b5e57922476fbf1c9dbbe branch main
+status --short:
+ M .claude/skills/track-equations/references/03_bsplines.md
+ M .claude/skills/track-equations/references/09_core_channels.md
+ M .claude/skills/track-equations/references/MATH_SOURCES.md
+ D .gitattributes
+MM CHANGELOG.md
+ M README.md
+ M app/README.md
+ M app/camera/cameras.js
+ M app/camera/index.js
+ D app/closer.js
+ D app/core/centreline.js
+ D app/core/coreshell.js
+ D app/core/flightlayer.js
+ D app/core/griplayer.js
+ D app/core/griplike.js
+ D app/core/gripvals.js
+ D app/core/handles.js
+ D app/core/index.js
+ D app/core/jumpwords.js
+ D app/core/keys.js
+ D app/core/labels.js
+ D app/core/landing.js
+ D app/core/overlapjob.js
+ D app/core/overlapmerge.js
+ D app/core/overlaprunner.js
+ D app/core/overlapworker.js
+ D app/core/panel.js
+ D app/core/piecesui.js
+ D app/core/pitui.js
+ D app/core/selectionlayer.js
+ D app/core/spawndrag.js
+ D app/core/spawnslayer.js
+ D app/core/spawnsui.js
+ D app/core/textures.js
+ D app/core/valuesoverlay.js
+ D app/core/widthlike.js
+ D app/core/xsec.js
+ M app/export/export.js
+ M app/index.html
+ M app/install/index.js
+ M app/install/install.js
+ M app/onboarding/guide.js
+ M app/onboarding/index.js
+ M app/preview/aclook.js
+ M app/preview/batches.js
+ D app/preview/coarse.js
+ D app/preview/guides.js
+ D app/preview/guideslayer.js
+ M app/preview/index.js
+ M app/preview/look.js
+ M app/preview/preview.js
+ M app/preview/renderer.js
+ D app/preview/segkey.js
+ M app/preview/trackmodel.js
+ M app/share/index.js
+ M app/share/share.js
+ M app/shell.js
+ M app/test/aclook.test.js
+ D app/test/aclook_webview.test.js
+ M app/test/camera.test.js
+ D app/test/cheap-ghost.test.js
+ D app/test/closer.test.js
+ D app/test/core-close-mutation.test.js
+ D app/test/core-close-preview.test.js
+ D app/test/core-eqonly.test.js
+ D app/test/core-mutation.test.js
+ D app/test/core-pieces-ui.test.js
+ D app/test/core-pitlane.test.js
+ D app/test/core-readout-display.test.js
+ D app/test/core-sculpt.test.js
+ D app/test/core-shell.test.js
+ D app/test/core-spawndrag.test.js
+ D app/test/core-spawns-ui.test.js
+ D app/test/core-spawns.test.js
+ D app/test/core-startline-creep.test.js
+ D app/test/core-textures.test.js
+ D app/test/core-undo-persist.test.js
+ D app/test/core-widthlike.test.js
+ D app/test/core-xsec-mutation.test.js
+ D app/test/core-xsec.test.js
+ M app/test/export.test.js
+ D app/test/guides.test.js
+ M app/test/handles.test.js
+ D app/test/jump-ui.test.js
+ D app/test/keys-anywhere.test.js
+ D app/test/layout-css.test.js
+ M app/test/look.test.js
+ M app/test/mutation.test.js
+ M app/test/onboarding.test.js
+ D app/test/preview-async.test.js
+ D app/test/preview-speed.test.js
+ M app/test/preview.test.js
+ D app/test/redgroups.test.js
+ M app/test/share-install.test.js
+ M app/test/shell-dist.test.js
+ M app/test/shell-layout.test.js
+ M app/test/shell-loader.test.js
+ M app/test/texture-panel.test.js
+ D app/test/undo-guard.test.js
+ M app/test/validate-ui-incval.test.js
+ M app/test/validate-ui-jumpdefault.test.js
+ M app/test/validate-ui-panel.test.js
+ M app/test/validate-ui.test.js
+ M app/validate-ui/index.js
+ M app/validate-ui/labels.js
+ M app/validate-ui/panel.js
+ D app/validate-ui/redgroups.js
+ M docs/ARCHITECTURE.md
+ M docs/FINDINGS.md
+ M docs/RELEASE.md
+ D docs/STATUS_0.2.2.md
+ M scripts/prove_render.ps1
+ M scripts/prove_render_dialog.ps1
+ M src-tauri/Cargo.lock
+ M src-tauri/Cargo.toml
+ M src-tauri/capabilities/default.json
+ M src-tauri/src/ac.rs
+ D src-tauri/src/backups.rs
+ M src-tauri/src/lib.rs
+ M src-tauri/tauri.conf.json
+ M src/core/README.md
+ M src/core/adapter.js
+ M src/core/close.js
+ M src/core/document.js
+ M src/core/extend.js
+ D src/core/jump.js
+ D src/core/level.js
+ D src/core/piece.js
+ D src/core/pitflat.js
+ D src/core/readout.js
+ M src/core/sculpt.js
+ D src/core/sharp.js
+ D src/core/turnby.js
+ M src/core/water.js
+ M src/doc/code.js
+ M src/doc/document.js
+ D src/doc/grips.json
+ M src/doc/index.js
+ M src/doc/phrasebook.js
+ M src/doc/resolve.js
+ M src/doc/vocab.js
+ D src/doc/widths.json
+ D src/export/acready.js
+ M src/export/ailine.js
+ M src/export/fromwords.js
+ D src/export/gripkeys.js
+ M src/export/layouts.js
+ D src/export/pitboxes.js
+ M src/export/pitlane.js
+ M src/export/trackfiles.js
+ D src/export/underskin.js
+ M src/geom/index.js
+ M src/geom/mesh.js
+ M src/geom/path.js
+ M src/geom/profile.js
+ M src/markers/checks.js
+ M src/markers/index.js
+ M src/markers/layout.js
+ M src/markers/paint.js
+ D src/texture/flow.js
+ M src/texture/set.js
+ M src/validate/index.js
+ M src/validate/limits.js
+ M src/validate/raygap.js
+ D test/core_adapter.test.js
+ D test/core_chord.test.js
+ D test/core_chord_mutation.test.js
+ M test/core_close.test.js
+ D test/core_close_local.test.js
+ D test/core_close_refusal.test.js
+ D test/core_cup.test.js
+ D test/core_cup_export.test.js
+ D test/core_cup_fixtures.test.js
+ D test/core_cup_mutation.test.js
+ D test/core_cup_readers.test.js
+ D test/core_cup_seam.test.js
+ D test/core_doc.test.js
+ D test/core_extend.test.js
+ D test/core_grip.test.js
+ D test/core_jump.test.js
+ D test/core_jump_mutation.test.js
+ D test/core_knots.test.js
+ D test/core_level.test.js
+ D test/core_offset.test.js
+ D test/core_piece.test.js
+ D test/core_piece_mutation.test.js
+ D test/core_pitflat.test.js
+ D test/core_pitlane.test.js
+ D test/core_ramp.test.js
+ D test/core_ramp_mutation.test.js
+ D test/core_readout.test.js
+ D test/core_sharp.test.js
+ D test/core_spawns.test.js
+ D test/core_tube_from_cup.test.js
+ D test/core_tube_open.test.js
+ D test/core_turnby.test.js
+ D test/core_valuesat.test.js
+ M test/core_water.test.js
+ M test/core_water_mutation.test.js
+ D test/core_xsec.test.js
+ D test/core_xsec_math.test.js
+ D test/core_xsec_mutation.test.js
+ M test/doc-e2e.test.js
+ D test/export_acready.test.js
+ D test/export_grip.test.js
+ D test/export_merge.test.js
+ D test/export_pitboxes.test.js
+ D test/export_pitinfill.test.js
+ D test/export_pittexture.test.js
+ D test/export_test_unfinished.test.js
+ D test/export_tube_grid.test.js
+ M test/export_words.test.js
+ D test/fixtures/F1-bowl-default-lap-closed.core2.json
+ D test/fixtures/F2-halfpipe-default-lap-closed.core2.json
+ D test/fixtures/F3-bowl-narrow-12m-cap-binds.core2.json
+ D test/fixtures/F4-halfpipe-width-31.5-to-12-along-s.core2.json
+ D test/fixtures/F5-flat-20m-bank-30.core2.json
+ D test/fixtures/F6-bowl-r-brushed.core2.json
+ D test/fixtures/F7-hill-then-jump.core2.json
+ D test/fixtures/F8-mixed-families.core2.json
+ D test/fixtures/F9-empty.core2.json
+ D test/fixtures/fixtures.js
+ D test/fixtures/manifest.d196.json
+ D test/fixtures/manifest.d222.json
+ D test/fixtures/manifest.d230.json
+ D test/fixtures/manifest.d258.json
+ D test/fixtures/manifest.d260.json
+ D test/fixtures/manifest.d279.json
+ D test/fixtures/manifest.json
+ M test/geom_mutation.test.js
+ D test/grips.test.js
+ D test/jumpwarn_refusals.test.js
+ D test/markers_pitbalance.test.js
+M  test/perf_soak.test.js
+D  test/perf_soak_tempclean.test.js
+ D test/texture_flow.test.js
+ D test/underskin.test.js
+ M test/validate.test.js
+ D test/validate_fullspeed.test.js
+ M test/validate_head.test.js
+ M test/validate_jumps.test.js
+ D test/validate_raygap_lean.test.js
+ M test/validate_speed.test.js
+ D test/validate_xsec.test.js
+ D test/vocab-corpus.test.js
+ D test/widths.test.js
+ D tools/bankrate.cjs
+ D tools/grips.cjs
+ D tools/widths.cjs
+?? app/handles/
+?? app/onboarding/defaults.js
+?? app/palette/palette.js
+?? app/test/handles-panel.test.js
+?? app/test/palette-dom.test.js
+?? app/test/palette.test.js
+?? app/test/validate-ui-speed.test.js
+?? app/texture/index.js
+?? app/validate-ui/speed.js
+?? docs/math/01_curves.md
+?? docs/math/02_closure.md
+?? docs/math/03_fourier.md
+?? docs/math/04_fairing.md
+?? docs/math/05_surfaces.md
+?? docs/math/06_geodesics.md
+?? docs/math/07_worked_examples.md
+?? docs/math/MATH_SOURCES.md
+?? docs/math/README.md
+?? docs/math/_parked_tests/
+?? scripts/ac_launch.js
+?? test/ac_launch.test.js
+?? test/water.test.js
+?? tools/mathref.cjs
+?? tools/water.cjs

@@ -1,0 +1,126 @@
+{
+ "repo": "C:/Users/nname/Downloads/t180-track-builder",
+ "bases": [
+  "v0.4.9",
+  "origin/main",
+  "main"
+ ],
+ "worktrees": [
+  {
+   "path": "C:/Users/nname/Downloads/t180-track-builder",
+   "head": "b306309a6e829d671f2584f5e4c992029959a0d2",
+   "branch": "land-0.4.8",
+   "exists": true,
+   "dirty": 0,
+   "reach": [
+    "v0.4.9",
+    "origin/main"
+   ],
+   "links": [],
+   "keep": "the repo main checkout"
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-a29",
+   "head": "4becdd56c55613422a5713352b8bba9d15c62745",
+   "branch": "d407b-a",
+   "exists": true,
+   "dirty": 0,
+   "reach": [],
+   "links": [],
+   "keep": "open lap branch d407b-a"
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-b049",
+   "head": "409d3f834b3364f0391d1e2d9bf9be3ceb5e2b90",
+   "branch": "rel-0.4.9",
+   "exists": true,
+   "dirty": 0,
+   "reach": [
+    "v0.4.9",
+    "origin/main"
+   ],
+   "links": [],
+   "keep": "kept by path"
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-c27",
+   "head": "52558e3bba23258baff4fb6dd80628d7fe9a13bc",
+   "branch": "d421-c",
+   "exists": true,
+   "dirty": 3,
+   "reach": [
+    "v0.4.9",
+    "origin/main"
+   ],
+   "links": [],
+   "keep": "open lap branch d421-c"
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-e23",
+   "head": "58abf771ca5d21dcda6aa4adc0cb939a8d9db79f",
+   "branch": "d403-a",
+   "exists": true,
+   "dirty": 0,
+   "reach": [],
+   "links": [],
+   "keep": "open lap branch d403-a"
+  }
+ ],
+ "branches": [
+  {
+   "name": "d403-a",
+   "sha": "58abf771ca5d21dcda6aa4adc0cb939a8d9db79f",
+   "worktree": "C:/Users/nname/Downloads/t180-wt-e23",
+   "reach": [],
+   "keep": "open lap"
+  },
+  {
+   "name": "d407b-a",
+   "sha": "4becdd56c55613422a5713352b8bba9d15c62745",
+   "worktree": "C:/Users/nname/Downloads/t180-wt-a29",
+   "reach": [],
+   "keep": "open lap"
+  },
+  {
+   "name": "d421-c",
+   "sha": "52558e3bba23258baff4fb6dd80628d7fe9a13bc",
+   "worktree": "C:/Users/nname/Downloads/t180-wt-c27",
+   "reach": [
+    "v0.4.9",
+    "origin/main"
+   ],
+   "keep": "open lap"
+  },
+  {
+   "name": "land-0.4.8",
+   "sha": "b306309a6e829d671f2584f5e4c992029959a0d2",
+   "worktree": "C:/Users/nname/Downloads/t180-track-builder",
+   "reach": [
+    "v0.4.9",
+    "origin/main"
+   ],
+   "keep": "open lap"
+  },
+  {
+   "name": "main",
+   "sha": "dbb92b65fc4ce3f05d9193b9498e429d59a3986d",
+   "worktree": null,
+   "reach": [
+    "v0.4.9",
+    "origin/main",
+    "main"
+   ],
+   "keep": null
+  },
+  {
+   "name": "rel-0.4.9",
+   "sha": "409d3f834b3364f0391d1e2d9bf9be3ceb5e2b90",
+   "worktree": "C:/Users/nname/Downloads/t180-wt-b049",
+   "reach": [
+    "v0.4.9",
+    "origin/main"
+   ],
+   "keep": "open lap"
+  }
+ ]
+}
