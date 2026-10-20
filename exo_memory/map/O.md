@@ -43,3 +43,9 @@ iteration the pipe closes on varies with output), not in kind.
 General form: never truncate the output of a loop that writes; truncate a separate read of its results, and make the destructive
 step re-check the precondition itself, which is what saved this one.
 → `exo_memory/handback/p-d420-cleanup-O_2026-10-20.md`
+
+### Windows PowerShell 5.1 reads a BOM-less .ps1 as ANSI, so a UTF-8 em-dash inside a string ends it early, and "$Var: text" is a scope reference
+2026-10-20, D423 landing — my staged swap.ps1 failed to parse on its dry run (nothing changed); fixed by keeping the file pure ASCII and
+writing ${Var}: wherever a variable meets a colon. Could be wrong for PowerShell 7, which reads UTF-8 by default.
+General form: dry-run a staged script on the target machine's own shell before handing it to the person who will run it at a bad moment.
+→ `exo_memory/handback/p-d423-landing-O_2026-10-20.md`
