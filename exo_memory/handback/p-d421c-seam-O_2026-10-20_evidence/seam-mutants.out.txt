@@ -1,0 +1,7 @@
+caught       S1 no seam tries (the window, then the whole lap)
+caught       S2 the last piece only, never the first
+caught       S3 the first piece tried before the last
+caught       S4 a repeated try is run again
+caught       S5 the whole lap protects the last try, not the window
+SURVIVED     S6 the seam piece is the last PIECE of the lap, not its last road piece
+applied 6 / caught 5 / NOT APPLIED 0

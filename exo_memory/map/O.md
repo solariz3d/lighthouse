@@ -80,3 +80,10 @@ General form: an instrument that wraps a cache must keep one wrapper per cache, 
 brushed + piece 49 closes changing 5 pieces against the whole lap's 47; a brush at 9800 m (pieces 48-49) closes in its own window. Could be wrong about WHY (the
 seam's C1 rows): inferred from close.js:8-9, not from the solver; pieces 0-19 hold the seam piece and still stall at 2 mm.
 → `exo_memory/handback/p-d421c-window-O_2026-10-20.md`
+
+### A route release on a closed lap now lands on the seam try: 3-5 pieces change instead of 47-49, though it is no faster
+2026-10-20, D421c seam tries — d421c-o d3be0cb: the window, + the last road piece, + the last and first, then the whole lap; on row 3's lap the second try lands
+for a Bend at 2100 and 6000, a Climb and a Stretch (599-707 ms, gap 0.03-0.16 mm). No item-5 case (seam fails, whole closes) in 150 positions on three laps.
+Could be wrong for laps not swept: jumps, a mixed seam, a window already holding a seam piece. Also: the tube oval and a legacy lap with the same centreline
+close identically, to the 4th decimal, because the close solves the centreline only.
+→ `exo_memory/handback/p-d421c-seam-O_2026-10-20.md`
