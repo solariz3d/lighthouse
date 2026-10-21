@@ -74,3 +74,9 @@ only h/l differ (inputs compared as before) cut row 2's step p50 2.36→1.23 ms 
 was a pre-C-cut tree (937f5d4: 6.76; 57b41f8: 1.83 = the page). Could be wrong if some reader of segments I did not find reads h or l through valuesAt.
 General form: an instrument that wraps a cache must keep one wrapper per cache, or it hides per-cache state and reports no change.
 → `exo_memory/handback/p-d421c-step-O_2026-10-20.md`
+
+### On a closed lap, a route brush's re-close window closes only if it holds a piece beside the start line; width alone (+1..+8 each side) never does
+2026-10-20, D421c window measure — row 3 (Bend at 2100 m, pieces 9-11): +0..+8 all CLOSE_SINGULAR (~80-110 ms each); +9 closes as the first to reach piece 0;
+brushed + piece 49 closes changing 5 pieces against the whole lap's 47; a brush at 9800 m (pieces 48-49) closes in its own window. Could be wrong about WHY (the
+seam's C1 rows): inferred from close.js:8-9, not from the solver; pieces 0-19 hold the seam piece and still stall at 2 mm.
+→ `exo_memory/handback/p-d421c-window-O_2026-10-20.md`

@@ -1,0 +1,5 @@
+{"finalPx":14,"delta_kh":0.00028,"pieces":50,"closed_flag_of_dragged_doc":false,"changedPieces":[48,49]}
+{"finalPx":14,"try":"window +0","window":[48,49],"closes":true,"refused":null,"ms_median":319.8,"ms_runs":[319.8,319.6,372.3],"iterations":2,"gapM":0.0008279427266738293,"pieces_changed":2}
+{"finalPx":14,"try":"window +1","window":[47,48,49],"closes":true,"refused":null,"ms_median":311.1,"ms_runs":[274,311.1,324.8],"iterations":2,"gapM":0.00017893219883828262,"pieces_changed":3}
+{"finalPx":14,"try":"window +2","window":[46,47,48,49],"closes":true,"refused":null,"ms_median":378,"ms_runs":[276.7,378,420.2],"iterations":2,"gapM":0.00007855877063226457,"pieces_changed":4}
+{"finalPx":14,"try":"whole lap","window":null,"closes":false,"refused":"not converged","ms_median":446.4,"ms_runs":[446.4,417,455],"iterations":2,"gapM":0.001185963459774605,"pieces_changed":48}
