@@ -133,6 +133,38 @@ pub fn sender_of(text: &str) -> Option<&str> {
     (!letter.is_empty() && letter.chars().all(|c| c.is_ascii_alphanumeric())).then_some(letter)
 }
 
+/// D424 cut (P's review item 1): who a refusal is TOLD to. Only the two fixed senders: `[chair:MAIN]` and
+/// `[librarian:LIB]` resolve to fixed ids and cannot cross. A `[pane:X]` letter is the MOUNT letter, fixed at launch,
+/// and the only way to a pane from it is the UI names map, which D423 found crossed with it (P's rings carry O, O's
+/// carry N, and N is the Third Place's letter), so a note to it could land in the wrong pane. Until the mount letter maps
+/// to a pane id, a lettered sender is not told: the REFUSED board row carries it, and a NOT TOLD row names the letter.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Recipient<'a> {
+    /// A fixed sender, addressed by its seat name (`M` or `LIB`).
+    Tell(&'a str),
+    /// A lettered sender, named on the board only.
+    NotTold(&'a str),
+    /// No sender to tell (a keep-warm, a pull, a dyad line, a refusal note).
+    Nobody,
+}
+
+pub fn refusal_recipient(text: &str) -> Recipient<'_> {
+    match sender_of(text) {
+        Some(s @ ("M" | "LIB")) => Recipient::Tell(s),
+        Some(letter) => Recipient::NotTold(letter),
+        None => Recipient::Nobody,
+    }
+}
+
+/// D424 cut (P's review items 2 and 5): a NEW session was inserted for this pane, by the automatic reopen or by the ↻.
+/// Its exit entry is dropped, so a new child that drew the dead child's pid (Windows reuses a pid once the waiter has
+/// let the handle go) never reads exited; and the reopen time is recorded, so the dead child's last ready stamp is not
+/// read as the new child's.
+pub fn on_new_session(exits: &mut HashMap<String, PaneExit>, reopened_at: &mut HashMap<String, u64>, pane: &str, now_ms: u64) {
+    exits.remove(pane);
+    reopened_at.insert(pane.to_string(), now_ms);
+}
+
 fn utc_clock(at_ms: u64) -> String {
     let s = at_ms / 1000;
     format!("{:02}:{:02}:{:02}Z", (s / 3600) % 24, (s / 60) % 60, s % 60)
@@ -292,6 +324,34 @@ mod tests {
         assert_eq!(sender_of("[pane:] x"), None);
         assert_eq!(sender_of("[pane:O; rm] x"), None);
         assert_eq!(sender_of(""), None);
+    }
+
+    /// D424 CUT, P's item 1: only the chair and the librarian are told; a lettered sender is named, never routed to,
+    /// because its mount letter and the UI's letters are crossed today (P's rings carry [pane:O]; O's carry [pane:N]).
+    #[test]
+    fn only_the_two_fixed_senders_are_told_a_lettered_one_is_named() {
+        assert_eq!(refusal_recipient("[chair:MAIN] D421c GO"), Recipient::Tell("M"));
+        assert_eq!(refusal_recipient("[librarian:LIB] collated"), Recipient::Tell("LIB"));
+        assert_eq!(refusal_recipient("[pane:O] pane P (Fable) review"), Recipient::NotTold("O"), "a lettered sender was routed to by its letter");
+        assert_eq!(refusal_recipient("[pane:N] seat O's ring"), Recipient::NotTold("N"), "the Third Place's letter was routed to");
+        assert_eq!(refusal_recipient("[keep-warm, from the chair — not the keeper] Reply with exactly: ok"), Recipient::Nobody);
+    }
+
+    /// D424 CUT, P's item 2: a ↻ child that drew the dead child's pid (reuse, once the waiter let the handle go) reads
+    /// open once its new session is in, not exited for the rest of the run. Item 5: the ↻ records the reopen time, so the
+    /// dead child's last stamp is not the new child's.
+    #[test]
+    fn a_new_session_drops_the_exit_and_records_the_reopen() {
+        let mut exits = HashMap::from([("c88002b1".to_string(), PaneExit { pid: Some(31337), code: Some(3), at_ms: 1_000 })]);
+        exits.insert("other".to_string(), PaneExit { pid: Some(5), code: None, at_ms: 1 });
+        let mut at = HashMap::new();
+        let none = HashSet::new();
+        assert_eq!(exit_gate(&exits, &none, "c88002b1", Some(31337)), ExitGate::Refuse(exits["c88002b1"]), "premise");
+        on_new_session(&mut exits, &mut at, "c88002b1", 9_000);
+        assert_eq!(exit_gate(&exits, &none, "c88002b1", Some(31337)), ExitGate::Open, "the new child with a reused pid reads exited");
+        assert_eq!(at.get("c88002b1"), Some(&9_000), "the reopen time was not recorded");
+        assert!(stamp_predates_reopen(Some(5_000), at.get("c88002b1").copied()), "the dead child's stamp counts for the new one");
+        assert!(exits.contains_key("other"), "another pane's exit was dropped");
     }
 
     /// The refusal row and the sender's note: both name the exit (code and time), neither reads DELIVERED, and the note

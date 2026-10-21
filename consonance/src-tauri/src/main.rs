@@ -9886,9 +9886,19 @@ fn pty_kill(panes: State<Panes>, sandboxes: State<PaneSandboxes>, pane: String) 
 #[tauri::command]
 fn pty_reopen(app: AppHandle, panes: State<Panes>, pane: String, cwd: String) -> Result<(), String> {
     let resolved_cwd = if cwd.trim().is_empty() { home() } else { cwd };
-    let session = spawn_claude_pane(app, pane.clone(), resolved_cwd, true, true)?;
-    insert_pane(&panes, pane, session);
+    let session = spawn_claude_pane(app.clone(), pane.clone(), resolved_cwd, true, true)?;
+    // D424 (P items 2, 5): the held messages wait for THIS child, and once it is in, the dead child's exit and its last
+    // ready stamp stop counting for the pane
+    app.state::<Inbox>().restart_wait(&pane, Instant::now());
+    insert_pane(&panes, pane.clone(), session);
+    new_session_for(&pane);
     Ok(())
+}
+
+/// D424: a new session is in for this pane (the automatic reopen or the ↻): drop its exit, record the reopen time.
+fn new_session_for(pane: &str) {
+    let now_ms = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    pane_exit::on_new_session(&mut harvest_guard::recover(pane_exits().lock()), &mut harvest_guard::recover(reopened_at().lock()), pane, now_ms);
 }
 
 /// D143: the exits this app run has seen, by pane, keyed to the child's pid (pane_exit::liveness reads it), and the
@@ -9933,7 +9943,14 @@ fn exit_gate_for(app: &AppHandle, pane: &str) -> pane_exit::ExitGate {
 /// D424: a message refused in the queue is told to its sender, read from the app's own provenance label. The note is
 /// queued like any message, so it waits for the sender's own ready signal, and it carries no sender of its own.
 fn tell_refused_sender(app: &AppHandle, pane: &str, text: &str, e: &pane_exit::PaneExit, label: &str) {
-    let Some(who) = pane_exit::sender_of(text) else { return };
+    let who = match pane_exit::refusal_recipient(text) {
+        pane_exit::Recipient::Tell(who) => who,
+        pane_exit::Recipient::NotTold(letter) => {
+            chair_audit(app, format!("REFUSAL NOT TOLD -> pane:{letter}: a lettered sender is not routed to until its mount letter maps to a pane id (the letters are crossed today, D423); the REFUSED row above, for {}, is the record", short_id(pane)));
+            return;
+        }
+        pane_exit::Recipient::Nobody => return,
+    };
     let to = match resolve_pane(&app.state::<Panes>(), &app.state::<PaneNames>(), who) {
         Ok(t) => t,
         Err(err) => {
@@ -10005,6 +10022,7 @@ fn on_pane_exit(app: &AppHandle, pane: &str, pid: Option<u32>, code: Option<u32>
             // no drain tick can read the new child open with the old clock
             app.state::<Inbox>().restart_wait(pane, Instant::now());
             insert_pane(&app.state::<Panes>(), pane.to_string(), session);
+            new_session_for(pane);
             harvest_guard::recover(reopening().lock()).remove(pane);
             chair_audit(app, format!("pane REOPENED -> {who}: resumed the same session, once, automatically"));
             let _ = app.emit("pane-reopened", pane);
@@ -23029,6 +23047,28 @@ mod pane_exit_wiring_tests {
         assert_eq!(gate_stamp(new, reopen), Stamp::Done, "the new child's own stamp was ignored");
         assert_eq!(gate_stamp(old, None), Stamp::Done, "a pane never reopened lost its stamp");
         assert_eq!(gate_stamp(r#"{"ready":false,"at":"2026-10-21T04:26:10.000Z"}"#, reopen), Stamp::Working);
+    }
+
+    /// D424 CUT, WIRED (P's items 1, 2 and 5): the sender is chosen by `refusal_recipient`, and a lettered one gets a NOT
+    /// TOLD row naming its letter, never a note; both new-session paths (the automatic reopen's Ok arm and the ↻) drop the
+    /// exit and record the reopen after the new session is in, and the ↻ restarts the held messages' wait before it.
+    #[test]
+    fn the_cut_tells_only_fixed_senders_and_both_new_sessions_clear_the_exit() {
+        let s = src();
+        let tell = body_of(&s, "fn tell_refused_sender(");
+        assert!(tell.contains("pane_exit::refusal_recipient(text)"), "the sender is not chosen by refusal_recipient");
+        let nt = tell.find("pane_exit::Recipient::NotTold(letter) =>").expect("no NotTold arm");
+        let arm = &tell[nt..tell.find("pane_exit::Recipient::Nobody => return,").expect("no Nobody arm")];
+        assert!(arm.contains("REFUSAL NOT TOLD -> pane:{letter}"), "the NOT TOLD row does not name the letter");
+        assert!(arm.trim_end().ends_with("return;\n        }"), "the NotTold arm goes on to route the note");
+        assert!(!tell.contains("sender_of("), "the old any-sender path is still there");
+        let reopen = body_of(&s, "fn pty_reopen(");
+        let at = |b: &str, n: &str| b.find(n).unwrap_or_else(|| panic!("no {n}"));
+        assert!(at(&reopen, "restart_wait(&pane, Instant::now())") < at(&reopen, "insert_pane(") && at(&reopen, "insert_pane(") < at(&reopen, "new_session_for(&pane)"),
+            "the ↻: restart the wait, insert, then clear the exit and record the reopen");
+        let exit = body_of(&s, "fn on_pane_exit(");
+        assert!(at(&exit, "insert_pane(&app.state::<Panes>(), pane.to_string(), session);") < at(&exit, "new_session_for(pane)"),
+            "the automatic reopen does not clear the exit after the new session is in");
     }
 
     /// D424 ITEM 1, WIRED: the reopen is marked under way BEFORE the exit is recorded (so the gate never refuses what
