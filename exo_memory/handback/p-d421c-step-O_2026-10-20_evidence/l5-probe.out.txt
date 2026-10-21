@@ -1,0 +1,6 @@
+flags: edge [33mfalse[39m cup [33mfalse[39m tube [33mtrue[39m
+{"channel":"c","without_valid":"yes","other_values_valid":"yes","segments_same":true}
+{"channel":"e","without_valid":"yes","other_values_valid":"yes","segments_same":true}
+{"channel":"s","without_valid":"yes","other_values_valid":"yes","segments_same":true}
+{"channel":"t","without_valid":"BAD_DOC","other_values_valid":"yes","segments_same":null}
+{"channel":"er","without_valid":"yes","other_values_valid":"yes","segments_same":true}

@@ -1,0 +1,1 @@
+{"anchors_in_file":49,"per_harness":{"test/core_chord_mutation.test.js":12,"test/core_cup_mutation.test.js":20,"test/core_jump_mutation.test.js":1,"test/core_xsec_mutation.test.js":16},"not_exactly_once":0}

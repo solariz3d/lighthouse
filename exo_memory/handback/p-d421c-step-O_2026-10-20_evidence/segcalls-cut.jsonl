@@ -1,0 +1,6 @@
+{"row":"2","caller":"pieceOffsets (C:\\Users\\nname\\Downloads\\t180-wt-o3\\src\\core\\s","calls":38,"miss_median":0,"segs":5000,"ms_median":0.283,"all_hits_again_ms":0.279,"checkDoc_ms":0.26}
+{"row":"2","caller":"segmentsOf (C:\\Users\\nname\\Downloads\\t180-wt-o3\\app\\core\\cor","calls":38,"miss_median":0,"segs":5000,"ms_median":0.292,"all_hits_again_ms":0.282,"checkDoc_ms":0.262}
+{"row":"3","caller":"pieceOffsets (C:\\Users\\nname\\Downloads\\t180-wt-o3\\src\\core\\s","calls":10,"miss_median":0,"segs":5000,"ms_median":0.311,"all_hits_again_ms":0.312,"checkDoc_ms":0.263}
+{"row":"3","caller":"segmentsOf (C:\\Users\\nname\\Downloads\\t180-wt-o3\\app\\core\\cor","calls":10,"miss_median":3,"segs":5000,"ms_median":1.415,"all_hits_again_ms":0.327,"checkDoc_ms":0.265}
+{"row":"4a","caller":"pieceOffsets (C:\\Users\\nname\\Downloads\\t180-wt-o3\\src\\core\\s","calls":18,"miss_median":0,"segs":748,"ms_median":0.058,"all_hits_again_ms":0.055,"checkDoc_ms":0.045}
+{"row":"4a","caller":"segmentsOf (C:\\Users\\nname\\Downloads\\t180-wt-o3\\app\\core\\cor","calls":18,"miss_median":0,"segs":748,"ms_median":0.064,"all_hits_again_ms":0.058,"checkDoc_ms":0.045}

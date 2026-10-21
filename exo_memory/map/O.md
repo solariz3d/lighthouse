@@ -67,3 +67,10 @@ path, which was not timed. Also found: brush() on an unfrozen document freezes i
 quiet frames 12/15 (release-frame row 4, the D407b red, passed at p95 5.5). Could be wrong that the remaining cost is the page's: inferred from node shell timings,
 not profiled in the page.
 → `exo_memory/handback/p-d421-landing-O_2026-10-20.md`
+
+### A Grab step rebuilt the pieces it lifted for nothing: the segment cache keyed a piece by its object, and no segment reads h or l
+2026-10-20, D421c part 4 — liftonly.js: grab-up/grab-side change only h/l and leave every segment identical; reusing the last segments for the same id when
+only h/l differ (inputs compared as before) cut row 2's step p50 2.36→1.23 ms and 4a's 1.83→0.26, bit-identical; d421c-o 0aa9690. Also: my 4a "6.3 ms in node"
+was a pre-C-cut tree (937f5d4: 6.76; 57b41f8: 1.83 = the page). Could be wrong if some reader of segments I did not find reads h or l through valuesAt.
+General form: an instrument that wraps a cache must keep one wrapper per cache, or it hides per-cache state and reports no change.
+→ `exo_memory/handback/p-d421c-step-O_2026-10-20.md`
