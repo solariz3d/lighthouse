@@ -61,3 +61,9 @@ differently (the window close's freedom grows with the turns inside it). Also: t
 `shellrun.js` both slots, docs/lifted sha256 equal on all four rows; d421-o 937f5d4; 7/7 cache mutants, harnesses 178/178/0. Could be wrong for the browser preview
 path, which was not timed. Also found: brush() on an unfrozen document freezes its knots arrays in place (so it did at 969ecac).
 → `exo_memory/handback/p-d421-shellcut-O_2026-10-20.md`
+
+### local-0.4.11 lands D421 green except three sculpt-frame p95 rows, which miss 6.0 ms even in a quiet window (8.3–12.3 ms) though the shell step alone is now 2–6 ms
+2026-10-20, D421 landing — 57b41f8 (ea54ac3 + d421-b, -a, b-c, -e); full suite 3,390 / 5 fail, all timing rows under load; harnesses 596/596/0; cargo 44/0;
+quiet frames 12/15 (release-frame row 4, the D407b red, passed at p95 5.5). Could be wrong that the remaining cost is the page's: inferred from node shell timings,
+not profiled in the page.
+→ `exo_memory/handback/p-d421-landing-O_2026-10-20.md`

@@ -1,0 +1,10 @@
+app/test/core-xsec.test.js
+test/core_cup.test.js
+test/core_cup_export.test.js
+test/core_cup_fixtures.test.js
+test/core_cup_readers.test.js
+test/core_cup_seam.test.js
+test/core_tube_from_cup.test.js
+test/core_xsec.test.js
+test/core_xsec_math.test.js
+test/validate_xsec.test.js

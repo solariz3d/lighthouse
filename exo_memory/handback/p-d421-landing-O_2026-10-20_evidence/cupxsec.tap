@@ -1,0 +1,1024 @@
+TAP version 13
+# Subtest: xsec extendOptions: each field is its channel target, in the seal's units
+ok 1 - xsec extendOptions: each field is its channel target, in the seal's units
+  ---
+  duration_ms: 0.9484
+  type: 'test'
+  ...
+# Subtest: xsec extendOptions: nothing is clamped; the core's guards refuse by name (E2 KE2-2)
+ok 2 - xsec extendOptions: nothing is clamped; the core's guards refuse by name (E2 KE2-2)
+  ---
+  duration_ms: 0.6511
+  type: 'test'
+  ...
+# Subtest: xsec extendOptions: bank winds past ±180 (the spiral, S1 iv)
+ok 3 - xsec extendOptions: bank winds past ±180 (the spiral, S1 iv)
+  ---
+  duration_ms: 0.1551
+  type: 'test'
+  ...
+# Subtest: xsec extendOptions: the new fields take the "at start" box like the others
+ok 4 - xsec extendOptions: the new fields take the "at start" box like the others
+  ---
+  duration_ms: 0.1915
+  type: 'test'
+  ...
+# Subtest: xsec headState (A's core): a non-tube head shows tube sweep 0 ("none"); an edge head and a tube head show the document's values
+ok 5 - xsec headState (A's core): a non-tube head shows tube sweep 0 ("none"); an edge head and a tube head show the document's values
+  ---
+  duration_ms: 57.3722
+  type: 'test'
+  ...
+# Subtest: xsec panel: the three fields are on the panel and show the head; left as shown they send nothing
+ok 6 - xsec panel: the three fields are on the panel and show the head; left as shown they send nothing
+  ---
+  duration_ms: 39.6021
+  type: 'test'
+  ...
+# Subtest: xsec panel: a changed field is a target, and its cell shows the DOCUMENT, not the typed value
+ok 7 - xsec panel: a changed field is a target, and its cell shows the DOCUMENT, not the typed value
+  ---
+  duration_ms: 13.4501
+  type: 'test'
+  ...
+# Subtest: xsec panel: the edge angle and the edge start each redraw the readout on their own, with no other field typed after them
+ok 8 - xsec panel: the edge angle and the edge start each redraw the readout on their own, with no other field typed after them
+  ---
+  duration_ms: 6.997
+  type: 'test'
+  ...
+# Subtest: xsec panel: after Extend the fields read back what the document holds
+ok 9 - xsec panel: after Extend the fields read back what the document holds
+  ---
+  duration_ms: 6.6305
+  type: 'test'
+  ...
+# Subtest: xsec panel (A's core): each cross-section cell is the core's own readout of the candidate
+ok 10 - xsec panel (A's core): each cross-section cell is the core's own readout of the candidate
+  ---
+  duration_ms: 76.9677
+  type: 'test'
+  ...
+# Subtest: xsec panel: a core that reports no cross-section readout shows — in those cells
+ok 11 - xsec panel: a core that reports no cross-section readout shows — in those cells
+  ---
+  duration_ms: 2.8236
+  type: 'test'
+  ...
+# Subtest: xsec panel: a core refusal is shown by its name (BAD_TUBE, BAD_EDGE: A's contract)
+ok 12 - xsec panel: a core refusal is shown by its name (BAD_TUBE, BAD_EDGE: A's contract)
+  ---
+  duration_ms: 18.0989
+  type: 'test'
+  ...
+# Subtest: xsec panel: a piece is a cup OR a tube — changing one puts the other back and disables it
+ok 13 - xsec panel: a piece is a cup OR a tube — changing one puts the other back and disables it
+  ---
+  duration_ms: 5.3972
+  type: 'test'
+  ...
+# Subtest: xsec panel: a cup and a tube sent together anyway are refused by name (BAD_TARGET)
+ok 14 - xsec panel: a cup and a tube sent together anyway are refused by name (BAD_TARGET)
+  ---
+  duration_ms: 0.6422
+  type: 'test'
+  ...
+# Subtest: xsec panel: a refusal the REAL core makes on Extend is shown in the panel with its name
+ok 15 - xsec panel: a refusal the REAL core makes on Extend is shown in the panel with its name
+  ---
+  duration_ms: 1.9978
+  type: 'test'
+  ...
+# Subtest: xsec panel: the bank field takes any number and keeps it within one turn, its sign kept: 360 is 0 and -540 is -180 (D259)
+ok 16 - xsec panel: the bank field takes any number and keeps it within one turn, its sign kept: 360 is 0 and -540 is -180 (D259)
+  ---
+  duration_ms: 13.3694
+  type: 'test'
+  ...
+# Subtest: xsec head marker: the mast follows the road's U, right side up when inverted
+ok 17 - xsec head marker: the mast follows the road's U, right side up when inverted
+  ---
+  duration_ms: 1.1048
+  type: 'test'
+  ...
+# Subtest: xsec head marker: inside a closed tube the marker keeps to the room it has
+ok 18 - xsec head marker: inside a closed tube the marker keeps to the room it has
+  ---
+  duration_ms: 0.1781
+  type: 'test'
+  ...
+# Subtest: xsec head marker: the clearance of a closed tube is 0.9 of its roof and of its reach
+ok 19 - xsec head marker: the clearance of a closed tube is 0.9 of its roof and of its reach
+  ---
+  duration_ms: 1.7056
+  type: 'test'
+  ...
+# Subtest: xsec head marker: the preview hands the closed tube's room to the marker it draws
+ok 20 - xsec head marker: the preview hands the closed tube's room to the marker it draws
+  ---
+  duration_ms: 55.0106
+  type: 'test'
+  ...
+# Subtest: xsec validation words: the tube-too-narrow and roll-rate reds read in plain words, the id in the tooltip
+ok 21 - xsec validation words: the tube-too-narrow and roll-rate reds read in plain words, the id in the tooltip
+  ---
+  duration_ms: 0.3639
+  type: 'test'
+  ...
+# Subtest: xsec the panel loads in the webview loader with no node built-in (D186)
+ok 22 - xsec the panel loads in the webview loader with no node built-in (D186)
+  ---
+  duration_ms: 15.4591
+  type: 'test'
+  ...
+# Subtest: xsec panel: the left and right edge fields take a negative number, with no min, and Extend places it (D406)
+ok 23 - xsec panel: the left and right edge fields take a negative number, with no min, and Extend places it (D406)
+  ---
+  duration_ms: 98.1566
+  type: 'test'
+  ...
+# Subtest: row 1a: a cup profile has edge ψ = c on both sides, every family, width and c, and never less than the wall before it (ψ non-decreasing outward)
+ok 24 - row 1a: a cup profile has edge ψ = c on both sides, every family, width and c, and never less than the wall before it (ψ non-decreasing outward)
+  ---
+  duration_ms: 2.0274
+  type: 'test'
+  ...
+# Subtest: row 2 (i): the walls do not meet at c = 150: each tip stays off the centreline by at least 5% of the half-width, on every family and width
+ok 25 - row 2 (i): the walls do not meet at c = 150: each tip stays off the centreline by at least 5% of the half-width, on every family and width
+  ---
+  duration_ms: 0.8439
+  type: 'test'
+  ...
+# Subtest: row 1a: a cup piece's road carries the cup profile at its c: the r cap does NOT apply (bowl 12 m at c = 90 is 90°, not the capped edge)
+ok 26 - row 1a: a cup piece's road carries the cup profile at its c: the r cap does NOT apply (bowl 12 m at c = 90 is 90°, not the capped edge)
+  ---
+  duration_ms: 6.0798
+  type: 'test'
+  ...
+# Subtest: row 1b (default): a bowl cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves)
+ok 27 - row 1b (default): a bowl cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves)
+  ---
+  duration_ms: 507.5468
+  type: 'test'
+  ...
+# Subtest: row 1b (default): a bowl cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves)
+ok 28 - row 1b (default): a bowl cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves)
+  ---
+  duration_ms: 362.3019
+  type: 'test'
+  ...
+# Subtest: row 1b (default): a half-pipe cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves)
+ok 29 - row 1b (default): a half-pipe cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves)
+  ---
+  duration_ms: 320.5489
+  type: 'test'
+  ...
+# Subtest: row 1b (default): a half-pipe cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves)
+ok 30 - row 1b (default): a half-pipe cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves)
+  ---
+  duration_ms: 332.3147
+  type: 'test'
+  ...
+# Subtest: row 1b (cupLocal): a bowl cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves)
+ok 31 - row 1b (cupLocal): a bowl cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves)
+  ---
+  duration_ms: 214.3187
+  type: 'test'
+  ...
+# Subtest: row 1b (cupLocal): a bowl cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves)
+ok 32 - row 1b (cupLocal): a bowl cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves)
+  ---
+  duration_ms: 239.7797
+  type: 'test'
+  ...
+# Subtest: row 1b (cupLocal): a half-pipe cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves)
+ok 33 - row 1b (cupLocal): a half-pipe cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves)
+  ---
+  duration_ms: 217.8035
+  type: 'test'
+  ...
+# Subtest: row 1b (cupLocal): a half-pipe cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves)
+ok 34 - row 1b (cupLocal): a half-pipe cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves)
+  ---
+  duration_ms: 254.4034
+  type: 'test'
+  ...
+# Subtest: cupLocal (the option): a seam zip where c changes and NONE where it is held: the last 100 m of a 400 m piece has none (the default scheme has none anywhere inside the piece)
+ok 35 - cupLocal (the option): a seam zip where c changes and NONE where it is held: the last 100 m of a 400 m piece has none (the default scheme has none anywhere inside the piece)
+  ---
+  duration_ms: 229.612
+  type: 'test'
+  ...
+# Subtest: the cupLocal option keeps segment.profile LOCAL (its edge is c at the end of the segment within 0.05 deg), and the default does NOT (its profile is the widest of the run, the target of the blend): the readers evaluate the blend (test/core_cup_readers.test.js)
+ok 36 - the cupLocal option keeps segment.profile LOCAL (its edge is c at the end of the segment within 0.05 deg), and the default does NOT (its profile is the widest of the run, the target of the blend): the readers evaluate the blend (test/core_cup_readers.test.js)
+  ---
+  duration_ms: 3.3094
+  type: 'test'
+  ...
+# Subtest: row 1b: a bowl cup ramp to 90° over 100 m never changes faster than c between rows, and no row is outside c's range
+ok 37 - row 1b: a bowl cup ramp to 90° over 100 m never changes faster than c between rows, and no row is outside c's range
+  ---
+  duration_ms: 605.9669
+  type: 'test'
+  ...
+# Subtest: row 1b: a half-pipe cup ramp to 90° over 100 m never changes faster than c between rows, and no row is outside c's range
+ok 38 - row 1b: a half-pipe cup ramp to 90° over 100 m never changes faster than c between rows, and no row is outside c's range
+  ---
+  duration_ms: 650.6941
+  type: 'test'
+  ...
+# Subtest: R1 (B score): a bowl cup ramp to 90 deg over 40 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme)
+ok 39 - R1 (B score): a bowl cup ramp to 90 deg over 40 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme)
+  ---
+  duration_ms: 61.4778
+  type: 'test'
+  ...
+# Subtest: R1 (B score): a bowl cup ramp to 90 deg over 40 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme)
+ok 40 - R1 (B score): a bowl cup ramp to 90 deg over 40 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme)
+  ---
+  duration_ms: 312.6669
+  type: 'test'
+  ...
+# Subtest: R1 (B score): a bowl cup ramp to 150 deg over 40 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme)
+ok 41 - R1 (B score): a bowl cup ramp to 150 deg over 40 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme)
+  ---
+  duration_ms: 78.1529
+  type: 'test'
+  ...
+# Subtest: R1 (B score): a bowl cup ramp to 150 deg over 40 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme)
+ok 42 - R1 (B score): a bowl cup ramp to 150 deg over 40 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme)
+  ---
+  duration_ms: 352.941
+  type: 'test'
+  ...
+# Subtest: R1 (B score): a half-pipe cup ramp to 150 deg over 40 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme)
+ok 43 - R1 (B score): a half-pipe cup ramp to 150 deg over 40 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme)
+  ---
+  duration_ms: 80.2735
+  type: 'test'
+  ...
+# Subtest: R1 (B score): a half-pipe cup ramp to 150 deg over 40 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme)
+ok 44 - R1 (B score): a half-pipe cup ramp to 150 deg over 40 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme)
+  ---
+  duration_ms: 378.0176
+  type: 'test'
+  ...
+# Subtest: R1 (B score): a bowl cup ramp to 90 deg over 100 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme)
+ok 45 - R1 (B score): a bowl cup ramp to 90 deg over 100 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme)
+  ---
+  duration_ms: 158.6101
+  type: 'test'
+  ...
+# Subtest: R1 (B score): a bowl cup ramp to 90 deg over 100 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme)
+ok 46 - R1 (B score): a bowl cup ramp to 90 deg over 100 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme)
+  ---
+  duration_ms: 366.5504
+  type: 'test'
+  ...
+# Subtest: R1 (B score): a half-pipe cup ramp to 150 deg over 100 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme)
+ok 47 - R1 (B score): a half-pipe cup ramp to 150 deg over 100 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme)
+  ---
+  duration_ms: 189.2204
+  type: 'test'
+  ...
+# Subtest: R1 (B score): a half-pipe cup ramp to 150 deg over 100 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme)
+ok 48 - R1 (B score): a half-pipe cup ramp to 150 deg over 100 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme)
+  ---
+  duration_ms: 491.4785
+  type: 'test'
+  ...
+# Subtest: row 1b PLANTED K1b-1: today's adapter (one profile per 2 m, no blend) on the bowl ramp to 90° over 40 m is CAUGHT by the same check (a step of about 5.6°, seams inside)
+ok 49 - row 1b PLANTED K1b-1: today's adapter (one profile per 2 m, no blend) on the bowl ramp to 90° over 40 m is CAUGHT by the same check (a step of about 5.6°, seams inside)
+  ---
+  duration_ms: 116.8834
+  type: 'test'
+  ...
+# Subtest: row 1b (default): a cup that also changes width (a chord per segment) still follows c and the width along the road (a seam zip per segment is the stated cost)
+ok 50 - row 1b (default): a cup that also changes width (a chord per segment) still follows c and the width along the road (a seam zip per segment is the stated cost)
+  ---
+  duration_ms: 297.0455
+  type: 'test'
+  ...
+# Subtest: row 1b (cupLocal): a cup that also changes width (a chord per segment) still follows c and the width along the road (a seam zip per segment is the stated cost)
+ok 51 - row 1b (cupLocal): a cup that also changes width (a chord per segment) still follows c and the width along the road (a seam zip per segment is the stated cost)
+  ---
+  duration_ms: 296.6361
+  type: 'test'
+  ...
+# Subtest: row 2 (ii): a document with a cup control point outside [0, 150] is refused by name, in checkDoc and in parse
+ok 52 - row 2 (ii): a document with a cup control point outside [0, 150] is refused by name, in checkDoc and in parse
+  ---
+  duration_ms: 2.2789
+  type: 'test'
+  ...
+# Subtest: row 2 (iii): extend refuses a typed cup outside [0, 150] by name, and the fit's ringing never leaves the document past 150 (30 m piece, 10 m transition: 174.65° before the guard)
+ok 53 - row 2 (iii): extend refuses a typed cup outside [0, 150] by name, and the fit's ringing never leaves the document past 150 (30 m piece, 10 m transition: 174.65° before the guard)
+  ---
+  duration_ms: 3.0257
+  type: 'test'
+  ...
+# Subtest: row 2 (iii): a cup that reaches a limit (150 or 0) ends flat, so the piece after it continues C1 inside [0, 150], and a lap held at 150 closes (a solver's float noise on a control point at the limit is not a violation)
+ok 54 - row 2 (iii): a cup that reaches a limit (150 or 0) ends flat, so the piece after it continues C1 inside [0, 150], and a lap held at 150 closes (a solver's float noise on a control point at the limit is not a violation)
+  ---
+  duration_ms: 122.4558
+  type: 'test'
+  ...
+# Subtest: row 2 (iv): a channel curve stays within the range of its control points (the convex hull, ref 03 §1b), for a cup piece with knots
+ok 55 - row 2 (iv): a channel curve stays within the range of its control points (the convex hull, ref 03 §1b), for a cup piece with knots
+  ---
+  duration_ms: 3.3364
+  type: 'test'
+  ...
+# Subtest: row 2 PLANTED K2-1: a cup of 165° on a bowl would have its walls cross: its tip is past the centreline, and the document guard refuses 165 (so the guard, not the export, is what stops it)
+ok 56 - row 2 PLANTED K2-1: a cup of 165° on a bowl would have its walls cross: its tip is past the centreline, and the document guard refuses 165 (so the guard, not the export, is what stops it)
+  ---
+  duration_ms: 0.4305
+  type: 'test'
+  ...
+# Subtest: row 2 (iii): a cup brush that would push c past 150 (or below 0) is refused by name, and one inside the range works
+ok 57 - row 2 (iii): a cup brush that would push c past 150 (or below 0) is refused by name, and one inside the range works
+  ---
+  duration_ms: 3.5908
+  type: 'test'
+  ...
+# Subtest: row 5e: a cup brush that reaches a LEGACY piece is refused by name; on a cup piece it leaves the road far from the window bit for bit
+ok 58 - row 5e: a cup brush that reaches a LEGACY piece is refused by name; on a cup piece it leaves the road far from the window bit for bit
+  ---
+  duration_ms: 7.1196
+  type: 'test'
+  ...
+# Subtest: row 3 (i): c is a joint channel: a cup step of 5° (or a kink of the slope) between two cup pieces is refused JOINT (planted K3-1: c left out of the joint test)
+ok 59 - row 3 (i): c is a joint channel: a cup step of 5° (or a kink of the slope) between two cup pieces is refused JOINT (planted K3-1: c left out of the joint test)
+  ---
+  duration_ms: 1.0781
+  type: 'test'
+  ...
+# Subtest: row 3 (ii): c is CARRIED through a flight, like bank, width and rise (planted K3-2: reset like the heading rate)
+ok 60 - row 3 (ii): c is CARRIED through a flight, like bank, width and rise (planted K3-2: reset like the heading rate)
+  ---
+  duration_ms: 2.1176
+  type: 'test'
+  ...
+# Subtest: row 3 (iii): a closed lap of cup pieces closes with c(L) = c(0) and c'(L) = c'(0) (planted K3-3: c left out of the seam rows)
+ok 61 - row 3 (iii): a closed lap of cup pieces closes with c(L) = c(0) and c'(L) = c'(0) (planted K3-3: c left out of the seam rows)
+  ---
+  duration_ms: 113.3382
+  type: 'test'
+  ...
+# Subtest: row 3 (iv): legacy → cup: a cup that follows a legacy piece starts at the edge that piece RENDERS (11.679° on a 12 m bowl, not the nominal 15.5°); a cup that starts at the nominal edge is refused JOINT (planted K3-4)
+ok 62 - row 3 (iv): legacy → cup: a cup that follows a legacy piece starts at the edge that piece RENDERS (11.679° on a 12 m bowl, not the nominal 15.5°); a cup that starts at the nominal edge is refused JOINT (planted K3-4)
+  ---
+  duration_ms: 1.6551
+  type: 'test'
+  ...
+# Subtest: R2 / row 3 (iv): a bowl road 12 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before)
+ok 63 - R2 / row 3 (iv): a bowl road 12 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before)
+  ---
+  duration_ms: 166.2926
+  type: 'test'
+  ...
+# Subtest: R2 / row 3 (iv): a half-pipe road 24 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before)
+ok 64 - R2 / row 3 (iv): a half-pipe road 24 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before)
+  ---
+  duration_ms: 187.1683
+  type: 'test'
+  ...
+# Subtest: R2 / row 3 (iv): a bowl road 18 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before)
+ok 65 - R2 / row 3 (iv): a bowl road 18 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before)
+  ---
+  duration_ms: 149.1732
+  type: 'test'
+  ...
+# Subtest: R2 / row 3 (iv): a flat road 20 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before)
+ok 66 - R2 / row 3 (iv): a flat road 20 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before)
+  ---
+  duration_ms: 164.0979
+  type: 'test'
+  ...
+# Subtest: R2 / row 3 (iv): a bowl road 31 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before)
+ok 67 - R2 / row 3 (iv): a bowl road 31 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before)
+  ---
+  duration_ms: 156.7262
+  type: 'test'
+  ...
+# Subtest: R2 / row 3 (iv): a half-pipe road 31.5 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before)
+ok 68 - R2 / row 3 (iv): a half-pipe road 31.5 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before)
+  ---
+  duration_ms: 158.6867
+  type: 'test'
+  ...
+# Subtest: R2 / row 3 (iv): a flat road 45 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before)
+ok 69 - R2 / row 3 (iv): a flat road 45 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before)
+  ---
+  duration_ms: 167.1425
+  type: 'test'
+  ...
+# Subtest: R2: past the joint's morph the road is the pure cup shape (ψ at every quarter is c·Fᵢ/F_edge within 0.01°), and the edge stays c through it
+ok 70 - R2: past the joint's morph the road is the pure cup shape (ψ at every quarter is c·Fᵢ/F_edge within 0.01°), and the edge stays c through it
+  ---
+  duration_ms: 2.3605
+  type: 'test'
+  ...
+# Subtest: row 5 (amended D196): a /2 file loads as LEGACY pieces (no cup flag, no c in the canonical text), a constant segment renders through profileAt with no blend and no new key, a changing one is a chord, and it saves as /3
+ok 71 - row 5 (amended D196): a /2 file loads as LEGACY pieces (no cup flag, no c in the canonical text), a constant segment renders through profileAt with no blend and no new key, a changing one is a chord, and it saves as /3
+  ---
+  duration_ms: 2.8925
+  type: 'test'
+  ...
+# Subtest: row 5c / 5d: extending a legacy piece with NO cup typed makes a legacy piece (nothing changes for a user who never types one); with a cup target it starts at the rendered edge
+ok 72 - row 5c / 5d: extending a legacy piece with NO cup typed makes a legacy piece (nothing changes for a user who never types one); with a cup target it starts at the rendered edge
+  ---
+  duration_ms: 1.1232
+  type: 'test'
+  ...
+# Subtest: row 5b: a cup document round-trips through /3 text (serialize, parse, serialize)
+ok 73 - row 5b: a cup document round-trips through /3 text (serialize, parse, serialize)
+  ---
+  duration_ms: 3.6379
+  type: 'test'
+  ...
+# Subtest: row 6: bank 30° + cup 60° at a level straight station: the left edge's surface is at 90° to gravity, the right at 30°, the centre at 30°, bankG 30° (and the mirror for −30°)
+ok 74 - row 6: bank 30° + cup 60° at a level straight station: the left edge's surface is at 90° to gravity, the right at 30°, the centre at 30°, bankG 30° (and the mirror for −30°)
+  ---
+  duration_ms: 5.6695
+  type: 'test'
+  ...
+# Subtest: row 6: typing a cup changes none of turn, climb, bank or pitch in the readout, and not one number of the centreline (planted K6-3: a cup that feeds the bank)
+ok 75 - row 6: typing a cup changes none of turn, climb, bank or pitch in the readout, and not one number of the centreline (planted K6-3: a cup that feeds the bank)
+  ---
+  duration_ms: 6.6142
+  type: 'test'
+  ...
+# Subtest: row 7: cupFromDeg / cupToDeg are c(0) and c(L) of a cup piece, the rendered edge of a legacy piece (profileAt at each end), and carried through a flight; the ghost equals the placed piece
+ok 76 - row 7: cupFromDeg / cupToDeg are c(0) and c(L) of a cup piece, the rendered edge of a legacy piece (profileAt at each end), and carried through a flight; the ghost equals the placed piece
+  ---
+  duration_ms: 1.4192
+  type: 'test'
+  ...
+# Subtest: row 7 PLANTED K7-1: cupToDeg is the DOCUMENT's c, not the typed target: a brush near the piece's end moves it
+ok 77 - row 7 PLANTED K7-1: cupToDeg is the DOCUMENT's c, not the typed target: a brush near the piece's end moves it
+  ---
+  duration_ms: 1.8856
+  type: 'test'
+  ...
+# Subtest: knot insertion keeps a cup piece's c curve and its cup flag (Boehm on the c channel)
+ok 78 - knot insertion keeps a cup piece's c curve and its cup flag (Boehm on the c channel)
+  ---
+  duration_ms: 3.0943
+  type: 'test'
+  ...
+# Subtest: row 4 (i): a closed bowl lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+ok 79 - row 4 (i): a closed bowl lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+  ---
+  duration_ms: 3541.5228
+  type: 'test'
+  ...
+# Subtest: row 4 (i): a closed bowl lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+ok 80 - row 4 (i): a closed bowl lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+  ---
+  duration_ms: 4605.6434
+  type: 'test'
+  ...
+# Subtest: row 4 (i): a closed half-pipe lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+ok 81 - row 4 (i): a closed half-pipe lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+  ---
+  duration_ms: 3630.6388
+  type: 'test'
+  ...
+# Subtest: row 4 (i): a closed half-pipe lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+ok 82 - row 4 (i): a closed half-pipe lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+  ---
+  duration_ms: 4489.6882
+  type: 'test'
+  ...
+# Subtest: row 4 (i): a closed flat lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+ok 83 - row 4 (i): a closed flat lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+  ---
+  duration_ms: 3353.7506
+  type: 'test'
+  ...
+# Subtest: row 4 (i): a closed flat lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+ok 84 - row 4 (i): a closed flat lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+  ---
+  duration_ms: 4026.7719
+  type: 'test'
+  ...
+# Subtest: row 4 (ii): the same bowl lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore)
+ok 85 - row 4 (ii): the same bowl lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore)
+  ---
+  duration_ms: 2842.3041
+  type: 'test'
+  ...
+# Subtest: row 4 (ii): the same half-pipe lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore)
+ok 86 - row 4 (ii): the same half-pipe lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore)
+  ---
+  duration_ms: 2917.5096
+  type: 'test'
+  ...
+# Subtest: row 4 (ii): the same flat lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore)
+ok 87 - row 4 (ii): the same flat lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore)
+  ---
+  duration_ms: 2800.0775
+  type: 'test'
+  ...
+# Subtest: row 4 (iii): a start straight cupped to 150° (a 4.45 m floor: not two columns, one slot) exports with a single-column grid and says so, not a crash
+ok 88 - row 4 (iii): a start straight cupped to 150° (a 4.45 m floor: not two columns, one slot) exports with a single-column grid and says so, not a crash
+  ---
+  duration_ms: 4523.7684
+  type: 'test'
+  ...
+# Subtest: row 4 / row 2: a bowl cup of 165° (walls crossed) is refused at the DOCUMENT by name, so the export's incidental raygap red is never what stops it
+ok 89 - row 4 / row 2: a bowl cup of 165° (walls crossed) is refused at the DOCUMENT by name, so the export's incidental raygap red is never what stops it
+  ---
+  duration_ms: 0.6425
+  type: 'test'
+  ...
+# Subtest: the fixture kit is the seal's: fixtures.js and manifest.json carry the sha256 the seal registered (and the D196 amendment record is the one registered)
+ok 90 - the fixture kit is the seal's: fixtures.js and manifest.json carry the sha256 the seal registered (and the D196 amendment record is the one registered)
+  ---
+  duration_ms: 6.7162
+  type: 'test'
+  ...
+# Subtest: row 5a (amended D196, D222, D258): against the SEAL's manifest (c964c2d) F4, F6, F8 differ in segs and mesh only, F1, F2 in kn5 only, F7 in segs, path and mesh, and the three others are identical
+ok 91 - row 5a (amended D196, D222, D258): against the SEAL's manifest (c964c2d) F4, F6, F8 differ in segs and mesh only, F1, F2 in kn5 only, F7 in segs, path and mesh, and the three others are identical
+  ---
+  duration_ms: 3333.87
+  type: 'test'
+  ...
+# Subtest: row 5a (amended D196): against the D196 baseline every fixture renders identically: "0 of 9 differ"
+ok 92 - row 5a (amended D196): against the D196 baseline every fixture renders identically: "0 of 9 differ"
+  ---
+  duration_ms: 2477.1464
+  type: 'test'
+  ...
+# Subtest: row 5b (D225, /4): each fixture parsed, saved as /4 text and read again renders to the same digests (the round trip), its text is /4 and carries no edge or tube channel (seal E3c)
+ok 93 - row 5b (D225, /4): each fixture parsed, saved as /4 text and read again renders to the same digests (the round trip), its text is /4 and carries no edge or tube channel (seal E3c)
+  ---
+  duration_ms: 2560.3268
+  type: 'test'
+  ...
+# Subtest: row 5 CONTROL: the check has teeth: a manifest with one digest altered reads "1 of 9 differ", and a changed fixture file is reported as changed
+ok 94 - row 5 CONTROL: the check has teeth: a manifest with one digest altered reads "1 of 9 differ", and a changed fixture file is reported as changed
+  ---
+  duration_ms: 4645.7503
+  type: 'test'
+  ...
+# Subtest: sector gates amendment record: only F1 F2 (the closed laps) changed, only their kn5, and the measure says the same triangles and meshes with exactly AC_TIME_1 and AC_TIME_2 added
+ok 95 - sector gates amendment record: only F1 F2 (the closed laps) changed, only their kn5, and the measure says the same triangles and meshes with exactly AC_TIME_1 and AC_TIME_2 added
+  ---
+  duration_ms: 0.3746
+  type: 'test'
+  ...
+# Subtest: mesh cap amendment record: only the F2 kn5 changed, every other digest is the one in the D279 record, and the measure says the same triangles and markers in one more chunk, none over 32,768 vertices
+ok 96 - mesh cap amendment record: only the F2 kn5 changed, every other digest is the one in the D279 record, and the measure says the same triangles and markers in one more chunk, none over 32,768 vertices
+  ---
+  duration_ms: 0.2036
+  type: 'test'
+  ...
+# Subtest: D279 amendment record: F1 F2 keep every digest but the kn5, and the measure says only their pit boxes changed, in material and coordinates
+ok 97 - D279 amendment record: F1 F2 keep every digest but the kn5, and the measure says only their pit boxes changed, in material and coordinates
+  ---
+  duration_ms: 0.1299
+  type: 'test'
+  ...
+# Subtest: D260 amendment record: F1 F2 keep their segs, path and mesh digests, only the kn5 moved, and its triangle set and markers are the same in far fewer meshes
+ok 98 - D260 amendment record: F1 F2 keep their segs, path and mesh digests, only the kn5 moved, and its triangle set and markers are the same in far fewer meshes
+  ---
+  duration_ms: 0.1338
+  type: 'test'
+  ...
+# Subtest: D230 amendment record: F1 F2 keep their segs, path and mesh digests and their ROAD nodes byte for byte, only the kn5 moved (the skin nodes are added), and the measure says so
+ok 99 - D230 amendment record: F1 F2 keep their segs, path and mesh digests and their ROAD nodes byte for byte, only the kn5 moved (the skin nodes are added), and the measure says so
+  ---
+  duration_ms: 0.1902
+  type: 'test'
+  ...
+# Subtest: D222 amendment record: F1 F2 keep their segs, path and mesh digests, only the kn5 moved, and the measure shows the AC-ready export (unique names, world space, a diffuse, no sliver seam)
+ok 100 - D222 amendment record: F1 F2 keep their segs, path and mesh digests, only the kn5 moved, and the measure shows the AC-ready export (unique names, world space, a diffuse, no sliver seam)
+  ---
+  duration_ms: 0.117
+  type: 'test'
+  ...
+# Subtest: D196 amendment record: every changed fixture keeps its path digest, its segs and mesh digests moved, and the measure shows the steps gone
+ok 101 - D196 amendment record: every changed fixture keeps its path digest, its segs and mesh digests moved, and the measure shows the steps gone
+  ---
+  duration_ms: 0.1054
+  type: 'test'
+  ...
+# Subtest: atSegment: the profile at d = 0 is the blend's `from`, at the segment's end the mix at its end weight, and a segment with no blend is its own profile
+ok 102 - atSegment: the profile at d = 0 is the blend's `from`, at the segment's end the mix at its end weight, and a segment with no blend is its own profile
+  ---
+  duration_ms: 19.6261
+  type: 'test'
+  ...
+# Subtest: a word document font-transition blend is NOT evaluated by the readers, only a cup: readAt gives the own profile for a blended segment without the cup mark (the paused piece builder validation, layout and export read as before)
+ok 103 - a word document font-transition blend is NOT evaluated by the readers, only a cup: readAt gives the own profile for a blended segment without the cup mark (the paused piece builder validation, layout and export read as before)
+  ---
+  duration_ms: 0.2391
+  type: 'test'
+  ...
+# Subtest: atSegment lands on the document's c along the ramp: the edge of the cross-section at a station is c(s) within 0.05° (a reader that took segment.profile would read the run's widest, 90°, at the start)
+ok 104 - atSegment lands on the document's c along the ramp: the edge of the cross-section at a station is c(s) within 0.05° (a reader that took segment.profile would read the run's widest, 90°, at the start)
+  ---
+  duration_ms: 16.9477
+  type: 'test'
+  ...
+# Subtest: marker layout: a straight running into a cupped turn keeps the width of the straight (the grid is not refused as "too narrow" by the turn's 150° target)
+ok 105 - marker layout: a straight running into a cupped turn keeps the width of the straight (the grid is not refused as "too narrow" by the turn's 150° target)
+  ---
+  duration_ms: 18.8151
+  type: 'test'
+  ...
+# Subtest: validation: with csp off the first steep-without-raycast red is where the wall PASSES 50° (c(s) = 50, about 47 m into a 100 m ramp), not at the ramp's start (the run's widest, 90°)
+ok 106 - validation: with csp off the first steep-without-raycast red is where the wall PASSES 50° (c(s) = 50, about 47 m into a 100 m ramp), not at the ramp's start (the run's widest, 90°)
+  ---
+  duration_ms: 59.7016
+  type: 'test'
+  ...
+# Subtest: export sections: the section at a station is the road as drawn there (its maxPsi is c(s)), not the run's widest
+ok 107 - export sections: the section at a station is the road as drawn there (its maxPsi is c(s)), not the run's widest
+  ---
+  duration_ms: 61.5857
+  type: 'test'
+  ...
+# Subtest: water: the profile under a sample is the road as drawn there (the edge is c(s)), and a segment without a blend still gives its own profile object
+ok 108 - water: the profile under a sample is the road as drawn there (the edge is c(s)), and a segment without a blend still gives its own profile object
+  ---
+  duration_ms: 6.5025
+  type: 'test'
+  ...
+# Subtest: camera: the width at the head is the last segment's cross-section at the head (a cup brushed down at its end reads the lowered c, not the run's widest)
+ok 109 - camera: the width at the head is the last segment's cross-section at the head (a cup brushed down at its end reads the lowered c, not the run's widest)
+  ---
+  duration_ms: 13.9801
+  type: 'test'
+  ...
+# Subtest: R3 (a) X3: a bowl 16 m lap with the cup at 90 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24)
+ok 110 - R3 (a) X3: a bowl 16 m lap with the cup at 90 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24)
+  ---
+  duration_ms: 1673.2943
+  type: 'test'
+  ...
+# Subtest: R3 (a) X3: a bowl 16 m lap with the cup at 150 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24)
+ok 111 - R3 (a) X3: a bowl 16 m lap with the cup at 150 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24)
+  ---
+  duration_ms: 1018.5994
+  type: 'test'
+  ...
+# Subtest: R3 (a) X3: a half-pipe 24 m lap with the cup at 90 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24)
+ok 112 - R3 (a) X3: a half-pipe 24 m lap with the cup at 90 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24)
+  ---
+  duration_ms: 1561.5062
+  type: 'test'
+  ...
+# Subtest: R3 (a) X3: a half-pipe 24 m lap with the cup at 150 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24)
+ok 113 - R3 (a) X3: a half-pipe 24 m lap with the cup at 150 returned exactly closes with the seam within 1 mm on the whole curve (B: 23.2 mm bowl 16, 148.2 mm half-pipe 24)
+  ---
+  duration_ms: 1173.6883
+  type: 'test'
+  ...
+# Subtest: R3 (a) X2: a 20 m closing straight after the cup returns (the fit's ringing left 0.02-0.03°) closes with the seam within 1 mm (B: 2.3-5.3 mm)
+ok 114 - R3 (a) X2: a 20 m closing straight after the cup returns (the fit's ringing left 0.02-0.03°) closes with the seam within 1 mm (B: 2.3-5.3 mm)
+  ---
+  duration_ms: 3316.5924
+  type: 'test'
+  ...
+# Subtest: R3 (b) X1: a cup NOT returned before closing (B: 150° against an edge of 15.5°, a 9,488 mm cliff) is never reported converged over a step: it closes with the seam within 1 mm, or it is refused by name
+ok 115 - R3 (b) X1: a cup NOT returned before closing (B: 150° against an edge of 15.5°, a 9,488 mm cliff) is never reported converged over a step: it closes with the seam within 1 mm, or it is refused by name
+  ---
+  duration_ms: 735.2765
+  type: 'test'
+  ...
+# Subtest: R3 (b): close() holds the cup's last value at the legacy start's rendered edge (0.05°), for a returned cup and for one that was not
+ok 116 - R3 (b): close() holds the cup's last value at the legacy start's rendered edge (0.05°), for a returned cup and for one that was not
+  ---
+  duration_ms: 278.5908
+  type: 'test'
+  ...
+# Subtest: R3 (a) mirror: a lap that STARTS in a cup and ends on a legacy piece meets within 1 mm at the lap seam, and so does the cup -> legacy joint inside it (B-class step: 148 mm half-pipe 24, 23 mm bowl 16 before)
+ok 117 - R3 (a) mirror: a lap that STARTS in a cup and ends on a legacy piece meets within 1 mm at the lap seam, and so does the cup -> legacy joint inside it (B-class step: 148 mm half-pipe 24, 23 mm bowl 16 before)
+  ---
+  duration_ms: 964.2961
+  type: 'test'
+  ...
+# Subtest: R3 (b): a closing cup piece too short to fade (8 m, straight after a legacy piece) is REFUSED by name with the seam real step (B: 148.2 mm half-pipe 24, 23.2 mm bowl 16), never closed over it; at 12 m it closes and the seam is matched
+ok 118 - R3 (b): a closing cup piece too short to fade (8 m, straight after a legacy piece) is REFUSED by name with the seam real step (B: 148.2 mm half-pipe 24, 23.2 mm bowl 16), never closed over it; at 12 m it closes and the seam is matched
+  ---
+  duration_ms: 663.2827
+  type: 'test'
+  ...
+# Subtest: R3 (c): validation reds a lap seam whose curve steps more than 1 mm (drawn with the local scheme, which has no reverse morph: the panel would otherwise read "0 red · lap proved" over the cliff), and does not red the same lap drawn by default
+ok 119 - R3 (c): validation reds a lap seam whose curve steps more than 1 mm (drawn with the local scheme, which has no reverse morph: the panel would otherwise read "0 red · lap proved" over the cliff), and does not red the same lap drawn by default
+  ---
+  duration_ms: 318.6904
+  type: 'test'
+  ...
+# Subtest: R3 (c): the panel has words for the joint-step red (labels reasonText)
+ok 120 - R3 (c): the panel has words for the joint-step red (labels reasonText)
+  ---
+  duration_ms: 1.7715
+  type: 'test'
+  ...
+# Subtest: R3 (c): a legacy → cup JOINT the R2 morph matched is not red
+ok 121 - R3 (c): a legacy → cup JOINT the R2 morph matched is not red
+  ---
+  duration_ms: 13.9334
+  type: 'test'
+  ...
+# Subtest: row 1: adding a tube after a cup leaves every placed segment byte for byte as it was
+ok 122 - row 1: adding a tube after a cup leaves every placed segment byte for byte as it was
+  ---
+  duration_ms: 53.8385
+  type: 'test'
+  ...
+# Subtest: row 2: the handover is seamless: the tube morphs out of the cup's own end, the rows meet, the centre is on the curve, no self-intersection, stacking or red
+ok 123 - row 2: the handover is seamless: the tube morphs out of the cup's own end, the rows meet, the centre is on the curve, no self-intersection, stacking or red
+  ---
+  duration_ms: 4146.2698
+  type: 'test'
+  ...
+# Subtest: row 3: an EDGE piece after a cup leaves the placed cup as it was and morphs out of the cup's own end
+ok 124 - row 3: an EDGE piece after a cup leaves the placed cup as it was and morphs out of the cup's own end
+  ---
+  duration_ms: 59.1744
+  type: 'test'
+  ...
+# Subtest: SCHEMA: new documents are t180b.core/4; /1, /2 and /3 text still loads; a piece without an edge or a tube carries none of e, s, t in its text
+ok 125 - SCHEMA: new documents are t180b.core/4; /1, /2 and /3 text still loads; a piece without an edge or a tube carries none of e, s, t in its text
+  ---
+  duration_ms: 15.6135
+  type: 'test'
+  ...
+# Subtest: SCHEMA: an edge piece and a tube piece write their channels, read back with their flags, and save to the same text (round trip)
+ok 126 - SCHEMA: an edge piece and a tube piece write their channels, read back with their flags, and save to the same text (round trip)
+  ---
+  duration_ms: 4.3505
+  type: 'test'
+  ...
+# Subtest: DOMAIN (E2, V4, T1, T3): a hand-built document with e < 0, s outside [0.5, 0.95], a total past the cap, a closed tube with an edge, or a tube held in the slot is refused by name
+ok 127 - DOMAIN (E2, V4, T1, T3): a hand-built document with e < 0, s outside [0.5, 0.95], a total past the cap, a closed tube with an edge, or a tube held in the slot is refused by name
+  ---
+  duration_ms: 5.591
+  type: 'test'
+  ...
+# Subtest: A PIECE IS A CUP OR A TUBE: c and t together are refused, in extend and in a hand-built document
+ok 128 - A PIECE IS A CUP OR A TUBE: c and t together are refused, in extend and in a hand-built document
+  ---
+  duration_ms: 1.1585
+  type: 'test'
+  ...
+# Subtest: JOINT (E4 i, KE4-1): e and s join C1 like every channel: a 5° step in e at a joint is refused JOINT; e starts from 0 where the piece before has no edge
+ok 129 - JOINT (E4 i, KE4-1): e and s join C1 like every channel: a 5° step in e at a joint is refused JOINT; e starts from 0 where the piece before has no edge
+  ---
+  duration_ms: 0.9102
+  type: 'test'
+  ...
+# Subtest: ENDSTATE (ruling 2): endState reports the tube sweep t ONLY for a tube head (a non-tube head reads 0, so the shell shows none); a tube started after another kind still starts at twice the edge it renders (the internal tNext)
+ok 130 - ENDSTATE (ruling 2): endState reports the tube sweep t ONLY for a tube head (a non-tube head reads 0, so the shell shows none); a tube started after another kind still starts at twice the edge it renders (the internal tNext)
+  ---
+  duration_ms: 1.6578
+  type: 'test'
+  ...
+# Subtest: A TUBE JOINT: a tube after another kind starts at the edge that piece renders (t = 2·edge); a cup after a tube starts at t/2; tube to tube is C1 in t
+ok 131 - A TUBE JOINT: a tube after another kind starts at the edge that piece renders (t = 2·edge); a cup after a tube starts at t/2; tube to tube is C1 in t
+  ---
+  duration_ms: 0.91
+  type: 'test'
+  ...
+# Subtest: EXTEND: e, s and t targets are range-checked by name; an e target on a plain track makes an edge piece; the edge continues while active and turns off with e = 0
+ok 132 - EXTEND: e, s and t targets are range-checked by name; an e target on a plain track makes an edge piece; the edge continues while active and turns off with e = 0
+  ---
+  duration_ms: 5.1169
+  type: 'test'
+  ...
+# Subtest: EXTEND: the fit never leaves the range (D190 V5 ringing): a 30 m piece, a 10 m ramp to e = 150 − c on a cup, stays inside [0, cap] and the document is accepted (E2 iii, KE2-2)
+ok 133 - EXTEND: the fit never leaves the range (D190 V5 ringing): a 30 m piece, a 10 m ramp to e = 150 − c on a cup, stays inside [0, cap] and the document is accepted (E2 iii, KE2-2)
+  ---
+  duration_ms: 0.9812
+  type: 'test'
+  ...
+# Subtest: EXTEND: the transition map takes e, s and t like the others, and the at-start `first` carries them on an empty track
+ok 134 - EXTEND: the transition map takes e, s and t like the others, and the at-start `first` carries them on an empty track
+  ---
+  duration_ms: 2.2335
+  type: 'test'
+  ...
+# Subtest: READOUT (E7): edgeFrom/To, sliceFrom/To, tubeFrom/To come from the document; a plain piece reads 0, 0.64 and 0; candidateReadout equals the placed piece bit for bit (KE7-1)
+ok 135 - READOUT (E7): edgeFrom/To, sliceFrom/To, tubeFrom/To come from the document; a plain piece reads 0, 0.64 and 0; candidateReadout equals the placed piece bit for bit (KE7-1)
+  ---
+  duration_ms: 25.7883
+  type: 'test'
+  ...
+# Subtest: E1 (i): the rendered edge of an edge piece is ψ_mid(edge) + e on BOTH sides, within 0.05°; bank and a closed lap do not change that (E6)
+ok 136 - E1 (i): the rendered edge of an edge piece is ψ_mid(edge) + e on BOTH sides, within 0.05°; bank and a closed lap do not change that (E6)
+  ---
+  duration_ms: 19.6166
+  type: 'test'
+  ...
+# Subtest: E6: edge THEN roll: at φ = +30° the left edge surface is 105° from gravity and the right 45°; a −30° bank mirrors it; e changes no readout and no path sample
+ok 137 - E6: edge THEN roll: at φ = +30° the left edge surface is 105° from gravity and the right 45°; a −30° bank mirrors it; e changes no readout and no path sample
+  ---
+  duration_ms: 48.3685
+  type: 'test'
+  ...
+# Subtest: E4 (ii): e, s and t are CARRIED across a flight like c, and an edge continues after the jump
+ok 138 - E4 (ii): e, s and t are CARRIED across a flight like c, and an edge continues after the jump
+  ---
+  duration_ms: 1.6681
+  type: 'test'
+  ...
+# Subtest: E4 (vi, vii): inside an edge piece every segment is a chord that shares ONE row grid and meets the next on the same profile, so the mesh emits no seam zip; the joint from a plain piece steps ≤ 1 mm
+ok 139 - E4 (vi, vii): inside an edge piece every segment is a chord that shares ONE row grid and meets the next on the same profile, so the mesh emits no seam zip; the joint from a plain piece steps ≤ 1 mm
+  ---
+  duration_ms: 375.2497
+  type: 'test'
+  ...
+# Subtest: E4 (v): along a moving slice (s 0.5 → 0.95 over 40 m, e 15) every row at a segment boundary is within 0.05° of the analytic profile and every row inside a segment within 0.5° (KE4-3)
+ok 140 - E4 (v): along a moving slice (s 0.5 → 0.95 over 40 m, e 15) every row at a segment boundary is within 0.05° of the analytic profile and every row inside a segment within 0.5° (KE4-3)
+  ---
+  duration_ms: 78.7765
+  type: 'test'
+  ...
+# Subtest: E5: a lap with an edge exports end to end: mesh, markers and kn5 write and read back, with no NaN in any buffer (the F1-style lap, edge 15 on the turns)
+ok 141 - E5: a lap with an edge exports end to end: mesh, markers and kn5 write and read back, with no NaN in any buffer (the F1-style lap, edge 15 on the turns)
+  ---
+  duration_ms: 1198.7637
+  type: 'test'
+  ...
+# Subtest: T1 (ii, iii): a closed tube meshes with its two edge rows within 1 mm; the tube profile is the circle; a transition cup → tube has no seam zip and every row X_tip >= 0 (T2)
+ok 142 - T1 (ii, iii): a closed tube meshes with its two edge rows within 1 mm; the tube profile is the circle; a transition cup → tube has no seam zip and every row X_tip >= 0 (T2)
+  ---
+  duration_ms: 525.9027
+  type: 'test'
+  ...
+# Subtest: CLOSE (E4 iii, T2): a lap whose seam would join a tube to a different cross-section is refused TUBE_SEAM; an edge still active at only one end is refused EDGE_SEAM
+ok 143 - CLOSE (E4 iii, T2): a lap whose seam would join a tube to a different cross-section is refused TUBE_SEAM; an edge still active at only one end is refused EDGE_SEAM
+  ---
+  duration_ms: 1.7476
+  type: 'test'
+  ...
+# Subtest: CLOSE: a lap whose edge ends at 0.004° (under the 0.01° seam tolerance) at a plain start closes, and the close leaves every edge array exactly as built (no row reaches e where only one end has it)
+ok 144 - CLOSE: a lap whose edge ends at 0.004° (under the 0.01° seam tolerance) at a plain start closes, and the close leaves every edge array exactly as built (no row reaches e where only one end has it)
+  ---
+  duration_ms: 484.0823
+  type: 'test'
+  ...
+# Subtest: BRUSH (E2 iii): a brush on e, s or t reaching a piece without them is refused by name; one that takes e outside its range is refused BAD_EDGE
+ok 145 - BRUSH (E2 iii): a brush on e, s or t reaching a piece without them is refused by name; one that takes e outside its range is refused BAD_EDGE
+  ---
+  duration_ms: 50.8211
+  type: 'test'
+  ...
+# Subtest: G = 3t² − 2t³: G(0) = 0, G′(0) = 0, G(1) = 1, G′(1) = 0, monotone, G′ peaks at ½ with 3/2 (ref 09 §10, DERIVED)
+ok 146 - G = 3t² − 2t³: G(0) = 0, G′(0) = 0, G(1) = 1, G′(1) = 0, monotone, G′ peaks at ½ with 3/2 (ref 09 §10, DERIVED)
+  ---
+  duration_ms: 1.0579
+  type: 'test'
+  ...
+# Subtest: the edge profile is the analytic ψ_mid + e·G within 0.05° at 4000 points a side, for every family, width, s and e on the seal grid (E1 iii)
+ok 147 - the edge profile is the analytic ψ_mid + e·G within 0.05° at 4000 points a side, for every family, width, s and e on the seal grid (E1 iii)
+  ---
+  duration_ms: 64.4848
+  type: 'test'
+  ...
+# Subtest: the slice is no kink: |Δψ| at u = s·h is 0 and the one-sided slope difference of ψ − ψ_mid is 3e-6 of what G = t gives (the seal measured 3e-6, E1 ii)
+ok 148 - the slice is no kink: |Δψ| at u = s·h is 0 and the one-sided slope difference of ψ − ψ_mid is 3e-6 of what G = t gives (the seal measured 3e-6, E1 ii)
+  ---
+  duration_ms: 0.2523
+  type: 'test'
+  ...
+# Subtest: LINEAR in e at a fixed s: the fraction-matched blend of two edge profiles IS the profile at the blended e (to 1e-12 rad); NOT linear in s (ref 09 §10, E4 iv and v)
+ok 149 - LINEAR in e at a fixed s: the fraction-matched blend of two edge profiles IS the profile at the blended e (to 1e-12 rad); NOT linear in s (ref 09 §10, E4 iv and v)
+  ---
+  duration_ms: 1.246
+  type: 'test'
+  ...
+# Subtest: the TUBE: ψ = (t/2)|u|/h is a circular arc of radius w/t_rad, and at t = 360 its two edges meet at Y = 2R = w/π within 1e-9 m (E T1 i, ii)
+ok 150 - the TUBE: ψ = (t/2)|u|/h is a circular arc of radius w/t_rad, and at t = 360 its two edges meet at Y = 2R = w/π within 1e-9 m (E T1 i, ii)
+  ---
+  duration_ms: 8.4271
+  type: 'test'
+  ...
+# Subtest: the tube slot: t1m(w) is where the two tips are 1.0 m apart: 4 → 283.566°, 8 → 319.241°, 12 → 332.053°, 31 → 348.732°, 60 → 354.096° (the seal, F_tube)
+ok 151 - the tube slot: t1m(w) is where the two tips are 1.0 m apart: 4 → 283.566°, 8 → 319.241°, 12 → 332.053°, 31 → 348.732°, 60 → 354.096° (the seal, F_tube)
+  ---
+  duration_ms: 0.3673
+  type: 'test'
+  ...
+# Subtest: the helix curvature of a floor at radius R rolling at ω is R·ω²/(1 + R²ω²) (a = R, b = 1/ω, ref 02 §1), by finite differences of the helix
+ok 152 - the helix curvature of a floor at radius R rolling at ω is R·ω²/(1 + R²ω²) (a = R, b = 1/ω, ref 02 §1), by finite differences of the helix
+  ---
+  duration_ms: 0.1771
+  type: 'test'
+  ...
+# Subtest: S1: bank 360° over 300 m is accepted and read back as 360, then −540 (nothing wraps, clamps or refuses); the adapter rolls continuously
+ok 153 - S1: bank 360° over 300 m is accepted and read back as 360, then −540 (nothing wraps, clamps or refuses); the adapter rolls continuously
+  ---
+  duration_ms: 19.1728
+  type: 'test'
+  ...
+# Subtest: S3: a full 360° of bank is RED over 300 m (the keeper's own example, 1.80°/m), AMBER over 450 m (1.20), clear over 600 m (0.90): the bar is 1.2144 red, 0.9338 amber, read over a 20 m chord
+ok 154 - S3: a full 360° of bank is RED over 300 m (the keeper's own example, 1.80°/m), AMBER over 450 m (1.20), clear over 600 m (0.90): the bar is 1.2144 red, 0.9338 amber, read over a 20 m chord
+  ---
+  duration_ms: 276.1243
+  type: 'test'
+  ...
+# Subtest: S3: the rate is the frame-intrinsic one: a plain climbing turn (constant bank, the frame twisting) reads 0, and revalidate equals validate (the check is recomputed whole)
+ok 155 - S3: the rate is the frame-intrinsic one: a plain climbing turn (constant bank, the frame twisting) reads 0, and revalidate equals validate (the check is recomputed whole)
+  ---
+  duration_ms: 100.1686
+  type: 'test'
+  ...
+# Subtest: S3 (KS3-3): on a climbing turn at constant bank the validator's roll rate EQUALS §1's frame-intrinsic rate value for value (worst difference < 1e-9 °/m), and is not the gravity-frame φ′, which is 0 there
+ok 156 - S3 (KS3-3): on a climbing turn at constant bank the validator's roll rate EQUALS §1's frame-intrinsic rate value for value (worst difference < 1e-9 °/m), and is not the gravity-frame φ′, which is 0 there
+  ---
+  duration_ms: 7.7685
+  type: 'test'
+  ...
+# Subtest: T1 iv (ruling 1, corrected to 9.74 m): a CLOSED tube narrower than 9.74 m is red by name (tube-too-narrow), 9.8 m, 12 m and 31 m are not: the 3 m chase eye plus the seal's 0.1 m margin must fit under the ceiling 2R = w/π
+ok 157 - T1 iv (ruling 1, corrected to 9.74 m): a CLOSED tube narrower than 9.74 m is red by name (tube-too-narrow), 9.8 m, 12 m and 31 m are not: the 3 m chase eye plus the seal's 0.1 m margin must fit under the ceiling 2R = w/π
+  ---
+  duration_ms: 577.636
+  type: 'test'
+  ...
+# Subtest: E2: the validator reds an edge past the cap by name (edge-past-cap) on a segment built past it, and not on any a document can hold
+ok 158 - E2: the validator reds an edge past the cap by name (edge-past-cap) on a segment built past it, and not on any a document can hold
+  ---
+  duration_ms: 264.1859
+  type: 'test'
+  ...
+# Subtest: S2 (i, ii): every segment of the closed tube carries the heartline R = w/2π, and the road centre steps at most 1 mm at every segment joint, including where the tube closes
+ok 159 - S2 (i, ii): every segment of the closed tube carries the heartline R = w/2π, and the road centre steps at most 1 mm at every segment joint, including where the tube closes
+  ---
+  duration_ms: 40.3368
+  type: 'test'
+  ...
+# Subtest: S2 (iii): the floor of the spiral is a smooth helix: the road centre has curvature (finite differences) at most 1.1 × the helix R·ω²/(1 + R²ω²) + 1e-3, and lies at radius R from the tube axis within 5 mm
+ok 160 - S2 (iii): the floor of the spiral is a smooth helix: the road centre has curvature (finite differences) at most 1.1 × the helix R·ω²/(1 + R²ω²) + 1e-3, and lies at radius R from the tube axis within 5 mm
+  ---
+  duration_ms: 17.4963
+  type: 'test'
+  ...
+# Subtest: S2 (vi): a tube that CLOSES WHILE BANKED (60°): the road centre steps at most 1 mm at every segment joint (the heartline is continuous along the road, never a step per segment)
+ok 161 - S2 (vi): a tube that CLOSES WHILE BANKED (60°): the road centre steps at most 1 mm at every segment joint (the heartline is continuous along the road, never a step per segment)
+  ---
+  duration_ms: 56.3487
+  type: 'test'
+  ...
+# Subtest: S2 (vii): an OPEN tube (sweep below 300°) has no roll axis of its own: rolled 90°, its road centre stays on the drawn curve within 1 mm (the heartline grows in from 300° only)
+ok 162 - S2 (vii): an OPEN tube (sweep below 300°) has no roll axis of its own: rolled 90°, its road centre stays on the drawn curve within 1 mm (the heartline grows in from 300° only)
+  ---
+  duration_ms: 49.353
+  type: 'test'
+  ...
+# Subtest: S4: the validator reads the spiral's load: the floor centre's normal load is 1 g·(gravity along the floor normal) + v²·κ_helix/g within 0.05 g at 460 km/h (KS4-1: from kvec of the integrated curve it would read 1 g)
+ok 163 - S4: the validator reads the spiral's load: the floor centre's normal load is 1 g·(gravity along the floor normal) + v²·κ_helix/g within 0.05 g at 460 km/h (KS4-1: from kvec of the integrated curve it would read 1 g)
+  ---
+  duration_ms: 202.7135
+  type: 'test'
+  ...
+# Subtest: S2 (iv): water over a heartline offset is refused BY NAME (WATER_HEARTLINE), never an anonymous throw
+ok 164 - S2 (iv): water over a heartline offset is refused BY NAME (WATER_HEARTLINE), never an anonymous throw
+  ---
+  duration_ms: 13.7529
+  type: 'test'
+  ...
+# Subtest: E5 (a) bowl c 135 + e 15 at s 0.64: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast
+ok 165 - E5 (a) bowl c 135 + e 15 at s 0.64: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast
+  ---
+  duration_ms: 10894.7942
+  type: 'test'
+  ...
+# Subtest: E5 (b) flat + e 147 at s 0.5: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast
+ok 166 - E5 (b) flat + e 147 at s 0.5: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast
+  ---
+  duration_ms: 38060.7643
+  type: 'test'
+  ...
+# Subtest: E5 (c) flat + e 147 at s 0.95: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast
+ok 167 - E5 (c) flat + e 147 at s 0.95: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast
+  ---
+  duration_ms: 52144.0661
+  type: 'test'
+  ...
+# Subtest: E5 (d) half-pipe c 120 + e 30 at s 0.95: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast
+ok 168 - E5 (d) half-pipe c 120 + e 30 at s 0.95: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast
+  ---
+  duration_ms: 13481.3085
+  type: 'test'
+  ...
+# Subtest: X1 and T2 iv (ruling 3): a lap whose tube CLOSES along the road is refused by downforce-ray-gap over the slot zone ONLY (no exemption, no other red); the ceiling meshes of a closed tube are drivable road (1ROAD), not wall
+ok 169 - X1 and T2 iv (ruling 3): a lap whose tube CLOSES along the road is refused by downforce-ray-gap over the slot zone ONLY (no exemption, no other red); the ceiling meshes of a closed tube are drivable road (1ROAD), not wall
+  ---
+  duration_ms: 3792.6135
+  type: 'test'
+  ...
+1..169
+# tests 169
+# suites 0
+# pass 169
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 120268.3151
