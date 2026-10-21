@@ -1,0 +1,8 @@
+caught       K1 ratio key forgets r
+caught       K2 ratio key forgets s0
+caught       K3 ratio kept for an unfrozen document
+caught       K4 fractions handed out shared
+caught       K5 fractions key forgets the options
+caught       K6 fractions key forgets u
+caught       K7 fractions key forgets psi
+applied 7 / caught 7 / NOT APPLIED 0

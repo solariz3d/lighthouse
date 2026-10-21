@@ -1,0 +1,13 @@
+profile 1551 ms, 1086 samples, 1.428 ms each
+INCLUSIVE (ms): {"brushTo":1112.3,"brushed":745.4,"brush":743.9,"sculpt":8.6,"pieceOffsets":742.5,"checkDoc":11.4,"toSegments":1303.7,"resolvedOf":439.8,"segmentsOf":439.8,"offsetPath":2.9,"routeMovedDetail":0,"dragTo":0,"valueAt":14.3,"spanUnder":0,"freeze":1.4,"serialize":0}
+SELF, top 10:
+     842.4 ms  commonFractions geom/profile.js:190
+      88.5 ms  tubeProfile core/adapter.js:89
+      78.5 ms  valuesAt core/document.js:104
+      61.4 ms  (garbage collector) :0
+      54.3 ms  psiAt geom/profile.js:27
+      51.4 ms  deepFreeze core/adapter.js:271
+      44.3 ms  piece core/adapter.js:296
+      37.1 ms  basis tools/piecewise.cjs:178
+      17.1 ms  growBlock geom/path.js:216
+      14.3 ms  basisN tools/piecewise.cjs:197

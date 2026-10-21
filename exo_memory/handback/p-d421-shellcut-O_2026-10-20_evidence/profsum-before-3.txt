@@ -1,0 +1,13 @@
+profile 617 ms, 455 samples, 1.355 ms each
+INCLUSIVE (ms): {"brushTo":44.7,"brushed":24.4,"brush":24.4,"sculpt":24.4,"pieceOffsets":33.9,"checkDoc":59.6,"toSegments":165.3,"resolvedOf":56.9,"segmentsOf":56.9,"offsetPath":0,"routeMovedDetail":0,"dragTo":4.1,"valueAt":0,"spanUnder":1.4,"freeze":0,"serialize":37.9}
+SELF, top 10:
+      55.6 ms  (garbage collector) :0
+      50.1 ms  growBlock geom/path.js:216
+      44.7 ms  (anon) core/document.js:452
+      35.2 ms  valuesAt core/document.js:104
+      33.9 ms  piece core/adapter.js:296
+      33.9 ms  basis tools/piecewise.cjs:178
+      25.8 ms  profileAt core/adapter.js:44
+      21.7 ms  sampleAt geom/path.js:99
+      17.6 ms  wrapSafe cjs/loader:1701
+      17.6 ms  add core/close.js:151

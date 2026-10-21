@@ -1,0 +1,13 @@
+profile 684 ms, 460 samples, 1.487 ms each
+INCLUSIVE (ms): {"brushTo":419.5,"brushed":348.1,"brush":346.6,"sculpt":53.5,"pieceOffsets":116,"checkDoc":168.1,"toSegments":202.3,"resolvedOf":92.2,"segmentsOf":92.2,"offsetPath":10.4,"routeMovedDetail":0,"dragTo":17.8,"valueAt":217.2,"spanUnder":0,"freeze":0,"serialize":58}
+SELF, top 10:
+     148.7 ms  valueAt core/sculpt.js:65
+     129.4 ms  (anon) core/document.js:452
+      46.1 ms  piece core/adapter.js:296
+      31.2 ms  basis tools/piecewise.cjs:178
+      25.3 ms  valuesAt core/document.js:104
+      22.3 ms  profileAt core/adapter.js:44
+      20.8 ms  (garbage collector) :0
+      20.8 ms  (anon) core/sculpt.js:67
+      19.3 ms  pieceText core/document.js:490
+      17.8 ms  wrapSafe cjs/loader:1701

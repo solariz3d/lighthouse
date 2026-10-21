@@ -55,3 +55,9 @@ General form: dry-run a staged script on the target machine's own shell before h
 So the design's "only the window's pieces move" holds for wide windows; a small route edit usually gets the whole-lap fallback. Could be wrong on a lap shaped
 differently (the window close's freedom grows with the turns inside it). Also: the shell's share of a Bend step on 10 km is ~4.5 ms; the page frame's ~155 ms is the preview's.
 → `exo_memory/handback/p-d421-shell-O_2026-10-20.md`
+
+### A sculpt step on a tube or a long road was mostly re-deriving two pure functions; kept exactly, rows 2/4a/4b p50 fell 10.3→2.4, 54.3→6.3, 18.4→5.6 ms, bit-identical
+2026-10-20, D421 shell cut — the hill's peak ratio (redone per step on the same base) and commonFractions (per tube piece); `shellprof.js` + `profsum.js` profile,
+`shellrun.js` both slots, docs/lifted sha256 equal on all four rows; d421-o 937f5d4; 7/7 cache mutants, harnesses 178/178/0. Could be wrong for the browser preview
+path, which was not timed. Also found: brush() on an unfrozen document freezes its knots arrays in place (so it did at 969ecac).
+→ `exo_memory/handback/p-d421-shellcut-O_2026-10-20.md`
