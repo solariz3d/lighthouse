@@ -2504,3 +2504,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-22 ~16:4xZ (D) · D432 Part 1, stacked-within-2m: not landed, "do not flip" → `exo_memory/handback/p-d432-E_2026-10-22.md`
 - The stack stops being red cleanly at export and in the overlap check (stacked_not_red 6 rows, red first on 6261a22), but the live checker, Close, sharp.js and the phrases have no mesh: the stack was their only clip test, and Close then committed a coil with 961 self-intersections. Patch kept uncommitted (d432-wip.patch); the keeper's TEST 10 has a pass 0.80 m over its road edge at s 2930, one of its two reds.
 - **Carry:** before removing a red, find every check that has no other way to see the thing it stood in for.
+
+## 2026-10-22 ~18:5xZ (D) · D432 build (option A): the 2 m stack is information, a clip is red → `exo_memory/handback/p-d432-E-build_2026-10-22.md`
+- t180 `70abb64` on d432-e (b5181e2 + 70abb64): a mesh-free clip test in validate's stack pairs, Close's own mesh self-check, the stack in info everywhere; 6 pinning rows and core_sharp row 4 amended, the six blindness files unchanged and green; every harness whole; own mutants 9/7/0 (M4 and M9 survive, named). Close: ELYSIUM's bent press 80.6 s (base refused at 128.6 s), over D337's 30 s on both.
+- **Carry:** `$(...)` in the same assignment resets `$?`: capture a command's exit into a variable before anything else runs.
