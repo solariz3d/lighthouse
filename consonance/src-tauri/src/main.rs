@@ -9886,9 +9886,19 @@ fn pty_kill(panes: State<Panes>, sandboxes: State<PaneSandboxes>, pane: String) 
 #[tauri::command]
 fn pty_reopen(app: AppHandle, panes: State<Panes>, pane: String, cwd: String) -> Result<(), String> {
     let resolved_cwd = if cwd.trim().is_empty() { home() } else { cwd };
-    let session = spawn_claude_pane(app, pane.clone(), resolved_cwd, true, true)?;
-    insert_pane(&panes, pane, session);
+    let session = spawn_claude_pane(app.clone(), pane.clone(), resolved_cwd, true, true)?;
+    // D424 (P items 2, 5): the held messages wait for THIS child, and once it is in, the dead child's exit and its last
+    // ready stamp stop counting for the pane
+    app.state::<Inbox>().restart_wait(&pane, Instant::now());
+    insert_pane(&panes, pane.clone(), session);
+    new_session_for(&pane);
     Ok(())
+}
+
+/// D424: a new session is in for this pane (the automatic reopen or the ↻): drop its exit, record the reopen time.
+fn new_session_for(pane: &str) {
+    let now_ms = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    pane_exit::on_new_session(&mut harvest_guard::recover(pane_exits().lock()), &mut harvest_guard::recover(reopened_at().lock()), pane, now_ms);
 }
 
 /// D143: the exits this app run has seen, by pane, keyed to the child's pid (pane_exit::liveness reads it), and the
@@ -9897,6 +9907,61 @@ static PANE_EXITS: std::sync::OnceLock<Mutex<HashMap<String, pane_exit::PaneExit
 static AUTO_REOPENED: std::sync::OnceLock<Mutex<HashSet<String>>> = std::sync::OnceLock::new();
 fn pane_exits() -> &'static Mutex<HashMap<String, pane_exit::PaneExit>> {
     PANE_EXITS.get_or_init(|| Mutex::new(HashMap::new()))
+}
+
+/// D424: the panes whose one automatic reopen is under way (the gate holds their messages rather than refusing them),
+/// and when each pane was last reopened automatically (a ready stamp older than that is the dead child's).
+static REOPENING: std::sync::OnceLock<Mutex<HashSet<String>>> = std::sync::OnceLock::new();
+static REOPENED_AT: std::sync::OnceLock<Mutex<HashMap<String, u64>>> = std::sync::OnceLock::new();
+fn reopening() -> &'static Mutex<HashSet<String>> {
+    REOPENING.get_or_init(|| Mutex::new(HashSet::new()))
+}
+fn reopened_at() -> &'static Mutex<HashMap<String, u64>> {
+    REOPENED_AT.get_or_init(|| Mutex::new(HashMap::new()))
+}
+
+/// D424: what kind of seat this is for reopening, and the folder it resumes in. A fixed seat resumes in its own folder; a
+/// committee pane in the folder its kept-pane record holds (the record `resume_pane` restores it from at launch); a
+/// committee pane with no record, and every human pane, has nowhere the app may resume it and is left to the ↻.
+fn reopen_seat(fixed_cwd: Option<String>, role: &str, kept: &[KeptPane], pane: &str) -> (pane_exit::Seat, Option<String>) {
+    if let Some(cwd) = fixed_cwd {
+        return (pane_exit::Seat::Fixed, Some(cwd));
+    }
+    match kept.iter().find(|k| k.pane == pane) {
+        Some(k) if role == "committee" && !k.cwd.trim().is_empty() => (pane_exit::Seat::Committee, Some(k.cwd.clone())),
+        _ => (pane_exit::Seat::Human, None),
+    }
+}
+
+/// D424: the exit half of the delivery gate for this pane, from the exit record, the reopens under way and the pid the
+/// map holds now.
+fn exit_gate_for(app: &AppHandle, pane: &str) -> pane_exit::ExitGate {
+    let current_pid = app.try_state::<Panes>().and_then(|p| harvest_guard::recover(p.0.lock()).get(pane).and_then(|s| s.pid));
+    pane_exit::exit_gate(&harvest_guard::recover(pane_exits().lock()), &harvest_guard::recover(reopening().lock()), pane, current_pid)
+}
+
+/// D424: a message refused in the queue is told to its sender, read from the app's own provenance label. The note is
+/// queued like any message, so it waits for the sender's own ready signal, and it carries no sender of its own.
+fn tell_refused_sender(app: &AppHandle, pane: &str, text: &str, e: &pane_exit::PaneExit, label: &str) {
+    let who = match pane_exit::refusal_recipient(text) {
+        pane_exit::Recipient::Tell(who) => who,
+        pane_exit::Recipient::NotTold(letter) => {
+            chair_audit(app, format!("REFUSAL NOT TOLD -> pane:{letter}: a lettered sender is not routed to until its mount letter maps to a pane id (the letters are crossed today, D423); the REFUSED row above, for {}, is the record", short_id(pane)));
+            return;
+        }
+        pane_exit::Recipient::Nobody => return,
+    };
+    let to = match resolve_pane(&app.state::<Panes>(), &app.state::<PaneNames>(), who) {
+        Ok(t) => t,
+        Err(err) => {
+            chair_audit(app, format!("REFUSAL NOT TOLD -> {who}: the sender of the refused message to {} was not found ({err}); the board row above is the only record", short_id(pane)));
+            return;
+        }
+    };
+    let note = pane_exit::refusal_notice(short_id(pane), e, label);
+    let preview = format!("refused: your message to {}", short_id(pane));
+    let depth = app.state::<Inbox>().push(&to, note, preview.clone(), Instant::now());
+    chair_audit(app, format!("QUEUED -> {} ({} waiting, the app's refusal note): {}", short_id(&to), depth, preview));
 }
 
 /// The fixed seats, and the folder each one runs in — the same folders their spawn_* commands use.
@@ -9918,17 +9983,23 @@ fn on_pane_exit(app: &AppHandle, pane: &str, pid: Option<u32>, code: Option<u32>
     let still_ours = pid.is_some()
         && LEAVE_PHASE.load(Ordering::SeqCst) == LEAVE_IDLE
         && app.try_state::<Panes>().is_some_and(|p| harvest_guard::recover(p.0.lock()).get(pane).is_some_and(|s| s.pid == pid));
-    let cwd = fixed_seat_cwd(pane);
+    let role = pane_role(app, pane);
+    let (seat, cwd) = reopen_seat(fixed_seat_cwd(pane), &role, &read_kept(), pane);
     let action = pane_exit::decide(
         still_ours,
-        cwd.is_some(),
+        seat,
         pane,
         &mut harvest_guard::recover(AUTO_REOPENED.get_or_init(|| Mutex::new(HashSet::new())).lock()),
     );
-    let Some(row) = pane_exit::exited_row(short_id(pane), &pane_role(app, pane), code, action) else {
+    let Some(row) = pane_exit::exited_row(short_id(pane), &role, code, action) else {
         return;
     };
     let at_ms = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    // D424: a reopen is marked under way BEFORE the exit is recorded, so the gate never sees this exit without it and
+    // refuses a message that should wait for the reopened child.
+    if action == pane_exit::ExitAction::ReopenOnce {
+        harvest_guard::recover(reopening().lock()).insert(pane.to_string());
+    }
     harvest_guard::recover(pane_exits().lock()).insert(pane.to_string(), pane_exit::PaneExit { pid, code, at_ms });
     plog(&row);
     chair_audit(app, row);
@@ -9943,13 +10014,22 @@ fn on_pane_exit(app: &AppHandle, pane: &str, pid: Option<u32>, code: Option<u32>
     }
     let Some(cwd) = cwd else { return };
     let who = if pane == THIRD_PLACE_SID { "the Third Place".to_string() } else { short_id(pane).to_string() };
-    match spawn_claude_pane(app.clone(), pane.to_string(), cwd, true, true) {
+    harvest_guard::recover(reopened_at().lock()).insert(pane.to_string(), at_ms);
+    let reopened = spawn_claude_pane(app.clone(), pane.to_string(), cwd, true, true);
+    match reopened {
         Ok(session) => {
+            // the messages held across the reopen wait for THIS child from now; restarted before the new pid lands, so
+            // no drain tick can read the new child open with the old clock
+            app.state::<Inbox>().restart_wait(pane, Instant::now());
             insert_pane(&app.state::<Panes>(), pane.to_string(), session);
+            new_session_for(pane);
+            harvest_guard::recover(reopening().lock()).remove(pane);
             chair_audit(app, format!("pane REOPENED -> {who}: resumed the same session, once, automatically"));
             let _ = app.emit("pane-reopened", pane);
         }
         Err(e) => {
+            // the dead child is still the map's, so the next drain tick refuses what was held for it, by name
+            harvest_guard::recover(reopening().lock()).remove(pane);
             chair_audit(app, format!("pane REOPEN FAILED -> {who}: {e} — ↻ on its pane retries it by hand"));
             let _ = app.emit("pane-exit", serde_json::json!({ "pane": pane, "code": code, "action": "reopen_failed" }));
         }
@@ -10391,7 +10471,23 @@ fn parse_stamp(raw: &str) -> Stamp {
 }
 
 fn read_stamp(pane: &str) -> Stamp {
-    fs::read_to_string(ready_path(pane)).map(|r| parse_stamp(&r)).unwrap_or(Stamp::Absent)
+    let Ok(raw) = fs::read_to_string(ready_path(pane)) else { return Stamp::Absent };
+    gate_stamp(&raw, harvest_guard::recover(reopened_at().lock()).get(pane).copied())
+}
+
+/// D424: a stamp as the gate reads it. After an automatic reopen, a stamp written before it is the dead child's account,
+/// not the new one's, and reads as no stamp.
+fn gate_stamp(raw: &str, reopened_at_ms: Option<u64>) -> Stamp {
+    if pane_exit::stamp_predates_reopen(stamp_at_ms(raw), reopened_at_ms) {
+        return Stamp::Absent;
+    }
+    parse_stamp(raw)
+}
+
+/// When a stamp was written (its `at`), in unix ms, or None if it carries no readable time.
+fn stamp_at_ms(raw: &str) -> Option<u64> {
+    let v = serde_json::from_str::<serde_json::Value>(raw).ok()?;
+    iso_utc_ms(v.get("at")?.as_str()?)
 }
 
 /// The delivery state of a pane, as ONE value carrying its own reason.
@@ -10893,6 +10989,10 @@ struct Queued {
     /// For the board row only — never re-rendered into the pane.
     label: String,
     queued_at: Instant,
+    /// D424: what the bounded hold counts from. The moment it was queued, until its pane's one automatic reopen is done:
+    /// then the reopened child's own wait starts, so a message held across the reopen is not forced into a claude that
+    /// is still starting up. `queued_at` stays as it was, for the rows.
+    wait_from: Instant,
     /// Every composer reading taken while THIS message waited — what its forced row is built from.
     reads: Reads,
     /// WITHDRAWN: the chair cancelled this before the pane was ready for it. It is NOT removed
@@ -10954,7 +11054,7 @@ impl Inbox {
     fn push(&self, pane: &str, text: String, label: String, now: Instant) -> usize {
         let mut m = self.0.lock().unwrap();
         let q = m.entry(pane.to_string()).or_default();
-        q.push_back(Queued { text, label, queued_at: now, reads: Reads::default(), withdrawn: false });
+        q.push_back(Queued { text, label, queued_at: now, wait_from: now, reads: Reads::default(), withdrawn: false });
         q.len()
     }
     fn depth(&self, pane: &str) -> usize {
@@ -11026,6 +11126,31 @@ impl Inbox {
         Some((it.label, now.saturating_duration_since(it.queued_at)))
     }
 
+    /// D424: every message queued for a pane whose child exited with nothing reopening it, taken out so the drain can
+    /// refuse each one by name: (text, label, how long it waited, whether it had been withdrawn). Nothing for any other
+    /// gate: an open pane is the ordinary gate's, and a reopen in flight holds.
+    fn take_refused(&self, pane: &str, exit: pane_exit::ExitGate, now: Instant) -> Vec<(String, String, Duration, bool)> {
+        if !matches!(exit, pane_exit::ExitGate::Refuse(_)) {
+            return Vec::new();
+        }
+        let Ok(mut m) = self.0.lock() else { return Vec::new() };
+        m.remove(pane)
+            .map(|q| q.into_iter().map(|it| (it.text, it.label, now.saturating_duration_since(it.queued_at), it.withdrawn)).collect())
+            .unwrap_or_default()
+    }
+
+    /// D424: the pane's one automatic reopen is done. Every message waiting for it starts its bounded hold again from now,
+    /// so the reopened child is waited for on its own terms.
+    fn restart_wait(&self, pane: &str, now: Instant) {
+        if let Ok(mut m) = self.0.lock() {
+            if let Some(q) = m.get_mut(pane) {
+                for it in q.iter_mut() {
+                    it.wait_from = now;
+                }
+            }
+        }
+    }
+
     /// Take the head IF the decision says it may go. Returns the message and whether it was forced.
     /// Leaves the queue untouched on HOLD — bar 4: a queued message must never be lost.
     fn take_ready(
@@ -11060,7 +11185,7 @@ impl Inbox {
         if head.withdrawn {
             return None;
         }
-        let waited = now.saturating_duration_since(head.queued_at);
+        let waited = now.saturating_duration_since(head.wait_from);
         match drain_decision(gate, box_empty, screen_idle, waited, enabled) {
             Drain::Hold => None,
             d => {
@@ -11166,6 +11291,21 @@ fn with_delivery_stamp(text: &str, now: chrono::DateTime<chrono::Utc>) -> String
 /// The one call every delivery site makes before it writes. `Some(reply)` means the message was
 /// QUEUED and the caller must return that reply instead of writing; `None` means go ahead.
 fn gate_or_queue(app: &AppHandle, pane_id: &str, msg: &str, preview: &str) -> Option<String> {
+    // D424: nothing goes into an exited child. Refused at the door with the exit named, or held for the one reopen.
+    match exit_gate_for(app, pane_id) {
+        pane_exit::ExitGate::Refuse(e) => {
+            let row = pane_exit::refused_row(short_id(pane_id), &e, None, preview);
+            plog(&row);
+            chair_audit(app, row.clone());
+            return Some(row);
+        }
+        pane_exit::ExitGate::AwaitReopen => {
+            let depth = app.state::<Inbox>().push(pane_id, msg.to_string(), preview.to_string(), Instant::now());
+            chair_audit(app, format!("QUEUED -> {} ({} waiting, its child exited and its one automatic reopen is running): {}", short_id(pane_id), depth, preview));
+            return Some(format!("queued for {} — its child exited and the app is reopening it once; it delivers when the reopened pane is ready", short_id(pane_id)));
+        }
+        pane_exit::ExitGate::Open => {}
+    }
     let enabled = deliver_only_when_idle();
     let (gate, box_empty, screen_idle, _) = pane_state(&app.state::<PaneEmus>(), pane_id);
     // waited = 0 at the door, so this can only ever say Deliver or Hold here
@@ -11382,6 +11522,26 @@ fn drain_inboxes(app: &AppHandle) {
                  ready for it): {}",
                 short_id(&pane), waited.as_secs(), label
             ));
+        }
+        // D424: THE EXIT GATE, before any reading: a child that exited with nothing reopening it has every message refused
+        // by name and told to its sender; one whose reopen is running holds, and nothing is taken for it this tick.
+        let exit = exit_gate_for(app, &pane);
+        for (text, label, waited, withdrawn) in app.state::<Inbox>().take_refused(&pane, exit, Instant::now()) {
+            if withdrawn {
+                chair_audit(app, format!(
+                    "WITHDRAWN NOT DELIVERED -> {} (queued {}s ago, cancelled before this pane was ready for it): {}",
+                    short_id(&pane), waited.as_secs(), label
+                ));
+                continue;
+            }
+            let pane_exit::ExitGate::Refuse(e) = exit else { continue };
+            let row = pane_exit::refused_row(short_id(&pane), &e, Some(waited.as_secs()), &label);
+            plog(&row);
+            chair_audit(app, row);
+            tell_refused_sender(app, &pane, &text, &e, &label);
+        }
+        if exit != pane_exit::ExitGate::Open {
+            return;
         }
         let (gate, box_empty, screen_idle, composer) = pane_state(&app.state::<PaneEmus>(), &pane);
         app.state::<Inbox>().note_reading(&pane, composer);
@@ -20680,6 +20840,60 @@ mod composer_tristate_tests {
         assert_eq!(i.depth("p"), 0, "reported and gone");
     }
 
+    /// D424 ITEM 2, THE 22:37 CASE, through the inbox in the drain's own order (exit gate, refusals, then the take): O's
+    /// child exited with code 3 at about 22:24 and nothing reopened it; the chair's GO had been queued behind a ready
+    /// stamp from O's last Stop and a composer nobody could read. At the bound it was FORCED and read DELIVERED. It must
+    /// be refused, by name, and nothing must be left for the take to deliver.
+    #[test]
+    fn the_2237_case_a_queued_go_and_an_exited_pid_never_read_delivered() {
+        let t0 = Instant::now();
+        let i = Inbox::new();
+        i.push("c88002b1", "[chair:MAIN] D421c landing GO".into(), "D421c landing GO".into(), t0);
+        let o = pane_exit::PaneExit { pid: Some(31337), code: Some(3), at_ms: 1 };
+        let exits = HashMap::from([("c88002b1".to_string(), o)]);
+        let later = t0 + Duration::from_millis(MAX_HOLD_MS + 1);
+        let exit = pane_exit::exit_gate(&exits, &HashSet::new(), "c88002b1", Some(31337));
+        let refused = i.take_refused("c88002b1", exit, later);
+        let delivered = i.take_ready_read("c88002b1", PaneGate::Ready, false, false, later, true);
+        assert!(delivered.is_none(), "the GO was taken for delivery into an exited child: {:?}", delivered.map(|d| (d.1, d.2)));
+        assert_eq!(refused.len(), 1, "the GO was not refused");
+        assert_eq!((refused[0].1.as_str(), refused[0].0.starts_with("[chair:MAIN] ")), ("D421c landing GO", true));
+        assert_eq!(i.depth("c88002b1"), 0, "a refused message is still queued");
+    }
+
+    /// The refusal takes only that pane's messages, every one of them, in order, and an open pane's queue is untouched.
+    #[test]
+    fn a_refusal_takes_every_message_for_that_pane_and_none_for_another() {
+        let t0 = Instant::now();
+        let i = Inbox::new();
+        let o = pane_exit::PaneExit { pid: Some(7), code: Some(3), at_ms: 1 };
+        i.push("p", "one".into(), "a".into(), t0);
+        i.push("p", "two".into(), "b".into(), t0);
+        i.push("q", "other".into(), "c".into(), t0);
+        assert!(i.take_refused("p", pane_exit::ExitGate::Open, t0).is_empty(), "an open pane's queue was refused");
+        assert!(i.take_refused("p", pane_exit::ExitGate::AwaitReopen, t0).is_empty(), "a reopen in flight refused the queue");
+        let r = i.take_refused("p", pane_exit::ExitGate::Refuse(o), t0);
+        assert_eq!(r.iter().map(|x| x.1.as_str()).collect::<Vec<_>>(), ["a", "b"]);
+        assert_eq!((i.depth("p"), i.depth("q")), (0, 1));
+    }
+
+    /// D424 ITEM 2, AFTER THE REOPEN: a message held across the reopen waits for the NEW child. Queued long enough ago to
+    /// be past the bound, it is not forced into the reopened claude while that one is still starting up (no stamp of its
+    /// own, a screen still drawing); it goes when the new child's screen reads ready.
+    #[test]
+    fn a_message_held_across_the_reopen_waits_for_the_new_child() {
+        let t0 = Instant::now();
+        let i = Inbox::new();
+        i.push("p", "m".into(), "the GO".into(), t0);
+        let reopened = t0 + Duration::from_millis(MAX_HOLD_MS + 60_000);
+        i.restart_wait("p", reopened);
+        let starting = reopened + Duration::from_millis(1_000);
+        assert!(i.take_ready_read("p", PaneGate::Unstamped, false, false, starting, true).is_none(),
+            "the held message was forced into the reopened child before it was ready");
+        let (_, _, why, _) = i.take_ready_read("p", PaneGate::Unstamped, true, true, starting, true).expect("the new child is ready");
+        assert_eq!(why, None, "a ready new child should take it unforced");
+    }
+
     /// THE FALSIFIER, AND IT OUTRANKS THE FIX. This is the queue every dispatch uses. If anything
     /// added this lap can drop a message that was never withdrawn, the change is wrong.
     #[test]
@@ -22784,6 +22998,91 @@ mod pane_exit_wiring_tests {
     }
     fn src() -> String {
         fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n")
+    }
+
+    fn kept(pane: &str, cwd: &str) -> KeptPane {
+        KeptPane { pane: pane.to_string(), cwd: cwd.to_string(), label: String::new() }
+    }
+
+    /// D424 ITEM 1: a committee pane resumes in the folder its kept record holds; a fixed seat in its own; a committee
+    /// pane with no record (or an empty folder) and every human pane are left to the ↻, whatever the record says.
+    #[test]
+    fn a_committee_pane_resumes_where_its_kept_record_says_and_a_human_pane_never() {
+        let rec = [kept("c88002b1-74d8", "C:/Consonance/instances/sibling-a"), kept("blank", "  "), kept("room", "C:/rooms/x")];
+        assert_eq!(reopen_seat(None, "committee", &rec, "c88002b1-74d8"), (pane_exit::Seat::Committee, Some("C:/Consonance/instances/sibling-a".to_string())));
+        assert_eq!(reopen_seat(None, "committee", &rec, "nobody"), (pane_exit::Seat::Human, None), "a committee pane with no record was reopened");
+        assert_eq!(reopen_seat(None, "committee", &rec, "blank"), (pane_exit::Seat::Human, None), "an empty folder was resumed in");
+        assert_eq!(reopen_seat(None, "human", &rec, "room"), (pane_exit::Seat::Human, None), "a human pane was reopened");
+        assert_eq!(reopen_seat(Some("C:/main".to_string()), "main", &[], MAIN_SID), (pane_exit::Seat::Fixed, Some("C:/main".to_string())));
+    }
+
+    /// D424 ITEM 2, WIRED: the door asks the exit gate before the delivery decision; the drain asks it before any reading,
+    /// refuses and tells the sender, and takes nothing for a pane that is not open; the stamp reader asks whether the
+    /// stamp is the dead child's.
+    #[test]
+    fn the_door_and_the_drain_ask_the_exit_gate_first() {
+        let s = src();
+        let door = body_of(&s, "fn gate_or_queue(");
+        let (g, d) = (door.find("exit_gate_for(app, pane_id)").expect("the door does not ask the exit gate"), door.find("drain_decision(").unwrap());
+        assert!(g < d, "the door decides delivery before it asks whether the child exited");
+        assert!(door[g..d].contains("pane_exit::refused_row(") && door[g..d].contains("return Some(row);"), "the door's refusal is not returned to the sender");
+        let drain = body_of(&s, "fn drain_inboxes(");
+        let at = |n: &str| drain.find(n).unwrap_or_else(|| panic!("drain_inboxes has no {n}"));
+        let (gate, refuse, tell, stop, read, take) = (at("exit_gate_for(app, &pane)"), at(".take_refused(&pane, exit,"), at("tell_refused_sender("), at("if exit != pane_exit::ExitGate::Open {\n            return;\n        }"), at("pane_state(&app.state::<PaneEmus>(), &pane)"), at(".take_ready_read("));
+        assert!(gate < refuse && refuse < tell && tell < stop && stop < read && read < take, "exit gate -> refusals -> told -> stop -> reading -> take is out of order");
+        assert!(body_of(&s, "fn read_stamp(").contains("gate_stamp(&raw, harvest_guard::recover(reopened_at().lock()).get(pane).copied())"), "the stamp reader does not ask about the reopen");
+    }
+
+    /// D424 ITEM 2, AFTER THE REOPEN, at the stamp: the dead child's last Stop stamp (O's, before the reopen) reads as no
+    /// stamp for the reopened child, so the screen gate decides; the new child's own stamp, written after, reads as itself;
+    /// a pane never reopened keeps its stamp.
+    #[test]
+    fn the_dead_childs_ready_stamp_is_not_the_reopened_childs() {
+        let reopen = iso_utc_ms("2026-10-21T04:25:00.000Z");
+        let old = r#"{"ready":true,"at":"2026-10-21T04:12:31.000Z","event":"stop"}"#;
+        let new = r#"{"ready":true,"at":"2026-10-21T04:26:10.000Z","event":"stop"}"#;
+        let timeless = r#"{"ready":true}"#;
+        assert_eq!(gate_stamp(old, reopen), Stamp::Absent, "the dead child's ready stamp let a message into the new one");
+        assert_eq!(gate_stamp(timeless, reopen), Stamp::Absent);
+        assert_eq!(gate_stamp(new, reopen), Stamp::Done, "the new child's own stamp was ignored");
+        assert_eq!(gate_stamp(old, None), Stamp::Done, "a pane never reopened lost its stamp");
+        assert_eq!(gate_stamp(r#"{"ready":false,"at":"2026-10-21T04:26:10.000Z"}"#, reopen), Stamp::Working);
+    }
+
+    /// D424 CUT, WIRED (P's items 1, 2 and 5): the sender is chosen by `refusal_recipient`, and a lettered one gets a NOT
+    /// TOLD row naming its letter, never a note; both new-session paths (the automatic reopen's Ok arm and the ↻) drop the
+    /// exit and record the reopen after the new session is in, and the ↻ restarts the held messages' wait before it.
+    #[test]
+    fn the_cut_tells_only_fixed_senders_and_both_new_sessions_clear_the_exit() {
+        let s = src();
+        let tell = body_of(&s, "fn tell_refused_sender(");
+        assert!(tell.contains("pane_exit::refusal_recipient(text)"), "the sender is not chosen by refusal_recipient");
+        let nt = tell.find("pane_exit::Recipient::NotTold(letter) =>").expect("no NotTold arm");
+        let arm = &tell[nt..tell.find("pane_exit::Recipient::Nobody => return,").expect("no Nobody arm")];
+        assert!(arm.contains("REFUSAL NOT TOLD -> pane:{letter}"), "the NOT TOLD row does not name the letter");
+        assert!(arm.trim_end().ends_with("return;\n        }"), "the NotTold arm goes on to route the note");
+        assert!(!tell.contains("sender_of("), "the old any-sender path is still there");
+        let reopen = body_of(&s, "fn pty_reopen(");
+        let at = |b: &str, n: &str| b.find(n).unwrap_or_else(|| panic!("no {n}"));
+        assert!(at(&reopen, "restart_wait(&pane, Instant::now())") < at(&reopen, "insert_pane(") && at(&reopen, "insert_pane(") < at(&reopen, "new_session_for(&pane)"),
+            "the ↻: restart the wait, insert, then clear the exit and record the reopen");
+        let exit = body_of(&s, "fn on_pane_exit(");
+        assert!(at(&exit, "insert_pane(&app.state::<Panes>(), pane.to_string(), session);") < at(&exit, "new_session_for(pane)"),
+            "the automatic reopen does not clear the exit after the new session is in");
+    }
+
+    /// D424 ITEM 1, WIRED: the reopen is marked under way BEFORE the exit is recorded (so the gate never refuses what
+    /// should wait), the held messages' wait restarts BEFORE the new pid lands, and the mark is cleared on both arms.
+    #[test]
+    fn the_reopen_is_marked_before_the_exit_and_cleared_after_the_new_pid() {
+        let body = body_of(&src(), "fn on_pane_exit(");
+        let at = |n: &str| body.find(n).unwrap_or_else(|| panic!("on_pane_exit has no {n}"));
+        assert!(body.contains("reopen_seat(fixed_seat_cwd(pane), &role, &read_kept(), pane)"), "a committee pane's folder is not looked up");
+        assert!(at("reopening().lock()).insert(pane.to_string())") < at("pane_exits().lock()).insert("), "the exit is recorded before the reopen is marked");
+        let (restart, insert) = (at("restart_wait(pane, Instant::now())"), at("insert_pane(&app.state::<Panes>(), pane.to_string(), session);"));
+        assert!(restart < insert, "the new pid lands before the held messages' wait restarts");
+        assert_eq!(body.matches("reopening().lock()).remove(pane)").count(), 2, "the reopen mark is not cleared on both arms");
+        assert!(at("reopened_at().lock()).insert(") < at("spawn_claude_pane("), "the reopen time is set after the new child could stamp");
     }
 
     /// The exited pane's row says EXITED even when its transcript ends on an open AskUserQuestion — a dead process is

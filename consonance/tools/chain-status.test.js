@@ -1354,6 +1354,17 @@ test('QUEUED — a ring FORCE-delivered (the post-D074 row, with "; composer: �
   assert.ok(!/QUEUED/.test(t), t);
 });
 
+// D424: a ring queued for a pane whose child then exited is REFUSED in the queue. The row is main.rs's own
+// (`pane_exit::refused_row`, the 22:37 case: O exited with code 3 and was not reopened). Unpaired, the refused ring read
+// as "waiting" for ever, which is the six silent hours over again.
+const RROW = (ts, sid, label) => ({ pane: 'chair', role: 'committee', ts,
+  text: 'REFUSED NOT DELIVERED -> ' + sid.slice(0, 8) + ' (queued 14s ago; its claude process exited by itself (exit code 3) at 04:24:58Z'
+    + ' and is not being reopened, so nothing was written into it — ↻ on its pane reopens it): ' + label });
+test('QUEUED — a ring REFUSED because its pane exited is not printed as waiting', () => {
+  const t = qline([QROW(T0, A, 'stamp=ready', RING), RROW(T0 + 1 * MIN, A, RING)], T0 + 99 * MIN);
+  assert.ok(!/QUEUED/.test(t), t);
+});
+
 test('QUEUED — a ring that was WITHDRAWN is not printed', () => {
   const t = qline([QROW(T0, A, 'stamp=working', RING), WROW(T0 + 2 * MIN, A, RING)], T0 + 20 * MIN);
   assert.ok(!/QUEUED/.test(t), t);

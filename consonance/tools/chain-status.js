@@ -747,7 +747,8 @@ const MAIN_SID = '0c0c0c0a-0000-4000-8000-000000000a01';   // the chair's fixed 
 const QUEUED_WORKING_MS = 3 * 60 * 1000;
 const HOLD_BOUND_MS = 240 * 1000;                  // main.rs MAX_HOLD_MS — a copy; if that constant moves, move this
 const QUEUED_BOUNDED_MS = HOLD_BOUND_MS + 60 * 1000;
-const QUEUE_ROW_RE = /^(QUEUED|DELIVERED|WITHDRAWN NOT DELIVERED) -> ([0-9a-f]{8})/;
+// D424: a ring refused in the queue because its pane exited ends its wait too (main.rs `pane_exit::refused_row`).
+const QUEUE_ROW_RE = /^(QUEUED|DELIVERED|WITHDRAWN NOT DELIVERED|REFUSED NOT DELIVERED) -> ([0-9a-f]{8})/;
 
 /** One of the three queue rows, split into kind, receiver (8 hex), gate (QUEUED only) and label; or null. */
 function queueRow(text) {
