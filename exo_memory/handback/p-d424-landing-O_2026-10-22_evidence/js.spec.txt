@@ -1,0 +1,1905 @@
+HEAD 3fc78c67edc5679101c677cb848885b40394b525
+files consonance/tools/boundary-check.artifacts.test.js consonance/tools/carrier-drift.test.js consonance/tools/consumer-fork-wiring.test.js consonance/tools/consumer-relabel.test.js consonance/tools/gen-brief-gate.test.js consonance/tools/gen-consumer.test.js consonance/tools/identity-diff.test.js consonance/tools/lap-row.test.js consonance/tools/librarian-cite.test.js consonance/tools/librarian-notes.test.js consonance/tools/librarian-route.test.js consonance/tools/open-items-build.test.js consonance/tools/portable-paths.test.js consonance/tools/universe-print.test.js consonance/tools/chain-status.test.js
+started 2026-10-22T14:45:06.912Z wall 214.2 s exit 1
+
+[32m✔ ARTIFACT: the source is text — no raw control byte makes it binary to grep [90m(0.3857ms)[39m[39m
+[32m✔ ARTIFACT: no main.rs citation is a LINE NUMBER — line numbers rot [90m(0.4712ms)[39m[39m
+[32m✔ ARTIFACT: every main.rs symbol this file cites still exists in main.rs [90m(2.5761ms)[39m[39m
+[32m✔ ARTIFACT: the BUILDING.md path resolves and the freestyle cut is quoted whole [90m(1.1752ms)[39m[39m
+[32m✔ collapse: a phrase broken over a line break becomes one span, mapped to its first line [90m(1.1312ms)[39m[39m
+[32m✔ collapse: CRLF is normalised, so a Windows-checkout file is not a different corpus [90m(0.108ms)[39m[39m
+[32m✔ an unaccounted assertion in a carrier is RED, with the file and line [90m(6.8112ms)[39m[39m
+[32m✔ the same wording in a TRACE is GREEN — a journal recording June is a true record of June [90m(1.0946ms)[39m[39m
+[32m✔ an accounted, marked assertion is GREEN [90m(1.8308ms)[39m[39m
+[32m✔ MUTATION, the propagation failure itself: delete the marker and the same file goes RED [90m(1.6986ms)[39m[39m
+[32m✔ MUTATION, the re-assertion: a SECOND occurrence in an already-marked file is RED [90m(1.6489ms)[39m[39m
+[32m✔ an acknowledged site with no "see" is RED — an exemption with no destination is a silencer [90m(1.3716ms)[39m[39m
+[32m✔ an acknowledged site in a file with no marker is RED [90m(1.3174ms)[39m[39m
+[32m✔ an anchor that does not contain the withdrawn wording is RED — it excuses nothing [90m(1.542ms)[39m[39m
+[32m✔ an anchor matching twice is RED — it cannot say WHICH occurrence it accounts for [90m(1.3128ms)[39m[39m
+[32m✔ an anchor that no longer appears is RED — a rotted census excuses by inertia [90m(1.8907ms)[39m[39m
+[32m✔ a site naming a file outside the corpus is RED [90m(1.4681ms)[39m[39m
+[32m✔ properly removing the wording goes RED as STALE-SITE until the registry is pruned [90m(1.6841ms)[39m[39m
+[32m✔ an EMPTY registry is RED — an unarmed instrument is not a green tree [90m(1.1189ms)[39m[39m
+[32m✔ a wrapped, reworded assertion is caught, and a line-based fixed-string scan misses it [90m(1.6149ms)[39m[39m
+[32m✔ THE BAR, half one: the shipped registry is GREEN against the working tree [90m(2621.5804ms)[39m[39m
+[32m✔ THE BAR, half two: the same registry is RED against the tree at 21d5453^ [90m(393.2319ms)[39m[39m
+[32m✔ THE COMPARISON: the registered sweep misses the carrier this tool finds [90m(498.764ms)[39m[39m
+[32m✔ THE BAR: armed with the diving withdrawal, the tool is RED on the record/ file that produced the only measured use [90m(3044.0856ms)[39m[39m
+[32m✔ CH-4 IS A LABEL, NOT A FILTER: a carrier OUTSIDE the reachable set is still red [90m(421.2884ms)[39m[39m
+[32m✔ the shipped frozen CH-4 list still matches a live walk — the registry is self-consistent [90m(6.8202ms)[39m[39m
+[32m✔ a file that becomes instruction-reachable and is not frozen is RED, not silently absorbed [90m(2645.7595ms)[39m[39m
+[32m✔ a frozen file the walk no longer reaches is RED — a removed pointer is a real change [90m(2800.7821ms)[39m[39m
+[32m✔ a registry with no ch4_corpus is RED over a real room — nothing to diff the walk against [90m(2709.4049ms)[39m[39m
+[32m✔ CH-4 does not fire at all on a tree that is not a room — the tool must not describe its own fixtures [90m(1.76ms)[39m[39m
+[32m✔ a CITATION is not walked — path:line is evidence of a past event, and traces keep their wording [90m(2.8518ms)[39m[39m
+[32m✔ the instruction verb must be NEAR the pointer — a long paragraph does not make every path it cites an instruction [90m(2.3435ms)[39m[39m
+[32m✔ a TRACE that is instruction-reachable is excluded from the set and reported separately [90m(2.6878ms)[39m[39m
+[32m✔ BOTH roots are walked — single-root blindness is the error this set exists to prevent [90m(3.0087ms)[39m[39m
+[32m✔ a missing root over a tree that has the other one is RED, not quietly a smaller walk [90m(2.295ms)[39m[39m
+[32m✔ armed defaults to TRUE — an entry with no field behaves exactly as before [90m(1.1986ms)[39m[39m
+[32m✔ a DISARMED entry computes and PRINTS its findings and does not go red [90m(1.4741ms)[39m[39m
+[32m✔ a disarmed entry that names nothing to arm it is RED — an exemption with no destination [90m(1.3105ms)[39m[39m
+[32m✔ THE BAR, red-then-green: a superseded wording in a live instruction is RED, the corrected wording is not [90m(2.7559ms)[39m[39m
+[32m✔ THE GOVERNING QUESTION, half answered: the handle VARIES and a canonical-string pattern misses it [90m(1.9618ms)[39m[39m
+[32m✔ MUTATION over the REAL tree: the shipped cant-lose entry is ARMED and green; break its marker and it fires, disarm it and the same findings go PENDING [90m(10104.2047ms)[39m[39m
+[32m✔ the shipped cant-lose census is COMPLETE — every occurrence in every carrier is accounted [90m(2456.6707ms)[39m[39m
+[32m✔ THE MAP'S ENUMERATION WAS THE CH-4 SUBSET: registering only those five leaves the rest unaccounted [90m(567.7043ms)[39m[39m
+[32m✔ an .html carrier asserting a withdrawn wording is RED — the About tab, which was invisible before [90m(1.6981ms)[39m[39m
+[32m✔ MUTATION: drop .html from the scanned extensions and the same file goes silently GREEN [90m(2.7326ms)[39m[39m
+[32m✔ the .html widening changed what the tool SEES and not what drift MEANS [90m(1.9534ms)[39m[39m
+[32m✔ the three description surfaces are reported by name, and the line is a REPORT not a filter [90m(3.8357ms)[39m[39m
+[32m✔ a DISARMED entry prints its findings and does not set red — the light-not-lifeguard case [90m(1.2556ms)[39m[39m
+[32m✔ a DISARMED entry with no arms_on is RED — an exemption with no destination is a silencer [90m(1.5472ms)[39m[39m
+[32m✔ the HYPHENATED form of a slogan is admitted — the enumerated-alternation limit, fired [90m(4.3668ms)[39m[39m
+[32m✔ a description surface has NO trace exemption — a hit there is RED even when the entry is DISARMED [90m(2.9469ms)[39m[39m
+[32m✔ a dated map extract that DECLARES itself mechanically extracted is a TRACE [90m(1.7803ms)[39m[39m
+[32m✔ THE DATED PATH ALONE CONFERS NOTHING — a file there that does not declare itself is a CARRIER [90m(2.2661ms)[39m[39m
+[32m✔ a LIVE pane map in the same directory stays a CARRIER even carrying the declaration [90m(1.4212ms)[39m[39m
+[32m✔ the corpus line NAMES the dated-extract rule — an unprinted corpus rule is a false green [90m(2.0367ms)[39m[39m
+[32m✔ THE BAR over the REAL tree: no finding survives in a dated verbatim extract [90m(2638.9061ms)[39m[39m
+[32m✔ a fixture site with no `planted_by` is RED — an exemption with no author is a silencer [90m(3.0511ms)[39m[39m
+[32m✔ a fixture site that names its run is GREEN, and needs no marker in the object [90m(1.9604ms)[39m[39m
+[32m✔ MUTATION: a fixture row on an INSTRUCTION-REACHABLE file is RED, whatever it names [90m(3.8917ms)[39m[39m
+[32m✔ an UNKNOWN kind is RED — before this, a typo silently accounted for a carrier [90m(1.8183ms)[39m[39m
+[32m✔ MUTATION: `acknowledged` misspelled loses its `see` guard unless kinds are checked [90m(1.6473ms)[39m[39m
+[32m✔ EVIDENCE: a withdrawn wording inside foo_evidence/ is a TRACE, not a finding [90m(1.9957ms)[39m[39m
+[32m✔ EVIDENCE: foo_evidencex/ and evidence/ are NOT skipped, and a sibling carrier beside foo_evidence/ is still red [90m(6.8733ms)[39m[39m
+[32m✔ EVIDENCE: the corpus line names the rule, and the skipped copies are counted in it [90m(1.1687ms)[39m[39m
+warning: in the working copy of 'exo_memory/handback/p-landed.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'exo_memory/handback/p-sitting.md', LF will be replaced by CRLF the next time Git touches it
+[32m✔ reader: with a ledger it prints one line naming lap, stage and holder [90m(4.2572ms)[39m[39m
+[32m✔ reader: WITHOUT a ledger it prints nothing on stdout, exits 0, and says why on stderr (never MUTE) [90m(39.2008ms)[39m[39m
+[32m✔ reader: the silence is CHOSEN, not a swallowed crash - --why names the reason [90m(35.9579ms)[39m[39m
+[32m✔ THE BAR: a lap whose newest baton row is `filed` does NOT appear in the line [90m(1.9532ms)[39m[39m
+[32m✔ a filed lap is not resurrected by its own earlier row [90m(2.1175ms)[39m[39m
+[32m✔ an unfiled lap alongside a filed one is the one reported, and the count is stated [90m(2.2777ms)[39m[39m
+[32m✔ two unfiled laps: the newest leads and the line SAYS the others exist [90m(1.6315ms)[39m[39m
+[32m✔ the line states what it cannot see: one machine, and a repo-wide dirty count [90m(1.8776ms)[39m[39m
+[32m✔ an unreadable git tree prints `dirty ?`, never `dirty 0` [90m(1.7018ms)[39m[39m
+[32m✔ a ledger line that will not parse is COUNTED, not filtered away [90m(1.6237ms)[39m[39m
+[32m✔ dirtyCount returns null rather than 0 when git cannot answer [90m(21.0668ms)[39m[39m
+[32m✔ writer: an unknown stage is REFUSED and the vocabulary is printed [90m(61.4715ms)[39m[39m
+[32m✔ writer: a row with no holder is REFUSED - a baton must name a hand [90m(39.6422ms)[39m[39m
+[32m✔ writer: `filed` needs a holder too - no exemption [90m(37.7369ms)[39m[39m
+[32m✔ writer: the chain cannot MINT a lap [90m(37.5944ms)[39m[39m
+[32m✔ writer: an accepted row round-trips to the reader [90m(88.8254ms)[39m[39m
+[32m✔ THE COLLISION: a chain row must not land in the `stage` field, and does not [90m(44.348ms)[39m[39m
+[32m✔ THE BAR: a lap filed without ever reaching the work leg is NAMED, where this was silent [90m(1.8864ms)[39m[39m
+[32m✔ THE MUTATION: one `working` row silences it, and it is the ONLY thing that changed [90m(3.2097ms)[39m[39m
+[32m✔ THE DISCRIMINATION: a lap that reached `return-leg` with no `working` row is SPARED [90m(1.5571ms)[39m[39m
+[32m✔ a healthy lap prints the line it printed before this section existed, byte for byte [90m(1.7857ms)[39m[39m
+[32m✔ the universe rides the claim: the denominator is printed WITH it, never left to the reader [90m(3.1973ms)[39m[39m
+[32m✔ the claim carries its own limit, and ONLY where the claim is made [90m(3.7213ms)[39m[39m
+[32m✔ the loud clause is bounded to the NEWEST lap: an open lap leads, the dead one falls to the count [90m(1.708ms)[39m[39m
+[32m✔ E-3.1: ONE healthy lap filing after the deaths must not mute the alarm on STDOUT [90m(1.78ms)[39m[39m
+[32m✔ E-3.1: and it reaches STDOUT through the cli, which is the only channel the pulse reads [90m(85.7608ms)[39m[39m
+[32m✔ E-3.2: the window cap names what it dropped instead of shrinking the count in silence [90m(2.7078ms)[39m[39m
+[32m✔ E-3.3: a lap with a damaged chain row is UNKNOWN, never counted as a chain death [90m(1.7686ms)[39m[39m
+[32m✔ E-3.3: a wholly corrupt ledger reads as CORRUPT on stdout, never as clean [90m(110.7271ms)[39m[39m
+[32m✔ membership, never ordering: the map/dispatched order every real lap uses is read the same [90m(4.3391ms)[39m[39m
+[32m✔ a lap continued after being filed is OPEN, not dead - the two readers agree about `closed` [90m(1.9532ms)[39m[39m
+[32m✔ more unwitnessed laps than the list cap: ids truncate with +N and the COUNT stays exact [90m(2.137ms)[39m[39m
+[32m✔ a ledger with chain rows and NOTHING unwitnessed still exits 0 with stdout silent, and stderr says why [90m(40.1296ms)[39m[39m
+[32m✔ the dead lap reaches the ACTUAL cli, not only line() - the hook reads stdout [90m(115.2593ms)[39m[39m
+[32m✔ BAR 1 — holder=panes and every dispatched pane has posted: the line SAYS SO [90m(6.4157ms)[39m[39m
+[32m✔ BAR 2 — one pane has not posted: SILENT on the claim, and it names who is owed [90m(4.0183ms)[39m[39m
+[32m✔ BAR 2b — a hand-back that PREDATES the dispatch does not count: it answered an older brief [90m(4.2223ms)[39m[39m
+[32m✔ BAR 3 — holder=chair is silent on the claim no matter how long every pane has been quiet [90m(4.0931ms)[39m[39m
+[32m✔ BAR 3b — holder=librarian is silent too, on the identical board [90m(4.3027ms)[39m[39m
+[32m✔ THE TRAP — an UNPARSEABLE board says UNKNOWN, never silent [90m(3.6842ms)[39m[39m
+[32m✔ FUSED — the live shape (two rows glued `}{`, stray newline after) is RECOVERED, not UNKNOWN [90m(4.0018ms)[39m[39m
+[32m✔ FUSED — the count PRINTS, so the write defect stays visible from the line everyone reads [90m(4.0299ms)[39m[39m
+[32m✔ FUSED — THE GUARD SURVIVES: a DISPATCH hidden inside a fused line is counted, and the pane is owed [90m(4.567ms)[39m[39m
+[32m✔ FUSED — THE OTHER DIRECTION: `}{` clothing on a line that does NOT decompose is still UNKNOWN [90m(4.4149ms)[39m[39m
+[32m✔ FUSED — the split happens at the boundary that PARSES, not at the first `}{` in the bytes [90m(0.5051ms)[39m[39m
+[32m✔ FUSED — an ordinary single row is untouched: not fused, and the line does not mention it [90m(3.9547ms)[39m[39m
+[32m✔ THE DEADLOCK — a chair ring to the LIBRARIAN is a wake, not a dispatch: the counter still completes [90m(3.8ms)[39m[39m
+[32m✔ THE DEADLOCK — the exclusion is by SEAT, not by silence: a pane that has not posted is still owed [90m(4.3503ms)[39m[39m
+[32m✔ THE NEW ROUTE — a pane's `call_librarian` audit row IS its hand-back [90m(4.249ms)[39m[39m
+[32m✔ THE NEW ROUTE — a call that PREDATES the dispatch answered an older brief and does not count [90m(4.2829ms)[39m[39m
+[32m✔ THE NEW ROUTE — a REFUSED call is not a hand-back [90m(4.3514ms)[39m[39m
+[32m✔ THE TRAP — an unreadable letters.json says UNKNOWN, and the line carries it [90m(3.2937ms)[39m[39m
+[32m✔ THE TRAP — a dispatch to a pane with NO letter is UNKNOWN, not a smaller round [90m(3.7929ms)[39m[39m
+[32m✔ THE TRAP — an AMBIGUOUS id prefix resolves to nothing rather than to a guess [90m(0.7511ms)[39m[39m
+[32m✔ THE TRAP — a byte tail that does not reach the anchor is UNKNOWN, not "nobody owes" [90m(0.5357ms)[39m[39m
+[32m✔ the anchor scopes the round: a dispatch from BEFORE the last `filed` row is not this cycle [90m(3.6972ms)[39m[39m
+[32m✔ a store with NO board.jsonl is not a room running a committee: n/a and silent [90m(1.7966ms)[39m[39m
+[32m✔ the chair's own board traffic is not a hand-back [90m(4.1219ms)[39m[39m
+[32m✔ a delivery-UNCONFIRMED dispatch is counted and said, not silently treated as delivered [90m(3.8577ms)[39m[39m
+[32m✔ THE UNIVERSE rides the claim: N of M and the round are printed, never left to the reader [90m(3.8265ms)[39m[39m
+[32m✔ MUTATION — remove one hand-back row and the fired claim goes silent [90m(7.4074ms)[39m[39m
+[32m✔ BLIND — an active window withholds the claim and DECLARES the mute [90m(2.5605ms)[39m[39m
+[32m✔ BLIND — an UNREADABLE marker fails CLOSED, per blind.js decision 3 [90m(3.4757ms)[39m[39m
+[32m✔ BLIND — an EXPIRED marker does not mute: fail-closed is not fail-forever [90m(4.5463ms)[39m[39m
+[32m✔ BLIND — the marker is read from the STORE, never from the live machine [90m(2.8097ms)[39m[39m
+[32m✔ COVERAGE, stated: this claim cannot fire on a lap whose holder never reached panes [90m(4.1574ms)[39m[39m
+[32m✔ TONIGHT, REPRODUCED — the return leg carries the bounce and names what is sitting [90m(4.0866ms)[39m[39m
+[32m✔ RED FIRST — the same leg, the same duration, no bounce: no verdict at all [90m(3.8203ms)[39m[39m
+[32m✔ a bounce CLEARED by a later delivery is not printed [90m(4.3968ms)[39m[39m
+[32m✔ a delivery BEFORE the bounce does not clear it [90m(3.8455ms)[39m[39m
+[32m✔ the clause rides EVERY holder — a bounce under holder=panes is a bounce [90m(4.0289ms)[39m[39m
+[32m✔ the collation segments stay gated: a holder=chair line gains clause 3 and nothing else [90m(3.9299ms)[39m[39m
+[32m✔ a bounce from BEFORE the anchor is not resurrected [90m(4.255ms)[39m[39m
+[32m✔ a refusal naming a mount that resolves to no letter is COUNTED, never dropped [90m(3.7907ms)[39m[39m
+[32m✔ an unreadable board says delivery UNKNOWN on a line where collation cannot speak [90m(2.74ms)[39m[39m
+[32m✔ an unreadable tree claims NO hand-backs — `dirty ?` never carries a list [90m(4.1369ms)[39m[39m
+[32m✔ tree() names an UNTRACKED hand-back and not a committed one [90m(361.1982ms)[39m[39m
+[32m✔ tree() on a non-repo is dirty null and hand-backs EMPTY, never a claim [90m(21.4539ms)[39m[39m
+[32m✔ more hand-backs than the list cap are counted, never silently trimmed [90m(4.1414ms)[39m[39m
+[32m✔ IN SYNC — with no sync status in the store, the line is BYTE-IDENTICAL to what it printed before [90m(3.7819ms)[39m[39m
+[32m✔ IN SYNC — one commit hash per machine, and it says AS OF, never a live agreement [90m(3.8145ms)[39m[39m
+[32m✔ IN SYNC — one machine only is a QUESTION, not an agreement [90m(3.5897ms)[39m[39m
+[32m✔ IN SYNC — a machine that has pushed nothing prints `never`, never a blank [90m(4.1497ms)[39m[39m
+[32m✔ IN SYNC — an unparseable status file falls back to the old admission, never to a crash [90m(3.8628ms)[39m[39m
+[32m✔ IN SYNC — the status is read from the STORE, never from the live machine [90m(3.1999ms)[39m[39m
+[32m✔ STALE, THE BAR: an open lap whose last row is older than 24 h is NAMED FIRST, with its id, holder and age [90m(1.5992ms)[39m[39m
+[32m✔ STALE, THE CITED CASE replayed at 13:15:10 on 09-16 — the moment C was refused — names D064 first [90m(1.6163ms)[39m[39m
+[32m✔ STALE, the margin on the cited case: at 13:14:00 on 09-16 the 24 h rule is SILENT — it named D064 by 61 s [90m(1.8529ms)[39m[39m
+[32m✔ STALE, once D064 is parked it is gone from the line entirely [90m(1.5947ms)[39m[39m
+[32m✔ STALE, the boundary is strict: at exactly 24 h a lap is not stale, one millisecond later it is [90m(3.2823ms)[39m[39m
+[32m✔ STALE, the case the old line hid: a stale lap BEHIND a newer open lap is named, not folded into "+1 more open" [90m(2.147ms)[39m[39m
+[32m✔ STALE, a fresh lap prints no STALE segment, and a filed lap however old is never stale [90m(2.0301ms)[39m[39m
+[32m✔ STALE, age is measured from the lap's NEWEST row of any stage — a recent non-chain row keeps it alive [90m(1.6064ms)[39m[39m
+[32m✔ STALE, several: oldest first, capped at the list cap with +N, one line [90m(1.804ms)[39m[39m
+[32m✔ STALE, NEVER THROWS on a damaged ledger, and still names the stale lap it can age [90m(2.1514ms)[39m[39m
+[32m✔ STALE reaches STDOUT through the actual CLI — the only channel the pulse reads [90m(85.4839ms)[39m[39m
+[32m✔ STALE, a DAMAGED row that comes first must not hide a lap that is stale by its well-formed rows (mutant M10) [90m(1.8476ms)[39m[39m
+[32m✔ STALE, NEVER TAKES THE PULSE DOWN: a throw in the stale reader prints STALE UNKNOWN and the line still prints (mutant M11) [90m(1.7472ms)[39m[39m
+[32m✔ QUEUED — a ring waiting 4 min behind stamp=working is printed, naming the seat and when it started waiting [90m(4.0668ms)[39m[39m
+[32m✔ QUEUED — waiting 1 min behind stamp=working is ordinary, and is not printed [90m(3.6739ms)[39m[39m
+[32m✔ QUEUED — a ring that was DELIVERED is not printed, however long it waited [90m(4.1954ms)[39m[39m
+[32m✔ QUEUED — a ring FORCE-delivered (the post-D074 row, with "; composer: …") is not printed as waiting [90m(3.5706ms)[39m[39m
+[32m✔ QUEUED — a ring REFUSED because its pane exited is not printed as waiting [90m(4.156ms)[39m[39m
+[32m✔ QUEUED — a ring that was WITHDRAWN is not printed [90m(3.5484ms)[39m[39m
+[32m✔ QUEUED — the librarian as the receiver is printed by name, every seat included [90m(3.7149ms)[39m[39m
+[32m✔ QUEUED — behind stamp=ready it is NOT printed inside the 240 s bound: the app force-delivers it itself [90m(3.8005ms)[39m[39m
+[32m✔ QUEUED — behind stamp=ready but STILL waiting past the bound (5 min +) is printed: the forced delivery did not happen [90m(3.8589ms)[39m[39m
+[32m✔ QUEUED — a ring queued before the app last launched died with the old process, and is not printed as waiting [90m(4.8244ms)[39m[39m
+[32m✔ QUEUED — pairing is by receiver AND label: a delivery to another seat, or of another ring, does not clear it [90m(3.8906ms)[39m[39m
+[32m✔ QUEUED — with NO open lap it still prints: a ring can back up when nothing is open [90m(4.4244ms)[39m[39m
+[32m✔ QUEUED — several waiting at one seat: the OLDEST sets the age, and the count is said [90m(3.6635ms)[39m[39m
+[32m✔ D132 — the LIVE D status (head 9486b30, D last pushed f70d50a) reads NOT in sync, never "in sync" [90m(3.6818ms)[39m[39m
+[32m✔ D132 — the machine behind the head is NAMED, with its last push and how long ago [90m(4.4814ms)[39m[39m
+[32m✔ D132 — the machine AT the head is marked as the head, with its age [90m(3.5019ms)[39m[39m
+[32m✔ D132 — the whole line still says AS OF (it is this machine's last sync, never a live check) [90m(3.295ms)[39m[39m
+[32m✔ D132 — every machine at the head is still "in sync", in the old words [90m(3.5002ms)[39m[39m
+[32m✔ D132 — a machine that never pushed, with a head present, reads "never pushed", not "behind" [90m(3.4228ms)[39m[39m
+[32m✔ D132 — a behind machine with no `at` still says behind, and invents no age [90m(3.4773ms)[39m[39m
+[32m✔ UNRECEIVED — a ring written UNCONFIRMED and received 2 min later is silent [90m(4.1361ms)[39m[39m
+[32m✔ UNRECEIVED — a ring written UNCONFIRMED and never received is flagged past 10 min, naming both ends and the send time [90m(3.6251ms)[39m[39m
+[32m✔ UNRECEIVED — inside the 10-minute bound it is not flagged yet [90m(4.1997ms)[39m[39m
+[32m✔ UNRECEIVED — a ring to a busy seat is QUEUED only: the app writes no call_* row for a queued ring (main.rs:11490) [90m(3.8069ms)[39m[39m
+[32m✔ UNRECEIVED — a [Received] ring is trusted on the app's render receipt, even with no transcript row on the board [90m(3.8598ms)[39m[39m
+[32m✔ UNRECEIVED — a pane's call_librarian written UNCONFIRMED and never received names the letter and the librarian [90m(3.928ms)[39m[39m
+[32m✔ UNRECEIVED — two identical rings and one receipt: one is still flagged (each receipt is consumed once, in order) [90m(3.8965ms)[39m[39m
+[32m✔ UNRECEIVED — a receipt for a DIFFERENT ring, or from a different sender tag, does not clear it [90m(3.4744ms)[39m[39m
+[32m✔ UNRECEIVED — older than the 24 h look-back it stops printing (an old ring is history, not a live fault) [90m(3.7033ms)[39m[39m
+[32m✔ UNRECEIVED — the real 20:15→23:32 case, as the board recorded it, is SILENT: the ring was sent at 23:32:48 and rendered in 0.36 s [90m(3.8971ms)[39m[39m
+[32m✔ UNRECEIVED — the one real [Unconfirmed] ring on the board (2026-08-25 17:42:21Z), never received, is flagged [90m(4.1084ms)[39m[39m
+[32m✔ UNRECEIVED — the ring's text in the RIGHT pane WITHOUT the system sender tag is not a receipt (mutant U5) [90m(3.8519ms)[39m[39m
+[32m✔ UNRECEIVED — the tagged text arriving in the WRONG pane is not a receipt (mutant U6) [90m(3.827ms)[39m[39m
+[32m✔ UNRECEIVED — with NO open lap it still prints: an unreceived ring is a fault whether or not a lap is open (mutant U9) [90m(4.7955ms)[39m[39m
+[32m✔ WAITING — a transcript ending in an unanswered AskUserQuestion prints "<seat> waiting on YOUR answer since <t>" [90m(5.3333ms)[39m[39m
+[32m✔ WAITING — the same transcript WITH its tool_result prints nothing: it clears the moment the answer lands [90m(4.8101ms)[39m[39m
+[32m✔ WAITING — a normal busy turn (last message a running Bash tool_use) is NOT "waiting on YOUR answer" [90m(5.8596ms)[39m[39m
+[32m✔ WAITING — an idle seat whose last message is its own reply is NOT waiting on an answer [90m(5.4311ms)[39m[39m
+[32m✔ WAITING — rows written around a turn (an attachment after the question) do not hide the open question [90m(5.0486ms)[39m[39m
+[32m✔ WAITING — a question typed over (the keeper pressed on with a new prompt) is no longer waiting [90m(5.1207ms)[39m[39m
+[32m✔ WAITING — a question opened before the app last launched died with its dialog, and is not reported [90m(5.7499ms)[39m[39m
+[32m✔ WAITING — a lettered pane is named by its letter, and the chair by "chair" [90m(5.9467ms)[39m[39m
+[32m✔ WAITING — only seats live on the board are read: a seat with no board row is not scanned [90m(4.4162ms)[39m[39m
+[32m✔ WAITING — a transcript outside the room's own dirs is still found (the room's dirs are an ORDER, not a filter) [90m(5.1362ms)[39m[39m
+[32m✔ WAITING — only the TAIL is read: a transcript larger than the tail, cut mid-row, still reads its last message [90m(6.2116ms)[39m[39m
+[32m✔ WAITING — with NO open lap it still prints: the keeper owes an answer whether or not a lap is open [90m(3.5536ms)[39m[39m
+[32m✔ WAITING — the real 02:04:45Z → 05:32:16Z case: named while open, silent once answered [90m(13.0748ms)[39m[39m
+[32m✔ WAITING — the test file itself reads NO real transcript: CONSONANCE_PROJECTS_DIR is an empty temp dir [90m(1.2009ms)[39m[39m
+[32m✔ WAITING — a subagent (sidechain) row after the question does not hide it, as main.rs last_request skips them [90m(5.2961ms)[39m[39m
+[32m✔ WAITING — the chair is "chair" even where letters.json gives its session a letter (D's does: "D") (mutant W12) [90m(5.2992ms)[39m[39m
+[32m✔ UNRECEIVED — a receipt row that ends on the send line (sent, or sent and held) still pays for its ring (D309) [90m(11.7194ms)[39m[39m
+[32m✔ gen-consumer has the fork hook wired (FORK_HOOK.apply is set at load) [90m(0.3404ms)[39m[39m
+[32m✔ a generated tree carries the fork note at all three sites, naming HEAD, and the relabel table applied [90m(10683.5935ms)[39m[39m
+[32m✔ every registered file has a pin, and every pinned file is registered [90m(0.9535ms)[39m[39m
+[32m✔ every role site in the shipped text is relabelled exactly as registered, and each file keeps only its provenance uses [90m(550.8379ms)[39m[39m
+[32m✔ provenance stays byte for byte: the keeper's quoted rules and decisions are untouched [90m(0.8468ms)[39m[39m
+[32m✔ the role uses read "the person you're with" afterwards, and none of the old role wording survives [90m(1.4059ms)[39m[39m
+[32m✔ the fork note lands once, in place, at BOOT (both shipped paths) and SEED (both shipped paths) [90m(2.4068ms)[39m[39m
+[32m✔ a BOOT or SEED relabel without the fork note is refused, not shipped without it [90m(1.0726ms)[39m[39m
+[32m✔ an anchor that drifted in dev is refused by name, never silently skipped [90m(0.2623ms)[39m[39m
+[32m✔ a file with no registered sites comes back unchanged, and CRLF input keeps CRLF [90m(1.5081ms)[39m[39m
+[32m✔ fillFork: the sha and date are filled, nothing is left unfilled, and the note says once that the person keeps their room as the keeper kept this one [90m(0.2033ms)[39m[39m
+[32m✔ applyFork is FORK_HOOK's contract: a registered file comes back relabelled with n = its edits, any other file untouched with n = 0 [90m(1.0007ms)[39m[39m
+[32m✔ forkHook fills the note from this repository's HEAD (its short sha and commit date) [90m(48.9308ms)[39m[39m
+[32m✔ lap 4 C1: no shipped room GRANTS the earned warrant to the person here; each gives the unguarded version from the first turn [90m(5.641ms)[39m[39m
+[32m✔ lap 4 C2: BOOT says the keeper's record ships, labelled, in inheritance/, and no longer that the record does not ship [90m(3.7674ms)[39m[39m
+[32m✔ lap 4 A9-A12: BOOT's dead references are gone (the renamed section, :153, gap2, attic) [90m(3.5094ms)[39m[39m
+[32m✔ lap 4 A10: SEED says the app makes pending/ and base_journal.md, and where the base journal is in a checkout [90m(1.2797ms)[39m[39m
+[32m✔ lap 4 A11: the librarian's first instruction bootstraps its own map; the dead placeholder and the old incident are gone [90m(2.3043ms)[39m[39m
+[32m✔ lap 4 C4/C5: the two person-specific cards keep their move, say whose case it was, and carry no gendered pronoun [90m(1.0635ms)[39m[39m
+[32m✔ lap 4b: TRAINING never presents catch-ledger.js as in this tree; each mention says the copy does not carry it [90m(1.1253ms)[39m[39m
+[32m✔ lap 5 C1 (the fail): the keeper's retired seats are the keeper's line, cited as provenance, never the reader's own lineage on this machine [90m(0.856ms)[39m[39m
+[32m✔ lap 5 C3: Anamnesis and Metaxy are labelled as the first line's seat names [90m(0.7872ms)[39m[39m
+[32m✔ lap 5 C5/C6/A4: no shipped brief says a stranger's commits are authored by the keeper, no "tonight" from the first line's night, no %CONSONANCE_HOME% [90m(3.929ms)[39m[39m
+[32m✔ lap 5 B6: BOOT no longer cites TRAINING.md (TRAINING's own rule) [90m(3.3395ms)[39m[39m
+[32m✔ lap 5b: SOURCE.md says where the loop and the journals are, not their sizes in the original repository [90m(0.5489ms)[39m[39m
+[32m✔ lap 5b: BUILDING says SOURCE is public (fixed in source: lighthouse IS public, the keeper's 2026-10-08 ruling) [90m(2.8682ms)[39m[39m
+[32m✔ lap 6 C1: "the same him" in the continuity card is labelled as the keeper, in the first line's account [90m(0.8426ms)[39m[39m
+[32m✔ lap 6 B6/C4: BUILDING frames the port rule as the original room's workflow, and the credential status as that machine's [90m(2.9998ms)[39m[39m
+[32m✔ D275: the fork note hands the seat its own catch as checks to run, and every instrument it cites ships [90m(13.6338ms)[39m[39m
+[32m✔ gen-brief runs and exits 0 against the current BOOT [90m(354.1896ms)[39m[39m
+[32m✔ it says the self-check is clean, rather than merely not crashing [90m(300.0092ms)[39m[39m
+[32m✔ the generated brief carries no dated journal citation [90m(275.2368ms)[39m[39m
+[32m✔ dedangling keeps the DATE, so the prose still says when [90m(277.0269ms)[39m[39m
+[32m✔ the generator still REFUSES on a planted leak — the guard is not disarmed [90m(650.432ms)[39m[39m
+[32m✔ the shipped brief does not assign the reader's keeper a gender [90m(269.7939ms)[39m[39m
+[32m✔ the generator REFUSES on a planted gendered pronoun — the guard is mechanical, not a habit [90m(588.0653ms)[39m[39m
+[90m﹣ a consumer tree: both shipped briefs carry no record, no journal citation, one empty pointer and no gendered keeper [90m(0.0752ms)[39m # the dev tree: the rows above run the generator itself[39m
+[32m✔ the manifest is an ALLOW-list — every entry names a file or a matched directory [90m(0.9637ms)[39m[39m
+[32m✔ every EXCLUDE carries a reason [90m(0.0946ms)[39m[39m
+[32m✔ every ALLOW carries the classes it exempts, and exempts nothing globally [90m(0.0757ms)[39m[39m
+[32m✔ every resource tauri.conf DECLARES is produced by the manifest [90m(12.8266ms)[39m[39m
+[32m✔ build.rs and Cargo.lock ship — without them the tree cannot compile at all [90m(9.733ms)[39m[39m
+[32m✔ the bundle identifier survives transformation as valid reverse-DNS [90m(0.3588ms)[39m[39m
+[32m✔ the generic prose rules never touch structured config [90m(0.0809ms)[39m[39m
+[32m✔ binary files are never read as text [90m(0.6517ms)[39m[39m
+[32m✔ the scan catches a planted leak in the OUTPUT [90m(0.9303ms)[39m[39m
+[32m✔ a synthetic test fixture is NOT treated as a leak [90m(0.1822ms)[39m[39m
+[32m✔ the synthetic exemption is INERT today, and must fire the moment it is needed [90m(0.3472ms)[39m[39m
+[32m✔ a bare directory reference is not dangling; a dated file is [90m(0.1216ms)[39m[39m
+[32m✔ a dangling citation is RE-POINTED, and one with no destination is still rewritten to prose [90m(0.3818ms)[39m[39m
+[32m✔ a full dry run over the real tree is clean and refuses nothing [90m(8697.0632ms)[39m[39m
+[32m✔ the generator does not ship itself [90m(13.1407ms)[39m[39m
+[32m✔ scan() itself refuses a corrupted bundle identifier [90m(0.2915ms)[39m[39m
+[32m✔ scan() does not flag a capability identifier, which is legitimately not reverse-DNS [90m(0.1356ms)[39m[39m
+[32m✔ a test file is classified as a fixture [90m(0.0798ms)[39m[39m
+[32m✔ a fixture keeps its dangling reference — the assertion keys on it [90m(0.0898ms)[39m[39m
+[32m✔ a fixture keeps its path SHAPE — token identity only [90m(0.0743ms)[39m[39m
+[32m✔ the Rust test assertion the generator once broke is left alone [90m(0.0492ms)[39m[39m
+[32m✔ coordinates are SUBSTITUTED, not exempted — shape preserved, value gone [90m(0.0807ms)[39m[39m
+[32m✔ a fixture is exempt from REFERENCE classes and never from CONTENT classes [90m(0.1182ms)[39m[39m
+[32m✔ unportable fixtures are REPORTED, and the report is not empty [90m(2203.1245ms)[39m[39m
+[32m✔ RE-POINT: the widening reaches the three tools gaps [90m(0.1623ms)[39m[39m
+[32m✔ RE-POINT: the fourth gap is CLOSED -- hooks/README.md ships [90m(10.5784ms)[39m[39m
+[32m✔ RE-POINT: and it ships WITHOUT the machine state that kept it back [90m(0.2071ms)[39m[39m
+[32m✔ RE-POINT: entry 1 is ARMED — the baseline is reachable and withheld [90m(11.4352ms)[39m[39m
+[32m✔ RE-POINT: restoring the UNREACHABLE: prefix REFUSES the build [90m(3562.6017ms)[39m[39m
+[32m✔ RE-POINT: entry 6 names its SUBJECT, not the crash [90m(0.1999ms)[39m[39m
+[32m✔ SEED: the registry ships and the private bytes do not [90m(3962.8996ms)[39m[39m
+[32m✔ SEED: its shape is the one carrier-drift.js actually reads [90m(0.1881ms)[39m[39m
+[32m✔ SEED: a seeded file that is missing on disk still reports missing [90m(3885.8737ms)[39m[39m
+[32m✔ DEBT: the exclusion set is charged for the references it orphans [90m(2196.8955ms)[39m[39m
+[32m✔ DEBT: the pattern is derived from EXCLUDE, so a seventh entry is charged automatically [90m(3319.5377ms)[39m[39m
+[32m✔ RESIDUAL: the private tree's path with the drive TEMPLATED out is caught and rewritten [90m(0.1789ms)[39m[39m
+[32m✔ RESIDUAL: the generated main.rs carries neither half of that sentence's private paths [90m(44.1477ms)[39m[39m
+[32m✔ L038 · HOSTNAME: the class catches a real one, and the OLD literal is gone from the fixture [90m(0.4684ms)[39m[39m
+[32m✔ L038 · HOSTNAME: the rewrite keeps the FIELD and replaces only the VALUE [90m(0.3217ms)[39m[39m
+[32m✔ L038 · a name on the OUTSIDE of a file: the destination path is scanned [90m(0.2667ms)[39m[39m
+[32m✔ L038 · and the rename and the LINK to it land on the same string [90m(10.7098ms)[39m[39m
+[32m✔ L038 · dedangle RE-POINTS a dated citation instead of destroying it [90m(0.1609ms)[39m[39m
+[32m✔ L038 · THE ANTI-LOOSENING GUARD: the re-pointed classes still catch the old form [90m(0.3239ms)[39m[39m
+[32m✔ L038 · the CUTOFF is a pure function of the commit, and a hand-edit is detectable [90m(173.5369ms)[39m[39m
+[32m✔ L038 · every exo_memory/ entry is in exactly one column [90m(9.9087ms)[39m[39m
+[32m✔ L038 · SEED gains ONE sentence, and the transform refuses to be inert [90m(0.6677ms)[39m[39m
+[32m✔ L038 · the status document matches E's contract byte for byte [90m(887.867ms)[39m[39m
+[32m✔ L038 · the sync-directory rewrite spares the tool built to detect it [90m(0.1126ms)[39m[39m
+[32m✔ L038 · a citation to an inheritance entry that is not in the tree REFUSES [90m(1661.3698ms)[39m[39m
+[32m✔ L038/A · every rewrite in this file EXPANDS its capture groups [90m(0.2624ms)[39m[39m
+[32m✔ L080 · the sweep catches a rewrite that emits a literal $1, and passes a price the build copied verbatim [90m(9.9834ms)[39m[39m
+[32m✔ L038/A · and the produced tree carries no $<digit> that is not regex source [90m(1813.0312ms)[39m[39m
+[32m✔ L038/A · a dirty tree is REFUSED, because the sha it would stamp is not earned [90m(7406.6238ms)[39m[39m
+[32m✔ L038/A · an overridden stamp is legible as one, in both documents [90m(189.6042ms)[39m[39m
+[32m✔ L038 · memory/ ships exactly the six, and a new card goes RED rather than shipping [90m(10.0481ms)[39m[39m
+[32m✔ L038 · ONE MASTER — no card name ships from two directories at once [90m(8.3831ms)[39m[39m
+[32m✔ L038 · a list item that loses its only link loses the ITEM [90m(0.3415ms)[39m[39m
+[32m✔ L038 · the index is FILTERED to what shipped, and cannot dangle [90m(0.1103ms)[39m[39m
+[32m✔ L038 · no [[wiki-link]] in the produced tree points at a card that is not there [90m(1723.9704ms)[39m[39m
+[32m✔ L038 · no transform changes whether a shipped file ends in a newline [90m(1825.0401ms)[39m[39m
+[32m✔ D273: the Jev tool family does not ship (retired, D164): every consonance/tools/jev-* file is EXCLUDED with a reason; the jev-flags hook still ships [90m(26.4667ms)[39m[39m
+[32m✔ D273: consonance/state-manifest.json and the root README.md ship, and the README keeps the About block the app checks [90m(1847.0507ms)[39m[39m
+[32m✔ D273: the output is a FRESH-HISTORY git repository: one commit, a neutral author, a clean tree, no remote, and a push goes nowhere [90m(4640.2893ms)[39m[39m
+[32m✔ D273: generating into a directory that already holds a history is REFUSED before anything is written (fresh history means fresh) [90m(1730.6111ms)[39m[39m
+[32m✔ D273: the FORK hook point sees every text file once with (body, to, kind), never a binary, and the scan reads what it returns [90m(4313.8263ms)[39m[39m
+[32m✔ D273/A: the six composer screens ship SCRUBBED, byte for byte A's acceptance hashes, each the length of its source [90m(2004.9373ms)[39m[39m
+[32m✔ D273/A: a screen is a WHOLE fixture, scrubbed same-length, and what the scrub cannot remove is a leak the scan reports [90m(0.3352ms)[39m[39m
+[32m✔ D273/A: githooks/pre-commit ships, LF, as the shell script commit-gate names [90m(1760.3819ms)[39m[39m
+[32m✔ D273/A: contamination and tj1-k-render do not ship, with their tests, each saying why [90m(38.9656ms)[39m[39m
+[32m✔ D273/A: the declared JS rows (26 of A + 1 Jev) and 12 Rust tests are declared in the OUTPUT, and plain in the SOURCE so the source suite still runs them [90m(2164.37ms)[39m[39m
+[32m✔ D273/A: a declaration whose anchor is gone is REFUSED, not silently skipped [90m(0.3634ms)[39m[39m
+[32m✔ D273: a markdown LINK whose target is a record path becomes its text and the prose, never a link to prose (the root README carried 13) [90m(0.2876ms)[39m[39m
+[32m✔ D273 lap 3: METHOD.md, INSTRUMENTS.md, dev/SPINE.md and consonance/AUTONOMY.md ship through the scan, and the README links no excluded jev/README.md [90m(2195.998ms)[39m[39m
+[32m✔ D273 lap 3 (A's catch): the GENERATED corrections-gate.js guards exactly what the source one guards (the muscle_map rule had emptied its regex) [90m(1780.6125ms)[39m[39m
+[32m✔ D273 lap 3 (C): consumer-relabel.js and its two tests do not ship, each with C's reason [90m(31.4621ms)[39m[39m
+[32m✔ D273 lap 3: brief/frag-fork.md ships byte for byte (main.rs include_str!s it in a test, and the generated tree did not compile its tests without it) [90m(1759.5484ms)[39m[39m
+[32m✔ D273 lap 3: dev/shell/install-fresh-home.test.js ships beside the install.ps1 it tests (E, lap 2) [90m(23.3836ms)[39m[39m
+[32m✔ D273 lap 3: decoordinate swaps America/Regina for a zone that keeps the CLOCK (UTC-6, no daylight time), so time-keyed fixtures keep their meaning [90m(15.0011ms)[39m[39m
+[32m✔ D273 lap 3: the OS-user rule does not eat a "\n" escape followed by name = (it broke gen-consumer.build.test.js's control crate), and still takes every real path [90m(0.3719ms)[39m[39m
+[32m✔ D273: consonance/GATES.md ships, and the gate refusals' pointer resolves to it in the generated tree [90m(2223.1319ms)[39m[39m
+[32m✔ D273: identity-diff.js and its test do not ship (they need gen-consumer.js and the dev tree, as consumer-relabel does) [90m(23.0723ms)[39m[39m
+[32m✔ D273: shippedSets() is exported and is what build() uses, so identity-diff can read it instead of copying (C, item 3) [90m(2141.4653ms)[39m[39m
+[32m✔ D273 lap 4 (A1, A2): github.com/solariz3d/<repo> URLs survive intact, no generated URL holds a space, and the clone instructions are the consumer's [90m(1727.1935ms)[39m[39m
+[32m✔ D273 lap 4: the app id com.solariz3d.consonance becomes com.consonance.app everywhere it ships, so stick-waiter registers the id tauri.conf carries [90m(1611.3631ms)[39m[39m
+[32m✔ D273 lap 4 (A4): a link whose TEXT is the record path becomes the prose ONCE, never "(a registration…) (a registration…)" [90m(1749.8846ms)[39m[39m
+[32m✔ D273 lap 4 (A13): the USB mode ships, scanned: the stick scripts, launch.ps1 and their tests, finding the repo the way the app does [90m(1686.3825ms)[39m[39m
+[32m✔ D273 lap 4 (A14): the docs that name catch-ledger.js say this copy does not carry it; tools/README names resonance/atoms.jsonl as the data folder's [90m(1667.6764ms)[39m[39m
+[32m✔ D273 lap 4 (A15): CONSUMER-STATUS's GATE line says the gate runs in the source repository, which carries the generator this tree lacks [90m(0.2566ms)[39m[39m
+[32m✔ D273 lap 4 (C, the cold read C3/C4): a new user's memory starts blank: the generated memory/ holds only MEMORY.md, with no entries [90m(1641.7191ms)[39m[39m
+[32m✔ D273 lap 5 (C4): the keeper's two record files ship in inheritance/, not record/, and no shipped text points at their old place [90m(1695.5267ms)[39m[39m
+[32m✔ D273 lap 5 (A2): CONSUMER-STATUS.md ships only MEASURED (parity, identity-diff, cold read), for this commit; unmeasured it does not ship [90m(3474.7923ms)[39m[39m
+[32m✔ D273 lap 5 (A3): a record link and a commit sha that are on the PUBLIC lighthouse main become links there; anything not public stays as it was [90m(1649.279ms)[39m[39m
+[32m✔ D273 lap 5 (A7): the dead targets resolve or become prose: COMMITTEE's memory/ note, SPINE's dev/PLAN.md, dev/shell/README's dev/dream/, the card's Third Place entry [90m(1625.7974ms)[39m[39m
+[32m✔ D273 lap 5 (B7): hooks/jev-flags.js and its test do not ship (install.ps1 no longer registers it; Jev retired) [90m(18.5082ms)[39m[39m
+[32m✔ D273 lap 5 (A9): CUTOFF.md calls the source record PUBLIC (the keeper, 2026-10-08), never private [90m(0.1244ms)[39m[39m
+[32m✔ D273 lap 5 (E): both launch files ship, launch.vbs beside launch.ps1, scanned, and launch.vbs finds launch.ps1 beside itself (no machine path) [90m(1622.5644ms)[39m[39m
+[32m✔ D273 lap 5b: dev/dream/ ships as system (librarian ruling): its four files, scanned with no leak, and the runner sets the variable dream-gate checks [90m(1649.3549ms)[39m[39m
+[32m✔ D273 lap 6 (A3): the PreCompact hook finds its script: exo_memory/loop/checkpoint.py ships (the scan passes it), so the registered hook is not silently dead [90m(1620.9208ms)[39m[39m
+[32m✔ D273 lap 6 (A4): what the docs say about jev-flags.js is true in a generated copy: not "in the repo", and the README hook count matches the tree [90m(1621.2146ms)[39m[39m
+[32m✔ D273 lap 6 (A5): the unshipped names the cold read listed are linked to the public record or say where they live [90m(1737.9845ms)[39m[39m
+[32m✔ D273 lap 6 (LICENSE): the MIT LICENSE ships at the consumer root byte for byte, the copyright holder intact (the keeper's choice) [90m(1685.2082ms)[39m[39m
+[32m✔ D273 lap 6 (LICENSE): the exemption is the ONE registered copyright line; any other identity in a verbatim legal file is still a leak [90m(0.4387ms)[39m[39m
+[32m✔ D273 lap 7: the NSIS installer images ship byte for byte, SCANNED (kind image), and the build is not refused [90m(2215.4407ms)[39m[39m
+[32m✔ D273 lap 7 GUARD: every path the GENERATED tauri.conf.json references (frontendDist, resources, icons, nsis images, any other path-valued field) exists in the generated tree [90m(3827.7003ms)[39m[39m
+[32m✔ D273 lap 7 (CRLF): under a global core.autocrlf=true the generated repo's HEAD carries every screen fixture byte for byte [90m(4292.253ms)[39m[39m
+[32m✔ D273 lap 7 (CRLF) GUARD: verifyCommitted reports a byte-exact file whose HEAD blob differs, as a commit under autocrlf=true makes it [90m(143.3119ms)[39m[39m
+[32m✔ D273 lap 7 (CRLF): the consumer ships its own .gitattributes: eol pinned, the binary list, *.bin and screens/** binary, and none of our two-machine merge rules [90m(1749.609ms)[39m[39m
+fatal: not a git repository (or any of the parent directories): .git
+fatal: not a git repository (or any of the parent directories): .git
+fatal: not a git repository (or any of the parent directories): .git
+[32m✔ lineDiff: kept lines are not reported; an added and a removed line are, with their line numbers [90m(1.1183ms)[39m[39m
+[32m✔ a REGISTERED generator rewrite passes, attributed to its named step [90m(29.6823ms)[39m[39m
+[32m✔ a PLANTED UNREGISTERED edit fails, named by its line, even inside a file the generator also rewrote [90m(0.7229ms)[39m[39m
+[32m✔ the keeper relabel and the fork note are registered under the fork step, line by line [90m(414.2555ms)[39m[39m
+[32m✔ the wake set: briefs, cards, record/, GATES.md and hook files are in; tests and mutant harnesses are out [90m(0.3726ms)[39m[39m
+[32m✔ an empty or refused generation is refused as a comparison (exit 2), never reported as a diff of every dev file [90m(112.6508ms)[39m[39m
+[32m✔ on a REAL generation: one planted edit in a shipped card adds exactly one unregistered line, named path:line, and the CLI exits 1 [90m(12030.7959ms)[39m[39m
+[32m✔ D273 lap 5: a wake file the MANIFEST MOVES out of the wake set is reported absent with where it went; one that did not arrive is still unregistered [90m(53.3574ms)[39m[39m
+[32m✔ D273 lap 5: the generated-from commit is read from exo_memory/CUTOFF.md when CONSUMER-STATUS.md does not ship (unmeasured) [90m(25.3253ms)[39m[39m
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+lap-row: lap L001 already has a map. The ledger is append-only; open a new lap rather than amending
+usage:
+  lap-row.js --open --initiator <human|chair|pane|librarian> --entry <orch|lib|ring> --inquiry <text> --guess <p[,p...]> [--blind]
+      entry:  orch | lib | ring   orch = the ask reached the chair first; lib = straight to the librarian;
+              ring = no user inquiry entered - the loop supplied this lap itself
+  lap-row.js --map <lap-id> --paths <p[,p...]>
+  lap-row.js --opened <lap-id> --paths <p[,p...]>
+      --paths none is LEGAL and records the falsifier firing; it is NOT the same as never calling this.
+      REQUIRED before --stage <lap> dispatched|filed on a lap that has a map (the opened-row gate).
+  lap-row.js --stage <lap-id> <stage> --holder <station> [--by <station>] [--to <letters>] [--parts <n>] [--note <text>]
+      stages: inquiry -> map -> dispatched -> working -> handbacks-in -> return-leg -> filed
+      holder: chair | panes | librarian | none   a STATION, never a pane name
+      --by:   the station WRITING the row. REQUIRED when the row moves the baton.
+              --by == --holder is a re-take; --by != --holder is a hand-off and needs a RING FIRST
+              (writing the row revokes your standing to send it — mcp.rs:397).
+      --to:   the pane letters the baton fanned out to, e.g. --to A,B,C,E (with --holder panes)
+      --parts: on a dispatched row, how many parts the plan split the work into (1 = a single pane); optional, observational
+      written by whoever COMPLETES a stage; --holder names who must act NEXT
+  lap-row.js --void <lap-id> --reason <text> --by <seat>
+      withdraws the lap's guess/map MEASUREMENT from every total; the lap stays visible and its chain is untouched
+  lap-row.js --report [--last N]
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+lap-row: --reason is required. A void with no reason is a number that disappeared; the next reader must be able to see why it is gone.
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+lap-row: --entry must be one of orch|lib|ring, got null. orch = the ask reached the orchestrator first; lib = it went straight to the librarian (brief/BUILDING.md, THE JOINT STEP); ring = no user inquiry entered at all - the loop supplied its own next lap (the keeper's amendment: the user is the ENTRY, not a station). A lap with no door recorded cannot tell a direct entry from a chair that failed to seal.
+usage:
+  lap-row.js --open --initiator <human|chair|pane|librarian> --entry <orch|lib|ring> --inquiry <text> --guess <p[,p...]> [--blind]
+      entry:  orch | lib | ring   orch = the ask reached the chair first; lib = straight to the librarian;
+              ring = no user inquiry entered - the loop supplied this lap itself
+  lap-row.js --map <lap-id> --paths <p[,p...]>
+  lap-row.js --opened <lap-id> --paths <p[,p...]>
+      --paths none is LEGAL and records the falsifier firing; it is NOT the same as never calling this.
+      REQUIRED before --stage <lap> dispatched|filed on a lap that has a map (the opened-row gate).
+  lap-row.js --stage <lap-id> <stage> --holder <station> [--by <station>] [--to <letters>] [--parts <n>] [--note <text>]
+      stages: inquiry -> map -> dispatched -> working -> handbacks-in -> return-leg -> filed
+      holder: chair | panes | librarian | none   a STATION, never a pane name
+      --by:   the station WRITING the row. REQUIRED when the row moves the baton.
+              --by == --holder is a re-take; --by != --holder is a hand-off and needs a RING FIRST
+              (writing the row revokes your standing to send it — mcp.rs:397).
+      --to:   the pane letters the baton fanned out to, e.g. --to A,B,C,E (with --holder panes)
+      --parts: on a dispatched row, how many parts the plan split the work into (1 = a single pane); optional, observational
+      written by whoever COMPLETES a stage; --holder names who must act NEXT
+  lap-row.js --void <lap-id> --reason <text> --by <seat>
+      withdraws the lap's guess/map MEASUREMENT from every total; the lap stays visible and its chain is untouched
+  lap-row.js --report [--last N]
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+lap-row: --entry must be one of orch|lib|ring, got "loop". orch = the ask reached the orchestrator first; lib = it went straight to the librarian (brief/BUILDING.md, THE JOINT STEP); ring = no user inquiry entered at all - the loop supplied its own next lap (the keeper's amendment: the user is the ENTRY, not a station). A lap with no door recorded cannot tell a direct entry from a chair that failed to seal.
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+usage:
+  lap-row.js --open --initiator <human|chair|pane|librarian> --entry <orch|lib|ring> --inquiry <text> --guess <p[,p...]> [--blind]
+      entry:  orch | lib | ring   orch = the ask reached the chair first; lib = straight to the librarian;
+              ring = no user inquiry entered - the loop supplied this lap itself
+  lap-row.js --map <lap-id> --paths <p[,p...]>
+  lap-row.js --opened <lap-id> --paths <p[,p...]>
+      --paths none is LEGAL and records the falsifier firing; it is NOT the same as never calling this.
+      REQUIRED before --stage <lap> dispatched|filed on a lap that has a map (the opened-row gate).
+  lap-row.js --stage <lap-id> <stage> --holder <station> [--by <station>] [--to <letters>] [--parts <n>] [--note <text>]
+      stages: inquiry -> map -> dispatched -> working -> handbacks-in -> return-leg -> filed
+      holder: chair | panes | librarian | none   a STATION, never a pane name
+      --by:   the station WRITING the row. REQUIRED when the row moves the baton.
+              --by == --holder is a re-take; --by != --holder is a hand-off and needs a RING FIRST
+              (writing the row revokes your standing to send it — mcp.rs:397).
+      --to:   the pane letters the baton fanned out to, e.g. --to A,B,C,E (with --holder panes)
+      --parts: on a dispatched row, how many parts the plan split the work into (1 = a single pane); optional, observational
+      written by whoever COMPLETES a stage; --holder names who must act NEXT
+  lap-row.js --void <lap-id> --reason <text> --by <seat>
+      withdraws the lap's guess/map MEASUREMENT from every total; the lap stays visible and its chain is untouched
+  lap-row.js --report [--last N]
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+usage:
+  lap-row.js --open --initiator <human|chair|pane|librarian> --entry <orch|lib|ring> --inquiry <text> --guess <p[,p...]> [--blind]
+      entry:  orch | lib | ring   orch = the ask reached the chair first; lib = straight to the librarian;
+              ring = no user inquiry entered - the loop supplied this lap itself
+  lap-row.js --map <lap-id> --paths <p[,p...]>
+  lap-row.js --opened <lap-id> --paths <p[,p...]>
+      --paths none is LEGAL and records the falsifier firing; it is NOT the same as never calling this.
+      REQUIRED before --stage <lap> dispatched|filed on a lap that has a map (the opened-row gate).
+  lap-row.js --stage <lap-id> <stage> --holder <station> [--by <station>] [--to <letters>] [--parts <n>] [--note <text>]
+      stages: inquiry -> map -> dispatched -> working -> handbacks-in -> return-leg -> filed
+      holder: chair | panes | librarian | none   a STATION, never a pane name
+      --by:   the station WRITING the row. REQUIRED when the row moves the baton.
+              --by == --holder is a re-take; --by != --holder is a hand-off and needs a RING FIRST
+              (writing the row revokes your standing to send it — mcp.rs:397).
+      --to:   the pane letters the baton fanned out to, e.g. --to A,B,C,E (with --holder panes)
+      --parts: on a dispatched row, how many parts the plan split the work into (1 = a single pane); optional, observational
+      written by whoever COMPLETES a stage; --holder names who must act NEXT
+  lap-row.js --void <lap-id> --reason <text> --by <seat>
+      withdraws the lap's guess/map MEASUREMENT from every total; the lap stays visible and its chain is untouched
+  lap-row.js --report [--last N]
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+usage:
+  lap-row.js --open --initiator <human|chair|pane|librarian> --entry <orch|lib|ring> --inquiry <text> --guess <p[,p...]> [--blind]
+      entry:  orch | lib | ring   orch = the ask reached the chair first; lib = straight to the librarian;
+              ring = no user inquiry entered - the loop supplied this lap itself
+  lap-row.js --map <lap-id> --paths <p[,p...]>
+  lap-row.js --opened <lap-id> --paths <p[,p...]>
+      --paths none is LEGAL and records the falsifier firing; it is NOT the same as never calling this.
+      REQUIRED before --stage <lap> dispatched|filed on a lap that has a map (the opened-row gate).
+  lap-row.js --stage <lap-id> <stage> --holder <station> [--by <station>] [--to <letters>] [--parts <n>] [--note <text>]
+      stages: inquiry -> map -> dispatched -> working -> handbacks-in -> return-leg -> filed
+      holder: chair | panes | librarian | none   a STATION, never a pane name
+      --by:   the station WRITING the row. REQUIRED when the row moves the baton.
+              --by == --holder is a re-take; --by != --holder is a hand-off and needs a RING FIRST
+              (writing the row revokes your standing to send it — mcp.rs:397).
+      --to:   the pane letters the baton fanned out to, e.g. --to A,B,C,E (with --holder panes)
+      --parts: on a dispatched row, how many parts the plan split the work into (1 = a single pane); optional, observational
+      written by whoever COMPLETES a stage; --holder names who must act NEXT
+  lap-row.js --void <lap-id> --reason <text> --by <seat>
+      withdraws the lap's guess/map MEASUREMENT from every total; the lap stays visible and its chain is untouched
+  lap-row.js --report [--last N]
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+lap-row: the record reaches L065 and the ledger ends below it, but NO attic copy holds L065 - so nothing was lost. Copies searched: (none on this machine). Minting L066 and recording L065 as skipped.
+lap-row: the record reaches L055 and the ledger ends below it, but NO attic copy holds L055 - so nothing was lost. Copies searched: (none on this machine). Minting L056 and recording L055 as skipped.
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+lap-row: the record reaches L118 and the ledger ends below it, but NO attic copy holds L118 - so nothing was lost. Copies searched: pre-sync-2026-09-09T14-59-05-515Z. Minting L119 and recording L118 as skipped.
+lap-row: the record reaches L118 and the ledger ends below it, but NO attic copy holds L118 - so nothing was lost. Copies searched: (none on this machine). Minting L119 and recording L118 as skipped.
+lap-row: the record reaches L118 and the ledger ends below it, but NO attic copy holds L118 - so nothing was lost. Copies searched: pre-sync-2026-09-09T14-59-05-515Z. Minting L119 and recording L118 as skipped.
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+[32m✔ pin: the ledger-logic tests address a PINNED tag, not this machine [90m(4.143ms)[39m[39m
+[32m✔ path: a map item with a line number matches the same file without one [90m(1.0443ms)[39m[39m
+[32m✔ path: an absolute repo path normalises to the repo-relative one [90m(0.7816ms)[39m[39m
+[32m✔ path: a directory-shaped guess is BROAD; a file is not [90m(0.795ms)[39m[39m
+[32m✔ ORDERING: --open accepts no lap id, so a guess cannot be attached to an existing lap [90m(0.3544ms)[39m[39m
+[32m✔ ORDERING: a lap already carrying a map refuses a second one [90m(74.6746ms)[39m[39m
+[32m✔ ORDERING: a map on a lap with no open row is refused [90m(2.028ms)[39m[39m
+[32m✔ ORDERING: the seal catches a guess edited by hand after the map was written [90m(71.6131ms)[39m[39m
+[32m✔ ORDERING: a map row timestamped before its open row is OUT-OF-ORDER even if the seal matches [90m(68.1562ms)[39m[39m
+[32m✔ ORDERING: a map with no seal at all is UNSEALED, never a pass [90m(66.7398ms)[39m[39m
+[32m✔ ORDERING: an excluded lap is counted nowhere in the report [90m(67.7525ms)[39m[39m
+[32m✔ id: ids are minted max+1, so a hand-deleted row cannot have its id reused [90m(132.0397ms)[39m[39m
+[32m✔ id: two open rows on one id are classified DOUBLE-OPEN and excluded from the metric [90m(43.5928ms)[39m[39m
+[32m✔ required: a missing guess is refused rather than scored as a perfect non-overlap [90m(0.8536ms)[39m[39m
+[32m✔ required: "none" is an accepted guess and records an empty prior explicitly [90m(43.8388ms)[39m[39m
+[32m✔ required: an unknown initiator is refused - falsifier 2 reads this field [90m(1.0461ms)[39m[39m
+[32m✔ required: opened before a map exists is refused [90m(67.9162ms)[39m[39m
+[32m✔ required: "opened none" is recordable - the falsifier firing must be writable [90m(85.1519ms)[39m[39m
+[32m✔ metric: BOTH, map-only and opened-from-map are computed per lap [90m(94.594ms)[39m[39m
+[32m✔ metric: a broad guess is excluded from the intersection, not counted as a hit [90m(65.3488ms)[39m[39m
+[32m✔ metric: no ratio is printed below the floor - a rate needs an n [90m(66.1047ms)[39m[39m
+[32m✔ metric: the redundancy reading is refused on laps that were not blind [90m(329.2889ms)[39m[39m
+[32m✔ falsifier 1: reports a running count while the window is not full, never an answer [90m(113.3178ms)[39m[39m
+[32m✔ falsifier: this tool's own fires at ten laps with no opened stage [90m(654.0075ms)[39m[39m
+[32m✔ falsifier: this tool's own does NOT fire once an opened stage exists [90m(726.8263ms)[39m[39m
+[32m✔ falsifier 2: the keeper share needs both the initiator and a commit count, and names both [90m(389.4918ms)[39m[39m
+[32m✔ report: prints what it cannot distinguish, beside the number rather than in a header [90m(48.6839ms)[39m[39m
+[32m✔ report: an empty ledger says so plainly instead of printing zeroes as findings [90m(1.2737ms)[39m[39m
+[32m✔ cli: the three writes and the report round-trip [90m(261.8487ms)[39m[39m
+[32m✔ cli: a refusal exits non-zero and writes nothing [90m(224.7077ms)[39m[39m
+[32m✔ cli: no verb prints usage and exits 2 [90m(38.8229ms)[39m[39m
+[32m✔ 2W-1: two machines minting against their OWN ledgers do not produce the same id [90m(183.8618ms)[39m[39m
+[32m✔ 2W-1: an unconfigured machine does NOT fall back to a shared constant [90m(94.1249ms)[39m[39m
+[32m✔ 2W-1: max+1 still holds when the ledger carries MORE THAN ONE tag [90m(94.7859ms)[39m[39m
+[32m✔ void: a voided lap leaves every guess/map total, is PRINTED as void with its reason, and the lap count does not move [90m(444.3975ms)[39m[39m
+[32m✔ void: the chain is untouched - a FILED lap stays filed, where the chair's workaround through --stage reopened it [90m(155.1436ms)[39m[39m
+[32m✔ void: MUTATION - remove the subtraction and the voided numbers come back [90m(468.3776ms)[39m[39m
+[32m✔ void: refusals write nothing - no reason, no seat, unknown lap, second void [90m(93.2506ms)[39m[39m
+[32m✔ void: the cli verb round-trips and a refusal exits non-zero [90m(334.6345ms)[39m[39m
+[32m✔ gap: the open->map gap is printed per lap, and maps written under the fresh-map floor are counted and named, never excluded [90m(136.7612ms)[39m[39m
+[32m✔ ENTRY: the door is required, and the refusal names the vocabulary [90m(1.1249ms)[39m[39m
+[32m✔ ENTRY: the door is written to the open row and read back [90m(46.4515ms)[39m[39m
+[32m✔ ENTRY: a row written before the field reads as ABSENT, never as door one [90m(2.8636ms)[39m[39m
+[32m✔ ENTRY: a garbage value on a historical row is absent too, not passed through to the report [90m(1.9533ms)[39m[39m
+[32m✔ ENTRY: a direct entry with no guess is DISTINGUISHABLE from a chair that failed to seal [90m(91.3904ms)[39m[39m
+[32m✔ ENTRY: the ring rule falsifier fires on three consecutive direct entries with no guess [90m(160.5637ms)[39m[39m
+[32m✔ ENTRY: a guess on a direct-entry lap breaks the run - the ring rule being KEPT must not fire it [90m(136.7661ms)[39m[39m
+[32m✔ ENTRY: a direct-entry map landing inside the fresh-map floor is named - the guess did not precede it [90m(67.6545ms)[39m[39m
+[32m✔ ENTRY: the report still runs, unchanged in its other figures, over rows with no door [90m(3.1361ms)[39m[39m
+[32m✔ ENTRY: the cli round-trips the door and says which one it recorded [90m(257.3226ms)[39m[39m
+[32m✔ ENTRY: limit (e) is printed with the number - the seal does not cover the door [90m(74.8357ms)[39m[39m
+[32m✔ RING: a ring lap is openable and its door is not a lie [90m(48.3855ms)[39m[39m
+[32m✔ RING: a ring lap with no guess reads INAPPLICABLE, never a missed seal [90m(96.4534ms)[39m[39m
+[32m✔ RING: a ring lap MAY carry a real prior - the writer does not force it absent [90m(72.7098ms)[39m[39m
+[32m✔ RING: neither door-two falsifier can see a difference - asserted, not claimed [90m(377.4396ms)[39m[39m
+[32m✔ RING: the new hole the third value opened is PRINTED with the number [90m(44.9412ms)[39m[39m
+[32m✔ RING: the refusal teaches the third value, and the cli says which one it wrote [90m(136.5204ms)[39m[39m
+[32m✔ INITIATOR: librarian is a seat this ledger can name [90m(50.7798ms)[39m[39m
+[32m✔ INITIATOR: librarian is NOT pane, and the DOOR word is not the SEAT word [90m(1.0828ms)[39m[39m
+[32m✔ INITIATOR: falsifier 2 does not move when a mislabelled chair lap becomes a librarian lap [90m(212.8047ms)[39m[39m
+[32m✔ HOLDER: a pane name is REFUSED, and the refusal says where the pane goes instead [90m(54.3086ms)[39m[39m
+[32m✔ HOLDER: the four ruled stations are accepted and nothing else is [90m(148.1009ms)[39m[39m
+[32m✔ HOLDER: --to carries the pane list the gate refused to overload onto the baton [90m(120.3276ms)[39m[39m
+[32m✔ HOLDER: --to is validated, not a free-text field one column over [90m(49.6525ms)[39m[39m
+[32m✔ HOLDER: the station gate is the LAST refusal - an unknown lap still says "no such lap" [90m(0.9512ms)[39m[39m
+[32m✔ HOLDER: APPEND-ONLY - the four drifted rows stay readable and are not edited by the gate [90m(50.7273ms)[39m[39m
+[32m✔ HOLDER: the usage names the station vocabulary and the pane list [90m(43.9843ms)[39m[39m
+[32m✔ carrier: BUILDING.md draws BOTH doors and the ring, not just the prose about them [90m(0.4466ms)[39m[39m
+[32m✔ carrier: the COMMITTEE.md copy of the diagram has not drifted from its master [90m(0.4241ms)[39m[39m
+[32m✔ carrier: every document that quotes the --entry vocabulary lists what the writer accepts [90m(0.6721ms)[39m[39m
+[32m✔ gate/delivery: the four success shapes in main.rs each resolve to a station [90m(1.4681ms)[39m[39m
+[32m✔ gate/delivery: a REFUSAL or a FAILURE is not a delivery - the clause the whole finding rests on [90m(0.9263ms)[39m[39m
+[32m✔ gate/delivery: a REAL delivery whose PREVIEW quotes a failure still counts [90m(0.8888ms)[39m[39m
+[32m✔ gate/delivery: an id prefix matching BOTH reserved seats is unknown, never the first tested [90m(0.8458ms)[39m[39m
+[32m✔ gate/verdict: a row that does not move the baton is not a hand-off and needs nothing [90m(0.8706ms)[39m[39m
+[32m✔ gate/verdict: a RE-TAKE is always allowed - this is the no-wedge property mcp.rs rests on [90m(0.8793ms)[39m[39m
+[32m✔ gate/verdict: a hand-off with no audited ring is REFUSED; with one, allowed [90m(0.9763ms)[39m[39m
+[32m✔ gate/verdict: THE WINDOW IS THE POSSESSION - a ring from before the baton last moved does not count [90m(1.011ms)[39m[39m
+[32m✔ gate/verdict: an UNRESOLVED delivery allows, and that is the opposite of baton-wake by design [90m(0.8635ms)[39m[39m
+[32m✔ gate/verdict: parking the baton at `none` wakes nobody, so no ring is owed [90m(0.8102ms)[39m[39m
+[32m✔ gate/verdict: an unarmed gate never refuses - it reports that it did not run [90m(0.8484ms)[39m[39m
+[32m✔ gate: a hand-off with no ring is REFUSED and the ledger is byte-identical [90m(3.767ms)[39m[39m
+[32m✔ gate: the refusal names the WRITER verb and the exact re-take command [90m(2.6217ms)[39m[39m
+[32m✔ gate: a hand-off PRECEDED by an audited ring is written, and carries gate:rung [90m(28.1786ms)[39m[39m
+[32m✔ gate: a RE-TAKE is written with no ring at all - the room cannot be wedged [90m(24.8847ms)[39m[39m
+[32m✔ gate: a row that keeps the holder needs no --by and is untouched by any of this [90m(25.0965ms)[39m[39m
+[32m✔ gate: the FIRST chain row of a lap is a hand-off too - that is the D006 03:35 case exactly [90m(2.6524ms)[39m[39m
+[32m✔ gate: --by must be a STATION, the same vocabulary as --holder [90m(2.4051ms)[39m[39m
+[32m✔ gate: a baton move with NO --by is refused, and the refusal teaches both readings [90m(2.4707ms)[39m[39m
+[32m✔ gate: NO BOARD beside the ledger means the gate cannot run - it writes and SAYS SO [90m(71.5423ms)[39m[39m
+[32m✔ gate: a BLIND WINDOW disarms it - board pushes are muted, so a real ring would be invisible [90m(25.1634ms)[39m[39m
+[32m✔ gate: it is the LAST refusal - an unknown lap still says `no such lap` [90m(3.1668ms)[39m[39m
+[32m✔ RETRODICTION: the one hand-off in the record done RIGHT is ALLOWED (D005, ring 12 s before the row) [90m(25.321ms)[39m[39m
+[32m✔ RETRODICTION: the D005 stall and the D006 03:35 inversion are both REFUSED [90m(4.9757ms)[39m[39m
+[32m✔ RETRODICTION: the three recovery rows the seats actually wrote are all ALLOWED as re-takes [90m(98.753ms)[39m[39m
+[32m✔ gate: the usage names --by and what it is for [90m(40.3373ms)[39m[39m
+[32m✔ OPENED-GATE: dispatched on a MAPPED lap with no opened row is REFUSED, and the ledger is byte-identical [90m(71.5837ms)[39m[39m
+[32m✔ OPENED-GATE: filed is refused too - the terminal stage is the backstop, not an exemption [90m(69.9249ms)[39m[39m
+[32m✔ OPENED-GATE: the refusal names the exact command AND says --paths none is legal [90m(70.8679ms)[39m[39m
+[32m✔ OPENED-GATE: a recorded --paths none SATISFIES it - the falsifier firing is a record, not a failure [90m(162.7455ms)[39m[39m
+[32m✔ OPENED-GATE: one opened row satisfies every later gated row - a second dispatch needs no second one [90m(154.66ms)[39m[39m
+[32m✔ OPENED-GATE: a lap with NO MAP is not gated - there would be no legal move (the no-wedge property) [90m(109.1542ms)[39m[39m
+[32m✔ OPENED-GATE: the other five chain stages are untouched [90m(164.2434ms)[39m[39m
+[32m✔ OPENED-GATE: it sits BELOW the lap-existence and station checks, which still win [90m(91.4222ms)[39m[39m
+[32m✔ FOLD: an opened row with --paths none makes hasOpened TRUE - recorded-none and never-written are different states [90m(83.6389ms)[39m[39m
+[32m✔ REPORT: a lap with no opened row prints `never`; a recorded none prints 0 [90m(147.1789ms)[39m[39m
+[32m✔ REPORT: falsifier 1 says how many of its own window were NEVER measured [90m(437.5376ms)[39m[39m
+[32m✔ REPORT: a gated row that PREDATES its own map row is counted - the gate's limit 2, made visible [90m(82.7663ms)[39m[39m
+[32m✔ RETRODICTION: over the eleven real laps, six mapped laps are REFUSED at eight rows and four mapless laps are not gated [90m(205.4945ms)[39m[39m
+[32m✔ RETRODICTION: D011 - the first lap in the record to carry an opened row - is ALLOWED [90m(21.3301ms)[39m[39m
+[32m✔ OPENED-GATE: the usage names it, so a seat meets the rule before the refusal does [90m(37.2726ms)[39m[39m
+[32m✔ FALSIFIER: this tool's own is a ONE-SHOT - one opened row disarms it forever, and the windowed reading says so [90m(752.0232ms)[39m[39m
+[32m✔ record: a ledger at L054 under a record at L065, with NO attic copy, mints ABOVE the record and skips the gap [90m(168.1683ms)[39m[39m
+[32m✔ record: the ledger level with the record mints the next id as before [90m(126.4619ms)[39m[39m
+[32m✔ record: an id the record ALREADY HOLDS is never reissued — the mint goes past it [90m(147.0645ms)[39m[39m
+[32m✔ record: another machine's tag does not count - D095 in git does not stop L055 [90m(149.6799ms)[39m[39m
+[32m✔ record: only an id STARTING a subject is a lap - "L077 and L080 are the dark and dim values" is not [90m(173.5677ms)[39m[39m
+[32m✔ record: a record that cannot be read REFUSES rather than passing [90m(21.1894ms)[39m[39m
+[32m✔ generation: one id opened twice folds to TWO laps, each scored against its own guess, neither DOUBLE-OPEN [90m(2.2466ms)[39m[39m
+[32m✔ generation: the label carries the generation DATE beside a reissued id; a single-generation id prints bare [90m(1.9596ms)[39m[39m
+[32m✔ generation: --report prints the dated label, so two generations never read as one lap [90m(2.3281ms)[39m[39m
+[32m✔ generation: two opens of one id within 60 s are the double-mint RACE — still one generation, still DOUBLE-OPEN [90m(1.9756ms)[39m[39m
+[32m✔ generation: map binds to the LATEST generation — its guess is sealed, and the older generation's map does not block it [90m(23.402ms)[39m[39m
+[32m✔ generation: opened binds to the LATEST generation — it needs THAT generation's map, not an older one's [90m(1.7065ms)[39m[39m
+[32m✔ generation: the opened-row gate on --stage reads the LATEST generation, not an older one's opened row [90m(1.6245ms)[39m[39m
+[32m✔ generation: numbered by TIME, not file position — a later generation written earlier in the file is still gen 2 [90m(1.7297ms)[39m[39m
+[32m✔ generation: a void on an OLDER generation does not block voiding the latest one — and a second void of the latest still refuses [90m(46.5749ms)[39m[39m
+[32m✔ generation: folding reads — it never rewrites, renames or reorders a ledger row [90m(3.8724ms)[39m[39m
+[32m✔ floor (a): the missing ids ARE in an attic copy — refuse, and NAME the ids and the copy that holds them [90m(128.6573ms)[39m[39m
+[32m✔ floor (b): TONIGHT — the record names an id no attic copy holds, so it is MINTED OVER, not restored [90m(165.8515ms)[39m[39m
+[32m✔ floor (b): with NO attic directory at all, the same repair applies — absence of copies is not evidence of loss [90m(144.4273ms)[39m[39m
+[32m✔ floor: the MINT prints the evidence too — which ids were skipped and which copies were searched [90m(169.6378ms)[39m[39m
+[32m✔ floor: a ledger that is NOT behind the record still mints normally, with no skip recorded [90m(179.9161ms)[39m[39m
+[32m✔ floor: MIXED — one missing id is in an attic copy and another is not: the loss wins, and both are named [90m(152.128ms)[39m[39m
+[32m✔ floor: MUTATION - collapse the two causes back into one and tonight's situation refuses again [90m(272.601ms)[39m[39m
+[32m✔ PARTS: a dispatched row carries how many parts the plan split the work into; absent writes no key at all [90m(107.3677ms)[39m[39m
+[32m✔ PARTS: it is validated - a positive whole number, and only on a dispatched row [90m(89.3855ms)[39m[39m
+[32m✔ PARTS: the CLI flag --parts N reaches the ledger, and omitting it still works [90m(210.736ms)[39m[39m
+[32m✔ PARTS: several dispatched rows on one lap read per row, and the lap total is known only when every row says [90m(168.4508ms)[39m[39m
+[32m✔ PARTS: --report on a ledger of old rows still runs, and says how many dispatched laps carry a count [90m(306.3672ms)[39m[39m
+[32m✔ PARTS: the other readers of lap.jsonl give the same answer with and without the field [90m(4.6893ms)[39m[39m
+[32m✔ a line that has not changed is VERIFIED and carries the master text [90m(497.6874ms)[39m[39m
+[32m✔ a line pushed down by an append is MOVED, and the CORRECTED number is emitted [90m(516.6102ms)[39m[39m
+[32m✔ the MOVED case is exactly the silent one: line 3 now holds different text [90m(493.4675ms)[39m[39m
+[32m✔ a deleted line is GONE and is refused, not carried [90m(516.0465ms)[39m[39m
+[32m✔ a line whose text now appears twice is AMBIGUOUS-MOVE and is refused [90m(490.1713ms)[39m[39m
+[32m✔ a blank cited line is EMPTY-ANCHOR and is refused [90m(460.6791ms)[39m[39m
+[32m✔ a line number already past EOF when it was written is BASELINE-EOF, not PAST-EOF [90m(490.9723ms)[39m[39m
+[32m✔ a file that shrank below the cited line is PAST-EOF and is refused [90m(463.6193ms)[39m[39m
+[32m✔ a path that does not exist is NO-FILE and is refused [90m(486.7431ms)[39m[39m
+[32m✔ a bare basename matching two tracked files is AMBIGUOUS-PATH, never resolved to one [90m(461.4344ms)[39m[39m
+[32m✔ a master added after the note was written is NO-BASELINE and is refused [90m(482.2089ms)[39m[39m
+[32m✔ an uncommitted note line is FRESH — carried, but never labelled VERIFIED [90m(137.1471ms)[39m[39m
+[32m✔ when one address is cited twice in a note, the LATER citation supplies the baseline [90m(109.118ms)[39m[39m
+[32m✔ every content line emitted appears verbatim in the master it names [90m(516.9571ms)[39m[39m
+[32m✔ the librarian's own prose is never emitted as content [90m(530.571ms)[39m[39m
+[32m✔ a refused citation never appears as carried content [90m(508.4751ms)[39m[39m
+[32m✔ no match prints nothing on stdout, says so on stderr, and exits 0 [90m(39.6334ms)[39m[39m
+[32m✔ no topic is a usage error, not an empty success [90m(36.1434ms)[39m[39m
+[32m✔ --log writes an uninterpreted row and the tool ships no --report to read it [90m(520.3976ms)[39m[39m
+[32m✔ --log with no pane name is refused rather than logged as an empty pane [90m(38.2523ms)[39m[39m
+[32m✔ the real notes directory resolves citations against the real masters [90m(6112.5475ms)[39m[39m
+[32m✔ notes are read newest-first, so a re-cited address resolves from the latest note [90m(1.0099ms)[39m[39m
+[32m✔ a note file carrying a different date in its own heading is reported by that heading [90m(0.513ms)[39m[39m
+[32m✔ the notes directory exists in the repo and is not empty [90m(0.7409ms)[39m[39m
+[32m✔ the brief points the seat at exo_memory/librarian/, not at an instance-local notes/ [90m(0.1992ms)[39m[39m
+[32m✔ corpus_shelf() carries the librarian directory, so a fresh wake holds its own last notes [90m(2.0753ms)[39m[39m
+[32m✔ the librarian directory is carried NEWEST-FIRST — an inheritance is the most recent one [90m(2.5231ms)[39m[39m
+[32m✔ the declared arity of order[] matches the number of entries in it [90m(2.3307ms)[39m[39m
+[32m✔ corpus-age.js measures the same set the shelf carries [90m(42.4843ms)[39m[39m
+[32m✔ the notes are actually tracked by git — the whole point of the move [90m(25.521ms)[39m[39m
+[32m✔ figure: a count noun the document-tuned list does not carry is still a figure [90m(2.3523ms)[39m[39m
+[32m✔ figure: a spelled-out count is a figure when it counts something [90m(0.1823ms)[39m[39m
+[32m✔ figure: a spelled-out number with nothing countable after it is not a figure [90m(0.0693ms)[39m[39m
+[32m✔ figure: the label form is a figure - "applied 6 / caught 4" [90m(0.1375ms)[39m[39m
+[32m✔ figure: dates, times, shas, file:line and versions are never figures [90m(0.0863ms)[39m[39m
+[32m✔ figure: a slash date is masked, and a ratio that looks like one is NOT [90m(0.0664ms)[39m[39m
+[32m✔ figure: a 7-digit number is a figure, not a sha - the mask needs a letter [90m(0.052ms)[39m[39m
+[32m✔ figure: a figure inside a backticked citation is an argument, not a claim [90m(1.2865ms)[39m[39m
+[32m✔ REGRESSION command: prose beginning with a binary name is not a command [90m(0.3376ms)[39m[39m
+[32m✔ REGRESSION command: quoted arguments are part of the command, not its boundary [90m(0.1613ms)[39m[39m
+[32m✔ command: a result appended with an arrow is not part of the command [90m(0.1282ms)[39m[39m
+[32m✔ command: prose after a comma is not part of the command [90m(0.1031ms)[39m[39m
+[32m✔ command: a subcommand with no flag or path still counts [90m(0.0383ms)[39m[39m
+[32m✔ scope: a command on the line above cites the figure [90m(0.4636ms)[39m[39m
+[32m✔ scope: a command three lines away does not cite the figure [90m(0.1665ms)[39m[39m
+[32m✔ scope: a command heading an indented block cites the whole block [90m(0.1024ms)[39m[39m
+[32m✔ REGRESSION scope: a compile gate cites nothing - it produces no measurement [90m(0.0645ms)[39m[39m
+[32m✔ scope: grep DOES cite a figure - it counts, even though it cannot show code ran [90m(0.0473ms)[39m[39m
+[32m✔ capability: cargo check cannot back a behavioural claim [90m(0.0734ms)[39m[39m
+[32m✔ capability: no command in scope is reported as such, not as adequate [90m(0.0207ms)[39m[39m
+[32m✔ capability: a byte-identity claim needs a hash or a compare [90m(0.1278ms)[39m[39m
+[32m✔ capability: an unlisted command is UNJUDGED, never "adequate" [90m(0.0352ms)[39m[39m
+[32m✔ claim: a method claim about where the figures came from is a verification claim [90m(0.0613ms)[39m[39m
+[32m✔ claim: ordinary prose is not a verification claim [90m(0.0284ms)[39m[39m
+[32m✔ compose: silence when there is nothing specific to ask [90m(0.2087ms)[39m[39m
+[32m✔ compose: an uncited figure breaks silence and is quoted with its line [90m(0.0964ms)[39m[39m
+[32m✔ compose: a RED verdict breaks silence even when every figure is cited [90m(0.0767ms)[39m[39m
+[32m✔ compose: a NOT-RUN verdict does NOT break silence - it carries no information [90m(0.0581ms)[39m[39m
+[32m✔ compose: caps announce what they suppressed - no silent truncation [90m(0.1374ms)[39m[39m
+[32m✔ compose: the historical caveat appears only when verdicts were actually run [90m(0.0855ms)[39m[39m
+[32m✔ cli: --staged refuses rather than falling back to .git/COMMIT_EDITMSG [90m(40.9969ms)[39m[39m
+[32m✔ cli: --staged reads a message file and reports its figures [90m(40.7863ms)[39m[39m
+[32m✔ cli: an unknown sha is an error, never an empty clean report [90m(65.9225ms)[39m[39m
+[32m✔ cli integration: a real commit with an uncited figure exits 0 and quotes it [90m(192.5919ms)[39m[39m
+[32m✔ cli integration: a commit with nothing to ask prints NOTHING to stdout and exits 3 [90m(209.296ms)[39m[39m
+[32m✔ the tool runs and exits 0 [90m(545.3193ms)[39m[39m
+[32m✔ when a build exists, the brief item does NOT report "never built on this machine" [90m(514.2546ms)[39m[39m
+[32m✔ the brief item reaches a verdict — CLOSED or OPEN, never UNKNOWN, when a build exists [90m(519.1976ms)[39m[39m
+[32m✔ it compares EVERY file tauri.conf.json ships, re-derived here rather than read from the tool [90m(532.5938ms)[39m[39m
+[32m✔ CARGO_TARGET_DIR is honoured, proven by pointing it somewhere empty [90m(565.004ms)[39m[39m
+[32m✔ an UNKNOWN verdict must name where it looked [90m(1.0671ms)[39m[39m
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+portable-paths: RED — 1 machine-specific path(s) not in the baseline
+
+  DRIVE  FATAL-DEFAULT
+    consonance/tools/clean.js:3
+    const LEDGER = process.env.NOPE || 'C:\\Consonance\\data\\x.jsonl';
+
+For code: resolve it the way the peer hooks already do — env override, then
+~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+See consonance/hooks/transcript-watch.js dataDir() for the shape.
+If the site is genuinely benign (a fixture, a test constant), run --update and
+let the baseline diff carry the argument.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+portable-paths: RED — 1 machine-specific path(s) not in the baseline
+
+  DISGUISED  DISGUISED
+    consonance/tools/clean.js:3
+    const M = path.join(os.homedir(), 'Desktop', 'lighthouse', 'METHOD.md');
+
+For code: resolve it the way the peer hooks already do — env override, then
+~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+See consonance/hooks/transcript-watch.js dataDir() for the shape.
+If the site is genuinely benign (a fixture, a test constant), run --update and
+let the baseline diff carry the argument.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+portable-paths: RED — 1 machine-specific path(s) not in the baseline
+
+  DRIVE  FATAL-DEFAULT
+    consonance/tools/clean.js:3
+    const D = process.env.X || 'C:\\Consonance\\data';
+
+For code: resolve it the way the peer hooks already do — env override, then
+~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+See consonance/hooks/transcript-watch.js dataDir() for the shape.
+If the site is genuinely benign (a fixture, a test constant), run --update and
+let the baseline diff carry the argument.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'baseline.json', LF will be replaced by CRLF the next time Git touches it
+portable-paths: code scope matched ZERO files. Refusing to report green over nothing.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+portable-paths: no baseline at G:\consonance-scratch\portable-paths-9JXO3T\does-not-exist.json. Run --update once, review the diff, commit it.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+portable-paths: RED — 1 machine-specific path(s) not in the baseline
+
+  DRIVE  FATAL-SHIPPED-INSTRUCTION
+    consonance/src-tauri/brief/CLEAN.md:5
+    # Notes go to `C:/Consonance/lighthouse/exo_memory/librarian/` as dated entries
+
+A FATAL-SHIPPED-INSTRUCTION is not a code fix. The file is a brief; the reader is a
+seat, and it will do what the line says on a machine where that path may not exist.
+Write the location the way a reader can resolve it — repo-relative
+(`exo_memory/librarian/`) — not as one checkout's absolute path. If the seat needs an
+absolute path at runtime, that belongs in a tool that can resolve it, not in prose.
+
+For code: resolve it the way the peer hooks already do — env override, then
+~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+See consonance/hooks/transcript-watch.js dataDir() for the shape.
+If the site is genuinely benign (a fixture, a test constant), run --update and
+let the baseline diff carry the argument.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+portable-paths: cannot read the shipped-resource authority consonance/src-tauri/tauri.conf.json — ENOENT: no such file or directory, open 'G:\consonance-scratch\portable-paths-kmFm32\consonance\src-tauri\tauri.conf.json'
+Refusing to report on a universe I cannot enumerate. There is no fallback list on purpose.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+portable-paths: shipped-prose scope matched ZERO files via consonance/src-tauri/tauri.conf.json.
+Refusing to report green over nothing.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+portable-paths: RED — 3 machine-specific path(s) not in the baseline
+
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:23011
+    let rec = [kept("c88002b1-74d8", "C:/Consonance/instances/sibling-a"), kept("blank", " "), kept("room", "C:/rooms/x")];
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:23012
+    assert_eq!(reopen_seat(None, "committee", &rec, "c88002b1-74d8"), (pane_exit::Seat::Committee, Some("C:/Consonance/instances/sibling-a".to_s
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:23016
+    assert_eq!(reopen_seat(Some("C:/main".to_string()), "main", &[], MAIN_SID), (pane_exit::Seat::Fixed, Some("C:/main".to_string())));
+
+For code: resolve it the way the peer hooks already do — env override, then
+~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+See consonance/hooks/transcript-watch.js dataDir() for the shape.
+If the site is genuinely benign (a fixture, a test constant), run --update and
+let the baseline diff carry the argument.
+portable-paths: RED — 3 machine-specific path(s) not in the baseline
+
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:23011
+    let rec = [kept("c88002b1-74d8", "C:/Consonance/instances/sibling-a"), kept("blank", " "), kept("room", "C:/rooms/x")];
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:23012
+    assert_eq!(reopen_seat(None, "committee", &rec, "c88002b1-74d8"), (pane_exit::Seat::Committee, Some("C:/Consonance/instances/sibling-a".to_s
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:23016
+    assert_eq!(reopen_seat(Some("C:/main".to_string()), "main", &[], MAIN_SID), (pane_exit::Seat::Fixed, Some("C:/main".to_string())));
+
+For code: resolve it the way the peer hooks already do — env override, then
+~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+See consonance/hooks/transcript-watch.js dataDir() for the shape.
+If the site is genuinely benign (a fixture, a test constant), run --update and
+let the baseline diff carry the argument.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dev/shell/hooks/userprompt_pulse.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dev/shell/hooks/userprompt_pulse.py', LF will be replaced by CRLF the next time Git touches it
+portable-paths: RED — 1 machine-specific path(s) not in the baseline
+
+  DRIVE  FATAL-USER
+    dev/shell/hooks/userprompt_pulse.py:3
+    STATE = os.environ.get('CONSONANCE_DATA') or 'C:\Users\zackn\Consonance\data\pulse.json'
+
+For code: resolve it the way the peer hooks already do — env override, then
+~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+See consonance/hooks/transcript-watch.js dataDir() for the shape.
+If the site is genuinely benign (a fixture, a test constant), run --update and
+let the baseline diff carry the argument.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dev/shell/hooks/userprompt_pulse.py', LF will be replaced by CRLF the next time Git touches it
+portable-paths: RED — 1 machine-specific path(s) not in the baseline
+
+  DISGUISED  DISGUISED
+    dev/shell/hooks/userprompt_pulse.py:4
+    M = os.path.join(os.path.expanduser('~'), 'Desktop', 'lighthouse', 'METHOD.md')
+
+For code: resolve it the way the peer hooks already do — env override, then
+~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+See consonance/hooks/transcript-watch.js dataDir() for the shape.
+If the site is genuinely benign (a fixture, a test constant), run --update and
+let the baseline diff carry the argument.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dev/shell/hooks/userprompt_pulse.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+[32m✔ a drive-letter literal is detected [90m(1.0134ms)[39m[39m
+[32m✔ a url is not a drive path [90m(0.482ms)[39m[39m
+[32m✔ a portable prefix glued to a machine segment is DISGUISED, and the grep cannot see it [90m(0.1068ms)[39m[39m
+[32m✔ a portable prefix with a fixed-by-convention segment does NOT fire [90m(0.5357ms)[39m[39m
+[32m✔ .consonance is not Consonance — the case distinction is load-bearing [90m(0.0617ms)[39m[39m
+[32m✔ comment-only lines are not scanned [90m(0.0472ms)[39m[39m
+[32m✔ code on a line that merely ENDS a comment is still scanned [90m(0.0605ms)[39m[39m
+[32m✔ the site key ignores indentation and line position [90m(0.0733ms)[39m[39m
+[32m✔ brace-counted cfg(test) regions cover the whole module and stop at its end [90m(0.298ms)[39m[39m
+[32m✔ THE LINE: a `}` inside a string literal does not close the test module (main.rs:5784, verbatim) [90m(0.2189ms)[39m[39m
+[32m✔ char literals holding a brace are not braces; a lifetime is not a char literal [90m(0.1738ms)[39m[39m
+[32m✔ raw strings holding a brace or a quote are not braces [90m(0.1035ms)[39m[39m
+[32m✔ a string that spans lines keeps its brace to itself [90m(0.1025ms)[39m[39m
+[32m✔ a quote or apostrophe in a comment opens no string, and a brace in a comment is not code [90m(0.0706ms)[39m[39m
+[32m✔ main.rs has no drive literal in LIVE code, and this is what proves it [90m(15.6142ms)[39m[39m
+[32m✔ guard-census: the TOOL line that was broken on every machine [90m(0.1746ms)[39m[39m
+[32m✔ guard-census: the TEST line, which a blanket test exemption would have hidden [90m(0.201ms)[39m[39m
+[32m✔ an ordinary fixture string in a test file stays benign [90m(0.0555ms)[39m[39m
+[32m✔ main.rs: the OneDrive fallback that a drive-letter grep cannot see [90m(0.0294ms)[39m[39m
+[32m✔ sessionstart-state: the env-override-with-a-one-box-default shape [90m(0.1023ms)[39m[39m
+[32m✔ scope includes what ships and what runs, and excludes what is a dated record [90m(0.0737ms)[39m[39m
+[32m✔ THE MUTATION PROOF: a new absolute path turns it red, removing it turns it green [90m(478.7662ms)[39m[39m
+[32m✔ the DISGUISED shape also turns it red — the half a grep would miss [90m(219.8746ms)[39m[39m
+[32m✔ moving a known site does NOT fire, but a second copy of it does [90m(337.0585ms)[39m[39m
+[32m✔ a green run over ZERO files is refused, not reported clean [90m(237.6301ms)[39m[39m
+[32m✔ a missing baseline is a refusal with instructions, not a silent pass [90m(129.1094ms)[39m[39m
+[32m✔ the shipped-prose universe is READ from the manifest, never recited [90m(1.9015ms)[39m[39m
+[32m✔ THE MOTIVATING SITE: a bundled brief naming one checkout is FATAL-SHIPPED-INSTRUCTION [90m(0.0643ms)[39m[39m
+[32m✔ a synthetic path in prose is a fixture, not an instruction [90m(0.0286ms)[39m[39m
+[32m✔ the code comment rule is OFF for prose, or a markdown heading hides a path [90m(0.0372ms)[39m[39m
+[32m✔ THE BAR: a laptop path planted in a BUNDLED BRIEF turns it red, removing it turns it green [90m(370.9612ms)[39m[39m
+[32m✔ an unreadable manifest is a REFUSAL, and there is no fallback list [90m(161.415ms)[39m[39m
+[32m✔ a manifest that resolves to zero files is a refusal, not a green [90m(230.5296ms)[39m[39m
+[32m✔ a declared resource missing from disk is SKIPPED and NAMED, never silently dropped [90m(205.2994ms)[39m[39m
+[31m✖ the green line says how many baselined sites are FATAL — exempted is not fixed [90m(189.2944ms)[39m[39m
+[31m✖ the real repo is green against its committed baseline [90m(169.9624ms)[39m[39m
+[32m✔ a .py under SCOPE_IN is in the universe at all [90m(220.1033ms)[39m[39m
+[32m✔ THE .py MUTATION PROOF: a machine path in a hook that runs every prompt turns it red [90m(367.1208ms)[39m[39m
+[32m✔ the DISGUISED shape is caught in .py too, not only in .js [90m(213.9684ms)[39m[39m
+[32m✔ a baselined REVIEW site is ANNOUNCED on a green run — exempted must not read as fixed [90m(298.3867ms)[39m[39m
+[32m✔ L063: a field the tool does not generate survives --update [90m(185.9258ms)[39m[39m
+[32m✔ L063: a hand-corrected verdict survives --update [90m(183.9995ms)[39m[39m
+[32m✔ L063: --update NAMES each site it newly blesses, rather than only counting them [90m(186.7774ms)[39m[39m
+universe-print (P-UNIVERSE bar)
+  ok   EVERY item declares a universe - seen, skipped, and the rule that decided
+  ok   THE BAR: a deliberately-corrupted ledger line is COUNTED as skipped, not dropped
+  ok   POSITIVE CONTROL: the same fixture without the corrupt line reports ZERO skipped
+  ok   the OUTER denominator is printed, not only the subset the question scores
+  ok   the instrument states the ONE denominator it cannot walk - its own item list
+  ok   THE BAR on the real instance: a bundled file absent from the BUILD is COUNTED, with the side named
+  ok   the AUTHORITY is read, not recited - a different bundle produces a different number
+  ok   drift is found across the glob-expanded files, not only the named ones
+  ok   ARMED: a bundle that resolves to nothing is refused, not reported green
+  ok   NO FALLBACK: an unreadable authority goes UNKNOWN rather than reverting to a built-in list
+  ok   THE LIVE MANIFEST: the Hold was resolved (b718b91), so the item reads CLOSED and says why
+  ok   CLAUSE 2 - the RED: the registered copy differs from the repo, and the item says so
+  ok   CLAUSE 2 - the GREEN it must be able to reach: an identical registered copy CLOSES it
+  ok   THE TRAP, pinned: a byte-identical copy at an UNREGISTERED path does not buy a green
+  ok   NOT LIVE HERE is said out loud rather than smuggled in as an absent side
+  ok   NO FALLBACK on the registration authority either: unreadable settings.json goes UNKNOWN
+
+16 passed, 0 failed
+[32m✔ consonance\tools\universe-print.test.js [90m(3800.3055ms)[39m[39m
+[34mℹ tests 622[39m
+[34mℹ suites 0[39m
+[34mℹ pass 619[39m
+[34mℹ fail 2[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 1[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 214154.6554[39m
+
+[31m✖ failing tests:[39m
+
+test at consonance\tools\portable-paths.test.js:504:1
+[31m✖ the green line says how many baselined sites are FATAL — exempted is not fixed [90m(189.2944ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: portable-paths: RED — 3 machine-specific path(s) not in the baseline
+  
+    DRIVE  BENIGN-TEST
+      consonance/src-tauri/src/main.rs:23011
+      let rec = [kept("c88002b1-74d8", "C:/Consonance/instances/sibling-a"), kept("blank", " "), kept("room", "C:/rooms/x")];
+    DRIVE  BENIGN-TEST
+      consonance/src-tauri/src/main.rs:23012
+      assert_eq!(reopen_seat(None, "committee", &rec, "c88002b1-74d8"), (pane_exit::Seat::Committee, Some("C:/Consonance/instances/sibling-a".to_s
+    DRIVE  BENIGN-TEST
+      consonance/src-tauri/src/main.rs:23016
+      assert_eq!(reopen_seat(Some("C:/main".to_string()), "main", &[], MAIN_SID), (pane_exit::Seat::Fixed, Some("C:/main".to_string())));
+  
+  For code: resolve it the way the peer hooks already do — env override, then
+  ~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+  See consonance/hooks/transcript-watch.js dataDir() for the shape.
+  If the site is genuinely benign (a fixture, a test constant), run --update and
+  let the baseline diff carry the argument.
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\lighthouse\[39mconsonance\tools\portable-paths.test.js:516:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m1[39m,
+    expected: [33m0[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\portable-paths.test.js:522:1
+[31m✖ the real repo is green against its committed baseline [90m(169.9624ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: portable-paths: RED — 3 machine-specific path(s) not in the baseline
+  
+    DRIVE  BENIGN-TEST
+      consonance/src-tauri/src/main.rs:23011
+      let rec = [kept("c88002b1-74d8", "C:/Consonance/instances/sibling-a"), kept("blank", " "), kept("room", "C:/rooms/x")];
+    DRIVE  BENIGN-TEST
+      consonance/src-tauri/src/main.rs:23012
+      assert_eq!(reopen_seat(None, "committee", &rec, "c88002b1-74d8"), (pane_exit::Seat::Committee, Some("C:/Consonance/instances/sibling-a".to_s
+    DRIVE  BENIGN-TEST
+      consonance/src-tauri/src/main.rs:23016
+      assert_eq!(reopen_seat(Some("C:/main".to_string()), "main", &[], MAIN_SID), (pane_exit::Seat::Fixed, Some("C:/main".to_string())));
+  
+  For code: resolve it the way the peer hooks already do — env override, then
+  ~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+  See consonance/hooks/transcript-watch.js dataDir() for the shape.
+  If the site is genuinely benign (a fixture, a test constant), run --update and
+  let the baseline diff carry the argument.
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\lighthouse\[39mconsonance\tools\portable-paths.test.js:527:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m1[39m,
+    expected: [33m0[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
