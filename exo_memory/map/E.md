@@ -2520,3 +2520,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-22 ~20:4xZ (D) · D432d: rows between stations in the clip test, Close's mesh check removed → `exo_memory/handback/p-d432-E-build_2026-10-22.md` §8
 - t180 `7402479`: row 9's graze was edge strips crossing BETWEEN stations (not the last lateral metre); signing the rows linearly between stations catches it; 0 mesh-only in 728 heights; Close back to 6261a22's file; TRACK 2 11.2 s, bent ELYSIUM 28.6 s (was 80.6). Own mutants 8/7/0, M4 and M5 removed, M9 survives.
 - **Carry:** before widening a sampled test where it seems blind, re-sample finely to see which direction the miss runs.
+
+## 2026-10-22 ~21:5xZ (D) · D435: amber under 1 m of room overhead; TEST 10 stays clear → `exo_memory/handback/p-d435-E_2026-10-22.md`
+- t180 `3c870e3` on d432-e: 'low-overhead' amber from the clip test's normal gap (rows 10-12, red first). TEST 10's 0.80 m was a vertical ray at one steep edge lip; along the road's own normal the other road is beside, not over, so no amber; TEST TRACK 10 and ELYSIUM clear.
+- **Carry:** a clearance measured along world vertical is not the room over a road; say which direction a gap was measured in when reporting it.
