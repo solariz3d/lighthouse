@@ -84,3 +84,9 @@ consonance/tools/.close.mutants.lock
 consonance/tools/.state-sync.mutant-*.js
 consonance/tools/.state-manifest.mutant-*.js
 consonance/tools/.state-sync.mutants.lock
+# The keeper's own track files and the big binaries a diagnosis copies into a hand-back's evidence (2026-10-22, D431 §8): kept on this machine, never swept into a records commit
+exo_memory/handback/**/*.t180track
+exo_memory/handback/**/*.t180undo
+exo_memory/handback/**/*.kn5
+exo_memory/handback/**/*.acreplay
+exo_memory/handback/**/*.tar
