@@ -1,0 +1,12 @@
+{"eps":"1e-6","lap":"TEST 10","worstOver":0.012,"gapMm":0.456,"minHoldG":5.4,"straightSidewaysM":3.55,"straightOffHeightM":1.88,"plan":"LSR at R 300 m: turn 175.5°, 746 m strai"}
+{"eps":"1e-6","lap":"row 2 (","worstOver":0,"gapMm":0.0643,"minHoldG":5.4,"straightSidewaysM":27.92,"straightOffHeightM":92.63,"plan":"SC at R 284 m: turn 0°, 1706 m straight,"}
+{"eps":"1e-4","lap":"TEST 10","worstOver":0,"gapMm":0.404,"minHoldG":6,"straightSidewaysM":6.78,"straightOffHeightM":7.27,"plan":"RSR at R 300 m: turn -218°, 1016 m strai"}
+{"eps":"1e-4","lap":"row 2 (","worstOver":0,"gapMm":0.6834,"minHoldG":5.2,"straightSidewaysM":16.53,"straightOffHeightM":80.32,"plan":"SC at R 284 m: turn 0°, 1706 m straight,"}
+{"eps":"1e-2","lap":"TEST 10","worstOver":0.008,"gapMm":0.1302,"minHoldG":5.9,"straightSidewaysM":3.38,"straightOffHeightM":4.53,"plan":"LSL at R 300 m: turn 142°, 1016 m straig"}
+{"eps":"1e-2","lap":"row 2 (","worstOver":0,"gapMm":0.1055,"minHoldG":4.4,"straightSidewaysM":5.47,"straightOffHeightM":61.19,"plan":"SC at R 284 m: turn 0°, 1706 m straight,"}
+{"eps":"1","lap":"TEST 10","worstOver":0.123,"gapMm":0.1718,"minHoldG":5.6,"straightSidewaysM":0.83,"straightOffHeightM":0.6,"plan":"LSR at R 300 m: turn 175.5°, 746 m strai"}
+{"eps":"1","lap":"row 2 (","worstOver":0,"gapMm":0.1331,"minHoldG":4.1,"straightSidewaysM":4.12,"straightOffHeightM":55.48,"plan":"SC at R 284 m: turn 0°, 1706 m straight,"}
+{"eps":"100","lap":"TEST 10","worstOver":0.964,"gapMm":0.0653,"minHoldG":5.6,"straightSidewaysM":0.82,"straightOffHeightM":0.6,"plan":"LSR at R 300 m: turn 175.5°, 746 m strai"}
+{"eps":"100","lap":"row 2 (","worstOver":0.06,"gapMm":0.041,"minHoldG":4.1,"straightSidewaysM":3.87,"straightOffHeightM":54.77,"plan":"SC at R 284 m: turn 0°, 1706 m straight,"}
+{"eps":"1e4","lap":"TEST 10","worstOver":1.19,"gapMm":0.0373,"minHoldG":5.6,"straightSidewaysM":0.82,"straightOffHeightM":0.6,"plan":"LSR at R 300 m: turn 175.5°, 746 m strai"}
+{"eps":"1e4","lap":"row 2 (","worstOver":0.078,"gapMm":0.1554,"minHoldG":4.1,"straightSidewaysM":3.85,"straightOffHeightM":54.77,"plan":"SC at R 284 m: turn 0°, 1706 m straight,"}

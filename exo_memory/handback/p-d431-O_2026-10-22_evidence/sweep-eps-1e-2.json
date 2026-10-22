@@ -1,0 +1,174 @@
+{
+ "TEST 10": {
+  "ms": 6862,
+  "plan": "LSL at R 300 m: turn 142°, 1016 m straight, turn 218°; 3 new pieces, 2901 m; closed in 3 step(s): 0.130 mm, tangent 9.8e-8 rad",
+  "gapMm": 0.1302,
+  "tangentRad": 9.771344846937065e-8,
+  "minHoldG": 5.9,
+  "untouchedPiecesSameBytes": true,
+  "newPieces": 3,
+  "joints": [
+   {
+    "joint": "p21|p22",
+    "ch": "kh",
+    "points": [
+     1.097,
+     0.222,
+     -0.086,
+     -0.088,
+     "|",
+     -0.09,
+     -0.093,
+     -0.096
+    ],
+    "over": 0
+   },
+   {
+    "joint": "p21|p22",
+    "ch": "kv",
+    "points": [
+     0.58,
+     0.56,
+     0.546,
+     0.538,
+     "|",
+     0.531,
+     0.525,
+     0.52
+    ],
+    "over": 0
+   },
+   {
+    "joint": "p22|p23",
+    "ch": "kh",
+    "points": [
+     -0.182,
+     -0.182,
+     -0.183,
+     -0.186,
+     "|",
+     -0.19,
+     -0.06,
+     0.322
+    ],
+    "over": 0.008
+   },
+   {
+    "joint": "p22|p23",
+    "ch": "kv",
+    "points": [
+     -0.179,
+     -0.19,
+     -0.203,
+     -0.217,
+     "|",
+     -0.232,
+     -0.247,
+     -0.264
+    ],
+    "over": 0
+   },
+   {
+    "joint": "p23|p1",
+    "ch": "kh",
+    "points": [
+     0.56,
+     0.148,
+     0,
+     0,
+     "|",
+     0,
+     0,
+     0
+    ],
+    "over": 0
+   },
+   {
+    "joint": "p23|p1",
+    "ch": "kv",
+    "points": [
+     -0.257,
+     -0.1,
+     0,
+     0,
+     "|",
+     0,
+     0,
+     0
+    ],
+    "over": 0
+   }
+  ]
+ },
+ "row 2 (212 m climb)": {
+  "ms": 1081,
+  "plan": "SC at R 284 m: turn 0°, 1706 m straight, turn 180°; 2 new pieces, 2598 m; closed in 4 step(s): 0.106 mm, tangent 6.5e-8 rad",
+  "gapMm": 0.1055,
+  "tangentRad": 6.495265578539184e-8,
+  "minHoldG": 4.4,
+  "untouchedPiecesSameBytes": true,
+  "newPieces": 2,
+  "joints": [
+   {
+    "joint": "p5|p6",
+    "ch": "kh",
+    "points": [
+     -0.129,
+     -0.117,
+     -0.105,
+     -0.094,
+     "|",
+     -0.083,
+     0.161,
+     0.841
+    ],
+    "over": 0
+   },
+   {
+    "joint": "p5|p6",
+    "ch": "kv",
+    "points": [
+     -0.049,
+     -0.062,
+     -0.074,
+     -0.088,
+     "|",
+     -0.102,
+     -0.116,
+     -0.131
+    ],
+    "over": 0
+   },
+   {
+    "joint": "p6|p1",
+    "ch": "kh",
+    "points": [
+     0.895,
+     0.23,
+     0,
+     0,
+     "|",
+     0,
+     0,
+     0
+    ],
+    "over": 0
+   },
+   {
+    "joint": "p6|p1",
+    "ch": "kv",
+    "points": [
+     -0.6,
+     -0.236,
+     0,
+     0,
+     "|",
+     0,
+     0,
+     0
+    ],
+    "over": 0
+   }
+  ]
+ }
+}

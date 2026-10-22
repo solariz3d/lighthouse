@@ -93,3 +93,9 @@ close identically, to the 4th decimal, because the close solves the centreline o
 413b938c and green at ddfb4e4c. Push held. Could be wrong that baselining is the right fix: the guard's policy for BENIGN-TEST sites was not found stated.
 General form: a landing runs the guards the branch's author did not, and a red one is the landing's to stop on, not to route around.
 → `exo_memory/handback/p-d424-landing-O_2026-10-22.md`
+
+### The closer's bump was the windowed close's metric: least-norm in control points loads the change onto joints, whose points shape two pieces; measured on the road instead, the joints go smooth
+2026-10-22, D431 Part 1 — close.js:254/284-286 with the joint links at :98-100; gramMetric (∫Δ² + (50 m·Δ')², windowed closes only) on t180 d431-o a519bb9:
+TEST TRACK 10's p42|p43 kh -0.15, -11.81 | -23.54 → -8.71, -8.59 | -8.48; whole-lap close byte-identical. Could be wrong for windows of the user's own road:
+ELYSIUM's bend moves 4.40 m, was 3.99 (a ruling owed). General form: a bar on three points let two smoother-looking variants through; measure the road too.
+→ `exo_memory/handback/p-d431-O_2026-10-22.md`

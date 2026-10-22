@@ -1,0 +1,10 @@
+{"lap":"TEST 10","joint":"p21|p22","ch":"kh","over":0.011,"knotFromJoint":-1,"seq":[2.26,1,0.06,-0.51,-0.7,-0.69,-0.68,-0.66,-0.63,-0.59,-0.56]}
+{"lap":"TEST 10","joint":"p21|p22","ch":"kv","over":0,"knotFromJoint":null,"seq":[0.56,0.53,0.51,0.48,0.47,0.46,0.45,0.43,0.41,0.38,0.36]}
+{"lap":"TEST 10","joint":"p22|p23","ch":"kh","over":0.011,"knotFromJoint":1,"seq":[0.56,0.59,0.63,0.66,0.68,0.69,0.7,0.51,-0.06,-1,-2.26]}
+{"lap":"TEST 10","joint":"p22|p23","ch":"kv","over":0,"knotFromJoint":null,"seq":[-0.36,-0.38,-0.41,-0.43,-0.45,-0.46,-0.47,-0.48,-0.51,-0.53,-0.56]}
+{"lap":"TEST 10","joint":"p23|p1","ch":"kh","over":0,"knotFromJoint":null,"seq":[-3.83,-2.43,-1.27,-0.5,0,0,0,0,0,0,0]}
+{"lap":"TEST 10","joint":"p23|p1","ch":"kv","over":0,"knotFromJoint":null,"seq":[-0.88,-0.73,-0.51,-0.32,0,0,0,0,0,0,0]}
+{"lap":"row 2","joint":"p5|p6","ch":"kh","over":0,"knotFromJoint":null,"seq":[-0.15,-0.14,-0.12,-0.11,-0.1,-0.09,-0.08,0.16,0.85,1.93,3.36]}
+{"lap":"row 2","joint":"p5|p6","ch":"kv","over":0,"knotFromJoint":null,"seq":[-0.03,-0.05,-0.06,-0.08,-0.09,-0.1,-0.1,-0.12,-0.14,-0.15,-0.17]}
+{"lap":"row 2","joint":"p6|p1","ch":"kh","over":0,"knotFromJoint":null,"seq":[3.37,1.96,0.89,0.23,0,0,0,0,0,0,0]}
+{"lap":"row 2","joint":"p6|p1","ch":"kv","over":0,"knotFromJoint":null,"seq":[-1.57,-1.33,-0.93,-0.59,0,0,0,0,0,0,0]}

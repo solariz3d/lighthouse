@@ -1,0 +1,9 @@
+{"openPieces":40,"ms":14621,"plan":"RSL at R 300 m: turn -243.1°, 760 m straight, turn 333.1°, after 87 m rolling 54° upright first; 4 new pieces, 3864 m; closed in 3 step(s): 0.261 mm, tangent 6.1e-8 rad","window":[40,41,42,43],"reproducesSavedBytes":false}
+p40|p41 kh  0 0 0 0 | 0 -2.15 -2.78
+p40|p41 kv  0 0 0 0 | 0 -1.78 -2.58
+p41|p42 kh  -3.41 -3.28 -3.09 -2.92 | -2.74 -2.4 -1.83
+p41|p42 kv  -3.49 -3.9 -4.12 -4.19 | -4.27 -4.37 -4.4
+p42|p43 kh  -9.71 -9.05 -8.71 -8.59 | -8.48 -8.24 -7.89
+p42|p43 kv  1.56 1.48 1.43 1.4 | 1.38 1.33 1.25
+p43|p44 kh  4.1 4.45 4.68 4.8 | 4.92 5.2 5.72
+p43|p44 kv  -1.39 -1.47 -1.52 -1.55 | -1.57 -1.62 -1.7

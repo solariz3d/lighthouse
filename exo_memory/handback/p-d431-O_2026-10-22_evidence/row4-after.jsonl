@@ -1,0 +1,6 @@
+{"bankRad":0.5,"window":"the last 200 m (p6)","closed":true,"worstRollDegPerM":0.488,"bar":1.2144}
+{"bankRad":1,"window":"the last 200 m (p6)","closed":true,"worstRollDegPerM":0.976,"bar":1.2144}
+{"bankRad":1.5,"refused":"CLOSE_WINDOW: d roll too fast there: 1.464°/m over 20 m, past the 1.2144°/m bar (it was 0.000°/m). Widen the window or reshape the end"}
+{"bankRad":2,"refused":"CLOSE_WINDOW: d roll too fast there: 1.952°/m over 20 m, past the 1.2144°/m bar (it was 0.000°/m). Widen the window or reshape the end"}
+{"bankRad":2.5,"refused":"CLOSE_WINDOW: d roll too fast there: 2.440°/m over 20 m, past the 1.2144°/m bar (it was 0.000°/m). Widen the window or reshape the end"}
+{"bankRad":3,"refused":"CLOSE_WINDOW: d roll too fast there: 2.927°/m over 20 m, past the 1.2144°/m bar (it was 0.000°/m). Widen the window or reshape the end"}

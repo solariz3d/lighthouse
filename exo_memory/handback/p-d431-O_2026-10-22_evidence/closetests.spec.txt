@@ -1,0 +1,417 @@
+[32m✔ row 1: through the worker one press closes the track exactly as on the page, near and far, with the same words; new road keeps the user's pieces as the very same objects [90m(13057.1258ms)[39m[39m
+[32m✔ row 2: when no way of closing proves, the worker says the same words as the page, and nothing changes [90m(9792.9122ms)[39m[39m
+[32m✔ row 3: while the worker works the close is pending; an edit drops the answer by name; Cancel and a newer press cancel it; no runner or a failed job closes on the page [90m(7230.2906ms)[39m[39m
+[32m✔ row 4: the runner: one warm worker; a reply that is not the current job's is ignored; a refusal resolves; cancel and a failure make a fresh worker; no Worker throws [90m(1.5443ms)[39m[39m
+[32m✔ row 5: the worker SCRIPT loads closejob.js through the app's loader and answers as runClose does (a route, and the one press); a refusal and a bad job are answered [90m(32115.4136ms)[39m[39m
+[32m✔ row 6: the panel has ONE Close button (no "close using" box, no Apply); while the worker works it says so and Cancel stops it; then the line says what was done [90m(1477.0314ms)[39m[39m
+[32m✔ row 7: a press hands the worker the reds the live checker found for this very track with CSP on, and no others [90m(146.5727ms)[39m[39m
+[32m✔ REPRODUCER (the page as it was): close in core (a fresh start) closes [90m(1.2325ms)[39m[39m
+[32m✔ the window closes, destroyed exactly once: close in core (a fresh start) [90m(0.7694ms)[39m[39m
+[32m✔ REPRODUCER (the page as it was): close in pieces closes [90m(0.2268ms)[39m[39m
+[32m✔ the window closes, destroyed exactly once: close in pieces [90m(0.3268ms)[39m[39m
+[32m✔ REPRODUCER (the page as it was): close after switching pieces -> core is TRAPPED: the X does nothing [90m(0.3469ms)[39m[39m
+[32m✔ the window closes, destroyed exactly once: close after switching pieces -> core [90m(1.6312ms)[39m[39m
+[32m✔ REPRODUCER (the page as it was): close after switching core -> pieces closes [90m(0.264ms)[39m[39m
+[32m✔ the window closes, destroyed exactly once: close after switching core -> pieces [90m(0.1509ms)[39m[39m
+[32m✔ REPRODUCER (the page as it was): close after core -> pieces -> core -> pieces -> core is TRAPPED: the X does nothing [90m(0.7809ms)[39m[39m
+[32m✔ the window closes, destroyed exactly once: close after core -> pieces -> core -> pieces -> core [90m(0.2401ms)[39m[39m
+[32m✔ REPRODUCER (the page as it was): close in pieces with a failing autosave is TRAPPED: the X does nothing [90m(0.173ms)[39m[39m
+[32m✔ the window closes, destroyed exactly once: close in pieces with a failing autosave [90m(0.1014ms)[39m[39m
+[32m✔ REPRODUCER (the page as it was): close in core after a pieces page whose autosave fails is TRAPPED: the X does nothing [90m(0.0509ms)[39m[39m
+[32m✔ the window closes, destroyed exactly once: close in core after a pieces page whose autosave fails [90m(0.0465ms)[39m[39m
+[32m✔ the pieces cleanup RUNS on close, before the window is destroyed (the autosave is flushed or cleared first) [90m(0.8392ms)[39m[39m
+[32m✔ core has nothing to clean up: the handler destroys straight away [90m(0.168ms)[39m[39m
+[32m✔ a cleanup that throws is logged and the window still closes [90m(0.4425ms)[39m[39m
+[32m✔ a cleanup that HANGS cannot hold the window: it closes after the timeout [90m(41.8323ms)[39m[39m
+[32m✔ a destroy() that fails is logged, never thrown out of the handler [90m(0.5476ms)[39m[39m
+[32m✔ the handler prevents the wrapper's own destroy (it destroys once, itself), and tolerates an event with no preventDefault [90m(0.2579ms)[39m[39m
+[32m✔ installCloseHandler off Tauri (no window, or no onCloseRequested) registers nothing and does not throw [90m(0.0597ms)[39m[39m
+[32m✔ the cleanup is read at CLOSE time: a mode that sets it after registration is honoured, and a mode that clears it is too [90m(0.1364ms)[39m[39m
+[32m✔ app/index.html registers the close handler BEFORE the builder starts, so a builder that fails to start still has it [90m(0.0796ms)[39m[39m
+[32m✔ app/index.html has ONE close registration path (the closer, and a bare destroy-only fallback): the old pieces-only listener is gone [90m(0.0986ms)[39m[39m
+[32m✔ nothing unsaved (ask returns null): the X closes at once, with no save [90m(0.133ms)[39m[39m
+[32m✔ Cancel: the window stays open and nothing is saved [90m(0.0784ms)[39m[39m
+[32m✔ Don't save: the window closes without saving [90m(0.0909ms)[39m[39m
+[32m✔ Save: it saves, then the window closes [90m(0.1532ms)[39m[39m
+[32m✔ Save that does not save (no name yet): the window stays open, so the work is not lost [90m(0.1123ms)[39m[39m
+[32m✔ Save that THROWS: the window stays open; the next X asks again, and Don't save then closes [90m(0.1795ms)[39m[39m
+[32m✔ a prompt that THROWS (no dialog, a refused permission): the window closes as before, it is never trapped [90m(0.1441ms)[39m[39m
+[32m✔ a second X while the prompt is open is ignored: one prompt, one close [90m(0.1475ms)[39m[39m
+[32m✔ app/index.html gives the closer the prompt, and the builder says whether there is unsaved work [90m(0.2582ms)[39m[39m
+[32m✔ the window may show the prompt: dialog:allow-message is in its capability [90m(1.6173ms)[39m[39m
+[31m✖ control: the unmutated temp copy passes every test file the mutants use [90m(170787.8278ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(376.5994ms)[39m[39m
+[32m✔ a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353) [90m(724.8285ms)[39m[39m
+[32m✔ a load throw in a run of one file reads NOT CAUGHT as before, never NOT TESTED (the load-throw stand-in, D354) [90m(396.06ms)[39m[39m
+[32m✔ mutation K1 the columns outside the window are not fixed: applied, and caught by "row 1: a close confined to the LAST piece…" [90m(1443.1526ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation K2 the pieces outside the window are recomputed, not kept: applied, and caught by "row 1: a close confined to the LAST piece…" [90m(2459.7164ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation K3 a local close that does not close is handed back, not refused: applied, and caught by "row 3: a window that cannot close the loop…" [90m(2653.5384ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation K4 the roll-rate bar is not read: applied, and caught by "row 4: a local close may not push the window past the roll-rate bar…" [90m(2790.5242ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation K5 the window is not named for a person: applied, and caught by "row 1: a close confined to the LAST piece…" [90m(2733.7683ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation K6 the default window ignores the fraction (the last piece only): applied, and caught by "row 2: the default window…" [90m(2915.9309ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation K7 an empty window is accepted: applied, and caught by "row 5: a window with no road piece…" [90m(3082.6153ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation A6 the refused export keeps the export's own message (ids): applied, and caught by "row 6: a refused export names EVERY red…" [90m(8053.9801ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation A9 the press writes no copy from before the close: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…" [90m(5845.0681ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation A10 a failed copy still closes: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…" [90m(7006.7211ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation A11 an edit while the copy is written is closed over: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…" [90m(8531.7119ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation B1 a way that does not prove is picked: applied, and caught by "row 4: when no way proves…" [90m(48408.2354ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation B2 a way that adds a red is picked: applied, and caught by "row 4: when no way proves…" [90m(49582.5898ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation B3 new road is not put last: applied, and caught by "row 8: the order…" [90m(57677.1127ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation B4 the most movement is tried first: applied, and caught by "row 7: the pick is the least-moving way that proves…" [90m(51193.8713ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation B5 Finish is tried when the end is already at the start: applied, and caught by "row 1: an end already at the start…" [90m(56605.6035ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation B6 a bend may reshape the track (no move cap): applied, and caught by "row 5: a bend that would move the track further…" [90m(56652.2355ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation B7 a press that finds no way still applies: applied, and caught by "row 2: when no way of closing proves, nothing changes…" [90m(9362.8816ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation B8 the press commits the open track: applied, and caught by "row 1: one press closes a near lap AT ONCE…" [90m(5617.7229ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation N1 a laid road Close refuses is never taken as laid (the lone straight is lost to a loop again): applied, and caught by "row 17: an end straight behind the start…" [90m(23701.3274ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation N2 a route that is only a straight is not laid under 10 m: applied, and caught by "row 17: an end straight behind the start…" [90m(22897.0212ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation F5 the worker's document is not frozen (the residual memo misses): applied, and caught by "row 13: the worker's press on a structuredClone…" [90m(56436.2919ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation B9 a tie is not broken by the route order (micro-metres decide): applied, and caught by "row 8: the order…" [90m(32740.4066ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation F1 the near bend is not checked first (every route runs): applied, and caught by "row 9: when the end is at the start…" [90m(57451.225ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation F2 the given open-track reds are ignored (it is checked again): applied, and caught by "row 11: given the open track…" [90m(54271.212ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation F3 the press hands the worker no reds: applied, and caught by "row 7: a press hands the worker the reds…" [90m(37394.6883ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation F4 a check made with CSP off is used: applied, and caught by "row 7: a press hands the worker the reds…" [90m(38289.9234ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation G1 a ray red on an overlap keeps its own words: applied, and caught by "the overlap is ONE group…" [90m(355.1937ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation G2 every ray red is called an overlap: applied, and caught by "a downforce-ray-gap with NO overlap near it…" [90m(341.1618ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation G3 the text names only the first place of a group: applied, and caught by "groupsText names one line per PLACE…" [90m(342.3581ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation G6 places are never merged: applied, and caught by "D248: overlapping reds on one piece are ONE place…" [90m(376.6023ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation G7 places merge across pieces: applied, and caught by "D248: TOUCHING reds merge…" [90m(341.213ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation G10 places merge only on the same STARTING piece (the rule the real window caught): applied, and caught by "D248: a red inside a place that spans two pieces…" [90m(346.373ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation G8 touching reds do not merge (no tolerance): applied, and caught by "D248: TOUCHING reds merge…" [90m(353.8281ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation G9 the count is of reds, not places: applied, and caught by "D248: overlapping reds on one piece are ONE place…" [90m(369.3005ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation G4 the piece is read at the range's end: applied, and caught by "where: s in km and the piece…" [90m(338.4058ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation G5 s past the lap does not wrap: applied, and caught by "pieceAt wraps…" [90m(345.6306ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation L1 every piece is labelled again: applied, and caught by "the labels on the track…" [90m(9525.4744ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation L2 the hovered piece is never labelled: applied, and caught by "the labels on the track…" [90m(9416.2072ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation L3 a still pointer is not asked again after the track changes: applied, and caught by "the labels follow a path the preview extends IN PLACE…" [90m(9422.9803ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation U1 Undo shows the head only (the bug): applied, and caught by "D242 item 7…" [90m(9928.4351ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation U2 the ticks are not put back: applied, and caught by "D242 item 7…" [90m(10692.7231ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation S1 Straight does not tick turn "at start": applied, and caught by "D242: after a 30°/100m turn, Straight…" [90m(10320.1495ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation S2 Straight leaves the boxes ticked: applied, and caught by "D242: after a 30°/100m turn, Straight…" [90m(9694.7282ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation S3 the straight hint never shows: applied, and caught by "D242: after a 30°/100m turn, Straight…" [90m(9869.7786ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ row 1: one press closes a near lap AT ONCE: one undo step, the line says what it did, and Undo gives the open lap back [90m(4644.0213ms)[39m[39m
+[32m✔ row 2: when no way of closing proves, nothing changes: the same document, a line that says why, and no copy written [90m(7237.3978ms)[39m[39m
+[32m✔ row 6: a refused export names EVERY red in plain words, grouped, with where (not the export's first id) [90m(278.1378ms)[39m[39m
+[32m✔ row 7: the press writes the copy from BEFORE the close first (backupNow('pre-close'), the D239 amendment); a copy that fails refuses it by name; an edit while the copy is written is never closed over [90m(7232.8799ms)[39m[39m
+[32m✔ control: the unmutated temp copy passes every core-shell test [90m(74665.7272ms)[39m[39m
+[34mℹ D412 wide: "the layout" runs 4 rows[39m
+[34mℹ D412 wide: "the rate brush" runs 3 rows[39m
+[34mℹ D412 wide: "extendOptions" runs 3 rows[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(800.8503ms)[39m[39m
+[32m✔ a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353) [90m(1430.3605ms)[39m[39m
+[32m✔ a load throw in a run of several files reads NOT TESTED and names the files (the load-throw stand-in, D354) [90m(885.4436ms)[39m[39m
+[32m✔ a load throw in one file does not hide a crash after a failing row in another: NOT TESTED (F1, D354) [90m(1431.2107ms)[39m[39m
+[32m✔ mutation R1 the sign of an angle flipped: applied, and caught by "the strings…" [90m(1078.4539ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R2 zero is signed: applied, and caught by "the strings…" [90m(1139.6742ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R3 bank shown as its end value, not the change: applied, and caught by "the strings…" [90m(1129.99ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R4 rounding without the binary guard: applied, and caught by "the strings…" [90m(1098.8656ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R5 the head keep-out ignored: applied, and caught by "the layout…" [90m(1071.5921ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R6 labels may overlap: applied, and caught by "the layout…" [90m(1135.1002ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R7 anchors cached by the path object: applied, and caught by "the labels follow a path the preview extends IN PLACE…" [90m(1222.4183ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R8 the layer is not put back in the page: applied, and caught by "the labels follow a path the preview extends IN PLACE…" [90m(1183.1939ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R11 a label never slides off its piece's middle: applied, and caught by "a piece whose middle is behind the camera…" [90m(1054.88ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R13 the head's label may be culled: applied, and caught by "the layout: the head's own label is never culled…" [90m(1026.1049ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R14 a head piece with nothing on screen has no label: applied, and caught by "the head's own piece is labelled even when none of it is on screen…" [90m(1043.6946ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R15 the road bleeds through the label: applied, and caught by "the label box holds only…" [90m(1039.4893ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R16 the label box has a border and round corners again: applied, and caught by "the label box holds only…" [90m(1062.6021ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R17 the head's fallback place may cover the head: applied, and caught by "the layout: the head's own label is never culled…" [90m(1039.7986ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R18 a label may be placed under a panel: applied, and caught by "the layout: no label is placed under a panel…" [90m(984.6158ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R12 no ring clears a large head keep-out: applied, and caught by "the layout: a label anchored on a large head keep-out…" [90m(974.8384ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R9 the panel readout waits for the next state change: applied, and caught by "the panel shows the ghost…" [90m(976.3562ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R10 the ghost readout is the LAST placed piece, not the candidate: applied, and caught by "the panel shows the ghost…" [90m(984.0995ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U1 the cup field is not sent to the core: applied, and caught by "extendOptions: the cup field is the target c…" [90m(983.0572ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U2 the cup is sent in radians: applied, and caught by "extendOptions: the cup field is the target c…" [90m(1002.443ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U3 the panel clamps the cup, hiding the core guard: applied, and caught by "extendOptions: the cup field is the target c…" [90m(969.7842ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U4 the cup cell shows the typed target, not the document: applied, and caught by "the readout shows cup from → to…" [90m(1006.3814ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U5 (K7-4) the cup cell wired to the bank values: applied, and caught by "the readout shows cup from → to…" [90m(971.3582ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U6 (K7-3) the cup shown in radians: applied, and caught by "the readout shows cup from → to…" [90m(1003.9236ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U7 the cup field does not redraw the readout: applied, and caught by "the cup cell follows the cup field…" [90m(995.3462ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U8 the brush has no cup channel: applied, and caught by "the brush's channel list gains cup…" [90m(980.5828ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U9 the cup field is not on the panel: applied, and caught by "the Extend panel has a "cup °" field…" [90m(984.1933ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation V1 the at-start boxes are ignored: applied, and caught by "extendOptions "at start"…" [90m(991.568ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation V2 an untouched field is sent at start: applied, and caught by "extendOptions "at start"…" [90m(1032.7276ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation V3 the span is not held to the piece: applied, and caught by "extendOptions "at start"…" [90m(987.6076ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation V4 transition sent as one number for all channels: applied, and caught by "extendOptions "at start"…" [90m(977.449ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation V5 a field sent on the wrong channel: applied, and caught by "extendOptions "at start"…" [90m(1018.2898ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation V6 the panel never passes the boxes: applied, and caught by "the panel: an "at start" box…" [90m(983.1346ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation V7 ticking a box does not redraw: applied, and caught by "the panel: an "at start" box…" [90m(1197.007ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C1 a brush frame builds on the last frame, not the drag's base: applied, and caught by "the rate brush…" [90m(1271.3205ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C2 the drag never ends in the history: applied, and caught by "the rate brush…" [90m(1189.0546ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C3 the local brush is not the default: applied, and caught by "the local (height / sideways) brush…" [90m(998.0783ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C20 sideways is sent as a hill: applied, and caught by "the local (height / sideways) brush…" [90m(1009.3731ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C21 with E's brush, every channel is sent as rate: applied, and caught by "with E's brush, the rate brush goes through it…" [90m(993.5226ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C4 a second close runs again: applied, and caught by "close: one click…" [90m(1317.7017ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C5 the heading brush may open a closed loop: applied, and caught by "close: one click…" [90m(1262.3096ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C7 export runs on an open track: applied, and caught by "export: an open track is refused…" [90m(1228.8063ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C8 the list shows the piece builder's tracks too: applied, and caught by "save and open use their own prefix…" [90m(970.0164ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C12 turn is degrees per metre, not per 100 m: applied, and caught by "extendOptions…" [90m(996.5967ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C14 the pick takes the farthest station: applied, and caught by "the pick…" [90m(989.8579ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C15 the pick sees through the back of the camera: applied, and caught by "the pick…" [90m(992.3327ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C16 the ghost is not what extend builds: applied, and caught by "the ghost of an extension…" [90m(1053.195ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C17 export goes to the word exporter: applied, and caught by "export: an open track is refused…" [90m(1303.4096ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C18 the close does not go round the user's straights: applied, and caught by "close: one click…" [90m(1145.0544ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C19 the export is handed no start layout: applied, and caught by "export: an open track is refused…" [90m(1895.1164ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C22 the widened radius is not shown: applied, and caught by "a brush E widened says so…" [90m(996.774ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation L1 the track model ignores the lift: applied, and caught by "the track model draws the LIFTED road…" [90m(1044.7172ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation L2 a lift-only change is taken as the same track: applied, and caught by "the track model draws the LIFTED road…" [90m(1036.613ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation L3 the mesh is not keyed by the lift: applied, and caught by "the track model draws the LIFTED road…" [90m(1110.3871ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation L4 the export does not lift the path: applied, and caught by "the export lifts the path…" [90m(2879.0791ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C23 the radiusUsed E reports is not read: applied, and caught by "landed core: a narrow brush…" [90m(1011.4669ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C24 sharp is never passed to E: applied, and caught by "the sharp opt-in…" [90m(1009.6609ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation P1 the export starts at the origin: applied, and caught by "a lap that starts pitched…" [90m(1459.3476ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation P2 the preview starts at the origin: applied, and caught by "a lap that starts pitched…" [90m(1302.5989ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation P3 the shell does not hand on the start: applied, and caught by "a lap that starts pitched…" [90m(1251.2277ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ the closed track after Close, built from the open one, is the closed track a full build draws [90m(6090.1899ms)[39m[39m
+[32m✔ row 1: every tool resolves to its mode, channel and family; an unknown tool is refused by name and opens nothing [90m(51.8738ms)[39m[39m
+[32m✔ row 2: the family sets the guard: shape keeps the D244b refusal, local and route are not guarded, and a route tool moves the road after it [90m(571.1931ms)[39m[39m
+[32m✔ row 3: Smooth takes the channel of the tool used last; a channel given wins; with none it is refused by name [90m(155.8934ms)[39m[39m
+[32m✔ row 4: a route tool on a CLOSED lap is never closed per step: the lap is open during the drag [90m(498.5539ms)[39m[39m
+[32m✔ row 5: the release only STARTS the job; the job lands the re-closed lap as ONE undo step, every piece outside the window the very same object [90m(928.7732ms)[39m[39m
+[32m✔ row 6: the window close first; refused, the whole-lap close with the window protected; refused again, the drag is dropped whole and named [90m(808.8074ms)[39m[39m
+[32m✔ row 7: the window is the selected RUN: sculptInfo gives from/to and the middle piece; beginSculpt brushes the run, and nothing outside it changes [90m(80.8367ms)[39m[39m
+[32m✔ row 8: a radius change mid-drag takes no step itself, and the next brushTo of the page re-runs from the same base at the new radius, with no accumulation [90m(74.9322ms)[39m[39m
+[32m✔ row 9: Esc (cancelBrush) drops an open drag: the very same document, and no undo step [90m(21.7309ms)[39m[39m
+[32m✔ row 10: Stretch hands the core ONE factor for the whole run, keepRate when asked; refused by name until the core has stretch [90m(80.4833ms)[39m[39m
+[32m✔ row 11: the close runner hands the worker the window a route tool's release asks for [90m(2.7561ms)[39m[39m
+[32m✔ row 12: runClose closes with the window it is given, not the default trailing one [90m(524.4592ms)[39m[39m
+[32m✔ row 13: B's page: beginSculpt({ channel, from, to }) brushes the run with the shape guard on, and with a tool the tool's; a bad run or a steering channel is refused by name [90m(81.1248ms)[39m[39m
+[32m✔ row 14: with the real core of C, Stretch lengthens the run by exactly the metres of the drag, the document stays valid, one undo step [90m(36.0312ms)[39m[39m
+[32m✔ row 15: with the real core of C, Smooth after a Bend relaxes the turn channel under the window, one undo step [90m(38.2039ms)[39m[39m
+[32m✔ row 16: Stretch with no piece and no run takes the road piece under s0 (B's strip sends neither) [90m(66.3648ms)[39m[39m
+[32m✔ row 17: a re-close that outlives its document leaves no brush open: a new document during the release, and every tool still opens [90m(456.8723ms)[39m[39m
+[32m✔ row 18: a release with no change restores the lap as it was and runs no close [90m(636.7491ms)[39m[39m
+[32m✔ row 19: a handle on a two- or three-piece run lands the value asked where the handles read it, as exactly as D335 lands one piece (D335 per window) [90m(157.6886ms)[39m[39m
+[32m✔ row 20: the release tries the window, then the window with the lap's last road piece, then with the last and the first, then the whole lap with the window protected [90m(965.4961ms)[39m[39m
+[32m✔ row 21: with the real close, a Bend away from the seam whose window alone is refused closes with the window and the lap's last piece; only those and the joints after them change [90m(556.1048ms)[39m[39m
+[32m✔ closing the loop appends the safest connector as one undo step, and the track is closed [90m(26094.641ms)[39m[39m
+[32m✔ the connector the shell appends is the connector's FIRST-ranked candidate, the safest by its worst load [90m(19355.2913ms)[39m[39m
+[32m✔ the closed track still resolves for the panels, marked closed, with no resolve error [90m(0.3027ms)[39m[39m
+[32m✔ undo reopens the loop: the open track comes back byte for byte [90m(18197.7866ms)[39m[39m
+[32m✔ closing an empty track says why and changes nothing [90m(0.5229ms)[39m[39m
+[32m✔ test 4, track 0 (11 pieces, 4100 m, ε 0.00570491696708): one call closes it [90m(76.0218ms)[39m[39m
+[32m✔ test 4, track 1 (10 pieces, 3685 m, ε -0.0841972072609): one call closes it [90m(49.6076ms)[39m[39m
+[32m✔ test 4, track 2 (9 pieces, 3270 m, ε -0.0402413592674): one call closes it [90m(45.8791ms)[39m[39m
+[32m✔ test 4, track 3 (7 pieces, 3042 m, ε -0.0690124160144): one call closes it [90m(47.1616ms)[39m[39m
+[32m✔ test 4, track 4 (6 pieces, 2419 m, ε -0.00323135023937): one call closes it [90m(27.5119ms)[39m[39m
+[32m✔ test 4, track 5 (12 pieces, 4723 m, ε -0.065869737044): one call closes it [90m(64.0917ms)[39m[39m
+[32m✔ test 4, track 6 (9 pieces, 2773 m, ε 0.075068023568): one call closes it [90m(36.8026ms)[39m[39m
+[32m✔ test 4, track 7 (9 pieces, 3916 m, ε -0.0348630782217): one call closes it [90m(48.985ms)[39m[39m
+[32m✔ test 4, track 8 (8 pieces, 2717 m, ε 0.0987024823669): one call closes it [90m(29.7622ms)[39m[39m
+[32m✔ test 4, track 9 (7 pieces, 2519 m, ε -0.0799730329309): one call closes it [90m(35.6217ms)[39m[39m
+[32m✔ test 4, track 10 (6 pieces, 2235 m, ε -0.025086999312): one call closes it [90m(24.1978ms)[39m[39m
+[32m✔ test 4, track 11 (10 pieces, 3974 m, ε -0.00568767194636): one call closes it [90m(57.1923ms)[39m[39m
+[32m✔ test 4, track 12 (6 pieces, 2264 m, ε -0.055765911378): one call closes it [90m(28.0015ms)[39m[39m
+[32m✔ test 4, track 13 (8 pieces, 3594 m, ε 0.0442057050765): one call closes it [90m(47.0285ms)[39m[39m
+[32m✔ test 4, track 14 (6 pieces, 1914 m, ε 0.0142437375616): one call closes it [90m(18.4556ms)[39m[39m
+[32m✔ test 4, track 15 (9 pieces, 2362 m, ε -0.0745127643459): one call closes it [90m(33.8558ms)[39m[39m
+[32m✔ test 4, track 16 (7 pieces, 2498 m, ε 0.0869582034647): one call closes it [90m(37.1671ms)[39m[39m
+[32m✔ test 4, track 17 (8 pieces, 3177 m, ε -0.00734682576731): one call closes it [90m(37.0816ms)[39m[39m
+[32m✔ test 4, track 18 (9 pieces, 3486 m, ε -0.0384539657272): one call closes it [90m(44.7104ms)[39m[39m
+[32m✔ test 4, track 19 (7 pieces, 2735 m, ε -0.0382748652715): one call closes it [90m(35.6967ms)[39m[39m
+[32m✔ close REPORTS a closure it did not reach: one step on the hardest track says NOT CLOSED and leaves closed false [90m(186.0857ms)[39m[39m
+[32m✔ the input document is not changed (it is frozen, and deep-equal afterwards) [90m(459.8341ms)[39m[39m
+[32m✔ a lap that already closes (a full circle, R = 200 m) is left where it is: no steps [90m(91.1085ms)[39m[39m
+[32m✔ the position Jacobian predicts the adapter: bumping one interior control point moves the end as J says (relative 5e-4) [90m(409.5678ms)[39m[39m
+[32m✔ the seam is a joint like any other: after the close it passes the document’s own C1 joint check, last piece into first [90m(2.9513ms)[39m[39m
+[32m✔ with no stretch protected (every weight 1) close still closes, seam included [90m(584.5102ms)[39m[39m
+[32m✔ a track with a jump and no turn is refused as any turnless track is (CLOSE_SINGULAR), not as an unbuilt jump (D243) [90m(28.1049ms)[39m[39m
+[32m✔ row 1: an end already at the start: one press is the near-closed bend, with no new road and nothing moved; Finish is not even tried [90m(6908.8254ms)[39m[39m
+[32m✔ row 2: ends 2, 5 and 10 m past the start, and 5 m short of it, close by a bend: no new road, no loop [90m(12913.7837ms)[39m[39m
+[32m✔ row 3: new road only when no bend proves: a far end gets Finish (every other route refused or failed); a near end does not, though Finish closed it [90m(4501.1413ms)[39m[39m
+[32m✔ row 4: when no way proves, there is no document, and one line says nothing changed and why, with the closest way's reason [90m(4408.9798ms)[39m[39m
+[32m✔ row 5: a bend that would move the track further than its gap and 10 m is not eligible, and new road is laid instead [90m(2433.6545ms)[39m[39m
+[32m✔ row 7: the pick is the least-moving way that proves: every way that would move the track less was refused or failed the lap proof or added a red [90m(8938.2782ms)[39m[39m
+[32m✔ row 8: the order: no new road first (even when the new road moves nothing), then the least movement, and within a millimetre the route order [90m(0.727ms)[39m[39m
+[90m﹣ row 6: the reported near-closed save: one press bends its last 2 pieces by up to 4.0 m, with no new road, and the lap proves [90m(0.0654ms)[39m # fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)[39m
+[32m✔ row 9: when the end is at the start, the near bend is closed and checked first, and once it proves no other route is run [90m(2547.0938ms)[39m[39m
+[32m✔ row 10: the pick is the exhaustive order's on every track: the same route, the same words, the same closed track [90m(35132.7392ms)[39m[39m
+[32m✔ row 11: given the open track's reds, the press does not check the open track, and picks exactly as it does without them [90m(6460.5638ms)[39m[39m
+[90m﹣ row 12: the reported save: one press, with the reds the live checker found, closes in under 30 s, and picks as a press without them does [90m(0.0975ms)[39m # fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)[39m
+[32m✔ row 13: the worker's press on a structuredClone of the track picks and closes exactly as on the track, and residual never runs on an unfrozen document [90m(3922.0307ms)[39m[39m
+[90m﹣ row 14: the reported save: the worker's press on a structuredClone, with the live checker's reds, picks and closes as on the parsed save, residual never unfrozen [90m(0.1778ms)[39m # fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)[39m
+[32m✔ a lap end in the flipped frame that faces the start exactly has no heading, pitch or bank left to close [90m(423.0238ms)[39m[39m
+[32m✔ the whole-lap close of a flipped-frame lap converges and the seam meets in position and frame [90m(585.0539ms)[39m[39m
+[32m✔ Finish to start from a flipped-frame end lays no roll (the end is already upright) and closes the lap [90m(1930.8863ms)[39m[39m
+[32m✔ Level on a flipped-frame end with a slope ends level (pitch 0), as it does on an upright track [90m(971.8807ms)[39m[39m
+[32m✔ row 1: TEST 10 finishes with no spike at its closer joints, and nothing it did not lay moves [90m(6386.029ms)[39m[39m
+[32m✔ row 2: a lap that ends 212 m below its start, level, finishes with no spike at its closer joints [90m(1775.1676ms)[39m[39m
+[32m✔ row 1: a close confined to the LAST piece leaves every earlier piece bit-identical, closes the loop, and moves the last piece [90m(1470.7063ms)[39m[39m
+[32m✔ row 2: the default window covers at least ~20% of the lap from its end (at least the last piece); the whole-lap close, by contrast, moves pieces outside it [90m(713.0526ms)[39m[39m
+[32m✔ row 3: a window that cannot close the loop is REFUSED BY NAME (CLOSE_WINDOW), naming the window, and nothing is handed back [90m(4821.0145ms)[39m[39m
+[31m✖ row 4: a local close may not push the window past the roll-rate bar (1.2144°/m over 20 m): refused by name [90m(393.418ms)[39m[39m
+[32m✔ row 4 control: the same start banked 0.5 rad closes in the last piece (its roll stays under the bar) [90m(331.7682ms)[39m[39m
+[32m✔ row 5: a window with no road piece is refused by name [90m(265.2129ms)[39m[39m
+[32m✔ close on two straights is a NAMED refusal (CoreError CLOSE_SINGULAR), never a plain Error [90m(143.3269ms)[39m[39m
+[32m✔ control: a lap that CAN close still closes (a turning track is not refused) [90m(316.5787ms)[39m[39m
+[32m✔ the app shows the refusal by its name: the shell's message carries CLOSE_SINGULAR, and the track stays open [90m(232.465ms)[39m[39m
+[32m✔ row 1: every route the solver gives, laid out arc, straight, arc, ends on the start pose [90m(64.7458ms)[39m[39m
+[32m✔ row 2: an end behind the start and pointing at it is one straight of the gap, with no turn [90m(1.8263ms)[39m[39m
+[32m✔ row 3: a track is finished with new pieces only, closed, and the new road ends on the start [90m(1345.8582ms)[39m[39m
+[32m✔ row 4: refusals by name: a closed loop, an empty track [90m(921.1994ms)[39m[39m
+[32m✔ row 5: an end upside down rolls back upright on a straight of its own (last onto the start, or first when that keeps the car on the road), never in a turn, and the lap closes with the bank of the start [90m(4116.5915ms)[39m[39m
+[32m✔ row 8: the roll Finish lays, read as the checker reads it, is under the amber bar everywhere on the new road (54° and 180°) [90m(4654.8468ms)[39m[39m
+[32m✔ row 9: a roll whose first guess is too short (factor 1, and the old 1.1) is measured and lengthened until it is under the amber bar [90m(6964.3083ms)[39m[39m
+[32m✔ row 10: a banked end: the road Finish lays keeps the car on it (the lap proof of the checker passes), at 54° and at 126° [90m(13321.9612ms)[39m[39m
+[32m✔ row 11: F.roadHold is the own test of the lap proof: the same place on the road the old Finish laid at a banked end, and nothing on the new road [90m(2619.1451ms)[39m[39m
+[32m✔ row 13: an end Finish cannot close onto a road the car stays on is refused by name, with where the car leaves the road and what to change [90m(1200.8012ms)[39m[39m
+[32m✔ row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror) [90m(1617.0097ms)[39m[39m
+[32m✔ row 6: an end a quarter turn short of the lap is finished with one turn and one straight, not a detour [90m(269.1094ms)[39m[39m
+[32m✔ row 7: the one-turn routes, laid out, end on the start pose; none tighter than the floor [90m(0.856ms)[39m[39m
+[32m✔ row 14: an end already at the start is closed by bending its last pieces, with no new road and no loop [90m(464.8381ms)[39m[39m
+[90m﹣ row 15: the reported near-closed save closes by bending its last pieces: no new road, nothing else moves, the lap proves [90m(0.1095ms)[39m # fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)[39m
+[32m✔ row 16: an end at the start whose every bend leaves the road is refused by name (FINISH_NEAR), never given new road [90m(1446.7664ms)[39m[39m
+[32m✔ row 17: an end straight behind the start, on its line and pointing the same way, is finished with that straight (8, 20 and 40 m), not a loop [90m(11116.504ms)[39m[39m
+[32m✔ a NORMAL export of an open track still refuses (unchanged): NOT_CLOSED, nothing written [90m(61.3829ms)[39m[39m
+[32m✔ the TEST export of the same open track writes a folder marked unfinished, in name and folder [90m(1352.2452ms)[39m[39m
+[32m✔ D256: the TEST export checks the open track at FULL speed, so where F7's hill lets the car leave the road is LISTED (and does not block) [90m(2.3935ms)[39m[39m
+[32m✔ in TEST mode a red is LISTED and does not block: a hole's gap-in-road red is in the TEST file and the warnings [90m(923.8934ms)[39m[39m
+[32m✔ the TEST folder carries point-to-point gates and the named end wall in its kn5 [90m(0.4879ms)[39m[39m
+[32m✔ the TEST folder's AI line is OPEN and reads back [90m(0.3668ms)[39m[39m
+[32m✔ an open AI line is written only when asked for: the same line without open still refuses NOT_CLOSED [90m(309.4209ms)[39m[39m
+[34mℹ tests 266[39m
+[34mℹ suites 0[39m
+[34mℹ pass 260[39m
+[34mℹ fail 2[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 4[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 960602.8961[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\core-close-mutation.test.js:111:1
+[31m✖ control: the unmutated temp copy passes every test file the mutants use [90m(170787.8278ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the unmutated copy fails: row 4: a local close may not push the window past the roll-rate bar (1.2144°/m over 20 m): refused by name (134.8398ms)
+      at TestContext.<anonymous> [90m(C:\Users\nname\Downloads\t180-wt-o4\[39mapp\test\core-close-mutation.test.js:113:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.start (node:internal/test_runner/test:1015:17)[39m
+  [90m    at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [32m'row 4: a local close may not push the window past the roll-rate bar (1.2144°/m over 20 m): refused by name (134.8398ms)'[39m ],
+    expected: [],
+    operator: [32m'deepEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_close_local.test.js:62:1
+[31m✖ row 4: a local close may not push the window past the roll-rate bar (1.2144°/m over 20 m): refused by name [90m(393.418ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Missing expected exception: refused by name
+      at TestContext.<anonymous> [90m(C:\Users\nname\Downloads\t180-wt-o4\[39mtest\core_close_local.test.js:64:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [90mundefined[39m,
+    operator: [32m'throws'[39m,
+    diff: [32m'simple'[39m
+  }

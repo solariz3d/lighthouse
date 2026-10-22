@@ -1,0 +1,6 @@
+caught       G1 the windowed close takes the plain step (no Gram metric)  ()
+caught       G2 the slope of the change is not counted (GRAM_ELL_M 0)  ()
+caught       G3 the plain norm swamps the metric (GRAM_EPS 1e3)  ()
+caught       G4 a linked point counts only its first term  ()
+caught       G5 the value term dropped (only the slope counts)  ()
+applied 5 / caught 5 / NOT APPLIED 0

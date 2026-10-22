@@ -1,0 +1,1727 @@
+TAP version 13
+# Subtest: row 1: through the worker one press closes the track exactly as on the page, near and far, with the same words; new road keeps the user's pieces as the very same objects
+ok 1 - row 1: through the worker one press closes the track exactly as on the page, near and far, with the same words; new road keeps the user's pieces as the very same objects
+  ---
+  duration_ms: 16353.5467
+  type: 'test'
+  ...
+# Subtest: row 2: when no way of closing proves, the worker says the same words as the page, and nothing changes
+ok 2 - row 2: when no way of closing proves, the worker says the same words as the page, and nothing changes
+  ---
+  duration_ms: 14184.2999
+  type: 'test'
+  ...
+# Subtest: row 3: while the worker works the close is pending; an edit drops the answer by name; Cancel and a newer press cancel it; no runner or a failed job closes on the page
+ok 3 - row 3: while the worker works the close is pending; an edit drops the answer by name; Cancel and a newer press cancel it; no runner or a failed job closes on the page
+  ---
+  duration_ms: 10239.4757
+  type: 'test'
+  ...
+# Subtest: row 4: the runner: one warm worker; a reply that is not the current job's is ignored; a refusal resolves; cancel and a failure make a fresh worker; no Worker throws
+ok 4 - row 4: the runner: one warm worker; a reply that is not the current job's is ignored; a refusal resolves; cancel and a failure make a fresh worker; no Worker throws
+  ---
+  duration_ms: 3.8882
+  type: 'test'
+  ...
+# Subtest: row 5: the worker SCRIPT loads closejob.js through the app's loader and answers as runClose does (a route, and the one press); a refusal and a bad job are answered
+ok 5 - row 5: the worker SCRIPT loads closejob.js through the app's loader and answers as runClose does (a route, and the one press); a refusal and a bad job are answered
+  ---
+  duration_ms: 42133.4991
+  type: 'test'
+  ...
+# Subtest: row 6: the panel has ONE Close button (no "close using" box, no Apply); while the worker works it says so and Cancel stops it; then the line says what was done
+ok 6 - row 6: the panel has ONE Close button (no "close using" box, no Apply); while the worker works it says so and Cancel stops it; then the line says what was done
+  ---
+  duration_ms: 1521.9925
+  type: 'test'
+  ...
+# Subtest: row 7: a press hands the worker the reds the live checker found for this very track with CSP on, and no others
+ok 7 - row 7: a press hands the worker the reds the live checker found for this very track with CSP on, and no others
+  ---
+  duration_ms: 151.7833
+  type: 'test'
+  ...
+# Subtest: REPRODUCER (the page as it was): close in core (a fresh start) closes
+ok 8 - REPRODUCER (the page as it was): close in core (a fresh start) closes
+  ---
+  duration_ms: 1.7347
+  type: 'test'
+  ...
+# Subtest: the window closes, destroyed exactly once: close in core (a fresh start)
+ok 9 - the window closes, destroyed exactly once: close in core (a fresh start)
+  ---
+  duration_ms: 0.8162
+  type: 'test'
+  ...
+# Subtest: REPRODUCER (the page as it was): close in pieces closes
+ok 10 - REPRODUCER (the page as it was): close in pieces closes
+  ---
+  duration_ms: 0.1497
+  type: 'test'
+  ...
+# Subtest: the window closes, destroyed exactly once: close in pieces
+ok 11 - the window closes, destroyed exactly once: close in pieces
+  ---
+  duration_ms: 0.2829
+  type: 'test'
+  ...
+# Subtest: REPRODUCER (the page as it was): close after switching pieces -> core is TRAPPED: the X does nothing
+ok 12 - REPRODUCER (the page as it was): close after switching pieces -> core is TRAPPED: the X does nothing
+  ---
+  duration_ms: 0.9589
+  type: 'test'
+  ...
+# Subtest: the window closes, destroyed exactly once: close after switching pieces -> core
+ok 13 - the window closes, destroyed exactly once: close after switching pieces -> core
+  ---
+  duration_ms: 3.3756
+  type: 'test'
+  ...
+# Subtest: REPRODUCER (the page as it was): close after switching core -> pieces closes
+ok 14 - REPRODUCER (the page as it was): close after switching core -> pieces closes
+  ---
+  duration_ms: 0.3097
+  type: 'test'
+  ...
+# Subtest: the window closes, destroyed exactly once: close after switching core -> pieces
+ok 15 - the window closes, destroyed exactly once: close after switching core -> pieces
+  ---
+  duration_ms: 0.137
+  type: 'test'
+  ...
+# Subtest: REPRODUCER (the page as it was): close after core -> pieces -> core -> pieces -> core is TRAPPED: the X does nothing
+ok 16 - REPRODUCER (the page as it was): close after core -> pieces -> core -> pieces -> core is TRAPPED: the X does nothing
+  ---
+  duration_ms: 0.1663
+  type: 'test'
+  ...
+# Subtest: the window closes, destroyed exactly once: close after core -> pieces -> core -> pieces -> core
+ok 17 - the window closes, destroyed exactly once: close after core -> pieces -> core -> pieces -> core
+  ---
+  duration_ms: 0.2451
+  type: 'test'
+  ...
+# Subtest: REPRODUCER (the page as it was): close in pieces with a failing autosave is TRAPPED: the X does nothing
+ok 18 - REPRODUCER (the page as it was): close in pieces with a failing autosave is TRAPPED: the X does nothing
+  ---
+  duration_ms: 0.2937
+  type: 'test'
+  ...
+# Subtest: the window closes, destroyed exactly once: close in pieces with a failing autosave
+ok 19 - the window closes, destroyed exactly once: close in pieces with a failing autosave
+  ---
+  duration_ms: 0.5112
+  type: 'test'
+  ...
+# Subtest: REPRODUCER (the page as it was): close in core after a pieces page whose autosave fails is TRAPPED: the X does nothing
+ok 20 - REPRODUCER (the page as it was): close in core after a pieces page whose autosave fails is TRAPPED: the X does nothing
+  ---
+  duration_ms: 0.1531
+  type: 'test'
+  ...
+# Subtest: the window closes, destroyed exactly once: close in core after a pieces page whose autosave fails
+ok 21 - the window closes, destroyed exactly once: close in core after a pieces page whose autosave fails
+  ---
+  duration_ms: 0.0589
+  type: 'test'
+  ...
+# Subtest: the pieces cleanup RUNS on close, before the window is destroyed (the autosave is flushed or cleared first)
+ok 22 - the pieces cleanup RUNS on close, before the window is destroyed (the autosave is flushed or cleared first)
+  ---
+  duration_ms: 1.4338
+  type: 'test'
+  ...
+# Subtest: core has nothing to clean up: the handler destroys straight away
+ok 23 - core has nothing to clean up: the handler destroys straight away
+  ---
+  duration_ms: 3.3224
+  type: 'test'
+  ...
+# Subtest: a cleanup that throws is logged and the window still closes
+ok 24 - a cleanup that throws is logged and the window still closes
+  ---
+  duration_ms: 0.9229
+  type: 'test'
+  ...
+# Subtest: a cleanup that HANGS cannot hold the window: it closes after the timeout
+ok 25 - a cleanup that HANGS cannot hold the window: it closes after the timeout
+  ---
+  duration_ms: 43.3935
+  type: 'test'
+  ...
+# Subtest: a destroy() that fails is logged, never thrown out of the handler
+ok 26 - a destroy() that fails is logged, never thrown out of the handler
+  ---
+  duration_ms: 0.4465
+  type: 'test'
+  ...
+# Subtest: the handler prevents the wrapper's own destroy (it destroys once, itself), and tolerates an event with no preventDefault
+ok 27 - the handler prevents the wrapper's own destroy (it destroys once, itself), and tolerates an event with no preventDefault
+  ---
+  duration_ms: 0.257
+  type: 'test'
+  ...
+# Subtest: installCloseHandler off Tauri (no window, or no onCloseRequested) registers nothing and does not throw
+ok 28 - installCloseHandler off Tauri (no window, or no onCloseRequested) registers nothing and does not throw
+  ---
+  duration_ms: 0.0814
+  type: 'test'
+  ...
+# Subtest: the cleanup is read at CLOSE time: a mode that sets it after registration is honoured, and a mode that clears it is too
+ok 29 - the cleanup is read at CLOSE time: a mode that sets it after registration is honoured, and a mode that clears it is too
+  ---
+  duration_ms: 0.1417
+  type: 'test'
+  ...
+# Subtest: app/index.html registers the close handler BEFORE the builder starts, so a builder that fails to start still has it
+ok 30 - app/index.html registers the close handler BEFORE the builder starts, so a builder that fails to start still has it
+  ---
+  duration_ms: 0.0958
+  type: 'test'
+  ...
+# Subtest: app/index.html has ONE close registration path (the closer, and a bare destroy-only fallback): the old pieces-only listener is gone
+ok 31 - app/index.html has ONE close registration path (the closer, and a bare destroy-only fallback): the old pieces-only listener is gone
+  ---
+  duration_ms: 0.1848
+  type: 'test'
+  ...
+# Subtest: nothing unsaved (ask returns null): the X closes at once, with no save
+ok 32 - nothing unsaved (ask returns null): the X closes at once, with no save
+  ---
+  duration_ms: 0.2941
+  type: 'test'
+  ...
+# Subtest: Cancel: the window stays open and nothing is saved
+ok 33 - Cancel: the window stays open and nothing is saved
+  ---
+  duration_ms: 0.1478
+  type: 'test'
+  ...
+# Subtest: Don't save: the window closes without saving
+ok 34 - Don't save: the window closes without saving
+  ---
+  duration_ms: 0.1012
+  type: 'test'
+  ...
+# Subtest: Save: it saves, then the window closes
+ok 35 - Save: it saves, then the window closes
+  ---
+  duration_ms: 0.1021
+  type: 'test'
+  ...
+# Subtest: Save that does not save (no name yet): the window stays open, so the work is not lost
+ok 36 - Save that does not save (no name yet): the window stays open, so the work is not lost
+  ---
+  duration_ms: 0.0786
+  type: 'test'
+  ...
+# Subtest: Save that THROWS: the window stays open; the next X asks again, and Don't save then closes
+ok 37 - Save that THROWS: the window stays open; the next X asks again, and Don't save then closes
+  ---
+  duration_ms: 0.1429
+  type: 'test'
+  ...
+# Subtest: a prompt that THROWS (no dialog, a refused permission): the window closes as before, it is never trapped
+ok 38 - a prompt that THROWS (no dialog, a refused permission): the window closes as before, it is never trapped
+  ---
+  duration_ms: 0.1385
+  type: 'test'
+  ...
+# Subtest: a second X while the prompt is open is ignored: one prompt, one close
+ok 39 - a second X while the prompt is open is ignored: one prompt, one close
+  ---
+  duration_ms: 0.1659
+  type: 'test'
+  ...
+# Subtest: app/index.html gives the closer the prompt, and the builder says whether there is unsaved work
+ok 40 - app/index.html gives the closer the prompt, and the builder says whether there is unsaved work
+  ---
+  duration_ms: 0.3395
+  type: 'test'
+  ...
+# Subtest: the window may show the prompt: dialog:allow-message is in its capability
+ok 41 - the window may show the prompt: dialog:allow-message is in its capability
+  ---
+  duration_ms: 1.2799
+  type: 'test'
+  ...
+# Subtest: control: the unmutated temp copy passes every test file the mutants use
+ok 42 - control: the unmutated temp copy passes every test file the mutants use
+  ---
+  duration_ms: 272779.1423
+  type: 'test'
+  ...
+# D412 wide: "D242 item 7" on app/test/core-readout-display.test.js runs 2 rows
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 43 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 452.9228
+  type: 'test'
+  ...
+# Subtest: a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+ok 44 - a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+  ---
+  duration_ms: 754.5239
+  type: 'test'
+  ...
+# Subtest: a load throw in a run of one file reads NOT CAUGHT as before, never NOT TESTED (the load-throw stand-in, D354)
+ok 45 - a load throw in a run of one file reads NOT CAUGHT as before, never NOT TESTED (the load-throw stand-in, D354)
+  ---
+  duration_ms: 424.3807
+  type: 'test'
+  ...
+# Subtest: mutation K1 the columns outside the window are not fixed: applied, and caught by "row 1: a close confined to the LAST piece…"
+ok 46 - mutation K1 the columns outside the window are not fixed: applied, and caught by "row 1: a close confined to the LAST piece…"
+  ---
+  duration_ms: 783.2536
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation K2 the pieces outside the window are recomputed, not kept: applied, and caught by "row 1: a close confined to the LAST piece…"
+ok 47 - mutation K2 the pieces outside the window are recomputed, not kept: applied, and caught by "row 1: a close confined to the LAST piece…"
+  ---
+  duration_ms: 811.9308
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation K3 a local close that does not close is handed back, not refused: applied, and caught by "row 3: a window that cannot close the loop…"
+ok 48 - mutation K3 a local close that does not close is handed back, not refused: applied, and caught by "row 3: a window that cannot close the loop…"
+  ---
+  duration_ms: 2129.8376
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation K4 the roll-rate bar is not read: applied, and caught by "row 4: a local close may not push the window past the roll-rate bar…"
+ok 49 - mutation K4 the roll-rate bar is not read: applied, and caught by "row 4: a local close may not push the window past the roll-rate bar…"
+  ---
+  duration_ms: 757.6124
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation K5 the window is not named for a person: applied, and caught by "row 1: a close confined to the LAST piece…"
+ok 50 - mutation K5 the window is not named for a person: applied, and caught by "row 1: a close confined to the LAST piece…"
+  ---
+  duration_ms: 815.3144
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation K6 the default window ignores the fraction (the last piece only): applied, and caught by "row 2: the default window…"
+ok 51 - mutation K6 the default window ignores the fraction (the last piece only): applied, and caught by "row 2: the default window…"
+  ---
+  duration_ms: 627.6318
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation K7 an empty window is accepted: applied, and caught by "row 5: a window with no road piece…"
+ok 52 - mutation K7 an empty window is accepted: applied, and caught by "row 5: a window with no road piece…"
+  ---
+  duration_ms: 684.5661
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation A6 the refused export keeps the export's own message (ids): applied, and caught by "row 6: a refused export names EVERY red…"
+ok 53 - mutation A6 the refused export keeps the export's own message (ids): applied, and caught by "row 6: a refused export names EVERY red…"
+  ---
+  duration_ms: 1259.7978
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation A9 the press writes no copy from before the close: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…"
+ok 54 - mutation A9 the press writes no copy from before the close: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…"
+  ---
+  duration_ms: 2078.6256
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation A10 a failed copy still closes: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…"
+ok 55 - mutation A10 a failed copy still closes: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…"
+  ---
+  duration_ms: 3034.7608
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation A11 an edit while the copy is written is closed over: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…"
+ok 56 - mutation A11 an edit while the copy is written is closed over: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…"
+  ---
+  duration_ms: 5372.5104
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation B1 a way that does not prove is picked: applied, and caught by "row 4: when no way proves…"
+ok 57 - mutation B1 a way that does not prove is picked: applied, and caught by "row 4: when no way proves…"
+  ---
+  duration_ms: 3904.5036
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation B2 a way that adds a red is picked: applied, and caught by "row 4: when no way proves…"
+ok 58 - mutation B2 a way that adds a red is picked: applied, and caught by "row 4: when no way proves…"
+  ---
+  duration_ms: 3828.7042
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation B3 new road is not put last: applied, and caught by "row 8: the order…"
+ok 59 - mutation B3 new road is not put last: applied, and caught by "row 8: the order…"
+  ---
+  duration_ms: 715.5995
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation B4 the most movement is tried first: applied, and caught by "row 7: the pick is the least-moving way that proves…"
+ok 60 - mutation B4 the most movement is tried first: applied, and caught by "row 7: the pick is the least-moving way that proves…"
+  ---
+  duration_ms: 3413.5481
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation B5 Finish is tried when the end is already at the start: applied, and caught by "row 1: an end already at the start…"
+ok 61 - mutation B5 Finish is tried when the end is already at the start: applied, and caught by "row 1: an end already at the start…"
+  ---
+  duration_ms: 2962.9205
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation B6 a bend may reshape the track (no move cap): applied, and caught by "row 5: a bend that would move the track further…"
+ok 62 - mutation B6 a bend may reshape the track (no move cap): applied, and caught by "row 5: a bend that would move the track further…"
+  ---
+  duration_ms: 2945.884
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation B7 a press that finds no way still applies: applied, and caught by "row 2: when no way of closing proves, nothing changes…"
+ok 63 - mutation B7 a press that finds no way still applies: applied, and caught by "row 2: when no way of closing proves, nothing changes…"
+  ---
+  duration_ms: 4271.8054
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation B8 the press commits the open track: applied, and caught by "row 1: one press closes a near lap AT ONCE…"
+ok 64 - mutation B8 the press commits the open track: applied, and caught by "row 1: one press closes a near lap AT ONCE…"
+  ---
+  duration_ms: 2187.8349
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation N1 a laid road Close refuses is never taken as laid (the lone straight is lost to a loop again): applied, and caught by "row 17: an end straight behind the start…"
+ok 65 - mutation N1 a laid road Close refuses is never taken as laid (the lone straight is lost to a loop again): applied, and caught by "row 17: an end straight behind the start…"
+  ---
+  duration_ms: 4289.0733
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation N2 a route that is only a straight is not laid under 10 m: applied, and caught by "row 17: an end straight behind the start…"
+ok 66 - mutation N2 a route that is only a straight is not laid under 10 m: applied, and caught by "row 17: an end straight behind the start…"
+  ---
+  duration_ms: 1365.1176
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation F5 the worker's document is not frozen (the residual memo misses): applied, and caught by "row 13: the worker's press on a structuredClone…"
+ok 67 - mutation F5 the worker's document is not frozen (the residual memo misses): applied, and caught by "row 13: the worker's press on a structuredClone…"
+  ---
+  duration_ms: 5585.6645
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation B9 a tie is not broken by the route order (micro-metres decide): applied, and caught by "row 8: the order…"
+ok 68 - mutation B9 a tie is not broken by the route order (micro-metres decide): applied, and caught by "row 8: the order…"
+  ---
+  duration_ms: 716.8703
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation F1 the near bend is not checked first (every route runs): applied, and caught by "row 9: when the end is at the start…"
+ok 69 - mutation F1 the near bend is not checked first (every route runs): applied, and caught by "row 9: when the end is at the start…"
+  ---
+  duration_ms: 2219.6388
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation F2 the given open-track reds are ignored (it is checked again): applied, and caught by "row 11: given the open track…"
+ok 70 - mutation F2 the given open-track reds are ignored (it is checked again): applied, and caught by "row 11: given the open track…"
+  ---
+  duration_ms: 7802.3929
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation F3 the press hands the worker no reds: applied, and caught by "row 7: a press hands the worker the reds…"
+ok 71 - mutation F3 the press hands the worker no reds: applied, and caught by "row 7: a press hands the worker the reds…"
+  ---
+  duration_ms: 1063.918
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation F4 a check made with CSP off is used: applied, and caught by "row 7: a press hands the worker the reds…"
+ok 72 - mutation F4 a check made with CSP off is used: applied, and caught by "row 7: a press hands the worker the reds…"
+  ---
+  duration_ms: 1065.6457
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G1 a ray red on an overlap keeps its own words: applied, and caught by "the overlap is ONE group…"
+ok 73 - mutation G1 a ray red on an overlap keeps its own words: applied, and caught by "the overlap is ONE group…"
+  ---
+  duration_ms: 399.3347
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G2 every ray red is called an overlap: applied, and caught by "a downforce-ray-gap with NO overlap near it…"
+ok 74 - mutation G2 every ray red is called an overlap: applied, and caught by "a downforce-ray-gap with NO overlap near it…"
+  ---
+  duration_ms: 426.2067
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G3 the text names only the first place of a group: applied, and caught by "groupsText names one line per PLACE…"
+ok 75 - mutation G3 the text names only the first place of a group: applied, and caught by "groupsText names one line per PLACE…"
+  ---
+  duration_ms: 475.4858
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G6 places are never merged: applied, and caught by "D248: overlapping reds on one piece are ONE place…"
+ok 76 - mutation G6 places are never merged: applied, and caught by "D248: overlapping reds on one piece are ONE place…"
+  ---
+  duration_ms: 418.1821
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G7 places merge across pieces: applied, and caught by "D248: TOUCHING reds merge…"
+ok 77 - mutation G7 places merge across pieces: applied, and caught by "D248: TOUCHING reds merge…"
+  ---
+  duration_ms: 413.0111
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G10 places merge only on the same STARTING piece (the rule the real window caught): applied, and caught by "D248: a red inside a place that spans two pieces…"
+ok 78 - mutation G10 places merge only on the same STARTING piece (the rule the real window caught): applied, and caught by "D248: a red inside a place that spans two pieces…"
+  ---
+  duration_ms: 413.2738
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G8 touching reds do not merge (no tolerance): applied, and caught by "D248: TOUCHING reds merge…"
+ok 79 - mutation G8 touching reds do not merge (no tolerance): applied, and caught by "D248: TOUCHING reds merge…"
+  ---
+  duration_ms: 432.8017
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G9 the count is of reds, not places: applied, and caught by "D248: overlapping reds on one piece are ONE place…"
+ok 80 - mutation G9 the count is of reds, not places: applied, and caught by "D248: overlapping reds on one piece are ONE place…"
+  ---
+  duration_ms: 421.3077
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G4 the piece is read at the range's end: applied, and caught by "where: s in km and the piece…"
+ok 81 - mutation G4 the piece is read at the range's end: applied, and caught by "where: s in km and the piece…"
+  ---
+  duration_ms: 430.9049
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G5 s past the lap does not wrap: applied, and caught by "pieceAt wraps…"
+ok 82 - mutation G5 s past the lap does not wrap: applied, and caught by "pieceAt wraps…"
+  ---
+  duration_ms: 423.2021
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation L1 every piece is labelled again: applied, and caught by "the labels on the track…"
+ok 83 - mutation L1 every piece is labelled again: applied, and caught by "the labels on the track…"
+  ---
+  duration_ms: 1095.7919
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation L2 the hovered piece is never labelled: applied, and caught by "the labels on the track…"
+ok 84 - mutation L2 the hovered piece is never labelled: applied, and caught by "the labels on the track…"
+  ---
+  duration_ms: 1147.6953
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation L3 a still pointer is not asked again after the track changes: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+ok 85 - mutation L3 a still pointer is not asked again after the track changes: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+  ---
+  duration_ms: 1190.6844
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U1 Undo shows the head only (the bug): applied, and caught by "D242 item 7…"
+ok 86 - mutation U1 Undo shows the head only (the bug): applied, and caught by "D242 item 7…"
+  ---
+  duration_ms: 1046.4018
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U2 the ticks are not put back: applied, and caught by "D242 item 7…"
+ok 87 - mutation U2 the ticks are not put back: applied, and caught by "D242 item 7…"
+  ---
+  duration_ms: 1027.185
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation S1 Straight does not tick turn "at start": applied, and caught by "D242: after a 30°/100m turn, Straight…"
+ok 88 - mutation S1 Straight does not tick turn "at start": applied, and caught by "D242: after a 30°/100m turn, Straight…"
+  ---
+  duration_ms: 1042.5392
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation S2 Straight leaves the boxes ticked: applied, and caught by "D242: after a 30°/100m turn, Straight…"
+ok 89 - mutation S2 Straight leaves the boxes ticked: applied, and caught by "D242: after a 30°/100m turn, Straight…"
+  ---
+  duration_ms: 1006.6523
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation S3 the straight hint never shows: applied, and caught by "D242: after a 30°/100m turn, Straight…"
+ok 90 - mutation S3 the straight hint never shows: applied, and caught by "D242: after a 30°/100m turn, Straight…"
+  ---
+  duration_ms: 1031.8759
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: row 1: one press closes a near lap AT ONCE: one undo step, the line says what it did, and Undo gives the open lap back
+ok 91 - row 1: one press closes a near lap AT ONCE: one undo step, the line says what it did, and Undo gives the open lap back
+  ---
+  duration_ms: 4707.8366
+  type: 'test'
+  ...
+# Subtest: row 2: when no way of closing proves, nothing changes: the same document, a line that says why, and no copy written
+ok 92 - row 2: when no way of closing proves, nothing changes: the same document, a line that says why, and no copy written
+  ---
+  duration_ms: 8966.0845
+  type: 'test'
+  ...
+# Subtest: row 6: a refused export names EVERY red in plain words, grouped, with where (not the export's first id)
+ok 93 - row 6: a refused export names EVERY red in plain words, grouped, with where (not the export's first id)
+  ---
+  duration_ms: 512.6494
+  type: 'test'
+  ...
+# Subtest: row 7: the press writes the copy from BEFORE the close first (backupNow('pre-close'), the D239 amendment); a copy that fails refuses it by name; an edit while the copy is written is never closed over
+ok 94 - row 7: the press writes the copy from BEFORE the close first (backupNow('pre-close'), the D239 amendment); a copy that fails refuses it by name; an edit while the copy is written is never closed over
+  ---
+  duration_ms: 10330.2643
+  type: 'test'
+  ...
+# Subtest: control: the unmutated temp copy passes every core-shell test
+ok 95 - control: the unmutated temp copy passes every core-shell test
+  ---
+  duration_ms: 100008.8032
+  type: 'test'
+  ...
+# D412 wide: "the layout" runs 4 rows
+# D412 wide: "the rate brush" runs 3 rows
+# D412 wide: "extendOptions" runs 3 rows
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 96 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 1036.5877
+  type: 'test'
+  ...
+# Subtest: a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+ok 97 - a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+  ---
+  duration_ms: 1752.2021
+  type: 'test'
+  ...
+# Subtest: a load throw in a run of several files reads NOT TESTED and names the files (the load-throw stand-in, D354)
+ok 98 - a load throw in a run of several files reads NOT TESTED and names the files (the load-throw stand-in, D354)
+  ---
+  duration_ms: 1068.7563
+  type: 'test'
+  ...
+# Subtest: a load throw in one file does not hide a crash after a failing row in another: NOT TESTED (F1, D354)
+ok 99 - a load throw in one file does not hide a crash after a failing row in another: NOT TESTED (F1, D354)
+  ---
+  duration_ms: 1673.1631
+  type: 'test'
+  ...
+# Subtest: mutation R1 the sign of an angle flipped: applied, and caught by "the strings…"
+ok 100 - mutation R1 the sign of an angle flipped: applied, and caught by "the strings…"
+  ---
+  duration_ms: 1370.7246
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R2 zero is signed: applied, and caught by "the strings…"
+ok 101 - mutation R2 zero is signed: applied, and caught by "the strings…"
+  ---
+  duration_ms: 1380.6056
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R3 bank shown as its end value, not the change: applied, and caught by "the strings…"
+ok 102 - mutation R3 bank shown as its end value, not the change: applied, and caught by "the strings…"
+  ---
+  duration_ms: 1438.406
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R4 rounding without the binary guard: applied, and caught by "the strings…"
+ok 103 - mutation R4 rounding without the binary guard: applied, and caught by "the strings…"
+  ---
+  duration_ms: 1358.9336
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R5 the head keep-out ignored: applied, and caught by "the layout…"
+ok 104 - mutation R5 the head keep-out ignored: applied, and caught by "the layout…"
+  ---
+  duration_ms: 1360.3509
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R6 labels may overlap: applied, and caught by "the layout…"
+ok 105 - mutation R6 labels may overlap: applied, and caught by "the layout…"
+  ---
+  duration_ms: 1408.8253
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R7 anchors cached by the path object: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+ok 106 - mutation R7 anchors cached by the path object: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+  ---
+  duration_ms: 1335.4177
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R8 the layer is not put back in the page: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+ok 107 - mutation R8 the layer is not put back in the page: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+  ---
+  duration_ms: 1350.993
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R11 a label never slides off its piece's middle: applied, and caught by "a piece whose middle is behind the camera…"
+ok 108 - mutation R11 a label never slides off its piece's middle: applied, and caught by "a piece whose middle is behind the camera…"
+  ---
+  duration_ms: 1336.9274
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R13 the head's label may be culled: applied, and caught by "the layout: the head's own label is never culled…"
+ok 109 - mutation R13 the head's label may be culled: applied, and caught by "the layout: the head's own label is never culled…"
+  ---
+  duration_ms: 1245.6625
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R14 a head piece with nothing on screen has no label: applied, and caught by "the head's own piece is labelled even when none of it is on screen…"
+ok 110 - mutation R14 a head piece with nothing on screen has no label: applied, and caught by "the head's own piece is labelled even when none of it is on screen…"
+  ---
+  duration_ms: 1239.9402
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R15 the road bleeds through the label: applied, and caught by "the label box holds only…"
+ok 111 - mutation R15 the road bleeds through the label: applied, and caught by "the label box holds only…"
+  ---
+  duration_ms: 1225.2972
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R16 the label box has a border and round corners again: applied, and caught by "the label box holds only…"
+ok 112 - mutation R16 the label box has a border and round corners again: applied, and caught by "the label box holds only…"
+  ---
+  duration_ms: 1226.1871
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R17 the head's fallback place may cover the head: applied, and caught by "the layout: the head's own label is never culled…"
+ok 113 - mutation R17 the head's fallback place may cover the head: applied, and caught by "the layout: the head's own label is never culled…"
+  ---
+  duration_ms: 1225.7156
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R18 a label may be placed under a panel: applied, and caught by "the layout: no label is placed under a panel…"
+ok 114 - mutation R18 a label may be placed under a panel: applied, and caught by "the layout: no label is placed under a panel…"
+  ---
+  duration_ms: 1248.0043
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R12 no ring clears a large head keep-out: applied, and caught by "the layout: a label anchored on a large head keep-out…"
+ok 115 - mutation R12 no ring clears a large head keep-out: applied, and caught by "the layout: a label anchored on a large head keep-out…"
+  ---
+  duration_ms: 1318.5189
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R9 the panel readout waits for the next state change: applied, and caught by "the panel shows the ghost…"
+ok 116 - mutation R9 the panel readout waits for the next state change: applied, and caught by "the panel shows the ghost…"
+  ---
+  duration_ms: 1320.0231
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation R10 the ghost readout is the LAST placed piece, not the candidate: applied, and caught by "the panel shows the ghost…"
+ok 117 - mutation R10 the ghost readout is the LAST placed piece, not the candidate: applied, and caught by "the panel shows the ghost…"
+  ---
+  duration_ms: 1279.8409
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U1 the cup field is not sent to the core: applied, and caught by "extendOptions: the cup field is the target c…"
+ok 118 - mutation U1 the cup field is not sent to the core: applied, and caught by "extendOptions: the cup field is the target c…"
+  ---
+  duration_ms: 1193.7981
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U2 the cup is sent in radians: applied, and caught by "extendOptions: the cup field is the target c…"
+ok 119 - mutation U2 the cup is sent in radians: applied, and caught by "extendOptions: the cup field is the target c…"
+  ---
+  duration_ms: 1257.9681
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U3 the panel clamps the cup, hiding the core guard: applied, and caught by "extendOptions: the cup field is the target c…"
+ok 120 - mutation U3 the panel clamps the cup, hiding the core guard: applied, and caught by "extendOptions: the cup field is the target c…"
+  ---
+  duration_ms: 1191.7453
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U4 the cup cell shows the typed target, not the document: applied, and caught by "the readout shows cup from → to…"
+ok 121 - mutation U4 the cup cell shows the typed target, not the document: applied, and caught by "the readout shows cup from → to…"
+  ---
+  duration_ms: 1178.4049
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U5 (K7-4) the cup cell wired to the bank values: applied, and caught by "the readout shows cup from → to…"
+ok 122 - mutation U5 (K7-4) the cup cell wired to the bank values: applied, and caught by "the readout shows cup from → to…"
+  ---
+  duration_ms: 1027.257
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U6 (K7-3) the cup shown in radians: applied, and caught by "the readout shows cup from → to…"
+ok 123 - mutation U6 (K7-3) the cup shown in radians: applied, and caught by "the readout shows cup from → to…"
+  ---
+  duration_ms: 1190.5478
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U7 the cup field does not redraw the readout: applied, and caught by "the cup cell follows the cup field…"
+ok 124 - mutation U7 the cup field does not redraw the readout: applied, and caught by "the cup cell follows the cup field…"
+  ---
+  duration_ms: 1253.6179
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U8 the brush has no cup channel: applied, and caught by "the brush's channel list gains cup…"
+ok 125 - mutation U8 the brush has no cup channel: applied, and caught by "the brush's channel list gains cup…"
+  ---
+  duration_ms: 1265.6786
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U9 the cup field is not on the panel: applied, and caught by "the Extend panel has a "cup °" field…"
+ok 126 - mutation U9 the cup field is not on the panel: applied, and caught by "the Extend panel has a "cup °" field…"
+  ---
+  duration_ms: 1139.1954
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V1 the at-start boxes are ignored: applied, and caught by "extendOptions "at start"…"
+ok 127 - mutation V1 the at-start boxes are ignored: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 1035.6177
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V2 an untouched field is sent at start: applied, and caught by "extendOptions "at start"…"
+ok 128 - mutation V2 an untouched field is sent at start: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 1073.7777
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V3 the span is not held to the piece: applied, and caught by "extendOptions "at start"…"
+ok 129 - mutation V3 the span is not held to the piece: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 1094.1848
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V4 transition sent as one number for all channels: applied, and caught by "extendOptions "at start"…"
+ok 130 - mutation V4 transition sent as one number for all channels: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 1051.7885
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V5 a field sent on the wrong channel: applied, and caught by "extendOptions "at start"…"
+ok 131 - mutation V5 a field sent on the wrong channel: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 1077.1515
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V6 the panel never passes the boxes: applied, and caught by "the panel: an "at start" box…"
+ok 132 - mutation V6 the panel never passes the boxes: applied, and caught by "the panel: an "at start" box…"
+  ---
+  duration_ms: 1036.2935
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation V7 ticking a box does not redraw: applied, and caught by "the panel: an "at start" box…"
+ok 133 - mutation V7 ticking a box does not redraw: applied, and caught by "the panel: an "at start" box…"
+  ---
+  duration_ms: 1031.4312
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C1 a brush frame builds on the last frame, not the drag's base: applied, and caught by "the rate brush…"
+ok 134 - mutation C1 a brush frame builds on the last frame, not the drag's base: applied, and caught by "the rate brush…"
+  ---
+  duration_ms: 1232.9299
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C2 the drag never ends in the history: applied, and caught by "the rate brush…"
+ok 135 - mutation C2 the drag never ends in the history: applied, and caught by "the rate brush…"
+  ---
+  duration_ms: 1352.3694
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C3 the local brush is not the default: applied, and caught by "the local (height / sideways) brush…"
+ok 136 - mutation C3 the local brush is not the default: applied, and caught by "the local (height / sideways) brush…"
+  ---
+  duration_ms: 1166.2294
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C20 sideways is sent as a hill: applied, and caught by "the local (height / sideways) brush…"
+ok 137 - mutation C20 sideways is sent as a hill: applied, and caught by "the local (height / sideways) brush…"
+  ---
+  duration_ms: 1098.1762
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C21 with E's brush, every channel is sent as rate: applied, and caught by "with E's brush, the rate brush goes through it…"
+ok 138 - mutation C21 with E's brush, every channel is sent as rate: applied, and caught by "with E's brush, the rate brush goes through it…"
+  ---
+  duration_ms: 1019.1787
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C4 a second close runs again: applied, and caught by "close: one click…"
+ok 139 - mutation C4 a second close runs again: applied, and caught by "close: one click…"
+  ---
+  duration_ms: 1248.1501
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C5 the heading brush may open a closed loop: applied, and caught by "close: one click…"
+ok 140 - mutation C5 the heading brush may open a closed loop: applied, and caught by "close: one click…"
+  ---
+  duration_ms: 1186.5849
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C7 export runs on an open track: applied, and caught by "export: an open track is refused…"
+ok 141 - mutation C7 export runs on an open track: applied, and caught by "export: an open track is refused…"
+  ---
+  duration_ms: 1224.6629
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C8 the list shows the piece builder's tracks too: applied, and caught by "save and open use their own prefix…"
+ok 142 - mutation C8 the list shows the piece builder's tracks too: applied, and caught by "save and open use their own prefix…"
+  ---
+  duration_ms: 993.9196
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C12 turn is degrees per metre, not per 100 m: applied, and caught by "extendOptions…"
+ok 143 - mutation C12 turn is degrees per metre, not per 100 m: applied, and caught by "extendOptions…"
+  ---
+  duration_ms: 1003.2602
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C14 the pick takes the farthest station: applied, and caught by "the pick…"
+ok 144 - mutation C14 the pick takes the farthest station: applied, and caught by "the pick…"
+  ---
+  duration_ms: 1010.3094
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C15 the pick sees through the back of the camera: applied, and caught by "the pick…"
+ok 145 - mutation C15 the pick sees through the back of the camera: applied, and caught by "the pick…"
+  ---
+  duration_ms: 1069.5392
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C16 the ghost is not what extend builds: applied, and caught by "the ghost of an extension…"
+ok 146 - mutation C16 the ghost is not what extend builds: applied, and caught by "the ghost of an extension…"
+  ---
+  duration_ms: 1101.5077
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C17 export goes to the word exporter: applied, and caught by "export: an open track is refused…"
+ok 147 - mutation C17 export goes to the word exporter: applied, and caught by "export: an open track is refused…"
+  ---
+  duration_ms: 1377.4942
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C18 the close does not go round the user's straights: applied, and caught by "close: one click…"
+ok 148 - mutation C18 the close does not go round the user's straights: applied, and caught by "close: one click…"
+  ---
+  duration_ms: 1220.0551
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C19 the export is handed no start layout: applied, and caught by "export: an open track is refused…"
+ok 149 - mutation C19 the export is handed no start layout: applied, and caught by "export: an open track is refused…"
+  ---
+  duration_ms: 1930.2926
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C22 the widened radius is not shown: applied, and caught by "a brush E widened says so…"
+ok 150 - mutation C22 the widened radius is not shown: applied, and caught by "a brush E widened says so…"
+  ---
+  duration_ms: 1035.8516
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation L1 the track model ignores the lift: applied, and caught by "the track model draws the LIFTED road…"
+ok 151 - mutation L1 the track model ignores the lift: applied, and caught by "the track model draws the LIFTED road…"
+  ---
+  duration_ms: 1069.368
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation L2 a lift-only change is taken as the same track: applied, and caught by "the track model draws the LIFTED road…"
+ok 152 - mutation L2 a lift-only change is taken as the same track: applied, and caught by "the track model draws the LIFTED road…"
+  ---
+  duration_ms: 1083.0426
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation L3 the mesh is not keyed by the lift: applied, and caught by "the track model draws the LIFTED road…"
+ok 153 - mutation L3 the mesh is not keyed by the lift: applied, and caught by "the track model draws the LIFTED road…"
+  ---
+  duration_ms: 1163.8576
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation L4 the export does not lift the path: applied, and caught by "the export lifts the path…"
+ok 154 - mutation L4 the export does not lift the path: applied, and caught by "the export lifts the path…"
+  ---
+  duration_ms: 2989.6902
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C23 the radiusUsed E reports is not read: applied, and caught by "landed core: a narrow brush…"
+ok 155 - mutation C23 the radiusUsed E reports is not read: applied, and caught by "landed core: a narrow brush…"
+  ---
+  duration_ms: 1059.6816
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation C24 sharp is never passed to E: applied, and caught by "the sharp opt-in…"
+ok 156 - mutation C24 sharp is never passed to E: applied, and caught by "the sharp opt-in…"
+  ---
+  duration_ms: 1053.6005
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation P1 the export starts at the origin: applied, and caught by "a lap that starts pitched…"
+ok 157 - mutation P1 the export starts at the origin: applied, and caught by "a lap that starts pitched…"
+  ---
+  duration_ms: 1511.3207
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation P2 the preview starts at the origin: applied, and caught by "a lap that starts pitched…"
+ok 158 - mutation P2 the preview starts at the origin: applied, and caught by "a lap that starts pitched…"
+  ---
+  duration_ms: 1418.9131
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation P3 the shell does not hand on the start: applied, and caught by "a lap that starts pitched…"
+ok 159 - mutation P3 the shell does not hand on the start: applied, and caught by "a lap that starts pitched…"
+  ---
+  duration_ms: 1340.711
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: the closed track after Close, built from the open one, is the closed track a full build draws
+ok 160 - the closed track after Close, built from the open one, is the closed track a full build draws
+  ---
+  duration_ms: 7824.8668
+  type: 'test'
+  ...
+# Subtest: row 1: every tool resolves to its mode, channel and family; an unknown tool is refused by name and opens nothing
+ok 161 - row 1: every tool resolves to its mode, channel and family; an unknown tool is refused by name and opens nothing
+  ---
+  duration_ms: 79.2994
+  type: 'test'
+  ...
+# Subtest: row 2: the family sets the guard: shape keeps the D244b refusal, local and route are not guarded, and a route tool moves the road after it
+ok 162 - row 2: the family sets the guard: shape keeps the D244b refusal, local and route are not guarded, and a route tool moves the road after it
+  ---
+  duration_ms: 433.461
+  type: 'test'
+  ...
+# Subtest: row 3: Smooth takes the channel of the tool used last; a channel given wins; with none it is refused by name
+ok 163 - row 3: Smooth takes the channel of the tool used last; a channel given wins; with none it is refused by name
+  ---
+  duration_ms: 133.2888
+  type: 'test'
+  ...
+# Subtest: row 4: a route tool on a CLOSED lap is never closed per step: the lap is open during the drag
+ok 164 - row 4: a route tool on a CLOSED lap is never closed per step: the lap is open during the drag
+  ---
+  duration_ms: 602.9364
+  type: 'test'
+  ...
+# Subtest: row 5: the release only STARTS the job; the job lands the re-closed lap as ONE undo step, every piece outside the window the very same object
+ok 165 - row 5: the release only STARTS the job; the job lands the re-closed lap as ONE undo step, every piece outside the window the very same object
+  ---
+  duration_ms: 1133.5697
+  type: 'test'
+  ...
+# Subtest: row 6: the window close first; refused, the whole-lap close with the window protected; refused again, the drag is dropped whole and named
+ok 166 - row 6: the window close first; refused, the whole-lap close with the window protected; refused again, the drag is dropped whole and named
+  ---
+  duration_ms: 1120.2034
+  type: 'test'
+  ...
+# Subtest: row 7: the window is the selected RUN: sculptInfo gives from/to and the middle piece; beginSculpt brushes the run, and nothing outside it changes
+ok 167 - row 7: the window is the selected RUN: sculptInfo gives from/to and the middle piece; beginSculpt brushes the run, and nothing outside it changes
+  ---
+  duration_ms: 43.6712
+  type: 'test'
+  ...
+# Subtest: row 8: a radius change mid-drag takes no step itself, and the next brushTo of the page re-runs from the same base at the new radius, with no accumulation
+ok 168 - row 8: a radius change mid-drag takes no step itself, and the next brushTo of the page re-runs from the same base at the new radius, with no accumulation
+  ---
+  duration_ms: 52.3924
+  type: 'test'
+  ...
+# Subtest: row 9: Esc (cancelBrush) drops an open drag: the very same document, and no undo step
+ok 169 - row 9: Esc (cancelBrush) drops an open drag: the very same document, and no undo step
+  ---
+  duration_ms: 19.7262
+  type: 'test'
+  ...
+# Subtest: row 10: Stretch hands the core ONE factor for the whole run, keepRate when asked; refused by name until the core has stretch
+ok 170 - row 10: Stretch hands the core ONE factor for the whole run, keepRate when asked; refused by name until the core has stretch
+  ---
+  duration_ms: 86.4906
+  type: 'test'
+  ...
+# Subtest: row 11: the close runner hands the worker the window a route tool's release asks for
+ok 171 - row 11: the close runner hands the worker the window a route tool's release asks for
+  ---
+  duration_ms: 8.9887
+  type: 'test'
+  ...
+# Subtest: row 12: runClose closes with the window it is given, not the default trailing one
+ok 172 - row 12: runClose closes with the window it is given, not the default trailing one
+  ---
+  duration_ms: 409.6515
+  type: 'test'
+  ...
+# Subtest: row 13: B's page: beginSculpt({ channel, from, to }) brushes the run with the shape guard on, and with a tool the tool's; a bad run or a steering channel is refused by name
+ok 173 - row 13: B's page: beginSculpt({ channel, from, to }) brushes the run with the shape guard on, and with a tool the tool's; a bad run or a steering channel is refused by name
+  ---
+  duration_ms: 60.9149
+  type: 'test'
+  ...
+# Subtest: row 14: with the real core of C, Stretch lengthens the run by exactly the metres of the drag, the document stays valid, one undo step
+ok 174 - row 14: with the real core of C, Stretch lengthens the run by exactly the metres of the drag, the document stays valid, one undo step
+  ---
+  duration_ms: 31.6421
+  type: 'test'
+  ...
+# Subtest: row 15: with the real core of C, Smooth after a Bend relaxes the turn channel under the window, one undo step
+ok 175 - row 15: with the real core of C, Smooth after a Bend relaxes the turn channel under the window, one undo step
+  ---
+  duration_ms: 76.8016
+  type: 'test'
+  ...
+# Subtest: row 16: Stretch with no piece and no run takes the road piece under s0 (B's strip sends neither)
+ok 176 - row 16: Stretch with no piece and no run takes the road piece under s0 (B's strip sends neither)
+  ---
+  duration_ms: 24.9226
+  type: 'test'
+  ...
+# Subtest: row 17: a re-close that outlives its document leaves no brush open: a new document during the release, and every tool still opens
+ok 177 - row 17: a re-close that outlives its document leaves no brush open: a new document during the release, and every tool still opens
+  ---
+  duration_ms: 526.8995
+  type: 'test'
+  ...
+# Subtest: row 18: a release with no change restores the lap as it was and runs no close
+ok 178 - row 18: a release with no change restores the lap as it was and runs no close
+  ---
+  duration_ms: 599.2803
+  type: 'test'
+  ...
+# Subtest: row 19: a handle on a two- or three-piece run lands the value asked where the handles read it, as exactly as D335 lands one piece (D335 per window)
+ok 179 - row 19: a handle on a two- or three-piece run lands the value asked where the handles read it, as exactly as D335 lands one piece (D335 per window)
+  ---
+  duration_ms: 149.1387
+  type: 'test'
+  ...
+# Subtest: row 20: the release tries the window, then the window with the lap's last road piece, then with the last and the first, then the whole lap with the window protected
+ok 180 - row 20: the release tries the window, then the window with the lap's last road piece, then with the last and the first, then the whole lap with the window protected
+  ---
+  duration_ms: 1599.0169
+  type: 'test'
+  ...
+# Subtest: row 21: with the real close, a Bend away from the seam whose window alone is refused closes with the window and the lap's last piece; only those and the joints after them change
+ok 181 - row 21: with the real close, a Bend away from the seam whose window alone is refused closes with the window and the lap's last piece; only those and the joints after them change
+  ---
+  duration_ms: 724.4038
+  type: 'test'
+  ...
+# Subtest: closing the loop appends the safest connector as one undo step, and the track is closed
+ok 182 - closing the loop appends the safest connector as one undo step, and the track is closed
+  ---
+  duration_ms: 35520.1084
+  type: 'test'
+  ...
+# Subtest: the connector the shell appends is the connector's FIRST-ranked candidate, the safest by its worst load
+ok 183 - the connector the shell appends is the connector's FIRST-ranked candidate, the safest by its worst load
+  ---
+  duration_ms: 25625.3824
+  type: 'test'
+  ...
+# Subtest: the closed track still resolves for the panels, marked closed, with no resolve error
+ok 184 - the closed track still resolves for the panels, marked closed, with no resolve error
+  ---
+  duration_ms: 0.4157
+  type: 'test'
+  ...
+# Subtest: undo reopens the loop: the open track comes back byte for byte
+ok 185 - undo reopens the loop: the open track comes back byte for byte
+  ---
+  duration_ms: 21816.4694
+  type: 'test'
+  ...
+# Subtest: closing an empty track says why and changes nothing
+ok 186 - closing an empty track says why and changes nothing
+  ---
+  duration_ms: 0.4305
+  type: 'test'
+  ...
+# Subtest: test 4, track 0 (11 pieces, 4100 m, ε 0.00570491696708): one call closes it
+ok 187 - test 4, track 0 (11 pieces, 4100 m, ε 0.00570491696708): one call closes it
+  ---
+  duration_ms: 124.6383
+  type: 'test'
+  ...
+# Subtest: test 4, track 1 (10 pieces, 3685 m, ε -0.0841972072609): one call closes it
+ok 188 - test 4, track 1 (10 pieces, 3685 m, ε -0.0841972072609): one call closes it
+  ---
+  duration_ms: 79.0029
+  type: 'test'
+  ...
+# Subtest: test 4, track 2 (9 pieces, 3270 m, ε -0.0402413592674): one call closes it
+ok 189 - test 4, track 2 (9 pieces, 3270 m, ε -0.0402413592674): one call closes it
+  ---
+  duration_ms: 51.7241
+  type: 'test'
+  ...
+# Subtest: test 4, track 3 (7 pieces, 3042 m, ε -0.0690124160144): one call closes it
+ok 190 - test 4, track 3 (7 pieces, 3042 m, ε -0.0690124160144): one call closes it
+  ---
+  duration_ms: 51.9437
+  type: 'test'
+  ...
+# Subtest: test 4, track 4 (6 pieces, 2419 m, ε -0.00323135023937): one call closes it
+ok 191 - test 4, track 4 (6 pieces, 2419 m, ε -0.00323135023937): one call closes it
+  ---
+  duration_ms: 39.4057
+  type: 'test'
+  ...
+# Subtest: test 4, track 5 (12 pieces, 4723 m, ε -0.065869737044): one call closes it
+ok 192 - test 4, track 5 (12 pieces, 4723 m, ε -0.065869737044): one call closes it
+  ---
+  duration_ms: 112.4976
+  type: 'test'
+  ...
+# Subtest: test 4, track 6 (9 pieces, 2773 m, ε 0.075068023568): one call closes it
+ok 193 - test 4, track 6 (9 pieces, 2773 m, ε 0.075068023568): one call closes it
+  ---
+  duration_ms: 45.6638
+  type: 'test'
+  ...
+# Subtest: test 4, track 7 (9 pieces, 3916 m, ε -0.0348630782217): one call closes it
+ok 194 - test 4, track 7 (9 pieces, 3916 m, ε -0.0348630782217): one call closes it
+  ---
+  duration_ms: 104.4388
+  type: 'test'
+  ...
+# Subtest: test 4, track 8 (8 pieces, 2717 m, ε 0.0987024823669): one call closes it
+ok 195 - test 4, track 8 (8 pieces, 2717 m, ε 0.0987024823669): one call closes it
+  ---
+  duration_ms: 62.439
+  type: 'test'
+  ...
+# Subtest: test 4, track 9 (7 pieces, 2519 m, ε -0.0799730329309): one call closes it
+ok 196 - test 4, track 9 (7 pieces, 2519 m, ε -0.0799730329309): one call closes it
+  ---
+  duration_ms: 59.1843
+  type: 'test'
+  ...
+# Subtest: test 4, track 10 (6 pieces, 2235 m, ε -0.025086999312): one call closes it
+ok 197 - test 4, track 10 (6 pieces, 2235 m, ε -0.025086999312): one call closes it
+  ---
+  duration_ms: 46.9941
+  type: 'test'
+  ...
+# Subtest: test 4, track 11 (10 pieces, 3974 m, ε -0.00568767194636): one call closes it
+ok 198 - test 4, track 11 (10 pieces, 3974 m, ε -0.00568767194636): one call closes it
+  ---
+  duration_ms: 82.0914
+  type: 'test'
+  ...
+# Subtest: test 4, track 12 (6 pieces, 2264 m, ε -0.055765911378): one call closes it
+ok 199 - test 4, track 12 (6 pieces, 2264 m, ε -0.055765911378): one call closes it
+  ---
+  duration_ms: 42.5463
+  type: 'test'
+  ...
+# Subtest: test 4, track 13 (8 pieces, 3594 m, ε 0.0442057050765): one call closes it
+ok 200 - test 4, track 13 (8 pieces, 3594 m, ε 0.0442057050765): one call closes it
+  ---
+  duration_ms: 66.0348
+  type: 'test'
+  ...
+# Subtest: test 4, track 14 (6 pieces, 1914 m, ε 0.0142437375616): one call closes it
+ok 201 - test 4, track 14 (6 pieces, 1914 m, ε 0.0142437375616): one call closes it
+  ---
+  duration_ms: 29.1745
+  type: 'test'
+  ...
+# Subtest: test 4, track 15 (9 pieces, 2362 m, ε -0.0745127643459): one call closes it
+ok 202 - test 4, track 15 (9 pieces, 2362 m, ε -0.0745127643459): one call closes it
+  ---
+  duration_ms: 42.5076
+  type: 'test'
+  ...
+# Subtest: test 4, track 16 (7 pieces, 2498 m, ε 0.0869582034647): one call closes it
+ok 203 - test 4, track 16 (7 pieces, 2498 m, ε 0.0869582034647): one call closes it
+  ---
+  duration_ms: 45.2733
+  type: 'test'
+  ...
+# Subtest: test 4, track 17 (8 pieces, 3177 m, ε -0.00734682576731): one call closes it
+ok 204 - test 4, track 17 (8 pieces, 3177 m, ε -0.00734682576731): one call closes it
+  ---
+  duration_ms: 64.3149
+  type: 'test'
+  ...
+# Subtest: test 4, track 18 (9 pieces, 3486 m, ε -0.0384539657272): one call closes it
+ok 205 - test 4, track 18 (9 pieces, 3486 m, ε -0.0384539657272): one call closes it
+  ---
+  duration_ms: 72.2309
+  type: 'test'
+  ...
+# Subtest: test 4, track 19 (7 pieces, 2735 m, ε -0.0382748652715): one call closes it
+ok 206 - test 4, track 19 (7 pieces, 2735 m, ε -0.0382748652715): one call closes it
+  ---
+  duration_ms: 46.9991
+  type: 'test'
+  ...
+# Subtest: close REPORTS a closure it did not reach: one step on the hardest track says NOT CLOSED and leaves closed false
+ok 207 - close REPORTS a closure it did not reach: one step on the hardest track says NOT CLOSED and leaves closed false
+  ---
+  duration_ms: 317.9573
+  type: 'test'
+  ...
+# Subtest: the input document is not changed (it is frozen, and deep-equal afterwards)
+ok 208 - the input document is not changed (it is frozen, and deep-equal afterwards)
+  ---
+  duration_ms: 700.1302
+  type: 'test'
+  ...
+# Subtest: a lap that already closes (a full circle, R = 200 m) is left where it is: no steps
+ok 209 - a lap that already closes (a full circle, R = 200 m) is left where it is: no steps
+  ---
+  duration_ms: 124.7013
+  type: 'test'
+  ...
+# Subtest: the position Jacobian predicts the adapter: bumping one interior control point moves the end as J says (relative 5e-4)
+ok 210 - the position Jacobian predicts the adapter: bumping one interior control point moves the end as J says (relative 5e-4)
+  ---
+  duration_ms: 509.9206
+  type: 'test'
+  ...
+# Subtest: the seam is a joint like any other: after the close it passes the document’s own C1 joint check, last piece into first
+ok 211 - the seam is a joint like any other: after the close it passes the document’s own C1 joint check, last piece into first
+  ---
+  duration_ms: 1.5689
+  type: 'test'
+  ...
+# Subtest: with no stretch protected (every weight 1) close still closes, seam included
+ok 212 - with no stretch protected (every weight 1) close still closes, seam included
+  ---
+  duration_ms: 848.153
+  type: 'test'
+  ...
+# Subtest: a track with a jump and no turn is refused as any turnless track is (CLOSE_SINGULAR), not as an unbuilt jump (D243)
+ok 213 - a track with a jump and no turn is refused as any turnless track is (CLOSE_SINGULAR), not as an unbuilt jump (D243)
+  ---
+  duration_ms: 32.0435
+  type: 'test'
+  ...
+# Subtest: row 1: an end already at the start: one press is the near-closed bend, with no new road and nothing moved; Finish is not even tried
+ok 214 - row 1: an end already at the start: one press is the near-closed bend, with no new road and nothing moved; Finish is not even tried
+  ---
+  duration_ms: 7099.8158
+  type: 'test'
+  ...
+# Subtest: row 2: ends 2, 5 and 10 m past the start, and 5 m short of it, close by a bend: no new road, no loop
+ok 215 - row 2: ends 2, 5 and 10 m past the start, and 5 m short of it, close by a bend: no new road, no loop
+  ---
+  duration_ms: 17693.4548
+  type: 'test'
+  ...
+# Subtest: row 3: new road only when no bend proves: a far end gets Finish (every other route refused or failed); a near end does not, though Finish closed it
+ok 216 - row 3: new road only when no bend proves: a far end gets Finish (every other route refused or failed); a near end does not, though Finish closed it
+  ---
+  duration_ms: 7104.946
+  type: 'test'
+  ...
+# Subtest: row 4: when no way proves, there is no document, and one line says nothing changed and why, with the closest way's reason
+ok 217 - row 4: when no way proves, there is no document, and one line says nothing changed and why, with the closest way's reason
+  ---
+  duration_ms: 6081.2324
+  type: 'test'
+  ...
+# Subtest: row 5: a bend that would move the track further than its gap and 10 m is not eligible, and new road is laid instead
+ok 218 - row 5: a bend that would move the track further than its gap and 10 m is not eligible, and new road is laid instead
+  ---
+  duration_ms: 3539.2721
+  type: 'test'
+  ...
+# Subtest: row 7: the pick is the least-moving way that proves: every way that would move the track less was refused or failed the lap proof or added a red
+ok 219 - row 7: the pick is the least-moving way that proves: every way that would move the track less was refused or failed the lap proof or added a red
+  ---
+  duration_ms: 11485.4502
+  type: 'test'
+  ...
+# Subtest: row 8: the order: no new road first (even when the new road moves nothing), then the least movement, and within a millimetre the route order
+ok 220 - row 8: the order: no new road first (even when the new road moves nothing), then the least movement, and within a millimetre the route order
+  ---
+  duration_ms: 1.2179
+  type: 'test'
+  ...
+# Subtest: row 6: the reported near-closed save: one press bends its last 2 pieces by up to 4.0 m, with no new road, and the lap proves
+ok 221 - row 6: the reported near-closed save: one press bends its last 2 pieces by up to 4.0 m, with no new road, and the lap proves # SKIP fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)
+  ---
+  duration_ms: 0.1598
+  type: 'test'
+  ...
+# Subtest: row 9: when the end is at the start, the near bend is closed and checked first, and once it proves no other route is run
+ok 222 - row 9: when the end is at the start, the near bend is closed and checked first, and once it proves no other route is run
+  ---
+  duration_ms: 3009.7107
+  type: 'test'
+  ...
+# Subtest: row 10: the pick is the exhaustive order's on every track: the same route, the same words, the same closed track
+ok 223 - row 10: the pick is the exhaustive order's on every track: the same route, the same words, the same closed track
+  ---
+  duration_ms: 44484.0299
+  type: 'test'
+  ...
+# Subtest: row 11: given the open track's reds, the press does not check the open track, and picks exactly as it does without them
+ok 224 - row 11: given the open track's reds, the press does not check the open track, and picks exactly as it does without them
+  ---
+  duration_ms: 7443.8418
+  type: 'test'
+  ...
+# Subtest: row 12: the reported save: one press, with the reds the live checker found, closes in under 30 s, and picks as a press without them does
+ok 225 - row 12: the reported save: one press, with the reds the live checker found, closes in under 30 s, and picks as a press without them does # SKIP fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)
+  ---
+  duration_ms: 0.1774
+  type: 'test'
+  ...
+# Subtest: row 13: the worker's press on a structuredClone of the track picks and closes exactly as on the track, and residual never runs on an unfrozen document
+ok 226 - row 13: the worker's press on a structuredClone of the track picks and closes exactly as on the track, and residual never runs on an unfrozen document
+  ---
+  duration_ms: 4761.4582
+  type: 'test'
+  ...
+# Subtest: row 14: the reported save: the worker's press on a structuredClone, with the live checker's reds, picks and closes as on the parsed save, residual never unfrozen
+ok 227 - row 14: the reported save: the worker's press on a structuredClone, with the live checker's reds, picks and closes as on the parsed save, residual never unfrozen # SKIP fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)
+  ---
+  duration_ms: 0.0864
+  type: 'test'
+  ...
+# Subtest: a lap end in the flipped frame that faces the start exactly has no heading, pitch or bank left to close
+ok 228 - a lap end in the flipped frame that faces the start exactly has no heading, pitch or bank left to close
+  ---
+  duration_ms: 257.7814
+  type: 'test'
+  ...
+# Subtest: the whole-lap close of a flipped-frame lap converges and the seam meets in position and frame
+ok 229 - the whole-lap close of a flipped-frame lap converges and the seam meets in position and frame
+  ---
+  duration_ms: 713.7572
+  type: 'test'
+  ...
+# Subtest: Finish to start from a flipped-frame end lays no roll (the end is already upright) and closes the lap
+ok 230 - Finish to start from a flipped-frame end lays no roll (the end is already upright) and closes the lap
+  ---
+  duration_ms: 2239.8263
+  type: 'test'
+  ...
+# Subtest: Level on a flipped-frame end with a slope ends level (pitch 0), as it does on an upright track
+ok 231 - Level on a flipped-frame end with a slope ends level (pitch 0), as it does on an upright track
+  ---
+  duration_ms: 1028.9107
+  type: 'test'
+  ...
+# Subtest: row 1: TEST TRACK 10 finishes with no bump or wiggle at its closer joints, and nothing it did not lay moves
+ok 232 - row 1: TEST TRACK 10 finishes with no bump or wiggle at its closer joints, and nothing it did not lay moves
+  ---
+  duration_ms: 36455.6582
+  type: 'test'
+  ...
+# Subtest: row 2: TEST 10 finishes with no bump or wiggle at its closer joints, and nothing it did not lay moves
+ok 233 - row 2: TEST 10 finishes with no bump or wiggle at its closer joints, and nothing it did not lay moves
+  ---
+  duration_ms: 3609.1634
+  type: 'test'
+  ...
+# Subtest: row 3: a lap that ends 212 m below its start, level, finishes with no bump or wiggle at its closer joints
+ok 234 - row 3: a lap that ends 212 m below its start, level, finishes with no bump or wiggle at its closer joints
+  ---
+  duration_ms: 1277.3401
+  type: 'test'
+  ...
+# Subtest: row 4: a windowed close rolls the road as gently as the bank allows: a 57° start closes in the last 200 m under the roll-rate bar
+ok 235 - row 4: a windowed close rolls the road as gently as the bank allows: a 57° start closes in the last 200 m under the roll-rate bar
+  ---
+  duration_ms: 375.3744
+  type: 'test'
+  ...
+# Subtest: row 1: a close confined to the LAST piece leaves every earlier piece bit-identical, closes the loop, and moves the last piece
+ok 236 - row 1: a close confined to the LAST piece leaves every earlier piece bit-identical, closes the loop, and moves the last piece
+  ---
+  duration_ms: 1511.585
+  type: 'test'
+  ...
+# Subtest: row 2: the default window covers at least ~20% of the lap from its end (at least the last piece); the whole-lap close, by contrast, moves pieces outside it
+ok 237 - row 2: the default window covers at least ~20% of the lap from its end (at least the last piece); the whole-lap close, by contrast, moves pieces outside it
+  ---
+  duration_ms: 1034.5592
+  type: 'test'
+  ...
+# Subtest: row 3: a window that cannot close the loop is REFUSED BY NAME (CLOSE_WINDOW), naming the window, and nothing is handed back
+ok 238 - row 3: a window that cannot close the loop is REFUSED BY NAME (CLOSE_WINDOW), naming the window, and nothing is handed back
+  ---
+  duration_ms: 5276.8431
+  type: 'test'
+  ...
+# Subtest: row 4: a local close may not push the window past the roll-rate bar (1.2144°/m over 20 m): refused by name
+ok 239 - row 4: a local close may not push the window past the roll-rate bar (1.2144°/m over 20 m): refused by name
+  ---
+  duration_ms: 564.6554
+  type: 'test'
+  ...
+# Subtest: row 4 control: the same start banked 0.5 rad closes in the last piece (its roll stays under the bar)
+ok 240 - row 4 control: the same start banked 0.5 rad closes in the last piece (its roll stays under the bar)
+  ---
+  duration_ms: 540.3431
+  type: 'test'
+  ...
+# Subtest: row 5: a window with no road piece is refused by name
+ok 241 - row 5: a window with no road piece is refused by name
+  ---
+  duration_ms: 247.0123
+  type: 'test'
+  ...
+# Subtest: close on two straights is a NAMED refusal (CoreError CLOSE_SINGULAR), never a plain Error
+ok 242 - close on two straights is a NAMED refusal (CoreError CLOSE_SINGULAR), never a plain Error
+  ---
+  duration_ms: 184.4337
+  type: 'test'
+  ...
+# Subtest: control: a lap that CAN close still closes (a turning track is not refused)
+ok 243 - control: a lap that CAN close still closes (a turning track is not refused)
+  ---
+  duration_ms: 371.1593
+  type: 'test'
+  ...
+# Subtest: the app shows the refusal by its name: the shell's message carries CLOSE_SINGULAR, and the track stays open
+ok 244 - the app shows the refusal by its name: the shell's message carries CLOSE_SINGULAR, and the track stays open
+  ---
+  duration_ms: 119.8206
+  type: 'test'
+  ...
+# Subtest: row 1: every route the solver gives, laid out arc, straight, arc, ends on the start pose
+ok 245 - row 1: every route the solver gives, laid out arc, straight, arc, ends on the start pose
+  ---
+  duration_ms: 1.6342
+  type: 'test'
+  ...
+# Subtest: row 2: an end behind the start and pointing at it is one straight of the gap, with no turn
+ok 246 - row 2: an end behind the start and pointing at it is one straight of the gap, with no turn
+  ---
+  duration_ms: 0.2579
+  type: 'test'
+  ...
+# Subtest: row 3: a track is finished with new pieces only, closed, and the new road ends on the start
+ok 247 - row 3: a track is finished with new pieces only, closed, and the new road ends on the start
+  ---
+  duration_ms: 1203.523
+  type: 'test'
+  ...
+# Subtest: row 4: refusals by name: a closed loop, an empty track
+ok 248 - row 4: refusals by name: a closed loop, an empty track
+  ---
+  duration_ms: 1025.0289
+  type: 'test'
+  ...
+# Subtest: row 5: an end upside down rolls back upright on a straight of its own (last onto the start, or first when that keeps the car on the road), never in a turn, and the lap closes with the bank of the start
+ok 249 - row 5: an end upside down rolls back upright on a straight of its own (last onto the start, or first when that keeps the car on the road), never in a turn, and the lap closes with the bank of the start
+  ---
+  duration_ms: 4213.0012
+  type: 'test'
+  ...
+# Subtest: row 8: the roll Finish lays, read as the checker reads it, is under the amber bar everywhere on the new road (54° and 180°)
+ok 250 - row 8: the roll Finish lays, read as the checker reads it, is under the amber bar everywhere on the new road (54° and 180°)
+  ---
+  duration_ms: 6667.5091
+  type: 'test'
+  ...
+# Subtest: row 9: a roll whose first guess is too short (factor 1, and the old 1.1) is measured and lengthened until it is under the amber bar
+ok 251 - row 9: a roll whose first guess is too short (factor 1, and the old 1.1) is measured and lengthened until it is under the amber bar
+  ---
+  duration_ms: 9786.9713
+  type: 'test'
+  ...
+# Subtest: row 10: a banked end: the road Finish lays keeps the car on it (the lap proof of the checker passes), at 54° and at 126°
+ok 252 - row 10: a banked end: the road Finish lays keeps the car on it (the lap proof of the checker passes), at 54° and at 126°
+  ---
+  duration_ms: 18136.8948
+  type: 'test'
+  ...
+# Subtest: row 11: F.roadHold is the own test of the lap proof: the same place on the road the old Finish laid at a banked end, and nothing on the new road
+ok 253 - row 11: F.roadHold is the own test of the lap proof: the same place on the road the old Finish laid at a banked end, and nothing on the new road
+  ---
+  duration_ms: 3334.2394
+  type: 'test'
+  ...
+# Subtest: row 13: an end Finish cannot close onto a road the car stays on is refused by name, with where the car leaves the road and what to change
+ok 254 - row 13: an end Finish cannot close onto a road the car stays on is refused by name, with where the car leaves the road and what to change
+  ---
+  duration_ms: 1425.3696
+  type: 'test'
+  ...
+# Subtest: row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror)
+ok 255 - row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror)
+  ---
+  duration_ms: 1834.5935
+  type: 'test'
+  ...
+# Subtest: row 6: an end a quarter turn short of the lap is finished with one turn and one straight, not a detour
+ok 256 - row 6: an end a quarter turn short of the lap is finished with one turn and one straight, not a detour
+  ---
+  duration_ms: 282.193
+  type: 'test'
+  ...
+# Subtest: row 7: the one-turn routes, laid out, end on the start pose; none tighter than the floor
+ok 257 - row 7: the one-turn routes, laid out, end on the start pose; none tighter than the floor
+  ---
+  duration_ms: 2.2338
+  type: 'test'
+  ...
+# Subtest: row 14: an end already at the start is closed by bending its last pieces, with no new road and no loop
+ok 258 - row 14: an end already at the start is closed by bending its last pieces, with no new road and no loop
+  ---
+  duration_ms: 574.9228
+  type: 'test'
+  ...
+# Subtest: row 15: the reported near-closed save closes by bending its last pieces: no new road, nothing else moves, the lap proves
+ok 259 - row 15: the reported near-closed save closes by bending its last pieces: no new road, nothing else moves, the lap proves # SKIP fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)
+  ---
+  duration_ms: 0.1181
+  type: 'test'
+  ...
+# Subtest: row 16: an end at the start whose every bend leaves the road is refused by name (FINISH_NEAR), never given new road
+ok 260 - row 16: an end at the start whose every bend leaves the road is refused by name (FINISH_NEAR), never given new road
+  ---
+  duration_ms: 1749.5154
+  type: 'test'
+  ...
+# Subtest: row 17: an end straight behind the start, on its line and pointing the same way, is finished with that straight (8, 20 and 40 m), not a loop
+ok 261 - row 17: an end straight behind the start, on its line and pointing the same way, is finished with that straight (8, 20 and 40 m), not a loop
+  ---
+  duration_ms: 12598.164
+  type: 'test'
+  ...
+# Subtest: a NORMAL export of an open track still refuses (unchanged): NOT_CLOSED, nothing written
+ok 262 - a NORMAL export of an open track still refuses (unchanged): NOT_CLOSED, nothing written
+  ---
+  duration_ms: 27.7376
+  type: 'test'
+  ...
+# Subtest: the TEST export of the same open track writes a folder marked unfinished, in name and folder
+ok 263 - the TEST export of the same open track writes a folder marked unfinished, in name and folder
+  ---
+  duration_ms: 1311.3781
+  type: 'test'
+  ...
+# Subtest: D256: the TEST export checks the open track at FULL speed, so where F7's hill lets the car leave the road is LISTED (and does not block)
+ok 264 - D256: the TEST export checks the open track at FULL speed, so where F7's hill lets the car leave the road is LISTED (and does not block)
+  ---
+  duration_ms: 47.5772
+  type: 'test'
+  ...
+# Subtest: in TEST mode a red is LISTED and does not block: a hole's gap-in-road red is in the TEST file and the warnings
+ok 265 - in TEST mode a red is LISTED and does not block: a hole's gap-in-road red is in the TEST file and the warnings
+  ---
+  duration_ms: 942.8297
+  type: 'test'
+  ...
+# Subtest: the TEST folder carries point-to-point gates and the named end wall in its kn5
+ok 266 - the TEST folder carries point-to-point gates and the named end wall in its kn5
+  ---
+  duration_ms: 1.029
+  type: 'test'
+  ...
+# Subtest: the TEST folder's AI line is OPEN and reads back
+ok 267 - the TEST folder's AI line is OPEN and reads back
+  ---
+  duration_ms: 0.4229
+  type: 'test'
+  ...
+# Subtest: an open AI line is written only when asked for: the same line without open still refuses NOT_CLOSED
+ok 268 - an open AI line is written only when asked for: the same line without open still refuses NOT_CLOSED
+  ---
+  duration_ms: 244.6775
+  type: 'test'
+  ...
+1..268
+# tests 268
+# suites 0
+# pass 264
+# fail 0
+# cancelled 0
+# skipped 4
+# todo 0
+# duration_ms 354065.7727

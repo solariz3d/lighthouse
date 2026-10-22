@@ -1,0 +1,8 @@
+{"metric":"gram","eps":"1e-9","lap":"TEST 10","worstOver":0.037,"gapMm":0.1016,"minHoldG":5.2,"straightSidewaysM":0.8,"straightOffHeightM":0.58,"plan":"LSR at R 300 m: turn 175.5°, 746 m strai"}
+{"metric":"gram","eps":"1e-9","lap":"row 2 (","worstOver":0,"gapMm":0.047,"minHoldG":3.3,"straightSidewaysM":3.67,"straightOffHeightM":53.71,"plan":"SC at R 284 m: turn 0°, 1706 m straight,"}
+{"metric":"gram","eps":"1e-12","lap":"TEST 10","worstOver":0.037,"gapMm":0.1016,"minHoldG":5.2,"straightSidewaysM":0.8,"straightOffHeightM":0.58,"plan":"LSR at R 300 m: turn 175.5°, 746 m strai"}
+{"metric":"gram","eps":"1e-12","lap":"row 2 (","worstOver":0,"gapMm":0.047,"minHoldG":3.3,"straightSidewaysM":3.67,"straightOffHeightM":53.71,"plan":"SC at R 284 m: turn 0°, 1706 m straight,"}
+{"metric":"gram","eps":"1e-6","lap":"TEST 10","worstOver":0.037,"gapMm":0.1016,"minHoldG":5.2,"straightSidewaysM":0.8,"straightOffHeightM":0.58,"plan":"LSR at R 300 m: turn 175.5°, 746 m strai"}
+{"metric":"gram","eps":"1e-6","lap":"row 2 (","worstOver":0,"gapMm":0.1062,"minHoldG":3.3,"straightSidewaysM":3.67,"straightOffHeightM":53.71,"plan":"SC at R 284 m: turn 0°, 1706 m straight,"}
+{"metric":"gram","eps":"1e-3","lap":"TEST 10","worstOver":0.037,"gapMm":0.0817,"minHoldG":5.2,"straightSidewaysM":0.8,"straightOffHeightM":0.58,"plan":"LSR at R 300 m: turn 175.5°, 746 m strai"}
+{"metric":"gram","eps":"1e-3","lap":"row 2 (","worstOver":0,"gapMm":0.0746,"minHoldG":3.3,"straightSidewaysM":3.67,"straightOffHeightM":53.71,"plan":"SC at R 284 m: turn 0°, 1706 m straight,"}
