@@ -2508,3 +2508,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-22 ~18:5xZ (D) · D432 build (option A): the 2 m stack is information, a clip is red → `exo_memory/handback/p-d432-E-build_2026-10-22.md`
 - t180 `70abb64` on d432-e (b5181e2 + 70abb64): a mesh-free clip test in validate's stack pairs, Close's own mesh self-check, the stack in info everywhere; 6 pinning rows and core_sharp row 4 amended, the six blindness files unchanged and green; every harness whole; own mutants 9/7/0 (M4 and M9 survive, named). Close: ELYSIUM's bent press 80.6 s (base refused at 128.6 s), over D337's 30 s on both.
 - **Carry:** `$(...)` in the same assignment resets `$?`: capture a command's exit into a variable before anything else runs.
+
+## 2026-10-22 ~19:2xZ (D) · D432c: the clip only the mesh sees is an edge graze; M4 still uncaught → `exo_memory/handback/p-d432-E-build_2026-10-22.md` §7
+- t180 `c250b22`: stacked_not_red row 9, a road grazing the other's last lateral metre (u = ±13) clips in the mesh and not in the sampled clip test; no chord-sag case found. Close's backstop has a real case, but no core document reaching it was built, so M4 survives.
+- **Carry:** a sampled test that excludes points beyond an edge is blind to a crossing inside the last sample interval; test the segment to the next point, not the points.
