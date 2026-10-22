@@ -99,3 +99,9 @@ General form: a landing runs the guards the branch's author did not, and a red o
 TEST TRACK 10's p42|p43 kh -0.15, -11.81 | -23.54 → -8.71, -8.59 | -8.48; whole-lap close byte-identical. Could be wrong for windows of the user's own road:
 ELYSIUM's bend moves 4.40 m, was 3.99 (a ruling owed). General form: a bar on three points let two smoother-looking variants through; measure the road too.
 → `exo_memory/handback/p-d431-O_2026-10-22.md`
+
+### A closer banked to the balance bank at the design speed leans 72-81° into its curves and keeps the lap closed; the plan's "gentle curves get none" needs a flat limit the code does not have
+2026-10-22, D434 — measured, not built: −atan(v²·kh/g) on the laid route's new pieces (sign found in both frames), 460 km/h: TEST TRACK 10 lateral 10.68 → 5.32 g,
+TEST 10 10.96 → 0.48 g, normal ≤ 11 g, roll under amber; 0.75 × balance = 53.8°, the keeper's own 53.2°. Could be wrong about the size the keeper wants (his eye).
+General form: a capture that keeps the FIRST call of a retried step measures a thrown-away attempt; key it to the result returned.
+→ `exo_memory/handback/p-d434-O_2026-10-22.md`
