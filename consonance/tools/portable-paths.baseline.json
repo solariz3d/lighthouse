@@ -2,7 +2,7 @@
   "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
-    "BENIGN-TEST": 387,
+    "BENIGN-TEST": 390,
     "BENIGN-FIXTURE": 12,
     "REVIEW": 15,
     "DISGUISED": 15,
@@ -1662,6 +1662,20 @@
       "file": "consonance/src-tauri/src/main.rs",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(reopen_seat(None, \"committee\", &rec, \"c88002b1-74d8\"), (pane_exit::Seat::Committee, Some(\"C:/Consonance/instances/sibling-a\".to_string())));",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(reopen_seat(None, \"committee\", &rec, \"c88002b1-74d8\"), (pane_exit::Seat::Committee, Some(\"C:/Consonance/instances/sibling-a\".to_string())));\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(reopen_seat(Some(\"C:/main\".to_string()), \"main\", &[], MAIN_SID), (pane_exit::Seat::Fixed, Some(\"C:/main\".to_string())));",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(reopen_seat(Some(\"C:/main\".to_string()), \"main\", &[], MAIN_SID), (pane_exit::Seat::Fixed, Some(\"C:/main\".to_string())));\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "assert_eq!(repo_root_from_room_path(r\"D:\\BOOT.md\"), None);",
       "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(repo_root_from_room_path(r\"D:\\BOOT.md\"), None);\u0000#1"
     },
@@ -1790,6 +1804,13 @@
       "verdict": "BENIGN-TEST",
       "text": "let out = \"consonance close · D · C:\\\\data -> C:\\\\state\\n published: main 1a2b3c4 -> origin (was 9486b30)\\n remote confirms: refs/heads/main = 1a2b3c4 (asked the remote, not the push)\\n\";",
       "key": "consonance/src-tauri/src/main.rs\u0000let out = \"consonance close · D · C:\\\\data -> C:\\\\state\\n published: main 1a2b3c4 -> origin (was 9486b30)\\n remote confirms: refs/heads/main = 1a2b3c4 (asked the remote, not the push)\\n\";\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let rec = [kept(\"c88002b1-74d8\", \"C:/Consonance/instances/sibling-a\"), kept(\"blank\", \" \"), kept(\"room\", \"C:/rooms/x\")];",
+      "key": "consonance/src-tauri/src/main.rs\u0000let rec = [kept(\"c88002b1-74d8\", \"C:/Consonance/instances/sibling-a\"), kept(\"blank\", \" \"), kept(\"room\", \"C:/rooms/x\")];\u0000#1"
     },
     {
       "file": "consonance/src-tauri/src/main.rs",
