@@ -2516,3 +2516,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-22 ~20:3xZ (D) · D429 Part 4, local-0.4.14 installed by the SHA → `exo_memory/handback/p-d429-install-E_2026-10-22.md`
 - t180 b6969da exactly (detached t180-wt-e37, no version commit): installed sha256 `DB194F9E…7BE0`, stamped compare equal, backup .before-local-0.4.14 = the 0.4.13 install `40CB0BB6…0988`; ProductVersion reads 0.4.9.
 - **Carry:** a name that is both a tag and a branch is ambiguous to git; build from a detached worktree at the full sha, and refuse in the script if HEAD differs.
+
+## 2026-10-22 ~20:4xZ (D) · D432d: rows between stations in the clip test, Close's mesh check removed → `exo_memory/handback/p-d432-E-build_2026-10-22.md` §8
+- t180 `7402479`: row 9's graze was edge strips crossing BETWEEN stations (not the last lateral metre); signing the rows linearly between stations catches it; 0 mesh-only in 728 heights; Close back to 6261a22's file; TRACK 2 11.2 s, bent ELYSIUM 28.6 s (was 80.6). Own mutants 8/7/0, M4 and M5 removed, M9 survives.
+- **Carry:** before widening a sampled test where it seems blind, re-sample finely to see which direction the miss runs.
