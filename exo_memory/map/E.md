@@ -2512,3 +2512,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-22 ~19:2xZ (D) · D432c: the clip only the mesh sees is an edge graze; M4 still uncaught → `exo_memory/handback/p-d432-E-build_2026-10-22.md` §7
 - t180 `c250b22`: stacked_not_red row 9, a road grazing the other's last lateral metre (u = ±13) clips in the mesh and not in the sampled clip test; no chord-sag case found. Close's backstop has a real case, but no core document reaching it was built, so M4 survives.
 - **Carry:** a sampled test that excludes points beyond an edge is blind to a crossing inside the last sample interval; test the segment to the next point, not the points.
+
+## 2026-10-22 ~20:3xZ (D) · D429 Part 4, local-0.4.14 installed by the SHA → `exo_memory/handback/p-d429-install-E_2026-10-22.md`
+- t180 b6969da exactly (detached t180-wt-e37, no version commit): installed sha256 `DB194F9E…7BE0`, stamped compare equal, backup .before-local-0.4.14 = the 0.4.13 install `40CB0BB6…0988`; ProductVersion reads 0.4.9.
+- **Carry:** a name that is both a tag and a branch is ambiguous to git; build from a detached worktree at the full sha, and refuse in the script if HEAD differs.
