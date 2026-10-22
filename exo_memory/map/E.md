@@ -2496,3 +2496,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-22 ~03:4xZ (D) · the D425 landing installed, local-0.4.13 0.4.13-dev → `exo_memory/handback/p-local0413-E_2026-10-22.md`
 - t180 `ab89570` (6261a22 + version) on local-0.4.13-e, t180-wt-e34. Installed through install-local.ps1: sha256 `40CB0BB6…0988`, stamped compare equal, backup .before-local-0.4.13 (the 0.4.12 install).
 - **Carry:** a sed that writes a `tr '\n'` into a script writes a newline; edit generated scripts with the Edit tool, and read them back.
+
+## 2026-10-22 ~15:1xZ (D) · D429 Part 2, D403 brought onto 0.4.13 → `exo_memory/handback/p-d429-d403-E_2026-10-22.md`
+- t180 `2ccee1e` on d403-on-0413 (A's e1f98c9 and my 58abf77 cherry-picked onto 6261a22, D416's pixel stars kept beside D403's curtains). Sky tests and theme-mutation green (48/48/0) after sky-crisp row 1 was AMENDED (D429): the star finder had counted ~2,400 ray peaks as stars. Shots in t180-d421-e\shots403\.
+- **Carry:** a lock-waiter that matches one label goes blind when the label changes; match on every word the standing check names (timing, sculpt-frame, ABAB).
