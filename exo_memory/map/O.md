@@ -87,3 +87,9 @@ for a Bend at 2100 and 6000, a Climb and a Stretch (599-707 ms, gap 0.03-0.16 mm
 Could be wrong for laps not swept: jumps, a mixed seam, a window already holding a seam piece. Also: the tube oval and a legacy lap with the same centreline
 close identically, to the 4th decimal, because the close solves the centreline only.
 → `exo_memory/handback/p-d421c-seam-O_2026-10-20.md`
+
+### A branch can arrive green on its own checks and still turn a guard on main red: D424's new test rows carry 3 drive-letter fixtures portable-paths does not baseline
+2026-10-22, D424 landing — merge 3fc78c67 (local): cargo whole green (1,099/0); the brief-reading JS tests 619/622, both reds in portable-paths.test.js, red at
+413b938c and green at ddfb4e4c. Push held. Could be wrong that baselining is the right fix: the guard's policy for BENIGN-TEST sites was not found stated.
+General form: a landing runs the guards the branch's author did not, and a red one is the landing's to stop on, not to route around.
+→ `exo_memory/handback/p-d424-landing-O_2026-10-22.md`
