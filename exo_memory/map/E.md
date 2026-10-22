@@ -2500,3 +2500,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-22 ~15:1xZ (D) · D429 Part 2, D403 brought onto 0.4.13 → `exo_memory/handback/p-d429-d403-E_2026-10-22.md`
 - t180 `2ccee1e` on d403-on-0413 (A's e1f98c9 and my 58abf77 cherry-picked onto 6261a22, D416's pixel stars kept beside D403's curtains). Sky tests and theme-mutation green (48/48/0) after sky-crisp row 1 was AMENDED (D429): the star finder had counted ~2,400 ray peaks as stars. Shots in t180-d421-e\shots403\.
 - **Carry:** a lock-waiter that matches one label goes blind when the label changes; match on every word the standing check names (timing, sculpt-frame, ABAB).
+
+## 2026-10-22 ~16:4xZ (D) · D432 Part 1, stacked-within-2m: not landed, "do not flip" → `exo_memory/handback/p-d432-E_2026-10-22.md`
+- The stack stops being red cleanly at export and in the overlap check (stacked_not_red 6 rows, red first on 6261a22), but the live checker, Close, sharp.js and the phrases have no mesh: the stack was their only clip test, and Close then committed a coil with 961 self-intersections. Patch kept uncommitted (d432-wip.patch); the keeper's TEST 10 has a pass 0.80 m over its road edge at s 2930, one of its two reds.
+- **Carry:** before removing a red, find every check that has no other way to see the thing it stood in for.
