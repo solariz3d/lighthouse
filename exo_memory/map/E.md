@@ -2433,3 +2433,66 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - Six PNGs in `C:\Users\nname\Downloads\t180-048-shots-e\shots\` from the b306309 source page, headless: five looks with a six-piece track, the File menu open and the chase camera, plus SIGIL's empty builder with its ASCII loop.
 - **Carry:** a button labelled in CSS capitals carries its text in lower case; match labels case-insensitively and print whether the click found its target.
 - 13:0x amendment: the empty-builder shot dropped (moved to dropped/), the five track shots kept; the camera label reads "chase view · sigil look (L)" in all five looks, wrong in four, noted for C's D409 check.
+
+## 2026-10-19 ~14:3x (D) · D405 Skyline Night → `exo_memory/handback/p-d405-skylinenight-E_2026-10-19.md`
+- t180 `294cacd` on b306309 (v0.4.8): a sixth look on Skyline's melody (theme.js LOOKS + melodyOf; the melodies stay four), navy glass and a lit sky-blue accent, a new city sky (band 1.148 of its fog), the flipped paper grain; Random lands on it in the lower half of Skyline's quarter at start (1 in 8) and among five looks live. Whole: theme 12, settings 7, sky 14, sky-dither 3, sky-caustics-aurora 11, texture-page 6 (row 6: 0 texts under 4.5:1), menubar-page 21, theme-mutation 38 (36/36/0). The page-test launchers now pass --mute-audio.
+- **Carry:** "0 pushed under" is not "0 under": a rule about every text needs an absolute row, and a text half covered by an open menu is sampled over the menu, so name and leave out the covered ones.
+- 14:4x shot checks → `exo_memory/handback/p-d405-shotcheck-E_2026-10-19.md`: the night readout's panel is there (the page veil at .86, navy on a navy sky, about 1.04:1); the lit pill reads 5.44 to 9.86:1; the chase-view label (2,058 px²) and the 100.00 handle label under the grid bar (10,944 px²) are real overlaps, older than D405.
+
+## 2026-10-19 ~16:0x (D) · D414 local rolling build, install 1 (D409 + D405) → `exo_memory/handback/p-d414-local049-E_2026-10-19.md`
+- local-0.4.9 (t180-wt-e25): merges 2b6f1f4 (D409) and c6575f9 (D405), bump eafce1c to 0.4.9-dev; touched tests whole + theme-mutation green; built and installed on the keeper's machine: sha256 57CDEC57…20D7, backup .before-local-0.4.9-m1 = 0.4.8's 2255CB13…; stamped compare 3 bytes UNK->NSS.
+- **Carry:** the exe compresses the app's files, so a grep can only see file names: check a lap with no new file in src-tauri/dist and tie dist to the install by the stamped hash.
+
+## 2026-10-19 ~19:2x (D) · D414 merge 2, local-0.4.9 install 2 (C's D409 overlap fix) → `exo_memory/handback/p-d414-local049-m2-E_2026-10-19.md`
+- t180 `3e9b240` (local-0.4.9). Six files whole and muted, all green; core-mutation 60/60/0, theme-mutation 36/36/0. Installed exe sha256 `B9823F5D…CC8A` = built + 3 stamped bytes (UNK→NSS); view.panels 4 in dist, 0 at b306309.
+- **Carry:** a fix that adds no file can only be checked in dist; the stamped hash is what ties dist to the installed exe.
+
+## 2026-10-19 ~20:0x (D) · D414 merge 3, local-0.4.9 install 3 (O's D412 suite speed-up) → `exo_memory/handback/p-d414-local049-m3-E_2026-10-19.md`
+- t180 `38e8436` (local-0.4.9). inner_run.test.js 18/18. Installed exe sha256 `6FE81287…5AA2` = built + 3 stamped bytes (UNK→NSS). D412 is test-only, so the exe carries none of it; build 3 differs from build 2 by 24 bytes (link timestamps, inferred).
+- **Carry:** `bash -n` passes a script whose quoted argument became a newline; read a generated script back, not just its syntax.
+
+## 2026-10-19 ~20:4x (D) · D414 merge 4 (D407 18b8fd8): stopped at release-frame row 4, not built → `exo_memory/handback/p-d414-local049-m4-E_2026-10-19.md`
+- t180 `b8ee2b4` (local-0.4.9), unbuilt. Row 4 (an edit p95 ≤ 6.0 ms) red in 4 of 4 ABAB runs, d407-a alone 10.0–13.8 ms and the merge 10.7–13.6, every other file green (mutation 103/103/0, geom 35/35/0). The merge is not the cause; install 3 stays.
+- **Carry:** before blaming a red timing row on a merge or on load, A/B the branch alone against the merge, same machine, same window.
+- 2026-10-19 ~20:4x install 4 on the GO (row 4 a known red owned by D407b): installed exe sha256 `7C70D946…BB55` = built + 3 stamped bytes; sameKey 2 in dist, 0 at b306309 (§6 of the same hand-back).
+
+## 2026-10-19 ~23:5x (D) · D418 part 4, scripts/install-local.ps1 → `exo_memory/handback/p-d418-installlocal-E_2026-10-19.md`
+- t180 `83dce86` (local-0.4.9). Waits on an open builder (never closes it), backs up, installs silently, stamped compare by hash, own install.lock with stale takeover and -Take/-Release for merges. test/install_local.test.js 6/6; one real install (exit 0, sha256 `7C70D946…BB55`, install 4 re-put).
+- **Carry:** in PowerShell, Write-Output inside a function that returns a value becomes part of the value; send messages to the host.
+
+## 2026-10-19 ~23:5x (D) · D414 merge 5 (D410 + D417 + D419), install 5 → `exo_memory/handback/p-d414-local049-m5-E_2026-10-19.md`
+- t180 `731c9ec` (local-0.4.9; D419 is 731c9ec). Eight touched files whole and green; installed through scripts/install-local.ps1: sha256 `4D37E69F…E27B`, stamped compare equal. texture-page rows now 1 2 3 5 6 7 8.
+- **Carry:** a lock that names its holder by pid needs a holder that lives as long as the hold; a one-off shell makes it stale at once.
+
+## 2026-10-20 ~05:1x (D) · D414 merge 6 (D416 night skies), install 6 → `exo_memory/handback/p-d414-local049-m6-E_2026-10-19.md`
+- t180 `52558e3` (local-0.4.9). Six files whole and green, theme-mutation 48/48/0; installed through install-local.ps1, sha256 `C405F084…B4F0`, backup .before-local-0.4.9-m6. D416's CHANGELOG entry quotes the keeper: flagged, not reworded.
+- **Carry:** take an install lock from the script that does the work, so its holder lives the whole hold.
+
+## 2026-10-20 ~08:2x (D) · local-0.4.10 install 1 (C's D421 part 1, brush freeze) → `exo_memory/handback/p-local0410-m1-E_2026-10-20.md`
+- t180 `000f13e` (local-0.4.10 from v0.4.9 409d3f8). Four files whole and green (cup 50/50/0, xsec 59/59/0); installed through install-local.ps1, sha256 `D597E34C…1EF4`, backup .before-local-0.4.10-m1 (the v0.4.9 release exe).
+- **Carry:** never chain a commit after a patch script with `;`: a thrown patch then commits half a change.
+
+## 2026-10-21 ~00:3x (D) · D421 part 4, the preview degrade ladder → `exo_memory/handback/p-d421-ladder-E_2026-10-20.md`
+- t180 `bea5a42` on d421-e (1bf6e95, 4314708, 162872f, bea5a42). A drag step rebuilds nothing placed: chord-ghost window, rigid tail via `xform` drawn from baked chunks, closed lap drawn open, exact road the frame after release. On all four parts: row 1 passes (3.6–3.9 ms); row 3 7.7–8.5 ms (shell 2.6, preview 3.2 p95 in node); rows 2, 4a, 4b set by the shell step. Own mutants 15/15/0.
+- **Carry:** a renderer that bakes chunks to world space re-bakes everything whose matrix changes; move a rigid body by a matrix beside the placed one, not in it.
+- 2026-10-21 ~01:0x row-4a ghost cut, t180 `dc7d170` → `exo_memory/handback/p-d421-4acut-E_2026-10-20.md`: frozen row-grid pairs answered once (748 chords, 6 grids on the oval); bit-identical on all six cases; 4a frame 10.37 -> 6.53 ms p50; own mutants 16/16/0.
+
+## 2026-10-21 ~01:5x (D) · the Sculpt landing installed, local-0.4.11 0.4.11-dev → `exo_memory/handback/p-local0411-sculpt-E_2026-10-21.md`
+- t180 `5168053` (57b41f8 + version) on local-0.4.11-e, t180-wt-e29. Installed through install-local.ps1: sha256 `91388815…ADEE7`, stamped compare equal, backup .before-local-0.4.11-sculpt (local-0.4.10 m1).
+- **Carry:** a landing branch keeps its base lineage's version string; a local build owes its own version commit, in its own worktree.
+
+## 2026-10-21 ~03:4x (D) · D421c part 2, row 4a drag frame and row 3 release → `exo_memory/handback/p-d421c-p2-E_2026-10-21.md`
+- t180 `c45518f` on d421c-e (from 57b41f8). Ramp blends kept for frozen inputs (mesh.js rampShape), the release built a slice at a time (reuseMeshSteps, updateSteps). Row 4a passes (p95 5.8, longest 31); row 3 longest 164–178 (was 406–443), drag p95 9.9–10.0. The whole-lap re-close changed all 50 pieces, so re-placing was not bit-identical. Own mutants 5/5/0.
+- **Carry:** before cutting a rebuild by reuse, check what changed; a re-close that moves every piece makes reuse a different road.
+- 2026-10-21 ~04:3x item 3 (a change during the sliced build gets its own sliced build) and item 10 (CHANGELOG), t180 `7d42d35`: row 5 red on c45518f then green; own mutants 6/6/0 (§6 of the same hand-back).
+
+## 2026-10-21 ~11:2x (D) · the D421c landing installed, local-0.4.12 0.4.12-dev → `exo_memory/handback/p-local0412-sculptc-E_2026-10-21.md`
+- t180 `b6a616c` (a795359 + version) on local-0.4.12-e, t180-wt-e31. Installed through install-local.ps1: sha256 `8FD1D056…6F43`, stamped compare equal, backup .before-local-0.4.12-sculptc (the 0.4.11 install).
+
+## 2026-10-21 ~21:2x (D) · D425 Part 3, the on-road wash and seam hatch → `exo_memory/handback/p-d425-p3-E_2026-10-21.md`
+- t180 `704e9e1` on d425-e (3c1c6b0 the cues, 2a76719 the wash on the edge lines, C's 63e3dd9 merged). Combined measure tree cb529ce (+ B ae2b108, A c29e53a), quiet, both slots: row 2 5.3/5.8, row 4a 4.0/4.2, row 3 median 7.4 against the base's 7.5 beside it. Own mutants 6/6/0.
+- **Carry:** a wash drawn as a second surface pass costs fill on most of a lap; colour a uniform the frame already sets (the edge lines) instead.
+
+## 2026-10-22 ~03:4xZ (D) · the D425 landing installed, local-0.4.13 0.4.13-dev → `exo_memory/handback/p-local0413-E_2026-10-22.md`
+- t180 `ab89570` (6261a22 + version) on local-0.4.13-e, t180-wt-e34. Installed through install-local.ps1: sha256 `40CB0BB6…0988`, stamped compare equal, backup .before-local-0.4.13 (the 0.4.12 install).
+- **Carry:** a sed that writes a `tr '\n'` into a script writes a newline; edit generated scripts with the Edit tool, and read them back.

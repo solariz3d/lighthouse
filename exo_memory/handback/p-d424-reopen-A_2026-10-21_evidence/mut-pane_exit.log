@@ -1,0 +1,19 @@
+pre-flight (unmutated copy): green 58/0
+  killed    #1 P1 a committee pane is prompted again (the old rule)   (pane_exit::tests::a_committee_pane_is_reopened_once_and_never_in_a_loop)
+  killed    #2 P2 a human pane is reopened   (pane_exit::tests::a_human_pane_is_prompted_never_reopened)
+  killed    #3 P3 the once is not kept   (pane_exit::tests::a_committee_pane_is_reopened_once_and_never_in_a_loop, pane_exit::tests::a_fixed_seat_is_reopened_once_and_never_in_a_loop)
+  killed    #4 P4 an exited pid is never refused   (composer_tristate_tests::the_2237_case_a_queued_go_and_an_exited_pid_never_read_delivered, pane_exit::tests::an_exited_pid_with_nothing_reopening_it_is_refused_naming_the_exit)
+  killed    #5 P5 a running reopen refuses instead of holding   (pane_exit::tests::a_running_reopen_holds_the_message_rather_than_refusing_it)
+  killed    #6 P6 the exit gate ignores the pid the map holds   (pane_exit::tests::a_running_reopen_holds_the_message_rather_than_refusing_it, pane_exit::tests::an_exited_pid_with_nothing_reopening_it_is_refused_naming_the_exit)
+  killed    #7 P7 a timeless stamp passes for the new child   (pane_exit::tests::a_stamp_from_before_the_reopen_is_the_dead_childs, pane_exit_wiring_tests::the_dead_childs_ready_stamp_is_not_the_reopened_childs)
+  killed    #8 P8 the stamp comparison is flipped   (pane_exit::tests::a_stamp_from_before_the_reopen_is_the_dead_childs, pane_exit_wiring_tests::the_dead_childs_ready_stamp_is_not_the_reopened_childs)
+  killed    #9 P9 a pane never reopened loses its stamp   (pane_exit::tests::a_stamp_from_before_the_reopen_is_the_dead_childs, pane_exit_wiring_tests::the_dead_childs_ready_stamp_is_not_the_reopened_childs)
+  killed    #10 P10 the chair is not a sender   (pane_exit::tests::the_sender_is_the_provenance_label_and_nothing_else)
+  killed    #11 P11 any text is a pane letter   (pane_exit::tests::the_sender_is_the_provenance_label_and_nothing_else)
+  killed    #12 P12 the refusal row reads DELIVERED   (pane_exit::tests::the_refusal_names_the_exit_and_never_reads_delivered)
+  killed    #13 P13 the refusal note carries a sender   (pane_exit::tests::the_refusal_names_the_exit_and_never_reads_delivered)
+  killed    #14 P14 the exit code is not named   (pane_exit::tests::the_refusal_names_the_exit_and_never_reads_delivered)
+  killed    #15 P15 the exit time is not named   (pane_exit::tests::the_refusal_names_the_exit_and_never_reads_delivered)
+
+d424-pane_exit mutants: 15 listed · 15 killed · 0 survived · 0 no result · 0 not applied
+live consonance/src-tauri/src/pane_exit.rs unchanged: true

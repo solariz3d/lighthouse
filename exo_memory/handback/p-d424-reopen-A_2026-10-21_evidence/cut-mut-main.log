@@ -1,0 +1,24 @@
+pre-flight (unmutated copy): green 61/0
+  killed    #1 M1 the door never asks the exit gate   (pane_exit_wiring_tests::the_door_and_the_drain_ask_the_exit_gate_first)
+  killed    #2 M2 the drain never asks the exit gate   (pane_exit_wiring_tests::the_door_and_the_drain_ask_the_exit_gate_first)
+  killed    #3 M3 the drain takes for a pane awaiting its reopen   (pane_exit_wiring_tests::the_door_and_the_drain_ask_the_exit_gate_first)
+  killed    #4 M4 take_refused takes nothing   (composer_tristate_tests::a_refusal_takes_every_message_for_that_pane_and_none_for_another, composer_tristate_tests::the_2237_case_a_queued_go_and_an_exited_pid_never_read_delivered)
+  killed    #5 M5 take_refused takes for any gate   (composer_tristate_tests::a_refusal_takes_every_message_for_that_pane_and_none_for_another)
+  killed    #6 M6 restart_wait does nothing   (composer_tristate_tests::a_message_held_across_the_reopen_waits_for_the_new_child)
+  killed    #7 M7 the bound counts from the queueing again   (composer_tristate_tests::a_message_held_across_the_reopen_waits_for_the_new_child)
+  killed    #8 M8 the sender is not told   (pane_exit_wiring_tests::the_door_and_the_drain_ask_the_exit_gate_first)
+  killed    #9 M9 the reopen is not marked before the exit   (pane_exit_wiring_tests::the_reopen_is_marked_before_the_exit_and_cleared_after_the_new_pid)
+  killed    #10 M10 the reopen mark is not cleared on success   (pane_exit_wiring_tests::the_reopen_is_marked_before_the_exit_and_cleared_after_the_new_pid)
+  killed    #11 M11 a committee pane is never given its folder   (pane_exit_wiring_tests::a_committee_pane_resumes_where_its_kept_record_says_and_a_human_pane_never)
+  killed    #12 M12 any kept pane is reopened, whatever its role   (pane_exit_wiring_tests::a_committee_pane_resumes_where_its_kept_record_says_and_a_human_pane_never)
+  killed    #13 M13 the gate ignores the reopen at the stamp   (pane_exit_wiring_tests::the_dead_childs_ready_stamp_is_not_the_reopened_childs)
+  killed    #14 M14 a stamp never has a time   (pane_exit_wiring_tests::the_dead_childs_ready_stamp_is_not_the_reopened_childs)
+  killed    #15 M15 the restart comes after the new pid lands   (pane_exit_wiring_tests::the_reopen_is_marked_before_the_exit_and_cleared_after_the_new_pid)
+  killed    #16 M16 the door refusal is not returned   (pane_exit_wiring_tests::the_door_and_the_drain_ask_the_exit_gate_first)
+  killed    #17 M17 the ↻ keeps the dead child's exit   (pane_exit_wiring_tests::the_cut_tells_only_fixed_senders_and_both_new_sessions_clear_the_exit)
+  killed    #18 M18 the ↻ does not restart the wait   (pane_exit_wiring_tests::the_cut_tells_only_fixed_senders_and_both_new_sessions_clear_the_exit)
+  killed    #19 M19 the automatic reopen keeps the dead child's exit   (pane_exit_wiring_tests::the_cut_tells_only_fixed_senders_and_both_new_sessions_clear_the_exit)
+  killed    #20 M20 a lettered sender is routed to after all   (pane_exit_wiring_tests::the_cut_tells_only_fixed_senders_and_both_new_sessions_clear_the_exit)
+
+d424-main mutants: 20 listed · 20 killed · 0 survived · 0 no result · 0 not applied
+live consonance/src-tauri/src/main.rs unchanged: true
