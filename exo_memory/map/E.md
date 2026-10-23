@@ -2532,3 +2532,4 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-23 ~12:2xZ (D) · D442 interim: release-frame row 4 A/B, no quiet window yet → `exo_memory/handback/p-d442-E_2026-10-23.md`
 - 8 interleaved runs (b6969da / 5908692) all loud (probe440.js, no lock, ~20 s foreign CPU a window): A and B overlap, nothing decided. The waiting run was stopped by the system for low memory; not restarted, awaiting go.
 - **Carry:** a process that holds no heavy-run lock is invisible to the slot check; quiet.js is what catches it, so never skip the quiet verdict.
+- 2026-10-23 ~12:2xZ quiet A/B (§4): 4 quiet runs each; medians 3.85 vs 3.95 ms (no cost), B's p95 tail 2 of 4 high on first measure, unsettled; no trace; worktrees removed.
