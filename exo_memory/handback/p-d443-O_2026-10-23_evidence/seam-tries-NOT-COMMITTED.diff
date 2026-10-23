@@ -1,0 +1,112 @@
+diff --git a/src/core/finish.js b/src/core/finish.js
+index 739ccd5..fd6990b 100644
+--- a/src/core/finish.js
++++ b/src/core/finish.js
+@@ -171,16 +171,24 @@ function roadHold(doc, from) {
+  *  centreline, every station on road), as core_finish_bank's lean() reads it. D440: and how many of its CURVED stations (|κ| > 1/600 m) lean OUT of the curve by
+  *  more than LEAN_OUT_DEG, asin(U·κ̂) (core_finish_bank's lean(), the bar D434 ruled: "no curved station leaning out by more than 5°"), of how many. */
+ const LEAN_OUT_DEG = 5;
++// D443 (P's review of D440 §2.1): THE SEAM. A turn that runs into the start meets the start's bank there (the seam's bank row; bankPlan pins each piece's last two
++// points), and the bank, held to BANK_ROLL and BANK_ACCEL, starts down about 140 m before the seam while the road still bends: on P's pitched lap (kv −0.0006,
++// tail 600, roll 10) two stations 44–46 m before the seam leaned out to −7.1° at a bank of −11° (the share there is ~52°), and rule 1 then took a road 3.0× longer.
++// So a route that leans out ONLY on its last piece is tried again with a straight onto the start, SEAM_TRIES metres, the shortest first: the last curve then
++// ends before the seam and the bank comes back to the start's on the straight. (Not with a roll laid last: that straight is already there, rolling.)
++const SEAM_TRIES = [0, 50, 100, 150, 200];
+ function closerLoad(doc, from) {
+-  const { segments, path } = toPath(doc, { step: 2 }), ids = new Set(doc.pieces.slice(from).map((P) => P.id)), v = V_DESIGN;
+-  let side = 0, out = 0, curved = 0;
++  // NOTE (P's review of D440 §2.3): κ here is the 3-D curvature, so a crest reads as a lean OUT (a pure crest tighter than R 600 m reads −90°). Unreachable as
++  // the only cause today: roadHold refuses crests under R 1,665 m first. Mixed with a bend it counts, which is the seam dip above (D443).
++  const { segments, path } = toPath(doc, { step: 2 }), ids = new Set(doc.pieces.slice(from).map((P) => P.id)), v = V_DESIGN, lastId = doc.pieces[doc.pieces.length - 1].id;
++  let side = 0, out = 0, curved = 0, outLast = 0;
+   for (const q of path.samples) {
+     const g = segments[q.seg]; if (g.kind === 'gap' || !ids.has(g.id)) continue; const k = q.kvec;
+     side = Math.max(side, Math.abs((v * v * k[0] * q.L[0] + (v * v * k[1] + G) * q.L[1] + v * v * k[2] * q.L[2]) / G));
+     const km = Math.hypot(k[0], k[1], k[2]); if (km < 1 / 600) continue;
+-    curved++; if (Math.asin(Math.max(-1, Math.min(1, (q.U[0] * k[0] + q.U[1] * k[1] + q.U[2] * k[2]) / km))) < -LEAN_OUT_DEG * DEG) out++;
++    curved++; if (Math.asin(Math.max(-1, Math.min(1, (q.U[0] * k[0] + q.U[1] * k[1] + q.U[2] * k[2]) / km))) < -LEAN_OUT_DEG * DEG) { out++; if (g.id === lastId) outLast++; }
+   }
+-  return { side, out, curved };
++  return { side, out, curved, outLast };
+ }
+ 
+ // D434 (the keeper, 2026-10-22, TEST TRACK 10: "there needs to be a nuance for banking in large curves like that to support the car better"; the librarian's ruling,
+@@ -382,53 +390,64 @@ function finishToStart(doc, { radii = RADII_M, rollGuess = ROLL_PEAK_OVER_MEAN }
+     // already held (exo_memory/handback/p-d440-O_2026-10-23.md §2: R 900 detours of 10–11 km on his two tracks; core_finish row 6's one-turn finish; row 12's
+     // compact roll-last road).
+     let best = null, left = 0, worstRoad = null, out = null;
+-    for (const r0 of all) {
++    const endBank = D.valuesAt(base.pieces[base.pieces.length - 1], base.pieces[base.pieces.length - 1].length).phi;
++    route: for (const r00 of all) {
++      // D443: the body below runs once per SEAM_TRIES length (only 0 with a roll laid last): the same word aimed that far behind the start, with a straight there
++      for (const seamM of laidRoll ? [0] : SEAM_TRIES) {
++      const tail = seamM ? { bank: endBank, lengthM: seamM } : laidRoll, p0x = seamM ? [doc.start.pos[0] - seamM * f0[0], doc.start.pos[2] - seamM * f0[1]] : p0;
++      const r0 = seamM ? (r00.word.length === 2 ? oneTurnRoutes(e1.p, e1.th, p0x, th0) : routes(e1.p, e1.th, p0x, th0, r00.radiusM)).find((x) => x.word === r00.word) : r00;
++      if (!r0) continue;
+       let laid, r = r0;
+       try {
+-        laid = lay(base, r, laidRoll);
++        laid = lay(base, r, tail);
+         // RE-AIM: where the laid road really ends against the start, in plan, moves the aim by that much and the same word is laid again (the eased turns fall short of the circles)
+-        let aim = p0;
++        let aim = p0x;
+         for (let k = 0; k < REFINE_ROUNDS; k++) {
+           const ep = endPose(laid, 5), miss = [ep.p[0] - doc.start.pos[0], ep.p[1] - doc.start.pos[2]];
+           if (Math.hypot(miss[0], miss[1]) < REFINE_M) break;
+           aim = [aim[0] - miss[0], aim[1] - miss[1]];
+           const again = (r0.word.length === 2 ? oneTurnRoutes(e1.p, e1.th, aim, th0) : routes(e1.p, e1.th, aim, th0, r0.radiusM)).find((x) => x.word === r0.word);
+           if (!again) break;
+-          r = again; laid = lay(base, r, laidRoll);
++          r = again; laid = lay(base, r, tail);
+         }
+-      } catch (err) { if (err.name !== 'CoreError') throw err; best = best || err.message; continue; }
++      } catch (err) { if (err.name !== 'CoreError') throw err; best = best || err.message; continue route; }
+       const window = []; for (let i = doc.pieces.length; i < laid.pieces.length; i++) window.push(i);
+-      if (!window.length) continue;
++      if (!window.length) continue route;
+       // D439 (P's review of D438 §2 (b)): with the roll laid FIRST, Close, the bank and the cup work on the pieces after its roll straight. Closed with them, the
+       // straight was bent into a curve (to R 326 m) while it still rolled, and a rolling piece is never banked (bankPlan's upright rule), so its roll leaned the
+       // wrong way through the bend: 41 stations out, to −26.3°, 5.07 g on P's turn 210 / tail 300 / roll 30. Left as laid it stays straight; the pieces after
+       // it close the lap. (window, all the new road, is still what the plan reports and the shell outlines, and what the cup comes home over (cupHome): the cup
+       // does not move the centreline, and over the whole new road it is slowest, D439 (d).)
+       const shut = first ? window.slice(1) : window;
+-      if (!shut.length) continue;
++      if (!shut.length) continue route;
+       let res;
+       // D357: what Close refuses is taken AS LAID when it already meets the start (metAsLaid: a lone straight it cannot bend). (A windowed Close never returns
+       // unconverged: it refuses by name, close.js D242)
+-      try { laid = cupHome(laid, window); res = closeBanked(laid, shut, bank); } catch (err) { if (err.name !== 'CoreError') throw err; res = metAsLaid(laid); if (!res) { best = best || err.message; continue; } }
+-      if (!res.converged) { best = best || res.report; continue; }
++      try { laid = cupHome(laid, window); res = closeBanked(laid, shut, bank); } catch (err) { if (err.name !== 'CoreError') throw err; res = metAsLaid(laid); if (!res) { best = best || err.message; continue route; } }
++      if (!res.converged) { best = best || res.report; continue route; }
+       const peak = roll ? rollPeak(res.doc, doc.pieces.length) : 0;
+       if (peak > ROLL_AMBER_DEG_M) return { tooFast: peak };   // the roll reads too fast as the checker reads it: lengthen it and search again
+       const hold = roadHold(res.doc, doc.pieces.length);
+       if (hold.worst < 0) {   // the lap proof would fail here: the car leaves the road
+         if (!worstRoad || hold.worst > worstRoad.worst) worstRoad = { ...hold, word: r.word, radiusM: r.radiusM };
+         best = best || `the car would leave the road at ${(hold.at / 1000).toFixed(2)} km (a load of ${hold.worst.toFixed(0)} g on it)`;
+-        if (++left >= GATE_TRIES) break;
+-        continue;
++        if (++left >= GATE_TRIES) break route;
++        continue route;
+       }
+       const load = closerLoad(res.doc, doc.pieces.length);
+-      if (load.out > 0) { if (!out || load.out < out.out) out = { ...load, word: r.word, radiusM: r.radiusM }; continue; }
++      if (load.out > 0) {
++        if (!out || load.out < out.out) out = { ...load, word: r.word, radiusM: r.radiusM };
++        if (!laidRoll && (seamM || load.outLast === load.out)) continue;   // D443: leaning out only at the seam: the next straight onto the start
++        continue route;
++      }
+       const added = res.doc.pieces.slice(doc.pieces.length).reduce((a, P) => a + P.length, 0), cupRate = cupPeak(res.doc, doc.pieces.length);
+       // D438: the closer too short to bring the cup home at his own road's fastest says so, and at what rate (it is already the slowest the closer allows: cupHome)
+       const cupNote = cupRate > CUP_RATE_DEG_M ? `; the cup comes home at ${cupRate.toFixed(3)}°/m, faster than ${CUP_RATE_DEG_M}°/m: the new road is too short to bring it home slower` : '';
+       const rolled = roll ? (first ? `, after ${roll.lengthM} m rolling ${Math.round(rollRad / DEG)}° upright first` : `, then ${roll.lengthM} m rolling ${Math.round(rollRad / DEG)}° upright onto the start`) : '';
+-      const report = `${r.word} at R ${Math.round(r.radiusM)} m: turn ${deg(r.a1)}°, ${Math.round(r.straightM)} m straight, turn ${deg(r.a2)}°${rolled}; ${window.length} new piece${window.length === 1 ? '' : 's'}, ${Math.round(added)} m; ${res.report}${cupNote}`;
+-      const cand = ({ side: load.side, result: { doc: res.doc, window, plan: Object.freeze({ word: r.word, radiusM: r.radiusM, turns: [deg(r.a1), deg(r.a2)], straightM: Math.round(r.straightM), rollM: roll ? roll.lengthM : 0, rollFirst: !!first, rollPeakDegM: Math.round(peak * 1000) / 1000, minHoldG: Math.round(hold.worst * 10) / 10, lengthM: Math.round(added), cupRateDegM: Math.round(cupRate * 10000) / 10000, report }) } });
++      const report = `${r.word} at R ${Math.round(r.radiusM)} m: turn ${deg(r.a1)}°, ${Math.round(r.straightM)} m straight, turn ${deg(r.a2)}°${rolled}${seamM ? `, then ${seamM} m straight onto the start` : ''}; ${window.length} new piece${window.length === 1 ? '' : 's'}, ${Math.round(added)} m; ${res.report}${cupNote}`;
++      const cand = ({ side: load.side, result: { doc: res.doc, window, plan: Object.freeze({ word: r.word, radiusM: r.radiusM, turns: [deg(r.a1), deg(r.a2)], straightM: Math.round(r.straightM), rollM: roll ? roll.lengthM : 0, rollFirst: !!first, seamM, rollPeakDegM: Math.round(peak * 1000) / 1000, minHoldG: Math.round(hold.worst * 10) / 10, lengthM: Math.round(added), cupRateDegM: Math.round(cupRate * 10000) / 10000, report }) } });
+       return { passed: [cand] };
++      }
+     }
+     return { passed: [], fail: { tried: all.length, best, worstRoad, out } };
+   };

@@ -137,3 +137,10 @@ Also: an ease pinned at both ends needs its parameter to start AND end where the
 every version moved his TEST 10 route, lost core_finish row 6's one-turn finish, row 12's compact road, or D439 (c)'s banked closers (whole load: unbanked 8.12/9.16 g back).
 Could be wrong that no bound exists between 1.0 and 1.25 × that keeps all: only 0, 1.25, 1.5 and ∞ were measured.
 → `exo_memory/handback/p-d440-O_2026-10-23.md`
+
+### The seam dips are a crest read as lean: at every station rule 1 counts out, the road leans INTO its horizontal turn (+10.6° to +24.7°)
+2026-10-23, D443 — no commit: on P's five pitched laps (cd3dc42) the 3-D κ̂ tilts down where a crest of R 735–1,850 m meets a bend; four of five are at turn joints, not the
+seam. The ruled seam fix mended 1 of 5; reading the lean against the horizontal turn mends 5 of 5 back to the short roads with his tracks and the tight family identical.
+Could be wrong that a crest under a bend is not "leaning out": that is the ruling's, not mine.
+General form: before fixing where a measure fires, check what the measure reads there.
+→ `exo_memory/handback/p-d443-O_2026-10-23.md`
