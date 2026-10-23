@@ -2524,3 +2524,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-22 ~21:5xZ (D) · D435: amber under 1 m of room overhead; TEST 10 stays clear → `exo_memory/handback/p-d435-E_2026-10-22.md`
 - t180 `3c870e3` on d432-e: 'low-overhead' amber from the clip test's normal gap (rows 10-12, red first). TEST 10's 0.80 m was a vertical ray at one steep edge lip; along the road's own normal the other road is beside, not over, so no amber; TEST TRACK 10 and ELYSIUM clear.
 - **Carry:** a clearance measured along world vertical is not the room over a road; say which direction a gap was measured in when reporting it.
+
+## 2026-10-23 ~04:4xZ (D) · D437a: the export's soup and BVH out of the heap, built once → `exo_memory/handback/p-d437a-E_2026-10-22.md`
+- t180 `f2cd310` on d437a-e: typed soup, typed BVH (same tree), shared with the lane check. At the page's 2.8 GB the 27.6 km ELYSIUM export no longer runs out of memory (refused by the validator; force mode writes it); headless Chrome: refused in 35 s, no crash. Sharing the object BVH as planned made it fail earlier.
+- **Carry:** keeping a structure alive to avoid rebuilding it only saves memory if the structure lives outside the heap; measure at the real cap before trusting the plan.
