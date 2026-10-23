@@ -1,0 +1,17 @@
+[32m✔ row 1: TEST TRACK 10's closer leans into its curves, carries less side load, closes, and rolls under the amber [90m(22924.5882ms)[39m[39m
+[32m✔ row 2: TEST 10's closer leans into its curves, carries less side load, closes, and rolls under the amber [90m(2982.3946ms)[39m[39m
+[32m✔ row 3: a closer with only gentle curves is banked by its share and no more [90m(3102.1558ms)[39m[39m
+[32m✔ row 4: a straight gets none: a finish that is only a straight keeps the laid bank [90m(475.4209ms)[39m[39m
+[32m✔ row 1: TEST TRACK 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels [90m(21915.0792ms)[39m[39m
+[32m✔ row 2: TEST 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels [90m(2666.2741ms)[39m[39m
+[32m✔ row 3: TEST TRACK 10: the closer brings the cup home over its length, no faster than his own road changes it [90m(18534.6729ms)[39m[39m
+[32m✔ row 4: TEST 10: the closer brings the cup home over its length, no faster than his own road changes it [90m(2034.4191ms)[39m[39m
+[32m✔ row 5: a track built here: its closer rolls upright, steps no more than the bar at every joint and the seam, and brings the cup home slowly [90m(6969.3142ms)[39m[39m
+[34mℹ tests 9[39m
+[34mℹ suites 0[39m
+[34mℹ pass 9[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 52280.5575[39m
