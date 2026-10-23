@@ -2528,3 +2528,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-23 ~04:4xZ (D) · D437a: the export's soup and BVH out of the heap, built once → `exo_memory/handback/p-d437a-E_2026-10-22.md`
 - t180 `f2cd310` on d437a-e: typed soup, typed BVH (same tree), shared with the lane check. At the page's 2.8 GB the 27.6 km ELYSIUM export no longer runs out of memory (refused by the validator; force mode writes it); headless Chrome: refused in 35 s, no crash. Sharing the object BVH as planned made it fail earlier.
 - **Carry:** keeping a structure alive to avoid rebuilding it only saves memory if the structure lives outside the heap; measure at the real cap before trusting the plan.
+
+## 2026-10-23 ~12:2xZ (D) · D442 interim: release-frame row 4 A/B, no quiet window yet → `exo_memory/handback/p-d442-E_2026-10-23.md`
+- 8 interleaved runs (b6969da / 5908692) all loud (probe440.js, no lock, ~20 s foreign CPU a window): A and B overlap, nothing decided. The waiting run was stopped by the system for low memory; not restarted, awaiting go.
+- **Carry:** a process that holds no heavy-run lock is invisible to the slot check; quiet.js is what catches it, so never skip the quiet verdict.
