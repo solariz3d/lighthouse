@@ -1697,3 +1697,6 @@ composer, identical to shipped, unmeasured for want of a real capture).
 
 ## 2026-10-22 — D438 part 1: the pit lane flips up at its ends because it is tilted to the road edge at the joins (my own D182 rule)
 - t180 src/geom/pitlane.js:95 (phi = psiEdge at gap 0) lifts the lane 4.23 m at the outer edge on TEST TRACK 10 (a 30 deg edge), the same in both installed kn5s; red test d438-c 7e03f1f; phi = 0 probed green, with 3 D182-rule rows of geom_pitlane_tilt to amend; held for the librarian because E owns the file. Evidence: exo_memory/handback/p-d438-C_2026-10-22.md
+
+## 2026-10-22 — D438 part 1 fixed: the pit lane is level from leave to rejoin (phi = 0)
+- t180 d438-c 9233a93 (over red 7e03f1f): his TEST TRACK 10 lane goes from a 4.23 m lift at both ends to 2.567..2.567 m at 0 deg in the builder model; pit tests 69/69; geom_mutation 35/35/0; own pitlane mutants applied 5 / caught 5 / NOT APPLIED 0; merges clean with E working copy. Evidence: exo_memory/handback/p-d438-C_2026-10-22.md section 8
