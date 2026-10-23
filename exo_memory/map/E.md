@@ -2541,3 +2541,5 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - **Carry:** a check found from either side of a slit lets a one-sided mutant survive; make the row ask for both sides.
 - 2026-10-23 ~17:5xZ row 15, t180 `5a2fbab` on d446-e (§12 of the same hand-back): an other-pass edge at ~1.09 m is not a near-touch; M6 survived without it, caught with it; own mutants 7/6/0; raygap files and 7 harnesses green, NOT APPLIED 0.
 - **Carry:** a probe that meets another pass puts it within ~1.17 m (1 m out, 0.6 m down), so a bar's row must sit in the range the check can actually reach.
+- 2026-10-23 ~18:5xZ P's review fixes, t180 `a05e487` on d446-e (§13 of the same hand-back): the seam distance is min(d, lapM - d) (row 16, P's closed-lap seam slit, red at 5a2fbab); Install's note keeps near-touch lines (page run on his copy shows them). Own mutants 9/8/0; touched tests and 7 harnesses green, NOT APPLIED 0.
+- **Carry:** synthetic stations never put s 0 and s = lapM at one place; test a closed lap's seam on a built lap.
