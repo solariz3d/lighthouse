@@ -105,3 +105,9 @@ ELYSIUM's bend moves 4.40 m, was 3.99 (a ruling owed). General form: a bar on th
 TEST 10 10.96 → 0.48 g, normal ≤ 11 g, roll under amber; 0.75 × balance = 53.8°, the keeper's own 53.2°. Could be wrong about the size the keeper wants (his eye).
 General form: a capture that keeps the FIRST call of a retried step measures a thrown-away attempt; key it to the result returned.
 → `exo_memory/handback/p-d434-O_2026-10-22.md`
+
+### Finish now banks the curves it lays (0.75 of balance at 460 km/h, from the closed route, pinned at every joint, rate-limited under the roll amber): TEST TRACK 10's side load 10.68 → 4.66 g, 0 stations leaning out
+2026-10-22, D434 Part 2 — d434-o 15e4e81: rows red at b6969da, 7/7 mutants, harnesses NOT APPLIED 0. Could be wrong for laps where a crest on the user's own road
+fails the checker: core_finish row 13 now closes into such a lap (ruling owed). No kn5: both his tracks export RED on their own road. General form: a limiter that pins
+values must skip the pins in every pass, or a later pass silently undoes them.
+→ `exo_memory/handback/p-d434-build-O_2026-10-22.md`

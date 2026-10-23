@@ -1,0 +1,12 @@
+cap 0.9 {"lap":"testtrack10","shareUsed":"none (flat)","plan":"RSR at R 300 m: turn -284.1°, 737 m straight, tu","meanLean":1.2,"out":501,"maxLatG":7.89,"worstRoll":0.925,"amber":0.9338}
+cap 0.9 {"lap":"test10","shareUsed":0.75,"plan":"LSR at R 300 m: turn 175.5°, 746 m straight, tur","meanLean":61,"out":0,"maxLatG":4.23,"worstRoll":0.602,"amber":0.9338}
+cap 0.9 {"lap":"gentle","shareUsed":0.75,"plan":"SC at R 1983 m: turn 0°, 1000 m straight, turn 1","meanLean":null,"out":0,"maxLatG":0,"worstRoll":0.026,"amber":0.9338}
+cap 0.7 {"lap":"testtrack10","shareUsed":0.593,"plan":"RSR at R 300 m: turn -284.1°, 737 m straight, tu","meanLean":46.4,"out":10,"maxLatG":5.07,"worstRoll":0.925,"amber":0.9338}
+cap 0.7 {"lap":"test10","shareUsed":0.75,"plan":"LSR at R 300 m: turn 175.5°, 746 m straight, tur","meanLean":61,"out":0,"maxLatG":4.23,"worstRoll":0.602,"amber":0.9338}
+cap 0.7 {"lap":"gentle","shareUsed":0.75,"plan":"SC at R 1983 m: turn 0°, 1000 m straight, turn 1","meanLean":null,"out":0,"maxLatG":0,"worstRoll":0.026,"amber":0.9338}
+cap 0.6 {"lap":"testtrack10","shareUsed":0.534,"plan":"RSL at R 300 m: turn -243.1°, 760 m straight, tu","meanLean":41.6,"out":0,"maxLatG":7.45,"worstRoll":0.921,"amber":0.9338}
+cap 0.6 {"lap":"test10","shareUsed":0.75,"plan":"LSR at R 300 m: turn 175.5°, 746 m straight, tur","meanLean":61,"out":0,"maxLatG":4.23,"worstRoll":0.56,"amber":0.9338}
+cap 0.6 {"lap":"gentle","shareUsed":0.75,"plan":"SC at R 1983 m: turn 0°, 1000 m straight, turn 1","meanLean":null,"out":0,"maxLatG":0,"worstRoll":0.026,"amber":0.9338}
+cap 0.5 {"lap":"testtrack10","shareUsed":0.561,"plan":"RSL at R 300 m: turn -243.1°, 760 m straight, tu","meanLean":43.7,"out":0,"maxLatG":7.14,"worstRoll":0.917,"amber":0.9338}
+cap 0.5 {"lap":"test10","shareUsed":0.75,"plan":"LSR at R 300 m: turn 175.5°, 746 m straight, tur","meanLean":61,"out":0,"maxLatG":4.23,"worstRoll":0.529,"amber":0.9338}
+cap 0.5 {"lap":"gentle","shareUsed":0.75,"plan":"SC at R 1983 m: turn 0°, 1000 m straight, turn 1","meanLean":null,"out":0,"maxLatG":0,"worstRoll":0.026,"amber":0.9338}

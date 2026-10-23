@@ -1,0 +1,22 @@
+## o5-base testtrack10
+plan: RSL at R 300 m: turn -243.1°, 760 m straight, turn 333.1°, after 87 m rolling 54° upright first; 4 new pieces, 3864 m; closed in 3 step(s): 0.261 mm, tangent 6.1e-8 rad (9477 ms)
+{"piece":"p41","lengthM":87,"turnDeg":-2.2,"maxBankChangeDeg":54,"curved":0,"meanLean":null,"out":0,"maxLatG":0}
+{"piece":"p42","lengthM":1273,"turnDeg":-228.8,"maxBankChangeDeg":0,"curved":428,"meanLean":-4.7,"out":151,"maxLatG":10.68}
+{"piece":"p43","lengthM":760,"turnDeg":-14.3,"maxBankChangeDeg":0,"curved":0,"meanLean":null,"out":0,"maxLatG":0}
+{"piece":"p44","lengthM":1744,"turnDeg":335.3,"maxBankChangeDeg":0,"curved":793,"meanLean":1.1,"out":302,"maxLatG":8.16}
+## o5-base test10
+plan: LSR at R 300 m: turn 175.5°, 746 m straight, turn -175.5°; 3 new pieces, 2584 m; closed in 3 step(s): 0.104 mm, tangent 3.0e-8 rad (1231 ms)
+{"piece":"p21","lengthM":919,"turnDeg":174.8,"maxBankChangeDeg":0,"curved":312,"meanLean":2.5,"out":0,"maxLatG":10.96}
+{"piece":"p22","lengthM":746,"turnDeg":0,"maxBankChangeDeg":0,"curved":0,"meanLean":null,"out":0,"maxLatG":0}
+{"piece":"p23","lengthM":919,"turnDeg":-174.8,"maxBankChangeDeg":0,"curved":312,"meanLean":-2.5,"out":26,"maxLatG":10.96}
+## o5 testtrack10
+plan: RSL at R 300 m: turn -243.1°, 760 m straight, turn 333.1°, after 87 m rolling 54° upright first; 4 new pieces, 3864 m; closed in 1 step(s): 0.261 mm, tangent 6.1e-8 rad (14022 ms)
+{"piece":"p41","lengthM":87,"turnDeg":-2.2,"maxBankChangeDeg":54,"curved":0,"meanLean":null,"out":0,"maxLatG":0}
+{"piece":"p42","lengthM":1273,"turnDeg":-228.8,"maxBankChangeDeg":63.5,"curved":428,"meanLean":55.3,"out":0,"maxLatG":4.66}
+{"piece":"p43","lengthM":760,"turnDeg":-14.3,"maxBankChangeDeg":48.3,"curved":0,"meanLean":null,"out":0,"maxLatG":0}
+{"piece":"p44","lengthM":1744,"turnDeg":335.3,"maxBankChangeDeg":62.3,"curved":793,"meanLean":60.5,"out":0,"maxLatG":3.14}
+## o5 test10
+plan: LSR at R 300 m: turn 175.5°, 746 m straight, turn -175.5°; 3 new pieces, 2584 m; closed in 1 step(s): 0.104 mm, tangent 3.0e-8 rad (1674 ms)
+{"piece":"p21","lengthM":919,"turnDeg":174.8,"maxBankChangeDeg":63.6,"curved":312,"meanLean":63.5,"out":0,"maxLatG":3.73}
+{"piece":"p22","lengthM":746,"turnDeg":0,"maxBankChangeDeg":6.9,"curved":0,"meanLean":null,"out":0,"maxLatG":0}
+{"piece":"p23","lengthM":919,"turnDeg":-174.8,"maxBankChangeDeg":63.6,"curved":312,"meanLean":58.5,"out":0,"maxLatG":4.23}
