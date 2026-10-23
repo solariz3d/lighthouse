@@ -1,0 +1,19 @@
+sharp: true finish | closed: laid 904 m of new road from the end to the start (3 pieces); nothing already built moved; the bank eases to none where the turn changes direction faster than the road can roll (p6, p7)
+flips at 2144, 2631, 4010, 4685
+  p1 100 m kh 0.00..0.00 ×1/300 | curved 0 mean - least - | far 0 mean - | phi 0.0..0.0
+  p2 471 m kh 0.00..2.00 ×1/300 | curved 159 mean 58.9 least 32.5 | far 159 mean 58.9 | phi -65.9..0.0
+  p3 700 m kh 0.00..0.00 ×1/300 | curved 0 mean - least - | far 0 mean - | phi 0.0..0.0
+  p4 471 m kh 0.00..2.00 ×1/300 | curved 159 mean 58.9 least 32.5 | far 159 mean 58.9 | phi -65.9..0.0
+  p5 100 m kh 0.00..0.00 ×1/300 | curved 0 mean - least - | far 0 mean - | phi 0.0..0.0
+  p6 300 m kh 0.00..1.00 ×1/300 | curved 74 mean 33.6 least 0.1 | far 4 mean 57.3 | phi -58.5..0.0
+  p7 157 m kh -2.00..1.00 ×1/300 | curved 79 mean 33.0 least 0.0 | far 6 mean 6.7 | phi 0.0..61.7
+  p8 4 m kh -2.00..0.00 ×1/300 | curved 2 mean 0.4 least 0.1 | far 2 mean 0.4 | phi 0.0..0.7
+  p9 150 m kh 0.00..0.00 ×1/300 | curved 0 mean - least - | far 0 mean - | phi 0.0..0.0
+  p10 100 m kh 0.00..0.00 ×1/300 | curved 0 mean - least - | far 0 mean - | phi 0.0..0.0
+  p11 471 m kh 0.00..2.00 ×1/300 | curved 159 mean 58.9 least 32.5 | far 87 mean 59.3 | phi -65.9..0.0
+  p12 100 m kh 0.00..0.00 ×1/300 | curved 0 mean - least - | far 0 mean - | phi 0.0..0.0
+  p13 471 m kh 0.00..2.00 ×1/300 | curved 159 mean 58.9 least 32.5 | far 159 mean 58.9 | phi -65.9..0.0
+  p14 400 m kh 0.00..0.00 ×1/300 | curved 0 mean - least - | far 0 mean - | phi 0.0..0.0
+  p15 91 m (new) kh -1.93..0.00 ×1/300 | curved 32 mean 3.3 least 1.0 | far 0 mean - | phi 0.0..5.1
+  p16 558 m (new) kh -0.01..0.01 ×1/300 | curved 0 mean - least - | far 0 mean - | phi -7.2..3.6
+  p17 255 m (new) kh 0.00..1.97 ×1/300 | curved 86 mean 32.4 least 10.0 | far 15 mean 18.8 | phi -46.5..0.0
