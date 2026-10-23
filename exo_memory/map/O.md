@@ -144,3 +144,8 @@ seam. The ruled seam fix mended 1 of 5; reading the lean against the horizontal 
 Could be wrong that a crest under a bend is not "leaning out": that is the ruling's, not mine.
 General form: before fixing where a measure fires, check what the measure reads there.
 → `exo_memory/handback/p-d443-O_2026-10-23.md`
+
+### FINISH_LEANS_OUT is reachable and now has a row: P's steep lap (kv −0.003, 431 m below the start) refuses with "219 of its 971"; N5 and N6 caught
+2026-10-23, D444 — d444-o 9fa000a: N5/N6 survived at da76067 without the row, caught with it. My D440 "not reached in 114 laps" was true of my families only.
+Could be wrong that the lap stays a refusal: a change to roadHold or the roll laid first could let a road close there.
+→ `exo_memory/handback/p-d444-O_2026-10-23.md`
