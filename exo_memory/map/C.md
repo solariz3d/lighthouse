@@ -1694,3 +1694,6 @@ composer, identical to shipped, unmeasured for want of a real capture).
 
 ## 2026-10-22 — D430: an emptied Extend field was sent as "continue", the same as an untouched one
 - asTyped (t180 app/core/panel.js:208 at 6261a22) gave the same blank for both, so a cleared turn, climb or bank kept the head value; fixed in d430-c b575fdb (blank where a value was shown = 0, and the box shows 0 on change), red then green in core-pieces-ui rows 22-22c; the old D193 line in core-readout-display was amended by name. Evidence and figures: exo_memory/handback/p-d430-blank-zero-C_2026-10-22.md
+
+## 2026-10-22 — D438 part 1: the pit lane flips up at its ends because it is tilted to the road edge at the joins (my own D182 rule)
+- t180 src/geom/pitlane.js:95 (phi = psiEdge at gap 0) lifts the lane 4.23 m at the outer edge on TEST TRACK 10 (a 30 deg edge), the same in both installed kn5s; red test d438-c 7e03f1f; phi = 0 probed green, with 3 D182-rule rows of geom_pitlane_tilt to amend; held for the librarian because E owns the file. Evidence: exo_memory/handback/p-d438-C_2026-10-22.md
