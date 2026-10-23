@@ -2533,3 +2533,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - 8 interleaved runs (b6969da / 5908692) all loud (probe440.js, no lock, ~20 s foreign CPU a window): A and B overlap, nothing decided. The waiting run was stopped by the system for low memory; not restarted, awaiting go.
 - **Carry:** a process that holds no heavy-run lock is invisible to the slot check; quiet.js is what catches it, so never skip the quiet verdict.
 - 2026-10-23 ~12:2xZ quiet A/B (§4): 4 quiet runs each; medians 3.85 vs 3.95 ms (no cost), B's p95 tail 2 of 4 high on first measure, unsettled; no trace; worktrees removed.
+
+## 2026-10-23 ~16:2xZ (D) · D446, TEST 10 banked refused on export in 0.4.16 → `exo_memory/handback/p-d446-E_2026-10-23.md`
+- Two downforce-ray-gap reds at s 2574 and 2928, both in p5: its edges curl within 0.64 m, and raygap's 1.0 m probe past an edge hits the other pass (354–356 m along the lap) and counts it as road past a slit; a false red as worded. b6969da refuses the same (plus 2 stacked); re-finishing does not help; p5 narrowed to 23 m on a copy exports clean. Not built: the fix needs a rule (how far is "another pass", should the near-touch warn).
+- **Carry:** a parsed t180 document is frozen; an edit to it is silently dropped, so edit a deep copy and cmp the file before trusting a "changed" run.
