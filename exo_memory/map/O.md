@@ -111,3 +111,9 @@ General form: a capture that keeps the FIRST call of a retried step measures a t
 fails the checker: core_finish row 13 now closes into such a lap (ruling owed). No kn5: both his tracks export RED on their own road. General form: a limiter that pins
 values must skip the pins in every pass, or a later pass silently undoes them.
 → `exo_memory/handback/p-d434-build-O_2026-10-22.md`
+
+### My D434 bank steps under the outer wheels at the closer's first joint (95.9 °/100 m, 11.9 g at 300 km/h) far past his own worst joint (24.3): a roll rate capped is not a roll rate eased
+2026-10-22, D438 Part 2 — kstep436.js on three copies of TEST TRACK 10: centre line smoothest on mine, p41|p42 worst on mine; the cup pulled from 37.3° to 10° in the last
+30-40 m before the seam on all three (his own road: 0.021 °/m). Fix planned, not built. Could be wrong about the cause split at p41|p42 (bank onset vs the laid roll's own
+roll): inferred from where the step sits, not separated by a run. General form: bound the derivative the rider feels, not the one the checker reads.
+→ `exo_memory/handback/p-d438-O_2026-10-22.md`
