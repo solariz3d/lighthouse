@@ -149,3 +149,8 @@ General form: before fixing where a measure fires, check what the measure reads 
 2026-10-23, D444 — d444-o 9fa000a: N5/N6 survived at da76067 without the row, caught with it. My D440 "not reached in 114 laps" was true of my families only.
 Could be wrong that the lap stays a refusal: a change to roadHold or the roll laid first could let a road close there.
 → `exo_memory/handback/p-d444-O_2026-10-23.md`
+
+### Closing a loop banks every upright LEVEL curve; on his copies only TEST 10's flat closer changes, because every other curve is his own bank
+2026-10-23, D447 — d447-o 2be3b8e: bankLap in the Close press; the first build banked TEST TRACK 10's loop exit by 54° (bank 0 stored at pitch −90°) until a level rule.
+General form: "upright" read from a stored channel is frame-dependent; check the road's own up vector before acting on it. Could be wrong that 30° is the right level bound.
+→ `exo_memory/handback/p-d447-O_2026-10-23.md`

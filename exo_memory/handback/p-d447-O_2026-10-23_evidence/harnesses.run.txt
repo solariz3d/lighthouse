@@ -1,0 +1,14 @@
+heavy-run: waiting on a2122153 pid 24608 (t180 D446 E review fixes: touched tests + 7 harnesses + own mutants, since 2026-10-23T18:14:59.623Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 24608 (t180 D446 E review fixes: touched tests + 7 harnesses + own mutants, since 2026-10-23T18:14:59.623Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 24608 (t180 D446 E review fixes: touched tests + 7 harnesses + own mutants, since 2026-10-23T18:14:59.623Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 24608 (t180 D446 E review fixes: touched tests + 7 harnesses + own mutants, since 2026-10-23T18:14:59.623Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 24608 (t180 D446 E review fixes: touched tests + 7 harnesses + own mutants, since 2026-10-23T18:14:59.623Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 24608 (t180 D446 E review fixes: touched tests + 7 harnesses + own mutants, since 2026-10-23T18:14:59.623Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 24608 (t180 D446 E review fixes: touched tests + 7 harnesses + own mutants, since 2026-10-23T18:14:59.623Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 24608 (t180 D446 E review fixes: touched tests + 7 harnesses + own mutants, since 2026-10-23T18:14:59.623Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 24608 (t180 D446 E review fixes: touched tests + 7 harnesses + own mutants, since 2026-10-23T18:14:59.623Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 24608 (t180 D446 E review fixes: touched tests + 7 harnesses + own mutants, since 2026-10-23T18:14:59.623Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 24608 (t180 D446 E review fixes: touched tests + 7 harnesses + own mutants, since 2026-10-23T18:14:59.623Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 24608 (t180 D446 E review fixes: touched tests + 7 harnesses + own mutants, since 2026-10-23T18:14:59.623Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 24608 (t180 D446 E review fixes: touched tests + 7 harnesses + own mutants, since 2026-10-23T18:14:59.623Z) — it holds this tree
+{"files":["app/test/core-close-mutation.test.js","app/test/core-mutation.test.js"],"exit":0,"wall_s":364,"started":"2026-10-23T18:42:20.128Z"}
