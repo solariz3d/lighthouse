@@ -1,0 +1,41 @@
+[32m✔ row 1: every route the solver gives, laid out arc, straight, arc, ends on the start pose [90m(0.9846ms)[39m[39m
+[32m✔ row 2: an end behind the start and pointing at it is one straight of the gap, with no turn [90m(0.106ms)[39m[39m
+[32m✔ row 3: a track is finished with new pieces only, closed, and the new road ends on the start [90m(459.8564ms)[39m[39m
+[32m✔ row 4: refusals by name: a closed loop, an empty track [90m(332.0245ms)[39m[39m
+[32m✔ row 5: an end upside down rolls back upright on a straight of its own (last onto the start, or first when that keeps the car on the road), never in a turn, and the lap closes with the bank of the start [90m(1590.7001ms)[39m[39m
+[32m✔ row 8: the roll Finish lays, read as the checker reads it, is under the amber bar everywhere on the new road (54° and 180°) [90m(3698.2554ms)[39m[39m
+[32m✔ row 9: a roll whose first guess is too short (factor 1, and the old 1.1) is measured and lengthened until it is under the amber bar [90m(3589.7395ms)[39m[39m
+[32m✔ row 10: a banked end: the road Finish lays keeps the car on it (the lap proof of the checker passes), at 54° and at 126° [90m(4933.3303ms)[39m[39m
+[32m✔ row 11: F.roadHold is the own test of the lap proof: the same place on the road the old Finish laid at a banked end, and nothing on the new road [90m(1612.1685ms)[39m[39m
+[32m✔ row 13: an end Finish cannot close onto a road the car stays on is refused by name, with where the car leaves the road and what to change [90m(2650.5077ms)[39m[39m
+[32m✔ row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror) [90m(1532.9452ms)[39m[39m
+[32m✔ row 6: an end a quarter turn short of the lap is finished with one turn and one straight, not a detour [90m(286.6627ms)[39m[39m
+[32m✔ row 7: the one-turn routes, laid out, end on the start pose; none tighter than the floor [90m(0.7368ms)[39m[39m
+[32m✔ row 14: an end already at the start is closed by bending its last pieces, with no new road and no loop [90m(413.302ms)[39m[39m
+[32m✔ row 15: the reported near-closed save closes by bending its last pieces: no new road, nothing else moves, the lap proves [90m(52287.9672ms)[39m[39m
+[32m✔ row 16: an end at the start whose every bend leaves the road is refused by name (FINISH_NEAR), never given new road [90m(810.0483ms)[39m[39m
+[32m✔ row 17: an end straight behind the start, on its line and pointing the same way, is finished with that straight (8, 20 and 40 m), not a loop [90m(4952.8018ms)[39m[39m
+[32m✔ row 1: TEST TRACK 10's closer leans into its curves, carries less side load, closes, and rolls under the amber [90m(21326.2605ms)[39m[39m
+[32m✔ row 2: TEST 10's closer leans into its curves, carries less side load, closes, and rolls under the amber [90m(2913.4288ms)[39m[39m
+[32m✔ row 3: a closer with only gentle curves is banked by its share and no more [90m(3134.0343ms)[39m[39m
+[32m✔ row 5: P's turn 210, tail 300, roll 30: the roll straight laid first is not bent into a lean the wrong way [90m(3020.4732ms)[39m[39m
+[32m✔ row 6: P's turn 180, tail 1,200, roll 10: the closer that banks its turns is the one taken [90m(2649.3288ms)[39m[39m
+[32m✔ row 7: P's turn 180, tail 1,200, roll 30: the closer that banks its turns is the one taken [90m(2593.2171ms)[39m[39m
+[32m✔ row 8: an end banked the way the closer turns is closed rolled last, on its own bank and with nothing banked on top [90m(780.9987ms)[39m[39m
+[32m✔ row 4: a straight gets none: a finish that is only a straight keeps the laid bank [90m(378.3548ms)[39m[39m
+[32m✔ row 1: TEST TRACK 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels [90m(20502.2818ms)[39m[39m
+[32m✔ row 2: TEST 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels [90m(2596.3107ms)[39m[39m
+[32m✔ row 3: TEST TRACK 10: the closer brings the cup home over its length, no faster than his own road changes it [90m(20089.6822ms)[39m[39m
+[32m✔ row 4: TEST 10: the closer brings the cup home over its length, no faster than his own road changes it [90m(2198.8516ms)[39m[39m
+[32m✔ row 5: a track built here: its closer rolls upright, steps no more than the bar at every joint and the seam, and brings the cup home slowly [90m(6831.7507ms)[39m[39m
+[32m✔ row 6: a short closer (P's turn 150, tail 300, roll 54) brings the cup home no faster than his own road changes it [90m(1912.2966ms)[39m[39m
+[32m✔ row 7: a closer too short for his rate brings the cup home at the slowest rate it allows, and the report says the rate [90m(2218.1746ms)[39m[39m
+[32m✔ row 8: a closer long enough for his rate brings the cup home under it and says nothing of a fallback (P's three laps) [90m(6196.7884ms)[39m[39m
+[34mℹ tests 33[39m
+[34mℹ suites 0[39m
+[34mℹ pass 33[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 79426.7461[39m

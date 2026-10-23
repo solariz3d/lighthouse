@@ -1,0 +1,8 @@
+[31m✖ row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror) [90m(757.0274ms)[39m[39m
+[34mℹ tests 17[39m
+[34mℹ pass 16[39m
+[34mℹ fail 1[39m
+[34mℹ skipped 0[39m
+[31m✖ failing tests:[39m
+[31m✖ row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror) [90m(757.0274ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: turn -150, bank 54: the roll is the last piece (RSR at R 300 m: turn -164.7°, 271 m straight, turn -45.3°, after 209 m rolling 55° upright first; 4 new pieces, 1579 m; closed in 1 step(s): 0.015 mm, tangent 0.0e+0 rad)

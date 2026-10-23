@@ -124,3 +124,10 @@ outer wheels and the seam from 75.6 to 9.5 (kstep436 never saw that seam: it doe
 backstop silently dropped every bank, so the roll is now laid ≥ 1.5·2√(θ/A) (route changes, 3,864 → 3,990 m). Could be wrong that 1.5 generalises: fitted on one lap.
 General form: a backstop that falls back silently can turn a new limit into the loss of the whole feature; check the feature is still there, not only the bar.
 → `exo_memory/handback/p-d438-build-O_2026-10-22.md`
+
+### Choosing a closer by side load fixes the order it is laid in, not the route inside an order: a lap can leave both orders bad
+2026-10-23, D439 — d439-o cd3dc42: "roll first, always" broke core_finish row 12 (that end, banked the way the turns go, is better rolled last, 5.55 g against 8.08), so both
+orders are searched and the lower side load wins; P's laps went 10.89 / 9.16 g → 4.68 / 4.65. But on a lap with a tight own turn the roll-first order takes a one-turn
+route at R 126 m (~9.5 g) and roll-last leans out at 1,171 of 1,172 stations (9.22 g). Could be wrong that ranking routes inside an order is the cure: not built.
+Also: an ease pinned at both ends needs its parameter to start AND end where the pins do; fixing one end moved the 1.5 × span to the other (σ, D439 (d)).
+→ `exo_memory/handback/p-d439-O_2026-10-23.md`

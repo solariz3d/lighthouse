@@ -1,0 +1,552 @@
+TAP version 13
+# Subtest: test 4, track 0 (11 pieces, 4100 m, ε 0.00570491696708): one call closes it
+ok 1 - test 4, track 0 (11 pieces, 4100 m, ε 0.00570491696708): one call closes it
+  ---
+  duration_ms: 49.7331
+  type: 'test'
+  ...
+# Subtest: test 4, track 1 (10 pieces, 3685 m, ε -0.0841972072609): one call closes it
+ok 2 - test 4, track 1 (10 pieces, 3685 m, ε -0.0841972072609): one call closes it
+  ---
+  duration_ms: 28.5576
+  type: 'test'
+  ...
+# Subtest: test 4, track 2 (9 pieces, 3270 m, ε -0.0402413592674): one call closes it
+ok 3 - test 4, track 2 (9 pieces, 3270 m, ε -0.0402413592674): one call closes it
+  ---
+  duration_ms: 26.0852
+  type: 'test'
+  ...
+# Subtest: test 4, track 3 (7 pieces, 3042 m, ε -0.0690124160144): one call closes it
+ok 4 - test 4, track 3 (7 pieces, 3042 m, ε -0.0690124160144): one call closes it
+  ---
+  duration_ms: 21.8774
+  type: 'test'
+  ...
+# Subtest: test 4, track 4 (6 pieces, 2419 m, ε -0.00323135023937): one call closes it
+ok 5 - test 4, track 4 (6 pieces, 2419 m, ε -0.00323135023937): one call closes it
+  ---
+  duration_ms: 21.5627
+  type: 'test'
+  ...
+# Subtest: test 4, track 5 (12 pieces, 4723 m, ε -0.065869737044): one call closes it
+ok 6 - test 4, track 5 (12 pieces, 4723 m, ε -0.065869737044): one call closes it
+  ---
+  duration_ms: 39.0787
+  type: 'test'
+  ...
+# Subtest: test 4, track 6 (9 pieces, 2773 m, ε 0.075068023568): one call closes it
+ok 7 - test 4, track 6 (9 pieces, 2773 m, ε 0.075068023568): one call closes it
+  ---
+  duration_ms: 23.0447
+  type: 'test'
+  ...
+# Subtest: test 4, track 7 (9 pieces, 3916 m, ε -0.0348630782217): one call closes it
+ok 8 - test 4, track 7 (9 pieces, 3916 m, ε -0.0348630782217): one call closes it
+  ---
+  duration_ms: 28.6663
+  type: 'test'
+  ...
+# Subtest: test 4, track 8 (8 pieces, 2717 m, ε 0.0987024823669): one call closes it
+ok 9 - test 4, track 8 (8 pieces, 2717 m, ε 0.0987024823669): one call closes it
+  ---
+  duration_ms: 19.454
+  type: 'test'
+  ...
+# Subtest: test 4, track 9 (7 pieces, 2519 m, ε -0.0799730329309): one call closes it
+ok 10 - test 4, track 9 (7 pieces, 2519 m, ε -0.0799730329309): one call closes it
+  ---
+  duration_ms: 19.3225
+  type: 'test'
+  ...
+# Subtest: test 4, track 10 (6 pieces, 2235 m, ε -0.025086999312): one call closes it
+ok 11 - test 4, track 10 (6 pieces, 2235 m, ε -0.025086999312): one call closes it
+  ---
+  duration_ms: 15.455
+  type: 'test'
+  ...
+# Subtest: test 4, track 11 (10 pieces, 3974 m, ε -0.00568767194636): one call closes it
+ok 12 - test 4, track 11 (10 pieces, 3974 m, ε -0.00568767194636): one call closes it
+  ---
+  duration_ms: 32.4185
+  type: 'test'
+  ...
+# Subtest: test 4, track 12 (6 pieces, 2264 m, ε -0.055765911378): one call closes it
+ok 13 - test 4, track 12 (6 pieces, 2264 m, ε -0.055765911378): one call closes it
+  ---
+  duration_ms: 17.15
+  type: 'test'
+  ...
+# Subtest: test 4, track 13 (8 pieces, 3594 m, ε 0.0442057050765): one call closes it
+ok 14 - test 4, track 13 (8 pieces, 3594 m, ε 0.0442057050765): one call closes it
+  ---
+  duration_ms: 28.2148
+  type: 'test'
+  ...
+# Subtest: test 4, track 14 (6 pieces, 1914 m, ε 0.0142437375616): one call closes it
+ok 15 - test 4, track 14 (6 pieces, 1914 m, ε 0.0142437375616): one call closes it
+  ---
+  duration_ms: 15.3359
+  type: 'test'
+  ...
+# Subtest: test 4, track 15 (9 pieces, 2362 m, ε -0.0745127643459): one call closes it
+ok 16 - test 4, track 15 (9 pieces, 2362 m, ε -0.0745127643459): one call closes it
+  ---
+  duration_ms: 19.266
+  type: 'test'
+  ...
+# Subtest: test 4, track 16 (7 pieces, 2498 m, ε 0.0869582034647): one call closes it
+ok 17 - test 4, track 16 (7 pieces, 2498 m, ε 0.0869582034647): one call closes it
+  ---
+  duration_ms: 24.1692
+  type: 'test'
+  ...
+# Subtest: test 4, track 17 (8 pieces, 3177 m, ε -0.00734682576731): one call closes it
+ok 18 - test 4, track 17 (8 pieces, 3177 m, ε -0.00734682576731): one call closes it
+  ---
+  duration_ms: 27.2031
+  type: 'test'
+  ...
+# Subtest: test 4, track 18 (9 pieces, 3486 m, ε -0.0384539657272): one call closes it
+ok 19 - test 4, track 18 (9 pieces, 3486 m, ε -0.0384539657272): one call closes it
+  ---
+  duration_ms: 61.2056
+  type: 'test'
+  ...
+# Subtest: test 4, track 19 (7 pieces, 2735 m, ε -0.0382748652715): one call closes it
+ok 20 - test 4, track 19 (7 pieces, 2735 m, ε -0.0382748652715): one call closes it
+  ---
+  duration_ms: 24.6713
+  type: 'test'
+  ...
+# Subtest: close REPORTS a closure it did not reach: one step on the hardest track says NOT CLOSED and leaves closed false
+ok 21 - close REPORTS a closure it did not reach: one step on the hardest track says NOT CLOSED and leaves closed false
+  ---
+  duration_ms: 122.0392
+  type: 'test'
+  ...
+# Subtest: the input document is not changed (it is frozen, and deep-equal afterwards)
+ok 22 - the input document is not changed (it is frozen, and deep-equal afterwards)
+  ---
+  duration_ms: 316.5202
+  type: 'test'
+  ...
+# Subtest: a lap that already closes (a full circle, R = 200 m) is left where it is: no steps
+ok 23 - a lap that already closes (a full circle, R = 200 m) is left where it is: no steps
+  ---
+  duration_ms: 48.4651
+  type: 'test'
+  ...
+# Subtest: the position Jacobian predicts the adapter: bumping one interior control point moves the end as J says (relative 5e-4)
+ok 24 - the position Jacobian predicts the adapter: bumping one interior control point moves the end as J says (relative 5e-4)
+  ---
+  duration_ms: 224.5989
+  type: 'test'
+  ...
+# Subtest: the seam is a joint like any other: after the close it passes the document’s own C1 joint check, last piece into first
+ok 25 - the seam is a joint like any other: after the close it passes the document’s own C1 joint check, last piece into first
+  ---
+  duration_ms: 1.6941
+  type: 'test'
+  ...
+# Subtest: with no stretch protected (every weight 1) close still closes, seam included
+ok 26 - with no stretch protected (every weight 1) close still closes, seam included
+  ---
+  duration_ms: 643.965
+  type: 'test'
+  ...
+# Subtest: a track with a jump and no turn is refused as any turnless track is (CLOSE_SINGULAR), not as an unbuilt jump (D243)
+ok 27 - a track with a jump and no turn is refused as any turnless track is (CLOSE_SINGULAR), not as an unbuilt jump (D243)
+  ---
+  duration_ms: 15.0987
+  type: 'test'
+  ...
+# Subtest: row 1: an end already at the start: one press is the near-closed bend, with no new road and nothing moved; Finish is not even tried
+ok 28 - row 1: an end already at the start: one press is the near-closed bend, with no new road and nothing moved; Finish is not even tried
+  ---
+  duration_ms: 3252.8845
+  type: 'test'
+  ...
+# Subtest: row 2: ends 2, 5 and 10 m past the start, and 5 m short of it, close by a bend: no new road, no loop
+ok 29 - row 2: ends 2, 5 and 10 m past the start, and 5 m short of it, close by a bend: no new road, no loop
+  ---
+  duration_ms: 10300.7248
+  type: 'test'
+  ...
+# Subtest: row 3: new road only when no bend proves: a far end gets Finish (every other route refused or failed); a near end does not, though Finish closed it
+ok 30 - row 3: new road only when no bend proves: a far end gets Finish (every other route refused or failed); a near end does not, though Finish closed it
+  ---
+  duration_ms: 3907.4148
+  type: 'test'
+  ...
+# Subtest: row 4: when no way proves, there is no document, and one line says nothing changed and why, with the closest way's reason
+ok 31 - row 4: when no way proves, there is no document, and one line says nothing changed and why, with the closest way's reason
+  ---
+  duration_ms: 3530.7478
+  type: 'test'
+  ...
+# Subtest: row 5: a bend that would move the track further than its gap and 10 m is not eligible, and new road is laid instead
+ok 32 - row 5: a bend that would move the track further than its gap and 10 m is not eligible, and new road is laid instead
+  ---
+  duration_ms: 1782.089
+  type: 'test'
+  ...
+# Subtest: row 7: the pick is the least-moving way that proves: every way that would move the track less was refused or failed the lap proof or added a red
+ok 33 - row 7: the pick is the least-moving way that proves: every way that would move the track less was refused or failed the lap proof or added a red
+  ---
+  duration_ms: 7451.1067
+  type: 'test'
+  ...
+# Subtest: row 8: the order: no new road first (even when the new road moves nothing), then the least movement, and within a millimetre the route order
+ok 34 - row 8: the order: no new road first (even when the new road moves nothing), then the least movement, and within a millimetre the route order
+  ---
+  duration_ms: 0.6212
+  type: 'test'
+  ...
+# Subtest: row 6: the reported near-closed save: one press bends its last 2 pieces by up to 4.4 m, with no new road, and the lap proves
+ok 35 - row 6: the reported near-closed save: one press bends its last 2 pieces by up to 4.4 m, with no new road, and the lap proves
+  ---
+  duration_ms: 28224.2228
+  type: 'test'
+  ...
+# Subtest: row 9: when the end is at the start, the near bend is closed and checked first, and once it proves no other route is run
+ok 36 - row 9: when the end is at the start, the near bend is closed and checked first, and once it proves no other route is run
+  ---
+  duration_ms: 2003.1726
+  type: 'test'
+  ...
+# Subtest: row 10: the pick is the exhaustive order's on every track: the same route, the same words, the same closed track
+ok 37 - row 10: the pick is the exhaustive order's on every track: the same route, the same words, the same closed track
+  ---
+  duration_ms: 25266.0666
+  type: 'test'
+  ...
+# Subtest: row 11: given the open track's reds, the press does not check the open track, and picks exactly as it does without them
+ok 38 - row 11: given the open track's reds, the press does not check the open track, and picks exactly as it does without them
+  ---
+  duration_ms: 4407.7753
+  type: 'test'
+  ...
+# Subtest: row 12: the reported save: one press, with the reds the live checker found, closes in under 30 s, and picks as a press without them does
+ok 39 - row 12: the reported save: one press, with the reds the live checker found, closes in under 30 s, and picks as a press without them does
+  ---
+  duration_ms: 52754.3802
+  type: 'test'
+  ...
+# main thread 17141 ms CPU, process 23062 ms CPU, 17355 ms wall; routes 5463, checks 11318
+# Subtest: row 13: the worker's press on a structuredClone of the track picks and closes exactly as on the track, and residual never runs on an unfrozen document
+ok 40 - row 13: the worker's press on a structuredClone of the track picks and closes exactly as on the track, and residual never runs on an unfrozen document
+  ---
+  duration_ms: 3105.2753
+  type: 'test'
+  ...
+# Subtest: row 14: the reported save: the worker's press on a structuredClone, with the live checker's reds, picks and closes as on the parsed save, residual never unfrozen
+ok 41 - row 14: the reported save: the worker's press on a structuredClone, with the live checker's reds, picks and closes as on the parsed save, residual never unfrozen
+  ---
+  duration_ms: 46634.2728
+  type: 'test'
+  ...
+# main thread: clone 17078 ms, parsed 17187 ms; residual on an unfrozen document 0 of 4; closed sha256 5fc2e6fdd25a
+# Subtest: a lap end in the flipped frame that faces the start exactly has no heading, pitch or bank left to close
+ok 42 - a lap end in the flipped frame that faces the start exactly has no heading, pitch or bank left to close
+  ---
+  duration_ms: 151.0107
+  type: 'test'
+  ...
+# Subtest: the whole-lap close of a flipped-frame lap converges and the seam meets in position and frame
+ok 43 - the whole-lap close of a flipped-frame lap converges and the seam meets in position and frame
+  ---
+  duration_ms: 257.9665
+  type: 'test'
+  ...
+# Subtest: Finish to start from a flipped-frame end lays no roll (the end is already upright) and closes the lap
+ok 44 - Finish to start from a flipped-frame end lays no roll (the end is already upright) and closes the lap
+  ---
+  duration_ms: 1463.8603
+  type: 'test'
+  ...
+# Subtest: Level on a flipped-frame end with a slope ends level (pitch 0), as it does on an upright track
+ok 45 - Level on a flipped-frame end with a slope ends level (pitch 0), as it does on an upright track
+  ---
+  duration_ms: 476.2785
+  type: 'test'
+  ...
+# Subtest: row 1: TEST TRACK 10 finishes with no bump or wiggle at its closer joints, and nothing it did not lay moves
+ok 46 - row 1: TEST TRACK 10 finishes with no bump or wiggle at its closer joints, and nothing it did not lay moves
+  ---
+  duration_ms: 24173.2634
+  type: 'test'
+  ...
+# Subtest: row 2: TEST 10 finishes with no bump or wiggle at its closer joints, and nothing it did not lay moves
+ok 47 - row 2: TEST 10 finishes with no bump or wiggle at its closer joints, and nothing it did not lay moves
+  ---
+  duration_ms: 2544.08
+  type: 'test'
+  ...
+# Subtest: row 3: a lap that ends 212 m below its start, level, finishes with no bump or wiggle at its closer joints
+ok 48 - row 3: a lap that ends 212 m below its start, level, finishes with no bump or wiggle at its closer joints
+  ---
+  duration_ms: 1004.282
+  type: 'test'
+  ...
+# Subtest: row 4: a windowed close rolls the road as gently as the bank allows: a 57° start closes in the last 200 m under the roll-rate bar
+ok 49 - row 4: a windowed close rolls the road as gently as the bank allows: a 57° start closes in the last 200 m under the roll-rate bar
+  ---
+  duration_ms: 207.84
+  type: 'test'
+  ...
+# Subtest: row 1: a close confined to the LAST piece leaves every earlier piece bit-identical, closes the loop, and moves the last piece
+ok 50 - row 1: a close confined to the LAST piece leaves every earlier piece bit-identical, closes the loop, and moves the last piece
+  ---
+  duration_ms: 490.1275
+  type: 'test'
+  ...
+# Subtest: row 2: the default window covers at least ~20% of the lap from its end (at least the last piece); the whole-lap close, by contrast, moves pieces outside it
+ok 51 - row 2: the default window covers at least ~20% of the lap from its end (at least the last piece); the whole-lap close, by contrast, moves pieces outside it
+  ---
+  duration_ms: 499.9879
+  type: 'test'
+  ...
+# Subtest: row 3: a window that cannot close the loop is REFUSED BY NAME (CLOSE_WINDOW), naming the window, and nothing is handed back
+ok 52 - row 3: a window that cannot close the loop is REFUSED BY NAME (CLOSE_WINDOW), naming the window, and nothing is handed back
+  ---
+  duration_ms: 2230.8412
+  type: 'test'
+  ...
+# Subtest: row 4: a local close may not push the window past the roll-rate bar (1.2144°/m over 20 m): refused by name
+ok 53 - row 4: a local close may not push the window past the roll-rate bar (1.2144°/m over 20 m): refused by name
+  ---
+  duration_ms: 269.9205
+  type: 'test'
+  ...
+# Subtest: row 4 control: the same start banked 0.5 rad closes in the last piece (its roll stays under the bar)
+ok 54 - row 4 control: the same start banked 0.5 rad closes in the last piece (its roll stays under the bar)
+  ---
+  duration_ms: 164.981
+  type: 'test'
+  ...
+# Subtest: row 5: a window with no road piece is refused by name
+ok 55 - row 5: a window with no road piece is refused by name
+  ---
+  duration_ms: 113.101
+  type: 'test'
+  ...
+# Subtest: close on two straights is a NAMED refusal (CoreError CLOSE_SINGULAR), never a plain Error
+ok 56 - close on two straights is a NAMED refusal (CoreError CLOSE_SINGULAR), never a plain Error
+  ---
+  duration_ms: 31.9655
+  type: 'test'
+  ...
+# Subtest: control: a lap that CAN close still closes (a turning track is not refused)
+ok 57 - control: a lap that CAN close still closes (a turning track is not refused)
+  ---
+  duration_ms: 158.9439
+  type: 'test'
+  ...
+# Subtest: the app shows the refusal by its name: the shell's message carries CLOSE_SINGULAR, and the track stays open
+ok 58 - the app shows the refusal by its name: the shell's message carries CLOSE_SINGULAR, and the track stays open
+  ---
+  duration_ms: 220.2767
+  type: 'test'
+  ...
+# Subtest: row 1: every route the solver gives, laid out arc, straight, arc, ends on the start pose
+ok 59 - row 1: every route the solver gives, laid out arc, straight, arc, ends on the start pose
+  ---
+  duration_ms: 1.625
+  type: 'test'
+  ...
+# Subtest: row 2: an end behind the start and pointing at it is one straight of the gap, with no turn
+ok 60 - row 2: an end behind the start and pointing at it is one straight of the gap, with no turn
+  ---
+  duration_ms: 0.1934
+  type: 'test'
+  ...
+# Subtest: row 3: a track is finished with new pieces only, closed, and the new road ends on the start
+ok 61 - row 3: a track is finished with new pieces only, closed, and the new road ends on the start
+  ---
+  duration_ms: 962.5402
+  type: 'test'
+  ...
+# Subtest: row 4: refusals by name: a closed loop, an empty track
+ok 62 - row 4: refusals by name: a closed loop, an empty track
+  ---
+  duration_ms: 751.9061
+  type: 'test'
+  ...
+# Subtest: row 5: an end upside down rolls back upright on a straight of its own (last onto the start, or first when that keeps the car on the road), never in a turn, and the lap closes with the bank of the start
+ok 63 - row 5: an end upside down rolls back upright on a straight of its own (last onto the start, or first when that keeps the car on the road), never in a turn, and the lap closes with the bank of the start
+  ---
+  duration_ms: 2764.9761
+  type: 'test'
+  ...
+# Subtest: row 8: the roll Finish lays, read as the checker reads it, is under the amber bar everywhere on the new road (54° and 180°)
+ok 64 - row 8: the roll Finish lays, read as the checker reads it, is under the amber bar everywhere on the new road (54° and 180°)
+  ---
+  duration_ms: 5434.2513
+  type: 'test'
+  ...
+# Subtest: row 9: a roll whose first guess is too short (factor 1, and the old 1.1) is measured and lengthened until it is under the amber bar
+ok 65 - row 9: a roll whose first guess is too short (factor 1, and the old 1.1) is measured and lengthened until it is under the amber bar
+  ---
+  duration_ms: 3814.1726
+  type: 'test'
+  ...
+# Subtest: row 10: a banked end: the road Finish lays keeps the car on it (the lap proof of the checker passes), at 54° and at 126°
+ok 66 - row 10: a banked end: the road Finish lays keeps the car on it (the lap proof of the checker passes), at 54° and at 126°
+  ---
+  duration_ms: 5895.7913
+  type: 'test'
+  ...
+# Subtest: row 11: F.roadHold is the own test of the lap proof: the same place on the road the old Finish laid at a banked end, and nothing on the new road
+ok 67 - row 11: F.roadHold is the own test of the lap proof: the same place on the road the old Finish laid at a banked end, and nothing on the new road
+  ---
+  duration_ms: 1978.0269
+  type: 'test'
+  ...
+# Subtest: row 13: an end Finish cannot close onto a road the car stays on is refused by name, with where the car leaves the road and what to change
+ok 68 - row 13: an end Finish cannot close onto a road the car stays on is refused by name, with where the car leaves the road and what to change
+  ---
+  duration_ms: 3156.1522
+  type: 'test'
+  ...
+# Subtest: row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror)
+ok 69 - row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror)
+  ---
+  duration_ms: 1939.0138
+  type: 'test'
+  ...
+# Subtest: row 6: an end a quarter turn short of the lap is finished with one turn and one straight, not a detour
+ok 70 - row 6: an end a quarter turn short of the lap is finished with one turn and one straight, not a detour
+  ---
+  duration_ms: 342.0434
+  type: 'test'
+  ...
+# Subtest: row 7: the one-turn routes, laid out, end on the start pose; none tighter than the floor
+ok 71 - row 7: the one-turn routes, laid out, end on the start pose; none tighter than the floor
+  ---
+  duration_ms: 0.7173
+  type: 'test'
+  ...
+# Subtest: row 14: an end already at the start is closed by bending its last pieces, with no new road and no loop
+ok 72 - row 14: an end already at the start is closed by bending its last pieces, with no new road and no loop
+  ---
+  duration_ms: 496.2106
+  type: 'test'
+  ...
+# Subtest: row 15: the reported near-closed save closes by bending its last pieces: no new road, nothing else moves, the lap proves
+ok 73 - row 15: the reported near-closed save closes by bending its last pieces: no new road, nothing else moves, the lap proves
+  ---
+  duration_ms: 45114.628
+  type: 'test'
+  ...
+# Subtest: row 16: an end at the start whose every bend leaves the road is refused by name (FINISH_NEAR), never given new road
+ok 74 - row 16: an end at the start whose every bend leaves the road is refused by name (FINISH_NEAR), never given new road
+  ---
+  duration_ms: 831.5256
+  type: 'test'
+  ...
+# Subtest: row 17: an end straight behind the start, on its line and pointing the same way, is finished with that straight (8, 20 and 40 m), not a loop
+ok 75 - row 17: an end straight behind the start, on its line and pointing the same way, is finished with that straight (8, 20 and 40 m), not a loop
+  ---
+  duration_ms: 5225.4047
+  type: 'test'
+  ...
+# Subtest: row 1: TEST TRACK 10's closer leans into its curves, carries less side load, closes, and rolls under the amber
+ok 76 - row 1: TEST TRACK 10's closer leans into its curves, carries less side load, closes, and rolls under the amber
+  ---
+  duration_ms: 25491.7864
+  type: 'test'
+  ...
+# Subtest: row 2: TEST 10's closer leans into its curves, carries less side load, closes, and rolls under the amber
+ok 77 - row 2: TEST 10's closer leans into its curves, carries less side load, closes, and rolls under the amber
+  ---
+  duration_ms: 2889.932
+  type: 'test'
+  ...
+# Subtest: row 3: a closer with only gentle curves is banked by its share and no more
+ok 78 - row 3: a closer with only gentle curves is banked by its share and no more
+  ---
+  duration_ms: 2770.1565
+  type: 'test'
+  ...
+# Subtest: row 5: P's turn 210, tail 300, roll 30: the roll straight laid first is not bent into a lean the wrong way
+ok 79 - row 5: P's turn 210, tail 300, roll 30: the roll straight laid first is not bent into a lean the wrong way
+  ---
+  duration_ms: 2801.6619
+  type: 'test'
+  ...
+# Subtest: row 6: P's turn 180, tail 1,200, roll 10: the closer that banks its turns is the one taken
+ok 80 - row 6: P's turn 180, tail 1,200, roll 10: the closer that banks its turns is the one taken
+  ---
+  duration_ms: 2516.1015
+  type: 'test'
+  ...
+# Subtest: row 7: P's turn 180, tail 1,200, roll 30: the closer that banks its turns is the one taken
+ok 81 - row 7: P's turn 180, tail 1,200, roll 30: the closer that banks its turns is the one taken
+  ---
+  duration_ms: 2398.7942
+  type: 'test'
+  ...
+# Subtest: row 4: a straight gets none: a finish that is only a straight keeps the laid bank
+ok 82 - row 4: a straight gets none: a finish that is only a straight keeps the laid bank
+  ---
+  duration_ms: 386.8511
+  type: 'test'
+  ...
+# Subtest: row 1: TEST TRACK 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels
+ok 83 - row 1: TEST TRACK 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels
+  ---
+  duration_ms: 24687.451
+  type: 'test'
+  ...
+# Subtest: row 2: TEST 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels
+ok 84 - row 2: TEST 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels
+  ---
+  duration_ms: 2572.0308
+  type: 'test'
+  ...
+# Subtest: row 3: TEST TRACK 10: the closer brings the cup home over its length, no faster than his own road changes it
+ok 85 - row 3: TEST TRACK 10: the closer brings the cup home over its length, no faster than his own road changes it
+  ---
+  duration_ms: 17507.3877
+  type: 'test'
+  ...
+# Subtest: row 4: TEST 10: the closer brings the cup home over its length, no faster than his own road changes it
+ok 86 - row 4: TEST 10: the closer brings the cup home over its length, no faster than his own road changes it
+  ---
+  duration_ms: 1845.5565
+  type: 'test'
+  ...
+# Subtest: row 5: a track built here: its closer rolls upright, steps no more than the bar at every joint and the seam, and brings the cup home slowly
+ok 87 - row 5: a track built here: its closer rolls upright, steps no more than the bar at every joint and the seam, and brings the cup home slowly
+  ---
+  duration_ms: 5459.8718
+  type: 'test'
+  ...
+# Subtest: row 6: a short closer (P's turn 150, tail 300, roll 54) brings the cup home no faster than his own road changes it
+ok 88 - row 6: a short closer (P's turn 150, tail 300, roll 54) brings the cup home no faster than his own road changes it
+  ---
+  duration_ms: 1657.5062
+  type: 'test'
+  ...
+# Subtest: row 7: a closer too short for his rate brings the cup home at the slowest rate it allows, and the report says the rate
+ok 89 - row 7: a closer too short for his rate brings the cup home at the slowest rate it allows, and the report says the rate
+  ---
+  duration_ms: 1884.7363
+  type: 'test'
+  ...
+# Subtest: row 8: a closer long enough for his rate brings the cup home under it and says nothing of a fallback (P's three laps)
+ok 90 - row 8: a closer long enough for his rate brings the cup home under it and says nothing of a fallback (P's three laps)
+  ---
+  duration_ms: 5412.5533
+  type: 'test'
+  ...
+1..90
+# tests 90
+# suites 0
+# pass 90
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 193339.2591
