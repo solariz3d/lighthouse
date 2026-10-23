@@ -131,3 +131,9 @@ orders are searched and the lower side load wins; P's laps went 10.89 / 9.16 g �
 route at R 126 m (~9.5 g) and roll-last leans out at 1,171 of 1,172 stations (9.22 g). Could be wrong that ranking routes inside an order is the cure: not built.
 Also: an ease pinned at both ends needs its parameter to start AND end where the pins do; fixing one end moved the 1.5 × span to the other (σ, D439 (d)).
 → `exo_memory/handback/p-d439-O_2026-10-23.md`
+
+### A load rank cannot see bank: |v²κ + g·ŷ| depends only on the path, so ranking closers by whole load undoes banking; by lateral load it moves routes for 0.02 g
+2026-10-23, D440 — d440-o c422e8e: never-lean-out built (the tight lap 1,171/1,172 out → 0); the rank of (e)/(f) measured seven ways (rank-probe.js) and NOT built:
+every version moved his TEST 10 route, lost core_finish row 6's one-turn finish, row 12's compact road, or D439 (c)'s banked closers (whole load: unbanked 8.12/9.16 g back).
+Could be wrong that no bound exists between 1.0 and 1.25 × that keeps all: only 0, 1.25, 1.5 and ∞ were measured.
+→ `exo_memory/handback/p-d440-O_2026-10-23.md`
