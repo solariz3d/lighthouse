@@ -1,0 +1,10 @@
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) — it holds this tree
+{"files":["test/core_close.test.js","test/core_close_best.test.js","test/core_close_flip.test.js","test/core_close_joint.test.js","test/core_close_local.test.js","test/core_close_refusal.test.js","test/core_finish.test.js","test/core_finish_bank.test.js","test/core_finish_joints.test.js"],"exit":0,"wall_s":109.4,"started":"2026-10-23T04:30:36.245Z"}

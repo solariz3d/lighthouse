@@ -1,0 +1,36 @@
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 30576 (t180 O D421 part 2 (second slot), since 2026-10-23T04:30:36.244Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 30576 (t180 O D421 part 2 (second slot), since 2026-10-23T04:30:36.244Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 20744 (t180 O D421 part 2 (second slot), since 2026-10-23T04:32:25.791Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 20744 (t180 O D421 part 2 (second slot), since 2026-10-23T04:32:25.791Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 20744 (t180 O D421 part 2 (second slot), since 2026-10-23T04:32:25.791Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 20744 (t180 O D421 part 2 (second slot), since 2026-10-23T04:32:25.791Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 20744 (t180 O D421 part 2 (second slot), since 2026-10-23T04:32:25.791Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 20744 (t180 O D421 part 2 (second slot), since 2026-10-23T04:32:25.791Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 20744 (t180 O D421 part 2 (second slot), since 2026-10-23T04:32:25.791Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 10332 (t180 E D437a own mutants, since 2026-10-23T04:39:26.557Z) — it holds this tree
+== build-before at 23728,23815,27570: exit 0
+menubar ready errors [33m0[39m
+pieces 44 pieces · 27,592 m · closed loop status TEST TRACK 10 · closed loop
+wrote build-before-s23728.png
+wrote build-before-close-s23728.png
+wrote build-before-s23815.png
+wrote build-before-close-s23815.png
+wrote build-before-s27570.png
+wrote build-before-close-s27570.png
+page errors: none
+
+== build-after at 23728,23934,27700: exit 0
+menubar ready errors [33m0[39m
+pieces 44 pieces · 27,718 m · closed loop status TEST TRACK 10 · closed loop
+wrote build-after-s23728.png
+wrote build-after-close-s23728.png
+wrote build-after-s23934.png
+wrote build-after-close-s23934.png
+wrote build-after-s27700.png
+wrote build-after-close-s27700.png
+page errors: none
+

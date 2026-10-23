@@ -1,0 +1,18 @@
+caught       J1 no acceleration limit  (row 1: TEST TRACK 10: every closer joint and; row 2: TEST 10: every closer joint and the se; row 5: a track built here: its closer rolls u)
+caught       J2 the acceleration projection moves the pins  (row 1: TEST TRACK 10's closer leans into its; row 1: TEST TRACK 10: every closer joint and; row 5: a track built here: its closer rolls u)
+SURVIVED     J3 the limits act on the added bank only (the laid bank ignored)
+caught       J4 the roll straight laid by its rate only (not long enough for the acceleration)  (row 1: TEST TRACK 10's closer leans into its; row 1: TEST TRACK 10: every closer joint and; row 5: a track built here: its closer rolls u)
+caught       J5 no cup home (the call removed)  (row 3: TEST TRACK 10: the closer brings the c; row 4: TEST 10: the closer brings the cup hom; row 5: a track built here: its closer rolls u)
+SURVIVED     J6 the cup eased linearly, not by smootherstep
+caught       J7 half the cup brought home  (row 3: TEST TRACK 10: the closer brings the c; row 4: TEST 10: the closer brings the cup hom; row 5: a track built here: its closer rolls u)
+caught       J8 the cup ignores the joint slope rule  (row 1: TEST TRACK 10's closer leans into its; row 1: TEST TRACK 10: every closer joint and; row 3: TEST TRACK 10: the closer brings the c)
+caught       J9 one sweep only  (row 1: TEST TRACK 10's closer leans into its; row 1: TEST TRACK 10: every closer joint and; row 2: TEST 10: every closer joint and the se; row 5: a track built here: its closer rolls u)
+SURVIVED     J10 the rate passes keep no laid rate (cap without the laid span)
+caught       B1 the bank leans the wrong way  (row 1: TEST TRACK 10's closer leans into its; row 2: TEST 10's closer leans into its curves; row 3: a closer with only gentle curves is ba; row 4: a straight gets none: a finish that is; row 1: TEST TRACK 10: every closer joint and; row 2: TEST 10: every closer joint and the se; row 3: TEST TRACK 10: the closer brings the c; row 4: TEST 10: the closer brings the cup hom; row 5: a track built here: its closer rolls u)
+caught       B2 sized from the laid route only (no second pass)  (row 1: TEST TRACK 10's closer leans into its; row 2: TEST 10's closer leans into its curves; row 3: a closer with only gentle curves is ba)
+caught       B3 the pins are moved by the rate passes  (row 1: TEST TRACK 10's closer leans into its; row 1: TEST TRACK 10: every closer joint and; row 3: TEST TRACK 10: the closer brings the c; row 5: a track built here: its closer rolls u)
+caught       B4 every piece banked, upright or not  (row 5: a track built here: its closer rolls u)
+caught       B5 no rate limit  (row 1: TEST TRACK 10's closer leans into its)
+caught       B6 half the share  (row 1: TEST TRACK 10's closer leans into its; row 2: TEST 10's closer leans into its curves; row 3: a closer with only gentle curves is ba)
+caught       B7 no bank at all (the call reverted)  (row 1: TEST TRACK 10's closer leans into its; row 2: TEST 10's closer leans into its curves; row 3: a closer with only gentle curves is ba)
+applied 17 / caught 14 / NOT APPLIED 0

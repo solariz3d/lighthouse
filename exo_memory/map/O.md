@@ -117,3 +117,10 @@ values must skip the pins in every pass, or a later pass silently undoes them.
 30-40 m before the seam on all three (his own road: 0.021 °/m). Fix planned, not built. Could be wrong about the cause split at p41|p42 (bank onset vs the laid roll's own
 roll): inferred from where the step sits, not separated by a run. General form: bound the derivative the rider feels, not the one the checker reads.
 → `exo_memory/handback/p-d438-O_2026-10-22.md`
+
+### A rate limit on a bank does not ease its start: bound the roll's acceleration too, and lay a roll straight long enough to start and stop inside it
+2026-10-22, D438 build — d438-o 63bb388: BANK_ACCEL 2e-4 rad/m² on the bank polygon's slope change took TEST TRACK 10's p41|p42 from 95.9 to 14.5 °/100 m under the
+outer wheels and the seam from 75.6 to 9.5 (kstep436 never saw that seam: it does not wrap s = 0); the 87 m roll straight could not fit the bound, the bank's
+backstop silently dropped every bank, so the roll is now laid ≥ 1.5·2√(θ/A) (route changes, 3,864 → 3,990 m). Could be wrong that 1.5 generalises: fitted on one lap.
+General form: a backstop that falls back silently can turn a new limit into the loss of the whole feature; check the feature is still there, not only the bar.
+→ `exo_memory/handback/p-d438-build-O_2026-10-22.md`
