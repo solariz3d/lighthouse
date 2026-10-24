@@ -1,0 +1,1 @@
+{"files":["test/core_close_banks_lap.test.js"],"exit":0,"wall_s":207.2,"started":"2026-10-24T11:30:58.612Z"}

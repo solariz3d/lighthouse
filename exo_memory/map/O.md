@@ -160,3 +160,9 @@ General form: "upright" read from a stored channel is frame-dependent; check the
 BANK_ACCEL to the rate cap) fixed it, row 16 red at f2459fe; copies-bytes-r5.out five sha256-identical to 2c13316. Could be wrong for a run-out shorter than the acceleration's reach.
 General form: a measurement script that compares against the INPUT cannot see a change between two trees; compare the outputs byte for byte.
 → `exo_memory/handback/p-d447-O_2026-10-23.md` §9
+
+### A curvature threshold below the guard's own reads the builder's fit ringing as flips; count a run only if the guard would read a station in it
+2026-10-24, D447 §10 — at 05cdb9d "turning = banked over 5°" (R < 14.2 km) made the Bloss fit's rings after a 20 m transition into 2–8 m flips, every short corner's exit −0.4° (P §8.3);
+P's variant 2 plus bankLap reading its own banked road at each unpinned gap: 54 of 68 rows red at 05cdb9d, green at 28eb328, five copies sha256-identical, W1-off sweep identical on 76 laps.
+General form: a bar that can only see a wrong-way value cannot see a missing one; add a row that reads the value against a known-good table.
+→ `exo_memory/handback/p-d447-O_2026-10-23.md` §10
