@@ -2551,3 +2551,8 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-24 ~01:4xZ (D) · D402 part 3, SIGIL plays Obsidian → `exo_memory/handback/p-d402-3-E_2026-10-23.md`
 - t180 `910fd64` on d402-e (from 1e436f6): sigil the fifth melody (mel13 sigil1, PL Phantoms files), SIGIL plays it, Random among five looks and five melodies; the eight named files green, theme-mutation 48/48/0, mutation 104/104/0; theme, sound, sound-samples and menubar-page rows AMENDED (D402).
 - **Carry:** a fifth name moves every pinned draw from quarters to fifths; recheck that a harness's rounding mutant still has a draw where round and floor differ.
+- 2026-10-24 ~02:0xZ P's read, t180 `9c5a3ab` on d402-e (§5 of the same hand-back): sound-bands gains SIGIL's row (Phantoms), 14/14.
+
+## 2026-10-24 ~22:1x (D) · D450 part 2 step 2, the deleter → `exo_memory/handback/p-d450-delete-E_2026-10-24.md`
+- 168 of 169 removed (B's PASS 156 + the 13 released), 0 errors, 35.07 GiB by du; backup sha256 list `C:\Users\nname\t180-cleanup-backup-2026-10-24\SHA256SUMS.txt`, 54,560 re-hashed equal. Skipped t180-wt-e21: my D402 audition tools read it live.
+- **Carry:** a verifier that greps only the record cannot see a live tool outside it; before deleting a tree, grep your own tools for its path.

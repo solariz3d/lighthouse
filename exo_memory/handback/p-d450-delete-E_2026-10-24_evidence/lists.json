@@ -1,0 +1,1506 @@
+{
+ "PASS": [
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-a33",
+   "b": "13,464,545",
+   "r": "clean, head e3e9b4a not an ancestor but git cherry 0, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-a38",
+   "b": "13,655,780",
+   "r": "clean, head c45518f in local-0.4.17, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-b049",
+   "b": "5,042,521,329",
+   "r": "clean, head 409d3f8 in local-0.4.17, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-b421",
+   "b": "13,450,873",
+   "r": "clean, head 8b7ef3e in local-0.4.17, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-b421c",
+   "b": "13,636,963",
+   "r": "clean, head 856a386 in local-0.4.17, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-b428",
+   "b": "13,758,029",
+   "r": "clean, head c1841ca in local-0.4.17, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-b433",
+   "b": "13,757,570",
+   "r": "clean, head d2dff3e in local-0.4.17, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-c27",
+   "b": "13,425,556",
+   "r": "clean, head 84e2170 in local-0.4.17, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-c28",
+   "b": "13,525,061",
+   "r": "clean, head ee43f20 in local-0.4.17, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-c30",
+   "b": "13,761,736",
+   "r": "clean, head b575fdb in local-0.4.17, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-c31",
+   "b": "13,826,055",
+   "r": "clean, head 9233a93 in local-0.4.17, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-e30",
+   "b": "13,660,289",
+   "r": "clean, head 7d42d35 in local-0.4.17, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-e36",
+   "b": "13,782,496",
+   "r": "clean, head 3c870e3 in local-0.4.17, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-land411",
+   "b": "3,491,027,218",
+   "r": "clean, head 57b41f8 in local-0.4.17, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-land415",
+   "b": "13,978,592",
+   "r": "clean, head 42d4c2b in local-0.4.17, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-land416",
+   "b": "13,987,684",
+   "r": "clean, head e8e34d0 in local-0.4.17, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-o1",
+   "b": "13,519,277",
+   "r": "clean, head 937f5d4 in local-0.4.17, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-o3",
+   "b": "13,651,203",
+   "r": "clean, head d3be0cb in local-0.4.17, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-p446",
+   "b": "14,004,349",
+   "r": "clean, head 5a2fbab in local-0.4.17, no open lap or plan names it, no link inside |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-048-shots-e",
+   "b": "18,406,687",
+   "r": "dir, no .git; 598 files, newest 2026-10-19; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-cargo-c",
+   "b": "1,916,164,753",
+   "r": "dir, no .git; 3252 files, newest 2026-10-16; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-cargo-e",
+   "b": "1,931,069,035",
+   "r": "dir, no .git; 3278 files, newest 2026-10-17; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d049",
+   "b": "1,580,436",
+   "r": "dir, no .git; 24 files, newest 2026-10-20; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d331",
+   "b": "10,718,349",
+   "r": "dir, no .git; 77 files, newest 2026-10-16; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d341",
+   "b": "23,050,239",
+   "r": "dir, no .git; 40 files, newest 2026-10-16; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d344",
+   "b": "5,720,513",
+   "r": "dir, no .git; 17 files, newest 2026-10-16; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d355",
+   "b": "465,478",
+   "r": "dir, no .git; 5 files, newest 2026-10-17; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d359",
+   "b": "15,344",
+   "r": "dir, no .git; 3 files, newest 2026-10-17; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d362",
+   "b": "44,669,372",
+   "r": "dir, no .git; 36 files, newest 2026-10-17; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d371",
+   "b": "678,159,900",
+   "r": "dir, no .git; 55 files, newest 2026-10-17; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d373",
+   "b": "1,548",
+   "r": "dir, no .git; 1 files, newest 2026-10-17; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d378",
+   "b": "4,812,483",
+   "r": "dir, no .git; 39 files, newest 2026-10-18; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d379-b",
+   "b": "20,059,535",
+   "r": "dir, no .git; 45 files, newest 2026-10-18; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d379-e",
+   "b": "7,354,288",
+   "r": "dir, no .git; 79 files, newest 2026-10-18; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d381",
+   "b": "4,170,599",
+   "r": "dir, no .git; 54 files, newest 2026-10-18; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d381-e",
+   "b": "57,857,221",
+   "r": "dir, no .git; 2306 files, newest 2026-10-18; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d384",
+   "b": "42,704,036",
+   "r": "dir, no .git; 578 files, newest 2026-10-18; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d384-e",
+   "b": "164,406,276",
+   "r": "dir, no .git; 5771 files, newest 2026-10-18; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d384-msg1.txt",
+   "b": "572",
+   "r": "file, no .git; 1 files, newest 2026-10-18; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d389",
+   "b": "1,509,048",
+   "r": "dir, no .git; 23 files, newest 2026-10-18; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d389-e",
+   "b": "113,332,304",
+   "r": "dir, no .git; 4609 files, newest 2026-10-18; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d390",
+   "b": "44,324",
+   "r": "dir, no .git; 14 files, newest 2026-10-18; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d391-e",
+   "b": "23,917,820",
+   "r": "dir, no .git; 352 files, newest 2026-10-18; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d392",
+   "b": "1,530,536",
+   "r": "dir, no .git; 19 files, newest 2026-10-18; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d393-e",
+   "b": "13,898",
+   "r": "dir, no .git; 8 files, newest 2026-10-18; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d394",
+   "b": "1,512,668",
+   "r": "dir, no .git; 18 files, newest 2026-10-19; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d394-e",
+   "b": "213,362",
+   "r": "dir, no .git; 25 files, newest 2026-10-18; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d394-red-settings.out",
+   "b": "3,581",
+   "r": "file, no .git; 1 files, newest 2026-10-18; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d395-concepts",
+   "b": "547,459",
+   "r": "dir, no .git; 137 files, newest 2026-10-18; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d396",
+   "b": "16,363,229",
+   "r": "dir, no .git; 24 files, newest 2026-10-19; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d397-e",
+   "b": "252,821,914",
+   "r": "dir, no .git; 1817 files, newest 2026-10-19; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d398-e",
+   "b": "10,203,040",
+   "r": "dir, no .git; 323 files, newest 2026-10-19; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d399-e",
+   "b": "22,882,500",
+   "r": "dir, no .git; 426 files, newest 2026-10-19; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d400",
+   "b": "63,050",
+   "r": "dir, no .git; 25 files, newest 2026-10-19; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d404",
+   "b": "18,282",
+   "r": "dir, no .git; 3 files, newest 2026-10-19; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d404rev-e",
+   "b": "52,620,269",
+   "r": "dir, no .git; 2298 files, newest 2026-10-19; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d405-e",
+   "b": "27,904,506",
+   "r": "dir, no .git; 967 files, newest 2026-10-19; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d406rev-e",
+   "b": "65,650,326",
+   "r": "dir, no .git; 2873 files, newest 2026-10-19; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d410",
+   "b": "4,969,535",
+   "r": "dir, no .git; 30 files, newest 2026-10-19; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d412",
+   "b": "1,609,891",
+   "r": "dir, no .git; 22 files, newest 2026-10-21; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d414-e",
+   "b": "73,254,829",
+   "r": "dir, no .git; 688 files, newest 2026-10-20; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d416",
+   "b": "24,407,992",
+   "r": "dir, no .git; 55 files, newest 2026-10-20; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d432-e",
+   "b": "17,515,406",
+   "r": "dir, no .git; 1328 files, newest 2026-10-23; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d432-mut",
+   "b": "13,511,731",
+   "r": "dir, no .git; 589 files, newest 2026-10-22; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d446-e",
+   "b": "1,409,694",
+   "r": "dir, no .git; 167 files, newest 2026-10-23; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d446-mut",
+   "b": "13,755,525",
+   "r": "dir, no .git; 602 files, newest 2026-10-23; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-msgs",
+   "b": "907,644",
+   "r": "dir, no .git; 15 files, newest 2026-10-16; no open lap or plan names it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-sounds-d334",
+   "b": "7,930,599",
+   "r": "dir, no .git; 2 files, newest 2026-10-16; no open lap or plan names it |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/b437oom-pQNE1l",
+   "b": "122,024,662",
+   "r": "ours by content (ActorSafetyLists, AmountExtractionHeuristicRegexes, BrowserMetrics-spare.pma…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d361list.txt",
+   "b": "1,863",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d395files.json",
+   "b": "5,243",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d411-export-author.txt",
+   "b": "892",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d411-menubar-page.txt",
+   "b": "3,284",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d411-red.txt",
+   "b": "14,478",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d411-settings.txt",
+   "b": "1,208",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d411-theme-mutation.txt",
+   "b": "5,014",
+   "r": "ours by content (t180 test TAP read in this session), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d411-theme.txt",
+   "b": "1,755",
+   "r": "ours by content (t180 test TAP read in this session), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d411edit.js",
+   "b": "3,327",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d411edit.js.2",
+   "b": "3,408",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d411fix.js",
+   "b": "2,879",
+   "r": "ours by content (t180 test TAP read in this session), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d411green.txt",
+   "b": "5,748",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d411hs.txt",
+   "b": "2,015",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d411r6.js",
+   "b": "951",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d411red.txt",
+   "b": "4,780",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d411x.txt",
+   "b": "0",
+   "r": "empty file, name of filed lap, not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d438.diff",
+   "b": "172,187",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d438a.sha",
+   "b": "855",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d438src.sha",
+   "b": "854",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d439.sha",
+   "b": "854",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/p437exp-4s3hZ6",
+   "b": "185,094,590",
+   "r": "ours by content (ActorSafetyLists, AmountExtractionHeuristicRegexes, BrowserMetrics-spare.pma…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/p437exp-BFiwF2",
+   "b": "185,064,059",
+   "r": "ours by content (ActorSafetyLists, AmountExtractionHeuristicRegexes, BrowserMetrics-spare.pma…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/p437exp-jlu316",
+   "b": "185,040,882",
+   "r": "ours by content (ActorSafetyLists, AmountExtractionHeuristicRegexes, BrowserMetrics-spare.pma…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/p437exp-SJtIUW",
+   "b": "185,049,251",
+   "r": "ours by content (ActorSafetyLists, AmountExtractionHeuristicRegexes, BrowserMetrics-spare.pma…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/p446exp-Uttebs",
+   "b": "189,450,108",
+   "r": "ours by content (ActorSafetyLists, AmountExtractionHeuristicRegexes, Breadcrumbs…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/scoped_dir16140_1363245528",
+   "b": "596,143",
+   "r": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/scoped_dir16140_351611768",
+   "b": "1,169,375",
+   "r": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/scoped_dir18796_83526462",
+   "b": "567,644",
+   "r": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/scoped_dir19572_1801488478",
+   "b": "1,168,153",
+   "r": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/scoped_dir19572_2103109250",
+   "b": "601,348",
+   "r": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/scoped_dir24092_1870515405",
+   "b": "0",
+   "r": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/scoped_dir32432_1795058767",
+   "b": "1,163,722",
+   "r": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/scoped_dir32432_884874878",
+   "b": "596,143",
+   "r": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/scoped_dir36420_1728314846",
+   "b": "578,926",
+   "r": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/scoped_dir39172_1787509312",
+   "b": "164,015",
+   "r": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/scoped_dir39172_644652556",
+   "b": "249,629",
+   "r": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/scoped_dir40204_1407341019",
+   "b": "1,168,153",
+   "r": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/scoped_dir40204_1632679282",
+   "b": "596,143",
+   "r": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180-water-6yp5Xa",
+   "b": "386,388",
+   "r": "ours by content (W1.js, W10.js, W11.js…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180-water-B7a9xn",
+   "b": "386,464",
+   "r": "ours by content (W1.js, W10.js, W11.js…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180-water-cqzkwd",
+   "b": "386,464",
+   "r": "ours by content (W1.js, W10.js, W11.js…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180-water-HDhrlb",
+   "b": "386,464",
+   "r": "ours by content (W1.js, W10.js, W11.js…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180-water-JNufVK",
+   "b": "386,407",
+   "r": "ours by content (W1.js, W10.js, W11.js…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180-water-LFNqDo",
+   "b": "386,388",
+   "r": "ours by content (W1.js, W10.js, W11.js…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180-water-qBB9kQ",
+   "b": "386,464",
+   "r": "ours by content (W1.js, W10.js, W11.js…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180-water-zTop6Y",
+   "b": "386,388",
+   "r": "ours by content (W1.js, W10.js, W11.js…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180close.txt",
+   "b": "13,407",
+   "r": "ours by content (t180 test TAP read in this session), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180crisp-HwQOYe",
+   "b": "63,488,201",
+   "r": "ours by content (Default, extensions_crx_cache, FileTypePolicies…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180dec.txt",
+   "b": "124,988",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180df.txt",
+   "b": "42,380",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180fin.txt",
+   "b": "14,565",
+   "r": "ours by content (t180 test TAP read in this session), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180full.txt",
+   "b": "433,466",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180full2.txt",
+   "b": "433,857",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180full3.txt",
+   "b": "435,661",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180full4.txt",
+   "b": "437,006",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180full5.txt",
+   "b": "437,994",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180full6.txt",
+   "b": "438,018",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180full7.txt",
+   "b": "438,246",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180h.txt",
+   "b": "35,158",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180mut.txt",
+   "b": "19,557",
+   "r": "ours by content (t180 test TAP read in this session), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180rel-ED1OLp",
+   "b": "78,576,637",
+   "r": "ours by content (CrashpadMetrics-active.pma, Crowd Deny, Default…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180sculpt-7zE8p8",
+   "b": "37,833,088",
+   "r": "ours by content (CrashpadMetrics-active.pma, Crowd Deny, Default…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180sculpt-YBniii",
+   "b": "17,627,948",
+   "r": "ours by content (CrashpadMetrics-active.pma, Crowd Deny, Default…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180sweep",
+   "b": "296,674",
+   "r": "ours by content (CHANGELOG.md, README.md…), none of its files open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180t2.txt",
+   "b": "29,251",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180t3.txt",
+   "b": "35,357",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180tests.txt",
+   "b": "35,605",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180_a2.log",
+   "b": "16,139",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180_build.log",
+   "b": "158",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180_c.log",
+   "b": "19,223",
+   "r": "ours by content (t180 test TAP read in this session), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180_fx.log",
+   "b": "2,879",
+   "r": "ours by content (t180 test TAP read in this session), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/t180_touched.log",
+   "b": "6,005",
+   "r": "ours by content (names t180/test paths), not open |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/v0414.MxBP",
+   "b": "13,831,513",
+   "r": "ours by content (.claude, .gitattributes, .gitignore…), none of its files open |"
+  },
+  {
+   "g": "G5",
+   "p": "C:/build",
+   "b": "24,992,044,582",
+   "r": "7 cargo target dirs of laps D098/D111/D164/D168/D169/D170 (none open); newest write 2026-09-27; no CARGO_TARGET_DIR (env, HKCU, HKLM) and no cargo config names it |"
+  },
+  {
+   "g": "G6",
+   "p": "~/Desktop/lighthouse/exo_memory/handback/p-d433-P_2026-10-22_evidence/out",
+   "b": "67,567,378",
+   "r": "untracked evidence copy, lap D433 filed |"
+  },
+  {
+   "g": "G6",
+   "p": "~/Desktop/lighthouse/exo_memory/handback/p-d433-P_2026-10-22_evidence/out-re",
+   "b": "742,827",
+   "r": "untracked evidence copy, lap D433 filed |"
+  },
+  {
+   "g": "G6",
+   "p": "~/Desktop/lighthouse/exo_memory/handback/p-d438-O_2026-10-22_evidence/tracks",
+   "b": "316,317",
+   "r": "untracked evidence copy, lap D438 filed |"
+  },
+  {
+   "g": "G6",
+   "p": "~/Desktop/lighthouse/exo_memory/handback/p-d438-build-O_2026-10-22_evidence/tracks",
+   "b": "465,131,139",
+   "r": "untracked evidence copy, lap D438 filed |"
+  },
+  {
+   "g": "G6",
+   "p": "~/Desktop/lighthouse/exo_memory/handback/p-d439-O_2026-10-23_evidence/tracks",
+   "b": "228,624,606",
+   "r": "untracked evidence copy, lap D439 filed |"
+  },
+  {
+   "g": "branch",
+   "p": "land-0.4.8",
+   "b": "0",
+   "r": "409d3f8 merged into HEAD (e59991e), not checked out: git branch -d succeeds |"
+  },
+  {
+   "g": "his",
+   "p": "~/Documents/t180b_untitled",
+   "b": "5,101,376",
+   "r": "builder-made: .t180b-builder.json says tool t180-track-builder (src/export/fromwords.js, written 2026-09-27), its 9 listed files are exactly the folder's files |"
+  },
+  {
+   "g": "his",
+   "p": "~/Documents/Assetto Corsa/content/tracks/t180b_test_oval",
+   "b": "56,143,568",
+   "r": "builder-made: .t180b-builder.json says tool t180-track-builder (src/export/fromwords.js, written 2026-10-02), its 9 listed files are exactly the folder's files |"
+  },
+  {
+   "g": "his",
+   "p": "~/Downloads/t180-wt-e19",
+   "b": "13,059,621",
+   "r": "clean, head e18a9c5 (d394-e) in local-0.4.17, no open lap or plan names it |"
+  },
+  {
+   "g": "his",
+   "p": "~/Downloads/t180-wt-e20",
+   "b": "13,096,336",
+   "r": "clean, head e46d5a1 (d398-e) in local-0.4.17, no open lap or plan names it |"
+  },
+  {
+   "g": "his",
+   "p": "~/Downloads/t180-wt-e21",
+   "b": "13,167,213",
+   "r": "clean, head fc8c445 (d399-e) in local-0.4.17, no open lap or plan names it |"
+  },
+  {
+   "g": "his",
+   "p": "~/Downloads/t180-wt-e22",
+   "b": "13,109,740",
+   "r": "clean, head 41eac04 (skydither-row2-e) in local-0.4.17, no open lap or plan names it |"
+  },
+  {
+   "g": "his",
+   "p": "~/Downloads/t180-wt-e24",
+   "b": "13,278,238",
+   "r": "clean, head 294cacd (d405-e) in local-0.4.17, no open lap or plan names it |"
+  }
+ ],
+ "FAIL": [
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-040",
+   "b": "8,329,963",
+   "r": "named as a comparison tree its seat added for open-lap work (D434/D437 board lines 1792729756183, 1792740540639); no release seen |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-a34",
+   "b": "13,451,175",
+   "r": "not clean: 1 entry (untracked only: app/test/sculpt-frame.test.js) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-a35",
+   "b": "13,516,657",
+   "r": "not clean: 1 entry (untracked only: app/test/sculpt-frame.test.js) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-a36",
+   "b": "13,660,228",
+   "r": "not clean: 1 entry (untracked only: app/test/sculpt-prof.tmp.js) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-a37",
+   "b": "13,683,922",
+   "r": "not clean: 1 entry (untracked only: app/test/sculpt-prof.tmp.js) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-a427",
+   "b": "13,701,460",
+   "r": "its own lap is open (D427) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-a429",
+   "b": "13,762,518",
+   "r": "A wrote that it \"remains\" while removing its siblings, in a D427/D434 line (1792747548168, 2026-10-23 01:25Z); no release seen |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-b425",
+   "b": "13,730,248",
+   "r": "its own lap is open (D425) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-b437",
+   "b": "13,882,785",
+   "r": "its own lap is open (D437) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-c29",
+   "b": "13,704,467",
+   "r": "its own lap is open (D426) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-e23",
+   "b": "13,137,585",
+   "r": "head 58abf77 not in 0.4.17/0.4.18 and git cherry shows 2 patch(es) not landed; its own lap is open (D403) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-e26",
+   "b": "1,575,234,034",
+   "r": "head 000f13e not in 0.4.17/0.4.18 and git cherry shows 2 patch(es) not landed |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-e27",
+   "b": "13,495,119",
+   "r": "not clean: 1 entry (untracked only: app/test/sculpt-frame.test.js) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-e28",
+   "b": "13,599,342",
+   "r": "not clean: 1 entry (untracked only: app/test/sculpt-frame-prof.test.js) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-e29",
+   "b": "1,575,815,759",
+   "r": "head 5168053 not in 0.4.17/0.4.18 and git cherry shows 1 patch(es) not landed |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-e31",
+   "b": "1,575,908,612",
+   "r": "head b6a616c not in 0.4.17/0.4.18 and git cherry shows 1 patch(es) not landed |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-e32",
+   "b": "13,725,757",
+   "r": "its own lap is open (D425) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-e33",
+   "b": "13,754,981",
+   "r": "its own lap is open (D425) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-e34",
+   "b": "1,576,189,354",
+   "r": "head ab89570 not in 0.4.17/0.4.18 and git cherry shows 1 patch(es) not landed |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-e35",
+   "b": "13,786,768",
+   "r": "its own lap is open (D403) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-e38",
+   "b": "13,836,292",
+   "r": "its own lap is open (D437) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-land412",
+   "b": "3,491,231,804",
+   "r": "plan under an open-lap heading names it (plan_d425_sculpt_cues_2026-10-21.md:9 D425; plan_d426_ghost_vanish_2026-10-21.md:15 D426) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-land413",
+   "b": "13,756,069",
+   "r": "open-lap row names it (D425) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-land414",
+   "b": "14,034,473",
+   "r": "not clean: 3 entries (untracked only: fixtures-d337/pre-close.t180track, fixtures-d431/test10-open.t180track, fixtures-d431/testtrack10-open.t180track) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-land417",
+   "b": "14,223,010",
+   "r": "not clean: 3 entries (untracked only: fixtures-d337/pre-close.t180track, fixtures-d431/test10-open.t180track, fixtures-d431/testtrack10-open.t180track) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-o10-kn5",
+   "b": "13,997,931",
+   "r": "not clean: 19 entries (CHANGELOG.md, app/core/overlapjob.js, app/core/overlapmerge.js, …); merge in progress (MERGE_HEAD) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-o11-kn5a",
+   "b": "13,974,481",
+   "r": "not clean: 18 entries (CHANGELOG.md, app/core/overlapjob.js, app/core/overlapmerge.js, …); merge in progress (MERGE_HEAD) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-o12",
+   "b": "14,100,868",
+   "r": "not clean: 6 entries (untracked only: fixtures-d337/pre-close.t180track, fixtures-d431/p-t180-l1200-r10.t180track, fixtures-d431/p-t180-l1200-r30.t180track, …) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-o13-kn5",
+   "b": "13,983,746",
+   "r": "not clean: 18 entries (CHANGELOG.md, app/core/overlapjob.js, app/core/overlapmerge.js, …); merge in progress (MERGE_HEAD) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-o14",
+   "b": "14,106,414",
+   "r": "not clean: 6 entries (untracked only: fixtures-d337/pre-close.t180track, fixtures-d431/p-t180-l1200-r10.t180track, fixtures-d431/p-t180-l1200-r30.t180track, …) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-o15-red",
+   "b": "13,868,870",
+   "r": "not clean: 1 entry (est/core_finish_bank.test.js) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-o16",
+   "b": "14,108,491",
+   "r": "not clean: 6 entries (untracked only: fixtures-d337/pre-close.t180track, fixtures-d431/p-t180-l1200-r10.t180track, fixtures-d431/p-t180-l1200-r30.t180track, …) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-o17",
+   "b": "14,110,262",
+   "r": "not clean: 6 entries (untracked only: fixtures-d337/pre-close.t180track, fixtures-d431/p-t180-l1200-r10.t180track, fixtures-d431/p-t180-l1200-r30.t180track, …) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-o2",
+   "b": "13,514,757",
+   "r": "not clean: 1 entry (untracked only: app/test/sculpt-frame.test.js) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-o4",
+   "b": "13,984,550",
+   "r": "not clean: 3 entries (untracked only: fixtures-d337/pre-close.t180track, fixtures-d431/test10-open.t180track, fixtures-d431/testtrack10-open.t180track); plan under an open-lap heading names it (plan_d434_close_banks_curves_2026-10-22.md:30 D434) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-o5",
+   "b": "14,051,083",
+   "r": "not clean: 3 entries (untracked only: fixtures-d337/pre-close.t180track, fixtures-d431/test10-open.t180track, fixtures-d431/testtrack10-open.t180track); plan under an open-lap heading names it (plan_d438_pits_flip_and_closer_joints_2026-10-22.md:47 D434); its own lap is open (D434) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-o6-scratch",
+   "b": "13,952,394",
+   "r": "not clean: 18 entries (CHANGELOG.md, app/core/overlapjob.js, app/core/overlapmerge.js, …); merge in progress (MERGE_HEAD) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-o7",
+   "b": "14,071,704",
+   "r": "not clean: 3 entries (untracked only: fixtures-d337/pre-close.t180track, fixtures-d431/test10-open.t180track, fixtures-d431/testtrack10-open.t180track) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-o8-red",
+   "b": "13,964,340",
+   "r": "not clean: 3 entries (untracked only: fixtures-d431/test10-open.t180track, fixtures-d431/testtrack10-open.t180track, test/core_finish_joints.test.js) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-o9-d438",
+   "b": "13,971,500",
+   "r": "not clean: 2 entries (untracked only: fixtures-d431/test10-open.t180track, fixtures-d431/testtrack10-open.t180track) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-p438",
+   "b": "13,972,514",
+   "r": "not clean: 2 entries (untracked only: fixtures-d431/test10-open.t180track, fixtures-d431/testtrack10-open.t180track) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-p438b",
+   "b": "13,972,286",
+   "r": "not clean: 2 entries (untracked only: fixtures-d431/test10-open.t180track, fixtures-d431/testtrack10-open.t180track) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-p438c",
+   "b": "13,976,601",
+   "r": "not clean: 2 entries (untracked only: fixtures-d431/test10-open.t180track, fixtures-d431/testtrack10-open.t180track) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-p439",
+   "b": "13,985,548",
+   "r": "not clean: 2 entries (untracked only: fixtures-d431/test10-open.t180track, fixtures-d431/testtrack10-open.t180track) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-p440",
+   "b": "13,990,644",
+   "r": "not clean: 2 entries (untracked only: fixtures-d431/test10-open.t180track, fixtures-d431/testtrack10-open.t180track) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-p443",
+   "b": "13,992,721",
+   "r": "not clean: 2 entries (untracked only: fixtures-d431/test10-open.t180track, fixtures-d431/testtrack10-open.t180track) |"
+  },
+  {
+   "g": "G1",
+   "p": "~/Downloads/t180-wt-p446e",
+   "b": "13,987,682",
+   "r": "P lists it among its existing trees in a D402 line of today (1792816026483, 2026-10-24 04:27Z); P's open trees are kept by ruling unless P releases it |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d358",
+   "b": "979,408,979",
+   "r": "holds the only record of the .before-scifi zip digest (HANDBACK_A.md:35); no exo_memory file carries it. Passes once the digests are recorded elsewhere (this hand-back records them) |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d364",
+   "b": "1,238,615,952",
+   "r": "holds the only record of the ELYSIUM and .before-d364 zip digests (HANDBACK_A.md:70-71); no exo_memory file carries them. Passes once recorded elsewhere (this hand-back records them) |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d403-base",
+   "b": "13,756,747",
+   "r": "its own lap is open (D403) |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d403-diag",
+   "b": "13,785,818",
+   "r": "its own lap is open (D403) |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d403-mut",
+   "b": "13,786,579",
+   "r": "its own lap is open (D403) |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d403f-e",
+   "b": "26,114,284",
+   "r": "its own lap is open (D403) |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d403rev",
+   "b": "30,491,853",
+   "r": "its own lap is open (D403) |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d408",
+   "b": "17,948,224",
+   "r": "its own lap is open (D408) |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d413",
+   "b": "3,304,847",
+   "r": "live tool: holds lockrun.js (the heavy-run lock wrapper) and tapmut.js; this verify's own runs call it (run.log, run2.log, run3.log) |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d421-e",
+   "b": "71,672,962",
+   "r": "live tool: E's heavy-run gate (gate.js) named as the current route in a D402 board line of today 03:50Z (board ts 1792813839784); also D442 evidence (p-d442-E_2026-10-23.md) |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d421b",
+   "b": "1,265,356",
+   "r": "live tool: wait2.js (both-slots timing) and lockrun.js named as the current tools in open-lap lines (D425/D426/D427 1792644150710; D403 1792701876248, 2026-10-22 20:44Z) |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d425-mut",
+   "b": "10,834,144",
+   "r": "its own lap is open (D425) |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d425b",
+   "b": "202,774",
+   "r": "its own lap is open (D425) |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d437-A",
+   "b": "13,828,364",
+   "r": "its own lap is open (D437) |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d437-base",
+   "b": "13,831,887",
+   "r": "its own lap is open (D437) |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d437-e",
+   "b": "245,029,020",
+   "r": "its own lap is open (D437) |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d437-mut",
+   "b": "13,569,534",
+   "r": "its own lap is open (D437) |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d437-S",
+   "b": "13,828,287",
+   "r": "its own lap is open (D437) |"
+  },
+  {
+   "g": "G2",
+   "p": "~/Downloads/t180-d437b",
+   "b": "532,652",
+   "r": "its own lap is open (D437) |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d02524ef-c01f-4ff2-b659-fc7947c6ddd0.tmp",
+   "b": "11,185",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d033a605-e153-4d30-ba46-a4bc42b282c1.tmp",
+   "b": "248,531",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d08873de-c915-4f43-b7a0-2da228412aa5.tmp",
+   "b": "162,108",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d160dcb7-3095-4c0f-9171-493cd10bfa8d.tmp",
+   "b": "248,531",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d1615ec8-ac82-4f7e-95b2-5ef9e05f142b.tmp",
+   "b": "162,108",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d178b8e0-a33f-48bf-acb8-eb0f16b63d7f.tmp",
+   "b": "11,185",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d25014c3-f558-4ed0-8438-145d0740a39c.tmp.woff2",
+   "b": "114,856",
+   "r": "not shown ours: a uuid temp file (magic wOF2), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d415e3f7-cb12-4e40-b057-12ff34f652ca.tmp",
+   "b": "11,185",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d43925d2-1d89-481e-976b-7e7abe82c161.tmp",
+   "b": "162,108",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d515af43-d501-4857-9a59-a5b57dba64b6.tmp",
+   "b": "162,108",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d522be0a-75b3-4894-8e69-b06f697be166.tmp",
+   "b": "162,108",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d551b55c-e6fa-4b3d-a5cc-28c0fa4ceff0.tmp",
+   "b": "162,108",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d57389f3-8f23-4098-9d7b-9d8991ef0d9b.tmp",
+   "b": "162,108",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d5937f2f-bf09-4131-88b0-6ff52aa6cc0c.tmp",
+   "b": "162,108",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d6029932-c469-4989-bd35-6115458c12ce.tmp",
+   "b": "162,108",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d648d115-633a-4a4e-af95-9a554de019e6.tmp",
+   "b": "11,185",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d6727b7f-ab71-4382-b526-79bdd0376f4d.tmp",
+   "b": "248,531",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d742b9fb-e8ba-496c-98c5-95ad397244b4.tmp",
+   "b": "162,108",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d7440b6a-e9c2-46a1-864d-b90a3e32d888.tmp",
+   "b": "162,108",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d7877de3-c88a-4bc5-b64a-6b736a3cd8be.tmp",
+   "b": "162,108",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d797d9f3-cdec-4195-888a-7ed0223d76d9.tmp",
+   "b": "162,108",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d8059fb7-1c21-4d00-ac76-371422a2dcda.tmp",
+   "b": "162,108",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d863aab5-6c85-49da-aa0e-45c4ee704305.tmp",
+   "b": "11,185",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/d934ee2b-8aff-4470-89a3-bbf7de23f17c.tmp",
+   "b": "248,531",
+   "r": "not shown ours: a uuid temp file (magic Cr24, a Chrome extension package), one of ~1,600 such in TEMP across every hex first letter (d=106); C's regex /^(…|d\\d{3}|…)/ caught the d-ones by accident |"
+  },
+  {
+   "g": "G4",
+   "p": "~/AppData/Local/Temp/node-compile-cache",
+   "b": "1,317,976",
+   "r": "not shown ours: node's shared compile cache (any node on the machine writes it, Claude Code included) |"
+  },
+  {
+   "g": "G6",
+   "p": "~/Desktop/lighthouse/exo_memory/handback/p-d434-O_2026-10-22_evidence/tracks",
+   "b": "247,774,708",
+   "r": "its lap D434 is open (handbacks-in) |"
+  },
+  {
+   "g": "branch",
+   "p": "d427-a",
+   "b": "0",
+   "r": "a795359 is in local-0.4.17 but NOT merged into HEAD (docs/readme-0.4x @ e59991e), no upstream: git branch -d refuses (\"not fully merged\"); its lap is open (D427) |"
+  },
+  {
+   "g": "branch",
+   "p": "d446-e",
+   "b": "0",
+   "r": "a05e487 is in local-0.4.17 but NOT merged into HEAD (docs/readme-0.4x @ e59991e), no upstream: git branch -d refuses (\"not fully merged\") |"
+  }
+ ]
+}

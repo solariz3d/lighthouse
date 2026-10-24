@@ -1,0 +1,2679 @@
+[
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-a33",
+  "bytesB": 13464545,
+  "reason": "clean, head e3e9b4a not an ancestor but git cherry 0, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 595,
+   "bytes": 13464545,
+   "newest": "2026-10-21T03:39:05.0921302Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "e3e9b4a0a1d79fd5fd7dfd77a673b0fc1db9f705",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-a38",
+  "bytesB": 13655780,
+  "reason": "clean, head c45518f in local-0.4.17, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 601,
+   "bytes": 13655780,
+   "newest": "2026-10-21T04:07:53.1417254Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "c45518fff55158e9c1716445c90a4c22249ff334",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-b049",
+  "bytesB": 5042521329,
+  "reason": "clean, head 409d3f8 in local-0.4.17, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 7804,
+   "bytes": 5042521329,
+   "newest": "2026-10-20T07:58:45.2607718Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "409d3f834b3364f0391d1e2d9bf9be3ceb5e2b90",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-b421",
+  "bytesB": 13450873,
+  "reason": "clean, head 8b7ef3e in local-0.4.17, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 593,
+   "bytes": 13450873,
+   "newest": "2026-10-20T23:55:15.5509195Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "8b7ef3e3d309452718148fcb1395e17aeeebb5a0",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-b421c",
+  "bytesB": 13636963,
+  "reason": "clean, head 856a386 in local-0.4.17, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 600,
+   "bytes": 13636963,
+   "newest": "2026-10-21T02:35:48.1088747Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "856a386517c05a8c17a6143f855cf55f57e7fb89",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-b428",
+  "bytesB": 13758029,
+  "reason": "clean, head c1841ca in local-0.4.17, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 605,
+   "bytes": 13758029,
+   "newest": "2026-10-22T03:46:26.5514831Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "c1841cae1d769bc5a0ffc2f3a0360b0196a6a16f",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-b433",
+  "bytesB": 13757570,
+  "reason": "clean, head d2dff3e in local-0.4.17, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 605,
+   "bytes": 13757570,
+   "newest": "2026-10-22T16:06:43.0110221Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "d2dff3eb474ddb9fa3ddcd888d78ea2f6a6549ae",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-c27",
+  "bytesB": 13425556,
+  "reason": "clean, head 84e2170 in local-0.4.17, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 593,
+   "bytes": 13425556,
+   "newest": "2026-10-20T08:11:24.4788957Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "84e21700dbc8d531d427e10a45e3e3716f2370d2",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-c28",
+  "bytesB": 13525061,
+  "reason": "clean, head ee43f20 in local-0.4.17, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 597,
+   "bytes": 13525061,
+   "newest": "2026-10-21T01:05:49.2833414Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "ee43f20adbefe9c85335a9b09dd2ebc1d01c6c54",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-c30",
+  "bytesB": 13761736,
+  "reason": "clean, head b575fdb in local-0.4.17, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 605,
+   "bytes": 13761736,
+   "newest": "2026-10-22T15:31:23.0151288Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "b575fdbf53aeb2ccd6edaa88317b086824af4f0a",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-c31",
+  "bytesB": 13826055,
+  "reason": "clean, head 9233a93 in local-0.4.17, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 608,
+   "bytes": 13826055,
+   "newest": "2026-10-23T03:46:13.8025765Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "9233a93927e26fbaae805cef8a6155516102ae11",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-e30",
+  "bytesB": 13660289,
+  "reason": "clean, head 7d42d35 in local-0.4.17, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 601,
+   "bytes": 13660289,
+   "newest": "2026-10-21T04:00:17.6384380Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "7d42d3523381f8d872a641a4aa539c4e0aa0f2fb",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-e36",
+  "bytesB": 13782496,
+  "reason": "clean, head 3c870e3 in local-0.4.17, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 606,
+   "bytes": 13782496,
+   "newest": "2026-10-22T21:44:00.9327416Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "3c870e34428e9243a9a2ea5bdd12fe31117172e6",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-land411",
+  "bytesB": 3491027218,
+  "reason": "clean, head 57b41f8 in local-0.4.17, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 4325,
+   "bytes": 3491027218,
+   "newest": "2026-10-21T01:40:35.2143980Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "57b41f875392b9c1c2c99a4bc321f219c5a5f712",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-land415",
+  "bytesB": 13978592,
+  "reason": "clean, head 42d4c2b in local-0.4.17, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 617,
+   "bytes": 13978592,
+   "newest": "2026-10-23T09:34:34.5400653Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "42d4c2b26b053d65f1678b50dde415c48c164372",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-land416",
+  "bytesB": 13987684,
+  "reason": "clean, head e8e34d0 in local-0.4.17, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 617,
+   "bytes": 13987684,
+   "newest": "2026-10-23T13:28:05.8081424Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "e8e34d00c3ff4324c82182a5e0dba872fc325200",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-o1",
+  "bytesB": 13519277,
+  "reason": "clean, head 937f5d4 in local-0.4.17, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 597,
+   "bytes": 13519277,
+   "newest": "2026-10-21T00:45:29.9996455Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "937f5d45438bc72fb76ffd8d26c9e7af7e9f988b",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-o3",
+  "bytesB": 13651203,
+  "reason": "clean, head d3be0cb in local-0.4.17, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 601,
+   "bytes": 13651203,
+   "newest": "2026-10-21T03:44:59.4746071Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "d3be0cbd9846ad08bb8512e88700e6c51e7e7f20",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G1",
+  "path": "C:/Users/nname/Downloads/t180-wt-p446",
+  "bytesB": 14004349,
+  "reason": "clean, head 5a2fbab in local-0.4.17, no open lap or plan names it, no link inside",
+  "walkB": {
+   "files": 617,
+   "bytes": 14004349,
+   "newest": "2026-10-23T17:57:15.0545511Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "5a2fbab2c37048e3f20750c265ad6bf53ebe9630",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-048-shots-e",
+  "bytesB": 18406687,
+  "reason": "dir, no .git; 598 files, newest 2026-10-19; no open lap or plan names it",
+  "walkB": {
+   "files": 598,
+   "bytes": 18406687,
+   "newest": "2026-10-19T12:59:25.1537491Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-cargo-c",
+  "bytesB": 1916164753,
+  "reason": "dir, no .git; 3252 files, newest 2026-10-16; no open lap or plan names it",
+  "walkB": {
+   "files": 3252,
+   "bytes": 1916164753,
+   "newest": "2026-10-16T15:51:32.9502784Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-cargo-e",
+  "bytesB": 1931069035,
+  "reason": "dir, no .git; 3278 files, newest 2026-10-17; no open lap or plan names it",
+  "walkB": {
+   "files": 3278,
+   "bytes": 1931069035,
+   "newest": "2026-10-17T15:40:12.7856042Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d049",
+  "bytesB": 1580436,
+  "reason": "dir, no .git; 24 files, newest 2026-10-20; no open lap or plan names it",
+  "walkB": {
+   "files": 24,
+   "bytes": 1580436,
+   "newest": "2026-10-20T07:58:33.8938241Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d331",
+  "bytesB": 10718349,
+  "reason": "dir, no .git; 77 files, newest 2026-10-16; no open lap or plan names it",
+  "walkB": {
+   "files": 77,
+   "bytes": 10718349,
+   "newest": "2026-10-16T07:24:57.3754917Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d341",
+  "bytesB": 23050239,
+  "reason": "dir, no .git; 40 files, newest 2026-10-16; no open lap or plan names it",
+  "walkB": {
+   "files": 40,
+   "bytes": 23050239,
+   "newest": "2026-10-16T16:21:10.5276713Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d344",
+  "bytesB": 5720513,
+  "reason": "dir, no .git; 17 files, newest 2026-10-16; no open lap or plan names it",
+  "walkB": {
+   "files": 17,
+   "bytes": 5720513,
+   "newest": "2026-10-16T21:29:27.4811973Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d355",
+  "bytesB": 465478,
+  "reason": "dir, no .git; 5 files, newest 2026-10-17; no open lap or plan names it",
+  "walkB": {
+   "files": 5,
+   "bytes": 465478,
+   "newest": "2026-10-17T12:27:33.6150723Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d359",
+  "bytesB": 15344,
+  "reason": "dir, no .git; 3 files, newest 2026-10-17; no open lap or plan names it",
+  "walkB": {
+   "files": 3,
+   "bytes": 15344,
+   "newest": "2026-10-17T16:35:13.1960813Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d362",
+  "bytesB": 44669372,
+  "reason": "dir, no .git; 36 files, newest 2026-10-17; no open lap or plan names it",
+  "walkB": {
+   "files": 36,
+   "bytes": 44669372,
+   "newest": "2026-10-17T15:45:17.6954871Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d371",
+  "bytesB": 678159900,
+  "reason": "dir, no .git; 55 files, newest 2026-10-17; no open lap or plan names it",
+  "walkB": {
+   "files": 55,
+   "bytes": 678159900,
+   "newest": "2026-10-17T19:08:25.5955974Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d373",
+  "bytesB": 1548,
+  "reason": "dir, no .git; 1 files, newest 2026-10-17; no open lap or plan names it",
+  "walkB": {
+   "files": 1,
+   "bytes": 1548,
+   "newest": "2026-10-17T19:11:23.5425392Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d378",
+  "bytesB": 4812483,
+  "reason": "dir, no .git; 39 files, newest 2026-10-18; no open lap or plan names it",
+  "walkB": {
+   "files": 39,
+   "bytes": 4812483,
+   "newest": "2026-10-18T14:49:39.1229747Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d379-b",
+  "bytesB": 20059535,
+  "reason": "dir, no .git; 45 files, newest 2026-10-18; no open lap or plan names it",
+  "walkB": {
+   "files": 45,
+   "bytes": 20059535,
+   "newest": "2026-10-18T00:20:39.0710422Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d379-e",
+  "bytesB": 7354288,
+  "reason": "dir, no .git; 79 files, newest 2026-10-18; no open lap or plan names it",
+  "walkB": {
+   "files": 79,
+   "bytes": 7354288,
+   "newest": "2026-10-18T00:20:04.6883584Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d381",
+  "bytesB": 4170599,
+  "reason": "dir, no .git; 54 files, newest 2026-10-18; no open lap or plan names it",
+  "walkB": {
+   "files": 54,
+   "bytes": 4170599,
+   "newest": "2026-10-18T01:56:44.1499186Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d381-e",
+  "bytesB": 57857221,
+  "reason": "dir, no .git; 2306 files, newest 2026-10-18; no open lap or plan names it",
+  "walkB": {
+   "files": 2306,
+   "bytes": 57857221,
+   "newest": "2026-10-18T02:03:37.7996695Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d384",
+  "bytesB": 42704036,
+  "reason": "dir, no .git; 578 files, newest 2026-10-18; no open lap or plan names it",
+  "walkB": {
+   "files": 578,
+   "bytes": 42704036,
+   "newest": "2026-10-18T17:21:25.6556882Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d384-e",
+  "bytesB": 164406276,
+  "reason": "dir, no .git; 5771 files, newest 2026-10-18; no open lap or plan names it",
+  "walkB": {
+   "files": 5771,
+   "bytes": 164406276,
+   "newest": "2026-10-18T17:30:18.8644542Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d384-msg1.txt",
+  "bytesB": 572,
+  "reason": "file, no .git; 1 files, newest 2026-10-18; no open lap or plan names it",
+  "walkB": {
+   "files": 1,
+   "bytes": 572,
+   "newest": "2026-10-18T11:57:19.0384937Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d389",
+  "bytesB": 1509048,
+  "reason": "dir, no .git; 23 files, newest 2026-10-18; no open lap or plan names it",
+  "walkB": {
+   "files": 23,
+   "bytes": 1509048,
+   "newest": "2026-10-18T18:58:43.2010172Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d389-e",
+  "bytesB": 113332304,
+  "reason": "dir, no .git; 4609 files, newest 2026-10-18; no open lap or plan names it",
+  "walkB": {
+   "files": 4609,
+   "bytes": 113332304,
+   "newest": "2026-10-18T19:31:29.9352146Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d390",
+  "bytesB": 44324,
+  "reason": "dir, no .git; 14 files, newest 2026-10-18; no open lap or plan names it",
+  "walkB": {
+   "files": 14,
+   "bytes": 44324,
+   "newest": "2026-10-18T19:55:48.5460347Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d391-e",
+  "bytesB": 23917820,
+  "reason": "dir, no .git; 352 files, newest 2026-10-18; no open lap or plan names it",
+  "walkB": {
+   "files": 352,
+   "bytes": 23917820,
+   "newest": "2026-10-18T19:41:03.1674718Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d392",
+  "bytesB": 1530536,
+  "reason": "dir, no .git; 19 files, newest 2026-10-18; no open lap or plan names it",
+  "walkB": {
+   "files": 19,
+   "bytes": 1530536,
+   "newest": "2026-10-18T21:31:45.1786519Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d393-e",
+  "bytesB": 13898,
+  "reason": "dir, no .git; 8 files, newest 2026-10-18; no open lap or plan names it",
+  "walkB": {
+   "files": 8,
+   "bytes": 13898,
+   "newest": "2026-10-18T20:01:34.3319331Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d394",
+  "bytesB": 1512668,
+  "reason": "dir, no .git; 18 files, newest 2026-10-19; no open lap or plan names it",
+  "walkB": {
+   "files": 18,
+   "bytes": 1512668,
+   "newest": "2026-10-19T00:55:17.9383804Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d394-e",
+  "bytesB": 213362,
+  "reason": "dir, no .git; 25 files, newest 2026-10-18; no open lap or plan names it",
+  "walkB": {
+   "files": 25,
+   "bytes": 213362,
+   "newest": "2026-10-18T22:56:20.9473959Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d394-red-settings.out",
+  "bytesB": 3581,
+  "reason": "file, no .git; 1 files, newest 2026-10-18; no open lap or plan names it",
+  "walkB": {
+   "files": 1,
+   "bytes": 3581,
+   "newest": "2026-10-18T22:14:07.8139395Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d395-concepts",
+  "bytesB": 547459,
+  "reason": "dir, no .git; 137 files, newest 2026-10-18; no open lap or plan names it",
+  "walkB": {
+   "files": 137,
+   "bytes": 547459,
+   "newest": "2026-10-18T23:05:38.0647171Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d396",
+  "bytesB": 16363229,
+  "reason": "dir, no .git; 24 files, newest 2026-10-19; no open lap or plan names it",
+  "walkB": {
+   "files": 24,
+   "bytes": 16363229,
+   "newest": "2026-10-19T03:51:34.4843148Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d397-e",
+  "bytesB": 252821914,
+  "reason": "dir, no .git; 1817 files, newest 2026-10-19; no open lap or plan names it",
+  "walkB": {
+   "files": 1817,
+   "bytes": 252821914,
+   "newest": "2026-10-19T13:06:00.2026016Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d398-e",
+  "bytesB": 10203040,
+  "reason": "dir, no .git; 323 files, newest 2026-10-19; no open lap or plan names it",
+  "walkB": {
+   "files": 323,
+   "bytes": 10203040,
+   "newest": "2026-10-19T01:45:47.4642079Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d399-e",
+  "bytesB": 22882500,
+  "reason": "dir, no .git; 426 files, newest 2026-10-19; no open lap or plan names it",
+  "walkB": {
+   "files": 426,
+   "bytes": 22882500,
+   "newest": "2026-10-19T03:49:24.9411899Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d400",
+  "bytesB": 63050,
+  "reason": "dir, no .git; 25 files, newest 2026-10-19; no open lap or plan names it",
+  "walkB": {
+   "files": 25,
+   "bytes": 63050,
+   "newest": "2026-10-19T02:09:09.6777309Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d404",
+  "bytesB": 18282,
+  "reason": "dir, no .git; 3 files, newest 2026-10-19; no open lap or plan names it",
+  "walkB": {
+   "files": 3,
+   "bytes": 18282,
+   "newest": "2026-10-19T03:55:19.7733311Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d404rev-e",
+  "bytesB": 52620269,
+  "reason": "dir, no .git; 2298 files, newest 2026-10-19; no open lap or plan names it",
+  "walkB": {
+   "files": 2298,
+   "bytes": 52620269,
+   "newest": "2026-10-19T10:49:25.9244072Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d405-e",
+  "bytesB": 27904506,
+  "reason": "dir, no .git; 967 files, newest 2026-10-19; no open lap or plan names it",
+  "walkB": {
+   "files": 967,
+   "bytes": 27904506,
+   "newest": "2026-10-19T14:39:57.0693847Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d406rev-e",
+  "bytesB": 65650326,
+  "reason": "dir, no .git; 2873 files, newest 2026-10-19; no open lap or plan names it",
+  "walkB": {
+   "files": 2873,
+   "bytes": 65650326,
+   "newest": "2026-10-19T08:32:44.3810594Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d410",
+  "bytesB": 4969535,
+  "reason": "dir, no .git; 30 files, newest 2026-10-19; no open lap or plan names it",
+  "walkB": {
+   "files": 30,
+   "bytes": 4969535,
+   "newest": "2026-10-19T22:01:54.9443987Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d412",
+  "bytesB": 1609891,
+  "reason": "dir, no .git; 22 files, newest 2026-10-21; no open lap or plan names it",
+  "walkB": {
+   "files": 22,
+   "bytes": 1609891,
+   "newest": "2026-10-21T11:14:39.7010825Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d414-e",
+  "bytesB": 73254829,
+  "reason": "dir, no .git; 688 files, newest 2026-10-20; no open lap or plan names it",
+  "walkB": {
+   "files": 688,
+   "bytes": 73254829,
+   "newest": "2026-10-20T08:23:08.5885900Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d416",
+  "bytesB": 24407992,
+  "reason": "dir, no .git; 55 files, newest 2026-10-20; no open lap or plan names it",
+  "walkB": {
+   "files": 55,
+   "bytes": 24407992,
+   "newest": "2026-10-20T04:59:05.7806175Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d432-e",
+  "bytesB": 17515406,
+  "reason": "dir, no .git; 1328 files, newest 2026-10-23; no open lap or plan names it",
+  "walkB": {
+   "files": 1328,
+   "bytes": 17515406,
+   "newest": "2026-10-23T03:27:32.9334843Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d432-mut",
+  "bytesB": 13511731,
+  "reason": "dir, no .git; 589 files, newest 2026-10-22; no open lap or plan names it",
+  "walkB": {
+   "files": 589,
+   "bytes": 13511731,
+   "newest": "2026-10-22T20:32:18.6439478Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d446-e",
+  "bytesB": 1409694,
+  "reason": "dir, no .git; 167 files, newest 2026-10-23; no open lap or plan names it",
+  "walkB": {
+   "files": 167,
+   "bytes": 1409694,
+   "newest": "2026-10-23T18:52:06.8686843Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-d446-mut",
+  "bytesB": 13755525,
+  "reason": "dir, no .git; 602 files, newest 2026-10-23; no open lap or plan names it",
+  "walkB": {
+   "files": 602,
+   "bytes": 13755525,
+   "newest": "2026-10-23T18:18:00.6930036Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-msgs",
+  "bytesB": 907644,
+  "reason": "dir, no .git; 15 files, newest 2026-10-16; no open lap or plan names it",
+  "walkB": {
+   "files": 15,
+   "bytes": 907644,
+   "newest": "2026-10-16T07:25:43.4632008Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G2",
+  "path": "C:/Users/nname/Downloads/t180-sounds-d334",
+  "bytesB": 7930599,
+  "reason": "dir, no .git; 2 files, newest 2026-10-16; no open lap or plan names it",
+  "walkB": {
+   "files": 2,
+   "bytes": 7930599,
+   "newest": "2026-10-16T13:14:16.1654475Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/b437oom-pQNE1l",
+  "bytesB": 122024662,
+  "reason": "ours by content (ActorSafetyLists, AmountExtractionHeuristicRegexes, BrowserMetrics-spare.pma…), none of its files open",
+  "walkB": {
+   "files": 675,
+   "bytes": 122024662,
+   "newest": "2026-10-23T03:33:00.8523672Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d361list.txt",
+  "bytesB": 1863,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 1863,
+   "newest": "2026-10-17T15:34:54.2960736Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d395files.json",
+  "bytesB": 5243,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 5243,
+   "newest": "2026-10-18T22:40:37.6041564Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d411-export-author.txt",
+  "bytesB": 892,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 892,
+   "newest": "2026-10-19T14:38:55.1788844Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d411-menubar-page.txt",
+  "bytesB": 3284,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 3284,
+   "newest": "2026-10-19T14:38:31.1942664Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d411-red.txt",
+  "bytesB": 14478,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 14478,
+   "newest": "2026-10-19T14:34:35.7782726Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d411-settings.txt",
+  "bytesB": 1208,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 1208,
+   "newest": "2026-10-19T14:38:55.5314822Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d411-theme-mutation.txt",
+  "bytesB": 5014,
+  "reason": "ours by content (t180 test TAP read in this session), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 5014,
+   "newest": "2026-10-19T14:38:45.1374293Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d411-theme.txt",
+  "bytesB": 1755,
+  "reason": "ours by content (t180 test TAP read in this session), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 1755,
+   "newest": "2026-10-19T14:38:55.8239053Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d411edit.js",
+  "bytesB": 3327,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 3327,
+   "newest": "2026-10-19T20:29:18.1326572Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d411edit.js.2",
+  "bytesB": 3408,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 3408,
+   "newest": "2026-10-19T20:29:24.9612837Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d411fix.js",
+  "bytesB": 2879,
+  "reason": "ours by content (t180 test TAP read in this session), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 2879,
+   "newest": "2026-10-19T20:37:02.7226206Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d411green.txt",
+  "bytesB": 5748,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 5748,
+   "newest": "2026-10-19T20:42:04.6146711Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d411hs.txt",
+  "bytesB": 2015,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 2015,
+   "newest": "2026-10-19T20:47:48.8618184Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d411r6.js",
+  "bytesB": 951,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 951,
+   "newest": "2026-10-19T20:37:10.6804964Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d411red.txt",
+  "bytesB": 4780,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 4780,
+   "newest": "2026-10-19T20:36:44.9509524Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d411x.txt",
+  "bytesB": 0,
+  "reason": "empty file, name of filed lap, not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 0,
+   "newest": "2026-10-20T01:22:06.0480527Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d438.diff",
+  "bytesB": 172187,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 172187,
+   "newest": "2026-10-23T15:19:32.6769222Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d438a.sha",
+  "bytesB": 855,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 855,
+   "newest": "2026-10-23T06:26:05.6548563Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d438src.sha",
+  "bytesB": 854,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 854,
+   "newest": "2026-10-23T05:07:51.1760456Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/d439.sha",
+  "bytesB": 854,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 854,
+   "newest": "2026-10-23T08:11:50.8611836Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/p437exp-4s3hZ6",
+  "bytesB": 185094590,
+  "reason": "ours by content (ActorSafetyLists, AmountExtractionHeuristicRegexes, BrowserMetrics-spare.pma…), none of its files open",
+  "walkB": {
+   "files": 742,
+   "bytes": 185094590,
+   "newest": "2026-10-23T02:51:17.1535254Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/p437exp-BFiwF2",
+  "bytesB": 185064059,
+  "reason": "ours by content (ActorSafetyLists, AmountExtractionHeuristicRegexes, BrowserMetrics-spare.pma…), none of its files open",
+  "walkB": {
+   "files": 742,
+   "bytes": 185064059,
+   "newest": "2026-10-23T02:06:21.8214641Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/p437exp-jlu316",
+  "bytesB": 185040882,
+  "reason": "ours by content (ActorSafetyLists, AmountExtractionHeuristicRegexes, BrowserMetrics-spare.pma…), none of its files open",
+  "walkB": {
+   "files": 742,
+   "bytes": 185040882,
+   "newest": "2026-10-23T03:11:06.2460572Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/p437exp-SJtIUW",
+  "bytesB": 185049251,
+  "reason": "ours by content (ActorSafetyLists, AmountExtractionHeuristicRegexes, BrowserMetrics-spare.pma…), none of its files open",
+  "walkB": {
+   "files": 742,
+   "bytes": 185049251,
+   "newest": "2026-10-23T02:25:56.9200874Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/p446exp-Uttebs",
+  "bytesB": 189450108,
+  "reason": "ours by content (ActorSafetyLists, AmountExtractionHeuristicRegexes, Breadcrumbs…), none of its files open",
+  "walkB": {
+   "files": 750,
+   "bytes": 189450108,
+   "newest": "2026-10-23T15:58:37.9016762Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir16140_1363245528",
+  "bytesB": 596143,
+  "reason": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open",
+  "walkB": {
+   "files": 89,
+   "bytes": 596143,
+   "newest": "2026-10-22T21:50:57.9135958Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir16140_351611768",
+  "bytesB": 1169375,
+  "reason": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open",
+  "walkB": {
+   "files": 55,
+   "bytes": 1169375,
+   "newest": "2026-10-22T21:50:58.0955923Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir18796_83526462",
+  "bytesB": 567644,
+  "reason": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open",
+  "walkB": {
+   "files": 90,
+   "bytes": 567644,
+   "newest": "2026-10-22T18:37:01.8998031Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir19572_1801488478",
+  "bytesB": 1168153,
+  "reason": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open",
+  "walkB": {
+   "files": 55,
+   "bytes": 1168153,
+   "newest": "2026-10-22T18:38:01.7213506Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir19572_2103109250",
+  "bytesB": 601348,
+  "reason": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open",
+  "walkB": {
+   "files": 90,
+   "bytes": 601348,
+   "newest": "2026-10-22T18:38:02.0318460Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir24092_1870515405",
+  "bytesB": 0,
+  "reason": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open",
+  "walkB": {
+   "files": 0,
+   "bytes": 0,
+   "newest": null,
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir32432_1795058767",
+  "bytesB": 1163722,
+  "reason": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open",
+  "walkB": {
+   "files": 53,
+   "bytes": 1163722,
+   "newest": "2026-10-22T18:51:29.7277854Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir32432_884874878",
+  "bytesB": 596143,
+  "reason": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open",
+  "walkB": {
+   "files": 89,
+   "bytes": 596143,
+   "newest": "2026-10-22T18:51:30.6635167Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir36420_1728314846",
+  "bytesB": 578926,
+  "reason": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open",
+  "walkB": {
+   "files": 90,
+   "bytes": 578926,
+   "newest": "2026-10-22T21:48:06.7314282Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir39172_1787509312",
+  "bytesB": 164015,
+  "reason": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open",
+  "walkB": {
+   "files": 2,
+   "bytes": 164015,
+   "newest": "2026-10-22T18:51:09.4422409Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir39172_644652556",
+  "bytesB": 249629,
+  "reason": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open",
+  "walkB": {
+   "files": 2,
+   "bytes": 249629,
+   "newest": "2026-10-22T18:51:09.4687209Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir40204_1407341019",
+  "bytesB": 1168153,
+  "reason": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open",
+  "walkB": {
+   "files": 55,
+   "bytes": 1168153,
+   "newest": "2026-10-22T18:48:50.4939349Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir40204_1632679282",
+  "bytesB": 596143,
+  "reason": "Chrome scoped extension-install dir left by a dead process (CRX_INSTALL tmp only), none open",
+  "walkB": {
+   "files": 89,
+   "bytes": 596143,
+   "newest": "2026-10-22T18:48:50.4025202Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180-water-6yp5Xa",
+  "bytesB": 386388,
+  "reason": "ours by content (W1.js, W10.js, W11.js…), none of its files open",
+  "walkB": {
+   "files": 19,
+   "bytes": 386388,
+   "newest": "2026-10-22T17:55:01.3427793Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180-water-B7a9xn",
+  "bytesB": 386464,
+  "reason": "ours by content (W1.js, W10.js, W11.js…), none of its files open",
+  "walkB": {
+   "files": 19,
+   "bytes": 386464,
+   "newest": "2026-10-23T08:48:07.4349211Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180-water-cqzkwd",
+  "bytesB": 386464,
+  "reason": "ours by content (W1.js, W10.js, W11.js…), none of its files open",
+  "walkB": {
+   "files": 19,
+   "bytes": 386464,
+   "newest": "2026-10-23T13:46:04.9667210Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180-water-HDhrlb",
+  "bytesB": 386464,
+  "reason": "ours by content (W1.js, W10.js, W11.js…), none of its files open",
+  "walkB": {
+   "files": 19,
+   "bytes": 386464,
+   "newest": "2026-10-22T18:59:48.4540712Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180-water-JNufVK",
+  "bytesB": 386407,
+  "reason": "ours by content (W1.js, W10.js, W11.js…), none of its files open",
+  "walkB": {
+   "files": 19,
+   "bytes": 386407,
+   "newest": "2026-10-22T18:28:11.7995905Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180-water-LFNqDo",
+  "bytesB": 386388,
+  "reason": "ours by content (W1.js, W10.js, W11.js…), none of its files open",
+  "walkB": {
+   "files": 19,
+   "bytes": 386388,
+   "newest": "2026-10-22T20:17:10.6200293Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180-water-qBB9kQ",
+  "bytesB": 386464,
+  "reason": "ours by content (W1.js, W10.js, W11.js…), none of its files open",
+  "walkB": {
+   "files": 19,
+   "bytes": 386464,
+   "newest": "2026-10-23T19:51:06.4444933Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180-water-zTop6Y",
+  "bytesB": 386388,
+  "reason": "ours by content (W1.js, W10.js, W11.js…), none of its files open",
+  "walkB": {
+   "files": 19,
+   "bytes": 386388,
+   "newest": "2026-10-22T19:30:40.8477570Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180close.txt",
+  "bytesB": 13407,
+  "reason": "ours by content (t180 test TAP read in this session), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 13407,
+   "newest": "2026-10-15T04:37:13.7647413Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180crisp-HwQOYe",
+  "bytesB": 63488201,
+  "reason": "ours by content (Default, extensions_crx_cache, FileTypePolicies…), none of its files open",
+  "walkB": {
+   "files": 493,
+   "bytes": 63488201,
+   "newest": "2026-10-23T19:39:22.6487281Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180dec.txt",
+  "bytesB": 124988,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 124988,
+   "newest": "2026-10-15T08:00:24.5446659Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180df.txt",
+  "bytesB": 42380,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 42380,
+   "newest": "2026-10-15T15:34:44.0036253Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180fin.txt",
+  "bytesB": 14565,
+  "reason": "ours by content (t180 test TAP read in this session), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 14565,
+   "newest": "2026-10-15T18:04:12.1099938Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180full.txt",
+  "bytesB": 433466,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 433466,
+   "newest": "2026-10-15T01:35:09.4957092Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180full2.txt",
+  "bytesB": 433857,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 433857,
+   "newest": "2026-10-15T04:50:46.3268690Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180full3.txt",
+  "bytesB": 435661,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 435661,
+   "newest": "2026-10-15T05:19:27.4473447Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180full4.txt",
+  "bytesB": 437006,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 437006,
+   "newest": "2026-10-15T16:06:50.6290645Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180full5.txt",
+  "bytesB": 437994,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 437994,
+   "newest": "2026-10-15T19:50:25.1212112Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180full6.txt",
+  "bytesB": 438018,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 438018,
+   "newest": "2026-10-15T21:11:39.7485808Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180full7.txt",
+  "bytesB": 438246,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 438246,
+   "newest": "2026-10-15T22:50:52.4978951Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180h.txt",
+  "bytesB": 35158,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 35158,
+   "newest": "2026-10-15T02:32:18.2728359Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180mut.txt",
+  "bytesB": 19557,
+  "reason": "ours by content (t180 test TAP read in this session), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 19557,
+   "newest": "2026-10-15T08:31:26.0951901Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180rel-ED1OLp",
+  "bytesB": 78576637,
+  "reason": "ours by content (CrashpadMetrics-active.pma, Crowd Deny, Default…), none of its files open",
+  "walkB": {
+   "files": 564,
+   "bytes": 78576637,
+   "newest": "2026-10-23T19:38:32.6916480Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180sculpt-7zE8p8",
+  "bytesB": 37833088,
+  "reason": "ours by content (CrashpadMetrics-active.pma, Crowd Deny, Default…), none of its files open",
+  "walkB": {
+   "files": 436,
+   "bytes": 37833088,
+   "newest": "2026-10-22T18:37:01.5744075Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180sculpt-YBniii",
+  "bytesB": 17627948,
+  "reason": "ours by content (CrashpadMetrics-active.pma, Crowd Deny, Default…), none of its files open",
+  "walkB": {
+   "files": 326,
+   "bytes": 17627948,
+   "newest": "2026-10-22T18:38:01.3858660Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180sweep",
+  "bytesB": 296674,
+  "reason": "ours by content (CHANGELOG.md, README.md…), none of its files open",
+  "walkB": {
+   "files": 2,
+   "bytes": 296674,
+   "newest": "2026-10-22T15:02:23.2964518Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180t2.txt",
+  "bytesB": 29251,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 29251,
+   "newest": "2026-10-15T00:26:29.2420517Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180t3.txt",
+  "bytesB": 35357,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 35357,
+   "newest": "2026-10-15T00:43:15.5464293Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180tests.txt",
+  "bytesB": 35605,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 35605,
+   "newest": "2026-10-15T00:16:52.2076715Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180_a2.log",
+  "bytesB": 16139,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 16139,
+   "newest": "2026-10-16T01:27:43.4219397Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180_build.log",
+  "bytesB": 158,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 158,
+   "newest": "2026-10-16T02:31:43.6320841Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180_c.log",
+  "bytesB": 19223,
+  "reason": "ours by content (t180 test TAP read in this session), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 19223,
+   "newest": "2026-10-16T01:22:24.4409506Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180_fx.log",
+  "bytesB": 2879,
+  "reason": "ours by content (t180 test TAP read in this session), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 2879,
+   "newest": "2026-10-16T07:51:23.0654724Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/t180_touched.log",
+  "bytesB": 6005,
+  "reason": "ours by content (names t180/test paths), not open",
+  "walkB": {
+   "files": 1,
+   "bytes": 6005,
+   "newest": "2026-10-16T01:06:58.6158545Z",
+   "links": 0
+  },
+  "kind": "file",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G4",
+  "path": "C:/Users/nname/AppData/Local/Temp/v0414.MxBP",
+  "bytesB": 13831513,
+  "reason": "ours by content (.claude, .gitattributes, .gitignore…), none of its files open",
+  "walkB": {
+   "files": 606,
+   "bytes": 13831513,
+   "newest": "2026-10-23T15:17:18.2898230Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G5",
+  "path": "C:/build",
+  "bytesB": 24992044582,
+  "reason": "7 cargo target dirs of laps D098/D111/D164/D168/D169/D170 (none open); newest write 2026-09-27; no CARGO_TARGET_DIR (env, HKCU, HKLM) and no cargo config names it",
+  "walkB": {
+   "files": 29580,
+   "bytes": 24992044582,
+   "newest": "2026-09-27T22:50:59.9239305Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G6",
+  "path": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d433-P_2026-10-22_evidence/out",
+  "bytesB": 67567378,
+  "reason": "untracked evidence copy, lap D433 filed",
+  "walkB": {
+   "files": 10,
+   "bytes": 67567378,
+   "newest": "2026-10-22T15:40:30.8833599Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G6",
+  "path": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d433-P_2026-10-22_evidence/out-re",
+  "bytesB": 742827,
+  "reason": "untracked evidence copy, lap D433 filed",
+  "walkB": {
+   "files": 8,
+   "bytes": 742827,
+   "newest": "2026-10-22T16:02:01.1774469Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G6",
+  "path": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d438-O_2026-10-22_evidence/tracks",
+  "bytesB": 316317,
+  "reason": "untracked evidence copy, lap D438 filed",
+  "walkB": {
+   "files": 4,
+   "bytes": 316317,
+   "newest": "2026-10-23T03:35:33.5683869Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G6",
+  "path": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d438-build-O_2026-10-22_evidence/tracks",
+  "bytesB": 465131139,
+  "reason": "untracked evidence copy, lap D438 filed",
+  "walkB": {
+   "files": 35,
+   "bytes": 465131139,
+   "newest": "2026-10-23T05:43:48.3891528Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "G6",
+  "path": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d439-O_2026-10-23_evidence/tracks",
+  "bytesB": 228624606,
+  "reason": "untracked evidence copy, lap D439 filed",
+  "walkB": {
+   "files": 11,
+   "bytes": 228624606,
+   "newest": "2026-10-23T08:11:38.1089359Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "branch",
+  "path": "land-0.4.8",
+  "bytesB": 0,
+  "reason": "409d3f8 merged into HEAD (e59991e), not checked out: git branch -d succeeds",
+  "walkB": null,
+  "kind": "branch",
+  "name": "land-0.4.8",
+  "sha": "409d3f834b3364f0391d1e2d9bf9be3ceb5e2b90"
+ },
+ {
+  "g": "his",
+  "path": "C:/Users/nname/Documents/t180b_untitled",
+  "bytesB": 5101376,
+  "reason": "builder-made: .t180b-builder.json says tool t180-track-builder (src/export/fromwords.js, written 2026-09-27), its 9 listed files are exactly the folder's files",
+  "walkB": {
+   "files": 10,
+   "bytes": 5101376,
+   "newest": "2026-09-27T23:01:02.9349122Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": true,
+  "phase": "A"
+ },
+ {
+  "g": "his",
+  "path": "C:/Users/nname/Documents/Assetto Corsa/content/tracks/t180b_test_oval",
+  "bytesB": 56143568,
+  "reason": "builder-made: .t180b-builder.json says tool t180-track-builder (src/export/fromwords.js, written 2026-10-02), its 9 listed files are exactly the folder's files",
+  "walkB": {
+   "files": 10,
+   "bytes": 56143568,
+   "newest": "2026-10-02T21:54:58.6769987Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": true,
+  "phase": "A"
+ },
+ {
+  "g": "his",
+  "path": "C:/Users/nname/Downloads/t180-wt-e19",
+  "bytesB": 13059621,
+  "reason": "clean, head e18a9c5 (d394-e) in local-0.4.17, no open lap or plan names it",
+  "walkB": {
+   "files": 570,
+   "bytes": 13059621,
+   "newest": "2026-10-18T22:55:09.8038557Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "e18a9c5de85c87117ca2522365cc264f70054b33",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": true,
+  "phase": "A"
+ },
+ {
+  "g": "his",
+  "path": "C:/Users/nname/Downloads/t180-wt-e20",
+  "bytesB": 13096336,
+  "reason": "clean, head e46d5a1 (d398-e) in local-0.4.17, no open lap or plan names it",
+  "walkB": {
+   "files": 572,
+   "bytes": 13096336,
+   "newest": "2026-10-19T01:45:07.6640217Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "e46d5a1bb50865f21fa0d33ed38ed12f05098926",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": true,
+  "phase": "A"
+ },
+ {
+  "g": "his",
+  "path": "C:/Users/nname/Downloads/t180-wt-e21",
+  "bytesB": 13167213,
+  "reason": "clean, head fc8c445 (d399-e) in local-0.4.17, no open lap or plan names it",
+  "walkB": {
+   "files": 581,
+   "bytes": 13167213,
+   "newest": "2026-10-19T03:44:45.3197572Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "fc8c445dc3c1d9981df3d35bf56ffe7d2db50621",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": true,
+  "phase": "A"
+ },
+ {
+  "g": "his",
+  "path": "C:/Users/nname/Downloads/t180-wt-e22",
+  "bytesB": 13109740,
+  "reason": "clean, head 41eac04 (skydither-row2-e) in local-0.4.17, no open lap or plan names it",
+  "walkB": {
+   "files": 572,
+   "bytes": 13109740,
+   "newest": "2026-10-19T03:55:49.6368041Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "41eac040ad3f72c1ef7c4a1d6c8054866af705ed",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": true,
+  "phase": "A"
+ },
+ {
+  "g": "his",
+  "path": "C:/Users/nname/Downloads/t180-wt-e24",
+  "bytesB": 13278238,
+  "reason": "clean, head 294cacd (d405-e) in local-0.4.17, no open lap or plan names it",
+  "walkB": {
+   "files": 587,
+   "bytes": 13278238,
+   "newest": "2026-10-19T14:25:46.3383709Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "294cacdc30567bfd90cd7234ee58f9aab74930da",
+  "untracked": [],
+  "otherDirt": [],
+  "whole": true,
+  "phase": "A"
+ },
+ {
+  "g": "released",
+  "path": "C:/Users/nname/Downloads/t180-wt-a34",
+  "bytesB": 13451175,
+  "reason": "not clean: 1 entry (untracked only: app/test/sculpt-frame.test.js)",
+  "walkB": {
+   "files": 594,
+   "bytes": 13451175,
+   "newest": "2026-10-20T22:14:17.3651935Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "ea54ac3bff097f32820445c6670d67eab744f59d",
+  "untracked": [
+   "app/test/sculpt-frame.test.js"
+  ],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "released",
+  "path": "C:/Users/nname/Downloads/t180-wt-a35",
+  "bytesB": 13516657,
+  "reason": "not clean: 1 entry (untracked only: app/test/sculpt-frame.test.js)",
+  "walkB": {
+   "files": 596,
+   "bytes": 13516657,
+   "newest": "2026-10-20T23:20:56.0196643Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "06e0645c88825048c350bf63f75092ecd07b015b",
+  "untracked": [
+   "app/test/sculpt-frame.test.js"
+  ],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "released",
+  "path": "C:/Users/nname/Downloads/t180-wt-a36",
+  "bytesB": 13660228,
+  "reason": "not clean: 1 entry (untracked only: app/test/sculpt-prof.tmp.js)",
+  "walkB": {
+   "files": 601,
+   "bytes": 13660228,
+   "newest": "2026-10-21T01:47:28.0202287Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "57b41f875392b9c1c2c99a4bc321f219c5a5f712",
+  "untracked": [
+   "app/test/sculpt-prof.tmp.js"
+  ],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "released",
+  "path": "C:/Users/nname/Downloads/t180-wt-a37",
+  "bytesB": 13683922,
+  "reason": "not clean: 1 entry (untracked only: app/test/sculpt-prof.tmp.js)",
+  "walkB": {
+   "files": 602,
+   "bytes": 13683922,
+   "newest": "2026-10-21T04:28:01.8171700Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "1c640b0c54bba5b71b50ec2c1987874c21f33777",
+  "untracked": [
+   "app/test/sculpt-prof.tmp.js"
+  ],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "released",
+  "path": "C:/Users/nname/Downloads/t180-wt-e27",
+  "bytesB": 13495119,
+  "reason": "not clean: 1 entry (untracked only: app/test/sculpt-frame.test.js)",
+  "walkB": {
+   "files": 595,
+   "bytes": 13495119,
+   "newest": "2026-10-21T00:37:20.4179954Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "dc7d17018b6c1502f08fb0aa78e88af6e0871d06",
+  "untracked": [
+   "app/test/sculpt-frame.test.js"
+  ],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "released",
+  "path": "C:/Users/nname/Downloads/t180-wt-e28",
+  "bytesB": 13599342,
+  "reason": "not clean: 1 entry (untracked only: app/test/sculpt-frame-prof.test.js)",
+  "walkB": {
+   "files": 599,
+   "bytes": 13599342,
+   "newest": "2026-10-21T00:56:17.8010502Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "6e5ea43656ef4259d54fb34ff533a395cff5f07f",
+  "untracked": [
+   "app/test/sculpt-frame-prof.test.js"
+  ],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "released",
+  "path": "C:/Users/nname/Downloads/t180-wt-o12",
+  "bytesB": 14100868,
+  "reason": "not clean: 6 entries (untracked only: fixtures-d337/pre-close.t180track, fixtures-d431/p-t180-l1200-r10.t180track, fixtures-d431/p-t180-l1200-r30.t180track, …)",
+  "walkB": {
+   "files": 615,
+   "bytes": 14100868,
+   "newest": "2026-10-23T08:07:21.7669927Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "cd3dc42dc949b478dbe44711294e711c39b4639f",
+  "untracked": [
+   "fixtures-d337/pre-close.t180track",
+   "fixtures-d431/p-t180-l1200-r10.t180track",
+   "fixtures-d431/p-t180-l1200-r30.t180track",
+   "fixtures-d431/p-t210-l300-r30.t180track",
+   "fixtures-d431/test10-open.t180track",
+   "fixtures-d431/testtrack10-open.t180track"
+  ],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "released",
+  "path": "C:/Users/nname/Downloads/t180-wt-o14",
+  "bytesB": 14106414,
+  "reason": "not clean: 6 entries (untracked only: fixtures-d337/pre-close.t180track, fixtures-d431/p-t180-l1200-r10.t180track, fixtures-d431/p-t180-l1200-r30.t180track, …)",
+  "walkB": {
+   "files": 615,
+   "bytes": 14106414,
+   "newest": "2026-10-23T10:15:39.6737431Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "c422e8ee94a9bb25ab4e8d7c8c5d0525f5920a1a",
+  "untracked": [
+   "fixtures-d337/pre-close.t180track",
+   "fixtures-d431/p-t180-l1200-r10.t180track",
+   "fixtures-d431/p-t180-l1200-r30.t180track",
+   "fixtures-d431/p-t210-l300-r30.t180track",
+   "fixtures-d431/test10-open.t180track",
+   "fixtures-d431/testtrack10-open.t180track"
+  ],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "released",
+  "path": "C:/Users/nname/Downloads/t180-wt-o16",
+  "bytesB": 14108491,
+  "reason": "not clean: 6 entries (untracked only: fixtures-d337/pre-close.t180track, fixtures-d431/p-t180-l1200-r10.t180track, fixtures-d431/p-t180-l1200-r30.t180track, …)",
+  "walkB": {
+   "files": 615,
+   "bytes": 14108491,
+   "newest": "2026-10-23T12:59:36.7296729Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "da76067d9fdc9da4ce751eb80e6ab575715f9f0a",
+  "untracked": [
+   "fixtures-d337/pre-close.t180track",
+   "fixtures-d431/p-t180-l1200-r10.t180track",
+   "fixtures-d431/p-t180-l1200-r30.t180track",
+   "fixtures-d431/p-t210-l300-r30.t180track",
+   "fixtures-d431/test10-open.t180track",
+   "fixtures-d431/testtrack10-open.t180track"
+  ],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "released",
+  "path": "C:/Users/nname/Downloads/t180-wt-o17",
+  "bytesB": 14110262,
+  "reason": "not clean: 6 entries (untracked only: fixtures-d337/pre-close.t180track, fixtures-d431/p-t180-l1200-r10.t180track, fixtures-d431/p-t180-l1200-r30.t180track, …)",
+  "walkB": {
+   "files": 615,
+   "bytes": 14110262,
+   "newest": "2026-10-23T13:18:49.8109902Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "9fa000aa5265657a6ef21c1763df4e0848f159e3",
+  "untracked": [
+   "fixtures-d337/pre-close.t180track",
+   "fixtures-d431/p-t180-l1200-r10.t180track",
+   "fixtures-d431/p-t180-l1200-r30.t180track",
+   "fixtures-d431/p-t210-l300-r30.t180track",
+   "fixtures-d431/test10-open.t180track",
+   "fixtures-d431/testtrack10-open.t180track"
+  ],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "released",
+  "path": "C:/Users/nname/Downloads/t180-wt-o2",
+  "bytesB": 13514757,
+  "reason": "not clean: 1 entry (untracked only: app/test/sculpt-frame.test.js)",
+  "walkB": {
+   "files": 596,
+   "bytes": 13514757,
+   "newest": "2026-10-20T23:02:31.0767366Z",
+   "links": 0
+  },
+  "kind": "worktree",
+  "head": "06e0645c88825048c350bf63f75092ecd07b015b",
+  "untracked": [
+   "app/test/sculpt-frame.test.js"
+  ],
+  "otherDirt": [],
+  "whole": false,
+  "phase": "B"
+ },
+ {
+  "g": "released",
+  "path": "C:/Users/nname/Downloads/t180-d358",
+  "bytesB": 979408979,
+  "reason": "holds the only record of the .before-scifi zip digest (HANDBACK_A.md:35); no exo_memory file carries it. Passes once the digests are recorded elsewhere (this hand-back records them)",
+  "walkB": {
+   "files": 67,
+   "bytes": 979408979,
+   "newest": "2026-10-17T15:09:54.6073191Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ },
+ {
+  "g": "released",
+  "path": "C:/Users/nname/Downloads/t180-d364",
+  "bytesB": 1238615952,
+  "reason": "holds the only record of the ELYSIUM and .before-d364 zip digests (HANDBACK_A.md:70-71); no exo_memory file carries them. Passes once recorded elsewhere (this hand-back records them)",
+  "walkB": {
+   "files": 80,
+   "bytes": 1238615952,
+   "newest": "2026-10-17T16:26:16.3081965Z",
+   "links": 0
+  },
+  "kind": "dir",
+  "whole": false,
+  "phase": "A"
+ }
+]
