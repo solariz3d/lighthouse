@@ -36,6 +36,8 @@ Tier: prove it (core geometry, and an overwrite of the installed exe). One part,
 
 Reword 63bb388, 15e4e81, a519bb9 and 1c640b0, and the 23 "keeper" lines from 0.4.15 (plan_batch_0417 "Landing ruled").
 
+**Added 2026-10-24 (step 6 ruled (a)):** the 3 D447 comment lines quoting him (app/core/closejob.js, src/core/finish.js, test/core_close_banks_lap.test.js) and the reword of 0c73322.
+
 NEXT: landing pane make local-0.4.19 per this plan when the librarian's 0.4.18 all-clear is out; then the librarian verifies on disk and gives the keeper the all-clear.
 
 ## D451 ruled (librarian, 2026-10-24 13:4x)
@@ -59,3 +61,12 @@ P's review: `exo_memory/handback/p-d451-review-P_2026-10-24.md` (git-blob 480928
 - **Incoming:** t180 **d451-o 18d97c1**, which is 28eb328 plus row 19. That is 4 files over 2c13316: CHANGELOG.md, src/core/finish.js and test/core_close_banks_lap.test.js.
 - **Step 3:** D447's own harness reads 24 / 21 / 0, survivors Y2, X4 and W1 (`d447-mutants-d451.out`); d438 reads 16 / 15 / 1.
 - After the merge, remove t180-wt-o24-d451 too if it is clean.
+
+## Step 6's "keeper" ruled: (a) (librarian, 2026-10-24 14:1x)
+
+A's interim: `exo_memory/handback/p-d452-keeper-A_2026-10-24.md` (git-blob 140d7a1e…, 2,071 B). There are 3 added comment lines quoting him, in app/core/closejob.js, src/core/finish.js and test/core_close_banks_lap.test.js, plus 0c73322's commit body. [Unreleased] reads 0, and the credential scan reads 0.
+- checked: `git diff ff88d85 7717b81 | grep '^+.*keeper'` → the same 3 lines.
+
+**Ruled (a): land as is.** This is a local build and nothing is pushed. It is the same class as 0.4.15's 23 lines, and the rule exists for public text only. A reword now would put an unreviewed source change into a reviewed landing.
+- **Added to "Still owed before any public push":** the 3 comment lines (closejob.js, finish.js, the test file) and the reword of 0c73322's message.
+- The install goes ahead once the suite and steps 1–5 pass.
