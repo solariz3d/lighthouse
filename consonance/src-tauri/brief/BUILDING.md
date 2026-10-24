@@ -148,6 +148,28 @@ full suite plus TAP, installs, scans and pushes, and hands back like any pane.
   Why: same record, fix 2. Check: when the pulse's `QUEUED <seat> <n>m` line names the chair, this was broken.
 - Panes follow `COMMITTEE.md` for the tests they run before handing back and for the lock.
 
+## Leave the machine as you found it
+
+The keeper uses this machine while we work: he races, streams and records on it. What a run leaves behind in his shell,
+his process list or his disk is ours to clean, and he should never be the one to find it.
+
+- **Headless browsers.** Every one runs with `--mute-audio`, never takes focus, and sets `document.title` to
+  `zz-headless-test` before anything else. Count Explorer's `Windows.Internal.Shell.TabProxyWindow` windows before and after
+  the run, and report a run that adds any as a finding.
+  Why: on 2026-10-24 the keeper found Streamlabs' audio source list full of `[explorer.exe] T-180 Track Builder`.
+  Explorer held 527 of these leftover windows from nine days of headless page runs and never freed them, and it was at
+  1,040 MB. A restart cleared them (527 → 0, 248 MB). `--mute-audio` had covered the sound; nobody had checked what a run
+  leaves in the shell (`exo_memory/journal/2026-10-24.md`).
+- **Processes.** A run ends everything it started (servers, browsers, watchers) before the hand-back. The hand-back
+  names any process it leaves running, and why.
+- **Worktrees, clones and scratch.** A worktree is removed when its branch has landed or been dropped, and the hand-back
+  says so. Fixture copies, fake AC roots and exported test tracks live under the pane's scratchpad, never in a tree or at
+  a drive root. A folder in Downloads that is no longer a registered worktree is a leftover.
+  Why: on 2026-10-24 there were 80 registered t180 worktrees and 77 more `t180-*` folders in Downloads that were not.
+- **The keeper's own things are never cleaned without his word.** That means his tracks, his saves and his AC folder.
+  Every delete of ours goes through a listed, byte-checked backup first, and he answers yes to the list as one decision,
+  not one item at a time.
+
 ---
 
 ## What a dispatch carries
