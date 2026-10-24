@@ -70,3 +70,31 @@ A's interim: `exo_memory/handback/p-d452-keeper-A_2026-10-24.md` (git-blob 140d7
 **Ruled (a): land as is.** This is a local build and nothing is pushed. It is the same class as 0.4.15's 23 lines, and the rule exists for public text only. A reword now would put an unreviewed source change into a reviewed landing.
 - **Added to "Still owed before any public push":** the 3 comment lines (closejob.js, finish.js, the test file) and the reword of 0c73322's message.
 - The install goes ahead once the suite and steps 1–5 pass.
+
+## A's 0.4.19 reds ruled: preview-close-reuse is (i), lap D453 for O; the install holds (librarian, 2026-10-24 15:1x)
+
+A's interim: `exo_memory/handback/p-d452-reds-A_2026-10-24.md` (git-blob a930bd3c…, 4,291 B). The suite at 7717b81: 3578 tests, 7 fail, EXPO 0.
+
+**preview-close-reuse.test.js:24 is real, and it blocks.**
+- It is deterministic: ok at ff88d85, not ok at 7717b81, and the first bad commit is 0c73322.
+- After Close, "every placed segment kept, not remade: 0 of 950". Not even the straights are reused.
+- The row guards a freeze he reported on 2026-10-15: Close froze the window white on a 24 km track, with 6.4 s and 6.7 s full rebuilds (`plan_t180_handoff_2026-10-15.md`; the row's header).
+- D447 banks the placed curves, so part of the row's premise ("moves nothing placed") is now false by design. Nothing moves the straights, though, and 0 of 950 means the reuse broke wholesale, not just where banks changed.
+- Nobody's D447 run included this file. Only the landing's full suite reached it, which is what the full suite at landing is for.
+
+**Ruled (i), as lap D453 for O, tier prove it:**
+1. **Measure first.** Time Close's preview rebuild on a 24 km closed-by-new-road track at ff88d85 and at 7717b81, in Node, through createTrackModel as the row does.
+2. **Fix:** after a banking Close, the track model reuses every placed segment whose own resolved geometry is unchanged, and remakes only the segments whose bank changed, plus the new road and the joint. Find why the straights are not reused (0 of 950) and fix that cause.
+3. **The row is amended by name, not weakened.**
+   - Its premise changes from "every placed segment kept" to "every placed segment whose geometry Close did not change is kept, and the ones it did change are remade". The test counts both from the two resolved states, not from a fixed number.
+   - The vertex-for-vertex check against a full build stays as it is.
+   - A row on the step 1 figure: Close's rebuild on the 24 km track within a bound that O states from ff88d85's figure.
+4. **core_close_best row 12** (34.8 s against 30, with D447's bankLap on every route): this goes in D453 as well, if A's base-against-tip comparison confirms it is the tip's work. Either bring the press under 30 s, or state the work added and propose the bound to me with figures. The bound is not moved silently.
+5. Red first on 7717b81, green after. Run D447's harness, the touched files' tests, and preview-close-reuse.
+6. **P reviews D453.** Then A re-merges and re-runs steps 2–8.
+
+**"The handle was not held" (drag-frame rows 1 and 2):** it has recurred, so the bisect is owed, as ruled at 0.4.18.
+- **It is A's, in this landing, while D453 runs:** ff88d85 against 1e436f6, drag-frame alone, under the other slot's load and without it, on the WAV preload hypothesis.
+- It does not block D452 on its own if it stays a load-only flake. If it is D402's, it is a fix lap.
+
+**The other reds:** drag-frame row 3 and release-frame rows 1 and 4 are load, as at 0.4.18. A logs the other slot's holders on the next suite.
