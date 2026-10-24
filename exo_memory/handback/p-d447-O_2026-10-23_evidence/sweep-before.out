@@ -1,0 +1,24 @@
+[31m✖ row 12: a flip swept: Sharp ramp 40 m: the curves stay banked, none leans out, no piece withheld [90m(4462.0033ms)[39m[39m
+[32m✔ row 12: a flip swept: Sharp ramp 100 m: the curves stay banked, none leans out, no piece withheld [90m(4086.4731ms)[39m[39m
+[31m✖ row 12: a flip swept: a 40 m transition: the curves stay banked, none leans out, no piece withheld [90m(3495.5493ms)[39m[39m
+[31m✖ row 12: a flip swept: a 50 m transition: the curves stay banked, none leans out, no piece withheld [90m(3618.0545ms)[39m[39m
+[32m✔ row 12: a flip swept: a 60 m transition: the curves stay banked, none leans out, no piece withheld [90m(2563.8877ms)[39m[39m
+[31m✖ row 12: a flip swept: a 70 m transition: the curves stay banked, none leans out, no piece withheld [90m(3153.6768ms)[39m[39m
+[31m✖ row 12: a flip swept: a 80 m transition: the curves stay banked, none leans out, no piece withheld [90m(4100.7492ms)[39m[39m
+[31m✖ row 12: a flip swept: a 100 m transition: the curves stay banked, none leans out, no piece withheld [90m(2838.478ms)[39m[39m
+[32m✔ row 12: a flip swept: e60 (Extend's default blend over a 60 m piece): the curves stay banked, none leans out, no piece withheld [90m(2573.9498ms)[39m[39m
+[31m✖ row 12: a flip swept: e80 (over an 80 m piece): the curves stay banked, none leans out, no piece withheld [90m(3031.397ms)[39m[39m
+[31m✖ row 12: a flip swept: Sharp ramp 40 m: the curves stay banked, none leans out, no piece withheld [90m(4462.0033ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Sharp ramp 40 m: p8 away from the flip leans in by 19.8° on average
+[31m✖ row 12: a flip swept: a 40 m transition: the curves stay banked, none leans out, no piece withheld [90m(3495.5493ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: a 40 m transition: p7 away from the flip leans in by 0.0° on average
+[31m✖ row 12: a flip swept: a 50 m transition: the curves stay banked, none leans out, no piece withheld [90m(3618.0545ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: a 50 m transition: the press proves (not closed, nothing changed: no way of closing the loop proves the lap; the closest, laid 1969 m of new road: it adds 3 reds (sel
+[31m✖ row 12: a flip swept: a 70 m transition: the curves stay banked, none leans out, no piece withheld [90m(3153.6768ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: a 70 m transition: p7 away from the flip leans in by 0.0° on average
+[31m✖ row 12: a flip swept: a 80 m transition: the curves stay banked, none leans out, no piece withheld [90m(4100.7492ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: a 80 m transition: p7 away from the flip leans in by 0.0° on average
+[31m✖ row 12: a flip swept: a 100 m transition: the curves stay banked, none leans out, no piece withheld [90m(2838.478ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: control, a 100 m transition: the closed lap has a flip
+[31m✖ row 12: a flip swept: e80 (over an 80 m piece): the curves stay banked, none leans out, no piece withheld [90m(3031.397ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: e80 (over an 80 m piece): p8 away from the flip leans in by 0.0° on average

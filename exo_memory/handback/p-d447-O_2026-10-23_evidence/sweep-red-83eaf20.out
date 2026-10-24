@@ -1,0 +1,26 @@
+[32m✔ row 10: a Sharp corner right after a turn that ends still turning: the curves stay banked, none leans out, and the report says where the bank eased [90m(4519.962ms)[39m[39m
+[32m✔ row 11: a turn that flips over extend's 20 m transition: the same [90m(4249.2633ms)[39m[39m
+[32m✔ row 12: a flip swept: Sharp ramp 40 m: the curves stay banked, none leans out, no piece withheld [90m(4939.7455ms)[39m[39m
+[32m✔ row 12: a flip swept: Sharp ramp 100 m: the curves stay banked, none leans out, no piece withheld [90m(4640.2144ms)[39m[39m
+[31m✖ row 12: a flip swept: a 40 m transition: the curves stay banked, none leans out, no piece withheld [90m(3868.3452ms)[39m[39m
+[31m✖ row 12: a flip swept: a 50 m transition: the curves stay banked, none leans out, no piece withheld [90m(3481.5164ms)[39m[39m
+[32m✔ row 12: a flip swept: a 60 m transition: the curves stay banked, none leans out, no piece withheld [90m(2634.5827ms)[39m[39m
+[31m✖ row 12: a flip swept: a 70 m transition: the curves stay banked, none leans out, no piece withheld [90m(3302.6557ms)[39m[39m
+[31m✖ row 12: a flip swept: a 80 m transition: the curves stay banked, none leans out, no piece withheld [90m(4099.4158ms)[39m[39m
+[31m✖ row 12: a flip swept: a 100 m transition: the curves stay banked, none leans out, no piece withheld [90m(3034.5473ms)[39m[39m
+[32m✔ row 12: a flip swept: e60 (Extend's default blend over a 60 m piece): the curves stay banked, none leans out, no piece withheld [90m(2648.5555ms)[39m[39m
+[31m✖ row 12: a flip swept: e80 (over an 80 m piece): the curves stay banked, none leans out, no piece withheld [90m(3271.731ms)[39m[39m
+[34mℹ pass 6[39m
+[34mℹ fail 6[39m
+[31m✖ row 12: a flip swept: a 40 m transition: the curves stay banked, none leans out, no piece withheld [90m(3868.3452ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: a 40 m transition: p7 away from the flip leans in by 0.0° on average
+[31m✖ row 12: a flip swept: a 50 m transition: the curves stay banked, none leans out, no piece withheld [90m(3481.5164ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: a 50 m transition: p7 away from the flip leans in by 0.0° on average
+[31m✖ row 12: a flip swept: a 70 m transition: the curves stay banked, none leans out, no piece withheld [90m(3302.6557ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: a 70 m transition: p7 away from the flip leans in by 0.0° on average
+[31m✖ row 12: a flip swept: a 80 m transition: the curves stay banked, none leans out, no piece withheld [90m(4099.4158ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: a 80 m transition: p7 away from the flip leans in by 0.0° on average
+[31m✖ row 12: a flip swept: a 100 m transition: the curves stay banked, none leans out, no piece withheld [90m(3034.5473ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: a 100 m transition: p7 away from the flip leans in by 0.0° on average
+[31m✖ row 12: a flip swept: e80 (over an 80 m piece): the curves stay banked, none leans out, no piece withheld [90m(3271.731ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: e80 (over an 80 m piece): p8 away from the flip leans in by 0.0° on average
