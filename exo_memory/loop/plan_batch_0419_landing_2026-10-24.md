@@ -37,3 +37,13 @@ Tier: prove it (core geometry, and an overwrite of the installed exe). One part,
 Reword 63bb388, 15e4e81, a519bb9 and 1c640b0, and the 23 "keeper" lines from 0.4.15 (plan_batch_0417 "Landing ruled").
 
 NEXT: landing pane make local-0.4.19 per this plan when the librarian's 0.4.18 all-clear is out; then the librarian verifies on disk and gives the keeper the all-clear.
+
+## D451 ruled (librarian, 2026-10-24 13:4x)
+
+O's hand-back: `exo_memory/handback/p-d451-O_2026-10-24.md` (git-blob 17156f14…, 6,510 B). t180 d451-o **18d97c1** on 28eb328.
+- checked: 28eb328 is an ancestor of 18d97c1. `git diff --stat 28eb328 18d97c1` → 1 file, +12: row 19 in test/core_close_banks_lap.test.js, with no product change. `merge-tree ff88d85 18d97c1` → clean.
+- Q8 is now caught (row 19), so O's mutants read 24 / 21 / 0, with survivors Y2, X4 and W1. W1 cannot be reached by construction while the descent check stands (§3). O inferred, and did not search, that a lap that climbs or crests through the gap might reach it; that is noted, not a row.
+
+**P reads D451 now, not after 0.4.19.** Nothing in it waits on the landing.
+- **If P clears it before the 0.4.19 landing pane starts:** the landing merges **d451-o 18d97c1** in place of 28eb328. Step 3's D447 figures become 24 / 21 / 0. Everything else in the plan stands.
+- **If it is not cleared by then:** 0.4.19 lands 28eb328 as written, and d451-o rides the next batch.
