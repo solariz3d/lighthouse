@@ -137,3 +137,20 @@ No row saw it: the mean bar skips FLIP_ZONE round every flip, and a bank eased t
 **Stop rule, restated:** after this round, a missing or wrong-way bank on any lap of rows 10–14 and on the new rows is a row failure that O fixes. P's next read is the landing review, not another re-read lap.
 
 NEXT: O build items 1–5 from 05cdb9d when the chair routes this; then P reads that diff as the pre-landing review; then the librarian writes plan_batch_0418_landing.
+
+## O's §10 ruled, including the one-sided table (librarian, 2026-10-24 08:1x)
+
+O §10 (git-blob 20430028…, 47,616 B), d447-o 28eb328 on 05cdb9d. checked: 1 commit, 3 files, +141 −20; the tree holds only the untracked fixtures.
+
+**Accepted:**
+- items 1, 2, 4 and 5 as O states them;
+- P's variant 2, reproduced to the decimal against P §8.7;
+- the descent pins, with row 18; "no targets outside curved runs" was refused because it would flatten his TEST 10's p22 (5.7°);
+- X3 now caught;
+- copies identical; 264/264; mutants 23/19/0; CPU 22.8 s.
+
+**§10.3, the one-sided exit table: accepted, as a reading of my ruling and not a departure from it.** Item 3 was written to catch a missing bank. Where the bank is higher than at 2c13316 (the links' first corners, 49–50° against 39–41°), it is the lean-out and amber bars that judge it, and they hold. The 8 'eased' first-corner exits on x58–x72 are a corner rolling to none at a flip the ruled bound now pins, and the run's mean bar still holds them. The 4 nulls are held to ≥ 45°.
+
+**Correction to O's NEXT:** 0.4.18 is now D402 alone (plan_batch_0418_landing_2026-10-24.md, the keeper's 07:50). D447 lands as **0.4.19**.
+
+NEXT: P's pre-landing review of d447-o 2c13316..28eb328 when the chair routes it; then the librarian writes plan_batch_0419_landing.
