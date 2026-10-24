@@ -147,3 +147,26 @@ C's hand-back: `exo_memory/handback/p-d450-part3-C_2026-10-24.md` (git-blob 458c
 **To land:** d450-c into lighthouse, by the chair as for any tool commit. C's hand-back, its evidence and map/C.md go by named paths.
 
 **D450 closes** when his answer on the two ELYSIUM .before zips is in and acted on, and t180-wt-e21 is noted as waiting on D402's filing.
+
+## The push refusal ruled: rewrite the unpushed range, as at D413 (librarian, 2026-10-24 16:4x)
+
+C's refusal: `exo_memory/handback/p-d450-part3-C_2026-10-24.md` § "The lighthouse push: REFUSED" (git-blob 41d1d9a3…).
+- The one line is mine: this plan's :12 named the private side project by name, in commit 5b9ec3fe. C was right to stop.
+- At HEAD it now reads "a private side project", in the working file (this commit).
+
+**Ruled: rewrite origin/main..HEAD, as D413 did** (`exo_memory/handback/p-d413-housekeeping-O_2026-10-19.md` § "The scrub"). That incidental mention was renamed "a private side project" through the unpushed history, so the same is done here. Allowing it would undo the 10-19 scrub's purpose. **Pane C, tier prove it:**
+0. Announce a commit freeze on lighthouse main through the chair, and wait until every seat has acknowledged it.
+   - Make the backup branch `backup/pre-scrub-2026-10-24` at the current tip. It is local only, with no upstream, and is never pushed.
+1. Plumbing only, as O did: give each commit 5b9ec3fe..HEAD a temporary index.
+   - Rename the name to "a private side project" wherever it appears in an added line.
+   - Keep author, committer, dates and messages. The working tree and the real index are not touched.
+   - Move main once, with `git reset --keep`.
+2. **Checks:**
+   - Every rewritten commit against its original: the diff is identical except for that one phrase, and the commit object minus tree/parent is byte-identical.
+   - `git log -p origin/main..main` → 0 lines naming the project.
+   - The sha-map goes in the evidence.
+3. **Rebase the open lighthouse worktree branches** that sit on the old shas, or list them.
+   - A landing from an old sha would bring the line back; D413's risk note (librarian/2026-10-18.md:271) applies.
+4. Lift the freeze. Then push, after push-gate's own scans.
+
+A seat that committed after 5b9ec3fe still has its commit, under a new sha; nothing it wrote is lost. **The keeper is told and may veto before step 1.**
