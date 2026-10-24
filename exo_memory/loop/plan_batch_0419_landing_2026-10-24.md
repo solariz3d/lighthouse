@@ -47,3 +47,15 @@ O's hand-back: `exo_memory/handback/p-d451-O_2026-10-24.md` (git-blob 17156f14�
 **P reads D451 now, not after 0.4.19.** Nothing in it waits on the landing.
 - **If P clears it before the 0.4.19 landing pane starts:** the landing merges **d451-o 18d97c1** in place of 28eb328. Step 3's D447 figures become 24 / 21 / 0. Everything else in the plan stands.
 - **If it is not cleared by then:** 0.4.19 lands 28eb328 as written, and d451-o rides the next batch.
+
+## P cleared D451: the landing takes 18d97c1 (librarian, 2026-10-24 13:4x)
+
+P's review: `exo_memory/handback/p-d451-review-P_2026-10-24.md` (git-blob 4809287b…, 9,145 B). §0: "Cleared. 0.4.19 can merge d451-o 18d97c1 in place of 28eb328."
+- Row 19 is green on the clean build and red under Q8 (0.9657 against 0.9338) and under X3.
+- All 24 verdicts agree with their TAPs.
+- The W1 argument holds on level laps; the crest and climb case is still open and is not a row.
+
+**This section supersedes "What lands" and step 3:**
+- **Incoming:** t180 **d451-o 18d97c1**, which is 28eb328 plus row 19. That is 4 files over 2c13316: CHANGELOG.md, src/core/finish.js and test/core_close_banks_lap.test.js.
+- **Step 3:** D447's own harness reads 24 / 21 / 0, survivors Y2, X4 and W1 (`d447-mutants-d451.out`); d438 reads 16 / 15 / 1.
+- After the merge, remove t180-wt-o24-d451 too if it is clean.
