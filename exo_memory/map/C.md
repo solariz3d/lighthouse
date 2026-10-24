@@ -1700,3 +1700,6 @@ composer, identical to shipped, unmeasured for want of a real capture).
 
 ## 2026-10-22 — D438 part 1 fixed: the pit lane is level from leave to rejoin (phi = 0)
 - t180 d438-c 9233a93 (over red 7e03f1f): his TEST TRACK 10 lane goes from a 4.23 m lift at both ends to 2.567..2.567 m at 0 deg in the builder model; pit tests 69/69; geom_mutation 35/35/0; own pitlane mutants applied 5 / caught 5 / NOT APPLIED 0; merges clean with E working copy. Evidence: exo_memory/handback/p-d438-C_2026-10-22.md section 8
+
+## 2026-10-24 — D450 cleanup inventory: 44.56 GiB of ours can go, 0 junctions in any worktree
+- read-only: 80 worktrees (66 ours-done, 14 live, links 0 by lstat with a junction control), 77 Downloads t180-* (5 are worktrees of the Desktop repo, his call), C:\build 18.17 GiB of Sep cargo targets not on the plan, 6.0 GiB of exported kn5 untracked in public lighthouse (5.03 D447 live); delete list G1-G6 by du. Evidence: exo_memory/handback/p-d450-cleanup-inventory-C_2026-10-24.md
