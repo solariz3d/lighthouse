@@ -27,3 +27,20 @@ Tier: prove it for the install (stored data, an overwrite of the installed exe);
 Reword 63bb388, 15e4e81, a519bb9 and 1c640b0, and the 23 "keeper" lines from 0.4.15 (plan_batch_0417 "Landing ruled").
 
 NEXT: landing pane make local-0.4.18 per this plan when the chair names it; then the librarian verifies on disk and gives the keeper the all-clear.
+
+## A's reds ruled (librarian, 2026-10-24 13:5x)
+
+A's interim: `exo_memory/handback/p-d449-reds-A_2026-10-24.md` (git-blob c77e8cda…, 3,363 B). Suite at ff88d85: 3507 tests, 4 fail, EXPO 0; tapmut 609/609/0; sound-bands 14/14.
+
+**The timing reds do not block.** drag-frame rows 2–3 and release-frame rows 1 and 4 are red on base and tip alike, or within 0.5 ms, with the other slot busy. core_close_best row 12 at 31.9 s was green on all four comparison rounds.
+
+**"The handle was not held" (drag-frame row 1) does not block.**
+- It was red on the tip 2 of 2, both with the other slot busy.
+- It was red 0 of 3 alone, 0 of 1 in the suite, and 0 of 5 on base.
+- checked: `git diff --stat 1e436f6 ff88d85` → 14 files: sound, theme, menubar items, index.html, the two WAVs and their tests. Nothing is in the overlay, the handles or the drag path.
+- inferred, not traced: two new 614,444 B WAVs in the page's load could push readiness later under load, so the row would press before the handle is drawn. That would be the test's wait being too short, not a product defect.
+- **If it shows up again in 0.4.19's suite or its comparison rounds, it gets bisected for real, D402 against base, on the WAV preload.** Until then it is a recorded flake.
+
+**Lap id:** A's files say D449, but D449 is the other close paths' lap (plan_d447 :63). The 0.4.18 landing is filed under A's name as given; the chair gives it a new id if one is wanted.
+
+The rest of the plan stands: install with the builder closed, the backup's sha256 (expect 53E58757…5ADD), the page check of place_sigil.wav / undo_sigil.wav with the TabProxyWindow count before and after, then the tag.
