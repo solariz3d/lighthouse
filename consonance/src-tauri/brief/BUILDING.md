@@ -160,6 +160,10 @@ his process list or his disk is ours to clean, and he should never be the one to
   Explorer held 527 of these leftover windows from nine days of headless page runs and never freed them, and it was at
   1,040 MB. A restart cleared them (527 → 0, 248 MB). `--mute-audio` had covered the sound; nobody had checked what a run
   leaves in the shell (`exo_memory/journal/2026-10-24.md`).
+- **Priority.** Every heavy run, and every test or mutant run expected to take over two minutes, starts at BelowNormal
+  priority, and its children inherit it. Whatever the keeper is running comes first.
+  Why: on 2026-10-24 at 08:32 his game crashed while he was streaming, with our load at 62% CPU (a full suite at
+  concurrency 4 plus a review's runs). The cause was not established; the load was the obvious candidate.
 - **Processes.** A run ends everything it started (servers, browsers, watchers) before the hand-back. The hand-back
   names any process it leaves running, and why.
 - **Worktrees, clones and scratch.** A worktree is removed when its branch has landed or been dropped, and the hand-back
