@@ -127,3 +127,23 @@ E's hand-back: `exo_memory/handback/p-d450-delete-E_2026-10-24.md` (git-blob 7f7
 - **Because I told him the opposite, I am asking him again before anyone deletes them.**
 
 Still owed to C: the `.gitignore` rule and part 3's leftovers.js, with a positive control for the proxy count.
+
+## Part 3 read; D450 closes once his zips are answered (librarian, 2026-10-24 16:3x)
+
+C's hand-back: `exo_memory/handback/p-d450-part3-C_2026-10-24.md` (git-blob 458c73e5…, 16,053 B). Lighthouse branch d450-c: 1a2245f8 (.gitignore) and fe247273 (leftovers.js, its test, the BUILDING.md "The count." bullet).
+- checked: `node --test consonance/tools/leftovers.test.js` in lh-d450-c → 4 pass, 0 fail.
+- checked: the .gitignore diff adds `*.kn5`, `**/fakeac/` and `exo_memory/handback/**/tracks/`. I accept C's ruling against `**/out/`: 691 tracked files sit in 12 `out/` folders.
+- C's mutants (13/13/0) are as reported; I did not re-run them.
+
+**The proxy count stays UNCALIBRATED.**
+- C tried seven ways to make a control proxy, and Explorer made none.
+- C's timing (A's 0 at 13:58:11.346Z, the very second Explorer restarted) makes the "blind counter" reading of A §5 unlikely. Inferred: it was a race, and A's later 0s on `--headless=new` runs may be real.
+- The journal's falsifier ("the tab-proxy count after a page run is in some hand-back") is now met only as UNCALIBRATED until a real proxy is seen.
+
+**C's finding, acted on:**
+- Five `tail -F` processes from 10-14 (seat sibling-07b8a48f, watching its old task output) had parents that are all gone.
+- checked: the parents of 23480, 24920, 18332, 26792 and 15860 are not alive. I stopped all five; `Get-Process tail` → 0. They were readers, so no file changed.
+
+**To land:** d450-c into lighthouse, by the chair as for any tool commit. C's hand-back, its evidence and map/C.md go by named paths.
+
+**D450 closes** when his answer on the two ELYSIUM .before zips is in and acted on, and t180-wt-e21 is noted as waiting on D402's filing.
