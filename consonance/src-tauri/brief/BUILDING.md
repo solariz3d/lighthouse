@@ -164,6 +164,9 @@ his process list or his disk is ours to clean, and he should never be the one to
   priority, and its children inherit it. Whatever the keeper is running comes first.
   Why: on 2026-10-24 at 08:32 his game crashed while he was streaming, with our load at 62% CPU (a full suite at
   concurrency 4 plus a review's runs). The cause was not established; the load was the obvious candidate.
+  BelowNormal lowers CPU priority only. A run that mostly reads the disk (a `du` or `find` over gigabytes, a walk of every
+  worktree) also needs low I/O priority: run it under `start /low`, or in Windows background mode, so it cannot starve a
+  game that is streaming its assets. C's `du` over 45 GiB ran from 08:27 to 08:33 that morning, across the crash.
 - **Processes.** A run ends everything it started (servers, browsers, watchers) before the hand-back. The hand-back
   names any process it leaves running, and why.
 - **Worktrees, clones and scratch.** A worktree is removed when its branch has landed or been dropped, and the hand-back
