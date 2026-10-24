@@ -1703,3 +1703,6 @@ composer, identical to shipped, unmeasured for want of a real capture).
 
 ## 2026-10-24 — D450 cleanup inventory: 44.56 GiB of ours can go, 0 junctions in any worktree
 - read-only: 80 worktrees (66 ours-done, 14 live, links 0 by lstat with a junction control), 77 Downloads t180-* (5 are worktrees of the Desktop repo, his call), C:\build 18.17 GiB of Sep cargo targets not on the plan, 6.0 GiB of exported kn5 untracked in public lighthouse (5.03 D447 live); delete list G1-G6 by du. Evidence: exo_memory/handback/p-d450-cleanup-inventory-C_2026-10-24.md
+
+## 2026-10-24 — D450 part 3: leftovers.js counts the leftovers and prints UNCALIBRATED for a proxy 0, because no control proxy can be made here
+- lighthouse d450-c 1a2245f8 (.gitignore: *.kn5, **/fakeac/, exo_memory/handback/**/tracks/; out/ left out, 691 tracked files) + fe247273 (leftovers.js, 4 tests, mutants applied 13 / caught 13 / NOT APPLIED 0); 7 control probes read 0 -> 0 -> 0 (the proxies are WindowTabHost's, twinui.pcshell.dll); A's 0 returned at 13:58:11Z, the restart's second; first run found 5 tail -F of sibling-07b8a48f from 10-14, which my part-1 inventory had missed. Evidence: exo_memory/handback/p-d450-part3-C_2026-10-24.md
