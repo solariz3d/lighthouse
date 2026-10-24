@@ -154,3 +154,9 @@ Could be wrong that the lap stays a refusal: a change to roadHold or the roll la
 2026-10-23, D447 — d447-o 2be3b8e: bankLap in the Close press; the first build banked TEST TRACK 10's loop exit by 54° (bank 0 stored at pitch −90°) until a level rule.
 General form: "upright" read from a stored channel is frame-dependent; check the road's own up vector before acting on it. Could be wrong that 30° is the right level bound.
 → `exo_memory/handback/p-d447-O_2026-10-23.md`
+
+### A flip bound read from a stretch's PEAK share pins a curve that unwinds slowly into the next; the bank the roll can still hold does not, and kept his copies byte-identical
+2026-10-24, D447 §9 — at f2459fe his saved TEST 10 closed with p21 moved 23° (pinned at 9,776–9,816 m, where nothing leaned out: worst +0.8°); held = max(share − fall from rest at
+BANK_ACCEL to the rate cap) fixed it, row 16 red at f2459fe; copies-bytes-r5.out five sha256-identical to 2c13316. Could be wrong for a run-out shorter than the acceleration's reach.
+General form: a measurement script that compares against the INPUT cannot see a change between two trees; compare the outputs byte for byte.
+→ `exo_memory/handback/p-d447-O_2026-10-23.md` §9

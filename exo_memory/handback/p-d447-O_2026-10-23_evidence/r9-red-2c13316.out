@@ -1,0 +1,8 @@
+[31m✖ row 12: a flip swept: Sharp ramp 40 m: the curves stay banked, none leans out, no piece withheld [90m(4064.1918ms)[39m[39m
+[31m✖ row 13: a straight of 58 m between opposite corners: none leans out, no corner withheld [90m(3548.4429ms)[39m[39m
+[31m✖ row 13: a straight of 60 m between opposite corners: none leans out, no corner withheld [90m(3341.4681ms)[39m[39m
+[31m✖ row 14: a 100 m link at R 1200 between opposite corners: none leans out, no corner withheld [90m(3310.5295ms)[39m[39m
+[31m✖ row 14: a 100 m link at R 3000 between opposite corners: none leans out, no corner withheld [90m(3221.4907ms)[39m[39m
+[34mℹ fail 5[39m
+[34mℹ pass 52[39m
+[34mℹ tests 57[39m

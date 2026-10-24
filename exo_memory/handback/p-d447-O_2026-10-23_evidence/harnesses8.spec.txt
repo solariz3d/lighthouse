@@ -1,0 +1,231 @@
+[32m✔ control: the unmutated temp copy passes every test file the mutants use [90m(244363.6915ms)[39m[39m
+[34mℹ D412 wide: "D242 item 7" on app/test/core-readout-display.test.js runs 2 rows[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(312.3499ms)[39m[39m
+[32m✔ a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353) [90m(655.3106ms)[39m[39m
+[32m✔ a load throw in a run of one file reads NOT CAUGHT as before, never NOT TESTED (the load-throw stand-in, D354) [90m(328.4227ms)[39m[39m
+[32m✔ mutation K1 the columns outside the window are not fixed: applied, and caught by "row 1: a close confined to the LAST piece…" [90m(617.0778ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation K2 the pieces outside the window are recomputed, not kept: applied, and caught by "row 1: a close confined to the LAST piece…" [90m(598.9721ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation K3 a local close that does not close is handed back, not refused: applied, and caught by "row 3: a window that cannot close the loop…" [90m(1655.2689ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation K4 the roll-rate bar is not read: applied, and caught by "row 4: a local close may not push the window past the roll-rate bar…" [90m(570.5671ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation K5 the window is not named for a person: applied, and caught by "row 1: a close confined to the LAST piece…" [90m(633.386ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation K6 the default window ignores the fraction (the last piece only): applied, and caught by "row 2: the default window…" [90m(477.9424ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation K7 an empty window is accepted: applied, and caught by "row 5: a window with no road piece…" [90m(500.5232ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation A6 the refused export keeps the export's own message (ids): applied, and caught by "row 6: a refused export names EVERY red…" [90m(949.9925ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation A9 the press writes no copy from before the close: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…" [90m(1759.2539ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation A10 a failed copy still closes: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…" [90m(2693.1814ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation A11 an edit while the copy is written is closed over: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…" [90m(5222.0645ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation B1 a way that does not prove is picked: applied, and caught by "row 4: when no way proves…" [90m(3523.5783ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation B2 a way that adds a red is picked: applied, and caught by "row 4: when no way proves…" [90m(3546.149ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation B3 new road is not put last: applied, and caught by "row 8: the order…" [90m(501.1242ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation B4 the most movement is tried first: applied, and caught by "row 7: the pick is the least-moving way that proves…" [90m(2951.2872ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation B5 Finish is tried when the end is already at the start: applied, and caught by "row 1: an end already at the start…" [90m(2348.7544ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation B6 a bend may reshape the track (no move cap): applied, and caught by "row 5: a bend that would move the track further…" [90m(2015.6847ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation B7 a press that finds no way still applies: applied, and caught by "row 2: when no way of closing proves, nothing changes…" [90m(5154.1782ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation B8 the press commits the open track: applied, and caught by "row 1: one press closes a near lap AT ONCE…" [90m(1831.7256ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation N1 a laid road Close refuses is never taken as laid (the lone straight is lost to a loop again): applied, and caught by "row 17: an end straight behind the start…" [90m(2724.4443ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation N2 a route that is only a straight is not laid under 10 m: applied, and caught by "row 17: an end straight behind the start…" [90m(1132.6924ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation F5 the worker's document is not frozen (the residual memo misses): applied, and caught by "row 13: the worker's press on a structuredClone…" [90m(4704.149ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation B9 a tie is not broken by the route order (micro-metres decide): applied, and caught by "row 8: the order…" [90m(544.0387ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation F1 the near bend is not checked first (every route runs): applied, and caught by "row 9: when the end is at the start…" [90m(1775.343ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation F2 the given open-track reds are ignored (it is checked again): applied, and caught by "row 11: given the open track…" [90m(10529.7253ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation F3 the press hands the worker no reds: applied, and caught by "row 7: a press hands the worker the reds…" [90m(720.8058ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation F4 a check made with CSP off is used: applied, and caught by "row 7: a press hands the worker the reds…" [90m(744.585ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G1 a ray red on an overlap keeps its own words: applied, and caught by "the overlap is ONE group…" [90m(292.4805ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G2 every ray red is called an overlap: applied, and caught by "a downforce-ray-gap with NO overlap near it…" [90m(309.822ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G3 the text names only the first place of a group: applied, and caught by "groupsText names one line per PLACE…" [90m(287.8812ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G6 places are never merged: applied, and caught by "D248: overlapping reds on one piece are ONE place…" [90m(296.9969ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G7 places merge across pieces: applied, and caught by "D248: TOUCHING reds merge…" [90m(297.2562ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G10 places merge only on the same STARTING piece (the rule the real window caught): applied, and caught by "D248: a red inside a place that spans two pieces…" [90m(302.7403ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G8 touching reds do not merge (no tolerance): applied, and caught by "D248: TOUCHING reds merge…" [90m(306.5403ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G9 the count is of reds, not places: applied, and caught by "D248: overlapping reds on one piece are ONE place…" [90m(295.8021ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G4 the piece is read at the range's end: applied, and caught by "where: s in km and the piece…" [90m(319.0289ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G5 s past the lap does not wrap: applied, and caught by "pieceAt wraps…" [90m(322.0182ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation L1 every piece is labelled again: applied, and caught by "the labels on the track…" [90m(715.6127ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation L2 the hovered piece is never labelled: applied, and caught by "the labels on the track…" [90m(753.3029ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation L3 a still pointer is not asked again after the track changes: applied, and caught by "the labels follow a path the preview extends IN PLACE…" [90m(766.8915ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U1 Undo shows the head only (the bug): applied, and caught by "D242 item 7…" [90m(754.4985ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U2 the ticks are not put back: applied, and caught by "D242 item 7…" [90m(707.0054ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation S1 Straight does not tick turn "at start": applied, and caught by "D242: after a 30°/100m turn, Straight…" [90m(694.6674ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation S2 Straight leaves the boxes ticked: applied, and caught by "D242: after a 30°/100m turn, Straight…" [90m(698.1546ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation S3 the straight hint never shows: applied, and caught by "D242: after a 30°/100m turn, Straight…" [90m(727.8104ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ control: the unmutated temp copy passes every core-shell test [90m(42958.5369ms)[39m[39m
+[34mℹ D412 wide: "the layout" runs 4 rows[39m
+[34mℹ D412 wide: "the rate brush" runs 3 rows[39m
+[34mℹ D412 wide: "extendOptions" runs 3 rows[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(544.8333ms)[39m[39m
+[32m✔ a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353) [90m(1100.8281ms)[39m[39m
+[32m✔ a load throw in a run of several files reads NOT TESTED and names the files (the load-throw stand-in, D354) [90m(545.9234ms)[39m[39m
+[32m✔ a load throw in one file does not hide a crash after a failing row in another: NOT TESTED (F1, D354) [90m(1073.7618ms)[39m[39m
+[32m✔ mutation R1 the sign of an angle flipped: applied, and caught by "the strings…" [90m(763.8021ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R2 zero is signed: applied, and caught by "the strings…" [90m(808.3631ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R3 bank shown as its end value, not the change: applied, and caught by "the strings…" [90m(760.6882ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R4 rounding without the binary guard: applied, and caught by "the strings…" [90m(777.8746ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R5 the head keep-out ignored: applied, and caught by "the layout…" [90m(785.5643ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R6 labels may overlap: applied, and caught by "the layout…" [90m(861.4004ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R7 anchors cached by the path object: applied, and caught by "the labels follow a path the preview extends IN PLACE…" [90m(812.5354ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R8 the layer is not put back in the page: applied, and caught by "the labels follow a path the preview extends IN PLACE…" [90m(822.0712ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R11 a label never slides off its piece's middle: applied, and caught by "a piece whose middle is behind the camera…" [90m(814.8499ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R13 the head's label may be culled: applied, and caught by "the layout: the head's own label is never culled…" [90m(854.3379ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R14 a head piece with nothing on screen has no label: applied, and caught by "the head's own piece is labelled even when none of it is on screen…" [90m(814.8826ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R15 the road bleeds through the label: applied, and caught by "the label box holds only…" [90m(799.2268ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R16 the label box has a border and round corners again: applied, and caught by "the label box holds only…" [90m(788.1522ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R17 the head's fallback place may cover the head: applied, and caught by "the layout: the head's own label is never culled…" [90m(776.4299ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R18 a label may be placed under a panel: applied, and caught by "the layout: no label is placed under a panel…" [90m(813.6101ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R12 no ring clears a large head keep-out: applied, and caught by "the layout: a label anchored on a large head keep-out…" [90m(782.4307ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R9 the panel readout waits for the next state change: applied, and caught by "the panel shows the ghost…" [90m(769.3335ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R10 the ghost readout is the LAST placed piece, not the candidate: applied, and caught by "the panel shows the ghost…" [90m(780.1256ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U1 the cup field is not sent to the core: applied, and caught by "extendOptions: the cup field is the target c…" [90m(780.4471ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U2 the cup is sent in radians: applied, and caught by "extendOptions: the cup field is the target c…" [90m(810.2271ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U3 the panel clamps the cup, hiding the core guard: applied, and caught by "extendOptions: the cup field is the target c…" [90m(775.0076ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U4 the cup cell shows the typed target, not the document: applied, and caught by "the readout shows cup from → to…" [90m(793.604ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U5 (K7-4) the cup cell wired to the bank values: applied, and caught by "the readout shows cup from → to…" [90m(790.0709ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U6 (K7-3) the cup shown in radians: applied, and caught by "the readout shows cup from → to…" [90m(805.2552ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U7 the cup field does not redraw the readout: applied, and caught by "the cup cell follows the cup field…" [90m(778.4707ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U8 the brush has no cup channel: applied, and caught by "the brush's channel list gains cup…" [90m(779.3423ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U9 the cup field is not on the panel: applied, and caught by "the Extend panel has a "cup °" field…" [90m(791.4789ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation V1 the at-start boxes are ignored: applied, and caught by "extendOptions "at start"…" [90m(799.548ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation V2 an untouched field is sent at start: applied, and caught by "extendOptions "at start"…" [90m(797.5758ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation V3 the span is not held to the piece: applied, and caught by "extendOptions "at start"…" [90m(771.1414ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation V4 transition sent as one number for all channels: applied, and caught by "extendOptions "at start"…" [90m(774.4231ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation V5 a field sent on the wrong channel: applied, and caught by "extendOptions "at start"…" [90m(781.7374ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation V6 the panel never passes the boxes: applied, and caught by "the panel: an "at start" box…" [90m(791.7297ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation V7 ticking a box does not redraw: applied, and caught by "the panel: an "at start" box…" [90m(767.2014ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C1 a brush frame builds on the last frame, not the drag's base: applied, and caught by "the rate brush…" [90m(937.4392ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C2 the drag never ends in the history: applied, and caught by "the rate brush…" [90m(946.8544ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C3 the local brush is not the default: applied, and caught by "the local (height / sideways) brush…" [90m(826.6592ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C20 sideways is sent as a hill: applied, and caught by "the local (height / sideways) brush…" [90m(796.1836ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C21 with E's brush, every channel is sent as rate: applied, and caught by "with E's brush, the rate brush goes through it…" [90m(788.4085ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C4 a second close runs again: applied, and caught by "close: one click…" [90m(939.5901ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C5 the heading brush may open a closed loop: applied, and caught by "close: one click…" [90m(925.3854ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C7 export runs on an open track: applied, and caught by "export: an open track is refused…" [90m(951.7598ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C8 the list shows the piece builder's tracks too: applied, and caught by "save and open use their own prefix…" [90m(788.1983ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C12 turn is degrees per metre, not per 100 m: applied, and caught by "extendOptions…" [90m(776.8726ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C14 the pick takes the farthest station: applied, and caught by "the pick…" [90m(774.0893ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C15 the pick sees through the back of the camera: applied, and caught by "the pick…" [90m(806.5054ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C16 the ghost is not what extend builds: applied, and caught by "the ghost of an extension…" [90m(842.635ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C17 export goes to the word exporter: applied, and caught by "export: an open track is refused…" [90m(1029.7663ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C18 the close does not go round the user's straights: applied, and caught by "close: one click…" [90m(903.9999ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C19 the export is handed no start layout: applied, and caught by "export: an open track is refused…" [90m(1452.922ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C22 the widened radius is not shown: applied, and caught by "a brush E widened says so…" [90m(784.6765ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation L1 the track model ignores the lift: applied, and caught by "the track model draws the LIFTED road…" [90m(836.3244ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation L2 a lift-only change is taken as the same track: applied, and caught by "the track model draws the LIFTED road…" [90m(820.6307ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation L3 the mesh is not keyed by the lift: applied, and caught by "the track model draws the LIFTED road…" [90m(927.0563ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation L4 the export does not lift the path: applied, and caught by "the export lifts the path…" [90m(2171.3236ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C23 the radiusUsed E reports is not read: applied, and caught by "landed core: a narrow brush…" [90m(780.8711ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation C24 sharp is never passed to E: applied, and caught by "the sharp opt-in…" [90m(802.1517ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation P1 the export starts at the origin: applied, and caught by "a lap that starts pitched…" [90m(1128.0894ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation P2 the preview starts at the origin: applied, and caught by "a lap that starts pitched…" [90m(984.1393ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation P3 the shell does not hand on the start: applied, and caught by "a lap that starts pitched…" [90m(988.7265ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[34mℹ tests 114[39m
+[34mℹ suites 0[39m
+[34mℹ pass 114[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 315003.2172[39m
