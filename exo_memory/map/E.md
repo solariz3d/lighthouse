@@ -2543,3 +2543,11 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - **Carry:** a probe that meets another pass puts it within ~1.17 m (1 m out, 0.6 m down), so a bar's row must sit in the range the check can actually reach.
 - 2026-10-23 ~18:5xZ P's review fixes, t180 `a05e487` on d446-e (§13 of the same hand-back): the seam distance is min(d, lapM - d) (row 16, P's closed-lap seam slit, red at 5a2fbab); Install's note keeps near-touch lines (page run on his copy shows them). Own mutants 9/8/0; touched tests and 7 harnesses green, NOT APPLIED 0.
 - **Carry:** synthetic stations never put s 0 and s = lapM at one place; test a closed lap's seam on a built lap.
+
+## 2026-10-24 ~01:0xZ (D) · D402 part 1b, the three SIGIL melodies' 64-step walks → `exo_memory/handback/p-d402-1b-E_2026-10-23.md`
+- sigil-1/2/3-64.wav + .mp3 in G:\Consonance-tools\b9\sigil13 (50.15 s each), from render13-64.js (render13.js copied, walk64 written) through a soundrender copy with --mute-audio; clip16 equals b13_pick's within one 16-bit step.
+- **Carry:** the builder's soundrender.js starts headless Chrome without --mute-audio; any render outside its tests goes through a copy that adds it.
+
+## 2026-10-24 ~01:4xZ (D) · D402 part 3, SIGIL plays Obsidian → `exo_memory/handback/p-d402-3-E_2026-10-23.md`
+- t180 `910fd64` on d402-e (from 1e436f6): sigil the fifth melody (mel13 sigil1, PL Phantoms files), SIGIL plays it, Random among five looks and five melodies; the eight named files green, theme-mutation 48/48/0, mutation 104/104/0; theme, sound, sound-samples and menubar-page rows AMENDED (D402).
+- **Carry:** a fifth name moves every pinned draw from quarters to fifths; recheck that a harness's rounding mutant still has a draw where round and floor differ.
