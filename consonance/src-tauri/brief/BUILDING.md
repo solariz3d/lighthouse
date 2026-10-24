@@ -173,6 +173,13 @@ his process list or his disk is ours to clean, and he should never be the one to
   says so. Fixture copies, fake AC roots and exported test tracks live under the pane's scratchpad, never in a tree or at
   a drive root. A folder in Downloads that is no longer a registered worktree is a leftover.
   Why: on 2026-10-24 there were 80 registered t180 worktrees and 77 more `t180-*` folders in Downloads that were not.
+- **The count.** The landing hand-back carries the output of `node consonance/tools/leftovers.js`, as printed: Explorer's tab
+  proxies, the registered t180 worktrees of each repo, the `t180-*` entries in Downloads that no repo registers, `fake-*`
+  folders at a drive root, and our processes older than two hours that are not infrastructure. A proxy count reads
+  UNCALIBRATED unless the tool saw a proxy in that run; quote UNCALIBRATED, never 0.
+  Why: on 2026-10-24 a counter read 0 in the second Explorer restarted, three minutes after the librarian read 527, and a 0 from
+  a counter that has never seen one measures nothing. Its first run found five `tail -F` processes ten days old
+  (`exo_memory/handback/p-d450-part3-C_2026-10-24.md`).
 - **The keeper's own things are never cleaned without his word.** That means his tracks, his saves and his AC folder.
   Every delete of ours goes through a listed, byte-checked backup first, and he answers yes to the list as one decision,
   not one item at a time.

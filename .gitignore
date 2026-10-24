@@ -88,5 +88,12 @@ consonance/tools/.state-sync.mutants.lock
 exo_memory/handback/**/*.t180track
 exo_memory/handback/**/*.t180undo
 exo_memory/handback/**/*.kn5
+# Exported tracks (D450 part 3, 2026-10-24). The kn5 above covers hand-backs only, and the export folders around a kn5 were not covered at all:
+# D447's fakeac/ folders hold 519 MB of texture PNGs beside their 4.7 GiB of kn5, and p-d434's tracks/ holds copies of his private tracks and
+# their shots. Today 0 tracked files sit under any fakeac/ or tracks/ folder, and 0 tracked files are kn5. out/ is NOT ignored: 691 tracked
+# files sit in 12 out/ folders (essay/sim/out, loop/run1/out, loop/run2/out, ...), and a rule would hide every new sibling of theirs.
+*.kn5
+**/fakeac/
+exo_memory/handback/**/tracks/
 exo_memory/handback/**/*.acreplay
 exo_memory/handback/**/*.tar
