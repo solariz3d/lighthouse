@@ -70,3 +70,38 @@ C's inventory: `exo_memory/handback/p-d450-cleanup-inventory-C_2026-10-24.md` (g
 - The live items (D447's fakeac, o18–o22, land418, e43, P's open trees, a29's parked d407b-a) wait for their laps to file.
 
 NEXT: chair name a verifier pane for part 2 step 1 when this ring lands; then the librarian reads its lists and names the deleter.
+
+## B's lists ruled; the deleter named (librarian, 2026-10-24 14:0x)
+
+B's verify: `exo_memory/handback/p-d450-verify-B_2026-10-24.md` (49,764 B). **PASS 156 (38.75 GiB apparent), FAIL 94 (12.43 GiB).**
+- Every entry of C's 250 is in exactly one list, and none of the 21 kept items is in PASS.
+- The walk found 0 links and 0 read errors; nothing is held open.
+- His zips are present and unchanged (§6). The `.before-scifi` zip matches its recorded prefix only.
+
+**Delete: B's PASS list, all 156, and nothing else.** It includes:
+- his 7 items: t180b_untitled, t180b_test_oval, and e19, e20, e21, e22, e24 in the Desktop repo;
+- branch land-0.4.8.
+His zips are confirmed and stay.
+
+**FAIL stays.** Each class is ruled:
+- **Open lap, named by a plan, live tool, held tree, patches not landed, merge in progress** (o6-scratch, o10/o11/o13-kn5): kept until their laps file. Several of those laps have in fact landed while their rows still read open (D403, D437, at least). Fixing the stale rows is its own small lap. It is not done by widening this list.
+- **The 11 trees dirty only with untracked test copies** (a34–a37, e27, e28, o2, o12, o14, o16, o17): **released.** Back up each untracked file first, with sha256 in the list, then `git worktree remove`. Their only content is one stray test copy, and the backup keeps it.
+- **t180-d358, t180-d364:** released once B's file, which now records his zip digests, is committed in lighthouse. Re-check that commit before removing them.
+- **G4's 25 not-ours entries** (24 Chrome `Cr24` uuid `.tmp` files and `node-compile-cache`): **struck from the list.** They are not ours, and the keeper did not say yes to them. Correction to C's inventory: inv345.js's `d\d{3}` pattern caught them by accident.
+- **Branches d427-a, d446-e:** kept. `-d` refuses them against HEAD docs/readme-0.4x, and `-D` is not ours to use. Their content is in local-0.4.17.
+
+**The deleter: pane E.** E is neither C (inventory) nor B (verifier).
+- **Start after A's 0.4.18 hand-back is in**, so no worktree remove or prune runs in the t180 repo while A builds there.
+- **Run under B's `lowio.ps1`** (BelowNormal, I/O priority very low, background mode), in small batches with pauses, as B did.
+- **Before each remove:** re-check that the path is a clean registered tree, has no junction inside, and that no process holds it (B §5). If anything has changed since B's run, skip the path and list it.
+- **Backup** to one dated folder `C:\Users\nname\t180-cleanup-backup-2026-10-24\`, with a sha256 list:
+  - every file not in git that is text or under 5 MB;
+  - his 4 items whole.
+  - C:\build's target dirs and exported kn5/dds are rebuildable and are not backed up.
+- **Worktrees:** `git worktree remove` without `--force`, then `git worktree prune`. e19–e24 are removed in `Desktop\t180-track-builder` by his yes of 08:4x; that is the only write in that repo. t180b_test_oval is removed in his AC folder by his own item, after its backup.
+- **Branch:** land-0.4.8 with `git branch -d` only.
+- **Hand-back:** the counts again (worktrees, `t180-*` in Downloads, TEMP, C:\build), the bytes freed by `du`, and every skipped path with its reason.
+
+**Also owed (unchanged):** the `.gitignore` rule for `**/fakeac/`, `**/tracks/*.kn5`, `**/out/`, and part 3's leftovers.js. Both go to C after the clean.
+
+NEXT: chair dispatch E as the deleter per this section when A's 0.4.18 hand-back is in; then the librarian reads E's counts and gives the keeper the all-clear.
