@@ -2,8 +2,10 @@
 // D447 (O): each mutant breaks one property of the closed lap's bank (finish.js bankLap, bankPlan's relaxed joints, and closejob.js's hook). The tests below must go
 // red on each. Applied to the file, run, restored (also on exit). Under the heavy-run lock. Reports applied / caught / NOT APPLIED.
 //   node d447-mutants.js <tree> [mutant id prefix,...]
+// Each mutant's raw TAP is written to MUTANT_TAP_DIR (default ./mutant-taps beside this file), one file per mutant id, named on its verdict line (D451).
 const fs = require('fs'), path = require('path'), { spawnSync } = require('child_process');
 const TREE = path.resolve(process.argv[2]), ONLY = process.argv[3] ? process.argv[3].split(',') : null, FILE = 'src/core/finish.js';
+const TAPS = path.resolve(process.env.MUTANT_TAP_DIR || path.join(__dirname, 'mutant-taps')); fs.mkdirSync(TAPS, { recursive: true });
 require(path.join(__dirname, '..', '..', '..', 'consonance', 'tools', 'heavy-run.js')).hold({ cmd: 'd447-mutants (finish.js / closejob.js mutated in turn: do not read this tree meanwhile)', tree: TREE });
 const M = [
   ['Q1 bank only the window (the closed lap is not banked: today)', 'function bankLapRun(doc) {\n  if (!doc.closed', 'function bankLapRun(doc) {\n  return { doc }; if (!doc.closed'],
@@ -44,8 +46,11 @@ for (const [name, from, to, file = FILE] of M) {
     const r = spawnSync(process.execPath, ['--test', '--test-reporter=tap', 'test/core_close_banks_lap.test.js', 'test/core_finish_bank.test.js', 'test/core_finish.test.js'], { cwd: TREE, encoding: 'utf8', timeout: 30 * 60 * 1000 });
     // caught only when a named row fails: a non-zero exit with no failing row (a load-bound timing test elsewhere; X4's first run) is not a catch
     const failed = [...new Set((r.stdout.match(/^\s*not ok \d+ - row \d+[^\n]{0,40}/gm) || []).map((l) => l.trim().replace(/^not ok \d+ - /, '')))];
-    const red = failed.length > 0; if (red) caught++; else if (r.status !== 0) console.log(`  (the run exited ${r.status} with no failing row: not counted as caught)`);
-    console.log(`${red ? 'caught      ' : 'SURVIVED    '} ${name}${red ? `  (${failed.join('; ') || 'status ' + r.status})` : ''}`);
+    // D451 (P's review §9.4, the D411 finding): the raw TAP is kept beside the verdict, so a verdict can be checked against what the run printed
+    const tap = path.join(TAPS, `${name.split(' ')[0]}.tap`); fs.writeFileSync(tap, `# ${name}\n# exit ${r.status}${r.signal ? ' signal ' + r.signal : ''}${r.error ? ' error ' + r.error.message : ''}\n${r.stdout}\n# stderr\n${r.stderr}`);
+    const red = failed.length > 0; if (red) caught++;
+    else if (r.status !== 0) console.log(`  (the run exited ${r.status} with no failing row: not counted as caught; its failing tests: ${(r.stdout.match(/^\s*not ok \d+ - [^\n]{0,80}/gm) || ['none printed']).map((l) => l.trim()).join(' | ')})`);
+    console.log(`${red ? 'caught      ' : 'SURVIVED    '} ${name}${red ? `  (${failed.join('; ') || 'status ' + r.status})` : ''}  [tap: ${path.relative(process.cwd(), tap)}]`);
   } finally { fs.writeFileSync(f, src); }
 }
 console.log(`applied ${applied} / caught ${caught} / NOT APPLIED ${na}`);

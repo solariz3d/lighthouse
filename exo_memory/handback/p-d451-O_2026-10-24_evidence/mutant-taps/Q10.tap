@@ -1,0 +1,630 @@
+# Q10 a piece banked whether or not it is level (a loop, its way in and out)
+# exit 1
+TAP version 13
+# Subtest: row 1: Close banks every upright curve of the closed lap into its turn, not only the road Finish adds
+ok 1 - row 1: Close banks every upright curve of the closed lap into its turn, not only the road Finish adds
+  ---
+  duration_ms: 3414.3957
+  type: 'test'
+  ...
+# Subtest: row 2: a curve he banked himself keeps its bank byte for byte, and the joints into it meet his bank
+ok 2 - row 2: a curve he banked himself keeps its bank byte for byte, and the joints into it meet his bank
+  ---
+  duration_ms: 6.5779
+  type: 'test'
+  ...
+# Subtest: row 3: a curve laid as two pieces banks as one: the lean holds across their joint
+ok 3 - row 3: a curve laid as two pieces banks as one: the lean holds across their joint
+  ---
+  duration_ms: 17.8613
+  type: 'test'
+  ...
+# Subtest: row 4: the near path (an end already at the start) closes banked
+ok 4 - row 4: the near path (an end already at the start) closes banked
+  ---
+  duration_ms: 768.3461
+  type: 'test'
+  ...
+# Subtest: row 5: the road a pit lane runs beside is not banked
+ok 5 - row 5: the road a pit lane runs beside is not banked
+  ---
+  duration_ms: 3176.0622
+  type: 'test'
+  ...
+# Subtest: row 7: a loop is not banked, even one that turns; a level curve on the same lap is
+not ok 6 - row 7: a loop is not banked, even one that turns; a level curve on the same lap is
+  ---
+  duration_ms: 483.2605
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:111:1'
+  failureType: 'testCodeFailure'
+  error: 'the loop was never banked (withheld: p4)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:121:10)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 8: a tube is not banked; a level curve on the same lap is
+ok 7 - row 8: a tube is not banked; a level curve on the same lap is
+  ---
+  duration_ms: 541.5837
+  type: 'test'
+  ...
+# Subtest: row 9: a straight next to a curve keeps the bank it was laid with
+ok 8 - row 9: a straight next to a curve keeps the bank it was laid with
+  ---
+  duration_ms: 4.7454
+  type: 'test'
+  ...
+# Subtest: row 10: a Sharp corner right after a turn that ends still turning: the curves stay banked, none leans out, and the report says where the bank eased
+ok 9 - row 10: a Sharp corner right after a turn that ends still turning: the curves stay banked, none leans out, and the report says where the bank eased
+  ---
+  duration_ms: 9391.7385
+  type: 'test'
+  ...
+# Subtest: row 11: a turn that flips over extend's 20 m transition: the same
+ok 10 - row 11: a turn that flips over extend's 20 m transition: the same
+  ---
+  duration_ms: 8553.105
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: Sharp ramp 40 m: the curves stay banked, none leans out, no piece withheld
+ok 11 - row 12: a flip swept: Sharp ramp 40 m: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 8601.4717
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: Sharp ramp 100 m: the curves stay banked, none leans out, no piece withheld
+ok 12 - row 12: a flip swept: Sharp ramp 100 m: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 7720.15
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: a 40 m transition: the curves stay banked, none leans out, no piece withheld
+ok 13 - row 12: a flip swept: a 40 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 6282.9436
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: a 50 m transition: the curves stay banked, none leans out, no piece withheld
+ok 14 - row 12: a flip swept: a 50 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 5595.6916
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: a 60 m transition: the curves stay banked, none leans out, no piece withheld
+ok 15 - row 12: a flip swept: a 60 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3739.3277
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: a 70 m transition: the curves stay banked, none leans out, no piece withheld
+ok 16 - row 12: a flip swept: a 70 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 4212.3819
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: a 80 m transition: the curves stay banked, none leans out, no piece withheld
+ok 17 - row 12: a flip swept: a 80 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 6005.4342
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: a 100 m transition: the curves stay banked, none leans out, no piece withheld
+ok 18 - row 12: a flip swept: a 100 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3716.2406
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: e60 (Extend's default blend over a 60 m piece): the curves stay banked, none leans out, no piece withheld
+ok 19 - row 12: a flip swept: e60 (Extend's default blend over a 60 m piece): the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3942.8624
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: e80 (over an 80 m piece): the curves stay banked, none leans out, no piece withheld
+ok 20 - row 12: a flip swept: e80 (over an 80 m piece): the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 4210.9227
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 40 m between opposite corners: none leans out, no corner withheld
+ok 21 - row 13: a straight of 40 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5872.3259
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 42 m between opposite corners: none leans out, no corner withheld
+ok 22 - row 13: a straight of 42 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5402.509
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 44 m between opposite corners: none leans out, no corner withheld
+ok 23 - row 13: a straight of 44 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5216.7111
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 46 m between opposite corners: none leans out, no corner withheld
+ok 24 - row 13: a straight of 46 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5473.5499
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 48 m between opposite corners: none leans out, no corner withheld
+ok 25 - row 13: a straight of 48 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5520.7832
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 50 m between opposite corners: none leans out, no corner withheld
+ok 26 - row 13: a straight of 50 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5224.5213
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 52 m between opposite corners: none leans out, no corner withheld
+ok 27 - row 13: a straight of 52 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5240.2028
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 54 m between opposite corners: none leans out, no corner withheld
+ok 28 - row 13: a straight of 54 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 6402.1425
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 56 m between opposite corners: none leans out, no corner withheld
+ok 29 - row 13: a straight of 56 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 6672.4031
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 58 m between opposite corners: none leans out, no corner withheld
+ok 30 - row 13: a straight of 58 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5703.278
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 60 m between opposite corners: none leans out, no corner withheld
+ok 31 - row 13: a straight of 60 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4762.2678
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 62 m between opposite corners: none leans out, no corner withheld
+ok 32 - row 13: a straight of 62 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5002.1976
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 64 m between opposite corners: none leans out, no corner withheld
+ok 33 - row 13: a straight of 64 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4536.8978
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 66 m between opposite corners: none leans out, no corner withheld
+ok 34 - row 13: a straight of 66 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4516.1169
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 68 m between opposite corners: none leans out, no corner withheld
+ok 35 - row 13: a straight of 68 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4873.0369
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 70 m between opposite corners: none leans out, no corner withheld
+ok 36 - row 13: a straight of 70 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5790.1257
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 72 m between opposite corners: none leans out, no corner withheld
+ok 37 - row 13: a straight of 72 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5038.1105
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 74 m between opposite corners: none leans out, no corner withheld
+ok 38 - row 13: a straight of 74 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5540.5347
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 76 m between opposite corners: none leans out, no corner withheld
+ok 39 - row 13: a straight of 76 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5989.2011
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 78 m between opposite corners: none leans out, no corner withheld
+ok 40 - row 13: a straight of 78 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4739.3309
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 80 m between opposite corners: none leans out, no corner withheld
+ok 41 - row 13: a straight of 80 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5145.444
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 82 m between opposite corners: none leans out, no corner withheld
+ok 42 - row 13: a straight of 82 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5034.8522
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 84 m between opposite corners: none leans out, no corner withheld
+ok 43 - row 13: a straight of 84 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4595.2242
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 86 m between opposite corners: none leans out, no corner withheld
+ok 44 - row 13: a straight of 86 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5541.967
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 88 m between opposite corners: none leans out, no corner withheld
+ok 45 - row 13: a straight of 88 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4932.0385
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 90 m between opposite corners: none leans out, no corner withheld
+ok 46 - row 13: a straight of 90 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4729.7993
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 92 m between opposite corners: none leans out, no corner withheld
+ok 47 - row 13: a straight of 92 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4901.462
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 94 m between opposite corners: none leans out, no corner withheld
+ok 48 - row 13: a straight of 94 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4999.7073
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 96 m between opposite corners: none leans out, no corner withheld
+ok 49 - row 13: a straight of 96 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5486.3192
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 98 m between opposite corners: none leans out, no corner withheld
+ok 50 - row 13: a straight of 98 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5529.3669
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 100 m between opposite corners: none leans out, no corner withheld
+ok 51 - row 13: a straight of 100 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4743.6006
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 102 m between opposite corners: none leans out, no corner withheld
+ok 52 - row 13: a straight of 102 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4995.3075
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 104 m between opposite corners: none leans out, no corner withheld
+ok 53 - row 13: a straight of 104 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5618.4763
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 106 m between opposite corners: none leans out, no corner withheld
+ok 54 - row 13: a straight of 106 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5403.3675
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 108 m between opposite corners: none leans out, no corner withheld
+ok 55 - row 13: a straight of 108 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5011.5496
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 110 m between opposite corners: none leans out, no corner withheld
+ok 56 - row 13: a straight of 110 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4855.5748
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 112 m between opposite corners: none leans out, no corner withheld
+ok 57 - row 13: a straight of 112 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4584.981
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 114 m between opposite corners: none leans out, no corner withheld
+ok 58 - row 13: a straight of 114 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4621.1288
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 116 m between opposite corners: none leans out, no corner withheld
+ok 59 - row 13: a straight of 116 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4623.9785
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 118 m between opposite corners: none leans out, no corner withheld
+ok 60 - row 13: a straight of 118 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5187.9025
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 120 m between opposite corners: none leans out, no corner withheld
+ok 61 - row 13: a straight of 120 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4397.0643
+  type: 'test'
+  ...
+# Subtest: row 14: a 100 m link at R 1200 between opposite corners: none leans out, no corner withheld
+ok 62 - row 14: a 100 m link at R 1200 between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4725.343
+  type: 'test'
+  ...
+# Subtest: row 14: a 100 m link at R 3000 between opposite corners: none leans out, no corner withheld
+ok 63 - row 14: a 100 m link at R 3000 between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4882.6499
+  type: 'test'
+  ...
+# Subtest: row 14: a 100 m link at R 10000 between opposite corners: none leans out, no corner withheld
+ok 64 - row 14: a 100 m link at R 10000 between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5557.2085
+  type: 'test'
+  ...
+# Subtest: row 15: a 90° curve laid as four short pieces is banked as one curve, by the run
+ok 65 - row 15: a 90° curve laid as four short pieces is banked as one curve, by the run
+  ---
+  duration_ms: 2340.6424
+  type: 'test'
+  ...
+# Subtest: row 16: a curve unwinding over 250 m into a gentle opposite curve keeps its bank: no flip pin, none leans out
+ok 66 - row 16: a curve unwinding over 250 m into a gentle opposite curve keeps its bank: no flip pin, none leans out
+  ---
+  duration_ms: 3837.8509
+  type: 'test'
+  ...
+# Subtest: row 17: a short curve between two straights is banked, and leaves its turn banked
+ok 67 - row 17: a short curve between two straights is banked, and leaves its turn banked
+  ---
+  duration_ms: 4025.66
+  type: 'test'
+  ...
+# Subtest: row 18: an 80 m straight between opposite corners, closed by close() and banked: nothing withheld, nothing leans out
+ok 68 - row 18: an 80 m straight between opposite corners, closed by close() and banked: nothing withheld, nothing leans out
+  ---
+  duration_ms: 425.1362
+  type: 'test'
+  ...
+# Subtest: row 18: a link at R 10000 between opposite corners, closed by close() and banked: nothing withheld, nothing leans out
+ok 69 - row 18: a link at R 10000 between opposite corners, closed by close() and banked: nothing withheld, nothing leans out
+  ---
+  duration_ms: 417.3156
+  type: 'test'
+  ...
+# Subtest: row 19: a banked lap rolls no faster than the amber over his pieces (Sharp ramp 40, whose first try does)
+ok 70 - row 19: a banked lap rolls no faster than the amber over his pieces (Sharp ramp 40, whose first try does)
+  ---
+  duration_ms: 5740.984
+  type: 'test'
+  ...
+# Subtest: row 6: the bank lands in Close's one undo step
+ok 71 - row 6: the bank lands in Close's one undo step
+  ---
+  duration_ms: 2360.0198
+  type: 'test'
+  ...
+# Subtest: row 1: every route the solver gives, laid out arc, straight, arc, ends on the start pose
+ok 72 - row 1: every route the solver gives, laid out arc, straight, arc, ends on the start pose
+  ---
+  duration_ms: 1.2587
+  type: 'test'
+  ...
+# Subtest: row 2: an end behind the start and pointing at it is one straight of the gap, with no turn
+ok 73 - row 2: an end behind the start and pointing at it is one straight of the gap, with no turn
+  ---
+  duration_ms: 0.1486
+  type: 'test'
+  ...
+# Subtest: row 3: a track is finished with new pieces only, closed, and the new road ends on the start
+ok 74 - row 3: a track is finished with new pieces only, closed, and the new road ends on the start
+  ---
+  duration_ms: 1074.6309
+  type: 'test'
+  ...
+# Subtest: row 4: refusals by name: a closed loop, an empty track
+ok 75 - row 4: refusals by name: a closed loop, an empty track
+  ---
+  duration_ms: 685.2254
+  type: 'test'
+  ...
+# Subtest: row 5: an end upside down rolls back upright on a straight of its own (last onto the start, or first when that keeps the car on the road), never in a turn, and the lap closes with the bank of the start
+ok 76 - row 5: an end upside down rolls back upright on a straight of its own (last onto the start, or first when that keeps the car on the road), never in a turn, and the lap closes with the bank of the start
+  ---
+  duration_ms: 3584.5699
+  type: 'test'
+  ...
+# Subtest: row 8: the roll Finish lays, read as the checker reads it, is under the amber bar everywhere on the new road (54° and 180°)
+ok 77 - row 8: the roll Finish lays, read as the checker reads it, is under the amber bar everywhere on the new road (54° and 180°)
+  ---
+  duration_ms: 6569.9986
+  type: 'test'
+  ...
+# Subtest: row 9: a roll whose first guess is too short (factor 1, and the old 1.1) is measured and lengthened until it is under the amber bar
+ok 78 - row 9: a roll whose first guess is too short (factor 1, and the old 1.1) is measured and lengthened until it is under the amber bar
+  ---
+  duration_ms: 6703.7636
+  type: 'test'
+  ...
+# Subtest: row 10: a banked end: the road Finish lays keeps the car on it (the lap proof of the checker passes), at 54° and at 126°
+ok 79 - row 10: a banked end: the road Finish lays keeps the car on it (the lap proof of the checker passes), at 54° and at 126°
+  ---
+  duration_ms: 10080.0444
+  type: 'test'
+  ...
+# Subtest: row 11: F.roadHold is the own test of the lap proof: the same place on the road the old Finish laid at a banked end, and nothing on the new road
+ok 80 - row 11: F.roadHold is the own test of the lap proof: the same place on the road the old Finish laid at a banked end, and nothing on the new road
+  ---
+  duration_ms: 3114.2474
+  type: 'test'
+  ...
+# Subtest: row 13: an end Finish cannot close onto a road the car stays on is refused by name, with where the car leaves the road and what to change
+ok 81 - row 13: an end Finish cannot close onto a road the car stays on is refused by name, with where the car leaves the road and what to change
+  ---
+  duration_ms: 5337.4583
+  type: 'test'
+  ...
+# Subtest: row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror)
+ok 82 - row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror)
+  ---
+  duration_ms: 3050.3605
+  type: 'test'
+  ...
+# Subtest: row 6: an end a quarter turn short of the lap is finished with one turn and one straight, not a detour
+ok 83 - row 6: an end a quarter turn short of the lap is finished with one turn and one straight, not a detour
+  ---
+  duration_ms: 552.7744
+  type: 'test'
+  ...
+# Subtest: row 7: the one-turn routes, laid out, end on the start pose; none tighter than the floor
+ok 84 - row 7: the one-turn routes, laid out, end on the start pose; none tighter than the floor
+  ---
+  duration_ms: 0.7669
+  type: 'test'
+  ...
+# Subtest: row 14: an end already at the start is closed by bending its last pieces, with no new road and no loop
+ok 85 - row 14: an end already at the start is closed by bending its last pieces, with no new road and no loop
+  ---
+  duration_ms: 815.5254
+  type: 'test'
+  ...
+# Subtest: row 15: the reported near-closed save closes by bending its last pieces: no new road, nothing else moves, the lap proves
+ok 86 - row 15: the reported near-closed save closes by bending its last pieces: no new road, nothing else moves, the lap proves # SKIP fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)
+  ---
+  duration_ms: 0.137
+  type: 'test'
+  ...
+# Subtest: row 16: an end at the start whose every bend leaves the road is refused by name (FINISH_NEAR), never given new road
+ok 87 - row 16: an end at the start whose every bend leaves the road is refused by name (FINISH_NEAR), never given new road
+  ---
+  duration_ms: 2000.8501
+  type: 'test'
+  ...
+# Subtest: row 17: an end straight behind the start, on its line and pointing the same way, is finished with that straight (8, 20 and 40 m), not a loop
+ok 88 - row 17: an end straight behind the start, on its line and pointing the same way, is finished with that straight (8, 20 and 40 m), not a loop
+  ---
+  duration_ms: 11489.2886
+  type: 'test'
+  ...
+# Subtest: row 1: TEST TRACK 10's closer leans into its curves, carries less side load, closes, and rolls under the amber
+ok 89 - row 1: TEST TRACK 10's closer leans into its curves, carries less side load, closes, and rolls under the amber # SKIP fixtures-d431/testtrack10-open.t180track is not here (TEST TRACK 10: a private track, kept off the repository)
+  ---
+  duration_ms: 0.6903
+  type: 'test'
+  ...
+# Subtest: row 2: TEST 10's closer leans into its curves, carries less side load, closes, and rolls under the amber
+ok 90 - row 2: TEST 10's closer leans into its curves, carries less side load, closes, and rolls under the amber # SKIP fixtures-d431/test10-open.t180track is not here (TEST 10: a private track, kept off the repository)
+  ---
+  duration_ms: 0.099
+  type: 'test'
+  ...
+# Subtest: row 3: a closer with only gentle curves is banked by its share and no more
+ok 91 - row 3: a closer with only gentle curves is banked by its share and no more
+  ---
+  duration_ms: 5123.1642
+  type: 'test'
+  ...
+# Subtest: row 5: P's turn 210, tail 300, roll 30: the roll straight laid first is not bent into a lean the wrong way
+ok 92 - row 5: P's turn 210, tail 300, roll 30: the roll straight laid first is not bent into a lean the wrong way
+  ---
+  duration_ms: 5192.5621
+  type: 'test'
+  ...
+# Subtest: row 6: P's turn 180, tail 1,200, roll 10: the closer that banks its turns is the one taken
+ok 93 - row 6: P's turn 180, tail 1,200, roll 10: the closer that banks its turns is the one taken
+  ---
+  duration_ms: 4917.5716
+  type: 'test'
+  ...
+# Subtest: row 7: P's turn 180, tail 1,200, roll 30: the closer that banks its turns is the one taken
+ok 94 - row 7: P's turn 180, tail 1,200, roll 30: the closer that banks its turns is the one taken
+  ---
+  duration_ms: 5064.5634
+  type: 'test'
+  ...
+# Subtest: row 9: a lap whose own turn is tight (180° over 400 m): never a closer that leans out
+ok 95 - row 9: a lap whose own turn is tight (180° over 400 m): never a closer that leans out
+  ---
+  duration_ms: 5241.3154
+  type: 'test'
+  ...
+# Subtest: row 10: his two tracks keep the routes D439 gave them
+ok 96 - row 10: his two tracks keep the routes D439 gave them # SKIP fixtures-d431/testtrack10-open.t180track is not here (TEST TRACK 10: a private track, kept off the repository)
+  ---
+  duration_ms: 0.1363
+  type: 'test'
+  ...
+# Subtest: row 11: a crest under a bend is not a lean out: P's pitched lap takes its short closer, leaning into its turn
+ok 97 - row 11: a crest under a bend is not a lean out: P's pitched lap takes its short closer, leaning into its turn
+  ---
+  duration_ms: 3934.0152
+  type: 'test'
+  ...
+# Subtest: row 12: where every road that closes leans out, Finish refuses by name and says the least of them
+ok 98 - row 12: where every road that closes leans out, Finish refuses by name and says the least of them
+  ---
+  duration_ms: 7731.1261
+  type: 'test'
+  ...
+# Subtest: row 8: an end banked the way the closer turns is closed rolled last, on its own bank and with nothing banked on top
+ok 99 - row 8: an end banked the way the closer turns is closed rolled last, on its own bank and with nothing banked on top
+  ---
+  duration_ms: 1413.2314
+  type: 'test'
+  ...
+# Subtest: row 4: a straight gets none: a finish that is only a straight keeps the laid bank
+ok 100 - row 4: a straight gets none: a finish that is only a straight keeps the laid bank
+  ---
+  duration_ms: 655.3806
+  type: 'test'
+  ...
+1..100
+# tests 100
+# suites 0
+# pass 95
+# fail 1
+# cancelled 0
+# skipped 4
+# todo 0
+# duration_ms 327360.9355
+
+# stderr

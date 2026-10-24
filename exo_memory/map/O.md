@@ -166,3 +166,8 @@ General form: a measurement script that compares against the INPUT cannot see a 
 P's variant 2 plus bankLap reading its own banked road at each unpinned gap: 54 of 68 rows red at 05cdb9d, green at 28eb328, five copies sha256-identical, W1-off sweep identical on 76 laps.
 General form: a bar that can only see a wrong-way value cannot see a missing one; add a row that reads the value against a known-good table.
 → `exo_memory/handback/p-d447-O_2026-10-23.md` §10
+
+### No lap reaches W1 while the descent check stands: the check reads the lean-out bar's own number at the same station
+2026-10-24, D451 — with the check off, the bank at the gap's far side and the worst lean agree to 0.01° (x79–x79.75: 4.57/−4.57 … 4.98/−4.98°), and x80 withholds p8; 61 laps with it on reach W1 0 times. Could be wrong for a lap that climbs or crests through the gap (not searched).
+Also: Q8 has a row (19: the roll amber on Sharp ramp 40, 0.9036 clean vs 0.9657 with Q8), and d447-mutants.js now keeps each mutant's raw TAP beside its verdict.
+→ `exo_memory/handback/p-d451-O_2026-10-24.md`

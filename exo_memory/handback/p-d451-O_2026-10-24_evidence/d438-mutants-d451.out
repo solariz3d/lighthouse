@@ -1,0 +1,18 @@
+caught       J1 no acceleration limit  (row 11: a crest under a bend is not a lean out; row 8: an end banked the way the closer turns; row 5: a track built here: its closer rolls u)
+caught       J2 the acceleration projection moves the pins  (row 5: P's turn 210, tail 300, roll 30: the r; row 7: P's turn 180, tail 1,200, roll 30: the; row 11: a crest under a bend is not a lean out; row 8: an end banked the way the closer turns; row 5: a track built here: its closer rolls u; row 7: a closer too short for his rate brings; row 8: a closer long enough for his rate brin)
+caught       J4 the roll straight laid by its rate only (not long enough for the acceleration)  (row 11: a crest under a bend is not a lean out; row 5: a track built here: its closer rolls u)
+caught       J5 no cup home (the call removed)  (row 5: a track built here: its closer rolls u; row 6: a short closer (P's turn 150, tail 300; row 7: a closer too short for his rate brings; row 8: a closer long enough for his rate brin)
+caught       J6 the cup eased by smootherstep, not linearly (reversed at the librarian, 23:3x ruling)  (row 6: a short closer (P's turn 150, tail 300; row 7: a closer too short for his rate brings; row 8: a closer long enough for his rate brin)
+caught       J11 the report does not state a cup rate over the bar  (row 7: a closer too short for his rate brings)
+caught       J12 the plan carries no cup rate  (row 7: a closer too short for his rate brings; row 8: a closer long enough for his rate brin)
+caught       J7 half the cup brought home  (row 5: a track built here: its closer rolls u; row 6: a short closer (P's turn 150, tail 300; row 7: a closer too short for his rate brings; row 8: a closer long enough for his rate brin)
+SURVIVED     J8 the cup ignores the joint slope rule
+caught       J9 one sweep only  (row 8: an end banked the way the closer turns; row 5: a track built here: its closer rolls u)
+caught       B1 the bank leans the wrong way  (row 3: a closer with only gentle curves is ba; row 5: P's turn 210, tail 300, roll 30: the r; row 6: P's turn 180, tail 1,200, roll 10: the; row 7: P's turn 180, tail 1,200, roll 30: the; row 11: a crest under a bend is not a lean out; row 4: a straight gets none: a finish that is; row 5: a track built here: its closer rolls u; row 6: a short closer (P's turn 150, tail 300; row 7: a closer too short for his rate brings; row 8: a closer long enough for his rate brin)
+caught       B2 sized from the laid route only (no second pass)  (row 3: a closer with only gentle curves is ba; row 5: P's turn 210, tail 300, roll 30: the r)
+caught       B3 the pins are moved by the rate passes  (row 6: P's turn 180, tail 1,200, roll 10: the; row 7: P's turn 180, tail 1,200, roll 30: the; row 12: where every road that closes leans out; row 8: an end banked the way the closer turns; row 5: a track built here: its closer rolls u)
+caught       B4 every piece banked, upright or not  (row 8: an end banked the way the closer turns)
+caught       B5 no rate limit  (row 5: P's turn 210, tail 300, roll 30: the r)
+caught       B6 half the share  (row 3: a closer with only gentle curves is ba; row 5: P's turn 210, tail 300, roll 30: the r; row 6: P's turn 180, tail 1,200, roll 10: the; row 7: P's turn 180, tail 1,200, roll 30: the)
+NOT APPLIED  B7 no bank at all (the call reverted)
+applied 16 / caught 15 / NOT APPLIED 1
