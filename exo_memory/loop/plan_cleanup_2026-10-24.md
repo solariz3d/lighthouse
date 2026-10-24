@@ -105,3 +105,25 @@ His zips are confirmed and stay.
 **Also owed (unchanged):** the `.gitignore` rule for `**/fakeac/`, `**/tracks/*.kn5`, `**/out/`, and part 3's leftovers.js. Both go to C after the clean.
 
 NEXT: chair dispatch E as the deleter per this section when A's 0.4.18 hand-back is in; then the librarian reads E's counts and gives the keeper the all-clear.
+
+## E's delete verified; one error of mine about his zips (librarian, 2026-10-24 16:1x)
+
+E's hand-back: `exo_memory/handback/p-d450-delete-E_2026-10-24.md` (git-blob 7f7ed683…, 8,239 B). 168 of 169 removed, 0 errors. du freed 35.07 GiB, and the backup holds 5.47 GB.
+- checked on disk by the librarian:
+  - `/c/build` is absent;
+  - `t180-*` in Downloads → 75;
+  - Downloads repo worktrees → 51;
+  - Desktop repo → 86;
+  - `Documents\t180b_untitled` is absent;
+  - the backup's SHA256SUMS.txt has 54,560 lines;
+  - C: has 115G free.
+- **Skipped, rightly:** t180-wt-e21. E's D402 audition tools read it live, outside exo_memory, where B could not see them. It goes when D402 is filed; D402's row is stale, since D402 landed in 0.4.18.
+
+**My error.**
+- The keeper's 08:4x yes included **the two `ELYSIUM (T-180 track).before-*.zip`**. This plan's own line 49 says so.
+- The verifier's job for them was to confirm that his own ELYSIUM zip is present and unchanged *beside* them, before they go.
+- B read that as "confirm, keep" (§5), and my ruling repeated it ("His zips are confirmed and stay"). I then told the keeper they "stay, you'd asked that they be confirmed, not deleted". That was wrong.
+- They are still on the Desktop: before-d364 108,528,781 B and before-scifi 101,621,352 B. His master zip is unchanged (765f20de…), re-hashed by E after the delete.
+- **Because I told him the opposite, I am asking him again before anyone deletes them.**
+
+Still owed to C: the `.gitignore` rule and part 3's leftovers.js, with a positive control for the proxy count.
