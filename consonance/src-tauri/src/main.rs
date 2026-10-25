@@ -8409,6 +8409,26 @@ fn librarian_shelf_light_at(root: &Path, today: chrono::NaiveDate) -> String {
 mod intake_light_tests {
     use super::*;
 
+    /// D454: the bytes of the consumer's fork note inside an intake, 0 when it carries none (every dev tree). The note arrives once, either inside
+    /// the room's BOOT (FORK_MARKER through FORK_END, inclusive) or through `fork_section` (FORK_END stripped, followed by its "---" separator).
+    fn fork_span(s: &str) -> usize {
+        let Some(at) = s.find(FORK_MARKER) else { return 0 };
+        assert!(!s[at + FORK_MARKER.len()..].contains(FORK_MARKER), "the fork note rides twice in one intake");
+        match s[at..].find(FORK_END) {
+            Some(len) => len + FORK_END.len(),
+            None => s[at..].find("\n\n---\n\n").map(|len| len + "\n\n---\n\n".len()).unwrap_or(s.len() - at),
+        }
+    }
+
+    #[test]
+    fn fork_span_measures_the_note_in_either_form_and_nothing_without_one() {
+        assert_eq!(fork_span("the room, and no note"), 0, "a dev intake carries no fork note");
+        let inline = format!("before\n{FORK_MARKER} the note\n{FORK_END}\nafter");
+        assert_eq!(fork_span(&inline), format!("{FORK_MARKER} the note\n{FORK_END}").len(), "inside the room's BOOT: marker through end, inclusive");
+        let cut = format!("before\n{FORK_MARKER} the note\n\n---\n\nafter");
+        assert_eq!(fork_span(&cut), format!("{FORK_MARKER} the note\n\n---\n\n").len(), "through fork_section: marker through its separator");
+    }
+
     /// Sets the test's mode for this thread and puts it back to off on drop, even when an assertion fails.
     struct Mode;
     impl Mode {
@@ -8551,7 +8571,15 @@ mod intake_light_tests {
         assert!(light.starts_with(rest.as_str()), "the light intake is the rest followed by the map section");
         let map_len = light.len() - rest.len();
         eprintln!("PANE INTAKE light rest {} B, map section {map_len} B, reserve {reserve} B", rest.len());
-        assert!(rest.len() <= LIGHT_PANE_REST_MAX, "light pane intake without its map section is {} B, over {LIGHT_PANE_REST_MAX}", rest.len());
+        // D454 (B; the librarian ruled (a) with a ceiling): THE FORK NOTE IS SET ASIDE, as the map section is, and held under its own bound. A
+        // consumer's BOOT carries the fork note by design (brief/frag-fork.md, the one registered modification); a dev tree carries none, so
+        // here the fork span is 0 and this row is what it was. Measured in the D454 consumer: rest 90,654 B = 86,769 B + a 3,885 B fork note,
+        // against LIGHT_PANE_REST_MAX (set on the dev intake, before any consumer ran it). The ceiling is the measured note plus ~16%.
+        const FORK_SECTION_MAX: usize = 4_500;
+        let fork = fork_span(&rest);
+        eprintln!("PANE INTAKE fork note {fork} B (set aside; 0 in a dev tree)");
+        assert!(fork <= FORK_SECTION_MAX, "the fork note in the light pane intake is {fork} B, over its own ceiling {FORK_SECTION_MAX}");
+        assert!(rest.len() - fork <= LIGHT_PANE_REST_MAX, "light pane intake without its map section and fork note is {} B, over {LIGHT_PANE_REST_MAX}", rest.len() - fork);
         assert!(map_len <= reserve + MAP_SECTION_OVERHEAD, "the light map section is {map_len} B, over reserve {reserve} + {MAP_SECTION_OVERHEAD}");
         // THE ~14 KB ROW, at a FIXED reserve, for the same cause. Strict's optional seat shrinks byte for byte as the reserve
         // grows (optional_budget) while light's stays at its cap, so the whole-intake gap closed with C's long entry: on
