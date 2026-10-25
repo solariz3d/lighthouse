@@ -171,3 +171,8 @@ General form: a bar that can only see a wrong-way value cannot see a missing one
 2026-10-24, D451 — with the check off, the bank at the gap's far side and the worst lean agree to 0.01° (x79–x79.75: 4.57/−4.57 … 4.98/−4.98°), and x80 withholds p8; 61 laps with it on reach W1 0 times. Could be wrong for a lap that climbs or crests through the gap (not searched).
 Also: Q8 has a row (19: the roll amber on Sharp ramp 40, 0.9036 clean vs 0.9657 with Q8), and d447-mutants.js now keeps each mutant's raw TAP beside its verdict.
 → `exo_memory/handback/p-d451-O_2026-10-24.md`
+
+### A close-by-adding-road reuse gated on an unchanged PREFIX loses every placed segment once Close changes any; count and flag per segment
+2026-10-24, D453 — 7717b81 kept 0 of 11,958 placed segments on a 24 km rectangle (rebuild 1,065–1,114 ms) because D447 banks its 3 corners; keptFrom + reuseMesh's per-piece flags keep 11,250 (196–373 ms; ff88d85 231–281). His hand-banked laps never lost it. Could be wrong for a close that also cuts pieces (unseen).
+General form: an all-or-nothing gate in front of a per-item reuse turns one changed item into a full rebuild.
+→ `exo_memory/handback/p-d453-O_2026-10-24.md`

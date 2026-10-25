@@ -1,0 +1,43 @@
+[31m✖ the closed track after Close, built from the open one, is the closed track a full build draws [90m(2448.3799ms)[39m[39m
+[31m✖ Close's rebuild of a 24 km track it closes with new road costs at most half a full build: the placed straights are kept [90m(28287.3366ms)[39m[39m
+[34mℹ tests 2[39m
+[34mℹ suites 0[39m
+[34mℹ pass 0[39m
+[34mℹ fail 2[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 30971.9599[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\preview-close-reuse.test.js:24:1
+[31m✖ the closed track after Close, built from the open one, is the closed track a full build draws [90m(2448.3799ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: every placed segment Close did not change is kept (200), the 750 it changed remade: kept 0
+  
+  0 !== 200
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Downloads\t180-wt-o26-7717b81\[39mapp\test\preview-close-reuse.test.js:36:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m0[39m,
+    expected: [33m200[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\preview-close-reuse.test.js:43:1
+[31m✖ Close's rebuild of a 24 km track it closes with new road costs at most half a full build: the placed straights are kept [90m(28287.3366ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Close's rebuild 694 ms against a full build's 707 ms (share 0.98, bound 0.5); kept 0 of 11958
+      at TestContext.<anonymous> [90m(C:\Users\nname\Downloads\t180-wt-o26-7717b81\[39mapp\test\preview-close-reuse.test.js:58:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }

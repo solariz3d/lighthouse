@@ -1,0 +1,12 @@
+tree t180-wt-o26-ff88d85: open segments 11958, closed 13112, about 26.2 km; Close 29.9 s: closed: laid 2306 m of new road from the end to the start (3 pieces); nothing already built moved
+  rep 0: Close's rebuild (update open → closed) 281 ms, reused 11958 of 11958; a full build of the closed track 1075 ms
+  rep 1: Close's rebuild (update open → closed) 231 ms, reused 11958 of 11958; a full build of the closed track 968 ms
+  rep 2: Close's rebuild (update open → closed) 252 ms, reused 11958 of 11958; a full build of the closed track 1008 ms
+tree t180-wt-o26-7717b81: open segments 11958, closed 13112, about 26.2 km; Close 29.5 s: closed: laid 2306 m of new road from the end to the start (3 pieces); nothing already built moved
+  rep 0: Close's rebuild (update open → closed) 1114 ms, reused 0 of 11958; a full build of the closed track 959 ms
+  rep 1: Close's rebuild (update open → closed) 1068 ms, reused 0 of 11958; a full build of the closed track 1173 ms
+  rep 2: Close's rebuild (update open → closed) 1065 ms, reused 0 of 11958; a full build of the closed track 974 ms
+tree t180-wt-o25-d453: open segments 11958, closed 13112, about 26.2 km; Close 30.4 s: closed: laid 2306 m of new road from the end to the start (3 pieces); nothing already built moved
+  rep 0: Close's rebuild (update open → closed) 373 ms, reused 11250 of 11958; a full build of the closed track 973 ms
+  rep 1: Close's rebuild (update open → closed) 196 ms, reused 11250 of 11958; a full build of the closed track 767 ms
+  rep 2: Close's rebuild (update open → closed) 223 ms, reused 11250 of 11958; a full build of the closed track 735 ms
