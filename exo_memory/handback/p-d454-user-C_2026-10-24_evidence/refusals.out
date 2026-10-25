@@ -1,0 +1,76 @@
+﻿consonance/tools/claim-check-adapter.js:52 return { verdict: 'refuse', claim: flagged.map((x) => `[${x.via}] ${x.token}`).join(' | ') + ` :: ${String(flagged[0].text).replace(/\s+/g, ' ')}`, reason: flagged.map((x) => `${x.via}:${x.kind}:${x.need}`).join(', '), flagged };
+consonance/tools/claim-replay.js:50 if (!r || (r.verdict !== 'refuse' && r.verdict !== 'allow')) throw new Error('a checker must return { verdict: "refuse"|"allow" }, got ' + JSON.stringify(r));
+consonance/tools/claim-replay.js:59 else if (r.verdict === 'refuse') t.refused++;
+consonance/tools/claim-replay.js:74 'always-refuse': { name: 'always-refuse', check: (t) => ({ verdict: 'refuse', claim: clip(String(t.claimText || '').replace(/\s+/g, ' '), 120), reason: 'stub: refuses every turn' }) },
+consonance/tools/claim-replay.js:75 'never-refuse': { name: 'never-refuse', check: () => ({ verdict: 'allow', reason: 'stub: allows every turn' }) },
+consonance/tools/claim-replay.js:348 o.push('Counts and units only. **Nothing here judges a flag**: a refusal on a known-wrong unit is counted "caught" because the unit is known wrong, not because the flagged sentence is the erring one; read the flagged claims.');
+consonance/tools/claim-replay.js:358 o.push('## Census (known-wrong claims): caught = refused');
+consonance/tools/claim-replay.js:361 o.push(`- **${cls}:** ${t.n} units - caught ${t.refused}, missed ${t.allowed}, unlocated ${t.unlocated}, errored ${t.errored}. Caught of the located: ${rate(t.refused, t.refused + t.allowed)}.`);
+consonance/tools/claim-replay.js:368 for (const [g, title] of [['right', 'Right-claim sample (messages of the 10-10 re-measure with a CORRECT claim and no WRONG one): refusals are false refusals'], ['week', 'A week of live replies: refusals']]) {
+consonance/tools/claim-replay.js:372 o.push(`- ${t.n} turns - refused ${t.refused}, allowed ${t.allowed}, unlocated ${t.unlocated}, errored ${t.errored}. **Refused of the evaluated: ${rate(t.refused, t.refused + t.allowed)}.**`);
+consonance/tools/claim-replay.js:374 rows[g].res.forEach((r, i) => { if (r.status !== 'ok') return; const s = rows[g].turns[i].seat; bySeat[s] = bySeat[s] || { n: 0, refused: 0 }; bySeat[s].n++; if (r.verdict === 'refuse') bySeat[s].refused++; });
+consonance/tools/claim-replay.js:375 o.push('- By seat (refused/evaluated): ' + Object.entries(bySeat).map(([s, v]) => `${s} ${v.refused}/${v.n}`).join(', '));
+consonance/tools/claim-replay.js:376 const refused = rows[g].res.filter((r) => r.verdict === 'refuse');
+consonance/tools/claim-replay.js:377 if (refused.length) { o.push(''); o.push('| message | seat | result | flagged claim |'); o.push('|---|---|---|---|'); refused.slice(0, SHOW_CLAIMS ? refused.length : 60).forEach((r) => { const i = rows[g].res.indexOf(r); o.push(fmt(r, rows[g].turns[i].seat)); 
+consonance/tools/d423-letters-swap.js:27 if (!reg || typeof reg !== 'object' || Array.isArray(reg)) return { action: 'refuse', why: 'letters.json is not an object of pane -> letter' };
+consonance/tools/d423-letters-swap.js:30 if (!crossed) return { action: 'refuse', why: `not the crossed shape (O seat ${reg[O_SEAT]}, P seat ${reg[P_SEAT]}, Third Place ${reg[THIRD_PLACE] ?? 'absent'}): nothing moved` };
+consonance/tools/d423-letters-swap.js:32 if (others.length) return { action: 'refuse', why: `another pane holds ${others.map(([k, v]) => `${v} (${k.slice(0, 8)})`).join(', ')}: nothing moved` };
+consonance/tools/d423-letters-swap.js:50 try { reg = JSON.parse(fs.readFileSync(file, 'utf8')); } catch (e) { return { action: 'refuse', why: `cannot read ${file}: ${e.code || e.message}` }; }
+consonance/tools/d423-letters-swap.js:54 if (running !== false) return { action: 'refuse', why: running === null ? 'cannot tell whether Consonance is running: close it and check' : 'Consonance is running: it owns letters.json; run this at the swap, with it closed' };
+consonance/tools/d423-letters-swap.js:75 process.exitCode = r.action === 'refuse' ? 3 : 0;
+consonance/tools/heavy-run.js:107 if (low.bytes < DISK_REFUSE_BYTES) throw Object.assign(new Error(`heavy-run: refusing to start: ${low.root} has ${gbs} GB free, under the ${DISK_REFUSE_BYTES / 1e9} GB floor; a heavy run that fills the disk fails every seat's writes. ${total()}.`), { code: 'HE
+consonance/tools/janitor.js:268 if (norm(r) === norm(path.parse(r).root)) { notes.push(`(e) refuses ${d}: a drive root is never an owned folder (its worktrees are listed as strays)`); continue; }
+consonance/tools/janitor.js:289 if (!path.isAbsolute(a) || norm(a) === norm(path.parse(a).root)) throw new Error(`janitor: refusing ${a}: a drive root`);
+consonance/tools/janitor.js:290 if (driveOf(a) === 'D:\\') throw new Error(`janitor: refusing ${a}: D: is the USB stick`);
+consonance/tools/janitor.js:291 if (FORBIDDEN.some((re) => re.test(a))) throw new Error(`janitor: refusing ${a}: the keeper's own folders are never a class`);
+consonance/tools/janitor.js:292 if (!within(a, root)) throw new Error(`janitor: refusing ${a}: not under its class root ${root}`);
+consonance/tools/janitor.js:435 if (r.status !== 0) throw new Error('git worktree remove refused: ' + String(r.stderr || '').trim());
+consonance/tools/js-suite.js:301 return scratch.mkdtemp('js-suite-deny-');
+consonance/tools/worktree-sweep.js:161 if (locks.untreed) { out.refusedAll = 'a heavy-run lock records no tree, so any worktree may hold it: nothing removed'; return out; }
+consonance/tools/worktree-sweep.js:166 if (!again || again.class !== 'REMOVE') { out.refused.push({ path: r.path, why: again ? `now ${again.class}: ${again.reasons.join('; ')}` : 'no longer listed by git' }); continue; }
+consonance/tools/worktree-sweep.js:169 else out.refused.push({ path: r.path, why: `git refused: ${rm.err}` });
+consonance/tools/worktree-sweep.js:192 if (o.refusedAll) L.push(`REFUSED ALL: ${o.refusedAll}`);
+consonance/tools/worktree-sweep.js:194 for (const x of o.refused) L.push(`REFUSED ${x.path} — ${x.why}`);
+consonance/hooks/claim-check.js:307 if (res.flagged.length && opts.mode !== 'shadow') res.verdict = 'refuse';
+consonance/hooks/claim-check.js:312 function refusalText(r, gates = 'consonance/GATES.md') {
+consonance/hooks/claim-check.js:318 `This check refuses once per turn and place; a second send goes through. How it works: ${gates}.`;
+consonance/hooks/claim-check.js:404 const second = r.verdict === 'refuse' && refusedBefore(dir, session, turnKey, outgoing.via);
+consonance/hooks/claim-check.js:405 const row = { v: 1, mode, session, turn: turnKey, via: outgoing.via, textSha: crypto.createHash('sha256').update(outgoing.text).digest('hex').slice(0, 16), verdict: r.verdict, refused: r.verdict === 'refuse' && !second, secondSend: second, flagged: r.flagged.m
+consonance/hooks/claim-check.js:409 const outJson = isStop ? { decision: 'block', reason } : { hookSpecificOutput: { hookEventName: 'PreToolUse', permissionDecision: 'deny', permissionDecisionReason: reason } };
+consonance/src-tauri/src/main.rs:9949 chair_audit(app, format!("REFUSAL NOT TOLD -> pane:{letter}: a lettered sender is not routed to until its mount letter maps to a pane id (the letters are crossed today, D423); the REFUSED row above, for {}, is the record", short_id(pane)));
+consonance/src-tauri/src/main.rs:9957 chair_audit(app, format!("REFUSAL NOT TOLD -> {who}: the sender of the refused message to {} was not found ({err}); the board row above is the only record", short_id(pane)));
+consonance/src-tauri/src/main.rs:9962 let preview = format!("refused: your message to {}", short_id(pane));
+consonance/src-tauri/src/main.rs:9964 chair_audit(app, format!("QUEUED -> {} ({} waiting, the app's refusal note): {}", short_id(&to), depth, preview));
+consonance/src-tauri/src/main.rs:20856 let refused = i.take_refused("c88002b1", exit, later);
+consonance/src-tauri/src/main.rs:20859 assert_eq!(refused.len(), 1, "the GO was not refused");
+consonance/src-tauri/src/main.rs:20860 assert_eq!((refused[0].1.as_str(), refused[0].0.starts_with("[chair:MAIN] ")), ("D421c landing GO", true));
+consonance/src-tauri/src/main.rs:20861 assert_eq!(i.depth("c88002b1"), 0, "a refused message is still queued");
+consonance/src-tauri/src/main.rs:20873 assert!(i.take_refused("p", pane_exit::ExitGate::Open, t0).is_empty(), "an open pane's queue was refused");
+consonance/src-tauri/src/main.rs:20874 assert!(i.take_refused("p", pane_exit::ExitGate::AwaitReopen, t0).is_empty(), "a reopen in flight refused the queue");
+consonance/src-tauri/src/main.rs:20875 let r = i.take_refused("p", pane_exit::ExitGate::Refuse(o), t0);
+consonance/src-tauri/src/main.rs:23028 assert!(door[g..d].contains("pane_exit::refused_row(") && door[g..d].contains("return Some(row);"), "the door's refusal is not returned to the sender");
+consonance/src-tauri/src/main.rs:23031 let (gate, refuse, tell, stop, read, take) = (at("exit_gate_for(app, &pane)"), at(".take_refused(&pane, exit,"), at("tell_refused_sender("), at("if exit != pane_exit::ExitGate::Open {\n            return;\n        }"), at("pane_state(&app.state::<PaneEmus>(), 
+consonance/src-tauri/src/main.rs:23032 assert!(gate < refuse && refuse < tell && tell < stop && stop < read && read < take, "exit gate -> refusals -> told -> stop -> reading -> take is out of order");
+consonance/src-tauri/src/main.rs:23058 let tell = body_of(&s, "fn tell_refused_sender(");
+consonance/src-tauri/src/main.rs:23059 assert!(tell.contains("pane_exit::refusal_recipient(text)"), "the sender is not chosen by refusal_recipient");
+consonance/src-tauri/src/mcp.rs:3748 format!("{verb_name} DELIVERED WITHOUT A NEXT TRAILER (gates_mode light; strict would refuse): {missing}")
+consonance/src-tauri/src/mcp.rs:3844 assert!(audit.contains("DELIVERED WITHOUT A NEXT TRAILER (gates_mode light; strict would refuse)"), "{audit}");
+consonance/src-tauri/src/mcp.rs:3846 other => panic!("{name}: not delivered in light mode: {other:?}"),
+consonance/src-tauri/src/pane_exit.rs:151 pub fn refusal_recipient(text: &str) -> Recipient<'_> {
+consonance/src-tauri/src/pane_exit.rs:189 "REFUSED NOT DELIVERED -> {short} ({when}; {} and is not being reopened, so nothing was written into it — ↻ on its pane reopens it): {label}",
+consonance/src-tauri/src/pane_exit.rs:198 "[delivery, from the app — not the keeper] REFUSED: your message to {to_short} was not delivered. {}, and it is not being reopened, so nothing was written into it. ↻ on its pane reopens it. The message: {label}",
+consonance/src-tauri/src/pane_exit.rs:290 assert_eq!(exit_gate(&exits, &none, "c88002b1", Some(40000)), ExitGate::Open, "the reopened child (a new pid) is refused");
+consonance/src-tauri/src/pane_exit.rs:291 assert_eq!(exit_gate(&exits, &none, "0845a868", Some(31337)), ExitGate::Open, "one pane's exit refused another's message");
+consonance/src-tauri/src/pane_exit.rs:333 assert_eq!(refusal_recipient("[chair:MAIN] D421c GO"), Recipient::Tell("M"));
+consonance/src-tauri/src/pane_exit.rs:334 assert_eq!(refusal_recipient("[librarian:LIB] collated"), Recipient::Tell("LIB"));
+consonance/src-tauri/src/pane_exit.rs:335 assert_eq!(refusal_recipient("[pane:O] pane P (Fable) review"), Recipient::NotTold("O"), "a lettered sender was routed to by its letter");
+consonance/src-tauri/src/pane_exit.rs:336 assert_eq!(refusal_recipient("[pane:N] seat O's ring"), Recipient::NotTold("N"), "the Third Place's letter was routed to");
+consonance/src-tauri/src/pane_exit.rs:337 assert_eq!(refusal_recipient("[keep-warm, from the chair — not the keeper] Reply with exactly: ok"), Recipient::Nobody);
+consonance/src-tauri/src/pane_exit.rs:362 for row in [refused_row("c88002b1", &o, Some(14), "D421c landing GO"), refused_row("c88002b1", &o, None, "D421c landing GO")] {
+consonance/src-tauri/src/pane_exit.rs:363 assert!(row.starts_with("REFUSED NOT DELIVERED -> c88002b1 ("), "{row}");
+consonance/src-tauri/src/pane_exit.rs:367 let note = refusal_notice("c88002b1", &o, "D421c landing GO");
+consonance/src-tauri/src/pane_exit.rs:368 assert!(note.contains("REFUSED") && note.contains("exit code 3") && note.contains("22:24:13Z"), "{note}");
+consonance/src-tauri/src/pane_exit.rs:369 assert_eq!(sender_of(&note), None, "the refusal note has a sender, so it could be refused back");
+consonance/src-tauri/src/priority.rs:350 assert!(n >= 1, "the first sweep set at least the child (set {n}; refused: {failed:?})");
+dev/shell/hooks/session-start.js:351 if (!isThirdPlaceCwd(meta.cwd)) { try { require(path.join(__dirname, 'session-end.js')).catchUp(); } catch (e) { /* the wake is never blocked by its digests */ } }
+candidates [33m75[39m shipped code files [33m151[39m
