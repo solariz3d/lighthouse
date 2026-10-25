@@ -8589,7 +8589,12 @@ mod intake_light_tests {
         // optional seat (strict floor 100,465 -> 100,877 B, +412) while light carries it on top of its fixed set (86,240 -> 90,654 B, +4,414). The
         // saving this row states is light's own; a dev tree has no note, so this is the row it was.
         let light_floor_rest = rest_at(SHELL_MAP_FLOOR, true);
-        let (light_floor, strict_floor) = (light_floor_rest.len() - fork_span(&light_floor_rest), rest_at(SHELL_MAP_FLOOR, false).len());
+        let fork_floor = fork_span(&light_floor_rest);
+        // D454 (P §4.7): the span set aside HERE is bound too, not only the rest row's. It is the same note at another reserve, so it must equal
+        // the rest row's measure, and it sits under the same ceiling; an inflated floor-row span would otherwise buy this row its 14 KB unseen.
+        assert_eq!(fork_floor, fork, "the fork note set aside at the floor reserve ({fork_floor} B) is not the one set aside at the seat's reserve ({fork} B)");
+        assert!(fork_floor <= FORK_SECTION_MAX, "the fork note at the floor reserve is {fork_floor} B, over its own ceiling {FORK_SECTION_MAX}");
+        let (light_floor, strict_floor) = (light_floor_rest.len() - fork_floor, rest_at(SHELL_MAP_FLOOR, false).len());
         eprintln!("PANE INTAKE rests at the floor reserve: light {light_floor} B (fork note set aside), strict {strict_floor} B");
         assert!(light_floor + 14_000 <= strict_floor, "at the floor reserve, light {light_floor} B is not ~14 KB+ under strict {strict_floor} B");
     }
