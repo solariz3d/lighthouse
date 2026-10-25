@@ -67,3 +67,24 @@ Lighthouse: `origin/main` = `321c4745` (2026-10-25 11:45). Checks are `git merge
 
 - No `filed` rows were written on the 111 already-filed `filed/chair` laps (§0). If "closed" is meant to be `holder none`, that needs a decision on boundary-check's last-filed-wins first, and a change to that tool, not a ledger fill.
 - The scratch clone `G:\consonance-scratch\d458-t180.git` is left so the checks can be re-run. It is my own scratch and can be removed whenever wanted.
+
+## 9. Finish (the chair's packet of 2026-10-25T21:43:35Z, after the collation at fa99b27b)
+
+**The commit and the push**
+- checked: before committing, a credential scan of the added lines (the diff of map/E.md and the D454 hand-back, plus this new file) → 0. The commit was made only if that scan returned 0.
+- `67b3da2c` on lighthouse main, by named paths: this hand-back, `exo_memory/map/E.md`, and `exo_memory/handback/p-d454-install-E_2026-10-24.md`.
+  - The third path is beyond what the packet named. E.md's pending diff also carried my §11 map line for D454, so I committed §11, my own section and already finished, so that line's pointer resolves.
+- checked: scratchpad `d458/rangescan.js` over `git log -p origin/main..main` (3 commits: edcba8de, fa99b27b, 67b3da2c; 176 lines) → push-gate `findKeys` 0, loose prefix lines 0. The private-name count is 0 added and 0 on other lines, for each of the 11 private terms; the terms come from my own scratchpad `d161/private_terms.json`, outside the repo, and their values were never printed.
+- checked: `git push origin main` → `321c4745..67b3da2c`. `C:\Consonance\data\push-gate.jsonl`, last row: `2026-10-25T21:45:24.741Z`, seat `a2122153…` (this session), `"decision":"allow"`.
+
+**The scratch clone**
+- checked, before removing: `G:\consonance-scratch\d458-t180.git`.
+  - It is mine: created 2026-10-25 15:39:58 local by this sweep's `git clone --bare`, with origin the public t180 URL.
+  - 753K, 21 files.
+  - No links: `find -type l` → 0, and PowerShell `-Attributes ReparsePoint` → 0.
+  - No t180 worktree points into it.
+- My first removal went through `lowio.ps1 cmd /c rmdir …`, which opened an interactive cmd and removed nothing (checked: the folder was still there).
+- Redone as `lowio.ps1 node scratchpad/d458/rmclone.js` ("lowio: class BelowNormal, io-priority set to 0 rc 0"). The script walks the clone and refuses on any link before `rmSync`. It also removed my `G:\consonance-scratch\d458-v0419.log`.
+- checked: `ls G:/consonance-scratch | grep -c d458` → 0.
+
+**Corrections, mine:** the `cmd /c` slip above. Also, rangescan.js, first written in a bash heredoc, lost its backslashes and failed `node --check`. I rewrote it with the Write tool before it ran. The known hazard, again.
