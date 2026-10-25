@@ -2073,3 +2073,23 @@ test('D454 PRIVATE: the command line requires the guard: gen-consumer.js --dry w
   assert.notStrictEqual(r.status, 0, 'the CLI generated without the guard');
   assert.match(r.stdout + r.stderr, /PRIV_PATTERN/, 'the refusal does not name what is missing');
 });
+
+test('D454 (E §7): the consumer ships its own .gitignore keeping the build output out of git, and it ignores no shipped file', () => {
+  /* E's bar-5 run (p-d454-install-E_2026-10-24.md §7): after the README's own `cargo tauri build`, a stranger's `git status` showed
+   * consonance/src-tauri/gen/ and consonance/src-tauri/target/ (several GB) untracked, because the consumer shipped no .gitignore. And the
+   * generator's fresh commit runs `git add -A`, so a rule that matched a shipped file would drop it from the commit without a word. */
+  const r = lap5();
+  try {
+    assert.ok(!r.refused, r.refused);
+    const gi = fs.readFileSync(path.join(r.staging, '.gitignore'), 'utf8').split('\n');
+    for (const rule of ['consonance/src-tauri/target/', 'consonance/src-tauri/gen/']) assert.ok(gi.includes(rule), '.gitignore lacks ' + rule);
+    const walk = (d, out = []) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) walk(p, out); else out.push(path.relative(r.staging, p).replace(/\\/g, '/')); } return out; };
+    const files = walk(r.staging);
+    assert.ok(files.length > 300, 'premise: the staged tree is here');
+    const ck = spawnSync('git', ['-c', 'core.excludesFile=', 'check-ignore', '--no-index', '--stdin'], { cwd: r.staging, input: files.join('\n'), encoding: 'utf8' });
+    if (ck.status === 128) { spawnSync('git', ['init', '-q'], { cwd: r.staging }); }
+    const ck2 = ck.status === 128 ? spawnSync('git', ['-c', 'core.excludesFile=', 'check-ignore', '--no-index', '--stdin'], { cwd: r.staging, input: files.join('\n'), encoding: 'utf8' }) : ck;
+    assert.strictEqual(ck2.stdout.trim(), '', 'the consumer .gitignore ignores shipped files: ' + ck2.stdout.trim().split('\n').slice(0, 5).join(', '));
+    assert.ok(ck2.status === 1, 'git check-ignore did not run cleanly (status ' + ck2.status + '): ' + ck2.stderr);
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});

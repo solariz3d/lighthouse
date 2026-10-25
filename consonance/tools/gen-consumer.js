@@ -1182,11 +1182,25 @@ const CONSUMER_GITATTRIBUTES = [
   '',
 ].join('\n');
 
+/* THE CONSUMER'S OWN .gitignore (D454, pane B, from E's §7). The consumer shipped none, so after the README's own `cargo tauri build` a stranger's
+ * `git status` listed consonance/src-tauri/target/ (several GB) and consonance/src-tauri/gen/ untracked. These are lighthouse's consonance/.gitignore
+ * build rules, written from the repository root. Nothing shipped may match a rule here: the fresh commit runs `git add -A`, which would drop a
+ * matching file without a word (gen-consumer.test.js checks every staged path with `git check-ignore`). */
+const CONSUMER_GITIGNORE = [
+  '# What a build and a run leave in this tree, kept out of git.',
+  '',
+  '# `cargo tauri build` and `cargo test` (several GB) and the generated Tauri schemas',
+  'consonance/src-tauri/target/',
+  'consonance/src-tauri/gen/',
+  '',
+].join('\n');
+
 function generatedFiles(id, measured) {
   const out = {
     'exo_memory/CUTOFF.md': renderCutoff(id.sha, id.at, id.dirty),
     'exo_memory/journal/README.md': JOURNAL_SEED,
     '.gitattributes': CONSUMER_GITATTRIBUTES,
+    '.gitignore': CONSUMER_GITIGNORE,
   };
   if (measured) out['CONSUMER-STATUS.md'] = renderStatusDoc({ measured: true, sha: id.sha, at: measured.at, dirty: id.dirty, changes: id.changes,
     js: measured.js || [], rust: measured.rustList || [], parity: measured.parity, rustBreaks: measured.rust, identity: measured.identity, coldRead: measured.coldRead });
