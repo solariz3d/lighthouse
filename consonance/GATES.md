@@ -172,7 +172,8 @@ built it, and it is disclosed here so it is your choice.
 
 **To turn it off:** remove the `second-reader.js` entry from `%USERPROFILE%\.claude\settings.json` (under `hooks` → `PreToolUse`, matcher
 `mcp__consonance__call_librarian|mcp__consonance__call_chair`). To keep it off when `install.ps1` runs again, mark its line in `$register`
-`Excluded`, as below. It also does nothing while `~/.consonance.json` has no `data_dir` set, but the app writes that key the first time you save Settings.
+`Excluded`, as below. It runs by default, the cost above included: when `~/.consonance.json` sets no `data_dir`, it uses the default Data
+folder, `%USERPROFILE%\.consonance`, as the app does.
 
 ## Built and not installed: the claim check
 
