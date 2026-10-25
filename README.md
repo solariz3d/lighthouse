@@ -195,15 +195,13 @@ The working method in three principles and one test: [`METHOD.md`](METHOD.md). C
 ### The tests, today
 
 ```
-node consonance/tools/js-suite.js                    (2026-09-25, on the desktop)
-    -> 139 green · 0 failed · 1 canary · 1 not run   (of 141 files)
-cd consonance/src-tauri && cargo test                (2026-09-25, on the desktop)
-    -> the main program: 961 passed · 0 failed · 4 ignored; every other target passed
+node consonance/tools/js-suite.js                    # every JS test file, with a universe report
+cd consonance/src-tauri && cargo test                # the Rust tests
 ```
 
-Both runs are recorded in [`exo_memory/handback/p-d138-waiting-C_2026-09-25.md`](exo_memory/handback/p-d138-waiting-C_2026-09-25.md).
-The "canary" is a test that is meant to fail and is not counted. The one "not run" declares itself tied to one
-machine's data, and says so rather than guessing when that data is not there.
+Run them for the figures; this page gives none, because the counts change with every lap and a generated copy leaves some
+files out. In js-suite's report a "canary" is a test that is meant to fail and is not counted, and a "not run" is a file that
+declares itself tied to one machine's data and says so rather than guessing when that data is not there.
 
 ### The central claim, and its evidence
 

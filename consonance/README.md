@@ -61,7 +61,7 @@ fragments, `frag-pointer.md` and `frag-traces.md`, which the app never reads and
 Command names above are the Rust `#[tauri::command]` functions — the canonical list is the
 `invoke_handler` block in [`src-tauri/src/main.rs`](src-tauri/src/main.rs):
 
-    grep -c '^#\[tauri::command\]' consonance/src-tauri/src/main.rs        # 47
+    grep -c '^#\[tauri::command\]' consonance/src-tauri/src/main.rs        # how many commands
     sed -n '/invoke_handler(tauri::generate_handler!/,/])/p' consonance/src-tauri/src/main.rs
 
 ### Panes come back into their own conversation, or a row says why not
@@ -121,7 +121,7 @@ given, and rings the librarian with the **pointer** in that same turn — never 
 The board verbs are defined in [`src-tauri/src/mcp.rs`](src-tauri/src/mcp.rs):
 
     grep -oE 'async fn (post_board|read_board|call_chair|call_librarian|raise_pull|chair_[a-z_]+)' \
-      consonance/src-tauri/src/mcp.rs | sort -u                                          # 10
+      consonance/src-tauri/src/mcp.rs | sort -u                                          # the verbs, by name
 
 - **Everyone:** `post_board`, `read_board`.
 - **Committee panes:** `raise_pull`, and `call_librarian` — the hand-back edge.
@@ -147,20 +147,21 @@ readable and panes can catch each other. `chair_phase` moves it.
 
 ## The instruments
 
-79 non-test tools under [`tools/`](tools/). 74 have a `.test.js` beside them and six also carry a `.mutants.js` beside them; there are 10
-`.mutants.js` files in all, and four of them (`reply-slot`, `second-reader`, `sources-gate`, `union-at-launch`) sit beside no tool of their name. **Five have
-no test of their own**: `dispatch-gate-report.js`, `l039-power.js`, `open-items.js`, `pane-status.js`, `reply-slot-replay.js`.
+The tools live under [`tools/`](tools/). Most have a `.test.js` beside them, some also carry a `.mutants.js`, and a few `.test.js` and
+`.mutants.js` files sit beside no tool of their name. **Some tools have no test of their own**, and the commands below name them.
+This page gives no counts: they change with every lap, and a generated copy leaves some tools out, so a number written here goes stale
+where a command does not. Run them:
 
-    ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js' | wc -l   # 79
-    ls consonance/tools/*.test.js | wc -l                                            # 95 (74 beside a tool; 21 with no tool of their name)
-    ls consonance/tools/*.mutants.js | wc -l                                         # 10
+    ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js' | wc -l   # the tools
+    ls consonance/tools/*.test.js | wc -l                                            # the tool tests
+    ls consonance/tools/*.mutants.js | wc -l                                         # the mutant harnesses
     for f in $(ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js'); do
-      [ -f "${f%.js}.test.js" ] || echo "$f"; done                                  # the five
+      [ -f "${f%.js}.test.js" ] || echo "$f"; done                                  # the tools with no test
     for f in $(ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js'); do
-      [ -f "${f%.js}.mutants.js" ] && echo "$f"; done | wc -l                       # 6 with a .mutants.js beside them
-    for f in consonance/tools/*.mutants.js; do [ -f "${f%.mutants.js}.js" ] || echo "$f"; done   # the four with no tool
+      [ -f "${f%.js}.mutants.js" ] && echo "$f"; done | wc -l                       # the tools with a .mutants.js beside them
+    for f in consonance/tools/*.mutants.js; do [ -f "${f%.mutants.js}.js" ] || echo "$f"; done   # the harnesses with no tool of their name
 
-Three of the 79 are shapes **wired to nothing**, and each says so in its own header. That was a decision priced in
+A few are shapes **wired to nothing**, and each says so in its own header. That was a decision priced in
 a registration, not an omission: `live-host.js`, `vantage-disposition.js`, `vantage-sealed-scope.js`
 (`grep -l "WIRED TO NOTHING" consonance/tools/*.js | grep -v '\.test\.js'`).
 
@@ -187,15 +188,14 @@ including the big one — it detects asserted *wording* and is blind to *omissio
 
 ## The hooks
 
-24 non-test `.js` files under [`hooks/`](hooks/) (23 in a generated copy, which leaves out the retired `jev-flags.js`): `blind.js` is a library, `second-reader-worker.js` is the worker the second-reader hook starts, and the rest are hooks.
-[`../dev/shell/install.ps1`](../dev/shell/install.ps1) copies 19 of the 23 and lists the other 4 as **unmanaged**, each with its reason: `ask-surface.js`, `baton-wake-stop.js` and
-`live-mirror-stop.js` wait on a decision, and `jev-flags.js` is retired (a generated copy does not carry it). It makes 23 registration entries in all (some are marked Excluded). Its own census
-(`files 35`, `registrations 23`) is printed by the `derive.ps1` snippet in [`hooks/README.md`](hooks/README.md):
+The hooks are the non-test `.js` files under [`hooks/`](hooks/) (a generated copy leaves out the retired `jev-flags.js`): `blind.js` is a library, `second-reader-worker.js` is the worker the second-reader hook starts, and the rest are hooks.
+[`../dev/shell/install.ps1`](../dev/shell/install.ps1) copies most of them and lists the rest as **unmanaged**, each with its reason; [`hooks/README.md`](hooks/README.md) names them.
+Some registration entries are marked Excluded. Its own census is printed by the `derive.ps1` snippet in [`hooks/README.md`](hooks/README.md). The counts, from the commands:
 
-    ls consonance/hooks/*.js | grep -v '\.test\.js' | wc -l                       # 23
-    grep -c "^ *@{ From = 'consonance.hooks" dev/shell/install.ps1                  # 19 copied
-    grep -c "^ *@{ Src = 'consonance.hooks" dev/shell/install.ps1                   # 4 unmanaged
-    grep -c "^ *@{ Event = " dev/shell/install.ps1                                  # 23 registration entries
+    ls consonance/hooks/*.js | grep -v '\.test\.js' | wc -l                       # the hook files
+    grep -c "^ *@{ From = 'consonance.hooks" dev/shell/install.ps1                  # copied
+    grep -c "^ *@{ Src = 'consonance.hooks" dev/shell/install.ps1                   # unmanaged
+    grep -c "^ *@{ Event = " dev/shell/install.ps1                                  # registration entries
 
 They exist because of one measurement, which is in [`AUTONOMY.md`](AUTONOMY.md) (the roster and the design
 argument are in [`hooks/README.md`](hooks/README.md)): over six
@@ -356,7 +356,7 @@ the last publish moved to `attic/pre-sync-*` and left the live file.
 
 Check which files are marked:
 
-    grep -c '"install": "fast-forward"' consonance/state-manifest.json        # 11
+    grep -c '"install": "fast-forward"' consonance/state-manifest.json        # the files marked
     grep -nE '^function (installTree|appendOnlyCompare)|judged FIRST|THE RE-CHECK' consonance/tools/state-sync.js   # the lines above
 
 **`tools/ledger-union.js`** (L070–L076) recovers rows that the old replace-on-install had displaced.
