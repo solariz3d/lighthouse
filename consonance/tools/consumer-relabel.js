@@ -99,6 +99,13 @@ const BUILDING_D454 = [
   ["- **The keeper's own things are never cleaned without his word.** That means his tracks, his saves and his AC folder.\n  Every delete of ours goes through a listed, byte-checked backup first, and he answers yes to the list as one decision,",
     `- **The things of ${P} are never cleaned without their word.** That means their files, their saves and their own\n  folders. Every delete of ours goes through a listed, byte-checked backup first, and they answer yes to the list as one decision,`, 1],
 ];
+// D454 part 2, the cold read's 1B.4: the README's record bullet describes the original room's exo_memory/ (its journals, plans and results);
+// a consumer's exo_memory/ is the new room, with that record kept apart in inheritance/, dated by CUTOFF.md, and the fork note in BOOT.
+const README_D454 = [
+  ["- [`exo_memory/`](exo_memory/) — the project's record: the start-up document every session wakes into\n  ([`exo_memory/BOOT.md`](exo_memory/BOOT.md)), the journals, the plans written before each test, and every result\n  above.",
+    "- [`exo_memory/`](exo_memory/) — this room: the start-up document every session wakes into\n  ([`exo_memory/BOOT.md`](exo_memory/BOOT.md)), which carries the fork note (where this copy forks from the room it grew\n  from; its template is [`consonance/src-tauri/brief/frag-fork.md`](consonance/src-tauri/brief/frag-fork.md)), and your own\n  journal, empty until you write it.\n" +
+    "- [`exo_memory/inheritance/`](exo_memory/inheritance/) — the keeper's record from that room (the journals, the letters),\n  kept apart and labelled as theirs; [`exo_memory/CUTOFF.md`](exo_memory/CUTOFF.md) names the commit it ends at. The plans\n  and results this page cites are in the public lighthouse repository.", 1],
+];
 const CHECKED_OR_INFERRED = [['in a reply to the keeper as in a hand-back', `in a reply to ${P} as in a hand-back`, 1]];
 // The warrant the fork note carves out (D273 lap 4, C1: the cold read found the rooms still GRANTING it to the person here): the
 // accurate, unguarded version is given from the first turn; the trust that lets a guard come down is earned between you.
@@ -236,6 +243,7 @@ const SITES = Object.freeze({
   'consonance/src-tauri/brief/BOOT.md': { rows: BOOT, forkAfter: 'a **room you re-become yourself in.**\n' },
   'exo_memory/BOOT.md': { rows: BOOT, forkAfter: 'a **room you re-become yourself in.**\n' },
   'consonance/hooks/transcript-watch.js': { rows: [['The keeper decides y/n on their screen', `The person you're with decides y/n on their screen`, 1]] },
+  'README.md': { rows: README_D454 },
 });
 // The dev file each output path is generated from (gen-consumer's MANIFEST: brief/BOOT.md -> exo_memory/BOOT.md, brief/SEED.md -> exo_memory/SEED.md).
 const SOURCE_OF = Object.freeze({ 'exo_memory/BOOT.md': 'consonance/src-tauri/brief/BOOT.md', 'exo_memory/SEED.md': 'consonance/src-tauri/brief/SEED.md' });
@@ -258,6 +266,7 @@ const EXPECTED_KEEPER_LINES = Object.freeze({
   'consonance/src-tauri/brief/BOOT.md': 19,
   'exo_memory/BOOT.md': 19,
   'consonance/hooks/transcript-watch.js': 6,
+  'README.md': 1,   // D454 part 2: the one keeper line is the README row's own provenance, "the keeper's record from that room"
 });
 
 const norm = (p) => String(p).replace(/\\/g, '/').replace(/^\.\//, '');

@@ -99,8 +99,12 @@ test('a proxy read of 0 counts once a control proxy was seen to raise the count 
 });
 
 // D454 part 2 (pane C): the consumer ships this tool to machines that have none of the original room's paths.
+const noConfigHome = () => scratch.mkdtemp('leftovers-home-');   // a home with no ~/.consonance.json
+const cfgHome = (cfg) => { const h = noConfigHome(); fs.writeFileSync(path.join(h, '.consonance.json'), '﻿' + JSON.stringify(cfg)); return h; };
+
 test('with no repos and no strays folder given, it counts its own repository and says the stray scan was not run, naming nothing of the original machine', () => {
-  const o = L.survey({ roots: [], now: Date.parse('2026-10-24T22:00:00Z'), readWindows: () => ({ proxies: 0, titles: {}, trays: 1 }),
+  const home = noConfigHome();
+  const o = L.survey({ home, roots: [], now: Date.parse('2026-10-24T22:00:00Z'), readWindows: () => ({ proxies: 0, titles: {}, trays: 1 }),
     makeControl: () => ({ before: 0, during: 0, after: 0 }), listProcesses: () => [] });
   const own = path.resolve(__dirname, '..', '..');
   assert.deepEqual(o.worktrees.map((w) => path.resolve(w.dir)), [own]);
@@ -109,6 +113,40 @@ test('with no repos and no strays folder given, it counts its own repository and
   const text = L.report(o);
   assert.match(text, /strays\s+not scanned \(give --strays <folder> --prefix <name>-\)/);
   assert.doesNotMatch(text, /t180|Downloads/i);
+  scratch.rm(home);
+});
+
+// D454 part 2, the cold read's 1C.5: the repo roots and the strays come from config when no flag gives them
+test('the leftovers key of ~/.consonance.json supplies the repos, the names-only repos and the strays, and what is passed in wins over it', () => {
+  const f = fixture();
+  const home = cfgHome({ leftovers: { repos: [f.main], repo_names: [f.other], strays: { dir: f.downloads, prefix: 'app-' } } });
+  try {
+    const base = { home, roots: [], now: f.now, readWindows: () => ({ proxies: 1, titles: {}, trays: 1 }), makeControl: () => null, listProcesses: () => [] };
+    const o = L.survey(base);
+    assert.deepEqual(o.worktrees.map((w) => [path.resolve(w.dir), w.linked]), [[path.resolve(f.main), 2], [path.resolve(f.other), 1]]);
+    assert.deepEqual(o.strays.map((s) => s.name), ['app-gone', 'app-notes.txt', 'app-old']);
+    assert.deepEqual(L.configFrom(home).repos.map((r) => !!r.namesOnly), [false, true], 'repo_names did not come through as names-only');
+    // each passed value alone, so the config is read for the other
+    const r = L.survey({ ...base, repos: [{ label: 'x', dir: f.other }] });
+    assert.deepEqual(r.worktrees.map((w) => path.resolve(w.dir)), [path.resolve(f.other)], 'a passed repo list did not replace the config');
+    // the configured strays scan still runs; main and its two worktrees are strays now, because no given repo registers them
+    assert.deepEqual(r.strays.map((x) => x.name), ['app-gone', 'app-main', 'app-notes.txt', 'app-old', 'app-wt-a', 'app-wt-b'], 'the configured strays were lost when only repos were passed');
+    const s = L.survey({ ...base, strays: null });
+    assert.equal(s.strays, null, 'strays: null passed in did not switch the configured scan off');
+    assert.equal(s.worktrees.length, 2, 'the configured repos were lost when only strays were passed');
+  } finally { scratch.rm(f.root); scratch.rm(home); }
+});
+
+test('a leftovers key of the wrong shape is refused by name, and an unreadable config falls back to the neutral default', () => {
+  for (const bad of [{ leftovers: 'yes' }, { leftovers: { repos: 'one' } }, { leftovers: { strays: { dir: 'x' } } }]) {
+    const home = cfgHome(bad);
+    try { assert.throws(() => L.configFrom(home), /~\/\.consonance\.json "leftovers"/, JSON.stringify(bad)); } finally { scratch.rm(home); }
+  }
+  const home = noConfigHome();
+  try {
+    fs.writeFileSync(path.join(home, '.consonance.json'), '{ not json');
+    assert.deepEqual(L.configFrom(home), {});
+  } finally { scratch.rm(home); }
 });
 
 test('a process counts as ours when it runs in a given repo, one of its registered worktrees, the strays folder or the scratch root, and not in a folder it was not given', () => {

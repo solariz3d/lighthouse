@@ -174,7 +174,7 @@ built it, and it is disclosed here so it is your choice.
 `mcp__consonance__call_librarian|mcp__consonance__call_chair`). To keep it off when `install.ps1` runs again, mark its line in `$register`
 `Excluded`, as below. It also does nothing while `~/.consonance.json` has no `data_dir` set, but the app writes that key the first time you save Settings.
 
-## Built and not wired: the claim check
+## Built and not installed: the claim check
 
 This one is not counted among the six because it does not run in a new room. Its refusal points here, so here is what it is.
 
@@ -182,7 +182,8 @@ This one is not counted among the six because it does not run in a new room. Its
 `exo_memory/`) and refuses a claim about state or a figure when nothing in the same turn could have shown it wrong. It asks only
 whether the turn *could* have known, never whether the claim is true.
 
-**Where it stands.** `install.ps1` copies it but registers no hook event for it, so it never fires until someone wires it. Even then
+**Where it stands.** `install.ps1` neither copies nor registers it: it is on that script's list of hooks declared unmanaged
+("installable, deliberately not installed"), so it never fires until someone installs and wires it. Even then
 it acts only when `%USERPROFILE%\.consonance.json` sets `"claim_check": true` (refuses) or `"shadow"` (logs what it would refuse,
 refuses nothing); anything else, or no key, is off.
 

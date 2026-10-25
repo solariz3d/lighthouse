@@ -175,7 +175,8 @@ his process list or his disk is ours to clean, and he should never be the one to
   Why: on 2026-10-24 there were 80 registered t180 worktrees and 77 more `t180-*` folders in Downloads that were not.
 - **The count.** The landing hand-back carries the output of `node consonance/tools/leftovers.js`, as printed, run with
   `--repo <dir>` for each repository whose worktrees our runs make (`--repo-names <dir>` for a checkout that is read no
-  further than its worktree names) and `--strays <folder> --prefix <name>-` for the folder they are made in. In this room
+  further than its worktree names) and `--strays <folder> --prefix <name>-` for the folder they are made in, or set them once in `~/.consonance.json` under
+  `"leftovers": { "repos": [...], "repo_names": [...], "strays": { "dir": ..., "prefix": ... } }`. In this room
   that is `--repo` the t180 checkout in Downloads, `--repo-names` the one on the Desktop, `--repo` lighthouse, and
   `--strays` Downloads with `--prefix t180-`. It prints Explorer's tab proxies, the registered
   worktrees of each repo, the entries in the strays folder that no repo registers, `fake-*` folders at a drive root, and

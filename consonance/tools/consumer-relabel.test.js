@@ -273,7 +273,7 @@ test('D454: the section\'s incidents keep their dates and figures, said of the k
 test('D454: the leftovers count is described by its general flags, with the original room\'s own invocation dropped', () => {
   const s = section(shipped('consonance/src-tauri/brief/BUILDING.md'), '## Leave the machine as you found it');
   assert.ok(s.includes('run with\n  `--repo <dir>` for each repository whose worktrees our runs make'), 'the general flags are not described');
-  assert.ok(s.includes('for the folder they are made in. It prints Explorer\'s tab proxies'), 'the sentence around the dropped invocation does not join');
+  assert.ok(s.includes('"strays": { "dir": ..., "prefix": ... } }`. It prints Explorer\'s tab proxies'), 'the sentence around the dropped invocation does not join');
 });
 
 test('D454: COMMITTEE\'s junction incident and LIBRARIAN\'s notes-path fact fix are said of the keeper\'s room and machine', () => {
@@ -286,6 +286,16 @@ test('D454: COMMITTEE\'s junction incident and LIBRARIAN\'s notes-path fact fix 
 test('D454: the fork note names the machine among what is the person\'s, and points at the rule that keeps it', () => {
   assert.ok(FORK.includes("whose machine every run of yours shares (`BUILDING.md`, \"Leave the machine as you found it\")"), 'the machine is not named as the person\'s');
   assert.ok(shipped('consonance/src-tauri/brief/BUILDING.md').includes('## Leave the machine as you found it'), 'the section the note cites is gone');
+});
+
+test('D454 (1B.4): the README says where the record lives in THIS copy: the room, inheritance/, CUTOFF.md and the fork note, each a shipped path', () => {
+  const t = shipped('README.md');
+  const s = t.slice(t.indexOf('### Where the record lives'), t.indexOf('### Keeping the About tab in step'));
+  assert.ok(!s.includes("the project's record: the start-up document") && !s.includes('the plans written before each test, and every result'), 'the original room\'s exo_memory/ is still described');
+  const links = [...s.matchAll(/\]\(([^)\s#]+)\)/g)].map((m) => m[1]).filter((l) => !/^https?:/.test(l));
+  for (const want of ['exo_memory/inheritance/', 'exo_memory/CUTOFF.md', 'consonance/src-tauri/brief/frag-fork.md']) assert.ok(links.includes(want), 'not linked: ' + want);
+  const shippedTo = new Set([...G.collect().filter((f) => !G.EXCLUDE[f.from]).map((f) => f.to), 'exo_memory/CUTOFF.md']);   // CUTOFF.md is written by the generator
+  for (const l of links) assert.ok(shippedTo.has(l) || [...shippedTo].some((p) => p.startsWith(l)), 'links a path that does not ship: ' + l);
 });
 
 test('D454: no relabelled brief or card names the keeper\'s product', () => {

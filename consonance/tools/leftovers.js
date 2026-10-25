@@ -9,7 +9,8 @@
 //   --repo-names <dir>  the same, but read no further than the names in its worktrees/ folder (a checkout that is not ours to open)
 //   --strays <folder> --prefix <name->   where those worktrees are made, and their name prefix (default: not scanned)
 //   --min-age <minutes> what counts as long-running (default 120)
-// D454 part 2: the repos and the strays folder are given, not the original room's t180 paths, so the tool fits any machine.
+// D454 part 2: the repos and the strays folder are given, not the original room's t180 paths, so the tool fits any machine. The flags
+// win; without them the `leftovers` key of ~/.consonance.json gives them ({ "repos": [dir], "repo_names": [dir], "strays": { "dir", "prefix" } }).
 //
 // The counts:
 //   tab proxies     Explorer's top-level Windows.Internal.Shell.TabProxyWindow windows. On 2026-10-24 Explorer held 527, titled
@@ -232,9 +233,32 @@ function ourLongRunning(procs, now, minAgeMin, ours = OURS_ALWAYS) {
 /** A repo's label in the report: its folder and the one above it, so two checkouts of one repo stay apart. */
 const labelOf = (dir) => { const r = path.resolve(dir); return `${path.basename(path.dirname(r))}/${path.basename(r)}`; };
 
+/** The `leftovers` key of <home>/.consonance.json: { repos: [dir], repo_names: [dir], strays: { dir, prefix } }, each part optional.
+ *  No file, or a file that is not JSON, is no config (the default, as the app and the hooks read it); a key of the wrong shape THROWS. */
+function configFrom(home) {
+  let cfg; try { cfg = JSON.parse(fs.readFileSync(path.join(home, '.consonance.json'), 'utf8').replace(/^﻿/, '')); } catch (_) { return {}; }
+  const v = cfg && cfg.leftovers;
+  if (v === undefined) return {};
+  const bad = (why) => new Error(`~/.consonance.json "leftovers" ${why} (shape: { "repos": [dir], "repo_names": [dir], "strays": { "dir": folder, "prefix": "name-" } })`);
+  if (!v || typeof v !== 'object' || Array.isArray(v)) throw bad('is not an object');
+  const dirs = (k) => { if (v[k] === undefined) return []; if (!Array.isArray(v[k]) || !v[k].every((d) => typeof d === 'string' && d.trim())) throw bad(`"${k}" is not a list of folders`); return v[k]; };
+  const out = {};
+  const repos = [...dirs('repos').map((d) => ({ label: labelOf(d), dir: d })), ...dirs('repo_names').map((d) => ({ label: labelOf(d), dir: d, namesOnly: true }))];
+  if (repos.length) out.repos = repos;
+  if (v.strays !== undefined) {
+    const s = v.strays;
+    if (!s || typeof s.dir !== 'string' || !s.dir.trim() || typeof s.prefix !== 'string' || !s.prefix.trim()) throw bad('"strays" needs both "dir" and "prefix"');
+    out.strays = { dir: s.dir, prefix: s.prefix };
+  }
+  return out;
+}
+
 function survey(opts = {}) {
-  const repos = opts.repos && opts.repos.length ? opts.repos : [{ label: labelOf(REPO), dir: REPO }];
-  const strays = opts.strays || null;
+  // what is passed in wins; then the config; then the neutral default (this tool's own repository, no stray scan)
+  const given = (opts.repos && opts.repos.length) && opts.strays !== undefined;
+  const cfg = given ? {} : configFrom(opts.home || os.homedir());   // read only when something is not passed in
+  const repos = opts.repos && opts.repos.length ? opts.repos : cfg.repos || [{ label: labelOf(REPO), dir: REPO }];
+  const strays = opts.strays !== undefined ? opts.strays : cfg.strays || null;
   if (strays && !(typeof strays.prefix === 'string' && strays.prefix.trim())) throw new Error('--strays needs --prefix <name->, the prefix its entries share');
   const now = opts.now || Date.now(), minAgeMin = opts.minAgeMin == null ? 120 : opts.minAgeMin;
   const windows = (opts.readWindows || readWindowsDefault)();
@@ -263,7 +287,7 @@ function report(o) {
   return L.join('\n');
 }
 
-module.exports = { survey, report, parsePsLine, proxyVerdict, countWorktrees, worktreeDirs, oursFor, findStrays, findFakeRoots, ourLongRunning, readWindowsDefault, makeControlDefault, listProcessesDefault };
+module.exports = { survey, report, configFrom, parsePsLine, proxyVerdict, countWorktrees, worktreeDirs, oursFor, findStrays, findFakeRoots, ourLongRunning, readWindowsDefault, makeControlDefault, listProcessesDefault };
 
 if (require.main === module) {
   try { os.setPriority(0, os.constants.priority.PRIORITY_BELOW_NORMAL); } catch (_) { /* a lower priority is a courtesy, not a requirement */ }
@@ -281,7 +305,7 @@ if (require.main === module) {
   if (minAge !== null && !(Number(minAge) >= 0)) { console.error('leftovers: --min-age takes a number of minutes, 0 or more'); process.exit(1); }
   if (got['--strays'] !== undefined && got['--prefix'] === undefined) { console.error('leftovers: --strays needs --prefix <name->, the prefix its entries share'); process.exit(1); }
   try {
-    const o = survey({ repos, strays: got['--strays'] === undefined ? null : { dir: got['--strays'], prefix: got['--prefix'] }, minAgeMin: minAge ? Number(minAge) : undefined });
+    const o = survey({ repos, strays: got['--strays'] === undefined ? undefined : { dir: got['--strays'], prefix: got['--prefix'] }, minAgeMin: minAge ? Number(minAge) : undefined });
     console.log(a.includes('--json') ? JSON.stringify(o, null, 1) : report(o));
   } catch (e) {
     console.error(`leftovers: ${e.message}`);
