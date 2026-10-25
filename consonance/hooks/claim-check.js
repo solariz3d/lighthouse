@@ -366,7 +366,7 @@ function dataDir() {
   const env = (process.env.CONSONANCE_DATA || '').trim();
   if (env) return env;
   try { const d = String((JSON.parse(fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^﻿/, '')) || {}).data_dir || '').trim(); if (d) return d; } catch (_) { /* none */ }
-  return null;
+  return path.join(os.homedir(), '.consonance');   // D454: the app's third step (main.rs default_data); a folder not made yet is an unwritable ledger, which allows
 }
 function record(dir, row) { try { fs.appendFileSync(path.join(dir, LEDGER), JSON.stringify({ ts: new Date().toISOString(), ...row }) + '\n'); return true; } catch (_) { return false; } }
 /** Has this session already been refused in this turn at this place? (once per turn per place, E §4) */

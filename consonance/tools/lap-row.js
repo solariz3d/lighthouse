@@ -104,7 +104,8 @@ function fromConfig(key) {
   } catch (_) { return null; }
 }
 
-const DATA_DIR = process.env.CONSONANCE_DATA || fromConfig('data_dir') || 'C:\\Consonance\\data';
+// D454: the third step is the app's own (main.rs default_data, %USERPROFILE%\.consonance), not one machine's fixed folder.
+const DATA_DIR = process.env.CONSONANCE_DATA || fromConfig('data_dir') || path.join(os.homedir(), '.consonance');
 const LEDGER = process.env.LAP_LEDGER || path.join(DATA_DIR, 'lap.jsonl');
 const REPO = process.env.LAP_REPO || fromConfig('room_path') && path.resolve(path.dirname(fromConfig('room_path')), '..')
   || path.resolve(__dirname, '..', '..');

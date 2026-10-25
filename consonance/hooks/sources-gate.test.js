@@ -665,3 +665,17 @@ test('D309 STAMP: a PANE or CHAIR ring that ends on the send line is still a bou
     assert.ok(isDeny(r), 'a stamped ring did not cut the turn: ' + text.slice(0, 30));
   }
 });
+
+// D454 part 3 (pane E): the data dir by the app's rule (main.rs data_dir: data_dir from ~/.consonance.json when set, else %USERPROFILE%\.consonance).
+// A new user who keeps the default Data folder saves data_dir "" (ui/app.js), and the app gives panes no CONSONANCE_DATA, so without the third step
+// this gate had no ledger and allowed every ring.
+test('APP RULE (D454): with CONSONANCE_DATA unset and data_dir empty or absent, the ledger is USERPROFILE/.consonance and a ring with no SOURCES line is denied', () => {
+  for (const cfg of [{ data_dir: '' }, null]) {
+    const h = homeWith(cfg), data = path.join(h, '.consonance'); fs.mkdirSync(data);
+    const dir = tmpDir(), input = payloadOf(dir, [USER('go')], { text: 'no sources' });
+    const r = spawnSync(process.execPath, [HOOK], { input, env: { ...envFor(dir), CONSONANCE_DATA: '', USERPROFILE: h, HOME: h }, encoding: 'utf8', timeout: 20000 });
+    assert.strictEqual(r.status, 0, r.stderr);
+    assert.match(r.stdout, /"permissionDecision":"deny"/, JSON.stringify(cfg) + ': ' + r.stdout);
+    assert.ok(fs.existsSync(path.join(data, 'sources-gate.jsonl')), 'the refusal is recorded under the default data dir');
+  }
+});

@@ -551,3 +551,15 @@ test('a mixed window withholds the pooled tell counts and prints them per actor 
   assert.ok(/WITHHELD: 1 of 1 windows/.test(text), 'the refusal is stated, with its denominator');
   assert.ok(/aaaaaaaa/.test(text) && /bbbbbbbb/.test(text), 'the per-actor breakdown replaces it');
 });
+
+// D454 part 3 (pane E, P's cold read 1C.4): the data dir by the app's rule (main.rs data_dir: data_dir from ~/.consonance.json when set, else
+// %USERPROFILE%\.consonance; CONSONANCE_DATA first), not one machine's fixed folder.
+test('APP RULE (D454): with CONSONANCE_DATA unset and data_dir empty or absent, the board is looked for under USERPROFILE/.consonance', () => {
+  const cp = require('child_process'), path = require('path'), fs = require('fs');
+  for (const cfg of [null, { data_dir: '' }]) {
+    const h = require('./scratch.js').mkdtemp('ti-home-'); if (cfg) fs.writeFileSync(path.join(h, '.consonance.json'), JSON.stringify(cfg));
+    const env = { ...process.env, USERPROFILE: h, HOME: h }; delete env.CONSONANCE_DATA;
+    const got = cp.execFileSync(process.execPath, ['-e', 'process.stdout.write(require(' + JSON.stringify(path.join(__dirname, 'tell-index.js')) + ').dataDir())'], { env, encoding: 'utf8' });
+    assert.strictEqual(got, path.join(h, '.consonance'), JSON.stringify(cfg));
+  }
+});

@@ -106,9 +106,11 @@ const PY = FOUND.exe || 'python';
 function iso(msAgo) { return new Date(Date.now() - msAgo).toISOString(); }
 
 /* One isolated run. Returns { ctx, raw, status }. */
-function run({ prevMsAgo, compactMsAgo, startMsAgo, hook = HOOK, stdin = true }) {
+// dataVia 'default' (D454): no CONSONANCE_DATA and no ~/.consonance.json, so the data dir is the app's default, <home>/.consonance
+function run({ prevMsAgo, compactMsAgo, startMsAgo, hook = HOOK, stdin = true, dataVia = 'env' }) {
   const home = require('../../../consonance/tools/scratch.js').mkdtemp('pulse-home-');
-  const data = require('../../../consonance/tools/scratch.js').mkdtemp('pulse-data-');
+  const data = dataVia === 'default' ? path.join(home, '.consonance') : require('../../../consonance/tools/scratch.js').mkdtemp('pulse-data-');
+  fs.mkdirSync(data, { recursive: true });
   const cwd = require('../../../consonance/tools/scratch.js').mkdtemp('pulse-cwd-sibling-');
   const shell = path.join(home, '.claude', 'shell');
   fs.mkdirSync(shell, { recursive: true });
@@ -139,7 +141,7 @@ function run({ prevMsAgo, compactMsAgo, startMsAgo, hook = HOOK, stdin = true })
   const r = spawnSync(PY, [hook], {
     cwd,
     input: stdin ? JSON.stringify({ hook_event_name: 'UserPromptSubmit', transcript_path: transcript, cwd }) : '',
-    env: { ...process.env, USERPROFILE: home, HOME: home, CONSONANCE_DATA: data },
+    env: { ...process.env, USERPROFILE: home, HOME: home, CONSONANCE_DATA: dataVia === 'default' ? '' : data },
     encoding: 'utf8',
   });
   let ctx = null;
@@ -260,4 +262,14 @@ test('MUTATION: with the ROW 10 block removed, the positive fixture prints no pa
   // and the control arm, same fixture, real hook: the path is there
   const c = run({ prevMsAgo: 2 * H, compactMsAgo: 1 * H, startMsAgo: 1 * H });
   assert.ok(c.ctx && c.ctx.includes(CARD), 'control must fire: ' + c.ctx);
+});
+
+// D454 part 3 (pane E): the data dir by the app's rule (main.rs data_dir: data_dir from ~/.consonance.json when set, else %USERPROFILE%\.consonance).
+// A new user who keeps the default Data folder saves data_dir "" (ui/app.js), and the app gives panes no CONSONANCE_DATA, so without the third step
+// the pulse said "restart detection OFF" on every turn of a default install.
+test('APP RULE (D454): with CONSONANCE_DATA unset and no data_dir, a restart is read from USERPROFILE/.consonance/head-watch.jsonl', () => {
+  const r = run({ prevMsAgo: 2 * H, startMsAgo: 1 * H, dataVia: 'default' });
+  assert.ok(r.ctx, r.raw + r.err);
+  assert.doesNotMatch(r.ctx, /restart detection OFF/, r.ctx);
+  assert.match(r.ctx, /crosses a restart/, r.ctx);
 });

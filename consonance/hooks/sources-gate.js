@@ -76,8 +76,10 @@ function dataDir() {
     const raw = fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^﻿/, '');
     const d = String((JSON.parse(raw) || {}).data_dir || '').trim();
     if (d) return d;
-  } catch (_) { /* no config: no data dir: the hook logs nothing and therefore never denies */ }
-  return null;
+  } catch (_) { /* no config, or no data_dir in it: the app's default below */ }
+  // D454: the app's third step (main.rs default_data). A new user who keeps the default Data folder saves data_dir "", and without this the
+  // gate had no ledger and allowed every ring. A default folder the app has not made yet is an unwritable ledger, and that still allows.
+  return path.join(os.homedir(), '.consonance');
 }
 /* D277 part 2 (plan: exo_memory/loop/plan_lighten_the_load_2026-10-09.md): ONE switch for the three paperwork gates, `gates_mode` in ~/.consonance.json.
  * Absent, unreadable, or anything but "light" (trimmed, any case) is "strict", which is TODAY's behaviour, byte for byte. "light": this gate matches what

@@ -2131,3 +2131,12 @@ test('PARTS: the other readers of lap.jsonl give the same answer with and withou
     assert.deepStrictEqual(bare(cs.chainLaps(withParts)), bare(cs.chainLaps(base)));
   } finally { fs.rmSync(d1, { recursive: true, force: true }); fs.rmSync(d2, { recursive: true, force: true }); }
 });
+
+// D454 part 3 (pane E): the data dir by the app's rule (main.rs data_dir: data_dir from ~/.consonance.json when set, else %USERPROFILE%\.consonance).
+// README tells a new user to run `node consonance/tools/lap-row.js --report`; with no data_dir it read one machine's fixed ledger path instead.
+test('APP RULE (D454): with CONSONANCE_DATA, LAP_LEDGER and data_dir unset, --report reads USERPROFILE/.consonance/lap.jsonl', () => {
+  const h = require('./scratch.js').mkdtemp('lap-home-');
+  const env = { ...process.env, USERPROFILE: h, HOME: h }; delete env.CONSONANCE_DATA; delete env.LAP_LEDGER;
+  let out = ''; try { out = execFileSync(NODE, [TOOL, '--report'], { env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }); } catch (e) { out = String(e.stdout || '') + String(e.stderr || ''); }
+  assert.strictEqual(out.split(/\r?\n/)[0], 'lap-row - ' + path.join(h, '.consonance', 'lap.jsonl'), out.slice(0, 300));
+});

@@ -116,7 +116,7 @@ Three states a file in this directory can be in, and all three are normal:
 | copied, **not** registered | the installer places it; something else fires it, or nobody has wired it yet |
 | **not in the installer's list** | present here, installed by nothing — a hook you must wire yourself, or one that is not finished |
 
-As the script stands, `ask-surface.js`, `baton-wake-stop.js` and `live-mirror-stop.js` are in the third state (so is `jev-flags.js`, retired: its registration and copy were dropped on 2026-10-08), and
+As the script stands, its `$unmanaged` list has five files in the third state: `ask-surface.js`, `baton-wake-stop.js`, `live-mirror-stop.js`, `claim-check.js` (built and off: it acts only when `~/.consonance.json` sets `claim_check`), and `jev-flags.js`, retired (its registration and copy were dropped on 2026-10-08). And
 `blind.js` is a library — copied because another hook requires it, never registered. Do not trust
 that sentence either: the `$files` and `$reg` lists the command above prints are what decide it, and
 `install.ps1 -Check` reports the state of every managed file on the machine you run it on.

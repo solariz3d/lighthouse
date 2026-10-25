@@ -202,3 +202,17 @@ test('D309: a ring that ends on the send line backs the same seat and no other',
   assert.strictEqual(C.check(turn('B has finished the tidy.', [], stamped('B'))).verdict, 'allow');
   assert.strictEqual(C.check(turn('B has finished the tidy.', [], stamped('C'))).verdict, 'refuse');
 });
+
+// D454 part 3 (pane E): the data dir by the app's rule (main.rs data_dir: data_dir from ~/.consonance.json when set, else %USERPROFILE%\.consonance).
+// A new user who keeps the default Data folder saves data_dir "" (ui/app.js), and the app gives panes no CONSONANCE_DATA, so without the third step
+// the switched-on check had no ledger and let every claim through.
+test('APP RULE (D454): with data_dir empty or absent, ON keeps its ledger in USERPROFILE/.consonance and refuses', () => {
+  for (const extra of [{ data_dir: '' }, {}]) {
+    const h = fs.mkdtempSync(path.join(tmp, 'home-')), data = path.join(h, '.consonance'); fs.mkdirSync(data);
+    fs.writeFileSync(path.join(h, '.consonance.json'), JSON.stringify({ claim_check: true, ...extra }));
+    const tr = path.join(h, 't.jsonl'); fs.writeFileSync(tr, JSON.stringify({ type: 'user', timestamp: T0, message: { role: 'user', content: 'collate it' } }) + '\n');
+    const r = runHook({ h, data, tr }, ring(tr));
+    assert.match(r.out, /"permissionDecision":"deny"/, JSON.stringify(extra) + ': ' + r.out);
+    assert.strictEqual(r.ledger.length, 1, 'the refusal is recorded under the default data dir');
+  }
+});

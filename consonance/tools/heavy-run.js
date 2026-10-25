@@ -66,6 +66,9 @@ const path = require('path');
 const crypto = require('crypto');
 const { spawnSync } = require('child_process');
 const { dataDir: manifestDataDir } = require('./state-manifest.js');
+// D454: the app's third step (main.rs default_data), for a config with no data_dir: a new user's default Data folder. The app creates it at
+// launch; acquire() creates it too, so a heavy run before the first launch is not refused.
+const appDefaultDataDir = () => path.join(process.env.USERPROFILE || require('os').homedir(), '.consonance');
 
 const LOCK_NAME = 'heavy-run.lock';   // slot 1; slot k is heavy-run.k.lock (D286)
 const DEFAULT_SLOTS = 2;
@@ -154,7 +157,8 @@ function acquire({
   alive = pidAlive, confirmGone = pidGone, log = (s) => process.stderr.write(s + '\n'), now = () => Date.now(), sleep = sleepSync,
   writes, diskFree = freeBytes, diskTotal = janitorTotal,
 } = {}) {
-  const dir = dataDir === undefined ? manifestDataDir() : dataDir;
+  let dir = dataDir === undefined ? manifestDataDir() : dataDir;
+  if (dataDir === undefined && !dir) { dir = appDefaultDataDir(); fs.mkdirSync(dir, { recursive: true }); }
   if (!dir) throw Object.assign(new Error('heavy-run: no data dir (CONSONANCE_DATA unset and ~/.consonance.json has no data_dir) — refusing to run without the lock'), { code: 'HEAVY_RUN_NO_DATA' });
   const n = slotCount(slots !== undefined ? slots : process.env.CONSONANCE_HEAVY_SLOTS);
 

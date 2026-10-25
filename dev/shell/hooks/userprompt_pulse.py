@@ -185,6 +185,12 @@ def _consonance_data_dir():
             return _d, "config"
     except Exception:
         pass
+    # D454: the app's own third tier (main.rs default_data), %USERPROFILE%\.consonance -- not the fixed path the note above refused.
+    # A new user who keeps the default Data folder saves data_dir "", and without it every turn said restart detection OFF.
+    try:
+        return os.path.join(os.path.expanduser("~"), ".consonance"), "default"
+    except Exception:
+        pass
     return None, None
 
 

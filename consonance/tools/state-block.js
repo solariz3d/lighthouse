@@ -208,20 +208,29 @@ function nameSection() {
   };
 }
 
-function liveSection() {
+// D454: the ledgers live in the data dir, resolved by the app's rule (CONSONANCE_DATA, then ~/.consonance.json data_dir, then
+// %USERPROFILE%\.consonance), not at one machine's fixed path. On a machine whose config sets data_dir, the paths are that folder's.
+function liveDataDir(env = process.env) {
+  const e = String(env.CONSONANCE_DATA || '').trim(); if (e) return e;
+  const home = env.USERPROFILE || env.HOME || '';
+  try { const d = String((JSON.parse(fs.readFileSync(path.join(home, '.consonance.json'), 'utf8').replace(/^\uFEFF/, '')) || {}).data_dir || '').trim(); if (d) return d; } catch (_) { /* none: the default */ }
+  return path.join(home, '.consonance');
+}
+function liveSection(env = process.env) {
   const lines = [];
-  const hw = 'C:\\Consonance\\data\\head-watch.jsonl';
+  const dir = liveDataDir(env);
+  const hw = path.join(dir, 'head-watch.jsonl');
   try {
     const rows = fs.readFileSync(hw, 'utf8').trim().split('\n');
     const last = JSON.parse(rows[rows.length - 1]);
     lines.push('head-watch ledger ' + rows.length + ' row(s), last ' + last.event + ' at ' + last.ts.slice(0, 16).replace('T', ' '));
   } catch (e) { lines.push('head-watch ledger unreadable (' + (e.code || 'error') + ')'); }
-  const pc = 'C:\\Consonance\\data\\precompact.jsonl';
+  const pc = path.join(dir, 'precompact.jsonl');
   try {
     const rows = fs.readFileSync(pc, 'utf8').trim().split('\n');
     lines.push('precompact ledger ' + rows.length + ' attempt(s) recorded');
   } catch (e) { lines.push('precompact ledger absent — the hook has not fired here'); }
-  return { title: 'live', cmd: 'tail -1 C:\\Consonance\\data\\head-watch.jsonl', lines };
+  return { title: 'live', cmd: 'tail -1 ' + hw, lines };
 }
 
 /* THE TRIGGER TABLE. Added 2026-08-22, and it replaces the card DESCRIPTIONS in the block for a

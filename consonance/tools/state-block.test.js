@@ -446,3 +446,18 @@ test('D309: every section whose figures can go stale says "as of" the stamp, bes
   }
   assert.match(t, /^NAME  \(check: /m, 'the name line carries no figure and no stamp');
 });
+
+// D454 part 3 (pane E): the data dir by the app's rule (main.rs data_dir: data_dir from ~/.consonance.json when set, else %USERPROFILE%\.consonance).
+// A new user who keeps the default Data folder saves data_dir "" (ui/app.js), and the app gives panes no CONSONANCE_DATA, so without the third step
+// the live section read one machine's fixed ledger paths on every machine.
+test('APP RULE (D454): the live ledgers are read from the data dir by the app\'s rule, and the printed check names that path', () => {
+  const h = require('./scratch.js').mkdtemp('sb-home-'), def = path.join(h, '.consonance'); fs.mkdirSync(def);
+  fs.writeFileSync(path.join(def, 'head-watch.jsonl'), JSON.stringify({ ts: '2026-10-25T04:00:00.000Z', event: 'start' }) + '\n');
+  let s = sb.liveSection({ USERPROFILE: h });
+  assert.match(s.lines.join('\n'), /head-watch ledger 1 row\(s\), last start/, s.lines.join(' | ')); assert.ok(s.cmd.includes(path.join(def, 'head-watch.jsonl')), s.cmd);
+  const custom = path.join(h, 'custom'); fs.mkdirSync(custom); fs.writeFileSync(path.join(h, '.consonance.json'), JSON.stringify({ data_dir: custom }));
+  s = sb.liveSection({ USERPROFILE: h });
+  assert.match(s.lines.join('\n'), /head-watch ledger unreadable \(ENOENT\)/, s.lines.join(' | ')); assert.ok(s.cmd.includes(path.join(custom, 'head-watch.jsonl')), s.cmd);
+  s = sb.liveSection({ USERPROFILE: h, CONSONANCE_DATA: def });
+  assert.match(s.lines.join('\n'), /head-watch ledger 1 row/, 'CONSONANCE_DATA comes first');
+});

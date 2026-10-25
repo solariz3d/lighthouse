@@ -596,3 +596,17 @@ test('D287 disk guard through hold(): a refused run EXITS 4, loudly, and never s
   assert.doesNotMatch(r.stdout, /STARTED/);
   assert.match(r.stderr, /refusing to start: .* has 5\.0 GB free/);
 });
+
+// D454 part 3 (pane E): the data dir by the app's rule (main.rs data_dir: data_dir from ~/.consonance.json when set, else %USERPROFILE%\.consonance).
+// A new user who keeps the default Data folder saves data_dir "" (ui/app.js), and the app gives panes no CONSONANCE_DATA, so without the third step
+// a heavy run refused with "no data dir", README's `node consonance/tools/js-suite.js` among them. The app creates that folder; so does the lock.
+test('APP RULE (D454): with CONSONANCE_DATA unset and data_dir empty or absent, hold() takes its lock in USERPROFILE/.consonance and runs the work', async () => {
+  for (const cfg of [{ data_dir: '' }, null]) {
+    const h = tmp(); if (cfg) fs.writeFileSync(path.join(h, '.consonance.json'), JSON.stringify(cfg));
+    const env = cleanEnv({ USERPROFILE: h, HOME: h }); delete env.CONSONANCE_DATA;
+    const def = path.join(h, '.consonance');
+    const c = spawn(process.execPath, ['-e', `const fs=require('fs');require(${JSON.stringify(HELPER)}).hold({cmd:'app rule'});const l=fs.existsSync(${JSON.stringify(def)})?fs.readdirSync(${JSON.stringify(def)}).filter((n)=>/^heavy-run(\\.\\d+)?\\.lock$/.test(n)):[];console.log(l.length?'LOCKED':'NOLOCK');console.log('RAN')`], { env, stdio: ['ignore', 'pipe', 'pipe'] });
+    const r = await done(c);
+    assert.strictEqual(r.code, 0, JSON.stringify(cfg) + ': ' + r.err); assert.match(r.out, /RAN/); assert.match(r.out, /LOCKED/, 'the lock is under the default data dir: ' + r.out + r.err);
+  }
+});

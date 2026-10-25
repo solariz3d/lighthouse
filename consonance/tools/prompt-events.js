@@ -41,7 +41,14 @@
 const fs = require("fs");
 const path = require("path");
 
-const CAPTURES = "C:/Consonance/data/captures";
+// D454: the data dir by the app's rule (CONSONANCE_DATA, then ~/.consonance.json data_dir, then %USERPROFILE%\.consonance), not one machine's folder.
+function dataDir() {
+  const e = String(process.env.CONSONANCE_DATA || "").trim(); if (e) return e;
+  const home = process.env.USERPROFILE || require("os").homedir();
+  try { const d = String((JSON.parse(fs.readFileSync(path.join(home, ".consonance.json"), "utf8").replace(/^\uFEFF/, "")) || {}).data_dir || "").trim(); if (d) return d; } catch (e) { /* none: the default */ }
+  return path.join(home, ".consonance");
+}
+const CAPTURES = path.join(dataDir(), "captures");
 const PHRASE = "Can Anthropic look at your session transcript";
 const DOCS = "data-usage#session-quality-surveys";
 const AFFORD = /y:\s*Yes\s*n:\s*No/;      // whitespace varies with terminal width
@@ -156,7 +163,7 @@ function mergeRedraws(firings) {
 function paneName(file) {
   const id = path.basename(file, ".log");
   try {
-    const reg = JSON.parse(fs.readFileSync("C:/Consonance/data/panes.json", "utf8"));
+    const reg = JSON.parse(fs.readFileSync(path.join(path.dirname(CAPTURES), "panes.json"), "utf8"));
     const p = (reg.panes || reg || []).find(x => x && (x.id === id || String(x.id).startsWith(id.slice(0, 8))));
     if (p && p.name) return `${p.name} (${id.slice(0, 8)})`;
   } catch (e) { /* registry is a convenience, never a requirement */ }

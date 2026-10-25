@@ -624,6 +624,24 @@ test('D218: a fresh machine gets reply-slot.js and sources-gate.js in the SAME d
   for (const n of ['reply-slot.js', 'sources-gate.js']) assert.strictEqual(fs.readFileSync(found[n][0], 'utf8'), fs.readFileSync(path.join(REPO, 'consonance', 'hooks', n), 'utf8'), n);
 });
 
+// D454 part 3 (pane E, P's cold read 1C.6 / 1B.3): hooks/README says which files are "not in the installer's list". That sentence named three
+// (and jev-flags) while install.ps1's $unmanaged had five rows, claim-check added since 0.1.1. The README now follows the list, and this row holds it there.
+test('D454: hooks/README names exactly the files of install.ps1 $unmanaged as not in the installer list, and says how many', () => {
+  const repo = path.resolve(__dirname, '..', '..');
+  const ps = fs.readFileSync(path.join(repo, 'dev', 'shell', 'install.ps1'), 'utf8');
+  const block = ps.slice(ps.indexOf('$unmanaged = @('), ps.indexOf('\n)', ps.indexOf('$unmanaged = @(')));
+  const listed = [...block.matchAll(/Src = '[^']*\\([^\\']+\.js)'/g)].map((m) => m[1]).sort();
+  assert.ok(listed.length >= 1, 'the $unmanaged list was read');
+  const readme = fs.readFileSync(path.join(repo, 'consonance', 'hooks', 'README.md'), 'utf8');
+  const at = readme.indexOf('As the script stands'), end = readme.indexOf('is a library', at);
+  assert.ok(at >= 0 && end > at, 'the sentence is in the README');
+  const sentence = readme.slice(at, end);
+  const named = [...new Set([...sentence.matchAll(/`([a-z0-9-]+\.js)`/g)].map((m) => m[1]))].filter((n) => n !== 'blind.js').sort();
+  assert.deepStrictEqual(named, listed, 'the README names the $unmanaged files, no more and no fewer');
+  const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+  assert.match(sentence, new RegExp('\\b' + words[listed.length] + '\\b'), 'and gives their number, ' + words[listed.length]);
+});
+
 console.log(`\n${pass} passed, ${fail} failed`);
 fs.rmSync(tmp, { recursive: true, force: true });
 process.exit(fail ? 1 : 0);
