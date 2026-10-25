@@ -1,0 +1,53 @@
+lap 11484.0 m; samples [33m5744[39m ; rows [33m14005[39m
+largest |residual| vs the core, whole lap, per class:
+   1ROAD         8096.6 mm at s 3552.6 x -19.28 y -2.308 1ROAD_p16_chunk_10
+rows anywhere with a vertex more than [33m20[39m mm off the core: [33m285[39m
+   1ROAD_p16_chunk_10       s   1381.900 max 6727.5 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1383.775 max 7655.4 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1383.786 max 7554.9 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1383.799 max 7451.3 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1383.813 max 7344.4 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1383.828 max 7231.6 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1383.845 max 7110.8 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1383.866 max 6976.9 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1383.892 max 6816.9 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1383.939 max 6553.9 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1385.804 max 7670.5 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1385.815 max 7568.0 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1385.826 max 7463.2 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1385.839 max 7354.9 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1385.852 max 7242.7 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1385.868 max 7123.9 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1385.885 max 6996.3 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1385.905 max 6854.2 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1385.932 max 6683.4 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1385.979 max 6400.0 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1387.845 max 7606.1 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1387.855 max 7500.0 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1387.867 max 7391.0 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1387.879 max 7278.2 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1387.893 max 7160.9 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1387.908 max 7036.4 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1387.926 max 6902.1 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1387.946 max 6751.9 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1387.972 max 6570.4 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1388.019 max 6266.8 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1389.886 max 7560.9 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1389.897 max 7451.3 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1389.908 max 7338.5 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1389.921 max 7221.4 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1389.934 max 7099.2 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1389.950 max 6969.3 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1389.967 max 6828.4 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1389.987 max 6670.6 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1390.013 max 6478.6 mm, verts [33m2[39m
+   1ROAD_p16_chunk_10       s   1390.060 max 6155.2 mm, verts [33m2[39m
+
+== joint at s 2300 (+-6 m): rows (mesh, s, n, max|res| mm | edges x: kn5 R L | core R L | y edges kn5 R L)
+   1ROAD_p4_chunk_5               2294  114     0.1  |  -12.500   12.187  |  -12.500   12.187  |   0.000   1.591  
+   1ROAD_p4_chunk_5               2296  114     0.1  |  -12.500   12.187  |  -12.500   12.187  |   0.000   1.591  
+   1ROAD_p4_chunk_5               2298  114     0.1  |  -12.500   12.187  |  -12.500   12.187  |   0.000   1.591  
+   1ROAD_p4_chunk_5               2300  288     0.5  |  -12.500   12.187  |  -12.500   12.187  |   0.000   1.591  
+   1ROAD_p4_chunk_5               2302  174     0.1  |  -12.500   12.187  |  -12.500   12.187  |   0.000   1.591  
+   1ROAD_p4_chunk_5               2304  174     0.1  |  -12.500   12.187  |  -12.500   12.187  |   0.000   1.591  
+   largest second difference of kn5 height at fixed x over three consecutive rows: 0.2 mm at s 2302.000 x 9 (row spacing 2.000, 2.000 m; first differences up to 0.1 mm)

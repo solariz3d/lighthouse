@@ -1,0 +1,35 @@
+rows [33m11486[39m with no station within 8 m [33m0[39m
+stations with a drawn point [33m5743[39m of [33m5744[39m
+
+largest |side| offset of the drawn centre from the true centre (m, + toward L), by station:
+  s      0.0 pieces 499/5742 K 26/57  side 0.0000 | -0.0000  up 0.0000 | -0.0001  along 0.000 | 0.000
+  s   3868.0 pieces 1949   K 92     side -0.0000 | -0.0000  up 0.0003 | 0.0003  along 0.000 | -0.000
+  s   4018.0 pieces 2024   K 92     side -0.0000 | -0.0000  up 0.0003 | 0.0003  along 0.000 | 0.000
+  s   3884.0 pieces 1949   K 92     side -0.0000 | -0.0000  up 0.0003 | 0.0003  along 0.000 | 0.000
+  s   4034.0 pieces 2024   K 92     side -0.0000 | -0.0000  up 0.0003 | 0.0003  along 0.000 | -0.000
+  s   4410.0 pieces 2324   K 92     side -0.0000 | -0.0000  up 0.0003 | 0.0003  along 0.000 | 0.000
+  s   3864.0 pieces 1949   K 92     side -0.0000 | -0.0000  up 0.0003 | 0.0003  along 0.000 | 0.000
+  s   4014.0 pieces 2024   K 92     side -0.0000 | -0.0000  up 0.0003 | 0.0003  along 0.000 | 0.000
+  s   4026.0 pieces 2024   K 92     side -0.0000 | -0.0000  up 0.0003 | 0.0003  along 0.000 | -0.000
+  s   3876.0 pieces 1949   K 92     side -0.0000 | -0.0000  up 0.0003 | 0.0003  along 0.000 | 0.000
+  s   4476.0 pieces 2324   K 92     side -0.0000 | -0.0000  up 0.0003 | 0.0003  along 0.000 | 0.000
+  s   4220.0 pieces 2324   K 92     side -0.0000 | -0.0000  up 0.0003 | 0.0003  along 0.000 | -0.000
+
+largest lateral JUMPS of the drawn centre line between neighbouring stations (dSide, m) or between the two rows drawn at one station (within):
+  s      0.0 ->      2.0 dSide   0.0000 within   0.0000 pieces 499/5742
+  s  11482.0 ->      0.0 dSide  -0.0000 within   0.0000 pieces 5742/499
+  s   3750.0 ->   3752.0 dSide  -0.0000 within   0.0000 pieces 1874/1924
+  s   4650.0 ->   4652.0 dSide   0.0000 within   0.0000 pieces 2324/2374
+  s   3748.0 ->   3750.0 dSide  -0.0000 within   0.0000 pieces 1874/1924
+  s   4648.0 ->   4650.0 dSide   0.0000 within   0.0000 pieces 2324/2374
+  s   3700.0 ->   3702.0 dSide  -0.0000 within   0.0000 pieces 1849/1874
+  s   3698.0 ->   3700.0 dSide  -0.0000 within   0.0000 pieces 1849/1874
+  s   1328.0 ->   1330.0 dSide   0.0000 within   0.0000 pieces 1149
+  s   1558.0 ->   1560.0 dSide  -0.0000 within   0.0000 pieces 1149
+  s   1434.0 ->   1436.0 dSide  -0.0000 within   0.0000 pieces 1149
+  s   1432.0 ->   1434.0 dSide   0.0000 within   0.0000 pieces 1149
+  s   2058.0 ->   2060.0 dSide  -0.0000 within   0.0000 pieces 1149
+  s   2056.0 ->   2058.0 dSide   0.0000 within   0.0000 pieces 1149
+  s   1330.0 ->   1332.0 dSide  -0.0000 within   0.0000 pieces 1149
+ERR TypeError: Cannot read properties of undefined (reading 'pieces')
+    at C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d459\prevline459b.js:45:35

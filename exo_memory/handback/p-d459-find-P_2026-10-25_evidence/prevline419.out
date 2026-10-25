@@ -1,0 +1,47 @@
+trackmodel.update: full batches [33m5750[39m in [33m1232[39m ms
+path samples [33m5744[39m s [33m0[39m .. [33m11483.999999999412[39m segments [33m5743[39m closed [33mtrue[39m
+rows [33m11486[39m with no station of their own [33m0[39m
+
+largest lateral JUMPS of the drawn centre line between neighbouring rows (m; + toward L), with the offset before and after and the batches:
+  s   8748.0 dSide 445.2179 side   0.0000 -> 445.2179 dUp  90.2182 K 57->57    1ROAD_p18_body_0 -> 1ROAD_p19_body_0 
+  s   8750.0 dSide 443.2426 side  -0.0000 -> 443.2426 dUp  89.9207 K 57->57    1ROAD_p19_body_0 -> 1ROAD_p19_body_0 
+  s   6748.0 dSide 407.4682 side  -0.0000 -> 407.4682 dUp   7.9078 K 91->57    1ROAD_p17_body_0 -> 1ROAD_p18_body_0 
+  s   6750.0 dSide 405.4682 side   0.0000 -> 405.4682 dUp   7.9084 K 57->57    1ROAD_p18_body_0 -> 1ROAD_p18_body_0 
+  s  11482.0 dSide -387.5644 side  -0.0000 -> -387.5644 dUp -75.8512 K 57->57    1ROAD_p22_body_0 -> 1ROAD_p23_body_0 
+  s  11484.0 dSide -387.3860 side  -0.0000 -> -387.3860 dUp -75.5699 K 57->57    1ROAD_p23_body_0 -> 1ROAD_p23_body_0 
+  s   9817.0 dSide 386.4785 side   0.0000 -> 386.4785 dUp -71.0688 K 57->57    1ROAD_p20_body_0 -> 1ROAD_p21_body_0 
+  s   9819.0 dSide 386.2966 side   0.0000 -> 386.2966 dUp -70.7732 K 57->57    1ROAD_p21_body_0 -> 1ROAD_p21_body_0 
+  s   4648.0 dSide 346.0127 side  -0.0000 -> 346.0127 dUp  61.0114 K 92->92    1ROAD_p15_body_0 -> 1ROAD_p16_body_0 
+  s   4650.0 dSide 344.0434 side  -0.0000 -> 344.0434 dUp  60.6641 K 92->92    1ROAD_p16_body_0 -> 1ROAD_p16_body_0 
+  s   3300.0 dSide -252.5672 side   0.0000 -> -252.5672 dUp  57.6372 K 87->87    1ROAD_p5_body_0 -> 1ROAD_p5_body_0 
+  s   3298.0 dSide -252.5665 side  -0.0000 -> -252.5665 dUp  57.8733 K 57->87    1ROAD_p4_body_0 -> 1ROAD_p5_body_0 
+  s   2298.0 dSide -208.0733 side   0.0000 -> -208.0733 dUp 170.5783 K 57->57    1ROAD_p3_body_0 -> 1ROAD_p4_body_0 
+  s   2300.0 dSide -207.7441 side  -0.0000 -> -207.7441 dUp 170.7691 K 57->57    1ROAD_p4_body_0 -> 1ROAD_p4_body_0 
+  s   3598.0 dSide -58.6643 side   0.0000 -> -58.6643 dUp  -0.5178 K 87->87    1ROAD_p7_body_0 -> 1ROAD_p8_body_0 
+
+largest |side| offset of the drawn line from the true centre anywhere: 445.2179 m; largest |up - LIFT|: 444.6868 m
+
+per batch: K columns, centre lerp k0/t and u either side, side offset first row -> last row:
+   1ROAD_p1_body_0        s    998.0 ..   1000.0 K   26 k0  12 t 0.5000 u -0.500 .. 0.500 side 0.0000 -> 0.0000
+   1ROAD_p2_body_0        s   1098.0 ..   1100.0 K   57 k0  12 t 0.7273 u -0.714 .. 0.268 side -31.6940 -> -0.0000
+   1ROAD_p3_body_0        s   1298.0 ..   1300.0 K   57 k0  12 t 0.7273 u -0.714 .. 0.268 side -56.5950 -> 0.0000
+   1ROAD_p4_body_0        s   2298.0 ..   2300.0 K   57 k0  12 t 0.7273 u -0.714 .. 0.268 side -208.0733 -> -0.0000
+   1ROAD_p5_body_0        s   3298.0 ..   3300.0 K   87 k0  27 t 0.8235 u -0.443 .. 0.095 side -252.5665 -> 0.0000
+   1ROAD_p6_body_0        s   3398.0 ..   3400.0 K   87 k0  27 t 0.8235 u -0.443 .. 0.095 side -28.3417 -> 0.0000
+   1ROAD_p7_body_0        s   3498.0 ..   3500.0 K   87 k0  27 t 0.8235 u -0.443 .. 0.095 side -31.2638 -> 0.0000
+   1ROAD_p8_body_0        s   3598.0 ..   3600.0 K   87 k0  27 t 0.8235 u -0.443 .. 0.095 side -58.6643 -> 0.0000
+   1ROAD_p9_body_0        s   3648.0 ..   3650.0 K   87 k0  27 t 0.8235 u -0.443 .. 0.095 side 0.0000 -> 0.0000
+   1ROAD_p10_body_0       s   3698.0 ..   3700.0 K   87 k0  27 t 0.8235 u -0.443 .. 0.095 side 0.0000 -> 0.0000
+   1ROAD_p11_body_0       s   3748.0 ..   3750.0 K   91 k0  62 t 0.5000 u -0.272 .. 0.272 side 28.9210 -> 0.0000
+   1ROAD_p12_body_0       s   3848.0 ..   3850.0 K   92 k0  63 t 0.1944 u -0.105 .. 0.434 side -0.0000 -> -0.0000
+   1ROAD_p13_body_0       s   3898.0 ..   3900.0 K   92 k0  63 t 0.1944 u -0.105 .. 0.434 side 28.9169 -> -0.0000
+   1ROAD_p14_body_0       s   3998.0 ..   4000.0 K   92 k0  63 t 0.1944 u -0.105 .. 0.434 side -0.0000 -> -0.0000
+   1ROAD_p15_body_0       s   4048.0 ..   4050.0 K   92 k0  63 t 0.1944 u -0.105 .. 0.434 side 28.9169 -> -0.0000
+   1ROAD_p16_body_0       s   4648.0 ..   4650.0 K   92 k0  63 t 0.1944 u -0.105 .. 0.434 side 346.0127 -> -0.0000
+   1ROAD_p17_body_0       s   4748.0 ..   4750.0 K   91 k0  62 t 0.5000 u -0.272 .. 0.272 side 0.0053 -> -0.0000
+   1ROAD_p18_body_0       s   6748.0 ..   6750.0 K   57 k0  27 t 1.0000 u -0.535 .. 0.000 side 407.4682 -> 0.0000
+   1ROAD_p19_body_0       s   8748.0 ..   8750.0 K   57 k0  27 t 1.0000 u -0.535 .. 0.000 side 445.2179 -> 0.0000
+   1ROAD_p20_body_0       s   8898.0 ..   8900.0 K   57 k0  27 t 1.0000 u -0.535 .. 0.000 side 0.0000 -> 0.0000
+   1ROAD_p21_body_0       s   9817.0 ..   9819.0 K   57 k0  27 t 1.0000 u -0.535 .. 0.000 side 386.4785 -> 0.0000
+   1ROAD_p22_body_0       s  10563.0 ..  10565.0 K   57 k0  27 t 1.0000 u -0.535 .. 0.000 side 7.3123 -> -0.0000
+   1ROAD_p23_body_0       s  11482.0 ..  11484.0 K   57 k0  27 t 1.0000 u -0.535 .. 0.000 side -387.5644 -> 0.0000

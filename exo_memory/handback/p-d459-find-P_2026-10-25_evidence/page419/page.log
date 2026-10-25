@@ -1,0 +1,17 @@
+menubar ready errors [33m0[39m
+opened: 23 pieces · 11,484 m · closed loop | TEST 10 · closed loop
+wrote p419-s11470.png
+wrote p419-close-s11470.png
+wrote p419-s11484.png
+wrote p419-close-s11484.png
+wrote p419-s2290.png
+wrote p419-close-s2290.png
+wrote p419-s2300.png
+wrote p419-close-s2300.png
+wrote p419-s1000.png
+wrote p419-close-s1000.png
+page errors: none
+
+# stderr
+
+# exit 0 in 52.9 s
