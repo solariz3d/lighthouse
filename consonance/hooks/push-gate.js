@@ -47,7 +47,7 @@ function dataDir() {
   const env = (process.env.CONSONANCE_DATA || '').trim();
   if (env) return env;
   try { const d = String((JSON.parse(fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^\uFEFF/, '')) || {}).data_dir || '').trim(); if (d) return d; } catch (_) { /* no config */ }
-  return null;
+  return path.join(os.homedir(), '.consonance');   // D454: the app's third step (main.rs default_data), so a new user's default Data folder has this gate's record
 }
 function record(dir, row) {
   if (!dir) return false;

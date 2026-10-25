@@ -160,3 +160,17 @@ test('cygpath is looked for on PATH, then under this machine\'s own Program File
   assert.strictEqual(here[0], 'cygpath', 'PATH first');
   if (process.platform === 'win32' && process.env.ProgramFiles) assert.ok(here.includes(path.win32.join(process.env.ProgramFiles, 'Git', 'usr', 'bin', 'cygpath.exe')), 'and this machine\'s own Program Files after it');
 });
+
+// D454 part 3 (pane E): the data dir by the app's rule (main.rs data_dir: data_dir from ~/.consonance.json when set, else %USERPROFILE%\.consonance).
+// A new user who keeps the default Data folder saves data_dir "" and panes get no CONSONANCE_DATA, so this gate denied but kept no ledger: a refusal with no record.
+test('APP RULE (D454): with CONSONANCE_DATA unset and data_dir empty, a push with a key is still refused and the refusal is recorded under USERPROFILE/.consonance', () => {
+  const h = require('../tools/scratch.js').mkdtemp('app-rule-home-'), def = path.join(h, '.consonance'); fs.mkdirSync(def); fs.writeFileSync(path.join(h, '.consonance.json'), JSON.stringify({ data_dir: '' }));
+  const strangerEnv = (extra = {}) => { const e = { ...process.env, USERPROFILE: h, HOME: h, CONSONANCE_DREAM: '', ...extra }; delete e.CONSONANCE_DATA; return e; };
+  const { work } = repo();
+  fs.writeFileSync(path.join(work, 'config.txt'), `a = 1\nkey = ${FAKE_VCK}\n`); git(work, 'add', 'config.txt'); git(work, 'commit', '-q', '-m', 'oops');
+  const r = spawnSync(process.execPath, [HOOK], { input: JSON.stringify(push(work)), encoding: 'utf8', env: strangerEnv() });
+  const j = r.stdout.trim() ? JSON.parse(r.stdout) : null;
+  assert.equal(r.status, 0); assert.equal(j && j.hookSpecificOutput.permissionDecision, 'deny', r.stdout);
+  const lp = path.join(def, G.LEDGER), ledger = fs.existsSync(lp) ? fs.readFileSync(lp, 'utf8') : '';
+  assert.ok(ledger.includes('"decision":"deny"'), 'the deny is recorded under the default data dir'); assert.ok(!ledger.includes(FAKE_VCK), 'and never the secret');
+});

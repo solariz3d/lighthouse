@@ -38,8 +38,8 @@ function dataDir() {
     const raw = fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^﻿/, '');
     const d = String((JSON.parse(raw) || {}).data_dir || '').trim();
     if (d) return d;
-  } catch (_) { /* no config: no data dir: the hook logs nothing and still allows */ }
-  return null;
+  } catch (_) { /* no config, or no data_dir in it: the app's default below */ }
+  return path.join(os.homedir(), '.consonance');   // D454: the app's third step (main.rs default_data), so a new user's default Data folder has this gate's record
 }
 
 /** One ledger row. Never throws, never blocks a ring. Never carries message text: callers pass a sha. */

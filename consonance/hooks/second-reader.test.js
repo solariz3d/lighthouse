@@ -283,3 +283,17 @@ test('SECRET SCAN: the hook\'s own rows (skipped-busy) carry the ring\'s sha and
   const dir = tmpDir(); writeStub(dir); fs.writeFileSync(path.join(dir, 'second-reader.lock'), JSON.stringify({ pid: process.pid, ts: Date.now(), token: 'held' }));
   runHook(dir, payload(LIB, `ZEBRA-UNIQUE ${OR_TOKEN}`)); const log = fs.readFileSync(path.join(dir, 'second-reader.jsonl'), 'utf8'); assert.ok(!/ZEBRA-UNIQUE|sk-or-/.test(log), log);
 });
+
+// D454 part 3 (pane E): the data dir by the app's rule (main.rs data_dir: data_dir from ~/.consonance.json when set, else %USERPROFILE%\.consonance).
+// A new user who keeps the default Data folder saves data_dir "" and panes get no CONSONANCE_DATA, so the second reader never ran for them: no lock, no ledger, no read.
+test('APP RULE (D454): with CONSONANCE_DATA unset and data_dir empty, a ring is read under USERPROFILE/.consonance: its lock, its worker and its ledger row', async () => {
+  const h = require('../tools/scratch.js').mkdtemp('app-rule-home-'), def = path.join(h, '.consonance'); fs.mkdirSync(def); fs.writeFileSync(path.join(h, '.consonance.json'), JSON.stringify({ data_dir: '' }));
+  const strangerEnv = (extra = {}) => { const e = { ...process.env, USERPROFILE: h, HOME: h, CONSONANCE_DREAM: '', ...extra }; delete e.CONSONANCE_DATA; return e; };
+  writeStub(def);
+  const r = spawnSync(process.execPath, [HOOK], { input: payload(LIB, 'a pointer to read'), encoding: 'utf8', timeout: 15000, env: strangerEnv({ CONSONANCE_PANE: 'A', CONSONANCE_SECOND_READER_WORKER: path.join(def, 'stub-worker.js') }) });
+  assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '', 'it never blocks the ring');
+  assert.ok(await waitFor(() => stubDone(def) === 1), 'the worker ran from the default data dir');
+  // a started read leaves its row to the worker; a ring with no text is one the hook records itself, so the ledger is shown with that one
+  const r2 = spawnSync(process.execPath, [HOOK], { input: payload(LIB, ''), encoding: 'utf8', timeout: 15000, env: strangerEnv({ CONSONANCE_PANE: 'A', CONSONANCE_SECOND_READER_WORKER: path.join(def, 'stub-worker.js') }) });
+  assert.strictEqual(r2.status, 0); assert.deepStrictEqual(rows(def).map((x) => x.status), ['skipped-no-text'], 'and its ledger is there');
+});
