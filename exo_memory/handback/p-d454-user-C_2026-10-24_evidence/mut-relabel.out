@@ -12,6 +12,9 @@ caught       row: COMMITTEE junction
 caught       pin: BUILDING back to 22
 caught       pin: COMMITTEE back to 5
 caught       the person's things keep "his word"
+caught       README row dropped
+caught       README pin moved
+caught       README row loses inheritance/
 caught       the incident loses its room label
-applied 14 / caught 14 / NOT APPLIED 0; restored byte-identical; unmutated green
+applied 17 / caught 17 / NOT APPLIED 0; restored byte-identical; unmutated green
 exit 0

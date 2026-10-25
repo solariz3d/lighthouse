@@ -1,10 +1,10 @@
 ﻿lowio: set status 0, io priority now 1, class BelowNormal
-ok   consonance/tools/leftovers.test.js: tests 10 pass 10 fail 0 (4 s)
-ok   consonance/tools/consumer-relabel.test.js: tests 33 pass 33 fail 0 (1 s)
+ok   consonance/tools/leftovers.test.js: tests 12 pass 12 fail 0 (6 s)
+ok   consonance/tools/consumer-relabel.test.js: tests 34 pass 34 fail 0 (2 s)
 ok   consonance/tools/heavy-run.test.js: tests 51 pass 51 fail 0 (11 s)
 ok   consonance/tools/front-door-links.test.js: tests 5 pass 5 fail 0 (0 s)
-ok   consonance/tools/portable-paths.test.js: tests 43 pass 43 fail 0 (5 s)
-ok   consonance/tools/identity-diff.test.js: tests 9 pass 9 fail 0 (16 s)
-ok   consonance/tools/gen-consumer.test.js: tests 107 pass 107 fail 0 (121 s)
+ok   consonance/tools/portable-paths.test.js: tests 43 pass 43 fail 0 (8 s)
+ok   consonance/tools/identity-diff.test.js: tests 9 pass 9 fail 0 (21 s)
+ok   consonance/tools/gen-consumer.test.js: tests 107 pass 107 fail 0 (128 s)
 all green
 exit 0

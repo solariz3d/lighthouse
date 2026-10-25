@@ -24,6 +24,9 @@ const M = [
   ['pin: BUILDING back to 22', ["'consonance/src-tauri/brief/BUILDING.md': 25,", "'consonance/src-tauri/brief/BUILDING.md': 22,"]],
   ['pin: COMMITTEE back to 5', ["'consonance/src-tauri/brief/COMMITTEE.md': 6,", "'consonance/src-tauri/brief/COMMITTEE.md': 5,"]],
   ['the person\'s things keep "his word"', ['are never cleaned without their word.**', 'are never cleaned without his word.**']],
+  ['README row dropped', ["  'README.md': { rows: README_D454 },\n", '']],
+  ['README pin moved', ["  'README.md': 1,", "  'README.md': 0,"]],
+  ['README row loses inheritance/', ['"- [`exo_memory/inheritance/`](exo_memory/inheritance/) — the keeper', '"- [`exo_memory/inheritance`](exo_memory/) — the keeper']],
   ['the incident loses its room label', ["\"Why: in the keeper's room, on 2026-10-24 at 08:32, the keeper's game crashed mid-stream,\"", "\"Why: on 2026-10-24 at 08:32, the keeper's game crashed mid-stream,\""]],
 ];
 let applied = 0, caught = 0, notApplied = 0;

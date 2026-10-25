@@ -22,6 +22,14 @@ caught       its worktrees are not ours
 caught       the strays folder is not ours
 caught       the scratch root is not ours
 caught       an unknown flag is accepted
+caught       config repos are ignored
+caught       config strays are ignored
+caught       config wins over what is passed
+caught       a non-object leftovers key is accepted
+caught       strays without a prefix are accepted
+caught       repo_names lose names-only
+caught       a BOM breaks the config
+caught       an unreadable config throws
 caught       the old keeper paths are ours again
-applied 24 / caught 24 / NOT APPLIED 0; unmutated copy green
+applied 32 / caught 32 / NOT APPLIED 0; unmutated copy green
 exit 0
