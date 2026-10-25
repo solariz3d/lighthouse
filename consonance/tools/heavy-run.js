@@ -104,7 +104,7 @@ function checkDisk({ paths, free = freeBytes, total = janitorTotal, log }) {
   }
   if (!low) return null;
   const gbs = (low.bytes / 1e9).toFixed(1);
-  if (low.bytes < DISK_REFUSE_BYTES) throw Object.assign(new Error(`heavy-run: refusing to start: ${low.root} has ${gbs} GB free, under the ${DISK_REFUSE_BYTES / 1e9} GB floor; a heavy run that fills the disk fails every seat's writes. ${total()}.`), { code: 'HEAVY_RUN_DISK', free: low });
+  if (low.bytes < DISK_REFUSE_BYTES) throw Object.assign(new Error(`heavy-run: refusing to start: ${low.root} has ${gbs} GB free, under the ${DISK_REFUSE_BYTES / 1e9} GB floor; a heavy run that fills the disk fails every seat's writes. ${total()}. How it works: consonance/GATES.md, "The heavy-run lock".`), { code: 'HEAVY_RUN_DISK', free: low });
   if (low.bytes < DISK_WARN_BYTES) log(`heavy-run: WARNING: ${low.root} has ${gbs} GB free, under ${DISK_WARN_BYTES / 1e9} GB; run node consonance/tools/janitor.js`);
   return low;
 }

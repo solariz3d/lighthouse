@@ -552,6 +552,11 @@ test('D287 disk guard: under 20 GB free on a drive the run writes to, it REFUSES
   assert.strictEqual(fs.existsSync(lockOf(d)), false, 'no slot is taken by a refused run');
 });
 
+test('D454 part 2: the disk refusal points to GATES.md, the page that explains what refuses a seat', () => {
+  const { r } = guarded(tmp(), () => 5 * GB);
+  assert.match(r.message, /How it works: consonance\/GATES\.md, "The heavy-run lock"\./);
+});
+
 test('D287 disk guard: at a normal free space it runs (takes the slot) and says nothing', () => {
   const d = tmp();
   const { r, logs } = guarded(d, () => 500 * GB);

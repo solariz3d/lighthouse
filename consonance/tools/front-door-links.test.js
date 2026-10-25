@@ -67,6 +67,23 @@ test('GATES.md documents six gates, each with how to turn it off', () => {
   for (const s of sections) assert.match(s, /\*\*To turn it off:\*\*/, s.split('\n')[0]);
 });
 
+// D454 part 2 (pane C): a refusal that sends a seat to GATES.md must land on a section that explains it. Every `GATES.md, "<title>"` in the
+// shipped code names a heading of GATES.md, and every hook or tool that names GATES.md at all is itself named in GATES.md.
+test('every refusal that points into GATES.md by section title finds that heading, and every file that points there is explained there', () => {
+  const gates = fs.readFileSync(path.join(ROOT, 'consonance/GATES.md'), 'utf8');
+  const heads = new Set(gates.split(/\r?\n/).filter((l) => /^## /.test(l)).map((l) => l.slice(3).trim()));
+  const files = ['consonance/hooks', 'consonance/tools', 'consonance/src-tauri/src'].flatMap((d) => fs.readdirSync(path.join(ROOT, d))
+    .filter((n) => /\.(js|rs)$/.test(n) && !/\.test\.js$|mutants/.test(n)).map((n) => d + '/' + n));
+  let titled = 0;
+  for (const rel of files) {
+    const text = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    if (!/GATES\.md/.test(text) || rel.endsWith('front-door-links.test.js')) continue;
+    for (const m of text.matchAll(/GATES\.md, \\?"([^"\\]+)\\?"/g)) { titled++; assert.ok(heads.has(m[1]), `${rel} points at GATES.md "${m[1]}", which is no heading there`); }
+  }
+  assert.ok(titled >= 2, 'the titled pointers are gone, so this check proves nothing');
+  for (const named of ['claim-check.js', 'heavy-run.js', 'pane_exit.rs']) assert.ok(gates.includes(named), `GATES.md does not explain ${named}, whose refusal points there`);
+});
+
 test('GATES.md evidence links point into the public lighthouse repository at paths in this tree', () => {
   const gates = fs.readFileSync(path.join(ROOT, 'consonance/GATES.md'), 'utf8');
   const pub = [...gates.matchAll(/\]\((https:\/\/github\.com\/[^)\s]+)\)/g)].map((m) => m[1]);

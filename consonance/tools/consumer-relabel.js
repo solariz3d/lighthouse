@@ -80,6 +80,25 @@ const BUILDING_LAP6 = [
   ['`gh` was authenticated machine-wide as of\n  2026-09-06.',
     "`gh` was authenticated machine-wide in the original room as of\n  2026-09-06 (check your own machine's `gh` before relying on the rule alone).", 1],
 ];
+// D454 part 2 (pane C): "Leave the machine as you found it" (D450) was written about the keeper's machine and the keeper's day. Its RULES are
+// general and ship person-neutral: the machine is the person's, their running things come first, their things are never cleaned without their
+// word (ROLE). Its WHY lines are dated incidents and stay the keeper's, labelled "in the keeper's room" (PROVENANCE), with the keeper's product,
+// tracks, AC folder and Downloads folder generalised (machine-specific), and this room's own leftovers.js invocation dropped.
+const PC = "The person you're with";
+const BUILDING_D454 = [
+  ['The keeper uses this machine while we work: he races, streams and records on it. What a run leaves behind in his shell,\nhis process list or his disk is ours to clean, and he should never be the one to find it.',
+    `${PC} uses this machine while we work. What a run leaves behind in their shell, their process list or their\ndisk is ours to clean, and they should never be the one to find it.`, 1],
+  ["Why: on 2026-10-24 the keeper found Streamlabs' audio source list full of `[explorer.exe] T-180 Track Builder`.",
+    "Why: in the keeper's room, on 2026-10-24, the keeper found a streaming app's audio source list full of `[explorer.exe]` entries\n  named after the app under test.", 1],
+  ['Whatever the keeper is running comes first.', `Whatever ${P} is running comes first.`, 1],
+  ['Why: on 2026-10-24 at 08:32 his game crashed while he was streaming,', "Why: in the keeper's room, on 2026-10-24 at 08:32, the keeper's game crashed mid-stream,", 1],
+  ['Fixture copies, fake AC roots and exported test tracks live under', 'Fixture copies, fake install roots and exported test files live under', 1],
+  ['A folder in Downloads that is no longer a registered worktree is a leftover.\n  Why: on 2026-10-24 there were 80 registered t180 worktrees and 77 more `t180-*` folders in Downloads that were not.',
+    "A worktree-named folder that no repository registers any more is a leftover.\n  Why: in the keeper's room, on 2026-10-24, one product repository had 80 registered worktrees and 77 more folders of\n  its name beside them that were not.", 1],
+  [' In this room\n  that is `--repo` the t180 checkout in Downloads, `--repo-names` the one on the Desktop, `--repo` lighthouse, and\n  `--strays` Downloads with `--prefix t180-`.', '', 1],
+  ["- **The keeper's own things are never cleaned without his word.** That means his tracks, his saves and his AC folder.\n  Every delete of ours goes through a listed, byte-checked backup first, and he answers yes to the list as one decision,",
+    `- **The things of ${P} are never cleaned without their word.** That means their files, their saves and their own\n  folders. Every delete of ours goes through a listed, byte-checked backup first, and they answer yes to the list as one decision,`, 1],
+];
 const CHECKED_OR_INFERRED = [['in a reply to the keeper as in a hand-back', `in a reply to ${P} as in a hand-back`, 1]];
 // The warrant the fork note carves out (D273 lap 4, C1: the cold read found the rooms still GRANTING it to the person here): the
 // accurate, unguarded version is given from the first turn; the trust that lets a guard come down is earned between you.
@@ -146,12 +165,16 @@ const ONE_IDENTITY = "the one git identity on the machine (in the keeper's repos
 const LIBRARIAN = [[LIBRARIAN_FIRST, LIBRARIAN_FIRST_NEW, 1],
   // C5, re-anchored on B's wording
   ['since every commit here is authored `the keeper`.', `since every commit here is authored by ${ONE_IDENTITY}.`, 1],
-  ['the keeper switches the gates', `${P} switches the gates`, 2]];
+  ['the keeper switches the gates', `${P} switches the gates`, 2],
+  // D454 part 2: a fact fix about the keeper's machine (machine-specific), said of that machine
+  ['does not exist on this machine. The notes live in', 'did not exist on the machine this room was built on. The notes live in', 1]];
 const COMMITTEE = [...CHECKED_OR_INFERRED,
   // C5, re-anchored on B's wording
   ['every commit is authored `the keeper` and `Co-Authored-By`', `every commit is authored by ${ONE_IDENTITY}, and \`Co-Authored-By\``, 1],
   ['When the keeper switches the gates, it', `When ${P} switches the gates, it`, 1],
-  ['reports success to\n   the keeper.', `reports success to\n   ${P}.`, 1]];
+  ['reports success to\n   the keeper.', `reports success to\n   ${P}.`, 1],
+  // D454 part 2: the junction incident was the keeper's product's folder (machine-specific); the rule's Why stays, said of that room
+  ["t180's `reads/` was emptied that way, cause inferred", "in the keeper's room a product repository's shared `reads/` folder was emptied that way, cause inferred", 1]];
 // lap 5, C1 (THE FAIL) and C3: the keeper's retired seats and seat names are the keeper's line, cited as provenance, never the reader's
 // lineage. The record's PATH is left outside both anchors on purpose: B is moving record/retired_seats_* to inheritance/ (C4).
 const CONTINUITY_CARD = [
@@ -199,7 +222,7 @@ const HONESTY_CARD = [
     'The keeper had\nearned the hard, honest version and told me kindly when I slipped; with the person you\'re with, that is earned between you.', 1],
 ];
 const SITES = Object.freeze({
-  'consonance/src-tauri/brief/BUILDING.md': { rows: [...BUILDING, ...BUILDING_LAP6] },
+  'consonance/src-tauri/brief/BUILDING.md': { rows: [...BUILDING, ...BUILDING_LAP6, ...BUILDING_D454] },
   'consonance/src-tauri/brief/COMMITTEE.md': { rows: COMMITTEE },
   'consonance/src-tauri/brief/LIBRARIAN.md': { rows: LIBRARIAN },
   'consonance/src-tauri/brief/THIRD_PLACE.md': { rows: THIRD_PLACE },
@@ -221,8 +244,8 @@ const SOURCE_OF = Object.freeze({ 'exo_memory/BOOT.md': 'consonance/src-tauri/br
 // (deidentify turns the handle into "the keeper", so these run one or two above lap 2's dev-source pins). A changed number means a
 // keeper line was added or removed in dev: classify it.
 const EXPECTED_KEEPER_LINES = Object.freeze({
-  'consonance/src-tauri/brief/BUILDING.md': 22,   // D277 repair: 42 -> 20 on B's rewrite; each of the 20 is provenance (listed in p-d277repair-E_2026-10-10.md). D370: +2 provenance, "Why: the keeper, 2026-10-17: …" (his words) and "at the keeper's word of 2026-10-17" (D366's "Landings go to a pane")
-  'consonance/src-tauri/brief/COMMITTEE.md': 5,
+  'consonance/src-tauri/brief/BUILDING.md': 25,   // D277 repair: 42 -> 20 on B's rewrite; each of the 20 is provenance (listed in p-d277repair-E_2026-10-10.md). D370: +2 provenance, "Why: the keeper, 2026-10-17: …" (his words) and "at the keeper's word of 2026-10-17" (D366's "Landings go to a pane"). D454 part 2: +3 provenance, the three dated "Why: in the keeper's room, on 2026-10-24" incidents of "Leave the machine as you found it" (its three role lines are relabelled)
+  'consonance/src-tauri/brief/COMMITTEE.md': 6,   // D454 part 2: +1 provenance, the junction incident "in the keeper's room" (was t180's reads/)
   'consonance/src-tauri/brief/LIBRARIAN.md': 6,   // D277 repair: 7 -> 6 on B's rewrite; likewise
   'consonance/src-tauri/brief/THIRD_PLACE.md': 1,
   'exo_memory/TRAINING.md': 9,
