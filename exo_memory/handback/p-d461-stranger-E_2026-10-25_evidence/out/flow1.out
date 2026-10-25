@@ -1,0 +1,40 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+stranger lap
+extend [33m200[39m [33m0[39m -> ? :: unsaved • | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100%
+extend [33m150[39m [33m90[39m -> 2 pieces · 350 m · open · last extend 0 ms :: unsaved • | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100%
+extend [33m200[39m [33m0[39m -> 3 pieces · 550 m · open · last extend 0 ms :: unsaved • | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100%
+extend [33m150[39m [33m90[39m -> 4 pieces · 700 m · open · last extend 0 ms :: unsaved • | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100%
+extend [33m200[39m [33m0[39m -> 5 pieces · 900 m · open · last extend 0 ms :: unsaved • | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100%
+extend [33m150[39m [33m90[39m -> 6 pieces · 1,050 m · open · last extend 0 ms :: unsaved • | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100%
+extend [33m150[39m [33m0[39m -> 7 pieces · 1,200 m · open · last extend 0 ms :: unsaved • | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100%
+
+[02-extended] {
+ "panel": "7 pieces · 1,200 m · open · last extend 0 ms",
+ "status": "unsaved • | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100%",
+ "guide": "2 of 6Brush the trackChoose Build ▸ Brush: a strip under the menus holds what to change (turn, bank, width, …) and the radius. Then drag on the track in the preview. The brush bends the track smoothly around where you drag; a stroke stops where the track would break (red). Build ▸ Brush again turns ",
+ "checker": "CSP (wall raycasting)0 red · 0 amber · lap: the loop is still open · 0 jumps"
+}
+shot G:\consonance-scratch\d461-stranger\shots\02-extended.png
+Sculpt mode || Straight || Level || To floor || Turn by… || Turn to grid… || Sharp corner… || Jump || Close the loop
+unsaved • · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100% | closed: laid 200 m of new road from the end to the start (2 pieces); nothing already built moved
+
+[03-close-pressed] {
+ "panel": "9 pieces · 1,400 m · closed loop · last close 927 ms",
+ "status": "unsaved • · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100% | closed: laid 200 m of new road from the end to the start (2 pieces); nothing already built moved",
+ "guide": "2 of 6Brush the trackChoose Build ▸ Brush: a strip under the menus holds what to change (turn, bank, width, …) and the radius. Then drag on the track in the preview. The brush bends the track smoothly around where you drag; a stroke stops where the track would break (red). Build ▸ Brush again turns ",
+ "checker": "CSP (wall raycasting)0 red · 0 amber · lap proved · 0 jumps"
+}
+shot G:\consonance-scratch\d461-stranger\shots\03-close-pressed.png
+apply: no Apply button visible
+
+[04-closed] {
+ "panel": "9 pieces · 1,400 m · closed loop · last close 927 ms",
+ "status": "unsaved • · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100% | closed: laid 200 m of new road from the end to the start (2 pieces); nothing already built moved",
+ "guide": "2 of 6Brush the trackChoose Build ▸ Brush: a strip under the menus holds what to change (turn, bank, width, …) and the radius. Then drag on the track in the preview. The brush bends the track smoothly around where you drag; a stroke stops where the track would break (red). Build ▸ Brush again turns ",
+ "checker": "CSP (wall raycasting)0 red · 0 amber · lap proved · 0 jumps"
+}
+shot G:\consonance-scratch\d461-stranger\shots\04-closed.png
+
+errors [33m0[39m []
+console warn/error [33m0[39m []
+native calls open_autosave, list_tracks, list_pieces, get_see_it_setting, find_ac_root, save_autosave, save_autosave, save_autosave, save_autosave, save_autosave, save_autosave, save_autosave, backup_track, save_autosave
