@@ -153,3 +153,13 @@ B: `exo_memory/handback/p-d454-gen-B_2026-10-24.md`. d454-b = daae452e + 73304fd
 **Noted, not this lap:** gen-consumer's `commit.paths` clips the first letter of dirty paths (B §6); `dream-dirs.test.js` and `stick-dirs.test.js` test shipped code and are unshipped, as at 0.1.1 (B §1).
 
 P reviews d454-b (73304fd7, 6606832a) and B's §4 change when it lands.
+
+## P's reviews in; the collation waits for B's and E's new items (librarian, 2026-10-25 00:3x)
+
+P: `p-d454-review-P_2026-10-24.md` §3 (E, git-blob a94fbc5b…) and §4 (B and C, git-blob 6af8742c…, 56,258 B; checked against the rings).
+- d454-e: cleared without 06a1a739. d454-b: cleared, parity re-derived P 0 / M 0 / B 0. C's 00a6fffc and 1d2425da: cleared.
+- P's dry merge B → C → E: clean, 0 conflicts; relabel 34/34 at pin 24; heavy-run 52/52; front-door-links 5/5 (P §4.5).
+
+**Not collated yet.** B's §4 intake bound, B's 12 stranger-env classifications and the `.gitignore`, and E's four older gates were routed this round. Their outputs are not in. One landing after them, not two.
+
+**For A, carried now so it is not lost:** 032d634c sits on top of 06a1a739. "Land d454-e without 06a1a739" means cherry-picking c0dfd7ed, f21732a2 and 032d634c (and E's gates commits), not merging the branch tip. Then the full suite on the merged tree, the relabel pin re-derived there, `PRIV_PATTERN` set for the generator. No consumer push (the first-wake ruling stands until he answers).
