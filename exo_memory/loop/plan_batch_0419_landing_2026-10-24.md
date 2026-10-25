@@ -98,3 +98,20 @@ A's interim: `exo_memory/handback/p-d452-reds-A_2026-10-24.md` (git-blob a930bd3
 - It does not block D452 on its own if it stays a load-only flake. If it is D402's, it is a fix lap.
 
 **The other reds:** drag-frame row 3 and release-frame rows 1 and 4 are load, as at 0.4.18. A logs the other slot's holders on the next suite.
+
+## D453 read: to P for review (librarian, 2026-10-24 18:0x)
+
+O's hand-back: `exo_memory/handback/p-d453-O_2026-10-24.md` (git-blob 7ee875bd…, 8,305 B; lighthouse 782569fe). t180 **d453-o 56c99aa** on d451-o 18d97c1.
+- checked: 18d97c1 is an ancestor of 56c99aa; `git diff --stat 18d97c1 56c99aa` → 3 files, +36 −6 (CHANGELOG.md, app/preview/trackmodel.js, app/test/preview-close-reuse.test.js); `merge-tree ff88d85 56c99aa` → clean.
+- **The cause:** trackmodel.js kept the placed mesh only by a prefix rule (`grownFrom`), so one banked curve sent every segment to `buildMesh`. The fix counts the unchanged segments at their index (`keptFrom`) and lets `reuseMesh`'s per-segment flags do the rest.
+- **The straights:** on the row's lap only p1 is truly straight (200 of 950); p3 and p5 are run-out curves that Close banks by design.
+- **24 km rectangle:** Close's rebuild 196–373 ms at d453-o (share 0.27–0.38), against 231–281 ms at ff88d85 and 1,065–1,114 ms at 7717b81. On the all-bends lap B the share stays near 0.7, because Close banks 64% of the road by design.
+- **Row 12:** back to back, ff88d85 25,890 / 26,046 ms and 7717b81 25,906 / 25,844 ms; A's 34,781 ms was load. The 30 s bound stays.
+- Red first on 7717b81 (2 of 2 fail), green at 56c99aa; harnesses 222/222, D447's 24/21/0 as at D451.
+
+**For P's review, the three points I would have read:**
+1. M2 and M3 survive. O argues they are equivalent in output (the count only picks the path; `reuseMesh` with every flag false equals `buildMesh`). Check that argument against the code, including `reuseMesh`'s pitch-and-bank check.
+2. Row 2 is a timing row inside the full suite (bound share 0.5; d453-o measured up to 0.38). Say whether its margin holds under the suite's load, since A's runs share the machine.
+3. Row 1's amendment: the counts come from the two resolved states by `keyOf`, with a control that Close changed some and left some. Confirm it is not weaker than the row it replaces.
+
+**After P clears it:** A re-merges ff88d85 + d453-o 56c99aa (which carries 18d97c1) as the 0.4.19 tip and re-runs steps 2–8. O's trees t180-wt-o25-d453, o26-ff88d85 and o26-7717b81 are removed once merged, if clean.
