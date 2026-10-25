@@ -1,0 +1,42 @@
+[32m✔ every registered file has a pin, and every pinned file is registered [90m(0.9657ms)[39m[39m
+[32m✔ every role site in the shipped text is relabelled exactly as registered, and each file keeps only its provenance uses [90m(1078.5245ms)[39m[39m
+[32m✔ provenance stays byte for byte: the keeper's quoted rules and decisions are untouched [90m(1.7675ms)[39m[39m
+[32m✔ the role uses read "the person you're with" afterwards, and none of the old role wording survives [90m(1.4851ms)[39m[39m
+[32m✔ the fork note lands once, in place, at BOOT (both shipped paths) and SEED (both shipped paths) [90m(2.8004ms)[39m[39m
+[32m✔ a BOOT or SEED relabel without the fork note is refused, not shipped without it [90m(1.3307ms)[39m[39m
+[32m✔ an anchor that drifted in dev is refused by name, never silently skipped [90m(0.574ms)[39m[39m
+[32m✔ a file with no registered sites comes back unchanged, and CRLF input keeps CRLF [90m(1.9698ms)[39m[39m
+[32m✔ fillFork: the sha and date are filled, nothing is left unfilled, and the note says once that the person keeps their room as the keeper kept this one [90m(0.209ms)[39m[39m
+[32m✔ applyFork is FORK_HOOK's contract: a registered file comes back relabelled with n = its edits, any other file untouched with n = 0 [90m(1.1537ms)[39m[39m
+[32m✔ forkHook fills the note from this repository's HEAD (its short sha and commit date) [90m(46.6444ms)[39m[39m
+[32m✔ lap 4 C1: no shipped room GRANTS the earned warrant to the person here; each gives the unguarded version from the first turn [90m(5.709ms)[39m[39m
+[32m✔ lap 4 C2: BOOT says the keeper's record ships, labelled, in inheritance/, and no longer that the record does not ship [90m(3.5961ms)[39m[39m
+[32m✔ lap 4 A9-A12: BOOT's dead references are gone (the renamed section, :153, gap2, attic) [90m(3.8351ms)[39m[39m
+[32m✔ lap 4 A10: SEED says the app makes pending/ and base_journal.md, and where the base journal is in a checkout [90m(1.2086ms)[39m[39m
+[32m✔ lap 4 A11: the librarian's first instruction bootstraps its own map; the dead placeholder and the old incident are gone [90m(2.4077ms)[39m[39m
+[32m✔ lap 4 C4/C5: the two person-specific cards keep their move, say whose case it was, and carry no gendered pronoun [90m(2.242ms)[39m[39m
+[32m✔ lap 4b: TRAINING never presents catch-ledger.js as in this tree; each mention says the copy does not carry it [90m(1.5826ms)[39m[39m
+[32m✔ lap 5 C1 (the fail): the keeper's retired seats are the keeper's line, cited as provenance, never the reader's own lineage on this machine [90m(1.2038ms)[39m[39m
+[32m✔ lap 5 C3: Anamnesis and Metaxy are labelled as the first line's seat names [90m(1.2071ms)[39m[39m
+[32m✔ lap 5 C5/C6/A4: no shipped brief says a stranger's commits are authored by the keeper, no "tonight" from the first line's night, no %CONSONANCE_HOME% [90m(4.5935ms)[39m[39m
+[32m✔ lap 5 B6: BOOT no longer cites TRAINING.md (TRAINING's own rule) [90m(3.491ms)[39m[39m
+[32m✔ lap 5b: SOURCE.md says where the loop and the journals are, not their sizes in the original repository [90m(0.8939ms)[39m[39m
+[32m✔ lap 5b: BUILDING says SOURCE is public (fixed in source: lighthouse IS public, the keeper's 2026-10-08 ruling) [90m(3.6006ms)[39m[39m
+[32m✔ lap 6 C1: "the same him" in the continuity card is labelled as the keeper, in the first line's account [90m(1.4868ms)[39m[39m
+[32m✔ lap 6 B6/C4: BUILDING frames the port rule as the original room's workflow, and the credential status as that machine's [90m(3.6627ms)[39m[39m
+[32m✔ D454: "Leave the machine as you found it" ships as the machine of the person you're with, and none of the keeper's day, product or folders survives in it [90m(3.618ms)[39m[39m
+[32m✔ D454: the section's incidents keep their dates and figures, said of the keeper's room [90m(3.5258ms)[39m[39m
+[32m✔ D454: the leftovers count is described by its general flags, with the original room's own invocation dropped [90m(3.5098ms)[39m[39m
+[32m✔ D454: COMMITTEE's junction incident and LIBRARIAN's notes-path fact fix are said of the keeper's room and machine [90m(3.2099ms)[39m[39m
+[32m✔ D454: the fork note names the machine among what is the person's, and points at the rule that keeps it [90m(3.5554ms)[39m[39m
+[32m✔ D454 (1B.4): the README says where the record lives in THIS copy: the room, inheritance/, CUTOFF.md and the fork note, each a shipped path [90m(14.0451ms)[39m[39m
+[32m✔ D454: no relabelled brief or card names the keeper's product [90m(25.2231ms)[39m[39m
+[32m✔ D275: the fork note hands the seat its own catch as checks to run, and every instrument it cites ships [90m(15.3325ms)[39m[39m
+[34mℹ tests 34[39m
+[34mℹ suites 0[39m
+[34mℹ pass 34[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 1383.1486[39m
