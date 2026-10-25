@@ -36,15 +36,21 @@ const node = (args, env, cwd) => spawnSync(process.execPath, args, {
   cwd: cwd || TOOLS, env: { ...process.env, ...env }, encoding: 'utf8', timeout: 180000,
 });
 
-test('the root: CONSONANCE_SCRATCH wins, then G: when it exists, else the OS temp dir', () => {
-  assert.strictEqual(scratch.scratchRoot({ CONSONANCE_SCRATCH: path.resolve('x-root') }, 'win32', () => true), path.resolve('x-root'));
-  assert.strictEqual(scratch.scratchRoot({}, 'win32', (p) => p === drv('G')), path.join(drv('G'), 'consonance-scratch'));
-  assert.strictEqual(scratch.scratchRoot({}, 'win32', () => false), os.tmpdir());
-  assert.strictEqual(scratch.scratchRoot({}, 'linux', () => true), os.tmpdir(), 'a drive letter means nothing off Windows');
-  assert.strictEqual(scratch.scratchRoot({ CONSONANCE_SCRATCH: '   ' }, 'win32', () => false), os.tmpdir(), 'a blank override is no override');
-  assert.strictEqual(scratch.scratchRoot({ CONSONANCE_SCRATCH_DRIVE: 'Q' }, 'win32', (p) => p === drv('Q')), path.join(drv('Q'), 'consonance-scratch'));
-  assert.strictEqual(scratch.scratchRoot({ CONSONANCE_SCRATCH_DRIVE: '..\\x' }, 'win32', () => true), os.tmpdir(), 'a malformed drive is ignored, not joined');
-  assert.strictEqual(scratch.scratchRoot({}, 'win32', () => { throw new Error('boom'); }), os.tmpdir(), 'a probe that throws falls back');
+// AMENDED (D454): the rule changed by name (C's part 2): the root is CONSONANCE_SCRATCH, then scratch_dir in ~/.consonance.json, then the OS
+// temp dir. A G: drive alone no longer decides (that was one machine's drive); the machine that wants G: says so in its config.
+test('the root: CONSONANCE_SCRATCH wins, then scratch_dir in ~/.consonance.json, else the OS temp dir; a G: drive alone decides nothing', () => {
+  const home = require('./scratch.js').mkdtemp('scr-home-'), cfgOf = (o) => fs.writeFileSync(path.join(home, '.consonance.json'), typeof o === 'string' ? o : JSON.stringify(o));
+  const env = (extra = {}) => ({ USERPROFILE: home, HOME: home, ...extra });
+  cfgOf({ scratch_dir: path.resolve('cfg-root') });
+  assert.strictEqual(scratch.scratchRoot(env({ CONSONANCE_SCRATCH: path.resolve('x-root') }), 'win32', () => true), path.resolve('x-root'), 'the env wins over the config');
+  assert.strictEqual(scratch.scratchRoot(env(), 'win32', () => true), path.resolve('cfg-root'), 'then the config');
+  assert.strictEqual(scratch.scratchRoot(env(), 'linux', () => true), path.resolve('cfg-root'), 'on any platform');
+  assert.strictEqual(scratch.scratchRoot(env({ CONSONANCE_SCRATCH: '   ' }), 'win32', () => true), path.resolve('cfg-root'), 'a blank override is no override');
+  for (const c of [{}, { scratch_dir: '' }, { scratch_dir: '   ' }, { scratch_dir: 7 }, 'not json', '\uFEFF{}']) {
+    cfgOf(c); assert.strictEqual(scratch.scratchRoot(env(), 'win32', (p) => p === drv('G')), os.tmpdir(), 'no scratch_dir, so a present G: decides nothing: ' + JSON.stringify(c));
+  }
+  cfgOf('\uFEFF' + JSON.stringify({ scratch_dir: path.resolve('bom-root') })); assert.strictEqual(scratch.scratchRoot(env(), 'win32', () => false), path.resolve('bom-root'), 'a BOM is tolerated');
+  fs.rmSync(path.join(home, '.consonance.json')); assert.strictEqual(scratch.scratchRoot(env(), 'win32', () => true), os.tmpdir(), 'no config file at all');
 });
 
 test('withDir removes its folder on return AND on a throw', () => withRoot((root) => {

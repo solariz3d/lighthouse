@@ -5,8 +5,8 @@
  * suites ~260,000 small ones (sg-test-*, rs-test-*, jev-*, actors-home-*, jssuite-*, sr-test-* ...). Nothing removed them because removal
  * sat after the assertions, not in a `finally`, and a creator that is killed or throws leaves its folder behind.
  *
- * THE ROOT. CONSONANCE_SCRATCH if set; else G:\consonance-scratch when a G: drive exists (a 2 TB NVMe with room; D287 amendment); else the
- * OS temp directory. The root is only a place: every folder lives under a prefix so the janitor (part 2) can match it.
+ * THE ROOT. CONSONANCE_SCRATCH if set; else `scratch_dir` in ~/.consonance.json (D454: a machine with a roomy drive names it there; it was
+ * "G:\consonance-scratch when a G: drive exists", one machine's 2 TB NVMe, D287 amendment); else the OS temp directory. The root is only a place: every folder lives under a prefix so the janitor (part 2) can match it.
  *
  * THE TWO UNIVERSAL MOVES.
  *   mkdtemp(prefix)  a folder under the root, REMOVED AT PROCESS EXIT whether the process ended normally or on an uncaught throw, so a
@@ -18,19 +18,18 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
+// The folder name a machine's scratch_dir conventionally ends in (G:consonance-scratch here). Exported as before; it no longer picks a drive (D454).
 const DEFAULT_DRIVE_DIR = 'consonance-scratch';
 
-/** The scratch root. `env`, `platform` and `exists` are injectable so the choice can be tested without a G: drive. */
-function scratchRoot(env = process.env, platform = process.platform, exists = fs.existsSync) {
+/** The scratch root. `env` is injectable (its USERPROFILE/HOME locate ~/.consonance.json) so the choice can be tested; `platform` and `exists`
+ *  are kept for the callers that pass them and no longer decide anything (D454). */
+function scratchRoot(env = process.env, platform = process.platform, exists = fs.existsSync) {   // eslint-disable-line no-unused-vars
   if (env.CONSONANCE_SCRATCH && String(env.CONSONANCE_SCRATCH).trim()) return path.resolve(String(env.CONSONANCE_SCRATCH).trim());
-  if (platform === 'win32') {
-    const drive = String(env.CONSONANCE_SCRATCH_DRIVE || 'G').trim().replace(/[:\\/]+$/, '').toUpperCase();
-    if (/^[A-Z]$/.test(drive)) {
-      let there = false;
-      try { there = exists(drive + ':\\'); } catch { there = false; }
-      if (there) return path.join(drive + ':\\', DEFAULT_DRIVE_DIR);
-    }
-  }
+  const home = env.USERPROFILE || env.HOME || os.homedir();
+  try {
+    const d = (JSON.parse(fs.readFileSync(path.join(home, '.consonance.json'), 'utf8').replace(/^\uFEFF/, '')) || {}).scratch_dir;
+    if (typeof d === 'string' && d.trim()) return path.resolve(d.trim());
+  } catch { /* no config, or no scratch_dir in it: the OS temp dir */ }
   return os.tmpdir();
 }
 
