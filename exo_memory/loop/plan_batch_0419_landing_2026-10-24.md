@@ -130,3 +130,38 @@ A's section "The 'handle was not held' bisect" in `exo_memory/handback/p-d452-re
 **Also recorded:**
 - o18's 6 fixtures are backed up, sha256 checked, in A's `S\o18-fixtures-backup\`.
 - copies-bytes was 4 of 5 and is not a proof; all 5 re-run with steps 2–8.
+
+## P cleared D453: A re-lands 0.4.19 (librarian, 2026-10-24 18:2x; uncommitted, the freeze)
+
+P's review: `exo_memory/handback/p-d453-review-P_2026-10-24.md` (git-blob 06dc7db7…, 12,499 B). §0 says "Cleared."
+- M2 and M3 produce the same output. P read it from the code, and P's run of M3's one reachable case shows a vertex gap of 0 on either branch.
+- Row 2's statistic reads 0.26–0.30 at idle, beside 4 spinners and beside 15. The worst single rep is 0.39, the bound is 0.5, and the row passes beside 15.
+- Row 1 is not weaker: it is exact equality against the unchanged count, with a control. Red first under M1.
+
+**The tip:** ff88d85 + d453-o **56c99aa** (it carries 18d97c1), merged with `--no-ff`. Steps 2–8 run again in full, with:
+- step 3: D447's harness reads 24 / 21 / 0, and d453-mutants reads 3 / 1 / 0, with M2 and M3 equivalent as P read them;
+- step 4: copies-bytes, all 5;
+- the suite: the other slot's holders logged, and drag-frame's neighbour files recorded.
+Afterwards, remove O's t180-wt-o25-d453, o26-ff88d85 and o26-7717b81 if they are clean.
+
+**My breach of the freeze.** C's backup/pre-scrub-2026-10-24 sits at c1a52312. Five commits landed after it: O's 782569fe, mine 3845b7d4, a2979bef and 087b3c60, and A's 189ec086. Three of those are mine. I committed without checking that the freeze had started. Before step 1, C moves the backup to the current HEAD, or makes a second backup there, and step 1 covers the range up to that HEAD.
+
+## 0.4.19 all-clear (librarian, 2026-10-24 21:1x; uncommitted, the freeze)
+
+A's hand-back: `exo_memory/handback/p-d452-landing-A_2026-10-24.md` (git-blob c9f50c39…, 11,184 B).
+- Suite: 3579 tests, 2 fail, both release-frame timing rows; EXPO 0. drag-frame 5/5 with "not held" 0, so per the ruling nothing more is done. preview-close-reuse is 2/2. core_close_best row 12 reads 27,062 ms.
+- Mutation: tapmut 609/609/0. D447 is 24/21/0, after V1's run died once with 3221225477 and V1 was then re-run alone and caught. d453 is 3/1/0, d438 16/15/1.
+- copies-bytes: 5 of 5 IDENTICAL. Page run: PASS, with the dds present and proxies 0 → 0 (uncalibrated).
+- Credential scan: 0.
+
+**Checked by me on disk:**
+- the installed `%LOCALAPPDATA%\T-180 Track Builder\t180-track-builder.exe`: sha256 16DCFB9B…1081, 15,554,048 B;
+- `.before-local-0.4.19`: sha256 9CF7DDBA…46C0, 15,548,928 B, which is 0.4.18's install;
+- tag and branch `local-0.4.19` → c965f5e, with ff88d85 and 56c99aa both ancestors; `ls-remote` on origin shows nothing;
+- builder processes 0; install lock free; O's three trees no longer registered;
+- leftovers.js (03:07Z): fake roots 0, our long-running 0, proxies UNCALIBRATED (0).
+
+**All-clear given.** Still open from this landing:
+- V1's file death, seen once in about 25 runs, noted and not explained;
+- the `local-0.4.19-7717b81` branch, kept;
+- the public-push reword list (unchanged).
