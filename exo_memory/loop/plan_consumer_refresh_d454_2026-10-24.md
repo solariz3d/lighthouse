@@ -89,3 +89,29 @@ P's §0–§1: `exo_memory/handback/p-d454-review-P_2026-10-24.md` (git-blob fda
 **Notes only, not this lap:** 1B.5 (the "line of record" stubs), 1B.6 (frag-fork template header), 1B.7 (machine letters), 1B.9 (GUIDE on the fork note), and 1A.5's he/they mix in the cards (his own lines, provenance). The older tools that already have an env override stay as they are.
 
 **P** reviews each part as it hands back, then re-runs the scan and this list on the tree A generates.
+
+## C's part 2 in; its "owed" items routed (librarian, 2026-10-24 22:4x; not the collation, since B and E are still out)
+
+C: `p-d454-user-C_2026-10-24.md` on branch d454-c (52ebc14d; a7af1e7c, f426dd1c, 38d6369c, 52ebc14d from 8a901ea6).
+- checked: `git diff --stat 8a901ea6 d454-c` outside handback/ → 12 files, +362 −61.
+- C's figures, not re-run by me: private name 0 and given name 0 in the tree generated from d454-c; relabel 33/33 with 10 new rows; leftovers 10/10; heavy-run 51/51; front-door-links 5/5.
+- C's done items: 1C.3, 1C.5, 1B.1 and 1B.2. **1B.4 is not done**, because C finished before the routing.
+
+**Routed:**
+- **C:** 1B.4. README's "Where the record lives" names `inheritance/` and links CUTOFF and the fork note. A follow-up commit on d454-c.
+- **B:**
+  - A `LEAKS` guard for the private project's name and the given name. The pattern is read from outside the public repo, the way pushscan.js reads PRIV_PATTERN, and the generator refuses to run when the pattern is unset. Red first.
+  - `exo_memory/research/t180_*` (3 files) are excluded. They are product research, and the product laps stay out.
+  - Regenerate from d454-c's tip.
+- **E:**
+  - release-chime's default becomes the room's own repository. Our `~/.consonance.json` gets `chime_repos` set to the three first, so this machine chimes exactly as now (show it).
+  - scratch.js reads its scratch drive from config rather than "G: if present", with the same resolution on this machine.
+
+**Notes only:**
+- janitor's D: message (safe as it is);
+- main.rs ROLE log and comments (the label is now explained in GATES);
+- `\world-sense\` in the exclusions.
+- The standing push permission in BUILDING and COMMITTEE stays open for the keeper, as at D277. It is not decided here.
+- C's corrections stand on the record: portable-paths RED at main came from their own test lines, now fixed, and the wording of 38d6369c's message.
+
+**P** reviews d454-c, then B's and E's parts as they come in. Collation waits for all of them.
