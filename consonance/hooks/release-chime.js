@@ -11,7 +11,8 @@
 //
 // ONE chime per 2 minutes (a push followed by a release chimes once); the state is <data dir>/release-chime.json. `"chime": false` in ~/.consonance.json silences it (absent = on);
 // `"chime_sound"` is a .wav path (default: C:\Windows\Media\chimes.wav, found through %SystemRoot%; if it is missing, the next of a short list; if none, silence);
-// `"chime_repos"` is the list of repo names a push to main must match (default t180, consonance, lighthouse; matched as a part of the remote URL's or the directory's name).
+// `"chime_repos"` is the list of repo names a push to main must match (matched as a part of the remote URL's or the directory's name). With none, the default is the
+// room's own repository: the folder that room_path's exo_memory sits in (D454: it was one creator's three products, t180, consonance and lighthouse).
 //
 // FIRE AND FORGET: it never blocks, slows or fails the tool call. It prints NOTHING and exits 0 on every path; the audio is a detached hidden PowerShell that it does not wait
 // for; a missing file, a missing PowerShell, a broken config, a data dir it cannot write, a payload it does not recognise, or its own bug (a 3 s watchdog) are silence.
@@ -32,7 +33,13 @@ const { spawn } = require('child_process');
 const LEDGER = 'release-chime.jsonl', STATE = 'release-chime.json';
 const DEBOUNCE_MS = 2 * 60 * 1000, WATCHDOG_MS = 3000;
 const SHELL_TOOLS = new Set(['Bash', 'PowerShell']);
-const DEFAULT_REPOS = ['t180', 'consonance', 'lighthouse'];
+/** D454: the default repos: the room's own repository, the folder room_path (<repo>/exo_memory/BOOT.md) sits two levels under; none without a room. */
+function defaultRepos(cfg) {
+  const rp = cfg && typeof cfg.room_path === 'string' ? cfg.room_path.trim() : '';
+  if (!rp) return [];
+  const name = path.basename(path.dirname(path.dirname(rp))).toLowerCase();
+  return name ? [name] : [];
+}
 const DEFAULT_SOUNDS = ['chimes.wav', 'Windows Notify System Generic.wav', 'notify.wav', 'ding.wav'];   // in %SystemRoot%\Media
 
 const homeDir = () => process.env.USERPROFILE || os.homedir();
@@ -157,7 +164,7 @@ function shipOf(command, resp, cfg = {}) {
     if (exitZero(resp) || url) return { kind: 'release', repo: repoPart(url ? url[0].replace(/\/releases\/.*$/, '') : run.release.repo || run.release.dir) || null };
   }
   if (run.push) {
-    const repos = Array.isArray(cfg.chime_repos) && cfg.chime_repos.length ? cfg.chime_repos : DEFAULT_REPOS;
+    const repos = Array.isArray(cfg.chime_repos) && cfg.chime_repos.length ? cfg.chime_repos : defaultRepos(cfg);
     for (const u of refUpdates(text)) {
       if (!u.ok || u.dst !== 'main') continue;
       const name = repoPart(u.url) || repoPart(run.push.dir);
@@ -214,4 +221,4 @@ function main() {
 
 if (require.main === module) { try { main(); } catch (_) { process.exit(0); } }   // fail silent, without exception
 
-module.exports = { DEBOUNCE_MS, DEFAULT_REPOS, DEFAULT_SOUNDS, words, stripHeredocs, splitSegments, commandsOf, outputOf, failureOf, refUpdates, shipOf, soundCandidates, playerArgs, powershell, isOff, dataDir };
+module.exports = { DEBOUNCE_MS, defaultRepos, DEFAULT_SOUNDS, words, stripHeredocs, splitSegments, commandsOf, outputOf, failureOf, refUpdates, shipOf, soundCandidates, playerArgs, powershell, isOff, dataDir };

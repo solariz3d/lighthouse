@@ -25,8 +25,11 @@ const roots = [];
 test.after(() => { for (const r of roots) try { fs.rmSync(r, { recursive: true, force: true }); } catch (_) { /* temp */ } });
 const FIXED = Date.parse('2026-10-09T20:00:00Z');
 
+// AMENDED (D454): the rule changed by name: with no chime_repos a push chimes for the ROOM's own repository (room_path's repo), not for a fixed
+// list. So the fixture's config names a room in a folder called lighthouse unless the row gives its own room_path (an empty one is no room).
 function room(cfg = {}, { sound = true } = {}) {
   const root = require('../tools/scratch.js').mkdtemp('chime-'); roots.push(root);
+  if (cfg && typeof cfg === 'object' && !('room_path' in cfg)) cfg = { ...cfg, room_path: path.join(root, 'lighthouse', 'exo_memory', 'BOOT.md') };
   const home = path.join(root, 'home'), data = path.join(root, 'data'), media = path.join(root, 'Media'), stub = path.join(root, 'stub.jsonl');
   fs.mkdirSync(home, { recursive: true }); fs.mkdirSync(media, { recursive: true });
   if (sound) fs.writeFileSync(path.join(media, 'chimes.wav'), WAV);
@@ -59,7 +62,8 @@ test('row 2: a push that updated main chimes, however it is written', () => {
   const cmds = ['git push origin main', 'git -C C:/Users/x/lighthouse push origin main', 'cd /c/repo && git push origin main', 'git push origin HEAD:main', 'git push -u origin main', 'git push', 'git push origin main 2>&1 | tail -3',
     'git push --force-with-lease origin main', 'echo shipping; git push origin main; echo done', 'git -c core.x=1 push origin main', 'GIT_TRACE=0 git push origin main'];
   for (const c of cmds) { const e = room(); run(e, call(c, OK(PUSH()))); assert.equal(chimes(e).length, 1, c); }
-  for (const repo of ['t180-track-builder', 'consonance', 'lighthouse']) { const e = room(); run(e, call('git push origin main', OK(PUSH('main', repo)))); assert.equal(chimes(e).length, 1, repo); }
+  // AMENDED (D454): the three products chime where chime_repos names them, as this machine's config does; the default is the room's own repository (row 12)
+  for (const repo of ['t180-track-builder', 'consonance', 'lighthouse']) { const e = room({ chime_repos: ['t180', 'consonance', 'lighthouse'] }); run(e, call('git push origin main', OK(PUSH('main', repo)))); assert.equal(chimes(e).length, 1, repo); }
   const e1 = room(); run(e1, call('git push origin main', OK('To git@github.com:acme/lighthouse.git\n * [new branch]      main -> main\n'))); assert.equal(chimes(e1).length, 1, 'a new branch main over ssh');
   const e2 = room(); run(e2, call('git push -f origin main', OK('To https://github.com/acme/lighthouse.git\n + a1b2c3d...e4f5a6b main -> main (forced update)\n'))); assert.equal(chimes(e2).length, 1, 'forced');
   const e3 = room(); run(e3, call('git push origin main', { stdout: PUSH(), stderr: '', exit_code: 0 })); assert.equal(chimes(e3).length, 1, 'the report on stdout (2>&1) is read too');
@@ -181,4 +185,17 @@ test('the parsing, directly', () => {
   } finally { if (keep.d === undefined) delete process.env.CONSONANCE_DATA; else process.env.CONSONANCE_DATA = keep.d; process.env.USERPROFILE = keep.u; }
   assert.equal(C.failureOf({ exit_code: 0 }), null); assert.equal(C.failureOf({ code: 1 }), 'code 1'); assert.equal(C.failureOf('plain text'), null);
   for (const v of [false, 0, 'false', 'OFF', ' no ']) assert.equal(C.isOff(v), true, String(v)); for (const v of [undefined, null, true, 1, 'on', '', 'yes']) assert.equal(C.isOff(v), false, String(v));
+});
+
+// D454 part 3 (pane E, C's part 2): a new user's room is THEIR repository. The fixed default (t180, consonance, lighthouse) was one creator's three products.
+test('row 12 (D454): with no chime_repos a push chimes for the room\'s own repository and no other; with no room no push chimes; a release still does', () => {
+  const mine = (e) => path.join(e.root, 'mine', 'exo_memory', 'BOOT.md');
+  const a = room({ room_path: '' }); fs.writeFileSync(path.join(a.home, '.consonance.json'), JSON.stringify({ room_path: mine(a) }));
+  run(a, call('git push origin main', OK(PUSH('main', 'mine')))); assert.equal(chimes(a).length, 1, 'a push to the room\'s own repository chimes');
+  for (const other of ['lighthouse', 'consonance', 't180-track-builder']) { const b = room({ room_path: '' }); fs.writeFileSync(path.join(b.home, '.consonance.json'), JSON.stringify({ room_path: mine(b) }));
+    run(b, call('git push origin main', OK(PUSH('main', other)))); assert.equal(chimes(b).length, 0, other + ' is not this room'); }
+  const c = room({ room_path: '' }); run(c, call('git push origin main', OK(PUSH('main', 'lighthouse')))); assert.equal(chimes(c).length, 0, 'no room, no push chime');
+  const d = room({ room_path: '' }); run(d, call('gh release create v1', OK('', REL))); assert.equal(chimes(d).length, 1, 'a release chimes whatever the room');
+  assert.deepEqual(C.defaultRepos({ room_path: path.join('x', 'Some Repo', 'exo_memory', 'BOOT.md') }), ['some repo']);
+  for (const cfg of [{}, { room_path: '' }, { room_path: 7 }, null]) assert.deepEqual(C.defaultRepos(cfg), [], JSON.stringify(cfg));
 });
