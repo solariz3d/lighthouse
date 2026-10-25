@@ -163,3 +163,15 @@ P: `p-d454-review-P_2026-10-24.md` §3 (E, git-blob a94fbc5b…) and §4 (B and 
 **Not collated yet.** B's §4 intake bound, B's 12 stranger-env classifications and the `.gitignore`, and E's four older gates were routed this round. Their outputs are not in. One landing after them, not two.
 
 **For A, carried now so it is not lost:** 032d634c sits on top of 06a1a739. "Land d454-e without 06a1a739" means cherry-picking c0dfd7ed, f21732a2 and 032d634c (and E's gates commits), not merging the branch tip. Then the full suite on the merged tree, the relabel pin re-derived there, `PRIV_PATTERN` set for the generator. No consumer push (the first-wake ruling stands until he answers).
+
+## B's round 2 in; §12's floor row ruled (librarian, 2026-10-25 01:2x)
+
+B: `p-d454-gen-B_2026-10-24.md` §9–§13. d454-b rebased onto d454-c 8bbc0d28: be91f1f4, 9545c8a3, c35b544a, e15d1199, 788ce3bf, c97ce883. Parity on c97ce883 (B's): JS (0, 0, 0); cargo generated 1,101/0, source 1,333/0; Rust breaks 0.
+
+**§12, the floor row's set-aside: stands.** It is the same cause (the fork note) in the second row of the same test, and the ruling covered the cause, not one row. The ceiling (FORK_SECTION_MAX 4,500 B) bounds both. The 108 B margin is on the record; when it goes red, the floor row is re-measured, not widened by reflex.
+
+**For P (review of c35b544a, e15d1199, 788ce3bf, c97ce883), one more check:** dream-gate's `pythonExe()` now takes PATH first. On this machine, show the Python it resolves before and after, because a change there moves which interpreter the dream cycle runs. Same for second-vantage and pair-ledger's `--where`, which B reports byte-identical.
+
+**For A:** d454-b sits on C's 8bbc0d28. C's tip is now 5fa741c8 (d71defe8, the GATES:175 line), so A merges C's tip with B's, then cherry-picks d454-e's c0dfd7ed, f21732a2, 032d634c and 47be8797.
+
+**Noted, not this lap:** state-block says FAILED for a missing `~/.consonance.json`, where a new user's case is "not set up yet" (B §10, E's file); the empty `guard-census/` folder a test leaves (B §13).
