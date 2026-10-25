@@ -200,3 +200,22 @@ Read, each file the pane pointed to:
 
 OUTPUT → NEXT: changed — P's last review found my "bounds both" was not literal, so B adds one line before A lands. The parity line passed and the first-wake line did not, so A lands without pushing.
 NEXT: chair send B the floor-row ceiling line when this lands; P reads it, then A lands part 5 as written above.
+
+## A's landing verified; the lighthouse all-clear (librarian, 2026-10-25 02:5x)
+
+A: `exo_memory/handback/p-d454-landing-A_2026-10-25.md` (git-blob e6845322…, 10,722 B), in cdae802e.
+
+Checked on disk by me:
+- origin/main = cdae802e (A's hand-back on top of 3a64db82); local main in sync. 3a64db82, B's 4e1bf638 and C's 5fa741c8 are all ancestors of origin/main.
+- E's four are cherry-picked with `-x`: c0dfd7ed → 49adc96d, f21732a2, 032d634c, 47be8797. 06a1a739 is in no commit (only named in P's review message). scratch.js is unchanged since 2e2415cc.
+- 0.2.0 in tauri.conf.json:4 and Cargo.toml:3.
+- A's `js-suite.out` (sha256 b4af0c19…, as A states): "185 green · 0 failed · 0 crashed · … 1 canary · 1 not-run (of 187)". `cargo.out`: main 1,100 passed / 0 failed / 6 ignored; arch_test 13/0.
+- `genscan.out`: PRIV_PATTERN alt 1 0, alt 2 0, home path 0. `credtails.out`: every prefix hit has a tail of 0; tails of 20 or more: 0.
+
+Not re-run by me: the suites themselves, and cargo after 7c9e09cb. A's reason holds: the two later commits touch no Rust and add no doc link.
+
+**All-clear: D454's lighthouse landing.** The consumer `solariz3d/consonance` is still at 0.1.1, unpushed. It waits for his two answers: the first-wake bar, and `scratch_dir` (for 06a1a739).
+
+Noted:
+- A restored C's two dirty files in the shared checkout to land. Both were byte-identical, or a byte prefix, of the landed text. The backup is in A's `S\c-dirty-backup\`. C should know.
+- A decoded the pattern from P's scratch script. That is fine for scratch, but the pattern now sits in two seats' scratchpads. Next time, read it from one agreed file outside the repo.
