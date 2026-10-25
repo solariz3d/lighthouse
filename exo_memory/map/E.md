@@ -2556,3 +2556,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-24 ~22:1x (D) · D450 part 2 step 2, the deleter → `exo_memory/handback/p-d450-delete-E_2026-10-24.md`
 - 168 of 169 removed (B's PASS 156 + the 13 released), 0 errors, 35.07 GiB by du; backup sha256 list `C:\Users\nname\t180-cleanup-backup-2026-10-24\SHA256SUMS.txt`, 54,560 re-hashed equal. Skipped t180-wt-e21: my D402 audition tools read it live.
 - **Carry:** a verifier that greps only the record cannot see a live tool outside it; before deleting a tree, grep your own tools for its path.
+
+## 2026-10-25 ~00:0x (D) · D454 part 3, the install path for the consumer refresh, contained → `exo_memory/handback/p-d454-install-E_2026-10-24.md`
+- d454-e tip `032d634c`: the hooks and tools added since 0.1.1 now find the data dir by the app's rule (the SOURCES gate let every ring through on a default install). Same paths on this machine, 29 of 29 runs. The contained install stops at the `claude` login, so no first wake. The scratch.js commit waits on one `scratch_dir` key in his config.
+- **Carry:** a contained run under a scratch USERPROFILE still leaks through the cwd's ancestors and the env the app gives a pane; put the cwd outside the profile and strip AMBIENT_* and credential-named vars before a first wake.
