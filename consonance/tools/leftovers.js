@@ -1,36 +1,44 @@
 #!/usr/bin/env node
 'use strict';
-// leftovers.js — the counts of what our runs leave on the keeper's machine (D450 part 3, pane C). READ-ONLY: it removes, stops and writes nothing.
+// leftovers.js — the counts of what our runs leave on the machine (D450 part 3, pane C). READ-ONLY: it removes, stops and writes nothing.
 // Plan: exo_memory/loop/plan_cleanup_2026-10-24.md, part 3. BUILDING.md "Leave the machine as you found it" has the landing hand-back carry its output.
 //
 //   node consonance/tools/leftovers.js                 the counts, as text
 //   node consonance/tools/leftovers.js --json          the same, as JSON
-//   --downloads <dir>   (default <home>/Downloads)     --min-age <minutes>   what counts as long-running (default 120)
+//   --repo <dir>        a repository whose worktrees our runs make; repeat it for each (default: the repository this tool is in)
+//   --repo-names <dir>  the same, but read no further than the names in its worktrees/ folder (a checkout that is not ours to open)
+//   --strays <folder> --prefix <name->   where those worktrees are made, and their name prefix (default: not scanned)
+//   --min-age <minutes> what counts as long-running (default 120)
+// D454 part 2: the repos and the strays folder are given, not the original room's t180 paths, so the tool fits any machine.
 //
 // The counts:
 //   tab proxies     Explorer's top-level Windows.Internal.Shell.TabProxyWindow windows. On 2026-10-24 Explorer held 527, titled
-//                   "T-180 Track Builder", from nine days of headless page runs (exo_memory/journal/2026-10-24.md). They are made by the
+//                   after the app under test, from nine days of headless page runs (exo_memory/journal/2026-10-24.md). They are made by the
 //                   shell's WindowTabHost (twinui.pcshell.dll, tabproxywindowfactory.cpp), the host of Windows.UI.Shell.WindowTabManager.
 //                   A READ OF 0 IS NOT PRINTED AS 0. A counter that reads 0 has not shown it could see one: A's read 0 at 13:58:11Z, the
 //                   second Explorer restarted (p-d449-landing-A_2026-10-24.md §5). So the count is CALIBRATED only when this run either
 //                   read a proxy that exists, or made a control proxy (a WindowTabManager tab titled zz-leftovers-control on a window that
 //                   is never shown) and saw the count rise. Otherwise it prints UNCALIBRATED. As of 2026-10-24 the control does not make a
 //                   proxy on this machine (pane C's probes, p-d450-part3-C_2026-10-24.md), so a clean machine reads UNCALIBRATED.
-//   worktrees       per repo, the entries in <repo>/.git/worktrees (names only: the Desktop repo is read no further than that).
-//   t180-* strays   entries in Downloads named t180-* that are neither a repo's main checkout nor a worktree a repo has registered
+//   worktrees       per repo, the entries in <repo>/.git/worktrees (names only: a repo is read no further than that, and its gitdir files).
+//   strays          entries in the strays folder named <prefix>* that are neither a repo's main checkout nor a worktree a repo has registered
 //                   (its .git file points into <repo>/.git/worktrees/<name>, and that exists).
 //   fake roots      fake-* at each drive root.
 //   our long-running processes older than --min-age whose command line or executable names one of our places (a seat's Temp\claude
-//                   folder, lighthouse and its worktrees, the t180 trees in Downloads, the seats' shell snapshots, the scratch root) or is a
-//                   headless browser. Infrastructure is not listed: consonance.exe, claude.exe, msedgewebview2.exe, the stick-waiter, the MCP servers.
+//                   folder, the seats' shell snapshots, the scratch root, a given repo or one of its registered worktrees, the strays
+//                   folder's <prefix>* entries) or is a headless browser. Infrastructure is not listed: consonance.exe, claude.exe,
+//                   msedgewebview2.exe, the stick-waiter, the MCP servers.
 // It runs itself at BelowNormal priority, and its two PowerShell children inherit it.
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
+const scratch = require('./scratch.js');
 
 const PROXY_CLASS = 'Windows.Internal.Shell.TabProxyWindow';
-const OURS = [/\\temp\\claude\\/, /\\desktop\\lighthouse\\/, /\\desktop\\worktrees\\/, /\\downloads\\(t180|lh)-/, /\\shell-snapshots\\/, /\\consonance-scratch\\/, /zz-headless-test/];
+const REPO = path.resolve(__dirname, '..', '..');
+// The places that are ours on any machine; the given repos, their worktrees and the strays folder are added per survey (oursFor).
+const OURS_ALWAYS = [/\\temp\\claude\\/, /\\shell-snapshots\\/, /zz-headless-test/];
 // Headless counts only for a browser: conhost.exe --headless is Windows' pseudo-console under every seat's terminal, not a run of ours.
 const HEADLESS_BROWSER = /^(chrome|msedge|chromium|chrome-headless-shell|headless_shell)(\.exe)?$/;
 const INFRA_NAMES = new Set(['consonance.exe', 'claude.exe', 'msedgewebview2.exe']);
@@ -42,8 +50,14 @@ function psJson(script) {
   const r = spawnSync('powershell', ['-NoProfile', '-NonInteractive', '-STA', '-EncodedCommand', Buffer.from(script, 'utf16le').toString('base64')],
     { encoding: 'utf8', timeout: 120000, windowsHide: true, maxBuffer: 1 << 26 });
   if (r.status !== 0) throw new Error(`powershell failed: ${String(r.stderr || r.error || '').slice(0, 300)}`);
-  const line = String(r.stdout).trim().split(/\r?\n/).pop();
-  return JSON.parse(line);
+  return parsePsLine(String(r.stdout).trim().split(/\r?\n/).pop());
+}
+
+/** One compressed JSON line from Windows PowerShell 5.1. Its ConvertTo-Json can leave a control character raw inside a string (a live
+ *  process's command line carried one on 2026-10-25), which JSON.parse refuses. On one -Compress line every such character is inside a
+ *  string, so each is written as its \u escape first; anything else malformed still throws. */
+function parsePsLine(line) {
+  return JSON.parse(String(line).replace(/[\u0000-\u001f]/g, (c) => '\\u' + c.charCodeAt(0).toString(16).padStart(4, '0')));
 }
 
 const WINDOWS_CS = `
@@ -126,24 +140,57 @@ function proxyVerdict(w, control) {
   return { state: 'UNCALIBRATED', count: null, titles, how: `read 0, and ${tried}` };
 }
 
-/** Linked worktrees a repo has registered: the names in <repo>/.git/worktrees. */
+/** The repository's own git folder: <dir>/.git, or, when <dir> is itself a linked worktree (.git is a file), the main one it names. */
+function commonGitDir(dir) {
+  const g = path.join(dir, '.git');
+  let st; try { st = fs.statSync(g); } catch (_) { return null; }
+  if (st.isDirectory()) return g;
+  const m = fs.readFileSync(g, 'utf8').match(/^gitdir:\s*(.+?)\s*$/m);
+  if (!m) return null;
+  const own = path.resolve(dir, m[1]);
+  try { return path.resolve(own, fs.readFileSync(path.join(own, 'commondir'), 'utf8').trim()); } catch (_) { return own; }
+}
+
+/** Linked worktrees a repo has registered: the names in its git folder's worktrees/. */
 function countWorktrees(repo) {
-  const gitDir = path.join(repo.dir, '.git');
-  if (!fs.existsSync(gitDir)) return { label: repo.label, dir: repo.dir, linked: null, error: 'no .git here' };
+  const gitDir = commonGitDir(repo.dir);
+  if (!gitDir) return { label: repo.label, dir: repo.dir, linked: null, error: 'no .git here' };
   let names = [];
   try { names = fs.readdirSync(path.join(gitDir, 'worktrees')); } catch (e) { if (e.code !== 'ENOENT') return { label: repo.label, dir: repo.dir, linked: null, error: e.code || e.message }; }
   return { label: repo.label, dir: repo.dir, linked: names.length };
 }
 
-/** t180-* entries in Downloads that are not a repo's main checkout and not a worktree a repo has registered. */
-function findStrays(downloads, repos) {
-  let es; try { es = fs.readdirSync(downloads, { withFileTypes: true }); } catch (e) { throw new Error(`cannot read ${downloads}: ${e.code || e.message}`); }
+/** The working folders of a repo's registered worktrees: each worktrees/<name>/gitdir names its <folder>/.git. */
+function worktreeDirs(repo) {
+  const g = commonGitDir(repo.dir);
+  if (!g) return [];
+  const base = path.join(g, 'worktrees');
+  let names = []; try { names = fs.readdirSync(base); } catch (_) { return []; }
+  const out = [];
+  for (const n of names) { try { out.push(path.dirname(path.resolve(fs.readFileSync(path.join(base, n, 'gitdir'), 'utf8').trim()))); } catch (_) { /* a half-removed entry names no folder */ } }
+  return out;
+}
+
+/** What makes a process ours in this survey: the places every machine has, plus the given repos, their worktrees and the strays. */
+function oursFor(repos, strays) {
+  const lit = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const under = (dir) => new RegExp(lit(norm(path.resolve(dir)) + '\\'));
+  const res = [...OURS_ALWAYS, under(scratch.scratchRoot())];
+  for (const r of repos) { res.push(under(r.dir)); if (!r.namesOnly) for (const d of worktreeDirs(r)) res.push(under(d)); }
+  if (strays) res.push(new RegExp(lit(norm(path.resolve(strays.dir)) + '\\') + lit(norm(strays.prefix))));
+  return res;
+}
+
+/** <prefix>* entries in the strays folder that are not a repo's main checkout and not a worktree a repo has registered. */
+function findStrays(strays, repos) {
+  const { dir, prefix } = strays;
+  let es; try { es = fs.readdirSync(dir, { withFileTypes: true }); } catch (e) { throw new Error(`cannot read ${dir}: ${e.code || e.message}`); }
   const mains = new Set(repos.map((r) => norm(path.resolve(r.dir))));
-  const wtRoots = repos.map((r) => norm(path.join(path.resolve(r.dir), '.git', 'worktrees')) + '\\');
+  const wtRoots = repos.map((r) => commonGitDir(r.dir)).filter(Boolean).map((g) => norm(path.join(g, 'worktrees')) + '\\');
   const out = [];
   for (const e of es) {
-    if (!/^t180-/i.test(e.name)) continue;
-    const p = path.join(downloads, e.name);
+    if (!e.name.toLowerCase().startsWith(prefix.toLowerCase())) continue;
+    const p = path.join(dir, e.name);
     if (mains.has(norm(path.resolve(p)))) continue;
     if (e.isDirectory()) {
       let gd = null;
@@ -169,33 +216,35 @@ function findFakeRoots(roots) {
 }
 
 /** Our processes older than minAgeMin that are not infrastructure, oldest first. */
-function ourLongRunning(procs, now, minAgeMin) {
+function ourLongRunning(procs, now, minAgeMin, ours = OURS_ALWAYS) {
   const out = [];
   for (const p of procs) {
     const cmd = norm(p.cmd), name = String(p.name || '').toLowerCase();
     if (!(now - p.started >= minAgeMin * 60000)) continue;
     if (INFRA_NAMES.has(name) || INFRA_CMD.some((re) => re.test(cmd))) continue;
-    if (!OURS.some((re) => re.test(cmd)) && !(HEADLESS_BROWSER.test(name) && /--headless/.test(cmd))) continue;
+    if (!ours.some((re) => re.test(cmd)) && !(HEADLESS_BROWSER.test(name) && /--headless/.test(cmd))) continue;
     const seat = (cmd.match(/instances-([^\\]+)\\/) || [])[1] || null;
     out.push({ pid: p.pid, ppid: p.ppid, name: p.name, started: new Date(p.started).toISOString(), ageMin: Math.floor((now - p.started) / 60000), seat, cmd: String(p.cmd || '').trim() });
   }
   return out.sort((a, b) => b.ageMin - a.ageMin);
 }
 
+/** A repo's label in the report: its folder and the one above it, so two checkouts of one repo stay apart. */
+const labelOf = (dir) => { const r = path.resolve(dir); return `${path.basename(path.dirname(r))}/${path.basename(r)}`; };
+
 function survey(opts = {}) {
-  const home = os.homedir();
-  const downloads = opts.downloads || path.join(home, 'Downloads');
-  const repos = opts.repos || [{ label: 'Downloads', dir: path.join(home, 'Downloads', 't180-track-builder') }, { label: 'Desktop', dir: path.join(home, 'Desktop', 't180-track-builder') }];
+  const repos = opts.repos && opts.repos.length ? opts.repos : [{ label: labelOf(REPO), dir: REPO }];
+  const strays = opts.strays || null;
+  if (strays && !(typeof strays.prefix === 'string' && strays.prefix.trim())) throw new Error('--strays needs --prefix <name->, the prefix its entries share');
   const now = opts.now || Date.now(), minAgeMin = opts.minAgeMin == null ? 120 : opts.minAgeMin;
   const windows = (opts.readWindows || readWindowsDefault)();
   const control = windows && windows.proxies > 0 ? null : (opts.makeControl || makeControlDefault)();
   return {
-    at: new Date(now).toISOString(), minAgeMin, downloads,
+    at: new Date(now).toISOString(), minAgeMin, strays: strays ? findStrays(strays, repos) : null, straysAt: strays,
     proxies: proxyVerdict(windows, control),
     worktrees: repos.map(countWorktrees),
-    strays: findStrays(downloads, repos),
     fakeRoots: findFakeRoots(opts.roots || driveRoots()),
-    processes: ourLongRunning((opts.listProcesses || listProcessesDefault)(), now, minAgeMin),
+    processes: ourLongRunning((opts.listProcesses || listProcessesDefault)(), now, minAgeMin, oursFor(repos, strays)),
   };
 }
 
@@ -206,23 +255,33 @@ function report(o) {
   L.push(`tab proxies          ${p.state === 'CALIBRATED' ? `${p.count} (calibrated: ${p.how})` : `UNCALIBRATED (${p.how})`}${titles ? ` · by title: ${titles}` : ''}`);
   if (p.leak) L.push(`  FINDING: ${p.leak}`);
   L.push(`worktrees            ${o.worktrees.map((w) => `${w.label} ${w.linked === null ? `ERROR (${w.error})` : `${w.linked} linked + main`}`).join(' · ')}`);
-  L.push(`t180-* not worktrees ${o.strays.length} in ${o.downloads}${o.strays.length ? ': ' + o.strays.map((s) => (s.kind === 'folder' ? s.name : `${s.name} (${s.kind})`)).join(', ') : ''}`);
+  L.push(o.strays === null ? 'strays               not scanned (give --strays <folder> --prefix <name>-)'
+    : `strays               ${o.strays.length} ${o.straysAt.prefix}* not worktrees, in ${o.straysAt.dir}${o.strays.length ? ': ' + o.strays.map((s) => (s.kind === 'folder' ? s.name : `${s.name} (${s.kind})`)).join(', ') : ''}`);
   L.push(`fake roots           ${o.fakeRoots.length}${o.fakeRoots.length ? ': ' + o.fakeRoots.join(', ') : ''}`);
   L.push(`our long-running     ${o.processes.length} (older than ${o.minAgeMin} min, infrastructure left out)`);
   for (const x of o.processes) L.push(`  pid ${x.pid}  ${age(x.ageMin)}  ${x.name}${x.seat ? `  [${x.seat}]` : ''}  ${x.cmd.length > 140 ? x.cmd.slice(0, 140) + '…' : x.cmd}`);
   return L.join('\n');
 }
 
-module.exports = { survey, report, proxyVerdict, countWorktrees, findStrays, findFakeRoots, ourLongRunning, readWindowsDefault, makeControlDefault, listProcessesDefault };
+module.exports = { survey, report, parsePsLine, proxyVerdict, countWorktrees, worktreeDirs, oursFor, findStrays, findFakeRoots, ourLongRunning, readWindowsDefault, makeControlDefault, listProcessesDefault };
 
 if (require.main === module) {
   try { os.setPriority(0, os.constants.priority.PRIORITY_BELOW_NORMAL); } catch (_) { /* a lower priority is a courtesy, not a requirement */ }
   const a = process.argv.slice(2);
-  const val = (k) => { const i = a.indexOf(k); return i >= 0 ? a[i + 1] : null; };
-  const minAge = val('--min-age');
+  const VALUED = new Set(['--repo', '--repo-names', '--strays', '--prefix', '--min-age']), FLAGS = new Set(['--json']);
+  const got = {}, repos = [];
+  for (let i = 0; i < a.length; i++) {
+    if (FLAGS.has(a[i])) continue;
+    if (!VALUED.has(a[i])) { console.error(`leftovers: unknown flag ${a[i]} (flags: --repo <dir>, --repo-names <dir>, --strays <folder> --prefix <name->, --min-age <minutes>, --json)`); process.exit(1); }
+    const v = a[++i];
+    if (v === undefined) { console.error(`leftovers: ${a[i - 1]} needs a value`); process.exit(1); }
+    if (a[i - 1] === '--repo' || a[i - 1] === '--repo-names') repos.push({ label: labelOf(v), dir: v, namesOnly: a[i - 1] === '--repo-names' }); else got[a[i - 1]] = v;
+  }
+  const minAge = got['--min-age'] === undefined ? null : got['--min-age'];
   if (minAge !== null && !(Number(minAge) >= 0)) { console.error('leftovers: --min-age takes a number of minutes, 0 or more'); process.exit(1); }
+  if (got['--strays'] !== undefined && got['--prefix'] === undefined) { console.error('leftovers: --strays needs --prefix <name->, the prefix its entries share'); process.exit(1); }
   try {
-    const o = survey({ downloads: val('--downloads') || undefined, minAgeMin: minAge ? Number(minAge) : undefined });
+    const o = survey({ repos, strays: got['--strays'] === undefined ? null : { dir: got['--strays'], prefix: got['--prefix'] }, minAgeMin: minAge ? Number(minAge) : undefined });
     console.log(a.includes('--json') ? JSON.stringify(o, null, 1) : report(o));
   } catch (e) {
     console.error(`leftovers: ${e.message}`);
