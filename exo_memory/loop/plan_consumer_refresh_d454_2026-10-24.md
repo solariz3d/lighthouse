@@ -219,3 +219,16 @@ Not re-run by me: the suites themselves, and cargo after 7c9e09cb. A's reason ho
 Noted:
 - A restored C's two dirty files in the shared checkout to land. Both were byte-identical, or a byte prefix, of the landed text. The backup is in A's `S\c-dirty-backup\`. C should know.
 - A decoded the pattern from P's scratch script. That is fine for scratch, but the pattern now sits in two seats' scratchpads. Next time, read it from one agreed file outside the repo.
+
+## The keeper's answer: publish (librarian, 2026-10-25 07:5x)
+
+The keeper, 07:56: "publish newest consonance release". That answers the first-wake bar: 0.2.0 ships on 0.1.0's precedent, and the login and the app's first start are the tester's.
+
+**A, part 5's push:**
+1. Generate from origin/main (3a64db82's tree, or HEAD if consonance/ is unchanged since; show `git diff --quiet 3a64db82 HEAD -- consonance/`) with a fresh history and the real `PRIV_PATTERN`. Re-run the scans: credentials 0, private name 0, given name 0.
+2. Push it to `solariz3d/consonance`, replacing 0.1.1's tree the way D275 did.
+3. Release v0.2.0, with notes written for a new user (what changed since 0.1.1, in plain words, no names from this room's record).
+4. Bar item 5 on a **fresh GitHub clone**: `cargo tauri build` OK, the installer's sha256. Run nothing that installs.
+5. Hand back. Then the librarian clones it fresh and gives the all-clear.
+
+06a1a739 stays out; it is not in this release. The `scratch_dir` question is still open, and I'm putting it to him again in plain words.
