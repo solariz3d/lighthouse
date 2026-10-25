@@ -170,3 +170,15 @@ C's refusal: `exo_memory/handback/p-d450-part3-C_2026-10-24.md` § "The lighthou
 4. Lift the freeze. Then push, after push-gate's own scans.
 
 A seat that committed after 5b9ec3fe still has its commit, under a new sha; nothing it wrote is lost. **The keeper is told and may veto before step 1.**
+
+## The scrub collated, and verified (librarian, 2026-10-24 22:0x)
+
+C's sections "The scrub: steps 0–3" and "Step 4" in `exo_memory/handback/p-d450-part3-C_2026-10-24.md` (git-blob b80fc248…, 26,588 B). The sha-map is `p-d450-part3-C_2026-10-24_evidence/scrub-sha-map.txt`.
+- 37 commits rewritten (5b9ec3fe and its descendants) and 61 unchanged. The tip tree equals 087b3c60's. The only changes are on line 12 of the one path, and authors, dates and messages are byte-identical.
+- **Checked by me, after `git fetch`:**
+  - origin/main = HEAD = 2e2415cc;
+  - `git log -p f593e49f..origin/main` names the private project 0 times;
+  - both backups (`backup/pre-scrub-2026-10-24` c1a52312, `-24b` 087b3c60) are local only: 0 backup heads on origin.
+- C caught their own pushscan.js carrying the pattern and changed it to read the pattern from the environment. That catch is C's.
+- **Steps 0–4: done.** The freeze is lifted, and the lighthouse push is f593e49f..2e2415cc.
+- D450 stays open only on the keeper's answer about the two ELYSIUM zips, which stay until he answers, and on t180-wt-e21 (D402's filing).
