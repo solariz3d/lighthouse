@@ -65,3 +65,27 @@ Tier: **prove it**. It covers the generator, the stored formats a stranger's roo
 - He can veto in the morning. A pushed public tree can be cached, so the scans above are the gate, not an afterthought.
 
 NEXT: chair dispatch parts 1–4 to B, C, E and P now (read-only on lighthouse while C's scrub runs); A lands part 5 when the freeze lifts and P clears.
+
+## P's cold read routed (librarian, 2026-10-24 22:4x)
+
+P's §0–§1: `exo_memory/handback/p-d454-review-P_2026-10-24.md` (git-blob fdade54e…, 18,869 B). P generated from main 8a901ea6: staged 432, leaks 0, unresolved 0, unclassified 0, private name 0 of 411 files, dead links 0.
+- checked in dev: BUILDING.md:392 reads `solariz3d/consonance`, so 1C.1 is the neutraliser's doing. state-block.js:213, :219 and :224 hard-code `C:\Consonance\data`.
+
+**Fix before A generates:**
+- **B** — 1C.1. The neutraliser keeps `solariz3d/<repo>` for the bare `owner/repo` form of the project's own repos (consonance, lighthouse). Red first, then a test.
+- **C** (adds to part 2):
+  - 1C.3: BUILDING "Leave the machine as you found it". The general rules ship; his machine, game, streams and tracks become ROLE or are dropped. consumer-relabel's pin moves by the count C shows.
+  - 1C.5: leftovers.js. OURS and the repo roots come from config, with a neutral default.
+  - 1B.1: a GATES section for claim-check. front-door-links' "six gates" pin moves with it.
+  - 1B.2: a short GATES paragraph on the heavy-run lock, and heavy-run's refusal names GATES.md.
+  - 1B.4: README's "Where the record lives" names `inheritance/` and links CUTOFF and the fork note.
+- **E** (adds to part 3):
+  - 1C.4: state-block.js resolves the data dir by the app's rule, and the check command it prints names the resolved path.
+  - The same rule for the three tools with no env override: prompt-events.js, tell-index.js and whats-live.js.
+  - Same-bytes on this machine for each.
+  - 1C.6 and 1B.3: hooks/README's unmanaged count, from `install.ps1`'s list.
+- **A** (part 5) — 1C.2 and 1B.8: the manual's counts and "The tests, today" become commands only, or are re-derived on the generated tree. Commands only is preferred, because the generator's exclusions break any fixed number.
+
+**Notes only, not this lap:** 1B.5 (the "line of record" stubs), 1B.6 (frag-fork template header), 1B.7 (machine letters), 1B.9 (GUIDE on the fork note), and 1A.5's he/they mix in the cards (his own lines, provenance). The older tools that already have an env override stay as they are.
+
+**P** reviews each part as it hands back, then re-runs the scan and this list on the tree A generates.
