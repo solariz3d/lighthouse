@@ -175,3 +175,28 @@ B: `p-d454-gen-B_2026-10-24.md` §9–§13. d454-b rebased onto d454-c 8bbc0d28:
 **For A:** d454-b sits on C's 8bbc0d28. C's tip is now 5fa741c8 (d71defe8, the GATES:175 line), so A merges C's tip with B's, then cherry-picks d454-e's c0dfd7ed, f21732a2, 032d634c and 47be8797.
 
 **Noted, not this lap:** state-block says FAILED for a missing `~/.consonance.json`, where a new user's case is "not set up yet" (B §10, E's file); the empty `guard-census/` folder a test leaves (B §13).
+
+## The collation (librarian, 2026-10-25 01:2x): every part's output is in
+
+Read, each file the pane pointed to:
+- **B** `p-d454-gen-B_2026-10-24.md` §1–§13 → d454-b c97ce883 (on C's 8bbc0d28). Parity (P, M, B) = (0, 0, 0); cargo generated 1,101/0, source 1,333/0; Rust breaks 0; staged 418, leaks 0. B's figures; P re-derived them.
+- **C** `p-d454-user-C_2026-10-24.md` (on d454-c) → d454-c 5fa741c8 (d71defe8 the GATES:175 line, 1d2425da the pin, 00a6fffc ARRIVING). Real PRIV_PATTERN on B's 6606832a generation: private name 0, given name 0 (C's run; I read the output file).
+- **E** `p-d454-install-E_2026-10-24.md` §0–§10 (git-blob c88245f7…) → d454-e 47be8797. Contained install up to the `claude` login; hooks same paths on this machine 29/29; four older gates fixed.
+- **P** `p-d454-review-P_2026-10-24.md` §1–§4.7 (git-blob 3ad85df2…, 68,410 B; checked against the ring) → every commit above cleared, E's 06a1a739 held. P's dry merge B → C → E clean. pythonExe resolves the same Python312 on this machine before and after; the result depends on PATH order (P §4.7).
+
+**The registered lines:**
+- P ≤ 15: **met**, P = 0.
+- First wake: **not met**. The install stopped at the login. The push stays held until he answers (the "E's part 3 in" section).
+
+**One correction to my own ruling, from P §4.7.** I wrote that the ceiling "bounds both" rows. As built, FORK_SECTION_MAX is asserted on the rest row's span only. The floor row subtracts a second span it does not assert. In practice they are the same note (3,885 B both), but the ruling is not literal yet. **B adds the one line** (`assert_eq!(fork_span(&light_floor_rest), fork)` or a second `<= FORK_SECTION_MAX`) with a mutant that only the floor row reaches. Red first by that mutant. P reads it. This goes in before A, so there is one landing.
+
+**A, part 5, landing only (no consumer push):**
+1. On lighthouse main, by named paths: merge d454-c 5fa741c8 and d454-b's tip (c97ce883 plus B's ceiling line). Then cherry-pick d454-e c0dfd7ed, f21732a2, 032d634c and 47be8797. **Not 06a1a739.**
+2. Bump to 0.2.0 (tauri.conf.json, Cargo.toml, Cargo.lock).
+3. Full js suite and cargo on the merged tree. Re-derive the relabel pin there.
+4. 1C.2 / 1B.8: the manual's counts become commands only.
+5. Generate with `PRIV_PATTERN` set to the real pattern, to scratch. Show: credentials 0, private name 0, given name 0, staged, leaks, forked.
+6. Hand back. **Do not push the consumer, do not release, install nothing.** That waits for his answer on the first-wake bar.
+
+OUTPUT → NEXT: changed — P's last review found my "bounds both" was not literal, so B adds one line before A lands. The parity line passed and the first-wake line did not, so A lands without pushing.
+NEXT: chair send B the floor-row ceiling line when this lands; P reads it, then A lands part 5 as written above.
