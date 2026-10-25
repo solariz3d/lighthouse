@@ -15,6 +15,11 @@ const G = require('./delete-gate.js');
 // D287: OS_TMP is the machine's REAL temp dir (js-suite hands each file a redirected TEMP and passes the real one as CONSONANCE_OS_TMP), ON PURPOSE (the MSYS /tmp/... row below needs the folder where Git Bash maps /tmp); still removed at exit.
 const OS_TMP = process.env.CONSONANCE_OS_TMP || os.tmpdir();
 const tmp = (p) => require('../tools/scratch.js').mkdtemp(p, OS_TMP);
+// D454 (B, from E's stranger run): ENV-ONLY for the /tmp/... form. Git Bash maps /tmp from the ACCOUNT's profile, not from %TEMP%; in a real account
+// (and under js-suite, which passes the real one as CONSONANCE_OS_TMP) the two agree. A contained run that moves TEMP off the profile separates
+// them, and then the /tmp form names a different folder. Said, not failed; the /c/... form still runs everywhere.
+const GIT_BASH_TMP = (() => { if (process.platform !== 'win32') return null; const r = spawnSync('cygpath', ['-w', '/tmp'], { encoding: 'utf8' }); return r.status === 0 && r.stdout.trim() ? r.stdout.trim() : null; })();
+const TMP_APART = (() => { try { return GIT_BASH_TMP && fs.realpathSync(GIT_BASH_TMP).toLowerCase() !== fs.realpathSync(OS_TMP).toLowerCase() && `needs a set-up account: Git Bash maps /tmp to ${GIT_BASH_TMP}, not to this run's temp dir ${OS_TMP}; they agree in a real account, and a run that moves TEMP off the profile separates them`; } catch (_) { return false; } })();
 /** A tree to delete with a junction inside it, pointing at a precious directory outside it. */
 function tree({ link = true } = {}) {
   const root = tmp('dg-'), wt = path.join(root, 'worktree'), precious = path.join(root, 'precious');
@@ -45,10 +50,11 @@ test('RED: a relative target is read from the cwd, and from `git -C <dir>`; a wi
   assert.equal(runHook(cmd(`git -C "${t.root}" worktree remove worktree`, os.tmpdir()), data).deny, true);
   assert.equal(runHook(cmd(`rm -rf "${t.wt}"/*`, t.root), data).deny, true);
 });
-test('RED: the Bash tool\'s MSYS paths are read as Git Bash means them: /c/Users/... and /tmp/... (the push gate\'s live failure, 2026-10-06)', { skip: process.platform !== 'win32' && 'MSYS paths are a Windows matter' }, () => {
+test('RED: the Bash tool\'s MSYS paths are read as Git Bash means them: /c/Users/... and /tmp/... (the push gate\'s live failure, 2026-10-06)', { skip: process.platform !== 'win32' && 'MSYS paths are a Windows matter' }, (tc) => {
   const t = tree(), data = tmp('dgd-');
   const msys = t.wt.replace(/^([A-Za-z]):/, (_, d) => `/${d.toLowerCase()}`).replace(/\\/g, '/');
   assert.equal(runHook(cmd(`rm -rf ${msys}`, os.homedir()), data).deny, true, 'the /c/... form');
+  if (TMP_APART) return tc.skip(TMP_APART);
   const viaTmp = '/tmp/' + path.relative(fs.realpathSync(OS_TMP), fs.realpathSync(t.wt)).replace(/\\/g, '/');
   assert.equal(runHook(cmd(`git worktree remove ${viaTmp}`, os.homedir()), data).deny, true, 'the /tmp/... form');
 });

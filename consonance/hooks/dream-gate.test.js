@@ -82,19 +82,45 @@ function manifestHooks() {
 }
 
 function pythonExe() {
-  // Same resolution as install.ps1: never the Microsoft Store stub, which is not an interpreter.
+  // Same resolution as install.ps1 (its "$py" block): never the Microsoft Store stub, which is not an interpreter.
+  // 1. the first python.exe on PATH that is not under \WindowsApps\ (install.ps1's Get-Command python.exe -All);
+  // D454: this step was missing, so a Python installed for all users and on PATH was never found here.
+  for (const dir of String(process.env.PATH || '').split(path.delimiter)) {
+    if (!dir || /\\WindowsApps(\\|$)/i.test(dir)) continue;
+    const p = path.join(dir, 'python.exe');
+    if (fs.existsSync(p)) return p;
+  }
+  // 2. else the newest %LOCALAPPDATA%\Programs\Python\Python3<digits>\python.exe, by version (install.ps1's fallback).
   const globbed = path.join(
     process.env.LOCALAPPDATA || '',
     'Programs', 'Python'
   );
   try {
-    for (const d of fs.readdirSync(globbed)) {
+    const ver = (d) => { const m = /^Python3(\d*)$/i.exec(d); return m ? (m[1] ? Number(m[1]) : 0) : -1; };
+    for (const d of fs.readdirSync(globbed).filter((x) => ver(x) >= 0).sort((a, b) => ver(b) - ver(a))) {
       const p = path.join(globbed, d, 'python.exe');
       if (fs.existsSync(p)) return p;
     }
   } catch (_) {}
   return null;
 }
+
+// D454 (B, from E's stranger run, p-d454-install-E_2026-10-24.md §6): pythonExe() said "same resolution as install.ps1" and did only its second
+// half (the %LOCALAPPDATA% glob), so a Python installed for all users, on PATH, made this suite throw where install.ps1 finds it.
+t('D454: pythonExe() resolves as install.ps1 does: a python.exe on PATH outside \\WindowsApps\\ first, the Store stub never', () => {
+  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'dreamgate-py-'));
+  const stub = path.join(d, 'WindowsApps'), real = path.join(d, 'Python312');
+  for (const x of [stub, real]) { fs.mkdirSync(x, { recursive: true }); fs.writeFileSync(path.join(x, 'python.exe'), ''); }
+  const saved = { PATH: process.env.PATH, LOCALAPPDATA: process.env.LOCALAPPDATA };
+  try {
+    process.env.LOCALAPPDATA = path.join(d, 'no-local-python');
+    process.env.PATH = [stub, real].join(path.delimiter);
+    const got = pythonExe();
+    if (got !== path.join(real, 'python.exe')) throw new Error('a python.exe on PATH outside WindowsApps was not found: ' + got);
+    process.env.PATH = stub;
+    if (pythonExe() !== null) throw new Error('the Store stub was taken for an interpreter');
+  } finally { process.env.PATH = saved.PATH; process.env.LOCALAPPDATA = saved.LOCALAPPDATA; fs.rmSync(d, { recursive: true, force: true }); }
+});
 
 const HOOKS = manifestHooks();
 
@@ -257,7 +283,7 @@ function seedBed(dataDir) {
 
 function runHook(abs, withGate) {
   const exe = abs.endsWith('.py') ? pythonExe() : process.execPath;
-  if (!exe) throw new Error('no python.exe found outside the Store stub; cannot verify the pulse gate');
+  if (!exe) throw new Error('no python.exe found outside the Store stub (neither on PATH nor under %LOCALAPPDATA%\\Programs\\Python); Python is a prerequisite (consonance/GUIDE.md), so install it, then this suite can verify the pulse gate');
   const cwd = path.join(TMP_INSTANCES, 'sibling-gate-test');
   fs.mkdirSync(cwd, { recursive: true });
   const dataDir = require('../tools/scratch.js').mkdtemp('dreamgate-data-');

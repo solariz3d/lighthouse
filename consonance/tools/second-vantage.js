@@ -88,7 +88,15 @@ const crypto = require('crypto');
 const cp = require('child_process');
 
 const REPO = path.resolve(__dirname, '..', '..');
-const DATA = process.env.VANTAGE_DATA || 'C:\\Consonance\\data';
+// D454 (B, from E's stranger run): the data folder by THE APP'S OWN RULE, the same text as the five hooks' "D273 dirs" block (findings-return.js
+// reads this file's artifact through it): ~/.consonance.json's data_dir when set, else %USERPROFILE%\.consonance. The hard-coded C:\Consonance\data
+// it replaces wrote where a stranger's findings-return.js never reads. On this machine data_dir IS C:\Consonance\data, so every path is unchanged.
+function consonanceDir(key, under) {
+  const home = process.env.USERPROFILE || '.';
+  try { const v = JSON.parse(fs.readFileSync(path.join(home, '.consonance.json'), 'utf8').replace(/^\uFEFF/, ''))[key]; if (typeof v === 'string' && v.trim()) return v.trim(); } catch (e) { /* no config, or not JSON: the default below */ }
+  return `${home}\\${under}`;
+}
+const DATA = process.env.VANTAGE_DATA || consonanceDir('data_dir', '.consonance');
 const LEDGER = process.env.SOURCED_LEDGER || path.join(DATA, 'sourced_ledger.jsonl');
 const FINDINGS = process.env.VANTAGE_FINDINGS || path.join(DATA, 'vantage_findings.jsonl');
 const WATERMARK = process.env.VANTAGE_WATERMARK || path.join(DATA, 'vantage_watermark.json');

@@ -57,13 +57,21 @@
 const fs = require('fs');
 const path = require('path');
 
+// D454 (B, from E's stranger run): the data folder by THE APP'S OWN RULE, the same text as second-vantage.js and the five hooks' "D273 dirs"
+// block: ~/.consonance.json's data_dir when set, else %USERPROFILE%\.consonance. On this machine data_dir IS C:\Consonance\data, so nothing moves here.
+function consonanceDir(key, under) {
+  const home = process.env.USERPROFILE || '.';
+  try { const v = JSON.parse(fs.readFileSync(path.join(home, '.consonance.json'), 'utf8').replace(/^\uFEFF/, ''))[key]; if (typeof v === 'string' && v.trim()) return v.trim(); } catch (e) { /* no config, or not JSON: the default below */ }
+  return `${home}\\${under}`;
+}
+const DATA_DEFAULT = process.env.VANTAGE_DATA || consonanceDir('data_dir', '.consonance');
+
 const DEFAULTS = {
   pairs: 'exo_memory/loop/pair_ledger.jsonl',                       // relative to repo root
   // the wire: the producer (second-vantage.js) names the findings artifact; every consumer
   // reads that name through the same env vars. attached.test.js pins the three-way equality.
-  findings: process.env.VANTAGE_FINDINGS ||
-    path.join(process.env.VANTAGE_DATA || 'C:\\Consonance\\data', 'vantage_findings.jsonl'),
-  sourced: process.env.SOURCED_LEDGER || 'C:\\Consonance\\data\\sourced_ledger.jsonl',
+  findings: process.env.VANTAGE_FINDINGS || path.join(DATA_DEFAULT, 'vantage_findings.jsonl'),
+  sourced: process.env.SOURCED_LEDGER || path.join(consonanceDir('data_dir', '.consonance'), 'sourced_ledger.jsonl'),
   seasonDays: 30,
 };
 
