@@ -1,0 +1,13 @@
+Restore the five sealed fixture amendment records byte for byte
+
+The previous commit reworded one "reason" line in each of five fixture
+amendment records under test/fixtures/ (d230, d258, d260, d279, meshcap).
+Those records are sealed: core_cup_fixtures.test.js pins each file's
+sha256, so the reword broke the seal check. A sealed record is not
+reworded; the five files go back to their exact bytes, and the line in
+each is listed for review instead.
+
+Seat: pane C (sibling-0845a868).
+
+Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_017jVCxaAah7YfDwfSsgsdXy

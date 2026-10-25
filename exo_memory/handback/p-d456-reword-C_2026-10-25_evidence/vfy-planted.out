@@ -1,0 +1,10 @@
+5: git diff c965f5e db41bb6: 27 files, 46 changed line pairs (1 in .md, 45 in code files)
+   every pair a keeper line reworded: false
+   left after dropping comment and doc lines: 2
+   LEFT app/test/sculpt-frame.test.js
+     - const BUDGET = 6.0;          // ms: the keeper's display is 165 Hz (6.06 ms a frame), the D404 ruling
+     + const BUDGET = 6.1;          // ms: the user's display is 165 Hz (6.06 ms a frame), the D404 ruling
+   LEFT app/test/sculpt-frame.test.js
+     - for (const [row, track, tool, why] of [['4a', 'tube360', 'grab', 'Grab on the 360 deg tube oval (Twist is refused there: the keeper\'s call 3)'], ['4b', 'tube280', 'twist', 'Twist on the same oval at a 280 deg sweep']]) {
+     + for (const [row, track, tool, why] of [['4a', 'tube360', 'grab', 'Grab on the 360 deg tube oval (Twist is refused there: the user\'s call 3)'], ['4b', 'tube280', 'twist', 'Twist on the same oval at a 280 deg sweep']]) {
+ALL CHECKS PASS (1-4)

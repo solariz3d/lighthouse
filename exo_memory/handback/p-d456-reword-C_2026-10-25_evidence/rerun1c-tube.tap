@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: row 1: the road's centre stays on the curve the user drew at every station of the closing and opening pieces (≤ 1 cm)
+ok 1 - row 1: the road's centre stays on the curve the user drew at every station of the closing and opening pieces (≤ 1 cm)
+  ---
+  duration_ms: 0.877
+  type: 'test'
+  ...
+# Subtest: row 2: the floor is level through the closing and opening pieces: its centre's height moves ≤ 1 cm (no climb anywhere, no hump)
+ok 2 - row 2: the floor is level through the closing and opening pieces: its centre's height moves ≤ 1 cm (no climb anywhere, no hump)
+  ---
+  duration_ms: 0.1088
+  type: 'test'
+  ...
+# Subtest: row 2b: the user's own case (the panel's fields, widths 44 and 30): a track that is a closed 45 m tube from its start, still turning, opened in 254.1 m
+ok 3 - row 2b: the user's own case (the panel's fields, widths 44 and 30): a track that is a closed 45 m tube from its start, still turning, opened in 254.1 m
+  ---
+  duration_ms: 9386.9097
+  type: 'test'
+  ...
+# Subtest: row 3: in the opening piece the walls rise above the floor no more than a fixed-width circular arc must at the row's sweep, and the self-check finds no self-intersection
+ok 4 - row 3: in the opening piece the walls rise above the floor no more than a fixed-width circular arc must at the row's sweep, and the self-check finds no self-intersection
+  ---
+  duration_ms: 5.211
+  type: 'test'
+  ...
+# Subtest: row 4: the cross-sections are the adapter's, untouched, and the open end is on the curve, as before
+ok 5 - row 4: the cross-sections are the adapter's, untouched, and the open end is on the curve, as before
+  ---
+  duration_ms: 0.1732
+  type: 'test'
+  ...
+# Subtest: row 5: a ROLLED closed tube still turns about its own axis, hl above the curve; the word builder's constant heartline is as it was
+ok 6 - row 5: a ROLLED closed tube still turns about its own axis, hl above the curve; the word builder's constant heartline is as it was
+  ---
+  duration_ms: 1364.3619
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12298.4645

@@ -1,0 +1,6 @@
+touched: head dfe16d3 files 103 changed=[0] 16:25:54Z
+touched exit 1: # tests 1477 # pass 1468 # fail 3 # skipped 6 # todo 0  16:38:21Z
+not ok 355 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+not ok 694 - row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+not ok 697 - row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, handler and frame
+EXPO (3221225477) lines: 0; after: changed=[0]

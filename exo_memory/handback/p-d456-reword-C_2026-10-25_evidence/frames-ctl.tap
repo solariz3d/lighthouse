@@ -1,0 +1,131 @@
+TAP version 13
+# Subtest: row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+not ok 1 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+  ---
+  duration_ms: 11319.6354
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-c456ctl\\app\\test\\drag-frame.test.js:109:1'
+  failureType: 'testCodeFailure'
+  error: 'aqua 1000 m turn: the drag moved nothing (the field still reads ): the handle was not held'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ''
+  actual: ''
+  operator: 'notStrictEqual'
+  stack: |-
+    drag (C:\Users\nname\Downloads\t180-wt-c456ctl\app\test\drag-frame.test.js:93:10)
+    async within (C:\Users\nname\Downloads\t180-wt-c456ctl\app\test\drag-frame.test.js:104:46)
+    async TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-c456ctl\app\test\drag-frame.test.js:111:41)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
+  ...
+# Subtest: row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+not ok 2 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+  ---
+  duration_ms: 15543.9062
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-c456ctl\\app\\test\\drag-frame.test.js:115:1'
+  failureType: 'testCodeFailure'
+  error: 'aqua, a 2000 m turn drag: p95 11.6 / 9.7 ms (median 2.6 / 3.4), over 6 ms'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-c456ctl\app\test\drag-frame.test.js:117:140)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+not ok 3 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+  ---
+  duration_ms: 14959.9521
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-c456ctl\\app\\test\\drag-frame.test.js:121:1'
+  failureType: 'testCodeFailure'
+  error: 'aqua, a 1000 m stretch drag: p95 7.0 / 8.0 ms (median 3.4 / 3.2), over 6 ms'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-c456ctl\app\test\drag-frame.test.js:123:143)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20 or more rebuilds a second
+ok 4 - row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20 or more rebuilds a second
+  ---
+  duration_ms: 12398.4729
+  type: 'test'
+  ...
+# 20,000 m: p95 20 ms, 61.7 rebuilds a second
+# Subtest: row 5: the release is the exact road: a few hundred stations while the handle is held, a station every 2 m the moment it is let go
+ok 5 - row 5: the release is the exact road: a few hundred stations while the handle is held, a station every 2 m the moment it is let go
+  ---
+  duration_ms: 7901.0359
+  type: 'test'
+  ...
+# ghost stations during the drag 97, after the release 1001
+# Subtest: row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+not ok 6 - row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+  ---
+  duration_ms: 16545.1335
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-c456ctl\\app\\test\\release-frame.test.js:116:1'
+  failureType: 'testCodeFailure'
+  error: 'aqua, letting go of a 1,000 m turn: handler 11.9, worst frame 9.0 / handler 7.0, worst frame 11.3 ms, over 6'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-c456ctl\app\test\release-frame.test.js:120:12)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
+  ...
+# Subtest: row 2: past the ordinary range it does not stall: letting go of a 20,000 m turn, nothing takes more than 120 ms, and the exact ghost is whole within 10 s
+ok 7 - row 2: past the ordinary range it does not stall: letting go of a 20,000 m turn, nothing takes more than 120 ms, and the exact ghost is whole within 10 s
+  ---
+  duration_ms: 18567.9402
+  type: 'test'
+  ...
+# 20,000 m: handler 72.9, worst frame 107.0 ms; 10001 stations after 10 s
+# Subtest: row 3: the exact ghost arrives and nothing blinks: after letting go of a 2,000 m turn the ghost is on show at every frame, and the exact one is in place within 1 s
+ok 8 - row 3: the exact ghost arrives and nothing blinks: after letting go of a 2,000 m turn the ghost is on show at every frame, and the exact one is in place within 1 s
+  ---
+  duration_ms: 6966.1267
+  type: 'test'
+  ...
+# 420 frames watched; the exact ghost (1001 stations) after 405 ms; 0 without a ghost
+# Subtest: row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, handler and frames together
+not ok 9 - row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, handler and frames together
+  ---
+  duration_ms: 18036.7353
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-c456ctl\\app\\test\\release-frame.test.js:145:1'
+  failureType: 'testCodeFailure'
+  error: 'a field change: p95 38.1 / 33.2 ms, over 6'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-c456ctl\app\test\release-frame.test.js:163:10)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# a field change: p95 38.1 / 33.2 ms (median 28.0 / 22.9)
+1..9
+# tests 9
+# suites 0
+# pass 4
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 123917.3461

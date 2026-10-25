@@ -1,0 +1,21 @@
+d2e57d6 -> 0db8444
+  - Row 4 is split: Twist is refused on a 360 deg tube by the keeper's call 3, so 4a drags Grab on
+  + Row 4 is split: Twist is refused on a 360 deg tube by the user's call 3, so 4a drags Grab on
+f8af9e6 -> 0d8ec1a
+  - The keeper's GO on P's Sculpt design (2026-10-20 14:53). beginBrush({ tool }) resolves the 14
+  + The user's GO on P's Sculpt design (2026-10-20 14:53). beginBrush({ tool }) resolves the 14
+1c640b0 -> 1bfb6f4
+  - 2 skipped (the keeper's save), 5 fail: sculpt-frame rows 2, 3, 4a, 4b timed under the suite's load, and
+  + 2 skipped (the user's save), 5 fail: sculpt-frame rows 2, 3, 4a, 4b timed under the suite's load, and
+a519bb9 -> 5f902ef
+  - The keeper (TEST TRACK 10 and TEST 10): the system-made closer had a hump near the end; "fix the
+  + The user (TEST TRACK 10 and TEST 10): the system-made closer had a hump near the end; "fix the
+15e4e81 -> b782064
+  - The keeper (TEST TRACK 10): "there needs to be a nuance for banking in large curves like that to
+  + The user (TEST TRACK 10): "there needs to be a nuance for banking in large curves like that to
+63bb388 -> f1a9ca1
+  - The keeper (TEST TRACK 10): "where the pieces connect there is too big of a bump, then how the
+  + The user (TEST TRACK 10): "where the pieces connect there is too big of a bump, then how the
+0c73322 -> 1beb2cc
+  - The keeper (2026-10-23 11:59): "closing a loop should bank"; 09:48: "all closed loops after if the
+  + The user (2026-10-23 11:59): "closing a loop should bank"; 09:48: "all closed loops after if the

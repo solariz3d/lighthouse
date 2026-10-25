@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: the fixture kit is the seal's: fixtures.js and manifest.json carry the sha256 the seal registered (and the D196 amendment record is the one registered)
+ok 1 - the fixture kit is the seal's: fixtures.js and manifest.json carry the sha256 the seal registered (and the D196 amendment record is the one registered)
+  ---
+  duration_ms: 5.6293
+  type: 'test'
+  ...
+# Subtest: row 5a (amended D196, D222, D258): against the SEAL's manifest (c964c2d) F4, F6, F8 differ in segs and mesh only, F1, F2 in kn5 only, F7 in segs, path and mesh, and the three others are identical
+ok 2 - row 5a (amended D196, D222, D258): against the SEAL's manifest (c964c2d) F4, F6, F8 differ in segs and mesh only, F1, F2 in kn5 only, F7 in segs, path and mesh, and the three others are identical
+  ---
+  duration_ms: 2861.0285
+  type: 'test'
+  ...
+# Subtest: row 5a (amended D196): against the D196 baseline every fixture renders identically: "0 of 9 differ"
+ok 3 - row 5a (amended D196): against the D196 baseline every fixture renders identically: "0 of 9 differ"
+  ---
+  duration_ms: 2837.682
+  type: 'test'
+  ...
+# Subtest: row 5b (D225, /4): each fixture parsed, saved as /4 text and read again renders to the same digests (the round trip), its text is /4 and carries no edge or tube channel (seal E3c)
+ok 4 - row 5b (D225, /4): each fixture parsed, saved as /4 text and read again renders to the same digests (the round trip), its text is /4 and carries no edge or tube channel (seal E3c)
+  ---
+  duration_ms: 2862.8634
+  type: 'test'
+  ...
+# Subtest: row 5 CONTROL: the check has teeth: a manifest with one digest altered reads "1 of 9 differ", and a changed fixture file is reported as changed
+ok 5 - row 5 CONTROL: the check has teeth: a manifest with one digest altered reads "1 of 9 differ", and a changed fixture file is reported as changed
+  ---
+  duration_ms: 5651.8644
+  type: 'test'
+  ...
+# Subtest: sector gates amendment record: only F1 F2 (the closed laps) changed, only their kn5, and the measure says the same triangles and meshes with exactly AC_TIME_1 and AC_TIME_2 added
+ok 6 - sector gates amendment record: only F1 F2 (the closed laps) changed, only their kn5, and the measure says the same triangles and meshes with exactly AC_TIME_1 and AC_TIME_2 added
+  ---
+  duration_ms: 0.615
+  type: 'test'
+  ...
+# Subtest: mesh cap amendment record: only the F2 kn5 changed, every other digest is the one in the D279 record, and the measure says the same triangles and markers in one more chunk, none over 32,768 vertices
+ok 7 - mesh cap amendment record: only the F2 kn5 changed, every other digest is the one in the D279 record, and the measure says the same triangles and markers in one more chunk, none over 32,768 vertices
+  ---
+  duration_ms: 0.24
+  type: 'test'
+  ...
+# Subtest: D279 amendment record: F1 F2 keep every digest but the kn5, and the measure says only their pit boxes changed, in material and coordinates
+ok 8 - D279 amendment record: F1 F2 keep every digest but the kn5, and the measure says only their pit boxes changed, in material and coordinates
+  ---
+  duration_ms: 0.1199
+  type: 'test'
+  ...
+# Subtest: D260 amendment record: F1 F2 keep their segs, path and mesh digests, only the kn5 moved, and its triangle set and markers are the same in far fewer meshes
+ok 9 - D260 amendment record: F1 F2 keep their segs, path and mesh digests, only the kn5 moved, and its triangle set and markers are the same in far fewer meshes
+  ---
+  duration_ms: 0.0997
+  type: 'test'
+  ...
+# Subtest: D230 amendment record: F1 F2 keep their segs, path and mesh digests and their ROAD nodes byte for byte, only the kn5 moved (the skin nodes are added), and the measure says so
+ok 10 - D230 amendment record: F1 F2 keep their segs, path and mesh digests and their ROAD nodes byte for byte, only the kn5 moved (the skin nodes are added), and the measure says so
+  ---
+  duration_ms: 0.1669
+  type: 'test'
+  ...
+# Subtest: D222 amendment record: F1 F2 keep their segs, path and mesh digests, only the kn5 moved, and the measure shows the AC-ready export (unique names, world space, a diffuse, no sliver seam)
+ok 11 - D222 amendment record: F1 F2 keep their segs, path and mesh digests, only the kn5 moved, and the measure shows the AC-ready export (unique names, world space, a diffuse, no sliver seam)
+  ---
+  duration_ms: 0.2348
+  type: 'test'
+  ...
+# Subtest: D196 amendment record: every changed fixture keeps its path digest, its segs and mesh digests moved, and the measure shows the steps gone
+ok 12 - D196 amendment record: every changed fixture keeps its path digest, its segs and mesh digests moved, and the measure shows the steps gone
+  ---
+  duration_ms: 0.1244
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14306.0635

@@ -1,0 +1,28 @@
+git diff fc75629 f217110: 199 files (10 .md/.txt doc, 189 code or data files)
+A, left after dropping comment and doc lines: 25 lines
+   A app/test/core-pieces-ui.test.js:656: test('row 14d (D278, the user: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and heig
+   A app/test/core-startline-creep.test.js:50: test('the automatic line on an open track stays put when a Straight is added to the straight it is on (the user\'s case: it followed the head)', async () => {
+   A app/test/export.test.js:216: test('D226 the empty folder the user made exports to content\\tracks as the normal t180b_<name> folder and the empty folder is removed, so Content Manager never sees it',
+   A test/core_close_local.test.js:54: assert.ok(outside.some((i) => !sameChannels(d.pieces[i], whole.doc.pieces[i])), 'control: the whole-lap close reaches back into the lap (what the user saw)');
+   A test/core_tube_open.test.js:64: test('row 2b: the user\'s own case (the panel\'s fields, widths 44 and 30): a track that is a closed 45 m tube from its start, still turning, opened in 254.1 m', () => {
+   A test/doc-library.test.js:24: test('every handle the user names is sculptable: length, curvature and ramps, pitch, bank, width, wall and Ï', () => {
+   A test/doc-library.test.js:61: let lib = L.savePiece(L.builtinLibrary(), { name: 'my-bend', author: 'user', doc: d, ids: ['w2', 'w3'] });
+   A test/doc-library.test.js:72: const lib = L.savePiece(L.builtinLibrary(), { name: 'wide-turn', author: 'user', doc: d, ids: ['w2'] });
+   A test/doc-library.test.js:127: const lib = L.savePiece(L.builtinLibrary(), { name: 'my-bend', author: 'user', doc: sculpted(), ids: ['w2', 'w3'] });
+   A test/doc-library.test.js:134: const lib = L.savePiece(L.builtinLibrary(), { name: 'my-bend', author: 'user', doc: sculpted(), ids: ['w2', 'w3'] });
+   A test/doc-library.test.js:141: const lib = L.savePiece(L.builtinLibrary(), { name: 'my-bend', author: 'user', doc: sculpted(), ids: ['w2', 'w3'] });
+   A test/export_merge.test.js:55: test('row 2b: with the default budget no chunk passes 32,768 vertices (AC left the user\x27s two chunks near 65,536 undrawn: the road went invisible but drivable)', () =>
+   A test/fixtures/manifest.d230.json:4: "reason": "The user, 2026-10-04 02:22: the closed tube \"should be inclosed and pitch black\" (daylight leaked into it); 02:25: \"i guess we need to make it so the bottom
+   A test/fixtures/manifest.d258.json:4: "reason": "The user, 2026-10-06 15:09: a jump is placed by hand and tuned by driving (exo_memory/loop/plan_t180_free_jump_2026-10-06.md). An OLD flight ({gap, drop, land}
+   A test/fixtures/manifest.d260.json:4: "reason": "The user, 2026-10-06 18:31: \"i should be getting 400-500 frames in a map with no complex lighting, is the track geometry like too complex\" (exo_memory/loop/p
+   A test/fixtures/manifest.d279.json:4: "reason": "The user, 2026-10-09, asked which pits should wear the track's texture: \"The painted pit boxes\" (exo_memory/loop/plan_t180_pit_texture_2026-10-09.md, Amendme
+   A test/fixtures/manifest.meshcap.json:4: "reason": "The user, 2026-10-12, on TEST TRACK 10: the road went invisible from the 90Â° turns on while the car still drove on it. Its two largest chunks held 65,088 and 
+   A test/grips.test.js:18: test('row 1: one entry per row the tool lists, in the user\'s order, and every value is a whole percent the Grip field takes (50 to 150)', () => {
+   A test/prove_render.test.js:87: const f = path.join(d, 'autosave.t180auto'); fs.writeFileSync(f, 'an unsaved track of the user');
+   A test/prove_render.test.js:89: assert.deepEqual([restore(), fs.readFileSync(f, 'utf8')], ['restored', 'an unsaved track of the user']);
+   A test/readout_corner.test.js:74: test('row 5: the user\'s save: p41 corner 90.00Â°, ends turning at 171Â°/100 m, +9.64Â° from p42; p42 corner 99.64Â°; gravity bank â53.5Â°', { skip: fs.existsSync(FX) ?
+   A test/trackfiles.test.js:172: installOne(b, ac); fs.writeFileSync(path.join(t, 'user-note.txt'), 'kept');
+   A test/trackfiles.test.js:177: assert.strictEqual(fs.readFileSync(path.join(t, 'user-note.txt'), 'utf8'), 'kept');
+   A test/turn_corner.test.js:90: test('row 4: the user\'s save opens unchanged: it round-trips byte for byte and builds the identical track (pinned before B and C)', { skip: fs.existsSync(FX) ? false : '
+   A test/validate_xsec.test.js:34: test('S3: a full 360Â° of bank is RED over 300 m (the user\'s own example, 1.80Â°/m), AMBER over 450 m (1.20), clear over 600 m (0.90): the bar is 1.2144 red, 0.9338 ambe
+B, left after dropping comments, doc and string contents (code tokens alone): 0 lines
