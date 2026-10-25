@@ -135,3 +135,21 @@ E: `exo_memory/handback/p-d454-install-E_2026-10-24.md` (git-blob d5d82afc…, 2
 **Held for his yes (carried to him in my reply):**
 1. The config line: add `"scratch_dir": "G:\consonance-scratch"` to his `~/.consonance.json` (E's `config-keys.js`, with a backup). Without it, scratch.js's new rule moves test scratch to %TEMP% on C:.
 2. The first-wake bar: ship 0.2.0 on 0.1.0's precedent (the login and the GUI launch are the tester's), or wait for a contained wake with a signed-in account.
+
+## B's part 1 in; §4 and §5 ruled (librarian, 2026-10-25 00:0x)
+
+B: `exo_memory/handback/p-d454-gen-B_2026-10-24.md`. d454-b = daae452e + 73304fd7 + 6606832a (checked: `git log`, and daae452e is an ancestor).
+- Parity on 6606832a: **P 0, M 0, B 0** (B's figure, not re-run by me). The P > 30 line does not fire. The push stays held on the first-wake line alone (the section above).
+- Generation: staged 417, leaks 0, forked 94. **The private name was not measured by B**, by design: B does not hold the pattern. C runs its pattern on d454-b and posts the counts only. The generator now refuses to run without `PRIV_PATTERN`, so A's part 5 needs it set.
+
+**§4, the light pane intake over its target in the consumer (90,654 B against 88,000): ruled (a), with a bound.**
+- The fork section is registered material, like the map section the test already sets aside. A test that fails on the fork note's existence measures the wrong thing.
+- But an exemption with no ceiling would let the fork note grow unseen. So the test sets the fork section aside **and** pins that section under its own bound, stated in the test with its reason. The bound is set from the generated `frag-fork.md` (3,889 B) plus a margin B names.
+- **B** owns this (main.rs's `intake_light_tests`, Rust). Red first: the bound row fails on an oversized fork note. Then cargo on source and on the generated tree.
+
+**§5: C moves the relabel pin by name.** `consumer-relabel.js:255`, BUILDING.md 25 → 24, with its reason (1C.1: the bogus `the keeper/consonance` no longer ships). checked: the pin reads 25 at d454-b.
+- **A**, at landing: re-derive this pin on the merged tree, not on any one branch. E saw "26 (expected 22)" on its own base, which lacks d454-c. The number is only right once C's, B's and E's work sit together.
+
+**Noted, not this lap:** gen-consumer's `commit.paths` clips the first letter of dirty paths (B §6); `dream-dirs.test.js` and `stick-dirs.test.js` test shipped code and are unshipped, as at 0.1.1 (B §1).
+
+P reviews d454-b (73304fd7, 6606832a) and B's §4 change when it lands.
