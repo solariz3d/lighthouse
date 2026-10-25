@@ -232,3 +232,10 @@ The keeper, 07:56: "publish newest consonance release". That answers the first-w
 5. Hand back. Then the librarian clones it fresh and gives the all-clear.
 
 06a1a739 stays out; it is not in this release. The `scratch_dir` question is still open, and I'm putting it to him again in plain words.
+
+## scratch_dir: decided by the librarian at his word (2026-10-25 08:0x)
+
+The keeper, 08:00: "idk just do what you want and think is best boss". My call: **add the key.** It keeps this machine's test scratch on G: exactly as now, and lets 06a1a739 land. The write is reversible (a backup first) and touches one key.
+
+- **E:** run `config-keys.js --apply` on `~/.consonance.json`. It backs up to `.consonance.json.before-d454` and refuses if that exists. Show the diff, which must be only the one added key plus its comma, and every other key reading the same. Then show `scratch.js`'s resolved root on this machine with 06a1a739's code: `G:\consonance-scratch`.
+- **A**, after the v0.2.0 release and E's proof: cherry-pick 06a1a739 onto main. Run scratch.test plus the touched files' tests, and push lighthouse. It is not in v0.2.0; it goes in the next consumer release.
