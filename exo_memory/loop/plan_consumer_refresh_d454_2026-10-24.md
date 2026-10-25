@@ -115,3 +115,23 @@ C: `p-d454-user-C_2026-10-24.md` on branch d454-c (52ebc14d; a7af1e7c, f426dd1c,
 - C's corrections stand on the record: portable-paths RED at main came from their own test lines, now fixed, and the wording of 38d6369c's message.
 
 **P** reviews d454-c, then B's and E's parts as they come in. Collation waits for all of them.
+
+## E's part 3 in; the first-wake rule applied (librarian, 2026-10-25 00:0x)
+
+E: `exo_memory/handback/p-d454-install-E_2026-10-24.md` (git-blob d5d82afc…, 24,377 B; checked, the same as at the ring). d454-e: c0dfd7ed, f21732a2, 06a1a739, 032d634c on 52076502 (checked: `git log 52076502..d454-e`).
+
+**The ruling on §0: the registered condition failed, so there is no consumer push tonight.**
+- The install reached the `claude` login and stopped there: "Not logged in · Please run /login". A seat never read its brief. The app's GUI first launch is refused by its own single-instance guard while his Consonance runs.
+- I registered "reaches a first wake" before the run. Re-reading it now as "reaches the login" would be redefining the bar after seeing the result, so I am not doing that. The plan comes back to me and is re-planned, not defended.
+- What it means for the bar itself: as written, a contained install on this machine cannot meet it. A signed-in account under a separate `~/.claude` is a person's credential, and a second GUI copy needs another logon session. At 0.1.0 those two steps were named "the tester's". Whether 0.2.0 ships on that precedent, or waits for a signed-in contained wake, is **his call**, and it waits for him.
+
+**Re-planned (the parts go on; only the push waits):**
+- **P** reviews d454-e (all four commits), as already routed.
+- **E**, a new item inside this lap: the four older gates in §3's last row (ask-ending, second-reader, push-gate, delete-gate) get the same data-dir rule. With a stranger's default config they reach no ledger or lock now, so a new user's gates are silently weaker than ours. Red first, same bytes on this machine. This is a recommendation inside the line of work, so it is a lap; he can veto it.
+- **B** (parity): E §6's 12 files that are red in a stranger's env in both generated trees, each classified (fix, exclude, or env-only). And E §7: the consumer ships no `.gitignore` (`src-tauri/target/`, `src-tauri/gen/`).
+- **C**: GUIDE's "nothing is written then" for `ARRIVING.ps1 -DryRun`, which runs `git pull --ff-only` before its dry-run exit (:126). Wording or the order, C's choice.
+- **A** lands B, C and E on lighthouse main when P clears, and runs the full suite. **A does not land 06a1a739** until `scratch_dir` is in his `~/.consonance.json` (checked: the key is absent now; `chime_repos` is already `["t180-track-builder","consonance"]`, so f21732a2 needs no config change). A does not push the consumer.
+
+**Held for his yes (carried to him in my reply):**
+1. The config line: add `"scratch_dir": "G:\consonance-scratch"` to his `~/.consonance.json` (E's `config-keys.js`, with a backup). Without it, scratch.js's new rule moves test scratch to %TEMP% on C:.
+2. The first-wake bar: ship 0.2.0 on 0.1.0's precedent (the login and the GUI launch are the tester's), or wait for a contained wake with a signed-in account.
