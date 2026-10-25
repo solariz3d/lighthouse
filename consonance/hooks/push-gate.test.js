@@ -19,6 +19,10 @@ const FAKE_SKANT = ['sk', 'ant', 'api03', 'Zx9Yw8Vu7Ts6Rq5Po4Nm3Lk2'].join('-');
 // D287: OS_TMP is the machine's REAL temp dir (js-suite hands each file a redirected TEMP and passes the real one as CONSONANCE_OS_TMP), ON PURPOSE (the MSYS /tmp/... row needs the folder where Git Bash maps /tmp); still removed at exit.
 const OS_TMP = process.env.CONSONANCE_OS_TMP || os.tmpdir();
 const tmp = (p) => require('../tools/scratch.js').mkdtemp(p, OS_TMP);
+// D454 (B, from E's stranger run): ENV-ONLY for the /tmp/... form, as in delete-gate.test.js. Git Bash maps /tmp from the ACCOUNT's profile, not
+// from %TEMP%; in a real account (and under js-suite) the two agree, and a contained run that moves TEMP off the profile separates them.
+const GIT_BASH_TMP = (() => { if (process.platform !== 'win32') return null; const r = spawnSync('cygpath', ['-w', '/tmp'], { encoding: 'utf8' }); return r.status === 0 && r.stdout.trim() ? r.stdout.trim() : null; })();
+const TMP_APART = (() => { try { return GIT_BASH_TMP && fs.realpathSync(GIT_BASH_TMP).toLowerCase() !== fs.realpathSync(OS_TMP).toLowerCase() && `needs a set-up account: Git Bash maps /tmp to ${GIT_BASH_TMP}, not to this run's temp dir ${OS_TMP}; they agree in a real account, and a run that moves TEMP off the profile separates them`; } catch (_) { return false; } })();
 const git = (cwd, ...args) => { const r = spawnSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@t', '-c', 'init.defaultBranch=main', '-c', 'core.autocrlf=false', ...args], { cwd, encoding: 'utf8' }); assert.equal(r.status, 0, `git ${args.join(' ')}: ${r.stderr}`); return r.stdout; };
 /** A bare origin, a clone with one pushed commit (so @{upstream} exists and origin/HEAD is set). */
 function repo() {
@@ -82,10 +86,11 @@ test('RED: `git -C <repo> push` from another directory scans that repo; a push a
 // Found LIVE on 2026-10-06, the first push after install: `git -C /tmp/x push` from the Bash tool was read as C:\tmp\x ("not a git repo") and the gate failed
 // open. A native hook must convert Git Bash's MSYS paths itself.
 const msysDrive = (p) => p.replace(/^([A-Za-z]):/, (_, d) => `/${d.toLowerCase()}`).replace(/\\/g, '/');
-test('RED: the Bash tool\'s MSYS paths are read as Git Bash means them: /c/Users/... and /tmp/...', { skip: process.platform !== 'win32' && 'MSYS paths are a Windows matter' }, () => {
+test('RED: the Bash tool\'s MSYS paths are read as Git Bash means them: /c/Users/... and /tmp/...', { skip: process.platform !== 'win32' && 'MSYS paths are a Windows matter' }, (tc) => {
   const { root, work } = repo(), data = tmp('pgd-');
   fs.writeFileSync(path.join(work, 'm.txt'), `${FAKE_VCK}\n`); git(work, 'add', 'm.txt'); git(work, 'commit', '-q', '-m', 'm');
   assert.equal(runHook(push(os.homedir(), `git -C ${msysDrive(work)} push`), data).deny, true, 'the /c/... form');
+  if (TMP_APART) return tc.skip(TMP_APART);
   const viaTmp = '/tmp/' + path.relative(fs.realpathSync(OS_TMP), fs.realpathSync(work)).replace(/\\/g, '/');
   assert.equal(G.nativePath(viaTmp).toLowerCase().replace(/\\/g, '/'), fs.realpathSync(work).toLowerCase().replace(/\\/g, '/'), `cygpath maps ${viaTmp}`);
   assert.equal(runHook(push(root, `git -C ${viaTmp} push`), data).deny, true, 'the /tmp/... form');

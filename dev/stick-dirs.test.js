@@ -50,3 +50,30 @@ test('row 2: no config gives %USERPROFILE%\\.consonance; a named data_dir is use
   }
   for (const d of [none, named]) fs.rmSync(d, { recursive: true, force: true });
 });
+
+// Row 3 (D454, E's part 3): GUIDE says nothing is written by `-DryRun`, but the script pulled before its dry-run exit. The whole
+// script runs here against a temp home whose room_path names a clone one commit behind its upstream, with a stub tail-carry.js;
+// after the dry run the clone's HEAD, its origin/main (a pull fetches first), its reflog and its status are what they were before.
+test('row 3: a dry run does not pull or otherwise touch the repo', () => {
+  const root = require('../consonance/tools/scratch.js').mkdtemp('stick-dry-');
+  const git = (cwd, ...a) => { const r = spawnSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@t', ...a], { cwd, encoding: 'utf8' }); assert.strictEqual(r.status, 0, r.stderr); return r.stdout.trim(); };
+  try {
+    const up = path.join(root, 'up'), repo = path.join(root, 'repo'), stick = path.join(root, 'stick'), h = path.join(root, 'home');
+    for (const d of [up, stick, h]) fs.mkdirSync(d);
+    git(up, 'init', '-q', '-b', 'main');
+    fs.mkdirSync(path.join(up, 'dev'));
+    fs.writeFileSync(path.join(up, 'dev', 'tail-carry.js'), '// stub: the rehearsal prints no verdicts\n');
+    git(up, 'add', '.'); git(up, 'commit', '-q', '-m', 'one');
+    git(root, 'clone', '-q', up, repo);
+    fs.writeFileSync(path.join(up, 'later.txt'), 'two\n');
+    git(up, 'add', '.'); git(up, 'commit', '-q', '-m', 'two');
+    fs.copyFileSync(ARRIVING, path.join(stick, 'ARRIVING.ps1'));
+    fs.writeFileSync(path.join(h, '.consonance.json'), JSON.stringify({ room_path: path.join(repo, 'exo_memory', 'BOOT.md') }));
+    const before = { head: git(repo, 'rev-parse', 'HEAD'), origin: git(repo, 'rev-parse', 'origin/main'), reflog: git(repo, 'reflog'), status: git(repo, 'status', '--porcelain') };
+    const r = spawnSync(PS, ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(stick, 'ARRIVING.ps1'), '-DryRun'],
+      { encoding: 'utf8', timeout: 60000, env: { ...process.env, USERPROFILE: h } });
+    assert.strictEqual(r.status, 0, r.stdout + r.stderr);
+    assert.match(r.stdout, /dry run only - nothing written/, 'it reached the dry-run exit');
+    assert.deepStrictEqual({ head: git(repo, 'rev-parse', 'HEAD'), origin: git(repo, 'rev-parse', 'origin/main'), reflog: git(repo, 'reflog'), status: git(repo, 'status', '--porcelain') }, before);
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});

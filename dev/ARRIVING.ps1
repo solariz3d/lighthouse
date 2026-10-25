@@ -6,7 +6,7 @@
 #   powershell -ExecutionPolicy Bypass -File <stick>\ARRIVING.ps1 -DryRun    # only show what it would do
 #
 # What it does, in order:
-#   1. git pull in the lighthouse repo (so the carry tool and the room's files are current)
+#   1. git pull in the lighthouse repo (so the carry tool and the room's files are current; -DryRun skips it)
 #   2. rehearse the import (writes nothing) and read the verdict per seat
 #   3. if a committee PANE is refused because this machine holds a different conversation under
 #      the same id, retire this machine's copy (renamed with a stamp, never deleted) and take the
@@ -44,13 +44,18 @@ Write-Host "[arriving] stick $stick"
 # 1. pull
 Push-Location $repo
 try {
-  Write-Host "[arriving] git pull ..."
-  & git pull --ff-only | Out-Host
-  if ($LASTEXITCODE -ne 0) {
-    # a push from the other machine can land mid-pull; one retry covers the race seen on D at 12:55
-    Start-Sleep -Seconds 5
+  # D454: a dry run writes nothing, so it does not pull either (it used to pull, then exit at the dry-run line; dev/stick-dirs.test.js row 3).
+  if ($DryRun) {
+    Write-Host "[arriving] dry run: git pull skipped (a real run pulls first); the rehearsal below uses this checkout as it is."
+  } else {
+    Write-Host "[arriving] git pull ..."
     & git pull --ff-only | Out-Host
-    if ($LASTEXITCODE -ne 0) { Write-Host "[arriving] git pull FAILED twice - the room's files here are stale. Continuing with the carry, because the conversations matter more; tell the librarian seat to sort the pull out." }
+    if ($LASTEXITCODE -ne 0) {
+      # a push from the other machine can land mid-pull; one retry covers the race seen on D at 12:55
+      Start-Sleep -Seconds 5
+      & git pull --ff-only | Out-Host
+      if ($LASTEXITCODE -ne 0) { Write-Host "[arriving] git pull FAILED twice - the room's files here are stale. Continuing with the carry, because the conversations matter more; tell the librarian seat to sort the pull out." }
+    }
   }
   if (-not (Test-Path 'dev\tail-carry.js')) { Write-Host "[arriving] dev\tail-carry.js is not in this repo after the pull - stop and ask"; exit 2 }
 

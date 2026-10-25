@@ -474,16 +474,28 @@ test('SEED: a seeded file that is missing on disk still reports missing', () => 
    * The detectable state is the seed reaching NOTHING, and it covers strictly more: the vanished
    * file, a typo in a seed key, and a manifest edit that drops the rule — one refusal, same
    * two-way shape as the exclusion check. Asserted by removing the file, which is the real event. */
-  const hidden = abs + '.p3-test-moved';
-  fs.renameSync(abs, hidden);
+  /* D454 (C's finding, p-d454-user-C_2026-10-24.md): this test used to RENAME the tracked registry away for the build and back, so mid-suite git
+   * showed a 1,225-line deletion. The vanishing is now simulated at the file-system boundary: consonance/tools/ is listed without the file and
+   * existsSync answers false for it, for this build only. Nothing on disk moves. */
+  const realReaddir = fs.readdirSync, realExists = fs.existsSync, toolsDir = path.dirname(abs), name = path.basename(abs);
+  let listed = 0, onDisk = true;   // the tracked file must stay on disk while the build runs
+  fs.readdirSync = function (p, o) {
+    const r = realReaddir.call(fs, p, o);
+    if (path.resolve(String(p)) !== toolsDir) return r;
+    listed++; onDisk = onDisk && realExists(abs);
+    return r.filter((e) => (typeof e === 'string' ? e : e.name) !== name);
+  };
+  fs.existsSync = function (p) { return path.resolve(String(p)) === abs ? false : realExists.call(fs, p); };
   try {
     const r = G.build(null, { dry: true });
+    assert.ok(listed > 0, 'premise: the build lists consonance/tools/');
+    assert.ok(onDisk, 'the tracked registry was moved off disk while the build ran: a seat listing its diff or committing with -a sees a 1,225-line deletion');
     assert.ok(r.seedDrift.some((d) => d.rel === K),
       'a seed no manifest rule reaches must be REPORTED. Otherwise the seed closes the gap in the ' +
       'output while the manifest describes a file nobody has, and a seed protecting nothing reads ' +
       'exactly like one that is protecting something.');
     assert.match(String(r.refused || ''), /reach nothing/, 'and the build must refuse');
-  } finally { fs.renameSync(hidden, abs); }
+  } finally { fs.readdirSync = realReaddir; fs.existsSync = realExists; }
   assert.ok(fs.existsSync(abs), 'the private file must be put back whatever happened above');
   assert.strictEqual(G.build(null, { dry: true }).seedDrift.length, 0, 'and clean again once it is');
 });
@@ -1380,8 +1392,10 @@ test('D273/A: the declared JS rows (26 of A + 1 Jev) and 12 Rust tests are decla
     // D273 lap 5 AMENDED AGAIN (pane B): + carrier-drift.test.js's ten rows that read the room's registry or history (the file was red in the source
     // too until 6d12f9fa, which hid them from the parity count): 37.
     // D273 lap 7 AMENDED BY NAME (pane B): + portable-paths.test.js's two committed-baseline rows (red in the source too until b95767dc): 39.
-    assert.deepStrictEqual([js, rs], [39, 12]);
-    assert.deepStrictEqual([r.declared.js, r.declared.rust], [39, 12]);
+    // D454 AMENDED BY NAME (pane B): + janitor.test.js's one and scratch.test.js's three cases that run or read gen-consumer.js, which does not
+    // ship (found red in the D454 generated tree; the D454 WORKSHOP row pins them by name): 43.
+    assert.deepStrictEqual([js, rs], [43, 12]);
+    assert.deepStrictEqual([r.declared.js, r.declared.rust], [43, 12]);
   } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
 });
 
@@ -1918,5 +1932,164 @@ test('D273 lap 7 (CRLF): the consumer ships its own .gitattributes: eol pinned, 
     for (const rule of ['* text=auto eol=lf', '*.bin binary', 'consonance/src-tauri/fixtures/screens/** binary', '*.png binary', '*.bmp binary', '*.ico binary'])
       assert.ok(ga.split('\n').includes(rule), '.gitattributes lacks the rule: ' + rule);
     assert.doesNotMatch(ga, /merge=union/, 'the two-machine merge=union rules shipped');
+  } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
+});
+
+test('D454: the workshop tools added since 0.1.1 are withheld with a reason, janitor-task.ps1 is declared unreachable, and the product files added beside them ship', () => {
+  /* Every system file added between caa62c1a (v0.1.1) and 087b3c60, classified one by one (handback/p-d454-gen-B_2026-10-24.md §3). A
+   * WORKSHOP file needs this room's record or this machine; a PRODUCT file works in a stranger's room. */
+  const T = 'consonance/tools/';
+  const WORKSHOP = ['d423-letters-swap.js', 'd423-letters-swap.test.js', 'mistake-bench.js', 'mistake-bench.test.js', 'mistake-bench-toolstub.js',
+    'claim-replay.js', 'claim-replay.test.js', 'claim-check-adapter.js', 'claim-check-adapter.test.js', 'shelf-reach-score.js',
+    'shelf-reach-score.test.js', 'worktree-sweep.js', 'worktree-sweep.test.js'].map((n) => T + n);
+  const PRODUCT = ['consonance/hooks/claim-check.js', 'consonance/hooks/claim-check.test.js', 'consonance/hooks/gate-mode.test.js',
+    'consonance/hooks/release-chime.js', 'consonance/hooks/release-chime.test.js', 'consonance/src-tauri/src/priority.rs',
+    'consonance/src-tauri/src/test_scratch.rs', T + 'heavy-run.mutants.js', T + 'janitor.js', T + 'janitor.mutants.js', T + 'janitor.test.js',
+    T + 'leftovers.js', T + 'leftovers.test.js', T + 'scratch.js', T + 'scratch.test.js', 'consonance/ui/inject-submit.test.js',
+    'consonance/ui/pane-letter.test.js', 'dev/shell/hooks/digest-repair.test.js', 'dev/shell/hooks/session-start-light.test.js'];
+  const ships = new Set(G.collect().filter((f) => !G.EXCLUDE[f.from]).map((f) => f.from));
+  for (const k of WORKSHOP) {
+    assert.ok(G.EXCLUDE[k] && !/^UNREACHABLE:/.test(G.EXCLUDE[k]), k + ' must be EXCLUDED, live, with its reason');
+    assert.ok(!ships.has(k), k + ' reached the shipped set');
+  }
+  const J = T + 'janitor-task.ps1';
+  assert.match(G.EXCLUDE[J] || '', /^UNREACHABLE:/, J + ' must be DECIDED: declared unreachable, not merely absent');
+  assert.ok(!ships.has(J), J + ' reached the shipped set');
+  for (const k of PRODUCT) assert.ok(ships.has(k), k + ' must ship');
+});
+
+test('D454 1C.1: the bare owner/repo form of the project\'s own repos (solariz3d/consonance, solariz3d/lighthouse) survives; every ROLE or PROVENANCE use of the handle is still neutralised', () => {
+  /* P's cold read (handback/p-d454-review-P_2026-10-24.md, 1C.1): BUILDING.md:392 reads `solariz3d/consonance` in dev and shipped as
+   * `the keeper/consonance`, a repository name nobody can clone. The name of a public repository is a reference, as the github.com URL already is. */
+  const d = (s) => G.deidentify(s).body;
+  assert.strictEqual(d('Generated is `solariz3d/consonance`: public'), 'Generated is `solariz3d/consonance`: public');
+  assert.strictEqual(d('gh repo view solariz3d/lighthouse --json isPrivate'), 'gh repo view solariz3d/lighthouse --json isPrivate');
+  assert.strictEqual(d('push to solariz3d/consonance.'), 'push to solariz3d/consonance.');
+  assert.strictEqual(d('see github.com/solariz3d/consonance'), 'see github.com/solariz3d/consonance');
+  // still neutralised: the person, a profile URL, and any repo that is not the project's own
+  assert.strictEqual(d('solariz3d said so'), 'the keeper said so');
+  assert.strictEqual(d('his page github.com/solariz3d is public'), 'his page github.com/the keeper is public');
+  assert.strictEqual(d('solariz3d/signal-private'), 'the keeper/signal-private');
+  assert.strictEqual(d('solariz3d/consonancex'), 'the keeper/consonancex');
+  // the scan agrees with the rewrite: one regex for both, so the kept form is no leak and the person still is
+  const hits = (s) => G.scan(s, 'x.md').filter((h) => h.cls === 'IDENTITY').length;
+  assert.strictEqual(hits('Generated is solariz3d/consonance'), 0, 'the repo name read as an identity leak');
+  assert.strictEqual(hits('solariz3d said so'), 1, 'the handle as a person stopped being scanned');
+  // and the real line: BUILDING.md as the generator ships it
+  const body = G.transform(fs.readFileSync(path.join(REPO, 'consonance/src-tauri/brief/BUILDING.md'), 'utf8'), 'prose').body;
+  assert.ok(!/the keeper\/(consonance|lighthouse)\b/.test(body), 'BUILDING.md still ships "the keeper/<repo>"');
+});
+
+test('D454: the t180 product research (exo_memory/research/t180_*) is withheld; the rest of research/ ships', () => {
+  /* The librarian's routing of C's part 2 (plan_consumer_refresh_d454, "C's part 2 in"): the product laps stay out, and these three are
+   * research for the track builder, a product, not for the room. */
+  const R = 'exo_memory/research/';
+  const t180 = fs.readdirSync(path.join(REPO, R)).filter((n) => /^t180_.*\.md$/.test(n)).map((n) => R + n);
+  assert.strictEqual(t180.length, 3, 'premise: three t180 research files in dev');
+  const ships = new Set(G.collect().filter((f) => !G.EXCLUDE[f.from]).map((f) => f.from));
+  for (const k of t180) {
+    assert.ok(G.EXCLUDE[k] && !/^UNREACHABLE:/.test(G.EXCLUDE[k]), k + ' must be EXCLUDED, live, with its reason');
+    assert.ok(!ships.has(k), k + ' reached the shipped set');
+  }
+  assert.ok(ships.has(R + 'the_pattern_in_felt_knowing.md'), 'the room\'s own research must still ship');
+});
+
+test('D454: the claim check ships with its unit splitter at the path the hook reads in a repository (exo_memory/loop/claimrec/units.js), so the gate a stranger turns on is not inert', () => {
+  /* Found by the D454 parity run: claim-check.js loads ./units.js, else <repo>/exo_memory/loop/claimrec/units.js, which is the record and did
+   * not ship. In the generated tree it found neither, so with claim_check on it refused nothing (claim-check.test.js red there, green here).
+   * It ships at its own path, as checkpoint.py does, rather than into hooks/, where it would be counted as a hook (README.md:190). */
+  const row = G.collect().find((f) => f.from === 'exo_memory/loop/claimrec/units.js');
+  assert.ok(row && !G.EXCLUDE[row.from], 'units.js must reach the shipped set');
+  assert.strictEqual(row.to.replace(/\\/g, '/'), 'exo_memory/loop/claimrec/units.js', 'it must land where the hook looks in a repository');
+  assert.ok(G.SHIPS_FROM_PRIVATE[row.from], 'one named file out of the private loop/ column must be declared');
+  const hook = fs.readFileSync(path.join(REPO, 'consonance/hooks/claim-check.js'), 'utf8');
+  assert.match(hook, /path\.join\(__dirname, '\.\.', '\.\.', 'exo_memory', 'loop', 'claimrec', 'units\.js'\)/, 'premise: the hook reads the repository\'s copy');
+});
+
+test('D454: the four product-test cases that drive gen-consumer.js itself are DECLARED workshop, one by one, and the rest of their files stays live', () => {
+  /* Found by the D454 parity run: janitor.test.js and scratch.test.js ship (their tools are product) but four of their cases run or read
+   * gen-consumer.js, which never ships. Declared per case, the registered way (WORKSHOP.js), never by withholding the file. */
+  const want = {
+    'consonance/tools/janitor.test.js': ["test('the prefixes are read from this repository\\'s own source: mkdtemp literals and the Rust format! heads', "],
+    'consonance/tools/scratch.test.js': [
+      "test('gen-consumer: a REFUSED real run (output already holds a history) leaves no staging folder', ",
+      "test('gen-consumer --keep-staging keeps the folder on a refusal, and says where', ",
+      "test('gen-consumer build(): a THROW after staging was made removes the staging folder', "],
+  };
+  for (const [file, anchors] of Object.entries(want)) {
+    const rows = G.WORKSHOP.js[file] || [];
+    const src = fs.readFileSync(path.join(REPO, file), 'utf8');
+    for (const a of anchors) {
+      const row = rows.find((r) => r[0] === a);
+      assert.ok(row && row[1] && /gen-consumer/.test(row[1]), file + ': no WORKSHOP row, with a reason naming the generator, for ' + a);
+      assert.ok(src.includes(a), 'premise: the anchor is in ' + file + ': ' + a);
+    }
+    assert.strictEqual(rows.length, anchors.length, file + ': only the generator\'s cases are declared, the rest of the file stays live');
+  }
+});
+
+/* D454 (the librarian's routing of C's part 2): a LEAKS guard for the private project's name and the given name. The pattern is read from
+ * PRIV_PATTERN, outside this public file, the way pushscan.js reads it; these rows use a synthetic nonce, never the real names. */
+const withPriv = (v, fn) => {
+  const had = Object.prototype.hasOwnProperty.call(process.env, 'PRIV_PATTERN'), old = process.env.PRIV_PATTERN;
+  if (v == null) delete process.env.PRIV_PATTERN; else process.env.PRIV_PATTERN = v;
+  try { return fn(); } finally { if (had) process.env.PRIV_PATTERN = old; else delete process.env.PRIV_PATTERN; }
+};
+const NONCE = 'zq-d454-nonce-[0-9]+';
+
+test('D454 PRIVATE: with PRIV_PATTERN set, a line or a destination path matching it is a leak, and no report carries the matched text', () => {
+  withPriv(NONCE, () => {
+    const inLine = G.scan('a shipped line naming zq-d454-nonce-7 in passing\nclean line', 'exo_memory/cards/x.md').filter((h) => h.cls === 'PRIVATE');
+    assert.deepStrictEqual(inLine.map((h) => h.line), [1], 'the line naming it must be one PRIVATE hit');
+    const inPath = G.scan('clean body', 'exo_memory/cards/zq-d454-nonce-1.md').filter((h) => h.cls === 'PRIVATE');
+    assert.deepStrictEqual(inPath.map((h) => h.line), [0], 'a destination path naming it must be a PRIVATE hit at line 0');
+    for (const h of inLine.concat(inPath)) assert.ok(!/zq-d454/i.test(JSON.stringify(h)), 'a PRIVATE hit carried the guarded text: ' + JSON.stringify(h));
+    const inFixture = G.scan('zq-d454-nonce-3', 'consonance/src-tauri/fixtures/a.json').filter((h) => h.cls === 'PRIVATE');
+    assert.strictEqual(inFixture.length, 1, 'a fixture is never exempt from it');
+  });
+  withPriv(null, () => assert.strictEqual(G.scan('zq-d454-nonce-7', 'x.md').filter((h) => h.cls === 'PRIVATE').length, 0, 'unset, the scan has nothing to match'));
+});
+
+test('D454 PRIVATE: a run that requires the guard refuses with PRIV_PATTERN unset, dry or real, before it writes anything', () => {
+  const out = path.join(require('./scratch.js').mkdtemp('gen-priv-out-'), 'out');
+  try {
+    withPriv(null, () => {
+      const dry = G.build(out, { dry: true, allowDirty: true, requirePriv: true });
+      assert.match(String(dry.refused), /PRIV_PATTERN/, 'a dry run without the guard reported a tree: ' + dry.refused);
+      const real = G.build(out, { allowDirty: true, requirePriv: true });
+      assert.match(String(real.refused), /PRIV_PATTERN/, 'a real run without the guard was not refused for it: ' + real.refused);
+      assert.ok(!fs.existsSync(out), 'the refused run wrote its output directory');
+    });
+    withPriv(NONCE, () => {
+      const dry = G.build(out, { dry: true, allowDirty: true, requirePriv: true });
+      assert.ok(!/PRIV_PATTERN/.test(String(dry.refused || '')), 'with the pattern set the guard must not refuse: ' + dry.refused);
+    });
+  } finally { fs.rmSync(path.dirname(out), { recursive: true, force: true }); }
+});
+
+test('D454 PRIVATE: the command line requires the guard: gen-consumer.js --dry with PRIV_PATTERN unset exits non-zero, naming PRIV_PATTERN', () => {
+  const env = { ...process.env }; delete env.PRIV_PATTERN;
+  const r = spawnSync(process.execPath, [path.join(__dirname, 'gen-consumer.js'), '--dry', '--json', '--allow-dirty', '--out', path.join(os.tmpdir(), 'gen-priv-cli-unused')], { encoding: 'utf8', env, cwd: REPO });
+  assert.notStrictEqual(r.status, 0, 'the CLI generated without the guard');
+  assert.match(r.stdout + r.stderr, /PRIV_PATTERN/, 'the refusal does not name what is missing');
+});
+
+test('D454 (E §7): the consumer ships its own .gitignore keeping the build output out of git, and it ignores no shipped file', () => {
+  /* E's bar-5 run (p-d454-install-E_2026-10-24.md §7): after the README's own `cargo tauri build`, a stranger's `git status` showed
+   * consonance/src-tauri/gen/ and consonance/src-tauri/target/ (several GB) untracked, because the consumer shipped no .gitignore. And the
+   * generator's fresh commit runs `git add -A`, so a rule that matched a shipped file would drop it from the commit without a word. */
+  const r = lap5();
+  try {
+    assert.ok(!r.refused, r.refused);
+    const gi = fs.readFileSync(path.join(r.staging, '.gitignore'), 'utf8').split('\n');
+    for (const rule of ['consonance/src-tauri/target/', 'consonance/src-tauri/gen/']) assert.ok(gi.includes(rule), '.gitignore lacks ' + rule);
+    const walk = (d, out = []) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) walk(p, out); else out.push(path.relative(r.staging, p).replace(/\\/g, '/')); } return out; };
+    const files = walk(r.staging);
+    assert.ok(files.length > 300, 'premise: the staged tree is here');
+    const ck = spawnSync('git', ['-c', 'core.excludesFile=', 'check-ignore', '--no-index', '--stdin'], { cwd: r.staging, input: files.join('\n'), encoding: 'utf8' });
+    if (ck.status === 128) { spawnSync('git', ['init', '-q'], { cwd: r.staging }); }
+    const ck2 = ck.status === 128 ? spawnSync('git', ['-c', 'core.excludesFile=', 'check-ignore', '--no-index', '--stdin'], { cwd: r.staging, input: files.join('\n'), encoding: 'utf8' }) : ck;
+    assert.strictEqual(ck2.stdout.trim(), '', 'the consumer .gitignore ignores shipped files: ' + ck2.stdout.trim().split('\n').slice(0, 5).join(', '));
+    assert.ok(ck2.status === 1, 'git check-ignore did not run cleanly (status ' + ck2.status + '): ' + ck2.stderr);
   } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
 });

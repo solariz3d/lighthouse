@@ -250,6 +250,58 @@ test('lap 6 B6/C4: BUILDING frames the port rule as the original room\'s workflo
   assert.ok(!t.includes('`gh` was authenticated machine-wide as of\n  2026-09-06.') && t.includes('`gh` was authenticated machine-wide in the original room as of'));
 });
 
+// ── D454 part 2: made for a new user (exo_memory/loop/plan_consumer_refresh_d454_2026-10-24.md, part 2) ────────────────────
+const section = (t, head) => { const a = t.indexOf(head); assert.ok(a >= 0, 'missing section ' + head); const b = t.indexOf('\n---', a); return t.slice(a, b < 0 ? undefined : b); };
+
+test('D454: "Leave the machine as you found it" ships as the machine of the person you\'re with, and none of the keeper\'s day, product or folders survives in it', () => {
+  const s = section(shipped('consonance/src-tauri/brief/BUILDING.md'), '## Leave the machine as you found it');
+  for (const now of ["The person you're with uses this machine while we work.", "Whatever the person you're with is running comes first.",
+    "**The things of the person you're with are never cleaned without their word.**", 'and they answer yes to the list as one decision',
+    'fake install roots and exported test files', 'A worktree-named folder that no repository registers any more is a leftover.']) assert.ok(s.includes(now), 'missing: ' + now);
+  for (const gone of ['he races', 'Whatever the keeper is running', "The keeper's own things", 'his tracks', 'AC folder', 'AC roots', 'T-180', 't180', 'Downloads', 'Streamlabs', 'In this room', '<home>'])
+    assert.ok(!s.includes(gone), 'survived: ' + gone);
+  assert.deepEqual(s.match(GENDERED) || [], [], 'a pronoun still makes the keeper\'s day read as the person here');
+});
+
+test('D454: the section\'s incidents keep their dates and figures, said of the keeper\'s room', () => {
+  const s = section(shipped('consonance/src-tauri/brief/BUILDING.md'), '## Leave the machine as you found it');
+  assert.equal(s.split("Why: in the keeper's room, on 2026-10-24").length - 1, 3);
+  for (const kept of ["the keeper found a streaming app's audio source list full of `[explorer.exe]` entries", 'Explorer held 527 of these leftover windows',
+    "the keeper's game crashed mid-stream, with our load at 62% CPU", 'one product repository had 80 registered worktrees and 77 more folders']) assert.ok(s.includes(kept), 'lost: ' + kept);
+});
+
+test('D454: the leftovers count is described by its general flags, with the original room\'s own invocation dropped', () => {
+  const s = section(shipped('consonance/src-tauri/brief/BUILDING.md'), '## Leave the machine as you found it');
+  assert.ok(s.includes('run with\n  `--repo <dir>` for each repository whose worktrees our runs make'), 'the general flags are not described');
+  assert.ok(s.includes('"strays": { "dir": ..., "prefix": ... } }`. It prints Explorer\'s tab proxies'), 'the sentence around the dropped invocation does not join');
+});
+
+test('D454: COMMITTEE\'s junction incident and LIBRARIAN\'s notes-path fact fix are said of the keeper\'s room and machine', () => {
+  const c = shipped('consonance/src-tauri/brief/COMMITTEE.md');
+  assert.ok(c.includes("in the keeper's room a product repository's shared `reads/` folder was emptied that way, cause inferred") && !/t180/i.test(c));
+  const l = shipped('consonance/src-tauri/brief/LIBRARIAN.md');
+  assert.ok(l.includes('did not exist on the machine this room was built on. The notes live in') && !l.includes('does not exist on this machine'));
+});
+
+test('D454: the fork note names the machine among what is the person\'s, and points at the rule that keeps it', () => {
+  assert.ok(FORK.includes("whose machine every run of yours shares (`BUILDING.md`, \"Leave the machine as you found it\")"), 'the machine is not named as the person\'s');
+  assert.ok(shipped('consonance/src-tauri/brief/BUILDING.md').includes('## Leave the machine as you found it'), 'the section the note cites is gone');
+});
+
+test('D454 (1B.4): the README says where the record lives in THIS copy: the room, inheritance/, CUTOFF.md and the fork note, each a shipped path', () => {
+  const t = shipped('README.md');
+  const s = t.slice(t.indexOf('### Where the record lives'), t.indexOf('### Keeping the About tab in step'));
+  assert.ok(!s.includes("the project's record: the start-up document") && !s.includes('the plans written before each test, and every result'), 'the original room\'s exo_memory/ is still described');
+  const links = [...s.matchAll(/\]\(([^)\s#]+)\)/g)].map((m) => m[1]).filter((l) => !/^https?:/.test(l));
+  for (const want of ['exo_memory/inheritance/', 'exo_memory/CUTOFF.md', 'consonance/src-tauri/brief/frag-fork.md']) assert.ok(links.includes(want), 'not linked: ' + want);
+  const shippedTo = new Set([...G.collect().filter((f) => !G.EXCLUDE[f.from]).map((f) => f.to), 'exo_memory/CUTOFF.md']);   // CUTOFF.md is written by the generator
+  for (const l of links) assert.ok(shippedTo.has(l) || [...shippedTo].some((p) => p.startsWith(l)), 'links a path that does not ship: ' + l);
+});
+
+test('D454: no relabelled brief or card names the keeper\'s product', () => {
+  for (const rel of Object.keys(R.SITES)) assert.doesNotMatch(shipped(rel), /T-180|\bt180/i, rel);
+});
+
 // ── D275: the fork carries its own drift awareness (exo_memory/loop/plan_consumer_drift_awareness_2026-10-09.md) ─────────
 test('D275: the fork note hands the seat its own catch as checks to run, and every instrument it cites ships', () => {
   assert.ok(FORK.includes('**When nobody catches it.**'), 'the drift paragraph is missing');

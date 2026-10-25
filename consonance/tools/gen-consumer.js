@@ -203,6 +203,10 @@ const MANIFEST = [
    * costs nothing, because the rewritten file is an improvement in the private tree whether or not
    * it travels. */
   { dir: 'consonance/hooks', to: 'consonance/hooks', match: /\.(js|md)$/, kind: 'code' },
+  /* D454 part 1 (pane B, found by the parity run): hooks/claim-check.js loads ./units.js, else <repo>/exo_memory/loop/claimrec/units.js, the
+   * record, which did not ship. With neither, the gate a stranger turns on refuses nothing. The splitter is system (it implements E's registered
+   * splitting rule, no record in it), so it ships at its own path, as checkpoint.py does: in hooks/ it would count as a hook (README.md:190). */
+  { from: 'exo_memory/loop/claimrec/units.js', to: 'exo_memory/loop/claimrec/units.js', kind: 'code' },
 
   // The app.
   { dir: 'consonance/ui', to: 'consonance/ui', match: /\.(html|css|js)$/, kind: 'code' },
@@ -559,6 +563,13 @@ const WORKSHOP = {
       ["test('MUTATION over the REAL tree: the shipped cant-lose entry is ARMED and green; break its marker and it fires, disarm it and the same findings go PENDING', ", 'the carrier-drift registry ships SEEDED empty by ruling'],
       ["test('the shipped cant-lose census is COMPLETE — every occurrence in every carrier is accounted', ", 'the carrier-drift registry ships SEEDED empty by ruling'],
       ["test(\"THE MAP'S ENUMERATION WAS THE CH-4 SUBSET: registering only those five leaves the rest unaccounted\", ", 'reads the registry at 325fb03^ of the room\'s git history; a consumer is one fresh commit']],
+    /* D454 part 1 (pane B, found by the parity run): janitor and scratch are product and their tests ship, but these four cases run or read
+     * gen-consumer.js, which never ships (EXCLUDE). Declared per case; every other case in both files stays live in the consumer. */
+    'consonance/tools/janitor.test.js': [["test('the prefixes are read from this repository\\'s own source: mkdtemp literals and the Rust format! heads', ", 'one of the prefixes it reads is gen-consumer.js\'s, and the generator does not ship']],
+    'consonance/tools/scratch.test.js': [
+      ["test('gen-consumer: a REFUSED real run (output already holds a history) leaves no staging folder', ", 'runs gen-consumer.js, which does not ship'],
+      ["test('gen-consumer --keep-staging keeps the folder on a refusal, and says where', ", 'runs gen-consumer.js, which does not ship'],
+      ["test('gen-consumer build(): a THROW after staging was made removes the staging folder', ", 'requires gen-consumer.js, which does not ship']],
   },
   rust: {
     'consonance/src-tauri/src/main.rs': [
@@ -783,6 +794,43 @@ const EXCLUDE = {
     'replays gen-consumer.js against the dev tree to compare the shipped wake files with their sources; neither the generator nor the dev tree ships',
   'consonance/tools/identity-diff.test.js':
     'tests identity-diff, which needs gen-consumer.js and the dev tree, neither of which ships',
+  /* D454 part 1 (pane B): the system files added since v0.1.1 (caa62c1a) that are WORKSHOP, each needing this room's record or this machine. The
+   * product files added beside them ship; the classification of all 33 is handback/p-d454-gen-B_2026-10-24.md §3. */
+  'consonance/tools/d423-letters-swap.js':
+    'a one-time correction of this machine\'s letters.json at the keeper\'s seat swap (D423); a fresh install never has the mislabelled letters',
+  'consonance/tools/d423-letters-swap.test.js':
+    'tests the one-time letters correction, which does not ship',
+  'consonance/tools/mistake-bench.js':
+    'the replay bench loads the 27 census units from this record\'s hand-back evidence (digest-pinned), which does not exist for anyone else',
+  'consonance/tools/mistake-bench.test.js':
+    'tests the replay bench, which needs this record\'s census and does not ship',
+  'consonance/tools/mistake-bench-toolstub.js':
+    'the replay bench\'s stub MCP server; it serves only mistake-bench.js, which does not ship',
+  'consonance/tools/claim-replay.js':
+    'the claim-check replay harness freezes its census group from this record\'s hand-back evidence (E\'s classification.json); the gate it measured, hooks/claim-check.js, ships',
+  'consonance/tools/claim-replay.test.js':
+    'tests the replay harness, which needs this record\'s census and does not ship',
+  'consonance/tools/claim-check-adapter.js':
+    'the adapter between the replay harness and the claim check; it serves only claim-replay.js, which does not ship',
+  'consonance/tools/claim-check-adapter.test.js':
+    'tests the replay adapter, which does not ship',
+  'consonance/tools/shelf-reach-score.js':
+    'scores this room\'s shelf-budget experiment against a registration in exo_memory/loop/ and the librarian\'s own transcripts, which do not ship',
+  'consonance/tools/shelf-reach-score.test.js':
+    'tests the shelf-budget scorer, which does not ship',
+  'consonance/tools/worktree-sweep.js':
+    'the one-time sweep of this machine\'s 2026-10-13 worktree backlog at the keeper\'s yes (D319); the standing rule is janitor.js class (e), which ships',
+  'consonance/tools/worktree-sweep.test.js':
+    'tests the one-time sweep, which does not ship',
+  /* D454 (the librarian's routing of C's part 2): the product laps stay out of the consumer, and these are research for the track builder. */
+  'exo_memory/research/t180_be_like_water_2026-09-28.md':
+    'research for the track builder, a product of the first keeper\'s, not for the room; the product laps stay out of the consumer',
+  'exo_memory/research/t180_math_tools_2026-09-28.md':
+    'research for the track builder, a product of the first keeper\'s, not for the room; the product laps stay out of the consumer',
+  'exo_memory/research/t180_track_mathematics_2026-09-28.md':
+    'research for the track builder, a product of the first keeper\'s, not for the room; the product laps stay out of the consumer',
+  'consonance/tools/janitor-task.ps1':
+    'UNREACHABLE: no rule reaches .ps1 under tools/, and it stays out by decision: it registers an unattended daily deleter, a fresh install schedules nothing by itself (the D273 dream-installer rule), and janitor.js ships for a hand run',
 };
 
 /* ------------------------------------------------------------------ seeded files
@@ -870,6 +918,7 @@ const SEEDED = {
  * STAYS_PRIVATE entry and still refuses any other rule that does. */
 const SHIPS_FROM_PRIVATE = {
   'exo_memory/loop/checkpoint.py': 'dev/shell/hooks/precompact.js runs <repo>/exo_memory/loop/checkpoint.py, and install.ps1 registers that hook',
+  'exo_memory/loop/claimrec/units.js': 'consonance/hooks/claim-check.js loads <repo>/exo_memory/loop/claimrec/units.js (D454); without it the gate refuses nothing',
 };
 const STAYS_PRIVATE = {
   'ASK.md': 'its own header: the questions the automations put to the keeper — one person\'s inbox',
@@ -1133,11 +1182,25 @@ const CONSUMER_GITATTRIBUTES = [
   '',
 ].join('\n');
 
+/* THE CONSUMER'S OWN .gitignore (D454, pane B, from E's §7). The consumer shipped none, so after the README's own `cargo tauri build` a stranger's
+ * `git status` listed consonance/src-tauri/target/ (several GB) and consonance/src-tauri/gen/ untracked. These are lighthouse's consonance/.gitignore
+ * build rules, written from the repository root. Nothing shipped may match a rule here: the fresh commit runs `git add -A`, which would drop a
+ * matching file without a word (gen-consumer.test.js checks every staged path with `git check-ignore`). */
+const CONSUMER_GITIGNORE = [
+  '# What a build and a run leave in this tree, kept out of git.',
+  '',
+  '# `cargo tauri build` and `cargo test` (several GB) and the generated Tauri schemas',
+  'consonance/src-tauri/target/',
+  'consonance/src-tauri/gen/',
+  '',
+].join('\n');
+
 function generatedFiles(id, measured) {
   const out = {
     'exo_memory/CUTOFF.md': renderCutoff(id.sha, id.at, id.dirty),
     'exo_memory/journal/README.md': JOURNAL_SEED,
     '.gitattributes': CONSUMER_GITATTRIBUTES,
+    '.gitignore': CONSUMER_GITIGNORE,
   };
   if (measured) out['CONSUMER-STATUS.md'] = renderStatusDoc({ measured: true, sha: id.sha, at: measured.at, dirty: id.dirty, changes: id.changes,
     js: measured.js || [], rust: measured.rustList || [], parity: measured.parity, rustBreaks: measured.rust, identity: measured.identity, coldRead: measured.coldRead });
@@ -1162,7 +1225,11 @@ function generatedFiles(id, measured) {
  * `…/solariz3d/consonance.git` and `cd lighthouse/consonance` becomes `cd consonance/consonance` (the clone folder, then the app's folder).
  * And the app id: tauri.conf's "com.solariz3d.consonance" was already "com.consonance.app" (destructure), but stick-waiter.js's single-quoted
  * copy became 'com.the keeper.consonance'; every spelling now becomes com.consonance.app, so the notices register the id the bundle carries. */
-const HANDLE_RE = /(?<!github\.com\/)solariz3d|solariz3d(?!\/[A-Za-z0-9_.-])/gi;
+/* D454 1C.1 (P's cold read, pane B): the BARE owner/repo form of the project's own repositories is a reference too. BUILDING.md:392's
+ * `solariz3d/consonance` shipped as `the keeper/consonance`, a name nobody can clone. So the handle is kept where it is followed by
+ * /consonance or /lighthouse as a whole name (with or without github.com/ before it); after github.com/ it is kept before any repo name, as
+ * before; everywhere else (the person, the profile URL github.com/solariz3d, any other repo) it is taken and scanned exactly as it was. */
+const HANDLE_RE = /(?<!github\.com\/)solariz3d(?!\/(?:consonance|lighthouse)(?![A-Za-z0-9_-]))|(?<=github\.com\/)solariz3d(?!\/[A-Za-z0-9_.-])/gi;
 function consumerNames(body) {
   let n = 0;
   const rep = (re, to) => { body = body.replace(re, () => { n++; return to; }); };
@@ -2207,7 +2274,27 @@ function scan(body, rel) {
     if (m) found.push({ cls, why: why + ' — IN THE DESTINATION PATH, not in the file', rel,
       line: 0, text: rel, n: m.length });
   }
+
+  /* PRIVATE (D454, pane B; the librarian's routing of C's part 2): the private project's name and the given name. The pattern is read from
+   * PRIV_PATTERN, outside this public file, the way pushscan.js reads it, so this file never holds the names it guards. No fixture, ALLOW or
+   * SYNTHETIC exemption. A hit NEVER carries the matched text: the report is read and pasted, and the line itself is what must not travel. */
+  const priv = privPattern();
+  if (priv) {
+    const why = 'names what PRIV_PATTERN guards (the private project or the given name)';
+    for (let i = 0; i < lines.length; i++) {
+      if (priv.test(lines[i])) found.push({ cls: 'PRIVATE', why, rel, line: i + 1, text: '(withheld: the line names what PRIV_PATTERN guards)', n: 1 });
+    }
+    if (priv.test(rel)) found.push({ cls: 'PRIVATE', why: why + ' — IN THE DESTINATION PATH, not in the file', rel: '(withheld)', line: 0, text: '(withheld)', n: 1 });
+  }
   return found;
+}
+
+/** The PRIVATE class's pattern, from PRIV_PATTERN (case-insensitive), or null when unset. An invalid pattern throws: a guard that cannot be read
+ *  must not read as a guard that found nothing. */
+function privPattern() {
+  const v = process.env.PRIV_PATTERN;
+  if (v == null || v === '') return null;
+  return new RegExp(v, 'i');
 }
 
 /* ------------------------------------------------------------------ collection */
@@ -2670,6 +2757,11 @@ function buildStaged(outDir, opts, track) {
       + report.tauriMissing.map((m) => m.field + ' ' + m.path).join(', ') + ' (`cargo tauri build` would fail)';
     return report;
   }
+  /* D454 PRIVATE: a run that requires the guard (the command line always does) refuses without it, and neither reports a dry tree as clean nor
+   * writes one. Twice, so that the history refusal below keeps its place for a real run into a used directory. */
+  const PRIV_UNSET = 'PRIV_PATTERN is unset, so the PRIVATE class (the private project\'s name and the given name) cannot be scanned; set it the way '
+    + 'pushscan.js reads it, outside this public repository, then generate';
+  if (opts.dry && opts.requirePriv && !privPattern()) { report.refused = PRIV_UNSET; return report; }
   if (opts.dry) { report.wrote = null; return report; }
 
   /* D273 lap 2 (pane B, 2026-10-08): THE OUTPUT IS A FRESH-HISTORY GIT REPOSITORY (the plan's ruling; journal/2026-09-03.md §2: fresh history, no history
@@ -2679,6 +2771,7 @@ function buildStaged(outDir, opts, track) {
     report.refused = outDir + ' already holds a git history; the output is a FRESH-history repository, so generate into an empty directory';
     return report;
   }
+  if (opts.requirePriv && !privPattern()) { report.refused = PRIV_UNSET; return report; }
 
   /* Atomic-ish: the destination is only touched once staging is clean. */
   fs.mkdirSync(outDir, { recursive: true });
@@ -2816,7 +2909,7 @@ function main() {
   const measuredFile = arg('--measured');
   let measured = null;
   if (measuredFile) { try { measured = JSON.parse(fs.readFileSync(measuredFile, 'utf8')); } catch (e) { console.error('gen-consumer: --measured ' + measuredFile + ': ' + e.message); process.exit(2); } }
-  const r = build(outDir || '', { dry, allowDirty, measured });
+  const r = build(outDir || '', { dry, allowDirty, measured, requirePriv: true });   // D454: a run from the command line always requires the PRIVATE guard
   /* D287 part 1: the staging tree is a scratch copy, removed as soon as the build is done (it is also removed at process exit). --keep-staging keeps it. */
   const keepStaging = argv.includes('--keep-staging');
   if (r.staging) { if (keepStaging) scratch.keep(r.staging); else scratch.rm(r.staging); }

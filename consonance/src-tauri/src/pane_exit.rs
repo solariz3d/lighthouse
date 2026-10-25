@@ -195,7 +195,7 @@ pub fn refused_row(short: &str, e: &PaneExit, queued_s: Option<u64>, label: &str
 /// its own (`sender_of` is None for it) and a refused note can never be refused back.
 pub fn refusal_notice(to_short: &str, e: &PaneExit, label: &str) -> String {
     format!(
-        "[delivery, from the app — not the keeper] REFUSED: your message to {to_short} was not delivered. {}, and it is not being reopened, so nothing was written into it. ↻ on its pane reopens it. The message: {label}",
+        "[delivery, from the app — not the keeper] REFUSED: your message to {to_short} was not delivered. {}, and it is not being reopened, so nothing was written into it. ↻ on its pane reopens it. Why: consonance/GATES.md, \"The app's delivery refusal\". The message: {label}",
         exit_words(e)
     )
 }
@@ -367,6 +367,8 @@ mod tests {
         let note = refusal_notice("c88002b1", &o, "D421c landing GO");
         assert!(note.contains("REFUSED") && note.contains("exit code 3") && note.contains("22:24:13Z"), "{note}");
         assert_eq!(sender_of(&note), None, "the refusal note has a sender, so it could be refused back");
+        // D454 part 2: every refusal a seat meets points to the page that explains it, and the message stays last
+        assert!(note.contains("Why: consonance/GATES.md, \"The app's delivery refusal\".") && note.ends_with("The message: D421c landing GO"), "{note}");
     }
 
     /// THE FAKE CHILD THAT EXITS reads as exited, never awake — and the reopened one (a new pid) reads awake again.

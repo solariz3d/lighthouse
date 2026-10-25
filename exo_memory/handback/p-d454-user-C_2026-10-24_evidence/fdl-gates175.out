@@ -1,0 +1,13 @@
+[32m✔ every relative link and anchor in the four front-door documents resolves [90m(4.9096ms)[39m[39m
+[32m✔ the README links the GUIDE, and the glossary it promises exists [90m(0.3817ms)[39m[39m
+[32m✔ GATES.md documents six gates, each with how to turn it off [90m(0.2824ms)[39m[39m
+[32m✔ every refusal that points into GATES.md by section title finds that heading, and every file that points there is explained there [90m(13.8425ms)[39m[39m
+[32m✔ GATES.md evidence links point into the public lighthouse repository at paths in this tree [90m(0.4284ms)[39m[39m
+[34mℹ tests 5[39m
+[34mℹ suites 0[39m
+[34mℹ pass 5[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 69.6262[39m

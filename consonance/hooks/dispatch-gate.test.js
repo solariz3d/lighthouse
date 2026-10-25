@@ -439,8 +439,10 @@ test('findCitationDetail returns the token, and findCitation still returns only 
 });
 
 test('a gated dispatch records the target and the citation, and NEVER the token or the text', () => {
+  // D454 (B, from E's stranger run): FERRY_REPO is the sandbox, as in the mode rows. Without it the hook resolved the repo from THIS machine's
+  // ~/.consonance.json room_path, and on a machine without one it is (rightly) INERT and writes an "inert" row with no target.
   runHook({ tool_name: 'mcp__consonance__chair_inject',
-            tool_input: { target: 'B', token: 'SECRET-CHAIR-TOKEN', text: 'uncited prose' } });
+            tool_input: { target: 'B', token: 'SECRET-CHAIR-TOKEN', text: 'uncited prose' } }, { FERRY_REPO: SANDBOX_REPO });
   const raw = fs.readFileSync(path.join(LEDGER, 'dispatch-gate.jsonl'), 'utf8');
   assert.ok(!raw.includes('SECRET-CHAIR-TOKEN'), 'the chair token reached the ledger');
   assert.ok(!raw.includes('uncited prose'), 'the dispatch text reached the ledger');
