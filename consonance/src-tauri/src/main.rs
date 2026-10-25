@@ -8585,8 +8585,12 @@ mod intake_light_tests {
         // grows (optional_budget) while light's stays at its cap, so the whole-intake gap closed with C's long entry: on
         // 2026-10-12 light 96,544 B against strict 104,900 B, rests 85,472 against 98,359 at reserve 11,651. The saving the row
         // states is the light rest's, so it is measured at the floor every non-empty map reserves (SHELL_MAP_FLOOR).
-        let (light_floor, strict_floor) = (rest_at(SHELL_MAP_FLOOR, true).len(), rest_at(SHELL_MAP_FLOOR, false).len());
-        eprintln!("PANE INTAKE rests at the floor reserve: light {light_floor} B, strict {strict_floor} B");
+        // D454: the fork note is set aside on the LIGHT side here too. Strict is assembled to a budget, so in a consumer the note displaces strict's
+        // optional seat (strict floor 100,465 -> 100,877 B, +412) while light carries it on top of its fixed set (86,240 -> 90,654 B, +4,414). The
+        // saving this row states is light's own; a dev tree has no note, so this is the row it was.
+        let light_floor_rest = rest_at(SHELL_MAP_FLOOR, true);
+        let (light_floor, strict_floor) = (light_floor_rest.len() - fork_span(&light_floor_rest), rest_at(SHELL_MAP_FLOOR, false).len());
+        eprintln!("PANE INTAKE rests at the floor reserve: light {light_floor} B (fork note set aside), strict {strict_floor} B");
         assert!(light_floor + 14_000 <= strict_floor, "at the floor reserve, light {light_floor} B is not ~14 KB+ under strict {strict_floor} B");
     }
 
