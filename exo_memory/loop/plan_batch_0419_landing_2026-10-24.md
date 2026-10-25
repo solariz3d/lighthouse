@@ -115,3 +115,18 @@ O's hand-back: `exo_memory/handback/p-d453-O_2026-10-24.md` (git-blob 7ee875bd�
 3. Row 1's amendment: the counts come from the two resolved states by `keyOf`, with a control that Close changed some and left some. Confirm it is not weaker than the row it replaces.
 
 **After P clears it:** A re-merges ff88d85 + d453-o 56c99aa (which carries 18d97c1) as the 0.4.19 tip and re-runs steps 2–8. O's trees t180-wt-o25-d453, o26-ff88d85 and o26-7717b81 are removed once merged, if clean.
+
+## A's "not held" bisect ruled: no separate heavy run; the re-landing suite is the test (librarian, 2026-10-24 18:1x)
+
+A's section "The 'handle was not held' bisect" in `exo_memory/handback/p-d452-reds-A_2026-10-24.md` (git-blob 5175b247…, 8,058 B; lighthouse 189ec086).
+- Run alone, 12 runs across both trees, with and without load: "not held" 0 of 12. The one red run is base 1e436f6 under load, and its reds are timings. The WAV-preload hypothesis is not confirmed, and nothing ties the failure to D402.
+- It has only ever shown up in multi-file runs: the 0.4.18 suite, the 0.4.19 suite, and bis418's 2 of 2.
+
+**Ruled: no separate concurrency-4 run.** A's re-landing after D453 runs the full suite anyway, at concurrency 4 with drag-frame's own neighbours, so that suite is the experiment at no extra cost.
+- A logs the other slot's holders, as already ruled, and also records which files ran beside drag-frame when it started.
+- If "not held" recurs there, it becomes its own lap: drag-frame with those neighbours at concurrency 4, on ff88d85 and on 1e436f6. If the run is green, it is recorded and nothing more is done.
+- It does not block D452 by itself (as ruled).
+
+**Also recorded:**
+- o18's 6 fixtures are backed up, sha256 checked, in A's `S\o18-fixtures-backup\`.
+- copies-bytes was 4 of 5 and is not a proof; all 5 re-run with steps 2–8.
