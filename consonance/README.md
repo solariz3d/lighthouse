@@ -189,7 +189,7 @@ including the big one — it detects asserted *wording* and is blind to *omissio
 ## The hooks
 
 The hooks are the non-test `.js` files under [`hooks/`](hooks/) (a generated copy leaves out the retired `jev-flags.js`): `blind.js` is a library, `second-reader-worker.js` is the worker the second-reader hook starts, and the rest are hooks.
-[`../dev/shell/install.ps1`](../dev/shell/install.ps1) copies most of them and lists the rest as **unmanaged**, each with its reason; [`hooks/README.md`](hooks/README.md) names them.
+[`../dev/shell/install.ps1`](../dev/shell/install.ps1) copies most of them and lists the rest as **unmanaged**, each with its reason; [`hooks/README.md`](hooks/README.md) names them, and `jev-flags.js` is retired (a generated copy does not carry it).
 Some registration entries are marked Excluded. Its own census is printed by the `derive.ps1` snippet in [`hooks/README.md`](hooks/README.md). The counts, from the commands:
 
     ls consonance/hooks/*.js | grep -v '\.test\.js' | wc -l                       # the hook files

@@ -1786,7 +1786,7 @@ test('D273 lap 6 (A3): the PreCompact hook finds its script: exo_memory/loop/che
   } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
 });
 
-test('D273 lap 6 (A4): what the docs say about jev-flags.js is true in a generated copy: not "in the repo", and the README hook count matches the tree', () => {
+test('D273 lap 6 (A4): what the docs say about jev-flags.js is true in a generated copy: not "in the repo", and the README counts the hooks by a command, not a fixed number', () => {
   const r = lap5();
   try {
     assert.ok(!r.refused, r.refused);
@@ -1794,8 +1794,11 @@ test('D273 lap 6 (A4): what the docs say about jev-flags.js is true in a generat
     const inst = fs.readFileSync(path.join(r.staging, 'dev/shell/install.ps1'), 'utf8'), readme = fs.readFileSync(path.join(r.staging, 'consonance/README.md'), 'utf8');
     assert.doesNotMatch(inst, /The file stays in the repo as the record/, 'install.ps1 says the excluded jev-flags.js is in this repo');
     assert.match(inst, /jev-flags[\s\S]{0,400}a generated copy does not carry it/, 'install.ps1 does not say a generated copy lacks jev-flags.js');
-    const n = fs.readdirSync(path.join(r.staging, 'consonance/hooks')).filter((f) => /\.js$/.test(f) && !/\.(test|mutants)\.js$/.test(f)).length;
-    assert.match(readme, new RegExp('\\(' + n + ' in a generated copy'), 'the README hook count is not stated for a generated copy, which has ' + n);
+    // D454 part 5 (pane A; P's cold read 1C.2, ruled commands-only in plan_consumer_refresh_d454 § "P's cold read routed"): the README states no
+    // fixed hook count, because the generator's exclusions change it and a written number went stale in dev and in the copy alike. The rule changed
+    // from "the README's number matches the tree" to "the README gives the command that counts the tree, and no number to go stale".
+    assert.doesNotMatch(readme, /\(\d+ in a generated copy/, 'the README states a fixed hook count for a generated copy');
+    assert.ok(readme.includes("ls consonance/hooks/*.js | grep -v '\\.test\\.js' | wc -l"), 'the README lost the command that counts the hooks');
     assert.match(readme, /`jev-flags\.js` is retired \(a generated copy does not carry it\)/, 'README:192 does not say a generated copy lacks jev-flags.js');
   } finally { try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {} }
 });
