@@ -474,16 +474,28 @@ test('SEED: a seeded file that is missing on disk still reports missing', () => 
    * The detectable state is the seed reaching NOTHING, and it covers strictly more: the vanished
    * file, a typo in a seed key, and a manifest edit that drops the rule — one refusal, same
    * two-way shape as the exclusion check. Asserted by removing the file, which is the real event. */
-  const hidden = abs + '.p3-test-moved';
-  fs.renameSync(abs, hidden);
+  /* D454 (C's finding, p-d454-user-C_2026-10-24.md): this test used to RENAME the tracked registry away for the build and back, so mid-suite git
+   * showed a 1,225-line deletion. The vanishing is now simulated at the file-system boundary: consonance/tools/ is listed without the file and
+   * existsSync answers false for it, for this build only. Nothing on disk moves. */
+  const realReaddir = fs.readdirSync, realExists = fs.existsSync, toolsDir = path.dirname(abs), name = path.basename(abs);
+  let listed = 0, onDisk = true;   // the tracked file must stay on disk while the build runs
+  fs.readdirSync = function (p, o) {
+    const r = realReaddir.call(fs, p, o);
+    if (path.resolve(String(p)) !== toolsDir) return r;
+    listed++; onDisk = onDisk && realExists(abs);
+    return r.filter((e) => (typeof e === 'string' ? e : e.name) !== name);
+  };
+  fs.existsSync = function (p) { return path.resolve(String(p)) === abs ? false : realExists.call(fs, p); };
   try {
     const r = G.build(null, { dry: true });
+    assert.ok(listed > 0, 'premise: the build lists consonance/tools/');
+    assert.ok(onDisk, 'the tracked registry was moved off disk while the build ran: a seat listing its diff or committing with -a sees a 1,225-line deletion');
     assert.ok(r.seedDrift.some((d) => d.rel === K),
       'a seed no manifest rule reaches must be REPORTED. Otherwise the seed closes the gap in the ' +
       'output while the manifest describes a file nobody has, and a seed protecting nothing reads ' +
       'exactly like one that is protecting something.');
     assert.match(String(r.refused || ''), /reach nothing/, 'and the build must refuse');
-  } finally { fs.renameSync(hidden, abs); }
+  } finally { fs.readdirSync = realReaddir; fs.existsSync = realExists; }
   assert.ok(fs.existsSync(abs), 'the private file must be put back whatever happened above');
   assert.strictEqual(G.build(null, { dry: true }).seedDrift.length, 0, 'and clean again once it is');
 });
