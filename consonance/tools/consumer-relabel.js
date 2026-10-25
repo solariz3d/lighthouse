@@ -252,7 +252,7 @@ const SOURCE_OF = Object.freeze({ 'exo_memory/BOOT.md': 'consonance/src-tauri/br
 // (deidentify turns the handle into "the keeper", so these run one or two above lap 2's dev-source pins). A changed number means a
 // keeper line was added or removed in dev: classify it.
 const EXPECTED_KEEPER_LINES = Object.freeze({
-  'consonance/src-tauri/brief/BUILDING.md': 25,   // D277 repair: 42 -> 20 on B's rewrite; each of the 20 is provenance (listed in p-d277repair-E_2026-10-10.md). D370: +2 provenance, "Why: the keeper, 2026-10-17: …" (his words) and "at the keeper's word of 2026-10-17" (D366's "Landings go to a pane"). D454 part 2: +3 provenance, the three dated "Why: in the keeper's room, on 2026-10-24" incidents of "Leave the machine as you found it" (its three role lines are relabelled)
+  'consonance/src-tauri/brief/BUILDING.md': 24,   // D277 repair: 42 -> 20 on B's rewrite; each of the 20 is provenance (listed in p-d277repair-E_2026-10-10.md). D370: +2 provenance, "Why: the keeper, 2026-10-17: …" (his words) and "at the keeper's word of 2026-10-17" (D366's "Landings go to a pane"). D454 part 2: +3 provenance, the three dated "Why: in the keeper's room, on 2026-10-24" incidents of "Leave the machine as you found it" (its three role lines are relabelled). D454 part 1 (B's 1C.1): -1, the bogus "the keeper/consonance" no longer ships, because the repo name solariz3d/consonance stays whole
   'consonance/src-tauri/brief/COMMITTEE.md': 6,   // D454 part 2: +1 provenance, the junction incident "in the keeper's room" (was t180's reads/)
   'consonance/src-tauri/brief/LIBRARIAN.md': 6,   // D277 repair: 7 -> 6 on B's rewrite; likewise
   'consonance/src-tauri/brief/THIRD_PLACE.md': 1,
