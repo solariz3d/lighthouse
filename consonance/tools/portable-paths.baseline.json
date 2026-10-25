@@ -2,13 +2,13 @@
   "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
-    "BENIGN-TEST": 390,
+    "BENIGN-TEST": 391,
     "BENIGN-FIXTURE": 12,
-    "REVIEW": 15,
+    "REVIEW": 8,
     "DISGUISED": 15,
     "BENIGN-MESSAGE": 4,
     "FATAL-USER": 7,
-    "FATAL-DEFAULT": 13,
+    "FATAL-DEFAULT": 8,
     "FATAL-TEST-READ": 2,
     "FATAL-SHIPPED-INSTRUCTION": 1
   },
@@ -26,6 +26,13 @@
       "verdict": "BENIGN-TEST",
       "text": "const payload = raw !== null ? raw : JSON.stringify({ session_id: 's', transcript_path: tr, cwd: 'C:/x/myproject', hook_event_name: 'Stop', stop_hook_active: false });",
       "key": "consonance/hooks/ask-ending.test.js\u0000const payload = raw !== null ? raw : JSON.stringify({ session_id: 's', transcript_path: tr, cwd: 'C:/x/myproject', hook_event_name: 'Stop', stop_hook_active: false });\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/ask-ending.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = spawnSync(process.execPath, [HOOK], { input: JSON.stringify({ session_id: 's', transcript_path: tr, cwd: 'C:/x/myproject', hook_event_name: 'Stop', stop_hook_active: false }), encoding: 'utf8', env: strangerEnv() });",
+      "key": "consonance/hooks/ask-ending.test.js\u0000const r = spawnSync(process.execPath, [HOOK], { input: JSON.stringify({ session_id: 's', transcript_path: tr, cwd: 'C:/x/myproject', hook_event_name: 'Stop', stop_hook_active: false }), encoding: 'utf8', env: strangerEnv() });\u0000#1"
     },
     {
       "file": "consonance/hooks/delete-gate.test.js",
@@ -2373,13 +2380,6 @@
       "key": "consonance/tools/janitor.test.js\u0000put(path.join(s.exo, 'handback', 'p-x.md'), 'the run is at C:\\\\Temp\\\\claude\\\\C--proj\\\\sess1\\\\tasks\\\\bcited001.output, read it');\u0000#1"
     },
     {
-      "file": "consonance/tools/lap-row.js",
-      "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "const DATA_DIR = process.env.CONSONANCE_DATA || fromConfig('data_dir') || 'C:\\\\Consonance\\\\data';",
-      "key": "consonance/tools/lap-row.js\u0000const DATA_DIR = process.env.CONSONANCE_DATA || fromConfig('data_dir') || 'C:\\\\Consonance\\\\data';\u0000#1"
-    },
-    {
       "file": "consonance/tools/lap-row.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
@@ -2441,20 +2441,6 @@
       "verdict": "FATAL-DEFAULT",
       "text": "const data = process.env.VANTAGE_DATA || 'C:/Consonance/data';",
       "key": "consonance/tools/open-items.js\u0000const data = process.env.VANTAGE_DATA || 'C:/Consonance/data';\u0000#2"
-    },
-    {
-      "file": "consonance/tools/pair-ledger.js",
-      "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "path.join(process.env.VANTAGE_DATA || 'C:\\\\Consonance\\\\data', 'vantage_findings.jsonl'),",
-      "key": "consonance/tools/pair-ledger.js\u0000path.join(process.env.VANTAGE_DATA || 'C:\\\\Consonance\\\\data', 'vantage_findings.jsonl'),\u0000#1"
-    },
-    {
-      "file": "consonance/tools/pair-ledger.js",
-      "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "sourced: process.env.SOURCED_LEDGER || 'C:\\\\Consonance\\\\data\\\\sourced_ledger.jsonl',",
-      "key": "consonance/tools/pair-ledger.js\u0000sourced: process.env.SOURCED_LEDGER || 'C:\\\\Consonance\\\\data\\\\sourced_ledger.jsonl',\u0000#1"
     },
     {
       "file": "consonance/tools/pane-status.js",
@@ -2689,20 +2675,6 @@
       "key": "consonance/tools/prompt-events.js\u0000const AFFORD = /y:\\s*Yes\\s*n:\\s*No/; // whitespace varies with terminal width\u0000#1"
     },
     {
-      "file": "consonance/tools/prompt-events.js",
-      "detector": "DRIVE",
-      "verdict": "REVIEW",
-      "text": "const CAPTURES = \"C:/Consonance/data/captures\";",
-      "key": "consonance/tools/prompt-events.js\u0000const CAPTURES = \"C:/Consonance/data/captures\";\u0000#1"
-    },
-    {
-      "file": "consonance/tools/prompt-events.js",
-      "detector": "DRIVE",
-      "verdict": "REVIEW",
-      "text": "const reg = JSON.parse(fs.readFileSync(\"C:/Consonance/data/panes.json\", \"utf8\"));",
-      "key": "consonance/tools/prompt-events.js\u0000const reg = JSON.parse(fs.readFileSync(\"C:/Consonance/data/panes.json\", \"utf8\"));\u0000#1"
-    },
-    {
       "file": "consonance/tools/read-ledger.js",
       "detector": "DRIVE",
       "verdict": "FATAL-DEFAULT",
@@ -2722,13 +2694,6 @@
       "verdict": "FATAL-DEFAULT",
       "text": "const board = a.board || path.join(process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data', 'board.jsonl');",
       "key": "consonance/tools/residue.js\u0000const board = a.board || path.join(process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data', 'board.jsonl');\u0000#1"
-    },
-    {
-      "file": "consonance/tools/second-vantage.js",
-      "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "const DATA = process.env.VANTAGE_DATA || 'C:\\\\Consonance\\\\data';",
-      "key": "consonance/tools/second-vantage.js\u0000const DATA = process.env.VANTAGE_DATA || 'C:\\\\Consonance\\\\data';\u0000#1"
     },
     {
       "file": "consonance/tools/second-vantage.js",
@@ -2780,27 +2745,6 @@
       "key": "consonance/tools/stamp.test.js\u0000const m = fs.readFileSync(f, 'utf8').match(/^## (\\d\\d:\\d\\d) — from the cli$/m);\u0000#1"
     },
     {
-      "file": "consonance/tools/state-block.js",
-      "detector": "DRIVE",
-      "verdict": "REVIEW",
-      "text": "const hw = 'C:\\\\Consonance\\\\data\\\\head-watch.jsonl';",
-      "key": "consonance/tools/state-block.js\u0000const hw = 'C:\\\\Consonance\\\\data\\\\head-watch.jsonl';\u0000#1"
-    },
-    {
-      "file": "consonance/tools/state-block.js",
-      "detector": "DRIVE",
-      "verdict": "REVIEW",
-      "text": "const pc = 'C:\\\\Consonance\\\\data\\\\precompact.jsonl';",
-      "key": "consonance/tools/state-block.js\u0000const pc = 'C:\\\\Consonance\\\\data\\\\precompact.jsonl';\u0000#1"
-    },
-    {
-      "file": "consonance/tools/state-block.js",
-      "detector": "DRIVE",
-      "verdict": "REVIEW",
-      "text": "return { title: 'live', cmd: 'tail -1 C:\\\\Consonance\\\\data\\\\head-watch.jsonl', lines };",
-      "key": "consonance/tools/state-block.js\u0000return { title: 'live', cmd: 'tail -1 C:\\\\Consonance\\\\data\\\\head-watch.jsonl', lines };\u0000#1"
-    },
-    {
       "file": "consonance/tools/state-sync.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
@@ -2836,13 +2780,6 @@
       "key": "consonance/tools/swell-head.test.js\u0000const p = 'C:/Consonance/data/heard.jsonl';\u0000#1"
     },
     {
-      "file": "consonance/tools/tell-index.js",
-      "detector": "DRIVE",
-      "verdict": "REVIEW",
-      "text": "return 'C:\\\\Consonance\\\\data';",
-      "key": "consonance/tools/tell-index.js\u0000return 'C:\\\\Consonance\\\\data';\u0000#1"
-    },
-    {
       "file": "consonance/tools/tell-index.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
@@ -2855,20 +2792,6 @@
       "verdict": "BENIGN-TEST",
       "text": "assert.strictEqual(stringish({ data_dir: ' C:\\\\x ' }, 'data_dir'), 'C:\\\\x');",
       "key": "consonance/tools/tell-index.test.js\u0000assert.strictEqual(stringish({ data_dir: ' C:\\\\x ' }, 'data_dir'), 'C:\\\\x');\u0000#1"
-    },
-    {
-      "file": "consonance/tools/whats-live.js",
-      "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "const DATA = process.env.CONSONANCE_DATA || 'C:/Consonance/data';",
-      "key": "consonance/tools/whats-live.js\u0000const DATA = process.env.CONSONANCE_DATA || 'C:/Consonance/data';\u0000#1"
-    },
-    {
-      "file": "consonance/tools/whats-live.js",
-      "detector": "DRIVE",
-      "verdict": "REVIEW",
-      "text": "const INSTANCES = 'C:/Consonance/instances';",
-      "key": "consonance/tools/whats-live.js\u0000const INSTANCES = 'C:/Consonance/instances';\u0000#1"
     },
     {
       "file": "consonance/ui/leave.test.js",
