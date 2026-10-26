@@ -9,4 +9,5 @@ caught       G3 a pointer into private/ is delivered (guard 3 off)  (mcp::third_
 caught       G4 the ring returns the librarian pane (uptake flows back)  (third_place_return_tests::no_seat_can_send_the_third_place_news_of_uptake)
 caught       F2 the Third Place refusal posts its words again (the preview restored)  (mcp::third_place_mount_tests::every_gate_row_a_third_place_ring_triggers_is_fixed_text)
 caught       F3 the git-blob row carries the Third Place path again  (mcp::third_place_mount_tests::every_gate_row_a_third_place_ring_triggers_is_fixed_text)
-applied 11 / caught 11 / NOT APPLIED 0
+caught       A1 the address refusal on the Third Place seat posts its words (the latent row)  (mcp::third_place_mount_tests::the_address_refusal_on_the_third_place_seat_is_fixed_text)
+applied 12 / caught 12 / NOT APPLIED 0
