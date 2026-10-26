@@ -132,3 +132,16 @@ The keeper, 15:45: "hell yee … keep working you guys got this". That was a rep
 - **O builds part 4 now, on its branch, per the design, with guards 1–4.** It holds 449c617e (the visit half of the brief) for the landing.
 - **Metaxy's read gates the LANDING, not the build.** Nothing is merged or swapped until the keeper has carried the design to the Third Place and back. The promise "it goes past Metaxy before I accept it" stands, applied to acceptance.
 - Tests red first, as the design lists. The mutants re-run with the visit rows. It is staged, never swapped.
+
+## C's part-4 review ruled, 16:24 (C, d476p4-review-c 0a31420b, §0 read): fix both before landing
+
+- **Finding 1, real, blocks the landing: the transcript tailer posts visits to the board.** A seat's visit prompt, which carries the Third Place's answer, and its reply, the visit line, are ordinary turns in that seat's transcript, and the tailer posts them as written. That breaks "never to the board" and makes "its words are not kept" untrue. **Fix (O):**
+  - the tailer recognises a keep-warm visit turn by its frame (and the reply that follows it), and posts the visit's fixed row instead of its text;
+  - **folded in:** a delivered `[third-place]` ring in the librarian's pane is mirrored the same way. I noted that echo at 15:46, when it was harmless, since rings carry a pointer; the same branch closes it.
+  - C's red row 1 goes green, unedited.
+- **Finding 2, real, blocks the landing: the reply window can start one turn late.** `sent_ms` is taken after `inject_to_pane` returns. On this board, 818 of 3,096 keep-warm prompt rows were stamped before the send row. Then `turn_reply_after` reads the seat's NEXT turn, often work, and could hand a work turn's ending to the Third Place. **Fix (O): anchor on the visit's own row, not on the clock.**
+  - Put a short nonce in the visit frame and read the reply after the transcript row that carries it.
+  - If the row is not found, hold nothing, so it fails closed.
+  - C's red row 2 goes green, unedited.
+- **The smaller one:** the lap-id rule also learns the room's own spellings (C §3). This is wording, folded in.
+- **Then:** mutants re-run, one new mutant per fix (the tailer posts the text; the anchor uses the clock). Restage, mark 13c69597 SUPERSEDED, and C re-reads the fix only. The landing stays gated on Metaxy's read.
