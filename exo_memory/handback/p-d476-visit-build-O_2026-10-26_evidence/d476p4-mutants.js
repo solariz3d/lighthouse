@@ -49,6 +49,7 @@ const VISIT = [
   ['R2r the replay never learns a visit (the restart fold)', 'src/main.rs', '            let _ = extract_turn_tracked(&v, &mut st);\n        }\n    }\n    st', '            let _ = extract_turn(&v);\n        }\n    }\n    st', 'a_tailer_restarted'],
   ['U1 the pasted-content wrap not stripped in the tailer (C 8)', 'src/main.rs', '    let inner = unwrap_pasted(&text);', '    let inner: &str = &text;', 'd476p4_rr_c'],
   ['U2 the harvest anchor reads the wrapped text (C 8)', 'src/main.rs', '.map(|s| unwrap_pasted(s.trim()).to_string())', '.map(|s| s.trim().to_string())', 'visit'],
+  ['M1 a mid-turn row (isMeta, isCompactSummary) closes the visit window (C 9)', 'src/main.rs', '    if role == "user" && !mid_turn {', '    if role == "user" {', 'd476p4_rr2_c'],
 ];
 const M = [...PART2.map((m) => [...m.slice(0, 4), 'third_place']), ...VISIT];
 const src = {}; for (const [, f] of M) src[f] = src[f] || fs.readFileSync(path.join(T, f), 'utf8');

@@ -28,19 +28,19 @@ test d476p4_review_c_tests::a_seats_visit_prompt_does_not_carry_the_third_places
 test mcp::third_place_mount_tests::a_pointer_into_private_is_refused_and_one_outside_it_is_not ... ok
 test d476p4_rr_c_tests::a_wrapped_third_place_ring_posts_the_fixed_row ... ok
 test mcp::third_place_mount_tests::the_third_place_has_its_own_config ... ok
+test mcp::third_place_mount_tests::the_address_refusal_on_the_third_place_seat_is_fixed_text ... ok
 test third_place_return_tests::no_seat_can_reach_the_third_place ... ok
 test mcp::third_place_mount_tests::a_private_pointer_is_refused_before_delivery_and_its_text_is_not_posted ... ok
-test mcp::third_place_mount_tests::the_address_refusal_on_the_third_place_seat_is_fixed_text ... ok
-test mcp::third_place_mount_tests::every_gate_row_a_third_place_ring_triggers_is_fixed_text ... ok
 test third_place_return_tests::the_third_place_can_ring_the_librarian ... ok
-test shelf_tests::the_third_place_transcript_never_reaches_the_board ... ok
-test third_place_return_tests::the_third_place_reaches_no_chair_and_no_pane ... ok
+test mcp::third_place_mount_tests::every_gate_row_a_third_place_ring_triggers_is_fixed_text ... ok
 test third_place_return_tests::the_newest_third_place_entry_is_the_one_carried ... ok
+test shelf_tests::the_third_place_transcript_never_reaches_the_board ... ok
 test mcp::d476_review_c_tests::a_third_place_ring_the_digest_gate_refuses_does_not_post_its_words_to_the_board ... ok
 test mcp::third_place_mount_tests::the_third_place_ring_is_not_held_to_the_loop_station ... ok
-test mcp::third_place_mount_tests::the_third_place_is_told_only_about_its_one_verb ... ok
+test third_place_return_tests::the_third_place_reaches_no_chair_and_no_pane ... ok
 test mcp::third_place_mount_tests::the_third_place_mount_carries_only_the_return_leg ... ok
 test mcp::third_place_mount_tests::a_lettered_mount_is_unchanged ... ok
+test mcp::third_place_mount_tests::the_third_place_is_told_only_about_its_one_verb ... ok
 test mcp::third_place_mount_tests::the_third_place_mount_is_its_own_seat ... FAILED
 test third_place_return_tests::the_third_place_is_launched_with_its_own_mount ... ok
 test third_place_return_tests::no_seat_can_send_the_third_place_news_of_uptake ... ok
@@ -53,7 +53,7 @@ failures:
 
 ---- mcp::third_place_mount_tests::the_third_place_mount_is_its_own_seat stdout ----
 
-thread 'mcp::third_place_mount_tests::the_third_place_mount_is_its_own_seat' (16224) panicked at src\mcp.rs:4290:9:
+thread 'mcp::third_place_mount_tests::the_third_place_mount_is_its_own_seat' (2920) panicked at src\mcp.rs:4290:9:
 assertion `left == right` failed
   left: "committee"
  right: "third_place"
@@ -63,7 +63,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 failures:
     mcp::third_place_mount_tests::the_third_place_mount_is_its_own_seat
 
-test result: FAILED. 24 passed; 1 failed; 0 ignored; 0 measured; 1117 filtered out; finished in 5.19s
+test result: FAILED. 24 passed; 1 failed; 0 ignored; 0 measured; 1118 filtered out; finished in 3.72s
 
 warning: unused variable: `ratio`
     --> src\bin\..\cochlea.rs:3004:13
@@ -188,6 +188,21 @@ warning: function `replay` is never used
 1974 | pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Event)> {
      |        ^^^^^^
 
+warning: function `strip_overlay` is never used
+   --> src\bin\..\capture.rs:182:8
+    |
+182 | pub fn strip_overlay(s: &str) -> String {
+    |        ^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `stitch` is never used
+   --> src\bin\..\capture.rs:197:8
+    |
+197 | pub fn stitch(old: &str, new: &str) -> String {
+    |        ^^^^^^
+
+   Compiling consonance v0.2.0 (C:\Users\nname\Desktop\worktrees\lh-o-d476-p4\consonance\src-tauri)
 warning: struct `C` is never constructed
   --> src\bin\..\cochlea.rs:30:12
    |
@@ -247,26 +262,6 @@ warning: function `bands` is never used
 325 | pub fn bands(spec: &[f32], sample_rate: f32, n: usize) -> Vec<f32> {
     |        ^^^^^
 
-warning: function `strip_overlay` is never used
-   --> src\bin\..\capture.rs:182:8
-    |
-182 | pub fn strip_overlay(s: &str) -> String {
-    |        ^^^^^^^^^^^^^
-    |
-    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
-
-warning: function `stitch` is never used
-   --> src\bin\..\capture.rs:197:8
-    |
-197 | pub fn stitch(old: &str, new: &str) -> String {
-    |        ^^^^^^
-
-warning: `consonance` (bin "conf_sweep" test) generated 2 warnings (run `cargo fix --bin "conf_sweep" -p consonance --tests` to apply 2 suggestions)
-warning: `consonance` (bin "conf_sweep") generated 16 warnings
-warning: `consonance` (bin "cochlea_replay" test) generated 2 warnings (2 duplicates)
-warning: `consonance` (bin "cochlea_replay") generated 21 warnings (13 duplicates)
-warning: `consonance` (bin "capture_probe") generated 2 warnings
-   Compiling consonance v0.2.0 (C:\Users\nname\Desktop\worktrees\lh-o-d476-p4\consonance\src-tauri)
 warning: function `is_working` is never used
   --> src\bin\..\capture.rs:55:8
    |
@@ -329,7 +324,12 @@ warning: function `collapse_blanks` is never used
 221 | fn collapse_blanks(s: &str) -> String {
     |    ^^^^^^^^^^^^^^^
 
+warning: `consonance` (bin "conf_sweep" test) generated 2 warnings (run `cargo fix --bin "conf_sweep" -p consonance --tests` to apply 2 suggestions)
+warning: `consonance` (bin "conf_sweep") generated 16 warnings
+warning: `consonance` (bin "capture_probe") generated 2 warnings
+warning: `consonance` (bin "cochlea_replay") generated 21 warnings (13 duplicates)
 warning: `consonance` (bin "composer_probe") generated 11 warnings (1 duplicate)
+warning: `consonance` (bin "cochlea_replay" test) generated 2 warnings (2 duplicates)
 warning: function `sysdrive` is never used
    --> src\main.rs:512:4
     |
@@ -339,33 +339,33 @@ warning: function `sysdrive` is never used
     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
 warning: method `is_stamped` is never used
-     --> src\main.rs:10715:8
+     --> src\main.rs:10718:8
       |
-10704 | impl PaneGate {
+10707 | impl PaneGate {
       | ------------- method in this implementation
 ...
-10715 |     fn is_stamped(&self) -> bool {
+10718 |     fn is_stamped(&self) -> bool {
       |        ^^^^^^^^^^
 
 warning: method `take_ready` is never used
-     --> src\main.rs:11326:8
+     --> src\main.rs:11329:8
       |
-11220 | impl Inbox {
+11223 | impl Inbox {
       | ---------- method in this implementation
 ...
-11326 |     fn take_ready(
+11329 |     fn take_ready(
       |        ^^^^^^^^^^
 
 warning: function `delivery_note` is never used
-     --> src\main.rs:11508:4
+     --> src\main.rs:11511:4
       |
-11508 | fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
+11511 | fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
       |    ^^^^^^^^^^^^^
 
 warning: function `turn_reply_after` is never used
-     --> src\main.rs:13030:4
+     --> src\main.rs:13033:4
       |
-13030 | fn turn_reply_after(jsonl: &str, since_ms: u64) -> Option<String> {
+13033 | fn turn_reply_after(jsonl: &str, since_ms: u64) -> Option<String> {
       |    ^^^^^^^^^^^^^^^^
 
 warning: field `tool_router` is never read
@@ -419,9 +419,9 @@ warning: methods `attempts`, `records`, `consecutive_panics`, and `last_attempt_
     |            ^^^^^^^^^^^^^^^
 
 warning: unused import: `HashMap`
-     --> src\main.rs:16104:28
+     --> src\main.rs:16107:28
       |
-16104 |     use std::collections::{HashMap, HashSet};
+16107 |     use std::collections::{HashMap, HashSet};
       |                            ^^^^^^^
       |
       = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
@@ -441,14 +441,14 @@ warning: unused variable: `sr`
      |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
 
 warning: unused variable: `rows`
-     --> src\main.rs:16362:14
+     --> src\main.rs:16365:14
       |
-16362 |         let (rows, flags) = render(&format!("❯ {msg}"));
+16365 |         let (rows, flags) = render(&format!("❯ {msg}"));
       |              ^^^^ help: if this is intentional, prefix it with an underscore: `_rows`
 
 warning: `consonance` (bin "consonance" test) generated 5 warnings (1 duplicate) (run `cargo fix --bin "consonance" -p consonance --tests` to apply 4 suggestions)
 warning: `consonance` (bin "consonance") generated 10 warnings
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 20.57s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 14.22s
      Running unittests src\bin\capture_probe.rs (target\debug\deps\capture_probe-19c2a55d1c8470f1.exe)
      Running unittests src\bin\cochlea_replay.rs (target\debug\deps\cochlea_replay-1ad250337380d7e5.exe)
      Running unittests src\bin\composer_probe.rs (target\debug\deps\composer_probe-20f363dbf4ded9f0.exe)

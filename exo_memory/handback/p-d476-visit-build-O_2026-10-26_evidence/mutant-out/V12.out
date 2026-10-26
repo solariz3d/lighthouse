@@ -25,8 +25,8 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 80 filtered out; fin
 running 11 tests
 test keep_warm_visit_tests::an_ok_reply_holds_nothing ... ok
 test keep_warm_visit_tests::a_seat_visit_is_one_line_not_work_and_carries_only_its_own_answer ... ok
-test keep_warm_visit_tests::the_hour_answers_go_only_to_their_visitors_and_stays_here_gives_nothing ... ok
 test keep_warm_visit_tests::the_visit_hour_carries_every_held_line_by_name_in_one_message ... ok
+test keep_warm_visit_tests::the_hour_answers_go_only_to_their_visitors_and_stays_here_gives_nothing ... ok
 test keep_warm_visit_tests::the_tailer_posts_a_visit_and_its_reply_as_fixed_rows_and_work_as_before ... ok
 test keep_warm_visit_tests::a_visit_line_carrying_work_is_refused_and_a_plain_line_is_not ... ok
 test keep_warm_visit_tests::only_the_reply_the_turn_ended_on_is_read ... FAILED
@@ -39,7 +39,7 @@ failures:
 
 ---- keep_warm_visit_tests::only_the_reply_the_turn_ended_on_is_read stdout ----
 
-thread 'keep_warm_visit_tests::only_the_reply_the_turn_ended_on_is_read' (45336) panicked at src\main.rs:24216:9:
+thread 'keep_warm_visit_tests::only_the_reply_the_turn_ended_on_is_read' (42952) panicked at src\main.rs:24219:9:
 assertion `left == right` failed
   left: Some("a subagent's line")
  right: Some("where it ended")
@@ -49,28 +49,86 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 failures:
     keep_warm_visit_tests::only_the_reply_the_turn_ended_on_is_read
 
-test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measured; 1131 filtered out; finished in 0.01s
+test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measured; 1132 filtered out; finished in 0.01s
 
-   Compiling consonance v0.2.0 (C:\Users\nname\Desktop\worktrees\lh-o-d476-p4\consonance\src-tauri)
+warning: unused variable: `ratio`
+    --> src\bin\..\cochlea.rs:3004:13
+     |
+3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
+     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `sr`
+    --> src\bin\..\cochlea.rs:3157:13
+     |
+3157 |         let sr = 46.875;
+     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
+
+warning: struct `C` is never constructed
+  --> src\bin\..\cochlea.rs:30:12
+   |
+30 | pub struct C {
+   |            ^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: methods `mul`, `add`, `sub`, and `abs` are never used
+  --> src\bin\..\cochlea.rs:35:8
+   |
+34 | impl C {
+   | ------ methods in this implementation
+35 |     fn mul(self, o: C) -> C {
+   |        ^^^
+...
+38 |     fn add(self, o: C) -> C { C { re: self.re + o.re, im: self.im + o.im } }
+   |        ^^^
+39 |     fn sub(self, o: C) -> C { C { re: self.re - o.re, im: self.im - o.im } }
+   |        ^^^
+40 |     fn abs(self) -> f32 { (self.re * self.re + self.im * self.im).sqrt() }
+   |        ^^^
+
+warning: function `fft` is never used
+  --> src\bin\..\cochlea.rs:44:8
+   |
+44 | pub fn fft(buf: &mut [C]) {
+   |        ^^^
+
+warning: function `hann` is never used
+  --> src\bin\..\cochlea.rs:76:8
+   |
+76 | pub fn hann(samples: &[f32]) -> Vec<C> {
+   |        ^^^^
+
+warning: function `spectrum` is never used
+  --> src\bin\..\cochlea.rs:85:8
+   |
+85 | pub fn spectrum(samples: &[f32]) -> Vec<f32> {
+   |        ^^^^^^^^
+
+warning: function `peaks` is never used
+   --> src\bin\..\cochlea.rs:103:8
+    |
+103 | pub fn peaks(spec: &[f32], sample_rate: f32, max: usize, floor_ratio: f32) -> Vec<Peak> {
+    |        ^^^^^
+
+warning: function `note_name` is never used
+   --> src\bin\..\cochlea.rs:173:8
+    |
+173 | pub fn note_name(hz: f32) -> (String, f32) {
+    |        ^^^^^^^^^
+
 warning: function `bands` is never used
    --> src\bin\..\cochlea.rs:325:8
     |
 325 | pub fn bands(spec: &[f32], sample_rate: f32, n: usize) -> Vec<f32> {
     |        ^^^^^
-    |
-    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
 warning: function `rms_db` is never used
    --> src\bin\..\cochlea.rs:522:8
     |
 522 | pub fn rms_db(samples: &[f32]) -> f32 {
     |        ^^^^^^
-
-warning: constant `PULSE_ENABLED` is never used
-   --> src\bin\..\cochlea.rs:950:11
-    |
-950 | pub const PULSE_ENABLED: bool = false;
-    |           ^^^^^^^^^^^^^
 
 warning: function `pitch_track` is never used
     --> src\bin\..\cochlea.rs:1195:8
@@ -155,29 +213,21 @@ warning: variant `Vibrato` is never constructed
      |
      = note: `Event` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
 
-warning: function `replay` is never used
-    --> src\bin\..\cochlea.rs:1974:8
-     |
-1974 | pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Event)> {
-     |        ^^^^^^
+   Compiling consonance v0.2.0 (C:\Users\nname\Desktop\worktrees\lh-o-d476-p4\consonance\src-tauri)
+warning: function `strip_overlay` is never used
+   --> src\bin\..\capture.rs:182:8
+    |
+182 | pub fn strip_overlay(s: &str) -> String {
+    |        ^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
-warning: unused variable: `ratio`
-    --> src\bin\..\cochlea.rs:3004:13
-     |
-3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
-     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
-     |
-     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+warning: function `stitch` is never used
+   --> src\bin\..\capture.rs:197:8
+    |
+197 | pub fn stitch(old: &str, new: &str) -> String {
+    |        ^^^^^^
 
-warning: unused variable: `sr`
-    --> src\bin\..\cochlea.rs:3157:13
-     |
-3157 |         let sr = 46.875;
-     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
-
-warning: `consonance` (bin "conf_sweep") generated 16 warnings
-warning: `consonance` (bin "cochlea_replay" test) generated 2 warnings (run `cargo fix --bin "cochlea_replay" -p consonance --tests` to apply 2 suggestions)
-warning: `consonance` (bin "conf_sweep" test) generated 2 warnings (2 duplicates)
 warning: function `is_working` is never used
   --> src\bin\..\capture.rs:55:8
    |
@@ -234,92 +284,42 @@ warning: function `strip_overlay` is never used
 182 | pub fn strip_overlay(s: &str) -> String {
     |        ^^^^^^^^^^^^^
 
-warning: function `stitch` is never used
-   --> src\bin\..\capture.rs:197:8
-    |
-197 | pub fn stitch(old: &str, new: &str) -> String {
-    |        ^^^^^^
-
 warning: function `collapse_blanks` is never used
    --> src\bin\..\capture.rs:221:4
     |
 221 | fn collapse_blanks(s: &str) -> String {
     |    ^^^^^^^^^^^^^^^
 
-warning: function `strip_overlay` is never used
-   --> src\bin\..\capture.rs:182:8
-    |
-182 | pub fn strip_overlay(s: &str) -> String {
-    |        ^^^^^^^^^^^^^
-    |
-    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
-
-warning: struct `C` is never constructed
-  --> src\bin\..\cochlea.rs:30:12
-   |
-30 | pub struct C {
-   |            ^
-   |
-   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
-
-warning: methods `mul`, `add`, `sub`, and `abs` are never used
-  --> src\bin\..\cochlea.rs:35:8
-   |
-34 | impl C {
-   | ------ methods in this implementation
-35 |     fn mul(self, o: C) -> C {
-   |        ^^^
-...
-38 |     fn add(self, o: C) -> C { C { re: self.re + o.re, im: self.im + o.im } }
-   |        ^^^
-39 |     fn sub(self, o: C) -> C { C { re: self.re - o.re, im: self.im - o.im } }
-   |        ^^^
-40 |     fn abs(self) -> f32 { (self.re * self.re + self.im * self.im).sqrt() }
-   |        ^^^
-
-warning: function `fft` is never used
-  --> src\bin\..\cochlea.rs:44:8
-   |
-44 | pub fn fft(buf: &mut [C]) {
-   |        ^^^
-
-warning: function `hann` is never used
-  --> src\bin\..\cochlea.rs:76:8
-   |
-76 | pub fn hann(samples: &[f32]) -> Vec<C> {
-   |        ^^^^
-
-warning: function `spectrum` is never used
-  --> src\bin\..\cochlea.rs:85:8
-   |
-85 | pub fn spectrum(samples: &[f32]) -> Vec<f32> {
-   |        ^^^^^^^^
-
-warning: function `peaks` is never used
-   --> src\bin\..\cochlea.rs:103:8
-    |
-103 | pub fn peaks(spec: &[f32], sample_rate: f32, max: usize, floor_ratio: f32) -> Vec<Peak> {
-    |        ^^^^^
-
-warning: function `note_name` is never used
-   --> src\bin\..\cochlea.rs:173:8
-    |
-173 | pub fn note_name(hz: f32) -> (String, f32) {
-    |        ^^^^^^^^^
-
+warning: `consonance` (bin "cochlea_replay" test) generated 2 warnings (run `cargo fix --bin "cochlea_replay" -p consonance --tests` to apply 2 suggestions)
+warning: `consonance` (bin "cochlea_replay") generated 21 warnings
+warning: `consonance` (bin "capture_probe") generated 2 warnings
+warning: `consonance` (bin "conf_sweep" test) generated 2 warnings (2 duplicates)
+warning: `consonance` (bin "composer_probe") generated 11 warnings (1 duplicate)
 warning: function `bands` is never used
    --> src\bin\..\cochlea.rs:325:8
     |
 325 | pub fn bands(spec: &[f32], sample_rate: f32, n: usize) -> Vec<f32> {
     |        ^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
-warning: `consonance` (bin "composer_probe") generated 11 warnings
-warning: `consonance` (bin "capture_probe") generated 2 warnings (1 duplicate)
-warning: `consonance` (bin "cochlea_replay") generated 21 warnings (13 duplicates)
+warning: constant `PULSE_ENABLED` is never used
+   --> src\bin\..\cochlea.rs:950:11
+    |
+950 | pub const PULSE_ENABLED: bool = false;
+    |           ^^^^^^^^^^^^^
+
+warning: function `replay` is never used
+    --> src\bin\..\cochlea.rs:1974:8
+     |
+1974 | pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Event)> {
+     |        ^^^^^^
+
+warning: `consonance` (bin "conf_sweep") generated 16 warnings (13 duplicates)
 warning: unused import: `HashMap`
-     --> src\main.rs:16103:28
+     --> src\main.rs:16106:28
       |
-16103 |     use std::collections::{HashMap, HashSet};
+16106 |     use std::collections::{HashMap, HashSet};
       |                            ^^^^^^^
       |
       = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
@@ -333,33 +333,33 @@ warning: function `sysdrive` is never used
     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
 warning: method `is_stamped` is never used
-     --> src\main.rs:10715:8
+     --> src\main.rs:10718:8
       |
-10704 | impl PaneGate {
+10707 | impl PaneGate {
       | ------------- method in this implementation
 ...
-10715 |     fn is_stamped(&self) -> bool {
+10718 |     fn is_stamped(&self) -> bool {
       |        ^^^^^^^^^^
 
 warning: method `take_ready` is never used
-     --> src\main.rs:11326:8
+     --> src\main.rs:11329:8
       |
-11220 | impl Inbox {
+11223 | impl Inbox {
       | ---------- method in this implementation
 ...
-11326 |     fn take_ready(
+11329 |     fn take_ready(
       |        ^^^^^^^^^^
 
 warning: function `delivery_note` is never used
-     --> src\main.rs:11508:4
+     --> src\main.rs:11511:4
       |
-11508 | fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
+11511 | fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
       |    ^^^^^^^^^^^^^
 
 warning: function `turn_reply_after` is never used
-     --> src\main.rs:13030:4
+     --> src\main.rs:13033:4
       |
-13030 | fn turn_reply_after(jsonl: &str, since_ms: u64) -> Option<String> {
+13033 | fn turn_reply_after(jsonl: &str, since_ms: u64) -> Option<String> {
       |    ^^^^^^^^^^^^^^^^
 
 warning: field `tool_router` is never read
@@ -427,14 +427,14 @@ warning: unused variable: `sr`
      |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
 
 warning: unused variable: `rows`
-     --> src\main.rs:16361:14
+     --> src\main.rs:16364:14
       |
-16361 |         let (rows, flags) = render(&format!("❯ {msg}"));
+16364 |         let (rows, flags) = render(&format!("❯ {msg}"));
       |              ^^^^ help: if this is intentional, prefix it with an underscore: `_rows`
 
 warning: `consonance` (bin "consonance" test) generated 5 warnings (1 duplicate) (run `cargo fix --bin "consonance" -p consonance --tests` to apply 4 suggestions)
 warning: `consonance` (bin "consonance") generated 10 warnings
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 17.18s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.03s
      Running unittests src\bin\capture_probe.rs (target\debug\deps\capture_probe-19c2a55d1c8470f1.exe)
      Running unittests src\bin\cochlea_replay.rs (target\debug\deps\cochlea_replay-1ad250337380d7e5.exe)
      Running unittests src\bin\composer_probe.rs (target\debug\deps\composer_probe-20f363dbf4ded9f0.exe)

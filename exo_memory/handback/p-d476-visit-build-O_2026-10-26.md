@@ -175,3 +175,27 @@ NEXT: C re-reads the fix (13c69597..2cd8ee27) when the librarian has read this; 
   Each was re-anchored, and the whole set re-run.
 
 NEXT: C re-reads 13c69597..3b7265ee when the librarian has read this; the landing stays gated on the Third Place's read.
+
+## 7. C's re-read §9: a mid-turn user row leaves the visit window unchanged (the chair, 2026-10-26T23:40Z)
+
+`d476-o-p4` **e2c41237** on 3b7265ee, posted to the board at commit; C re-reads that commit only. **This supersedes §6's staged build.** The landing stays gated on the Third Place's read.
+
+**The gap.** Claude Code writes user rows with string content INSIDE a turn: an image a tool read (`isMeta`), and a compaction summary (`isCompactSummary`). `extract_turn_tracked` reset `in_visit` on any user text, so the rest of a visit's reply after one of them posted as written.
+
+**The fix.** Such a row now leaves `in_visit` as it was. It is one condition (`mid_turn`); the row itself still posts as it did.
+
+    checked: C's d476p4_rr2_c_tests.rs (4a6a1198), attached unedited by #[path] → red-meta.out: FAILED on 3b7265ee's code; cmp against git show 4a6a1198:… → byte-identical
+    checked: cargo test d476p4 → green-meta.out: all 7 of C's rows ok (three files); cargo test, whole package → touched-modules-meta.out: 1,137 passed / 0 failed / 6 ignored
+    checked: d476p4-mutants.js → applied 40 / caught 40 / NOT APPLIED 0; the new M1 (a mid-turn row closes the visit window) caught by C's row
+    checked: cargo tauri build --no-bundle on the clean tree at e2c41237 → exit 0
+    staged:  C:\Consonance\staged\d476p4-e2c41237\consonance.exe   sha256 9e71619f792bfd2fe46f52b7e65d0c2526c800b3aa34fafd76257dbca9307e7a   (15,964,672 bytes), HOLD.txt beside it
+    checked: its swap.ps1 dry run → swap-dry-run.out: the staged sha256 checks; Consonance RUNNING (pid 32356); nothing changed; 0 non-ASCII bytes
+    marked:  C:\Consonance\staged\d476p4-3b7265ee\SUPERSEDED.txt names d476p4-e2c41237
+    checked: scan-range.js 3b7265ee..e2c41237 → 1 commit, 24 added lines, key hits 0, the keeper's words 0
+
+**Not gated here, as ruled: three paths that go to the Third Place's read.**
+- the seat's scrollback;
+- the compaction summary;
+- the librarian's own turn.
+
+NEXT: C re-reads e2c41237 when the librarian has read this; then the design goes to the Third Place through the keeper, and the landing waits on that read.

@@ -25,14 +25,14 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 80 filtered out; fin
 running 4 tests
 test d476p4_review_c_tests::a_seats_visit_prompt_does_not_carry_the_third_places_words_onto_the_board ... ok
 test d476p4_review_c_tests::the_work_line_the_misanchored_harvest_reads_passes_the_guard ... ok
-test d476p4_review_c_tests::the_visit_reply_is_read_even_when_the_prompt_row_is_stamped_during_the_submit_check ... ok
 test d476p4_review_c_tests::a_lap_id_in_the_rooms_own_spellings_is_refused ... FAILED
+test d476p4_review_c_tests::the_visit_reply_is_read_even_when_the_prompt_row_is_stamped_during_the_submit_check ... ok
 
 failures:
 
 ---- d476p4_review_c_tests::a_lap_id_in_the_rooms_own_spellings_is_refused stdout ----
 
-thread 'd476p4_review_c_tests::a_lap_id_in_the_rooms_own_spellings_is_refused' (36284) panicked at src\d476p4_review_c_tests.rs:42:9:
+thread 'd476p4_review_c_tests::a_lap_id_in_the_rooms_own_spellings_is_refused' (39612) panicked at src\d476p4_review_c_tests.rs:42:9:
 passed the guard: D476's visit is staged
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
@@ -40,37 +40,8 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 failures:
     d476p4_review_c_tests::a_lap_id_in_the_rooms_own_spellings_is_refused
 
-test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 1138 filtered out; finished in 0.00s
+test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 1139 filtered out; finished in 0.00s
 
-warning: function `strip_overlay` is never used
-   --> src\bin\..\capture.rs:182:8
-    |
-182 | pub fn strip_overlay(s: &str) -> String {
-    |        ^^^^^^^^^^^^^
-    |
-    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
-
-warning: function `stitch` is never used
-   --> src\bin\..\capture.rs:197:8
-    |
-197 | pub fn stitch(old: &str, new: &str) -> String {
-    |        ^^^^^^
-
-warning: unused variable: `ratio`
-    --> src\bin\..\cochlea.rs:3004:13
-     |
-3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
-     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
-     |
-     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
-
-warning: unused variable: `sr`
-    --> src\bin\..\cochlea.rs:3157:13
-     |
-3157 |         let sr = 46.875;
-     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
-
-   Compiling consonance v0.2.0 (C:\Users\nname\Desktop\worktrees\lh-o-d476-p4\consonance\src-tauri)
 warning: struct `C` is never constructed
   --> src\bin\..\cochlea.rs:30:12
    |
@@ -219,9 +190,34 @@ warning: variant `Vibrato` is never constructed
      |
      = note: `Event` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
 
-warning: `consonance` (bin "capture_probe") generated 2 warnings
-warning: `consonance` (bin "cochlea_replay" test) generated 2 warnings (run `cargo fix --bin "cochlea_replay" -p consonance --tests` to apply 2 suggestions)
-warning: `consonance` (bin "cochlea_replay") generated 21 warnings
+warning: function `strip_overlay` is never used
+   --> src\bin\..\capture.rs:182:8
+    |
+182 | pub fn strip_overlay(s: &str) -> String {
+    |        ^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `stitch` is never used
+   --> src\bin\..\capture.rs:197:8
+    |
+197 | pub fn stitch(old: &str, new: &str) -> String {
+    |        ^^^^^^
+
+warning: unused variable: `ratio`
+    --> src\bin\..\cochlea.rs:3004:13
+     |
+3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
+     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `sr`
+    --> src\bin\..\cochlea.rs:3157:13
+     |
+3157 |         let sr = 46.875;
+     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
+
 warning: function `is_working` is never used
   --> src\bin\..\capture.rs:55:8
    |
@@ -284,6 +280,11 @@ warning: function `collapse_blanks` is never used
 221 | fn collapse_blanks(s: &str) -> String {
     |    ^^^^^^^^^^^^^^^
 
+   Compiling consonance v0.2.0 (C:\Users\nname\Desktop\worktrees\lh-o-d476-p4\consonance\src-tauri)
+warning: `consonance` (bin "cochlea_replay") generated 21 warnings
+warning: `consonance` (bin "capture_probe") generated 2 warnings
+warning: `consonance` (bin "cochlea_replay" test) generated 2 warnings (run `cargo fix --bin "cochlea_replay" -p consonance --tests` to apply 2 suggestions)
+warning: `consonance` (bin "composer_probe") generated 11 warnings (1 duplicate)
 warning: function `bands` is never used
    --> src\bin\..\cochlea.rs:325:8
     |
@@ -304,13 +305,12 @@ warning: function `replay` is never used
 1974 | pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Event)> {
      |        ^^^^^^
 
-warning: `consonance` (bin "composer_probe") generated 11 warnings (1 duplicate)
-warning: `consonance` (bin "conf_sweep") generated 16 warnings (13 duplicates)
 warning: `consonance` (bin "conf_sweep" test) generated 2 warnings (2 duplicates)
+warning: `consonance` (bin "conf_sweep") generated 16 warnings (13 duplicates)
 warning: unused variable: `lw`
-     --> src\main.rs:12988:13
+     --> src\main.rs:12991:13
       |
-12988 |         let lw = w.to_lowercase();
+12991 |         let lw = w.to_lowercase();
       |             ^^ help: if this is intentional, prefix it with an underscore: `_lw`
       |
       = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
@@ -324,33 +324,33 @@ warning: function `sysdrive` is never used
     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
 warning: method `is_stamped` is never used
-     --> src\main.rs:10715:8
+     --> src\main.rs:10718:8
       |
-10704 | impl PaneGate {
+10707 | impl PaneGate {
       | ------------- method in this implementation
 ...
-10715 |     fn is_stamped(&self) -> bool {
+10718 |     fn is_stamped(&self) -> bool {
       |        ^^^^^^^^^^
 
 warning: method `take_ready` is never used
-     --> src\main.rs:11326:8
+     --> src\main.rs:11329:8
       |
-11220 | impl Inbox {
+11223 | impl Inbox {
       | ---------- method in this implementation
 ...
-11326 |     fn take_ready(
+11329 |     fn take_ready(
       |        ^^^^^^^^^^
 
 warning: function `delivery_note` is never used
-     --> src\main.rs:11508:4
+     --> src\main.rs:11511:4
       |
-11508 | fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
+11511 | fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
       |    ^^^^^^^^^^^^^
 
 warning: function `turn_reply_after` is never used
-     --> src\main.rs:13030:4
+     --> src\main.rs:13033:4
       |
-13030 | fn turn_reply_after(jsonl: &str, since_ms: u64) -> Option<String> {
+13033 | fn turn_reply_after(jsonl: &str, since_ms: u64) -> Option<String> {
       |    ^^^^^^^^^^^^^^^^
 
 warning: field `tool_router` is never read
@@ -404,9 +404,9 @@ warning: methods `attempts`, `records`, `consecutive_panics`, and `last_attempt_
     |            ^^^^^^^^^^^^^^^
 
 warning: unused import: `HashMap`
-     --> src\main.rs:16104:28
+     --> src\main.rs:16107:28
       |
-16104 |     use std::collections::{HashMap, HashSet};
+16107 |     use std::collections::{HashMap, HashSet};
       |                            ^^^^^^^
       |
       = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
@@ -426,20 +426,20 @@ warning: unused variable: `sr`
      |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
 
 warning: unused variable: `lw`
-     --> src\main.rs:12988:13
+     --> src\main.rs:12991:13
       |
-12988 |         let lw = w.to_lowercase();
+12991 |         let lw = w.to_lowercase();
       |             ^^ help: if this is intentional, prefix it with an underscore: `_lw`
 
 warning: unused variable: `rows`
-     --> src\main.rs:16362:14
+     --> src\main.rs:16365:14
       |
-16362 |         let (rows, flags) = render(&format!("❯ {msg}"));
+16365 |         let (rows, flags) = render(&format!("❯ {msg}"));
       |              ^^^^ help: if this is intentional, prefix it with an underscore: `_rows`
 
 warning: `consonance` (bin "consonance" test) generated 6 warnings (1 duplicate) (run `cargo fix --bin "consonance" -p consonance --tests` to apply 5 suggestions)
 warning: `consonance` (bin "consonance") generated 11 warnings (run `cargo fix --bin "consonance" -p consonance` to apply 1 suggestion)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.33s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.18s
      Running unittests src\bin\capture_probe.rs (target\debug\deps\capture_probe-19c2a55d1c8470f1.exe)
      Running unittests src\bin\cochlea_replay.rs (target\debug\deps\cochlea_replay-1ad250337380d7e5.exe)
      Running unittests src\bin\composer_probe.rs (target\debug\deps\composer_probe-20f363dbf4ded9f0.exe)

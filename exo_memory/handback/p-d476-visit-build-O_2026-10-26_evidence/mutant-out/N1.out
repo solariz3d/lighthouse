@@ -22,17 +22,18 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 80 filtered out; finished in 0.00s
 
 
-running 15 tests
+running 16 tests
+test keep_warm_visit_tests::an_ok_reply_holds_nothing ... ok
 test keep_warm_visit_tests::a_seat_visit_is_one_line_not_work_and_carries_only_its_own_answer ... ok
 test d476p4_review_c_tests::a_seats_visit_prompt_does_not_carry_the_third_places_words_onto_the_board ... ok
-test keep_warm_visit_tests::an_ok_reply_holds_nothing ... ok
+test d476p4_rr2_c_tests::a_visit_reply_after_a_mid_turn_image_or_compaction_row_still_posts_fixed ... ok
 test d476p4_rr_c_tests::a_wrapped_visit_and_its_reply_post_fixed_rows ... ok
+test keep_warm_visit_tests::the_visit_hour_carries_every_held_line_by_name_in_one_message ... ok
 test keep_warm_visit_tests::the_tailer_posts_a_visit_and_its_reply_as_fixed_rows_and_work_as_before ... ok
 test d476p4_review_c_tests::the_visit_reply_is_read_even_when_the_prompt_row_is_stamped_during_the_submit_check ... ok
-test keep_warm_visit_tests::the_visit_hour_carries_every_held_line_by_name_in_one_message ... ok
 test keep_warm_visit_tests::only_the_reply_the_turn_ended_on_is_read ... ok
-test keep_warm_visit_tests::the_hour_answers_go_only_to_their_visitors_and_stays_here_gives_nothing ... ok
 test keep_warm_visit_tests::a_visit_line_carrying_work_is_refused_and_a_plain_line_is_not ... ok
+test keep_warm_visit_tests::the_hour_answers_go_only_to_their_visitors_and_stays_here_gives_nothing ... ok
 test keep_warm_visit_tests::the_reply_is_read_after_the_row_that_carries_the_nonce_and_nothing_without_it ... ok
 test keep_warm_tests::the_tick_rations_only_the_ping_every_pane_is_still_visited ... ok
 test keep_warm_visit_tests::a_tailer_restarted_between_a_visit_and_its_reply_still_posts_the_reply_as_fixed ... ok
@@ -43,7 +44,7 @@ failures:
 
 ---- keep_warm_visit_tests::the_send_carries_a_nonce_and_the_harvest_reads_by_it stdout ----
 
-thread 'keep_warm_visit_tests::the_send_carries_a_nonce_and_the_harvest_reads_by_it' (21732) panicked at src\main.rs:24302:9:
+thread 'keep_warm_visit_tests::the_send_carries_a_nonce_and_the_harvest_reads_by_it' (46556) panicked at src\main.rs:24305:9:
 the harvest reads the reply after the row carrying the nonce
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
@@ -51,7 +52,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 failures:
     keep_warm_visit_tests::the_send_carries_a_nonce_and_the_harvest_reads_by_it
 
-test result: FAILED. 14 passed; 1 failed; 0 ignored; 0 measured; 1127 filtered out; finished in 0.01s
+test result: FAILED. 15 passed; 1 failed; 0 ignored; 0 measured; 1127 filtered out; finished in 0.01s
 
 warning: unused variable: `ratio`
     --> src\bin\..\cochlea.rs:3004:13
@@ -68,19 +69,73 @@ warning: unused variable: `sr`
      |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
 
    Compiling consonance v0.2.0 (C:\Users\nname\Desktop\worktrees\lh-o-d476-p4\consonance\src-tauri)
+warning: function `is_working` is never used
+  --> src\bin\..\capture.rs:55:8
+   |
+55 | pub fn is_working(lines: &[String]) -> bool {
+   |        ^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `is_chrome` is never used
+  --> src\bin\..\capture.rs:62:8
+   |
+62 | pub fn is_chrome(s: &str) -> bool {
+   |        ^^^^^^^^^
+
+warning: function `screen_ready` is never used
+  --> src\bin\..\capture.rs:82:8
+   |
+82 | pub fn screen_ready(lines: &[String]) -> bool {
+   |        ^^^^^^^^^^^^
+
+warning: function `is_wrapped` is never used
+   --> src\bin\..\capture.rs:102:4
+    |
+102 | fn is_wrapped(wrapped: &[bool], i: usize) -> bool {
+    |    ^^^^^^^^^^
+
+warning: function `fold_end` is never used
+   --> src\bin\..\capture.rs:107:4
+    |
+107 | fn fold_end(lines: &[String], wrapped: &[bool], i: usize) -> usize {
+    |    ^^^^^^^^
+
+warning: function `join_fold` is never used
+   --> src\bin\..\capture.rs:117:4
+    |
+117 | fn join_fold(lines: &[String], i: usize, end: usize) -> String {
+    |    ^^^^^^^^^
+
+warning: function `latest_turn` is never used
+   --> src\bin\..\capture.rs:127:8
+    |
+127 | pub fn latest_turn(lines: &[String], wrapped: &[bool]) -> String {
+    |        ^^^^^^^^^^^
+
+warning: function `latest_prompt` is never used
+   --> src\bin\..\capture.rs:162:8
+    |
+162 | pub fn latest_prompt(lines: &[String], wrapped: &[bool]) -> String {
+    |        ^^^^^^^^^^^^^
+
 warning: function `strip_overlay` is never used
    --> src\bin\..\capture.rs:182:8
     |
 182 | pub fn strip_overlay(s: &str) -> String {
     |        ^^^^^^^^^^^^^
-    |
-    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
 warning: function `stitch` is never used
    --> src\bin\..\capture.rs:197:8
     |
 197 | pub fn stitch(old: &str, new: &str) -> String {
     |        ^^^^^^
+
+warning: function `collapse_blanks` is never used
+   --> src\bin\..\capture.rs:221:4
+    |
+221 | fn collapse_blanks(s: &str) -> String {
+    |    ^^^^^^^^^^^^^^^
 
 warning: struct `C` is never constructed
   --> src\bin\..\cochlea.rs:30:12
@@ -230,10 +285,6 @@ warning: variant `Vibrato` is never constructed
      |
      = note: `Event` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
 
-warning: `consonance` (bin "conf_sweep" test) generated 2 warnings (run `cargo fix --bin "conf_sweep" -p consonance --tests` to apply 2 suggestions)
-warning: `consonance` (bin "capture_probe") generated 2 warnings
-warning: `consonance` (bin "cochlea_replay") generated 21 warnings
-warning: `consonance` (bin "cochlea_replay" test) generated 2 warnings (2 duplicates)
 warning: function `bands` is never used
    --> src\bin\..\cochlea.rs:325:8
     |
@@ -254,74 +305,24 @@ warning: function `replay` is never used
 1974 | pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Event)> {
      |        ^^^^^^
 
-warning: function `is_working` is never used
-  --> src\bin\..\capture.rs:55:8
-   |
-55 | pub fn is_working(lines: &[String]) -> bool {
-   |        ^^^^^^^^^^
-   |
-   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
-
-warning: function `is_chrome` is never used
-  --> src\bin\..\capture.rs:62:8
-   |
-62 | pub fn is_chrome(s: &str) -> bool {
-   |        ^^^^^^^^^
-
-warning: function `screen_ready` is never used
-  --> src\bin\..\capture.rs:82:8
-   |
-82 | pub fn screen_ready(lines: &[String]) -> bool {
-   |        ^^^^^^^^^^^^
-
-warning: function `is_wrapped` is never used
-   --> src\bin\..\capture.rs:102:4
-    |
-102 | fn is_wrapped(wrapped: &[bool], i: usize) -> bool {
-    |    ^^^^^^^^^^
-
-warning: function `fold_end` is never used
-   --> src\bin\..\capture.rs:107:4
-    |
-107 | fn fold_end(lines: &[String], wrapped: &[bool], i: usize) -> usize {
-    |    ^^^^^^^^
-
-warning: function `join_fold` is never used
-   --> src\bin\..\capture.rs:117:4
-    |
-117 | fn join_fold(lines: &[String], i: usize, end: usize) -> String {
-    |    ^^^^^^^^^
-
-warning: function `latest_turn` is never used
-   --> src\bin\..\capture.rs:127:8
-    |
-127 | pub fn latest_turn(lines: &[String], wrapped: &[bool]) -> String {
-    |        ^^^^^^^^^^^
-
-warning: function `latest_prompt` is never used
-   --> src\bin\..\capture.rs:162:8
-    |
-162 | pub fn latest_prompt(lines: &[String], wrapped: &[bool]) -> String {
-    |        ^^^^^^^^^^^^^
-
+warning: `consonance` (bin "cochlea_replay" test) generated 2 warnings (run `cargo fix --bin "cochlea_replay" -p consonance --tests` to apply 2 suggestions)
+warning: `consonance` (bin "conf_sweep" test) generated 2 warnings (2 duplicates)
+warning: `consonance` (bin "composer_probe") generated 11 warnings
+warning: `consonance` (bin "cochlea_replay") generated 21 warnings
+warning: `consonance` (bin "conf_sweep") generated 16 warnings (13 duplicates)
 warning: function `strip_overlay` is never used
    --> src\bin\..\capture.rs:182:8
     |
 182 | pub fn strip_overlay(s: &str) -> String {
     |        ^^^^^^^^^^^^^
-
-warning: function `collapse_blanks` is never used
-   --> src\bin\..\capture.rs:221:4
     |
-221 | fn collapse_blanks(s: &str) -> String {
-    |    ^^^^^^^^^^^^^^^
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
-warning: `consonance` (bin "conf_sweep") generated 16 warnings (13 duplicates)
-warning: `consonance` (bin "composer_probe") generated 11 warnings (1 duplicate)
+warning: `consonance` (bin "capture_probe") generated 2 warnings (1 duplicate)
 warning: unused variable: `nonce`
-     --> src\main.rs:13127:20
+     --> src\main.rs:13130:20
       |
-13127 |     for (pane, at, nonce) in sent {
+13130 |     for (pane, at, nonce) in sent {
       |                    ^^^^^ help: if this is intentional, prefix it with an underscore: `_nonce`
       |
       = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
@@ -335,33 +336,33 @@ warning: function `sysdrive` is never used
     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
 warning: method `is_stamped` is never used
-     --> src\main.rs:10715:8
+     --> src\main.rs:10718:8
       |
-10704 | impl PaneGate {
+10707 | impl PaneGate {
       | ------------- method in this implementation
 ...
-10715 |     fn is_stamped(&self) -> bool {
+10718 |     fn is_stamped(&self) -> bool {
       |        ^^^^^^^^^^
 
 warning: method `take_ready` is never used
-     --> src\main.rs:11326:8
+     --> src\main.rs:11329:8
       |
-11220 | impl Inbox {
+11223 | impl Inbox {
       | ---------- method in this implementation
 ...
-11326 |     fn take_ready(
+11329 |     fn take_ready(
       |        ^^^^^^^^^^
 
 warning: function `delivery_note` is never used
-     --> src\main.rs:11508:4
+     --> src\main.rs:11511:4
       |
-11508 | fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
+11511 | fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
       |    ^^^^^^^^^^^^^
 
 warning: function `turn_reply_after` is never used
-     --> src\main.rs:13030:4
+     --> src\main.rs:13033:4
       |
-13030 | fn turn_reply_after(jsonl: &str, since_ms: u64) -> Option<String> {
+13033 | fn turn_reply_after(jsonl: &str, since_ms: u64) -> Option<String> {
       |    ^^^^^^^^^^^^^^^^
 
 warning: field `tool_router` is never read
@@ -415,9 +416,9 @@ warning: methods `attempts`, `records`, `consecutive_panics`, and `last_attempt_
     |            ^^^^^^^^^^^^^^^
 
 warning: unused import: `HashMap`
-     --> src\main.rs:16104:28
+     --> src\main.rs:16107:28
       |
-16104 |     use std::collections::{HashMap, HashSet};
+16107 |     use std::collections::{HashMap, HashSet};
       |                            ^^^^^^^
       |
       = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
@@ -437,20 +438,20 @@ warning: unused variable: `sr`
      |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
 
 warning: unused variable: `nonce`
-     --> src\main.rs:13127:20
+     --> src\main.rs:13130:20
       |
-13127 |     for (pane, at, nonce) in sent {
+13130 |     for (pane, at, nonce) in sent {
       |                    ^^^^^ help: if this is intentional, prefix it with an underscore: `_nonce`
 
 warning: unused variable: `rows`
-     --> src\main.rs:16362:14
+     --> src\main.rs:16365:14
       |
-16362 |         let (rows, flags) = render(&format!("❯ {msg}"));
+16365 |         let (rows, flags) = render(&format!("❯ {msg}"));
       |              ^^^^ help: if this is intentional, prefix it with an underscore: `_rows`
 
 warning: `consonance` (bin "consonance" test) generated 6 warnings (1 duplicate) (run `cargo fix --bin "consonance" -p consonance --tests` to apply 5 suggestions)
 warning: `consonance` (bin "consonance") generated 11 warnings (run `cargo fix --bin "consonance" -p consonance` to apply 1 suggestion)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.78s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.93s
      Running unittests src\bin\capture_probe.rs (target\debug\deps\capture_probe-19c2a55d1c8470f1.exe)
      Running unittests src\bin\cochlea_replay.rs (target\debug\deps\cochlea_replay-1ad250337380d7e5.exe)
      Running unittests src\bin\composer_probe.rs (target\debug\deps\composer_probe-20f363dbf4ded9f0.exe)
