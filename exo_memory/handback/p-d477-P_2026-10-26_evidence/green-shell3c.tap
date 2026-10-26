@@ -1,0 +1,138 @@
+✔ row 1: bankLapWith over a lap closed by close() is byte for byte D473's (a4bfe52) on four public laps (1683.2524ms)
+✔ row 2: Close's own press (runCloseBest, which banks the lap it closes) is byte for byte D473's (a4bfe52) on the two public laps that close that way (5998.4115ms)
+✖ Bank the lap pressed again on a lap it has just banked changes nothing (no second undo step, every bank channel as the first press left it) (596.8798ms)
+✔ row 1: a closed lap with a flat closer is banked as one undo step, and the route does not move (kh and kv byte-equal) (271.1075ms)
+✔ row 2: a loop held back by the level rule is named in the status line, and a level curve on the same lap is banked (322.3021ms)
+✖ row 3: on a lap shaped like TEST 10, a second press changes nothing (no undo step, every bank channel as the first press left it, and the status line says so) (864.7984ms)
+✔ row 4: a loop whose stored turn is under 1/600 is named in the status line when the level rule holds it back (664.4356ms)
+✔ row 5: the press copies the track to its backups first, as it was; a press that changes nothing writes no copy (174.8644ms)
+✔ row 6: a copy that cannot be written refuses by name, and nothing changes (122.9069ms)
+✖ row 7: a bank he laid on purpose under 5° is kept: a straight at 3° is unchanged, a gentle curve at 3° is never taken below 3° (370.7466ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 7
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7797.6705
+
+✖ failing tests:
+
+test at app\test\core-bank-lap-twice.test.js:22:1
+✖ Bank the lap pressed again on a lap it has just banked changes nothing (no second undo step, every bank channel as the first press left it) (596.8798ms)
+  AssertionError [ERR_ASSERTION]: the second press re-banked p3: banked the lap: 1 piece (p3), up to 1.1° into its turn; the route did not move (Ctrl+Z takes the bank back); no bank on p4: it climbs or dives too steeply to bank (a loop or a steep ramp); the bank eases to none where the turn changes direction faster than the road can roll (p2); the bank on the lap stopped about under 1% past its smoothness limit at one point (p9)
+  + actual - expected
+  
+  + [
+  +   'p3'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-p477\app\test\core-bank-lap-twice.test.js:30:10)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'p3' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at app\test\core-bank-lap.test.js:95:1
+✖ row 3: on a lap shaped like TEST 10, a second press changes nothing (no undo step, every bank channel as the first press left it, and the status line says so) (864.7984ms)
+  AssertionError [ERR_ASSERTION]: the second press re-banked p6, p10: banked the lap: 2 pieces (p6, p10), up to 3.7° into their turns; the route did not move (Ctrl+Z takes the bank back); no bank on p5: it climbs or dives too steeply to bank (a loop or a steep ramp); the bank on the lap stopped about under 1% past its smoothness limit at one point (p6)
+  + actual - expected
+  
+  + [
+  +   'p6',
+  +   'p10'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-p477\app\test\core-bank-lap.test.js:104:10)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'p6', 'p10' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at app\test\core-bank-lap.test.js:157:1
+✖ row 7: a bank he laid on purpose under 5° is kept: a straight at 3° is unchanged, a gentle curve at 3° is never taken below 3° (370.7466ms)
+  AssertionError [ERR_ASSERTION]: the straight at 3° is unchanged (banked the lap: 12 pieces (p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12), up to 63.9° into their turns; the route did not move (Ctrl+Z takes the bank back); the bank eases to none where the turn changes direction faster than the road can roll (p10))
+  + actual - expected
+  
+    [
+  +   0.5932629248054452,
+  +   0.6165845233841304,
+  +   0.6365610537438527,
+  +   0.7221633990406842,
+  +   0.7427047648046905,
+  +   0.7456518362986998,
+  +   0.7484856256812671,
+  +   0.7512043056822315,
+  +   0.7538078997158804,
+  +   0.7562946216674217,
+  +   0.7586648216114964,
+  +   0.7609170397263738,
+  +   0.7630511831965598,
+  +   0.7751408765873202,
+  +   0.7072305699780806,
+  +   0.6163296425613137,
+  +   0.6001734687279137,
+  +   0.605428715144547
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878
+    ]
+  
+      at TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-p477\app\test\core-bank-lap.test.js:166:10)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [
+      0.5932629248054452, 0.6165845233841304,
+      0.6365610537438527, 0.7221633990406842,
+      0.7427047648046905, 0.7456518362986998,
+      0.7484856256812671, 0.7512043056822315,
+      0.7538078997158804, 0.7562946216674217,
+      0.7586648216114964, 0.7609170397263738,
+      0.7630511831965598, 0.7751408765873202,
+      0.7072305699780806, 0.6163296425613137,
+      0.6001734687279137,  0.605428715144547
+    ],
+    expected: [
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878
+    ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

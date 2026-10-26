@@ -93,3 +93,21 @@ NEXT: chair dispatch D472 to C now; librarian rules when C's hand-back is in.
 - **Order to P (prove it):** one row with a closed lap where a straight carries a deliberate 3° bank and a gentle curve carries a deliberate 3° bank, both under ROLL_FREE. Bank the lap must keep each of his banks: on the straight, unchanged; on the curve, at least his 3°, never less. If the current code flattens them, that is red, and P fixes it without breaking idempotence or closejob's byte-equality.
   - The same lap is the one R3 needed (an upright piece carrying bank curvature at a plan edge). If the row also catches R3, R3 goes back in the list. If it doesn't, P says why.
 - **The batch** (d473-e + d477-p) waits on that row.
+
+## D477 ruled, 13:44 (P cf03658 on 2451dfb, §6 read whole): accepted for the batch
+
+- **My question was right, and it is fixed.** Row 7 was red on 2451dfb (his 3° straight was flattened) and green on a4bfe52. It is now green on cf03658:
+  - his roll adds 0;
+  - his straight is byte-equal except one tail point (+0.62°, D468's C2 roll-off, against +1.28° on a4bfe52);
+  - his curve goes 3.00 → 7.45°, never below 3°.
+- **How it tells his bank from the press's:** by the joint pins, which the press never writes. A piece is his when its joint-pinned points carry bank.
+  - P recorded the three forms that failed, so they are not tried again.
+  - Idempotence holds, and Close's press is byte-equal on both private fixtures (7478b828…, 1171b887…).
+  - Harness 59/59/0, touched 362/0.
+- **§1.3, ruled: accepted.** A seam wobble under 0.2° on the bent TEST 10 is not a bank he laid, so bringing the total to the plan is right there. Close's own press is unchanged.
+- **R3 stays out of the list,** with P's reason. It is live only where an upright piece carries bank curvature at a plan edge, which no public builder lays. The record of it is §3/§6.
+- **For the release review**, the edges P names:
+  - a piece of his between two of his curved pieces, at relaxed joints, has no joint pins and is read as the press's;
+  - a bank of his leaning against its turn is replaced, as a4bfe52 did.
+  Both are rare. Both get a line in the release notes' known-limits, not a fix now.
+- **The batch:** d473-e a4bfe52 + d477-p (2451dfb, cf03658) ride the next T-180 release together, held for whatever the keeper's new original track turns up. **D477 CLOSED.**

@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: row 1: TEST TRACK 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels
+ok 1 - row 1: TEST TRACK 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels
+  ---
+  duration_ms: 20929.4245
+  type: 'test'
+  ...
+# Subtest: row 2: TEST 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels
+ok 2 - row 2: TEST 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels
+  ---
+  duration_ms: 2632.2426
+  type: 'test'
+  ...
+# Subtest: row 3: TEST TRACK 10: the closer brings the cup home over its length, no faster than his own road changes it
+ok 3 - row 3: TEST TRACK 10: the closer brings the cup home over its length, no faster than his own road changes it
+  ---
+  duration_ms: 20353.9121
+  type: 'test'
+  ...
+# Subtest: row 4: TEST 10: the closer brings the cup home over its length, no faster than his own road changes it
+ok 4 - row 4: TEST 10: the closer brings the cup home over its length, no faster than his own road changes it
+  ---
+  duration_ms: 2300.1396
+  type: 'test'
+  ...
+# Subtest: row 5: a track built here: its closer rolls upright, steps no more than the bar at every joint and the seam, and brings the cup home slowly
+ok 5 - row 5: a track built here: its closer rolls upright, steps no more than the bar at every joint and the seam, and brings the cup home slowly
+  ---
+  duration_ms: 7325.8576
+  type: 'test'
+  ...
+# Subtest: row 6: a short closer (P's turn 150, tail 300, roll 54) brings the cup home no faster than his own road changes it
+ok 6 - row 6: a short closer (P's turn 150, tail 300, roll 54) brings the cup home no faster than his own road changes it
+  ---
+  duration_ms: 2119.3658
+  type: 'test'
+  ...
+# Subtest: row 7: a closer too short for his rate brings the cup home at the slowest rate it allows, and the report says the rate
+ok 7 - row 7: a closer too short for his rate brings the cup home at the slowest rate it allows, and the report says the rate
+  ---
+  duration_ms: 2451.1395
+  type: 'test'
+  ...
+# Subtest: row 8: a closer long enough for his rate brings the cup home under it and says nothing of a fallback (P's three laps)
+ok 8 - row 8: a closer long enough for his rate brings the cup home under it and says nothing of a fallback (P's three laps)
+  ---
+  duration_ms: 7073.6426
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 65332.3356

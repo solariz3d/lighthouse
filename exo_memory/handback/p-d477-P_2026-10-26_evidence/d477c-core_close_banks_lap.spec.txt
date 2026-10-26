@@ -1,0 +1,84 @@
+[32m✔ row 1: Close banks every upright curve of the closed lap into its turn, not only the road Finish adds [90m(2250.5396ms)[39m[39m
+[32m✔ row 2: a curve he banked himself keeps its bank byte for byte, and the joints into it meet his bank [90m(5.8548ms)[39m[39m
+[32m✔ row 3: a curve laid as two pieces banks as one: the lean holds across their joint [90m(9.6253ms)[39m[39m
+[32m✔ row 4: the near path (an end already at the start) closes banked [90m(352.1212ms)[39m[39m
+[32m✔ row 5: the road a pit lane runs beside is not banked [90m(2203.3831ms)[39m[39m
+[32m✔ row 7: a loop is not banked, even one that turns; a level curve on the same lap is [90m(298.3145ms)[39m[39m
+[32m✔ row 8: a tube is not banked; a level curve on the same lap is [90m(379.3623ms)[39m[39m
+[32m✔ row 9: a straight next to a curve keeps the bank it was laid with, but for the tail of the roll-off on its third point from the joint (D468) [90m(6.9211ms)[39m[39m
+[32m✔ row 10: a Sharp corner right after a turn that ends still turning: the curves stay banked, none leans out, and the report says where the bank eased [90m(5311.9453ms)[39m[39m
+[32m✔ row 11: a turn that flips over extend's 20 m transition: the same [90m(4884.7826ms)[39m[39m
+[32m✔ row 12: a flip swept: Sharp ramp 40 m: the curves stay banked, none leans out, no piece withheld [90m(5007.6557ms)[39m[39m
+[32m✔ row 12: a flip swept: Sharp ramp 100 m: the curves stay banked, none leans out, no piece withheld [90m(5287.1168ms)[39m[39m
+[32m✔ row 12: a flip swept: a 40 m transition: the curves stay banked, none leans out, no piece withheld [90m(4501.4505ms)[39m[39m
+[32m✔ row 12: a flip swept: a 50 m transition: the curves stay banked, none leans out, no piece withheld [90m(3558.1041ms)[39m[39m
+[32m✔ row 12: a flip swept: a 60 m transition: the curves stay banked, none leans out, no piece withheld [90m(2799.5095ms)[39m[39m
+[32m✔ row 12: a flip swept: a 70 m transition: the curves stay banked, none leans out, no piece withheld [90m(3384.351ms)[39m[39m
+[32m✔ row 12: a flip swept: a 80 m transition: the curves stay banked, none leans out, no piece withheld [90m(4318.6151ms)[39m[39m
+[32m✔ row 12: a flip swept: a 100 m transition: the curves stay banked, none leans out, no piece withheld [90m(3189.267ms)[39m[39m
+[32m✔ row 12: a flip swept: e60 (Extend's default blend over a 60 m piece): the curves stay banked, none leans out, no piece withheld [90m(3186.2938ms)[39m[39m
+[32m✔ row 12: a flip swept: e80 (over an 80 m piece): the curves stay banked, none leans out, no piece withheld [90m(3310.1558ms)[39m[39m
+[32m✔ row 13: a straight of 40 m between opposite corners: none leans out, no corner withheld [90m(3981.7636ms)[39m[39m
+[32m✔ row 13: a straight of 42 m between opposite corners: none leans out, no corner withheld [90m(3803.2111ms)[39m[39m
+[32m✔ row 13: a straight of 44 m between opposite corners: none leans out, no corner withheld [90m(3808.9361ms)[39m[39m
+[32m✔ row 13: a straight of 46 m between opposite corners: none leans out, no corner withheld [90m(3872.8719ms)[39m[39m
+[32m✔ row 13: a straight of 48 m between opposite corners: none leans out, no corner withheld [90m(4004.0326ms)[39m[39m
+[32m✔ row 13: a straight of 50 m between opposite corners: none leans out, no corner withheld [90m(3693.4013ms)[39m[39m
+[32m✔ row 13: a straight of 52 m between opposite corners: none leans out, no corner withheld [90m(3533.5259ms)[39m[39m
+[32m✔ row 13: a straight of 54 m between opposite corners: none leans out, no corner withheld [90m(3867.1052ms)[39m[39m
+[32m✔ row 13: a straight of 56 m between opposite corners: none leans out, no corner withheld [90m(3833.5793ms)[39m[39m
+[32m✔ row 13: a straight of 58 m between opposite corners: none leans out, no corner withheld [90m(3811.3902ms)[39m[39m
+[32m✔ row 13: a straight of 60 m between opposite corners: none leans out, no corner withheld [90m(3569.3954ms)[39m[39m
+[32m✔ row 13: a straight of 62 m between opposite corners: none leans out, no corner withheld [90m(3756.431ms)[39m[39m
+[32m✔ row 13: a straight of 64 m between opposite corners: none leans out, no corner withheld [90m(3413.1579ms)[39m[39m
+[32m✔ row 13: a straight of 66 m between opposite corners: none leans out, no corner withheld [90m(3448.8201ms)[39m[39m
+[32m✔ row 13: a straight of 68 m between opposite corners: none leans out, no corner withheld [90m(3535.9953ms)[39m[39m
+[32m✔ row 13: a straight of 70 m between opposite corners: none leans out, no corner withheld [90m(4132.8304ms)[39m[39m
+[32m✔ row 13: a straight of 72 m between opposite corners: none leans out, no corner withheld [90m(3999.6778ms)[39m[39m
+[32m✔ row 13: a straight of 74 m between opposite corners: none leans out, no corner withheld [90m(3811.739ms)[39m[39m
+[32m✔ row 13: a straight of 76 m between opposite corners: none leans out, no corner withheld [90m(3981.983ms)[39m[39m
+[32m✔ row 13: a straight of 78 m between opposite corners: none leans out, no corner withheld [90m(3414.0128ms)[39m[39m
+[32m✔ row 13: a straight of 80 m between opposite corners: none leans out, no corner withheld [90m(3659.0443ms)[39m[39m
+[32m✔ row 13: a straight of 82 m between opposite corners: none leans out, no corner withheld [90m(3446.3936ms)[39m[39m
+[32m✔ row 13: a straight of 84 m between opposite corners: none leans out, no corner withheld [90m(3074.8164ms)[39m[39m
+[32m✔ row 13: a straight of 86 m between opposite corners: none leans out, no corner withheld [90m(4160.5295ms)[39m[39m
+[32m✔ row 13: a straight of 88 m between opposite corners: none leans out, no corner withheld [90m(4421.1294ms)[39m[39m
+[32m✔ row 13: a straight of 90 m between opposite corners: none leans out, no corner withheld [90m(4373.7389ms)[39m[39m
+[32m✔ row 13: a straight of 92 m between opposite corners: none leans out, no corner withheld [90m(4394.6943ms)[39m[39m
+[32m✔ row 13: a straight of 94 m between opposite corners: none leans out, no corner withheld [90m(4475.3127ms)[39m[39m
+[32m✔ row 13: a straight of 96 m between opposite corners: none leans out, no corner withheld [90m(4379.3837ms)[39m[39m
+[32m✔ row 13: a straight of 98 m between opposite corners: none leans out, no corner withheld [90m(4111.9088ms)[39m[39m
+[32m✔ row 13: a straight of 100 m between opposite corners: none leans out, no corner withheld [90m(3988.4843ms)[39m[39m
+[32m✔ row 13: a straight of 102 m between opposite corners: none leans out, no corner withheld [90m(4085.0506ms)[39m[39m
+[32m✔ row 13: a straight of 104 m between opposite corners: none leans out, no corner withheld [90m(4259.0297ms)[39m[39m
+[32m✔ row 13: a straight of 106 m between opposite corners: none leans out, no corner withheld [90m(4030.3321ms)[39m[39m
+[32m✔ row 13: a straight of 108 m between opposite corners: none leans out, no corner withheld [90m(4100.0077ms)[39m[39m
+[32m✔ row 13: a straight of 110 m between opposite corners: none leans out, no corner withheld [90m(4205.8343ms)[39m[39m
+[32m✔ row 13: a straight of 112 m between opposite corners: none leans out, no corner withheld [90m(3847.7141ms)[39m[39m
+[32m✔ row 13: a straight of 114 m between opposite corners: none leans out, no corner withheld [90m(3920.1224ms)[39m[39m
+[32m✔ row 13: a straight of 116 m between opposite corners: none leans out, no corner withheld [90m(3985.3377ms)[39m[39m
+[32m✔ row 13: a straight of 118 m between opposite corners: none leans out, no corner withheld [90m(4007.3327ms)[39m[39m
+[32m✔ row 13: a straight of 120 m between opposite corners: none leans out, no corner withheld [90m(4043.4549ms)[39m[39m
+[32m✔ row 14: a 100 m link at R 1200 between opposite corners: none leans out, no corner withheld [90m(4517.1896ms)[39m[39m
+[32m✔ row 14: a 100 m link at R 3000 between opposite corners: none leans out, no corner withheld [90m(4668.6554ms)[39m[39m
+[32m✔ row 14: a 100 m link at R 10000 between opposite corners: none leans out, no corner withheld [90m(4536.9011ms)[39m[39m
+[32m✔ row 15: a 90° curve laid as four short pieces is banked as one curve, by the run [90m(2102.4104ms)[39m[39m
+[32m✔ row 16: a curve unwinding over 250 m into a gentle opposite curve keeps its bank: no flip pin, none leans out [90m(3085.6638ms)[39m[39m
+[32m✔ row 17: a short curve between two straights is banked, and leaves its turn banked [90m(3488.2836ms)[39m[39m
+[32m✔ row 18: an 80 m straight between opposite corners, closed by close() and banked: nothing withheld, nothing leans out [90m(352.261ms)[39m[39m
+[32m✔ row 18: a link at R 10000 between opposite corners, closed by close() and banked: nothing withheld, nothing leans out [90m(384.2556ms)[39m[39m
+[32m✔ row 19: a banked lap rolls no faster than the amber over his pieces (Sharp ramp 40, whose first try does) [90m(4876.666ms)[39m[39m
+[32m✔ row 6: the bank lands in Close's one undo step [90m(2486.5277ms)[39m[39m
+[32m✔ row 20: where the bank plan reaches its sweep budget the press says so in user words (this lap at R 200), and where every plan converges it says nothing (R 300) [90m(4840.166ms)[39m[39m
+[34mℹ tests 72[39m
+[34mℹ suites 0[39m
+[34mℹ pass 72[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 249957.5262[39m
+
+# stderr
+
+# exit 0 in 250.0 s

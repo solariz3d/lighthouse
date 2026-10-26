@@ -1,0 +1,18 @@
+✔ row 1: bankLapWith over a lap closed by close() is byte for byte D473's (a4bfe52) on four public laps (1730.6573ms)
+✔ row 2: Close's own press (runCloseBest, which banks the lap it closes) is byte for byte D473's (a4bfe52) on the two public laps that close that way (6118.9669ms)
+✔ Bank the lap pressed again on a lap it has just banked changes nothing (no second undo step, every bank channel as the first press left it) (725.3413ms)
+✔ row 1: a closed lap with a flat closer is banked as one undo step, and the route does not move (kh and kv byte-equal) (311.1891ms)
+✔ row 2: a loop held back by the level rule is named in the status line, and a level curve on the same lap is banked (486.3799ms)
+✔ row 3: on a lap shaped like TEST 10, a second press changes nothing (no undo step, every bank channel as the first press left it, and the status line says so) (653.0242ms)
+✔ row 4: a loop whose stored turn is under 1/600 is named in the status line when the level rule holds it back (538.6837ms)
+✔ row 5: the press copies the track to its backups first, as it was; a press that changes nothing writes no copy (145.2168ms)
+✔ row 6: a copy that cannot be written refuses by name, and nothing changes (122.6974ms)
+✔ row 7: a bank he laid on purpose under 5° is kept: a straight at 3° is unchanged but for the roll-off tail into the curve, a gentle curve at 3° is never taken below 3° (446.14ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7976.22

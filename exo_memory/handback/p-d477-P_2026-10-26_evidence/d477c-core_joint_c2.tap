@@ -1,0 +1,76 @@
+TAP version 13
+# Subtest: row 0: the instrument's closed forms agree with pieceEnd and with the four-point reading, channel by channel; c2Breaks finds the same joints
+ok 1 - row 0: the instrument's closed forms agree with pieceEnd and with the four-point reading, channel by channel; c2Breaks finds the same joints
+  ---
+  duration_ms: 13.2227
+  type: 'test'
+  ...
+# Subtest: row 1: a bank reached over 100 m is C2 at the ramp's start and end (the roll's curvature along s does not step)
+ok 2 - row 1: a bank reached over 100 m is C2 at the ramp's start and end (the roll's curvature along s does not step)
+  ---
+  duration_ms: 2.3181
+  type: 'test'
+  ...
+# Subtest: row 2: a 15° cup brought home to 0 over 40 m is C2 at both ends of the fade
+ok 3 - row 2: a 15° cup brought home to 0 over 40 m is C2 at both ends of the fade
+  ---
+  duration_ms: 1.4226
+  type: 'test'
+  ...
+# Subtest: row 3: a 30° edge brought to 0 over 50 m is C2 at both ends
+ok 4 - row 3: a 30° edge brought to 0 over 50 m is C2 at both ends
+  ---
+  duration_ms: 1.9369
+  type: 'test'
+  ...
+# Subtest: row 4: a 35° right edge reached over 50 m is C2 at both ends
+ok 5 - row 4: a 35° right edge reached over 50 m is C2 at both ends
+  ---
+  duration_ms: 0.7987
+  type: 'test'
+  ...
+# Subtest: row 5 (control): at every one of those joints the channel's value and slope are continuous (the C1 that holds today stays)
+ok 6 - row 5 (control): at every one of those joints the channel's value and slope are continuous (the C1 that holds today stays)
+  ---
+  duration_ms: 4.2679
+  type: 'test'
+  ...
+# Subtest: row 6: through Close, the closer brings the cup home C2: at its first joint, its own joints and the seam the cup's second derivative does not step
+ok 7 - row 6: through Close, the closer brings the cup home C2: at its first joint, its own joints and the seam the cup's second derivative does not step
+  ---
+  duration_ms: 1969.165
+  type: 'test'
+  ...
+# Subtest: row 7: through Close, Finish's roll straight is C2 where it meets the user's last piece
+ok 8 - row 7: through Close, Finish's roll straight is C2 where it meets the user's last piece
+  ---
+  duration_ms: 2084.0911
+  type: 'test'
+  ...
+# Subtest: row 8: a ramp's shape is the C2 quintic's: a bank over 100 m within 1.5% of its change at every half metre, a right edge over 50 m within 3%
+ok 9 - row 8: a ramp's shape is the C2 quintic's: a bank over 100 m within 1.5% of its change at every half metre, a right edge over 50 m within 3%
+  ---
+  duration_ms: 4.3201
+  type: 'test'
+  ...
+# Subtest: row 9: the closure is C2: a whole-lap close and a local close leave no curvature step at the seam nor at any joint they moved
+ok 10 - row 9: the closure is C2: a whole-lap close and a local close leave no curvature step at the seam nor at any joint they moved
+  ---
+  duration_ms: 937.4782
+  type: 'test'
+  ...
+# Subtest: row 10: through Finish and through bankLap, the added bank is C2: the bank's second derivative steps at no joint from the closer's first to the seam, and at no joint of a banked lap
+ok 11 - row 10: through Finish and through bankLap, the added bank is C2: the bank's second derivative steps at no joint from the closer's first to the seam, and at no joint of a banked lap
+  ---
+  duration_ms: 5618.1621
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10729.4401

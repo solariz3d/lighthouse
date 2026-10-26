@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: row 1: bankLapWith over a lap closed by close() is byte for byte D473's (a4bfe52) on four public laps
+ok 1 - row 1: bankLapWith over a lap closed by close() is byte for byte D473's (a4bfe52) on four public laps
+  ---
+  duration_ms: 1097.4099
+  type: 'test'
+  ...
+# Subtest: row 2: Close's own press (runCloseBest, which banks the lap it closes) is byte for byte D473's (a4bfe52) on the two public laps that close that way
+ok 2 - row 2: Close's own press (runCloseBest, which banks the lap it closes) is byte for byte D473's (a4bfe52) on the two public laps that close that way
+  ---
+  duration_ms: 5238.7405
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6450.1556
