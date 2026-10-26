@@ -1,0 +1,3 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+caught     B3 part 3 leaves the window out  (# fail 1)
+applied 1 / caught 1 / NOT APPLIED 0

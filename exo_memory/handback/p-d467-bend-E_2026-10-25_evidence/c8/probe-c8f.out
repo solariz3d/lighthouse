@@ -1,0 +1,13 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+A 600 H 45 G 300: base crosses 1211,1567,2502,2933
+A 600 H 45 G 450: base crosses 1583,2813
+A 600 H 55 G 300: base crosses 1248,1598,2585,2952
+A 600 H 55 G 450: base crosses 1618,2887
+A 600 H 65 G 300: base crosses 1284,1630,2671,2971
+A 600 H 65 G 450: base crosses 1654,2968
+A 800 H 45 G 300: base crosses 1253,3273
+A 800 H 45 G 450: base crosses 1339,1421,1441,1447,1683,3319,3552,3654
+A 800 H 55 G 300: base crosses 1297,3326
+A 800 H 55 G 450: base crosses 1385,1524,3415,3709
+A 800 H 65 G 300: base crosses 1328,3387
+A 800 H 65 G 450: base crosses 1422,1624,3520,3778

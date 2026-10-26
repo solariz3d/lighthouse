@@ -1,0 +1,40 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+.......................................
+MATCH L 900 R 36 back.5 0.003: window [2] open crosses 94,318,1599; start: crosses 422,434,776,1125,1133,1487, move 138.1 vs drag 166.3 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 30% of your bend (closed
+
+MATCH L 900 R 36 back.5 0.004: window [2] open crosses 202,1561; start: crosses 472,798,1103,1435, move 99.2 vs drag 220.8 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 33% of your bend (closed
+.......
+MATCH L 900 R 40 back.5 0.003: window [2] open crosses 74,1628; start: crosses 458,466,726,1186,1194,1462, move 132.0 vs drag 167.7 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 25% of your bend (closed
+
+MATCH L 900 R 40 back.5 0.004: window [2] open crosses 178,1582; start: crosses 490,494,1154,1160, move 97.9 vs drag 222.7 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 29% of your bend (closed
+
+MATCH L 900 R 40 back.5 0.005: window [2] open crosses 252,1562; start: crosses 506,1138, move 141.5 vs drag 276.8 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 32% of your bend (closed
+.......
+MATCH L 900 R 45 back.5 0.004: window [2] open crosses 148,1641; start: crosses 512,516,700,1227,1231,1421, move 130.5 vs drag 225.6 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 28% of your bend (closed
+
+MATCH L 900 R 45 back.5 0.005: window [2] open crosses 222,1609; start: crosses 520,730,1197, move 135.4 vs drag 280.4 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 30% of your bend (closed
+...............
+MATCH L 1100 R 36 back.5 0.003: window [2] open crosses 210,1905; start: crosses 558,564,958,1343,1351,1749, move 140.9 vs drag 201.0 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 31% of your bend (closed
+
+MATCH L 1100 R 36 back.5 0.004: window [2] open crosses 312,1869; start: crosses 590,988,1313,1319, move 114.0 vs drag 266.9 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 34% of your bend (closed
+
+MATCH L 1100 R 36 back.5 0.005: window [2] open crosses 366,1849; start: crosses 608,1002,1301,1305, move 159.6 vs drag 331.9 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 37% of your bend (closed
+......
+MATCH L 1100 R 40 back.5 0.003: window [2] open crosses 178,1928; start: crosses 580,586,918,1394,1402,1740, move 127.2 vs drag 202.4 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 26% of your bend (closed
+
+MATCH L 1100 R 40 back.5 0.004: window [2] open crosses 294,1888; start: crosses 604,954,1360,1366, move 122.4 vs drag 268.7 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 30% of your bend (closed
+
+MATCH L 1100 R 40 back.5 0.005: window [2] open crosses 358,1866; start: crosses 618,1344, move 170.5 vs drag 334.2 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 33% of your bend (closed
+......
+MATCH L 1100 R 45 back.5 0.003: window [2] open crosses 142,1973,1977; start: crosses 610,616,854,1473,1481,1723, move 135.0 vs drag 204.2 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 23% of your bend (closed
+
+MATCH L 1100 R 45 back.5 0.004: window [2] open crosses 268,1921; start: crosses 622,904,1425,1429, move 125.4 vs drag 271.2 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 26% of your bend (closed
+
+MATCH L 1100 R 45 back.5 0.005: window [2] open crosses 340,1893; start: crosses 632,1399, move 176.7 vs drag 337.2 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 29% of your bend (closed
+......
+MATCH L 1100 R 50 back.5 0.003: window [2] open crosses 114,2049; start: crosses 650,660,784,1559,1571,1695, move 183.1 vs drag 206.2 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 22% of your bend (closed
+
+MATCH L 1100 R 50 back.5 0.004: window [2] open crosses 232,1977; start: crosses 640,646,858,1485,1489, move 125.8 vs drag 273.8 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 25% of your bend (closed
+
+MATCH L 1100 R 50 back.5 0.005: window [2] open crosses 312,1941; start: crosses 648,894,1449, move 172.0 vs drag 340.5 (part3 pass), start straight true; fallback: closed crosses  :: osing it took back 28% of your bend (closed
+...
