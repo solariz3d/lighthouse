@@ -18867,6 +18867,9 @@ mod address_table_tests {
         assert_eq!(address_row("librarian", "call_chair"), Some(MAIN_SID));
         assert_eq!(address_row("third_place", "call_librarian"), Some(LIBRARIAN_SID));
         assert_eq!(ADDRESS_TABLE.len(), 3, "a fourth row lands with its own tests");
+        // ui/chain-indicator.js reads `call_chair -> Main` as the librarian's ring because the audit names no actor: correct only while
+        // call_chair has ONE holder (the chip pins this line; D476)
+        assert_eq!(ADDRESS_TABLE.iter().filter(|r| r.verb == "call_chair").count(), 1, "a second call_chair holder would be read as LIB by the chain chip");
         assert!(ADDRESS_TABLE.iter().all(|r| r.to == LIBRARIAN_SID || r.to == MAIN_SID));
     }
 

@@ -114,6 +114,9 @@
   var RE_DISPATCH = /^chair injected \(chair: [^)]*\) -> ([0-9a-f]{1,8}) \[([^\]]*)\]/;
   var RE_HANDBACK = /^call_librarian ([A-Z][A-Z0-9]*) -> LIB \[([^\]]*)\]/;
   var RE_RING = /^call_chair -> Main \[([^\]]*)\]/;
+  // D476: the Third Place's ring to the librarian (ADDRESS_TABLE row 3). Read for its ACTOR, and never a hop: the Third Place is
+  // not a loop station, so its ring moves no arrow and opens no dwell.
+  var RE_THIRD_PLACE = /^call_librarian \[third-place\] -> LIB \[([^\]]*)\]/;
 
   // A FOURTH CONTRACT WITH main.rs, and it is pinned in the test against main.rs's own source for
   // the same reason the three above are: `chain_state` returns this exact sentence when every lap
@@ -154,6 +157,7 @@
   function readHop(entry) {
     if (!entry || entry.pane !== 'chair') return null;   // the spoof guard
     var text = String(entry.text || '');
+    if (RE_THIRD_PLACE.test(text)) return null;         // D476: the Third Place's ring is no hop (readActor names it)
     var m = RE_DISPATCH.exec(text);
     if (m) return { kind: 'dispatch', from: 'orch', to: 'pane', paneId: m[1], receipt: m[2], confirmed: confirmedReceipt('dispatch', m[2]) };
     m = RE_HANDBACK.exec(text);
@@ -161,6 +165,22 @@
     m = RE_RING.exec(text);
     if (m) return { kind: 'ring', from: 'lib', to: 'orch', receipt: m[1], confirmed: confirmedReceipt('ring', m[1]) };
     return null;                                          // FAILED / REFUSED / EXPIRED land here
+  }
+
+  /**
+   * WHO RANG, from a ring's own audit row, or null (D476). The chip learns the actor so a ring from a seat that is not a loop station
+   * (the Third Place) can be told from a hop. `call_chair -> Main` names no actor; it is the librarian's, and main.rs pins that
+   * call_chair has one holder (address_table_tests), so 'LIB' is read from the table, not guessed.
+   */
+  function readActor(entry) {
+    if (!entry || entry.pane !== 'chair') return null;   // the spoof guard, as for hops
+    var text = String(entry.text || '');
+    if (RE_THIRD_PLACE.test(text)) return 'third-place';
+    if (RE_DISPATCH.test(text)) return 'orch';
+    var m = RE_HANDBACK.exec(text);
+    if (m) return m[1];
+    if (RE_RING.test(text)) return 'LIB';
+    return null;
   }
 
   /** True if this row is the blind window opening (pushes muted from here). */
@@ -909,7 +929,7 @@
   }
 
   var api = {
-    readHop: readHop, latestHop: latestHop, nextHop: nextHop, chainView: chainView,
+    readHop: readHop, readActor: readActor, latestHop: latestHop, nextHop: nextHop, chainView: chainView,
     blindOpen: blindOpen, paneLabel: paneLabel, positionLabel: positionLabel,
     outstanding: outstanding, confirmedReceipt: confirmedReceipt,
     holderArrow: holderArrow, holderTab: holderTab, tabForWho: tabForWho,
