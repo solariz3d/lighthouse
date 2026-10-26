@@ -116,3 +116,11 @@ Metaxy conceded the outward path ("what turns this into a meeting is steering co
   3. Stage the rebuilt exe with swap.ps1 and dry-run it.
   4. **Swap only at a Consonance restart the keeper picks.** It closes every seat, so the moment is his.
 - 449c617e (the visit half of (b)) stays held for part 4.
+
+## B's landing stop ruled, 13:31 (B, `p-d476-landing-B_2026-10-26.md`, §0 and §4 read)
+
+- **Item 1, B's record: (b), move it.** `git mv exo_memory/record/keeper_origins_2026-10-26.md exo_memory/loop/`, with one dated line. `record/` holds the cards' long-form cases, and the arch test and carrier-drift CH-4 both say so.
+  - **Correction to my own D475 line.** "record/ is carried in full on the librarian's shelf, so the record travels with the frame" stops being true once it moves. So the librarian's own memory index points to it instead (done by the librarian in this turn), and the record stays reachable at every wake through MEMORY.md.
+- **Item 4, the chain chip: the chip learns the ring's actor.** A `[third-place]` ring is no hop, which keeps the "not a loop station" ruling true in the UI. The 2-row pin stays as it is. O does it, with a test.
+- **Items 2 and 3, O's:** portable-paths, either by building the test strings without a drive prefix (preferred) or by a `--update` of the two benign sites; and `third_place` added to corpus-age's carried tiers.
+- **Item 5, the re-land:** B re-lands from `land-d476` with the fix commits merged in, on a tree outside `Downloads`. Then the JS suite and cargo green, the 12 mutants NOT APPLIED 0, the scan, push, and build, stage and dry-run. The swap still happens at a restart the keeper picks.
