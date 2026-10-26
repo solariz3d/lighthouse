@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: row 1: on a track laid by 0.4.19 it copies the track to its backups first, as it was, then re-lays the ramps as ONE undo step and says what it did
+ok 1 - row 1: on a track laid by 0.4.19 it copies the track to its backups first, as it was, then re-lays the ramps as ONE undo step and says what it did
+  ---
+  duration_ms: 110.3359
+  type: 'test'
+  ...
+# Subtest: row 2: Ctrl+Z gives back the track's bytes exactly, and Ctrl+Y the smoothed bytes
+ok 2 - row 2: Ctrl+Z gives back the track's bytes exactly, and Ctrl+Y the smoothed bytes
+  ---
+  duration_ms: 48.4865
+  type: 'test'
+  ...
+# Subtest: row 3: a copy that cannot be written refuses by name, and nothing changes
+ok 3 - row 3: a copy that cannot be written refuses by name, and nothing changes
+  ---
+  duration_ms: 46.3479
+  type: 'test'
+  ...
+# Subtest: row 4: an empty track: it says so, with no copy and no undo step
+ok 4 - row 4: an empty track: it says so, with no copy and no undo step
+  ---
+  duration_ms: 0.2476
+  type: 'test'
+  ...
+# Subtest: row 5: a track with no ramps: nothing changes, and it says so in plain words, with no copy and no undo step
+ok 5 - row 5: a track with no ramps: nothing changes, and it says so in plain words, with no copy and no undo step
+  ---
+  duration_ms: 3.3715
+  type: 'test'
+  ...
+# Subtest: row 6: a track laid by this build is already smooth: it says so, and nothing changes
+ok 6 - row 6: a track laid by this build is already smooth: it says so, and nothing changes
+  ---
+  duration_ms: 59.5754
+  type: 'test'
+  ...
+# Subtest: row 7: it never runs on its own: opening a saved 0.4.19 track leaves its bytes and its ramps as they were
+ok 7 - row 7: it never runs on its own: opening a saved 0.4.19 track leaves its bytes and its ramps as they were
+  ---
+  duration_ms: 32.8267
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 393.0197

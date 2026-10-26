@@ -1,0 +1,5 @@
+loop p5: 25° over 700 m, stored max|kh| 1.232e-3 (1/600 = 1.667e-3): UNDER, not curved; share bank at that kh 48.0° (V 460 km/h assumed)
+press 1 (162 ms): banked the lap: 7 pieces (p1, p6, p7, p8, p9, p10, p11), up to 64.2° into their turns; the route did not move (Ctrl+Z takes the bank back); the bank eases to none where the turn changes direction faster than the road can roll (p7, p8, p9)
+press 2 (1 ms): nothing to bank: every curve on this lap already has its bank; nothing changed; depth 1 → 1; same doc true
+press-1 digest (bankLapWith over close()) 01083cc64dec8a06b058314a658906e6ba480d13fdc63e137a6958e11512deab; lap digest f0479b79e5ba16543e6001d9bbfff0494754aa6303c55870d5f562bf3705963a
+runCloseBest on the open lap: 6842 ms, converged false, digest -; report: not closed, nothing changed: no way of closing the loop proves the lap; the closest, bent the last 5 pieces (1714 m): the lap does not prove (leaves-surface at 0.32 km)

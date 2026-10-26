@@ -1,0 +1,19 @@
+[32m✔ row 1: on a track laid by 0.4.19 it copies the track to its backups first, as it was, then re-lays the ramps as ONE undo step and says what it did [90m(110.3359ms)[39m[39m
+[32m✔ row 2: Ctrl+Z gives back the track's bytes exactly, and Ctrl+Y the smoothed bytes [90m(48.4865ms)[39m[39m
+[32m✔ row 3: a copy that cannot be written refuses by name, and nothing changes [90m(46.3479ms)[39m[39m
+[32m✔ row 4: an empty track: it says so, with no copy and no undo step [90m(0.2476ms)[39m[39m
+[32m✔ row 5: a track with no ramps: nothing changes, and it says so in plain words, with no copy and no undo step [90m(3.3715ms)[39m[39m
+[32m✔ row 6: a track laid by this build is already smooth: it says so, and nothing changes [90m(59.5754ms)[39m[39m
+[32m✔ row 7: it never runs on its own: opening a saved 0.4.19 track leaves its bytes and its ramps as they were [90m(32.8267ms)[39m[39m
+[34mℹ tests 7[39m
+[34mℹ suites 0[39m
+[34mℹ pass 7[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 393.0197[39m
+
+# stderr
+
+# exit 0 in 0.4 s

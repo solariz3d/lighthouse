@@ -1,0 +1,304 @@
+TAP version 13
+# Subtest: the strings: two decimals (2026-10-15: "everything to 0.00"), the unit written, a sign on angles, 0.00° bare, half away from zero, no wrap
+ok 1 - the strings: two decimals (2026-10-15: "everything to 0.00"), the unit written, a sign on angles, 0.00° bare, half away from zero, no wrap
+  ---
+  duration_ms: 1.0298
+  type: 'test'
+  ...
+# Subtest: the layout: never over the head's keep-out, never two labels overlapping, the priority one placed first, a crowded one culled
+ok 2 - the layout: never over the head's keep-out, never two labels overlapping, the priority one placed first, a crowded one culled
+  ---
+  duration_ms: 0.7432
+  type: 'test'
+  ...
+# Subtest: the layout: a label anchored on a large head keep-out is placed clear of it, not culled
+ok 3 - the layout: a label anchored on a large head keep-out is placed clear of it, not culled
+  ---
+  duration_ms: 0.0942
+  type: 'test'
+  ...
+# Subtest: the layout: the head's own label is never culled, even where no ring around its anchor fits; it stays clear of the head
+ok 4 - the layout: the head's own label is never culled, even where no ring around its anchor fits; it stays clear of the head
+  ---
+  duration_ms: 0.524
+  type: 'test'
+  ...
+# Subtest: the layout: no label is placed under a panel over the view, the head's own label included
+ok 5 - the layout: no label is placed under a panel over the view, the head's own label included
+  ---
+  duration_ms: 0.1631
+  type: 'test'
+  ...
+# Subtest: a piece whose middle is behind the camera is labelled, when hovered, on the part of it that is in view
+ok 6 - a piece whose middle is behind the camera is labelled, when hovered, on the part of it that is in view
+  ---
+  duration_ms: 53.0646
+  type: 'test'
+  ...
+# Subtest: the head's own piece is labelled even when none of it is on screen (the camera looks ahead, past the head)
+ok 7 - the head's own piece is labelled even when none of it is on screen (the camera looks ahead, past the head)
+  ---
+  duration_ms: 13.6646
+  type: 'test'
+  ...
+# Subtest: the label box holds only an opaque background and its text: no border, square corners, contrast ≥ 4.5 : 1
+ok 8 - the label box holds only an opaque background and its text: no border, square corners, contrast ≥ 4.5 : 1
+  ---
+  duration_ms: 5.7696
+  type: 'test'
+  ...
+# Subtest: a skin change recolours the label boxes already made, and their background stays opaque
+ok 9 - a skin change recolours the label boxes already made, and their background stays opaque
+  ---
+  duration_ms: 8.7625
+  type: 'test'
+  ...
+# Subtest: the shell's readouts are A's, once per document; the ghost's strings are the placed piece's strings
+ok 10 - the shell's readouts are A's, once per document; the ghost's strings are the placed piece's strings
+  ---
+  duration_ms: 6.1915
+  type: 'test'
+  ...
+# Subtest: the panel shows the ghost's four numbers, and they follow every field inside its input handler (no timer, no frame)
+ok 11 - the panel shows the ghost's four numbers, and they follow every field inside its input handler (no timer, no frame)
+  ---
+  duration_ms: 25.9091
+  type: 'test'
+  ...
+# Subtest: the panel: a field set extend refuses shows — (and says why in the title); a closed loop shows —; after Extend the ghost is the NEXT piece
+ok 12 - the panel: a field set extend refuses shows — (and says why in the title); a closed loop shows —; after Extend the ghost is the NEXT piece
+  ---
+  duration_ms: 3.0005
+  type: 'test'
+  ...
+# Subtest: the labels on the track: the head's own piece always, any other only when hovered; the text A's numbers, clear of the head; a flight and an empty track draw none and throw nothing
+ok 13 - the labels on the track: the head's own piece always, any other only when hovered; the text A's numbers, clear of the head; a flight and an empty track draw none and throw nothing
+  ---
+  duration_ms: 29.1989
+  type: 'test'
+  ...
+# Subtest: the head's own piece is labelled in the build view, where its middle is behind the camera
+ok 14 - the head's own piece is labelled in the build view, where its middle is behind the camera
+  ---
+  duration_ms: 12.2545
+  type: 'test'
+  ...
+# Subtest: the labels follow a path the preview extends IN PLACE (a hovered later piece is labelled), and survive the preview clearing \#preview after they mounted
+ok 15 - the labels follow a path the preview extends IN PLACE (a hovered later piece is labelled), and survive the preview clearing \#preview after they mounted
+  ---
+  duration_ms: 63.3604
+  type: 'test'
+  ...
+# Subtest: extendOptions: the cup field is the target c, in DEGREES, typed as it is (0 is a target; empty continues; never clamped here)
+ok 16 - extendOptions: the cup field is the target c, in DEGREES, typed as it is (0 is a target; empty continues; never clamped here)
+  ---
+  duration_ms: 0.1478
+  type: 'test'
+  ...
+# Subtest: the Extend panel has a "cup °" field beside bank, 0 to 150, and Extend hands its value to the core as c
+ok 17 - the Extend panel has a "cup °" field beside bank, 0 to 150, and Extend hands its value to the core as c
+  ---
+  duration_ms: 3.3692
+  type: 'test'
+  ...
+# Subtest: the readout shows cup from → to: the DOCUMENT's values with the bank cell's rounding, never the typed target, never bank's
+ok 18 - the readout shows cup from → to: the DOCUMENT's values with the bank cell's rounding, never the typed target, never bank's
+  ---
+  duration_ms: 4.2819
+  type: 'test'
+  ...
+# Subtest: the cup cell follows the cup field inside its input handler, and a cup the core refuses shows — and says why
+ok 19 - the cup cell follows the cup field inside its input handler, and a cup the core refuses shows — and says why
+  ---
+  duration_ms: 2.115
+  type: 'test'
+  ...
+# Subtest: the brush's channel list gains cup (channel c), with a drag rate in degrees
+ok 20 - the brush's channel list gains cup (channel c), with a drag rate in degrees
+  ---
+  duration_ms: 0.5607
+  type: 'test'
+  ...
+# Subtest: the brush's channel list offers the cross-section channels e, s and t (D225), each with a drag rate
+ok 21 - the brush's channel list offers the cross-section channels e, s and t (D225), each with a drag rate
+  ---
+  duration_ms: 0.5562
+  type: 'test'
+  ...
+# Subtest: on an EMPTY track the fields show the first piece's start (level, straight, the bowl's 31 m and the edge it renders), not blanks
+ok 22 - on an EMPTY track the fields show the first piece's start (level, straight, the bowl's 31 m and the edge it renders), not blanks
+  ---
+  duration_ms: 1.0671
+  type: 'test'
+  ...
+# Subtest: after Extend and Redo the fields show the head's END state in their own units (°/100m, °, m); after Undo, the undone piece's own values (D242 item 7)
+ok 23 - after Extend and Redo the fields show the head's END state in their own units (°/100m, °, m); after Undo, the undone piece's own values (D242 item 7)
+  ---
+  duration_ms: 13.2628
+  type: 'test'
+  ...
+# Subtest: on OPENING a saved track the fields show its head
+ok 24 - on OPENING a saved track the fields show its head
+  ---
+  duration_ms: 3.382
+  type: 'test'
+  ...
+# Subtest: a CHANGED value is a target in the core's units; a value typed back to exactly what was shown is untouched again
+ok 25 - a CHANGED value is a target in the core's units; a value typed back to exactly what was shown is untouched again
+  ---
+  duration_ms: 14.9699
+  type: 'test'
+  ...
+# Subtest: a field left as shown builds the SAME piece, ghost and readout as a blank, even where turn and bank are still changing at the head; a literal target would not
+ok 26 - a field left as shown builds the SAME piece, ghost and readout as a blank, even where turn and bank are still changing at the head; a literal target would not
+  ---
+  duration_ms: 7.754
+  type: 'test'
+  ...
+# Subtest: the first piece is the typed WIDTH along its whole length, from s = 0 (no bottleneck); untyped channels keep their default start
+ok 27 - the first piece is the typed WIDTH along its whole length, from s = 0 (no bottleneck); untyped channels keep their default start
+  ---
+  duration_ms: 3.4389
+  type: 'test'
+  ...
+# Subtest: the first piece is the typed BANK, TURN and CLIMB from s = 0
+ok 28 - the first piece is the typed BANK, TURN and CLIMB from s = 0
+  ---
+  duration_ms: 7.4209
+  type: 'test'
+  ...
+# Subtest: a typed CUP makes the first piece a cup piece from its start, and the rendered edge equals c on both sides from s = 0 (seal row 1)
+ok 29 - a typed CUP makes the first piece a cup piece from its start, and the rendered edge equals c on both sides from s = 0 (seal row 1)
+  ---
+  duration_ms: 4.0546
+  type: 'test'
+  ...
+# Subtest: the SECOND piece is unchanged: it starts where the first ends and ramps to its target, exactly as before
+ok 30 - the SECOND piece is unchanged: it starts where the first ends and ramps to its target, exactly as before
+  ---
+  duration_ms: 4.0252
+  type: 'test'
+  ...
+# Subtest: a lap whose first piece was typed (width 40, cup 30) closes, and exports through the app's route with no red (csp on)
+ok 31 - a lap whose first piece was typed (width 40, cup 30) closes, and exports through the app's route with no red (csp on)
+  ---
+  duration_ms: 1001.0577
+  type: 'test'
+  ...
+# Subtest: extendOptions "at start": a ticked field WITH a target goes in transition as { channel: 20 m }; unticked or untouched fields do not
+ok 32 - extendOptions "at start": a ticked field WITH a target goes in transition as { channel: 20 m }; unticked or untouched fields do not
+  ---
+  duration_ms: 0.1945
+  type: 'test'
+  ...
+# Subtest: the panel: an "at start" box beside each field, OFF by default; ticking one redraws the ghost and readout inside its handler, and Extend sends it
+ok 33 - the panel: an "at start" box beside each field, OFF by default; ticking one redraws the ghost and readout inside its handler, and Extend sends it
+  ---
+  duration_ms: 3.5827
+  type: 'test'
+  ...
+# Subtest: "at start" on a field left as shown sends nothing (no target, D193); the box stays ticked for the next piece
+ok 34 - "at start" on a field left as shown sends nothing (no target, D193); the box stays ticked for the next piece
+  ---
+  duration_ms: 3.6084
+  type: 'test'
+  ...
+# Subtest: no water: the panel has no Water section, the shell no pour and no water state, an edit pours and draws nothing, and no file of the app names the water
+ok 35 - no water: the panel has no Water section, the shell no pour and no water state, an edit pours and draws nothing, and no file of the app names the water
+  ---
+  duration_ms: 15.1736
+  type: 'test'
+  ...
+# Subtest: Close the loop writes a copy of the track as it was BEFORE closing it (shell.backupNow), then closes, in one press
+ok 36 - Close the loop writes a copy of the track as it was BEFORE closing it (shell.backupNow), then closes, in one press
+  ---
+  duration_ms: 1598.8029
+  type: 'test'
+  ...
+# Subtest: Close says it is working at once, and a refusal shows in the Close box, in red
+ok 37 - Close says it is working at once, and a refusal shows in the Close box, in red
+  ---
+  duration_ms: 4363.7524
+  type: 'test'
+  ...
+# Subtest: if that copy cannot be written, the press changes nothing and says why
+ok 38 - if that copy cannot be written, the press changes nothing and says why
+  ---
+  duration_ms: 1508.7595
+  type: 'test'
+  ...
+# Subtest: D271: Level ends the piece straight and level; To floor too short says the length that works, which then works; each is one undo step
+ok 39 - D271: Level ends the piece straight and level; To floor too short says the length that works, which then works; each is one undo step
+  ---
+  duration_ms: 162.9819
+  type: 'test'
+  ...
+# Subtest: D280: Turn by places a piece that turns exactly the typed angle and ends straight; a Straight after it turns 0.0°; one undo step; too short names the length
+ok 40 - D280: Turn by places a piece that turns exactly the typed angle and ends straight; a Straight after it turns 0.0°; one undo step; too short names the length
+  ---
+  duration_ms: 11.5051
+  type: 'test'
+  ...
+# Subtest: Turn to grid: the line under the buttons says how far the end is off the grid, and the button turns onto it (90 by default, 45 when picked)
+ok 41 - Turn to grid: the line under the buttons says how far the end is off the grid, and the button turns onto it (90 by default, 45 when picked)
+  ---
+  duration_ms: 10.8168
+  type: 'test'
+  ...
+# Subtest: D282: Sharp places a corner of the typed angle at the typed radius as ONE undo step; too tight a radius names the tightest at this width and places nothing
+ok 42 - D282: Sharp places a corner of the typed angle at the typed radius as ONE undo step; too tight a radius names the tightest at this width and places nothing
+  ---
+  duration_ms: 1284.3761
+  type: 'test'
+  ...
+# Subtest: D242: after a 30°/100m turn, Straight extends a piece whose turn and climb are 0 from 20 m on, and puts the "at start" boxes back; turn 0 without "at start" shows the hint
+ok 43 - D242: after a 30°/100m turn, Straight extends a piece whose turn and climb are 0 from 20 m on, and puts the "at start" boxes back; turn 0 without "at start" shows the hint
+  ---
+  duration_ms: 7.3923
+  type: 'test'
+  ...
+# Subtest: D242 item 7: Undo gives back the undone piece's values: the fields read what it was extended with, and Extend again rebuilds it byte-identical; Redo shows the head as before
+ok 44 - D242 item 7: Undo gives back the undone piece's values: the fields read what it was extended with, and Extend again rebuilds it byte-identical; Redo shows the head as before
+  ---
+  duration_ms: 9.7817
+  type: 'test'
+  ...
+# Subtest: the piece labels equal a fresh read after a placement, an undo, a redo, a bend in the middle and a moved start
+ok 45 - the piece labels equal a fresh read after a placement, an undo, a redo, a bend in the middle and a moved start
+  ---
+  duration_ms: 16.7911
+  type: 'test'
+  ...
+# Subtest: the panel shows the corner (its turn, "ends turning at …", what turn 0 at start would add) and the gravity bank, for the piece Extend would add
+ok 46 - the panel shows the corner (its turn, "ends turning at …", what turn 0 at start would add) and the gravity bank, for the piece Extend would add
+  ---
+  duration_ms: 5.6211
+  type: 'test'
+  ...
+# Subtest: D331 B: by default the turn field is a corner: it shows nothing at the head, a typed 90 is the ghost's and the placed piece's exact 90.00°, ending straight
+ok 47 - D331 B: by default the turn field is a corner: it shows nothing at the head, a typed 90 is the ghost's and the placed piece's exact 90.00°, ending straight
+  ---
+  duration_ms: 3.682
+  type: 'test'
+  ...
+# Subtest: D331 B: "turn as" rate is the old field (°/100 m, the head's rate shown); switching back puts the field back; Level, To floor and Jump refuse a corner by name and place nothing
+ok 48 - D331 B: "turn as" rate is the old field (°/100 m, the head's rate shown); switching back puts the field back; Level, To floor and Jump refuse a corner by name and place nothing
+  ---
+  duration_ms: 1.9466
+  type: 'test'
+  ...
+# Subtest: D331 climb: by default the climb field is a corner: blank at the head, a typed 10 is the ghost's and the placed piece's exact 10.00°, at a steady pitch after; the climb corner cell reads it
+ok 49 - D331 climb: by default the climb field is a corner: blank at the head, a typed 10 is the ghost's and the placed piece's exact 10.00°, at a steady pitch after; the climb corner cell reads it
+  ---
+  duration_ms: 4.4259
+  type: 'test'
+  ...
+1..49
+# tests 49
+# suites 0
+# pass 49
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10451.8371
