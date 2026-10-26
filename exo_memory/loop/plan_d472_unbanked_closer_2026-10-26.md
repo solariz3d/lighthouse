@@ -67,3 +67,19 @@ NEXT: chair dispatch D472 to C now; librarian rules when C's hand-back is in.
 - **One fold-in for the landing, ruled:** Bank the lap writes a pre-bank backup first, as Smooth ramps does. It changes every curve on the lap, and Undo only lasts the session. Two lines, modelled on smoothRamps.
 - **For the release review, not a fix order yet:** a second press on a looped lap banks p3 again by up to 1.9° (E §4). A command that is not idempotent reads as a bug to a user. The reviewer says whether it is bankPlan's straight-beside-a-loop case, and whether it needs its own lap.
 - **Release:** held. By the batch rule, d473-e rides with whatever the keeper's new original track turns up today.
+
+## D474 ruled, 11:52 (C, d474-c 494cec16, `p-d474-review-C_2026-10-26.md`, read whole)
+
+- **The review is accepted.** d473-e a4bfe52 is correct on closed-only, route unmoved, one undo step, and the level-held pieces named on E's lap. These are checked, not inferred: E-twice.out, E-press.out.
+- **Finding 1, real, ruled a fix before the batch ships.** A second press re-banks a piece whose bank stays under ROLL_FREE (5°):
+  - `bankLapRun`'s `flat` set (finish.js:486), with `bankPlan`'s absolute targets (:233) added onto the existing phi by `banked()` (:350–351);
+  - on E's looped lap p3 goes 1.06 → 1.92 → 2.78 → 3.65°, and stops at press 5;
+  - it needs a piece next to a pinned joint (a loop, a ramp, his own bank, a pit or tube piece).
+  - A user who presses twice sees the lap change, which is a bug in a command that says the route does not move and implies "done".
+- **Finding 2, wording, ruled in.** On TEST 10 the status line leaves out his loop p18/p19, which the level rule holds back from a ~52° bank. `info.level` filters by `curved` (stored kh against 1/600), and his loop peaks at 1.571e-3. It should name the flat pieces that are not level and have a non-zero plan bank.
+
+## D477, the landing fixes for d473-e: pane E (prove it: src/core/finish.js is core maths)
+1. **Idempotent.** A second Bank the lap changes nothing, on every lap. C's red row `core-bank-lap-twice.test.js` (in d474-c's evidence folder) turns green, unedited. A second row on TEST 10's shape (a loop beside banked pieces) stays idempotent. The fix belongs in the core, so that closejob's single press keeps its output byte-equal. Test that equality.
+2. **Status words** name the level-held pieces by the plan-bank test, not `curved`. A row on a loop whose stored kh is under 1/600.
+3. **Pre-bank backup** before the write, modelled on smoothRamps (ruled at the D473 collation).
+4. The mutation harness covering finish.js, whole. The touched files' tests. 0 "keeper" in the added lines.
