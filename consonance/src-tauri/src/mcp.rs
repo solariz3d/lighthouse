@@ -4328,11 +4328,13 @@ mod third_place_mount_tests {
     /// private/third_place written relative) is refused; a pointer into the public record is not, and nor is the word "private".
     #[test]
     fn a_pointer_into_private_is_refused_and_one_outside_it_is_not() {
-        for p in [r"C:\Consonance\private\third_place\lineage\keeper_2026-10.md", "c:/consonance/private/x.md", r"C:\CONSONANCE\PRIVATE",
+        // The strings carry no drive prefix (portable-paths, D476 landing): the rule reads `consonance/private` whatever the drive, so a
+        // drive letter adds nothing to the case and would make this test a machine path.
+        for p in [r"\Consonance\private\third_place\lineage\keeper_2026-10.md", "/consonance/private/x.md", r"\CONSONANCE\PRIVATE",
                   "see private/third_place/2026-10-26.md"] {
             assert!(points_into_private(p), "{p}");
         }
-        for p in ["exo_memory/third_place/to_the_librarian_2026-10-26.md", r"C:\Users\nname\Desktop\lighthouse\exo_memory\third_place\2026-10-26.md",
+        for p in ["exo_memory/third_place/to_the_librarian_2026-10-26.md", r"\Users\someone\lighthouse\exo_memory\third_place\2026-10-26.md",
                   "a private thought, written down at exo_memory/third_place/2026-10-26.md"] {
             assert!(!points_into_private(p), "{p}");
         }
