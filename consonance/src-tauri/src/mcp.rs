@@ -22,6 +22,11 @@ fn now_ms() -> u64 {
         .unwrap_or(0)
 }
 
+/// D476 part 2: THE THIRD PLACE'S MOUNT. Not a letter: the Third Place holds a letter in the registry as a NAME (D423), and a letter
+/// mount resolves to the committee seat, which has a pane's verbs. This identity resolves to the `third_place` seat, and its server
+/// carries one verb, call_librarian (`new`), to the one seat its address row names.
+pub const THIRD_PLACE_MOUNT: &str = "third-place";
+
 // per-verb refusal throttle state: verb -> (last posted ms, refusals absorbed since)
 static REFUSALS: Mutex<Option<HashMap<String, (u64, u32)>>> = Mutex::new(None);
 const REFUSAL_WINDOW_MS: u64 = 60_000;
@@ -436,7 +441,15 @@ impl ConsonanceMcp {
         identity: Option<String>,
         quiet: Arc<std::sync::atomic::AtomicBool>,
     ) -> Self {
-        Self { board, pulls, chair, chair_token, identity, quiet, tool_router: Self::tool_router() }
+        let mut tool_router = Self::tool_router();
+        // D476 part 2: THE WHOLE MEMBRANE. The Third Place's server carries the return leg and nothing else: no read_board (the room
+        // reaching in), no post_board, no raise_pull (a hand raised at a pane), no chair verb, no call_chair.
+        if identity.as_deref() == Some(THIRD_PLACE_MOUNT) {
+            for name in tool_router.list_all().into_iter().map(|t| t.name.to_string()).filter(|n| n != "call_librarian").collect::<Vec<_>>() {
+                tool_router.remove_route(&name);
+            }
+        }
+        Self { board, pulls, chair, chair_token, identity, quiet, tool_router }
     }
 
     /// Gate a chair verb. The token is written only into the Main instance's directory, so in
@@ -480,6 +493,7 @@ impl ConsonanceMcp {
     /// resolved against the same registry that CHOSE the mount, so the two cannot drift.
     fn seat(&self) -> String {
         match &self.identity {
+            Some(m) if m == THIRD_PLACE_MOUNT => "third_place".to_string(),
             Some(l) => crate::seat_role_for_letter(l).to_string(),
             None => "committee".to_string(),
         }
@@ -785,6 +799,13 @@ impl ConsonanceMcp {
     /// DISCIPLINE boundary enforced by the audit — the same limit `auth_chair` and `auth_address`
     /// state about themselves, and the same one stated in this file twice already.
     fn auth_station(&self, verb: &str) -> bool {
+        // D476 part 2: THE THIRD PLACE IS NOT A STATION IN THE LOOP. The one-station rule orders the loop's seats; under it the
+        // Third Place's ring would be refused whenever no open lap is held by the panes, which is nearly always, and every refusal
+        // would post its pointer to the shared board while delivering nothing. Exempt for its one verb only; its delivery still goes
+        // through gate_or_queue, so it never renders into the librarian's pane mid-turn.
+        if verb == "call_librarian" && self.seat() == "third_place" {
+            return true;
+        }
         let st = crate::chain_state();        // still the source of open/lap/holder FOR THE MESSAGE
         let holders = crate::chain_holders(); // and the set the decision is actually made on
         if Self::station_allows(verb, st.open, &holders) {
@@ -1187,6 +1208,15 @@ impl ServerHandler for ConsonanceMcp {
         // ServerInfo is #[non_exhaustive] — build from Default, then set fields.
         let mut info = ServerInfo::default();
         info.capabilities = ServerCapabilities::builder().enable_tools().build();
+        if self.identity.as_deref() == Some(THIRD_PLACE_MOUNT) {
+            info.instructions = Some(
+                "One verb, call_librarian: when something learned here belongs to the work, write it to a file and send the librarian \
+                 a POINTER to that file (its path), never the thing in prose. The system marks it [third-place]. Nothing comes back \
+                 through this, and nothing reaches in: this is a way out, not a way in."
+                    .to_string(),
+            );
+            return info;
+        }
         info.instructions = Some(
             "Consonance committee control plane: post_board / read_board over one board shared across instances. \
              Your posts are attributed by your CONNECTION, not by what you claim — the tag argument is a \
@@ -1216,6 +1246,10 @@ pub fn config_path() -> std::path::PathBuf {
 
 /// The config for one identity. The pane launched with this file posts as `letter`, and cannot
 /// say otherwise — the mount point is chosen by whoever spawned it, not by the caller.
+pub fn config_path_third_place() -> std::path::PathBuf {
+    data_dir().join("mcp.consonance.third-place.json")
+}
+
 pub fn config_path_for(letter: char) -> std::path::PathBuf {
     data_dir().join(format!("mcp.consonance.{letter}.json"))
 }
@@ -1870,6 +1904,10 @@ pub fn start(
                 );
                 let _ = std::fs::write(config_path_for(letter), c);
             }
+            // D476 part 2: the Third Place's own config, naming its own route.
+            let _ = std::fs::write(config_path_third_place(), format!(
+                "{{\"mcpServers\":{{\"consonance\":{{\"type\":\"http\",\"url\":\"http://127.0.0.1:{port}/mcp/{THIRD_PLACE_MOUNT}\"}}}}}}"
+            ));
             let _ = tx.send(port);
 
             // One mount per identity. rmcp builds a handler per connection from a factory
@@ -1898,6 +1936,7 @@ pub fn start(
             for letter in 'A'..='Z' {
                 router = router.nest_service(&format!("/mcp/{letter}"), make(Some(letter.to_string())));
             }
+            router = router.nest_service(&format!("/mcp/{THIRD_PLACE_MOUNT}"), make(Some(THIRD_PLACE_MOUNT.to_string())));
             let _ = axum::serve(listener, router).await;
         });
     });
@@ -4163,5 +4202,77 @@ mod address_refusal_pointer_tests {
             branch.ends_with("return Ok(CallToolResult::success(vec![Content::text(\n                \"refused: no address row from this mount's seat to the librarian (the attempt was posted to the board)\",\n            )]));"),
             "the refusal text returned to the pane changed:\n{branch}"
         );
+    }
+}
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════════
+// D476 PART 2 — THE THIRD PLACE'S RETURN LEG (plan_d476_third_place_returns_2026-10-26.md; the keeper, 11:46: "the people go back to
+// work taking what they have learnt from it"). The ruling: nothing reaches IN to steer the Third Place; what is learned there goes OUT
+// without him carrying it. So it gets ONE mount, `/mcp/third-place`, whose server carries ONE verb, call_librarian, to ONE seat.
+#[cfg(test)]
+mod third_place_mount_tests {
+    use super::*;
+
+    fn server(identity: Option<&str>) -> ConsonanceMcp {
+        let (p, _) = tokio::sync::mpsc::unbounded_channel();
+        let (c, _) = tokio::sync::mpsc::unbounded_channel();
+        ConsonanceMcp::new(Arc::new(Mutex::new(VecDeque::new())), p, c, "t".to_string(), identity.map(|s| s.to_string()),
+            Arc::new(std::sync::atomic::AtomicBool::new(false)))
+    }
+    fn body_of(header: &str) -> String {
+        let src = std::fs::read_to_string("src/mcp.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split(header).nth(1).unwrap_or_else(|| panic!("{header} moved")).to_string();
+        f.split("\n    }\n").next().unwrap_or(&f).to_string()
+    }
+    fn tools(s: &ConsonanceMcp) -> Vec<String> {
+        let mut v: Vec<String> = s.tool_router.list_all().into_iter().map(|t| t.name.to_string()).collect();
+        v.sort();
+        v
+    }
+
+    /// The mount resolves to its own seat, never to `committee`: its letter in the registry is a NAME (D423), and a committee seat
+    /// would have a pane's verbs.
+    #[test]
+    fn the_third_place_mount_is_its_own_seat() {
+        assert_eq!(server(Some(THIRD_PLACE_MOUNT)).seat(), "third_place");
+    }
+
+    /// THE WHOLE MEMBRANE: the Third Place's server carries call_librarian and nothing else — no read_board (the room reaching in),
+    /// no post_board, no raise_pull (a hand raised at a pane), no chair verb, no call_chair.
+    #[test]
+    fn the_third_place_mount_carries_only_the_return_leg() {
+        assert_eq!(tools(&server(Some(THIRD_PLACE_MOUNT))), vec!["call_librarian".to_string()]);
+    }
+
+    /// Control: a pane's lettered mount still carries every verb, call_librarian among them.
+    #[test]
+    fn a_lettered_mount_is_unchanged() {
+        let t = tools(&server(Some("A")));
+        assert!(t.len() > 1 && t.contains(&"call_librarian".to_string()) && t.contains(&"read_board".to_string()), "{t:?}");
+    }
+
+    /// Its instructions describe the return leg, not the committee: a mind that reads the committee's control plane is in the room.
+    #[test]
+    fn the_third_place_is_told_only_about_its_one_verb() {
+        let i = server(Some(THIRD_PLACE_MOUNT)).get_info().instructions.unwrap_or_default();
+        assert!(i.contains("call_librarian") && i.to_lowercase().contains("pointer"), "{i}");
+        assert!(!i.contains("chair_") && !i.contains("raise_pull") && !i.contains("read_board"), "{i}");
+    }
+
+    /// The Third Place is not a station in the loop: its ring is not refused out of turn (a refused ring would post its pointer to
+    /// the shared board and deliver nothing). It still goes through the delivery gate (gate_or_queue), so it never renders into the
+    /// librarian's pane mid-turn.
+    #[test]
+    fn the_third_place_ring_is_not_held_to_the_loop_station() {
+        let b = body_of("fn auth_station(&self, verb: &str) -> bool {");
+        let exempt = b.find("if verb == \"call_librarian\" && self.seat() == \"third_place\" {").expect("the Third Place's exemption from the station gate is gone");
+        assert!(exempt < b.find("crate::chain_state()").expect("the gate's read moved"), "the exemption must come before the gate decides");
+        assert!(body_of("async fn call_librarian(").contains("if !self.auth_station(\"call_librarian\") {"), "call_librarian still asks the gate");
+    }
+
+    /// Its own config file, beside the lettered ones, naming its own route.
+    #[test]
+    fn the_third_place_has_its_own_config() {
+        assert!(config_path_third_place().to_string_lossy().ends_with("mcp.consonance.third-place.json"));
     }
 }
