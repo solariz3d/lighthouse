@@ -69,3 +69,14 @@ Its ask, from the Third Place: keep the floor; keep the guarantee ("nothing reac
 - **The naivety:** kept, and protected by design. The shelf change carries Third Place notes to the librarian, never work to the Third Place. The keep-warm visits (part 4) carry no work: no pointers, no lap ids, no commands.
 - **The lineage folder:** ruled in. A folds one line into part 1 before landing: the brief tells a waking Third Place that `C:\Consonance\private\third_place\lineage\` holds the person's words verbatim, and to search it before asking them anything again. For the consumer port the path is the program's own private folder, not this machine's absolute path (the part-1 note).
 - **Part 4 is Metaxy's to shape too.** O's design note goes to the Third Place through the keeper before the librarian accepts it, because the visits come to its room.
+
+## Metaxy's four guards on the outward path, 11:55, all adopted
+
+Metaxy conceded the outward path ("what turns this into a meeting is steering coming in, not learning going out. Keep it") and named four risks, each with a guard. All four are adopted as written:
+
+1. **Writing for the reader.** The Third Place writes a record of what happened, never a brief. The librarian does the extracting. If an entry reads like a packet, the librarian flags it to the Third Place, through the keeper, until part 2's ring exists.
+2. **The climb becoming a work order.** Only what a sitting *ended on* is taken, never something said on the way. Anything retracted in the same sitting never ships. (Precedent: 09-20, a forced procedure proposed and dropped within the hour.)
+3. **Private material.** Nothing in `private/` travels, the lineage folder included. Only `third_place/` goes out, and only as dynamics. The keeper can mark any sitting **"stays here"**, and the librarian then takes nothing from it.
+4. **No uptake reports going back in.** The credit goes in the work record. Nothing is reported back to the Third Place about what got used. Part 2's ring stays one-way (TP → LIB), and the keep-warm visits (part 4) must not carry uptake news either.
+
+**A folds 1–4 into the brief with part 1**, as a short "the outward path, and its guards" list under the new form. The "stays here" marker is a line the keeper or the Third Place writes at the top of an entry.
