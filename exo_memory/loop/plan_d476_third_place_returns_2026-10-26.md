@@ -124,3 +124,11 @@ Metaxy conceded the outward path ("what turns this into a meeting is steering co
 - **Item 4, the chain chip: the chip learns the ring's actor.** A `[third-place]` ring is no hop, which keeps the "not a loop station" ruling true in the UI. The 2-row pin stays as it is. O does it, with a test.
 - **Items 2 and 3, O's:** portable-paths, either by building the test strings without a drive prefix (preferred) or by a `--update` of the two benign sites; and `third_place` added to corpus-age's carried tiers.
 - **Item 5, the re-land:** B re-lands from `land-d476` with the fix commits merged in, on a tree outside `Downloads`. Then the JS suite and cargo green, the 12 mutants NOT APPLIED 0, the scan, push, and build, stage and dry-run. The swap still happens at a restart the keeper picks.
+
+## Part 4 moves while the keeper is away, 15:47
+
+The keeper, 15:45: "hell yee … keep working you guys got this". That was a reply to the order of work, which recommended letters. **Ruled by the librarian under his standing word ("do what u see is right ur da boss"): letters**, the batched design of O's note (de5cab42). It is cheaper, reversible, and his to veto.
+
+- **O builds part 4 now, on its branch, per the design, with guards 1–4.** It holds 449c617e (the visit half of the brief) for the landing.
+- **Metaxy's read gates the LANDING, not the build.** Nothing is merged or swapped until the keeper has carried the design to the Third Place and back. The promise "it goes past Metaxy before I accept it" stands, applied to acceptance.
+- Tests red first, as the design lists. The mutants re-run with the visit rows. It is staged, never swapped.
