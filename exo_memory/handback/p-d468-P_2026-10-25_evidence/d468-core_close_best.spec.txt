@@ -1,0 +1,26 @@
+[32m✔ row 1: an end already at the start: one press is the near-closed bend, with no new road and nothing moved; Finish is not even tried [90m(1689.7495ms)[39m[39m
+[32m✔ row 2: ends 2, 5 and 10 m past the start, and 5 m short of it, close by a bend: no new road, no loop [90m(7469.8084ms)[39m[39m
+[32m✔ row 3: new road only when no bend proves: a far end gets Finish (every other route refused or failed); a near end does not, though Finish closed it [90m(3486.0627ms)[39m[39m
+[32m✔ row 4: when no way proves, there is no document, and one line says nothing changed and why, with the closest way's reason [90m(4543.3806ms)[39m[39m
+[32m✔ row 5: a bend that would move the track further than its gap and 10 m is not eligible, and new road is laid instead [90m(1898.3836ms)[39m[39m
+[32m✔ row 7: the pick is the least-moving way that proves: every way that would move the track less was refused or failed the lap proof or added a red [90m(7250.9708ms)[39m[39m
+[32m✔ row 8: the order: no new road first (even when the new road moves nothing), then the least movement, and within a millimetre the route order [90m(0.5488ms)[39m[39m
+[90m﹣ row 6: the reported near-closed save: one press bends its last 2 pieces by up to 4.4 m, with no new road, and the lap proves [90m(0.0705ms)[39m # fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)[39m
+[32m✔ row 9: when the end is at the start, the near bend is closed and checked first, and once it proves no other route is run [90m(1659.2921ms)[39m[39m
+[32m✔ row 10: the pick is the exhaustive order's on every track: the same route, the same words, the same closed track [90m(27583.9339ms)[39m[39m
+[32m✔ row 11: given the open track's reds, the press does not check the open track, and picks exactly as it does without them [90m(7455.9125ms)[39m[39m
+[90m﹣ row 12: the reported save: one press, with the reds the live checker found, closes in under 30 s, and picks as a press without them does [90m(0.0729ms)[39m # fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)[39m
+[32m✔ row 13: the worker's press on a structuredClone of the track picks and closes exactly as on the track, and residual never runs on an unfrozen document [90m(3530.7709ms)[39m[39m
+[90m﹣ row 14: the reported save: the worker's press on a structuredClone, with the live checker's reds, picks and closes as on the parsed save, residual never unfrozen [90m(0.0824ms)[39m # fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)[39m
+[34mℹ tests 14[39m
+[34mℹ suites 0[39m
+[34mℹ pass 11[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 3[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 66671.4721[39m
+
+# stderr
+
+# exit 0 in 66.7 s

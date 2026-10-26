@@ -1,0 +1,134 @@
+[32m✔ CONTROL: core_xsec, core_xsec_math and validate_xsec pass whole on an unmutated copy of src/, tools/ and app/ [90m(107777.8094ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(266.1902ms)[39m[39m
+[32m✔ mutant KE1-1 G = t (the slice is a kink): applied, and caught by "slice is no kink|analytic" [90m(373.3627ms)[39m[39m
+[34mℹ KE1-1 G = t (the slice is a kink): 1 of 2 run tests failed[39m
+[32m✔ mutant KE1-2 the edge term is signed by the side (right side −e): applied, and caught by "E1 \(i\)" [90m(414.326ms)[39m[39m
+[34mℹ KE1-2 the edge term is signed by the side (right side −e): 1 of 1 run tests failed[39m
+[32m✔ mutant KE1-3 e is taken as radians: applied, and caught by "E1 \(i\)" [90m(411.0312ms)[39m[39m
+[34mℹ KE1-3 e is taken as radians: 1 of 1 run tests failed[39m
+[32m✔ mutant KE1-4 four intervals for the outer zone: applied, and caught by "E4 \(v\)" [90m(412.778ms)[39m[39m
+[34mℹ KE1-4 four intervals for the outer zone: 1 of 1 run tests failed[39m
+[32m✔ mutant KE1-5 the slice is placed at the full width, not the half-width (the edge is never reached): applied, and caught by "E1 \(i\)" [90m(397.3486ms)[39m[39m
+[34mℹ KE1-5 the slice is placed at the full width, not the half-width (the edge is never reached): 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-1 the cap is applied to e alone, not the total: applied, and caught by "DOMAIN" [90m(415.337ms)[39m[39m
+[34mℹ KE2-1 the cap is applied to e alone, not the total: 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-2 no guard on the edge in the document: applied, and caught by "DOMAIN" [90m(398.4957ms)[39m[39m
+[34mℹ KE2-2 no guard on the edge in the document: 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-3 s has no lower bound: applied, and caught by "DOMAIN" [90m(391.9553ms)[39m[39m
+[34mℹ KE2-3 s has no lower bound: 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-4 the floor is not checked (a side may turn down past -30°, a lip): applied, and caught by "DOMAIN" [90m(391.0696ms)[39m[39m
+[34mℹ KE2-4 the floor is not checked (a side may turn down past -30°, a lip): 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-5 extend does not refuse a target the cap cannot hold: applied, and caught by "EXTEND: e, s and t targets" [90m(400.1327ms)[39m[39m
+[34mℹ KE2-5 extend does not refuse a target the cap cannot hold: 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-6 the fit's ringing is not clamped (e): applied, and caught by "ringing" [90m(405.3568ms)[39m[39m
+[34mℹ KE2-6 the fit's ringing is not clamped (e): 2 of 2 run tests failed[39m
+[32m✔ mutant KE2-8 the clamp moves the joint's own two points too (the D406 form): applied, and caught by "ringing" [90m(437.7896ms)[39m[39m
+[34mℹ KE2-8 the clamp moves the joint's own two points too (the D406 form): 1 of 2 run tests failed[39m
+[32m✔ mutant KE2-7 a legacy piece's total cap ignores its own edge angle (e alone against 150): applied, and caught by "DOMAIN" [90m(432.2006ms)[39m[39m
+[34mℹ KE2-7 a legacy piece's total cap ignores its own edge angle (e alone against 150): 1 of 1 run tests failed[39m
+[32m✔ mutant KE3-3 the schema is still /3: applied, and caught by "SCHEMA" [90m(433.2951ms)[39m[39m
+[34mℹ KE3-3 the schema is still /3: 1 of 2 run tests failed[39m
+[32m✔ mutant KE3-4 every piece's text carries e, s and t: applied, and caught by "SCHEMA: new documents" [90m(417.6676ms)[39m[39m
+[34mℹ KE3-4 every piece's text carries e, s and t: 1 of 1 run tests failed[39m
+[32m✔ mutant KE3-5 a /3 file is not read: applied, and caught by "SCHEMA: new documents" [90m(479.0541ms)[39m[39m
+[34mℹ KE3-5 a /3 file is not read: 1 of 1 run tests failed[39m
+[32m✔ mutant KE3-6 a text with an edge array is not read as an edge piece: applied, and caught by "SCHEMA: an edge piece" [90m(270.0032ms)[39m[39m
+[34mℹ KE3-6 a text with an edge array is not read as an edge piece: 1 of 1 run tests failed[39m
+[32m✔ mutant KE4-1 e is left out of the joint test: applied, and caught by "JOINT \(E4 i" [90m(396.2687ms)[39m[39m
+[34mℹ KE4-1 e is left out of the joint test: 1 of 1 run tests failed[39m
+[32m✔ mutant KE4-2 e is reset after a flight, like the heading rate: applied, and caught by "E4 \(ii\)" [90m(402.7285ms)[39m[39m
+[34mℹ KE4-2 e is reset after a flight, like the heading rate: 1 of 1 run tests failed[39m
+[32m✔ mutant KE4-3 one blend start for the whole piece (the cup's run trick on a moving slice): applied, and caught by "E4 \(v\)|E4 \(vi" [90m(438.1235ms)[39m[39m
+[34mℹ KE4-3 one blend start for the whole piece (the cup's run trick on a moving slice): 2 of 2 run tests failed[39m
+[32m✔ mutant KE4-4 no blend: one profile per segment (the stair-step): applied, and caught by "E4 \(vi" [90m(405.4928ms)[39m[39m
+[34mℹ KE4-4 no blend: one profile per segment (the stair-step): 1 of 1 run tests failed[39m
+[32m✔ mutant KE4-5 the mesh ignores the piece's shared row grid (each segment samples its own rows: a zip inside the piece): applied, and caught by "E4 \(vi" [90m(554.1916ms)[39m[39m
+[34mℹ KE4-5 the mesh ignores the piece's shared row grid (each segment samples its own rows: a zip inside the piece): 1 of 1 run tests failed[39m
+[32m✔ mutant KE4-6 the chords do not share one fraction array: applied, and caught by "E4 \(vi" [90m(547.3602ms)[39m[39m
+[34mℹ KE4-6 the chords do not share one fraction array: 1 of 1 run tests failed[39m
+[32m✔ mutant KE5-1 the csp-off steep check is dropped: applied, and caught by "E5 " [90m(94396.708ms)[39m[39m
+[34mℹ KE5-1 the csp-off steep check is dropped: 4 of 4 run tests failed[39m
+[32m✔ mutant KE6-2 e is fed into the roll: applied, and caught by "E6" [90m(433.3764ms)[39m[39m
+[34mℹ KE6-2 e is fed into the roll: 1 of 2 run tests failed[39m
+[32m✔ mutant KE7-1 edgeToDeg reads the start of the piece: applied, and caught by "READOUT" [90m(407.8889ms)[39m[39m
+[34mℹ KE7-1 edgeToDeg reads the start of the piece: 1 of 1 run tests failed[39m
+[32m✔ mutant KE7-3 a plain piece reads the wrong default slice: applied, and caught by "READOUT" [90m(403.4293ms)[39m[39m
+[34mℹ KE7-3 a plain piece reads the wrong default slice: 1 of 1 run tests failed[39m
+[32m✔ mutant KT1-1 the tube's edge angle is t, not t/2: applied, and caught by "TUBE" [90m(306.354ms)[39m[39m
+[34mℹ KT1-1 the tube's edge angle is t, not t/2: 1 of 1 run tests failed[39m
+[32m✔ mutant KT1-2 a tube HELD in the slot is not refused: applied, and caught by "DOMAIN" [90m(407.7289ms)[39m[39m
+[34mℹ KT1-2 a tube HELD in the slot is not refused: 1 of 1 run tests failed[39m
+[32m✔ mutant KT1-3 the closure is 20 mm short of closing: applied, and caught by "T1 \(ii" [90m(397.2005ms)[39m[39m
+[34mℹ KT1-3 the closure is 20 mm short of closing: 1 of 1 run tests failed[39m
+[32m✔ mutant KT1-4 the slot formula has no factor 2: applied, and caught by "tube slot" [90m(303.1941ms)[39m[39m
+[34mℹ KT1-4 the slot formula has no factor 2: 1 of 1 run tests failed[39m
+[32m✔ mutant KT1-5 a sweep past 360 is accepted: applied, and caught by "DOMAIN" [90m(409.6532ms)[39m[39m
+[34mℹ KT1-5 a sweep past 360 is accepted: 1 of 1 run tests failed[39m
+[32m✔ mutant KT2-1 no morph into a tube from another kind (a zip with no fade): applied, and caught by "T1 \(ii" [90m(741.4902ms)[39m[39m
+[34mℹ KT2-1 no morph into a tube from another kind (a zip with no fade): 1 of 1 run tests failed[39m
+[32m✔ mutant KT3-1 CUP_MAX is applied to an open tube's t/2 + e: applied, and caught by "DOMAIN" [90m(402.1822ms)[39m[39m
+[34mℹ KT3-1 CUP_MAX is applied to an open tube's t/2 + e: 1 of 1 run tests failed[39m
+[32m✔ mutant KT3-2 a closed tube takes an edge: applied, and caught by "DOMAIN" [90m(402.2225ms)[39m[39m
+[34mℹ KT3-2 a closed tube takes an edge: 1 of 1 run tests failed[39m
+[32m✔ mutant KT4-1 a cup and a tube are allowed together (extend): applied, and caught by "CUP OR A TUBE" [90m(408.2905ms)[39m[39m
+[34mℹ KT4-1 a cup and a tube are allowed together (extend): 1 of 1 run tests failed[39m
+[32m✔ mutant KT4-2 a tube starts at the wrong edge after another kind (t = edge, not 2·edge): applied, and caught by "A TUBE JOINT" [90m(395.8012ms)[39m[39m
+[34mℹ KT4-2 a tube starts at the wrong edge after another kind (t = edge, not 2·edge): 1 of 1 run tests failed[39m
+[32m✔ mutant KT4-4 endState reports t at a non-tube head (twice the edge, the internal value leaks): applied, and caught by "ENDSTATE" [90m(388.3884ms)[39m[39m
+[34mℹ KT4-4 endState reports t at a non-tube head (twice the edge, the internal value leaks): 1 of 1 run tests failed[39m
+[32m✔ mutant KT4-5 a tube after another kind starts from the head's t (0), not from tNext: applied, and caught by "A TUBE JOINT|ENDSTATE" [90m(443.3799ms)[39m[39m
+[34mℹ KT4-5 a tube after another kind starts from the head's t (0), not from tNext: 2 of 2 run tests failed[39m
+[32m✔ mutant KT4-3 a cup after a closed tube is not refused by name: applied, and caught by "X1 and T2" [90m(784.6693ms)[39m[39m
+[34mℹ KT4-3 a cup after a closed tube is not refused by name: 1 of 1 run tests failed[39m
+[32m✔ mutant KS2-1 the roll stays the per-segment smoothstep under a heartline: applied, and caught by "S2 \(iii\)" [90m(810.5683ms)[39m[39m
+[34mℹ KS2-1 the roll stays the per-segment smoothstep under a heartline: 1 of 1 run tests failed[39m
+[32m✔ mutant KS2-2 the heartline is a constant per segment (a step between segments): applied, and caught by "S2 \(i, ii\)|S2 \(vi\)" [90m(834.5527ms)[39m[39m
+[34mℹ KS2-2 the heartline is a constant per segment (a step between segments): 1 of 2 run tests failed[39m
+[32m✔ mutant KS2-3 a closed tube carries heartline 0: applied, and caught by "S2 \(i, ii\)" [90m(808.1646ms)[39m[39m
+[34mℹ KS2-3 a closed tube carries heartline 0: 1 of 1 run tests failed[39m
+[32m✔ mutant KS2-4 the heartline ramp starts at 180 (a step where a tube hands over to a cup): applied, and caught by "X1 and T2|S2 \(vii\)" [90m(2998.6755ms)[39m[39m
+[34mℹ KS2-4 the heartline ramp starts at 180 (a step where a tube hands over to a cup): 1 of 2 run tests failed[39m
+[32m✔ mutant KS2-5 water over a heartline is an anonymous throw: applied, and caught by "S2 \(iv\)" [90m(852.1056ms)[39m[39m
+[34mℹ KS2-5 water over a heartline is an anonymous throw: 1 of 1 run tests failed[39m
+[32m✔ mutant KS3-1 the roll rate is read over a 0.5 m chord: applied, and caught by "S3: a full 360" [90m(821.3335ms)[39m[39m
+[34mℹ KS3-1 the roll rate is read over a 0.5 m chord: 1 of 1 run tests failed[39m
+[32m✔ mutant KS3-2 the bar is raised to 2.0: applied, and caught by "S3: a full 360" [90m(882.5473ms)[39m[39m
+[34mℹ KS3-2 the bar is raised to 2.0: 1 of 1 run tests failed[39m
+[32m✔ mutant KS3-3 the gravity-frame φ′ is read instead of the frame-intrinsic rate (blind on a climbing turn at constant bank): applied, and caught by "S3 \(KS3-3\)" [90m(785.8495ms)[39m[39m
+[34mℹ KS3-3 the gravity-frame φ′ is read instead of the frame-intrinsic rate (blind on a climbing turn at constant bank): 1 of 1 run tests failed[39m
+[32m✔ mutant KS3-4 the amber bar is dropped: applied, and caught by "S3: a full 360" [90m(922.5004ms)[39m[39m
+[34mℹ KS3-4 the amber bar is dropped: 1 of 1 run tests failed[39m
+[32m✔ mutant KS3-5 the roll rate is never checked: applied, and caught by "S3: a full 360" [90m(805.4735ms)[39m[39m
+[34mℹ KS3-5 the roll rate is never checked: 1 of 1 run tests failed[39m
+[32m✔ mutant KS4-1 the spiral's curvature is not given to the validator (kvec of the integrated curve): applied, and caught by "S4" [90m(951.6337ms)[39m[39m
+[34mℹ KS4-1 the spiral's curvature is not given to the validator (kvec of the integrated curve): 1 of 1 run tests failed[39m
+[32m✔ mutant KS4-2 a lifted sample keeps only its own fields (spread of a view): applied, and caught by "S4|S2 \(i, ii\)" [90m(849.3932ms)[39m[39m
+[34mℹ KS4-2 a lifted sample keeps only its own fields (spread of a view): 2 of 2 run tests failed[39m
+[32m✔ mutant KV1 tube-too-narrow is never raised: applied, and caught by "T1 iv" [90m(830.2362ms)[39m[39m
+[34mℹ KV1 tube-too-narrow is never raised: 1 of 1 run tests failed[39m
+[32m✔ mutant KV2 the narrowest tube bar is 5 m: applied, and caught by "T1 iv" [90m(833.4275ms)[39m[39m
+[34mℹ KV2 the narrowest tube bar is 5 m: 1 of 1 run tests failed[39m
+[32m✔ mutant KV2b the narrowest tube bar is the old 9.43 (the eye on the ceiling): applied, and caught by "T1 iv" [90m(933.6732ms)[39m[39m
+[34mℹ KV2b the narrowest tube bar is the old 9.43 (the eye on the ceiling): 1 of 1 run tests failed[39m
+[32m✔ mutant KV3 edge-past-cap is never raised: applied, and caught by "E2: the validator" [90m(981.9741ms)[39m[39m
+[34mℹ KV3 edge-past-cap is never raised: 1 of 1 run tests failed[39m
+[32m✔ mutant KC1 close does not refuse a seam that joins a tube to another kind: applied, and caught by "CLOSE \(E4 iii" [90m(425.0805ms)[39m[39m
+[34mℹ KC1 close does not refuse a seam that joins a tube to another kind: 1 of 1 run tests failed[39m
+[32m✔ mutant KC2 close does not refuse an edge active at one end only: applied, and caught by "CLOSE \(E4 iii" [90m(416.3728ms)[39m[39m
+[34mℹ KC2 close does not refuse an edge active at one end only: 1 of 1 run tests failed[39m
+[32m✔ mutant KC3 close moves e (it joins e at a seam where only one end has it): applied, and caught by "CLOSE: a lap whose edge ends" [90m(644.2726ms)[39m[39m
+[34mℹ KC3 close moves e (it joins e at a seam where only one end has it): 1 of 1 run tests failed[39m
+[32m✔ mutant KB1 an e brush may reach a piece without an edge: applied, and caught by "BRUSH" [90m(410.0301ms)[39m[39m
+[34mℹ KB1 an e brush may reach a piece without an edge: 1 of 1 run tests failed[39m
+[34mℹ tests 62[39m
+[34mℹ suites 0[39m
+[34mℹ pass 62[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 236960.3825[39m
+
+# stderr
+
+# exit 0 in 237.0 s

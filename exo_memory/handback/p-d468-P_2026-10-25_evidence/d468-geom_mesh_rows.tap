@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: row 1: the mesh is the same to the byte (scene arrays, matrices, cells, folds) for zipper seams, a closed lap's joint, a tube, a reuse with stale rows, and a lean build
+ok 1 - row 1: the mesh is the same to the byte (scene arrays, matrices, cells, folds) for zipper seams, a closed lap's joint, a tube, a reuse with stale rows, and a lean build
+  ---
+  duration_ms: 2985.6826
+  type: 'test'
+  ...
+# Subtest: row 2: a piece's boundary rows are packed: a Float64Array of 6·K numbers (p, n), equal to vertex(); rowVertices reads them back
+ok 2 - row 2: a piece's boundary rows are packed: a Float64Array of 6·K numbers (p, n), equal to vertex(); rowVertices reads them back
+  ---
+  duration_ms: 103.9756
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3169.7456

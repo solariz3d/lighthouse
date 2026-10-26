@@ -1,0 +1,9 @@
+[32m✔ row 10: through Finish and through bankLap, the added bank is C2: the bank's second derivative steps at no joint from the closer's first to the seam, and at no joint of a banked lap [90m(5693.5145ms)[39m[39m
+[34mℹ tests 1[39m
+[34mℹ suites 0[39m
+[34mℹ pass 1[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 5795.3805[39m

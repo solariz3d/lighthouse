@@ -1,0 +1,27 @@
+✖ row 6: a window on a lap whose cup is flat is not refused on the solve's float noise (D469): the cup read for the window's path is inside the quantum of 0, so the last piece alone, the last two and the first piece close (681.4725ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 837.2075
+
+✖ failing tests:
+
+test at test\core_close_local.test.js:92:1
+✖ row 6: a window on a lap whose cup is flat is not refused on the solve's float noise (D469): the cup read for the window's path is inside the quantum of 0, so the last piece alone, the last two and the first piece close (681.4725ms)
+  AssertionError [ERR_ASSERTION]: window [9]: the cup row needed no fallback here (the noise is the adapter's to read as 0, not the row's to drop): closed in 2 step(s): 0.028 mm, tangent 1.5e-8 rad; the cup's curvature row at the seam was left out (it would have taken the cup below 0), so the cup is C1 there
+      at TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\t180-p466-66VNhr\test\core_close_local.test.js:94:313)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: "closed in 2 step(s): 0.028 mm, tangent 1.5e-8 rad; the cup's curvature row at the seam was left out (it would have taken the cup below 0), so the cup is C1 there",
+    expected: /left out/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }

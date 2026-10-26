@@ -1,0 +1,8 @@
+'use strict';
+const T = process.argv[2], fs = require('fs'), path = require('path');
+const D = require(T + '/src/core/document.js'), { extend } = require(T + '/src/core/extend.js'), { extendTurnBy } = require(T + '/src/core/turnby.js'), F = require(T + '/src/core/finish.js'), CJ = require(T + '/app/core/closejob.js');
+const DEG = Math.PI / 180, Q = (Math.PI * 300) / 2;
+function rolledCup() { let d = D.createDoc('rolled cup'); d = extend(d, { length: 1000, family: 'bowl', first: { c: 10 } }); d = extendTurnBy(d, { length: 1500, targets: { kv: 0 } }, Math.PI); return extend(d, { length: 300, targets: { c: 35, phi: 40 * DEG } }); }
+function lap() { let d = D.createDoc('lap'); d = extend(d, { length: 100, family: 'bowl' }); d = extendTurnBy(d, { length: Q }, 90 * DEG); d = extend(d, { length: 100 }); d = extend(d, { length: Q / 2, targets: { kh: 1 / 300 } }); d = extendTurnBy(d, { length: Q / 2 }, 67.5 * DEG); d = extend(d, { length: 100, targets: { phi: -20 * DEG } }); d = extendTurnBy(d, { length: Q }, 90 * DEG); d = extend(d, { length: 100, targets: { phi: 0 } }); d = extendTurnBy(d, { length: Q }, 90 * DEG); return d; }
+const t10 = fs.existsSync(path.join(T, 'fixtures-d431/test10-open.t180track')) ? D.parse(fs.readFileSync(path.join(T, 'fixtures-d431/test10-open.t180track'), 'utf8')) : null;
+for (const [name, fn] of [['Finish rolled cup', () => F.finishToStart(rolledCup())], ['Finish TEST 10', () => t10 && F.finishToStart(t10)], ['Close (banks) the lap', () => CJ.runCloseBest({ doc: lap() })]]) { const t0 = Date.now(); fn(); console.log(name.padEnd(24), ((Date.now() - t0) / 1000).toFixed(2), 's'); }

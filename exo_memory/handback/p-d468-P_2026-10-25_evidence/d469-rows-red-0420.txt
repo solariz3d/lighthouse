@@ -1,0 +1,6 @@
+ℹ pass 0
+ℹ fail 1
+  Error [CoreError]: BAD_CUP: the cup must be a number of degrees from 0, got -1.4623500791500566e-15
+ℹ pass 0
+ℹ fail 1
+  Error [CoreError]: BAD_CUP: piece 0 (p1): the cup must stay within 0 to 150°, but a control point is -1.993276277664781 to 1.5201711703167402° (the walls of a 150°+ bowl touch)

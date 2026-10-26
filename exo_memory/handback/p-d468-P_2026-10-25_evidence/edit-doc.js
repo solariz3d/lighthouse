@@ -1,0 +1,14 @@
+'use strict';
+const fs = require('fs'); const p = 'C:/Users/nname/Downloads/t180-wt-p468/docs/CONTINUITY.md'; let s = fs.readFileSync(p, 'utf8'); const EOL = s.includes('\r\n') ? '\r\n' : '\n';
+function edit(oldS, newS) { oldS = oldS.split('\n').join(EOL); newS = newS.split('\n').join(EOL); const n = s.split(oldS).length - 1; if (n !== 1) throw new Error(`anchor ${n}: ${oldS.slice(0, 60)}`); s = s.replace(oldS, newS); }
+edit(`| Close: the bank plan (\`bankLap\`, \`bankPlan\`) | φ on the lap's curves | the plan's own rate and acceleration bounds on the control polygon | C1 by construction; the curvature step at a joint is bounded by BANK_ACCEL, 2e-4 rad/m² = 0.0115 °/m² (D447's ruling: 21.7 °/100 m at the wheel, the user's own joints' 90th percentile) | \`src/core/finish.js\` |`,
+`| Close: the bank plan (\`bankLap\`, \`bankPlan\`) | φ on the lap's curves | the plan's own rate and acceleration bounds on the control polygon, and (D468) a curvature-equality row per joint, all projected onto in the same sweeps; 0 curvature where the plan meets road outside it (the window's ends, the seam, his own banked curves); no point past its share | **C2** at every joint of the added bank (before D468: C1, a step of exactly BANK_ACCEL = 0.0115 °/m² at the closer's first joint and the seam of every Finish and at every relaxed joint of a banked lap). The rate and acceleration bounds stand (D447: BANK_ROLL, BANK_ACCEL) | \`src/core/finish.js\` |`);
+edit(`Finish asks for the edges' rows only (\`finish.js FINISH_C2\`): its bank plan owns the bank at the closer's joints and the seam (the row above, D447's C1 bound; a curvature row there moved the plan's points 0.46° off their share), and cupHome owns the cup`,
+`Finish asks for the edges' rows only (\`finish.js FINISH_C2\`): its bank plan owns the bank at the closer's joints and the seam (the row below: C2 by its own rows since D468; a closure row there moved the plan's points 0.46° off their share), and cupHome owns the cup`);
+edit(`What would still be missed: a channel this rule does not cover (the route's kh and kv ramps keep their Bloss ends, and a C3 step of the path is
+felt as a jerk in the turn, not as a vertical step under the wheels), a bank laid by the plan to its own C1 bound, and anything the mesh does between
+two stations (that is C's instrument, the fin guard).`,
+`What would still be missed: a channel this rule does not cover (the route's kh and kv ramps keep their Bloss ends, and a C3 step of the path is
+felt as a jerk in the turn, not as a vertical step under the wheels), and anything the mesh does between two stations (that is C's instrument, the fin
+guard). The bank plan's own joints were on this list until D468 (\`test/core_joint_c2.test.js\` row 10 reads them now, through Finish and through bankLap).`);
+fs.writeFileSync(p, s); console.log('CONTINUITY.md edited');

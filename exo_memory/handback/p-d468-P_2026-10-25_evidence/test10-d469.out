@@ -1,0 +1,4 @@
+TEST 10 copy, window [0] -> closed | closed in 1 step(s): 0.837 mm, tangent 6.8e-8 rad
+TEST 10 copy, window [0,22] -> closed | closed in 1 step(s): 0.087 mm, tangent 9.1e-8 rad; the cup's curvature row at the seam was left out (it would have taken the cup below 0), so the cup is C1 there
+TEST 10 copy, window [22] -> closed | closed in 1 step(s): 0.087 mm, tangent 9.1e-8 rad
+TEST 10 copy, window [4,22] -> closed | closed in 1 step(s): 0.087 mm, tangent 9.1e-8 rad

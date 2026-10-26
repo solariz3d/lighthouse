@@ -1,0 +1,34 @@
+[32m✔ SCHEMA: new documents are t180b.core/4; /1, /2 and /3 text still loads; a piece without an edge or a tube carries none of e, s, t in its text [90m(5.2049ms)[39m[39m
+[32m✔ SCHEMA: an edge piece and a tube piece write their channels, read back with their flags, and save to the same text (round trip) [90m(4.9788ms)[39m[39m
+[32m✔ DOMAIN (E2, V4, T1, T3): a hand-built document with e < 0, s outside [0.5, 0.95], a total past the cap, a closed tube with an edge, or a tube held in the slot is refused by name [90m(8.9253ms)[39m[39m
+[32m✔ A PIECE IS A CUP OR A TUBE: c and t together are refused, in extend and in a hand-built document [90m(0.364ms)[39m[39m
+[32m✔ JOINT (E4 i, KE4-1): e and s join C1 like every channel: a 5° step in e at a joint is refused JOINT; e starts from 0 where the piece before has no edge [90m(1.6145ms)[39m[39m
+[32m✔ ENDSTATE (ruling 2): endState reports the tube sweep t ONLY for a tube head (a non-tube head reads 0, so the shell shows none); a tube started after another kind still starts at twice the edge it renders (the internal tNext) [90m(1.1527ms)[39m[39m
+[32m✔ A TUBE JOINT: a tube after another kind starts at the edge that piece renders (t = 2·edge); a cup after a tube starts at t/2; tube to tube is C1 in t [90m(0.9136ms)[39m[39m
+[32m✔ EXTEND: e, s and t targets are range-checked by name; an e target on a plain track makes an edge piece; the edge continues while active and turns off with e = 0 [90m(8.0725ms)[39m[39m
+[32m✔ EXTEND: the fit never leaves the range (D190 V5 ringing): a 30 m piece, a 10 m ramp to e = 150 − c on a cup, stays inside [0, cap] and the document is accepted (E2 iii, KE2-2); D466: a 100 m piece with a 50 m ramp to the cap, an empty track with a 4 m ramp and a 50 m ramp down to −30° stay inside their range too (KE2-6) [90m(3.7143ms)[39m[39m
+[32m✔ EXTEND: the clamp on the ringing leaves the joint's own two points alone (D468): a tail still falling at −10° extends to 0 C1 with it, and one still rising at the cap is refused by name (BAD_EDGE), never with the document's JOINT error [90m(5.7155ms)[39m[39m
+[32m✔ EXTEND: the transition map takes e, s and t like the others, and the at-start `first` carries them on an empty track [90m(1.0718ms)[39m[39m
+[32m✔ READOUT (E7): edgeFrom/To, sliceFrom/To, tubeFrom/To come from the document; a plain piece reads 0, 0.64 and 0; candidateReadout equals the placed piece bit for bit (KE7-1) [90m(6.0455ms)[39m[39m
+[32m✔ E1 (i): the rendered edge of an edge piece is ψ_mid(edge) + e on BOTH sides, within 0.05°; bank and a closed lap do not change that (E6) [90m(9.955ms)[39m[39m
+[32m✔ E6: edge THEN roll: at φ = +30° the left edge surface is 105° from gravity and the right 45°; a −30° bank mirrors it; e changes no readout and no path sample [90m(24.2876ms)[39m[39m
+[32m✔ E4 (ii): e, s and t are CARRIED across a flight like c, and an edge continues after the jump [90m(2.9173ms)[39m[39m
+[32m✔ E4 (vi, vii): inside an edge piece every segment is a chord that shares ONE row grid and meets the next on the same profile, so the mesh emits no seam zip; the joint from a plain piece steps ≤ 1 mm [90m(196.5394ms)[39m[39m
+[32m✔ E4 (v): along a moving slice (s 0.5 → 0.95 over 40 m, e 15) every row at a segment boundary is within 0.05° of the analytic profile and every row inside a segment within 0.5° (KE4-3) [90m(47.9419ms)[39m[39m
+[32m✔ E5: a lap with an edge exports end to end: mesh, markers and kn5 write and read back, with no NaN in any buffer (the F1-style lap, edge 15 on the turns) [90m(790.239ms)[39m[39m
+[32m✔ T1 (ii, iii): a closed tube meshes with its two edge rows within 1 mm; the tube profile is the circle; a transition cup → tube has no seam zip and every row X_tip >= 0 (T2) [90m(340.8488ms)[39m[39m
+[32m✔ CLOSE (E4 iii, T2): a lap whose seam would join a tube to a different cross-section is refused TUBE_SEAM; an edge still active at only one end is refused EDGE_SEAM [90m(5.7564ms)[39m[39m
+[32m✔ CLOSE: a lap whose edge ends at 0.004° (under the 0.01° seam tolerance) at a plain start closes, and the close leaves every edge array exactly as built (no row reaches e where only one end has it) [90m(389.9823ms)[39m[39m
+[32m✔ BRUSH (E2 iii): a brush on e, s or t reaching a piece without them is refused by name; one that takes e outside its range is refused BAD_EDGE [90m(40.8133ms)[39m[39m
+[34mℹ tests 22[39m
+[34mℹ suites 0[39m
+[34mℹ pass 22[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 2021.5222[39m
+
+# stderr
+
+# exit 0 in 2.1 s
