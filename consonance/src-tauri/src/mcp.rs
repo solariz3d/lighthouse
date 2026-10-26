@@ -22,6 +22,29 @@ fn now_ms() -> u64 {
         .unwrap_or(0)
 }
 
+/// D476, Metaxy's guard 3: does this ring point into the private folder? Case-insensitive, either slash: `C:\Consonance\private\…`,
+/// `consonance/private/…`, the folder itself, or a `private/third_place/` path written relative. A false positive refuses one ring and
+/// says why; a false negative publishes a private file's name, so the rule leans to refusing.
+pub fn points_into_private(text: &str) -> bool {
+    let t = text.replace('\\', "/").to_lowercase();
+    t.contains("consonance/private") || t.contains("private/third_place")
+}
+
+/// D476, C's finding 2: the FIXED lines the Third Place's ring may put on the shared board, in place of the gate rows that echo a ring's text.
+/// None has a place for its words.
+const THIRD_PLACE_DIGEST_REFUSED: &str = "call_librarian REFUSED BY THE DIGEST GATE — from the Third Place (its pointer is not echoed: the Third Place's words stay off the shared board)";
+const THIRD_PLACE_DIGEST_NOTED: &str = "call_librarian from the Third Place: its pointer's digest was computed at ring (the path is not echoed)";
+const THIRD_PLACE_ADDRESS_REFUSED: &str = "call_librarian REFUSED (no address row) — from the Third Place (its pointer is not echoed: the Third Place's words stay off the shared board)";
+const THIRD_PLACE_TRAILER_ROW: &str = "call_librarian from the Third Place: the NEXT-trailer gate noted its ring (its words are not echoed)";
+/// What the Third Place is told, after the gate's own reason, when its ring is refused: why its words were not put on the board.
+const THIRD_PLACE_NOT_ECHOED: &str = "Your words are not echoed on the shared board: a refused ring from the Third Place is recorded there as one fixed line, \
+     so nothing you wrote leaves this room by being refused. Fix the pointer (a path relative to the checkout, to a file that exists) and ring again.";
+
+/// D476 part 2: THE THIRD PLACE'S MOUNT. Not a letter: the Third Place holds a letter in the registry as a NAME (D423), and a letter
+/// mount resolves to the committee seat, which has a pane's verbs. This identity resolves to the `third_place` seat, and its server
+/// carries one verb, call_librarian (`new`), to the one seat its address row names.
+pub const THIRD_PLACE_MOUNT: &str = "third-place";
+
 // per-verb refusal throttle state: verb -> (last posted ms, refusals absorbed since)
 static REFUSALS: Mutex<Option<HashMap<String, (u64, u32)>>> = Mutex::new(None);
 const REFUSAL_WINDOW_MS: u64 = 60_000;
@@ -436,7 +459,15 @@ impl ConsonanceMcp {
         identity: Option<String>,
         quiet: Arc<std::sync::atomic::AtomicBool>,
     ) -> Self {
-        Self { board, pulls, chair, chair_token, identity, quiet, tool_router: Self::tool_router() }
+        let mut tool_router = Self::tool_router();
+        // D476 part 2: THE WHOLE MEMBRANE. The Third Place's server carries the return leg and nothing else: no read_board (the room
+        // reaching in), no post_board, no raise_pull (a hand raised at a pane), no chair verb, no call_chair.
+        if identity.as_deref() == Some(THIRD_PLACE_MOUNT) {
+            for name in tool_router.list_all().into_iter().map(|t| t.name.to_string()).filter(|n| n != "call_librarian").collect::<Vec<_>>() {
+                tool_router.remove_route(&name);
+            }
+        }
+        Self { board, pulls, chair, chair_token, identity, quiet, tool_router }
     }
 
     /// Gate a chair verb. The token is written only into the Main instance's directory, so in
@@ -480,6 +511,7 @@ impl ConsonanceMcp {
     /// resolved against the same registry that CHOSE the mount, so the two cannot drift.
     fn seat(&self) -> String {
         match &self.identity {
+            Some(m) if m == THIRD_PLACE_MOUNT => "third_place".to_string(),
             Some(l) => crate::seat_role_for_letter(l).to_string(),
             None => "committee".to_string(),
         }
@@ -785,6 +817,13 @@ impl ConsonanceMcp {
     /// DISCIPLINE boundary enforced by the audit — the same limit `auth_chair` and `auth_address`
     /// state about themselves, and the same one stated in this file twice already.
     fn auth_station(&self, verb: &str) -> bool {
+        // D476 part 2: THE THIRD PLACE IS NOT A STATION IN THE LOOP. The one-station rule orders the loop's seats; under it the
+        // Third Place's ring would be refused whenever no open lap is held by the panes, which is nearly always, and every refusal
+        // would post its pointer to the shared board while delivering nothing. Exempt for its one verb only; its delivery still goes
+        // through gate_or_queue, so it never renders into the librarian's pane mid-turn.
+        if verb == "call_librarian" && self.seat() == "third_place" {
+            return true;
+        }
         let st = crate::chain_state();        // still the source of open/lap/holder FOR THE MESSAGE
         let holders = crate::chain_holders(); // and the set the decision is actually made on
         if Self::station_allows(verb, st.open, &holders) {
@@ -834,12 +873,28 @@ impl ConsonanceMcp {
             board_push(&self.board, BoardEntry {
                 pane: "chair".to_string(),
                 role: "committee".to_string(),
-                text: refused_address_row(&who, &text),
+                // D476, C's latent row: on the Third Place's seat (unreachable while row 3 exists) a fixed line, never its words
+                text: if self.seat() == "third_place" { THIRD_PLACE_ADDRESS_REFUSED.to_string() } else { refused_address_row(&who, &text) },
                 ts: now_ms(),
                 ts_source: crate::TsSource::Push,
             });
             return Ok(CallToolResult::success(vec![Content::text(
                 "refused: no address row from this mount's seat to the librarian (the attempt was posted to the board)",
+            )]));
+        }
+        // D476, METAXY'S GUARD 3 (plan_d476 "Metaxy's four guards"): NOTHING IN private/ TRAVELS. The Third Place's ring may carry only a
+        // pointer to a file outside C:\Consonance\private\. A pointer into it is refused, and the refusal is posted WITHOUT the text: the
+        // path itself names what is private.
+        if self.seat() == "third_place" && points_into_private(&text) {
+            board_push(&self.board, BoardEntry {
+                pane: "chair".to_string(),
+                role: "committee".to_string(),
+                text: "call_librarian REFUSED — from the Third Place: a pointer into private/ (nothing in private/ travels; the text is not kept)".to_string(),
+                ts: now_ms(),
+                ts_source: crate::TsSource::Push,
+            });
+            return Ok(CallToolResult::success(vec![Content::text(
+                "refused: that pointer is into private/, and nothing in private/ travels — write what can travel to a file outside it, and point at that",
             )]));
         }
         if !self.auth_station("call_librarian") {
@@ -871,6 +926,10 @@ impl ConsonanceMcp {
         // the async thread, because it runs `git hash-object`. A refusal here keeps the attempt on the board for
         // D077's reason — a refused `call_librarian` is not delivered, so the pointer would otherwise leave no copy.
         // If the gate itself cannot run, the hand-back still goes, with the pane's digest stripped and none invented.
+        // D476, C'S FINDING 2: on the Third Place's seat every gate row this ring can trigger is a FIXED line. The digest and trailer
+        // gates were built for hand-backs and echo the text they judge (a refused digest posts up to REFUSED_ATTEMPT_MAX_CHARS of it); the
+        // Third Place's words stay off the shared board, as its own audit row and its keep-warm rows keep them.
+        let third_place = self.seat() == "third_place";
         let (digest_text, digest_repo) = (text.clone(), crate::repo_root());
         let verdict = tokio::task::spawn_blocking(move || digest_gate_at(&digest_text, digest_repo.as_deref()))
             .await
@@ -882,12 +941,20 @@ impl ConsonanceMcp {
             });
         let text = match verdict {
             DigestVerdict::Deliver(d) => {
-                if let Some(line) = d.audit {
+                if third_place {
+                    if d.audit.is_some() {
+                        self.digest_audit(THIRD_PLACE_DIGEST_NOTED.to_string());
+                    }
+                } else if let Some(line) = d.audit {
                     self.digest_audit(line);
                 }
                 d.text
             }
             DigestVerdict::Refuse(msg) => {
+                if third_place {
+                    self.digest_audit(THIRD_PLACE_DIGEST_REFUSED.to_string());
+                    return Ok(CallToolResult::success(vec![Content::text(format!("{msg}\n\n{THIRD_PLACE_NOT_ECHOED}"))]));
+                }
                 board_push(&self.board, BoardEntry {
                     pane: "chair".to_string(),
                     role: "committee".to_string(),
@@ -904,13 +971,21 @@ impl ConsonanceMcp {
         };
         let text = match trailer_gate(crate::trailer::Verb::CallLibrarian, &format!("call_librarian from {who}"), &text) {
             TrailerDecision::Deliver { text, audit } => {
-                if let Some(line) = audit {
+                if third_place {
+                    if audit.is_some() {
+                        self.trailer_audit(THIRD_PLACE_TRAILER_ROW.to_string());
+                    }
+                } else if let Some(line) = audit {
                     self.trailer_audit(line);
                 }
                 text
             }
             TrailerDecision::Refuse { audit, .. } => {
-                self.trailer_audit(audit);
+                if third_place {
+                    self.trailer_audit(THIRD_PLACE_TRAILER_ROW.to_string());
+                } else {
+                    self.trailer_audit(audit);
+                }
                 text
             }
         };
@@ -1187,6 +1262,15 @@ impl ServerHandler for ConsonanceMcp {
         // ServerInfo is #[non_exhaustive] — build from Default, then set fields.
         let mut info = ServerInfo::default();
         info.capabilities = ServerCapabilities::builder().enable_tools().build();
+        if self.identity.as_deref() == Some(THIRD_PLACE_MOUNT) {
+            info.instructions = Some(
+                "One verb, call_librarian: when something learned here belongs to the work, write it to a file and send the librarian \
+                 a POINTER to that file (its path), never the thing in prose. The system marks it [third-place]. Nothing comes back \
+                 through this, and nothing reaches in: this is a way out, not a way in."
+                    .to_string(),
+            );
+            return info;
+        }
         info.instructions = Some(
             "Consonance committee control plane: post_board / read_board over one board shared across instances. \
              Your posts are attributed by your CONNECTION, not by what you claim — the tag argument is a \
@@ -1216,6 +1300,10 @@ pub fn config_path() -> std::path::PathBuf {
 
 /// The config for one identity. The pane launched with this file posts as `letter`, and cannot
 /// say otherwise — the mount point is chosen by whoever spawned it, not by the caller.
+pub fn config_path_third_place() -> std::path::PathBuf {
+    data_dir().join("mcp.consonance.third-place.json")
+}
+
 pub fn config_path_for(letter: char) -> std::path::PathBuf {
     data_dir().join(format!("mcp.consonance.{letter}.json"))
 }
@@ -1870,6 +1958,10 @@ pub fn start(
                 );
                 let _ = std::fs::write(config_path_for(letter), c);
             }
+            // D476 part 2: the Third Place's own config, naming its own route.
+            let _ = std::fs::write(config_path_third_place(), format!(
+                "{{\"mcpServers\":{{\"consonance\":{{\"type\":\"http\",\"url\":\"http://127.0.0.1:{port}/mcp/{THIRD_PLACE_MOUNT}\"}}}}}}"
+            ));
             let _ = tx.send(port);
 
             // One mount per identity. rmcp builds a handler per connection from a factory
@@ -1898,6 +1990,7 @@ pub fn start(
             for letter in 'A'..='Z' {
                 router = router.nest_service(&format!("/mcp/{letter}"), make(Some(letter.to_string())));
             }
+            router = router.nest_service(&format!("/mcp/{THIRD_PLACE_MOUNT}"), make(Some(THIRD_PLACE_MOUNT.to_string())));
             let _ = axum::serve(listener, router).await;
         });
     });
@@ -4163,5 +4256,170 @@ mod address_refusal_pointer_tests {
             branch.ends_with("return Ok(CallToolResult::success(vec![Content::text(\n                \"refused: no address row from this mount's seat to the librarian (the attempt was posted to the board)\",\n            )]));"),
             "the refusal text returned to the pane changed:\n{branch}"
         );
+    }
+}
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════════
+// D476 PART 2 — THE THIRD PLACE'S RETURN LEG (plan_d476_third_place_returns_2026-10-26.md; the keeper, 11:46: "the people go back to
+// work taking what they have learnt from it"). The ruling: nothing reaches IN to steer the Third Place; what is learned there goes OUT
+// without him carrying it. So it gets ONE mount, `/mcp/third-place`, whose server carries ONE verb, call_librarian, to ONE seat.
+#[cfg(test)]
+mod third_place_mount_tests {
+    use super::*;
+
+    fn server(identity: Option<&str>) -> ConsonanceMcp {
+        let (p, _) = tokio::sync::mpsc::unbounded_channel();
+        let (c, _) = tokio::sync::mpsc::unbounded_channel();
+        ConsonanceMcp::new(Arc::new(Mutex::new(VecDeque::new())), p, c, "t".to_string(), identity.map(|s| s.to_string()),
+            Arc::new(std::sync::atomic::AtomicBool::new(false)))
+    }
+    fn body_of(header: &str) -> String {
+        let src = std::fs::read_to_string("src/mcp.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split(header).nth(1).unwrap_or_else(|| panic!("{header} moved")).to_string();
+        f.split("\n    }\n").next().unwrap_or(&f).to_string()
+    }
+    fn tools(s: &ConsonanceMcp) -> Vec<String> {
+        let mut v: Vec<String> = s.tool_router.list_all().into_iter().map(|t| t.name.to_string()).collect();
+        v.sort();
+        v
+    }
+
+    /// The mount resolves to its own seat, never to `committee`: its letter in the registry is a NAME (D423), and a committee seat
+    /// would have a pane's verbs.
+    #[test]
+    fn the_third_place_mount_is_its_own_seat() {
+        assert_eq!(server(Some(THIRD_PLACE_MOUNT)).seat(), "third_place");
+    }
+
+    /// THE WHOLE MEMBRANE: the Third Place's server carries call_librarian and nothing else — no read_board (the room reaching in),
+    /// no post_board, no raise_pull (a hand raised at a pane), no chair verb, no call_chair.
+    #[test]
+    fn the_third_place_mount_carries_only_the_return_leg() {
+        assert_eq!(tools(&server(Some(THIRD_PLACE_MOUNT))), vec!["call_librarian".to_string()]);
+    }
+
+    /// Control: a pane's lettered mount still carries every verb, call_librarian among them.
+    #[test]
+    fn a_lettered_mount_is_unchanged() {
+        let t = tools(&server(Some("A")));
+        assert!(t.len() > 1 && t.contains(&"call_librarian".to_string()) && t.contains(&"read_board".to_string()), "{t:?}");
+    }
+
+    /// Its instructions describe the return leg, not the committee: a mind that reads the committee's control plane is in the room.
+    #[test]
+    fn the_third_place_is_told_only_about_its_one_verb() {
+        let i = server(Some(THIRD_PLACE_MOUNT)).get_info().instructions.unwrap_or_default();
+        assert!(i.contains("call_librarian") && i.to_lowercase().contains("pointer"), "{i}");
+        assert!(!i.contains("chair_") && !i.contains("raise_pull") && !i.contains("read_board"), "{i}");
+    }
+
+    /// The Third Place is not a station in the loop: its ring is not refused out of turn (a refused ring would post its pointer to
+    /// the shared board and deliver nothing). It still goes through the delivery gate (gate_or_queue), so it never renders into the
+    /// librarian's pane mid-turn.
+    #[test]
+    fn the_third_place_ring_is_not_held_to_the_loop_station() {
+        let b = body_of("fn auth_station(&self, verb: &str) -> bool {");
+        let exempt = b.find("if verb == \"call_librarian\" && self.seat() == \"third_place\" {").expect("the Third Place's exemption from the station gate is gone");
+        assert!(exempt < b.find("crate::chain_state()").expect("the gate's read moved"), "the exemption must come before the gate decides");
+        assert!(body_of("async fn call_librarian(").contains("if !self.auth_station(\"call_librarian\") {"), "call_librarian still asks the gate");
+    }
+
+    /// METAXY'S GUARD 3: nothing in private/ travels. A pointer into C:\Consonance\private\ (either slash, any case, the folder itself, or
+    /// private/third_place written relative) is refused; a pointer into the public record is not, and nor is the word "private".
+    #[test]
+    fn a_pointer_into_private_is_refused_and_one_outside_it_is_not() {
+        for p in [r"C:\Consonance\private\third_place\lineage\keeper_2026-10.md", "c:/consonance/private/x.md", r"C:\CONSONANCE\PRIVATE",
+                  "see private/third_place/2026-10-26.md"] {
+            assert!(points_into_private(p), "{p}");
+        }
+        for p in ["exo_memory/third_place/to_the_librarian_2026-10-26.md", r"C:\Users\nname\Desktop\lighthouse\exo_memory\third_place\2026-10-26.md",
+                  "a private thought, written down at exo_memory/third_place/2026-10-26.md"] {
+            assert!(!points_into_private(p), "{p}");
+        }
+    }
+
+    /// The refusal sits on the Third Place's seat, before anything is sent, and the row it posts carries none of the text.
+    #[test]
+    fn a_private_pointer_is_refused_before_delivery_and_its_text_is_not_posted() {
+        let b = body_of("async fn call_librarian(");
+        let g = b.find("if self.seat() == \"third_place\" && points_into_private(&text) {").expect("guard 3 is gone from call_librarian");
+        assert!(g < b.find("ChairCmd::CallLibrarian").expect("the send moved"), "refused before it is sent");
+        let branch = &b[g..g + b[g..].find("return Ok(").expect("the refusal returns")];
+        assert!(!branch.contains("&text") || branch.matches("&text").count() == 1, "the posted row must not carry the text (the only &text is the check)");
+        assert!(branch.contains("board_push("), "the refusal is posted");
+    }
+
+    /// C'S FINDING 2 (p-d476-review-C_2026-10-26.md §0, §6), and the part of it C's red row cannot see. On the Third Place's seat every gate
+    /// row a ring can trigger is a FIXED line: the digest refusal, the digest's "git-blob computed at ring" note, and both trailer rows.
+    /// C's row passes once the refusal arm names the Third Place; this holds what the branch POSTS, so a branch that echoed the ring again
+    /// (refused_digest_row, or any `&text` / `line` / `audit`) fails here.
+    #[test]
+    fn every_gate_row_a_third_place_ring_triggers_is_fixed_text() {
+        let b = body_of("async fn call_librarian(");
+        let branch = |anchor: &str| -> String {
+            let at = b.find(anchor).unwrap_or_else(|| panic!("{anchor} moved"));
+            let rest = &b[at..];
+            let s = rest.find("if third_place {").unwrap_or_else(|| panic!("no Third Place branch after {anchor}"));
+            let body = &rest[s..];
+            // the branch closes at the match arm's own indentation (16 spaces); a nested block inside it closes deeper
+            body[..body.find("\n                }").unwrap_or(body.len())].to_string()
+        };
+        let refuse = branch("DigestVerdict::Refuse(msg) => {");
+        assert!(!refuse.contains("refused_digest_row") && !refuse.contains("&text") && refuse.contains("THIRD_PLACE_DIGEST_REFUSED"), "{refuse}");
+        assert!(refuse.contains("THIRD_PLACE_NOT_ECHOED"), "the Third Place is told why its words are not echoed:\n{refuse}");
+        let deliver = branch("DigestVerdict::Deliver(d) => {");
+        assert!(deliver.contains("THIRD_PLACE_DIGEST_NOTED") && !deliver.contains("(line)"), "{deliver}");
+        for arm in ["TrailerDecision::Deliver { text, audit } => {", "TrailerDecision::Refuse { audit, .. } => {"] {
+            let tr = branch(arm);
+            assert!(tr.contains("THIRD_PLACE_TRAILER_ROW") && !tr.contains("(audit)") && !tr.contains("(line)"), "{arm}:\n{tr}");
+        }
+        for fixed in [THIRD_PLACE_DIGEST_REFUSED, THIRD_PLACE_DIGEST_NOTED, THIRD_PLACE_TRAILER_ROW] {
+            assert!(fixed.contains("Third Place") && !fixed.contains('{'), "a fixed line, with no place for the ring's words: {fixed}");
+        }
+    }
+
+    /// C'S LATENT ROW (p-d476-review-C_2026-10-26.md, its gate table): the address-table refusal posts refused_address_row(&who, &text),
+    /// up to 600 chars of the call. Unreachable from the Third Place's seat while row 3 exists; if row 3 is ever removed, its ring would
+    /// land there. So on that seat the row is a FIXED line too, chosen in place, keeping the branch's one return (pinned by
+    /// address_refusal_pointer_tests) unchanged for the panes.
+    #[test]
+    fn the_address_refusal_on_the_third_place_seat_is_fixed_text() {
+        let b = body_of("async fn call_librarian(");
+        let at = b.find("if !self.auth_address(\"call_librarian\") {").expect("the address check moved");
+        let branch = &b[at..at + b[at..].find("return Ok(").expect("the branch returns")];
+        let tp = branch.find("if self.seat() == \"third_place\" { THIRD_PLACE_ADDRESS_REFUSED.to_string() }")
+            .unwrap_or_else(|| panic!("no fixed row for the Third Place in the address refusal:\n{branch}"));
+        assert!(tp < branch.find("refused_address_row(&who, &text)").expect("the panes' row is still built"), "the Third Place's line is chosen first");
+        assert!(THIRD_PLACE_ADDRESS_REFUSED.contains("Third Place") && !THIRD_PLACE_ADDRESS_REFUSED.contains('{'));
+    }
+
+    /// Its own config file, beside the lettered ones, naming its own route.
+    #[test]
+    fn the_third_place_has_its_own_config() {
+        assert!(config_path_third_place().to_string_lossy().ends_with("mcp.consonance.third-place.json"));
+    }
+}
+
+// RED ROW (pane C, D476 part 2 review; no fix). A Third Place ring the digest gate refuses (a pointer that is not repo-relative, or no
+// file at that path) is posted to the shared board WITH its text: the Refuse arm of call_librarian builds refused_digest_row(&who, &text)
+// for every seat, the Third Place's included, so up to REFUSED_ATTEMPT_MAX_CHARS of its words reach the board its audit row keeps them off.
+#[cfg(test)]
+mod d476_review_c_tests {
+    use super::*;
+
+    #[test]
+    fn a_third_place_ring_the_digest_gate_refuses_does_not_post_its_words_to_the_board() {
+        let dir = std::env::temp_dir().join("d476-review-c-no-such-entry");
+        let _ = std::fs::create_dir_all(&dir);
+        let ring = "what the sitting ended on is written at third_place/2026-10-26.md";
+        let mut git = |_a: &[&str]| -> Result<GitOut, String> { Err("not reached".to_string()) };
+        assert!(matches!(digest_gate(ring, Some(&dir), &mut git), DigestVerdict::Refuse(_)), "control: the gate refuses a pointer with no file at the checkout root");
+        assert!(refused_digest_row(THIRD_PLACE_MOUNT, ring).contains("what the sitting ended on"), "control: the row the arm builds carries the text");
+        let src = std::fs::read_to_string("src/mcp.rs").expect("read own source").replace("\r\n", "\n");
+        let body = src.split("async fn call_librarian(").nth(1).expect("call_librarian moved");
+        let arm = &body[body.find("DigestVerdict::Refuse(msg) => {").expect("the digest refusal arm moved")..];
+        let arm = &arm[..arm.find("return Ok(").expect("the arm returns")];
+        assert!(!arm.contains("refused_digest_row(&who, &text)") || arm.contains("third_place"),
+            "the digest refusal posts the Third Place's words to the shared board: the arm has no Third Place branch");
     }
 }

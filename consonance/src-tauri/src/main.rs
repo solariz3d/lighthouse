@@ -1182,13 +1182,16 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     // with no channel cannot steer, cannot echo and cannot be misused: its only interlocutor is
     // the human in it. The membrane is what it needs to TALK, not what it needs to be SAFE, so it
     // ships mute and the membrane lands in a later cycle (librarian, L007 sequencing).
-    if MCP_PORT.load(Ordering::Relaxed) != 0 && !is_fresh_cwd(&cwd) && pane_id != THIRD_PLACE_SID {
+    //
+    // D476 part 2: THE MEMBRANE LANDS. The Third Place is launched with ITS OWN mount (mcp::THIRD_PLACE_MOUNT), never its letter's:
+    // a letter mount is a committee seat with a pane's verbs, and the Third Place's server carries call_librarian alone.
+    if MCP_PORT.load(Ordering::Relaxed) != 0 && !is_fresh_cwd(&cwd) {
         let letter = pane_letter(&pane_id);
         let mut chars = letter.chars();
-        let cfg = match (chars.next(), chars.next()) {
+        let cfg = if pane_id == THIRD_PLACE_SID { mcp::config_path_third_place() } else { match (chars.next(), chars.next()) {
             (Some(c), None) if c.is_ascii_uppercase() => mcp::config_path_for(c),
             _ => mcp::config_path(),
-        };
+        } };
         if let Some(p) = cfg.to_str() {
             cmd.args(["--mcp-config", p, "--strict-mcp-config"]);
         }
@@ -7439,6 +7442,35 @@ fn librarian_note_is_carried(file_name: &str, today: chrono::NaiveDate) -> bool 
 /// two equal-length sets with different members printed the full-delivery sentence. Caught by this
 /// change's own oracle before it left the pane. Naming what was DROPPED is the part the seat cannot
 /// reconstruct from the index by eye, so compute that first and let it decide the branch.
+/// D476 part 2: THE THIRD PLACE'S NEWEST ENTRY, by its own date: a dated note at the top of `third_place/` (`YYYY-MM-DD.md`, the
+/// librarian's own date rule), never a nested file and never a note named otherwise (`to_the_librarian_…`, `gathering_…`), which are
+/// indexed. None when there is no dated entry.
+fn third_place_newest(labels: &[String]) -> Option<String> {
+    labels.iter()
+        .filter_map(|l| {
+            let name = l.strip_prefix("third_place/")?;
+            if name.contains('/') { return None; }
+            librarian_note_date(name).map(|d| (d, l.clone()))
+        })
+        .max()
+        .map(|(_, l)| l)
+}
+
+/// The shelf's line for the Third Place's window: which entry is carried, or that the budget did not carry it, or that there is none.
+fn third_place_shelf_line(newest: Option<&str>, delivered: bool) -> String {
+    match (newest, delivered) {
+        (Some(n), true) => format!(
+            "THE THIRD PLACE -- its newest entry is carried below ({n}); the rest of third_place/ is indexed by path.\n\
+             What is learned there returns to the work through you: read it, and turn what applies into laps, crediting the sitting.\n"
+        ),
+        (Some(n), false) => format!(
+            "THE THIRD PLACE -- its newest entry ({n}) is NOT in front of you: there was no room under the intake cap.\n\
+             It is indexed below, whole, by path. Open it.\n"
+        ),
+        (None, _) => String::new(),
+    }
+}
+
 fn librarian_window_line(
     window_rule: &[String],
     window_delivered: &[String],
@@ -7862,6 +7894,9 @@ fn corpus_shelf_at_with_index(budget: usize, index_budget: usize) -> String {
     let mut window_rule: Vec<String> = Vec::new();
     let mut window_delivered: Vec<String> = Vec::new();
     let mut librarian_leftover: Option<usize> = None;
+    // D476 part 2: the Third Place entry the window names, and whether the budget carried it.
+    let mut third_place_window: Option<String> = None;
+    let mut third_place_delivered = false;
     // Files whose TIER said carry and whose BUDGET said no. The difference between "indexed by
     // design" and "indexed because we ran out" is the one thing the header cannot get wrong
     // without teaching the seat that its shelf is complete when it is not.
@@ -7951,9 +7986,12 @@ fn corpus_shelf_at_with_index(budget: usize, index_budget: usize) -> String {
     // untouched, so `librarian` -- the seat's own windowed notes -- still sits fifth and still gets
     // whatever the four tiers above it leave. That is a BOOT question (`the shelf HEAD is 83,645 B`
     // and the tier order as a priority list), not this change's to answer.
-    let order: [(&str, bool, bool); 10] = [
+    // D476 part 2: "third_place" rides right after the librarian's own notes, WINDOWED to its newest dated entry (third_place_newest);
+    // the rest of it is indexed. Before this the walk never reached it: the root tier is not recursive, and the Third Place's notes
+    // came to the librarian only when the keeper carried them.
+    let order: [(&str, bool, bool); 11] = [
         ("cards", false, true), ("", false, true), ("record", false, true),
-        ("memory", false, true), ("librarian", true, true), ("spread", false, true),
+        ("memory", false, true), ("librarian", true, true), ("third_place", true, true), ("spread", false, true),
         ("research", false, true),
         // indexed, never carried:
         ("map", false, false), ("journal", true, false), ("loop", true, false),
@@ -7974,6 +8012,10 @@ fn corpus_shelf_at_with_index(budget: usize, index_budget: usize) -> String {
         collect_md(&d, !dir.is_empty(), &mut files);
         files.sort();
         if newest_first { files.reverse(); }
+        if dir == "third_place" {
+            let labels: Vec<String> = files.iter().filter_map(|f| f.strip_prefix(&root).ok().and_then(|r| r.to_str()).map(|r| r.replace('\\', "/"))).collect();
+            third_place_window = third_place_newest(&labels);
+        }
         for f in files {
             // BOOT IS ALREADY IN THE INTAKE — skip it here or it rides twice.
             //
@@ -8042,6 +8084,8 @@ fn corpus_shelf_at_with_index(budget: usize, index_budget: usize) -> String {
                     in_window = true;
                 }
                 keep
+            } else if dir == "third_place" {
+                third_place_window.as_deref() == Some(label.as_str())
             } else { carry };
             // THE HARNESS ALREADY DELIVERED THIS ONE. `exo_memory/CLAUDE.global.md` is a copy of
             // `~/.claude/CLAUDE.md`, which Claude Code injects into every seat it starts on this
@@ -8063,6 +8107,7 @@ fn corpus_shelf_at_with_index(budget: usize, index_budget: usize) -> String {
             if carry && spent + body.len() <= budget {
                 spent += body.len();
                 if in_window { window_delivered.push(name); }
+                if third_place_window.as_deref() == Some(label.as_str()) { third_place_delivered = true; }
                 carried.push((label, body));
             } else {
                 if carry {
@@ -8232,6 +8277,7 @@ fn corpus_shelf_at_with_index(budget: usize, index_budget: usize) -> String {
         ));
     }
     s.push_str(&librarian_window_line(&window_rule, &window_delivered, librarian_leftover));
+    s.push_str(&third_place_shelf_line(third_place_window.as_deref(), third_place_delivered));
     if !indexed.is_empty() {
         s.push_str("\n## NOT CARRIED -- open these by path\n\n");
         // The old wording said "the budget ran out before these", which is now false for most of
@@ -11884,6 +11930,12 @@ fn submit_note(wrote: &Result<Submit, String>) -> &'static str {
 // pane now reads QUEUED and then DELIVERED on the board instead of rendering at the instant of
 // the click. Nothing is lost (the inbox is FIFO and never drops), and the bounded hold still
 // force-delivers. A reader watching a wake proof should not read that QUEUED row as a failure.
+/// The roles an approved pull may be delivered into. Pure so a test can hold it: a person is never injected into, and neither is the
+/// Third Place, which nothing reaches IN to (D476).
+fn pull_role_allowed(role: &str) -> bool {
+    role == "committee" || role == "main"
+}
+
 fn deliver_pull(app: &AppHandle, pull: &mcp::PullRequest) -> String {
     let target = pull.target.trim();
     if target.is_empty() {
@@ -11897,7 +11949,7 @@ fn deliver_pull(app: &AppHandle, pull: &mcp::PullRequest) -> String {
     };
     let short = &tid[..8.min(tid.len())];
     let role = app.state::<PaneRoles>().0.lock().unwrap().get(&tid).cloned().unwrap_or_else(|| "human".to_string());
-    if role != "committee" && role != "main" {
+    if !pull_role_allowed(&role) {
         return format!("NOT delivered — pane {short} is HUMAN-DRIVEN (never inject into a person)");
     }
     let msg = format!(
@@ -12006,6 +12058,10 @@ pub struct AddressRow {
 pub const ADDRESS_TABLE: &[AddressRow] = &[
     AddressRow { from_seat: "librarian", verb: "call_chair", to: MAIN_SID },
     AddressRow { from_seat: "committee", verb: "call_librarian", to: LIBRARIAN_SID },
+    // D476 part 2 (the keeper, 2026-10-26 11:46: "the people go back to work taking what they have learnt from it"): the Third Place's
+    // return leg. A way OUT, to the librarian only. There is no row INTO the Third Place from any seat — the rows that are not here
+    // are the topology too (third_place_return_tests).
+    AddressRow { from_seat: "third_place", verb: "call_librarian", to: LIBRARIAN_SID },
 ];
 
 /// The one destination a seat may reach with a verb, or None — and None is REFUSED, never
@@ -13045,6 +13101,49 @@ fn pane_call_librarian_exec(app: &AppHandle, from: Option<&str>, text: &str) -> 
         }
         Err(e) => {
             chair_audit(app, format!("call_librarian {letter} -> LIB FAILED: {e}"));
+            format!("delivery failed: {e}")
+        }
+    }
+}
+
+/// D476 part 2: THE THIRD PLACE SPEAKING INTO THE LIBRARIAN. Row 3 of `ADDRESS_TABLE`, built as `pane_call_librarian_exec` is, and
+/// kept apart from it because two of its terms differ on purpose:
+///   - the system names the voice `[third-place]`, never a letter (its letter is a name, not an address, D423);
+///   - the audit row carries NO PREVIEW of the text: the Third Place's record stays off the shared board, as its keep-warm rows do.
+/// The destination is the table's, so removing the row refuses here as at the gate.
+fn third_place_call_librarian_exec(app: &AppHandle, text: &str) -> String {
+    let Some(dest) = address_row("third_place", "call_librarian") else {
+        let out = "no address row for third_place -> call_librarian — nothing was delivered".to_string();
+        chair_audit(app, format!("call_librarian [third-place] REFUSED — {out}"));
+        return out;
+    };
+    let panes = app.state::<Panes>();
+    if !panes.0.lock().unwrap().contains_key(dest) {
+        let out = "the librarian is not awake — nothing was delivered".to_string();
+        chair_audit(app, format!("call_librarian [third-place] REFUSED — {out}"));
+        return out;
+    }
+    let msg = format!("[third-place] {text}");
+    let msg = with_send_stamp(&msg, chrono::Utc::now());
+    let cap = capture_path(dest);
+    let preview = "a ring from the Third Place".to_string();
+    // L034: THE GATE. Nothing renders into a pane whose prompt is not idle.
+    if let Some(queued) = gate_or_queue(app, dest, &msg, &preview) {
+        return queued;
+    }
+    let before = fs::metadata(&cap).map(|m| m.len()).unwrap_or(0);
+    let delivered = inject_to_pane(&panes, dest, &msg, &app.state::<PaneEmus>());
+    let receipt = match delivered {
+        Ok(submit) => delivery_receipt(await_render(&cap, before, &receipt_needle(text), &receipt_needle_tail(text)), submit),
+        Err(_) => Receipt::NotAttempted,
+    };
+    match delivered {
+        Ok(_) => {
+            chair_audit(app, format!("call_librarian [third-place] -> LIB [{receipt:?}]"));
+            ring_reply("the librarian", receipt)
+        }
+        Err(e) => {
+            chair_audit(app, format!("call_librarian [third-place] -> LIB FAILED: {e}"));
             format!("delivery failed: {e}")
         }
     }
@@ -15327,7 +15426,11 @@ fn main() {
                                 chair_audit(&chair_handle, "call_librarian: EXPIRED unexecuted (caller timed out before the actuator ran)".to_string());
                                 continue;
                             }
-                            let _ = reply.send(pane_call_librarian_exec(&chair_handle, from.as_deref(), &text));
+                            if from.as_deref() == Some(mcp::THIRD_PLACE_MOUNT) {
+                                let _ = reply.send(third_place_call_librarian_exec(&chair_handle, &text));
+                            } else {
+                                let _ = reply.send(pane_call_librarian_exec(&chair_handle, from.as_deref(), &text));
+                            }
                         }
                         mcp::ChairCmd::Scrollback { target, reply } => {
                             if reply.is_closed() {
@@ -18755,12 +18858,16 @@ mod address_table_tests {
         assert_eq!(address_row("committee", "chair_inject"), None, "chair verbs are token-gated and outside this table");
     }
 
-    /// The two rows that exist, and exactly where they lead.
+    /// The rows that exist, and exactly where they lead. AMENDED (D476 part 2, by name; the rule changed, the check is not weakened):
+    /// the third row is the Third Place's, as this test's own message said it would be, and it lands with its own tests
+    /// (third_place_return_tests). Every row still leads to one of the two fixed seats.
     #[test]
     fn the_two_rows_lead_to_the_two_fixed_seats() {
         assert_eq!(address_row("committee", "call_librarian"), Some(LIBRARIAN_SID));
         assert_eq!(address_row("librarian", "call_chair"), Some(MAIN_SID));
-        assert_eq!(ADDRESS_TABLE.len(), 2, "a third row is the Third Place's, and it lands with its own tests");
+        assert_eq!(address_row("third_place", "call_librarian"), Some(LIBRARIAN_SID));
+        assert_eq!(ADDRESS_TABLE.len(), 3, "a fourth row lands with its own tests");
+        assert!(ADDRESS_TABLE.iter().all(|r| r.to == LIBRARIAN_SID || r.to == MAIN_SID));
     }
 
     /// THE MUTATION, in the only form a const table admits: the executor's destination IS the
@@ -23544,5 +23651,104 @@ mod ring_stamp_tests {
         let w = b.find("with_delivery_stamp(&text, chrono::Utc::now())").expect("the drain stamps the delivery time");
         let i = b.find("inject_to_pane(&app.state::<Panes>(), &pane, &text").expect("the drain writes");
         assert!(w < i, "the held message is stamped BEFORE it is written");
+    }
+}
+
+// D476 PART 2 — THE THIRD PLACE'S RETURN LEG (plan_d476_third_place_returns_2026-10-26.md). Row 3 of the address table, and
+// the rows that are NOT there: nothing reaches in.
+#[cfg(test)]
+mod third_place_return_tests {
+    use super::*;
+
+    /// The one row: the Third Place's seat, call_librarian, to the librarian.
+    #[test]
+    fn the_third_place_can_ring_the_librarian() {
+        assert_eq!(address_row("third_place", "call_librarian"), Some(LIBRARIAN_SID));
+    }
+
+    /// The Third Place reaches the librarian and nothing else: not the chair, not a pane, by no verb in or outside the table.
+    #[test]
+    fn the_third_place_reaches_no_chair_and_no_pane() {
+        for verb in ["call_chair", "chair_inject", "raise_pull", "post_board"] {
+            assert_eq!(address_row("third_place", verb), None, "third_place -> {verb}");
+        }
+        assert!(ADDRESS_TABLE.iter().filter(|r| r.from_seat == "third_place").all(|r| r.to == LIBRARIAN_SID && r.verb == "call_librarian"));
+    }
+
+    /// Nothing reaches IN: no row in the table leads to the Third Place; the chair's inject guard refuses it by role (and so does a
+    /// resolved raw id or prefix, which is where the guard is applied); an approved pull refuses it.
+    #[test]
+    fn no_seat_can_reach_the_third_place() {
+        assert!(ADDRESS_TABLE.iter().all(|r| r.to != THIRD_PLACE_SID), "a row INTO the Third Place");
+        assert!(chair_target_guard(THIRD_PLACE_SID, "third_place").is_err(), "chair_inject must refuse the Third Place");
+        assert!(!pull_role_allowed("third_place"), "an approved pull must not deliver into the Third Place");
+        assert!(pull_role_allowed("committee") && pull_role_allowed("main"), "control: the rule is unchanged for the seats it always allowed");
+    }
+
+    /// METAXY'S GUARD 4: NO UPTAKE REPORTS GO BACK IN. The ring is one-way. No seat holds a row, by any verb, that leads to the Third Place;
+    /// the chair's inject and an approved pull are refused there; and what the Third Place's own call returns is the delivery receipt
+    /// alone (delivered, queued, refused), never anything read from the librarian's pane, so nothing about what was taken up comes back.
+    #[test]
+    fn no_seat_can_send_the_third_place_news_of_uptake() {
+        for r in ADDRESS_TABLE { assert_ne!(r.to, THIRD_PLACE_SID, "{} -> {} leads into the Third Place", r.from_seat, r.verb); }
+        assert!(chair_target_guard(THIRD_PLACE_SID, "third_place").is_err());
+        assert!(!pull_role_allowed("third_place"));
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split("fn third_place_call_librarian_exec(").nth(1).expect("the Third Place's executor is missing");
+        let body = f.split("\n}\n").next().unwrap_or(f);
+        for reader in ["pane_scrollback(", "read_tail(", "capture_text", "fs::read_to_string("] {
+            assert!(!body.contains(reader), "the ring's reply must not read the librarian's pane or files ({reader})");
+        }
+        assert!(body.contains("ring_reply(\"the librarian\", receipt)"), "the reply is the receipt");
+    }
+
+    /// The executor's destination is the table, and the system names the voice: `[third-place]`, never a pane's letter, the chair's
+    /// or the librarian's. Its audit row carries no preview of the text: the Third Place's record stays off the shared board.
+    #[test]
+    fn the_third_place_speaks_under_its_own_name_and_the_table_is_its_only_destination() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split("fn third_place_call_librarian_exec(").nth(1).expect("the Third Place's executor is missing");
+        let body = f.split("\n}\n").next().unwrap_or(f);
+        assert!(body.contains("address_row(\"third_place\", \"call_librarian\")"), "the destination must come from the table");
+        assert!(!body.contains("LIBRARIAN_SID"), "a literal destination would survive the row's removal");
+        assert!(body.contains("let msg = format!(\"[third-place] {text}\");"));
+        assert!(!body.contains("[pane:") && !body.contains("[chair:MAIN]") && !body.contains("[librarian:LIB]"));
+        assert!(!body.contains("{preview}"), "the audit row must not carry the Third Place's words");
+        let route = src.split("mcp::ChairCmd::CallLibrarian { from, text, reply } => {").nth(1).expect("dispatch moved");
+        assert!(route.split("\n                        }\n").next().unwrap_or(route).contains("third_place_call_librarian_exec("), "the dispatch must route the Third Place's mount to its executor");
+    }
+
+    /// The Third Place is launched WITH its mount (no longer mute), and with that mount only.
+    #[test]
+    fn the_third_place_is_launched_with_its_own_mount() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split("fn spawn_claude_pane(").nth(1).expect("spawn_claude_pane moved");
+        let body = f.split("\n}\n").next().unwrap_or(f);
+        assert!(body.contains("mcp::config_path_third_place()"), "the Third Place must be given its own config");
+        assert!(!body.contains("&& pane_id != THIRD_PLACE_SID {"), "the old exclusion, which left it mute, is gone");
+    }
+
+    /// THE SHELF: the newest dated Third Place entry rides in the librarian's window; undated files and notes named otherwise do not.
+    #[test]
+    fn the_newest_third_place_entry_is_the_one_carried() {
+        let labels: Vec<String> = ["third_place/2026-10-16.md", "third_place/to_the_librarian_2026-10-26.md", "third_place/2026-10-26.md",
+            "third_place/gathering_2026-09-11.md", "third_place/carry_2026-09-22/2026-10-30.md", "third_place/README.md"]
+            .iter().map(|s| s.to_string()).collect();
+        assert_eq!(third_place_newest(&labels).as_deref(), Some("third_place/2026-10-26.md"),
+            "a dated entry at the top of third_place/, newest by its own date; a nested file is not an entry");
+        assert_eq!(third_place_newest(&[]), None);
+    }
+
+    /// And the shelf the librarian wakes on carries it (the real walk, at a budget with room): its body under its own label, and the
+    /// header saying which entry it was.
+    #[test]
+    fn the_librarian_shelf_carries_the_newest_third_place_entry() {
+        let root = room_master_path().parent().map(|p| p.join("third_place")).expect("a room");
+        let mut labels = Vec::new();
+        if let Ok(rd) = fs::read_dir(&root) { for e in rd.flatten() { if let Some(n) = e.file_name().to_str() { labels.push(format!("third_place/{n}")); } } }
+        let Some(newest) = third_place_newest(&labels) else { return };   // a room with no Third Place entry: nothing to carry
+        let shelf = corpus_shelf_at_with_index(usize::MAX, usize::MAX);
+        assert!(shelf.contains(&format!("THE THIRD PLACE -- its newest entry is carried below ({newest})")), "the header names it");
+        assert!(shelf.contains(&format!("\n## {newest}\n")), "its body rides under its own label, as a carried file");
     }
 }
