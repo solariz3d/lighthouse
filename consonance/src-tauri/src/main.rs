@@ -2617,7 +2617,10 @@ struct TailVisit {
 /// visit and its reply posts that one reply as written.
 fn extract_turn_tracked(v: &serde_json::Value, st: &mut TailVisit) -> Option<(String, String)> {
     let (role, text) = extract_turn(v)?;
-    if role == "user" {
+    // C's re-read §9 (4a6a1198): a user row Claude Code writes INSIDE a turn (an image a tool read, isMeta; a compaction summary,
+    // isCompactSummary) is not a prompt, so it leaves the visit window as it was
+    let mid_turn = ["isMeta", "isCompactSummary"].iter().any(|k| v.get(*k).and_then(|x| x.as_bool()) == Some(true));
+    if role == "user" && !mid_turn {
         st.in_visit = text == VISIT_ROW;
         return Some((role, text));
     }
@@ -24331,3 +24334,4 @@ mod keep_warm_visit_tests {
 
 #[cfg(test)] #[path = "d476p4_review_c_tests.rs"] mod d476p4_review_c_tests;
 #[cfg(test)] #[path = "d476p4_rr_c_tests.rs"] mod d476p4_rr_c_tests;
+#[cfg(test)] #[path = "d476p4_rr2_c_tests.rs"] mod d476p4_rr2_c_tests;
