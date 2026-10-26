@@ -2576,3 +2576,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-26 ~12:1x (D) · D475 part 1, lineage-rip.js → `exo_memory/handback/p-d475-lineage-E_2026-10-26.md`
 - lighthouse `e11737b6` on d475-e (lh-d475-e), not pushed. Append-only and deduplicated against an exact parse of the store: on the real store, 2141 of 2144 kept turns were already there, and a re-run wrote 0 bytes. Mutants 18/18/0. Wired into the 04:30 dream cycle, before the presence guard. 837 of the store's 2502 rows are seat-made heads, not his words.
 - **Carry:** a store made by one script can be read back exactly by its own row-length headers; prove that with a byte-equal re-render before trusting dedup against it.
+
+## 2026-10-26 ~12:5x (D) · D478 held, not started → `exo_memory/handback/p-d478-watch-E_2026-10-26.md`
+- The dispatch crossed the plan's queue note (f076428c, the same minute): D478 waits until D476 closes. No ffmpeg install, no branch, nothing recorded.
+- **Carry:** read a plan to its last section before acting; a hold can arrive in the same minute as the dispatch.
