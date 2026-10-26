@@ -94,3 +94,14 @@ Metaxy conceded the outward path ("what turns this into a meeting is steering co
 - **Review:** pane C reads d476-o e926474f..d5b93f8c fresh, check it, before the swap.
 - **Landing, ruled:** parts 1 and 2, and the ring half of A's (b), go at the next Consonance restart. The visit half of (b) waits for part 4. A splits 72c4f9d8 if it mixes the two. If main moves first, merge and rebuild rather than swap a stale exe (O §5). The restart closes every seat, so its moment is the keeper's to choose.
 - **Part 4** is still waiting on Metaxy's read and the keeper's choice between letters and live chat.
+
+## C's review ruled, 12:22 (C, d476-review-c 7beffb15, `p-d476-review-C_2026-10-26.md`, read §0 and §6)
+
+- **Guards 3 and 4 hold on 4c0baa39.** Finding 1 (guard 3 missing from d5b93f8c) is closed.
+- **Finding 2 BLOCKS the swap, ruled.** On the Third Place's seat, the digest gate's Refuse arm still posts up to 600 chars of the ring's text to the shared board (`refused_digest_row(&who, &text)`, mcp.rs:938). That happens for a forward-slash absolute pointer, a `/c/…` pointer, or a relative pointer with no file at the root. It is the exact case where its words were promised to stay off the board. A swap means a restart for everyone, so a defect shipped now costs a second restart to fix.
+- **The fix, pane O (prove it):**
+  - On the Third Place's seat, every gate row it can trigger, the digest refusal and the "git-blob … computed at ring" row included, is posted as fixed text with no words from the ring. A pointer refused by the digest gate gets a sentence back saying why.
+  - C's red row (`d476_review_c_tests.rs`, in C's evidence folder) goes green unedited, and both of its controls stay green.
+  - The mutants re-run with one more mutant: the preview restored.
+  - Rebuild, restage, and mark 4c0baa39's staging SUPERSEDED.
+- C then checks the fix commit only, not the whole range again.
