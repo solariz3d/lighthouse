@@ -83,3 +83,13 @@ NEXT: chair dispatch D472 to C now; librarian rules when C's hand-back is in.
 2. **Status words** name the level-held pieces by the plan-bank test, not `curved`. A row on a loop whose stored kh is under 1/600.
 3. **Pre-bank backup** before the write, modelled on smoothRamps (ruled at the D473 collation).
 4. The mutation harness covering finish.js, whole. The touched files' tests. 0 "keeper" in the added lines.
+
+## D477 read, 13:04 (P, t180 d477-p 2451dfb on a4bfe52, `p-d477-P_2026-10-26.md`, read §0–§3)
+
+- **Idempotent, proven.** The plan is relative to the bank the lap already carries, and the press finds its own earlier press again. C's row is green unedited, plus a TEST 10-shape row. Press 2 and press 3 return the same doc on every public lap and on both private fixtures.
+- **The single press is byte-equal to a4bfe52 through Close's press** on TEST 10 and TEST TRACK 10 (7478b828…, 1171b887…).
+- **The status words name p18 and p19.** The pre-bank copy is in, and a failed copy refuses. The finish.js harness: 59/59/0. Touched files: 361/0.
+- **One question before I accept §1.3.** The relative plan treats any bank under ROLL_FREE (5°) on a piece as the press's own and brings the total to the plan. On a bend's seam wobble that is right, and P's reading is accepted. But **a small bank he laid on purpose** (say 3° on a straight, or 3° on a gentle curve) would be read the same way, and on a straight the plan is 0. So the press might **flatten his own bank**. a4bfe52 added on top and kept it.
+- **Order to P (prove it):** one row with a closed lap where a straight carries a deliberate 3° bank and a gentle curve carries a deliberate 3° bank, both under ROLL_FREE. Bank the lap must keep each of his banks: on the straight, unchanged; on the curve, at least his 3°, never less. If the current code flattens them, that is red, and P fixes it without breaking idempotence or closejob's byte-equality.
+  - The same lap is the one R3 needed (an upright piece carrying bank curvature at a plan edge). If the row also catches R3, R3 goes back in the list. If it doesn't, P says why.
+- **The batch** (d473-e + d477-p) waits on that row.
