@@ -21,17 +21,19 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 80 filtered out; finished in 0.00s
 
 
-running 20 tests
-test mcp::third_place_mount_tests::a_pointer_into_private_is_refused_and_one_outside_it_is_not ... ok
+running 22 tests
 test keep_warm_tests::the_third_place_row_carries_no_numbers ... ok
-test mcp::third_place_mount_tests::the_third_place_has_its_own_config ... ok
+test mcp::third_place_mount_tests::a_pointer_into_private_is_refused_and_one_outside_it_is_not ... ok
 test third_place_return_tests::no_seat_can_reach_the_third_place ... FAILED
+test mcp::third_place_mount_tests::the_third_place_has_its_own_config ... ok
 test third_place_return_tests::no_seat_can_send_the_third_place_news_of_uptake ... FAILED
-test third_place_return_tests::the_third_place_can_ring_the_librarian ... ok
 test mcp::third_place_mount_tests::a_private_pointer_is_refused_before_delivery_and_its_text_is_not_posted ... ok
+test third_place_return_tests::the_third_place_can_ring_the_librarian ... ok
 test third_place_return_tests::the_third_place_reaches_no_chair_and_no_pane ... ok
 test third_place_return_tests::the_newest_third_place_entry_is_the_one_carried ... ok
+test mcp::third_place_mount_tests::every_gate_row_a_third_place_ring_triggers_is_fixed_text ... ok
 test shelf_tests::the_third_place_transcript_never_reaches_the_board ... ok
+test mcp::d476_review_c_tests::a_third_place_ring_the_digest_gate_refuses_does_not_post_its_words_to_the_board ... ok
 test mcp::third_place_mount_tests::the_third_place_ring_is_not_held_to_the_loop_station ... ok
 test mcp::third_place_mount_tests::the_third_place_mount_is_its_own_seat ... ok
 test mcp::third_place_mount_tests::the_third_place_mount_carries_only_the_return_leg ... ok
@@ -47,13 +49,13 @@ failures:
 
 ---- third_place_return_tests::no_seat_can_reach_the_third_place stdout ----
 
-thread 'third_place_return_tests::no_seat_can_reach_the_third_place' (32832) panicked at src\main.rs:23683:9:
+thread 'third_place_return_tests::no_seat_can_reach_the_third_place' (45384) panicked at src\main.rs:23683:9:
 a row INTO the Third Place
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 ---- third_place_return_tests::no_seat_can_send_the_third_place_news_of_uptake stdout ----
 
-thread 'third_place_return_tests::no_seat_can_send_the_third_place_news_of_uptake' (22956) panicked at src\main.rs:23694:34:
+thread 'third_place_return_tests::no_seat_can_send_the_third_place_news_of_uptake' (46616) panicked at src\main.rs:23694:34:
 assertion `left != right` failed: librarian -> visit leads into the Third Place
   left: "3d000000-0000-4000-8000-000000003d00"
  right: "3d000000-0000-4000-8000-000000003d00"
@@ -63,72 +65,41 @@ failures:
     third_place_return_tests::no_seat_can_reach_the_third_place
     third_place_return_tests::no_seat_can_send_the_third_place_news_of_uptake
 
-test result: FAILED. 18 passed; 2 failed; 0 ignored; 0 measured; 1102 filtered out; finished in 3.04s
+test result: FAILED. 20 passed; 2 failed; 0 ignored; 0 measured; 1102 filtered out; finished in 3.48s
 
-warning: struct `C` is never constructed
-  --> src\bin\..\cochlea.rs:30:12
-   |
-30 | pub struct C {
-   |            ^
-   |
-   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+warning: unused variable: `ratio`
+    --> src\bin\..\cochlea.rs:3004:13
+     |
+3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
+     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
 
-warning: methods `mul`, `add`, `sub`, and `abs` are never used
-  --> src\bin\..\cochlea.rs:35:8
-   |
-34 | impl C {
-   | ------ methods in this implementation
-35 |     fn mul(self, o: C) -> C {
-   |        ^^^
-...
-38 |     fn add(self, o: C) -> C { C { re: self.re + o.re, im: self.im + o.im } }
-   |        ^^^
-39 |     fn sub(self, o: C) -> C { C { re: self.re - o.re, im: self.im - o.im } }
-   |        ^^^
-40 |     fn abs(self) -> f32 { (self.re * self.re + self.im * self.im).sqrt() }
-   |        ^^^
-
-warning: function `fft` is never used
-  --> src\bin\..\cochlea.rs:44:8
-   |
-44 | pub fn fft(buf: &mut [C]) {
-   |        ^^^
-
-warning: function `hann` is never used
-  --> src\bin\..\cochlea.rs:76:8
-   |
-76 | pub fn hann(samples: &[f32]) -> Vec<C> {
-   |        ^^^^
-
-warning: function `spectrum` is never used
-  --> src\bin\..\cochlea.rs:85:8
-   |
-85 | pub fn spectrum(samples: &[f32]) -> Vec<f32> {
-   |        ^^^^^^^^
-
-warning: function `peaks` is never used
-   --> src\bin\..\cochlea.rs:103:8
-    |
-103 | pub fn peaks(spec: &[f32], sample_rate: f32, max: usize, floor_ratio: f32) -> Vec<Peak> {
-    |        ^^^^^
-
-warning: function `note_name` is never used
-   --> src\bin\..\cochlea.rs:173:8
-    |
-173 | pub fn note_name(hz: f32) -> (String, f32) {
-    |        ^^^^^^^^^
+warning: unused variable: `sr`
+    --> src\bin\..\cochlea.rs:3157:13
+     |
+3157 |         let sr = 46.875;
+     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
 
 warning: function `bands` is never used
    --> src\bin\..\cochlea.rs:325:8
     |
 325 | pub fn bands(spec: &[f32], sample_rate: f32, n: usize) -> Vec<f32> {
     |        ^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
 warning: function `rms_db` is never used
    --> src\bin\..\cochlea.rs:522:8
     |
 522 | pub fn rms_db(samples: &[f32]) -> f32 {
     |        ^^^^^^
+
+warning: constant `PULSE_ENABLED` is never used
+   --> src\bin\..\cochlea.rs:950:11
+    |
+950 | pub const PULSE_ENABLED: bool = false;
+    |           ^^^^^^^^^^^^^
 
 warning: function `pitch_track` is never used
     --> src\bin\..\cochlea.rs:1195:8
@@ -213,6 +184,13 @@ warning: variant `Vibrato` is never constructed
      |
      = note: `Event` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
 
+warning: function `replay` is never used
+    --> src\bin\..\cochlea.rs:1974:8
+     |
+1974 | pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Event)> {
+     |        ^^^^^^
+
+   Compiling consonance v0.2.0 (C:\Users\nname\Downloads\lh-wt-o-d476\consonance\src-tauri)
 warning: function `strip_overlay` is never used
    --> src\bin\..\capture.rs:182:8
     |
@@ -289,47 +267,71 @@ warning: function `collapse_blanks` is never used
 221 | fn collapse_blanks(s: &str) -> String {
     |    ^^^^^^^^^^^^^^^
 
+warning: `consonance` (bin "cochlea_replay" test) generated 2 warnings (run `cargo fix --bin "cochlea_replay" -p consonance --tests` to apply 2 suggestions)
+warning: `consonance` (bin "conf_sweep") generated 16 warnings
+warning: `consonance` (bin "capture_probe") generated 2 warnings
+warning: `consonance` (bin "composer_probe") generated 11 warnings (1 duplicate)
+warning: struct `C` is never constructed
+  --> src\bin\..\cochlea.rs:30:12
+   |
+30 | pub struct C {
+   |            ^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: methods `mul`, `add`, `sub`, and `abs` are never used
+  --> src\bin\..\cochlea.rs:35:8
+   |
+34 | impl C {
+   | ------ methods in this implementation
+35 |     fn mul(self, o: C) -> C {
+   |        ^^^
+...
+38 |     fn add(self, o: C) -> C { C { re: self.re + o.re, im: self.im + o.im } }
+   |        ^^^
+39 |     fn sub(self, o: C) -> C { C { re: self.re - o.re, im: self.im - o.im } }
+   |        ^^^
+40 |     fn abs(self) -> f32 { (self.re * self.re + self.im * self.im).sqrt() }
+   |        ^^^
+
+warning: function `fft` is never used
+  --> src\bin\..\cochlea.rs:44:8
+   |
+44 | pub fn fft(buf: &mut [C]) {
+   |        ^^^
+
+warning: function `hann` is never used
+  --> src\bin\..\cochlea.rs:76:8
+   |
+76 | pub fn hann(samples: &[f32]) -> Vec<C> {
+   |        ^^^^
+
+warning: function `spectrum` is never used
+  --> src\bin\..\cochlea.rs:85:8
+   |
+85 | pub fn spectrum(samples: &[f32]) -> Vec<f32> {
+   |        ^^^^^^^^
+
+warning: function `peaks` is never used
+   --> src\bin\..\cochlea.rs:103:8
+    |
+103 | pub fn peaks(spec: &[f32], sample_rate: f32, max: usize, floor_ratio: f32) -> Vec<Peak> {
+    |        ^^^^^
+
+warning: function `note_name` is never used
+   --> src\bin\..\cochlea.rs:173:8
+    |
+173 | pub fn note_name(hz: f32) -> (String, f32) {
+    |        ^^^^^^^^^
+
 warning: function `bands` is never used
    --> src\bin\..\cochlea.rs:325:8
     |
 325 | pub fn bands(spec: &[f32], sample_rate: f32, n: usize) -> Vec<f32> {
     |        ^^^^^
-    |
-    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
-warning: constant `PULSE_ENABLED` is never used
-   --> src\bin\..\cochlea.rs:950:11
-    |
-950 | pub const PULSE_ENABLED: bool = false;
-    |           ^^^^^^^^^^^^^
-
-warning: function `replay` is never used
-    --> src\bin\..\cochlea.rs:1974:8
-     |
-1974 | pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Event)> {
-     |        ^^^^^^
-
-warning: unused variable: `ratio`
-    --> src\bin\..\cochlea.rs:3004:13
-     |
-3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
-     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
-     |
-     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
-
-warning: unused variable: `sr`
-    --> src\bin\..\cochlea.rs:3157:13
-     |
-3157 |         let sr = 46.875;
-     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
-
-   Compiling consonance v0.2.0 (C:\Users\nname\Downloads\lh-wt-o-d476\consonance\src-tauri)
-warning: `consonance` (bin "cochlea_replay") generated 21 warnings
-warning: `consonance` (bin "capture_probe") generated 2 warnings
-warning: `consonance` (bin "composer_probe") generated 11 warnings (1 duplicate)
-warning: `consonance` (bin "conf_sweep") generated 16 warnings (13 duplicates)
-warning: `consonance` (bin "conf_sweep" test) generated 2 warnings (run `cargo fix --bin "conf_sweep" -p consonance --tests` to apply 2 suggestions)
-warning: `consonance` (bin "cochlea_replay" test) generated 2 warnings (2 duplicates)
+warning: `consonance` (bin "cochlea_replay") generated 21 warnings (13 duplicates)
+warning: `consonance` (bin "conf_sweep" test) generated 2 warnings (2 duplicates)
 warning: unused import: `HashMap`
      --> src\main.rs:15718:28
       |
@@ -371,12 +373,12 @@ warning: function `delivery_note` is never used
       |    ^^^^^^^^^^^^^
 
 warning: field `tool_router` is never read
-   --> src\mcp.rs:351:5
+   --> src\mcp.rs:360:5
     |
-304 | pub struct ConsonanceMcp {
+313 | pub struct ConsonanceMcp {
     |            ------------- field in this struct
 ...
-351 |     tool_router: ToolRouter<ConsonanceMcp>,
+360 |     tool_router: ToolRouter<ConsonanceMcp>,
     |     ^^^^^^^^^^^
     |
     = note: `ConsonanceMcp` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
@@ -442,7 +444,7 @@ warning: unused variable: `rows`
 
 warning: `consonance` (bin "consonance" test) generated 5 warnings (1 duplicate) (run `cargo fix --bin "consonance" -p consonance --tests` to apply 4 suggestions)
 warning: `consonance` (bin "consonance") generated 9 warnings
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.68s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.99s
      Running unittests src\bin\capture_probe.rs (target\debug\deps\capture_probe-19c2a55d1c8470f1.exe)
      Running unittests src\bin\cochlea_replay.rs (target\debug\deps\cochlea_replay-1ad250337380d7e5.exe)
      Running unittests src\bin\composer_probe.rs (target\debug\deps\composer_probe-20f363dbf4ded9f0.exe)

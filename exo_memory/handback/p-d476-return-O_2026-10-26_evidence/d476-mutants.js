@@ -15,6 +15,8 @@ const M = [
   ['W1 the shelf does not carry the Third Place', 'src/main.rs', '            } else if dir == "third_place" {\n                third_place_window.as_deref() == Some(label.as_str())\n', '            } else if dir == "third_place" {\n                false\n'],
   ['G3 a pointer into private/ is delivered (guard 3 off)', 'src/mcp.rs', 'if self.seat() == "third_place" && points_into_private(&text) {', 'if false && points_into_private(&text) {'],
   ['G4 the ring returns the librarian pane (uptake flows back)', 'src/main.rs', '            ring_reply("the librarian", receipt)\n        }\n        Err(e) => {\n            chair_audit(app, format!("call_librarian [third-place] -> LIB FAILED: {e}"));', '            pane_scrollback(dest.to_string())\n        }\n        Err(e) => {\n            chair_audit(app, format!("call_librarian [third-place] -> LIB FAILED: {e}"));'],
+  ['F2 the Third Place refusal posts its words again (the preview restored)', 'src/mcp.rs', '                if third_place {\n                    self.digest_audit(THIRD_PLACE_DIGEST_REFUSED.to_string());', '                if third_place {\n                    self.digest_audit(refused_digest_row(&who, &text));'],
+  ['F3 the git-blob row carries the Third Place path again', 'src/mcp.rs', '                    if d.audit.is_some() {\n                        self.digest_audit(THIRD_PLACE_DIGEST_NOTED.to_string());\n                    }', '                    if let Some(line) = d.audit {\n                        self.digest_audit(line);\n                    }'],
 ];
 const src = {}; for (const [, f] of M) src[f] = src[f] || fs.readFileSync(path.join(T, f), 'utf8');
 process.on('exit', () => { for (const [f, s] of Object.entries(src)) fs.writeFileSync(path.join(T, f), s); });
