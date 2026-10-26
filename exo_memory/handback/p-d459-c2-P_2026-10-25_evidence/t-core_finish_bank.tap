@@ -1,0 +1,20 @@
+[32m✔ row 1: TEST TRACK 10's closer leans into its curves, carries less side load, closes, and rolls under the amber [90m(29967.3723ms)[39m[39m
+[32m✔ row 2: TEST 10's closer leans into its curves, carries less side load, closes, and rolls under the amber [90m(3962.678ms)[39m[39m
+[32m✔ row 3: a closer with only gentle curves is banked by its share and no more [90m(5285.4702ms)[39m[39m
+[32m✔ row 5: P's turn 210, tail 300, roll 30: the roll straight laid first is not bent into a lean the wrong way [90m(5383.2036ms)[39m[39m
+[32m✔ row 6: P's turn 180, tail 1,200, roll 10: the closer that banks its turns is the one taken [90m(5633.6501ms)[39m[39m
+[32m✔ row 7: P's turn 180, tail 1,200, roll 30: the closer that banks its turns is the one taken [90m(5730.9293ms)[39m[39m
+[32m✔ row 9: a lap whose own turn is tight (180° over 400 m): never a closer that leans out [90m(5739.8231ms)[39m[39m
+[32m✔ row 10: his two tracks keep the routes D439 gave them [90m(36542.1117ms)[39m[39m
+[32m✔ row 11: a crest under a bend is not a lean out: P's pitched lap takes its short closer, leaning into its turn [90m(3541.0241ms)[39m[39m
+[32m✔ row 12: where every road that closes leans out, Finish refuses by name and says the least of them [90m(6833.0028ms)[39m[39m
+[32m✔ row 8: an end banked the way the closer turns is closed rolled last, on its own bank and with nothing banked on top [90m(1116.3327ms)[39m[39m
+[32m✔ row 4: a straight gets none: a finish that is only a straight keeps the laid bank [90m(531.586ms)[39m[39m
+[34mℹ tests 12[39m
+[34mℹ suites 0[39m
+[34mℹ pass 12[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 110567.4524[39m

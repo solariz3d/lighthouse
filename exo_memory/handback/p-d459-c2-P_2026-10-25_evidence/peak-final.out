@@ -1,0 +1,5 @@
+e 30° over 50 m: knots 3, points 7, peak 1.200 °/m vs the quintic's 1.125 (1.07×), rms off the quintic 1.27 % of the change
+er 35° over 50 m: knots 3, points 7, peak 1.400 °/m vs the quintic's 1.313 (1.07×), rms off the quintic 1.27 % of the change
+phi 30° over 100 m: knots 4, points 8, peak 0.568 °/m vs the quintic's 0.562 (1.01×), rms off the quintic 0.48 % of the change
+phi 30° over 60 m: knots 3, points 7, peak 1.000 °/m vs the quintic's 0.937 (1.07×), rms off the quintic 1.27 % of the change
+c 15° over 40 m: knots 3, points 7, peak 0.750 °/m vs the quintic's 0.703 (1.07×), rms off the quintic 1.27 % of the change

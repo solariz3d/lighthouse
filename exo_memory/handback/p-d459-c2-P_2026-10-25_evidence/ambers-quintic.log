@@ -1,0 +1,22 @@
+force: downforce-ray-gap skipped
+textures: asphalt budget 5.3 MiB
+wrote t180b_test_10 [33m10[39m files
+geometry sha256:072352e342d8fec21f10b26fdd43d9659f6119278e9ea6728f459aff0616baa7 kn5Sha f0ed49756a58860146fb70da6e9526e2c6fe16f41d0545c66c5ccb8152cf7fc0 lengthM [33m11483.999999999412[39m
+warning: amber: load-above-proven at s 1658.0–1980.0 m (FINDINGS.md:105, :112-113)
+warning: amber: load-above-proven at s 2624.0–2902.0 m (FINDINGS.md:105, :112-113)
+warning: amber: load-above-proven at s 3320.0–3384.0 m (FINDINGS.md:105, :112-113)
+warning: amber: load-above-proven at s 3416.0–3484.0 m (FINDINGS.md:105, :112-113)
+warning: amber: load-above-proven at s 3524.0–3568.0 m (FINDINGS.md:105, :112-113)
+warning: amber: load-above-proven at s 3718.0–3740.0 m (FINDINGS.md:105, :112-113)
+warning: amber: load-above-proven at s 3858.0–3892.0 m (FINDINGS.md:105, :112-113)
+warning: amber: load-above-proven at s 4008.0–4042.0 m (FINDINGS.md:105, :112-113)
+warning: amber: load-sustained at s 1546.0–2078.0 m (D341: the ELYSIUM replay of 2026-10-16 (56-62 g held for about 2 s: seven passes held, one went through the road); src/validate/limits.js sustainedG, sustai
+warning: amber: load-sustained at s 2522.0–3024.0 m (D341: the ELYSIUM replay of 2026-10-16 (56-62 g held for about 2 s: seven passes held, one went through the road); src/validate/limits.js sustainedG, sustai
+warning: near-touch: two parts of the road come within 0.70 m of each other edge to edge, at 2.57 km, 2.93 km (information: it does not stop the export)
+warning: catch: a second road surface 0.3 m under the road on 601 cells, s 1504–3066 m (where the load stays over 55 g for more than 0.5 s); it is a second chance for a body that gets through the road, unteste
+warning: 96 mesh-node names repeat in the builder's scene (e.g. CELL_p1_body_0 ×500); the kn5 gets unique names (acready.js), INTERFACES §2, C's mesh.js safeId
+warning: csp-only: surfaces.ini sets WAV_PITCH=extended-0, CSP's extended physics (ARCHITECTURE §6). Assetto Corsa without Custom Shaders Patch can crash loading this track (CSP wiki, "Tracks – Enabling extend
+
+# stderr
+
+# exit 0 in 20.8 s

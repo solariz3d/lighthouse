@@ -1,0 +1,15 @@
+[32m✔ row 1: toSegments: segMFor absent or undefined is the same segments; a piece with its own chord length is that many chords of the same length in all [90m(58.0914ms)[39m[39m
+[32m✔ row 2: the coarse ghost: few chords whatever the length, the placed pieces' segments the same objects, the same end of road, and a short piece unchanged [90m(1500.666ms)[39m[39m
+[32m✔ row 3: the release is byte for byte what it was: the placed mesh and two full ghosts hash to what c2d7cb5 (0.4.7) made [90m(196.3986ms)[39m[39m
+[32m✔ row 4: the cheap ghost: at most 64 stations on its new piece, the same end, the placed path and mesh untouched, a full ghost after it the full ghost, the handles where the full ghost's are [90m(474.807ms)[39m[39m
+[32m✔ row 5: the documents are byte for byte what they were: pieces placed and corners solved, hashed (taken at c2d7cb5), and basisN is basis, channelValue is channelAt(...).v, and extendCorner answers the same fields with the same object [90m(559.7302ms)[39m[39m
+[32m✔ row 6 (E's review §0): a kept answer is never handed back across a non-finite number: kh null kept, then kh NaN, Infinity or -Infinity refused by name, as on a fresh document [90m(14.3722ms)[39m[39m
+[32m✔ row 7 (E's review §1b): a document frozen at the top only, its pieces array open, keeps no answer, so an edit in place is answered afresh [90m(3.5685ms)[39m[39m
+[34mℹ tests 7[39m
+[34mℹ suites 0[39m
+[34mℹ pass 7[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 2993.9694[39m

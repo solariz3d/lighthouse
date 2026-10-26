@@ -1,0 +1,4 @@
+test/core_ramp_mutation.test.js exit [33m0[39m 19.4 s
+app/test/core-close-mutation.test.js exit [33m0[39m 465.7 s
+test/core_cup_mutation.test.js exit [33m0[39m 166.4 s
+mutants done

@@ -1,0 +1,21 @@
+core_finish_bank: ℹ tests 12 ℹ pass 12 ℹ fail 0 
+core_finish_joints: ℹ tests 8 ℹ pass 8 ℹ fail 0 
+core_finish: ℹ tests 17 ℹ pass 16 ℹ fail 0 
+core_close_banks_lap: ℹ tests 71 ℹ pass 71 ℹ fail 0 
+core-pieces-ui: ℹ tests 52 ℹ pass 52 ℹ fail 0 
+core-readout-display: ℹ tests 49 ℹ pass 49 ℹ fail 0 
+core-xsec: ℹ tests 23 ℹ pass 23 ℹ fail 0 
+core_edgeneg: ℹ tests 11 ℹ pass 11 ℹ fail 0 
+core_edgesplit: ℹ tests 8 ℹ pass 8 ℹ fail 0 
+core_xsec: ℹ tests 21 ℹ pass 21 ℹ fail 0 
+core_readout: ℹ tests 13 ℹ pass 13 ℹ fail 0 
+core_cup: ℹ tests 55 ℹ pass 55 ℹ fail 0 
+core_extend: ℹ tests 10 ℹ pass 10 ℹ fail 0 
+core_close_flip: ℹ tests 4 ℹ pass 4 ℹ fail 0 
+doc: ℹ tests 32 ℹ pass 32 ℹ fail 0 
+core_adapter: ℹ tests 6 ℹ pass 6 ℹ fail 0 
+core_cup_readers: ℹ tests 8 ℹ pass 8 ℹ fail 0 
+vocab-corpus: ℹ tests 26 ℹ pass 25 ℹ fail 0 
+geom_ramp: ℹ tests 13 ℹ pass 13 ℹ fail 0 
+preview: ℹ tests 86 ℹ pass 86 ℹ fail 0 
+done

@@ -1,0 +1,18 @@
+cupTo 35: closer 2772 m, delta 25°, delta/L 0.0090, report: RSL at R 300 m: turn -307.8°, 313 m straight, turn 127.8°, after 178 m rolling 40° upright first; 4 new pieces, 2772 m; 
+  p3|p4 c'' 0.00000 phi'' 0.00000
+  p4|p5 c'' 0.00001 phi'' 0.01170
+  p5|p6 c'' 0.00001 phi'' 0.00000
+  p6|p7 c'' 0.00002 phi'' 0.00046
+  p7|p1 c'' 0.00000 phi'' 0.01146
+cupTo 38: closer 2772 m, delta 28°, delta/L 0.0101, report: RSL at R 300 m: turn -307.8°, 313 m straight, turn 127.8°, after 178 m rolling 40° upright first; 4 new pieces, 2772 m; 
+  p3|p4 c'' 0.00000 phi'' 0.00000
+  p4|p5 c'' 0.00001 phi'' 0.01170
+  p5|p6 c'' 0.00002 phi'' 0.00000
+  p6|p7 c'' 0.00002 phi'' 0.00046
+  p7|p1 c'' 0.00000 phi'' 0.01146
+cupTo 45: closer 2772 m, delta 35°, delta/L 0.0126, report: RSL at R 300 m: turn -307.8°, 313 m straight, turn 127.8°, after 178 m rolling 40° upright first; 4 new pieces, 2772 m; 
+  p3|p4 c'' 0.00128 phi'' 0.00000
+  p4|p5 c'' 0.00000 phi'' 0.01170
+  p5|p6 c'' 0.00000 phi'' 0.00000
+  p6|p7 c'' 0.00000 phi'' 0.00046
+  p7|p1 c'' 0.00129 phi'' 0.01146
