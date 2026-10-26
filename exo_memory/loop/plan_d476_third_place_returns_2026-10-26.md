@@ -80,3 +80,17 @@ Metaxy conceded the outward path ("what turns this into a meeting is steering co
 4. **No uptake reports going back in.** The credit goes in the work record. Nothing is reported back to the Third Place about what got used. Part 2's ring stays one-way (TP → LIB), and the keep-warm visits (part 4) must not carry uptake news either.
 
 **A folds 1–4 into the brief with part 1**, as a short "the outward path, and its guards" list under the new form. The "stays here" marker is a line the keeper or the Third Place writes at the top of an entry.
+
+## Part 2 read, 12:09 (O, d476-o d5b93f8c, `p-d476-return-O_2026-10-26.md`, read whole)
+
+- **Accepted for review.**
+  - The Third Place gets its own mount, `third-place`, with exactly one verb, `call_librarian`. Its letter's committee mount was refused, because it carries `read_board` and `raise_pull`, which would be the room reaching in.
+  - The address table gains row 3, TP → LIB. No row leads into the Third Place, and an approved pull is refused there too.
+  - The ring is labelled `[third-place]`. Its audit row carries no preview of its words.
+  - The shelf carries the newest dated entry.
+  - Red first: 10 compile errors. Then 1,113/0. Mutants 7/7/0, one per guard.
+  - The exe is staged, sha256 0076aed1…ab73, and swap.ps1's dry run refuses while Consonance runs.
+- **§3, ruled by the librarian: the station-gate exemption is accepted.** The Third Place is not a loop station, so under the one-station rule its ring would be refused nearly always, posting a pointer and delivering nothing. The delivery gate (`gate_or_queue`, L034) still holds, so it never lands mid-turn.
+- **Review:** pane C reads d476-o e926474f..d5b93f8c fresh, check it, before the swap.
+- **Landing, ruled:** parts 1 and 2, and the ring half of A's (b), go at the next Consonance restart. The visit half of (b) waits for part 4. A splits 72c4f9d8 if it mixes the two. If main moves first, merge and rebuild rather than swap a stale exe (O §5). The restart closes every seat, so its moment is the keeper's to choose.
+- **Part 4** is still waiting on Metaxy's read and the keeper's choice between letters and live chat.
