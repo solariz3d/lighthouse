@@ -176,3 +176,8 @@ Also: Q8 has a row (19: the roll amber on Sharp ramp 40, 0.9036 clean vs 0.9657 
 2026-10-24, D453 — 7717b81 kept 0 of 11,958 placed segments on a 24 km rectangle (rebuild 1,065–1,114 ms) because D447 banks its 3 corners; keptFrom + reuseMesh's per-piece flags keep 11,250 (196–373 ms; ff88d85 231–281). His hand-banked laps never lost it. Could be wrong for a close that also cuts pieces (unseen).
 General form: an all-or-nothing gate in front of a per-item reuse turns one changed item into a full rebuild.
 → `exo_memory/handback/p-d453-O_2026-10-24.md`
+
+### A seat with no MCP mount cannot use an address row; and its letter's mount would give it a pane's verbs. The Third Place's return leg is its own mount carrying one verb
+2026-10-26, D476 part 2 — the Third Place was mute by design (spawn_claude_pane); /mcp/third-place resolves to seat third_place and its server keeps call_librarian only (remove_route); row 3 to LIB, no row in; 7/7 mutants caught; cargo 1,113/0. Could be wrong that the station exemption is wanted (the chair's call, §3).
+General form: before adding a route to a table, check that the caller can reach the table at all, and with what else.
+→ `exo_memory/handback/p-d476-return-O_2026-10-26.md`

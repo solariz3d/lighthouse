@@ -1,0 +1,6 @@
+D476 swap - DRY RUN (nothing changes; add -Apply to act)
+  staged exe sha256 ok: 0076aed1e35c3585bbc04d2a5e2ba952bab90a6743416322c56a1f63efc1ab73
+  current exe sha256: 720c2b351c16b0b298684218a50f5a54977474f8cbf5bf6585715342b1d99e6d
+  1. Consonance is RUNNING (pid 18572): close it first
+  2. would back up C:\Users\nname\Desktop\lighthouse\consonance\src-tauri\target\release\consonance.exe -> C:\Users\nname\Desktop\lighthouse\consonance\src-tauri\target\release\consonance.exe.bak-d476-20261026T180627Z
+  3. would put C:\Consonance\staged\d476-d5b93f8c\consonance.exe in place and check sha256 0076aed1e35c3585bbc04d2a5e2ba952bab90a6743416322c56a1f63efc1ab73
