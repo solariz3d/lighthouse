@@ -1,8 +1,8 @@
-# D476 part 2 swap (seat O, 2026-10-26): the staged Consonance build (lighthouse d476-o d5b93f8c), the D423 procedure.
+# D476 part 2 swap (seat O, 2026-10-26): the staged Consonance build (lighthouse d476-o 4c0baa39), the D423 procedure.
 # DRY RUN BY DEFAULT: prints each step and check, changes nothing. -Apply acts. It NEVER launches Consonance: you reopen it yourself.
 #
-#   powershell -ExecutionPolicy Bypass -File C:\Consonance\staged\d476-d5b93f8c\swap.ps1            (dry run)
-#   powershell -ExecutionPolicy Bypass -File C:\Consonance\staged\d476-d5b93f8c\swap.ps1 -Apply     (with Consonance closed)
+#   powershell -ExecutionPolicy Bypass -File C:\Consonance\staged\d476-4c0baa39\swap.ps1            (dry run)
+#   powershell -ExecutionPolicy Bypass -File C:\Consonance\staged\d476-4c0baa39\swap.ps1 -Apply     (with Consonance closed)
 #
 # Order: 1 Consonance is closed (refuses otherwise) - 2 the current exe backed up beside itself - 3 the staged exe put in place,
 #        sha256 checked (restores the backup itself if it does not match) - then YOU reopen Consonance.

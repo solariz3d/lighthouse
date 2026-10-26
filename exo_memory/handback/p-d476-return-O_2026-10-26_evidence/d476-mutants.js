@@ -13,6 +13,8 @@ const M = [
   ['P1 an approved pull may enter the Third Place', 'src/main.rs', '    role == "committee" || role == "main"\n', '    role == "committee" || role == "main" || role == "third_place"\n'],
   ['E1 the ring labelled as a pane', 'src/main.rs', '    let msg = format!("[third-place] {text}");', '    let msg = format!("[pane:N] {text}");'],
   ['W1 the shelf does not carry the Third Place', 'src/main.rs', '            } else if dir == "third_place" {\n                third_place_window.as_deref() == Some(label.as_str())\n', '            } else if dir == "third_place" {\n                false\n'],
+  ['G3 a pointer into private/ is delivered (guard 3 off)', 'src/mcp.rs', 'if self.seat() == "third_place" && points_into_private(&text) {', 'if false && points_into_private(&text) {'],
+  ['G4 the ring returns the librarian pane (uptake flows back)', 'src/main.rs', '            ring_reply("the librarian", receipt)\n        }\n        Err(e) => {\n            chair_audit(app, format!("call_librarian [third-place] -> LIB FAILED: {e}"));', '            pane_scrollback(dest.to_string())\n        }\n        Err(e) => {\n            chair_audit(app, format!("call_librarian [third-place] -> LIB FAILED: {e}"));'],
 ];
 const src = {}; for (const [, f] of M) src[f] = src[f] || fs.readFileSync(path.join(T, f), 'utf8');
 process.on('exit', () => { for (const [f, s] of Object.entries(src)) fs.writeFileSync(path.join(T, f), s); });

@@ -1,8 +1,10 @@
 caught       R1 the address row removed  (third_place_return_tests::the_third_place_can_ring_the_librarian)
-caught       R2 a row INTO the Third Place  (third_place_return_tests::no_seat_can_reach_the_third_place)
+caught       R2 a row INTO the Third Place  (third_place_return_tests::no_seat_can_reach_the_third_place; third_place_return_tests::no_seat_can_send_the_third_place_news_of_uptake)
 caught       T1 the Third Place server keeps every verb  (mcp::third_place_mount_tests::the_third_place_mount_carries_only_the_return_leg)
 caught       S1 the mount resolves to its letter's seat  (mcp::third_place_mount_tests::the_third_place_mount_is_its_own_seat)
-caught       P1 an approved pull may enter the Third Place  (third_place_return_tests::no_seat_can_reach_the_third_place)
+caught       P1 an approved pull may enter the Third Place  (third_place_return_tests::no_seat_can_send_the_third_place_news_of_uptake; third_place_return_tests::no_seat_can_reach_the_third_place)
 caught       E1 the ring labelled as a pane  (third_place_return_tests::the_third_place_speaks_under_its_own_name_and_the_table_is_its_only_destination)
 caught       W1 the shelf does not carry the Third Place  (third_place_return_tests::the_librarian_shelf_carries_the_newest_third_place_entry)
-applied 7 / caught 7 / NOT APPLIED 0
+caught       G3 a pointer into private/ is delivered (guard 3 off)  (mcp::third_place_mount_tests::a_private_pointer_is_refused_before_delivery_and_its_text_is_not_posted)
+caught       G4 the ring returns the librarian pane (uptake flows back)  (third_place_return_tests::no_seat_can_send_the_third_place_news_of_uptake)
+applied 9 / caught 9 / NOT APPLIED 0

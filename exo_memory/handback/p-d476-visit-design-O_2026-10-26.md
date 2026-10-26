@@ -52,7 +52,11 @@ A visit line, and an answer, is refused if it contains any of:
 - **a file pointer:** a path separator with an extension, or a `*.md`/`.js`/`.rs`/`.json`/`.ps1` name;
 - **a lap or decision id:** `D` or `L` followed by 2–4 digits; a sha (7+ hex); a version tag (`local-0.4.`);
 - **a command:** a backtick, a `$ ` or `> ` line start, `node `, `git `, `cargo `, `npm `, `NEXT:`, a URL;
-- **more than 400 characters.**
+- **more than 400 characters;**
+- **word of uptake** (Metaxy's guard 4, adopted 2026-10-26: no uptake reports go back in): anything saying what was taken up from the Third Place, which lap used what, or what the librarian did with a note.
+  - By form, refused: a lap or decision id (above already), and the uptake phrases "taken up", "turned into", "became a lap", "the librarian read", "your note", "your entry", "from the third place" (any case).
+  - The same honest limit as below applies: a paraphrase can slip past a phrase list, and the visit text says it carries no word of uptake.
+- **a path into private/** (Metaxy's guard 3: nothing in private/ travels): `consonance\private` or `private/third_place`, either slash, any case. This is part 2's `points_into_private`, the same function, so the two rules cannot drift apart.
 
 Each refusal is posted to the board as "keep-warm visit REFUSED — from <seat> (<rule>)", **without the text**. The Third Place's record stays off the shared board, as its keep-warm rows already do. A relayed visit is posted the same way, as a count with no words.
 
@@ -85,8 +89,10 @@ It is a discipline boundary with an audit, the same honest class as `auth_addres
 
 **What changes in that test: nothing.** No seat gains a verb or a row. The only writer into the Third Place stays the app's keep-warm actuator, which writes "ok" into it today. What changes is that actuator's TEXT.
 
+Part 2 now also holds `no_seat_can_send_the_third_place_news_of_uptake` (guard 4; 4c0baa39). The visit build keeps it green: the visit-hour composer is the keep-warm actuator, not a row, and its lines pass the uptake rule above.
+
 **Two tests are added beside it, not instead of it:**
-1. The Third Place's keep-warm message is composed only from the fixed frame and lines that passed the guard. A line carrying a pointer, an id, a command, or over 400 characters never reaches it, and the refusal row carries no words.
+1. The Third Place's keep-warm message is composed only from the fixed frame and lines that passed the guard. A line carrying a pointer, an id, a command, word of uptake, a private/ path, or over 400 characters never reaches it, and the refusal row carries no words.
 2. An answer is delivered only to the seat it names, inside that seat's next visit, and never to the board.
 
 **Why this doesn't steer it.** Steering is work reaching in: a pointer to open, a lap to take, a command to run.
