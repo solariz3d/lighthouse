@@ -1,0 +1,80 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+stranger lap
+extend [33m200[39m [33m0[39m -> ? :: unsaved • | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100%
+extend [33m150[39m [33m90[39m -> 2 pieces · 350 m · open · last extend 0 ms :: unsaved • | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100%
+extend [33m200[39m [33m0[39m -> 3 pieces · 550 m · open · last extend 0 ms :: unsaved • | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100%
+extend [33m150[39m [33m90[39m -> 4 pieces · 700 m · open · last extend 0 ms :: unsaved • | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100%
+extend [33m200[39m [33m0[39m -> 5 pieces · 900 m · open · last extend 0 ms :: unsaved • | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100%
+extend [33m150[39m [33m90[39m -> 6 pieces · 1,050 m · open · last extend 0 ms :: unsaved • | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100%
+extend [33m150[39m [33m0[39m -> 7 pieces · 1,200 m · open · last extend 0 ms :: unsaved • | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100%
+
+[02-extended] {
+ "panel": "7 pieces · 1,200 m · open · last extend 0 ms",
+ "status": "unsaved • | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100%",
+ "guide": "2 of 6Sculpt the roadPress Tab (or Build ▸ Sculpt mode), pick a tool with 1–9, drag on the road. Each tool reshapes the road smoothly around where you drag; Tab again goes back to building.BackSkip✕",
+ "checker": "CSP (wall raycasting)0 red · 0 amber · lap: the loop is still open · 0 jumps"
+}
+shot G:\consonance-scratch\d467-e\shots\02-extended.png
+Sculpt mode || Straight || Level || To floor || Turn by… || Turn to grid… || Sharp corner… || Jump || Close the loop
+unsaved • · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100% | closed: laid 200 m of new road from the end to the start (2 pieces); nothing already built moved
+
+[03-close-pressed] {
+ "panel": "9 pieces · 1,400 m · closed loop · last close 1064 ms",
+ "status": "unsaved • · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100% | closed: laid 200 m of new road from the end to the start (2 pieces); nothing already built moved",
+ "guide": "2 of 6Sculpt the roadPress Tab (or Build ▸ Sculpt mode), pick a tool with 1–9, drag on the road. Each tool reshapes the road smoothly around where you drag; Tab again goes back to building.BackSkip✕",
+ "checker": "CSP (wall raycasting)0 red · 0 amber · lap proved · 0 jumps"
+}
+shot G:\consonance-scratch\d467-e\shots\03-close-pressed.png
+apply: no Apply button visible
+
+[04-closed] {
+ "panel": "9 pieces · 1,400 m · closed loop · last close 1064 ms",
+ "status": "unsaved • · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100% | closed: laid 200 m of new road from the end to the start (2 pieces); nothing already built moved",
+ "guide": "2 of 6Sculpt the roadPress Tab (or Build ▸ Sculpt mode), pick a tool with 1–9, drag on the road. Each tool reshapes the road smoothly around where you drag; Tab again goes back to building.BackSkip✕",
+ "checker": "CSP (wall raycasting)0 red · 0 amber · lap proved · 0 jumps"
+}
+shot G:\consonance-scratch\d467-e\shots\04-closed.png
+overhead: ok
+
+[05-overhead] {
+ "panel": "9 pieces · 1,400 m · closed loop · last close 1064 ms",
+ "status": "unsaved • · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. | Grip 100% | closed: laid 200 m of new road from the end to the start (2 pieces); nothing already built moved",
+ "guide": "2 of 6Sculpt the roadPress Tab (or Build ▸ Sculpt mode), pick a tool with 1–9, drag on the road. Each tool reshapes the road smoothly around where you drag; Tab again goes back to building.BackSkip✕",
+ "checker": "CSP (wall raycasting)0 red · 0 amber · lap proved · 0 jumps"
+}
+shot G:\consonance-scratch\d467-e\shots\05-overhead.png
+sculpt menu item: DIV <div class="more-menu"><div class="menu-slot" id="m-build-slot"><label class="menu-check" title="Sculpt: reshape the road you have placed, with the tools in the strip under the bar (Tab switches too)"
+sculpt (Tab): unsaved • · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. | Grab: drag up or down to lift or sink the road under the brush (Alt at the press: left or right to move it sideways); the road after it stays where it is. Click a piece to put the handles on it (Shift-click for a run). | Grip 100%
+sculpt strip: tool1 Grab2 Stretch3 Bend4 Climb5 Twist6 Width7 Cup8 Edge9 Smoothradius mmore ▾exact size (may nudge ≤ 0.1 mm outside)other toolnoneWall riseTube sweepEdge changesleft edgeright edgeedge startSmooth smoothsturn rateclimb rateheightsidewaysbankwidthcupedge angleright edgeedge startwall risetube sweepGrab: drag up or down to lift or sink the road under the brush (Alt at the press: left or right to move it sideways); the road after it stays where it is. Click a piece to put the handles on it (Shift-click for a run).
+
+[06-sculpt-mode] {
+ "panel": "9 pieces · 1,400 m · closed loop · last close 1064 ms",
+ "status": "unsaved • · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. | Grab: drag up or down to lift or sink the road under the brush (Alt at the press: left or right to move it sideways); the road after it stays where it is. Click a piece to put the handles on it (Shift-click for a run). | Grip 100%",
+ "guide": "2 of 6Sculpt the roadPress Tab (or Build ▸ Sculpt mode), pick a tool with 1–9, drag on the road. Each tool reshapes the road smoothly around where you drag; Tab again goes back to building.BackSkip✕",
+ "checker": "CSP (wall raycasting)0 red · 0 amber · lap proved · 0 jumps"
+}
+shot G:\consonance-scratch\d467-e\shots\06-sculpt-mode.png
+tool now: 3 Bend
+during drag: unsaved • | No saved pieces yet: select pieces on the track and press Save as piece. | Bend: drag left or right to turn the road harder or straighter here; moves the road after it. Click a piece to put the handles on it (Shift-click for a run). | right · turn rate −11.00 °/100 m at the centre · piece p1 · release may move p9, p1 | Grip 100%
+
+[09-bend-released] {
+ "panel": "9 pieces · 1,400 m · closed loop · last brush:bend:close 206 ms",
+ "status": "unsaved • · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. | Bend: drag left or right to turn the road harder or straighter here; moves the road after it. Click a piece to put the handles on it (Shift-click for a run). | Grip 100% | the lap is closed again: your bend was undone to close the lap; bend further from the start, or open the lap first (closed in 9 step(s): 0.515 mm, tangent 0.0e+0 rad)",
+ "guide": "4 of 6Read the coloursRed is known to break, and the track will not export until it is gone. Amber is past what any track has proven (a load over 90 g, or a seam sharper than measured), allowed but untested. Each one is listed with its reason and source.BackNext✕",
+ "checker": "CSP (wall raycasting)0 red · 0 amber · lap proved · 0 jumps"
+}
+shot G:\consonance-scratch\d467-e\shots\09-bend-released.png
+autosaves [33m9[39m last two differ: [33mtrue[39m
+during drag 2: unsaved • | No saved pieces yet: select pieces on the track and press Save as piece. | Bend: drag left or right to turn the road harder or straighter here; moves the road after it. Click a piece to put the handles on it (Shift-click for a run). | left · turn rate +11.00 °/100 m at the centre · piece p5 · release may move p9, p1 | Grip 100%
+
+[11-bend2-released] {
+ "panel": "9 pieces · 1,400 m · closed loop · last brush:bend:close 144 ms",
+ "status": "unsaved • · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. | Bend: drag left or right to turn the road harder or straighter here; moves the road after it. Click a piece to put the handles on it (Shift-click for a run). | Grip 100% | the lap is closed again: to keep your bend, the start of the lap moved (closed in 4 step(s): 0.000 mm, tangent 0.0e+0 rad)",
+ "guide": "4 of 6Read the coloursRed is known to break, and the track will not export until it is gone. Amber is past what any track has proven (a load over 90 g, or a seam sharper than measured), allowed but untested. Each one is listed with its reason and source.BackNext✕",
+ "checker": "CSP (wall raycasting)0 red · 0 amber · lap proved · 0 jumps"
+}
+shot G:\consonance-scratch\d467-e\shots\11-bend2-released.png
+
+errors [33m0[39m []
+console warn/error [33m0[39m []
+native calls open_autosave, list_tracks, list_pieces, get_see_it_setting, find_ac_root, save_autosave, save_autosave, save_autosave, save_autosave, save_autosave, save_autosave, save_autosave, backup_track, save_autosave, save_autosave, save_autosave

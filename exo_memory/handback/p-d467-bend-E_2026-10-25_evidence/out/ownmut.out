@@ -1,0 +1,12 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+caught     M1 no start-pieces try  (# fail 3)
+caught     M2 the start-pieces try also at the seam  (# fail 2)
+caught     M3 the start pieces tried after the window  (# fail 4)
+caught     M4 a start close is not told apart  (# fail 1)
+caught     M5 the kept bend not named  (# fail 1)
+caught     M6 the kept bend outlives its document  (# fail 1)
+caught     M7 the cues ignore a moved start  (# fail 2)
+caught     M8 the moved first piece drawn light  (# fail 1)
+caught     M9 the frame does not pass the moved start  (# fail 1)
+caught     M10 the start words say only closed again  (# fail 1)
+applied 10 / caught 10 / NOT APPLIED 0
