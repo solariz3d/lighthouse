@@ -59,3 +59,11 @@ NEXT: chair dispatch D472 to C now; librarian rules when C's hand-back is in.
 - Wire the existing core bankLap (finish.js) to a Track ▸ "Bank the lap" item. It is enabled on a closed lap and does nothing to the route. Its status line says what it banked, and says plainly when a piece is held back by the level rule.
 - One test row: a closed lap with a flat closer gets banked, and the route is unmoved.
 - CHANGELOG line. Rides the next release batch. No "keeper" in any text.
+
+## D473 collated, 10:58 (A 4cc51409; E f21c94a3 / t180 a4bfe52; both read whole)
+
+- **Part 1, accepted.** Verified on disk at 10:32: t180b_test_10.kn5 49d81c91…0992; save b6f62b8a…1a89, byte-equal to C's bankLap; backup .before-d473 0c9ca763. The route is unmoved (kh/kv byte-equal per piece), zuv 0.
+- **Part 2, accepted for the next batch.** Branch d473-e a4bfe52 on v0.4.21: 7 files, +111/−7. Red first (s.bankLap not a function), then 13/13. Touched files 1371/1387: one fail is E's own list (fixtures.js is a CLI), and the drag-frame flake also fails 1 in 4 on the untouched base. The added lines have 0 "keeper", which I checked on the diff myself.
+- **One fold-in for the landing, ruled:** Bank the lap writes a pre-bank backup first, as Smooth ramps does. It changes every curve on the lap, and Undo only lasts the session. Two lines, modelled on smoothRamps.
+- **For the release review, not a fix order yet:** a second press on a looped lap banks p3 again by up to 1.9° (E §4). A command that is not idempotent reads as a bug to a user. The reviewer says whether it is bankPlan's straight-beside-a-loop case, and whether it needs its own lap.
+- **Release:** held. By the batch rule, d473-e rides with whatever the keeper's new original track turns up today.
