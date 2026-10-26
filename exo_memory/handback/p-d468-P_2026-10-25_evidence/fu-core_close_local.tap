@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: row 1: a close confined to the LAST piece leaves every earlier piece bit-identical, closes the loop, and moves the last piece
+ok 1 - row 1: a close confined to the LAST piece leaves every earlier piece bit-identical, closes the loop, and moves the last piece
+  ---
+  duration_ms: 207.019
+  type: 'test'
+  ...
+# Subtest: row 2: the default window covers at least ~20% of the lap from its end (at least the last piece); the whole-lap close, by contrast, moves pieces outside it
+ok 2 - row 2: the default window covers at least ~20% of the lap from its end (at least the last piece); the whole-lap close, by contrast, moves pieces outside it
+  ---
+  duration_ms: 172.0073
+  type: 'test'
+  ...
+# Subtest: row 3: a window that cannot close the loop is REFUSED BY NAME (CLOSE_WINDOW), naming the window, and nothing is handed back
+ok 3 - row 3: a window that cannot close the loop is REFUSED BY NAME (CLOSE_WINDOW), naming the window, and nothing is handed back
+  ---
+  duration_ms: 1016.7766
+  type: 'test'
+  ...
+# Subtest: row 4: a local close may not push the window past the roll-rate bar (1.2144°/m over 20 m): refused by name
+ok 4 - row 4: a local close may not push the window past the roll-rate bar (1.2144°/m over 20 m): refused by name
+  ---
+  duration_ms: 103.3285
+  type: 'test'
+  ...
+# Subtest: row 4 control: the same start banked 0.5 rad closes in the last piece (its roll stays under the bar)
+ok 5 - row 4 control: the same start banked 0.5 rad closes in the last piece (its roll stays under the bar)
+  ---
+  duration_ms: 86.5298
+  type: 'test'
+  ...
+# Subtest: row 5: a window with no road piece is refused by name
+ok 6 - row 5: a window with no road piece is refused by name
+  ---
+  duration_ms: 62.6646
+  type: 'test'
+  ...
+# Subtest: row 6: a window on a lap whose cup is flat is not refused on the solve's float noise (D469): the cup read for the window's path is inside the quantum of 0, so the last piece alone, the last two and the first piece close
+ok 7 - row 6: a window on a lap whose cup is flat is not refused on the solve's float noise (D469): the cup read for the window's path is inside the quantum of 0, so the last piece alone, the last two and the first piece close
+  ---
+  duration_ms: 686.6052
+  type: 'test'
+  ...
+# Subtest: row 7: the seam's cup curvature rows respect c ≥ 0 (D469): where they would take p1's flat cup below 0 they are left out, the cup stays C1 at the seam like cupHome's straight fade, the close succeeds and says so, and the other channels stay C2 there
+ok 8 - row 7: the seam's cup curvature rows respect c ≥ 0 (D469): where they would take p1's flat cup below 0 they are left out, the cup stays C1 at the seam like cupHome's straight fade, the close succeeds and says so, and the other channels stay C2 there
+  ---
+  duration_ms: 484.819
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2894.6769

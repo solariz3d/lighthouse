@@ -1,0 +1,20 @@
+[32m✔ row 1: a close confined to the LAST piece leaves every earlier piece bit-identical, closes the loop, and moves the last piece [90m(207.019ms)[39m[39m
+[32m✔ row 2: the default window covers at least ~20% of the lap from its end (at least the last piece); the whole-lap close, by contrast, moves pieces outside it [90m(172.0073ms)[39m[39m
+[32m✔ row 3: a window that cannot close the loop is REFUSED BY NAME (CLOSE_WINDOW), naming the window, and nothing is handed back [90m(1016.7766ms)[39m[39m
+[32m✔ row 4: a local close may not push the window past the roll-rate bar (1.2144°/m over 20 m): refused by name [90m(103.3285ms)[39m[39m
+[32m✔ row 4 control: the same start banked 0.5 rad closes in the last piece (its roll stays under the bar) [90m(86.5298ms)[39m[39m
+[32m✔ row 5: a window with no road piece is refused by name [90m(62.6646ms)[39m[39m
+[32m✔ row 6: a window on a lap whose cup is flat is not refused on the solve's float noise (D469): the cup read for the window's path is inside the quantum of 0, so the last piece alone, the last two and the first piece close [90m(686.6052ms)[39m[39m
+[32m✔ row 7: the seam's cup curvature rows respect c ≥ 0 (D469): where they would take p1's flat cup below 0 they are left out, the cup stays C1 at the seam like cupHome's straight fade, the close succeeds and says so, and the other channels stay C2 there [90m(484.819ms)[39m[39m
+[34mℹ tests 8[39m
+[34mℹ suites 0[39m
+[34mℹ pass 8[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 2894.6769[39m
+
+# stderr
+
+# exit 0 in 2.9 s
