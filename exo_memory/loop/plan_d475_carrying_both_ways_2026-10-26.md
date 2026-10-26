@@ -50,3 +50,15 @@ NEXT: chair dispatch part 1 to E and part 2 to B now; librarian verifies both wh
 - **Row 6, checked by the librarian, since B does not read that brief.** `brief/THIRD_PLACE.md:52` says "Written 2026-08-25 by a seat that could not use this one". It does not say the Third Place was his idea (08-25T09:01:26Z, "a whole new tab for the room"). Named here, and the line is left as it is.
 - **B's carried rule** ("never read, quote or touch Third Place content") came in chair packets with no keeper attribution (B §5). The keeper's 11:46 word supersedes it: what is learned in the Third Place returns to the work. The only part that stands is that the private store's specifics stay private. B made the right call.
 - **How the record reaches the masters without rewriting them.** `record/` is carried in full on the librarian's shelf at every wake, so the record travels with the frame. Each master line it names is left as it is (law 2).
+
+## D475 collated, 12:04 (E 6bbd979d / code e11737b6 on d475-e; B 390c6378 + 264d7686; all read whole)
+
+- **Part 1, accepted.** lineage-rip.js is append-only and parses the store exactly. It refuses an in-repo output, an output inside the transcripts, and a store it cannot parse.
+  - Mutants 18/18/0 after two fixture fixes; touched 79/79; gen-consumer 116/116.
+  - On the real store: a backup first (`lineage.before-d475`), run 1 +3, run 2 0 bytes.
+  - It is wired into the existing 04:30 Consonance Dream Cycle, after the battery guard; a failure is logged and the cycle continues.
+  - Tool before tests is E's own correction. The mutants stand as the red evidence.
+- **Ship, ruled yes.** A stranger's machine gets its own private store, beside its own instances. Excluding the tool would leave the dream cycle logging exit 1 every night.
+- **E's finding, which matters:** 837 of the store's 2502 rows are seat messages (`[pane:X]` 391, `[librarian:LIB]` 388, `[chair:MAIN]` 44 …), not his words. The store stays append-only and nothing is struck. Anyone searching it skips rows that open with a delivery head. Part 2's quotes were checked as his own words (B §5, and my millisecond scan matched only the rows B cited). Whether to mark or strike them is the keeper's and the Third Place's call. It is named to the keeper.
+- **Landing:** d475-e e11737b6 merges to lighthouse main (the dream task runs the main checkout's script), then pushes with the scan. It takes effect at the next 04:30.
+- **Part 3, retention:** still the keeper's call.
