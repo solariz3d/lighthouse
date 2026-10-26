@@ -38,13 +38,17 @@ const VISIT = [
   ['V14 every seat gets the first answer, not its own', 'src/main.rs', '"committee" | "main" | "librarian" => (visit_text(b.answers.get(pane).map(|s| s.as_str())), None),', '"committee" | "main" | "librarian" => (visit_text(b.answers.values().next().map(|s| s.as_str())), None),', V],
   ['V15 a human-driven pane visited', 'src/main.rs', '"committee" | "main" | "librarian" => (visit_text(', '"committee" | "main" | "librarian" | "human" => (visit_text(', V],
   ['V16 the refusal row carries the line', 'src/main.rs', 'format!("keep-warm visit REFUSED — from {short} ({rule}); its words are not kept")', 'format!("keep-warm visit REFUSED — from {short} ({rule}); line kept")', V],
-  ['T1v the tailer posts the visit text (finding 1)', 'src/main.rs', '    if t == "user" && is_visit_frame(&text) {\n        return Some((t.to_string(), VISIT_ROW.to_string()));', '    if false {\n        return Some((t.to_string(), VISIT_ROW.to_string()));', 'visit'],
+  ['T1v the tailer posts the visit text (finding 1)', 'src/main.rs', '    if t == "user" && is_visit_frame(inner) {\n        return Some((t.to_string(), VISIT_ROW.to_string()));', '    if false {\n        return Some((t.to_string(), VISIT_ROW.to_string()));', 'visit'],
   ['T2v the tailer posts the visit reply words (finding 1)', 'src/main.rs', '    if st.in_visit {\n        return Some((role, VISIT_REPLY_ROW.to_string()));', '    if false {\n        return Some((role, VISIT_REPLY_ROW.to_string()));', 'visit'],
-  ['T3v the tailer posts a third-place ring words (finding 1)', 'src/main.rs', '    if t == "user" && text.starts_with("[third-place]") {', '    if false {', 'visit'],
+  ['T3v the tailer posts a third-place ring words (finding 1)', 'src/main.rs', '    if t == "user" && inner.starts_with("[third-place]") {', '    if false {', 'visit'],
   ['N1 the harvest anchors on the clock, not the nonce (finding 2)', 'src/main.rs', '.and_then(|t| visit_reply_from(&t, at, Some(&nonce)));', '.and_then(|t| visit_reply_from(&t, at, None));', 'visit'],
   ['N2 any prompt is an anchor, the frame unread (finding 2)', 'src/main.rs', 'is_visit_frame(&p) && nonce.is_none_or(|n| p.contains(n))', 'nonce.is_none_or(|n| p.contains(n))', 'visit'],
   ['N3 the nonce not required of the anchor row (finding 2)', 'src/main.rs', 'is_visit_frame(&p) && nonce.is_none_or(|n| p.contains(n))', 'is_visit_frame(&p)', 'visit'],
   ['I1 the id rule without the room spellings (C 3)', 'src/main.rs', 'let lw = lw.strip_suffix("\'s").or_else(|| lw.strip_suffix("\\u{2019}s")).unwrap_or(&lw);', 'let lw: &str = w;', 'd476p4_review_c'],
+  ['R1r a resumed tailer starts blank (the restart fold)', 'src/main.rs', '                    visit_state = tail_visit_resume(&read_before(&path, offset));', '                    visit_state = TailVisit::default();', 'a_tailer_restarted'],
+  ['R2r the replay never learns a visit (the restart fold)', 'src/main.rs', '            let _ = extract_turn_tracked(&v, &mut st);\n        }\n    }\n    st', '            let _ = extract_turn(&v);\n        }\n    }\n    st', 'a_tailer_restarted'],
+  ['U1 the pasted-content wrap not stripped in the tailer (C 8)', 'src/main.rs', '    let inner = unwrap_pasted(&text);', '    let inner: &str = &text;', 'd476p4_rr_c'],
+  ['U2 the harvest anchor reads the wrapped text (C 8)', 'src/main.rs', '.map(|s| unwrap_pasted(s.trim()).to_string())', '.map(|s| s.trim().to_string())', 'visit'],
 ];
 const M = [...PART2.map((m) => [...m.slice(0, 4), 'third_place']), ...VISIT];
 const src = {}; for (const [, f] of M) src[f] = src[f] || fs.readFileSync(path.join(T, f), 'utf8');
@@ -54,6 +58,9 @@ for (const [name, file, from, to, filter] of M) {
   const s = src[file], crlf = s.includes('\r\n'), norm = s.replace(/\r\n/g, '\n');
   if (norm.split(from).length !== 2) { na++; console.log(`NOT APPLIED  ${name}`); continue; }
   applied++; const out = norm.replace(from, to); fs.writeFileSync(path.join(T, file), crlf ? out.replace(/\n/g, '\r\n') : out);
+  // a write in the same tick as the last build can leave cargo testing the old binary (W1 read SURVIVED that way once, hand-back §6):
+  // every write is stamped 2 s ahead, so the next build always sees it
+  const bump = () => { const fut = new Date(Date.now() + 2000); fs.utimesSync(path.join(T, file), fut, fut); }; bump();
   try {
     const r = spawnSync('C:/Users/nname/.cargo/bin/cargo.exe', ['test', filter], { cwd: T, encoding: 'utf8', maxBuffer: 1 << 28, env: { ...process.env, CARGO_TERM_COLOR: 'never' } });
     const all = (r.stdout || '') + (r.stderr || ''); fs.writeFileSync(path.join(OUT, `${name.split(' ')[0]}.out`), `# ${name}\n# filter ${filter}\n# exit ${r.status}\n${all}`);
@@ -61,6 +68,6 @@ for (const [name, file, from, to, filter] of M) {
     const build = /error\[E\d+\]|could not compile/.test(all);
     if (failed.length) caught++;
     console.log(`${failed.length ? 'caught      ' : 'SURVIVED    '} ${name}${failed.length ? `  (${failed.join('; ')})` : build ? '  (did not BUILD: not counted)' : ''}`);
-  } finally { fs.writeFileSync(path.join(T, file), s); }
+  } finally { fs.writeFileSync(path.join(T, file), s); bump(); }
 }
 console.log(`applied ${applied} / caught ${caught} / NOT APPLIED ${na}`);

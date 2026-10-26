@@ -138,3 +138,40 @@ NEXT: the librarian reviews d476-o-p4 4727180f..13c69597 when this is read, and 
 - **N4 (the clock read after the inject) survived, and is dropped as equivalent.** With the nonce, the clock is only a lower bound on which row may anchor, and only the row carrying this visit's nonce can. So zeroing the clock cannot change the row read. The wiring test still pins the clock read before the inject.
 
 NEXT: C re-reads the fix (13c69597..2cd8ee27) when the librarian has read this; the landing stays gated on the Third Place's read.
+
+## 6. The fold: the tailer's restart state, and C's pasted-content unwrap (the chair, 2026-10-26T22:50Z and 22:54Z)
+
+`d476-o-p4` **3b7265ee** on 2cd8ee27; posted to the board at commit. C re-reads **13c69597..3b7265ee** in one pass. **This supersedes §5's staged build.** The landing stays gated on the Third Place's read.
+
+**1. The restart state (my own stated limit in §5).**
+- When a tailer resumes at an offset, it now replays what it had already read (its last 4 MB before the offset, `read_before`) through the same `extract_turn_tracked` the live tailer uses (`tail_visit_resume`). So the derived state and the live one cannot disagree.
+- A restart between a visit and its reply now posts the reply as a fixed row. After a work prompt, a reply posts as written.
+
+**2. A pasted-content wrap (C's re-read §8, bafadda8).** An injected message can be stored wrapped: an opening `<pasted_content id="…">` line and its closing tag. The one delivered `[third-place]` ring on this board was; keep-warm prompts were on 2026-09-21/22.
+- `unwrap_pasted` strips the wrap before the visit-frame and `[third-place]` checks in `extract_turn`, so `TailVisit` follows.
+- I also put it on the harvest's anchor, where a wrapped visit row would otherwise never be read. That fails closed, but it would harvest nothing.
+
+    checked: my restart row, before the code → red-resume.out: does not build (tail_visit_resume missing); C's pair d476p4_rr_c_tests.rs, attached unedited by
+             #[path] → red-wrap.out: 2 FAILED on my tree before the fix
+    checked: cmp against git show bafadda8:… and 0a31420b:… → both of C's files byte-identical; green-wrap.out: C's 6 rows ok
+    checked: cargo test, whole package, at 3b7265ee's tree → touched-modules-fold.out: main bin 1,136 passed / 0 failed / 6 ignored
+    checked: d476p4-mutants.js → applied 39 / caught 39 / NOT APPLIED 0: §5's 35, plus R1r (a resumed tailer starts blank), R2r (the replay never learns a
+             visit), U1 (the wrap not stripped in the tailer: caught by C's pair), U2 (the harvest's anchor reads the wrapped text)
+    checked: cargo tauri build --no-bundle on the clean tree at 3b7265ee → exit 0
+    staged:  C:\Consonance\staged\d476p4-3b7265ee\consonance.exe   sha256 f3df08f983bf567c498fda6c61ff1e1bed51b0c306dd392b4d3b3e13bc049e0a   (15,964,672 bytes), HOLD.txt beside it
+    checked: its swap.ps1 dry run → swap-dry-run.out: the staged sha256 checks; Consonance RUNNING (pid 32356); nothing changed; 0 non-ASCII bytes
+    marked:  C:\Consonance\staged\d476p4-2cd8ee27\SUPERSEDED.txt names d476p4-3b7265ee
+    checked: scan-range.js 2cd8ee27..3b7265ee → 1 commit, 99 added lines, key hits 0, the keeper's words 0
+
+**Corrections, mine:**
+- **A harness fault, found and fixed.** On one run, W1 (the shelf not carrying the Third Place) read SURVIVED. Applied by hand, it is caught: the test fails, newest `2026-10-16.md`.
+  - inferred: the runner wrote the mutant in the same file-time tick as the previous restore, and cargo reused the old binary.
+  - The runner now stamps every write two seconds ahead. W1 is caught on both runs since.
+  - inferred: earlier verdicts from that runner could have been affected the same way, and only in the "SURVIVED" direction. Every run but that one reported each mutant caught, and a catch needs the mutant's own build to fail.
+- **Three mutants NOT APPLIED on first runs, all my anchors:**
+  - R1r matched my own test's string literal;
+  - T1v and T3v named the pre-unwrap text.
+
+  Each was re-anchored, and the whole set re-run.
+
+NEXT: C re-reads 13c69597..3b7265ee when the librarian has read this; the landing stays gated on the Third Place's read.

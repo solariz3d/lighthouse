@@ -1,26 +1,72 @@
 $ cargo tauri build --no-bundle
-# exit 0 in 58 s
+# exit 0 in 71 s
 
         Info Looking up installed tauri packages to check mismatched versions...
+   Compiling consonance v0.2.0 (C:\Users\nname\Desktop\worktrees\lh-o-d476-p4\consonance\src-tauri)
+warning: struct `C` is never constructed
+  --> src\bin\..\cochlea.rs:30:12
+   |
+30 | pub struct C {
+   |            ^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: methods `mul`, `add`, `sub`, and `abs` are never used
+  --> src\bin\..\cochlea.rs:35:8
+   |
+34 | impl C {
+   | ------ methods in this implementation
+35 |     fn mul(self, o: C) -> C {
+   |        ^^^
+...
+38 |     fn add(self, o: C) -> C { C { re: self.re + o.re, im: self.im + o.im } }
+   |        ^^^
+39 |     fn sub(self, o: C) -> C { C { re: self.re - o.re, im: self.im - o.im } }
+   |        ^^^
+40 |     fn abs(self) -> f32 { (self.re * self.re + self.im * self.im).sqrt() }
+   |        ^^^
+
+warning: function `fft` is never used
+  --> src\bin\..\cochlea.rs:44:8
+   |
+44 | pub fn fft(buf: &mut [C]) {
+   |        ^^^
+
+warning: function `hann` is never used
+  --> src\bin\..\cochlea.rs:76:8
+   |
+76 | pub fn hann(samples: &[f32]) -> Vec<C> {
+   |        ^^^^
+
+warning: function `spectrum` is never used
+  --> src\bin\..\cochlea.rs:85:8
+   |
+85 | pub fn spectrum(samples: &[f32]) -> Vec<f32> {
+   |        ^^^^^^^^
+
+warning: function `peaks` is never used
+   --> src\bin\..\cochlea.rs:103:8
+    |
+103 | pub fn peaks(spec: &[f32], sample_rate: f32, max: usize, floor_ratio: f32) -> Vec<Peak> {
+    |        ^^^^^
+
+warning: function `note_name` is never used
+   --> src\bin\..\cochlea.rs:173:8
+    |
+173 | pub fn note_name(hz: f32) -> (String, f32) {
+    |        ^^^^^^^^^
+
 warning: function `bands` is never used
    --> src\bin\..\cochlea.rs:325:8
     |
 325 | pub fn bands(spec: &[f32], sample_rate: f32, n: usize) -> Vec<f32> {
     |        ^^^^^
-    |
-    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
 warning: function `rms_db` is never used
    --> src\bin\..\cochlea.rs:522:8
     |
 522 | pub fn rms_db(samples: &[f32]) -> f32 {
     |        ^^^^^^
-
-warning: constant `PULSE_ENABLED` is never used
-   --> src\bin\..\cochlea.rs:950:11
-    |
-950 | pub const PULSE_ENABLED: bool = false;
-    |           ^^^^^^^^^^^^^
 
 warning: function `pitch_track` is never used
     --> src\bin\..\cochlea.rs:1195:8
@@ -105,13 +151,26 @@ warning: variant `Vibrato` is never constructed
      |
      = note: `Event` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
 
+warning: function `bands` is never used
+   --> src\bin\..\cochlea.rs:325:8
+    |
+325 | pub fn bands(spec: &[f32], sample_rate: f32, n: usize) -> Vec<f32> {
+    |        ^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: constant `PULSE_ENABLED` is never used
+   --> src\bin\..\cochlea.rs:950:11
+    |
+950 | pub const PULSE_ENABLED: bool = false;
+    |           ^^^^^^^^^^^^^
+
 warning: function `replay` is never used
     --> src\bin\..\cochlea.rs:1974:8
      |
 1974 | pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Event)> {
      |        ^^^^^^
 
-   Compiling consonance v0.2.0 (C:\Users\nname\Desktop\worktrees\lh-o-d476-p4\consonance\src-tauri)
 warning: function `is_working` is never used
   --> src\bin\..\capture.rs:55:8
    |
@@ -188,69 +247,10 @@ warning: function `strip_overlay` is never used
     |
     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
-warning: struct `C` is never constructed
-  --> src\bin\..\cochlea.rs:30:12
-   |
-30 | pub struct C {
-   |            ^
-   |
-   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
-
-warning: methods `mul`, `add`, `sub`, and `abs` are never used
-  --> src\bin\..\cochlea.rs:35:8
-   |
-34 | impl C {
-   | ------ methods in this implementation
-35 |     fn mul(self, o: C) -> C {
-   |        ^^^
-...
-38 |     fn add(self, o: C) -> C { C { re: self.re + o.re, im: self.im + o.im } }
-   |        ^^^
-39 |     fn sub(self, o: C) -> C { C { re: self.re - o.re, im: self.im - o.im } }
-   |        ^^^
-40 |     fn abs(self) -> f32 { (self.re * self.re + self.im * self.im).sqrt() }
-   |        ^^^
-
-warning: function `fft` is never used
-  --> src\bin\..\cochlea.rs:44:8
-   |
-44 | pub fn fft(buf: &mut [C]) {
-   |        ^^^
-
-warning: function `hann` is never used
-  --> src\bin\..\cochlea.rs:76:8
-   |
-76 | pub fn hann(samples: &[f32]) -> Vec<C> {
-   |        ^^^^
-
-warning: function `spectrum` is never used
-  --> src\bin\..\cochlea.rs:85:8
-   |
-85 | pub fn spectrum(samples: &[f32]) -> Vec<f32> {
-   |        ^^^^^^^^
-
-warning: function `peaks` is never used
-   --> src\bin\..\cochlea.rs:103:8
-    |
-103 | pub fn peaks(spec: &[f32], sample_rate: f32, max: usize, floor_ratio: f32) -> Vec<Peak> {
-    |        ^^^^^
-
-warning: function `note_name` is never used
-   --> src\bin\..\cochlea.rs:173:8
-    |
-173 | pub fn note_name(hz: f32) -> (String, f32) {
-    |        ^^^^^^^^^
-
-warning: function `bands` is never used
-   --> src\bin\..\cochlea.rs:325:8
-    |
-325 | pub fn bands(spec: &[f32], sample_rate: f32, n: usize) -> Vec<f32> {
-    |        ^^^^^
-
-warning: `consonance` (bin "conf_sweep") generated 16 warnings
+warning: `consonance` (bin "cochlea_replay") generated 21 warnings
+warning: `consonance` (bin "conf_sweep") generated 16 warnings (13 duplicates)
 warning: `consonance` (bin "composer_probe") generated 11 warnings
 warning: `consonance` (bin "capture_probe") generated 2 warnings (1 duplicate)
-warning: `consonance` (bin "cochlea_replay") generated 21 warnings (13 duplicates)
 warning: function `sysdrive` is never used
    --> src\main.rs:512:4
     |
@@ -260,33 +260,33 @@ warning: function `sysdrive` is never used
     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
 warning: method `is_stamped` is never used
-     --> src\main.rs:10668:8
+     --> src\main.rs:10715:8
       |
-10657 | impl PaneGate {
+10704 | impl PaneGate {
       | ------------- method in this implementation
 ...
-10668 |     fn is_stamped(&self) -> bool {
+10715 |     fn is_stamped(&self) -> bool {
       |        ^^^^^^^^^^
 
 warning: method `take_ready` is never used
-     --> src\main.rs:11279:8
+     --> src\main.rs:11326:8
       |
-11173 | impl Inbox {
+11220 | impl Inbox {
       | ---------- method in this implementation
 ...
-11279 |     fn take_ready(
+11326 |     fn take_ready(
       |        ^^^^^^^^^^
 
 warning: function `delivery_note` is never used
-     --> src\main.rs:11461:4
+     --> src\main.rs:11508:4
       |
-11461 | fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
+11508 | fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
       |    ^^^^^^^^^^^^^
 
 warning: function `turn_reply_after` is never used
-     --> src\main.rs:12983:4
+     --> src\main.rs:13030:4
       |
-12983 | fn turn_reply_after(jsonl: &str, since_ms: u64) -> Option<String> {
+13030 | fn turn_reply_after(jsonl: &str, since_ms: u64) -> Option<String> {
       |    ^^^^^^^^^^^^^^^^
 
 warning: field `tool_router` is never read
@@ -340,5 +340,5 @@ warning: methods `attempts`, `records`, `consecutive_panics`, and `last_attempt_
     |            ^^^^^^^^^^^^^^^
 
 warning: `consonance` (bin "consonance") generated 10 warnings
-    Finished `release` profile [optimized] target(s) in 56.61s
+    Finished `release` profile [optimized] target(s) in 1m 08s
        Built application at: C:\Users\nname\Desktop\worktrees\lh-o-d476-p4\consonance\src-tauri\target\release\consonance.exe
