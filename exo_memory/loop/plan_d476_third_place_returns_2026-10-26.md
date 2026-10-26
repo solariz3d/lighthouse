@@ -145,3 +145,13 @@ The keeper, 15:45: "hell yee … keep working you guys got this". That was a rep
   - C's red row 2 goes green, unedited.
 - **The smaller one:** the lap-id rule also learns the room's own spellings (C §3). This is wording, folded in.
 - **Then:** mutants re-run, one new mutant per fix (the tailer posts the text; the anchor uses the clock). Restage, mark 13c69597 SUPERSEDED, and C re-reads the fix only. The landing stays gated on Metaxy's read.
+
+## C's §9 ruled, 17:42 (C 4a6a1198): fold the one line, then the code is ready for Metaxy's read
+
+- Everything the packet asked about holds at 3b7265ee: 99/0 on the filters, and C's rows byte-identical.
+- **The gap, folded in (O):** in `extract_turn_tracked`, a user row that is `isMeta` (an image a tool read) or `isCompactSummary` leaves `in_visit` unchanged. C's row `d476p4_rr2_c_tests.rs` goes green unedited, with one mutant. Restage, and C re-reads that commit only.
+- **Paths that remain, named to Metaxy's read, not gated on:**
+  - the visit stays on the seat's own screen, which the chair can read through scrollback;
+  - a compaction summary posts in full, as every seat's does, and could quote a visit;
+  - the librarian's own turn after a ring is its own words.
+  The design summary the keeper carries to the Third Place says these plainly.
