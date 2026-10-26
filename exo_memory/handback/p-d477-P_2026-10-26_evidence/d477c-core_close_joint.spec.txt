@@ -1,0 +1,16 @@
+[32m✔ row 1: TEST TRACK 10 finishes with no bump or wiggle at its closer joints, and nothing it did not lay moves [90m(20614.348ms)[39m[39m
+[32m✔ row 2: TEST 10 finishes with no bump or wiggle at its closer joints, and nothing it did not lay moves [90m(2613.5823ms)[39m[39m
+[32m✔ row 3: a lap that ends 212 m below its start, level, finishes with no bump or wiggle at its closer joints [90m(991.6614ms)[39m[39m
+[32m✔ row 4: a windowed close rolls the road as gently as the bank allows: a 57° start closes in the last 200 m under the roll-rate bar [90m(229.6445ms)[39m[39m
+[34mℹ tests 4[39m
+[34mℹ suites 0[39m
+[34mℹ pass 4[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 24584.3251[39m
+
+# stderr
+
+# exit 0 in 24.6 s

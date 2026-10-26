@@ -1,0 +1,18 @@
+[32m✔ row 1: a typed length that was never Extended: the first Ctrl+Z puts the field back and leaves the track; the next Ctrl+Z undoes the track [90m(32.6016ms)[39m[39m
+[32m✔ row 2: a typed head field (turn) the same: it returns to what the panel showed, the track stays, then the next Ctrl+Z undoes the track [90m(4.3424ms)[39m[39m
+[32m✔ row 3: with the focus off the field (the page body), the field touched last is the one put back [90m(3.6588ms)[39m[39m
+[32m✔ row 4: a field typed back to what it showed holds nothing un-applied: Ctrl+Z undoes the track at once [90m(2.7103ms)[39m[39m
+[32m✔ row 5: what Extend applied is not un-applied, and neither is what an Undo refills: Ctrl+Z steps the track back each time [90m(6.861ms)[39m[39m
+[32m✔ row 6: Ctrl+Y and Ctrl+Shift+Z are not guarded; a text-entry field keeps its own Ctrl+Z and asks nothing of the panel; with no panel Ctrl+Z undoes the track as before [90m(6.1518ms)[39m[39m
+[34mℹ tests 6[39m
+[34mℹ suites 0[39m
+[34mℹ pass 6[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 149.2183[39m
+
+# stderr
+
+# exit 0 in 0.2 s

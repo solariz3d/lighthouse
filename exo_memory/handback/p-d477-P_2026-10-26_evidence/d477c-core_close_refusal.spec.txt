@@ -1,0 +1,15 @@
+[32m✔ close on two straights is a NAMED refusal (CoreError CLOSE_SINGULAR), never a plain Error [90m(18.5551ms)[39m[39m
+[32m✔ control: a lap that CAN close still closes (a turning track is not refused) [90m(79.9568ms)[39m[39m
+[32m✔ the app shows the refusal by its name: the shell's message carries CLOSE_SINGULAR, and the track stays open [90m(24.9733ms)[39m[39m
+[34mℹ tests 3[39m
+[34mℹ suites 0[39m
+[34mℹ pass 3[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 192.8533[39m
+
+# stderr
+
+# exit 0 in 0.2 s

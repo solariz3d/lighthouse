@@ -1,0 +1,67 @@
+✖ row 7: a bank he laid on purpose under 5° is kept: a straight at 3° is unchanged but for the roll-off tail into the curve, a gentle curve at 3° is never taken below 3° (569.3831ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 700.316
+
+✖ failing tests:
+
+test at app\test\core-bank-lap.test.js:159:1
+✖ row 7: a bank he laid on purpose under 5° is kept: a straight at 3° is unchanged but for the roll-off tail into the curve, a gentle curve at 3° is never taken below 3° (569.3831ms)
+  AssertionError [ERR_ASSERTION]: the straight at 3° is unchanged up to the curve's roll-off tail (banked the lap: 11 pieces (p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12), up to 64.0° into their turns; the route did not move (Ctrl+Z takes the bank back))
+  + actual - expected
+  
+    [
+      0.052359878,
+      0.052359878,
+  +   0.025693211333333372,
+  +   0,
+  +   0,
+  +   0,
+  +   0,
+  +   0,
+  +   0,
+  +   0,
+  +   0,
+  +   0,
+  +   0,
+  +   0,
+  +   0
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878,
+  -   0.052359878
+    ]
+  
+      at TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d477\tree-2451\app\test\core-bank-lap.test.js:170:10)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 0.052359878, 0.052359878, 0.025693211333333372, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    expected: [
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878
+    ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,70 @@
+✔ row 1: bankLapWith over a lap closed by close() is byte for byte D473's (a4bfe52) on four public laps (1410.937ms)
+✔ row 2: Close's own press (runCloseBest, which banks the lap it closes) is byte for byte D473's (a4bfe52) on the two public laps that close that way (4176.0614ms)
+✔ Bank the lap pressed again on a lap it has just banked changes nothing (no second undo step, every bank channel as the first press left it) (502.65ms)
+✔ row 1: a closed lap with a flat closer is banked as one undo step, and the route does not move (kh and kv byte-equal) (265.3ms)
+✔ row 2: a loop held back by the level rule is named in the status line, and a level curve on the same lap is banked (327.1336ms)
+✔ row 3: on a lap shaped like TEST 10, a second press changes nothing (no undo step, every bank channel as the first press left it, and the status line says so) (651.7806ms)
+✔ row 4: a loop whose stored turn is under 1/600 is named in the status line when the level rule holds it back (471.7475ms)
+✔ row 5: the press copies the track to its backups first, as it was; a press that changes nothing writes no copy (121.1718ms)
+✔ row 6: a copy that cannot be written refuses by name, and nothing changes (112.7138ms)
+✖ row 7: a bank he laid on purpose under 5° is kept: a straight at 3° is unchanged, a gentle curve at 3° is never taken below 3° (392.3447ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5690.9015
+
+✖ failing tests:
+
+test at app\test\core-bank-lap.test.js:158:1
+✖ row 7: a bank he laid on purpose under 5° is kept: a straight at 3° is unchanged, a gentle curve at 3° is never taken below 3° (392.3447ms)
+  AssertionError [ERR_ASSERTION]: the straight at 3° is unchanged (banked the lap: 11 pieces (p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12), up to 64.0° into their turns; the route did not move (Ctrl+Z takes the bank back))
+  + actual - expected
+  ... Skipped lines
+  
+    [
+      0.052359878,
+      0.052359878,
+      0.052359878,
+      0.052359878,
+  ...
+      0.052359878,
+  +   0.06314079800561355,
+      0.052359878,
+      0.052359878,
+  -   0.052359878
+    ]
+  
+      at TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-p477\app\test\core-bank-lap.test.js:168:10)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [
+      0.052359878,         0.052359878,
+      0.052359878,         0.052359878,
+      0.052359878,         0.052359878,
+      0.052359878,         0.052359878,
+      0.052359878,         0.052359878,
+      0.052359878,         0.052359878,
+      0.052359878,         0.052359878,
+      0.052359878, 0.06314079800561355,
+      0.052359878,         0.052359878
+    ],
+    expected: [
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878,
+      0.052359878, 0.052359878
+    ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

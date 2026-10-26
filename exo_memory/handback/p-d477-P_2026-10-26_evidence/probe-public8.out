@@ -1,0 +1,6 @@
+flat (close(), 6 pieces): press 1 OLD 4893c25fdd539ef6 NEW 4893c25fdd539ef6 BYTE-EQUAL; level [] (OLD []); changed p1 54.10° p2 64.03° p3 62.71° p4 62.42° p5 64.06° p6 12.23°
+  press 2 OLD: same doc; NEW: same doc
+loop (close(), 10 pieces): press 1 OLD a712f84f84d977e8 NEW a712f84f84d977e8 BYTE-EQUAL; level ["p4"] (OLD ["p4"]); changed p1 12.46° p2 63.13° p3 1.59° p5 29.38° p6 62.62° p7 19.52° p8 63.35° p9 33.35° p10 63.64°
+  press 2 OLD: CHANGED p3 +1.582°; NEW: same doc
+t10 (close(), 11 pieces): press 1 OLD dd552a6d5f5adbd2 NEW dd552a6d5f5adbd2 BYTE-EQUAL; level ["p5"] (OLD ["p5"]); changed p1 16.33° p6 2.29° p7 63.75° p8 34.34° p9 63.27° p10 1.53° p11 63.64°
+  press 2 OLD: CHANGED p6 +3.820° p10 +3.820°; NEW: same doc

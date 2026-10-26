@@ -1,0 +1,27 @@
+test/core_close_banks_lap.test.js            exit [33m0[39m 250.0 s ℹ tests 72 ℹ pass 72 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+test/core_finish_bank.test.js                exit [33m0[39m 74.5 s ℹ tests 12 ℹ pass 12 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+test/core_finish.test.js                     exit [33m0[39m 26.5 s ℹ tests 17 ℹ pass 16 ℹ fail 0 ℹ skipped 1 ℹ todo 0
+test/core_finish_joints.test.js              exit [33m0[39m 65.4 s ℹ tests 8 ℹ pass 8 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+test/core_joint_c2.test.js                   exit [33m0[39m 10.8 s ℹ tests 11 ℹ pass 11 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+test/core_close_best.test.js                 exit [33m0[39m 90.7 s ℹ tests 14 ℹ pass 11 ℹ fail 0 ℹ skipped 3 ℹ todo 0
+test/core_close_flip.test.js                 exit [33m0[39m 1.2 s ℹ tests 4 ℹ pass 4 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+test/core_close_joint.test.js                exit [33m0[39m 24.6 s ℹ tests 4 ℹ pass 4 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+test/core_close_refusal.test.js              exit [33m0[39m 0.2 s ℹ tests 3 ℹ pass 3 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+test/core_close_local.test.js                exit [33m0[39m 3.4 s ℹ tests 8 ℹ pass 8 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+test/core_close.test.js                      exit [33m0[39m 6.5 s ℹ tests 27 ℹ pass 27 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+test/core_chord.test.js                      exit [33m0[39m 4.4 s ℹ tests 19 ℹ pass 19 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+test/sweep_joints.test.js                    exit [33m0[39m 16.4 s ℹ tests 12 ℹ pass 12 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+test/geom_mesh_rows.test.js                  exit [33m0[39m 3.6 s ℹ tests 2 ℹ pass 2 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+app/test/core-bank-lap.test.js               exit [33m0[39m 2.0 s ℹ tests 7 ℹ pass 7 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+app/test/core-bank-lap-twice.test.js         exit [33m0[39m 0.5 s ℹ tests 1 ℹ pass 1 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+app/test/core-bank-lap-pins.test.js          exit [33m0[39m 6.5 s ℹ tests 2 ℹ pass 2 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+app/test/core-smooth-ramps.test.js           exit [33m0[39m 0.5 s ℹ tests 7 ℹ pass 7 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+app/test/core-trackmenu.test.js              exit [33m0[39m 1.5 s ℹ tests 11 ℹ pass 11 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+app/test/close-worker.test.js                exit [33m0[39m 54.5 s ℹ tests 7 ℹ pass 7 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+app/test/core-close-preview.test.js          exit [33m0[39m 12.1 s ℹ tests 4 ℹ pass 4 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+app/test/core-shell.test.js                  exit [33m0[39m 12.8 s ℹ tests 29 ℹ pass 29 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+app/test/core-readout-display.test.js        exit [33m0[39m 13.4 s ℹ tests 49 ℹ pass 49 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+app/test/core-check-lean.test.js             exit [33m0[39m 17.7 s ℹ tests 4 ℹ pass 4 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+app/test/undo-guard.test.js                  exit [33m0[39m 0.2 s ℹ tests 6 ℹ pass 6 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+app/test/core-close-mutation.test.js         exit [33m0[39m 434.0 s ℹ tests 63 ℹ pass 63 ℹ fail 0 ℹ skipped 0 ℹ todo 0
+d477 runs done
