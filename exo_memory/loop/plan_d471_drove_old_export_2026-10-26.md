@@ -27,3 +27,12 @@ The keeper, 06:57: "nope its still broken exactly the same way it was … I save
 The librarian collates, then tells the keeper in plain words which track to pick in AC. If part 1 shows the new road is still wrong at his spot, that becomes the lap instead, and he is not asked to drive until a measurement says it is fixed.
 
 NEXT: chair dispatch part 1 to C and part 2 to A now; librarian collates when both hand-backs are in.
+
+## Amendment, 07:03: the keeper's word changes part 2's target
+
+The keeper, 07:03: "well make sure the correct TEST 10 is test 10 idc if its overwritten they are all test tracks anyway"
+
+- Part 2 now exports into **`t180b_test_10` itself**, so "TEST 10" in AC is the fixed one. No `_0421` folder.
+- First, A copies the old folder whole to `t180b_test_10.before-d471` (outside AC's tracks folder, e.g. A's scratch on G:), with a file count and the kn5's sha256 compared. This keeps it reversible, and **C reads the OLD road from that copy**, not from the live folder.
+- His saved `eq-TEST 10.t180track` (the source of t180b_test_10; `eq-TEST TRACK 10` is a different track and is not touched) is also saved with Smooth ramps applied, so the builder opens the same track he drives. A backs up the file first as `eq-TEST 10.t180track.before-d471`, beside it, with a sha256 compare. The .t180undo is left alone.
+- The rest of part 2 is unchanged: 0.4.21 install by the standing rule, the export's own FINS refusal must pass.
