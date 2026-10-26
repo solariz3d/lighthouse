@@ -1,0 +1,41 @@
+✔ 1 · a number (or no) transition is unchanged: case 0 serialises exactly as it did at 4ccdd58 (3.952ms)
+✔ 1 · a number (or no) transition is unchanged: case 1 serialises exactly as it did at D459 (re-pinned: the quintic for phi and c) (2.0539ms)
+✔ 1 · a number (or no) transition is unchanged: case 2 serialises exactly as it did at D459 (re-pinned: the quintic for phi and c) (2.2183ms)
+✔ 1 · a number (or no) transition is unchanged: case 3 serialises exactly as it did at D459 (re-pinned: the quintic for phi and c) (2.5218ms)
+✔ 1 · a number (or no) transition is unchanged: case 4 serialises exactly as it did at 4ccdd58 (0.4362ms)
+✔ 1 · a number (or no) transition is unchanged: case 5 serialises exactly as it did at 4ccdd58 (0.4462ms)
+✔ 2/3 · w 31 → 12 on a 100 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [12, 31] (6.1838ms)
+✔ 2/3 · w 12 → 31 on a 100 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [12, 31] (4.1715ms)
+✔ 2/3 · w 31 → 8 on a 200 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [8, 31] (5.4672ms)
+✔ 2/3 · w 31 → 12 on a 45 m piece with the ramp 'start': it reaches the target by R = 15 m and holds exactly, and never leaves [12, 31] (1.5122ms)
+✔ 2/3 · w 20 → 8 on a 60 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [8, 20] (1.8811ms)
+✔ 2/3 · w 31 → 12 on a 30 m piece with the ramp 'start': it reaches the target by R = 15 m and holds exactly, and never leaves [12, 31] (0.5613ms)
+✔ 2/3 · w 31 → 31.5 on a 100 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [31, 31.5] (2.4089ms)
+✔ 2/3 · w 12 → 30 on a 25 m piece with the ramp 'start': it reaches the target by R = 12.5 m and holds exactly, and never leaves [12, 30] (1.0469ms)
+✔ 2 · an explicit number of metres in the map is the ramp: w reaches the target by 30 m and holds (1.6328ms)
+✔ 2/3 · the same holds for the bank (phi) and the cup (c): a short ramp reaches its target and never leaves the range (5.3064ms)
+✔ 3 · a joint that carries a slope on w (0.5 m/m, a target just below the joint value: the ideal ramp rises past the joint's own first two points): C1 at the joint, and no control point outside the range of start, target and those two (2.5554ms)
+✔ 2 · the ramp SHAPE: the curve stays within 15% of the change of the smooth ramp it is built from (Bloss over R/2), measured 11.9% (the price of building from control points, ref 09 §9) (3.4113ms)
+✔ 5 · a ramped piece is stored on the channel quantum (every control point is a multiple of it), so the document round-trips byte for byte (1.0419ms)
+✔ 4 · a channel not in the map keeps the whole-piece blend: phi follows the number-transition document within 1% of its change (0.1% under the cubic, re-pinned at D459) (2.6856ms)
+✔ 4 · a map naming only a channel with no target changes nothing: the document equals the number-transition one (1.5007ms)
+✔ 4 · 'start' on a piece no longer than one span is the whole-piece blend (nothing to ramp inside the piece) (0.5021ms)
+✔ 4 · startRampM is the first knot span: 20 m for a long piece, the piece for a short one, and follows knotM (0.5811ms)
+✔ 4 · the extra knots: RAMP_KNOTS subdivisions of the ramp, strictly increasing, inside the piece, and the even knots they would crowd are dropped (0.1048ms)
+✔ 5 · joints are C1 into the ramped piece, out of it (a piece after the hold), and the document validates (0.7199ms)
+✔ 5 · a lap with ramped pieces still closes (the close reads the same control points) (157.1383ms)
+✔ 6 · a map with an unknown channel is refused by name (BAD_TRANSITION) (0.5441ms)
+✔ 6 · a map with zero is refused by name (BAD_TRANSITION) (0.1561ms)
+✔ 6 · a map with negative is refused by name (BAD_TRANSITION) (0.1165ms)
+✔ 6 · a map with longer than the piece is refused by name (BAD_TRANSITION) (0.0828ms)
+✔ 6 · a map with not a number is refused by name (BAD_TRANSITION) (0.094ms)
+✔ 6 · a map with a string that is not start is refused by name (BAD_TRANSITION) (0.0932ms)
+✔ 6 · a number transition is still checked as before: 0 and a value past the length are refused (0.3735ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 306.2255

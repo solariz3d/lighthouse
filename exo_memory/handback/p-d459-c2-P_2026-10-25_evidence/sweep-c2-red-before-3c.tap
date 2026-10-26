@@ -1,0 +1,101 @@
+[32m✔ seed 1: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint) [90m(23.1171ms)[39m[39m
+[32m✔ seed 1: C2 at the seam and at the joints Close moved [90m(11.5318ms)[39m[39m
+[32m✔ seed 2: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint) [90m(663.3907ms)[39m[39m
+[31m✖ seed 2: C2 at the seam and at the joints Close moved [90m(402.7473ms)[39m[39m
+[32m✔ seed 3: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint) [90m(12.148ms)[39m[39m
+[32m✔ seed 3: C2 at the seam and at the joints Close moved [90m(3.9064ms)[39m[39m
+[32m✔ seed 4: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint) [90m(488.5414ms)[39m[39m
+[31m✖ seed 4: C2 at the seam and at the joints Close moved [90m(396.4076ms)[39m[39m
+[32m✔ seed 5: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint) [90m(4.1504ms)[39m[39m
+[32m✔ seed 5: C2 at the seam and at the joints Close moved [90m(6.3363ms)[39m[39m
+[32m✔ seed 6: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint) [90m(495.859ms)[39m[39m
+[31m✖ seed 6: C2 at the seam and at the joints Close moved [90m(454.3916ms)[39m[39m
+[34mℹ tests 12[39m
+[34mℹ suites 0[39m
+[34mℹ pass 9[39m
+[34mℹ fail 3[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 3291.2218[39m
+
+[31m✖ failing tests:[39m
+
+test at test\sweep_c2.test.js:64:3
+[31m✖ seed 2: C2 at the seam and at the joints Close moved [90m(402.7473ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: seed 2 (closed), words [{"length":300,"first":{"e":13}},{"length":65,"transition":40,"targets":{"kh":0.0015150558547948297}},{"length":121,"transition":40,"targets":{"kh":0,"e":17}},{"length":180,"transition":40,"targets":{"kh":0,"phi":-0.06699747269969122,"er":16}},{"length":217,"transition":40,"targets":{"kh":0,"phi":-0.18194004418900367,"e":28}},{"length":211,"transition":40,"targets":{"kh":0.003365451054157263,"er":2}},{"length":225,"transition":40,"targets":{"er":34}}]
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m [
+  [32m+[39m   'p7|p1 phi 0.0890 °/m²',
+  [32m+[39m   'p7|p1 e -0.1280 °/m²',
+  [32m+[39m   'p7|p1 er -0.1792 °/m²'
+  [32m+[39m ]
+  [31m-[39m []
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d459\tree-441e869\[39mtest\sweep_c2.test.js:68:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [32m'p7|p1 phi 0.0890 °/m²'[39m, [32m'p7|p1 e -0.1280 °/m²'[39m, [32m'p7|p1 er -0.1792 °/m²'[39m ],
+    expected: [],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\sweep_c2.test.js:64:3
+[31m✖ seed 4: C2 at the seam and at the joints Close moved [90m(396.4076ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: seed 4 (closed), words [{"length":300,"first":{"t":107}},{"length":121,"transition":40,"targets":{"kh":-0.0017225847676941393,"kv":0.00022280895673510462}},{"length":202,"transition":40,"targets":{"t":133}},{"length":156,"transition":40,"targets":{"phi":0.0940076756649659}},{"length":61,"transition":40,"targets":{"kh":-0.0038900338548542523}},{"length":101,"transition":40,"targets":{"kh":0,"t":161}}]
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m [
+  [32m+[39m   'p6|p1 phi -0.0570 °/m²'
+  [32m+[39m ]
+  [31m-[39m []
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d459\tree-441e869\[39mtest\sweep_c2.test.js:68:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [32m'p6|p1 phi -0.0570 °/m²'[39m ],
+    expected: [],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\sweep_c2.test.js:64:3
+[31m✖ seed 6: C2 at the seam and at the joints Close moved [90m(454.3916ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: seed 6 (closed), words [{"length":300,"first":{"e":5}},{"length":213,"transition":40,"targets":{"kh":0.0033784181600148592,"kv":0.0001700037680389128,"phi":0.13360126317236606,"e":8}},{"length":256,"transition":40,"targets":{"kh":0,"phi":0.32991269476194357,"er":30}},{"length":104,"transition":40,"targets":{"er":7}},{"length":166,"transition":40,"targets":{"kh":0.0019485226399706672}},{"length":185,"transition":40,"targets":{"phi":0.2828700269793389,"e":4}},{"length":244,"transition":40,"targets":{"kh":-0.0022737388038016064,"kv":-0.00032734429637642126,"e":-7}},{"length":67,"transition":40,"targets":{"kh":-0.0017601047530234376,"phi":-0.23280034169089228,"e":27}}]
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m [
+  [32m+[39m   'p8|p1 phi 0.1426 °/m²',
+  [32m+[39m   'p8|p1 e -0.2352 °/m²',
+  [32m+[39m   'p8|p1 er -0.2352 °/m²'
+  [32m+[39m ]
+  [31m-[39m []
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d459\tree-441e869\[39mtest\sweep_c2.test.js:68:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [32m'p8|p1 phi 0.1426 °/m²'[39m, [32m'p8|p1 e -0.2352 °/m²'[39m, [32m'p8|p1 er -0.2352 °/m²'[39m ],
+    expected: [],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }

@@ -1,0 +1,21 @@
+✔ row 10a: at the open end the pieces simply go: the same document with fewer pieces, the ids kept and not reused, and inserting a saved run then deleting it gets back the track (14.0537ms)
+✔ row 10b: in the middle, when the two sides already join (the deleted run began and ended in the same state) nothing is changed anywhere (0.4044ms)
+✔ row 10c (legacy): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved (0.7318ms)
+✔ row 10c (cup): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved (2.0583ms)
+✔ row 10c (tube): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved (0.7345ms)
+✔ row 10h: a tube after a CUP head starts at twice the edge of the cup (tNext), so the rendered edge is continuous across the re-join (0.6936ms)
+✔ row 10d: jumps: deleting the road before a jump, a jump itself, and the road after it each give a valid track with the jump kept (or its own refusal), the far side untouched (0.4699ms)
+✔ row 10i: deleting the road between two jumps is REFUSED BY NAME (DELETE_REJOIN, naming land on road first), and nothing is touched (0.8262ms)
+✔ row 10j: a run that starts with a jump, added at a head that IS a jump, is refused by name (JUMP_AFTER_JUMP); at a road head it goes in (control) (1.2021ms)
+✔ row 10k: a piece FILE that starts with two jumps is refused when it is READ (JUMP_AFTER_JUMP), so the library lists why; one leading jump reads (control) (1.096ms)
+✔ row 10e: REFUSED BY NAME (DELETE_REJOIN), nothing deleted and nothing reshaped: a jump left with no road before it, and a re-join a limit of the document refuses (a tube held in the slot band) (0.8543ms)
+✔ row 10f: a closed track has no open end (CLOSED); a range that is not in the track is BAD_RANGE (91.9681ms)
+✔ row 10g: EVERY range of every kind of track either goes through as a valid document with only the joint touched, or is refused by name (DELETE_REJOIN): never another error, never an invalid document (7.2938ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 674.4208

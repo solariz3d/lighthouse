@@ -1,0 +1,5 @@
+lap e -20: closed with 10 pieces; pieces whose edge is live at the end: none
+lap e -29: closed with 10 pieces; pieces whose edge is live at the end: none
+lap e 20: closed with 10 pieces; pieces whose edge is live at the end: none
+finish refused [33m60[39m BAD_EDGE
+live tails reached by cut: 0; extends tried 0, refused JOINT 0

@@ -1,0 +1,18 @@
+[32m✔ row 0: the instrument's closed forms agree with pieceEnd and with the four-point reading, channel by channel; c2Breaks finds the same joints [90m(13.7549ms)[39m[39m
+[32m✔ row 1: a bank reached over 100 m is C2 at the ramp's start and end (the roll's curvature along s does not step) [90m(2.5351ms)[39m[39m
+[32m✔ row 2: a 15° cup brought home to 0 over 40 m is C2 at both ends of the fade [90m(1.7222ms)[39m[39m
+[32m✔ row 3: a 30° edge brought to 0 over 50 m is C2 at both ends [90m(2.5249ms)[39m[39m
+[32m✔ row 4: a 35° right edge reached over 50 m is C2 at both ends [90m(1.4324ms)[39m[39m
+[32m✔ row 5 (control): at every one of those joints the channel's value and slope are continuous (the C1 that holds today stays) [90m(3.6359ms)[39m[39m
+[32m✔ row 6: through Close, the closer brings the cup home C2: at its first joint, its own joints and the seam the cup's second derivative does not step [90m(1989.1222ms)[39m[39m
+[32m✔ row 7: through Close, Finish's roll straight is C2 where it meets the user's last piece [90m(2111.8103ms)[39m[39m
+[32m✔ row 8: a ramp's shape is the C2 quintic's: a bank over 100 m within 1.5% of its change at every half metre, a right edge over 50 m within 3% [90m(3.6016ms)[39m[39m
+[32m✔ row 9: the closure is C2: a whole-lap close and a local close leave no curvature step at the seam nor at any joint they moved [90m(978.9564ms)[39m[39m
+[34mℹ tests 10[39m
+[34mℹ suites 0[39m
+[34mℹ pass 10[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 5202.0085[39m

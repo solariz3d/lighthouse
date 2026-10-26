@@ -1,0 +1,10 @@
+'use strict';
+const path = require('path'); const T = path.resolve(process.argv[2]); const DEG = Math.PI / 180;
+const D = require(path.join(T, 'src/core/document.js')), { extend } = require(path.join(T, 'src/core/extend.js')), { extendTurnBy } = require(path.join(T, 'src/core/turnby.js')), F = require(path.join(T, 'src/core/finish.js')), { close } = require(path.join(T, 'src/core/close.js'));
+let d = D.createDoc('rolled cup'); d = extend(d, { length: 1000, family: 'bowl', first: { c: 10 } }); d = extendTurnBy(d, { length: 1500, targets: { kv: 0 } }, Math.PI); d = extend(d, { length: 300, targets: { c: 35, phi: 40 * DEG } });
+let t0 = Date.now(); const r = F.finishToStart(d); console.log('finishToStart', ((Date.now() - t0) / 1000).toFixed(1), 's; closed', r.doc.closed, '|', r.plan.report.slice(0, 120));
+// a square lap that nearly meets: 4 × (100 m straight + 90° at R 300), a 12° bank ramp on the third straight and back on the fourth; local close of the last two
+const Q = Math.PI * 300 / 2; let s = D.createDoc('square'); s = extend(s, { length: 100, family: 'bowl' }); s = extendTurnBy(s, { length: Q }, 90 * DEG); s = extend(s, { length: 100 }); s = extendTurnBy(s, { length: Q }, 90 * DEG);
+s = extend(s, { length: 100, targets: { phi: 12 * DEG } }); s = extendTurnBy(s, { length: Q }, 90 * DEG); s = extend(s, { length: 100, targets: { phi: 0 } }); s = extendTurnBy(s, { length: Q }, 90 * DEG);
+t0 = Date.now(); try { const c = close(s, { window: [s.pieces.length - 1, s.pieces.length - 2] }); console.log('local close', ((Date.now() - t0) / 1000).toFixed(1), 's; converged', c.converged, 'it', c.iterations, '|', c.report.slice(0, 100)); } catch (e) { console.log('local close', ((Date.now() - t0) / 1000).toFixed(1), 's REFUSED:', e.message.slice(0, 160)); }
+t0 = Date.now(); try { const c = close(s, { edited: [0] }); console.log('whole close', ((Date.now() - t0) / 1000).toFixed(1), 's; converged', c.converged, 'it', c.iterations); } catch (e) { console.log('whole close REFUSED:', e.message.slice(0, 160)); }

@@ -1,0 +1,5 @@
+finish refused [33m-20[39m FINISH_NO_ROUTE
+finish refused [33m-29[39m FINISH_NO_ROUTE
+finish refused [33m20[39m FINISH_NO_ROUTE
+finish refused [33m60[39m BAD_EDGE
+live tails reached by cut: 0; extends tried 0, refused JOINT 0

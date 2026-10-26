@@ -1,0 +1,9 @@
+✔ EXTEND: the fit never leaves the range (D190 V5 ringing): a 30 m piece, a 10 m ramp to e = 150 − c on a cup, stays inside [0, cap] and the document is accepted (E2 iii, KE2-2) (7.2891ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 185.1422

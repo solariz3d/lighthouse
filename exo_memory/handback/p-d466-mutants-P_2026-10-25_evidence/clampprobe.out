@@ -1,0 +1,71 @@
+cases 57750, where the clamp matters 3909
+by head: {"empty bowl":1030,"legacy bowl 100":21,"legacy flat 100":21,"cup 0":24,"cup 30":24,"cup 60":21,"cup 90":24,"cup 120":24,"cup 149":18,"cup 150":18,"tube 40":24,"tube 120":24,"tube 180":21,"tube 300":24,"edge held 10":27,"edge held 40":27,"edge held -20":24,"cup 60 + edge 10":27,"cup 60 + edge 40":27,"live tail e 10 slope 0.5":27,"live tail e 40 slope 0.5":131,"live tail e 40 slope -0.5":278,"live tail e 10 slope 2":280,"live tail e -10 slope -0.5":1743}
+by transition: {"4":475,"6":62,"8":62,"10":431,"12":62,"15":62,"20":62,"25":62,"30":62,"50":645,"100":193,"200":116,"undefined":511,"{\"e\":\"start\"}":365,"{\"er\":\"start\"}":455,"{\"e\":4}":284}
+tree/mutant outcome: {"ok/ok":1395,"ok/BAD_EDGE":803,"JOINT/ok":1711}
+empty bowl | L 8 | T 4 | {"e":60} | control points differ by 3.31e+1 | 
+empty bowl | L 8 | T 4 | {"er":60} | control points differ by 3.31e+1 | 
+empty bowl | L 8 | T 4 | {"e":60,"er":60} | control points differ by 3.31e+1 | 
+empty bowl | L 8 | T 4 | {"e":60} | control points differ by 3.31e+1 | 
+empty bowl | L 8 | T 4 | {"er":60} | control points differ by 3.31e+1 | 
+empty bowl | L 8 | T 4 | {"e":60,"er":60} | control points differ by 3.31e+1 | 
+empty bowl | L 12 | T 6 | {"e":60} | control points differ by 3.31e+1 | 
+empty bowl | L 12 | T 6 | {"er":60} | control points differ by 3.31e+1 | 
+empty bowl | L 12 | T 6 | {"e":60,"er":60} | control points differ by 3.31e+1 | 
+empty bowl | L 20 | T 10 | {"e":60} | control points differ by 3.31e+1 | 
+empty bowl | L 20 | T 10 | {"er":60} | control points differ by 3.31e+1 | 
+empty bowl | L 20 | T 10 | {"e":60,"er":60} | control points differ by 3.31e+1 | 
+empty bowl | L 20 | T 10 | {"e":60} | control points differ by 3.31e+1 | 
+empty bowl | L 20 | T 10 | {"er":60} | control points differ by 3.31e+1 | 
+empty bowl | L 20 | T 10 | {"e":60,"er":60} | control points differ by 3.31e+1 | 
+empty bowl | L 30 | T 15 | {"e":60} | control points differ by 3.31e+1 | 
+empty bowl | L 30 | T 15 | {"er":60} | control points differ by 3.31e+1 | 
+empty bowl | L 30 | T 15 | {"e":60,"er":60} | control points differ by 3.31e+1 | 
+empty bowl | L 50 | T 25 | {"e":60} | control points differ by 3.31e+1 | 
+empty bowl | L 50 | T 25 | {"er":60} | control points differ by 3.31e+1 | 
+empty bowl | L 50 | T 25 | {"e":60,"er":60} | control points differ by 3.31e+1 | 
+empty bowl | L 50 | T 4 | {"e":-10} | control points differ by 3.01e+1 | 
+empty bowl | L 50 | T 4 | {"er":-10} | control points differ by 3.01e+1 | 
+empty bowl | L 50 | T 4 | {"e":-10,"er":-10} | control points differ by 3.01e+1 | 
+empty bowl | L 12 | T 4 | {"e":120} | control points differ by 2.92e+1 | 
+empty bowl | L 12 | T 4 | {"er":120} | control points differ by 2.92e+1 | 
+empty bowl | L 12 | T 4 | {"e":120,"er":120} | control points differ by 2.92e+1 | 
+empty bowl | L 30 | T 10 | {"e":120} | control points differ by 2.92e+1 | 
+empty bowl | L 30 | T 10 | {"er":120} | control points differ by 2.92e+1 | 
+empty bowl | L 30 | T 10 | {"e":120,"er":120} | control points differ by 2.92e+1 | 
+empty bowl | L 100 | T 4 | {"e":-10} | control points differ by 2.86e+1 | 
+empty bowl | L 100 | T 4 | {"er":-10} | control points differ by 2.86e+1 | 
+empty bowl | L 100 | T 4 | {"e":-10,"er":-10} | control points differ by 2.86e+1 | 
+empty bowl | L 200 | T 4 | {"e":-10} | control points differ by 2.86e+1 | 
+empty bowl | L 200 | T 4 | {"er":-10} | control points differ by 2.86e+1 | 
+empty bowl | L 200 | T 4 | {"e":-10,"er":-10} | control points differ by 2.86e+1 | 
+empty bowl | L 100 | T 10 | {"e":-10} | control points differ by 2.55e+1 | 
+empty bowl | L 100 | T 10 | {"er":-10} | control points differ by 2.55e+1 | 
+empty bowl | L 100 | T 10 | {"e":-10,"er":-10} | control points differ by 2.55e+1 | 
+empty bowl | L 200 | T 10 | {"e":-10} | control points differ by 2.55e+1 | 
+
+--- stderr
+empty bowl 0 0
+legacy bowl 100 2310 1030
+legacy flat 100 4620 1051
+cup 0 6930 1072
+cup 30 9240 1096
+cup 60 11550 1120
+cup 90 13860 1141
+cup 120 16170 1165
+cup 149 18480 1189
+cup 150 20790 1207
+tube 40 23100 1225
+tube 120 25410 1249
+tube 180 27720 1273
+tube 300 30030 1294
+tube 360 32340 1318
+edge held 10 34650 1318
+edge held 40 36960 1345
+edge held -20 39270 1372
+cup 60 + edge 10 41580 1396
+cup 60 + edge 40 43890 1423
+live tail e 10 slope 0.5 46200 1450
+live tail e 40 slope 0.5 48510 1477
+live tail e 40 slope -0.5 50820 1608
+live tail e 10 slope 2 53130 1886
+live tail e -10 slope -0.5 55440 2166

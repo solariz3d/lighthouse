@@ -1,0 +1,14 @@
+✔ row 1: a close confined to the LAST piece leaves every earlier piece bit-identical, closes the loop, and moves the last piece (298.8563ms)
+✔ row 2: the default window covers at least ~20% of the lap from its end (at least the last piece); the whole-lap close, by contrast, moves pieces outside it (216.461ms)
+✔ row 3: a window that cannot close the loop is REFUSED BY NAME (CLOSE_WINDOW), naming the window, and nothing is handed back (1234.1237ms)
+✔ row 4: a local close may not push the window past the roll-rate bar (1.2144°/m over 20 m): refused by name (139.5036ms)
+✔ row 4 control: the same start banked 0.5 rad closes in the last piece (its roll stays under the bar) (114.5787ms)
+✔ row 5: a window with no road piece is refused by name (80.7405ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2173.445

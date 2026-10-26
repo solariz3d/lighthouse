@@ -1,0 +1,35 @@
+✔ test 4, track 0 (11 pieces, 4100 m, ε 0.00570491696708): one call closes it (40.7776ms)
+✔ test 4, track 1 (10 pieces, 3685 m, ε -0.0841972072609): one call closes it (30.0375ms)
+✔ test 4, track 2 (9 pieces, 3270 m, ε -0.0402413592674): one call closes it (38.6664ms)
+✔ test 4, track 3 (7 pieces, 3042 m, ε -0.0690124160144): one call closes it (27.2478ms)
+✔ test 4, track 4 (6 pieces, 2419 m, ε -0.00323135023937): one call closes it (22.1425ms)
+✔ test 4, track 5 (12 pieces, 4723 m, ε -0.065869737044): one call closes it (34.3193ms)
+✔ test 4, track 6 (9 pieces, 2773 m, ε 0.075068023568): one call closes it (17.2737ms)
+✔ test 4, track 7 (9 pieces, 3916 m, ε -0.0348630782217): one call closes it (26.4622ms)
+✔ test 4, track 8 (8 pieces, 2717 m, ε 0.0987024823669): one call closes it (19.0382ms)
+✔ test 4, track 9 (7 pieces, 2519 m, ε -0.0799730329309): one call closes it (15.0751ms)
+✔ test 4, track 10 (6 pieces, 2235 m, ε -0.025086999312): one call closes it (17.6991ms)
+✔ test 4, track 11 (10 pieces, 3974 m, ε -0.00568767194636): one call closes it (27.6036ms)
+✔ test 4, track 12 (6 pieces, 2264 m, ε -0.055765911378): one call closes it (12.9337ms)
+✔ test 4, track 13 (8 pieces, 3594 m, ε 0.0442057050765): one call closes it (28.1304ms)
+✔ test 4, track 14 (6 pieces, 1914 m, ε 0.0142437375616): one call closes it (11.0531ms)
+✔ test 4, track 15 (9 pieces, 2362 m, ε -0.0745127643459): one call closes it (16.1176ms)
+✔ test 4, track 16 (7 pieces, 2498 m, ε 0.0869582034647): one call closes it (14.1462ms)
+✔ test 4, track 17 (8 pieces, 3177 m, ε -0.00734682576731): one call closes it (24.6563ms)
+✔ test 4, track 18 (9 pieces, 3486 m, ε -0.0384539657272): one call closes it (23.439ms)
+✔ test 4, track 19 (7 pieces, 2735 m, ε -0.0382748652715): one call closes it (21.152ms)
+✔ close REPORTS a closure it did not reach: one step on the hardest track says NOT CLOSED and leaves closed false (84.7878ms)
+✔ the input document is not changed (it is frozen, and deep-equal afterwards) (325.5992ms)
+✔ a lap that already closes (a full circle, R = 200 m) is left where it is: no steps (46.2204ms)
+✔ the position Jacobian predicts the adapter: bumping one interior control point moves the end as J says (relative 5e-4) (203.8272ms)
+✔ the seam is a joint like any other: after the close it passes the document’s own C1 joint check, last piece into first (0.5879ms)
+✔ with no stretch protected (every weight 1) close still closes, seam included (287.2441ms)
+✔ a track with a jump and no turn is refused as any turnless track is (CLOSE_SINGULAR), not as an unbuilt jump (D243) (14.1777ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7220.5369

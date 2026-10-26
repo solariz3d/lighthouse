@@ -1,0 +1,78 @@
+[32m✔ CONTROL: the whole of core_piece.test.js passes on an unmutated copy of src/, tools/ and app/ [90m(46423.8031ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(690.7413ms)[39m[39m
+[32m✔ mutant P1 a run of one piece is a run of two (to defaults to from + 1): applied, and caught by "row 9|row 1b" [90m(1111.1157ms)[39m[39m
+[32m✔ mutant P2 a run that ends before it starts is accepted (on an open track): applied, and caught by "row 9" [90m(974.4144ms)[39m[39m
+[32m✔ mutant P3 a run past the end of the track is accepted: applied, and caught by "row 9" [90m(975.264ms)[39m[39m
+[32m✔ mutant P4 a run of flights alone is saved: applied, and caught by "row 6" [90m(853.2288ms)[39m[39m
+[32m✔ mutant P5 a mixed run is saved: applied, and caught by "row 8b" [90m(831.2441ms)[39m[39m
+[32m✔ mutant P6 the start is taken from the last road, not the first: applied, and caught by "row 1" [90m(1695.0537ms)[39m[39m
+[32m✔ mutant P7 a state is stored absolute, not as its change: applied, and caught by "row 1|row 2 " [90m(6945.2769ms)[39m[39m
+[32m✔ mutant P8 a rate is stored as a change too (relative to its first point): applied, and caught by "row 1" [90m(1357.8775ms)[39m[39m
+[32m✔ mutant P10 a state is put back without rounding (float noise comes back): applied, and caught by "row 1|row 2 " [90m(38614.266ms)[39m[39m
+[32m✔ mutant P11 a shifted run still uses its own start (the shift is ignored): applied, and caught by "row 3" [90m(1475.7916ms)[39m[39m
+[32m✔ mutant P12 the unused optional channels are not given their defaults: applied, and caught by "row 1|row 2 " [90m(6990.8291ms)[39m[39m
+[32m✔ mutant P14 any schema is accepted: applied, and caught by "row 8" [90m(1117.227ms)[39m[39m
+[32m✔ mutant P15 an unknown top-level field is dropped, not refused: applied, and caught by "row 8" [90m(1366.6622ms)[39m[39m
+[32m✔ mutant P16 a name with a path in it is accepted: applied, and caught by "row 8|row 9" [90m(1557.8053ms)[39m[39m
+[32m✔ mutant P17 a run of any length is accepted: applied, and caught by "row 9" [90m(1101.8047ms)[39m[39m
+[32m✔ mutant P18 a missing start is accepted: applied, and caught by "row 8" [90m(2161.7461ms)[39m[39m
+[32m✔ mutant P19 a first piece whose change does not start at 0 is accepted: applied, and caught by "row 8" [90m(3368.4601ms)[39m[39m
+[32m✔ mutant P20 knots out of order are accepted: applied, and caught by "row 8" [90m(2857.9474ms)[39m[39m
+[32m✔ mutant P21 knots outside the piece are accepted: applied, and caught by "row 8" [90m(2964.1842ms)[39m[39m
+[32m✔ mutant P22 a channel of the wrong length is accepted: applied, and caught by "row 8" [90m(3019.6574ms)[39m[39m
+[32m✔ mutant P23 a control point that is not a number is accepted: applied, and caught by "row 8" [90m(3216.7654ms)[39m[39m
+[32m✔ mutant P24 a piece that is a cup and a tube is accepted: applied, and caught by "row 8" [90m(3346.4574ms)[39m[39m
+[32m✔ mutant P25 an edge piece may carry e without s: applied, and caught by "row 8" [90m(3570.6268ms)[39m[39m
+[32m✔ mutant P26 a mixed run in a file is accepted: applied, and caught by "row 8" [90m(3207.9461ms)[39m[39m
+[32m✔ mutant P27 a start key the run does not carry is accepted: applied, and caught by "row 8" [90m(2270.2728ms)[39m[39m
+[32m✔ mutant P28 the document's own check of the run is skipped (a broken joint, a cup past its limit): applied, and caught by "row 8" [90m(3584.9655ms)[39m[39m
+[32m✔ mutant P29 a flight with no gap is accepted: applied, and caught by "row 8" [90m(3703.3805ms)[39m[39m
+[32m✔ mutant P30 a run with no road is accepted: applied, and caught by "row 8" [90m(3810.4926ms)[39m[39m
+[32m✔ mutant P31 numbers are not quantised as they enter: applied, and caught by "row 8c" [90m(991.7375ms)[39m[39m
+[32m✔ mutant P32 a file of any size is read: applied, and caught by "row 8" [90m(3949.7864ms)[39m[39m
+[32m✔ mutant P33 a text that is not JSON throws something else: applied, and caught by "row 8" [90m(1068.8347ms)[39m[39m
+[32m✔ mutant P34 the canonical text lists the pieces before the start: applied, and caught by "row 1b" [90m(943.9466ms)[39m[39m
+[32m✔ mutant P35 a parsed piece is not frozen: applied, and caught by "row 1b" [90m(973.4273ms)[39m[39m
+[32m✔ mutant P36 a mirror does not turn the other way (kh): applied, and caught by "row 5|row 9" [90m(1226.0498ms)[39m[39m
+[32m✔ mutant P37 a mirror does not flip the bank: applied, and caught by "row 5" [90m(905.6237ms)[39m[39m
+[32m✔ mutant P38 a mirror does not flip the swerve: applied, and caught by "row 5" [90m(891.0749ms)[39m[39m
+[32m✔ mutant P39 a mirror flips the climb too: applied, and caught by "row 5" [90m(893.1132ms)[39m[39m
+[32m✔ mutant P40 a mirror flips the hill too: applied, and caught by "row 5" [90m(897.6578ms)[39m[39m
+[32m✔ mutant P41 a mirror leaves the start bank as it was: applied, and caught by "row 5|row 2 " [90m(37402.1582ms)[39m[39m
+[32m✔ mutant P42 a run that already joins the head is recomputed, not added as saved: applied, and caught by "row 2 " [90m(22719.7501ms)[39m[39m
+[32m✔ mutant P43 every failure of the as-saved try falls through to the continuation, not only a joint: applied, and caught by "row 4b|row 4c|row 7" [90m(2061.5448ms)[39m[39m
+[32m✔ mutant P44 a legacy run after a cup or a tube is not refused by name: applied, and caught by "row 4b" [90m(928.5038ms)[39m[39m
+[32m✔ mutant P45 keepStart on a head it does not meet says something else: applied, and caught by "row 4" [90m(1245.4681ms)[39m[39m
+[32m✔ mutant P46 keepStart is ignored (the run continues from the head anyway): applied, and caught by "row 4" [90m(1264.7097ms)[39m[39m
+[32m✔ mutant P47 the slope of the joint is the head's over a half span, not a third: applied, and caught by "row 3" [90m(1408.4555ms)[39m[39m
+[32m✔ mutant P48 the joint takes the head's value only (no slope): applied, and caught by "row 3" [90m(1431.7364ms)[39m[39m
+[32m✔ mutant P50 a tube after another kind starts from the head's t (0), not tNext: applied, and caught by "row 3c" [90m(1001.6071ms)[39m[39m
+[32m✔ mutant P52 the joint values are taken from the saved start, not the head: applied, and caught by "row 3" [90m(1306.4195ms)[39m[39m
+[32m✔ mutant D1 a closed track can be deleted from: applied, and caught by "row 10" [90m(990.6141ms)[39m[39m
+[32m✔ mutant D2 a range one past the end is accepted: applied, and caught by "row 10" [90m(969.8209ms)[39m[39m
+[32m✔ mutant D3 a negative start is accepted: applied, and caught by "row 10" [90m(969.248ms)[39m[39m
+[32m✔ mutant D4 a fractional start is accepted: applied, and caught by "row 10" [90m(974.4807ms)[39m[39m
+[32m✔ mutant D5 the near side keeps one piece too many: applied, and caught by "row 10" [90m(984.1045ms)[39m[39m
+[32m✔ mutant D6 the far side keeps one piece too many: applied, and caught by "row 10" [90m(970.8306ms)[39m[39m
+[32m✔ mutant D7 the sides are never tried as they are: applied, and caught by "row 10" [90m(965.4994ms)[39m[39m
+[32m✔ mutant D8 the re-join carries no slope: applied, and caught by "row 10" [90m(988.8431ms)[39m[39m
+[32m✔ mutant D9 a tube after another kind is joined at the head's own sweep, not tNext: applied, and caught by "row 10" [90m(978.8048ms)[39m[39m
+[32m✔ mutant D10 the id counter is wound back: applied, and caught by "row 10" [90m(968.4944ms)[39m[39m
+[32m✔ mutant D11 a jump first is tried for a re-join: applied, and caught by "row 10" [90m(979.2475ms)[39m[39m
+[32m✔ mutant D12 the re-join also resets the second-from-last control point (reshapes the far piece): applied, and caught by "row 10" [90m(966.8335ms)[39m[39m
+[32m✔ mutant D13 a refusal does not say nothing was deleted: applied, and caught by "row 10" [90m(981.4642ms)[39m[39m
+[32m✔ mutant D14 the result is not frozen: applied, and caught by "row 10" [90m(970.8454ms)[39m[39m
+[32m✔ mutant P53 the turn is the integral of the climb: applied, and caught by "row 9" [90m(1134.1598ms)[39m[39m
+[32m✔ mutant P54 the integral's weights are wrong: applied, and caught by "row 9" [90m(1130.035ms)[39m[39m
+[34mℹ tests 66[39m
+[34mℹ suites 0[39m
+[34mℹ pass 66[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 254662.3967[39m
+
+# stderr
+
+# exit 0 in 254.6 s

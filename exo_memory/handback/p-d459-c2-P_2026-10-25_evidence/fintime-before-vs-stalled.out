@@ -1,0 +1,8 @@
+== 441e869 (before 3c)
+finishToStart 3.4 s; closed [33mtrue[39m | RSL at R 300 m: turn -307.8°, 313 m straight, turn 127.8°, after 178 m rolling 40° upright first; 4 new pieces, 2772 m; 
+local close 0.1 s; converged [33mtrue[39m it [33m1[39m | closed in 1 step(s): 0.012 mm, tangent 3.3e-8 rad
+whole close 0.1 s; converged [33mtrue[39m it [33m1[39m
+== 3c
+5
+
+[exited with code 0]

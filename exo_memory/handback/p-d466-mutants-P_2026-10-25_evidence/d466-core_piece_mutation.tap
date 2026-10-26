@@ -1,0 +1,406 @@
+TAP version 13
+# Subtest: CONTROL: the whole of core_piece.test.js passes on an unmutated copy of src/, tools/ and app/
+ok 1 - CONTROL: the whole of core_piece.test.js passes on an unmutated copy of src/, tools/ and app/
+  ---
+  duration_ms: 46423.8031
+  type: 'test'
+  ...
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 2 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 690.7413
+  type: 'test'
+  ...
+# Subtest: mutant P1 a run of one piece is a run of two (to defaults to from + 1): applied, and caught by "row 9|row 1b"
+ok 3 - mutant P1 a run of one piece is a run of two (to defaults to from + 1): applied, and caught by "row 9|row 1b"
+  ---
+  duration_ms: 1111.1157
+  type: 'test'
+  ...
+# Subtest: mutant P2 a run that ends before it starts is accepted (on an open track): applied, and caught by "row 9"
+ok 4 - mutant P2 a run that ends before it starts is accepted (on an open track): applied, and caught by "row 9"
+  ---
+  duration_ms: 974.4144
+  type: 'test'
+  ...
+# Subtest: mutant P3 a run past the end of the track is accepted: applied, and caught by "row 9"
+ok 5 - mutant P3 a run past the end of the track is accepted: applied, and caught by "row 9"
+  ---
+  duration_ms: 975.264
+  type: 'test'
+  ...
+# Subtest: mutant P4 a run of flights alone is saved: applied, and caught by "row 6"
+ok 6 - mutant P4 a run of flights alone is saved: applied, and caught by "row 6"
+  ---
+  duration_ms: 853.2288
+  type: 'test'
+  ...
+# Subtest: mutant P5 a mixed run is saved: applied, and caught by "row 8b"
+ok 7 - mutant P5 a mixed run is saved: applied, and caught by "row 8b"
+  ---
+  duration_ms: 831.2441
+  type: 'test'
+  ...
+# Subtest: mutant P6 the start is taken from the last road, not the first: applied, and caught by "row 1"
+ok 8 - mutant P6 the start is taken from the last road, not the first: applied, and caught by "row 1"
+  ---
+  duration_ms: 1695.0537
+  type: 'test'
+  ...
+# Subtest: mutant P7 a state is stored absolute, not as its change: applied, and caught by "row 1|row 2 "
+ok 9 - mutant P7 a state is stored absolute, not as its change: applied, and caught by "row 1|row 2 "
+  ---
+  duration_ms: 6945.2769
+  type: 'test'
+  ...
+# Subtest: mutant P8 a rate is stored as a change too (relative to its first point): applied, and caught by "row 1"
+ok 10 - mutant P8 a rate is stored as a change too (relative to its first point): applied, and caught by "row 1"
+  ---
+  duration_ms: 1357.8775
+  type: 'test'
+  ...
+# Subtest: mutant P10 a state is put back without rounding (float noise comes back): applied, and caught by "row 1|row 2 "
+ok 11 - mutant P10 a state is put back without rounding (float noise comes back): applied, and caught by "row 1|row 2 "
+  ---
+  duration_ms: 38614.266
+  type: 'test'
+  ...
+# Subtest: mutant P11 a shifted run still uses its own start (the shift is ignored): applied, and caught by "row 3"
+ok 12 - mutant P11 a shifted run still uses its own start (the shift is ignored): applied, and caught by "row 3"
+  ---
+  duration_ms: 1475.7916
+  type: 'test'
+  ...
+# Subtest: mutant P12 the unused optional channels are not given their defaults: applied, and caught by "row 1|row 2 "
+ok 13 - mutant P12 the unused optional channels are not given their defaults: applied, and caught by "row 1|row 2 "
+  ---
+  duration_ms: 6990.8291
+  type: 'test'
+  ...
+# Subtest: mutant P14 any schema is accepted: applied, and caught by "row 8"
+ok 14 - mutant P14 any schema is accepted: applied, and caught by "row 8"
+  ---
+  duration_ms: 1117.227
+  type: 'test'
+  ...
+# Subtest: mutant P15 an unknown top-level field is dropped, not refused: applied, and caught by "row 8"
+ok 15 - mutant P15 an unknown top-level field is dropped, not refused: applied, and caught by "row 8"
+  ---
+  duration_ms: 1366.6622
+  type: 'test'
+  ...
+# Subtest: mutant P16 a name with a path in it is accepted: applied, and caught by "row 8|row 9"
+ok 16 - mutant P16 a name with a path in it is accepted: applied, and caught by "row 8|row 9"
+  ---
+  duration_ms: 1557.8053
+  type: 'test'
+  ...
+# Subtest: mutant P17 a run of any length is accepted: applied, and caught by "row 9"
+ok 17 - mutant P17 a run of any length is accepted: applied, and caught by "row 9"
+  ---
+  duration_ms: 1101.8047
+  type: 'test'
+  ...
+# Subtest: mutant P18 a missing start is accepted: applied, and caught by "row 8"
+ok 18 - mutant P18 a missing start is accepted: applied, and caught by "row 8"
+  ---
+  duration_ms: 2161.7461
+  type: 'test'
+  ...
+# Subtest: mutant P19 a first piece whose change does not start at 0 is accepted: applied, and caught by "row 8"
+ok 19 - mutant P19 a first piece whose change does not start at 0 is accepted: applied, and caught by "row 8"
+  ---
+  duration_ms: 3368.4601
+  type: 'test'
+  ...
+# Subtest: mutant P20 knots out of order are accepted: applied, and caught by "row 8"
+ok 20 - mutant P20 knots out of order are accepted: applied, and caught by "row 8"
+  ---
+  duration_ms: 2857.9474
+  type: 'test'
+  ...
+# Subtest: mutant P21 knots outside the piece are accepted: applied, and caught by "row 8"
+ok 21 - mutant P21 knots outside the piece are accepted: applied, and caught by "row 8"
+  ---
+  duration_ms: 2964.1842
+  type: 'test'
+  ...
+# Subtest: mutant P22 a channel of the wrong length is accepted: applied, and caught by "row 8"
+ok 22 - mutant P22 a channel of the wrong length is accepted: applied, and caught by "row 8"
+  ---
+  duration_ms: 3019.6574
+  type: 'test'
+  ...
+# Subtest: mutant P23 a control point that is not a number is accepted: applied, and caught by "row 8"
+ok 23 - mutant P23 a control point that is not a number is accepted: applied, and caught by "row 8"
+  ---
+  duration_ms: 3216.7654
+  type: 'test'
+  ...
+# Subtest: mutant P24 a piece that is a cup and a tube is accepted: applied, and caught by "row 8"
+ok 24 - mutant P24 a piece that is a cup and a tube is accepted: applied, and caught by "row 8"
+  ---
+  duration_ms: 3346.4574
+  type: 'test'
+  ...
+# Subtest: mutant P25 an edge piece may carry e without s: applied, and caught by "row 8"
+ok 25 - mutant P25 an edge piece may carry e without s: applied, and caught by "row 8"
+  ---
+  duration_ms: 3570.6268
+  type: 'test'
+  ...
+# Subtest: mutant P26 a mixed run in a file is accepted: applied, and caught by "row 8"
+ok 26 - mutant P26 a mixed run in a file is accepted: applied, and caught by "row 8"
+  ---
+  duration_ms: 3207.9461
+  type: 'test'
+  ...
+# Subtest: mutant P27 a start key the run does not carry is accepted: applied, and caught by "row 8"
+ok 27 - mutant P27 a start key the run does not carry is accepted: applied, and caught by "row 8"
+  ---
+  duration_ms: 2270.2728
+  type: 'test'
+  ...
+# Subtest: mutant P28 the document's own check of the run is skipped (a broken joint, a cup past its limit): applied, and caught by "row 8"
+ok 28 - mutant P28 the document's own check of the run is skipped (a broken joint, a cup past its limit): applied, and caught by "row 8"
+  ---
+  duration_ms: 3584.9655
+  type: 'test'
+  ...
+# Subtest: mutant P29 a flight with no gap is accepted: applied, and caught by "row 8"
+ok 29 - mutant P29 a flight with no gap is accepted: applied, and caught by "row 8"
+  ---
+  duration_ms: 3703.3805
+  type: 'test'
+  ...
+# Subtest: mutant P30 a run with no road is accepted: applied, and caught by "row 8"
+ok 30 - mutant P30 a run with no road is accepted: applied, and caught by "row 8"
+  ---
+  duration_ms: 3810.4926
+  type: 'test'
+  ...
+# Subtest: mutant P31 numbers are not quantised as they enter: applied, and caught by "row 8c"
+ok 31 - mutant P31 numbers are not quantised as they enter: applied, and caught by "row 8c"
+  ---
+  duration_ms: 991.7375
+  type: 'test'
+  ...
+# Subtest: mutant P32 a file of any size is read: applied, and caught by "row 8"
+ok 32 - mutant P32 a file of any size is read: applied, and caught by "row 8"
+  ---
+  duration_ms: 3949.7864
+  type: 'test'
+  ...
+# Subtest: mutant P33 a text that is not JSON throws something else: applied, and caught by "row 8"
+ok 33 - mutant P33 a text that is not JSON throws something else: applied, and caught by "row 8"
+  ---
+  duration_ms: 1068.8347
+  type: 'test'
+  ...
+# Subtest: mutant P34 the canonical text lists the pieces before the start: applied, and caught by "row 1b"
+ok 34 - mutant P34 the canonical text lists the pieces before the start: applied, and caught by "row 1b"
+  ---
+  duration_ms: 943.9466
+  type: 'test'
+  ...
+# Subtest: mutant P35 a parsed piece is not frozen: applied, and caught by "row 1b"
+ok 35 - mutant P35 a parsed piece is not frozen: applied, and caught by "row 1b"
+  ---
+  duration_ms: 973.4273
+  type: 'test'
+  ...
+# Subtest: mutant P36 a mirror does not turn the other way (kh): applied, and caught by "row 5|row 9"
+ok 36 - mutant P36 a mirror does not turn the other way (kh): applied, and caught by "row 5|row 9"
+  ---
+  duration_ms: 1226.0498
+  type: 'test'
+  ...
+# Subtest: mutant P37 a mirror does not flip the bank: applied, and caught by "row 5"
+ok 37 - mutant P37 a mirror does not flip the bank: applied, and caught by "row 5"
+  ---
+  duration_ms: 905.6237
+  type: 'test'
+  ...
+# Subtest: mutant P38 a mirror does not flip the swerve: applied, and caught by "row 5"
+ok 38 - mutant P38 a mirror does not flip the swerve: applied, and caught by "row 5"
+  ---
+  duration_ms: 891.0749
+  type: 'test'
+  ...
+# Subtest: mutant P39 a mirror flips the climb too: applied, and caught by "row 5"
+ok 39 - mutant P39 a mirror flips the climb too: applied, and caught by "row 5"
+  ---
+  duration_ms: 893.1132
+  type: 'test'
+  ...
+# Subtest: mutant P40 a mirror flips the hill too: applied, and caught by "row 5"
+ok 40 - mutant P40 a mirror flips the hill too: applied, and caught by "row 5"
+  ---
+  duration_ms: 897.6578
+  type: 'test'
+  ...
+# Subtest: mutant P41 a mirror leaves the start bank as it was: applied, and caught by "row 5|row 2 "
+ok 41 - mutant P41 a mirror leaves the start bank as it was: applied, and caught by "row 5|row 2 "
+  ---
+  duration_ms: 37402.1582
+  type: 'test'
+  ...
+# Subtest: mutant P42 a run that already joins the head is recomputed, not added as saved: applied, and caught by "row 2 "
+ok 42 - mutant P42 a run that already joins the head is recomputed, not added as saved: applied, and caught by "row 2 "
+  ---
+  duration_ms: 22719.7501
+  type: 'test'
+  ...
+# Subtest: mutant P43 every failure of the as-saved try falls through to the continuation, not only a joint: applied, and caught by "row 4b|row 4c|row 7"
+ok 43 - mutant P43 every failure of the as-saved try falls through to the continuation, not only a joint: applied, and caught by "row 4b|row 4c|row 7"
+  ---
+  duration_ms: 2061.5448
+  type: 'test'
+  ...
+# Subtest: mutant P44 a legacy run after a cup or a tube is not refused by name: applied, and caught by "row 4b"
+ok 44 - mutant P44 a legacy run after a cup or a tube is not refused by name: applied, and caught by "row 4b"
+  ---
+  duration_ms: 928.5038
+  type: 'test'
+  ...
+# Subtest: mutant P45 keepStart on a head it does not meet says something else: applied, and caught by "row 4"
+ok 45 - mutant P45 keepStart on a head it does not meet says something else: applied, and caught by "row 4"
+  ---
+  duration_ms: 1245.4681
+  type: 'test'
+  ...
+# Subtest: mutant P46 keepStart is ignored (the run continues from the head anyway): applied, and caught by "row 4"
+ok 46 - mutant P46 keepStart is ignored (the run continues from the head anyway): applied, and caught by "row 4"
+  ---
+  duration_ms: 1264.7097
+  type: 'test'
+  ...
+# Subtest: mutant P47 the slope of the joint is the head's over a half span, not a third: applied, and caught by "row 3"
+ok 47 - mutant P47 the slope of the joint is the head's over a half span, not a third: applied, and caught by "row 3"
+  ---
+  duration_ms: 1408.4555
+  type: 'test'
+  ...
+# Subtest: mutant P48 the joint takes the head's value only (no slope): applied, and caught by "row 3"
+ok 48 - mutant P48 the joint takes the head's value only (no slope): applied, and caught by "row 3"
+  ---
+  duration_ms: 1431.7364
+  type: 'test'
+  ...
+# Subtest: mutant P50 a tube after another kind starts from the head's t (0), not tNext: applied, and caught by "row 3c"
+ok 49 - mutant P50 a tube after another kind starts from the head's t (0), not tNext: applied, and caught by "row 3c"
+  ---
+  duration_ms: 1001.6071
+  type: 'test'
+  ...
+# Subtest: mutant P52 the joint values are taken from the saved start, not the head: applied, and caught by "row 3"
+ok 50 - mutant P52 the joint values are taken from the saved start, not the head: applied, and caught by "row 3"
+  ---
+  duration_ms: 1306.4195
+  type: 'test'
+  ...
+# Subtest: mutant D1 a closed track can be deleted from: applied, and caught by "row 10"
+ok 51 - mutant D1 a closed track can be deleted from: applied, and caught by "row 10"
+  ---
+  duration_ms: 990.6141
+  type: 'test'
+  ...
+# Subtest: mutant D2 a range one past the end is accepted: applied, and caught by "row 10"
+ok 52 - mutant D2 a range one past the end is accepted: applied, and caught by "row 10"
+  ---
+  duration_ms: 969.8209
+  type: 'test'
+  ...
+# Subtest: mutant D3 a negative start is accepted: applied, and caught by "row 10"
+ok 53 - mutant D3 a negative start is accepted: applied, and caught by "row 10"
+  ---
+  duration_ms: 969.248
+  type: 'test'
+  ...
+# Subtest: mutant D4 a fractional start is accepted: applied, and caught by "row 10"
+ok 54 - mutant D4 a fractional start is accepted: applied, and caught by "row 10"
+  ---
+  duration_ms: 974.4807
+  type: 'test'
+  ...
+# Subtest: mutant D5 the near side keeps one piece too many: applied, and caught by "row 10"
+ok 55 - mutant D5 the near side keeps one piece too many: applied, and caught by "row 10"
+  ---
+  duration_ms: 984.1045
+  type: 'test'
+  ...
+# Subtest: mutant D6 the far side keeps one piece too many: applied, and caught by "row 10"
+ok 56 - mutant D6 the far side keeps one piece too many: applied, and caught by "row 10"
+  ---
+  duration_ms: 970.8306
+  type: 'test'
+  ...
+# Subtest: mutant D7 the sides are never tried as they are: applied, and caught by "row 10"
+ok 57 - mutant D7 the sides are never tried as they are: applied, and caught by "row 10"
+  ---
+  duration_ms: 965.4994
+  type: 'test'
+  ...
+# Subtest: mutant D8 the re-join carries no slope: applied, and caught by "row 10"
+ok 58 - mutant D8 the re-join carries no slope: applied, and caught by "row 10"
+  ---
+  duration_ms: 988.8431
+  type: 'test'
+  ...
+# Subtest: mutant D9 a tube after another kind is joined at the head's own sweep, not tNext: applied, and caught by "row 10"
+ok 59 - mutant D9 a tube after another kind is joined at the head's own sweep, not tNext: applied, and caught by "row 10"
+  ---
+  duration_ms: 978.8048
+  type: 'test'
+  ...
+# Subtest: mutant D10 the id counter is wound back: applied, and caught by "row 10"
+ok 60 - mutant D10 the id counter is wound back: applied, and caught by "row 10"
+  ---
+  duration_ms: 968.4944
+  type: 'test'
+  ...
+# Subtest: mutant D11 a jump first is tried for a re-join: applied, and caught by "row 10"
+ok 61 - mutant D11 a jump first is tried for a re-join: applied, and caught by "row 10"
+  ---
+  duration_ms: 979.2475
+  type: 'test'
+  ...
+# Subtest: mutant D12 the re-join also resets the second-from-last control point (reshapes the far piece): applied, and caught by "row 10"
+ok 62 - mutant D12 the re-join also resets the second-from-last control point (reshapes the far piece): applied, and caught by "row 10"
+  ---
+  duration_ms: 966.8335
+  type: 'test'
+  ...
+# Subtest: mutant D13 a refusal does not say nothing was deleted: applied, and caught by "row 10"
+ok 63 - mutant D13 a refusal does not say nothing was deleted: applied, and caught by "row 10"
+  ---
+  duration_ms: 981.4642
+  type: 'test'
+  ...
+# Subtest: mutant D14 the result is not frozen: applied, and caught by "row 10"
+ok 64 - mutant D14 the result is not frozen: applied, and caught by "row 10"
+  ---
+  duration_ms: 970.8454
+  type: 'test'
+  ...
+# Subtest: mutant P53 the turn is the integral of the climb: applied, and caught by "row 9"
+ok 65 - mutant P53 the turn is the integral of the climb: applied, and caught by "row 9"
+  ---
+  duration_ms: 1134.1598
+  type: 'test'
+  ...
+# Subtest: mutant P54 the integral's weights are wrong: applied, and caught by "row 9"
+ok 66 - mutant P54 the integral's weights are wrong: applied, and caught by "row 9"
+  ---
+  duration_ms: 1130.035
+  type: 'test'
+  ...
+1..66
+# tests 66
+# suites 0
+# pass 66
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 254662.3967
