@@ -2580,3 +2580,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-26 ~12:5x (D) · D478 held, not started → `exo_memory/handback/p-d478-watch-E_2026-10-26.md`
 - The dispatch crossed the plan's queue note (f076428c, the same minute): D478 waits until D476 closes. No ffmpeg install, no branch, nothing recorded.
 - **Carry:** read a plan to its last section before acting; a hold can arrive in the same minute as the dispatch.
+
+## 2026-10-26 ~16:1x (D) · D479 the stick, read-only → `exo_memory/handback/p-d479-stick-E_2026-10-26.md`
+- The stick reads back recently written files as other data: 9 of 9 ledger-named tails fail their sha256, today's 5 tails differ from the local ranges past 8 KiB, MANIFEST.json reads as 55 aa 55 aa; a 09-29 tail is intact. The masters on D: are whole; the laptop import would refuse every seat (TAIL_DAMAGED). Separately, every Leave now times out at 600 s, because the delta from the 09-29 agreed state is 3.8 GB.
+- **Carry:** a size that matches is not a carry; read the bytes back against the source before calling a stick current.

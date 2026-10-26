@@ -1,0 +1,2 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+{"tool":"tail-carry","contract":1,"mode":"verify-set","stick":"D:/consonance-L-20260911","code":2,"layout":null,"missing":[],"mismatched":[],"extra":[],"why":"consonance-transfer/MANIFEST.json is not readable JSON: Unexpected token 'U', \"U�U�\u001e�Ƞ\u001e��\"... is not valid JSON"}

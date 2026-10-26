@@ -1,0 +1,10 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+main           0c0c0c0a sha256 a88778ca… ledger d6c05bb7… DIFFERENT (40 s)
+librarian      0c0c0c0b sha256 fb136fb9… ledger 8ff81fe3… DIFFERENT (34 s)
+third place    3d000000 sha256 4260da1d… ledger 9ab49473… DIFFERENT (23 s)
+pane ✦ brief   6fe15f0a sha256 9207ccd1… ledger f93d4355… DIFFERENT (95 s)
+pane ✦ brief   12fb81f6 sha256 78807b1a… ledger f4fd4c97… DIFFERENT (62 s)
+pane ✦ Around  0845a868 sha256 8b2fbe74… ledger 7ffe34ee… DIFFERENT (107 s)
+pane ✦ brief   a2122153 sha256 cd7d8108… ledger f1b259f8… DIFFERENT (80 s)
+pane ✦ brief   c88002b1 sha256 19dbfe2a… ledger 7a39b85c… DIFFERENT (2 s)
+pane ✦ brief   fbf98f8e sha256 5259a36c… ledger 02601de7… DIFFERENT (2 s)
