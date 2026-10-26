@@ -12680,6 +12680,8 @@ fn keep_warm_tick(app: &AppHandle) {
     };
     REFUSED_SAID.store(false, Ordering::Relaxed);
     let now_ms = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    // D476 part 4: read the replies to the visits in flight before deciding who is next.
+    keep_warm_harvest(app, now_ms);
     let ids: Vec<String> = app.state::<Panes>().0.lock().map(|m| m.keys().cloned().collect()).unwrap_or_default();
     // L104 step 2: every pane is still visited and all its bookkeeping runs; only the PING is rationed — the seats
     // whose decision is Ping are collected here and ONE is sent after the loop (keep_warm_pick).
@@ -12759,7 +12761,23 @@ fn keep_warm_tick(app: &AppHandle) {
 
 /// Ask the inbox, then write — or take back our own message if the inbox queued it.
 fn keep_warm_send(app: &AppHandle, pane: &str, role: &str, idle: Duration, context: Option<u64>) {
-    if gate_or_queue(app, pane, KEEP_WARM_TEXT, KEEP_WARM_LABEL).is_some() {
+    // D476 part 4: WHAT is sent depends on the seat. A seat that works (committee, main, librarian) gets its visit, carrying the Third Place's
+    // answer to it; the Third Place gets the visit hour when lines are held, else "ok" as before; a human-driven pane gets "ok" (a person is
+    // not visited by the room). Nothing in the book changes unless the write lands.
+    let book = app.state::<KeepWarmVisits>();
+    let (text, hour): (String, Option<Vec<(String, String)>>) = match book.0.lock() {
+        Ok(b) => match role {
+            "third_place" if !b.held.is_empty() => {
+                let pairs: Vec<(String, String)> = b.held.iter().map(|(n, _, l)| (n.clone(), l.clone())).collect();
+                (visit_hour_text(&pairs), Some(b.held.iter().map(|(n, p, _)| (n.clone(), p.clone())).collect()))
+            }
+            "committee" | "main" | "librarian" => (visit_text(b.answers.get(pane).map(|s| s.as_str())), None),
+            _ => (KEEP_WARM_TEXT.to_string(), None),
+        },
+        Err(_) => (KEEP_WARM_TEXT.to_string(), None),
+    };
+    let visiting = text != KEEP_WARM_TEXT;
+    if gate_or_queue(app, pane, &text, KEEP_WARM_LABEL).is_some() {
         let pulled = app.state::<Inbox>().withdraw_tail_if(pane, KEEP_WARM_LABEL);
         chair_audit(app, format!(
             "keep-warm NOT SENT -> {}: the gate queued it (its state moved between two reads); {}",
@@ -12772,17 +12790,268 @@ fn keep_warm_send(app: &AppHandle, pane: &str, role: &str, idle: Duration, conte
         ));
         return;
     }
-    let wrote = inject_to_pane(&app.state::<Panes>(), pane, KEEP_WARM_TEXT, &app.state::<PaneEmus>());
+    let wrote = inject_to_pane(&app.state::<Panes>(), pane, &text, &app.state::<PaneEmus>());
     let ok = wrote.is_ok();
     if ok {
         if let Ok(mut m) = app.state::<KeepWarmPinged>().0.lock() {
             m.insert(pane.to_string(), Instant::now());
+        }
+        // D476 part 4: the letter is in flight. A seat's answer has been delivered (it is gone from the book); the hour's lines now await
+        // the Third Place's reply.
+        if visiting {
+            let sent_ms = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+            if let Ok(mut b) = app.state::<KeepWarmVisits>().0.lock() {
+                b.sent.insert(pane.to_string(), sent_ms);
+                match hour {
+                    Some(h) => { b.held.clear(); b.hour = h; }
+                    None => { b.answers.remove(pane); }
+                }
+            }
         }
     }
     chair_audit(app, keep_warm_row(short_id(pane), role, idle, context, ok));
     // D415: a ping left in the box is in the keeper's way, so it gets its own row.
     if let Ok(Submit::NotSubmitted { .. }) = wrote {
         chair_audit(app, format!("keep-warm -> {}: {}", short_id(pane), not_submitted_line(short_id(pane))));
+    }
+}
+
+// ── D476 PART 4: THE KEEP-WARM VISIT (O; design exo_memory/handback/p-d476-visit-design-O_2026-10-26.md with fold-in de5cab42; ruled LETTERS,
+// plan_d476 "Part 4 moves while the keeper is away") ──────────────────────────────────────────────────────────────────────────────
+//
+// THE KEEPER'S IDEA (10-17, at the Third Place): replace "Reply with exactly: ok" with a short real conversation; the seats come TO the
+// Third Place, which is pinged by them instead of by the chair. Built as LETTERS: a seat's keep-warm becomes a visit line; its reply, if it
+// is not "ok" and passes the guard, is HELD; the Third Place's own keep-warm becomes the VISIT HOUR, every held line in one message; its
+// answers, split by name and guarded, go back ONLY inside each seat's NEXT visit. Every seat's request count is what it was (one per
+// window), and so is the Third Place's — the cost is the words, not the requests (design §4).
+//
+// WHAT DOES NOT CHANGE: who is pinged and when (keep_warm_decision, one per tick, the off switch, never mid-turn), and the topology —
+// no seat gains a verb or a row into the Third Place; the only writer into it is still this actuator (part 2's
+// no_seat_can_reach_the_third_place stands unchanged).
+//
+// THE GUARDS (Metaxy's four, plan_d476, and the design's forms of work), enforced on every line in both directions by visit_line_refusal:
+// no file pointer, lap or decision id, sha, command or NEXT:, no word of uptake (guard 4), no path into private/ (guard 3), at most
+// VISIT_MAX_CHARS. A Third Place reply saying "stays here" gives NOTHING (guard 3). Only the reply a turn ENDED on is read (guard 2,
+// turn_reply_after). An answer is a letter to one seat, never a packet to the room (guard 1): it goes nowhere but that seat's next visit.
+// Refusals and relays are posted as FIXED rows, with no words.
+//
+// HONEST LIMIT (design §3): a filter catches the forms work travels in, not work described in plain prose. What holds that line is the
+// visit text ("not work"), the Third Place's brief, the routing (answers go nowhere else), the countable rows, and the off switch.
+
+const VISIT_MAX_CHARS: usize = 400;
+
+/// The visit a seat receives in place of "ok". One line, no NEXT:, said to be not work; it carries the Third Place's last answer to THIS
+/// seat when there is one, and nothing of anyone else's.
+fn visit_text(answer: Option<&str>) -> String {
+    let a = match answer {
+        Some(a) => format!("The Third Place's last answer to you: «{a}»."),
+        None => "The Third Place has no answer yet.".to_string(),
+    };
+    format!(
+        "[keep-warm visit — from the room, not the keeper, and not work] {a} If something not about work has come to your attention, \
+         say it in one or two lines for the Third Place (no file, lap, command, or word of what was taken up); otherwise reply: ok"
+    )
+}
+
+/// The visit hour the Third Place receives in place of "ok": every held line, by name, in one message.
+fn visit_hour_text(held: &[(String, String)]) -> String {
+    let lines: Vec<String> = held.iter().map(|(n, l)| format!("{n}: «{l}»")).collect();
+    format!(
+        "[visits — from the seats, not the keeper, and not work] {} — answer whom you like, one or two lines each, starting with their \
+         name (A: …); no answer is also an answer. A line saying «stays here» keeps the whole hour here.",
+        lines.join(" | ")
+    )
+}
+
+/// A reply that is just "ok" is not a visit: nothing is held, and it is not a refusal.
+fn is_plain_ok(s: &str) -> bool {
+    s.trim().trim_end_matches(['.', '!']).eq_ignore_ascii_case("ok")
+}
+
+/// Why a visit line (or an answer) is refused, or None. The rule's name is what the board row says; the line itself is never posted.
+fn visit_line_refusal(line: &str) -> Option<&'static str> {
+    if line.chars().count() > VISIT_MAX_CHARS {
+        return Some("over 400 characters");
+    }
+    if mcp::points_into_private(line) {
+        return Some("a path into private/");
+    }
+    let lower = line.to_lowercase();
+    let t = line.trim_start();
+    if line.contains('`') || t.starts_with("$ ") || t.starts_with("> ") || line.contains("NEXT:")
+        || ["node ", "git ", "cargo ", "npm ", "http://", "https://"].iter().any(|c| lower.contains(c))
+    {
+        return Some("a command");
+    }
+    if ["taken up", "turned into", "became a lap", "the librarian read", "your note", "your entry", "from the third place"]
+        .iter().any(|p| lower.contains(p))
+    {
+        return Some("word of uptake");
+    }
+    let tokens: Vec<&str> = line.split_whitespace()
+        .map(|w| w.trim_matches(|c: char| c.is_ascii_punctuation() || c == '«' || c == '»'))
+        .filter(|w| !w.is_empty()).collect();
+    let is_id = |w: &str| {
+        let b = w.as_bytes();
+        b.len() >= 3 && b.len() <= 5 && (b[0] == b'D' || b[0] == b'L') && b[1..].iter().all(|c| c.is_ascii_digit())
+    };
+    if lower.contains("local-0.") || tokens.iter().any(|w| is_id(w)) {
+        return Some("a lap or decision id");
+    }
+    let is_sha = |w: &str| {
+        (7..=40).contains(&w.len()) && w.chars().all(|c| c.is_ascii_hexdigit())
+            && w.chars().any(|c| c.is_ascii_digit()) && w.chars().any(|c| c.is_ascii_alphabetic())
+    };
+    if tokens.iter().any(|w| is_sha(w)) {
+        return Some("a sha");
+    }
+    const EXT: [&str; 13] = [".md", ".js", ".rs", ".json", ".jsonl", ".ps1", ".ts", ".txt", ".toml", ".py", ".html", ".css", ".tap"];
+    let is_pointer = |w: &str| {
+        let lw = w.to_lowercase();
+        EXT.iter().any(|e| lw.ends_with(e) && lw.len() > e.len())
+            || ((w.contains('/') || w.contains('\\')) && {
+                let last = w.rsplit(['/', '\\']).next().unwrap_or("");
+                last.rsplit_once('.').is_some_and(|(a, e)| !a.is_empty() && (1..=5).contains(&e.len()) && e.chars().all(|c| c.is_ascii_alphanumeric()))
+            })
+    };
+    if tokens.iter().any(|w| is_pointer(w)) {
+        return Some("a file pointer");
+    }
+    None
+}
+
+/// METAXY'S GUARD 2: what a turn ENDED on. The last assistant text after the first prompt sent at or after `since_ms`, up to the next prompt
+/// (a user row whose content is text; a tool_result is not a prompt). A subagent's (sidechain) lines are not the seat's. None while the
+/// turn has given no text.
+fn turn_reply_after(jsonl: &str, since_ms: u64) -> Option<String> {
+    let rows: Vec<serde_json::Value> = jsonl
+        .lines()
+        .filter_map(|l| serde_json::from_str::<serde_json::Value>(l).ok())
+        .filter(|v| v.get("isSidechain").and_then(|x| x.as_bool()) != Some(true))
+        .collect();
+    let ts = |v: &serde_json::Value| v.get("timestamp").and_then(|x| x.as_str()).and_then(iso_utc_ms);
+    let is_prompt = |v: &serde_json::Value| {
+        v.get("type").and_then(|t| t.as_str()) == Some("user")
+            && v.get("message").and_then(|m| m.get("content")).is_some_and(|c| c.is_string())
+    };
+    let start = rows.iter().position(|v| is_prompt(v) && ts(v).is_some_and(|t| t >= since_ms))?;
+    let end = rows[start + 1..].iter().position(is_prompt).map_or(rows.len(), |i| start + 1 + i);
+    rows[start + 1..end].iter().rev().find_map(|v| {
+        if v.get("type").and_then(|t| t.as_str()) != Some("assistant") {
+            return None;
+        }
+        let text: Vec<&str> = v.get("message")?.get("content")?.as_array()?.iter()
+            .filter(|b| b.get("type").and_then(|t| t.as_str()) == Some("text"))
+            .filter_map(|b| b.get("text").and_then(|t| t.as_str())).collect();
+        let joined = text.join("\n").trim().to_string();
+        (!joined.is_empty()).then_some(joined)
+    })
+}
+
+/// The visit hour's answers, by name: only the names that visited this hour, each guarded; a line naming anyone else is dropped. METAXY'S
+/// GUARD 3: a reply saying "stays here" anywhere gives nothing at all.
+fn hour_answers(reply: &str, names: &[String]) -> HashMap<String, String> {
+    let mut out: HashMap<String, String> = HashMap::new();
+    if reply.to_lowercase().contains("stays here") {
+        return out;
+    }
+    let mut cur: Option<String> = None;
+    for line in reply.lines() {
+        let l = line.trim();
+        if let Some((head, rest)) = l.split_once(':') {
+            let head = head.trim();
+            if head.len() <= 8 && !head.is_empty() && head.chars().all(|c| c.is_ascii_alphanumeric()) && head.chars().next().is_some_and(|c| c.is_ascii_uppercase()) {
+                cur = names.iter().find(|n| n.as_str() == head).cloned();
+                if let Some(n) = &cur {
+                    out.insert(n.clone(), rest.trim().to_string());
+                }
+                continue;
+            }
+        }
+        if let (Some(n), false) = (&cur, l.is_empty()) {
+            let e = out.entry(n.clone()).or_default();
+            if !e.is_empty() { e.push(' '); }
+            e.push_str(l);
+        }
+    }
+    out.retain(|_, a| !a.is_empty() && visit_line_refusal(a).is_none());
+    out
+}
+
+/// The row a refused visit line or answer leaves on the board: the seat and the rule, never the words.
+fn keep_warm_visit_refused_row(short: &str, rule: &str) -> String {
+    format!("keep-warm visit REFUSED — from {short} ({rule}); its words are not kept")
+}
+
+/// The letters in flight. `sent`: a seat (or the Third Place) whose visit has gone and whose reply is not yet read, with when it was sent.
+/// `held`: guarded lines waiting for the visit hour, one per seat (a newer line replaces an older). `hour`: the seats whose lines rode in
+/// the hour now awaiting the Third Place's reply. `answers`: the Third Place's guarded answer to a seat, for that seat's NEXT visit only.
+#[derive(Default)]
+struct VisitBook {
+    sent: HashMap<String, u64>,
+    held: Vec<(String, String, String)>,
+    hour: Vec<(String, String)>,
+    answers: HashMap<String, String>,
+}
+struct KeepWarmVisits(Mutex<VisitBook>);
+
+/// A seat's name in the visit hour: its shortest registered name (its letter), else its short id.
+fn visit_name(app: &AppHandle, pane: &str) -> String {
+    app.state::<PaneNames>().0.lock().ok()
+        .and_then(|m| m.iter().filter(|(_, id)| id.as_str() == pane).map(|(n, _)| n.clone()).min_by_key(|n| n.len()))
+        .unwrap_or_else(|| short_id(pane).to_string())
+}
+
+/// Read the replies to the visits in flight, once each turn has ENDED (its own Stop stamp: a seat mid-turn is left alone). A seat's reply is
+/// guarded and held for the visit hour; the Third Place's is split by name, guarded, and held as each visitor's answer. A visit whose turn
+/// gives no text within an hour is dropped.
+fn keep_warm_harvest(app: &AppHandle, now_ms: u64) {
+    let sent: Vec<(String, u64)> = app.state::<KeepWarmVisits>().0.lock().map(|b| b.sent.iter().map(|(p, t)| (p.clone(), *t)).collect()).unwrap_or_default();
+    for (pane, at) in sent {
+        let (gate, _, _, _) = pane_state(&app.state::<PaneEmus>(), &pane);
+        if gate != PaneGate::Ready {
+            continue;
+        }
+        let path = app.state::<PaneTranscripts>().0.lock().ok().and_then(|m| m.get(&pane).cloned());
+        let reply = path.and_then(|p| read_tail(&p, KEEP_WARM_TAIL_BYTES)).and_then(|t| turn_reply_after(&t, at));
+        let Some(reply) = reply else {
+            if now_ms.saturating_sub(at) > 60 * 60 * 1000 {
+                if let Ok(mut b) = app.state::<KeepWarmVisits>().0.lock() { b.sent.remove(&pane); }
+            }
+            continue;
+        };
+        let role = app.state::<PaneRoles>().0.lock().ok().and_then(|m| m.get(&pane).cloned()).unwrap_or_default();
+        let book = app.state::<KeepWarmVisits>();
+        let Ok(mut b) = book.0.lock() else { continue };
+        b.sent.remove(&pane);
+        if role == "third_place" {
+            let hour = std::mem::take(&mut b.hour);
+            let names: Vec<String> = hour.iter().map(|(n, _)| n.clone()).collect();
+            let answers = hour_answers(&reply, &names);
+            for (name, seat) in &hour {
+                if let Some(a) = answers.get(name) { b.answers.insert(seat.clone(), a.clone()); }
+            }
+            drop(b);
+            chair_audit(app, if reply.to_lowercase().contains("stays here") {
+                "keep-warm visit hour -> the Third Place kept this hour here (stays here): nothing goes back".to_string()
+            } else {
+                format!("keep-warm visit hour -> the Third Place answered {} of {} visits (no words)", answers.len(), hour.len())
+            });
+        } else if !is_plain_ok(&reply) {
+            let short = short_id(&pane).to_string();
+            match visit_line_refusal(reply.trim()) {
+                Some(rule) => { drop(b); chair_audit(app, keep_warm_visit_refused_row(&short, rule)); }
+                None => {
+                    let name = { drop(b); visit_name(app, &pane) };
+                    let n = reply.trim().chars().count();
+                    if let Ok(mut b) = app.state::<KeepWarmVisits>().0.lock() {
+                        b.held.retain(|(_, p, _)| p != &pane);
+                        b.held.push((name, pane.clone(), reply.trim().to_string()));
+                    }
+                    chair_audit(app, format!("keep-warm visit <- {short}: held for the Third Place's visit hour ({n} characters, no words)"));
+                }
+            }
+        }
     }
 }
 
@@ -15232,6 +15501,7 @@ fn main() {
         .manage(PaneEmus(Mutex::new(HashMap::new())))
         .manage(Inbox::new())   // L034: the delivery queue — nothing lands in a busy pane
         .manage(KeepWarmPinged(Mutex::new(HashMap::new())))   // L067: who keep-warm pinged, and when
+        .manage(KeepWarmVisits(Mutex::new(VisitBook::default())))   // D476 part 4: the visit letters in flight
         .manage(KeepWarmActivated(Mutex::new(HashSet::new())))  // D098: seats seen used this session (sticky)
         .manage(KeepWarmLastSkip(Mutex::new(HashMap::new())))   // D098: why each seat was last not pinged
         .manage(KeepWarmMissed(Mutex::new(HashMap::new())))     // D098: the request start each miss was reported for
@@ -23753,5 +24023,118 @@ mod third_place_return_tests {
         let shelf = corpus_shelf_at_with_index(usize::MAX, usize::MAX);
         assert!(shelf.contains(&format!("THE THIRD PLACE -- its newest entry is carried below ({newest})")), "the header names it");
         assert!(shelf.contains(&format!("\n## {newest}\n")), "its body rides under its own label, as a carried file");
+    }
+}
+
+// D476 PART 4 — THE KEEP-WARM VISIT (design: exo_memory/handback/p-d476-visit-design-O_2026-10-26.md, with fold-in de5cab42; ruled LETTERS,
+// plan_d476 "Part 4 moves while the keeper is away"). A seat's keep-warm becomes a short non-work visit line; the Third Place's own keep-warm
+// becomes the visit hour, every held line in one message; its answers go back only to each seat's NEXT visit. No seat gains a verb or a row.
+#[cfg(test)]
+mod keep_warm_visit_tests {
+    use super::*;
+
+    fn row(t: &str, ts: &str, side: bool, text: &str) -> String {
+        if t == "user" {
+            serde_json::json!({"type":"user","isSidechain":side,"timestamp":ts,"message":{"role":"user","content":text}}).to_string()
+        } else {
+            serde_json::json!({"type":"assistant","isSidechain":side,"timestamp":ts,"requestId":"r","message":{"role":"assistant","content":[{"type":"text","text":text}]}}).to_string()
+        }
+    }
+
+    /// THE GUARD, every rule, each with a near miss that passes. Guards 3 and 4 of Metaxy's four, and the design's forms of work.
+    #[test]
+    fn a_visit_line_carrying_work_is_refused_and_a_plain_line_is_not() {
+        let refused = [
+            ("I looked at exo_memory/loop/x.md today", "a file pointer"),
+            ("the notes in handback.md were long", "a file pointer"),
+            (r"\Consonance\private\third_place\lineage", "a path into private/"),
+            ("D476 is moving", "a lap or decision id"),
+            ("on L067 the pings were quiet", "a lap or decision id"),
+            ("since 4c0baa39 things changed", "a sha"),
+            ("run `cargo test` later", "a command"),
+            ("node consonance/tools/x.js", "a command"),
+            ("NEXT: the librarian", "a command"),
+            ("see https://example.com", "a command"),
+            ("your note was taken up into a lap", "word of uptake"),
+            ("the librarian read your entry", "word of uptake"),
+        ];
+        for (line, rule) in refused {
+            assert_eq!(visit_line_refusal(line), Some(rule), "{line}");
+        }
+        assert_eq!(visit_line_refusal(&"x".repeat(401)), Some("over 400 characters"));
+        for ok in ["a quiet morning, the light came in low", "D is for dawn", "I wondered about rivers and/or roads",
+                   "decade after decade", "the private hour before anyone wakes", &"x".repeat(400)] {
+            assert_eq!(visit_line_refusal(ok), None, "{ok}");
+        }
+    }
+
+    /// The seat's visit: one line, no NEXT:, said to be not work, carrying the Third Place's last answer when there is one.
+    #[test]
+    fn a_seat_visit_is_one_line_not_work_and_carries_only_its_own_answer() {
+        let v = visit_text(Some("the river was loud today"));
+        assert!(v.contains("not the keeper") && v.contains("not work") && v.contains("«the river was loud today»"), "{v}");
+        assert!(!v.contains('\n') && !v.contains("NEXT:"), "{v}");
+        assert!(visit_text(None).contains("no answer yet"));
+    }
+
+    /// The visit hour: every held line, by name, in one line; nothing else.
+    #[test]
+    fn the_visit_hour_carries_every_held_line_by_name_in_one_message() {
+        let held = vec![("A".to_string(), "rain on the window".to_string()), ("LIB".to_string(), "a long quiet".to_string())];
+        let h = visit_hour_text(&held);
+        assert!(h.contains("A: «rain on the window»") && h.contains("LIB: «a long quiet»") && h.contains("not work"), "{h}");
+        assert!(!h.contains('\n') && !h.contains("NEXT:"), "{h}");
+    }
+
+    /// METAXY'S GUARD 2: only what a sitting ENDED on ships. The reply read is the turn's LAST assistant text after the visit, never a
+    /// line said on the way, and a subagent's (sidechain) lines are not the seat's. A turn with no reply yet gives nothing.
+    #[test]
+    fn only_the_reply_the_turn_ended_on_is_read() {
+        let j = [row("user", "2026-10-26T10:00:00.000Z", false, "earlier"), row("assistant", "2026-10-26T10:00:05.000Z", false, "old"),
+                 row("user", "2026-10-26T11:00:00.000Z", false, "[keep-warm visit] …"),
+                 row("assistant", "2026-10-26T11:00:03.000Z", false, "first thought, said on the way"),
+                 row("assistant", "2026-10-26T11:00:06.000Z", false, "where it ended"),
+                 // after the seat's last line, so reading it would change the answer (D476 p4: the mutant V12 found the first order could not)
+                 row("assistant", "2026-10-26T11:00:07.000Z", true, "a subagent's line")].join("\n");
+        let since = iso_utc_ms("2026-10-26T10:59:59.000Z").unwrap();
+        assert_eq!(turn_reply_after(&j, since).as_deref(), Some("where it ended"));
+        let pending = [row("user", "2026-10-26T11:00:00.000Z", false, "[keep-warm visit] …")].join("\n");
+        assert_eq!(turn_reply_after(&pending, since), None);
+    }
+
+    /// The hour's answers go only to the names that visited; each is guarded; and METAXY'S GUARD 3: a "stays here" anywhere in the
+    /// reply gives nothing at all.
+    #[test]
+    fn the_hour_answers_go_only_to_their_visitors_and_stays_here_gives_nothing() {
+        let names = vec!["A".to_string(), "LIB".to_string()];
+        let a = hour_answers("A: the rain sounds the same\nB: someone not in the hour\nLIB: run `git log`", &names);
+        assert_eq!(a.get("A").map(|s| s.as_str()), Some("the rain sounds the same"));
+        assert!(!a.contains_key("B"), "a name that did not visit gets nothing");
+        assert!(!a.contains_key("LIB"), "an answer carrying a command is refused, not relayed");
+        assert!(hour_answers("Stays here.\nA: the rain sounds the same", &names).is_empty(), "stays here gives nothing");
+    }
+
+    /// A plain "ok" is not a visit: nothing is held, and it is not a refusal either.
+    #[test]
+    fn an_ok_reply_holds_nothing() {
+        assert!(is_plain_ok("ok") && is_plain_ok(" OK. ") && !is_plain_ok("ok, the river"));
+    }
+
+    /// WIRING: keep_warm_send sends a seat its visit and the Third Place its hour, and every refusal row carries no words.
+    #[test]
+    fn keep_warm_sends_visits_and_its_refusal_rows_carry_no_words() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let send = src.split("fn keep_warm_send(").nth(1).expect("keep_warm_send moved");
+        let send = send.split("\n}\n").next().unwrap_or(send);
+        assert!(send.contains("visit_text(") && send.contains("visit_hour_text("), "the send composes visits");
+        assert!(send.contains("\"committee\" | \"main\" | \"librarian\" => (visit_text(b.answers.get(pane)"),
+            "a working seat's visit carries ITS OWN answer (answers go only to that visit), and a human-driven pane is not visited");
+        let harvest = src.split("fn keep_warm_harvest(").nth(1).expect("the harvest is missing");
+        let harvest = harvest.split("\n}\n").next().unwrap_or(harvest);
+        assert!(harvest.contains("visit_line_refusal(") && harvest.contains("hour_answers("), "every line is guarded");
+        assert!(src.contains("fn keep_warm_visit_refused_row(") && !src.split("fn keep_warm_visit_refused_row(").nth(1).unwrap().split("\n}\n").next().unwrap().contains("line"),
+            "the refusal row is built from the seat and the rule, never the line");
+        let tick = src.split("fn keep_warm_tick(").nth(1).unwrap().split("\n}\n").next().unwrap();
+        assert!(tick.contains("keep_warm_harvest("), "the tick harvests replies");
     }
 }
