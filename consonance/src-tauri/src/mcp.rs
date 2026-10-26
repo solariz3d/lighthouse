@@ -34,6 +34,7 @@ pub fn points_into_private(text: &str) -> bool {
 /// None has a place for its words.
 const THIRD_PLACE_DIGEST_REFUSED: &str = "call_librarian REFUSED BY THE DIGEST GATE — from the Third Place (its pointer is not echoed: the Third Place's words stay off the shared board)";
 const THIRD_PLACE_DIGEST_NOTED: &str = "call_librarian from the Third Place: its pointer's digest was computed at ring (the path is not echoed)";
+const THIRD_PLACE_ADDRESS_REFUSED: &str = "call_librarian REFUSED (no address row) — from the Third Place (its pointer is not echoed: the Third Place's words stay off the shared board)";
 const THIRD_PLACE_TRAILER_ROW: &str = "call_librarian from the Third Place: the NEXT-trailer gate noted its ring (its words are not echoed)";
 /// What the Third Place is told, after the gate's own reason, when its ring is refused: why its words were not put on the board.
 const THIRD_PLACE_NOT_ECHOED: &str = "Your words are not echoed on the shared board: a refused ring from the Third Place is recorded there as one fixed line, \
@@ -872,7 +873,8 @@ impl ConsonanceMcp {
             board_push(&self.board, BoardEntry {
                 pane: "chair".to_string(),
                 role: "committee".to_string(),
-                text: refused_address_row(&who, &text),
+                // D476, C's latent row: on the Third Place's seat (unreachable while row 3 exists) a fixed line, never its words
+                text: if self.seat() == "third_place" { THIRD_PLACE_ADDRESS_REFUSED.to_string() } else { refused_address_row(&who, &text) },
                 ts: now_ms(),
                 ts_source: crate::TsSource::Push,
             });
@@ -4374,6 +4376,21 @@ mod third_place_mount_tests {
         for fixed in [THIRD_PLACE_DIGEST_REFUSED, THIRD_PLACE_DIGEST_NOTED, THIRD_PLACE_TRAILER_ROW] {
             assert!(fixed.contains("Third Place") && !fixed.contains('{'), "a fixed line, with no place for the ring's words: {fixed}");
         }
+    }
+
+    /// C'S LATENT ROW (p-d476-review-C_2026-10-26.md, its gate table): the address-table refusal posts refused_address_row(&who, &text),
+    /// up to 600 chars of the call. Unreachable from the Third Place's seat while row 3 exists; if row 3 is ever removed, its ring would
+    /// land there. So on that seat the row is a FIXED line too, chosen in place, keeping the branch's one return (pinned by
+    /// address_refusal_pointer_tests) unchanged for the panes.
+    #[test]
+    fn the_address_refusal_on_the_third_place_seat_is_fixed_text() {
+        let b = body_of("async fn call_librarian(");
+        let at = b.find("if !self.auth_address(\"call_librarian\") {").expect("the address check moved");
+        let branch = &b[at..at + b[at..].find("return Ok(").expect("the branch returns")];
+        let tp = branch.find("if self.seat() == \"third_place\" { THIRD_PLACE_ADDRESS_REFUSED.to_string() }")
+            .unwrap_or_else(|| panic!("no fixed row for the Third Place in the address refusal:\n{branch}"));
+        assert!(tp < branch.find("refused_address_row(&who, &text)").expect("the panes' row is still built"), "the Third Place's line is chosen first");
+        assert!(THIRD_PLACE_ADDRESS_REFUSED.contains("Third Place") && !THIRD_PLACE_ADDRESS_REFUSED.contains('{'));
     }
 
     /// Its own config file, beside the lettered ones, naming its own route.
