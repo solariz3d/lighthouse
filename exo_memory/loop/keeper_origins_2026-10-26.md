@@ -102,10 +102,6 @@ Each line is left as it is.
 *Amended 2026-10-26, the same day and before any push: lines 10 and 21 named the lineage store by an absolute path,
 which failed portable-paths on main. They now give its location relative to the instances folder.*
 
-*Moved 2026-10-26, the same day, from `exo_memory/record/` to `exo_memory/loop/`: record/ holds the cards' long-form
-cases. Both gates say so: the arch test requires a card to name every record file, and carrier-drift's CH-4 treats a
-record file as reachable by instruction. This is an attribution ledger, not a card's case.*
-
 ## What this record does not do
 
 - It changes no master. The lines above are named for the librarian and the keeper to act on, or not.
