@@ -2570,10 +2570,11 @@ fn extract_turn(v: &serde_json::Value) -> Option<(String, String)> {
     }
     // D476, C's part-4 finding 1: a keep-warm visit (carrying the Third Place's answer) and a delivered [third-place] ring are posted as
     // FIXED rows, never their words. The tailer is a path to the board that no one thinks of as a channel (the 2026-08-25 lesson above).
-    if t == "user" && is_visit_frame(&text) {
+    let inner = unwrap_pasted(&text);
+    if t == "user" && is_visit_frame(inner) {
         return Some((t.to_string(), VISIT_ROW.to_string()));
     }
-    if t == "user" && text.starts_with("[third-place]") {
+    if t == "user" && inner.starts_with("[third-place]") {
         return Some((t.to_string(), THIRD_PLACE_RING_ROW.to_string()));
     }
     // Full turn text — the committee triangulates on whole contributions, not fragments.
@@ -2586,6 +2587,19 @@ fn extract_turn(v: &serde_json::Value) -> Option<(String, String)> {
 const VISIT_ROW: &str = "[keep-warm visit] (a letter between this seat and the Third Place; its words stay off the board)";
 const VISIT_REPLY_ROW: &str = "[keep-warm visit reply] (this seat's letter to the Third Place; its words stay off the board)";
 const THIRD_PLACE_RING_ROW: &str = "[third-place] a ring from the Third Place (its words stay off the board; the librarian reads it in its own pane)";
+
+/// C's part-4 re-read (§8, bafadda8): an injected message can be STORED WRAPPED, an opening `<pasted_content id="…">` line and its closing
+/// tag around the text (the one delivered [third-place] ring on this machine's board was; keep-warm prompts were on 2026-09-21/22). The
+/// prefix checks read the text inside the wrap; an unwrapped text is returned as it is.
+fn unwrap_pasted(text: &str) -> &str {
+    let Some(rest) = text.strip_prefix("<pasted_content id=") else { return text };
+    let Some((_, body)) = rest.split_once('\n') else { return text };
+    let body = match body.rfind("</pasted_content") {
+        Some(i) if body[i..].lines().count() == 1 => &body[..i],
+        _ => body,
+    };
+    body.trim()
+}
 
 /// A keep-warm visit's frame: the seat's visit and the Third Place's visit hour.
 fn is_visit_frame(text: &str) -> bool {
@@ -2611,6 +2625,35 @@ fn extract_turn_tracked(v: &serde_json::Value, st: &mut TailVisit) -> Option<(St
         return Some((role, VISIT_REPLY_ROW.to_string()));
     }
     Some((role, text))
+}
+
+/// THE MEMORY AFTER A RESTART (the fold of O's own stated limit): the visit state the tailer would hold had it read `read` itself, by
+/// replaying those rows through the same extract_turn_tracked the live tailer uses, so the two cannot disagree. Used when a tailer resumes
+/// at an offset: a restart between a visit and its reply then still posts the reply as a fixed row.
+fn tail_visit_resume(read: &str) -> TailVisit {
+    let mut st = TailVisit::default();
+    for line in read.lines() {
+        if let Ok(v) = serde_json::from_str::<serde_json::Value>(line) {
+            let _ = extract_turn_tracked(&v, &mut st);
+        }
+    }
+    st
+}
+
+/// The transcript's text before `offset`: its last KEEP_WARM_TAIL_BYTES at most, from the first whole line. Empty when nothing was read.
+fn read_before(path: &Path, offset: u64) -> String {
+    use std::io::{Read, Seek, SeekFrom};
+    let start = offset.saturating_sub(KEEP_WARM_TAIL_BYTES);
+    let Ok(mut f) = fs::File::open(path) else { return String::new() };
+    if f.seek(SeekFrom::Start(start)).is_err() {
+        return String::new();
+    }
+    let mut buf = vec![0u8; (offset - start) as usize];
+    if f.read_exact(&mut buf).is_err() {
+        return String::new();
+    }
+    let s = String::from_utf8_lossy(&buf).into_owned();
+    if start > 0 { s.split_once('\n').map(|(_, r)| r.to_string()).unwrap_or_default() } else { s }
 }
 
 // poll the transcript (250ms + a size watermark) and emit each new complete turn.
@@ -2667,6 +2710,10 @@ fn start_tailer(
                 head = read_head(&path);
                 offset = resume_offset(offsets.lock().unwrap().get(&pane_id), len, head);
                 resolved = true;
+                // D476: a tailer resuming mid-transcript derives whether its last prompt was a keep-warm visit (the restart fold)
+                if offset > 0 {
+                    visit_state = tail_visit_resume(&read_before(&path, offset));
+                }
                 // A pane starting at 0 over a non-empty transcript on a backfill launch is
                 // one of the panes the announcement is about.
                 if offset == 0 && len > 0 {
@@ -12997,7 +13044,7 @@ fn visit_reply_from(jsonl: &str, since_ms: u64, nonce: Option<&str>) -> Option<S
         v.get("type").and_then(|t| t.as_str()) == Some("user")
             && v.get("message").and_then(|m| m.get("content")).is_some_and(|c| c.is_string())
     };
-    let prompt_text = |v: &serde_json::Value| v.get("message").and_then(|m| m.get("content")).and_then(|c| c.as_str()).map(|s| s.trim().to_string()).unwrap_or_default();
+    let prompt_text = |v: &serde_json::Value| v.get("message").and_then(|m| m.get("content")).and_then(|c| c.as_str()).map(|s| unwrap_pasted(s.trim()).to_string()).unwrap_or_default();
     let start = rows.iter().position(|v| {
         is_prompt(v) && ts(v).is_some_and(|t| t >= since_ms.saturating_sub(VISIT_STAMP_SLACK_MS)) && {
             let p = prompt_text(v);
@@ -24201,6 +24248,26 @@ mod keep_warm_visit_tests {
         for p in &posted { assert!(!p.contains("river") && !p.contains("rain") && !p.contains("2026-10-26.md"), "{p}"); }
     }
 
+    /// THE TAILER'S MEMORY SURVIVES A RESTART (the fold of O's own stated limit, §5): a tailer that starts after a visit and before its reply
+    /// derives "the last prompt was a visit" from what it had already read, so the reply still posts as a fixed row; after a work prompt,
+    /// a reply posts as written.
+    #[test]
+    fn a_tailer_restarted_between_a_visit_and_its_reply_still_posts_the_reply_as_fixed() {
+        let user = |t: &str| serde_json::json!({"type":"user","message":{"role":"user","content":t}}).to_string();
+        let asst = |t: &str| serde_json::json!({"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":t}]}}).to_string();
+        let tool = serde_json::json!({"type":"user","message":{"role":"user","content":[{"type":"tool_result","content":"x"}]}}).to_string();
+        let reply = serde_json::json!({"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"rain on the window"}]}});
+        let read = [user("[chair:MAIN] a packet"), asst("done"), user(&format!("{} (letter 0a1b2c3d)", visit_text(None))), tool].join("\n");
+        let mut st = tail_visit_resume(&read);
+        assert_eq!(extract_turn_tracked(&reply, &mut st).map(|(_, t)| t).as_deref(), Some(VISIT_REPLY_ROW));
+        let after_work = [user(&format!("{} (letter 0a1b2c3d)", visit_text(None))), asst("ok"), user("[chair:MAIN] the next packet")].join("\n");
+        let mut st = tail_visit_resume(&after_work);
+        assert_eq!(extract_turn_tracked(&reply, &mut st).map(|(_, t)| t).as_deref(), Some("rain on the window"));
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let tailer = src.split("fn start_tailer(").nth(1).unwrap().split("\n}\n").next().unwrap();
+        assert!(tailer.contains("visit_state = tail_visit_resume(&read_before(&path, offset));"), "the tailer derives its visit memory when it resumes");
+    }
+
     /// C'S FINDING 2: THE REPLY WINDOW IS ANCHORED ON THE VISIT'S OWN ROW (its nonce), not the clock. The row is found even when stamped
     /// before the clock was read; if it is not there, NOTHING is held, even with another visit in the window; an unframed prompt is
     /// never an anchor.
@@ -24217,6 +24284,10 @@ mod keep_warm_visit_tests {
         assert_eq!(visit_reply_from(&j, since, Some("bbbb2222")), None, "no row carries this nonce: hold nothing");
         let early = iso_utc_ms("2026-10-26T10:59:56.000Z").unwrap();
         assert_eq!(visit_reply_from(&j, early, None).as_deref(), Some("the light came in low"), "the work prompt before it is not an anchor");
+        // C §8: a visit stored WRAPPED in a pasted-content block is still the anchor (else no visit stored that way would ever be read)
+        let w = [user("2026-10-26T11:00:00.000Z", "<pasted_content id=\"cd34\">\n[keep-warm visit — from the room, not the keeper, and not work] … (letter cccc3333)\n</pasted_content id=\"cd34\">"),
+                 asst("2026-10-26T11:00:04.000Z", "a wrapped visit, answered")].join("\n");
+        assert_eq!(visit_reply_from(&w, since, Some("cccc3333")).as_deref(), Some("a wrapped visit, answered"));
     }
 
     /// WIRING for finding 2: the clock is read BEFORE the inject, the visit carries the nonce, and the harvest reads by the nonce.
@@ -24259,3 +24330,4 @@ mod keep_warm_visit_tests {
 }
 
 #[cfg(test)] #[path = "d476p4_review_c_tests.rs"] mod d476p4_review_c_tests;
+#[cfg(test)] #[path = "d476p4_rr_c_tests.rs"] mod d476p4_rr_c_tests;
