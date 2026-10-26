@@ -22,6 +22,14 @@ fn now_ms() -> u64 {
         .unwrap_or(0)
 }
 
+/// D476, Metaxy's guard 3: does this ring point into the private folder? Case-insensitive, either slash: `C:\Consonance\private\…`,
+/// `consonance/private/…`, the folder itself, or a `private/third_place/` path written relative. A false positive refuses one ring and
+/// says why; a false negative publishes a private file's name, so the rule leans to refusing.
+pub fn points_into_private(text: &str) -> bool {
+    let t = text.replace('\\', "/").to_lowercase();
+    t.contains("consonance/private") || t.contains("private/third_place")
+}
+
 /// D476 part 2: THE THIRD PLACE'S MOUNT. Not a letter: the Third Place holds a letter in the registry as a NAME (D423), and a letter
 /// mount resolves to the committee seat, which has a pane's verbs. This identity resolves to the `third_place` seat, and its server
 /// carries one verb, call_librarian (`new`), to the one seat its address row names.
@@ -861,6 +869,21 @@ impl ConsonanceMcp {
             });
             return Ok(CallToolResult::success(vec![Content::text(
                 "refused: no address row from this mount's seat to the librarian (the attempt was posted to the board)",
+            )]));
+        }
+        // D476, METAXY'S GUARD 3 (plan_d476 "Metaxy's four guards"): NOTHING IN private/ TRAVELS. The Third Place's ring may carry only a
+        // pointer to a file outside C:\Consonance\private\. A pointer into it is refused, and the refusal is posted WITHOUT the text: the
+        // path itself names what is private.
+        if self.seat() == "third_place" && points_into_private(&text) {
+            board_push(&self.board, BoardEntry {
+                pane: "chair".to_string(),
+                role: "committee".to_string(),
+                text: "call_librarian REFUSED — from the Third Place: a pointer into private/ (nothing in private/ travels; the text is not kept)".to_string(),
+                ts: now_ms(),
+                ts_source: crate::TsSource::Push,
+            });
+            return Ok(CallToolResult::success(vec![Content::text(
+                "refused: that pointer is into private/, and nothing in private/ travels — write what can travel to a file outside it, and point at that",
             )]));
         }
         if !self.auth_station("call_librarian") {
@@ -4268,6 +4291,31 @@ mod third_place_mount_tests {
         let exempt = b.find("if verb == \"call_librarian\" && self.seat() == \"third_place\" {").expect("the Third Place's exemption from the station gate is gone");
         assert!(exempt < b.find("crate::chain_state()").expect("the gate's read moved"), "the exemption must come before the gate decides");
         assert!(body_of("async fn call_librarian(").contains("if !self.auth_station(\"call_librarian\") {"), "call_librarian still asks the gate");
+    }
+
+    /// METAXY'S GUARD 3: nothing in private/ travels. A pointer into C:\Consonance\private\ (either slash, any case, the folder itself, or
+    /// private/third_place written relative) is refused; a pointer into the public record is not, and nor is the word "private".
+    #[test]
+    fn a_pointer_into_private_is_refused_and_one_outside_it_is_not() {
+        for p in [r"C:\Consonance\private\third_place\lineage\keeper_2026-10.md", "c:/consonance/private/x.md", r"C:\CONSONANCE\PRIVATE",
+                  "see private/third_place/2026-10-26.md"] {
+            assert!(points_into_private(p), "{p}");
+        }
+        for p in ["exo_memory/third_place/to_the_librarian_2026-10-26.md", r"C:\Users\nname\Desktop\lighthouse\exo_memory\third_place\2026-10-26.md",
+                  "a private thought, written down at exo_memory/third_place/2026-10-26.md"] {
+            assert!(!points_into_private(p), "{p}");
+        }
+    }
+
+    /// The refusal sits on the Third Place's seat, before anything is sent, and the row it posts carries none of the text.
+    #[test]
+    fn a_private_pointer_is_refused_before_delivery_and_its_text_is_not_posted() {
+        let b = body_of("async fn call_librarian(");
+        let g = b.find("if self.seat() == \"third_place\" && points_into_private(&text) {").expect("guard 3 is gone from call_librarian");
+        assert!(g < b.find("ChairCmd::CallLibrarian").expect("the send moved"), "refused before it is sent");
+        let branch = &b[g..g + b[g..].find("return Ok(").expect("the refusal returns")];
+        assert!(!branch.contains("&text") || branch.matches("&text").count() == 1, "the posted row must not carry the text (the only &text is the check)");
+        assert!(branch.contains("board_push("), "the refusal is posted");
     }
 
     /// Its own config file, beside the lettered ones, naming its own route.

@@ -23685,6 +23685,23 @@ mod third_place_return_tests {
         assert!(pull_role_allowed("committee") && pull_role_allowed("main"), "control: the rule is unchanged for the seats it always allowed");
     }
 
+    /// METAXY'S GUARD 4: NO UPTAKE REPORTS GO BACK IN. The ring is one-way. No seat holds a row, by any verb, that leads to the Third Place;
+    /// the chair's inject and an approved pull are refused there; and what the Third Place's own call returns is the delivery receipt
+    /// alone (delivered, queued, refused), never anything read from the librarian's pane, so nothing about what was taken up comes back.
+    #[test]
+    fn no_seat_can_send_the_third_place_news_of_uptake() {
+        for r in ADDRESS_TABLE { assert_ne!(r.to, THIRD_PLACE_SID, "{} -> {} leads into the Third Place", r.from_seat, r.verb); }
+        assert!(chair_target_guard(THIRD_PLACE_SID, "third_place").is_err());
+        assert!(!pull_role_allowed("third_place"));
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split("fn third_place_call_librarian_exec(").nth(1).expect("the Third Place's executor is missing");
+        let body = f.split("\n}\n").next().unwrap_or(f);
+        for reader in ["pane_scrollback(", "read_tail(", "capture_text", "fs::read_to_string("] {
+            assert!(!body.contains(reader), "the ring's reply must not read the librarian's pane or files ({reader})");
+        }
+        assert!(body.contains("ring_reply(\"the librarian\", receipt)"), "the reply is the receipt");
+    }
+
     /// The executor's destination is the table, and the system names the voice: `[third-place]`, never a pane's letter, the chair's
     /// or the librarian's. Its audit row carries no preview of the text: the Third Place's record stays off the shared board.
     #[test]
