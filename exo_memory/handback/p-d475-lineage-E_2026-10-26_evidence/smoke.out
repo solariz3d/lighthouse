@@ -1,0 +1,8 @@
+LOG  lineage: exit 0: lineage-rip: 456 transcripts, 622305 lines (0 empty, 0 malformed, skipped); 2146 kept, 2144 already in the store, 2 new (2026-10:2); 3722 bytes appended to C:\Consonance\private\third_place\lineage
+after the block: the cycle goes on
+rc 0
+LOG  lineage: exit 1: node:internal/modules/cjs/loader:1459 throw err; ^ System.Management.Automation.RemoteException Error: Cannot find module 'C:\nowhere\missing.js' [90m at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)[39m [90m at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)[39m [90m at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)[39m [90m at Module._load (node:internal/modules/cjs/loader:1242:25)[39m [90m at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)[39m [90m at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)[39m [90m at node:internal/main/run_main_module:33:47[39m { code: [32m'MODULE_NOT_FOUND'[39m, requireStack: [] } System.Management.Automation.RemoteException Node.js v24.14.1
+after the block: the cycle goes on
+rc 0
+after the block: the cycle goes on
+rc 0

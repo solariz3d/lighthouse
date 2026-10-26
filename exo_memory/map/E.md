@@ -2572,3 +2572,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-26 ~10:5x (D) · D473 part 2, Track ▸ Bank the lap → `exo_memory/handback/p-d473-E_2026-10-26.md`
 - t180 `a4bfe52` on d473-e from v0.4.21 9648a25 (t180-wt-e473), not pushed. bankLap is one undo step on a closed lap, kh/kv byte-equal (core-bank-lap row 1, red first); bankLapWith now names the curves the level rule kept out. Touched files: 1387 tests, 2 fails (a CLI script in my list; drag-frame row 1, which also fails 1 in 4 on the v0.4.21 base).
 - **Carry:** a grep for "files that name X" catches helper scripts too; check each listed file is a test before you count its exit code as a fail.
+
+## 2026-10-26 ~12:1x (D) · D475 part 1, lineage-rip.js → `exo_memory/handback/p-d475-lineage-E_2026-10-26.md`
+- lighthouse `e11737b6` on d475-e (lh-d475-e), not pushed. Append-only and deduplicated against an exact parse of the store: on the real store, 2141 of 2144 kept turns were already there, and a re-run wrote 0 bytes. Mutants 18/18/0. Wired into the 04:30 dream cycle, before the presence guard. 837 of the store's 2502 rows are seat-made heads, not his words.
+- **Carry:** a store made by one script can be read back exactly by its own row-length headers; prove that with a byte-equal re-render before trusting dedup against it.
