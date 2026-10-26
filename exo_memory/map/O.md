@@ -181,3 +181,8 @@ General form: an all-or-nothing gate in front of a per-item reuse turns one chan
 2026-10-26, D476 part 2 — the Third Place was mute by design (spawn_claude_pane); /mcp/third-place resolves to seat third_place and its server keeps call_librarian only (remove_route); row 3 to LIB, no row in; 7/7 mutants caught; cargo 1,113/0. Could be wrong that the station exemption is wanted (the chair's call, §3).
 General form: before adding a route to a table, check that the caller can reach the table at all, and with what else.
 → `exo_memory/handback/p-d476-return-O_2026-10-26.md`
+
+### The keep-warm visit is letters relayed by the keep-warm actuator itself: the same pings, the same requests, a guarded line each way, and no new way into the Third Place
+2026-10-26, D476 part 4 — d476-o-p4 13c69597: a seat's ping becomes a visit carrying ITS answer; the Third Place's ping becomes the hour; replies read only from the turn's last text; guard = pointers/ids/shas/commands/uptake/private/400 chars, "stays here" gives nothing; 28/28 mutants, cargo 1,126/0; staged, never swapped. Could be wrong that a phrase list holds uptake out: prose can paraphrase it.
+General form: a string a test parses must stay simple; an escaped quote in new code can put another test's parser out of step and fail far from the change.
+→ `exo_memory/handback/p-d476-visit-build-O_2026-10-26.md`
