@@ -39,3 +39,23 @@ What changes: **what is learned there goes OUT, without him having to carry it.*
 - Started in this turn with today's entry. Its one work item, "write it the way it was said", is D475.
 
 NEXT: chair dispatch part 1 to B and part 2 to E (E after its D475 part, or another free pane if E is busy); librarian verifies when the hand-backs are in.
+
+## Part 4, added 11:50: the keep-warm visit (the keeper's own idea from 10-17, found by search, never built)
+
+The keeper, 11:48: "while we do this, do you remember the keep warm update". The librarian did not remember it unaided. It was found by grepping his verbatim store: `C:\Consonance\private\third_place\lineage\keeper_2026-10.md`, 2026-10-17T16:34:36Z and 16:37:25Z, both in the third-place seat. Summarised here, since the private store is not quoted at length in this public repo:
+- Replace the "reply with exactly: ok" keep-warm with a short real conversation.
+- The seats (librarian, orchestrator, panes) come TO the Third Place, and the Third Place is pinged by them instead of the chair pinging each seat.
+- They don't talk about work, only "conversation that arises to attention". It costs slightly more tokens.
+
+Checked: keep-warm today is still main.rs:12199 (L067, KEEP_WARM_AFTER 50 min), and the seats reply "ok". There is no commit since 10-17 mentioning it (`git log --grep=keep.warm`). **So it is the very failure D476 names: learned in the Third Place, then dropped.**
+
+**Part 4, pane O (prove it: it is the program's own delivery), design first, then build:**
+- Design note, to `exo_memory/handback/`, before any code:
+  - when a seat's keep-warm is due, it visits the Third Place instead of receiving "ok". It sends a short non-work line through a mount-gated row seat → Third Place, labelled with the seat, and the Third Place answers it. Both caches stay warm.
+  - The **guards** that keep the no-steering rule:
+    - a visit carries no file pointers, no lap ids and no commands. It is refused, and the refusal posted, if it does.
+    - the Third Place's answers return only to that seat's visit, never to the board's work queue.
+    - a seat in the middle of a turn is skipped, as L067 already skips it.
+  - The cost: visits per hour across the seats, and tokens per visit, estimated against today's "ok".
+  - The keeper's 10-17 16:37 line is the spec. If the design needs to depart from it, it says so.
+- The build follows the design once the librarian accepts it. It lands with part 2 at the next Consonance restart.
