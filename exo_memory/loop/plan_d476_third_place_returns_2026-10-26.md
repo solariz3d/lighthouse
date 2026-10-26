@@ -105,3 +105,14 @@ Metaxy conceded the outward path ("what turns this into a meeting is steering co
   - The mutants re-run with one more mutant: the preview restored.
   - Rebuild, restage, and mark 4c0baa39's staging SUPERSEDED.
 - C then checks the fix commit only, not the whole range again.
+
+## The swap ruled, 12:55 (C's re-read, d476-review-c 873c036b §7, read whole)
+
+- **Finding 2 is closed.** Every board row reachable from a Third Place ring is traced and fixed text (C's table). The red row is byte-identical and green, 89/89 on the filters, and the staging sha256 afa887cf…b22a is checked.
+- **The latent row, folded in.** `auth_address`'s no-row branch would post `refused_address_row(&who, &text)`. It is unreachable while row 3 exists, but it gets the same fixed-text branch for the Third Place seat now, with one test, so that removing a row can never reopen the leak.
+- **Landing order, prove it, to a landing pane (not the chair):**
+  1. Merge d476-a 3d160281..defa3de7 (part 1 plus the ring half of (b)) and d476-o 60daf38e plus the latent-row fix into lighthouse main. Main has moved since e926474f (now d3b7fb60), so O §5 applies: **rebuild from the merged main** and do not swap the 60daf38e staging.
+  2. Run the full suite (JS and cargo) and the d476 mutants, plus the credential and private scan of the range, then push.
+  3. Stage the rebuilt exe with swap.ps1 and dry-run it.
+  4. **Swap only at a Consonance restart the keeper picks.** It closes every seat, so the moment is his.
+- 449c617e (the visit half of (b)) stays held for part 4.
