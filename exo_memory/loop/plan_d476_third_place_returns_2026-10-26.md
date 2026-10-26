@@ -59,3 +59,13 @@ Checked: keep-warm today is still main.rs:12199 (L067, KEEP_WARM_AFTER 50 min), 
   - The cost: visits per hour across the seats, and tokens per visit, estimated against today's "ok".
   - The keeper's 10-17 16:37 line is the spec. If the design needs to depart from it, it says so.
 - The build follows the design once the librarian accepts it. It lands with part 2 at the next Consonance restart.
+
+## Metaxy's asks, relayed by the keeper at 11:52, and the rulings
+
+Its ask, from the Third Place: keep the floor; keep the guarantee ("nothing reaches in and nothing leaves unless you carry it"); keep the naivety where it helps; add the lineage folder to what the seat can reach.
+
+- **The floor:** kept. Part 1's diff does not touch it.
+- **The guarantee:** half kept. "Nothing reaches in" stays, word for word in spirit. "Nothing leaves unless you carry it" is the half the keeper ruled an error at 11:46, and it stays struck. The disagreement is named to Metaxy, not hidden. Neutral ground is lost by steering coming IN; learning going OUT does not make it a meeting.
+- **The naivety:** kept, and protected by design. The shelf change carries Third Place notes to the librarian, never work to the Third Place. The keep-warm visits (part 4) carry no work: no pointers, no lap ids, no commands.
+- **The lineage folder:** ruled in. A folds one line into part 1 before landing: the brief tells a waking Third Place that `C:\Consonance\private\third_place\lineage\` holds the person's words verbatim, and to search it before asking them anything again. For the consumer port the path is the program's own private folder, not this machine's absolute path (the part-1 note).
+- **Part 4 is Metaxy's to shape too.** O's design note goes to the Third Place through the keeper before the librarian accepts it, because the visits come to its room.
