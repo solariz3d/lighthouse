@@ -22,20 +22,23 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 80 filtered out; finished in 0.00s
 
 
-running 7 tests
-test keep_warm_visit_tests::a_seat_visit_is_one_line_not_work_and_carries_only_its_own_answer ... ok
+running 10 tests
 test keep_warm_visit_tests::an_ok_reply_holds_nothing ... ok
+test keep_warm_visit_tests::a_seat_visit_is_one_line_not_work_and_carries_only_its_own_answer ... ok
 test keep_warm_visit_tests::the_visit_hour_carries_every_held_line_by_name_in_one_message ... ok
-test keep_warm_visit_tests::the_hour_answers_go_only_to_their_visitors_and_stays_here_gives_nothing ... ok
+test keep_warm_visit_tests::the_tailer_posts_a_visit_and_its_reply_as_fixed_rows_and_work_as_before ... ok
 test keep_warm_visit_tests::a_visit_line_carrying_work_is_refused_and_a_plain_line_is_not ... ok
+test keep_warm_visit_tests::the_hour_answers_go_only_to_their_visitors_and_stays_here_gives_nothing ... ok
 test keep_warm_visit_tests::only_the_reply_the_turn_ended_on_is_read ... ok
+test keep_warm_visit_tests::the_reply_is_read_after_the_row_that_carries_the_nonce_and_nothing_without_it ... ok
 test keep_warm_visit_tests::keep_warm_sends_visits_and_its_refusal_rows_carry_no_words ... FAILED
+test keep_warm_visit_tests::the_send_carries_a_nonce_and_the_harvest_reads_by_it ... ok
 
 failures:
 
 ---- keep_warm_visit_tests::keep_warm_sends_visits_and_its_refusal_rows_carry_no_words stdout ----
 
-thread 'keep_warm_visit_tests::keep_warm_sends_visits_and_its_refusal_rows_carry_no_words' (38736) panicked at src\main.rs:24130:9:
+thread 'keep_warm_visit_tests::keep_warm_sends_visits_and_its_refusal_rows_carry_no_words' (42276) panicked at src\main.rs:24249:9:
 a working seat's visit carries ITS OWN answer (answers go only to that visit), and a human-driven pane is not visited
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
@@ -43,22 +46,83 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 failures:
     keep_warm_visit_tests::keep_warm_sends_visits_and_its_refusal_rows_carry_no_words
 
-test result: FAILED. 6 passed; 1 failed; 0 ignored; 0 measured; 1125 filtered out; finished in 0.00s
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 1129 filtered out; finished in 0.01s
 
-   Compiling consonance v0.2.0 (C:\Users\nname\Desktop\worktrees\lh-o-d476-p4\consonance\src-tauri)
-warning: unused variable: `ratio`
-    --> src\bin\..\cochlea.rs:3004:13
-     |
-3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
-     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
-     |
-     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+warning: function `is_working` is never used
+  --> src\bin\..\capture.rs:55:8
+   |
+55 | pub fn is_working(lines: &[String]) -> bool {
+   |        ^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
-warning: unused variable: `sr`
-    --> src\bin\..\cochlea.rs:3157:13
-     |
-3157 |         let sr = 46.875;
-     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
+warning: function `is_chrome` is never used
+  --> src\bin\..\capture.rs:62:8
+   |
+62 | pub fn is_chrome(s: &str) -> bool {
+   |        ^^^^^^^^^
+
+warning: function `screen_ready` is never used
+  --> src\bin\..\capture.rs:82:8
+   |
+82 | pub fn screen_ready(lines: &[String]) -> bool {
+   |        ^^^^^^^^^^^^
+
+warning: function `is_wrapped` is never used
+   --> src\bin\..\capture.rs:102:4
+    |
+102 | fn is_wrapped(wrapped: &[bool], i: usize) -> bool {
+    |    ^^^^^^^^^^
+
+warning: function `fold_end` is never used
+   --> src\bin\..\capture.rs:107:4
+    |
+107 | fn fold_end(lines: &[String], wrapped: &[bool], i: usize) -> usize {
+    |    ^^^^^^^^
+
+warning: function `join_fold` is never used
+   --> src\bin\..\capture.rs:117:4
+    |
+117 | fn join_fold(lines: &[String], i: usize, end: usize) -> String {
+    |    ^^^^^^^^^
+
+warning: function `latest_turn` is never used
+   --> src\bin\..\capture.rs:127:8
+    |
+127 | pub fn latest_turn(lines: &[String], wrapped: &[bool]) -> String {
+    |        ^^^^^^^^^^^
+
+warning: function `latest_prompt` is never used
+   --> src\bin\..\capture.rs:162:8
+    |
+162 | pub fn latest_prompt(lines: &[String], wrapped: &[bool]) -> String {
+    |        ^^^^^^^^^^^^^
+
+warning: function `strip_overlay` is never used
+   --> src\bin\..\capture.rs:182:8
+    |
+182 | pub fn strip_overlay(s: &str) -> String {
+    |        ^^^^^^^^^^^^^
+
+warning: function `stitch` is never used
+   --> src\bin\..\capture.rs:197:8
+    |
+197 | pub fn stitch(old: &str, new: &str) -> String {
+    |        ^^^^^^
+
+warning: function `collapse_blanks` is never used
+   --> src\bin\..\capture.rs:221:4
+    |
+221 | fn collapse_blanks(s: &str) -> String {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `strip_overlay` is never used
+   --> src\bin\..\capture.rs:182:8
+    |
+182 | pub fn strip_overlay(s: &str) -> String {
+    |        ^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
 warning: struct `C` is never constructed
   --> src\bin\..\cochlea.rs:30:12
@@ -208,6 +272,26 @@ warning: variant `Vibrato` is never constructed
      |
      = note: `Event` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
 
+warning: unused variable: `ratio`
+    --> src\bin\..\cochlea.rs:3004:13
+     |
+3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
+     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `sr`
+    --> src\bin\..\cochlea.rs:3157:13
+     |
+3157 |         let sr = 46.875;
+     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
+
+   Compiling consonance v0.2.0 (C:\Users\nname\Desktop\worktrees\lh-o-d476-p4\consonance\src-tauri)
+warning: `consonance` (bin "composer_probe") generated 11 warnings
+warning: `consonance` (bin "capture_probe") generated 2 warnings (1 duplicate)
+warning: `consonance` (bin "cochlea_replay") generated 21 warnings
+warning: `consonance` (bin "cochlea_replay" test) generated 2 warnings (run `cargo fix --bin "cochlea_replay" -p consonance --tests` to apply 2 suggestions)
+warning: `consonance` (bin "conf_sweep" test) generated 2 warnings (2 duplicates)
 warning: function `bands` is never used
    --> src\bin\..\cochlea.rs:325:8
     |
@@ -228,96 +312,7 @@ warning: function `replay` is never used
 1974 | pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Event)> {
      |        ^^^^^^
 
-warning: function `is_working` is never used
-  --> src\bin\..\capture.rs:55:8
-   |
-55 | pub fn is_working(lines: &[String]) -> bool {
-   |        ^^^^^^^^^^
-   |
-   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
-
-warning: function `is_chrome` is never used
-  --> src\bin\..\capture.rs:62:8
-   |
-62 | pub fn is_chrome(s: &str) -> bool {
-   |        ^^^^^^^^^
-
-warning: function `screen_ready` is never used
-  --> src\bin\..\capture.rs:82:8
-   |
-82 | pub fn screen_ready(lines: &[String]) -> bool {
-   |        ^^^^^^^^^^^^
-
-warning: function `is_wrapped` is never used
-   --> src\bin\..\capture.rs:102:4
-    |
-102 | fn is_wrapped(wrapped: &[bool], i: usize) -> bool {
-    |    ^^^^^^^^^^
-
-warning: function `fold_end` is never used
-   --> src\bin\..\capture.rs:107:4
-    |
-107 | fn fold_end(lines: &[String], wrapped: &[bool], i: usize) -> usize {
-    |    ^^^^^^^^
-
-warning: function `join_fold` is never used
-   --> src\bin\..\capture.rs:117:4
-    |
-117 | fn join_fold(lines: &[String], i: usize, end: usize) -> String {
-    |    ^^^^^^^^^
-
-warning: function `latest_turn` is never used
-   --> src\bin\..\capture.rs:127:8
-    |
-127 | pub fn latest_turn(lines: &[String], wrapped: &[bool]) -> String {
-    |        ^^^^^^^^^^^
-
-warning: function `latest_prompt` is never used
-   --> src\bin\..\capture.rs:162:8
-    |
-162 | pub fn latest_prompt(lines: &[String], wrapped: &[bool]) -> String {
-    |        ^^^^^^^^^^^^^
-
-warning: function `strip_overlay` is never used
-   --> src\bin\..\capture.rs:182:8
-    |
-182 | pub fn strip_overlay(s: &str) -> String {
-    |        ^^^^^^^^^^^^^
-
-warning: function `stitch` is never used
-   --> src\bin\..\capture.rs:197:8
-    |
-197 | pub fn stitch(old: &str, new: &str) -> String {
-    |        ^^^^^^
-
-warning: function `collapse_blanks` is never used
-   --> src\bin\..\capture.rs:221:4
-    |
-221 | fn collapse_blanks(s: &str) -> String {
-    |    ^^^^^^^^^^^^^^^
-
-warning: `consonance` (bin "cochlea_replay" test) generated 2 warnings (run `cargo fix --bin "cochlea_replay" -p consonance --tests` to apply 2 suggestions)
-warning: `consonance` (bin "cochlea_replay") generated 21 warnings
 warning: `consonance` (bin "conf_sweep") generated 16 warnings (13 duplicates)
-warning: `consonance` (bin "conf_sweep" test) generated 2 warnings (2 duplicates)
-warning: `consonance` (bin "composer_probe") generated 11 warnings
-warning: function `strip_overlay` is never used
-   --> src\bin\..\capture.rs:182:8
-    |
-182 | pub fn strip_overlay(s: &str) -> String {
-    |        ^^^^^^^^^^^^^
-    |
-    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
-
-warning: `consonance` (bin "capture_probe") generated 2 warnings (1 duplicate)
-warning: unused import: `HashMap`
-     --> src\main.rs:15987:28
-      |
-15987 |     use std::collections::{HashMap, HashSet};
-      |                            ^^^^^^^
-      |
-      = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
-
 warning: function `sysdrive` is never used
    --> src\main.rs:512:4
     |
@@ -327,28 +322,34 @@ warning: function `sysdrive` is never used
     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
 warning: method `is_stamped` is never used
-     --> src\main.rs:10628:8
+     --> src\main.rs:10668:8
       |
-10617 | impl PaneGate {
+10657 | impl PaneGate {
       | ------------- method in this implementation
 ...
-10628 |     fn is_stamped(&self) -> bool {
+10668 |     fn is_stamped(&self) -> bool {
       |        ^^^^^^^^^^
 
 warning: method `take_ready` is never used
-     --> src\main.rs:11239:8
+     --> src\main.rs:11279:8
       |
-11133 | impl Inbox {
+11173 | impl Inbox {
       | ---------- method in this implementation
 ...
-11239 |     fn take_ready(
+11279 |     fn take_ready(
       |        ^^^^^^^^^^
 
 warning: function `delivery_note` is never used
-     --> src\main.rs:11421:4
+     --> src\main.rs:11461:4
       |
-11421 | fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
+11461 | fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
       |    ^^^^^^^^^^^^^
+
+warning: function `turn_reply_after` is never used
+     --> src\main.rs:12983:4
+      |
+12983 | fn turn_reply_after(jsonl: &str, since_ms: u64) -> Option<String> {
+      |    ^^^^^^^^^^^^^^^^
 
 warning: field `tool_router` is never read
    --> src\mcp.rs:361:5
@@ -400,6 +401,14 @@ warning: methods `attempts`, `records`, `consecutive_panics`, and `last_attempt_
 214 |     pub fn last_attempt_ms(&self) -> u64 {
     |            ^^^^^^^^^^^^^^^
 
+warning: unused import: `HashMap`
+     --> src\main.rs:16057:28
+      |
+16057 |     use std::collections::{HashMap, HashSet};
+      |                            ^^^^^^^
+      |
+      = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
 warning: unused variable: `ratio`
     --> src\cochlea.rs:3004:13
      |
@@ -415,14 +424,14 @@ warning: unused variable: `sr`
      |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
 
 warning: unused variable: `rows`
-     --> src\main.rs:16245:14
+     --> src\main.rs:16315:14
       |
-16245 |         let (rows, flags) = render(&format!("❯ {msg}"));
+16315 |         let (rows, flags) = render(&format!("❯ {msg}"));
       |              ^^^^ help: if this is intentional, prefix it with an underscore: `_rows`
 
 warning: `consonance` (bin "consonance" test) generated 5 warnings (1 duplicate) (run `cargo fix --bin "consonance" -p consonance --tests` to apply 4 suggestions)
-warning: `consonance` (bin "consonance") generated 9 warnings
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.97s
+warning: `consonance` (bin "consonance") generated 10 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.58s
      Running unittests src\bin\capture_probe.rs (target\debug\deps\capture_probe-19c2a55d1c8470f1.exe)
      Running unittests src\bin\cochlea_replay.rs (target\debug\deps\cochlea_replay-1ad250337380d7e5.exe)
      Running unittests src\bin\composer_probe.rs (target\debug\deps\composer_probe-20f363dbf4ded9f0.exe)

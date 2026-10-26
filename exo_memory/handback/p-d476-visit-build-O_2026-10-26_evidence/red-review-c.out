@@ -1,0 +1,431 @@
+$ cargo test d476p4_review_c
+# exit 101 in 21 s
+
+warning: struct `C` is never constructed
+  --> src\bin\..\cochlea.rs:30:12
+   |
+30 | pub struct C {
+   |            ^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: methods `mul`, `add`, `sub`, and `abs` are never used
+  --> src\bin\..\cochlea.rs:35:8
+   |
+34 | impl C {
+   | ------ methods in this implementation
+35 |     fn mul(self, o: C) -> C {
+   |        ^^^
+...
+38 |     fn add(self, o: C) -> C { C { re: self.re + o.re, im: self.im + o.im } }
+   |        ^^^
+39 |     fn sub(self, o: C) -> C { C { re: self.re - o.re, im: self.im - o.im } }
+   |        ^^^
+40 |     fn abs(self) -> f32 { (self.re * self.re + self.im * self.im).sqrt() }
+   |        ^^^
+
+warning: function `fft` is never used
+  --> src\bin\..\cochlea.rs:44:8
+   |
+44 | pub fn fft(buf: &mut [C]) {
+   |        ^^^
+
+warning: function `hann` is never used
+  --> src\bin\..\cochlea.rs:76:8
+   |
+76 | pub fn hann(samples: &[f32]) -> Vec<C> {
+   |        ^^^^
+
+warning: function `spectrum` is never used
+  --> src\bin\..\cochlea.rs:85:8
+   |
+85 | pub fn spectrum(samples: &[f32]) -> Vec<f32> {
+   |        ^^^^^^^^
+
+warning: function `peaks` is never used
+   --> src\bin\..\cochlea.rs:103:8
+    |
+103 | pub fn peaks(spec: &[f32], sample_rate: f32, max: usize, floor_ratio: f32) -> Vec<Peak> {
+    |        ^^^^^
+
+warning: function `note_name` is never used
+   --> src\bin\..\cochlea.rs:173:8
+    |
+173 | pub fn note_name(hz: f32) -> (String, f32) {
+    |        ^^^^^^^^^
+
+warning: function `bands` is never used
+   --> src\bin\..\cochlea.rs:325:8
+    |
+325 | pub fn bands(spec: &[f32], sample_rate: f32, n: usize) -> Vec<f32> {
+    |        ^^^^^
+
+warning: function `rms_db` is never used
+   --> src\bin\..\cochlea.rs:522:8
+    |
+522 | pub fn rms_db(samples: &[f32]) -> f32 {
+    |        ^^^^^^
+
+warning: function `pitch_track` is never used
+    --> src\bin\..\cochlea.rs:1195:8
+     |
+1195 | pub fn pitch_track(samples: &[f32], sample_rate: f32) -> Vec<Option<f32>> {
+     |        ^^^^^^^^^^^
+
+warning: struct `Vibrato` is never constructed
+    --> src\bin\..\cochlea.rs:1233:12
+     |
+1233 | pub struct Vibrato {
+     |            ^^^^^^^
+
+warning: constant `VIB_LO_HZ` is never used
+    --> src\bin\..\cochlea.rs:1243:7
+     |
+1243 | const VIB_LO_HZ: f32 = 4.0;
+     |       ^^^^^^^^^
+
+warning: constant `VIB_HI_HZ` is never used
+    --> src\bin\..\cochlea.rs:1244:7
+     |
+1244 | const VIB_HI_HZ: f32 = 7.5;
+     |       ^^^^^^^^^
+
+warning: constant `VIB_DEPTH_CENTS` is never used
+    --> src\bin\..\cochlea.rs:1246:7
+     |
+1246 | const VIB_DEPTH_CENTS: f32 = 25.0;
+     |       ^^^^^^^^^^^^^^^
+
+warning: constant `VIB_WINDOW_SECS` is never used
+    --> src\bin\..\cochlea.rs:1248:7
+     |
+1248 | const VIB_WINDOW_SECS: f32 = 1.5;
+     |       ^^^^^^^^^^^^^^^
+
+warning: constant `VIB_MIN_GAP_SECS` is never used
+    --> src\bin\..\cochlea.rs:1249:7
+     |
+1249 | const VIB_MIN_GAP_SECS: f32 = 3.0;
+     |       ^^^^^^^^^^^^^^^^
+
+warning: constant `VIB_SHAPE_MIN` is never used
+    --> src\bin\..\cochlea.rs:1255:7
+     |
+1255 | const VIB_SHAPE_MIN: f32 = 3.5;
+     |       ^^^^^^^^^^^^^
+
+warning: constant `VIB_MAX_DEPTH_CENTS` is never used
+    --> src\bin\..\cochlea.rs:1267:7
+     |
+1267 | const VIB_MAX_DEPTH_CENTS: f32 = 150.0;
+     |       ^^^^^^^^^^^^^^^^^^^
+
+warning: method `feed` is never used
+    --> src\bin\..\cochlea.rs:1272:12
+     |
+1269 | impl Vibrato {
+     | ------------ method in this implementation
+...
+1272 |     pub fn feed(&mut self, pitches: &[Option<f32>], t: f32, rate: f32) -> Option<Event> {
+     |            ^^^^
+
+warning: method `complexity` is never used
+    --> src\bin\..\cochlea.rs:1623:12
+     |
+1619 | impl IntervalReading {
+     | -------------------- method in this implementation
+...
+1623 |     pub fn complexity(&self) -> u32 { self.num + self.den }
+     |            ^^^^^^^^^^
+
+warning: variant `Vibrato` is never constructed
+    --> src\bin\..\cochlea.rs:1680:5
+     |
+1652 | pub enum Event {
+     |          ----- variant in this enum
+...
+1680 |     Vibrato(VibratoReading),
+     |     ^^^^^^^
+     |
+     = note: `Event` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: function `is_working` is never used
+  --> src\bin\..\capture.rs:55:8
+   |
+55 | pub fn is_working(lines: &[String]) -> bool {
+   |        ^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `is_chrome` is never used
+  --> src\bin\..\capture.rs:62:8
+   |
+62 | pub fn is_chrome(s: &str) -> bool {
+   |        ^^^^^^^^^
+
+warning: function `screen_ready` is never used
+  --> src\bin\..\capture.rs:82:8
+   |
+82 | pub fn screen_ready(lines: &[String]) -> bool {
+   |        ^^^^^^^^^^^^
+
+warning: function `is_wrapped` is never used
+   --> src\bin\..\capture.rs:102:4
+    |
+102 | fn is_wrapped(wrapped: &[bool], i: usize) -> bool {
+    |    ^^^^^^^^^^
+
+warning: function `fold_end` is never used
+   --> src\bin\..\capture.rs:107:4
+    |
+107 | fn fold_end(lines: &[String], wrapped: &[bool], i: usize) -> usize {
+    |    ^^^^^^^^
+
+warning: function `join_fold` is never used
+   --> src\bin\..\capture.rs:117:4
+    |
+117 | fn join_fold(lines: &[String], i: usize, end: usize) -> String {
+    |    ^^^^^^^^^
+
+warning: function `latest_turn` is never used
+   --> src\bin\..\capture.rs:127:8
+    |
+127 | pub fn latest_turn(lines: &[String], wrapped: &[bool]) -> String {
+    |        ^^^^^^^^^^^
+
+warning: function `latest_prompt` is never used
+   --> src\bin\..\capture.rs:162:8
+    |
+162 | pub fn latest_prompt(lines: &[String], wrapped: &[bool]) -> String {
+    |        ^^^^^^^^^^^^^
+
+warning: function `strip_overlay` is never used
+   --> src\bin\..\capture.rs:182:8
+    |
+182 | pub fn strip_overlay(s: &str) -> String {
+    |        ^^^^^^^^^^^^^
+
+warning: function `stitch` is never used
+   --> src\bin\..\capture.rs:197:8
+    |
+197 | pub fn stitch(old: &str, new: &str) -> String {
+    |        ^^^^^^
+
+warning: function `collapse_blanks` is never used
+   --> src\bin\..\capture.rs:221:4
+    |
+221 | fn collapse_blanks(s: &str) -> String {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `bands` is never used
+   --> src\bin\..\cochlea.rs:325:8
+    |
+325 | pub fn bands(spec: &[f32], sample_rate: f32, n: usize) -> Vec<f32> {
+    |        ^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: constant `PULSE_ENABLED` is never used
+   --> src\bin\..\cochlea.rs:950:11
+    |
+950 | pub const PULSE_ENABLED: bool = false;
+    |           ^^^^^^^^^^^^^
+
+warning: function `replay` is never used
+    --> src\bin\..\cochlea.rs:1974:8
+     |
+1974 | pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Event)> {
+     |        ^^^^^^
+
+warning: unused variable: `ratio`
+    --> src\bin\..\cochlea.rs:3004:13
+     |
+3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
+     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `sr`
+    --> src\bin\..\cochlea.rs:3157:13
+     |
+3157 |         let sr = 46.875;
+     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
+
+   Compiling consonance v0.2.0 (C:\Users\nname\Desktop\worktrees\lh-o-d476-p4\consonance\src-tauri)
+warning: function `strip_overlay` is never used
+   --> src\bin\..\capture.rs:182:8
+    |
+182 | pub fn strip_overlay(s: &str) -> String {
+    |        ^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `consonance` (bin "cochlea_replay") generated 21 warnings
+warning: `consonance` (bin "composer_probe") generated 11 warnings
+warning: `consonance` (bin "conf_sweep") generated 16 warnings (13 duplicates)
+warning: `consonance` (bin "conf_sweep" test) generated 2 warnings (run `cargo fix --bin "conf_sweep" -p consonance --tests` to apply 2 suggestions)
+warning: `consonance` (bin "capture_probe") generated 2 warnings (1 duplicate)
+warning: `consonance` (bin "cochlea_replay" test) generated 2 warnings (2 duplicates)
+warning: function `sysdrive` is never used
+   --> src\main.rs:512:4
+    |
+512 | fn sysdrive() -> String {
+    |    ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `is_stamped` is never used
+     --> src\main.rs:10628:8
+      |
+10617 | impl PaneGate {
+      | ------------- method in this implementation
+...
+10628 |     fn is_stamped(&self) -> bool {
+      |        ^^^^^^^^^^
+
+warning: method `take_ready` is never used
+     --> src\main.rs:11239:8
+      |
+11133 | impl Inbox {
+      | ---------- method in this implementation
+...
+11239 |     fn take_ready(
+      |        ^^^^^^^^^^
+
+warning: function `delivery_note` is never used
+     --> src\main.rs:11421:4
+      |
+11421 | fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
+      |    ^^^^^^^^^^^^^
+
+warning: field `tool_router` is never read
+   --> src\mcp.rs:361:5
+    |
+314 | pub struct ConsonanceMcp {
+    |            ------------- field in this struct
+...
+361 |     tool_router: ToolRouter<ConsonanceMcp>,
+    |     ^^^^^^^^^^^
+    |
+    = note: `ConsonanceMcp` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: function `replay` is never used
+    --> src\cochlea.rs:1974:8
+     |
+1974 | pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Event)> {
+     |        ^^^^^^
+
+warning: struct `Frame` is never constructed
+    --> src\cochlea.rs:2034:12
+     |
+2034 | pub struct Frame {
+     |            ^^^^^
+
+warning: method `elapsed` is never used
+   --> src\nowplaying.rs:107:12
+    |
+ 83 | impl NowPlaying {
+    | --------------- method in this implementation
+...
+107 |     pub fn elapsed(&self) -> String {
+    |            ^^^^^^^
+
+warning: methods `attempts`, `records`, `consecutive_panics`, and `last_attempt_ms` are never used
+   --> src\harvest_guard.rs:205:12
+    |
+132 | impl HarvestGuard {
+    | ----------------- methods in this implementation
+...
+205 |     pub fn attempts(&self) -> u64 {
+    |            ^^^^^^^^
+...
+208 |     pub fn records(&self) -> u64 {
+    |            ^^^^^^^
+...
+211 |     pub fn consecutive_panics(&self) -> u32 {
+    |            ^^^^^^^^^^^^^^^^^^
+...
+214 |     pub fn last_attempt_ms(&self) -> u64 {
+    |            ^^^^^^^^^^^^^^^
+
+error[E0425]: cannot find value `VISIT_ROW` in this scope
+     --> src\main.rs:24129:33
+      |
+24129 |         assert_eq!(posted, vec![VISIT_ROW.to_string(), VISIT_REPLY_ROW.to_string(), "[chair:MAIN] a work packet".to_string(),
+      |                                 ^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find value `VISIT_REPLY_ROW` in this scope
+     --> src\main.rs:24129:56
+      |
+24129 |         assert_eq!(posted, vec![VISIT_ROW.to_string(), VISIT_REPLY_ROW.to_string(), "[chair:MAIN] a work packet".to_string(),
+      |                                                        ^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find value `THIRD_PLACE_RING_ROW` in this scope
+     --> src\main.rs:24130:74
+      |
+24130 | ...                   "done, the review is filed".to_string(), THIRD_PLACE_RING_ROW.to_string()]);
+      |                                                                ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+warning: unused import: `HashMap`
+     --> src\main.rs:15987:28
+      |
+15987 |     use std::collections::{HashMap, HashSet};
+      |                            ^^^^^^^
+      |
+      = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+error[E0433]: cannot find type `TailVisit` in this scope
+     --> src\main.rs:24127:22
+      |
+24127 |         let mut st = TailVisit::default();
+      |                      ^^^^^^^^^ use of undeclared type `TailVisit`
+
+error[E0425]: cannot find function `extract_turn_tracked` in this scope
+     --> src\main.rs:24128:62
+      |
+24128 |         let posted: Vec<String> = rows.iter().filter_map(|v| extract_turn_tracked(v, &mut st)).map(|(_, t)| t).collect();
+      |                                                              ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `visit_reply_from` in this scope
+     --> src\main.rs:24146:20
+      |
+24146 |         assert_eq!(visit_reply_from(&j, since, Some("aaaa1111")).as_deref(), Some("the light came in low"));
+      |                    ^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `visit_reply_from` in this scope
+     --> src\main.rs:24147:20
+      |
+24147 |         assert_eq!(visit_reply_from(&j, since, Some("bbbb2222")), None, "no row carries this nonce: hold nothing");
+      |                    ^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `visit_reply_from` in this scope
+     --> src\main.rs:24149:20
+      |
+24149 | ...   assert_eq!(visit_reply_from(&j, early, None).as_deref(), Some("the light came in low"), "the work prompt before it is not a...
+      |                  ^^^^^^^^^^^^^^^^ not found in this scope
+
+warning: unused variable: `ratio`
+    --> src\cochlea.rs:3004:13
+     |
+3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
+     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `sr`
+    --> src\cochlea.rs:3157:13
+     |
+3157 |         let sr = 46.875;
+     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
+
+warning: unused variable: `rows`
+     --> src\main.rs:16245:14
+      |
+16245 |         let (rows, flags) = render(&format!("❯ {msg}"));
+      |              ^^^^ help: if this is intentional, prefix it with an underscore: `_rows`
+
+warning: `consonance` (bin "consonance") generated 9 warnings
+Some errors have detailed explanations: E0425, E0433.
+For more information about an error, try `rustc --explain E0425`.
+warning: `consonance` (bin "consonance" test) generated 4 warnings
+error: could not compile `consonance` (bin "consonance" test) due to 8 previous errors; 4 warnings emitted

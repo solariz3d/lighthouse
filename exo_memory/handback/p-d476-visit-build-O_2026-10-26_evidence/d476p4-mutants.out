@@ -26,4 +26,11 @@ caught       V13 the seat reply not guarded in the harvest  (keep_warm_visit_tes
 caught       V14 every seat gets the first answer, not its own  (keep_warm_visit_tests::keep_warm_sends_visits_and_its_refusal_rows_carry_no_words)
 caught       V15 a human-driven pane visited  (keep_warm_visit_tests::keep_warm_sends_visits_and_its_refusal_rows_carry_no_words)
 caught       V16 the refusal row carries the line  (keep_warm_visit_tests::keep_warm_sends_visits_and_its_refusal_rows_carry_no_words)
-applied 28 / caught 28 / NOT APPLIED 0
+caught       T1v the tailer posts the visit text (finding 1)  (d476p4_review_c_tests::a_seats_visit_prompt_does_not_carry_the_third_places_words_onto_the_board; keep_warm_visit_tests::the_tailer_posts_a_visit_and_its_reply_as_fixed_rows_and_work_as_before)
+caught       T2v the tailer posts the visit reply words (finding 1)  (keep_warm_visit_tests::the_tailer_posts_a_visit_and_its_reply_as_fixed_rows_and_work_as_before)
+caught       T3v the tailer posts a third-place ring words (finding 1)  (keep_warm_visit_tests::the_tailer_posts_a_visit_and_its_reply_as_fixed_rows_and_work_as_before)
+caught       N1 the harvest anchors on the clock, not the nonce (finding 2)  (keep_warm_visit_tests::the_send_carries_a_nonce_and_the_harvest_reads_by_it)
+caught       N2 any prompt is an anchor, the frame unread (finding 2)  (keep_warm_visit_tests::the_reply_is_read_after_the_row_that_carries_the_nonce_and_nothing_without_it)
+caught       N3 the nonce not required of the anchor row (finding 2)  (keep_warm_visit_tests::the_reply_is_read_after_the_row_that_carries_the_nonce_and_nothing_without_it)
+caught       I1 the id rule without the room spellings (C 3)  (d476p4_review_c_tests::a_lap_id_in_the_rooms_own_spellings_is_refused)
+applied 35 / caught 35 / NOT APPLIED 0

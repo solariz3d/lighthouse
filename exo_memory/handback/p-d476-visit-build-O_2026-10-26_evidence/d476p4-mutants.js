@@ -38,6 +38,13 @@ const VISIT = [
   ['V14 every seat gets the first answer, not its own', 'src/main.rs', '"committee" | "main" | "librarian" => (visit_text(b.answers.get(pane).map(|s| s.as_str())), None),', '"committee" | "main" | "librarian" => (visit_text(b.answers.values().next().map(|s| s.as_str())), None),', V],
   ['V15 a human-driven pane visited', 'src/main.rs', '"committee" | "main" | "librarian" => (visit_text(', '"committee" | "main" | "librarian" | "human" => (visit_text(', V],
   ['V16 the refusal row carries the line', 'src/main.rs', 'format!("keep-warm visit REFUSED — from {short} ({rule}); its words are not kept")', 'format!("keep-warm visit REFUSED — from {short} ({rule}); line kept")', V],
+  ['T1v the tailer posts the visit text (finding 1)', 'src/main.rs', '    if t == "user" && is_visit_frame(&text) {\n        return Some((t.to_string(), VISIT_ROW.to_string()));', '    if false {\n        return Some((t.to_string(), VISIT_ROW.to_string()));', 'visit'],
+  ['T2v the tailer posts the visit reply words (finding 1)', 'src/main.rs', '    if st.in_visit {\n        return Some((role, VISIT_REPLY_ROW.to_string()));', '    if false {\n        return Some((role, VISIT_REPLY_ROW.to_string()));', 'visit'],
+  ['T3v the tailer posts a third-place ring words (finding 1)', 'src/main.rs', '    if t == "user" && text.starts_with("[third-place]") {', '    if false {', 'visit'],
+  ['N1 the harvest anchors on the clock, not the nonce (finding 2)', 'src/main.rs', '.and_then(|t| visit_reply_from(&t, at, Some(&nonce)));', '.and_then(|t| visit_reply_from(&t, at, None));', 'visit'],
+  ['N2 any prompt is an anchor, the frame unread (finding 2)', 'src/main.rs', 'is_visit_frame(&p) && nonce.is_none_or(|n| p.contains(n))', 'nonce.is_none_or(|n| p.contains(n))', 'visit'],
+  ['N3 the nonce not required of the anchor row (finding 2)', 'src/main.rs', 'is_visit_frame(&p) && nonce.is_none_or(|n| p.contains(n))', 'is_visit_frame(&p)', 'visit'],
+  ['I1 the id rule without the room spellings (C 3)', 'src/main.rs', 'let lw = lw.strip_suffix("\'s").or_else(|| lw.strip_suffix("\\u{2019}s")).unwrap_or(&lw);', 'let lw: &str = w;', 'd476p4_review_c'],
 ];
 const M = [...PART2.map((m) => [...m.slice(0, 4), 'third_place']), ...VISIT];
 const src = {}; for (const [, f] of M) src[f] = src[f] || fs.readFileSync(path.join(T, f), 'utf8');
