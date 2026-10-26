@@ -1,0 +1,157 @@
+[32m✔ control: the unmutated temp copy passes every test file the mutants use [90m(259639.1454ms)[39m[39m
+[34mℹ D412 wide: "D242 item 7" on app/test/core-readout-display.test.js runs 2 rows[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(322.7495ms)[39m[39m
+[32m✔ a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353) [90m(707.3409ms)[39m[39m
+[32m✔ a load throw in a run of one file reads NOT CAUGHT as before, never NOT TESTED (the load-throw stand-in, D354) [90m(322.6354ms)[39m[39m
+[32m✔ mutation K1 the columns outside the window are not fixed: applied, and caught by "row 1: a close confined to the LAST piece…" [90m(645.5981ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation K2 the pieces outside the window are recomputed, not kept: applied, and caught by "row 1: a close confined to the LAST piece…" [90m(635.4583ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation K3 a local close that does not close is handed back, not refused: applied, and caught by "row 3: a window that cannot close the loop…" [90m(1830.1067ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation K4 the roll-rate bar is not read: applied, and caught by "row 4: a local close may not push the window past the roll-rate bar…" [90m(605.8045ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation K5 the window is not named for a person: applied, and caught by "row 1: a close confined to the LAST piece…" [90m(651.2943ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation K6 the default window ignores the fraction (the last piece only): applied, and caught by "row 2: the default window…" [90m(499.5816ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation K7 an empty window is accepted: applied, and caught by "row 5: a window with no road piece…" [90m(561.1935ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation A6 the refused export keeps the export's own message (ids): applied, and caught by "row 6: a refused export names EVERY red…" [90m(976.9559ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation A9 the press writes no copy from before the close: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…" [90m(1988.8715ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation A10 a failed copy still closes: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…" [90m(3203.4984ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation A11 an edit while the copy is written is closed over: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…" [90m(5770.0747ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation B1 a way that does not prove is picked: applied, and caught by "row 4: when no way proves…" [90m(4080.0828ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation B2 a way that adds a red is picked: applied, and caught by "row 4: when no way proves…" [90m(4968.3526ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation B3 new road is not put last: applied, and caught by "row 8: the order…" [90m(534.355ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation B4 the most movement is tried first: applied, and caught by "row 7: the pick is the least-moving way that proves…" [90m(4154.1208ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation B5 Finish is tried when the end is already at the start: applied, and caught by "row 1: an end already at the start…" [90m(2783.9221ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation B6 a bend may reshape the track (no move cap): applied, and caught by "row 5: a bend that would move the track further…" [90m(3232.9082ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation B7 a press that finds no way still applies: applied, and caught by "row 2: when no way of closing proves, nothing changes…" [90m(6299.6891ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation B8 the press commits the open track: applied, and caught by "row 1: one press closes a near lap AT ONCE…" [90m(2196.4729ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation N1 a laid road Close refuses is never taken as laid (the lone straight is lost to a loop again): applied, and caught by "row 17: an end straight behind the start…" [90m(3225.1382ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation Q8 the seam gets no curvature row (the closure meets value and slope only, as before 3c): applied, and caught by "row 9: the closure is C2…" [90m(582.4785ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation Q9 the joints the close moves get no curvature row (only the seam): applied, and caught by "row 9: the closure is C2…" [90m(559.0873ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation Q10 the bank plan's curvature rows are not projected: applied, and caught by "row 10: through Finish and through bankLap…" [90m(5005.9969ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation Q11 at a relaxed joint the later piece's first two points are not folded into the row: applied, and caught by "row 10: through Finish and through bankLap…" [90m(5183.5579ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation Q12 no row where the plan ends (the window's end, the seam): applied, and caught by "row 10: through Finish and through bankLap…" [90m(4807.7413ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R1 the plan ignores the bank a piece carries (the whole share bank added again): applied, and caught by "Bank the lap pressed again…" [90m(1136.2979ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R2 a piece banked past ROLL_FREE is never found again as the press's own (the second press plans against different pins): applied, and caught by "Bank the lap pressed again…" [90m(1113.9258ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[31m✖ mutation R3 the curvature rows are on the total bank, not the added bank (a straight's roll-off tail is taken back): applied, and caught by "Bank the lap pressed again…" [90m(3913.784ms)[39m[39m
+[34mℹ D412 path: whole[39m
+[32m✔ mutation R4 the farthest candidates are not dropped first (every candidate the plan would change goes at once): applied, and caught by "row 3: on a lap shaped like TEST 10…" [90m(1220.9452ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R5 the level words name the pieces by their stored turn (curved), not by the plan-bank test: applied, and caught by "row 4: a loop whose stored turn is under 1/600…" [90m(1247.7657ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R6 the press writes no copy from before the bank: applied, and caught by "row 5: the press copies the track…" [90m(894.8813ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation R7 a failed copy still banks: applied, and caught by "row 6: a copy that cannot be written…" [90m(904.4036ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation Q13 the adapter refuses a cup inside the quantum of 0 (the unrounded solve's −1e-15): applied, and caught by "row 6: a window on a lap whose cup is flat…" [90m(1278.2146ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation Q14 the cup's curvature row is kept where it takes the cup below 0 (no fallback): applied, and caught by "row 7: the seam's cup curvature rows respect c ≥ 0…" [90m(854.3132ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation Q5 the closer's cup fade is linear whatever its length (its curvature steps at the user's last joint and at the seam): applied, and caught by "row 6: through Close…" [90m(2660.3018ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation N2 a route that is only a straight is not laid under 10 m: applied, and caught by "row 17: an end straight behind the start…" [90m(2025.8222ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation F5 the worker's document is not frozen (the residual memo misses): applied, and caught by "row 13: the worker's press on a structuredClone…" [90m(6139.0286ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation B9 a tie is not broken by the route order (micro-metres decide): applied, and caught by "row 8: the order…" [90m(537.99ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation F1 the near bend is not checked first (every route runs): applied, and caught by "row 9: when the end is at the start…" [90m(2124.669ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation F2 the given open-track reds are ignored (it is checked again): applied, and caught by "row 11: given the open track…" [90m(9775.3766ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation F3 the press hands the worker no reds: applied, and caught by "row 7: a press hands the worker the reds…" [90m(816.3574ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation F4 a check made with CSP off is used: applied, and caught by "row 7: a press hands the worker the reds…" [90m(797.4612ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G1 a ray red on an overlap keeps its own words: applied, and caught by "the overlap is ONE group…" [90m(302.184ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G2 every ray red is called an overlap: applied, and caught by "a downforce-ray-gap with NO overlap near it…" [90m(295.8783ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G3 the text names only the first place of a group: applied, and caught by "groupsText names one line per PLACE…" [90m(339.5627ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G6 places are never merged: applied, and caught by "D248: overlapping reds on one piece are ONE place…" [90m(298.6851ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G7 places merge across pieces: applied, and caught by "D248: TOUCHING reds merge…" [90m(312.4814ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G10 places merge only on the same STARTING piece (the rule the real window caught): applied, and caught by "D248: a red inside a place that spans two pieces…" [90m(308.5027ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G8 touching reds do not merge (no tolerance): applied, and caught by "D248: TOUCHING reds merge…" [90m(323.2564ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G9 the count is of reds, not places: applied, and caught by "D248: overlapping reds on one piece are ONE place…" [90m(307.1675ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G4 the piece is read at the range's end: applied, and caught by "where: s in km and the piece…" [90m(353.8967ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation G5 s past the lap does not wrap: applied, and caught by "pieceAt wraps…" [90m(315.1828ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation L1 every piece is labelled again: applied, and caught by "the labels on the track…" [90m(815.086ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation L2 the hovered piece is never labelled: applied, and caught by "the labels on the track…" [90m(818.5907ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation L3 a still pointer is not asked again after the track changes: applied, and caught by "the labels follow a path the preview extends IN PLACE…" [90m(862.7329ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U1 Undo shows the head only (the bug): applied, and caught by "D242 item 7…" [90m(764.5078ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation U2 the ticks are not put back: applied, and caught by "D242 item 7…" [90m(782.8966ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation S1 Straight does not tick turn "at start": applied, and caught by "D242: after a 30°/100m turn, Straight…" [90m(732.8253ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation S2 Straight leaves the boxes ticked: applied, and caught by "D242: after a 30°/100m turn, Straight…" [90m(743.135ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[32m✔ mutation S3 the straight hint never shows: applied, and caught by "D242: after a 30°/100m turn, Straight…" [90m(779.5293ms)[39m[39m
+[34mℹ D412 path: narrowed[39m
+[34mℹ tests 64[39m
+[34mℹ suites 0[39m
+[34mℹ pass 63[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 372939.4977[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\core-close-mutation.test.js:164:3
+[31m✖ mutation R3 the curvature rows are on the total bank, not the added bank (a straight's roll-off tail is taken back): applied, and caught by "Bank the lap pressed again…" [90m(3913.784ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: NOT CAUGHT; failing tests on the mutant: none
+      at TestContext.<anonymous> [90m(C:\Users\nname\Downloads\t180-wt-p477\[39mapp\test\core-close-mutation.test.js:168:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+# stderr
+
+# exit 1 in 373.0 s

@@ -1,0 +1,16 @@
+[32m✔ a lean mesh is the same scene, cells and folds as the full one, and keeps no piece's spare rows [90m(1989.4137ms)[39m[39m
+[32m✔ the validator with leanLines keeps each station's centreline and hardest-hit line, and judges the track and draws the graph exactly as without [90m(2928.6335ms)[39m[39m
+[32m✔ the track checker's worker job makes no colour map and lean lines, and answers what the page's own check answers [90m(2609.1099ms)[39m[39m
+[32m✔ the overlap check (lean) answers exactly what the full mesh and full validator answer [90m(6358.6908ms)[39m[39m
+[34mℹ tests 4[39m
+[34mℹ suites 0[39m
+[34mℹ pass 4[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 14017.711[39m
+
+# stderr
+
+# exit 0 in 14.1 s
