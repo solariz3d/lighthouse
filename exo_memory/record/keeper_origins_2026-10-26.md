@@ -7,7 +7,7 @@ adopted it, this record names the line by path:line and leaves the line as it is
 **Source of the list.** The Third Place's note `exo_memory/third_place/to_the_librarian_2026-10-26.md`, §3 ("Many of
 the room's finds are his, but the record credits 'the room'"): ten finds, dated 08-11 to 10-19.
 
-**Source of the dates and words.** The lineage month files `C:\Consonance\private\third_place\lineage\keeper_2026-*.md`
+**Source of the dates and words.** The lineage month files `keeper_2026-*.md`, in the private\third_place\lineage folder beside the instances folder
 (outside every repo, read-only; nothing from them is committed except the short quotes below). Each message there has a
 header `### <UTC timestamp> · <seat> · <chars>`. The timestamps below are **UTC**; the room's journals use local time
 (UTC−6), so 13:09Z is 07:09 local.
@@ -18,7 +18,7 @@ header `### <UTC timestamp> · <seat> · <chars>`. The timestamps below are **UT
 prints, for each hit, the message header above it and a short window around it:
 
     awk -v d="<date prefix>" -v re="<regex>" 'BEGIN{IGNORECASE=1} /^### /{h=$0; next}
-      h ~ ("### " d) && match($0, re) {print h}' C:\Consonance\private\third_place\lineage\keeper_2026-MM.md
+      h ~ ("### " d) && match($0, re) {print h}' keeper_2026-MM.md   # in the private\third_place\lineage folder beside the instances folder
 
 The "confirm" grep is a plain `grep -n -F` of the quote's first words; the message header is the nearest `###` line
 above the hit.
@@ -98,6 +98,9 @@ Each line is left as it is.
 - **Row 10, `consonance/src-tauri/brief/COMMITTEE.md:100-102`.** Credits him by date ("Tiers were asked for on …
   2026-10-19") and quotes his 22:49Z message. The 13:28:26Z message the same day is the first, and it carries the
   "code reviews" idea, which he credits to a friend in it.
+
+*Amended 2026-10-26, the same day and before any push: lines 10 and 21 named the lineage store by an absolute path,
+which failed portable-paths on main. They now give its location relative to the instances folder.*
 
 ## What this record does not do
 
