@@ -1,0 +1,20 @@
+[32m✔ the capacity number counts the SAME set the librarian carries [90m(3.1757ms)[39m[39m
+[32m✔ the by-name exclusions match the ones the shelf actually drops [90m(52.0046ms)[39m[39m
+[32m✔ the tool refuses to print a capacity number it cannot anchor in the binary [90m(8.1619ms)[39m[39m
+[32m✔ attic/ is excluded from the carried corpus — law 3, in both places [90m(35.1096ms)[39m[39m
+[32m✔ a proposal needs BOTH unreferenced AND stale — either alone is not enough [90m(14810.9046ms)[39m[39m
+[32m✔ referenced files are never proposed, whatever their age [90m(7369.6442ms)[39m[39m
+[32m✔ the tool states the limit it cannot see, in its own output path [90m(0.4969ms)[39m[39m
+[32m✔ --apply moves and manifests; it never deletes [90m(0.2951ms)[39m[39m
+[32m✔ --apply refuses to clobber a name already in attic [90m(0.2147ms)[39m[39m
+[32m✔ the batched age map returns exactly what the per-file git log returned [90m(371.1908ms)[39m[39m
+[32m✔ a file with no commits is absent from the age map, not aged zero [90m(200.259ms)[39m[39m
+[32m✔ every value in the age map is a non-negative integer number of days [90m(202.6349ms)[39m[39m
+[34mℹ tests 12[39m
+[34mℹ suites 0[39m
+[34mℹ pass 12[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 23058.216[39m
