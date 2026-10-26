@@ -37,3 +37,25 @@ C has TEST 10's geometry warm from D471.
 **Nothing is written to his tracks folder or AC. No install.** Tier: check it. It is read-only and its result is visible in the next step.
 
 NEXT: chair dispatch D472 to C now; librarian rules when C's hand-back is in.
+
+## Ruling, 10:27: benign (C, d472-c d0152896, `p-d472-C_2026-10-26.md`, read whole)
+
+- **The cause.** p21–p23 were laid flat by Finish to start in undo step past[22], on 2026-10-22 before 09:25 local. That was a build without D434 (b782064, 20:42 the same day), when Finish did not bank yet. No bank was ever set on these pieces and then zeroed (E-hist.out, E-eq.out).
+- **0.4.21 does it right.** Its Finish to start re-lays the same closer and banks p21/p23 at 63.6° (E-b.out). bankLap on the closed save as it stands gives the same bank, with nothing moved (E-c.out).
+- **p18/p19 are flat by design.** They are a vertical loop: least road-up −1.000, against the level rule cos 30° at finish.js:488.
+- **The gap C found, which is real.** On a lap that is already closed, nothing the user can press banks it: Close is disabled once closed (buildmenu.js:45). Anyone whose closer was laid before 0.4.19 has the keeper's flat end, and no button fixes it.
+- **Noted, not ruled.** On the opened lap, the one-press Close picks a 1,147 m bend of p19–p20 over Finish's 2,584 m of new road that moves nothing (E-a.out, closejob.js order "new road only when no bend proves"). This is the same question as the keep-the-bend redesign still open with the keeper. It is held for that answer.
+
+## D473, from this ruling: two parts, in parallel
+
+**Part 1, pane A (prove it: writes his save and his AC track): bank his TEST 10 as it stands.**
+- Builder and AC closed check.
+- Back up `eq-TEST 10.t180track` beside itself as `.before-d473`, with a sha256 compare against 0c9ca763.
+- Run 0.4.21's own bankLap on it in the v0.4.21 tree (C's E-c.out path): nothing moves; p21/p23 → 63.61°, p20/p22 eased. Write the result as his save. The route must be unmoved: compare kh/kv per piece, and expect them byte-equal.
+- Then page-export it as "TEST 10" over t180b_test_10, after a backup of the folder. FINS must pass, and zuv must be 0.
+- Hand-back: the per-piece bank before and after, the hashes, the backups.
+
+**Part 2, pane E (check it): a Track menu command that banks a lap that is already closed.**
+- Wire the existing core bankLap (finish.js) to a Track ▸ "Bank the lap" item. It is enabled on a closed lap and does nothing to the route. Its status line says what it banked, and says plainly when a piece is held back by the level rule.
+- One test row: a closed lap with a flat closer gets banked, and the route is unmoved.
+- CHANGELOG line. Rides the next release batch. No "keeper" in any text.
