@@ -255,7 +255,7 @@ const EXPECTED_KEEPER_LINES = Object.freeze({
   'consonance/src-tauri/brief/BUILDING.md': 24,   // D277 repair: 42 -> 20 on B's rewrite; each of the 20 is provenance (listed in p-d277repair-E_2026-10-10.md). D370: +2 provenance, "Why: the keeper, 2026-10-17: …" (his words) and "at the keeper's word of 2026-10-17" (D366's "Landings go to a pane"). D454 part 2: +3 provenance, the three dated "Why: in the keeper's room, on 2026-10-24" incidents of "Leave the machine as you found it" (its three role lines are relabelled). D454 part 1 (B's 1C.1): -1, the bogus "the keeper/consonance" no longer ships, because the repo name solariz3d/consonance stays whole
   'consonance/src-tauri/brief/COMMITTEE.md': 6,   // D454 part 2: +1 provenance, the junction incident "in the keeper's room" (was t180's reads/)
   'consonance/src-tauri/brief/LIBRARIAN.md': 6,   // D277 repair: 7 -> 6 on B's rewrite; likewise
-  'consonance/src-tauri/brief/THIRD_PLACE.md': 1,
+  'consonance/src-tauri/brief/THIRD_PLACE.md': 2,   // D476 part 1: +1 provenance, "This program's keeper, 2026-10-26, 11:46, verbatim: …" (his words, the reason the :11 sentence is struck)
   'exo_memory/TRAINING.md': 9,
   'exo_memory/SOURCE.md': 1,
   'exo_memory/cards/claim-your-continuity.md': 6,
