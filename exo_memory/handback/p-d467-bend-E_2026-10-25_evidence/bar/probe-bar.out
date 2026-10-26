@@ -1,0 +1,17 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+tools s0 450 rate 0.0003: window [1] drag moved 12.89 m, start close moves outside 72.29 m -> fails part 3
+tools s0 450 rate 0.0001: window [1] drag moved 4.30 m, start close moves outside 51.83 m -> fails part 3
+tools s0 450 rate 0.00003: window [1] drag moved 1.29 m, start close moves outside 27.65 m -> fails part 3
+tools s0 450 rate 0.00001: window [1] drag moved 0.43 m, start close moves outside 15.31 m -> fails part 3
+tools s0 700 rate 0.0003: window [2] drag moved 11.09 m, start close moves outside 152.80 m -> fails part 3
+tools s0 700 rate 0.0001: window [2] drag moved 3.70 m, start close moves outside 84.39 m -> fails part 3
+tools s0 700 rate 0.00003: window [2] drag moved 1.11 m, start close moves outside 45.20 m -> fails part 3
+tools s0 700 rate 0.00001: window [2] drag moved 0.37 m, start close moves outside 25.00 m -> fails part 3
+oval s0 1985 rate 0.0003: window [2] drag moved 15.49 m, start close moves outside 285.30 m -> fails part 3
+oval s0 1985 rate 0.0001: window [2] drag moved 5.16 m, start close moves outside 160.98 m -> fails part 3
+oval s0 1985 rate 0.00003: window [2] drag moved 1.55 m, start close moves outside 87.21 m -> fails part 3
+oval s0 1985 rate 0.00001: window [2] drag moved 0.52 m, start close moves outside 56.05 m -> fails part 3
+long s0 3507 rate 0.0003: window [2] drag moved 27.33 m, start close moves outside 504.55 m -> fails part 3
+long s0 3507 rate 0.0001: window [2] drag moved 9.11 m, start close moves outside 332.60 m -> fails part 3
+long s0 3507 rate 0.00003: window [2] drag moved 2.73 m, start close moves outside 178.87 m -> fails part 3
+long s0 3507 rate 0.00001: window [2] drag moved 0.91 m, start close moves outside 99.91 m -> fails part 3
