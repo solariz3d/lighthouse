@@ -161,3 +161,14 @@ Told to the keeper, with the veto: if he would rather have the clean number befo
 - origin main and the v0.4.24 tag are both at 86b92f1. `releases/latest` is v0.4.24, not a draft; the asset is 8,025,959 B, sha256 cd5c1355…c86a. Push-gate allow at 16:02:25Z.
 - In it: the Aurora sky redrawn (D495), the X hover (D486), the Credits and the renders removed (D487/D488), the AI note (D491), the export wording fix (D497 (a)).
 - **Owed:** A's idle-window A/B of drag-frame row 8 and sculpt-frame row 3 (CPU under 10% for three minutes, no seat running). The tip worse than 0.4.23 by more than noise means a point release. D489–D497 otherwise CLOSED.
+
+## 10:25: the keeper, in the app: "it honestly doesnt look good and i am okay with reverting it back to how it was"
+
+My miss: a look went to a public release before he had seen it in the builder. Memory written (looks-ship-to-keeper-first): a visual or feel change is installed on his machine from a build with no public release, he judges, then it ships.
+
+## D499, the revert: pane A (prove it: release)
+- On t180 main 86b92f1: `git revert -m 1 132e151` (the d495-c merge), so the sky, budget, cycle and their tests go back to 0.4.23's. Keep everything else in 0.4.24. If the revert conflicts on CHANGELOG, resolve by hand: the [0.4.24] section keeps its lines and a new [0.4.25] gets "Reverted: the Aurora sky back to 0.4.23's, at the author's judgment in the app".
+- Check `app/preview/sky/aurora.js` is byte-equal to `git show 82afc11:app/preview/sky/aurora.js` and that budget.js, cycle.js, arcs.js are gone.
+- Full suite; the frame rows alone if red (under his load they will be; the A/B precedent stands); the touched sky tests must be green as at 0.4.23.
+- Version 0.4.25, release notes in user words, push, install with the builder closed, `.before-0.4.25` backup and a sha256 compare.
+- d495-c and d490-c stay as branches. Nothing ships from them without the keeper's yes in the app.
