@@ -38,3 +38,11 @@ The text above is withdrawn. Replace "## Credits" with this, verbatim:
 - The diff is the Credits text, verbatim as amended.
 - It rides the next batch with d486-a b6106130.
 - The PNG question waits on the keeper.
+
+## D488, 06:41, at the keeper's word: "remove them". Pane A (just do it)
+
+- On d486-a (after dcedd30): `git rm results/sakura_full.png results/rainbow_full.png`.
+- The only reference is `src/texmaker/presets.js:3`, a comment that cites `results/rainbow_full.png` as where the colour stops came from (checked by the librarian with `git grep` at dcedd30). Reword that comment so it names no file and no track. The colour stops stay byte-equal.
+- Remove from the tip only. **No history rewrite and no force push.** The files stay in 6de135e's history; rewriting public history is a separate, irreversible call he has not made.
+- Check that `git grep -E "sakura_full|rainbow_full"` returns 0. Run the texmaker tests (touched file). 0 "keeper" in the added lines.
+- It rides the next batch with d486-a.
