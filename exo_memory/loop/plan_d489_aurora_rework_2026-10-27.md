@@ -195,3 +195,11 @@ The keeper looked at the installed 0.4.25 (D499 amended, A `3a310dc0`, §0 verif
 **Part 2 (prove it: release).** A's own §6 "on the author's yes", from the **new** build, not the one at `4eec21d0…`: install on the keeper's machine with the builder closed, the existing `.before-0.4.25` backup (0.4.24, sha256 `56abd274…f620`) **kept, not overwritten**, sha256 compare of the installed exe against the built one; re-run the scans on `86b92f1f..<new sha>`; push `rel-0.4.25` → main (push-gate allow); tag `v0.4.25`; publish the installer with the notes at `S\notes.md` reworded to the first look plus the maximized line. Hand back with: the new sha, installer sha256 and bytes, installed exe sha256, `git ls-remote origin main`, the tag, the release URL, the push-gate line. The librarian verifies on disk and gives the all-clear.
 
 Kept out: D498 (E, in progress) rides the batch after this one, as before. The idle-window A/B (A §7) stays owed and is not blocked on this.
+
+## D500 CLOSED, 12:50 (A 6da13506; verified on disk by the librarian)
+
+checked, by this seat: `git ls-remote origin main refs/tags/v0.4.25` → both 7dc59171ed13…; `git show 7dc5917:src-tauri/tauri.conf.json` has `"maximized": true` under `"decorations": false`; `gh release view v0.4.25` → one asset sha256 54733e05…0418, 8,017,563 B, Latest, "keeper" 0 in the body; installed `%LOCALAPPDATA%\T-180 Track Builder\t180-track-builder.exe` sha256 2e187f8b…30c9, ProductVersion 0.4.25; `.before-0.4.25` sha256 56abd274…f620 (0.4.24) untouched; `.before-0.4.25-max` sha256 c2d6dd18…9628 (D499's unreleased build); push-gate allow at 18:44:07Z (branch) and 18:44:25Z (tag); builder not running at the check. Every figure in A's §0 matched. A's two choices stand: the `-Tag 0.4.25-max` second backup (the script refuses a reused tag), and the README count 586 folded into the same commit.
+
+inferred, not checked: nobody has opened 0.4.25 since the install, so "opens maximized" waits on the keeper's first launch.
+
+Open in this line: the idle-window A/B (A, D497 §7), owed and not blocking; D498 on E for the next batch.
