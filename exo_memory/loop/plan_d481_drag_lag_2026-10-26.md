@@ -45,3 +45,41 @@ NEXT: chair dispatch D481 to the first free pane now; librarian rules the fix or
 **Part 2, pane C (check it, find only): A's §7.** On 0.4.19 already, with any of bank, cup or edge typed, about 400 frames a second do more than 1 ms of work during a drag (40–60 untyped), and p95 misses 6.9 ms. Find what redraws every frame while a field is typed: a profile, the function and file. No fix; the fix is its own order.
 
 **The batch:** D482 part 1 joins d473-e + d477-p in the next T-180 release. This is a regression he feels on every drag, so it is the one item that justifies releasing the batch without waiting for his new-track findings. That is a recommendation, and his to veto.
+
+## D482 collated, 20:30 (A 001069f3 / t180 d482-a 883c200 + 1366dfc; C 8f2f8800; both read whole)
+
+Checked by the librarian on disk, from A's evidence (`G:\consonance-scratch\a-d482\`) and the worktree:
+- d482-a sits on 41e7595 with a clean tree: 5 files, +225/−16.
+- `final-proof-all.out`: cases 1036, byte-equal 674, refused alike 361, DIFFER 1.
+- `final2-direct.out`: 6,656 fits, 195,392 points, DIFFER 1. It is the same value, pre-close p43 phi[6].
+- Ramp harness: 35/35/0. Touched files: 943, pass 940, fail 0, skip 3.
+- Row 6 green unedited: p95 10.4 ms against the 13.4 bar.
+
+**Part 1, accepted.**
+- The one differing value is 2 ulp either side of a rounding half-point, with neither more correct, and it is listed as ordered. That is accepted.
+- The near-singular divergence (§3c) is accepted as A states it: a 1 cm knot cluster gives no meaningful bank in either code, and the panel cannot lay one. One line goes in the release notes' known limits, not a fix.
+- 10 km with all three typed: about 10 to 23 ms, against 162 s on 0.4.21.
+- A's two corrections are recorded: untitled D481 drag runs, and an accidental harness run outside the lock. 1366dfc fixes the first for good.
+
+**Part 2, accepted as a finding (C §5).**
+- The every-frame work is `widthAtHead` (preview.js:573). Its `perHead` memo skips the unfrozen ghost head, and it triggers only with an edge typed and nothing placed.
+- The 6.9 ms miss is the per-move rebuild with an edge typed (`handleKey` JSON.stringify, `meshPiece`, `ghostSteps`), placed or not.
+
+OUTPUT → NEXT: changed — after the fit is fixed, A's 1 km page profile puts 47% of the drag in C's perHead path. So the edge-typed costs are now the largest thing between his drag and 144 Hz, and they get their own order.
+
+## D483, two parts
+
+**Part 1, the landing: one pane, E or the first free that is not A or C (prove it: release).**
+- Merge d473-e (a4bfe52) + d477-p (2451dfb, cf03658) + d482-a (41e7595, 1366dfc, 883c200) onto v0.4.21.
+- The full suite. A credential scan on the added lines. 0 "keeper" in public text.
+- Release notes, including the known limits from D477 (two edges) and D482 (§3c).
+- Build, release and push under the standing permission.
+- Install into his T-180 only with the builder closed, a `.before-0.4.22` backup and a sha256 compare.
+- **The batch goes now, without waiting for his new-track findings.** It is a regression he feels on every drag. That is my ruling under his standing word; he can veto.
+
+**Part 2, pane C (prove it: mesh.js and the segment key feed what the preview and the mesher build). The edge-typed drag reaches the 6.9 ms standard.**
+1. `perHead` (or the coarsened copy) answers the dragged ghost's head without recomputing `spanOf` every frame. Output must be equal.
+2. The per-move rebuild with an edge typed: `handleKey`'s whole-segment JSON.stringify first, then whatever the profile names next. The mesh must be byte-equal to the current one on the public fixtures, and a stale-key test must show a changed segment never reuses an old mesh.
+3. Red first: a drag-frame row with a left edge typed, at 1,000 m, empty and placed, under 6.9 ms p95. If 6.9 ms is not reachable in headless runs, C says so with the figures and proposes the bar.
+4. The mutation harness for every touched src file, whole. Touched tests. CHANGELOG line, 0 "keeper".
+5. It builds on d482-a, and rides the next batch, not this one.
