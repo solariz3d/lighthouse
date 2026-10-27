@@ -144,3 +144,13 @@ A's stop was right: drag-frame row 8 is red alone (7.6 / 8.6 ms against 6.9) on 
 - **If both read alike** (within about 0.5 ms of each other, and the tip under 6.9 in at least two of three): load, not a regression; the release continues at step 3 and the landing note says so.
 - **If the tip reads over 0.4.23 by more than noise in every round:** a regression in d495-c's per-frame path (drawSky runs on every look; the one new per-frame call is `CYCLE.colours`, and the timer queries should not run for a look without a fallback). Then the release stops, A hands the six figures to C, and C finds and fixes it on d495-c before the landing resumes. No bar ruling: the bar is the keeper's 144 Hz.
 - sculpt-frame row 3 (8.0 / 7.3 against 6.0 in the suite): run it alone with both slots held in the same window, as C did in D495 (`bothslots.js`). If red alone and quiet, it joins C's list.
+
+## D497 A/B read, ruled 09:58 (A 01de41b8, §8 read whole)
+
+The six figures: 0.4.23 reads 9.8–12.5 ms and the tip 10.1–12.0 ms in the same window, with no consistent sign (round 2 the tip is 1.5 under, round 3 mixed). CPU was 54% from the keeper's own applications, none of them a seat's, the builder or AC. So:
+- **Not a regression.** The instrument that separates code from load is the A/B, and it shows base and tip alike. 0.4.23, which met the bar at 6.1–6.5 when quiet, reads 10–12 under this load; the tip reads the same.
+- **The absolute bar cannot be measured while the machine is in use**, by any build. My ruling's "tip under 6.9 in two of three" assumed a quiet machine, which no seat can make.
+
+**Ruled: the release continues at step 3.** The landing note states that drag-frame row 8 and sculpt-frame row 3 were red under the keeper's own load with 0.4.23 red beside them, and green alone at the 0.4.23 landing. **A re-runs the A/B (`ab497.js`, `bothslots.js`, kept) at the first idle window** (CPU under 10% for three minutes with no seat running, as A's quiet check does), after the release. If the tip then reads over 0.4.23 by more than noise, that is a regression and a point release follows; if both are green, the note is closed.
+
+Told to the keeper, with the veto: if he would rather have the clean number before the install, an idle machine for five minutes is all it takes.
