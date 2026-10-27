@@ -169,3 +169,11 @@ Two things it holds on its own side, no code: nothing of the keeper's own goes i
 - Hand-back: the merge sha, the suite and harness totals, the scan counts, the push-gate line, the staged exe's sha256.
 
 The librarian's recommendation for the restart: after C's D495 hand-back is accepted, so the aurora build is not cut in half. His to pick.
+
+## D496 ALL-CLEAR on the staging, 09:33 (E defb760b, `p-d496-landing-E_2026-10-27.md` §0, §3, §4 read; verified on disk by the librarian)
+
+- origin/main is f84864f7 (part 4 e2c41237 + the brief's visit half 449c617e, merged --no-ff). Pushed 4727180f..f84864f7, push-gate allow at 15:23:37Z.
+- JS suite 186/0, cargo 1,370/0/12 ignored, the visit-files harness 40/40/0, scans 0.
+- `C:\Consonance\staged\d476p4-f84864f7\consonance.exe`: sha256 1457480a…21c9, equal to its .sha256 file and to the build (checked). HOLD.txt and swap.ps1 beside it. The live exe is still 1ce82211…. **Not swapped.** This folder supersedes `d476p4-e2c41237`.
+- The shared main had diverged by the librarian's three commits; merged origin/main into it here (no overlap with its dirty files, as E said) and pushed.
+- **The swap waits on the keeper's restart time.** Recommended: after 0.4.24 is installed (D497, A), so nothing of his is mid-flight.
