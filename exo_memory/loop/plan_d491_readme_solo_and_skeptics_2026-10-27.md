@@ -35,3 +35,7 @@ The keeper asked whether the README addition is in yet. It is committed (fd4c8ea
 - Merge d486-a onto origin/main 82afc11, --no-ff. Full suite (frame rows re-run alone if red). Credential scan on the added lines. 0 "keeper" in public text. Push under the standing permission.
 - No version bump, no release, no install. The X hover line stays under [Unreleased] in the CHANGELOG for the next batch.
 - Hand-back: the merge sha, the suite totals, the scan counts, the push-gate line, and a fetch of https://github.com/solariz3d/t180-track-builder/blob/main/README.md showing the new paragraph.
+
+## 08:05: pushed by the librarian. D494 withdrawn from E.
+
+At the keeper's 07:54 rule and his 08:03 word, the librarian pushed d486-a fd4c8ead to main as a fast-forward (82afc11..fd4c8ea; push-gate allow at 14:04:43Z). Checked on GitHub: the README now carries the solo-developer estimate, the objection paragraph and the new Credits (3 of 3 phrases found). No release, no install; the X hover stays under [Unreleased]. E's suite result, if it finishes, is a note and gates nothing.
