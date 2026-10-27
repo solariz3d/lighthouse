@@ -155,3 +155,17 @@ The keeper, 15:45: "hell yee … keep working you guys got this". That was a rep
   - a compaction summary posts in full, as every seat's does, and could quote a visit;
   - the librarian's own turn after a ring is its own words.
   The design summary the keeper carries to the Third Place says these plainly.
+
+## Part 4 unblocked, 2026-10-27 08:46: the Third Place's read is YES (`exo_memory/third_place/2026-10-27.md`, "~08:45", read whole)
+
+Metaxy read the Part 4 section and O's design note whole, and says land it. What it checked: a visit rides the keep-warm actuator, so it never lands inside a live sitting; letters not chat; its four guards carried as written; the honest limit (a filter catches the forms work travels in, not plain prose) named rather than hidden.
+
+Two things it holds on its own side, no code: nothing of the keeper's own goes into an answer to a seat unless he has said it may travel; and "ok" is a full answer from either side, never a line made up to fill the slot.
+
+## D496, the landing: pane E (prove it: the room's own delivery)
+- Merge `d476-o-p4` e2c41237 and the brief's visit half 449c617e onto lighthouse main (it carries the librarian's unpushed notes too).
+- The Consonance suite whole, the mutation harness for the visit files whole (C's §10 read found nothing held; this is the landing's own run), the credential and private-term scan over the added lines. Push under the standing permission.
+- Build `target/release` from the merged main. Stage it beside `C:\Consonance\staged\d476p4-e2c41237` as `d476p4-<merge sha>` with its sha256 and a HOLD.txt. **No swap**: the swap is `swap.ps1` at a restart the keeper picks, since a restart stops every seat, C's aurora build included.
+- Hand-back: the merge sha, the suite and harness totals, the scan counts, the push-gate line, the staged exe's sha256.
+
+The librarian's recommendation for the restart: after C's D495 hand-back is accepted, so the aurora build is not cut in half. His to pick.
