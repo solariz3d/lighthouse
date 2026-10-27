@@ -83,3 +83,41 @@ OUTPUT → NEXT: changed — after the fit is fixed, A's 1 km page profile puts 
 3. Red first: a drag-frame row with a left edge typed, at 1,000 m, empty and placed, under 6.9 ms p95. If 6.9 ms is not reachable in headless runs, C says so with the figures and proposes the bar.
 4. The mutation harness for every touched src file, whole. Touched tests. CHANGELOG line, 0 "keeper".
 5. It builds on d482-a, and rides the next batch, not this one.
+
+## D483 collated, 21:50 (E 1e5d4bd1 `p-d483-release-E_2026-10-26.md`, C 89c36146 `p-d483-C_2026-10-26.md`; both read whole). ALL-CLEAR on 0.4.22.
+
+**Part 1, the landing: verified on disk by the librarian at 21:48.**
+- Installed exe sha256 851b9c9d…3391. The backup `.before-0.4.22` is sha256 87aa6a2a…27c3, the 0.4.21 exe D471 installed.
+- origin main and the v0.4.22 tag are both at b915a035…, and `releases/latest` is v0.4.22, not a draft.
+- The asset is T-180.Track.Builder_0.4.22_x64-setup.exe, 8,015,921 B, sha256 123e87c5…d077, matching E's §0.
+- The push-gate's last line allows at 03:40:13Z. The worktree is clean at b915a03.
+- **The two suite reds, ruled:**
+  - drag-frame row 6 (13.8 against 13.4) is load from the parallel suite. Alone it passes: run 1 p95 10.0 ms, and run 2 10 of 10 ok (`frame-reruns.txt`). Accepted.
+  - release-frame row 4 (a Turn-field change, p95 6.1–8.4 against 6.0) was red at 0.4.21 as well. A row red at two releases running teaches everyone to skip red, so it gets its own part below.
+- **§7, ruled:** E removes `t180-wt-e483` and `t180-wt-e483-rel` with `git worktree remove`, no --force. The branches stay.
+
+**Part 2, C, accepted.** d483-c 1be6832 + d1e93dd, checked: clean tree, meshcmp 34 lines equal on both sides, rows 6–8 green in `dragframe-final.tap`.
+- Placed: p95 4.3 ms, so the 6.9 ms standard is met.
+- Empty track: p95 8.1 ms. **C's bar is accepted for that case:** 10.0 ms plus at most 120 work frames a second. It is the measured state, not the standard. The standard stays 6.9, and part 1 below is how the empty case gets there.
+- d483-c rides the next batch.
+
+OUTPUT → NEXT: changed — C named what is left on the empty track: the extendCorner double fit, the fit's samples recomputed on every length change, and xsecSegments per chord end. Release-frame row 4 is a standing red.
+
+## D484, three parts, in parallel
+
+**Part 1, pane A (prove it: core maths; A rewrote fitWithHold).** The empty-track edge drag reaches 6.9 ms.
+- (a) The readout and the ghost share one fit when their options agree, and the fit's samples carry across a length change where the knot vector allows.
+- (b) `xsecSegments` builds each distinct edge cross-section once per piece, not once per chord end. C's figures: `commonFractions` 0.78 ms and `edgeProfile` 0.46 ms of 3.2 ms.
+- Same answer: byte-equal documents and meshes on the D482/D483 proof sets.
+- Row 8 tightens to 6.9 ms if it gets there. If it doesn't, A gives the figures.
+- The harness for each touched src file, whole. The touched tests. It builds on d483-c.
+
+**Part 2, pane C (check it, find first): release-frame row 4.** A Turn-field change misses 6.0 ms (p95 6.1–8.4) at 0.4.21 and 0.4.22.
+- A profile, then the function and file.
+- Then either a fix with the row green, or the evidence that the bar is wrong. If the bar is wrong, the bar's change comes to the librarian before anyone edits the row.
+
+**Part 3, pane E (just do it).**
+- Remove the two release worktrees (above).
+- Set the zz-headless-test title in the other headless page tests E named: export-isolated-page, sculpt-frame, texture-page and their kin.
+
+The next batch is d483-c plus D484, released when it is all in.
