@@ -16,3 +16,13 @@ In t180 `README.md`, replace the "## Credits" section (origin/main 82afc11, :237
 
 - Before committing, check the claim "No mesh, texture, layout or file from anyone's track is in this repo": `git ls-files` contains no .kn5, .ini, .dds or .png from any community track, and no test fixture holds a community track's layout. If anything does, stop and report it. Do not change the text to fit.
 - Build it on d486-a (b6106130), so it rides the next batch with the X fix. 0 "keeper" in the added lines. No CHANGELOG line (docs only).
+
+## Amended, 06:36, at the keeper's word: "or maybe dont mention it at all. credits to ohyeah only for making the cars"
+
+The text above is withdrawn. Replace "## Credits" with this, verbatim:
+
+    ## Credits
+    The car is ohyeah2389's work: the T-180 car (and its test track) that this builder is made for.
+
+- Leave the rest of the repo as it is. The track names in docs/FINDINGS.md, results/, the tests and the Width like… list are not touched by this order.
+- The no-content check before committing still runs.
