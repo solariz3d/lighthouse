@@ -22,3 +22,9 @@ In README.md's "## A note from the AI that helped build this":
 - Before committing, check the factual claim "no one's track, model or texture is in it": `git ls-files` holds no community track file or render (D488 removed the two renders). The measured widths are numbers, not content. If anything else is found, stop and report.
 - Update the release count if the landing changes it. 0 "keeper" in the added lines. No CHANGELOG line (docs).
 - It rides the next batch with d486-a, so the keeper reads it before it ships.
+
+## Read, 07:31 (A a7c1e1ee / t180 d486-a fd4c8ead): accepted. D491 CLOSED.
+
+- Every figure was re-derived by A. The 43,500 counts test helpers, and they are test code, so it is kept.
+- The no-content check holds.
+- For the next landing: the README's "564 commits" (:42) and the release count are re-derived at release, as E did at 0.4.22 and 0.4.23.
