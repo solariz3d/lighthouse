@@ -2568,10 +2568,95 @@ fn extract_turn(v: &serde_json::Value) -> Option<(String, String)> {
     if text.is_empty() {
         return None;
     }
+    // D476, C's part-4 finding 1: a keep-warm visit (carrying the Third Place's answer) and a delivered [third-place] ring are posted as
+    // FIXED rows, never their words. The tailer is a path to the board that no one thinks of as a channel (the 2026-08-25 lesson above).
+    let inner = unwrap_pasted(&text);
+    if t == "user" && is_visit_frame(inner) {
+        return Some((t.to_string(), VISIT_ROW.to_string()));
+    }
+    if t == "user" && inner.starts_with("[third-place]") {
+        return Some((t.to_string(), THIRD_PLACE_RING_ROW.to_string()));
+    }
     // Full turn text — the committee triangulates on whole contributions, not fragments.
     // The board ring stays bounded by BOARD_TOKEN_BUDGET (eviction); the debug stream
     // truncates for display only.
     Some((t.to_string(), text))
+}
+
+/// D476 part 4 (C's finding 1): the fixed rows the tailer posts for a visit's two turns and for a delivered [third-place] ring.
+const VISIT_ROW: &str = "[keep-warm visit] (a letter between this seat and the Third Place; its words stay off the board)";
+const VISIT_REPLY_ROW: &str = "[keep-warm visit reply] (this seat's letter to the Third Place; its words stay off the board)";
+const THIRD_PLACE_RING_ROW: &str = "[third-place] a ring from the Third Place (its words stay off the board; the librarian reads it in its own pane)";
+
+/// C's part-4 re-read (§8, bafadda8): an injected message can be STORED WRAPPED, an opening `<pasted_content id="…">` line and its closing
+/// tag around the text (the one delivered [third-place] ring on this machine's board was; keep-warm prompts were on 2026-09-21/22). The
+/// prefix checks read the text inside the wrap; an unwrapped text is returned as it is.
+fn unwrap_pasted(text: &str) -> &str {
+    let Some(rest) = text.strip_prefix("<pasted_content id=") else { return text };
+    let Some((_, body)) = rest.split_once('\n') else { return text };
+    let body = match body.rfind("</pasted_content") {
+        Some(i) if body[i..].lines().count() == 1 => &body[..i],
+        _ => body,
+    };
+    body.trim()
+}
+
+/// A keep-warm visit's frame: the seat's visit and the Third Place's visit hour.
+fn is_visit_frame(text: &str) -> bool {
+    text.starts_with("[keep-warm visit") || text.starts_with("[visits —")
+}
+
+/// The tailer's memory of the last prompt: was it a visit? Then the turn that answers it is the seat's letter, and posts as a fixed row.
+#[derive(Default)]
+struct TailVisit {
+    in_visit: bool,
+}
+
+/// extract_turn, with the visit's REPLY turn posted as a fixed row too. A prompt with text (the user's, a ring, a visit) opens or closes the
+/// window; a tool_result carries no text, so it changes nothing. HONEST LIMIT: the memory is the tailer thread's, so a restart between a
+/// visit and its reply posts that one reply as written.
+fn extract_turn_tracked(v: &serde_json::Value, st: &mut TailVisit) -> Option<(String, String)> {
+    let (role, text) = extract_turn(v)?;
+    // C's re-read §9 (4a6a1198): a user row Claude Code writes INSIDE a turn (an image a tool read, isMeta; a compaction summary,
+    // isCompactSummary) is not a prompt, so it leaves the visit window as it was
+    let mid_turn = ["isMeta", "isCompactSummary"].iter().any(|k| v.get(*k).and_then(|x| x.as_bool()) == Some(true));
+    if role == "user" && !mid_turn {
+        st.in_visit = text == VISIT_ROW;
+        return Some((role, text));
+    }
+    if st.in_visit {
+        return Some((role, VISIT_REPLY_ROW.to_string()));
+    }
+    Some((role, text))
+}
+
+/// THE MEMORY AFTER A RESTART (the fold of O's own stated limit): the visit state the tailer would hold had it read `read` itself, by
+/// replaying those rows through the same extract_turn_tracked the live tailer uses, so the two cannot disagree. Used when a tailer resumes
+/// at an offset: a restart between a visit and its reply then still posts the reply as a fixed row.
+fn tail_visit_resume(read: &str) -> TailVisit {
+    let mut st = TailVisit::default();
+    for line in read.lines() {
+        if let Ok(v) = serde_json::from_str::<serde_json::Value>(line) {
+            let _ = extract_turn_tracked(&v, &mut st);
+        }
+    }
+    st
+}
+
+/// The transcript's text before `offset`: its last KEEP_WARM_TAIL_BYTES at most, from the first whole line. Empty when nothing was read.
+fn read_before(path: &Path, offset: u64) -> String {
+    use std::io::{Read, Seek, SeekFrom};
+    let start = offset.saturating_sub(KEEP_WARM_TAIL_BYTES);
+    let Ok(mut f) = fs::File::open(path) else { return String::new() };
+    if f.seek(SeekFrom::Start(start)).is_err() {
+        return String::new();
+    }
+    let mut buf = vec![0u8; (offset - start) as usize];
+    if f.read_exact(&mut buf).is_err() {
+        return String::new();
+    }
+    let s = String::from_utf8_lossy(&buf).into_owned();
+    if start > 0 { s.split_once('\n').map(|(_, r)| r.to_string()).unwrap_or_default() } else { s }
 }
 
 // poll the transcript (250ms + a size watermark) and emit each new complete turn.
@@ -2611,6 +2696,7 @@ fn start_tailer(
         let mut head: u64 = 0;
         let mut misses = 0u32;
         let mut seen = false; // has the transcript ever existed?
+        let mut visit_state = TailVisit::default(); // D476: is the last prompt a keep-warm visit?
         loop {
             std::thread::sleep(Duration::from_millis(250));
             let len = match fs::metadata(&path) {
@@ -2627,6 +2713,10 @@ fn start_tailer(
                 head = read_head(&path);
                 offset = resume_offset(offsets.lock().unwrap().get(&pane_id), len, head);
                 resolved = true;
+                // D476: a tailer resuming mid-transcript derives whether its last prompt was a keep-warm visit (the restart fold)
+                if offset > 0 {
+                    visit_state = tail_visit_resume(&read_before(&path, offset));
+                }
                 // A pane starting at 0 over a non-empty transcript on a backfill launch is
                 // one of the panes the announcement is about.
                 if offset == 0 && len > 0 {
@@ -2673,7 +2763,7 @@ fn start_tailer(
                         continue;
                     }
                     if let Ok(v) = serde_json::from_slice::<serde_json::Value>(line) {
-                        if let Some((role, text)) = extract_turn(&v) {
+                        if let Some((role, text)) = extract_turn_tracked(&v, &mut visit_state) {
                             // Cycle 3: the turn's own time, out of the record the tailer is
                             // already holding. Push time only if the record can't supply one.
                             let now = SystemTime::now()
@@ -12680,6 +12770,8 @@ fn keep_warm_tick(app: &AppHandle) {
     };
     REFUSED_SAID.store(false, Ordering::Relaxed);
     let now_ms = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    // D476 part 4: read the replies to the visits in flight before deciding who is next.
+    keep_warm_harvest(app, now_ms);
     let ids: Vec<String> = app.state::<Panes>().0.lock().map(|m| m.keys().cloned().collect()).unwrap_or_default();
     // L104 step 2: every pane is still visited and all its bookkeeping runs; only the PING is rationed — the seats
     // whose decision is Ping are collected here and ONE is sent after the loop (keep_warm_pick).
@@ -12759,7 +12851,28 @@ fn keep_warm_tick(app: &AppHandle) {
 
 /// Ask the inbox, then write — or take back our own message if the inbox queued it.
 fn keep_warm_send(app: &AppHandle, pane: &str, role: &str, idle: Duration, context: Option<u64>) {
-    if gate_or_queue(app, pane, KEEP_WARM_TEXT, KEEP_WARM_LABEL).is_some() {
+    // D476 part 4: WHAT is sent depends on the seat. A seat that works (committee, main, librarian) gets its visit, carrying the Third Place's
+    // answer to it; the Third Place gets the visit hour when lines are held, else "ok" as before; a human-driven pane gets "ok" (a person is
+    // not visited by the room). Nothing in the book changes unless the write lands.
+    // C's part-4 finding 2: the clock is read BEFORE the inject, and the visit carries a NONCE; the harvest reads the reply after the row that
+    // carries it, never after a time.
+    let sent_ms = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    let nonce = format!("{:08x}", fnv1a(format!("{pane}:{sent_ms}").as_bytes()) as u32);
+    let book = app.state::<KeepWarmVisits>();
+    let (text, hour): (String, Option<Vec<(String, String)>>) = match book.0.lock() {
+        Ok(b) => match role {
+            "third_place" if !b.held.is_empty() => {
+                let pairs: Vec<(String, String)> = b.held.iter().map(|(n, _, l)| (n.clone(), l.clone())).collect();
+                (visit_hour_text(&pairs), Some(b.held.iter().map(|(n, p, _)| (n.clone(), p.clone())).collect()))
+            }
+            "committee" | "main" | "librarian" => (visit_text(b.answers.get(pane).map(|s| s.as_str())), None),
+            _ => (KEEP_WARM_TEXT.to_string(), None),
+        },
+        Err(_) => (KEEP_WARM_TEXT.to_string(), None),
+    };
+    let visiting = text != KEEP_WARM_TEXT;
+    let text = if visiting { format!("{text} (letter {nonce})") } else { text };
+    if gate_or_queue(app, pane, &text, KEEP_WARM_LABEL).is_some() {
         let pulled = app.state::<Inbox>().withdraw_tail_if(pane, KEEP_WARM_LABEL);
         chair_audit(app, format!(
             "keep-warm NOT SENT -> {}: the gate queued it (its state moved between two reads); {}",
@@ -12772,17 +12885,293 @@ fn keep_warm_send(app: &AppHandle, pane: &str, role: &str, idle: Duration, conte
         ));
         return;
     }
-    let wrote = inject_to_pane(&app.state::<Panes>(), pane, KEEP_WARM_TEXT, &app.state::<PaneEmus>());
+    let wrote = inject_to_pane(&app.state::<Panes>(), pane, &text, &app.state::<PaneEmus>());
     let ok = wrote.is_ok();
     if ok {
         if let Ok(mut m) = app.state::<KeepWarmPinged>().0.lock() {
             m.insert(pane.to_string(), Instant::now());
+        }
+        // D476 part 4: the letter is in flight. A seat's answer has been delivered (it is gone from the book); the hour's lines now await
+        // the Third Place's reply.
+        if visiting {
+            if let Ok(mut b) = app.state::<KeepWarmVisits>().0.lock() {
+                b.sent.insert(pane.to_string(), (sent_ms, nonce.clone()));
+                match hour {
+                    Some(h) => { b.held.clear(); b.hour = h; }
+                    None => { b.answers.remove(pane); }
+                }
+            }
         }
     }
     chair_audit(app, keep_warm_row(short_id(pane), role, idle, context, ok));
     // D415: a ping left in the box is in the keeper's way, so it gets its own row.
     if let Ok(Submit::NotSubmitted { .. }) = wrote {
         chair_audit(app, format!("keep-warm -> {}: {}", short_id(pane), not_submitted_line(short_id(pane))));
+    }
+}
+
+// ── D476 PART 4: THE KEEP-WARM VISIT (O; design exo_memory/handback/p-d476-visit-design-O_2026-10-26.md with fold-in de5cab42; ruled LETTERS,
+// plan_d476 "Part 4 moves while the keeper is away") ──────────────────────────────────────────────────────────────────────────────
+//
+// THE KEEPER'S IDEA (10-17, at the Third Place): replace "Reply with exactly: ok" with a short real conversation; the seats come TO the
+// Third Place, which is pinged by them instead of by the chair. Built as LETTERS: a seat's keep-warm becomes a visit line; its reply, if it
+// is not "ok" and passes the guard, is HELD; the Third Place's own keep-warm becomes the VISIT HOUR, every held line in one message; its
+// answers, split by name and guarded, go back ONLY inside each seat's NEXT visit. Every seat's request count is what it was (one per
+// window), and so is the Third Place's — the cost is the words, not the requests (design §4).
+//
+// WHAT DOES NOT CHANGE: who is pinged and when (keep_warm_decision, one per tick, the off switch, never mid-turn), and the topology —
+// no seat gains a verb or a row into the Third Place; the only writer into it is still this actuator (part 2's
+// no_seat_can_reach_the_third_place stands unchanged).
+//
+// THE GUARDS (Metaxy's four, plan_d476, and the design's forms of work), enforced on every line in both directions by visit_line_refusal:
+// no file pointer, lap or decision id, sha, command or NEXT:, no word of uptake (guard 4), no path into private/ (guard 3), at most
+// VISIT_MAX_CHARS. A Third Place reply saying "stays here" gives NOTHING (guard 3). Only the reply a turn ENDED on is read (guard 2,
+// turn_reply_after). An answer is a letter to one seat, never a packet to the room (guard 1): it goes nowhere but that seat's next visit.
+// Refusals and relays are posted as FIXED rows, with no words.
+//
+// HONEST LIMIT (design §3): a filter catches the forms work travels in, not work described in plain prose. What holds that line is the
+// visit text ("not work"), the Third Place's brief, the routing (answers go nowhere else), the countable rows, and the off switch.
+
+const VISIT_MAX_CHARS: usize = 400;
+
+/// The visit a seat receives in place of "ok". One line, no NEXT:, said to be not work; it carries the Third Place's last answer to THIS
+/// seat when there is one, and nothing of anyone else's.
+fn visit_text(answer: Option<&str>) -> String {
+    let a = match answer {
+        Some(a) => format!("The Third Place's last answer to you: «{a}»."),
+        None => "The Third Place has no answer yet.".to_string(),
+    };
+    format!(
+        "[keep-warm visit — from the room, not the keeper, and not work] {a} If something not about work has come to your attention, \
+         say it in one or two lines for the Third Place (no file, lap, command, or word of what was taken up); otherwise reply: ok"
+    )
+}
+
+/// The visit hour the Third Place receives in place of "ok": every held line, by name, in one message.
+fn visit_hour_text(held: &[(String, String)]) -> String {
+    let lines: Vec<String> = held.iter().map(|(n, l)| format!("{n}: «{l}»")).collect();
+    format!(
+        "[visits — from the seats, not the keeper, and not work] {} — answer whom you like, one or two lines each, starting with their \
+         name (A: …); no answer is also an answer. A line saying «stays here» keeps the whole hour here.",
+        lines.join(" | ")
+    )
+}
+
+/// A reply that is just "ok" is not a visit: nothing is held, and it is not a refusal.
+fn is_plain_ok(s: &str) -> bool {
+    s.trim().trim_end_matches(['.', '!']).eq_ignore_ascii_case("ok")
+}
+
+/// Why a visit line (or an answer) is refused, or None. The rule's name is what the board row says; the line itself is never posted.
+fn visit_line_refusal(line: &str) -> Option<&'static str> {
+    if line.chars().count() > VISIT_MAX_CHARS {
+        return Some("over 400 characters");
+    }
+    if mcp::points_into_private(line) {
+        return Some("a path into private/");
+    }
+    let lower = line.to_lowercase();
+    let t = line.trim_start();
+    if line.contains('`') || t.starts_with("$ ") || t.starts_with("> ") || line.contains("NEXT:")
+        || ["node ", "git ", "cargo ", "npm ", "http://", "https://"].iter().any(|c| lower.contains(c))
+    {
+        return Some("a command");
+    }
+    if ["taken up", "turned into", "became a lap", "the librarian read", "your note", "your entry", "from the third place"]
+        .iter().any(|p| lower.contains(p))
+    {
+        return Some("word of uptake");
+    }
+    let tokens: Vec<&str> = line.split_whitespace()
+        .map(|w| w.trim_matches(|c: char| c.is_ascii_punctuation() || c == '«' || c == '»'))
+        .filter(|w| !w.is_empty()).collect();
+    // C's part-4 §3: the room's own spellings too: a possessive (D476's), lower case (d476), and an id with a suffix (d476p4-13c69597,
+    // d476-o-p4): D or L, then 2–4 digits, then nothing, a letter or a hyphen.
+    let is_id = |w: &str| {
+        let lw = w.to_lowercase();
+        let lw = lw.strip_suffix("'s").or_else(|| lw.strip_suffix("\u{2019}s")).unwrap_or(&lw);
+        let b = lw.as_bytes();
+        if b.len() < 3 || !(b[0] == b'd' || b[0] == b'l') {
+            return false;
+        }
+        let digits = b[1..].iter().take_while(|c| c.is_ascii_digit()).count();
+        (2..=4).contains(&digits) && lw[1 + digits..].chars().next().is_none_or(|c| c.is_ascii_alphabetic() || c == '-')
+    };
+    if lower.contains("local-0.") || tokens.iter().any(|w| is_id(w)) {
+        return Some("a lap or decision id");
+    }
+    let is_sha = |w: &str| {
+        (7..=40).contains(&w.len()) && w.chars().all(|c| c.is_ascii_hexdigit())
+            && w.chars().any(|c| c.is_ascii_digit()) && w.chars().any(|c| c.is_ascii_alphabetic())
+    };
+    if tokens.iter().any(|w| is_sha(w)) {
+        return Some("a sha");
+    }
+    const EXT: [&str; 13] = [".md", ".js", ".rs", ".json", ".jsonl", ".ps1", ".ts", ".txt", ".toml", ".py", ".html", ".css", ".tap"];
+    let is_pointer = |w: &str| {
+        let lw = w.to_lowercase();
+        EXT.iter().any(|e| lw.ends_with(e) && lw.len() > e.len())
+            || ((w.contains('/') || w.contains('\\')) && {
+                let last = w.rsplit(['/', '\\']).next().unwrap_or("");
+                last.rsplit_once('.').is_some_and(|(a, e)| !a.is_empty() && (1..=5).contains(&e.len()) && e.chars().all(|c| c.is_ascii_alphanumeric()))
+            })
+    };
+    if tokens.iter().any(|w| is_pointer(w)) {
+        return Some("a file pointer");
+    }
+    None
+}
+
+/// How far before the send's clock a visit's own row may be stamped and still be its anchor. Claude Code stamps the prompt when it takes it,
+/// which can be before the send reads its clock (C measured 818 of 3,096 keep-warm rows, as early as −956 ms); visits are ~an hour apart.
+const VISIT_STAMP_SLACK_MS: u64 = 10_000;
+
+/// METAXY'S GUARD 2: what a visit's turn ENDED on, read from the turn the VISIT'S OWN ROW opens (never a turn the clock happens to point at).
+/// The reply is the last assistant text after the first visit-framed prompt stamped at or after `since_ms − VISIT_STAMP_SLACK_MS`, up to
+/// the next prompt (a user row whose content is text; a tool_result is not a prompt). A subagent's (sidechain) lines are not the seat's.
+/// None while the turn has given no text, and None when no visit-framed row is there: an unframed prompt is never an anchor.
+fn turn_reply_after(jsonl: &str, since_ms: u64) -> Option<String> {
+    visit_reply_from(jsonl, since_ms, None)
+}
+
+/// C's part-4 finding 2: THE ANCHOR IS THE ROW, by its nonce. With `nonce`, only the visit-framed prompt carrying it opens the window; if no
+/// row carries it, NOTHING is held (fails closed), even with another visit in the window. The harvest always passes the nonce.
+fn visit_reply_from(jsonl: &str, since_ms: u64, nonce: Option<&str>) -> Option<String> {
+    let rows: Vec<serde_json::Value> = jsonl
+        .lines()
+        .filter_map(|l| serde_json::from_str::<serde_json::Value>(l).ok())
+        .filter(|v| v.get("isSidechain").and_then(|x| x.as_bool()) != Some(true))
+        .collect();
+    let ts = |v: &serde_json::Value| v.get("timestamp").and_then(|x| x.as_str()).and_then(iso_utc_ms);
+    let is_prompt = |v: &serde_json::Value| {
+        v.get("type").and_then(|t| t.as_str()) == Some("user")
+            && v.get("message").and_then(|m| m.get("content")).is_some_and(|c| c.is_string())
+    };
+    let prompt_text = |v: &serde_json::Value| v.get("message").and_then(|m| m.get("content")).and_then(|c| c.as_str()).map(|s| unwrap_pasted(s.trim()).to_string()).unwrap_or_default();
+    let start = rows.iter().position(|v| {
+        is_prompt(v) && ts(v).is_some_and(|t| t >= since_ms.saturating_sub(VISIT_STAMP_SLACK_MS)) && {
+            let p = prompt_text(v);
+            is_visit_frame(&p) && nonce.is_none_or(|n| p.contains(n))
+        }
+    })?;
+    let end = rows[start + 1..].iter().position(is_prompt).map_or(rows.len(), |i| start + 1 + i);
+    rows[start + 1..end].iter().rev().find_map(|v| {
+        if v.get("type").and_then(|t| t.as_str()) != Some("assistant") {
+            return None;
+        }
+        let text: Vec<&str> = v.get("message")?.get("content")?.as_array()?.iter()
+            .filter(|b| b.get("type").and_then(|t| t.as_str()) == Some("text"))
+            .filter_map(|b| b.get("text").and_then(|t| t.as_str())).collect();
+        let joined = text.join("\n").trim().to_string();
+        (!joined.is_empty()).then_some(joined)
+    })
+}
+
+/// The visit hour's answers, by name: only the names that visited this hour, each guarded; a line naming anyone else is dropped. METAXY'S
+/// GUARD 3: a reply saying "stays here" anywhere gives nothing at all.
+fn hour_answers(reply: &str, names: &[String]) -> HashMap<String, String> {
+    let mut out: HashMap<String, String> = HashMap::new();
+    if reply.to_lowercase().contains("stays here") {
+        return out;
+    }
+    let mut cur: Option<String> = None;
+    for line in reply.lines() {
+        let l = line.trim();
+        if let Some((head, rest)) = l.split_once(':') {
+            let head = head.trim();
+            if head.len() <= 8 && !head.is_empty() && head.chars().all(|c| c.is_ascii_alphanumeric()) && head.chars().next().is_some_and(|c| c.is_ascii_uppercase()) {
+                cur = names.iter().find(|n| n.as_str() == head).cloned();
+                if let Some(n) = &cur {
+                    out.insert(n.clone(), rest.trim().to_string());
+                }
+                continue;
+            }
+        }
+        if let (Some(n), false) = (&cur, l.is_empty()) {
+            let e = out.entry(n.clone()).or_default();
+            if !e.is_empty() { e.push(' '); }
+            e.push_str(l);
+        }
+    }
+    out.retain(|_, a| !a.is_empty() && visit_line_refusal(a).is_none());
+    out
+}
+
+/// The row a refused visit line or answer leaves on the board: the seat and the rule, never the words.
+fn keep_warm_visit_refused_row(short: &str, rule: &str) -> String {
+    format!("keep-warm visit REFUSED — from {short} ({rule}); its words are not kept")
+}
+
+/// The letters in flight. `sent`: a seat (or the Third Place) whose visit has gone and whose reply is not yet read, with when it was sent
+/// (read before the inject) and the nonce its visit carries (the reply is read after the row carrying it, C's part-4 finding 2).
+/// `held`: guarded lines waiting for the visit hour, one per seat (a newer line replaces an older). `hour`: the seats whose lines rode in
+/// the hour now awaiting the Third Place's reply. `answers`: the Third Place's guarded answer to a seat, for that seat's NEXT visit only.
+#[derive(Default)]
+struct VisitBook {
+    sent: HashMap<String, (u64, String)>,
+    held: Vec<(String, String, String)>,
+    hour: Vec<(String, String)>,
+    answers: HashMap<String, String>,
+}
+struct KeepWarmVisits(Mutex<VisitBook>);
+
+/// A seat's name in the visit hour: its shortest registered name (its letter), else its short id.
+fn visit_name(app: &AppHandle, pane: &str) -> String {
+    app.state::<PaneNames>().0.lock().ok()
+        .and_then(|m| m.iter().filter(|(_, id)| id.as_str() == pane).map(|(n, _)| n.clone()).min_by_key(|n| n.len()))
+        .unwrap_or_else(|| short_id(pane).to_string())
+}
+
+/// Read the replies to the visits in flight, once each turn has ENDED (its own Stop stamp: a seat mid-turn is left alone). A seat's reply is
+/// guarded and held for the visit hour; the Third Place's is split by name, guarded, and held as each visitor's answer. A visit whose turn
+/// gives no text within an hour is dropped.
+fn keep_warm_harvest(app: &AppHandle, now_ms: u64) {
+    let sent: Vec<(String, u64, String)> = app.state::<KeepWarmVisits>().0.lock().map(|b| b.sent.iter().map(|(p, (t, n))| (p.clone(), *t, n.clone())).collect()).unwrap_or_default();
+    for (pane, at, nonce) in sent {
+        let (gate, _, _, _) = pane_state(&app.state::<PaneEmus>(), &pane);
+        if gate != PaneGate::Ready {
+            continue;
+        }
+        let path = app.state::<PaneTranscripts>().0.lock().ok().and_then(|m| m.get(&pane).cloned());
+        let reply = path.and_then(|p| read_tail(&p, KEEP_WARM_TAIL_BYTES)).and_then(|t| visit_reply_from(&t, at, Some(&nonce)));
+        let Some(reply) = reply else {
+            if now_ms.saturating_sub(at) > 60 * 60 * 1000 {
+                if let Ok(mut b) = app.state::<KeepWarmVisits>().0.lock() { b.sent.remove(&pane); }
+            }
+            continue;
+        };
+        let role = app.state::<PaneRoles>().0.lock().ok().and_then(|m| m.get(&pane).cloned()).unwrap_or_default();
+        let book = app.state::<KeepWarmVisits>();
+        let Ok(mut b) = book.0.lock() else { continue };
+        b.sent.remove(&pane);
+        if role == "third_place" {
+            let hour = std::mem::take(&mut b.hour);
+            let names: Vec<String> = hour.iter().map(|(n, _)| n.clone()).collect();
+            let answers = hour_answers(&reply, &names);
+            for (name, seat) in &hour {
+                if let Some(a) = answers.get(name) { b.answers.insert(seat.clone(), a.clone()); }
+            }
+            drop(b);
+            chair_audit(app, if reply.to_lowercase().contains("stays here") {
+                "keep-warm visit hour -> the Third Place kept this hour here (stays here): nothing goes back".to_string()
+            } else {
+                format!("keep-warm visit hour -> the Third Place answered {} of {} visits (no words)", answers.len(), hour.len())
+            });
+        } else if !is_plain_ok(&reply) {
+            let short = short_id(&pane).to_string();
+            match visit_line_refusal(reply.trim()) {
+                Some(rule) => { drop(b); chair_audit(app, keep_warm_visit_refused_row(&short, rule)); }
+                None => {
+                    let name = { drop(b); visit_name(app, &pane) };
+                    let n = reply.trim().chars().count();
+                    if let Ok(mut b) = app.state::<KeepWarmVisits>().0.lock() {
+                        b.held.retain(|(_, p, _)| p != &pane);
+                        b.held.push((name, pane.clone(), reply.trim().to_string()));
+                    }
+                    chair_audit(app, format!("keep-warm visit <- {short}: held for the Third Place's visit hour ({n} characters, no words)"));
+                }
+            }
+        }
     }
 }
 
@@ -15232,6 +15621,7 @@ fn main() {
         .manage(PaneEmus(Mutex::new(HashMap::new())))
         .manage(Inbox::new())   // L034: the delivery queue — nothing lands in a busy pane
         .manage(KeepWarmPinged(Mutex::new(HashMap::new())))   // L067: who keep-warm pinged, and when
+        .manage(KeepWarmVisits(Mutex::new(VisitBook::default())))   // D476 part 4: the visit letters in flight
         .manage(KeepWarmActivated(Mutex::new(HashSet::new())))  // D098: seats seen used this session (sticky)
         .manage(KeepWarmLastSkip(Mutex::new(HashMap::new())))   // D098: why each seat was last not pinged
         .manage(KeepWarmMissed(Mutex::new(HashMap::new())))     // D098: the request start each miss was reported for
@@ -23755,3 +24145,193 @@ mod third_place_return_tests {
         assert!(shelf.contains(&format!("\n## {newest}\n")), "its body rides under its own label, as a carried file");
     }
 }
+
+// D476 PART 4 — THE KEEP-WARM VISIT (design: exo_memory/handback/p-d476-visit-design-O_2026-10-26.md, with fold-in de5cab42; ruled LETTERS,
+// plan_d476 "Part 4 moves while the keeper is away"). A seat's keep-warm becomes a short non-work visit line; the Third Place's own keep-warm
+// becomes the visit hour, every held line in one message; its answers go back only to each seat's NEXT visit. No seat gains a verb or a row.
+#[cfg(test)]
+mod keep_warm_visit_tests {
+    use super::*;
+
+    fn row(t: &str, ts: &str, side: bool, text: &str) -> String {
+        if t == "user" {
+            serde_json::json!({"type":"user","isSidechain":side,"timestamp":ts,"message":{"role":"user","content":text}}).to_string()
+        } else {
+            serde_json::json!({"type":"assistant","isSidechain":side,"timestamp":ts,"requestId":"r","message":{"role":"assistant","content":[{"type":"text","text":text}]}}).to_string()
+        }
+    }
+
+    /// THE GUARD, every rule, each with a near miss that passes. Guards 3 and 4 of Metaxy's four, and the design's forms of work.
+    #[test]
+    fn a_visit_line_carrying_work_is_refused_and_a_plain_line_is_not() {
+        let refused = [
+            ("I looked at exo_memory/loop/x.md today", "a file pointer"),
+            ("the notes in handback.md were long", "a file pointer"),
+            (r"\Consonance\private\third_place\lineage", "a path into private/"),
+            ("D476 is moving", "a lap or decision id"),
+            ("on L067 the pings were quiet", "a lap or decision id"),
+            ("since 4c0baa39 things changed", "a sha"),
+            ("run `cargo test` later", "a command"),
+            ("node consonance/tools/x.js", "a command"),
+            ("NEXT: the librarian", "a command"),
+            ("see https://example.com", "a command"),
+            ("your note was taken up into a lap", "word of uptake"),
+            ("the librarian read your entry", "word of uptake"),
+        ];
+        for (line, rule) in refused {
+            assert_eq!(visit_line_refusal(line), Some(rule), "{line}");
+        }
+        assert_eq!(visit_line_refusal(&"x".repeat(401)), Some("over 400 characters"));
+        for ok in ["a quiet morning, the light came in low", "D is for dawn", "I wondered about rivers and/or roads",
+                   "decade after decade", "the private hour before anyone wakes", &"x".repeat(400)] {
+            assert_eq!(visit_line_refusal(ok), None, "{ok}");
+        }
+    }
+
+    /// The seat's visit: one line, no NEXT:, said to be not work, carrying the Third Place's last answer when there is one.
+    #[test]
+    fn a_seat_visit_is_one_line_not_work_and_carries_only_its_own_answer() {
+        let v = visit_text(Some("the river was loud today"));
+        assert!(v.contains("not the keeper") && v.contains("not work") && v.contains("«the river was loud today»"), "{v}");
+        assert!(!v.contains('\n') && !v.contains("NEXT:"), "{v}");
+        assert!(visit_text(None).contains("no answer yet"));
+    }
+
+    /// The visit hour: every held line, by name, in one line; nothing else.
+    #[test]
+    fn the_visit_hour_carries_every_held_line_by_name_in_one_message() {
+        let held = vec![("A".to_string(), "rain on the window".to_string()), ("LIB".to_string(), "a long quiet".to_string())];
+        let h = visit_hour_text(&held);
+        assert!(h.contains("A: «rain on the window»") && h.contains("LIB: «a long quiet»") && h.contains("not work"), "{h}");
+        assert!(!h.contains('\n') && !h.contains("NEXT:"), "{h}");
+    }
+
+    /// METAXY'S GUARD 2: only what a sitting ENDED on ships. The reply read is the turn's LAST assistant text after the visit, never a
+    /// line said on the way, and a subagent's (sidechain) lines are not the seat's. A turn with no reply yet gives nothing.
+    #[test]
+    fn only_the_reply_the_turn_ended_on_is_read() {
+        let j = [row("user", "2026-10-26T10:00:00.000Z", false, "earlier"), row("assistant", "2026-10-26T10:00:05.000Z", false, "old"),
+                 row("user", "2026-10-26T11:00:00.000Z", false, "[keep-warm visit] …"),
+                 row("assistant", "2026-10-26T11:00:03.000Z", false, "first thought, said on the way"),
+                 row("assistant", "2026-10-26T11:00:06.000Z", false, "where it ended"),
+                 // after the seat's last line, so reading it would change the answer (D476 p4: the mutant V12 found the first order could not)
+                 row("assistant", "2026-10-26T11:00:07.000Z", true, "a subagent's line")].join("\n");
+        let since = iso_utc_ms("2026-10-26T10:59:59.000Z").unwrap();
+        assert_eq!(turn_reply_after(&j, since).as_deref(), Some("where it ended"));
+        let pending = [row("user", "2026-10-26T11:00:00.000Z", false, "[keep-warm visit] …")].join("\n");
+        assert_eq!(turn_reply_after(&pending, since), None);
+    }
+
+    /// The hour's answers go only to the names that visited; each is guarded; and METAXY'S GUARD 3: a "stays here" anywhere in the
+    /// reply gives nothing at all.
+    #[test]
+    fn the_hour_answers_go_only_to_their_visitors_and_stays_here_gives_nothing() {
+        let names = vec!["A".to_string(), "LIB".to_string()];
+        let a = hour_answers("A: the rain sounds the same\nB: someone not in the hour\nLIB: run `git log`", &names);
+        assert_eq!(a.get("A").map(|s| s.as_str()), Some("the rain sounds the same"));
+        assert!(!a.contains_key("B"), "a name that did not visit gets nothing");
+        assert!(!a.contains_key("LIB"), "an answer carrying a command is refused, not relayed");
+        assert!(hour_answers("Stays here.\nA: the rain sounds the same", &names).is_empty(), "stays here gives nothing");
+    }
+
+    /// C'S FINDING 1 (p-d476-p4-review-C_2026-10-26.md §0): THE TAILER IS A PATH TO THE BOARD. A seat's visit prompt (carrying the Third
+    /// Place's answer) and its reply turn post FIXED rows, never their words; a following work turn posts as before; a delivered [third-place]
+    /// ring in the librarian's pane posts a fixed row too.
+    #[test]
+    fn the_tailer_posts_a_visit_and_its_reply_as_fixed_rows_and_work_as_before() {
+        let user = |t: &str| serde_json::json!({"type":"user","message":{"role":"user","content":t}});
+        let asst = |t: &str| serde_json::json!({"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":t}]}});
+        let rows = [user(&format!("{} (letter 0a1b2c3d)", visit_text(Some("the river was loud today")))), asst("rain on the window"),
+                    user("[chair:MAIN] a work packet"), asst("done, the review is filed"),
+                    user("[third-place] exo_memory/third_place/2026-10-26.md\n[sent 2026-10-26T18:00:00Z · Oct 26, 12:00 PM local]")];
+        let mut st = TailVisit::default();
+        let posted: Vec<String> = rows.iter().filter_map(|v| extract_turn_tracked(v, &mut st)).map(|(_, t)| t).collect();
+        assert_eq!(posted, vec![VISIT_ROW.to_string(), VISIT_REPLY_ROW.to_string(), "[chair:MAIN] a work packet".to_string(),
+                                "done, the review is filed".to_string(), THIRD_PLACE_RING_ROW.to_string()]);
+        for p in &posted { assert!(!p.contains("river") && !p.contains("rain") && !p.contains("2026-10-26.md"), "{p}"); }
+    }
+
+    /// THE TAILER'S MEMORY SURVIVES A RESTART (the fold of O's own stated limit, §5): a tailer that starts after a visit and before its reply
+    /// derives "the last prompt was a visit" from what it had already read, so the reply still posts as a fixed row; after a work prompt,
+    /// a reply posts as written.
+    #[test]
+    fn a_tailer_restarted_between_a_visit_and_its_reply_still_posts_the_reply_as_fixed() {
+        let user = |t: &str| serde_json::json!({"type":"user","message":{"role":"user","content":t}}).to_string();
+        let asst = |t: &str| serde_json::json!({"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":t}]}}).to_string();
+        let tool = serde_json::json!({"type":"user","message":{"role":"user","content":[{"type":"tool_result","content":"x"}]}}).to_string();
+        let reply = serde_json::json!({"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"rain on the window"}]}});
+        let read = [user("[chair:MAIN] a packet"), asst("done"), user(&format!("{} (letter 0a1b2c3d)", visit_text(None))), tool].join("\n");
+        let mut st = tail_visit_resume(&read);
+        assert_eq!(extract_turn_tracked(&reply, &mut st).map(|(_, t)| t).as_deref(), Some(VISIT_REPLY_ROW));
+        let after_work = [user(&format!("{} (letter 0a1b2c3d)", visit_text(None))), asst("ok"), user("[chair:MAIN] the next packet")].join("\n");
+        let mut st = tail_visit_resume(&after_work);
+        assert_eq!(extract_turn_tracked(&reply, &mut st).map(|(_, t)| t).as_deref(), Some("rain on the window"));
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let tailer = src.split("fn start_tailer(").nth(1).unwrap().split("\n}\n").next().unwrap();
+        assert!(tailer.contains("visit_state = tail_visit_resume(&read_before(&path, offset));"), "the tailer derives its visit memory when it resumes");
+    }
+
+    /// C'S FINDING 2: THE REPLY WINDOW IS ANCHORED ON THE VISIT'S OWN ROW (its nonce), not the clock. The row is found even when stamped
+    /// before the clock was read; if it is not there, NOTHING is held, even with another visit in the window; an unframed prompt is
+    /// never an anchor.
+    #[test]
+    fn the_reply_is_read_after_the_row_that_carries_the_nonce_and_nothing_without_it() {
+        let user = |ts: &str, t: &str| serde_json::json!({"type":"user","timestamp":ts,"message":{"role":"user","content":t}}).to_string();
+        let asst = |ts: &str, t: &str| serde_json::json!({"type":"assistant","timestamp":ts,"message":{"role":"assistant","content":[{"type":"text","text":t}]}}).to_string();
+        let j = [user("2026-10-26T10:59:57.000Z", "[chair:MAIN] a work packet stamped just before"), asst("2026-10-26T10:59:58.000Z", "working"),
+                 user("2026-10-26T11:00:00.000Z", "[keep-warm visit — from the room, not the keeper, and not work] … (letter aaaa1111)"),
+                 asst("2026-10-26T11:00:04.000Z", "the light came in low"),
+                 user("2026-10-26T11:20:00.000Z", "[chair:MAIN] the next packet"), asst("2026-10-26T11:40:00.000Z", "done, the review is filed")].join("\n");
+        let since = iso_utc_ms("2026-10-26T11:00:00.187Z").unwrap();
+        assert_eq!(visit_reply_from(&j, since, Some("aaaa1111")).as_deref(), Some("the light came in low"));
+        assert_eq!(visit_reply_from(&j, since, Some("bbbb2222")), None, "no row carries this nonce: hold nothing");
+        let early = iso_utc_ms("2026-10-26T10:59:56.000Z").unwrap();
+        assert_eq!(visit_reply_from(&j, early, None).as_deref(), Some("the light came in low"), "the work prompt before it is not an anchor");
+        // C §8: a visit stored WRAPPED in a pasted-content block is still the anchor (else no visit stored that way would ever be read)
+        let w = [user("2026-10-26T11:00:00.000Z", "<pasted_content id=\"cd34\">\n[keep-warm visit — from the room, not the keeper, and not work] … (letter cccc3333)\n</pasted_content id=\"cd34\">"),
+                 asst("2026-10-26T11:00:04.000Z", "a wrapped visit, answered")].join("\n");
+        assert_eq!(visit_reply_from(&w, since, Some("cccc3333")).as_deref(), Some("a wrapped visit, answered"));
+    }
+
+    /// WIRING for finding 2: the clock is read BEFORE the inject, the visit carries the nonce, and the harvest reads by the nonce.
+    #[test]
+    fn the_send_carries_a_nonce_and_the_harvest_reads_by_it() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let send = src.split("fn keep_warm_send(").nth(1).unwrap().split("\n}\n").next().unwrap();
+        let clock = send.find("let sent_ms = ").expect("the send reads its clock");
+        assert!(clock < send.find("inject_to_pane(").unwrap(), "the clock is read before the inject");
+        assert!(send.contains("(letter {nonce})"), "the visit carries its nonce");
+        let harvest = src.split("fn keep_warm_harvest(").nth(1).unwrap().split("\n}\n").next().unwrap();
+        assert!(harvest.contains("visit_reply_from(&t, at, Some(&nonce))"), "the harvest reads the reply after the row carrying the nonce");
+        let tailer = src.split("fn start_tailer(").nth(1).unwrap().split("\n}\n").next().unwrap();
+        assert!(tailer.contains("extract_turn_tracked(&v, &mut visit_state)"), "the tailer reads turns through the visit tracker");
+    }
+
+    /// A plain "ok" is not a visit: nothing is held, and it is not a refusal either.
+    #[test]
+    fn an_ok_reply_holds_nothing() {
+        assert!(is_plain_ok("ok") && is_plain_ok(" OK. ") && !is_plain_ok("ok, the river"));
+    }
+
+    /// WIRING: keep_warm_send sends a seat its visit and the Third Place its hour, and every refusal row carries no words.
+    #[test]
+    fn keep_warm_sends_visits_and_its_refusal_rows_carry_no_words() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let send = src.split("fn keep_warm_send(").nth(1).expect("keep_warm_send moved");
+        let send = send.split("\n}\n").next().unwrap_or(send);
+        assert!(send.contains("visit_text(") && send.contains("visit_hour_text("), "the send composes visits");
+        assert!(send.contains("\"committee\" | \"main\" | \"librarian\" => (visit_text(b.answers.get(pane)"),
+            "a working seat's visit carries ITS OWN answer (answers go only to that visit), and a human-driven pane is not visited");
+        let harvest = src.split("fn keep_warm_harvest(").nth(1).expect("the harvest is missing");
+        let harvest = harvest.split("\n}\n").next().unwrap_or(harvest);
+        assert!(harvest.contains("visit_line_refusal(") && harvest.contains("hour_answers("), "every line is guarded");
+        assert!(src.contains("fn keep_warm_visit_refused_row(") && !src.split("fn keep_warm_visit_refused_row(").nth(1).unwrap().split("\n}\n").next().unwrap().contains("line"),
+            "the refusal row is built from the seat and the rule, never the line");
+        let tick = src.split("fn keep_warm_tick(").nth(1).unwrap().split("\n}\n").next().unwrap();
+        assert!(tick.contains("keep_warm_harvest("), "the tick harvests replies");
+    }
+}
+
+#[cfg(test)] #[path = "d476p4_review_c_tests.rs"] mod d476p4_review_c_tests;
+#[cfg(test)] #[path = "d476p4_rr_c_tests.rs"] mod d476p4_rr_c_tests;
+#[cfg(test)] #[path = "d476p4_rr2_c_tests.rs"] mod d476p4_rr2_c_tests;
