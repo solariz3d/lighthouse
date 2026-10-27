@@ -182,3 +182,47 @@ The angular rates are checked (`S\..\d489-rates.out`): v divided by the slant ra
 - checked: every angle and rate in §0, §1.3 and §1.4 is from one script run (`S\..\d489-rates.out`, S = my scratchpad). That includes the hem elevations 12.9 / 14.9 / 17.2°, `clear` 60–77°, C 25° from the zenith, and the fold cap at about 1.46 km/s.
 - **The fold and curl speeds (0–5 and 0–22 km/s) come from a search summary of a paper I could not open,** and are not Hallinan & Davis 1970 read in the original. The UAF ray figure ("one hundred times … a jet aircraft", about 25 km/s) agrees with the curl figure in size. Treat the exact bounds as unverified.
 - My first search on the colours returned blogs. The colour-altitude facts above rest on Whiter et al. 2023 and the UAF, NOAA and IPS pages instead.
+
+## 7. Addition (the plan's "Added, 06:47", librarian 8fffce8c): colour shifts over time, and a 10-minute cycle
+
+The keeper's word: "how about, the aurora can slowly change colors over like 10mins".
+
+### 7.1 Which colour shifts real aurora make, and over what time
+
+| Shift | When, and how long | Source |
+|---|---|---|
+| **Green-dominant quiet arcs → bright, dynamic display → diffuse, pulsating green**, the substorm cycle | Growth phase "typically about one hour" ([Ann. Geophys. 31:835, 2013][ag2013]); about half an hour in the THEMIS volume ([Burch & Angelopoulos, *The THEMIS Mission*][themis]). Then expansion, when "bright, dynamic auroral displays appear" ([THEMIS volume][themis]). The whole response lasts "a few hours" ([ag2013][ag2013]). Recovery: diffuse patches that "blink on and off for hours", early morning ([NOAA SWPC][noaa]). | refereed paper; book; NOAA |
+| **Red tops brighter as activity rises; all-red aurora** | Red comes from low-energy electrons at 200–500 km. "All-red auroras are seen near the beginnings of large magnetic storms", and are "infrequent" ([UAF GI, *Red aurora*][uaf-red]). Storm-time red is tied to "storm-time substorms" (Japanese low-latitude studies, via search summary). | UAF; search summary |
+| **How fast red follows** | The 630 nm state lives about 110 s before it emits (§1.2). inferred from that lifetime: the red tops answer a change over a minute or two, smeared, never in a flash. Red-line aurora "evolve[s] distinctly" from the other emissions ([Liang et al. 2019, JGR, via Eos][eos]). | lifetime: §1.2's sources; Eos |
+| **Pink or magenta lower edges** | Red and blue together make magenta "on the leading edge of rapidly moving auroral features". The type-B red lower border sits at 60–85 km, is "always bright, IBC III or greater, active and usually of short duration" (via search summary of [*Planet. Space Sci.* 1968][pss1968] and [EarthRef][earthref]). So these come in seconds-to-minutes bursts with fast motion, not as a steady tint. | search summary of refereed sources |
+| **Red-to-green ratio in pulsating patches** | Some patches show an "enhanced red-to-green color ratio during their on time" (REGO, electrons under 1 keV; via search summary), so the ratio changes on the 2–20 s pulse. | search summary |
+
+### 7.2 Where a 10-minute cycle is true to life, and where it is invention
+
+- **True to life, in magnitude: a slow swing in the balance between green and red-topped.**
+  - A display that goes from quiet green to bright with red tops and back moves on a scale of tens of minutes to hours (7.1).
+  - One swing over about 10 minutes is about the length of an expansion's brightening and fading. It is a plausible pace for "the display grows active, then settles".
+  - Red that answers slowly, over a minute or two, is physical (the 110 s lifetime).
+- **Invention, said plainly:**
+  - **(a) A periodic cycle.** Real colour change follows activity. It does not repeat on a clock: growth phases run from half an hour to 9 h ([ag2013][ag2013]: "as long as 9 h").
+  - **(b) A hue path through colours aurora does not make.**
+    - The palette the plan names, "green → teal → violet → rose", is not an emission sequence.
+    - Teal is what green plus the co-located N₂⁺ blue looks like on a camera.
+    - Rose is the magenta lower edge, a brief burst, not a whole-sky state.
+    - Violet as the main colour of a whole curtain does not happen in nature.
+  - **(c) The whole sky shifting hue together.** In a real display the hem stays green while the tops redden. The colour change is **vertical and local**, not a global tint.
+- **The answer:**
+  - A 10-minute **slow drift of how red-topped and how pink-edged** the curtains are, with the hem staying green, is lifelike if it is not strictly periodic.
+  - A 10-minute **periodic hue cycle** through teal, violet and rose is invention. It can still be a good choice for the room's look, and that is the keeper's call. The design note should say which of the two it offers.
+- **One taste point for the note.** Whether the drift follows **eye colours** (mostly green, red only in bright moments, §1.2) or **camera colours** (vivid red and violet) changes how far the swing can go before it stops reading as an aurora.
+
+[ag2013]: https://angeo.copernicus.org/articles/31/835/2013/ "THEMIS and ground-based observations of successive substorm onsets following a super-long growth phase, Ann. Geophys. 31:835, 2013"
+[themis]: https://link.springer.com/book/9780387898193 "Burch & Angelopoulos (eds.), The THEMIS Mission, Springer (via search summary)"
+[uaf-red]: https://gi.alaska.edu/alaska-science-forum/red-aurora "UAF Geophysical Institute, Alaska Science Forum: Red aurora"
+[eos]: https://eos.org/editor-highlights/red-and-green-aurora-stop-and-go-for-different-reasons "Eos editor's highlight of Liang et al. 2019, JGR 124, doi 10.1029/2019JA026679"
+[pss1968]: https://spacewx.com/wp-content/uploads/2024/02/P_HEL_PSSD_E_PSS_1968.pdf "Planet. Space Sci. 1968 (type-B aurora), via search summary"
+[earthref]: https://earthref.org/ERR/27742 "EarthRef reference (magenta on the leading edge of moving features), via search summary"
+
+- checked: the UAF *Red aurora* page and the Eos highlight were read. The Eos page gives no timescales.
+- **Known only from a search summary,** and marked so: the growth-phase lengths, the type-B figures, the magenta leading edge, the pulsating red/green ratio.
+- I found no time-resolved red/green ratio across a substorm, so 7.1's "tens of minutes" is the substorm phase lengths, not a measured colour curve.
