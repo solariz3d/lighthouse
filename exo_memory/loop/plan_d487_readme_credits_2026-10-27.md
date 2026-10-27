@@ -52,3 +52,7 @@ The text above is withdrawn. Replace "## Credits" with this, verbatim:
 - Both PNGs are removed at the tip. The comment-only diff was read by the librarian. `git grep` returns 0, and texmaker tests are 32/0. History is untouched.
 - **A fold-in, ruled (just do it):** presets.js:2 still cites "(the README's promise)", which since D487 points at nothing. A drops the phrase on d486-a.
 - Then d486-a (b6106130, dcedd30, cdd19bf7 + the fold-in) rides the next batch. D487/D488 CLOSED once the fold-in lands.
+
+## Fold-in read, 06:52 (A d604e724): accepted. D487/D488 CLOSED.
+
+d486-a = b6106130, dcedd30, cdd19bf7, d604e724. It rides the next T-180 batch.
