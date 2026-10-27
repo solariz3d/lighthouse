@@ -32,3 +32,9 @@ The text above is withdrawn. Replace "## Credits" with this, verbatim:
 - A stopped on the first text: two renders of whole community tracks are tracked in the repo, `results/sakura_full.png` and `results/rainbow_full.png` (since 6de135e, 2026-09-27).
 - The amended text (06:36) makes no claim about content, so **A goes ahead with the amended text now** on d486-a.
 - Whether to remove the two PNGs is the keeper's call, since it is a delete from a public repo. I have asked him and recommended removing them.
+
+## Read, 06:39 (A 47f2f0ea / t180 d486-a dcedd30): accepted
+
+- The diff is the Credits text, verbatim as amended.
+- It rides the next batch with d486-a b6106130.
+- The PNG question waits on the keeper.
