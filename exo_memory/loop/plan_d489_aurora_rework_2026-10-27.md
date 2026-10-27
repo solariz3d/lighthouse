@@ -34,3 +34,28 @@ NEXT: chair dispatch D489 part 1 to E and part 2 to C now; librarian writes the 
 - **Part 1 (E) adds:** which colour shifts real aurora make, and over what time. For example, green-dominant to red-topped as activity rises, and pink/purple lower edges in bursts. Where would a 10-minute cycle be true to life, and where would it be invention? Either is fine; the note says which.
 - **Part 2 (C) adds:** colour today comes from the skin tokens (`--sky-a` green, `--sky-b` violet, red-pink derived from `--sky-b`; aurora.js:15–16). Say how a cycle fits: blend between token sets over time, or a hue path in the shader. Name what that means for the road and panel colours that share those tokens. The cycle should cost nothing measurable.
 - The design note offers the cycle's palette as a choice (for example, green to teal to violet to rose and back).
+
+## Part 3: the design note, 07:05 (E f8248c83 + c287bd05, `p-d489-aurora-research-E_2026-10-27.md` §0, §4, §7; C f3db6db1 + 7499edbb, `p-d489-C_2026-10-27.md` §1–§10; read)
+
+OUTPUT → NEXT: changed. E: the corona is inverted (bright green at the centre, aurora.js:85–86), the curtains are rings where real arcs cross the sky horizon to horizon, and "fluid" means motion at several scales, not speed. C: a GPU-timed row has to gate the build, because the frame rows cannot see GPU cost; and a colour cycle driven from JS costs nothing measurable.
+
+**Common to every option (from E's sources):**
+- Arcs run roughly east–west from horizon to horizon, instead of three rings at 13–17°.
+- Motion in layers: the arc drifts barely at all; folds and curls run along the hem; the fine rays flicker, low in contrast; now and then a patch pulses. The big shapes stay slow, which keeps it quiet behind the work.
+- The corona is right way round: green ray bases away from the centre, faint tops converging. Reduced motion freezes it.
+- **The gate is a GPU-timed sky row** (C's skypass.js): at most 1.5 ms p95 at 2560×1440 looking up. If the timer query is missing, the row skips and says why. The frame rows stay as they are.
+- A fallback for weaker GPUs: if the measured sky time is over budget, it drops to option 1.
+
+**The look, three options (the keeper picks):**
+1. **A reworked flat sky.** The same technique as today, with new shapes, layered motion and a corrected corona. About 0.15 ms. Looking straight up it is still flat.
+2. **One real 3D curtain in front, flat bands behind (recommended).** The near curtain is drawn in a volume (C's technique B, 24 steps, full resolution, about 1.1 ms p95). Its rays converge overhead with real depth, and near rays move faster than far ones as you turn. The far bands stay cheap.
+3. **Fully 3D, three curtains, drawn at half resolution and scaled up** (B 48×3, about 1.1 ms p95). The most lifelike and the softest. The stars stay sharp in the full-resolution pass.
+
+**The colour cycle, two options** (driven once a frame from JS: about 25 ns, nothing on the GPU; `--sky-c` stays equal to `--fog`):
+- (a) **Lifelike:** over about 10 minutes, red tops and pink lower edges swell and fade, not on an exact clock, while the hem stays green. Red follows with a lag of a minute or two.
+- (b) **Stylised:** a cycle through green → teal → violet → rose and back every 10 minutes. E notes it is invention, not physics.
+- Either way the panel stays its own green by default. Having the panel's glows follow in slow steps costs about 1.1 ms of main thread per step, and is a later choice.
+
+**Licence:** the build writes its own code for the technique and copies none from the Shadertoy "Auroras" (CC BY-NC-SA). C also notes t180 has no LICENSE file. That is the keeper's call, named and not pressed.
+
+**Recommendation:** 2 + (a). When he picks, the build is one pane (check it; prove it for the GPU row and the fallback). Its gate is the GPU row, plus a look at screenshots looking up and at the horizon in free view.
