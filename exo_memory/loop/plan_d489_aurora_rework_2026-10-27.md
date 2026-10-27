@@ -27,3 +27,10 @@ The keeper, 06:44, a screenshot named "bugged out aurora i think we should do a 
 Tier: research and measurement, no code. The build is its own order (check it, with the frame-time rows as the gate).
 
 NEXT: chair dispatch D489 part 1 to E and part 2 to C now; librarian writes the design note when both hand-backs are in.
+
+## Added, 06:47, at the keeper's word: "how about, the aurora can slowly change colors over like 10mins"
+
+- **A design requirement:** the aurora's colours drift slowly through a cycle of about 10 minutes.
+- **Part 1 (E) adds:** which colour shifts real aurora make, and over what time. For example, green-dominant to red-topped as activity rises, and pink/purple lower edges in bursts. Where would a 10-minute cycle be true to life, and where would it be invention? Either is fine; the note says which.
+- **Part 2 (C) adds:** colour today comes from the skin tokens (`--sky-a` green, `--sky-b` violet, red-pink derived from `--sky-b`; aurora.js:15–16). Say how a cycle fits: blend between token sets over time, or a hue path in the shader. Name what that means for the road and panel colours that share those tokens. The cycle should cost nothing measurable.
+- The design note offers the cycle's palette as a choice (for example, green to teal to violet to rose and back).
