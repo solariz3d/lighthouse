@@ -101,3 +101,20 @@ He named no number, so it is the recommendation, **look 2 with cycle (a)**, told
 4. **The look check:** stills from the four cameras and a 10 s clip, before and after the two fixes, to the librarian as an artifact update for the keeper.
 5. The existing sky tests (sky-caustics-aurora, sky-crisp, sky-aurora-look) updated only where they pin the old shapes, each named with its reason. Touched tests. CHANGELOG line, 0 "keeper".
 6. **Then it ships so he can see it:** when C's hand-back is accepted, landing pane E (after D494) merges d486-a + the build onto main, full suite, scans, releases 0.4.24, installs with the builder closed, a `.before-0.4.24` backup and a sha256 compare. If he dislikes look 2 in the app, switching to 3 is a small lap, since d490-c keeps all three.
+
+## D495 read, 08:55 (C 4b56d693 / t180 d495-c 60e9d12; hand-back read whole, the up and free strips viewed by the librarian)
+
+**Accepted for the landing.** The prove-it parts hold: the GPU row is green 5/5 at p95 1.304–1.305 ms looking up against 1.5, red on the heavy control every time; the fallback is proven through the real renderer with a forced budget (121–122 frames, said once); theme-mutation 65/65/0, mutation 104/104/0, touched 212/0/1 todo; the frame rows alone 8/8, 4/4, 6/6; scans 0. The prototypes are removed from the shipped tree and the style list is 0.4.23's seven again. Reduced motion holds at t = 0 in the skin's colours.
+
+**The look, said plainly for the keeper, who judges it in the app:**
+- (ii) the banding is gone, as ordered;
+- (i) the overhead gap is softened, not filled; C tried a third curtain and a zenith glow, both worse, and refused to force one. Right call. It stays an open look item;
+- the fix pressed the highlights, so the free view lost some of the edge-on filament character D490 had, and the large shapes drift slower than D490 (the shimmer along the hem is the moving layer now). The 10 s clips are where he judges whether it is alive enough.
+- Two real findings fixed on the way: D403's 15%/s rule had broken on the D490 code (98%, now 12.5%), and the corona was still inverted near the zenith (now bases 2–3× the tops, row 7).
+
+**The next look pass, if he wants one after seeing it live:** the filled centre needs a different idea (E's physics: rays converge on the magnetic zenith because they are parallel and tall; a single tall curtain crossing the zenith, seen from inside, might give it without a glow); and a middle setting between D490's drift and D495's.
+
+## D497, the landing: pane A (prove it: release). E is on D496.
+- Merge t180 d495-c 60e9d12 onto main fd4c8ea (d486-a is already on main) --no-ff. Full suite; frame rows alone if red; the GPU row alone under the lock. Scans. Release notes: the Aurora sky redrawn (arcs horizon to horizon, a corona the right way round, a slow colour drift), the X hover fix, and the known limit that the gap overhead is still visible. 0 "keeper".
+- Release 0.4.24, push, install with the builder closed, a `.before-0.4.24` backup and a sha256 compare.
+- Hand-back: the five lines as at 0.4.22/0.4.23.
