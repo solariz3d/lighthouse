@@ -2590,3 +2590,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - **Carry:** never stop a tool task that owns a running suite; its children die at start (0xC0000142). Launch long runs detached through a wrapper script.
 
 - 2026-10-27 ~03:5xZ (D) · D484 part 3: t180 `8472e7d` on d484-e from v0.4.22 (not pushed): the 9 other headless page tests title their page zz-headless-test; 76 tests, 0 fail. The two 0.4.22 worktrees were removed clean (§9 of the same hand-back).
+
+## 2026-10-27 ~10:5xZ (D) · D485 part 2, T-180 0.4.23 released and installed → `exo_memory/handback/p-d485-release-E_2026-10-27.md`
+- https://github.com/solariz3d/t180-track-builder/releases/tag/v0.4.23 at 82afc11 (merge e487495); installer sha256 df646245…e477 (8,013,405 B); installed 12911ad6…d49c, ProductVersion 0.4.23, stamped compare equal; backup .before-0.4.23 = 851b9c9d… (0.4.22); push-gate allow 2026-10-27T10:44:53.134Z. Suite 3,979 of 4,014 passed, 1 red (drag-frame row 8, 7.4 ms in the parallel run, green alone at 6.5 and 6.1 ms against 6.9), mutants 689 caught, NOT APPLIED 0.
+- **Carry:** a merge whose branch predates a release section puts its CHANGELOG entry into that released section; move it to the new section and assert the old one is byte-equal to the tag.
