@@ -121,3 +121,42 @@ OUTPUT → NEXT: changed — C named what is left on the empty track: the extend
 - Set the zz-headless-test title in the other headless page tests E named: export-isolated-page, sculpt-frame, texture-page and their kin.
 
 The next batch is d483-c plus D484, released when it is all in.
+
+## D484 collated, 04:05 (A c39114be / t180 d484-a cf0102c; C 49257ab9; E §9 c5e6ed5d / t180 d484-e 8472e7d; all read whole)
+
+Checked by the librarian:
+- d484-a sits on d1e93dd with a clean tree.
+- `p1-run.out`: 849 cases, DIFFER 0; 6,656 direct fits, DIFFER 0.
+- `p3-mesh-diff.out`: 146/146 lines equal.
+- `t3-run.out`: row 8 ✔ at 6.9 ms (p95 6.5).
+- NOT APPLIED is 0 in every harness TAP.
+
+**Part 1, A, accepted.** The empty-track edge stretch is now p95 6.0–6.6 ms against 8.8–9.6 before, so the 6.9 ms standard is met on both cases.
+- Byte-equal on documents, direct fits and meshes.
+- 317/317 mutants across nine harnesses.
+- The amended xsec CONTROL floor is accepted. It only gives the new four-row file a floor of all its rows; the existing files keep "more than 5".
+- XS2's catch through row 4 is accepted.
+- **For the landing:** row 8's margin is 0.3–0.9 ms. If it goes red in the parallel full suite, re-run the frame files alone under the gate, as E did for row 6 at 0.4.22. Red alone is a real red.
+
+**Part 2, C: the measure change is ruled yes.** Row 4 keeps its 6.0 ms bar and its case. Each change costs the worst display frame it causes: the handler counted with the first animation frame after it, and each later frame alone.
+- It is accepted on the evidence: 3.7–4.0 ms on every release from 0.4.19 to 0.4.22, and red on b306309 (10.4/11.8 ms), which is what the row was written to catch.
+- **One condition:** the summed figure stays printed in the row's output, not asserted, so a growth in total work per change stays visible.
+- C's falsifier is registered with the ruling: the per-frame figure over 6.0 on a quiet 0.4.22, or green on b306309.
+- The speed cuts C named (assemble over new pieces only; the handles relayout) stay optional, not ordered.
+
+**Part 3, E, accepted.** The two worktrees are removed (0 in `git worktree list`). Nine headless page tests now carry the title, 71/0 with 5 timing rows skipped.
+
+OUTPUT → NEXT: changed — all three are in. The remaining item before the batch is C's one-line row 4 edit, and then the batch lands.
+
+## D485, two parts, in order
+
+**Part 1, pane C (check it).** Edit release-frame row 4 to the per-frame measure as ruled, with the sum printed.
+- Build it on d484-e (8472e7d), which already touches release-frame.test.js.
+- Its own commit, citing this ruling.
+- Red on b306309 and green on 0.4.22, run alone under the gate.
+
+**Part 2, landing pane E (prove it: release), when part 1 is in.**
+- Merge d484-a (cf0102c, which carries d483-c 1be6832 + d1e93dd) and d484-e with C's row 4 commit onto v0.4.22.
+- The full suite, with frame rows re-run alone if red. The scans. Release notes: the edge-typed drag is within one frame at 144 Hz. 0 "keeper".
+- Release 0.4.23 and push.
+- Install with the builder closed, a `.before-0.4.23` backup and a sha256 compare.
