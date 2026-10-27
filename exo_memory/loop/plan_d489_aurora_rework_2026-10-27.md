@@ -118,3 +118,18 @@ He named no number, so it is the recommendation, **look 2 with cycle (a)**, told
 - Merge t180 d495-c 60e9d12 onto main fd4c8ea (d486-a is already on main) --no-ff. Full suite; frame rows alone if red; the GPU row alone under the lock. Scans. Release notes: the Aurora sky redrawn (arcs horizon to horizon, a corona the right way round, a slow colour drift), the X hover fix, and the known limit that the gap overhead is still visible. 0 "keeper".
 - Release 0.4.24, push, install with the builder closed, a `.before-0.4.24` backup and a sha256 compare.
 - Hand-back: the five lines as at 0.4.22/0.4.23.
+
+## D497 stopped at the review, ruled 09:04 (A cce3b401, `p-d497-A_2026-10-27.md` §0 and §3 read)
+
+A ran the periodic review as the landing's first step, as the rule puts it: 147 commits since the last tagged release, 36 "just do it"/"check it" read in full, 111 prove-it left to their own suites. It stopped on (a), rightly.
+
+- **(a) rides 0.4.24.** Since 0.4.20 every export tells the user `Turn off "T-180 track" to export without it`, and no such control exists (exportwords.js:18, shown by install.js:66). A drops that sentence, keeps the CSP warning, runs the tests that pin the string, commits on rel-0.4.24, then the suite once on the whole. Tier: just do it. One line in the release notes' Fixed.
+- **Nothing else joins 0.4.24.** The rest becomes D498 (below) so the release is not held on a list.
+
+## D498, the review's fixes, next batch: one pane, the first free after D496/D497 (check it; the checker item is prove it)
+1. **Tab after a click toggles Sculpt** (keys.js:41, :82–84): any focused control other than body or the stage counts as a field for Tab only. A keyboard test row.
+2. **The live checker keeps a stale `low`** on a stacked entry when the partner that set it changed (validate/index.js:249, :635–641). Reproduce in a test first; prove it (validate is core).
+3. **The closed-lap seam hatch** picks first/last segments where the seam tries pick first/last road pieces (preview.js:503 vs coreshell.js:413): a lap ending on a flight gets the cue on the gap. Align them; a test on a lap that ends on a flight.
+4. The (c) rows: drag() asserts its typed fields read back; a scan row for the headless-title rule; the stale comments in core-pieces-ui.test.js:549 and aurora.js:4/:8; renderer.js's `next` program deleted when a fallback check throws.
+5. The (d) tidies: hover.alt cleared on blur; the 0x08 bytes in sound.js/sound-samples.test.js comments; the CHANGELOG's "five looks" → six; coreshell.js:69–70's comment.
+6. CHANGELOG lines, 0 "keeper". It rides the batch after 0.4.24.
