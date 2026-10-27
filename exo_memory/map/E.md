@@ -2584,3 +2584,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-26 ~16:1x (D) · D479 the stick, read-only → `exo_memory/handback/p-d479-stick-E_2026-10-26.md`
 - The stick reads back recently written files as other data: 9 of 9 ledger-named tails fail their sha256, today's 5 tails differ from the local ranges past 8 KiB, MANIFEST.json reads as 55 aa 55 aa; a 09-29 tail is intact. The masters on D: are whole; the laptop import would refuse every seat (TAIL_DAMAGED). Separately, every Leave now times out at 600 s, because the delta from the 09-29 agreed state is 3.8 GB.
 - **Carry:** a size that matches is not a carry; read the bytes back against the source before calling a stick current.
+
+## 2026-10-27 ~03:5xZ (D) · D483 part 1, T-180 0.4.22 released and installed → `exo_memory/handback/p-d483-release-E_2026-10-26.md`
+- https://github.com/solariz3d/t180-track-builder/releases/tag/v0.4.22 at b915a03; installer sha256 123e87c5…d077 (8,015,921 B); installed exe 851b9c9d…3391, ProductVersion 0.4.22, stamped compare equal; backup .before-0.4.22 = 87aa6a2a… (0.4.21); push-gate allow 2026-10-27T03:40:13.617Z. Suite 3,939 of 3,975 passed, 2 frame-timing reds (drag-frame row 6 green alone at p95 10.0 ms), mutants 669 caught, NOT APPLIED 0, EXPO 0.
+- **Carry:** never stop a tool task that owns a running suite; its children die at start (0xC0000142). Launch long runs detached through a wrapper script.
