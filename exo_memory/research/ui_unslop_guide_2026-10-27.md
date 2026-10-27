@@ -21,20 +21,30 @@ descriptions below are this seat's own words. Pixel values are the ones the vide
 
 ## The passes, in the order the video makes them
 
-1. **Measure the spacing (0.5–1.5 s).** Overlays show the vertical gaps as they were: 21, 35, 41, 24 and 35 px, plus a
-   16 px left gutter that the content column doesn't sit on. Nothing repeats.
-2. **Put spacing on a scale (2.0–3.0 s).** The same gaps become 16, 24, 36, 18 and 32 px, and the main column snaps to
-   one 20 px edge. Things that are the same kind of gap get the same value, and the eye stops catching on it.
-3. **Take the colour out (3.5–4.0 s).** The background goes to a neutral near-black, cards to a slightly lighter grey
-   with a thin border, the chart bars to grey, the headline to plain white, the badges to grey. No glow, no gradient.
-   Do this before deciding where colour goes back in.
-4. **Check vertical alignment (4.5–5.0 s).** Red guide lines run down the left edge of icons and labels. The emojis
-   have different widths, so the text starts at a slightly different x on every row.
-5. **One icon set, one text edge (6.0 s).** Every emoji in the nav is replaced by a thin line icon from a single set,
-   with a 16 px inset and a 10 px gap from icon to text, so every label starts on the same x. Items with children get a
-   small chevron. The bell becomes a sidebar-collapse icon. Colour returns only as small status dots for the five
-   plans (yellow, green, blue, pink, violet).
-6. **Rewrite the copy (7–9 s).** Every change is subtraction:
+The overlays use a colour code: a **red** label means a value off the scale, a **white** label means on it. The
+values animate between the two, so a frame caught mid-change shows numbers that are neither (an earlier read of this
+file quoted 21/35/41/24/35 px; those were mid-animation, corrected after a second pass at 4 frames a second).
+
+1. **Measure the spacing (0.5–1.25 s).** Red labels show the vertical gaps as they were: **28, 44, 48, 38 and 38 px**,
+   and a **13 px** top gutter above the content column. Nothing repeats.
+2. **Put spacing on a scale (1.5–2.25 s).** The gaps step through in-between values and settle in white at **16, 24,
+   36, 18 and 32 px**, and the content column snaps to a **20 px** edge. Things that are the same kind of gap get the
+   same value, and the eye stops catching on it.
+3. **Highlight the edges (2.75–3.0 s).** For about half a second a bright stroke traces the search field's outline and
+   the top-left corners of both cards. The video doesn't say what it's checking; the likeliest reading is border and
+   corner radius made consistent, since the cards keep that one thin border into the final version.
+4. **Take the colour out (3.0–3.75 s).** The purple drains out over about three quarters of a second: the background
+   goes to a neutral grey-to-black, cards to a slightly lighter grey with a thin border, the chart bars, headline and
+   badges to grey or white. No glow, no gradient. Do this before deciding where colour goes back in.
+5. **Check vertical alignment (4.0–4.75 s).** Several red guide lines run down the left edge of the sidebar, one per
+   different x the emojis and labels start at. The emojis have different widths, so the text starts at a slightly
+   different x on every row.
+6. **One icon set, one text edge (5.0–6.25 s).** At 5.0 s every nav emoji is replaced by a thin line icon from a single
+   set and the plan emojis by coloured dots, and the guides turn white: a **16 px** inset and a **10 px** gap from icon
+   to text, so every label starts on the same x. Items with children get a small chevron. The bell becomes a
+   sidebar-collapse icon. Colour returns only as small status dots for the five plans (yellow, green, blue, pink,
+   violet).
+7. **Rewrite the copy (6.5–7.0 s, as a blur that refocuses on the new words).** Every change is subtraction:
    - "EmberAI PRO" becomes "Ember"; "Search anything… ⌘K" becomes "Search" with ⌘ and K as two small keycaps.
    - Section labels go from ALL-CAPS tracked to a small muted label ("Navigation", "Plans").
    - "Welcome back, Damir! 👋" becomes "October 2026", with the year in a dimmer grey. The heading now tells you *when*
@@ -43,11 +53,13 @@ descriptions below are this seat's own words. Pixel values are the ones the vide
    - Deltas become sentences with a comparison: "+12% vs last month", "4.2% ↑ vs September", "3 fewer". Only the
      number is green, and the rest is muted, in a monospace face.
    - Counts become plain muted numerals, right-aligned, with no pills. "Inbox 12", "Enterprise 18".
-7. **Make the chart carry information (7–9 s).** The seven decorative bars become a months-on-x-axis chart (Aug to
-   Jan) with labelled y-axis values (0–160k). There is one line per plan, in the same five colours as the plan dots in
+   - "Projects" loses its "New ✨" pill and gets a chevron like its neighbours.
+8. **Make the chart carry information (6.75–7.5 s).** The bars sink away, a flat line appears, and the curves grow up
+   out of it. The seven decorative bars become a months-on-x-axis chart (Aug to Jan) with labelled y-axis values
+   (0–160k). There is one line per plan, in the same five colours as the plan dots in
    the sidebar, with a mirrored grey shape below. Colour now means something, and it means the same thing in both
    places.
-8. **Replace clip-art with one real object.** The flat credit-card emoji becomes a rendered dark card ("•••• 4821")
+9. **Replace clip-art with one real object (7.0 s).** The flat credit-card emoji becomes a rendered dark card ("•••• 4821")
    tilted in the corner of the "Paid this month" card. It is the one decorative touch left, and it is specific to
    what the card is about.
 
@@ -69,4 +81,6 @@ descriptions below are this seat's own words. Pixel values are the ones the vide
   changes between frames, not the author's stated method.
 - The fonts weren't identified. The final version uses a sans for labels and numbers and a monospace face for the
   delta lines.
-- Frames were read at 2 per second; a change that lasted under half a second could have been missed.
+- Frames were read at 4 per second on a second pass (all 40 between 0.0 and 9.75 s), after a first pass at 2 per
+  second gave mid-animation spacing figures. A change lasting under a quarter second could still be missed. The final
+  version holds still from 7.5 s to the end.
