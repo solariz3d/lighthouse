@@ -75,3 +75,16 @@ OUTPUT → NEXT: changed. E: the corona is inverted (bright green at the centre,
 3. **The fallback:** if the measured sky time on the user's machine is over budget, it drops to a reworked 2D version of the same arcs, with a test.
 4. **The look:** headless screenshots (muted, titled) in free view looking up, at 40°, and at the horizon, at t = 0 and at t = 5 min, plus a short frame sequence of the hem moving. These go to the librarian, who shows them to the keeper.
 5. The existing sky tests (sky-caustics-aurora, sky-crisp, sky-aurora-look), updated only where they pin the old shapes. Each such update is named with its reason in the hand-back. The touched tests. CHANGELOG line, 0 "keeper". It rides the next batch.
+
+## 07:20: the librarian's sketch rejected; real prototypes ordered
+
+- The keeper, 07:16, on the artifact the librarian drew by hand (https://claude.ai/artifact/33cirtL2qeyqiLcPPq9r3U): "I do not like it at all … looks worse than the one from before".
+- That sketch was the librarian's own: a few minutes' work, sine-wave curtains, none of C's technique, and never seen running. The miss is the librarian's. It says nothing about E's or C's research. Lesson: a look is shown with renders made by a pane in the real code, never with a hand sketch.
+
+## D490: prototypes, not the build. Pane C (check it; no commit to main, a branch only)
+
+- Build looks 1, 2 and 3 as real sky styles inside t180's sky pass, on a branch from 82afc11. Use E's sources (arcs from horizon to horizon, layered motion, a corona the right way round) and C's own techniques (B with proper fbm/curl noise and a soft volume; nothing copied from CC BY-NC-SA).
+- Keep what the current sky does well: its softness, its palette tokens and its calm.
+- **Show, side by side with today's aurora**, from the same cameras (horizon, 40°, straight up, free view): stills at 2560×1440, plus a 10 s frame sequence of each. Show cycle (a) and (b) as stills at t = 0, 3, 6 and 9 min. All headless, muted, titled.
+- Measure the GPU time of each with C's skypass probe.
+- Hand-back: the image paths and the timings. The librarian shows them to the keeper, who picks from real renders.
