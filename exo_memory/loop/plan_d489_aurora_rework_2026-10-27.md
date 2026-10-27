@@ -185,3 +185,13 @@ Not 0.4.23's aurora (D403's three curtains and corona, 378ef3e, 2026-10-18, the 
 - aurora.js is byte-equal to 276d086's with D416's stars re-applied cleanly (the v0.4.9 blob). sky-aurora-look.test.js removed as it was before D403.
 - Suite 3,973/1/27: the one red is drag-frame row 8 in the parallel run, **green alone at 6.0 ms** this time. That is the A/B's load branch confirmed on a quieter machine; A's owed idle re-run can close on it if the sculpt row also reads green alone.
 - **Waiting on the keeper's eye in the app.** Yes → A releases 0.4.25 from this build. No → the backup goes back.
+
+## D500, 12:40, at the keeper's word: "YEP keep it new release, also make it so it opens full screen" — pane A (prove it: release)
+
+The keeper looked at the installed 0.4.25 (D499 amended, A `3a310dc0`, §0 verified on disk) and said yes. Two parts, one pane, one lap, because the second rides the same build.
+
+**Part 1 (just do it: a config value whose effect is seen).** The builder opens maximized. `src-tauri/tauri.conf.json` `app.windows[0]` (lines 12–21 on `rel-0.4.25` at `5292a11`) has `width 1400, height 860, minWidth 900, minHeight 600, decorations false` and no maximize flag; add `"maximized": true` to that object. Read as **maximized** (fills the screen, the taskbar stays, `#winctl`'s min/max/close at `app/index.html:288` keep working), not Tauri's `"fullscreen": true`, which hides the taskbar. The keeper can flip that reading before the release goes out. One commit on `rel-0.4.25`, a CHANGELOG `[0.4.25]` Changed line ("opens maximized"), no test, no suite re-run: the full suite ran whole on `5292a11` (A §4) and this line touches no tested code. `cargo check` and the build are the check.
+
+**Part 2 (prove it: release).** A's own §6 "on the author's yes", from the **new** build, not the one at `4eec21d0…`: install on the keeper's machine with the builder closed, the existing `.before-0.4.25` backup (0.4.24, sha256 `56abd274…f620`) **kept, not overwritten**, sha256 compare of the installed exe against the built one; re-run the scans on `86b92f1f..<new sha>`; push `rel-0.4.25` → main (push-gate allow); tag `v0.4.25`; publish the installer with the notes at `S\notes.md` reworded to the first look plus the maximized line. Hand back with: the new sha, installer sha256 and bytes, installed exe sha256, `git ls-remote origin main`, the tag, the release URL, the push-gate line. The librarian verifies on disk and gives the all-clear.
+
+Kept out: D498 (E, in progress) rides the batch after this one, as before. The idle-window A/B (A §7) stays owed and is not blocked on this.
