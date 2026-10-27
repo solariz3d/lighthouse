@@ -172,3 +172,9 @@ My miss: a look went to a public release before he had seen it in the builder. M
 - Full suite; the frame rows alone if red (under his load they will be; the A/B precedent stands); the touched sky tests must be green as at 0.4.23.
 - Version 0.4.25, release notes in user words, push, install with the builder closed, `.before-0.4.25` backup and a sha256 compare.
 - d495-c and d490-c stay as branches. Nothing ships from them without the keeper's yes in the app.
+
+## D499 amended, 10:27, at the keeper's word: "way in the beginning"
+
+Not 0.4.23's aurora (D403's three curtains and corona, 378ef3e, 2026-10-18, the one he called bugged) but the first one: D384's polar night (2896e6e), as it stood at 276d086 (D391, drawn alike on every card, the last commit before D403 changed the look).
+- `app/preview/sky/aurora.js` goes back to `git show 276d086:app/preview/sky/aurora.js`, on top of the D499 revert of the d495-c merge. Re-apply D416's device-pixel star sizing (b50e1aa) to it if it applies cleanly; if it doesn't, say so and leave the stars as D384 drew them. Any test that pins D403's shapes (sky-aurora-look rows from D403) is restored to its pre-D403 form from the same commits, each named with its reason.
+- **New rule in force (looks-ship-to-keeper-first):** this build is INSTALLED on his machine with the `.before-0.4.25` backup and sha256 compare, and NOT released or tagged. He judges in the app. On his yes, A releases 0.4.25 from the same build; on his no, the backup goes back.
