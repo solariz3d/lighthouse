@@ -160,3 +160,10 @@ OUTPUT → NEXT: changed — all three are in. The remaining item before the bat
 - The full suite, with frame rows re-run alone if red. The scans. Release notes: the edge-typed drag is within one frame at 144 Hz. 0 "keeper".
 - Release 0.4.23 and push.
 - Install with the builder closed, a `.before-0.4.23` backup and a sha256 compare.
+
+## D485 part 1 read, 04:10 (C 76722744 / t180 d485-c 1f56a58, read whole; diff read by the librarian)
+
+- **Accepted.** One file. The measure is exactly as ruled, and the sum is printed in the diagnostic and in the failure message, not asserted. The bar and the case are unchanged.
+- Red on b306309 (12.3 / 11.4 ms, now muted via 8472e7d's launcher). Green 5 of 5 on 0.4.22 (3.9–4.3 ms).
+- The falsifier has not fired.
+- Part 2 goes to E now.
