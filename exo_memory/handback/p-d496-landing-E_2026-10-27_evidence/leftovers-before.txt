@@ -1,0 +1,7 @@
+leftovers · 2026-10-27T14:48:22.786Z · read-only
+tab proxies          UNCALIBRATED (read 0, and the control made none (0 → 0 → 0))
+worktrees            Desktop/lighthouse 46 linked + main
+strays               not scanned (give --strays <folder> --prefix <name>-)
+fake roots           0
+our long-running     1 (older than 120 min, infrastructure left out)
+  pid 46808  1d 9h  tail.exe  [sibling-3d57124e]  C:\Program Files\Git\usr\bin\tail.exe "C:\Program Files\Git\usr\bin\tail.exe" -n +1 -f /c/Users/nname/AppData/Local/Temp/claude/C--Consonanc…

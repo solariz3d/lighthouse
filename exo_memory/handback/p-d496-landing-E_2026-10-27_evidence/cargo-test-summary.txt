@@ -1,0 +1,25 @@
+$ C:/Users/nname/.cargo/bin/cargo.exe test --no-fail-fast
+# cwd C:\Users\nname\Desktop\worktrees\lh-d496-e\consonance\src-tauri
+# exit 0 in 291 s
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 77 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 2.54s
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 77 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 2.49s
+test result: ok. 1137 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 186.83s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.06s
+     Running unittests src\bin\capture_probe.rs (target\debug\deps\capture_probe-19c2a55d1c8470f1.exe)
+     Running unittests src\bin\cochlea_replay.rs (target\debug\deps\cochlea_replay-1ad250337380d7e5.exe)
+     Running unittests src\bin\composer_probe.rs (target\debug\deps\composer_probe-20f363dbf4ded9f0.exe)
+     Running unittests src\bin\conf_sweep.rs (target\debug\deps\conf_sweep-61e67830c98d6bd6.exe)
+     Running unittests src\main.rs (target\debug\deps\consonance-99995e0d7afe289f.exe)
+     Running unittests src\bin\flush_probe.rs (target\debug\deps\flush_probe-1cca32fb28086d85.exe)
+     Running unittests src\bin\harvest_replay.rs (target\debug\deps\harvest_replay-03b32685599b07dd.exe)
+     Running unittests src\bin\jsonl_tap.rs (target\debug\deps\jsonl_tap-2922115ffd4f1a47.exe)
+     Running unittests src\bin\pty_spike.rs (target\debug\deps\pty_spike-f665c0301ad884d9.exe)
+     Running unittests src\bin\resume_probe.rs (target\debug\deps\resume_probe-e02f6abca5423390.exe)
+     Running tests\arch_test.rs (target\debug\deps\arch_test-c08a272213e530fb.exe)

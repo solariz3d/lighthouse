@@ -1,0 +1,10 @@
+$ cargo tauri build --no-bundle
+# cwd C:\Users\nname\Desktop\worktrees\lh-d496-e\consonance\src-tauri
+# head f84864f73032ca12df7ef090a9e0569d2a641ee7
+# exit 0 in 198 s
+214 |     pub fn last_attempt_ms(&self) -> u64 {
+    |            ^^^^^^^^^^^^^^^
+
+warning: `consonance` (bin "consonance") generated 10 warnings
+    Finished `release` profile [optimized] target(s) in 3m 14s
+       Built application at: C:\Users\nname\Desktop\worktrees\lh-d496-e\consonance\src-tauri\target\release\consonance.exe

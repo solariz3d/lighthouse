@@ -1,0 +1,4 @@
+D496 (pane E), 2026-10-27: lighthouse main f84864f7 (pushed), built with cargo tauri build --no-bundle from the landing tree.
+NO SWAP until the keeper picks the restart time: a restart stops every seat (C's aurora build included). The librarian recommends after C's D495 hand-back is accepted.
+The swap, at that time: powershell -ExecutionPolicy Bypass -File C:\Consonance\staged\d476p4-f84864f7\swap.ps1 -Apply  (Consonance closed first).
+Supersedes C:\Consonance\staged\d476p4-e2c41237 (the branch build, before the merge with main).

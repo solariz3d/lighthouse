@@ -1,0 +1,6 @@
+$ C:\Program Files\nodejs\node.exe C:\Users\nname\Desktop\worktrees\lh-d496-e\consonance\tools\js-suite.js
+# cwd C:/Users/nname/Desktop/worktrees/lh-d496-e
+# exit 0 in 967 s
+canary  consonance\tools\targetless-pull.test.js  (exit 1)
+js-suite: 186 green · 0 failed · 0 crashed · 0 silent · 1 canary · 0 sang · 1 not-run · 0 class-error  (of 188)
+canary (declared EXPECTED-RED, still red — not counted as a failure): consonance\tools\targetless-pull.test.js
