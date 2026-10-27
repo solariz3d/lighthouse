@@ -23,3 +23,5 @@ Hand-backs: each a sourced note. The librarian merges them into one plan for the
 ## WITHDRAWN, 07:33, at the keeper's word: "No lets keep doing what we have been doing, giving the panes more work we didnt plan out yet could be bad"
 
 The panes stop. Whatever is written stays as an untracked note for whoever picks this up later. Nothing else is dispatched from this plan without his yes.
+
+## 07:38: O's part 2 arrived after the withdrawal (`p-d493-builder-O_2026-10-27.md`, 7b47ed0c): the stop was still queued behind O's turn. It is filed here for whenever the keeper opens this; not read for action, not merged, nothing dispatched. Its §0 says the output differs from the plan's default and leaves one question open for part 1 (whether AC instances repeated models.ini models cheaply).
