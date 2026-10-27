@@ -186,3 +186,7 @@ General form: before adding a route to a table, check that the caller can reach 
 2026-10-26, D476 part 4 — d476-o-p4 13c69597: a seat's ping becomes a visit carrying ITS answer; the Third Place's ping becomes the hour; replies read only from the turn's last text; guard = pointers/ids/shas/commands/uptake/private/400 chars, "stays here" gives nothing; 28/28 mutants, cargo 1,126/0; staged, never swapped. Could be wrong that a phrase list holds uptake out: prose can paraphrase it.
 General form: a string a test parses must stay simple; an escaped quote in new code can put another test's parser out of step and fail far from the change.
 → `exo_memory/handback/p-d476-visit-build-O_2026-10-26.md`
+
+### A props catalogue plugs into the markers' placement as it stands, but the first paid pack is not worth building yet: the export has no ground, no LODs, no compressed textures, no prop merge class, and the preview draws the track only
+2026-10-27, D493 part 2 (research, t180 82afc11) — placement is place.js surfaceAt/placeMarker plus a piece/word anchor like the spawns block; the edge is the profile's span, which on a T-180 wall is the wall's top (up rules needed); kn5write.js:99 writes lodIn/lodOut 0; dds.js is uncompressed (1024² = 5,592,532 bytes by formula); MERGE_CLASSES (acready.js:233) has no props. Could be wrong if A's part 1 finds AC instances repeated models.ini entries cheaply: then props ride as their own kn5 and most of the export cost goes.
+→ `exo_memory/handback/p-d493-builder-O_2026-10-27.md`
