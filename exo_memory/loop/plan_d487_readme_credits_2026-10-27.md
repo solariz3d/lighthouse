@@ -26,3 +26,9 @@ The text above is withdrawn. Replace "## Credits" with this, verbatim:
 
 - Leave the rest of the repo as it is. The track names in docs/FINDINGS.md, results/, the tests and the Width like… list are not touched by this order.
 - The no-content check before committing still runs.
+
+## A stopped at the gate, 06:38 (`p-d487-A_2026-10-27.md`, 3d3182c4, read whole)
+
+- A stopped on the first text: two renders of whole community tracks are tracked in the repo, `results/sakura_full.png` and `results/rainbow_full.png` (since 6de135e, 2026-09-27).
+- The amended text (06:36) makes no claim about content, so **A goes ahead with the amended text now** on d486-a.
+- Whether to remove the two PNGs is the keeper's call, since it is a delete from a public repo. I have asked him and recommended removing them.
