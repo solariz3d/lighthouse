@@ -25,3 +25,5 @@ Hand-backs: each a sourced note. The librarian merges them into one plan for the
 The panes stop. Whatever is written stays as an untracked note for whoever picks this up later. Nothing else is dispatched from this plan without his yes.
 
 ## 07:38: O's part 2 arrived after the withdrawal (`p-d493-builder-O_2026-10-27.md`, 7b47ed0c): the stop was still queued behind O's turn. It is filed here for whenever the keeper opens this; not read for action, not merged, nothing dispatched. Its §0 says the output differs from the plan's default and leaves one question open for part 1 (whether AC instances repeated models.ini models cheaply).
+
+## 07:39: A's part 1 arrived too (`p-d493-A_2026-10-27.md`, 4a546ff5), for the same reason. Both halves are now on disk, unmerged. When the keeper opens the environment pack, the first step is the merge this plan named, from these two files; no new research is needed.
