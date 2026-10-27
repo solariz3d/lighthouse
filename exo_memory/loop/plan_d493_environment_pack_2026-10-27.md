@@ -19,3 +19,7 @@ The keeper's business model (memory, t180-business-model, 2026-10-06): the track
 - what is risky or expensive, named.
 
 Hand-backs: each a sourced note. The librarian merges them into one plan for the keeper, with the first pack's contents and a build order. No build without his yes.
+
+## WITHDRAWN, 07:33, at the keeper's word: "No lets keep doing what we have been doing, giving the panes more work we didnt plan out yet could be bad"
+
+The panes stop. Whatever is written stays as an untracked note for whoever picks this up later. Nothing else is dispatched from this plan without his yes.

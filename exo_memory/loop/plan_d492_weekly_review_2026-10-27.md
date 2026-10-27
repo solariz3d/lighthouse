@@ -7,3 +7,9 @@ The rule (`~/.claude/CLAUDE.md`, "Review instead of re-testing", 2026-10-19): be
 - Read each diff. For each, say in one line: fine, or what you would fix and why (a bug, a missed call site, a pattern not followed, an error path dropped, a test that pins implementation). Cite file:line.
 - Do not run suites. Do not fix anything. The list is the deliverable; fixes become their own laps, grouped by file, with a tier each.
 - Hand-back: the table (commit, lap, tier, verdict), the fix list ranked by what a user would hit first, and the count of commits read.
+
+## WITHDRAWN, 07:33, at the keeper's word: "No lets keep doing what we have been doing, giving the panes more work we didnt plan out yet could be bad"
+
+The panes stop. Whatever is written stays as an untracked note for whoever picks this up later. Nothing else is dispatched from this plan without his yes.
+
+The periodic review itself still runs where the rule puts it: as the first step of the next T-180 release landing, by the landing pane, before the full suite.
