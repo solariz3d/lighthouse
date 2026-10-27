@@ -46,3 +46,9 @@ The text above is withdrawn. Replace "## Credits" with this, verbatim:
 - Remove from the tip only. **No history rewrite and no force push.** The files stay in 6de135e's history; rewriting public history is a separate, irreversible call he has not made.
 - Check that `git grep -E "sakura_full|rainbow_full"` returns 0. Run the texmaker tests (touched file). 0 "keeper" in the added lines.
 - It rides the next batch with d486-a.
+
+## D488 read, 06:51 (A e0f804ea / t180 d486-a cdd19bf7): accepted
+
+- Both PNGs are removed at the tip. The comment-only diff was read by the librarian. `git grep` returns 0, and texmaker tests are 32/0. History is untouched.
+- **A fold-in, ruled (just do it):** presets.js:2 still cites "(the README's promise)", which since D487 points at nothing. A drops the phrase on d486-a.
+- Then d486-a (b6106130, dcedd30, cdd19bf7 + the fold-in) rides the next batch. D487/D488 CLOSED once the fold-in lands.
