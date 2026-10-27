@@ -167,3 +167,17 @@ OUTPUT → NEXT: changed — all three are in. The remaining item before the bat
 - Red on b306309 (12.3 / 11.4 ms, now muted via 8472e7d's launcher). Green 5 of 5 on 0.4.22 (3.9–4.3 ms).
 - The falsifier has not fired.
 - Part 2 goes to E now.
+
+## ALL-CLEAR on 0.4.23, 04:52 (E f8f71b8d, `p-d485-release-E_2026-10-27.md` §0–§2 and §6 read). D481–D485 CLOSED.
+
+Verified on disk by the librarian:
+- The installed exe is sha256 12911ad6…d49c. `.before-0.4.23` is sha256 851b9c9d…3391, the 0.4.22 exe.
+- origin main and the v0.4.23 tag are both at 82afc111. `releases/latest` is v0.4.23, not a draft.
+- The asset is 8,013,405 B, sha256 df646245…e477.
+- The push-gate's last line is allow.
+- Row 8 alone: p95 6.5 and 6.1 ms, both ok. Its suite red (7.4) is load, as ruled.
+- The e484/e485 worktrees: 0 left.
+- The CHANGELOG repair is accepted: [0.4.22] equals the tag's text, and the two entries were moved to [0.4.23].
+- E ended its own idle bash from the 0.4.22 landing.
+
+**Noted for the next release review, not a fix:** row 8 (0.3–0.9 ms margin) and row 6 have now each gone red once in the parallel suite and green alone. If frame rows keep needing a solo re-run every release, the suite should run the frame files alone by design.
