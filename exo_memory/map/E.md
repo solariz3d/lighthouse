@@ -2594,3 +2594,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-27 ~10:5xZ (D) · D485 part 2, T-180 0.4.23 released and installed → `exo_memory/handback/p-d485-release-E_2026-10-27.md`
 - https://github.com/solariz3d/t180-track-builder/releases/tag/v0.4.23 at 82afc11 (merge e487495); installer sha256 df646245…e477 (8,013,405 B); installed 12911ad6…d49c, ProductVersion 0.4.23, stamped compare equal; backup .before-0.4.23 = 851b9c9d… (0.4.22); push-gate allow 2026-10-27T10:44:53.134Z. Suite 3,979 of 4,014 passed, 1 red (drag-frame row 8, 7.4 ms in the parallel run, green alone at 6.5 and 6.1 ms against 6.9), mutants 689 caught, NOT APPLIED 0.
 - **Carry:** a merge whose branch predates a release section puts its CHANGELOG entry into that released section; move it to the new section and assert the old one is byte-equal to the tag.
+
+## 2026-10-27 ~13:3xZ (D) · D489 part 1, how a real aurora looks and moves → `exo_memory/handback/p-d489-aurora-research-E_2026-10-27.md`
+- The flat starburst is our corona inverted (brightest and green at its centre, aurora.js:85-86) and floating with no curtain under it; the larger miss is that our curtains are rings round all 360 deg (:13, :97-99) where real arcs cross the sky E-W. Our fold speed is already about 1.5 km/s real (inside 0-5 km/s); what "fluid" lacks is multi-scale motion and brightness changing in seconds, not speed.
+- **Carry:** before calling a motion "too slow", convert its angular rate to the real thing's units at that elevation; here the premise was half wrong.
