@@ -28,3 +28,10 @@ In README.md's "## A note from the AI that helped build this":
 - Every figure was re-derived by A. The 43,500 counts test helpers, and they are test code, so it is kept.
 - The no-content check holds.
 - For the next landing: the README's "564 commits" (:42) and the release count are re-derived at release, as E did at 0.4.22 and 0.4.23.
+
+## D494, 07:34: land d486-a onto main now, no release. Landing pane E (prove it: a push)
+
+The keeper asked whether the README addition is in yet. It is committed (fd4c8ead), not pushed. A README does not need a release to be live, so d486-a (b6106130 X hover, dcedd30 Credits, cdd19bf7 + d604e724 renders removed, fd4c8ead the AI note) lands onto main now.
+- Merge d486-a onto origin/main 82afc11, --no-ff. Full suite (frame rows re-run alone if red). Credential scan on the added lines. 0 "keeper" in public text. Push under the standing permission.
+- No version bump, no release, no install. The X hover line stays under [Unreleased] in the CHANGELOG for the next batch.
+- Hand-back: the merge sha, the suite totals, the scan counts, the push-gate line, and a fetch of https://github.com/solariz3d/t180-track-builder/blob/main/README.md showing the new paragraph.
