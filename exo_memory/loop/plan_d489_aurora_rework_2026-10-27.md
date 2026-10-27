@@ -133,3 +133,14 @@ A ran the periodic review as the landing's first step, as the rule puts it: 147 
 4. The (c) rows: drag() asserts its typed fields read back; a scan row for the headless-title rule; the stale comments in core-pieces-ui.test.js:549 and aurora.js:4/:8; renderer.js's `next` program deleted when a fallback check throws.
 5. The (d) tidies: hover.alt cleared on blur; the 0x08 bytes in sound.js/sound-samples.test.js comments; the CHANGELOG's "five looks" → six; coreshell.js:69–70's comment.
 6. CHANGELOG lines, 0 "keeper". It rides the batch after 0.4.24.
+
+## D497 stopped again, ruled 09:52 (A f6fbe630, §7 read whole)
+
+A's stop was right: drag-frame row 8 is red alone (7.6 / 8.6 ms against 6.9) on 86b92f1, where it read 6.0–6.6 at D484 and 6.1–6.5 at the 0.4.23 landing. But the machine was not quiet (CPU 37% with nothing of A's running; E is on D498 and a lockless run of three files or fewer is allowed), so red-alone does not yet separate a regression from load.
+
+**Ruled: A's way 2, in a quiet window.**
+- The chair asks E to hold every test run for the window and say when it has stopped; A takes the lock as a timing session.
+- A runs row 8 at 82afc11 (0.4.23) and at 86b92f1 back to back, three rounds each, alternating, same harness, same priority. Reports the six p95s.
+- **If both read alike** (within about 0.5 ms of each other, and the tip under 6.9 in at least two of three): load, not a regression; the release continues at step 3 and the landing note says so.
+- **If the tip reads over 0.4.23 by more than noise in every round:** a regression in d495-c's per-frame path (drawSky runs on every look; the one new per-frame call is `CYCLE.colours`, and the timer queries should not run for a look without a fallback). Then the release stops, A hands the six figures to C, and C finds and fixes it on d495-c before the landing resumes. No bar ruling: the bar is the keeper's 144 Hz.
+- sculpt-frame row 3 (8.0 / 7.3 against 6.0 in the suite): run it alone with both slots held in the same window, as C did in D495 (`bothslots.js`). If red alone and quiet, it joins C's list.
