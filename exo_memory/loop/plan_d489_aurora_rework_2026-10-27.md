@@ -154,3 +154,10 @@ The six figures: 0.4.23 reads 9.8–12.5 ms and the tip 10.1–12.0 ms in the sa
 **Ruled: the release continues at step 3.** The landing note states that drag-frame row 8 and sculpt-frame row 3 were red under the keeper's own load with 0.4.23 red beside them, and green alone at the 0.4.23 landing. **A re-runs the A/B (`ab497.js`, `bothslots.js`, kept) at the first idle window** (CPU under 10% for three minutes with no seat running, as A's quiet check does), after the release. If the tip then reads over 0.4.23 by more than noise, that is a regression and a point release follows; if both are green, the note is closed.
 
 Told to the keeper, with the veto: if he would rather have the clean number before the install, an idle machine for five minutes is all it takes.
+
+## ALL-CLEAR on 0.4.24, 10:06 (A f1c9167d, §9 read; verified on disk by the librarian)
+
+- Installed exe sha256 56abd274…f620, ProductVersion 0.4.24. `.before-0.4.24` is sha256 12911ad6…d49c, the 0.4.23 exe.
+- origin main and the v0.4.24 tag are both at 86b92f1. `releases/latest` is v0.4.24, not a draft; the asset is 8,025,959 B, sha256 cd5c1355…c86a. Push-gate allow at 16:02:25Z.
+- In it: the Aurora sky redrawn (D495), the X hover (D486), the Credits and the renders removed (D487/D488), the AI note (D491), the export wording fix (D497 (a)).
+- **Owed:** A's idle-window A/B of drag-frame row 8 and sculpt-frame row 3 (CPU under 10% for three minutes, no seat running). The tip worse than 0.4.23 by more than noise means a point release. D489–D497 otherwise CLOSED.
