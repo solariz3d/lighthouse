@@ -178,3 +178,10 @@ My miss: a look went to a public release before he had seen it in the builder. M
 Not 0.4.23's aurora (D403's three curtains and corona, 378ef3e, 2026-10-18, the one he called bugged) but the first one: D384's polar night (2896e6e), as it stood at 276d086 (D391, drawn alike on every card, the last commit before D403 changed the look).
 - `app/preview/sky/aurora.js` goes back to `git show 276d086:app/preview/sky/aurora.js`, on top of the D499 revert of the d495-c merge. Re-apply D416's device-pixel star sizing (b50e1aa) to it if it applies cleanly; if it doesn't, say so and leave the stars as D384 drew them. Any test that pins D403's shapes (sky-aurora-look rows from D403) is restored to its pre-D403 form from the same commits, each named with its reason.
 - **New rule in force (looks-ship-to-keeper-first):** this build is INSTALLED on his machine with the `.before-0.4.25` backup and sha256 compare, and NOT released or tagged. He judges in the app. On his yes, A releases 0.4.25 from the same build; on his no, the backup goes back.
+
+## D499 installed, not released, 11:06 (A 3a310dc0, §0 read; verified on disk by the librarian)
+
+- Installed exe sha256 c2d6dd18…9628, ProductVersion 0.4.25, a local build; `.before-0.4.25` is 56abd274 (0.4.24). origin main is still 86b92f1, no v0.4.25 tag, latest is v0.4.24.
+- aurora.js is byte-equal to 276d086's with D416's stars re-applied cleanly (the v0.4.9 blob). sky-aurora-look.test.js removed as it was before D403.
+- Suite 3,973/1/27: the one red is drag-frame row 8 in the parallel run, **green alone at 6.0 ms** this time. That is the A/B's load branch confirmed on a quieter machine; A's owed idle re-run can close on it if the sculpt row also reads green alone.
+- **Waiting on the keeper's eye in the app.** Yes → A releases 0.4.25 from this build. No → the backup goes back.
