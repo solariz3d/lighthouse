@@ -88,3 +88,16 @@ OUTPUT → NEXT: changed. E: the corona is inverted (bright green at the centre,
 - **Show, side by side with today's aurora**, from the same cameras (horizon, 40°, straight up, free view): stills at 2560×1440, plus a 10 s frame sequence of each. Show cycle (a) and (b) as stills at t = 0, 3, 6 and 9 min. All headless, muted, titled.
 - Measure the GPU time of each with C's skypass probe.
 - Hand-back: the image paths and the timings. The librarian shows them to the keeper, who picks from real renders.
+
+## D495, the build, 07:48. The keeper: "lets try it, to see how it looks in track builder, build time"
+
+He named no number, so it is the recommendation, **look 2 with cycle (a)**, told to him so he can veto. Pane C builds (it has the prototypes); tier: check it for the look, prove it for the GPU-timed row and the fallback.
+
+1. **The GPU row first, red where it should be.** From C's skypass probe: the sky pass alone at 2560×1440, pitched 0/40/85, GPU timer query, p95 ≤ 1.5 ms. It skips with a reason when `EXT_disjoint_timer_query_webgl2` is missing. Red on a deliberately heavy sky (B 64×3 full res), green on today's aurora and on the new one.
+2. **The sky:** d490-c's `aurora2` becomes the Aurora look's sky, with cycle (a) driven once a frame from JS through uSkyA/uSkyB (C §10 way 2); `--sky-c` stays `--fog`. Our own code throughout, nothing from CC BY-NC-SA sources.
+   - **Fix list from the renders:** (i) straight up, the hard dark gap between the two curtains near the magnetic zenith reads like a mouth; soften it (a third faint curtain, a wider emission tail, or a gentler cut), judged by a render from the up camera; (ii) the faint horizontal step banding in the near curtain (looks 2/3, up and free cameras): more steps where the ray is near edge-on, jitter, or the SDF skip, judged by a render; (iii) the 1.46 ms reading C saw once looking up: the row's margin must hold over 5 runs.
+   - Reduced motion holds everything at t = 0 in the skin's colours. The stars stay as they are (D416).
+3. **The fallback:** if the measured sky time on the user's machine is over budget, the Aurora look drops to d490-c's `aurora1` (the reworked flat sky), with a test. Looks 1 and 3 ship as code only if the fallback needs them; nothing else of the prototypes ships.
+4. **The look check:** stills from the four cameras and a 10 s clip, before and after the two fixes, to the librarian as an artifact update for the keeper.
+5. The existing sky tests (sky-caustics-aurora, sky-crisp, sky-aurora-look) updated only where they pin the old shapes, each named with its reason. Touched tests. CHANGELOG line, 0 "keeper".
+6. **Then it ships so he can see it:** when C's hand-back is accepted, landing pane E (after D494) merges d486-a + the build onto main, full suite, scans, releases 0.4.24, installs with the builder closed, a `.before-0.4.24` backup and a sha256 compare. If he dislikes look 2 in the app, switching to 3 is a small lap, since d490-c keeps all three.
