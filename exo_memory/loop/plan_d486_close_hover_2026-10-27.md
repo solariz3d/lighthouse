@@ -12,3 +12,10 @@ The keeper, 06:23: "the scrubbing fast is working, found a tiny bug lol, the hit
 - The white X strokes on hover already come from index.html:93.
 - Look at it in each of the six looks: a headless screenshot of the hovered X, muted and titled. Nothing else.
 - CHANGELOG line under [Unreleased] Fixed. It rides the next batch.
+
+## Read, 06:31 (A 31693d15 / t180 d486-a b6106130): accepted
+
+- The diff is the two hover lines plus a CHANGELOG line.
+- The before/after table shows aqua and glass going from transparent to red; the other four are unchanged.
+- The librarian viewed the aqua hovered-X screenshot: red, with a white X.
+- It rides the next batch. **D486 CLOSED.**
