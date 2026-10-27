@@ -22,3 +22,26 @@ The keeper, 16:12: "Something isnt right with track builder, as soon as I drag t
 Nothing touches his tracks or his install. Heavy runs go at BelowNormal under the heavy-run lock.
 
 NEXT: chair dispatch D481 to the first free pane now; librarian rules the fix order when its hand-back is in.
+
+## Ruled, 19:10 (A, `p-d481-A_2026-10-26.md` read whole, lighthouse 1be86b9a; red row t180 d481-a 41e7595a)
+
+- **Accepted.** The cause is `fitWithHold`, `src/core/extend.js:123` (t180), from 90f5809 (D459 3b widened), first shipped in 0.4.20. It runs on every pointer move whenever bank, cup or edge is typed. Checked by the librarian at v0.4.21 (9648a25:src/core/extend.js:123–141):
+  - `one(i)` builds an unfrozen piece per free point, so every `channelValue` copies the knot vector;
+  - the B table is dense m × S;
+  - the normal equations are a dense O(m²·S) loop, and the elimination is a dense O(m³) Gauss-Jordan. Its comment says "m is at most a few tens", but m is about 500 at 10 km.
+- My lead suspect (stackCurl) was wrong: 0 samples on the drag tick. A cleared it with the profile. The other suspects are cleared the same way (§5).
+- A's figures I take as A states them: 1 km with all three typed, p95 486 ms on 0.4.21 against 3.6 on 0.4.19. 10 km turn drag: frames of 130 s. The 26b895a and 496c347 bisect rows are inferred (unsaved output); 90f5809's row is on disk (`bis.out`).
+
+## D482, the fix: two parts, in parallel
+
+**Part 1, pane A (prove it: core maths, the bank/cup/edge every exported track carries).** Make `fitWithHold` cost linear in length with the same answer.
+- Compute the basis of each free point only over its own support (a B-spline basis function is non-zero over degree+1 spans). Use one knot vector for the whole fit, not a fresh copy per call.
+- Build the normal equations banded, and solve them with a banded solver. Keep the singular-system return ("the fit as it was").
+- **Same answer, proven:** byte-equal channels after the `toFixed(dec)` rounding on every public fixture, both private fixtures, TEST 10 and TEST TRACK 10, at each typed combination A used. If any value differs in its last kept digit, list it; do not widen a tolerance.
+- **Red to green:** row 6 (41e7595a) goes green unedited. A new node row: `extend()` at 10 km with all three typed finishes under a budget derived from a measured run, stated with its source.
+- The mutation harness covering extend.js, whole. The touched files' tests. CHANGELOG line, 0 "keeper".
+- No change to when the fit runs. Throttling the readout to release is a design change, not this fix.
+
+**Part 2, pane C (check it, find only): A's §7.** On 0.4.19 already, with any of bank, cup or edge typed, about 400 frames a second do more than 1 ms of work during a drag (40–60 untyped), and p95 misses 6.9 ms. Find what redraws every frame while a field is typed: a profile, the function and file. No fix; the fix is its own order.
+
+**The batch:** D482 part 1 joins d473-e + d477-p in the next T-180 release. This is a regression he feels on every drag, so it is the one item that justifies releasing the batch without waiting for his new-track findings. That is a recommendation, and his to veto.
