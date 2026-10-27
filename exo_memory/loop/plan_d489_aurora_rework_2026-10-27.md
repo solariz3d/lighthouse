@@ -59,3 +59,19 @@ OUTPUT → NEXT: changed. E: the corona is inverted (bright green at the centre,
 **Licence:** the build writes its own code for the technique and copies none from the Shadertoy "Auroras" (CC BY-NC-SA). C also notes t180 has no LICENSE file. That is the keeper's call, named and not pressed.
 
 **Recommendation:** 2 + (a). When he picks, the build is one pane (check it; prove it for the GPU row and the fallback). Its gate is the GPU row, plus a look at screenshots looking up and at the horizon in free view.
+
+## The keeper's pick, 07:11: "+" (read as a yes to the recommendation, 2 + (a); told him so he can veto)
+
+## D490, the build: one pane, C (C measured the techniques and wrote the GPU probe). Tier: check it for the look; prove it for the GPU row and the fallback.
+1. **The GPU row first, red where it should be.** It is a test made from C's skypass.js: the sky pass alone, 2560×1440, pitched 0/40/85, timer query, p95 ≤ 1.5 ms. It skips with a reason when `EXT_disjoint_timer_query_webgl2` is missing. It must be red on a sky deliberately over budget (C's B 64×3 at full res), and green on today's aurora.
+2. **The sky** (app/preview/sky/aurora.js and, for the cycle, the renderer/preview side). It is our own code for the technique, with nothing copied from CC BY-NC-SA sources.
+   - Arcs run east–west from horizon to horizon, tilted to a fixed field direction.
+   - The near curtain is in a volume (technique B, about 24 steps, full resolution), with the corona arising from its rays by perspective: green bases outward, faint tops converging.
+   - Far bands stay 2D.
+   - Motion in layers: the arc drifts at about 0.1 km/s equivalent; folds and curls run along the hem at km/s, low in contrast; rays flicker; an occasional pulsating patch of 2–20 s. The big shapes stay within D403's quiet pace.
+   - Colour, from E §7: a drift of about 10 minutes, not exactly periodic, in which red tops and pink lower edges swell and fade while the hem stays green. Red lags by a minute or two. It is driven once a frame from JS through the existing uSkyA/uSkyB uniforms (C §10 way 2). `--sky-c` stays equal to `--fog`.
+   - Under reduced motion, everything holds at t = 0 in the skin's own colours.
+   - The stars are kept as they are (D416 sizing).
+3. **The fallback:** if the measured sky time on the user's machine is over budget, it drops to a reworked 2D version of the same arcs, with a test.
+4. **The look:** headless screenshots (muted, titled) in free view looking up, at 40°, and at the horizon, at t = 0 and at t = 5 min, plus a short frame sequence of the hem moving. These go to the librarian, who shows them to the keeper.
+5. The existing sky tests (sky-caustics-aurora, sky-crisp, sky-aurora-look), updated only where they pin the old shapes. Each such update is named with its reason in the hand-back. The touched tests. CHANGELOG line, 0 "keeper". It rides the next batch.
