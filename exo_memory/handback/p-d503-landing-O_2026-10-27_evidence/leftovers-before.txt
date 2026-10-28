@@ -1,0 +1,6 @@
+leftovers · 2026-10-28T00:18:20.474Z · read-only
+tab proxies          UNCALIBRATED (read 0, and the control made none (0 → 0 → 0))
+worktrees            Desktop/lighthouse 47 linked + main
+strays               not scanned (give --strays <folder> --prefix <name>-)
+fake roots           0
+our long-running     0 (older than 120 min, infrastructure left out)
