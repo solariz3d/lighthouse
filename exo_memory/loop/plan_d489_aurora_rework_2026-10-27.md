@@ -230,3 +230,7 @@ Full suite at 6819a55: 4,013 tests, 3,977 pass, 2 fail, 27 skipped, 7 todo; harn
 - **chrome-mute row 3** asserted "at least the ten known starters"; 0.4.25's Aurora revert (7dc5917, 70f7c63) deleted `sky-aurora-look.test.js`, one of the ten, so the rebased tree has nine and the row's real rule (no untitled starter) holds on all nine. O's e905420 sets the floor to nine with the reason in a comment, red in the suite and green alone. A test verifiably wrong after its base moved, said so: allowed. Yes.
 - **drag-frame row 8**: 7.4 / 7.0 ms alone with every slot clear, the known 1-in-4 ruled load at D497. O's first "alone" run (5/3) was beside C's 73-file run and is reported, not discarded: it is the parallel-run effect D504 is for.
 O pushes 9 commits (8 + e905420) to t180 main after the push-gate check, no tag, no release; removes its worktrees; final hand-back with the main sha and the push-gate line.
+
+## D503 CLOSED, 19:0x (O ac437b4f; verified on disk by the librarian)
+
+checked, by this seat: `git ls-remote origin main` → e905420b6da0; `git rev-list --count 7dc5917..origin/main` → 9, the eight D498 commits plus e905420; newest tag v0.4.25, latest release 0.4.25 (no new tag, no release, as ordered); `[Unreleased] ### Fixed` on origin/main carries the four review lines; push-gate allow 01:03:51.917Z from O's seat; worktrees t180-wt-o503, t180-wt-e498, t180-wt-o-d493 gone from `git worktree list`. Every figure in O's §0 matched. D498 is landed. It ships as 0.4.26 with D502 Part 2 once the keeper has judged that in the app.
