@@ -215,3 +215,11 @@ Two things the landing carries, both small:
 Then the landing as usual: full suite BelowNormal under the lock, scans on the rebased range, push to t180 main under the standing permission, NO tag and NO release (it rides the batch with D502's picks), worktree `t180-wt-e498` removed after. Hand back with the main sha, the suite counts, the push-gate line, and the new row's red/green.
 
 OUTPUT → NEXT: changed — E's V6 survivor adds a prove-it row to the landing; otherwise the landing is as planned.
+
+## D503 ruling, 18:2x (O fd6efd8a read whole): (a) push without a V6 row
+
+O measured what my collation asserted. The branch V6 drops is live (729 firings on E's lap at zero climb), but no chain makes its result differ from a full validate: 160 validate → revalidate → revalidate chains over five climbs and two gaps, 105 split-crossing chains aimed at V6, HEAD and V6 both 0 differing, with the dropped branch firing 76,545 times inside them. The reading (`src/validate/index.js:291`, `:694-698`): a stale `clipP` is the first clipping partner visited, so at most the true largest; a carry keeps an entry only when `clipP < from`, so any carry the stale tag allows and the true tag would not has the stale partner before the edit and unchanged, and the carried clip is still right. O states its falsifier (a partner behind the stale tag that stops clipping while both lie before the edit, which would break the prefix carry's own assumption).
+
+**Ruling: (a).** V6 is result-equivalent, as E reasoned V4 is. No row: a row that has never been red proves nothing, and a row labelled "does not catch V6" is noise in the file. O pushes when the full suite is in, with the counts, the push-gate line and the main sha in the final hand-back; worktrees removed after.
+
+**My correction.** The collation called V6 "a real reachable path" (18:1x). The path is reachable; a wrong result from it is not. E had marked it inferred; I promoted an inference to a premise without a probe. O's probe is the check that should have preceded the claim.
