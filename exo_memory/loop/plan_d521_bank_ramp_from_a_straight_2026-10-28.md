@@ -24,3 +24,14 @@ Part 2, the fix (prove it: core extend.js, core_extend tests + one row per bulle
 Kept out: the renderer; the document's joint rule (C1 stays); Sculpt (D520 is separate).
 
 surfaced: panel.js:47-50/:85, extend.js:18-19/:50-51/:226-238, docs/math/04a_bank_ramp.md §1-§4, vocab.js:124 BANK_RATE, tools/bankrate.cjs.
+
+## Amendment, 15:25: his exact piece, and the cause is the ramp's SHAPE, not its length
+
+Second screenshot (panel visible): length 100 m, turn +11.70°, bank −54.05°, width 31 m, NO "at start" ticks ("bank to gravity 0.00° → −54.05°"). The red circle is at the joint; his words: "start banking where the red circle is at the start of the next piece vs where it does further down is what i mean" and "it should start banking the piece right from the next start of that new piece".
+
+So Part 1's fixture is this piece, and the first two bullets of Part 2 (the 20 m floor) are NOT his case. The cause is the Bloss smoothstep itself (04a §1): S′(0) = 0, so the first fifth of the piece barely banks and the middle rolls fast:
+- at 10 m: S(0.1) = 0.028 → 1.5° of 54.05°; at 20 m: S(0.2) = 0.104 → 5.6°; peak rate 1.5·54.05/100 = 0.81 °/m at 50 m (04a §2).
+- What he wants: roll from the first metre. A pure linear ramp (0.54 °/m from s = 0) starts with a slope the straight does not have: the joint is not C1 in phi (document.js:388-405 refuses it), and at 127 m/s that is a roll rate of 69 °/s switched on in one step.
+- The shape that gives both: a linear ramp with a SHORT rounding at each end (the rate rises from 0 to its plateau over ℓ metres, holds, falls over ℓ: C1 at both joints). With ℓ = 10 m on his piece the plateau is 54.05/90 = 0.60 °/m, the bank is 3° at 10 m and 9° at 20 m (Bloss: 1.5°, 5.6°), and the PEAK rate is lower than today's 0.81. ℓ is the one figure to settle: shorter starts sooner but changes the roll rate faster (ℓ = 5 m is 40 ms at 127 m/s).
+
+Part 1 becomes: render HIS piece (straight 100 m → 100 m, turn 11.70°, bank −54.05°, width 31 m) three ways: today's Bloss, the rounded-linear at ℓ = 5, 10 and 20 m, and the pure linear for reference; per ramp the bank at 10/20/50 m, the peak roll rate and the peak roll-rate change; the inner edge's first 60 m. Pictures to the keeper as an Artifact with the real renders (the visuals rule), the figures in a table; he picks ℓ or says the shape is still wrong. Part 2 then: the chosen ramp in extend.js for phi (and whether kh and kv take it too: O says, with the same pictures; the width and cup keep Bloss unless he asks), prove it in the small, Extend only, saved files byte for byte.
