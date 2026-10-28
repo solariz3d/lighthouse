@@ -1,0 +1,19 @@
+r.acreplay: 6530 frames measured of 7095, car ohyeah2389_t180_mach6
+load into the road (g):  p50 6.13  p90 45.78  p99 61.85  p99.9 62.90  max 63.28
+curve radius driven through above 150 km/h (m):  p0.1 64  p1 64  p10 89  median 545
+the ten hardest moments (load, speed, road tilt, implied radius):
+  t  93.96 s   63.28 g    720 km/h   tilt  90 deg   R 64 m
+  t  93.34 s   61.97 g    716 km/h   tilt  89 deg   R 65 m
+  t  92.02 s   61.72 g    748 km/h   tilt  89 deg   R 71 m
+  t  95.56 s   61.32 g    708 km/h   tilt  89 deg   R 64 m
+  t  94.56 s   61.27 g    707 km/h   tilt  86 deg   R 64 m
+  t  96.52 s   61.18 g    730 km/h   tilt  86 deg   R 69 m
+  t  92.64 s   59.82 g    722 km/h   tilt  88 deg   R 69 m
+  t  91.41 s   58.45 g    753 km/h   tilt  90 deg   R 76 m
+  t  97.13 s   57.31 g    725 km/h   tilt  86 deg   R 72 m
+  t  97.83 s   56.24 g    733 km/h   tilt  86 deg   R 75 m
+  0-200 km/h: 147 frames, load p50 1.00 p99 1.03 max 1.03 g
+  200-300 km/h: 83 frames, load p50 1.00 p99 1.09 max 1.10 g
+  300-400 km/h: 100 frames, load p50 1.00 p99 1.07 max 1.07 g
+  400-500 km/h: 131 frames, load p50 1.00 p99 1.09 max 1.09 g
+  500-700 km/h: 1142 frames, load p50 2.04 p99 59.51 max 60.16 g

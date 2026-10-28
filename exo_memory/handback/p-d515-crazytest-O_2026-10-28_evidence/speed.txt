@@ -1,0 +1,8 @@
+r.acreplay (car ohyeah2389_t180_mach6, dt 0.0150 s): 6518 frames · speed km/h p10 608 p50 761 p90 820 p99 821 p99.9 838 max 838
+    0-200 km/h:    141 frames, a_prop p50 22.33 p95 33.47 m/s²
+  200-300 km/h:     83 frames, a_prop p50 26.01 p95 27.15 m/s²
+  300-400 km/h:    100 frames, a_prop p50 21.10 p95 22.46 m/s²
+  400-500 km/h:    131 frames, a_prop p50 14.22 p95 18.91 m/s²
+  500-600 km/h:    158 frames, a_prop p50 13.98 p95 18.54 m/s²
+  600-700 km/h:    978 frames, a_prop p50 6.00 p95 15.50 m/s²
+  700-800 km/h:   2607 frames, a_prop p50 2.34 p95 10.22 m/s²

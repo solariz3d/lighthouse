@@ -209,3 +209,8 @@ Also: a fresh t180 tree has no src-tauri/dist, so release.cjs needs a cargo chec
 2026-10-28, D507 landing — lhpriv.js over origin/main..main: term 8 added 4, all in 655dd422 readers.tap (menu-row names quoting the export game). Origin already holds that term in 441 files, so likely benign; push stopped for a ruling. Could be wrong that the stop was needed: (a) is recommended.
 General form: a hand-back committed after its own scan is unscanned until the next landing scans it; scan the hand-back too, before committing it.
 → `exo_memory/handback/p-d507-landing-O_2026-10-28.md`
+
+### A T-180 track can hold 56-63 g for 6 s where Centrifuge spikes 77-90 g for under half a second: the Mach 6 runs out of travel at ~25 g, its box meets the road at ~47 g, and the soft road then holds it ~28 cm deep
+2026-10-28, D515 — CRAZY TEST replay against its 15:22Z export (kn5 bfde4dc6, AI 0cb82e6b): piece 13, a descending helix at bank 85°, R 63-76 m, 707-753 km/h; >= 55 g unbroken 7.13 s vs 0.39-0.43 s on four Centrifuge replays; the line-curvature load matches measured (r 0.988) but runs ~8 g low once the box is on the road. Could be wrong that the steadiness is why it held: driver and car not separated.
+General form: a load peak and a held load are different limits; measure both before calling a track the hardest.
+→ `exo_memory/handback/p-d515-crazytest-O_2026-10-28.md`
