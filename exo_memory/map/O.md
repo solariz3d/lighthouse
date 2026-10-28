@@ -204,3 +204,8 @@ Also: a fresh t180 tree has no src-tauri/dist, so release.cjs needs a cargo chec
 ### A visit guard that refuses on a rule the invitation never names loses the line silently; name the limit from the guard's own constant, and tell only the refused seat, by the rule's name
 2026-10-28, D507 — d507-o 1785df01: visit_text names "under 400 characters" (VISIT_MAX_CHARS); VisitBook.refused carries the rule (a &'static str, never the line) to that pane's next visit, cleared on delivery; 20/20 visit tests; staged d507-1785df01 (sha256 8c9e82bd…6f1e), not swapped. Could be wrong that a named limit is enough: seats may still answer "ok" from the old rule (the record's reading 1), which this does not touch.
 → `exo_memory/handback/p-d507-visit-O_2026-10-28.md`
+
+### A landing scan must cover the scanning pane's own unpushed commits: my D505 hand-back carried 4 private-term lines that its own scan, run before it existed, could not see
+2026-10-28, D507 landing — lhpriv.js over origin/main..main: term 8 added 4, all in 655dd422 readers.tap (menu-row names quoting the export game). Origin already holds that term in 441 files, so likely benign; push stopped for a ruling. Could be wrong that the stop was needed: (a) is recommended.
+General form: a hand-back committed after its own scan is unscanned until the next landing scans it; scan the hand-back too, before committing it.
+→ `exo_memory/handback/p-d507-landing-O_2026-10-28.md`
