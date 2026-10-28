@@ -2623,3 +2623,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-28 ~22:2xZ (D) · D524, the preview's road lines on a bump → `exo_memory/handback/p-d524-E_2026-10-28.md`
 - t180 d524-e 0eb6f25 + 07cee60 on d522-c (not pushed), installed 4bc4abb6…359f over C's D522 (.before-d524 = 913aba12). The line shader biases each vertex 2e-5 toward the camera in normalised depth (2e-5·d² m, near 0.5 m); headless renders show no line past a crest at 0, 2e-6, 2e-5 or 2e-4, ties a little more continuous at 2e-5; far dashes remain (inferred aliasing, not depth). O's D521 was not installed, so not merged.
 - **Carry:** before tuning a depth bias, probe with a bias 100x larger: if the artefact stays, depth is not its cause.
+
+## 2026-10-28 ~22:4xZ (D) · D524 part 2, the lines standing above the bump → `exo_memory/handback/p-d524b-E_2026-10-28.md`
+- Cause: app/preview/batches.js took each node's cell record by NAME, and every cell of a piece is named alike (1ROAD_p1_body_0), so every batch used the LAST cell's rowS, cols and us: a tie on every cell, and lines reading another part's stride over his bump (the ladder). Fixed by position (t180 d524-e f28bd69 + ad7f087); distinct rowS 1 -> 250, ties on the stretch 3,100 -> 756; release-ghost row 6 AMENDED (it pinned v0.4.8's bytes, which held the bug). Installed f144cf68…de4d over O's 5e4271ba.
+- **Carry:** a name-keyed map over generated names silently collapses duplicates; count distinct keys against records before trusting such a lookup.
