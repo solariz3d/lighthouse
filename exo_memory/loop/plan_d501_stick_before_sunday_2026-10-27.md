@@ -24,3 +24,6 @@ Either way the written set must verify on the desktop before he leaves with it, 
 The laptop-side import, at the laptop. If the laptop wrote nothing to its seats in October, there is no fork to resolve; D479 §4 says how a fork shows if there is one.
 
 Kept out: the 600 s Leave bound itself (a design question for later: once the daily carry is small again it stops mattering). Tier: Part 1 check it (writes only its own files, deletes only them). surfaced: D479 §2, `tail-carry.js:904`, the 15:42/16:09 notes.
+
+## 2026-10-28 06:4x — Part 1 verdict and the keeper's decisions
+Verdict FAKE CAPACITY (`exo_memory/handback/p-d501-A_2026-10-27.md`; ~55 GB real of 256 claimed; nothing lost, the stick only carried from this desktop; A's backup 895 files 18,743,396,234 B). The keeper, 06:34, "do 1": no write-back to D:; D: retired from the carry; the backup stays until the first verified carry reaches the laptop. Retired on disk by the librarian: the outer folder and both marker folders renamed (`retired-consonance-transfer`, `retired-consonance-tails`), `findStick` returns none, so the Leave and the waiter no longer write to it. Part 2 opens when the keeper names the new medium: pane A runs `captest.ps1` on it first (acceptance), then the full verified carry as written above.
