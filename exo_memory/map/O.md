@@ -218,3 +218,8 @@ General form: a load peak and a held load are different limits; measure both bef
 ### A zone grab on the road must ask the piece what it has: cup and edge channels exist only on flagged pieces, the edge zone starts at the piece's own s (default 0.64), and the pick gives no across offset at all
 2026-10-28, D519 Part 1 — t180 ff1d624: pickAt (preview.js:576-585) returns the nearest CENTRELINE sample within 40 px, so no u and often no hit on a rim; sculpt.js:111-112 refuses c and e/er/s on unflagged pieces; document.js:34-43 s in 0.5-0.95. Design: zones 0.2 / s / 0.9 by piece type, direction decides U vs L, a pickAcross in the preview, dots thinned to max(100 m, radius) and 24 px, cap 40 a row. Could be wrong that the keeper wants symmetric width at a rim (the registered falsifier).
 → `exo_memory/handback/p-d519-design-O_2026-10-28.md`
+
+### In a shared checkout, push the scanned sha, not the branch: a librarian commit landed one second after my scan and went out unscanned
+2026-10-28, landing — scanned origin/main..3f2959ed (41 commits, all scans 0), pushed main = 310077dd; the extra commit, scanned after, was 2 clean lines. Could be wrong that the gate alone would have caught a hit (it scans keys and words, not the 13 private terms).
+General form: git push origin <scanned sha>:main.
+→ `exo_memory/handback/p-landing-O_2026-10-28.md`
