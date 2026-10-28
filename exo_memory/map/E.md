@@ -2615,3 +2615,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-28 ~13:1xZ (D) · D508, the white flash at startup → `exo_memory/handback/p-d508-E_2026-10-28.md`
 - t180 d508-e 4d0a20d + f5ce433 (not pushed, not installed): the window is created hidden and dark, and the page shows it, maximized, two frames (each an animation frame or 100 ms) after its title bar is wired; a 3 s page fallback and an 8 s native show in lib.rs. tao 0.37.1 applies a hidden window's maximize when it is shown (window_state.rs:360-374), so nothing is remembered. titlebar 14/14, touched 333/334 (drag-frame row 8 timing), cargo check clean.
 - **Carry:** a "shown after frames" row must check the calls before awaiting the promise, or a broken frame hangs the run instead of failing it.
+
+## 2026-10-28 ~14:4xZ (D) · D511, T-180 0.4.27 landed, released and installed → `exo_memory/handback/p-d511-E_2026-10-28.md`
+- https://github.com/solariz3d/t180-track-builder/releases/tag/v0.4.27 at ff1d624; installer 24442d8e…c9ab (8,022,729 B); installed e75f76f0…54d8, stamped compare equal; .before-0.4.27 = 87fecdc6 (the judged build); push-gate allow 14:41:53.248Z. Full suite 3,990/4,026 with 7 reds: 6 from 61d86bc's unguarded dispose (O's 508fa33 fixes it), 1 core-pieces-ui row 11 left un-amended by d509-c (AMENDED D509); the preview re-run after both 757/758, 0 fail.
+- **Carry:** run the outgoing word scan BEFORE the release commit, and over commit messages too; a message on someone else's branch can only be kept out by squashing it.
