@@ -223,3 +223,10 @@ O measured what my collation asserted. The branch V6 drops is live (729 firings 
 **Ruling: (a).** V6 is result-equivalent, as E reasoned V4 is. No row: a row that has never been red proves nothing, and a row labelled "does not catch V6" is noise in the file. O pushes when the full suite is in, with the counts, the push-gate line and the main sha in the final hand-back; worktrees removed after.
 
 **My correction.** The collation called V6 "a real reachable path" (18:1x). The path is reachable; a wrong result from it is not. E had marked it inferred; I promoted an inference to a premise without a probe. O's probe is the check that should have preceded the claim.
+
+## D503 ruling 2, 19:0x (O 5ada48fd §0, §3 read): YES, push 9 commits
+
+Full suite at 6819a55: 4,013 tests, 3,977 pass, 2 fail, 27 skipped, 7 todo; harness rows 689 applied-and-caught, 0 NOT APPLIED; scans 0 of 8. The two reds: chrome-mute row 3 and drag-frame row 8.
+- **chrome-mute row 3** asserted "at least the ten known starters"; 0.4.25's Aurora revert (7dc5917, 70f7c63) deleted `sky-aurora-look.test.js`, one of the ten, so the rebased tree has nine and the row's real rule (no untitled starter) holds on all nine. O's e905420 sets the floor to nine with the reason in a comment, red in the suite and green alone. A test verifiably wrong after its base moved, said so: allowed. Yes.
+- **drag-frame row 8**: 7.4 / 7.0 ms alone with every slot clear, the known 1-in-4 ruled load at D497. O's first "alone" run (5/3) was beside C's 73-file run and is reported, not discarded: it is the parallel-run effect D504 is for.
+O pushes 9 commits (8 + e905420) to t180 main after the push-gate check, no tag, no release; removes its worktrees; final hand-back with the main sha and the push-gate line.
