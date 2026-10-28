@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict';
-// leftovers.js — the counts of what our runs leave on the machine (D450 part 3, pane C). READ-ONLY: it removes, stops and writes nothing.
+// leftovers.js — the counts of what our runs leave on the machine (D450 part 3, pane C). READ-ONLY: it removes, stops and writes nothing,
+// unless --reap-browsers is given (D504), which ends only orphaned t180 headless browsers (below).
 // Plan: exo_memory/loop/plan_cleanup_2026-10-24.md, part 3. BUILDING.md "Leave the machine as you found it" has the landing hand-back carry its output.
 //
 //   node consonance/tools/leftovers.js                 the counts, as text
@@ -9,6 +10,8 @@
 //   --repo-names <dir>  the same, but read no further than the names in its worktrees/ folder (a checkout that is not ours to open)
 //   --strays <folder> --prefix <name->   where those worktrees are made, and their name prefix (default: not scanned)
 //   --min-age <minutes> what counts as long-running (default 120)
+//   --reap-browsers     (D504) after the counts, end each headless browser root whose --user-data-dir folder starts t180 and whose parent
+//                       process is gone, with its own processes (taskkill /T); each is checked again, the same pid and start time, just before
 // D454 part 2: the repos and the strays folder are given, not the original room's t180 paths, so the tool fits any machine. The flags
 // win; without them the `leftovers` key of ~/.consonance.json gives them ({ "repos": [dir], "repo_names": [dir], "strays": { "dir", "prefix" } }).
 //
@@ -29,6 +32,9 @@
 //                   folder, the seats' shell snapshots, the scratch root, a given repo or one of its registered worktrees, the strays
 //                   folder's <prefix>* entries) or is a headless browser. Infrastructure is not listed: consonance.exe, claude.exe,
 //                   msedgewebview2.exe, the stick-waiter, the MCP servers.
+//   orphan browsers (D504, pane E) headless browser roots (the browser process itself, no --type=) whose parent process is gone, by
+//                   profile prefix: the --user-data-dir folder's name up to its last '-', so a test's browsers group under one name (t180menu-).
+//                   A page test that dies before it ends its Chrome leaves one; on 2026-10-27 a run left 2 of 11 so.
 // It runs itself at BelowNormal priority, and its two PowerShell children inherit it.
 const fs = require('fs');
 const os = require('os');
@@ -123,6 +129,48 @@ function listProcessesDefault() {
   }
   const r = spawnSync('ps', ['-eo', 'pid=,ppid=,etimes=,comm=,args='], { encoding: 'utf8' });
   return String(r.stdout || '').split('\n').filter(Boolean).map((l) => { const m = l.trim().match(/^(\d+)\s+(\d+)\s+(\d+)\s+(\S+)\s+(.*)$/); return m ? { pid: +m[1], ppid: +m[2], name: m[4], started: Date.now() - m[3] * 1000, cmd: m[5] } : null; }).filter(Boolean);
+}
+
+/** The --user-data-dir folder's name up to and including its last '-' (mkdtemp's tail cut off), or the whole name when it has none; null when none is given. */
+function profileOf(cmd) {
+  const m = String(cmd || '').match(/--user-data-dir=(?:"([^"]+)"|([^\s"]+))/);
+  if (!m) return null;
+  const base = path.win32.basename(path.posix.basename(m[1] || m[2]));
+  const i = base.lastIndexOf('-');
+  return i > 0 ? base.slice(0, i + 1) : base;
+}
+
+/** Headless browser roots whose parent process is gone, in the list's order: [{ pid, ppid, name, started, profile, t180, cmd }]. */
+function orphanBrowsers(procs) {
+  const alive = new Set(procs.map((p) => p.pid)), out = [];
+  for (const p of procs) {
+    const cmd = String(p.cmd || '');
+    if (!HEADLESS_BROWSER.test(String(p.name || '').toLowerCase()) || !/--headless/.test(cmd) || /--type=/.test(cmd) || alive.has(p.ppid)) continue;
+    const profile = profileOf(cmd);
+    out.push({ pid: p.pid, ppid: p.ppid, name: p.name, started: p.started, profile, t180: /^t180/i.test(profile || ''), cmd: cmd.trim() });
+  }
+  return out;
+}
+
+/** End one process and its own processes: { ok, why }. */
+function killTreeDefault(pid) {
+  const r = process.platform === 'win32' ? spawnSync('taskkill', ['/PID', String(pid), '/T', '/F'], { encoding: 'utf8', windowsHide: true, timeout: 30000 })
+    : spawnSync('kill', ['-TERM', String(pid)], { encoding: 'utf8' });
+  return r.status === 0 ? { ok: true } : { ok: false, why: String(r.stderr || r.stdout || r.error || `exit ${r.status}`).trim().slice(0, 200) };
+}
+
+/** --reap-browsers: end each t180 orphan browser, but only one that is still the same process (pid, start time and command line) and still an
+ *  orphan when the list is read again just before it is ended. -> [{ pid, profile, ended, why }]. */
+function reapBrowsers({ listProcesses = listProcessesDefault, kill = killTreeDefault } = {}) {
+  const targets = orphanBrowsers(listProcesses()).filter((b) => b.t180);
+  if (!targets.length) return [];
+  const again = listProcesses(), still = new Map(orphanBrowsers(again).map((b) => [b.pid, b]));
+  return targets.map((t) => {
+    const now = still.get(t.pid);
+    if (!now || now.started !== t.started || now.cmd !== t.cmd) return { pid: t.pid, profile: t.profile, ended: false, why: 'no longer the same process' };
+    const r = kill(t.pid);
+    return r && r.ok ? { pid: t.pid, profile: t.profile, ended: true } : { pid: t.pid, profile: t.profile, ended: false, why: (r && r.why) || 'the kill failed' };
+  });
 }
 
 /** The proxy verdict. A count is given only when this run has shown it can see a proxy. */
@@ -263,12 +311,14 @@ function survey(opts = {}) {
   const now = opts.now || Date.now(), minAgeMin = opts.minAgeMin == null ? 120 : opts.minAgeMin;
   const windows = (opts.readWindows || readWindowsDefault)();
   const control = windows && windows.proxies > 0 ? null : (opts.makeControl || makeControlDefault)();
+  const procs = (opts.listProcesses || listProcessesDefault)();
   return {
     at: new Date(now).toISOString(), minAgeMin, strays: strays ? findStrays(strays, repos) : null, straysAt: strays,
     proxies: proxyVerdict(windows, control),
     worktrees: repos.map(countWorktrees),
     fakeRoots: findFakeRoots(opts.roots || driveRoots()),
-    processes: ourLongRunning((opts.listProcesses || listProcessesDefault)(), now, minAgeMin, oursFor(repos, strays)),
+    processes: ourLongRunning(procs, now, minAgeMin, oursFor(repos, strays)),
+    orphanBrowsers: orphanBrowsers(procs),
   };
 }
 
@@ -282,21 +332,25 @@ function report(o) {
   L.push(o.strays === null ? 'strays               not scanned (give --strays <folder> --prefix <name>-)'
     : `strays               ${o.strays.length} ${o.straysAt.prefix}* not worktrees, in ${o.straysAt.dir}${o.strays.length ? ': ' + o.strays.map((s) => (s.kind === 'folder' ? s.name : `${s.name} (${s.kind})`)).join(', ') : ''}`);
   L.push(`fake roots           ${o.fakeRoots.length}${o.fakeRoots.length ? ': ' + o.fakeRoots.join(', ') : ''}`);
+  if (o.orphanBrowsers) {
+    const by = new Map(); for (const b of o.orphanBrowsers) by.set(b.profile || '(no profile)', (by.get(b.profile || '(no profile)') || 0) + 1);
+    L.push(`orphan browsers      ${o.orphanBrowsers.length} headless roots whose parent is gone${by.size ? ': ' + [...by].map(([k, n]) => `${k} ${n}`).join(', ') : ''}`);
+  }
   L.push(`our long-running     ${o.processes.length} (older than ${o.minAgeMin} min, infrastructure left out)`);
   for (const x of o.processes) L.push(`  pid ${x.pid}  ${age(x.ageMin)}  ${x.name}${x.seat ? `  [${x.seat}]` : ''}  ${x.cmd.length > 140 ? x.cmd.slice(0, 140) + '…' : x.cmd}`);
   return L.join('\n');
 }
 
-module.exports = { survey, report, configFrom, parsePsLine, proxyVerdict, countWorktrees, worktreeDirs, oursFor, findStrays, findFakeRoots, ourLongRunning, readWindowsDefault, makeControlDefault, listProcessesDefault };
+module.exports = { survey, report, configFrom, parsePsLine, proxyVerdict, orphanBrowsers, reapBrowsers, profileOf, countWorktrees, worktreeDirs, oursFor, findStrays, findFakeRoots, ourLongRunning, readWindowsDefault, makeControlDefault, listProcessesDefault };
 
 if (require.main === module) {
   try { os.setPriority(0, os.constants.priority.PRIORITY_BELOW_NORMAL); } catch (_) { /* a lower priority is a courtesy, not a requirement */ }
   const a = process.argv.slice(2);
-  const VALUED = new Set(['--repo', '--repo-names', '--strays', '--prefix', '--min-age']), FLAGS = new Set(['--json']);
+  const VALUED = new Set(['--repo', '--repo-names', '--strays', '--prefix', '--min-age']), FLAGS = new Set(['--json', '--reap-browsers']);
   const got = {}, repos = [];
   for (let i = 0; i < a.length; i++) {
     if (FLAGS.has(a[i])) continue;
-    if (!VALUED.has(a[i])) { console.error(`leftovers: unknown flag ${a[i]} (flags: --repo <dir>, --repo-names <dir>, --strays <folder> --prefix <name->, --min-age <minutes>, --json)`); process.exit(1); }
+    if (!VALUED.has(a[i])) { console.error(`leftovers: unknown flag ${a[i]} (flags: --repo <dir>, --repo-names <dir>, --strays <folder> --prefix <name->, --min-age <minutes>, --json, --reap-browsers)`); process.exit(1); }
     const v = a[++i];
     if (v === undefined) { console.error(`leftovers: ${a[i - 1]} needs a value`); process.exit(1); }
     if (a[i - 1] === '--repo' || a[i - 1] === '--repo-names') repos.push({ label: labelOf(v), dir: v, namesOnly: a[i - 1] === '--repo-names' }); else got[a[i - 1]] = v;
@@ -307,6 +361,12 @@ if (require.main === module) {
   try {
     const o = survey({ repos, strays: got['--strays'] === undefined ? undefined : { dir: got['--strays'], prefix: got['--prefix'] }, minAgeMin: minAge ? Number(minAge) : undefined });
     console.log(a.includes('--json') ? JSON.stringify(o, null, 1) : report(o));
+    if (a.includes('--reap-browsers')) {   // D504: the one thing this tool ends, and only when asked
+      const r = reapBrowsers();
+      console.log(`reap-browsers        ended ${r.filter((x) => x.ended).length} of ${r.length} t180 orphan browser roots`);
+      for (const x of r) console.log(`  pid ${x.pid}  ${x.profile}  ${x.ended ? 'ended' : `left: ${x.why}`}`);
+      if (r.some((x) => !x.ended && x.why !== 'no longer the same process')) process.exitCode = 1;
+    }
   } catch (e) {
     console.error(`leftovers: ${e.message}`);
     process.exit(1);

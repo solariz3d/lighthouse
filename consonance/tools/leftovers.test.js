@@ -208,3 +208,57 @@ test('the CLI refuses a flag it does not know and --strays without --prefix, and
     assert.match(r.stderr, why);
   }
 });
+
+// D504 item 3 (pane E): headless browser roots whose parent is gone, by profile prefix; --reap-browsers ends only the t180 ones, read-only without it.
+// The process list and the kill are injected (the boundary); the pids are made up and nothing is ended.
+const REPO_DIR = path.resolve(__dirname, "..", "..");   // its worktrees are counted by name only
+const BROWSERS = [
+  { pid: 100, ppid: 1, name: 'node.exe', started: 1, cmd: 'node --test app/test/menubar-page.test.js' },
+  { pid: 101, ppid: 100, name: 'chrome.exe', started: 2, cmd: 'chrome.exe --headless=new --mute-audio --remote-debugging-port=5 --user-data-dir=c:\\users\\x\\appdata\\local\\temp\\t180menu-aB3dE9 --no-first-run about:blank' },
+  { pid: 102, ppid: 999, name: 'chrome.exe', started: 3, cmd: 'chrome.exe --headless=new --mute-audio --remote-debugging-port=6 --user-data-dir=c:\\users\\x\\appdata\\local\\temp\\t180drag-Zz9yX1 --no-first-run about:blank' },
+  { pid: 103, ppid: 102, name: 'chrome.exe', started: 4, cmd: 'chrome.exe --type=renderer --user-data-dir=c:\\users\\x\\appdata\\local\\temp\\t180drag-Zz9yX1' },
+  { pid: 104, ppid: 998, name: 'chrome.exe', started: 5, cmd: 'chrome.exe --headless=new --user-data-dir="c:\\users\\x\\appdata\\local\\temp\\t180drag-Qq1wE2" about:blank' },
+  { pid: 105, ppid: 997, name: 'chrome.exe', started: 6, cmd: 'chrome.exe --headless=new --user-data-dir=c:\\users\\x\\appdata\\local\\temp\\appsnd-1 about:blank' },
+  { pid: 106, ppid: 996, name: 'chrome.exe', started: 7, cmd: '"c:\\program files\\google\\chrome\\application\\chrome.exe" --user-data-dir=c:\\users\\x\\appdata\\local\\temp\\t180menu-Ab1234' },
+  { pid: 107, ppid: 995, name: 'conhost.exe', started: 8, cmd: 'conhost.exe --headless --width 120' },
+];
+
+test('orphan browsers: a headless browser root whose parent is gone is listed by profile prefix; its renderers, a root with a live parent, a windowed Chrome and a pseudo-console are not', () => {
+  const o = L.orphanBrowsers(BROWSERS);
+  assert.deepEqual(o.map((b) => b.pid), [102, 104, 105]);
+  assert.deepEqual(o.map((b) => b.profile), ['t180drag-', 't180drag-', 'appsnd-']);
+  assert.deepEqual(o.map((b) => b.t180), [true, true, false]);
+  const r = L.report({ ...L.survey({ repos: [{ label: 'x', dir: REPO_DIR }], strays: null, roots: [], now: 10, readWindows: () => ({ proxies: 1, titles: {}, trays: 1 }), listProcesses: () => BROWSERS }) });
+  assert.match(r, /orphan browsers\s+3 headless roots whose parent is gone: t180drag- 2, appsnd- 1/);
+});
+
+test('orphan browsers: none is printed as 0, and the report says it is read-only', () => {
+  const o = L.survey({ repos: [{ label: 'x', dir: REPO_DIR }], strays: null, roots: [], now: 10, readWindows: () => ({ proxies: 1, titles: {}, trays: 1 }), listProcesses: () => BROWSERS.slice(0, 2) });
+  assert.deepEqual(o.orphanBrowsers, []);
+  assert.match(L.report(o), /orphan browsers\s+0 headless roots whose parent is gone\n/);
+  assert.match(L.report(o), /· read-only/);
+});
+
+test('--reap-browsers ends only t180 orphans, each still the same process when it is ended, and says what it ended', () => {
+  const ended = [];
+  const out = L.reapBrowsers({ listProcesses: () => BROWSERS, kill: (pid) => { ended.push(pid); return { ok: true }; } });
+  assert.deepEqual(ended, [102, 104], 'the two t180 orphans; not appsnd-, not a root whose parent lives');
+  assert.deepEqual(out.map((x) => [x.pid, x.profile, x.ended]), [[102, 't180drag-', true], [104, 't180drag-', true]]);
+});
+
+test('--reap-browsers leaves a pid that is no longer the same process (gone, or started again since the survey) and a kill that fails is said', () => {
+  let n = 0;
+  const lists = [BROWSERS, BROWSERS.map((p) => (p.pid === 102 ? { ...p, started: 99 } : p)).filter((p) => p.pid !== 104 || false)];
+  const ended = [];
+  const out = L.reapBrowsers({ listProcesses: () => lists[Math.min(n++, 1)], kill: (pid) => { ended.push(pid); return { ok: false, why: 'access denied' }; } });
+  assert.deepEqual(ended, [], 'neither is ended: 102 started again, 104 is gone');
+  assert.deepEqual(out.map((x) => [x.pid, x.ended, x.why]), [[102, false, 'no longer the same process'], [104, false, 'no longer the same process']]);
+  const out2 = L.reapBrowsers({ listProcesses: () => BROWSERS, kill: () => ({ ok: false, why: 'access denied' }) });
+  assert.deepEqual(out2.map((x) => [x.pid, x.ended, x.why]), [[102, false, 'access denied'], [104, false, 'access denied']]);
+});
+
+test('the CLI is read-only without --reap-browsers: a survey ends nothing', () => {
+  const ended = [];
+  L.survey({ repos: [{ label: 'x', dir: REPO_DIR }], strays: null, roots: [], now: 10, readWindows: () => ({ proxies: 1, titles: {}, trays: 1 }), listProcesses: () => BROWSERS, kill: (pid) => { ended.push(pid); return { ok: true }; } });
+  assert.deepEqual(ended, []);
+});
