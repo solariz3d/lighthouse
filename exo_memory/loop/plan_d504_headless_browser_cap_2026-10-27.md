@@ -1,0 +1,20 @@
+# D504: cap the headless browsers a T-180 test run opens. Librarian, 2026-10-27 19:0x
+
+The keeper, 18:56: "why are there so many chromes open, taking up too many resources, perhaps use opera gx i have it installed".
+
+checked at 18:57, during C's D502 Part 2 touched-test run (73 files, the lock's holder): **97 chrome.exe, 7,215 MB working set, 0 with a window, 15 roots carrying `--headless`**, profiles `t180menu-scaled`, `t180menu`, `t180drag`, `t180crisp`, `t180rel`, `t180tex`; 11 browser roots alive at once, all started 18:50–18:56, 2 of them orphans (parent node gone) that had already exited by 18:59. By 18:59 the count was 7: the burst is the page-test phase of a run, not a leak that grows. Machine: 16 logical CPUs, 61 GB RAM, 32.6 GB free at the time.
+
+**Why so many.** Every page test opens its own headless Chrome through one shared launcher, `app/test/soundrender.js:64 launchChrome` (10 test files use it; `menubar-page.test.js:332` opens a second one at device scale 1.25; `texture-page.test.js:46` spawns its own). Each browser is 5–9 processes (browser, gpu, crashpad, utilities, renderers). The suite runs 4 test files at once (`package.json:3`, and every suite script since D497, `--test-concurrency=4`), and 16 harness files spawn an inner `node --test` of their own, three of them at `--test-concurrency=4` (`core-mutation.test.js:121`, `mutation.test.js:180`, and `theme-mutation`'s), so a full suite can have 4 × 4 files live, each with a browser. That is the multiplier. Priority is already BelowNormal, so the cost the keeper feels is memory and disk, not CPU.
+
+**Opera GX does not help.** It is Chromium with the same multi-process model plus its own services, so each instance would be heavier, and the tests drive Chrome's `--headless=new` DevTools protocol. The number of browsers is the lever, not which browser.
+
+## Part 1, pane B (check it)
+
+1. **A machine-wide browser cap in the launcher.** In `launchChrome` (soundrender.js:64): take one of N slots before spawning and release it on kill (both exits, :77 and :122, and on process exit). Slots as lock files in `os.tmpdir()/t180-browsers/` holding the pid and start time, so processes that die without releasing are reclaimed when their pid is gone. N = 4 by default, `T180_BROWSERS` to override, waiting with a log line after 30 s and a hard error after 10 min so a stuck slot cannot hang a suite silently. `texture-page.test.js:46` switches to `launchChrome` so it is under the cap too.
+2. **Nested runs do not multiply.** The 16 harness files that spawn an inner `node --test`: when the outer run is itself a `node --test` (NODE_TEST_CONTEXT is set before the three files strip it at :87/:122/:62), the inner run takes `--test-concurrency=1`; run alone, they keep their 4. One helper in `app/test/` that returns the inner concurrency, used by all 16, so the rule lives once.
+3. **Orphans visible, and reapable.** `consonance/tools/leftovers.js` already matches browser names (:44); add a row "headless browser roots whose parent is gone, by profile prefix", and a `--reap-browsers` flag that ends only roots whose `--user-data-dir` holds a `t180` prefix and whose parent pid no longer exists. Read-only by default, as the tool is.
+4. **Measure.** Run the menubar, drag-frame, release-frame, sky-crisp and texture page tests together under the cap and record the peak chrome.exe count and working set (a sampler every 2 s, PowerShell), before and after. Then the full suite once, same sampler, so the keeper gets one number: the most browsers a run opens now.
+
+Tier check it: the launcher's own tests and the page tests named above; `node --test consonance/tools/leftovers.test.js` if there is one, else say so. No install, no release; it lands on t180 main with the next landing and on lighthouse main for leftovers.js. Hand back the peak-before / peak-after table, the branch shas, and what was not run.
+
+Kept out: the frame-timing rows' known parallel-run reds (D497, D503), which a cap may incidentally help but which this lap does not claim to fix; a browser pool shared across test files (bigger change, only if the cap is not enough).
