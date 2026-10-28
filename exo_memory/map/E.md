@@ -2611,3 +2611,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-28 ~03:0xZ (D) · D504 part 1, the headless browser cap → `exo_memory/handback/p-d504-E_2026-10-28.md`
 - t180 d504-e (cba8796 cap, a8c7de5 inner concurrency, 1e8e0c6), lighthouse d504-e 2be890cd (orphan browsers, --reap-browsers); not pushed. The full suite now peaks at 3 browser roots, 37 chrome.exe and 4,802 MB (the librarian saw 11, 97 and 7.2 GB at 18:57); the cap never bound. Item 2 buys no browsers (its 7 inner runs open none) and mutation.test.js nested runs 482 s at 1 against 278 s at 4: I propose leaving a8c7de5 out.
 - **Carry:** check a lock's cmd for "timing" before ANY process, a test, leftovers.js and a sampler included; a wrapper that waits at the gate still runs what came before the gate.
+
+## 2026-10-28 ~13:1xZ (D) · D508, the white flash at startup → `exo_memory/handback/p-d508-E_2026-10-28.md`
+- t180 d508-e 4d0a20d + f5ce433 (not pushed, not installed): the window is created hidden and dark, and the page shows it, maximized, two frames (each an animation frame or 100 ms) after its title bar is wired; a 3 s page fallback and an 8 s native show in lib.rs. tao 0.37.1 applies a hidden window's maximize when it is shown (window_state.rs:360-374), so nothing is remembered. titlebar 14/14, touched 333/334 (drag-frame row 8 timing), cargo check clean.
+- **Carry:** a "shown after frames" row must check the calls before awaiting the promise, or a broken frame hangs the run instead of failing it.
