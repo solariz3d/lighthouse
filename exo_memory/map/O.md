@@ -195,3 +195,8 @@ General form: a string a test parses must stay simple; an escaped quote in new c
 2026-10-28, D503 landing — 0 of 265 validate → revalidate → revalidate chains differ under V6 though its branch fires 76,545 times: a stale clipP is the first clipping partner, so any extra carry it allows has an unchanged partner that still clips (validate/index.js:291, :694-698); ruled (a), no row. Then chrome-mute row 3 (E's, ≥10 starters) went red on 0.4.25, which deleted sky-aurora-look.test.js; floor 9 in e905420; pushed t180 main 7dc5917..e905420. Could be wrong if a revalidate ever changes stations before `from`.
 General form: check that a mutant the plan calls reachable changes a RESULT before writing a row to catch it; a row never red proves nothing.
 → `exo_memory/handback/p-d503-landing-O_2026-10-27.md`
+
+### A lighthouse landing can merge in the shared checkout itself when the merge's paths miss every dirty file and the index is empty; then main and origin stay one commit
+2026-10-28, D505 — t180 0.4.26 released (main 1526a59, tag v0.4.26, installer 4ff5cb59… 8,017,420 B, installed 6a79b59b… = built + stamp, backup 2e187f8b… = 0.4.25); suite 4,019/1 fail (drag-frame row 8, 8/8 alone). lighthouse d504-e merged on main as dfa2464e (2 paths, 0 of 54 dirty, 0 staged) and pushed 74951dac..dfa2464e, so the shared main did not diverge as D496's worktree push left it. Could be wrong if another seat commits between the check and the merge (the window was seconds).
+Also: a fresh t180 tree has no src-tauri/dist, so release.cjs needs a cargo check first.
+→ `exo_memory/handback/p-d505-landing-O_2026-10-28.md`

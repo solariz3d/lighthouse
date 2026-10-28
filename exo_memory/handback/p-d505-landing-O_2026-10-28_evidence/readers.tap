@@ -1,0 +1,431 @@
+2026-10-28T04:10:33.454Z no timing session in any slot; taking the lock
+TAP version 13
+# Subtest: row 1: the bar reads File, Edit, Build, Track, Pieces, View, Settings, then Export to Assetto Corsa; the ⋯ menu is gone and every control keeps its id
+ok 1 - row 1: the bar reads File, Edit, Build, Track, Pieces, View, Settings, then Export to Assetto Corsa; the ⋯ menu is gone and every control keeps its id
+  ---
+  duration_ms: 1465.8283
+  type: 'test'
+  ...
+# Subtest: row 2: one menu open at a time; Esc, a press outside it and a command each close it
+ok 2 - row 2: one menu open at a time; Esc, a press outside it and a command each close it
+  ---
+  duration_ms: 1635.3901
+  type: 'test'
+  ...
+# Subtest: row 3: the moved controls work from their new place
+ok 3 - row 3: the moved controls work from their new place
+  ---
+  duration_ms: 1957.1314
+  type: 'test'
+  ...
+# Subtest: row 4: a choice in Settings and a tick in View survive a reload, saved as t180.settings.<key>
+ok 4 - row 4: a choice in Settings and a tick in View survive a reload, saved as t180.settings.<key>
+  ---
+  duration_ms: 2121.1122
+  type: 'test'
+  ...
+# Subtest: row 5: with localStorage refused, the page starts, the menus open, and a setting holds for the session
+ok 5 - row 5: with localStorage refused, the page starts, the menus open, and a setting holds for the session
+  ---
+  duration_ms: 951.5135
+  type: 'test'
+  ...
+# Subtest: row 6: Reset the guide forgets that the guide was finished
+ok 6 - row 6: Reset the guide forgets that the guide was finished
+  ---
+  duration_ms: 1097.3651
+  type: 'test'
+  ...
+# Subtest: row 7: Build and Track open and say something, never an error
+ok 7 - row 7: Build and Track open and say something, never an error
+  ---
+  duration_ms: 1094.2971
+  type: 'test'
+  ...
+# Subtest: row 8: the bar fits at 1400 px: the seven menus and Export to Assetto Corsa each on one line and inside the window, the status and install note giving way
+ok 8 - row 8: the bar fits at 1400 px: the seven menus and Export to Assetto Corsa each on one line and inside the window, the status and install note giving way
+  ---
+  duration_ms: 1027.0772
+  type: 'test'
+  ...
+# Subtest: row 9: Settings ▸ Wall raycasting and the checker's CSP box follow each other both ways, and the choice survives a reload
+ok 9 - row 9: Settings ▸ Wall raycasting and the checker's CSP box follow each other both ways, and the choice survives a reload
+  ---
+  duration_ms: 1937.0744
+  type: 'test'
+  ...
+# Subtest: row 10: with the Track part, the road surface has one controller, alive before the Track menu is opened
+ok 10 - row 10: with the Track part, the road surface has one controller, alive before the Track menu is opened
+  ---
+  duration_ms: 1099.2523
+  type: 'test'
+  ...
+# Subtest: row 11: Build ▸ Sculpt mode shows the Sculpt strip under the bar, keeps it there across an edit, and hides it again
+ok 11 - row 11: Build ▸ Sculpt mode shows the Sculpt strip under the bar, keeps it there across an edit, and hides it again
+  ---
+  duration_ms: 1981.3313
+  type: 'test'
+  ...
+# Subtest: row 12: with the Track part, a menu panel gives its controls back when the menu closes
+ok 12 - row 12: with the Track part, a menu panel gives its controls back when the menu closes
+  ---
+  duration_ms: 1448.2557
+  type: 'test'
+  ...
+# Subtest: row 13: a part that fails to load says why in its menu, and the other menus still work
+ok 13 - row 13: a part that fails to load says why in its menu, and the other menus still work
+  ---
+  duration_ms: 1085.5087
+  type: 'test'
+  ...
+# Subtest: row 14: File holds Export layouts…, its modules load on the page, and off the app it says it needs the native side instead of doing nothing
+ok 14 - row 14: File holds Export layouts…, its modules load on the page, and off the app it says it needs the native side instead of doing nothing
+  ---
+  duration_ms: 1059.5837
+  type: 'test'
+  ...
+# Subtest: row 15: Settings ▸ Sound: the volume slider shows 45 on a fresh start, and a saved volume shows as saved
+ok 15 - row 15: Settings ▸ Sound: the volume slider shows 45 on a fresh start, and a saved volume shows as saved
+  ---
+  duration_ms: 1546.5477
+  type: 'test'
+  ...
+# Subtest: row 16 (D394): Settings ▸ Theme: a fixed theme sets the look at once and fetches its own melody's two files; it survives a reload as that look and melody; SIGIL plays its own, Obsidian (D402)
+ok 16 - row 16 (D394): Settings ▸ Theme: a fixed theme sets the look at once and fetches its own melody's two files; it survives a reload as that look and melody; SIGIL plays its own, Obsidian (D402)
+  ---
+  duration_ms: 2023.4354
+  type: 'test'
+  ...
+# Subtest: row 17 (D396): the bar fits at 900, 1100, 1280 and 1400 px and on both sides of each fold: no overflow, the window buttons wholly inside the window, a grab strip of at least 24 px, every menu and Export on one line left of them; at 125% scaling too, where a window can be a fraction of a pixel wide
+ok 17 - row 17 (D396): the bar fits at 900, 1100, 1280 and 1400 px and on both sides of each fold: no overflow, the window buttons wholly inside the window, a grab strip of at least 24 px, every menu and Export on one line left of them; at 125% scaling too, where a window can be a fraction of a pixel wide
+  ---
+  duration_ms: 16485.7571
+  type: 'test'
+  ...
+# Subtest: row 18 (D401): Settings ▸ Theme starts with Random, not Music, and it is the default; choosing it picks another look at once and that look's melody follows; a saved music loads as Random
+ok 18 - row 18 (D401): Settings ▸ Theme starts with Random, not Music, and it is the default; choosing it picks another look at once and that look's melody follows; a saved music loads as Random
+  ---
+  duration_ms: 1963.2046
+  type: 'test'
+  ...
+# Subtest: row 18b (D401, B's D408 probe): the same with Math.random pinned, so both branches run every time: at 0.1 the start look is the pick (its files already in), at 0.5 it is not
+ok 19 - row 18b (D401, B's D408 probe): the same with Math.random pinned, so both branches run every time: at 0.1 the start look is the pick (its files already in), at 0.5 it is not
+  ---
+  duration_ms: 3927.6809
+  type: 'test'
+  ...
+# Subtest: row 19 (D401, A's read §8): a fresh start, Random already ticked: one click on Random picks another look and its melody, and so does the next
+ok 20 - row 19 (D401, A's read §8): a fresh start, Random already ticked: one click on Random picks another look and its melody, and so does the next
+  ---
+  duration_ms: 1261.0422
+  type: 'test'
+  ...
+# Subtest: row 19b (D401): on a fresh install the first click on the ticked Random picks once, not twice: with Math.random at 0.4, Glass becomes Aurora
+ok 21 - row 19b (D401): on a fresh install the first click on the ticked Random picks once, not twice: with Math.random at 0.4, Glass becomes Aurora
+  ---
+  duration_ms: 1168.4612
+  type: 'test'
+  ...
+# Subtest: a clamped cubic starts at P0 with slope 3(P1 − P0)/t4 (ref 09 §1), against a finite difference
+ok 22 - a clamped cubic starts at P0 with slope 3(P1 − P0)/t4 (ref 09 §1), against a finite difference
+  ---
+  duration_ms: 1.7335
+  type: 'test'
+  ...
+# Subtest: a piece placed after another starts at its end value AND slope in every channel (C1 joints, so the line is G2)
+ok 23 - a piece placed after another starts at its end value AND slope in every channel (C1 joints, so the line is G2)
+  ---
+  duration_ms: 1.446
+  type: 'test'
+  ...
+# Subtest: a joint that is not C1 is refused by name (JOINT)
+ok 24 - a joint that is not C1 is refused by name (JOINT)
+  ---
+  duration_ms: 0.6781
+  type: 'test'
+  ...
+# Subtest: checkDoc REFUSES a hand-built document with a broken joint, by the name JOINT (a κh step, a bank tear, a slope kink)
+ok 25 - checkDoc REFUSES a hand-built document with a broken joint, by the name JOINT (a κh step, a bank tear, a slope kink)
+  ---
+  duration_ms: 0.2888
+  type: 'test'
+  ...
+# Subtest: a frozen piece that passed after one piece is still refused (JOINT) after a different piece it does not join
+ok 26 - a frozen piece that passed after one piece is still refused (JOINT) after a different piece it does not join
+  ---
+  duration_ms: 0.2144
+  type: 'test'
+  ...
+# Subtest: a piece that is not frozen is checked again every time: changed after a pass, it is refused
+ok 27 - a piece that is not frozen is checked again every time: changed after a pass, it is refused
+  ---
+  duration_ms: 0.1369
+  type: 'test'
+  ...
+# Subtest: a piece frozen only at the top is checked again: its channels changed after a pass, it is refused
+ok 28 - a piece frozen only at the top is checked again: its channels changed after a pass, it is refused
+  ---
+  duration_ms: 0.1132
+  type: 'test'
+  ...
+# Subtest: a frozen piece after a piece that is not frozen is checked again: the piece before it changed after a pass, it is refused
+ok 29 - a frozen piece after a piece that is not frozen is checked again: the piece before it changed after a pass, it is refused
+  ---
+  duration_ms: 0.111
+  type: 'test'
+  ...
+# Subtest: a frozen piece that passed as a joint is still refused (LANDING) as the landing of a flight from the same piece
+ok 30 - a frozen piece that passed as a joint is still refused (LANDING) as the landing of a flight from the same piece
+  ---
+  duration_ms: 0.285
+  type: 'test'
+  ...
+# Subtest: a frozen piece that passed as a landing is still refused (JOINT) straight after the same take-off piece
+ok 31 - a frozen piece that passed as a landing is still refused (JOINT) straight after the same take-off piece
+  ---
+  duration_ms: 0.1865
+  type: 'test'
+  ...
+# Subtest: a flight must follow road; the road after it starts level (κh = κv = 0) at the flight's bank, the rest carried
+ok 32 - a flight must follow road; the road after it starts level (κh = κv = 0) at the flight's bank, the rest carried
+  ---
+  duration_ms: 0.8921
+  type: 'test'
+  ...
+# Subtest: load then save is byte-exact, and a value finer than its quantum is snapped as it enters
+ok 33 - load then save is byte-exact, and a value finer than its quantum is snapped as it enters
+  ---
+  duration_ms: 1.3583
+  type: 'test'
+  ...
+# Subtest: the same document serialises to the same bytes whatever order its keys were in
+ok 34 - the same document serialises to the same bytes whatever order its keys were in
+  ---
+  duration_ms: 0.2755
+  type: 'test'
+  ...
+# Subtest: a piece whose keys come in another order (as another module may build it) still serialises canonically
+ok 35 - a piece whose keys come in another order (as another module may build it) still serialises canonically
+  ---
+  duration_ms: 0.227
+  type: 'test'
+  ...
+# Subtest: a file of a different schema version is refused, saying a newer file needs a newer builder
+ok 36 - a file of a different schema version is refused, saying a newer file needs a newer builder
+  ---
+  duration_ms: 0.0993
+  type: 'test'
+  ...
+# Subtest: undo is the document history: undo and redo are byte-identical, and a whole drag is one entry
+ok 37 - undo is the document history: undo and redo are byte-identical, and a whole drag is one entry
+  ---
+  duration_ms: 0.5451
+  type: 'test'
+  ...
+# Subtest: a fitted channel holds its start exactly and reproduces a cubic polynomial (ref 03 §2: the cubic lies in the spline space)
+ok 38 - a fitted channel holds its start exactly and reproduces a cubic polynomial (ref 03 §2: the cubic lies in the spline space)
+  ---
+  duration_ms: 0.6365
+  type: 'test'
+  ...
+# Subtest: a circle's position fit loads as κh = 1/R, κv = 0 and no bank (ref 09 §4)
+ok 39 - a circle's position fit loads as κh = 1/R, κv = 0 and no bank (ref 09 §4)
+  ---
+  duration_ms: 9.7552
+  type: 'test'
+  ...
+# Subtest: a helix loads with κv = 0 at its constant pitch, and κh = cos p / R (the heading turns about WORLD up)
+ok 40 - a helix loads with κv = 0 at its constant pitch, and κh = cos p / R (the heading turns about WORLD up)
+  ---
+  duration_ms: 6.7986
+  type: 'test'
+  ...
+# Subtest: a real track from reads/ opens as a LOCAL example (skipped where reads/ has no position fit)
+ok 41 - a real track from reads/ opens as a LOCAL example (skipped where reads/ has no position fit) # SKIP no local position fit of Serpents Spiral in reads/ (other authors' tracks stay local)
+  ---
+  duration_ms: 0.2848
+  type: 'test'
+  ...
+# Subtest: the default brush is a HILL, and while the document has no height channel it is refused by name (never faked through the rate)
+ok 42 - the default brush is a HILL, and while the document has no height channel it is refused by name (never faked through the rate) # SKIP the offset channels are in: the hill tests below run instead
+  ---
+  duration_ms: 0.6422
+  type: 'test'
+  ...
+# Subtest: a value brush (bank) leaves every sample past W⁺ bit for bit, and calls no close
+ok 43 - a value brush (bank) leaves every sample past W⁺ bit for bit, and calls no close
+  ---
+  duration_ms: 96.6654
+  type: 'test'
+  ...
+# Subtest: a RATE brush must be asked for: a heading-rate channel under the hill or value mode is refused
+ok 44 - a RATE brush must be asked for: a heading-rate channel under the hill or value mode is refused
+  ---
+  duration_ms: 0.4889
+  type: 'test'
+  ...
+# Subtest: a RATE brush on an OPEN track changes the track downstream and does not close it
+ok 45 - a RATE brush on an OPEN track changes the track downstream and does not close it
+  ---
+  duration_ms: 46.8035
+  type: 'test'
+  ...
+# Subtest: a RATE brush on a CLOSED track re-closes it, with the brushed stretch protected
+ok 46 - a RATE brush on a CLOSED track re-closes it, with the brushed stretch protected
+  ---
+  duration_ms: 165.4144
+  type: 'test'
+  ...
+# Subtest: a RATE brush has no kink at its edges: κ_new − κ_old steps no more at the edges than inside
+ok 47 - a RATE brush has no kink at its edges: κ_new − κ_old steps no more at the edges than inside
+  ---
+  duration_ms: 54.5651
+  type: 'test'
+  ...
+# Subtest: a hill of 5 m, r 20 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked
+ok 48 - a hill of 5 m, r 20 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked
+  ---
+  duration_ms: 67.1924
+  type: 'test'
+  ...
+# Subtest: a hill of 5 m, r 100 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked
+ok 49 - a hill of 5 m, r 100 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked
+  ---
+  duration_ms: 62.3974
+  type: 'test'
+  ...
+# Subtest: a hill of -5 m, r 20 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked
+ok 50 - a hill of -5 m, r 20 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked
+  ---
+  duration_ms: 54.6444
+  type: 'test'
+  ...
+# Subtest: a hill of -5 m, r 100 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked
+ok 51 - a hill of -5 m, r 100 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked
+  ---
+  duration_ms: 66.2272
+  type: 'test'
+  ...
+# Subtest: a swerve of 3 m, r 20 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked
+ok 52 - a swerve of 3 m, r 20 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked
+  ---
+  duration_ms: 62.344
+  type: 'test'
+  ...
+# Subtest: a swerve of 3 m, r 100 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked
+ok 53 - a swerve of 3 m, r 100 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked
+  ---
+  duration_ms: 73.9822
+  type: 'test'
+  ...
+# Subtest: a SHARP brush (refine first) acts at the asked radius, and costs what the hand-back says: it is opt-in
+ok 54 - a SHARP brush (refine first) acts at the asked radius, and costs what the hand-back says: it is opt-in
+  ---
+  duration_ms: 12.951
+  type: 'test'
+  ...
+# Subtest: a SHARP rate brush on kh at 25%, r 20 m (a D185 miss): C2 at s₀ ± 20 on κ_new − κ_old, at the asked radius
+ok 55 - a SHARP rate brush on kh at 25%, r 20 m (a D185 miss): C2 at s₀ ± 20 on κ_new − κ_old, at the asked radius
+  ---
+  duration_ms: 78.4411
+  type: 'test'
+  ...
+# Subtest: a SHARP rate brush on kh at 75%, r 20 m (a D185 miss): C2 at s₀ ± 20 on κ_new − κ_old, at the asked radius
+ok 56 - a SHARP rate brush on kh at 75%, r 20 m (a D185 miss): C2 at s₀ ± 20 on κ_new − κ_old, at the asked radius
+  ---
+  duration_ms: 97.1655
+  type: 'test'
+  ...
+# Subtest: a SHARP rate brush on kv at 25%, r 20 m (a D185 miss): C2 at s₀ ± 20 on κ_new − κ_old, at the asked radius
+ok 57 - a SHARP rate brush on kv at 25%, r 20 m (a D185 miss): C2 at s₀ ± 20 on κ_new − κ_old, at the asked radius
+  ---
+  duration_ms: 81.8969
+  type: 'test'
+  ...
+# Subtest: a refinement ALONE leaves the curve unchanged up to its stored step: every channel within 2 of its quanta, everywhere (1.69 measured)
+ok 58 - a refinement ALONE leaves the curve unchanged up to its stored step: every channel within 2 of its quanta, everywhere (1.69 measured)
+  ---
+  duration_ms: 13.4557
+  type: 'test'
+  ...
+# Subtest: undo removes both the brush and its knots: one commit, one undo, the document as it was
+ok 59 - undo removes both the brush and its knots: one commit, one undo, the document as it was
+  ---
+  duration_ms: 15.2996
+  type: 'test'
+  ...
+# Subtest: a SHARP phi brush, r 20 m: outside W⁺ every channel moves under half a quantum and the track past it under 0.1 mm, as declared
+ok 60 - a SHARP phi brush, r 20 m: outside W⁺ every channel moves under half a quantum and the track past it under 0.1 mm, as declared
+  ---
+  duration_ms: 211.7036
+  type: 'test'
+  ...
+# Subtest: a SHARP w brush, r 20 m: outside W⁺ every channel moves under half a quantum and the track past it under 0.1 mm, as declared
+ok 61 - a SHARP w brush, r 20 m: outside W⁺ every channel moves under half a quantum and the track past it under 0.1 mm, as declared
+  ---
+  duration_ms: 185.3769
+  type: 'test'
+  ...
+# Subtest: a SHARP h brush, r 20 m: outside W⁺ every channel moves under half a quantum and the track past it under 0.1 mm, as declared
+ok 62 - a SHARP h brush, r 20 m: outside W⁺ every channel moves under half a quantum and the track past it under 0.1 mm, as declared
+  ---
+  duration_ms: 196.2461
+  type: 'test'
+  ...
+# Subtest: the brush always reports the radius it used (the default widens, and says how far)
+ok 63 - the brush always reports the radius it used (the default widens, and says how far)
+  ---
+  duration_ms: 0.6512
+  type: 'test'
+  ...
+# Subtest: D421a: a hill and a swerve brush step fits three frames (one alone) on a 2 km and a 10 km track (warm), and the first, cold step stays under 100 ms
+ok 64 - D421a: a hill and a swerve brush step fits three frames (one alone) on a 2 km and a 10 km track (warm), and the first, cold step stays under 100 ms
+  ---
+  duration_ms: 53.3228
+  type: 'test'
+  ...
+# Subtest: D421b: the peak scan finds the same peak as reading the whole track again at every 0.25 m, so the brushed document is bit for bit the same
+ok 65 - D421b: the peak scan finds the same peak as reading the whole track again at every 0.25 m, so the brushed document is bit for bit the same
+  ---
+  duration_ms: 6920.5917
+  type: 'test'
+  ...
+# Subtest: the script writes every file tauri.conf.json names, at its size, and the ico carries 16, 24, 32, 48 and 256
+ok 66 - the script writes every file tauri.conf.json names, at its size, and the ico carries 16, 24, 32, 48 and 256
+  ---
+  duration_ms: 1537.2771
+  type: 'test'
+  ...
+# Subtest: two runs write the same bytes, and the committed icons are what the script draws
+ok 67 - two runs write the same bytes, and the committed icons are what the script draws
+  ---
+  duration_ms: 2809.6174
+  type: 'test'
+  ...
+# Subtest: the icon is the Crossover loop in Skyline's colours: a light tile, the dark track and the blue car
+ok 68 - the icon is the Crossover loop in Skyline's colours: a light tile, the dark track and the blue car
+  ---
+  duration_ms: 4.9962
+  type: 'test'
+  ...
+# Subtest: on a light taskbar (\#f3f3f3) the tile's edge reads at 24 and 32 px: at least 3:1 at the middle of every side
+ok 69 - on a light taskbar (\#f3f3f3) the tile's edge reads at 24 and 32 px: at least 3:1 at the middle of every side
+  ---
+  duration_ms: 171.2079
+  type: 'test'
+  ...
+# Subtest: the title bar still reads "T-180 TRACK BUILDER", now as the wordmark: the name, a hairline rule, the dimmed rest
+ok 70 - the title bar still reads "T-180 TRACK BUILDER", now as the wordmark: the name, a hairline rule, the dimmed rest
+  ---
+  duration_ms: 1.0696
+  type: 'test'
+  ...
+1..70
+# tests 70
+# suites 0
+# pass 68
+# fail 0
+# cancelled 0
+# skipped 2
+# todo 0
+# duration_ms 48814.458

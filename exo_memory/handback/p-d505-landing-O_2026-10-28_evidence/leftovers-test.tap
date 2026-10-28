@@ -1,0 +1,112 @@
+TAP version 13
+# Subtest: the counts: worktrees per repo, unregistered app-* entries, fake roots, our long-running processes, and a proxy count it has read
+ok 1 - the counts: worktrees per repo, unregistered app-* entries, fake roots, our long-running processes, and a proxy count it has read
+  ---
+  duration_ms: 992.0077
+  type: 'test'
+  ...
+# Subtest: a proxy read of 0 is printed as UNCALIBRATED, never as 0, when no control proxy raised the count
+ok 2 - a proxy read of 0 is printed as UNCALIBRATED, never as 0, when no control proxy raised the count
+  ---
+  duration_ms: 1035.1288
+  type: 'test'
+  ...
+# Subtest: a proxy read of 0 from an enumerator that cannot see the taskbar says it is blind
+ok 3 - a proxy read of 0 from an enumerator that cannot see the taskbar says it is blind
+  ---
+  duration_ms: 1053.833
+  type: 'test'
+  ...
+# Subtest: a proxy read of 0 counts once a control proxy was seen to raise the count and leave again
+ok 4 - a proxy read of 0 counts once a control proxy was seen to raise the count and leave again
+  ---
+  duration_ms: 726.8668
+  type: 'test'
+  ...
+# Subtest: with no repos and no strays folder given, it counts its own repository and says the stray scan was not run, naming nothing of the original machine
+ok 5 - with no repos and no strays folder given, it counts its own repository and says the stray scan was not run, naming nothing of the original machine
+  ---
+  duration_ms: 23.4295
+  type: 'test'
+  ...
+# Subtest: the leftovers key of ~/.consonance.json supplies the repos, the names-only repos and the strays, and what is passed in wins over it
+ok 6 - the leftovers key of ~/.consonance.json supplies the repos, the names-only repos and the strays, and what is passed in wins over it
+  ---
+  duration_ms: 642.1474
+  type: 'test'
+  ...
+# Subtest: a leftovers key of the wrong shape is refused by name, and an unreadable config falls back to the neutral default
+ok 7 - a leftovers key of the wrong shape is refused by name, and an unreadable config falls back to the neutral default
+  ---
+  duration_ms: 5.6585
+  type: 'test'
+  ...
+# Subtest: a process counts as ours when it runs in a given repo, one of its registered worktrees, the strays folder or the scratch root, and not in a folder it was not given
+ok 8 - a process counts as ours when it runs in a given repo, one of its registered worktrees, the strays folder or the scratch root, and not in a folder it was not given
+  ---
+  duration_ms: 502.5168
+  type: 'test'
+  ...
+# Subtest: a names-only repo is counted from the names in its worktrees folder, and none of its worktree entries is opened
+ok 9 - a names-only repo is counted from the names in its worktrees folder, and none of its worktree entries is opened
+  ---
+  duration_ms: 527.86
+  type: 'test'
+  ...
+# Subtest: a repo given as one of its own linked worktrees (.git is a file there) counts the main repository's registered worktrees
+ok 10 - a repo given as one of its own linked worktrees (.git is a file there) counts the main repository's registered worktrees
+  ---
+  duration_ms: 533.2939
+  type: 'test'
+  ...
+# Subtest: a PowerShell JSON line with a raw control character inside a string still parses, and the character is kept
+ok 11 - a PowerShell JSON line with a raw control character inside a string still parses, and the character is kept
+  ---
+  duration_ms: 0.2802
+  type: 'test'
+  ...
+# Subtest: the CLI refuses a flag it does not know and --strays without --prefix, and says why
+ok 12 - the CLI refuses a flag it does not know and --strays without --prefix, and says why
+  ---
+  duration_ms: 78.9822
+  type: 'test'
+  ...
+# Subtest: orphan browsers: a headless browser root whose parent is gone is listed by profile prefix; its renderers, a root with a live parent, a windowed Chrome and a pseudo-console are not
+ok 13 - orphan browsers: a headless browser root whose parent is gone is listed by profile prefix; its renderers, a root with a live parent, a windowed Chrome and a pseudo-console are not
+  ---
+  duration_ms: 15.7709
+  type: 'test'
+  ...
+# Subtest: orphan browsers: none is printed as 0, and the report says it is read-only
+ok 14 - orphan browsers: none is printed as 0, and the report says it is read-only
+  ---
+  duration_ms: 14.5081
+  type: 'test'
+  ...
+# Subtest: --reap-browsers ends only t180 orphans, each still the same process when it is ended, and says what it ended
+ok 15 - --reap-browsers ends only t180 orphans, each still the same process when it is ended, and says what it ended
+  ---
+  duration_ms: 0.1971
+  type: 'test'
+  ...
+# Subtest: --reap-browsers leaves a pid that is no longer the same process (gone, or started again since the survey) and a kill that fails is said
+ok 16 - --reap-browsers leaves a pid that is no longer the same process (gone, or started again since the survey) and a kill that fails is said
+  ---
+  duration_ms: 0.2525
+  type: 'test'
+  ...
+# Subtest: the CLI is read-only without --reap-browsers: a survey ends nothing
+ok 17 - the CLI is read-only without --reap-browsers: a survey ends nothing
+  ---
+  duration_ms: 15.2265
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6337.2801

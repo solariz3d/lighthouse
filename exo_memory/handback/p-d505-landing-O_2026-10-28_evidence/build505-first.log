@@ -1,0 +1,12 @@
+head 1526a59 changed=[0] 04:11:37Z
+2026-10-28T04:11:37.865Z no timing session in any slot; taking the lock
+        Info Looking up installed tauri packages to check mismatched versions...
+       Error Unable to find your web assets, did you forget to build your web app? Your frontendDist is set to "dist" (which is `C:\Users\nname\Downloads\t180-wt-o505-rel\src-tauri\dist`).
+release: cargo tauri build failed (1)
+release.cjs exit 1 04:11:40Z
+ls: cannot access 'src-tauri/target/release/t180-track-builder.exe': No such file or directory
+ls: cannot access 'src-tauri/target/release/bundle/nsis/*.exe': No such file or directory
+sha256sum: src-tauri/target/release/t180-track-builder.exe: No such file or directory
+sha256sum: 'src-tauri/target/release/bundle/nsis/*.exe': No such file or directory
+after: changed=[1]
+ M src-tauri/Cargo.toml

@@ -1,0 +1,6 @@
+head cd6f145 changed=[0] SWEEP_SEEDS=60 03:44:04Z
+suite exit 1, 1404 s: ℹ tests 4019 ℹ pass 3984 ℹ fail 1 ℹ cancelled 0 ℹ skipped 27 ℹ todo 7  04:07:28Z
+suite non-TODO not ok rows: 1
+not ok 662 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms)
+mutant rows: applied-and-caught 689, not ok mutant rows 0, NOT APPLIED mentions 0
+after suite: changed=[0] 04:07:29Z
