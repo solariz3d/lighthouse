@@ -19,3 +19,11 @@ No code is committed in Part 1. No change to how the builder looks ships from it
 The picked changes as one branch, installed on his machine with the usual backup and sha256 compare, NO release until he has judged it in the app (looks ship to the keeper first). Then it rides the next batch.
 
 Kept out: the previewer's 3D view and the sky (D489's line); fonts (the guide could not identify them either). Tier: Part 1 just do it; Part 2 check it. surfaced: the guide (research/), index.html:262/:288, app/themes/, app/menubar/.
+
+## Part 1 in, 18:3x (C e3295b56, lighthouse branch d502-c b2d1d345; read whole; published)
+
+Artifact for the keeper: https://claude.ai/artifact/NCccGt5kjXW4GGyPtjQwUt (432 renders in two publishes of 216 files, 50 MB + 55 MB; page source `scratchpad\d502\index.html`, renders copied to `scratchpad\d502\r\<pass>\`). A look picker, per-pass region tabs, a wipe slider per pair, the colour pass shown as strip against controls side by side, pick buttons that compose one line.
+
+C's findings that change the plan's assumptions, all measured: six looks, not five (SIGIL uses the base); the spacing is identical across looks (the theme files declare none); the UI has 0 emoji, no icon set, 0 exclamation marks and no pills, so the guide's icon and copy-tone passes do not apply; 58 of 144 strings are all-caps by CSS only; border width is already 1 px everywhere while corner radius varies 3–4 ways per look; SIGIL already is the guide's colour result; the spacing scale alone moves rendered gaps only 32 → 30 because the gaps come from line and control heights. C's order: borders, edges, copy, colour (controls variant, not the strip), spacing only with a row-height scale.
+
+Part 2 waits on the keeper's picks from the page. On his line, the landing pane makes one branch of the picked passes, installs it with backup and sha256 compare, no release until he judges in the app, then it rides the batch with D503.
