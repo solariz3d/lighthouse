@@ -214,3 +214,7 @@ General form: a hand-back committed after its own scan is unscanned until the ne
 2026-10-28, D515 — CRAZY TEST replay against its 15:22Z export (kn5 bfde4dc6, AI 0cb82e6b): piece 13, a descending helix at bank 85°, R 63-76 m, 707-753 km/h; >= 55 g unbroken 7.13 s vs 0.39-0.43 s on four Centrifuge replays; the line-curvature load matches measured (r 0.988) but runs ~8 g low once the box is on the road. Could be wrong that the steadiness is why it held: driver and car not separated.
 General form: a load peak and a held load are different limits; measure both before calling a track the hardest.
 → `exo_memory/handback/p-d515-crazytest-O_2026-10-28.md`
+
+### A zone grab on the road must ask the piece what it has: cup and edge channels exist only on flagged pieces, the edge zone starts at the piece's own s (default 0.64), and the pick gives no across offset at all
+2026-10-28, D519 Part 1 — t180 ff1d624: pickAt (preview.js:576-585) returns the nearest CENTRELINE sample within 40 px, so no u and often no hit on a rim; sculpt.js:111-112 refuses c and e/er/s on unflagged pieces; document.js:34-43 s in 0.5-0.95. Design: zones 0.2 / s / 0.9 by piece type, direction decides U vs L, a pickAcross in the preview, dots thinned to max(100 m, radius) and 24 px, cap 40 a row. Could be wrong that the keeper wants symmetric width at a rim (the registered falsifier).
+→ `exo_memory/handback/p-d519-design-O_2026-10-28.md`
