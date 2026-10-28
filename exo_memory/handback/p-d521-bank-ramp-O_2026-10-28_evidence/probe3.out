@@ -1,0 +1,12 @@
+turn none: peak gravity-frame roll rate 0.387 °/m, peak φ rate 0.281 °/m
+  s 110: φ -0.030°, sample roll -0.030°, gravity-frame roll from U 0.030°, grade 0.0000
+  s 150: φ -3.106°, sample roll -3.106°, gravity-frame roll from U 3.106°, grade 0.0000
+  s 200: φ -15.000°, sample roll -15.000°, gravity-frame roll from U 15.000°, grade 0.0000
+  s 250: φ -26.894°, sample roll -26.894°, gravity-frame roll from U 26.894°, grade 0.0000
+  s 300: φ -30.000°, sample roll -30.000°, gravity-frame roll from U 30.000°, grade 0.0000
+turn 90°: peak gravity-frame roll rate 0.387 °/m, peak φ rate 0.281 °/m
+  s 110: φ -0.030°, sample roll -0.030°, gravity-frame roll from U 0.030°, grade 0.0000
+  s 150: φ -3.106°, sample roll -3.106°, gravity-frame roll from U 3.106°, grade 0.0000
+  s 200: φ -15.000°, sample roll -15.000°, gravity-frame roll from U 15.000°, grade 0.0000
+  s 250: φ -26.894°, sample roll -26.894°, gravity-frame roll from U 26.894°, grade 0.0000
+  s 300: φ -30.000°, sample roll -30.000°, gravity-frame roll from U 30.000°, grade 0.0000

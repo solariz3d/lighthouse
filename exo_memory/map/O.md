@@ -223,3 +223,8 @@ General form: a load peak and a held load are different limits; measure both bef
 2026-10-28, landing — scanned origin/main..3f2959ed (41 commits, all scans 0), pushed main = 310077dd; the extra commit, scanned after, was 2 clean lines. Could be wrong that the gate alone would have caught a hit (it scans keys and words, not the 13 private terms).
 General form: git push origin <scanned sha>:main.
 → `exo_memory/handback/p-landing-O_2026-10-28.md`
+
+### A bank that starts at the joint needs its rate eased, not its value: the C2 quintic banked 0.3° in the first 10 m of his piece; a linear ramp with its rate eased over min(10 m, L/4) banks 3.0° there, peaks 0.60 against 1.02 °/m, and stays C2
+2026-10-28, D521 — t180 d521-o 866157f; the shape needs knots at l/2 and l from each end (20 m knots make the first span a·s³: 1.41° at 10 m), INSERTED (Boehm) so every other channel keeps its curve; opt-in from the panel only, so Close/Finish and all 17 saved tracks keep their bytes; installed 5e4271ba over E's D524. Could be wrong that the 3× sharper roll onset feels better: the keeper judges.
+General form: before installing on a shared exe, read the installed hash; the brief's base can be two installs old.
+→ `exo_memory/handback/p-d521-bank-ramp-O_2026-10-28.md`

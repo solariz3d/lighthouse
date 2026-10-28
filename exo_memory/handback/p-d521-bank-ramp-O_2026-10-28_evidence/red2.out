@@ -1,0 +1,123 @@
+✔ the core loads through the WEBVIEW's loader with the node shim, builds the same track as node's, and is refused without the shim (51.4032ms)
+✔ extend: a piece is added at the head, the segments are the adapter's, and undo / redo walk it back and forth exactly (4.473ms)
+✔ the ghost of an extension is exactly what the click then builds (2.0674ms)
+✖ extendOptions: empty fields continue; turn and climb are degrees per 100 m, bank degrees, width metres (0.6955ms)
+✔ a failed extend changes nothing and says why (0.7564ms)
+✔ the rate brush: one drag is one undo step, every frame applies the WHOLE delta to the drag's base, and undo restores the track exactly (11.2916ms)
+✔ the local (height / sideways) brush: refused by name while E's brush is not in the build; E's hill and swerve when it is (3.3596ms)
+✔ with E's brush, the rate brush goes through it: kh and kv as its rate mode, bank, width and rise as its value mode (1.2157ms)
+✔ a brush E widened says so, with the radius it really used (the chair's ruling 2: always shown) (2.2116ms)
+✔ the sharp opt-in reaches E's brush only when asked; the default is off (the chair's ruling 2: widen by default) (1.2559ms)
+✔ E's refusal (a hill with no offset channel yet) is the message, and nothing changes (2.0413ms)
+✔ close: one click closes the lap; extending a closed loop is refused; the rate brush on heading refuses to open it (119.4408ms)
+✔ export: an open track is refused before anything runs; a closed lap goes through the SAME exporter and its files are written (1152.2378ms)
+✔ save and open use their own prefix, so the piece builder's tracks are neither listed nor opened here (1.5066ms)
+✔ openExample refuses files that are not a fit and a read, and changes nothing (0.6445ms)
+✔ the track model draws the LIFTED road, re-meshes a lift-only change to exactly a full build, and keeps the lift through an extend (111.2622ms)
+✔ the export lifts the path before it meshes it (meta.liftPath), so an exported hill is in the kn5 (1283.6004ms)
+✔ landed core: a 1 m hill brushed in the app is in the preview's path and the export's (123.4925ms)
+✔ landed core: a narrow brush that E widened says so, with the radius it used (E reports radiusUsed) (3.8988ms)
+✔ a lap that starts pitched, turned and off the origin: the preview starts and ends where the adapter does, and it closes and exports (1241.0746ms)
+✔ the pick: the station under a canvas point, as the renderer projects it; nothing when the point is off the track (2.5237ms)
+✔ D226 export (core): an EMPTY folder made directly in content\tracks exports to content\tracks and is removed; a folder with anything in it is refused and kept (1145.7502ms)
+✔ D234 an OPEN loop exported into an EMPTY picked folder is refused, the message and the refusal are shown, and the folder is GONE (16.8359ms)
+✔ D234 a REFUSED GRID (a tube too narrow for even one slot) and a RED lap into an empty picked folder: refused, shown, folder gone (282.933ms)
+✔ D234 a NON-EMPTY foreign folder is untouched in every case (open loop, refused grid, red): the target is refused first, nothing is removed or written (411.6846ms)
+✔ D234 a successful export is unchanged: written to content\tracks, the empty folder removed once, no refusal left; and a failed WRITE still removes the empty folder (2337.5609ms)
+✔ D243a the TEST export of an OPEN lap goes through the shell and the exporter: written open as a test folder, its reds listed, the loop not refused (1207.3935ms)
+✔ D243a the TEST export of a CLOSED lap is refused by name, and nothing is written (the lap would be built open with its end wall at the seam) (1201.0329ms)
+✔ D464: Export shows its warnings in the user's words: the CSP need, and none of the builders' references (1192.492ms)
+✔ 2a: a 50 m circle turning left, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) (16.5791ms)
+✔ 2a: a 50 m circle turning right, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) (9.8838ms)
+✔ 2a: a 200 m circle turning left, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) (7.1532ms)
+✔ 2a: a 200 m circle turning right, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) (7.0729ms)
+✔ 2a: a 1000 m circle turning left, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) (13.0635ms)
+✔ 2a: a 1000 m circle turning right, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) (7.0261ms)
+✔ 2b: a clothoid (κ = s/A², A² = 80,000 m², to 1/200) turning left, extended 200 m with no handle, keeps growing at 1/A² (4.7038ms)
+✔ 2b: a clothoid (κ = s/A², A² = 80,000 m², to 1/200) turning right, extended 200 m with no handle, keeps growing at 1/A² (3.839ms)
+✔ a handle target is reached at the transition with zero channel slope, and the start still holds value and slope (ref 09 §2) (3.1317ms)
+✔ extend refuses a closed track, a bad length and an unknown channel, by name (0.6459ms)
+✖ D521 row 1: on his piece the rounded bank starts at the joint: 3.0° by 10 m, 9.0° by 20 m, 27.0° at the middle, -54.05° at the end, and rolls no faster than real tracks (3.0491ms)
+✔ D521 row 2: the rounded bank is C2 at both joints: value, slope and second derivative continue across the straight's end and are steady at its own end (1.7016ms)
+✔ D521 row 3: his corner still turns exactly 11.70°, and the other channels keep their ramps (the turn rate within 1e-4 rad/m of today's) (8.455ms)
+✖ D521 row 4: without bankShape the bank is laid exactly as before (Close, Finish and every caller but the panel): his piece and a plain bank ramp keep their bytes (3.4302ms)
+✖ D521 row 5: the rounding is a quarter of a short ramp, so a 24 m bank still has its steady middle, and the shape itself is C2 with S(0) = 0, S(1) = 1 (0.3996ms)
+ℹ tests 44
+ℹ suites 0
+ℹ pass 40
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12125.1996
+
+✖ failing tests:
+
+test at app\test\core-shell.test.js:74:1
+✖ extendOptions: empty fields continue; turn and climb are degrees per 100 m, bank degrees, width metres (0.6955ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'rounded'
+  
+      at TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o521\app\test\core-shell.test.js:80:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'rounded',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\core_extend.test.js:91:1
+✖ D521 row 1: on his piece the rounded bank starts at the joint: 3.0° by 10 m, 9.0° by 20 m, 27.0° at the middle, -54.05° at the end, and rolls no faster than real tracks (3.0491ms)
+  AssertionError [ERR_ASSERTION]: at 10 m: -0.33460518466607586°
+      at TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o521\test\core_extend.test.js:93:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\core_extend.test.js:113:1
+✖ D521 row 4: without bankShape the bank is laid exactly as before (Close, Finish and every caller but the panel): his piece and a plain bank ramp keep their bytes (3.4302ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o521\test\core_extend.test.js:117:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at test\core_extend.test.js:119:1
+✖ D521 row 5: the rounding is a quarter of a short ramp, so a 24 m bank still has its steady middle, and the shape itself is C2 with S(0) = 0, S(1) = 1 (0.3996ms)
+  TypeError: roundedLinear is not a function
+      at TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o521\test\core_extend.test.js:123:47)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
