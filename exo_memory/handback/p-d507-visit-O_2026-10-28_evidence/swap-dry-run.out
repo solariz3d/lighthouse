@@ -1,0 +1,7 @@
+D507 swap - DRY RUN (nothing changes; add -Apply to act)
+  staged exe sha256 ok: 8c9e82bd3debd0b14fed507737b3e14ca5b2ba2331dbaf4fea6c7389ae3b6f1e
+  current exe sha256: 1382e4c072f7ee53b3146db41b8f1aba824db32a38e992302716de96e48d15a2
+  0. a heavy-run job is alive: t180 C C D506 touched tests (pid 47836) - with -Apply this waits for it
+  1. Consonance is RUNNING (pid 49032): close it first
+  2. would back up C:\Users\nname\Desktop\lighthouse\consonance\src-tauri\target\release\consonance.exe -> C:\Users\nname\Desktop\lighthouse\consonance\src-tauri\target\release\consonance.exe.bak-d507-20261028T124920Z
+  3. would put C:\Consonance\staged\d507-1785df01\consonance.exe in place and check sha256 8c9e82bd3debd0b14fed507737b3e14ca5b2ba2331dbaf4fea6c7389ae3b6f1e

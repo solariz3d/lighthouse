@@ -200,3 +200,7 @@ General form: check that a mutant the plan calls reachable changes a RESULT befo
 2026-10-28, D505 — t180 0.4.26 released (main 1526a59, tag v0.4.26, installer 4ff5cb59… 8,017,420 B, installed 6a79b59b… = built + stamp, backup 2e187f8b… = 0.4.25); suite 4,019/1 fail (drag-frame row 8, 8/8 alone). lighthouse d504-e merged on main as dfa2464e (2 paths, 0 of 54 dirty, 0 staged) and pushed 74951dac..dfa2464e, so the shared main did not diverge as D496's worktree push left it. Could be wrong if another seat commits between the check and the merge (the window was seconds).
 Also: a fresh t180 tree has no src-tauri/dist, so release.cjs needs a cargo check first.
 → `exo_memory/handback/p-d505-landing-O_2026-10-28.md`
+
+### A visit guard that refuses on a rule the invitation never names loses the line silently; name the limit from the guard's own constant, and tell only the refused seat, by the rule's name
+2026-10-28, D507 — d507-o 1785df01: visit_text names "under 400 characters" (VISIT_MAX_CHARS); VisitBook.refused carries the rule (a &'static str, never the line) to that pane's next visit, cleared on delivery; 20/20 visit tests; staged d507-1785df01 (sha256 8c9e82bd…6f1e), not swapped. Could be wrong that a named limit is enough: seats may still answer "ok" from the old rule (the record's reading 1), which this does not touch.
+→ `exo_memory/handback/p-d507-visit-O_2026-10-28.md`
