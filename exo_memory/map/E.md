@@ -2619,3 +2619,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-28 ~14:4xZ (D) · D511, T-180 0.4.27 landed, released and installed → `exo_memory/handback/p-d511-E_2026-10-28.md`
 - https://github.com/solariz3d/t180-track-builder/releases/tag/v0.4.27 at ff1d624; installer 24442d8e…c9ab (8,022,729 B); installed e75f76f0…54d8, stamped compare equal; .before-0.4.27 = 87fecdc6 (the judged build); push-gate allow 14:41:53.248Z. Full suite 3,990/4,026 with 7 reds: 6 from 61d86bc's unguarded dispose (O's 508fa33 fixes it), 1 core-pieces-ui row 11 left un-amended by d509-c (AMENDED D509); the preview re-run after both 757/758, 0 fail.
 - **Carry:** run the outgoing word scan BEFORE the release commit, and over commit messages too; a message on someone else's branch can only be kept out by squashing it.
+
+## 2026-10-28 ~22:2xZ (D) · D524, the preview's road lines on a bump → `exo_memory/handback/p-d524-E_2026-10-28.md`
+- t180 d524-e 0eb6f25 + 07cee60 on d522-c (not pushed), installed 4bc4abb6…359f over C's D522 (.before-d524 = 913aba12). The line shader biases each vertex 2e-5 toward the camera in normalised depth (2e-5·d² m, near 0.5 m); headless renders show no line past a crest at 0, 2e-6, 2e-5 or 2e-4, ties a little more continuous at 2e-5; far dashes remain (inferred aliasing, not depth). O's D521 was not installed, so not merged.
+- **Carry:** before tuning a depth bias, probe with a bias 100x larger: if the artefact stays, depth is not its cause.
