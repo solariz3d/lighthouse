@@ -203,3 +203,15 @@ checked, by this seat: `git ls-remote origin main refs/tags/v0.4.25` → both 7d
 inferred, not checked: nobody has opened 0.4.25 since the install, so "opens maximized" waits on the keeper's first launch.
 
 Open in this line: the idle-window A/B (A, D497 §7), owed and not blocking; D498 on E for the next batch.
+
+## D498 collated, 18:1x (E af73a6ee read whole; lands as D503, pane B)
+
+Accepted. Six items, each red first (E §1); item 2's harnesses 67/67/0 whole; scans 0 of 7; the item-5 regression (a blur listener on a fake window without an event API) was caught by E's own run and fixed in c94d4b6 before the hand-back, implementation changed, not the fake. Timing rows: red in the 125-file run, green alone except drag-frame row 8 at 7.4–7.8 ms, which has failed about 1 run in 4 since v0.4.21 and was ruled load at D497; export-isolated row 2 OOM in the parallel run and 8/0 alone, the known class. No new regression.
+
+Two things the landing carries, both small:
+1. **One more test row for item 2 (prove it).** E's surviving mutant V6 (§2: an update that changes only `lowP` or `clipP` is dropped) is a real reachable path: validate → edit that moves only the tagging partner → revalidate → revalidate, where the second revalidate would carry a stale tag. Write that chain as a row in the file that holds E's item-2 rows; confirm it is red with V6 applied (E's `ownmut2.js` in its scratchpad names the mutant) and green at HEAD. V4 (the tie-break) stays as E reasoned: equal results, only re-derived work.
+2. **The rebase.** `d498-e` (c94d4b6, 8 commits on fd4c8ea) onto `7dc5917`: items 1–5 replay clean (E §6); move the four CHANGELOG `[Unreleased]` Fixed lines under 7dc5917's `[Unreleased]` by hand; reword ea501a6's mangled message to E's intended text (§7: "where \b was meant", `G:\Consonance-tools\b9\mel11.js`).
+
+Then the landing as usual: full suite BelowNormal under the lock, scans on the rebased range, push to t180 main under the standing permission, NO tag and NO release (it rides the batch with D502's picks), worktree `t180-wt-e498` removed after. Hand back with the main sha, the suite counts, the push-gate line, and the new row's red/green.
+
+OUTPUT → NEXT: changed — E's V6 survivor adds a prove-it row to the landing; otherwise the landing is as planned.
