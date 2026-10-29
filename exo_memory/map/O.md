@@ -228,3 +228,7 @@ General form: git push origin <scanned sha>:main.
 2026-10-28, D521 — t180 d521-o 866157f; the shape needs knots at l/2 and l from each end (20 m knots make the first span a·s³: 1.41° at 10 m), INSERTED (Boehm) so every other channel keeps its curve; opt-in from the panel only, so Close/Finish and all 17 saved tracks keep their bytes; installed 5e4271ba over E's D524. Could be wrong that the 3× sharper roll onset feels better: the keeper judges.
 General form: before installing on a shared exe, read the installed hash; the brief's base can be two installs old.
 → `exo_memory/handback/p-d521-bank-ramp-O_2026-10-28.md`
+
+### CSP documents the direction of only one soft-road key: SOFT_CFM ("the higher it is, the softer"); SOFT_ERP is just "Error reduction parameter", INTENSITY is damage/audio/visuals, and the RIGID flags are rigid only "if set to 1"
+2026-10-28, D525 Part 1 — the CSP wiki "Tracks – Collision parameters" (raw markdown kept) and the server-options page; so B/C vary CFM alone (×1/4, ×4), ERP is left, and D (1/0/0) is staged though CSP's words say it should change nothing physical. Could be wrong that RIGID_WITH_BOXES defaults to soft: no default is documented; D515's sinking box is the only evidence.
+→ `exo_memory/handback/p-d525-soft-O_2026-10-28.md`

@@ -1,0 +1,60 @@
+source G:/SteamLibrary/steamapps/common/assettocorsa/content/tracks/t180b_crazy_test_test
+  7ac9e39c5967726dd7aa09b02b96b335913ccef0bbc840ffb4164643b1d6b512         456  .t180b-builder.json
+  0cb82e6bf9e0281e5cbeda59c26e41ea59bc021cd3cb6e78316e8e076e9833f9      301508  ai/fast_lane.ai
+  100e1e69eef72c637731ef46b2539d7e8fdca759f8c4c7f767f5ae72a57c7739         107  data/map.ini
+  21396ea8580aeefff567318e6c4280d132176ae6e9272c76f6fa48983e2af5b3         771  data/surfaces.ini
+  f36e493c404dc122bdc011b7a3c0d11eadad5506c7d1285f0e882b8b6c51227b    37516059  map.png
+  abd568063eccb75f0983ba44d6c853a85abf5553191fc85abdc850f6755c06f4          71  models.ini
+  77f7d0413e0545be050ec313a6c8744e1106d54f542e2843c07a23cc692dcf38         824  t180b_TEST_UNFINISHED.txt
+  93daef613f0f5b87d76a6d85372b064ebbf409c45f27c2c09d9ed3155dacd321   153206112  t180b_crazy_test_test.kn5
+  ff8712af706982d5fa280134b29a42106d0d1d3f9218946ca647513c24dd8444      280600  ui/outline.png
+  808eb342146389bed7c713c0bbe62fe1f701fbe94653fbcdb907e1a79a513eb0      284288  ui/preview.png
+  6694f9d56eed6e289859bdb68424c8d2f313d2354ce43a7dc4c83b2269e42ff1         402  ui/ui_track.json
+t180b_crazy_test_test_soft_a
+  7ac9e39c5967726dd7aa09b02b96b335913ccef0bbc840ffb4164643b1d6b512         456  .t180b-builder.json
+  0cb82e6bf9e0281e5cbeda59c26e41ea59bc021cd3cb6e78316e8e076e9833f9      301508  ai/fast_lane.ai
+  100e1e69eef72c637731ef46b2539d7e8fdca759f8c4c7f767f5ae72a57c7739         107  data/map.ini
+  740509f8043a2b8551297f819eab956147e5ebb2412ed4beb20fa836406a306b         832  data/surfaces.ini   <- differs from the source
+  f36e493c404dc122bdc011b7a3c0d11eadad5506c7d1285f0e882b8b6c51227b    37516059  map.png
+  abd568063eccb75f0983ba44d6c853a85abf5553191fc85abdc850f6755c06f4          71  models.ini
+  77f7d0413e0545be050ec313a6c8744e1106d54f542e2843c07a23cc692dcf38         824  t180b_TEST_UNFINISHED.txt
+  93daef613f0f5b87d76a6d85372b064ebbf409c45f27c2c09d9ed3155dacd321   153206112  t180b_crazy_test_test.kn5
+  ff8712af706982d5fa280134b29a42106d0d1d3f9218946ca647513c24dd8444      280600  ui/outline.png
+  808eb342146389bed7c713c0bbe62fe1f701fbe94653fbcdb907e1a79a513eb0      284288  ui/preview.png
+  853c85eb14db600b49427a6b1b13a1799fa416796be32c6b72ca70c9084146ad         408  ui/ui_track.json   <- differs from the source
+t180b_crazy_test_test_soft_b
+  7ac9e39c5967726dd7aa09b02b96b335913ccef0bbc840ffb4164643b1d6b512         456  .t180b-builder.json
+  0cb82e6bf9e0281e5cbeda59c26e41ea59bc021cd3cb6e78316e8e076e9833f9      301508  ai/fast_lane.ai
+  100e1e69eef72c637731ef46b2539d7e8fdca759f8c4c7f767f5ae72a57c7739         107  data/map.ini
+  8b17122230985131fc82810aebb76f04ef87c02acb9bc3fa82ea83145cc88833         881  data/surfaces.ini   <- differs from the source
+  f36e493c404dc122bdc011b7a3c0d11eadad5506c7d1285f0e882b8b6c51227b    37516059  map.png
+  abd568063eccb75f0983ba44d6c853a85abf5553191fc85abdc850f6755c06f4          71  models.ini
+  77f7d0413e0545be050ec313a6c8744e1106d54f542e2843c07a23cc692dcf38         824  t180b_TEST_UNFINISHED.txt
+  93daef613f0f5b87d76a6d85372b064ebbf409c45f27c2c09d9ed3155dacd321   153206112  t180b_crazy_test_test.kn5
+  ff8712af706982d5fa280134b29a42106d0d1d3f9218946ca647513c24dd8444      280600  ui/outline.png
+  808eb342146389bed7c713c0bbe62fe1f701fbe94653fbcdb907e1a79a513eb0      284288  ui/preview.png
+  be29062cad191814a1ecd89b6915fae87f9c6bcf9c7c48a69868463cd805407a         408  ui/ui_track.json   <- differs from the source
+t180b_crazy_test_test_soft_c
+  7ac9e39c5967726dd7aa09b02b96b335913ccef0bbc840ffb4164643b1d6b512         456  .t180b-builder.json
+  0cb82e6bf9e0281e5cbeda59c26e41ea59bc021cd3cb6e78316e8e076e9833f9      301508  ai/fast_lane.ai
+  100e1e69eef72c637731ef46b2539d7e8fdca759f8c4c7f767f5ae72a57c7739         107  data/map.ini
+  ce4498af2e3345153cd5fb36f9b45701baa19b144780df7c295ff161787a27ad         878  data/surfaces.ini   <- differs from the source
+  f36e493c404dc122bdc011b7a3c0d11eadad5506c7d1285f0e882b8b6c51227b    37516059  map.png
+  abd568063eccb75f0983ba44d6c853a85abf5553191fc85abdc850f6755c06f4          71  models.ini
+  77f7d0413e0545be050ec313a6c8744e1106d54f542e2843c07a23cc692dcf38         824  t180b_TEST_UNFINISHED.txt
+  93daef613f0f5b87d76a6d85372b064ebbf409c45f27c2c09d9ed3155dacd321   153206112  t180b_crazy_test_test.kn5
+  ff8712af706982d5fa280134b29a42106d0d1d3f9218946ca647513c24dd8444      280600  ui/outline.png
+  808eb342146389bed7c713c0bbe62fe1f701fbe94653fbcdb907e1a79a513eb0      284288  ui/preview.png
+  383f1741675b3461cab421023296ebb94535631c47cbc77d967b6bd1fbc0c534         408  ui/ui_track.json   <- differs from the source
+t180b_crazy_test_test_soft_d
+  7ac9e39c5967726dd7aa09b02b96b335913ccef0bbc840ffb4164643b1d6b512         456  .t180b-builder.json
+  0cb82e6bf9e0281e5cbeda59c26e41ea59bc021cd3cb6e78316e8e076e9833f9      301508  ai/fast_lane.ai
+  100e1e69eef72c637731ef46b2539d7e8fdca759f8c4c7f767f5ae72a57c7739         107  data/map.ini
+  c26eb8086cc640f3d14900a06eaf5925e2bca91a9fa148a62c1e2d12fbff884b         954  data/surfaces.ini   <- differs from the source
+  f36e493c404dc122bdc011b7a3c0d11eadad5506c7d1285f0e882b8b6c51227b    37516059  map.png
+  abd568063eccb75f0983ba44d6c853a85abf5553191fc85abdc850f6755c06f4          71  models.ini
+  77f7d0413e0545be050ec313a6c8744e1106d54f542e2843c07a23cc692dcf38         824  t180b_TEST_UNFINISHED.txt
+  93daef613f0f5b87d76a6d85372b064ebbf409c45f27c2c09d9ed3155dacd321   153206112  t180b_crazy_test_test.kn5
+  ff8712af706982d5fa280134b29a42106d0d1d3f9218946ca647513c24dd8444      280600  ui/outline.png
+  808eb342146389bed7c713c0bbe62fe1f701fbe94653fbcdb907e1a79a513eb0      284288  ui/preview.png
+  ec9bcc535724390065ef7e466c9c7dd653b4ac3cb953f36760c172d5be99eb31         408  ui/ui_track.json   <- differs from the source

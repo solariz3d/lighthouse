@@ -1,0 +1,18 @@
+== t180b_crazy_test_test_soft_a/data/surfaces.ini against the source (changed: data/surfaces.ini, ui/ui_track.json)
++ ; D525 variant A: the shipped block, unchanged (the control)
+
+== t180b_crazy_test_test_soft_b/data/surfaces.ini against the source (changed: data/surfaces.ini, ui/ui_track.json)
++ ; D525 variant B: STIFFER: SOFT_CFM 0.0002 -> 0.00005 (CSP: "the higher it is, the softer is the collision")
++ SOFT_CFM=0.00005
+- SOFT_CFM=0.0002
+
+== t180b_crazy_test_test_soft_c/data/surfaces.ini against the source (changed: data/surfaces.ini, ui/ui_track.json)
++ ; D525 variant C: SOFTER: SOFT_CFM 0.0002 -> 0.0008 (CSP: "the higher it is, the softer is the collision")
++ SOFT_CFM=0.0008
+- SOFT_CFM=0.0002
+
+== t180b_crazy_test_test_soft_d/data/surfaces.ini against the source (changed: data/surfaces.ini, ui/ui_track.json)
++ ; D525 variant D: the shipped block plus INTENSITY/RIGID_WITH_BODIES/RIGID_WITH_BOXES as the observed T-180 tracks set them (1/0/0)
++ INTENSITY=1
++ RIGID_WITH_BODIES=0
++ RIGID_WITH_BOXES=0
