@@ -241,3 +241,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### Inside the lip, the builder's one-s cross-section family already fits the reference sections (median 0.64-1.14 cm RMS, 1.71-2.85 cm max; 178 of 183 stations within 2 cm and 5 cm); per-side s or c gain at most 0.3 cm; the misfit is a 0.33 m stepped lip at each edge
 2026-10-28, D527 Part 2 — C's xsecfit.cjs at 6a3f496 on 183 stations of eight bends, every misfit refit from the other families' answers; the falsifier fires: the lesson is along the bend. Could be wrong that the lip is not wanted: the keeper's call.
 → `exo_memory/handback/p-d527-fit-O_2026-10-28.md`
+
+### 0.4.30 reads release-clean on its diff; Bank the bend reads a flight's length as a road's, so a run ending on a jump (or an open track whose head is a flight) is refused with "NaN m"
+2026-10-29, D539 review (read only, t180-fresh 9e6a249..dbe69b4) — coreshell.js:1237-1238 against document.js:354 (a flight has no length); the sliced open cannot publish a superseded build (preview.js:184). Could be wrong that it is only a worded refusal: inferred from swingBank's BAD_RANGE guard, not run.
+→ `exo_memory/handback/p-d539-review-O_2026-10-29.md`
