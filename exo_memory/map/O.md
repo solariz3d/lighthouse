@@ -237,3 +237,7 @@ General form: before installing on a shared exe, read the installed hash; the br
 2026-10-28, D527 Part 1 — eight bends, every 4 m; figures in our terms only, everything else in the private store. Bank swings up to 81° within 264 m, p90 rates 0.31-1.11 °/m. Could be wrong that it is what the keeper sees: inferred, not asked.
 General form: an edge read at a side's very end reads its trim; read the shape inside it.
 → `exo_memory/handback/p-d527-sections-O_2026-10-28.md`
+
+### Inside the lip, the builder's one-s cross-section family already fits the reference sections (median 0.64-1.14 cm RMS, 1.71-2.85 cm max; 178 of 183 stations within 2 cm and 5 cm); per-side s or c gain at most 0.3 cm; the misfit is a 0.33 m stepped lip at each edge
+2026-10-28, D527 Part 2 — C's xsecfit.cjs at 6a3f496 on 183 stations of eight bends, every misfit refit from the other families' answers; the falsifier fires: the lesson is along the bend. Could be wrong that the lip is not wanted: the keeper's call.
+→ `exo_memory/handback/p-d527-fit-O_2026-10-28.md`
