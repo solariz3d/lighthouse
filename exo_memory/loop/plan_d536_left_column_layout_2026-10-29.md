@@ -23,3 +23,12 @@ Falsifier: at 1920×1080 the column with every field shown must end above the wi
 Branch from d534-land 1148c28 in a worktree; plain commit message, co-author line allowed; no lap ids in new comments; lands on d534-land before the release with D535.
 
 surfaced: panel.js:141 (fieldAt), :269-270 (RO cells), :839 (the pickers row), index.html (the column's width and the HUD strip), the HUD line (app/preview or app/core/labels.js, A finds it).
+
+## Amendment D536b, 12:57 (the user, on the page): four more, same branch, same pane, before the landing
+
+1. **The bottom UI centred.** The camera dock (Build / Overhead / Side / Chase / Free), the Grid row and the hint lines sit centred on the PREVIEW area (between the column right edge and the window right edge), not offset; one centre line for all three.
+2. **The column thinner by a lot.** Target 260 px for the whole column (body grid 260, palette about 240): label column 58 px, number inputs about 110 px (five digits and the spinner), the start box at the end; the width-like and grip-like arrows stay inline. Nothing wraps; the notes stay one dim line. If 260 cannot hold label + input + box at the app font, 280 is the ceiling, and A says which.
+3. **The room above Equation track.** The column top padding and the heading rule go: the first line of the column is the track line (2 pieces · 350 m · loop open) directly under the bar, then the four buttons, then Extend at the head. No empty band above it.
+4. **The top HUD slimmer, one line, better looking.** The head values (length, turn, climb, bank, width) become ONE compact line in a smaller type (the number about 15 px, the label beside it in the dim small caps the HUD uses: length 100.00 m · turn +19.30 · climb 0.00 · bank -30.00 · width 31.00 m), in one slim dark band with the same rounded corners; the NEXT line sits under it in the same band as a second compact line, dim chips in their short form (the trim already ordered), so at 1920 the whole band is two lines and at 1400 at most three. Less height, less width, same numbers; the band stays centred on the preview area like the bottom UI.
+
+Tier check it; the same structure tests amended by name; renders again at 1400x860 and 1920x1080 (before = d534-land, after = the branch tip), which replace the page. Falsifier: the column must still fit 1080p with every field shown and nothing wrapping; the HUD band must not be taller than today.
