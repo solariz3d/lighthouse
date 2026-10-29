@@ -232,3 +232,8 @@ General form: before installing on a shared exe, read the installed hash; the br
 ### CSP documents the direction of only one soft-road key: SOFT_CFM ("the higher it is, the softer"); SOFT_ERP is just "Error reduction parameter", INTENSITY is damage/audio/visuals, and the RIGID flags are rigid only "if set to 1"
 2026-10-28, D525 Part 1 — the CSP wiki "Tracks – Collision parameters" (raw markdown kept) and the server-options page; so B/C vary CFM alone (×1/4, ×4), ERP is left, and D (1/0/0) is staged though CSP's words say it should change nothing physical. Could be wrong that RIGID_WITH_BOXES defaults to soft: no default is documented; D515's sinking box is the only evidence.
 → `exo_memory/handback/p-d525-soft-O_2026-10-28.md`
+
+### A banked bend in the reference sections is one symmetric dish (each side ~15° by 10 m out, sides within 1.6°) tilted by the bank, with a 0.33 m lip at each edge; "one side more banked" is the bank tilting the dish, not a per-side edge
+2026-10-28, D527 Part 1 — eight bends, every 4 m; figures in our terms only, everything else in the private store. Bank swings up to 81° within 264 m, p90 rates 0.31-1.11 °/m. Could be wrong that it is what the keeper sees: inferred, not asked.
+General form: an edge read at a side's very end reads its trim; read the shape inside it.
+→ `exo_memory/handback/p-d527-sections-O_2026-10-28.md`
