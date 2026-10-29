@@ -2636,3 +2636,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-29 ~14:2xZ (D) · D530 part 1, bank the bend core → `exo_memory/handback/p-d530-bankswing-E_2026-10-29.md`
 - t180 `90c0490` on d530-e from c1396b9 (not pushed): swingBank fits the swing on each piece's own knots with phi held at s0/peak/s1 and every joint it reaches held C1 (C2 inside); core_bankswing 15/15, core_ramp_mutation whole 54/54, bankswing mutants 16/16/0. Open for a ruling: an exit bank moves the road after it to the next jump, so on a closed lap with no jump it is refused.
 - **Carry:** a cubic on fixed 20 m knots cannot round a rate in 10 m; fitting a shape finer than the knots rings, so round over the knot span.
+
+## 2026-10-29 ~17:1xZ (D) · D532, at start ramps as long as the roll allows → `exo_memory/handback/p-d532-atstart-E_2026-10-29.md`
+- t180 `b30dfcf` on d532-e from 9e6a249 (not pushed): a ticked bank, cup or edge ramps over 2.2 × |change| / the roll amber (≥ 20 m, ≤ half the piece, never below the old ramp); his piece rolls 0.733 °/m where it rolled 1.000. The plan's |change| / rate alone rolls 0.998 for 20°, because Extend lays a short ramp in about three quarters of its length; the factor 2.2 is measured. Harnesses whole: 38/38/0 and 65/65/0; fixtures 0 of 9 differ.
+- **Carry:** before sizing a ramp from a rate, measure what the core lays at that length; the nominal transition is not the length the change happens over.
