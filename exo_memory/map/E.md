@@ -2644,3 +2644,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-29 ~19:1xZ (D) · D535, the at-start bank is one swell → `exo_memory/handback/p-d535-swell-E_2026-10-29.md`
 - t180 `41ae832` on d535-e from 1148c28 (not pushed): bankShape 'swell' (roundedLinear a = ½) for a bank ticked at start, laid over 2.6 × |change| / the amber; his kink 0.163 → 0.077 °/m, one bump, roll 0.841; the box-off bank, cup and edge at start are byte-identical (golden sha256, fixtures 0 of 9). A swell starts like u³, so it leans later than the old ramp (−3.5° against −8.0° by 20 m); the plan's "moves by 5 m" and "K 2.0–2.2" do not hold (rows in §3). Harnesses: ramp 55/55/0, app 65/65/0, cup and xsec 0 NOT APPLIED.
 - **Carry:** a shape with no corner at its start cannot also start fast; when a user asks for sooner and smoother, measure both and say which one the shape gives up.
+
+## 2026-10-29 ~22:5xZ (D) · D540, a longer at-start swell → `exo_memory/handback/p-d540-longerswell-E_2026-10-29.md`
+- t180 `60415c5` on d540-e from origin/main 82db6c3 (not pushed): SWELL_SPREAD 2.6 → 3.4; his piece ramps 150.7 m (was 115.3), roll 0.652 (0.841), kink 0.045 (0.077), bank −1.63° at 20 m (−3.52). Ramp harness 55/55/0, fixtures 0 of 9. 3.0 is the step back if it now arrives too late.
+- **Carry:** a "no flat stretch" bound in absolute units fails a wider bump; state it as a share of the ramp.
