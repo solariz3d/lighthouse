@@ -257,3 +257,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### Rendered from E's tool documents in Sigil, the six at-start candidates read back E's banks exactly; the tool must run in a clean tree at the tip, because E's worktree held an in-flight extend.js
 2026-10-29, D550 update — t180-wt-o550 at a8419d8, documents opened through File > Open against a stubbed native side; |bank| at 10-200 m equals figures.json to 0.01° for A-F. Could be wrong that Sigil reads well enough: the plain road is near-black there; a Glass ghost set is kept beside it.
 → `exo_memory/handback/p-d550-renders-O_2026-10-29.md`
+
+### At E's FIT commit the six at-start candidates render as laid, and B now leans in at the joint (3.2° at 10 m, was 0.6°); a render set made before a HOLD arrived was voided by moving it out of its delivered paths
+2026-10-29, D550 FIT renders — t180-wt-o550 at 2ca43d2, Sigil, |bank| at 10-200 m equal to figures.json (5a64f745) to 0.01° for A-F. Could be wrong that Sigil reads well enough for his eye: the plain road is near-black.
+→ `exo_memory/handback/p-d550-renders-O_2026-10-29.md`
