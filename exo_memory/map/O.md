@@ -249,3 +249,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### The active Mach 6 needs its own checker profile: on the same road it never reaches the mesh (min +1.0 cm at 72 g) where the regular falls 28 cm into it past 47 g
 2026-10-29, D544 Part 1 — one run each, same road (AI line byte-equal, road mesh within 0.0005 mm; only the texture differs); the cars differ in coilover end stop (250k → 750k N/m) and travel, not aero, tyres or controllers; h at 55-60 g −18.5 against −40.7 cm. Could be wrong for the active car on another line or driver: one run, no run-to-run scatter.
 → `exo_memory/handback/p-d544-active-O_2026-10-29.md`
+
+### His camera for the at-start ramp looks forward from just before the joint, at the Extend ghost, not back from past it; and the preview draws no cross lines from above at a height that holds 500 m
+2026-10-29, D550 renders — matched by eye over nine calibration shots; the ghost read back through t180:ghost-request equals E's bank figures to 0.01° for all six candidates, the candidate set by a serve-time shim of the panel's extendOptions only. Could be wrong about his exact pose: matched by eye, not measured.
+→ `exo_memory/handback/p-d550-renders-O_2026-10-29.md`
