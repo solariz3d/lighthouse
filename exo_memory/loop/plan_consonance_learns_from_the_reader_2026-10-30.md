@@ -26,6 +26,17 @@ His point 7 was that maps cut the exploring an agent does before it builds, and 
 
 Claude Code loads `.claude/skills` from the working directory's repository. Panes work in lighthouse worktrees, so once d556-o lands the five skills load on relevance in every pane. The track-equations skill is in the user folder and loads everywhere. Check at the keeper's next restart: a pane's `/skills` list shows the six; if not, the worktree cwd is the reason and Part 2's intake carries a skills index line instead.
 
+## Parts 6 to 9: what OpenRig teaches (added 17:5x, from `exo_memory/research/openrig_against_consonance_2026-10-30.md` §3)
+
+The keeper, 17:50: "I meant what could we learn from it and what the guy said." The reader's own points are Parts 1 to 5. OpenRig, read against Consonance, adds four, ranked by value; each is a lap only on his word.
+
+- **Part 6, a seat that is not Claude (prove it, medium).** BOOT's curated-auditor amendment: agreement among correlated readers is the species to fear; the room has never had a reader off the substrate. OpenRig's shipped `starter` is a Claude builder and a Codex reviewer. In Consonance: a second spawn path beside `spawn_claude_pane` for a Codex seat with the same MCP tools and the same mount gating, a read-only reviewer first. Falsifier: if the Codex reader's corrections over ten laps are all ones a Claude pane also made, it added no decorrelation and the seat is retired.
+- **Part 7, a typing guard (check it, small).** `drain_decision` knows a busy pane, not a human draft in the composer; OpenRig re-checks the composer "before Enter after any wait". In Consonance: the drain reads the composer line before `inject_to_pane` and holds while it is non-empty and changing. Falsifier: the keeper's typed line is clobbered once more after it lands.
+- **Part 8, a PostCompact refocus (check it, small).** The room's post-compaction rule is a sentence in LIBRARIAN.md and BUILDING.md; OpenRig delivers orientation at the next prompt after a compaction, never mid-turn. In Consonance: a `PostCompact` hook that queues, for that seat, its own `exo_memory/map/<letter>.md` tail and its latest notes path, delivered by the same drain. This is Part 2 in a second form: the map at the moment it is needed. Falsifier: a seat's first turn after a compaction still opens with a question to the chair about what is in flight.
+- **Part 9, a maturity stage on research files and cards (just do it).** OpenRig's `stage` field (`wip | provisional | established | canonical | superseded | retired`) in the frontmatter of `exo_memory/research/*.md` and the cards; the carrier-drift re-freeze log cites it; "superseded" names its successor. Answers the reader's "the record is the wrong shape" from the other side. Falsifier: a season on, no file has moved stage.
+
+Not taken, with the reason in the study: full-bypass launch postures, edges that do not enforce, delivery without an idle default, a chat room.
+
 ## Order and cost
 
 Part 1 now (a paragraph). Part 4 now (an instrument; no exe change). Parts 2 and 3 after the keeper's restart word, since both need consonance.exe rebuilt (D507's standing rule), and they are one rebuild together with the brief change already landed in d556-o. Nothing here touches the track builder or 0.4.31.
