@@ -277,3 +277,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### A seat's CLAUDE.md reads the briefs from the running build's bundled copies, not the repo: a brief edit reaches the seats only after the next build and a respawn
 2026-10-30, D556 — room_brief_at reads ~/.consonance, then the bundle beside the exe (target/release, equal to brief/ today), then the repo; five pointer skills on d556-o 0ca3eccd point at masters and commands only. Could be wrong for an installed (not dev) app: there the bundle is the installer's resources folder, refreshed only by a reinstall.
 → `exo_memory/handback/p-d556-skills-O_2026-10-30.md`
+
+### On ELYSIUM the reference replay (10-17 09:30) parses only with a later probe, and checks against today's export by wheel height; the first fleet car measured (C03, group B) holds every MACH6 line it reached
+2026-10-30, D560 v1 — wheel-centre height over today's mesh within 4.2 cm per 500 m between the two laps; C03 stop plateau equal, box over the mesh +0.5 cm at 45-50 g (reference -0.9), longest >= 55 g 0.44 s, peak 58.7 g. Could be wrong that the road is unchanged at a finer scale than 5 cm per 500 m.
+→ `exo_memory/handback/p-d560-fleet-elysium-O_2026-10-30.md`
