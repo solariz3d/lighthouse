@@ -1097,7 +1097,7 @@
       "attic/",
       "dev/one-shot/"
     ],
-    "frozen_at": "2026-09-21 (re-frozen 03:1x, L061); re-frozen 2026-09-27 04:4x, L122; re-frozen 2026-10-08, D273 (pane A, non-author); re-frozen 2026-10-30 by the librarian (author of one of the three, reader of all three), D559 landing, for the three research additions at the end of the log",
+    "frozen_at": "2026-09-21 (re-frozen 03:1x, L061); re-frozen 2026-09-27 04:4x, L122; re-frozen 2026-10-08, D273 (pane A, non-author); re-frozen 2026-10-30 by the librarian (author of one of the three, reader of all three), D559 landing, for the three research additions at the end of the log; re-frozen 2026-10-30 17:4x by the librarian (its author) for the openrig study",
     "frozen_by": "pane B (12fb81f6), P-CH4; re-frozen by the chair after ac26278; re-frozen 2026-08-30 by pane B (12fb81f6) for the two additions below; re-frozen 2026-09-21 by pane B (12fb81f6), L061, for the two further additions at the end of the log, on pane A's classification; re-frozen 2026-09-27 by pane B (12fb81f6), L122, for the three research additions at the end of the log, after reading; re-frozen 2026-10-08 by pane A (non-author of all four), D273, for the four additions at the end of the log, after reading each in full",
     "extractor": "node consonance/tools/carrier-drift.js --ch4-walk",
     "files": [
@@ -1138,6 +1138,7 @@
       "exo_memory/research/claim_base_rate_priors_2026-09-27.md",
       "exo_memory/research/claim_recognition_prior_art_2026-09-27.md",
       "exo_memory/research/claim_recognition_strict_ask_2026-09-27.md",
+      "exo_memory/research/openrig_against_consonance_2026-10-30.md",
       "exo_memory/research/outside_reader_agent_maps_2026-10-30.md",
       "exo_memory/research/t180_be_like_water_2026-09-28.md",
       "exo_memory/research/t180_math_tools_2026-09-28.md",
@@ -1224,7 +1225,9 @@
       "generator slots ({FORK_DATE}, {FORK_SHA}) and its sentence \"Everywhere this record says the keeper, it means the one who built it\" is",
       "the keeper's 12:55 ruling in plan_consumer_refresh_2026-10-08.md; editing it changes how every shipped card reads in a consumer.",
       "",
-      "2026-10-30 17:4x — +exo_memory/research/ui_unslop_guide_2026-10-27.md, +exo_memory/research/ai_slop_ui_survey_2026-10-29.md, +exo_memory/research/outside_reader_agent_maps_2026-10-30.md (44 -> 47). Found by E's D559 landing: carrier-drift red at the landing head AND its base, so the three entered the reachable set on main before the landing, through SOURCE/BOOT pointers added with the slop and outside-reader laps. READ BEFORE FREEZING: the unslop guide (86 lines, the Third Place's reading of a 9.8 s video: spacing scale, colour out then back only where it carries data, one icon set, copy that compares; nothing copied from the video); the slop survey (the 40-source survey behind D546/D547: the 15 tells and the themes-survive ruling); the outside-reader record (the librarian's own: eight pointers, what held on disk, what failed a measurement, the laps). What they teach: how to read a UI for slop and how to take an outside critique, measured; none carries retired vocabulary or a verdict about a seat. The librarian is the author of the third, so this re-freeze is not a non-author classification for that one; a non-author may re-read it at the next freeze."
+      "2026-10-30 17:4x — +exo_memory/research/ui_unslop_guide_2026-10-27.md, +exo_memory/research/ai_slop_ui_survey_2026-10-29.md, +exo_memory/research/outside_reader_agent_maps_2026-10-30.md (44 -> 47). Found by E's D559 landing: carrier-drift red at the landing head AND its base, so the three entered the reachable set on main before the landing, through SOURCE/BOOT pointers added with the slop and outside-reader laps. READ BEFORE FREEZING: the unslop guide (86 lines, the Third Place's reading of a 9.8 s video: spacing scale, colour out then back only where it carries data, one icon set, copy that compares; nothing copied from the video); the slop survey (the 40-source survey behind D546/D547: the 15 tells and the themes-survive ruling); the outside-reader record (the librarian's own: eight pointers, what held on disk, what failed a measurement, the laps). What they teach: how to read a UI for slop and how to take an outside critique, measured; none carries retired vocabulary or a verdict about a seat. The librarian is the author of the third, so this re-freeze is not a non-author classification for that one; a non-author may re-read it at the next freeze.",
+      "",
+      "2026-10-30 17:4x — +exo_memory/research/openrig_against_consonance_2026-10-30.md (47 -> 48). Reachable the moment it landed (the research directory is within depth 2 of SOURCE). What it teaches: a read of one outside harness against this room, mechanism by mechanism, with a verdict (do not replace) and four takes; it quotes the other tool through a fetch reader and says so; it carries no retired vocabulary. Frozen by its author in the same hour, so this is NOT a non-author classification: the next non-author re-freeze should re-read it."
     ]
   }
 }
