@@ -1724,3 +1724,6 @@ Claim (could be wrong): pub-0.4.19 at 4025ad4 has "keeper" on only 8 lines: 1 st
 ## 2026-10-25 — D456 part 1c: t180's 0.4.19 push range is one reword commit (dfe16d3) with 0 "keeper" on added lines; 5 sealed lines remain as a trace
 
 Claim (could be wrong): dfe16d3 is f217110's object with a new tree and nothing else changed. `git grep -i keeper dfe16d3` gives only the 5 sealed fixture "reason" lines. The filter's code-token list is exactly the ordered `userTrack` rename. The seal row passes, and the only reds in the touched tests are 3 frame-timing rows. Evidence: E/scan-1c2.out, E/filt1c2.out, E/touched1c.tap. Hand-back: exo_memory/handback/p-d456-reword-C_2026-10-25.md §10.
+
+## 2026-10-30 — D553: a code map of consonance/src-tauri/src (MAP.md): main.rs is 46 % tests after fn main(), and its banners do not bound what sits under them
+- lighthouse d553-c df3b525c: where to look for delivery, rings, gates, board, launch, capture; every file in a line; main.rs in 21 areas, mcp.rs, sync_launch.rs, cochlea.rs by area; 370 anchors (function names, no lines), all found, 0 missing. Evidence: exo_memory/handback/p-d553-codemap-C_2026-10-30.md
