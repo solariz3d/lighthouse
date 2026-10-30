@@ -1727,3 +1727,4 @@ Claim (could be wrong): dfe16d3 is f217110's object with a new tree and nothing 
 
 ## 2026-10-30 — D553: a code map of consonance/src-tauri/src (MAP.md): main.rs is 46 % tests after fn main(), and its banners do not bound what sits under them
 - lighthouse d553-c df3b525c: where to look for delivery, rings, gates, board, launch, capture; every file in a line; main.rs in 21 areas, mcp.rs, sync_launch.rs, cochlea.rs by area; 370 anchors (function names, no lines), all found, 0 missing. Evidence: exo_memory/handback/p-d553-codemap-C_2026-10-30.md
+- 2026-10-30 — D555: t180 now has a root MAP.md and CLAUDE.md (d555-c 60c76881, not pushed). The sweep is 0 term hits and 0 room words after one hit carried in from a script header was reworded; anchors found 384, the 6 misses all expected. Hand-back: exo_memory/handback/p-d555-t180map-C_2026-10-30.md.
