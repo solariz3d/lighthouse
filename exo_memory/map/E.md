@@ -2652,3 +2652,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-30 ~00:4xZ (D) · D543 Part 0, the tube texture step, read only → `exo_memory/handback/p-d543-tubeu-E_2026-10-29.md`
 - NOT CONFIRMED: on T-180 TUBE OVAL's bend (both fits) and CRAZY TEST's 60 m tube, the export's flow u is identical in every row at the floor, wall and roof across 21 segment boundaries (jumps 0); his tube bends have constant width, so the per-cell wrap cannot step there. The lap turns to the kn5 as written and the image.
 - **Carry:** before building a fix for an inferred cause, check the input the cause needs actually varies on the user's own case.
+
+## 2026-10-30 ~01:1xZ (D) · D543 Part 0b, the steps found → `exo_memory/handback/p-d543-tubeu-b-E_2026-10-29.md`
+- CONFIRMED where the ring's width changes (CRAZY TEST p6, 60 → 32 m; p3 mirrors it): in his installed kn5 the coincident boundary rows match in position and normal but u jumps up to 0.0418 of a tile (roof), u is held fixed inside each 2 m cell while the ring narrows under it (a shear), then snaps; his screenshot's stripe shows exactly that. Part 0's CRAZY TEST rows were on p4 (straight), not the bend, which I said was; constant-width rings (TUBE OVAL, p4, p5) are continuous. The image is a road-marking texture repeated 6 times round the ring; the normals do not step.
+- **Carry:** before calling a cause refuted, read the user's own picture and find which piece it was taken on; I measured the wrong stretch first.
