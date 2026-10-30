@@ -265,3 +265,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### On his piece (cup 15.5 on piece 1) the six candidates keep E's bank figures exactly, and the cross lines draw only from about 120 m down, so a 500 m overhead is three stitched tiles
 2026-10-29, D550 details of 04:21 — lay-his.js on E's tool at 2ca43d2: sameBankAsE for A-F, piece 1 c 15.5/15.5, w 31/31; overhead tiles from 120 m at 10.07 px/m, seams at 170 and 340 m. Could be wrong that the strip's scale is exact off the road: each tile is its own perspective.
 → `exo_memory/handback/p-d550-renders-O_2026-10-29.md`
+
+### For his pick the at-start candidates must be shown as the Extend ghost in Glass: a placed road draws dark brown in Glass and near-black in Sigil, and only the ghost carries the white cross lines his screenshots show
+2026-10-29, D550 camera spec — eighteen renders at 2ca43d2, three cameras each; the ghost's bank equals E's figures for A-F. Could be wrong that the ghost and a placed piece lay the same bank: checked for the bank figures only, not the cup.
+→ `exo_memory/handback/p-d550-renders-O_2026-10-29.md`
