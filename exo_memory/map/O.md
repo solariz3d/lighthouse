@@ -253,3 +253,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### His camera for the at-start ramp looks forward from just before the joint, at the Extend ghost, not back from past it; and the preview draws no cross lines from above at a height that holds 500 m
 2026-10-29, D550 renders — matched by eye over nine calibration shots; the ghost read back through t180:ghost-request equals E's bank figures to 0.01° for all six candidates, the candidate set by a serve-time shim of the panel's extendOptions only. Could be wrong about his exact pose: matched by eye, not measured.
 → `exo_memory/handback/p-d550-renders-O_2026-10-29.md`
+
+### Rendered from E's tool documents in Sigil, the six at-start candidates read back E's banks exactly; the tool must run in a clean tree at the tip, because E's worktree held an in-flight extend.js
+2026-10-29, D550 update — t180-wt-o550 at a8419d8, documents opened through File > Open against a stubbed native side; |bank| at 10-200 m equals figures.json to 0.01° for A-F. Could be wrong that Sigil reads well enough: the plain road is near-black there; a Glass ghost set is kept beside it.
+→ `exo_memory/handback/p-d550-renders-O_2026-10-29.md`
