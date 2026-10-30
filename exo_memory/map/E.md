@@ -2648,3 +2648,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-29 ~22:5xZ (D) · D540, a longer at-start swell → `exo_memory/handback/p-d540-longerswell-E_2026-10-29.md`
 - t180 `60415c5` on d540-e from origin/main 82db6c3 (not pushed): SWELL_SPREAD 2.6 → 3.4; his piece ramps 150.7 m (was 115.3), roll 0.652 (0.841), kink 0.045 (0.077), bank −1.63° at 20 m (−3.52). Ramp harness 55/55/0, fixtures 0 of 9. 3.0 is the step back if it now arrives too late.
 - **Carry:** a "no flat stretch" bound in absolute units fails a wider bump; state it as a share of the ramp.
+
+## 2026-10-30 ~00:4xZ (D) · D543 Part 0, the tube texture step, read only → `exo_memory/handback/p-d543-tubeu-E_2026-10-29.md`
+- NOT CONFIRMED: on T-180 TUBE OVAL's bend (both fits) and CRAZY TEST's 60 m tube, the export's flow u is identical in every row at the floor, wall and roof across 21 segment boundaries (jumps 0); his tube bends have constant width, so the per-cell wrap cannot step there. The lap turns to the kn5 as written and the image.
+- **Carry:** before building a fix for an inferred cause, check the input the cause needs actually varies on the user's own case.
