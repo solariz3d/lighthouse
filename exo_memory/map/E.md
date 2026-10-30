@@ -2668,3 +2668,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-30 ~03:1xZ (D) · D548 part 2a, handedness and the FBX step → `exo_memory/handback/p-d548-blender2-E_2026-10-29.md`
 - t180 `90c6484` on d548-e (not pushed): the glb is NOT mirrored in Blender (a right corner turns right from above, the L gate on the left; a mirrored control reads the opposite), and blender_fbx.py's FBX (Y up, -Z forward, Apply Transform, FBX All) holds every kn5 mesh with the kn5's vertices to the float, unit 100. 13/13 with export_gltf.
 - **Carry:** a handedness check that takes its forward from the thing it is checking (the gates) cannot fail; take the forward from an independent source and run a mirrored control.
+
+## 2026-10-30 ~03:4xZ (D) · D548 part 2b, File ▸ Export for Blender → `exo_memory/handback/p-d548-blender2-E_2026-10-29.md` §6–10
+- t180 `61a4e2a` on d548-e (not pushed): the menu item, Settings ▸ Blender…, Blender found through Steam libraries, the folder write never into content\tracks, the FBX run hidden at below-normal. The page's node shim reads Buffer.from(arrayBuffer, off, len) as the WHOLE buffer; gltf.js now uses calls both agree on, and a test checks the page's glb against node's array for array. Rust mutants 7/6/0 (one equivalent); the live app was not run.
+- **Carry:** code written for node and loaded in the page through the shim must be run through the shim in a test; agreeing in node proves nothing about the page.
