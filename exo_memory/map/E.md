@@ -2685,3 +2685,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-30 ~22:4xZ (D) · D552 Part 1, candidate G between B and C → `exo_memory/handback/p-d552-ramp-E_2026-10-30.md`
 - G (0.1 / 0.9 over 300 m) is F in all but name: both are laid over 225 m, G's rise is 22.5 m as laid and F's 20 m, and the bank differs at most 0.454° at 41° (1.1% of the bank), with the same done-by (234.5 m) and peak (0.366 °/m). No production code moved; the ramp tests are 15/15 at df8e440. I recommended not rendering G: "between B and C" is a length, and F already sits at it.
 - **Carry:** before laying a new candidate, convert it to as-laid metres and compare it with the ones already on the page; a new name can carry an old shape.
+
+## 2026-10-30 ~23:0xZ (D) · D554, the duplicate-block scan → `exo_memory/handback/p-d554-dupes-E_2026-10-30.md`
+- New instrument consonance/tools/dupe-scan.js. Over t180 82db6c3 (src, app, test) and lighthouse consonance/tools + ui, 110,475 code lines: 2.89% duplicated and the largest cluster 43 lines, so the falsifier did NOT fire, by 3 lines and only through test scaffolding. Non-test code is 0.68%, its largest cluster 19 lines; tests carry 91% of the duplicated lines. test/core_offset_lift.test.js re-implements adapter.js's lift and has already drifted from it.
+- **Carry:** split any duplication figure by test and non-test before reading it; here the headline was test harness scaffolding.
