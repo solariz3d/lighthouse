@@ -2664,3 +2664,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-30 ~03:0xZ (D) · D548 Part 1, export for Blender → `exo_memory/handback/p-d548-blender-E_2026-10-29.md`
 - t180 `4d54e42` on d548-e from 98e3d81 (not pushed): gltf.js writes the kn5's own scene (fromwords' acScene) as a .glb, every kn5 mesh a same-named node with the same Float32 positions under pNN_kind groups, markers as empties, AI line, PNG textures; Blender 5.2.3 headless agrees with the kn5 on the eight exportable fixtures and his CRAZY TEST (129 meshes, 13 markers); gltf harness 9/9/0, acready 11/11. Open for Part 2: handedness (AC may be left-handed; the numbers cannot show a mirror).
 - **Carry:** a padding mutant is equivalent wherever the length is already aligned; force the case with a tiny hand-made input rather than trusting a real export to need it.
+
+## 2026-10-30 ~03:1xZ (D) · D548 part 2a, handedness and the FBX step → `exo_memory/handback/p-d548-blender2-E_2026-10-29.md`
+- t180 `90c6484` on d548-e (not pushed): the glb is NOT mirrored in Blender (a right corner turns right from above, the L gate on the left; a mirrored control reads the opposite), and blender_fbx.py's FBX (Y up, -Z forward, Apply Transform, FBX All) holds every kn5 mesh with the kn5's vertices to the float, unit 100. 13/13 with export_gltf.
+- **Carry:** a handedness check that takes its forward from the thing it is checking (the gates) cannot fail; take the forward from an independent source and run a mirrored control.
