@@ -2689,3 +2689,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-30 ~23:0xZ (D) · D554, the duplicate-block scan → `exo_memory/handback/p-d554-dupes-E_2026-10-30.md`
 - New instrument consonance/tools/dupe-scan.js. Over t180 82db6c3 (src, app, test) and lighthouse consonance/tools + ui, 110,475 code lines: 2.89% duplicated and the largest cluster 43 lines, so the falsifier did NOT fire, by 3 lines and only through test scaffolding. Non-test code is 0.68%, its largest cluster 19 lines; tests carry 91% of the duplicated lines. test/core_offset_lift.test.js re-implements adapter.js's lift and has already drifted from it.
 - **Carry:** split any duplication figure by test and non-test before reading it; here the headline was test harness scaffolding.
+
+## 2026-10-30 ~23:1xZ (D) · D557, the offset-lift test → `exo_memory/handback/p-d557-lift-test-E_2026-10-30.md`
+- REFUSED on measurement: core_offset_lift.test.js already calls the real offsetPath, and its copy is a frozen oracle of the pre-D421 lift. The guard at adapter.js:463 is a speed-up whose removal is equivalent (M1 passes, by design); a skip that drops an offset piece is caught (M2, M3). My D554 §3 claim was wrong and is withdrawn there (§7). Done instead: dupe-scan.test.js and its README line, lighthouse `4eff4a11` on d557-e-tools, mutants 5/5/0.
+- **Carry:** read the whole test before calling its copy a stand-in; a frozen copy beside a call to the real function is an oracle, and a duplicate scan cannot tell the two apart.
