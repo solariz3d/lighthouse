@@ -37,7 +37,7 @@
 | line (limits.js MACH6) | reference | C03 | C03 |
 |---|---|---|---|
 | suspension stop, `suspensionStopG` 25: h p50 at 25–30 / 30–35 / 35–40 / 40–45 g (cm) | −18.6 / −19.4 / −20.0 / −19.8 | −18.6 / −19.7 / −20.1 / −20.2 | **holds** (the same plateau) |
-| chassis, `chassisG` 40: box over the mesh, p50 at 40–45 / 45–50 / 50–55 g (cm) | 3.2 / **−0.9** / −4.3 | 0.9 / **0.5** / −9.2 | **holds**: the mesh is reached at about 47–50 g in both, above the predicted 40 |
+| chassis, `chassisG` 40: box over the mesh, p50 at 40–45 / 45–50 / 50–55 g (cm) | 3.2 / **−0.9** / −4.3 | 0.9 / **0.5** / −9.2 | **holds at the threshold, deeper past it**: the mesh is reached at about 47–50 g in both, above the predicted 40; past it, see the helix stretch |
 | sustained, `sustainedG` 55 for 0.5 s: longest unbroken at ≥ 55 g | 0.77 s (total 1.48 s) | 0.44 s (total 0.43 s) | **holds** (not held past 0.5 s) |
 | proven, `provenG` 90: peak load | 60.19 g (s 8,603, 765 km/h) | 58.74 g (s 8,585, 761 km/h) | **not reached** |
 | the line-predicted load at the ten highest peaks, measured − predicted (median) | 6.5 g | 4.2 g | **holds**: the ~7 g margin covers it |
@@ -47,9 +47,37 @@
 
 **Speed on the same stretches** (median within ±50 m, every 1,000 m: `S\d560\elys.txt`): C03 is within about 55 km/h of the reference on most of the lap. It is slower at s 1,000–2,000 (682 against 785 and 554 against 750 km/h) and at 25,000, and faster at 3,000 and 17,000. So the loads compare at similar speeds on the hard stretches; the two peaks are 18 m and 4 km/h apart.
 
+## The helix stretch, his g test zone (the librarian's 17:30 addition)
+
+**The window: s 8,400–8,900,** piece 17's high-load run.
+- checked (`S\d560\helix.js`, from the same `table.csv` files, no new run): the load's 100 m median passes 30 g at 8,400 (8,300–8,400: 11–12 g) and falls under 33 g after 8,900, in both laps.
+- That is narrower at the start than the suggested 8,300–8,900, because 8,300–8,400 is still at 11–12 g.
+- The reference passes through it twice; C03 once.
+
+| helix, s 8,400–8,900 | reference pass 1 | reference pass 2 | reference pooled | C03 (one pass) |
+|---|---|---|---|---|
+| frames | 167 | 167 | 334 | 171 |
+| deepest 50 m median of the box over the mesh | **−10.8 cm** (s 8,650–8,700) | **−6.4 cm** (8,650–8,700) | −7.7 cm (8,600–8,650) | **−10.2 cm** (8,600–8,650) |
+| share of frames with the box under the mesh | 60.5% | 69.5% | 65.0% | 38.0% |
+| box median at matched load, 50–55 g | −8.7 cm (26 frames) | −4.2 cm (67) | −4.3 cm (93) | **−9.2 cm (24)** |
+| box median at matched load, 55–60 g | −10.0 cm (46) | −5.4 cm (48) | −5.8 cm (94) | −7.6 cm (29) |
+| h median (body over the wheel centres) | −24.1 cm | −27.9 cm | −26.4 cm | −20.4 cm |
+| peak load and its speed | 60.19 g, s 8,603, 765 km/h | 58.24 g, s 8,585, 753 km/h | 60.19 g | 58.74 g, s 8,585, 761 km/h |
+| load and speed medians | 49.3 g, 748 km/h | 53.4 g, 738 km/h | 52.2 g, 740 km/h | 45.2 g, 717 km/h |
+
+**What his "pulled under the track a bit" is, in these numbers:**
+- **Both cars go into the mesh in the helix.** The reference's box is under it for 60–70% of its helix frames, and up to −10.8 cm deep at the 50 m median. C03 is under it for 38%, and up to −10.2 cm.
+- **The reference's two passes differ by 4.4 cm** (−10.8 against −6.4, deepest bin) and by 4.5 cm at matched load (50–55 g: −8.7 against −4.2).
+- **C03 sits inside that pass-to-pass spread** on the deepest bin and at 55–60 g. At 50–55 g it is 0.5 cm past the reference's deeper pass (−9.2 against −8.7), on 24 frames.
+- The −4.3 cm the 17:30 ring compared against is the reference's POOLED figure, which its shallower second pass dominates (67 of its 93 frames there).
+- inferred: what he feels is real and is the same in kind as the reference's. On this evidence C03 is not deeper beyond the reference's own run-to-run variation, except that one 0.5 cm cell.
+
 ## Verdict so far
 
-**C03 (D551 group B: same springs and stops, a shorter wheelbase): every line it reached holds,** and the 90 g line was not reached. D551 inferred that group B's box ends sit 3–5 mm nearer the road. That does not show here: C03's box over the mesh stays at +0.5 cm at 45–50 g, where the reference is already at −0.9.
+**C03 (D551 group B: same springs and stops, a shorter wheelbase):**
+- **The chassis line holds at the threshold, deeper past it.** The box reaches the mesh at about 47–50 g, as the reference does; in the helix at 50–55 g its box median is −9.2 cm, against the reference's −4.2 and −8.7 on its two passes. Past the threshold it is within the reference's pass-to-pass spread, except 0.5 cm at 50–55 g.
+- **The other lines it reached hold:** the stop, the sustained line and the line-prediction margin.
+- **The 90 g line was not reached.** D551 inferred that group B's box ends sit 3–5 mm nearer the road. That does not show here: C03's box over the mesh stays at +0.5 cm at 45–50 g, where the reference is already at −0.9.
 
 **The falsifier** is about the cars D551 marked unsafe: groups C (the actives), E and F. **None of them is in yet**, so it has not been tested.
 
