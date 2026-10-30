@@ -269,3 +269,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### For his pick the at-start candidates must be shown as the Extend ghost in Glass: a placed road draws dark brown in Glass and near-black in Sigil, and only the ghost carries the white cross lines his screenshots show
 2026-10-29, D550 camera spec — eighteen renders at 2ca43d2, three cameras each; the ghost's bank equals E's figures for A-F. Could be wrong that the ghost and a placed piece lay the same bank: checked for the bank figures only, not the cup.
 → `exo_memory/handback/p-d550-renders-O_2026-10-29.md`
+
+### The checker's one car profile does not cover the installed T-180 fleet: 3 cars have weaker or no ray downforce, 9 actives run out of coilover range sooner; 6 cars are the reference's physics byte for byte
+2026-10-30, D551 — 27 cars' own data (labels C00-C26, key in my scratchpad): colliders.ini equal in all 27; ray downforce -200 in 24, -160 in one, none in two; the actives' coilover min length 0.95 against 0.9. Could be wrong about how much sooner the actives run out: the rest length is not readable, so it is a direction, not a figure.
+→ `exo_memory/handback/p-d551-cars-O_2026-10-30.md`
