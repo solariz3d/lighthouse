@@ -2,7 +2,7 @@
   "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
-    "BENIGN-TEST": 391,
+    "BENIGN-TEST": 397,
     "BENIGN-FIXTURE": 12,
     "REVIEW": 8,
     "DISGUISED": 15,
@@ -2385,6 +2385,48 @@
       "verdict": "BENIGN-TEST",
       "text": "assert.strictEqual(mod.normPath('C:\\\\Consonance\\\\lighthouse\\\\consonance\\\\tools\\\\ferry.js'), 'consonance/tools/ferry.js');",
       "key": "consonance/tools/lap-row.test.js\u0000assert.strictEqual(mod.normPath('C:\\\\Consonance\\\\lighthouse\\\\consonance\\\\tools\\\\ferry.js'), 'consonance/tools/ferry.js');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/leftovers.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ pid: 101, ppid: 100, name: 'chrome.exe', started: 2, cmd: 'chrome.exe --headless=new --mute-audio --remote-debugging-port=5 --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180menu-aB3dE9 --no-first-run about:blank' },",
+      "key": "consonance/tools/leftovers.test.js\u0000{ pid: 101, ppid: 100, name: 'chrome.exe', started: 2, cmd: 'chrome.exe --headless=new --mute-audio --remote-debugging-port=5 --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180menu-aB3dE9 --no-first-run about:blank' },\u0000#1"
+    },
+    {
+      "file": "consonance/tools/leftovers.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ pid: 102, ppid: 999, name: 'chrome.exe', started: 3, cmd: 'chrome.exe --headless=new --mute-audio --remote-debugging-port=6 --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180drag-Zz9yX1 --no-first-run about:blank' },",
+      "key": "consonance/tools/leftovers.test.js\u0000{ pid: 102, ppid: 999, name: 'chrome.exe', started: 3, cmd: 'chrome.exe --headless=new --mute-audio --remote-debugging-port=6 --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180drag-Zz9yX1 --no-first-run about:blank' },\u0000#1"
+    },
+    {
+      "file": "consonance/tools/leftovers.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ pid: 103, ppid: 102, name: 'chrome.exe', started: 4, cmd: 'chrome.exe --type=renderer --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180drag-Zz9yX1' },",
+      "key": "consonance/tools/leftovers.test.js\u0000{ pid: 103, ppid: 102, name: 'chrome.exe', started: 4, cmd: 'chrome.exe --type=renderer --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180drag-Zz9yX1' },\u0000#1"
+    },
+    {
+      "file": "consonance/tools/leftovers.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ pid: 104, ppid: 998, name: 'chrome.exe', started: 5, cmd: 'chrome.exe --headless=new --user-data-dir=\"c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180drag-Qq1wE2\" about:blank' },",
+      "key": "consonance/tools/leftovers.test.js\u0000{ pid: 104, ppid: 998, name: 'chrome.exe', started: 5, cmd: 'chrome.exe --headless=new --user-data-dir=\"c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180drag-Qq1wE2\" about:blank' },\u0000#1"
+    },
+    {
+      "file": "consonance/tools/leftovers.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ pid: 105, ppid: 997, name: 'chrome.exe', started: 6, cmd: 'chrome.exe --headless=new --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\appsnd-1 about:blank' },",
+      "key": "consonance/tools/leftovers.test.js\u0000{ pid: 105, ppid: 997, name: 'chrome.exe', started: 6, cmd: 'chrome.exe --headless=new --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\appsnd-1 about:blank' },\u0000#1"
+    },
+    {
+      "file": "consonance/tools/leftovers.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ pid: 106, ppid: 996, name: 'chrome.exe', started: 7, cmd: '\"c:\\\\program files\\\\google\\\\chrome\\\\application\\\\chrome.exe\" --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180menu-Ab1234' },",
+      "key": "consonance/tools/leftovers.test.js\u0000{ pid: 106, ppid: 996, name: 'chrome.exe', started: 7, cmd: '\"c:\\\\program files\\\\google\\\\chrome\\\\application\\\\chrome.exe\" --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180menu-Ab1234' },\u0000#1"
     },
     {
       "file": "consonance/tools/live-follow.test.js",
