@@ -22,6 +22,11 @@
   - reference p5/p50/p95 0.263 / 0.351 / 0.417 m; C03 0.261 / 0.364 / 0.407 m;
   - **worst difference in any 500 m between the two medians, 4.2 cm; none over 5 cm.**
 - inferred: the reference was driven on a road equal to today's within that resolution (5 cm per 500 m). A change smaller than that, or shorter than 500 m, would not show.
+- **CORRECTION, with the instrument's own noise floor** (found when C19 came in; both C03 and C19 were driven on today's export, so on the identical road):
+  - C03 against C19, per 500 m: under 5 cm everywhere except s 9,500–10,500, where the medians differ by **11.8 cm** (C03 0.259 / 0.258 m, C19 0.141 / 0.140 m).
+  - That stretch is inverted (median tilt 113°), where the ray along the car's normal can read another surface.
+  - So on the same road the check's noise reaches about 12 cm in inverted stretches, and stays under 5 cm elsewhere.
+  - The reference against C03 (4.2 cm at most, everywhere, including that stretch: 0.257 against 0.259 m) is consistent with the same road, but the check rules out only changes larger than its noise: about 12 cm in inverted stretches, 5 cm elsewhere.
 
 ## 1. The reference: what the MACH6 lines rest on, on ELYSIUM
 
@@ -84,6 +89,34 @@
 ## Appended
 
 (Each new ELYSIUM replay he saves gets a row here, by its label, with the same table.)
+
+### C19, saved 17:48 (D551 group A: the reference's own physics, byte for byte)
+
+- **The replay:** sha256 `e5a1925667166c92…`, 1,761,804 bytes, 5,179 frames.
+  - 4,830 rows, none dropped by the reset filter. `loads.cjs` alone prints a 19,470 g reset frame, which `table.js` already drops.
+  - One pass through the helix.
+- **Same road:** see the correction in §0. C19 against C03 is under 5 cm everywhere outside the inverted s 9,500–10,500.
+
+| line | C19 | verdict |
+|---|---|---|
+| suspension stop, 25 g: h p50 at 25–30 / 30–35 / 35–40 / 40–45 g | −17.2 / −17.6 / −19.4 / −19.9 cm (20, 20, 17, 24 frames) | **holds** (the plateau reached by 35–40 g, on few frames) |
+| chassis, 40 g: box over the mesh p50 at 40–45 / 45–50 / 50–55 g | 4.7 / **0.1** / −6.2 cm | **holds at the threshold** (the mesh at about 47–50 g). Past it, it is inside the reference's pass-to-pass spread. |
+| sustained, ≥ 55 g over 0.5 s | longest 0.14 s | **holds** |
+| proven, 90 g | peak 55.44 g, s 8,585, 733 km/h | **not reached** |
+| line-predicted margin, top-10 peaks | median +5.7 g | **holds** |
+| lift-off above 300 km/h | 79 of 4,830 (1.6%), worst −5.25 g | **holds** |
+
+**Helix, s 8,400–8,900** (174 frames):
+- deepest 50 m median of the box over the mesh: −7.4 cm (s 8,700–8,750);
+- under the mesh: 48.3% of frames;
+- box median at 50–55 g: −6.2 cm (57 frames); at 55–60 g: −4.1 cm (9 frames);
+- h median −23.4 cm;
+- peak 55.44 g at 733 km/h; load median 47.0 g, speed median 721 km/h.
+
+**Why this row matters beyond itself:** C19 IS the reference's physics, so its distance from the reference is the size of run-to-run (and driver) scatter on this track.
+- Its helix figures (−7.4 deepest, −6.2 at 50–55 g) fall between the reference's two passes (−10.8 / −6.4 and −8.7 / −4.2).
+- C03's (−10.2, −9.2) fall at the deep edge of the same spread.
+- inferred: on this evidence, the spread between two passes of one car on this track is about 4–5 cm at the helix. A car has to differ by more than that before its row says anything about its physics.
 
 ## Process
 
