@@ -273,3 +273,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### The checker's one car profile does not cover the installed T-180 fleet: 3 cars have weaker or no ray downforce, 9 actives run out of coilover range sooner; 6 cars are the reference's physics byte for byte
 2026-10-30, D551 — 27 cars' own data (labels C00-C26, key in my scratchpad): colliders.ini equal in all 27; ray downforce -200 in 24, -160 in one, none in two; the actives' coilover min length 0.95 against 0.9. Could be wrong about how much sooner the actives run out: the rest length is not readable, so it is a direction, not a figure.
 → `exo_memory/handback/p-d551-cars-O_2026-10-30.md`
+
+### A seat's CLAUDE.md reads the briefs from the running build's bundled copies, not the repo: a brief edit reaches the seats only after the next build and a respawn
+2026-10-30, D556 — room_brief_at reads ~/.consonance, then the bundle beside the exe (target/release, equal to brief/ today), then the repo; five pointer skills on d556-o 0ca3eccd point at masters and commands only. Could be wrong for an installed (not dev) app: there the bundle is the installer's resources folder, refreshed only by a reinstall.
+→ `exo_memory/handback/p-d556-skills-O_2026-10-30.md`
