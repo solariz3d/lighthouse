@@ -206,7 +206,8 @@ his process list or his disk is ours to clean, and he should never be the one to
    Why: matching by demonstrated strength from the chair's window fails when the window compacts (measured 2026-09-02,
    `3369982`). Falsifier (the librarian's): ten laps on, packets that cite no dossier row.
 6. An ask for the map line. The packet's hand-back leg asks the pane for one line in its own `exo_memory/map/<letter>.md`
-   pointing at the hand-back path.
+   pointing at the hand-back path, and, where the packet creates, splits or materially changes a source file, for that file's
+   line in its repo's code map in the same commit (`COMMITTEE.md`, "Your work").
    Why: `resume_pane` wakes a pane from its capture tail and that map only (`main.rs`, `own_map_path`); zero of five L029
    hand-backs wrote one because the packets never asked. Falsifier (the librarian's): three laps on,
    `git log -- exo_memory/map/*.md` shows no pane-authored append.

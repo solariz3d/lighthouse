@@ -109,6 +109,11 @@ librarian (two doors, 2026-09-02, `0714963`, `c177984`), and once a lap is open 
   The chair names a landing pane, which lands your commits on main.
   Why: a commit then carries only what its author named; `git commit` takes the whole index without any `add`
   (amendment 2026-08-26, tightened 2026-09-04 after `38ae5c2`; drafted in `exo_memory/loop/commit_rule_amendment_DRAFT_2026-08-25.md`).
+- When you create, split or materially change a source file, update that file's line in its repo's code map in the same
+  commit: `consonance/src-tauri/src/MAP.md` here, `MAP.md` at the root of the track builder.
+  Why: the next agent reads the map before the code, and a map no pane updates goes stale like any copy; an outside
+  reader's pointer, 2026-10-30 (`exo_memory/research/outside_reader_agent_maps_2026-10-30.md`, pointer 6). Falsifier (the
+  librarian's): three laps after the maps land, `git log` on the code maps shows no pane-authored append.
 - Name yourself, the seat, in the commit body.
   Why: every commit is authored `solariz3d` and `Co-Authored-By` names the model, not the thread; the body is the only
   attribution surface that works (cycle 8 F2, `muscle_map.md`).
