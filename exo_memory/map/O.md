@@ -261,3 +261,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### At E's FIT commit the six at-start candidates render as laid, and B now leans in at the joint (3.2° at 10 m, was 0.6°); a render set made before a HOLD arrived was voided by moving it out of its delivered paths
 2026-10-29, D550 FIT renders — t180-wt-o550 at 2ca43d2, Sigil, |bank| at 10-200 m equal to figures.json (5a64f745) to 0.01° for A-F. Could be wrong that Sigil reads well enough for his eye: the plain road is near-black.
 → `exo_memory/handback/p-d550-renders-O_2026-10-29.md`
+
+### On his piece (cup 15.5 on piece 1) the six candidates keep E's bank figures exactly, and the cross lines draw only from about 120 m down, so a 500 m overhead is three stitched tiles
+2026-10-29, D550 details of 04:21 — lay-his.js on E's tool at 2ca43d2: sameBankAsE for A-F, piece 1 c 15.5/15.5, w 31/31; overhead tiles from 120 m at 10.07 px/m, seams at 170 and 340 m. Could be wrong that the strip's scale is exact off the road: each tile is its own perspective.
+→ `exo_memory/handback/p-d550-renders-O_2026-10-29.md`
