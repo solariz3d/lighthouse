@@ -2672,3 +2672,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-30 ~03:4xZ (D) · D548 part 2b, File ▸ Export for Blender → `exo_memory/handback/p-d548-blender2-E_2026-10-29.md` §6–10
 - t180 `61a4e2a` on d548-e (not pushed): the menu item, Settings ▸ Blender…, Blender found through Steam libraries, the folder write never into content\tracks, the FBX run hidden at below-normal. The page's node shim reads Buffer.from(arrayBuffer, off, len) as the WHOLE buffer; gltf.js now uses calls both agree on, and a test checks the page's glb against node's array for array. Rust mutants 7/6/0 (one equivalent); the live app was not run.
 - **Carry:** code written for node and loaded in the page through the shim must be run through the shim in a test; agreeing in node proves nothing about the page.
+
+## 2026-10-30 ~04:2xZ (D) · D550, the at-start ramp: four candidates for his eye → `exo_memory/handback/p-d550-ramp-E_2026-10-30.md`
+- t180 `9e7cef1` + `5949b88` on d550-e (not pushed): rampShape(u, rise, fall), equal shares exactly roundedLinear (fixtures 0 of 9 differ); four candidates on his piece. Every at-start ramp is laid in three quarters of its length, so C's 0.1 rise is 37.5 m and it banks LESS than today by 20 m (0.57° against 1.63°); only B leans in sooner, and B's bank rate is 0.97 against the 0.934 amber. Ramp harness 58/58/0.
+- **Carry:** a share of a ramp is not a length; a "quick rise" given as a share of a long ramp is slow. State a shape's lean in metres before calling it quick.
