@@ -245,3 +245,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### 0.4.30 reads release-clean on its diff; Bank the bend reads a flight's length as a road's, so a run ending on a jump (or an open track whose head is a flight) is refused with "NaN m"
 2026-10-29, D539 review (read only, t180-fresh 9e6a249..dbe69b4) — coreshell.js:1237-1238 against document.js:354 (a flight has no length); the sliced open cannot publish a superseded build (preview.js:184). Could be wrong that it is only a worded refusal: inferred from swingBank's BAD_RANGE guard, not run.
 → `exo_memory/handback/p-d539-review-O_2026-10-29.md`
+
+### The active Mach 6 needs its own checker profile: on the same road it never reaches the mesh (min +1.0 cm at 72 g) where the regular falls 28 cm into it past 47 g
+2026-10-29, D544 Part 1 — one run each, same road (AI line byte-equal, road mesh within 0.0005 mm; only the texture differs); the cars differ in coilover end stop (250k → 750k N/m) and travel, not aero, tyres or controllers; h at 55-60 g −18.5 against −40.7 cm. Could be wrong for the active car on another line or driver: one run, no run-to-run scatter.
+→ `exo_memory/handback/p-d544-active-O_2026-10-29.md`
