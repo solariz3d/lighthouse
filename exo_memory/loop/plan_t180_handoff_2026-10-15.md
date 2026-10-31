@@ -2822,3 +2822,35 @@ NEXT: chair route the widened D404 to A now (pause D403); A measures when the lo
 - **The fix's test row** asserts the 144 Hz budget (p95 ≤ 6.9 ms) for a 1,000 m and a 2,000 m drag on the real page in every look; and that beyond the ordinary range the drag adapts (detail drops, frame time stays bounded) rather than stalls. The release mesh stays byte-identical.
 - **Every later previewer lap inherits this bar** (a line in the builder's docs/ARCHITECTURE.md with the fix).
 NEXT: chair pass the raised bar to A inside D404 now.
+
+## D402 part 2: the keeper's pick (librarian, 2026-10-23 18:5x)
+
+He listened on the audition page (https://claude.ai/artifact/7eC9DwR9JfR5CFJusQG2as, the 16-place clips; the 64-place walks are being rendered by E). His words, verbatim: "I guess Obsidian is alright". **Pick: sigil-1, Obsidian** (mel13.js, on PL Phantoms [SD]; files in G:\Consonance-tools\b9\b13_pick). He can still switch once he hears the 64-place walks.
+
+**Part 3, E builds** (E made the candidates), after the walk64 renders. Base local-0.4.17 1e436f6. Tier: check it (he hears it at once), with the sound tests whole as the plan says.
+- `MELODY_NAMES`/`MELODIES` gain `sigil` (five of 64; the guard and theme.test's names row follow).
+- Its two WAVs (place/undo) go in app/sounds with hashes in the README, levelled and inside the bands.
+- Settings ▸ Theme SIGIL plays Obsidian, not a random one. Random picks among five looks (and five melodies). The menu tooltip no longer says SIGIL's melody is random. Saved settings keep loading.
+- Run whole: sound, sound-samples, sound-bands, theme, theme-mutation, mutation, menubar-page, settings.
+- It lands in the next local batch with D447 (0.4.18).
+
+NEXT: E build D402 part 3 (SIGIL plays Obsidian) after the walk64 renders, when the chair relays this; then P reads the diff, and it batches into 0.4.18.
+
+## D402 part 3 ruled (librarian, 2026-10-23 19:4x)
+
+Read: `exo_memory/handback/p-d402-3-E_2026-10-23.md` whole. Checked: t180-wt-e43 at 910fd64 over 1e436f6, clean; 13 files, +116 −59.
+- **ACCEPTED for P's read.** Obsidian is the fifth melody, SIGIL plays it, and Random picks among five. The two WAVs are byte-equal to the audition's inputs. The eight named test files pass whole (theme-mutation 48/48/0, mutation 104/104/0).
+- **The amended tests are accepted:** each pinned the four-melody rule, which this change replaces by name ("AMENDED (D402)"). theme.test row 2 gains draws that keep T2 caught.
+- **My correction:** my packet named `b13_pick` as the source; the instrument files are in `inst13_pick`. E used the right ones.
+- P reads 1e436f6..910fd64 (check-it tier: the diff, the amendments against the rule change, a saved 'sigil' playing Obsidian). Then it batches with D447 into 0.4.18.
+
+NEXT: P read d402-e 1e436f6..910fd64 when the chair relays this; then it batches with D447 into the 0.4.18 landing plan.
+
+## P's D402 read ruled (librarian, 2026-10-23 19:5x)
+
+Read: `exo_memory/handback/p-d402-review-P_2026-10-23.md` §0 and §3. Landable. One finding: E's "sound-bands holds them inside the bands" had no witness. The band loop (`app/test/sound-bands.test.js:35`) names only the four old melodies, so 12/12 never rendered Obsidian. P added `['sigil', 'Phantoms']` on a copy: 14/14, both new rows inside the bands.
+- **RULED: E adds that one line on d402-e** (a new tip) and runs sound-bands whole. It is a missing check, not a fix. Check-it tier; no re-read owed beyond the landing pane seeing 14/14.
+- The rest of P's notes are wording only, and need no action.
+- D402 then waits for D447 and lands with it in 0.4.18.
+
+NEXT: E add the sigil band row on d402-e when the chair relays this; then the librarian writes the 0.4.18 landing plan when D447 is ruled.
