@@ -434,7 +434,7 @@
 | reference 1 | −15.6° (box from −5 to +2.5 cm) |
 | C09 | −33.7° (t 65.22, box at −3 cm) |
 
-- inferred: **"something similar to the Hangul, but no critical kill"** fits. The same box-under ride (−13 to −15 cm, wheels on top) and the same yaw kick as the box came out, at about half C09's size. It recovered, it did not reach the edge, and nothing went under.
+- inferred: **"something similar to the [C09], but no critical kill"** fits. The same box-under ride (−13 to −15 cm, wheels on top) and the same yaw kick as the box came out, at about half C09's size. It recovered, it did not reach the edge, and nothing went under.
 
 **Wheels anywhere on the lap:** `wheel.js` finds **0 events on all four wheels** over the replay's 4,646 rows (t 0–71.6, s 0 → the line → 10,912). No centre is under the top surface inside the footprint, or more than 0.5 m below an edge row outside it.
 - The replay ends at t 71.6, s 10,912: the auto-save window, not a stop. Blackbox's lap clock shows one reset, at t 13.89.
