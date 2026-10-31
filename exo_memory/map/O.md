@@ -293,3 +293,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### On ELYSIUM the recorded lap misses the 3.45 m top-down sector-2 segment too (by 3.85 m), so that miss does not explain the unrecorded lap; and no markers rule checks a gate's top-down width
 2026-10-30, D565 — gates.js on three laps: TIME_2 top-down misses of 3.85 m (recorded) and 4.27 m (not recorded), both through the plane within 3.5 m; TIME_2 passes every checks.js rule; the Oct-22 document opens through D.parse (corrects D563). Could be wrong if AC tests the gates in a way none of these reproduce.
 → `exo_memory/handback/p-d565-gates-O_2026-10-30.md`
+
+### On ELYSIUM the plan's 15° bar puts sector 2 on a 14.8° cupped stretch (28.94 m wide, laps 4.6-5.0 m off the line); a 2° bar finds level road at s 12,958 (31.73 m), but the sectors stop being thirds
+2026-10-30, D567 — t180 d567-o acc9280: tools/kn5-move-gate.cjs rewrites only the two gate matrices (88 bytes; 182 meshes, 29 other dummies, 8 other files identical); 8 tests, mutants 13/13/0; both laps cross the new gate inside it at 2.2-2.8 m. Could be wrong that the gate is why laps do not count: the keeper's lap on ELYSIUM GATES decides.
+→ `exo_memory/handback/p-d567-gate-patch-O_2026-10-30.md`
