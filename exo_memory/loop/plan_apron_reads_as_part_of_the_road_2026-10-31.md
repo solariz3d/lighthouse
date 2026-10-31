@@ -20,3 +20,10 @@ Falsifier: on his eye after the install, the underside still reads as a flat she
 Release: the apron is new in this release and this is his first close look, so recommend the publish waits for this and rides as 0.4.35 with the export banner and the overwrite warning. His veto stands.
 
 surfaced: apron.js header (a93ae51); p-d563-wheel-under-O (the 0.86 m case); his four screenshots; memory visuals-as-artifacts; the standing rule on runs while AC is up (A's D591 correction 5).
+
+## Amended 17:1x: his verdict on the physics comes first
+The keeper, 17:17: "still needs more testing, but the sides work very well compared to hand made tracks for stopping wheel dropping off and clipping into the track, it will be revolutionary". The apron's PHYSICS is now approved by its user and must not change by accident. So:
+- The physics apron stays exactly as exported today: the same vertices, the same names and the same collision. That is byte-equal by node for the 1ROAD_APRON_ and 1GRIPnnn_APRON_ meshes.
+- The look is fixed in a separate VISUAL mesh: the curled lip, the curved underside, the road's texture carried across, and the 20 m pit ease. The physics apron is made not to render (the kn5 node's renderable flag off, the way AC tracks hide colliders), checked in his game.
+- Step 2 of the lap above (the lip direction for physics) becomes a later, separate change, made only if his further testing asks for it.
+- Falsifier added: if after the install a wheel behaves differently anywhere at the edge, the physics was touched. Diff the apron's physics nodes against today's export.
