@@ -358,3 +358,8 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 2026-10-31, D587 — t180 d587-o b6fa925: heapstage.js dropping each holder then each memo (heap + ArrayBuffers); raw.pts's 809,883 findings were ~99 MB, the cup blends' one-object-per-u constants 483 MB, the stacked points 205-248 MB; 11/11 documents' checker and validate() JSON sha256-equal; validate_heap.test.js red at acaa2a0. Could be wrong for a track whose memos are mostly normMemo (165 MB, not cut).
 General form: a heap gauge must count ArrayBuffers, or a cut to typed arrays scores memory moved out of sight as memory saved.
 → `exo_memory/handback/p-d587-validator-heap-O_2026-10-31.md`
+
+### The apron's flat flap was a plank off the frame's lateral; drawn instead as a lip off the edge's own segment, the crease went from 53,070 of 53,070 rows over 5° to 0, the driven physics byte-identical and hidden, and the pit lane one outline
+2026-10-31, D593 — t180 d593-o 97ab62e: on his ELYSIUM the base plank met the edge at a median 55° (rim 30-60°: 69°, max 82.4°), the lip at 2.08°; the 57 physics apron meshes are byte-identical in his own kn5, the base and the cut (kn5cmp.js), +1 new 1ROAD_APRON_PIT_R; rows red at a93ae51 2/13/14/15/16, 17/17 after; harness 11/11/0. Could be wrong that AC still collides with a non-renderable 1ROAD_ mesh (inferred from catch.js, not run in the game).
+General form: where two strips meet along a line at different vertices, the downforce-ray check reads the line as a gap; share the vertices (a fan from one point), do not just make the lines coincide.
+→ `exo_memory/handback/p-d593-apron-shape-O_2026-10-31.md`
