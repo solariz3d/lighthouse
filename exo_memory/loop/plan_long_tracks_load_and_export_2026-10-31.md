@@ -27,3 +27,10 @@ Yes, and it becomes part 3 (load and preview). A grep of land-582 for lod, level
 - What must NOT go coarse: the checker, the reds, the readouts and anything measured; they keep reading the full geometry (or its maths) so what he is told matches what exports. Only the drawn mesh changes.
 - Proof: the checker's answers byte-equal with the coarse preview on; the preview holds his refresh rate on the 100 km track (memory preview-at-refresh-rate); the near-camera road within 1 cm of the export mesh where he edits.
 - This eases load and preview; it does not by itself fix the export ceiling, which needs full detail, so part 2 stands.
+
+## Split, 09:0x (the keeper: "only one pane is working? what is the bottle neck")
+My slip: I filed this as one pane when two parts are independent (memory plan-splits-the-work).
+- C keeps part 1-2: the export heap, measure then fix (in flight).
+- A takes part 3: the coarse preview road and the load time on ELYSIUM and the 100 km synthetic, its own branch off land-582 d08feea. Hidden windows only; headless Chromium preferred.
+- C and A both touch the road mesh build; A changes only the drawn mesh, C only the export path; the librarian merges, and a conflict there is named in the hand-backs.
+- E and O start Consonance Parts 2 and 3 now (plan_consonance_learns_from_the_reader_2026-10-30.md), since they share nothing with T-180 and the release is held on this bug; the exe swap still waits for his restart word.
