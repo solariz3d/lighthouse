@@ -289,3 +289,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### The wheel that ends up under the road got there over the edge: 0.86 m (±0.03) past the mesh edge for 0.20 s, dropping 0.68 m against the edge row, then back in 0.32 m below it
 2026-10-30, D563 final aim — entry.js against the mesh's own edge (u -17.10 m; the AI footprint sits 0.40 m outside it); then 27.6 m inward under the road over 1,236 m, freed by the jack. Could be wrong by the wheel-centre term: blackbox's recorded wheel position is taken as the physics centre, inferred.
 → `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md`
+
+### On ELYSIUM the recorded lap misses the 3.45 m top-down sector-2 segment too (by 3.85 m), so that miss does not explain the unrecorded lap; and no markers rule checks a gate's top-down width
+2026-10-30, D565 — gates.js on three laps: TIME_2 top-down misses of 3.85 m (recorded) and 4.27 m (not recorded), both through the plane within 3.5 m; TIME_2 passes every checks.js rule; the Oct-22 document opens through D.parse (corrects D563). Could be wrong if AC tests the gates in a way none of these reproduce.
+→ `exo_memory/handback/p-d565-gates-O_2026-10-30.md`

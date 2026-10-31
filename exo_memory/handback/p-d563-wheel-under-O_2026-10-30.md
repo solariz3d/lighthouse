@@ -163,3 +163,7 @@
 
 - **The first run of `wheel.js` had the height's sign inverted** (`4 − t`; the hit is at `wheel + (4 − t)·n`, so the wheel is `t − 4` over it). Every wheel read about 0.39 m under the road all lap. Caught by checking the road normal against the car's, which agreed. Fixed and rerun.
 - **My first reading of the mesh named no underskin on p20.** The underskin under p20 is the chunk `UNDERSKIN_p19#21`, which spans pieces 19–20. Found by the cross-section, which lists every surface.
+
+## Correction, 2026-10-30 (D565)
+
+- "The saved document … today's core refuses it on a joint check" (the road-there section) is WRONG. The core's own `D.parse` opens it (44 pieces) and `toSegments` builds it (27,592 m). The refusal came from my probe calling `toSegments` on the raw JSON without `parse`, which derives the `edge` and `cup` flags the stored pieces lack. Its handles as read raw still stand. See `p-d565-gates-O_2026-10-30.md` §4.
