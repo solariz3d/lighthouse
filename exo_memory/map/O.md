@@ -345,3 +345,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### Extend's boxes read "early" with a tooltip per row read from extendOptions: F (~235 m) for bank, cup, edges and (once d574-c lands) width; 20 m for turn and climb rates, edge start, tube; and nothing for a turn or climb read as a corner
 2026-10-31, D581 — t180 d581-o 93d6fe7 + 0e75289; 116/116 touched tests; render with the bank tooltip drawn from the box's own title (an OS tooltip cannot be captured headless). Could be wrong for width until d574-c lands: on d576-a width is still 20 m.
 → `exo_memory/handback/p-d581-early-O_2026-10-31.md`
+
+### The drag tick is capped at 35 ms (about 28 a second; a row red at 4), and every title in t180 now shows in a hover card drawn by each look's own menu rule, 4.5:1 or better in all six looks
+2026-10-31, D581 additions — d581-o 5e90523 (tick: sound tests 44/44 + 14/14) and e94cc90 (hovertip.js: one document listener, the title moved to data-tip only while hovered; hovertip.test.js 6/6, texture-page row 10 worst 5.82 in aqua). Could be wrong that no page test reads a hovered element's title: the full suite at landing is the check.
+→ `exo_memory/handback/p-d581-early-O_2026-10-31.md` (§tick, §hovercard)
