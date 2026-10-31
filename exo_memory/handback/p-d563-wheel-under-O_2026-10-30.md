@@ -18,7 +18,46 @@
 2. each wheel's height over the top surface along t;
 3. the cross-section at the entry station.
 
-## The answer
+## Re-aimed: the chair's ring of 23:58 (plan at 402dbbb5), lap t 52.7 s
+
+**Where his screenshot is in the replay.**
+- checked: blackbox's lap clock (`lapMs`) resets at replay t 14.010 s (frame 934, from 14,022 ms to 3 ms), so lap t = replay t − 14.010.
+- **His 0:52.673 is replay t 66.683 s, 0.19 s INTO the event below.** The rear right went under at lap 52.488 s (replay 66.495) and came up at lap 59.06 s.
+- At his frame the car is at s ≈ 9,420, body 10.5 m right of the line, 7 m inside the right edge, on a road whose climb is about 16° and rising. That is the start of a vertical loop. So "the middle of the road, three wheels on, the rear right hanging under" is exactly what the data shows there.
+
+**But the wheel went under AT THE EDGE, 0.2 s before his frame** (the frames are in `…_evidence/rear-right-frames.csv`):
+- lap 52.32–52.44 s: the rear right is outside the footprint past the right edge, by 0.1–0.5 m (0.9 m past the mesh's own edge, which ends at u −17.1), its centre 0.25 m below the edge row's height;
+- lap 52.488 s: the first frame with a surface over it, 0.31 m under.
+- The screenshot comes after the car has already moved 7 m inward with the wheel caught. inferred: from the screenshot alone it looks like a mid-road event; the frames say the entry was at the edge.
+
+**The rear right, frame by frame, lap 50.70 to 59.84 s** (609 frames, every frame in the CSV: lap t, replay t, s, speed, load, h, the contact normal, the road's bank and climb at the car, and all four wheels' height over the top surface):
+
+| lap t (s) | what the data shows |
+|---|---|
+| 50.70–51.30 | Leaving the helix: bank −37° → −27°, load 15 → −3 → 11 g. The hop (load −2.9 g, the body 19 cm up at 51.12). All four wheels +0.27 to +0.95 m. |
+| 51.30–52.30 | Across the road to the right edge on a road unbanking to 0°, load 2–11 g, all four wheels +0.25 to +0.40 m. |
+| 52.32–52.44 | The rear right outside the right edge (above). |
+| **52.488–59.055** | **Under: 6.57 s, 0.21–0.31 m under the top surface** (never deeper than 0.308 m). Over this stretch the road climbs from 6° through 90° to upside down (bank ±180°, s 9,701–10,343) and back down to −16°: a vertical loop. The contact normal turns through a full circle; load 15–24 g; speed 649–739 km/h. **The other three wheels ride at +0.24 to +0.26 m the whole time.** |
+| 59.04–59.76 | **The jack:** load 2.6 → 0.7 g and the body (h) +0.04 → +0.36 m; all four wheels at full droop and 1–5 m over the surface, so airborne. It lands at lap 59.76 (27 g) with all four wheels on top. |
+
+**How it came back:** a jump-jack step. Not a reset (no teleport until the car's later exit), and **not a restoring force.** The load stayed at 15–24 g for the whole 6.57 s and the depth stayed between 0.21 and 0.31 m regardless of it, round a loop that turned the road's normal through 360°.
+
+**Is it the soft block?** On this evidence, no, not this event. The re-aim's mechanism is CSP soft collision (MAX_DEPTH 4 m, ERP 0.8, CFM 0.0002) letting a wheel sink.
+- A wheel in a soft contact carries load and is pushed back harder the deeper it goes.
+- This wheel sat at its full droop all along (0.49 m below the plane of the other three, the same place every wheel sat while the car was airborne), so it carried no load, and its depth did not follow the load.
+- inferred: AC's tyre finds the road with a probe from the wheel downward, not through the soft contact the body uses, so a wheel whose centre is under a single-sided road sees nothing under it and hangs. That is the reading of a constant-depth, zero-load hang. It is not read from AC's source.
+
+**Every frame in the three laps with a wheel more than a tyre radius (0.395 m) under the top surface, inside the footprint:**
+- **C19:** 0 frames (deepest −0.308 m, the event above).
+- **C03:** 0 frames (it never goes under at all; its lowest reading is +0.218 m).
+- **The reference: 9 frames, all at s 17,578–17,590, t 337.20–337.32 s. A different event, and the soft block's kind.**
+  - The car was airborne over a 67°-banked stretch (s 17,600–17,660: load −1 to −18 g, wheels 0.5–3.5 m over the road).
+  - It landed at 383 km/h with the load rising 16 → 50 g in 0.06 s.
+  - **It went through the road:** in 0.12 s the wheels went from −0.5 to −3.8 m, near MAX_DEPTH 4 m. The box was 0.8 m under the mesh, then nothing under the rays.
+  - It fell, and the replay **reset the car to the pits** at t 337.68 s (s 360).
+  - That is D341's pass-through, by a 50 g landing on a 67° bank. The soft block's depth cap and spring are the candidate for THAT, not for C19's hanging wheel.
+
+## The answer (the first read, kept: the edge measurements, now context)
 
 **A wheel WAS under the road: the falsifier does not fire.**
 - **Which wheel, how long:** C19's rear-right wheel (w3) was under the road's top surface, inside the footprint, for **6.57 s** (t 66.495–73.065 s, 439 frames), 0.23–0.31 m under it, while the car ran across the road and back on its other three wheels.
