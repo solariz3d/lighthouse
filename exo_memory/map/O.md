@@ -341,3 +341,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### CI for t180 is one script and one workflow: the fast subset (277 of 302 files, 20.8 min here, clean profile) on every push, the 22 mutation harnesses weekly; and land-0431 is already red on menubar-page row 17, so the first CI run will be too
 2026-10-30, D579 — d579-o 94b5092; test-fast.cjs excludes by name (mutation, 3 frame-timing pages); Node pinned 24.14.1 from the repo's own Node-24 dependence; actions v7 from the releases API (my first draft said v4). Could be wrong that no test needs this machine: the clean-profile run is a stand-in, not a runner.
 → `exo_memory/handback/p-d579-ci-O_2026-10-30.md`
+
+### Extend's boxes read "early" with a tooltip per row read from extendOptions: F (~235 m) for bank, cup, edges and (once d574-c lands) width; 20 m for turn and climb rates, edge start, tube; and nothing for a turn or climb read as a corner
+2026-10-31, D581 — t180 d581-o 93d6fe7 + 0e75289; 116/116 touched tests; render with the bank tooltip drawn from the box's own title (an OS tooltip cannot be captured headless). Could be wrong for width until d574-c lands: on d576-a width is still 20 m.
+→ `exo_memory/handback/p-d581-early-O_2026-10-31.md`
