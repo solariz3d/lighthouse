@@ -2,7 +2,7 @@
   "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
-    "BENIGN-TEST": 397,
+    "BENIGN-TEST": 406,
     "BENIGN-FIXTURE": 12,
     "REVIEW": 8,
     "DISGUISED": 15,
@@ -2715,6 +2715,69 @@
       "verdict": "BENIGN-FIXTURE",
       "text": "const AFFORD = /y:\\s*Yes\\s*n:\\s*No/; // whitespace varies with terminal width",
       "key": "consonance/tools/prompt-events.js\u0000const AFFORD = /y:\\s*Yes\\s*n:\\s*No/; // whitespace varies with terminal width\u0000#1"
+    },
+    {
+      "file": "consonance/tools/read-before-edit.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "...call('2026-10-30T00:37:00Z', 'Edit', { file_path: 'C:/repo/a.js' }, 10)]);",
+      "key": "consonance/tools/read-before-edit.test.js\u0000...call('2026-10-30T00:37:00Z', 'Edit', { file_path: 'C:/repo/a.js' }, 10)]);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/read-before-edit.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "...call('2026-10-30T10:00:40Z', 'Edit', { file_path: 'C:/repo/a.js' }, 10)]);",
+      "key": "consonance/tools/read-before-edit.test.js\u0000...call('2026-10-30T10:00:40Z', 'Edit', { file_path: 'C:/repo/a.js' }, 10)]);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/read-before-edit.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "...call('2026-10-30T10:01:00Z', 'Write', { file_path: 'C:/repo/exo_memory/handback/h.md' }, 50), // a hand-back is not the change",
+      "key": "consonance/tools/read-before-edit.test.js\u0000...call('2026-10-30T10:01:00Z', 'Write', { file_path: 'C:/repo/exo_memory/handback/h.md' }, 50), // a hand-back is not the change\u0000#1"
+    },
+    {
+      "file": "consonance/tools/read-before-edit.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.equal(R.encodeCwd('C:\\\\Users\\\\nname\\\\Desktop\\\\brain rot'), 'C--Users-nname-Desktop-brain-rot', 'main.rs encode_cwd\\'s own pinned case');",
+      "key": "consonance/tools/read-before-edit.test.js\u0000assert.equal(R.encodeCwd('C:\\\\Users\\\\nname\\\\Desktop\\\\brain rot'), 'C--Users-nname-Desktop-brain-rot', 'main.rs encode_cwd\\'s own pinned case');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/read-before-edit.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "jsonl(file, [...call('2026-10-30T09:59:00Z', 'Read', { file_path: 'C:/boot/BOOT.md' }, 9000),",
+      "key": "consonance/tools/read-before-edit.test.js\u0000jsonl(file, [...call('2026-10-30T09:59:00Z', 'Read', { file_path: 'C:/boot/BOOT.md' }, 9000),\u0000#1"
+    },
+    {
+      "file": "consonance/tools/read-before-edit.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "jsonl(file, [packet('2026-10-30T00:36:25Z', '[chair:MAIN] D544: go. (D525 waits; D515 as before)'), ...call('2026-10-30T00:36:40Z', 'Read', { file_path: 'C:/repo/a.js' }, 70),",
+      "key": "consonance/tools/read-before-edit.test.js\u0000jsonl(file, [packet('2026-10-30T00:36:25Z', '[chair:MAIN] D544: go. (D525 waits; D515 as before)'), ...call('2026-10-30T00:36:40Z', 'Read', { file_path: 'C:/repo/a.js' }, 70),\u0000#1"
+    },
+    {
+      "file": "consonance/tools/read-before-edit.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "jsonl(file, [packet('2026-10-30T10:00:00Z', '[chair:MAIN] D900: read and report'), ...call('2026-10-30T10:00:10Z', 'Read', { file_path: 'C:/repo/a.js' }, 500),",
+      "key": "consonance/tools/read-before-edit.test.js\u0000jsonl(file, [packet('2026-10-30T10:00:00Z', '[chair:MAIN] D900: read and report'), ...call('2026-10-30T10:00:10Z', 'Read', { file_path: 'C:/repo/a.js' }, 500),\u0000#1"
+    },
+    {
+      "file": "consonance/tools/read-before-edit.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "jsonl(file, [packet('2026-10-30T10:00:00Z', 'a keeper message naming nothing'), ...call('2026-10-30T10:00:05Z', 'Edit', { file_path: 'C:/repo/a.js' }, 10)]);",
+      "key": "consonance/tools/read-before-edit.test.js\u0000jsonl(file, [packet('2026-10-30T10:00:00Z', 'a keeper message naming nothing'), ...call('2026-10-30T10:00:05Z', 'Edit', { file_path: 'C:/repo/a.js' }, 10)]);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/read-before-edit.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "packet('2026-10-30T11:00:00Z', '[chair:MAIN] D901: build it'), ...call('2026-10-30T11:00:10Z', 'Edit', { file_path: 'C:/repo/b.js' }, 50)]);",
+      "key": "consonance/tools/read-before-edit.test.js\u0000packet('2026-10-30T11:00:00Z', '[chair:MAIN] D901: build it'), ...call('2026-10-30T11:00:10Z', 'Edit', { file_path: 'C:/repo/b.js' }, 50)]);\u0000#1"
     },
     {
       "file": "consonance/tools/read-ledger.js",

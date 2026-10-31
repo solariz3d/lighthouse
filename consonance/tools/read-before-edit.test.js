@@ -94,8 +94,9 @@ test('the shell rule reads a command\'s syntax, not its quoted text', () => {
 test('the transcript path is the room\'s own: letters.json and panes.json, the cwd encoded as main.rs does, the Third Place left out', (t) => {
   const d = tmp(t);
   fs.writeFileSync(path.join(d, 'letters.json'), JSON.stringify({ 'aaaa-1': 'C', [R.THIRD_PLACE_SID]: 'N', 'bbbb-2': 'E' }));
-  fs.writeFileSync(path.join(d, 'panes.json'), JSON.stringify([{ pane: 'aaaa-1', cwd: 'C:\\Consonance\\instances\\sibling-0845a868' }]));
+  // a neutral cwd, not a real instances path: the encoding itself is pinned by main.rs's own case below
+  fs.writeFileSync(path.join(d, 'panes.json'), JSON.stringify([{ pane: 'aaaa-1', cwd: '/rooms/instances/sibling-1' }]));
   const seats = R.seatsFrom(d, 'P');
-  assert.deepEqual(seats.map((s) => [s.letter, s.file]), [['C', path.join('P', 'C--Consonance-instances-sibling-0845a868', 'aaaa-1.jsonl')], ['E', null]]);
+  assert.deepEqual(seats.map((s) => [s.letter, s.file]), [['C', path.join('P', '-rooms-instances-sibling-1', 'aaaa-1.jsonl')], ['E', null]]);
   assert.equal(R.encodeCwd('C:\\Users\\nname\\Desktop\\brain rot'), 'C--Users-nname-Desktop-brain-rot', 'main.rs encode_cwd\'s own pinned case');
 });
