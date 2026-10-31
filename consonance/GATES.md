@@ -1,6 +1,6 @@
 # The gates — what refuses you, why, and how to answer
 
-Consonance runs **six gates**: three on what its seats send each other, one on what the chair dispatches, and two on your machine's
+Consonance runs **seven gates**: four on what its seats send each other, one on what the chair dispatches, and two on your machine's
 history and files. They are on in every room. They **refuse; they don't remind**, because a rule written in a brief is followed
 about half the time and a rule that refuses at the moment of sending is followed almost always. That was measured, not assumed. In
 a census of the rules this program was built with (the D210 rule census, [`exo_memory/loop/rule_census_score_2026-10-02.md`](https://github.com/solariz3d/lighthouse/blob/main/exo_memory/loop/rule_census_score_2026-10-02.md)
@@ -16,7 +16,8 @@ session on your machine reads, inside Consonance or not. The SOURCES gate, the r
 verbs and seats, so outside Consonance they do nothing. **The push gate and the delete gate are machine-wide:** they check every `git push` and every
 recursive delete that any Claude Code session runs, in any project.
 
-Every gate **fails open on its own error** (a broken hook never traps a seat) and never reads or logs a secret. The SOURCES gate and
+Every gate **fails open on its own error** (a broken hook never traps a seat), except the map gate in strict mode, which refuses
+rather than pass a hand-back it could not check (section 7); and no gate reads or logs a secret. The SOURCES gate and
 the reply slot check only that a source was OPENED in this turn — never whether it backs the claim. That part stays with the seat,
 and with you.
 
@@ -152,6 +153,43 @@ that said "no junctions"; a rule that has to be remembered was not enough.
 **How to answer it:** remove the link itself first (`rmdir <link>`, or `Remove-Item <link>` without `-Recurse`), then delete the tree.
 
 **To turn it off:** remove the `delete-gate.js` entry from `%USERPROFILE%\.claude\settings.json` (under `hooks` → `PreToolUse`).
+
+## 7. The map gate — a hand-back that added or removed source files
+
+**What.** When a seat hands back to the librarian (`call_librarian`), its ring names each repository the work changed on a line
+above `SOURCES:`:
+
+    BASE: <checkout path> <base sha>
+
+the folder the seat worked in and the commit its packet named as the base. For each such line the gate runs
+`git diff --no-renames --name-status <base> HEAD` in that folder, so a renamed or split file counts as one deleted and one created.
+When a file under `src/`, `app/`, `consonance/src-tauri/src/` or `consonance/tools/` was **created or deleted**, and no file named
+`MAP.md` is in the same diff, the map has fallen behind the code. A file changed in place is not checked: whether its entry still
+reads true is a judgment, and the gate checks only what is mechanical. Only committed work is seen.
+
+**Why.** Everyone writes up what they built; nobody checks that the code map heard about it. A map that a rule asks people to keep
+goes stale the way the room's other remember-to rules did (the census above), and a reader who trusts a stale map is worse off than
+one with no map.
+
+**Warn or refuse.** It follows the `gates_mode` switch in `%USERPROFILE%\.consonance.json`, which the SOURCES gate also reads:
+- **light**: the hand-back is delivered with a line naming the files, `[MAP NOT UPDATED — <folder> <base>..<head>: N source file(s)
+  created or deleted and no MAP.md in the diff: A src/…, D app/… ; gates_mode light, strict would refuse]`, and the line is posted to
+  the board.
+- **strict** (the default): `refused by the map gate: …`, naming the files and how to recover; the hand-back is not delivered, and
+  the attempt is posted to the board so its pointer is not lost.
+
+**When the gate cannot run.** A `BASE:` line with no commit, a commit that is not a sha (a branch name moves, so it is refused), a
+folder git cannot open, a base that is not a commit there, or a git that fails: never a silent pass. In light mode the hand-back is
+delivered with `[MAP GATE COULD NOT RUN — <folder> <base>: <why>; gates_mode light, strict would refuse]` and the line is posted; in
+strict mode it is refused like the case above. A ring with **no** `BASE:` line is delivered in both modes, marked
+`[NO map check — this ring names no BASE: line …]`, and counted on the board, because work that changed no repository has
+nothing to name. Every line the gate posts is under the board name `map-gate`.
+
+**How to answer it:** add, change or remove each named file's entry in that repository's `MAP.md` and commit it there, or correct
+the `BASE:` line; then ring again.
+
+**To turn it off:** this one is not a hook. It is part of the app (`consonance/src-tauri/src/mcp.rs`, `fn map_gate`): light mode
+makes it warn instead of refuse; turning it off means removing its call from `call_librarian` and rebuilding Consonance.
 
 ## Also installed, and it spends your usage: the second reader
 

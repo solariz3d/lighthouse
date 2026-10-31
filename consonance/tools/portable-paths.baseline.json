@@ -2,7 +2,7 @@
   "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
-    "BENIGN-TEST": 406,
+    "BENIGN-TEST": 422,
     "BENIGN-FIXTURE": 12,
     "REVIEW": 8,
     "DISGUISED": 15,
@@ -1655,6 +1655,13 @@
       "file": "consonance/src-tauri/src/main.rs",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(p, vec![PathBuf::from(\"C:\\\\Users\\\\u\\\\Downloads\\\\t180-wt-o581\"), PathBuf::from(\"C:/Users/u/Desktop/lighthouse/MAP.md\"), PathBuf::from(\"C:/Users/u/x/y\")]);",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(p, vec![PathBuf::from(\"C:\\\\Users\\\\u\\\\Downloads\\\\t180-wt-o581\"), PathBuf::from(\"C:/Users/u/Desktop/lighthouse/MAP.md\"), PathBuf::from(\"C:/Users/u/x/y\")]);\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "assert_eq!(read_head(std::path::Path::new(\"C:\\\\definitely\\\\not\\\\here.jsonl\")), 0);",
       "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(read_head(std::path::Path::new(\"C:\\\\definitely\\\\not\\\\here.jsonl\")), 0);\u0000#1"
     },
@@ -1739,6 +1746,20 @@
       "file": "consonance/src-tauri/src/main.rs",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "assert!(s.contains(\"# The map of what you are about to change\") && s.contains(\"## t180 — `C:/x/t180/MAP.md`\") && s.contains(\"WHOLE-BODY\"));",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert!(s.contains(\"# The map of what you are about to change\") && s.contains(\"## t180 — `C:/x/t180/MAP.md`\") && s.contains(\"WHOLE-BODY\"));\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert!(small.contains(\"- `C:/x/t180/MAP.md` (\") && small.contains(\"the t180 map did not fit this shell\"), \"{small}\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert!(small.contains(\"- `C:/x/t180/MAP.md` (\") && small.contains(\"the t180 map did not fit this shell\"), \"{small}\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "cfg.data_dir = \"E:/elsewhere/data\".into();",
       "key": "consonance/src-tauri/src/main.rs\u0000cfg.data_dir = \"E:/elsewhere/data\".into();\u0000#1"
     },
@@ -1755,6 +1776,13 @@
       "verdict": "BENIGN-TEST",
       "text": "let (cfg, bad) = parse_config(r#\"{\"data_dir\":\" C:\\\\Consonance\\\\data \"}\"#);",
       "key": "consonance/src-tauri/src/main.rs\u0000let (cfg, bad) = parse_config(r#\"{\"data_dir\":\" C:\\\\Consonance\\\\data \"}\"#);\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let cap = \"❯ [chair:MAIN] the first packet\\n[sent 2026-10-30]\\n\\ndone\\n\\n❯ [chair:MAIN] the second packet, on t180\\nSOURCES: x\\n[sent 2026-10-31]\\n\\nI read it and wrote C:\\\\a\\\\b\\n\\n❯ [keep-warm visit — not work] reply ok\\n\\nok\\n\\n\";",
+      "key": "consonance/src-tauri/src/main.rs\u0000let cap = \"❯ [chair:MAIN] the first packet\\n[sent 2026-10-30]\\n\\ndone\\n\\n❯ [chair:MAIN] the second packet, on t180\\nSOURCES: x\\n[sent 2026-10-31]\\n\\nI read it and wrote C:\\\\a\\\\b\\n\\n❯ [keep-warm visit — not work] reply ok\\n\\nok\\n\\n\";\u0000#1"
     },
     {
       "file": "consonance/src-tauri/src/main.rs",
@@ -1802,6 +1830,20 @@
       "file": "consonance/src-tauri/src/main.rs",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "let m = RepoMap { label: \"lighthouse\", map: PathBuf::from(\"C:/x/lh/consonance/src-tauri/src/MAP.md\"), text: \"# Map\\nD585-MAP-IN-THE-WAKE\\n\".to_string() };",
+      "key": "consonance/src-tauri/src/main.rs\u0000let m = RepoMap { label: \"lighthouse\", map: PathBuf::from(\"C:/x/lh/consonance/src-tauri/src/MAP.md\"), text: \"# Map\\nD585-MAP-IN-THE-WAKE\\n\".to_string() };\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let m = RepoMap { label: \"t180\", map: PathBuf::from(\"C:/x/t180/MAP.md\"), text: \"# Map — t180\\nWHOLE-BODY\\n\".to_string() };",
+      "key": "consonance/src-tauri/src/main.rs\u0000let m = RepoMap { label: \"t180\", map: PathBuf::from(\"C:/x/t180/MAP.md\"), text: \"# Map — t180\\nWHOLE-BODY\\n\".to_string() };\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "let on = Config { usb_mode: true, data_dir: r\"C:\\d\".into(), ..Config::default() };",
       "key": "consonance/src-tauri/src/main.rs\u0000let on = Config { usb_mode: true, data_dir: r\"C:\\d\".into(), ..Config::default() };\u0000#1"
     },
@@ -1811,6 +1853,13 @@
       "verdict": "BENIGN-TEST",
       "text": "let out = \"consonance close · D · C:\\\\data -> C:\\\\state\\n published: main 1a2b3c4 -> origin (was 9486b30)\\n remote confirms: refs/heads/main = 1a2b3c4 (asked the remote, not the push)\\n\";",
       "key": "consonance/src-tauri/src/main.rs\u0000let out = \"consonance close · D · C:\\\\data -> C:\\\\state\\n published: main 1a2b3c4 -> origin (was 9486b30)\\n remote confirms: refs/heads/main = 1a2b3c4 (asked the remote, not the push)\\n\";\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let p = packet_paths(\"Work in C:\\\\Users\\\\u\\\\Downloads\\\\t180-wt-o581, and see `C:/Users/u/Desktop/lighthouse/MAP.md`. Bash: /c/Users/u/x/y.\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000let p = packet_paths(\"Work in C:\\\\Users\\\\u\\\\Downloads\\\\t180-wt-o581, and see `C:/Users/u/Desktop/lighthouse/MAP.md`. Bash: /c/Users/u/x/y.\");\u0000#1"
     },
     {
       "file": "consonance/src-tauri/src/main.rs",
@@ -1844,8 +1893,71 @@
       "file": "consonance/src-tauri/src/mcp.rs",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "(\"p at exo_memory/handback/p.md\\nBASE: C:/w/lh e80b\\nNEXT: librarian x\", \"not a sha\"),",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000(\"p at exo_memory/handback/p.md\\nBASE: C:/w/lh e80b\\nNEXT: librarian x\", \"not a sha\"),\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "(\"p at exo_memory/handback/p.md\\nBASE: C:/w/lh origin/main\\nNEXT: librarian x\", \"not a sha\"),",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000(\"p at exo_memory/handback/p.md\\nBASE: C:/w/lh origin/main\\nNEXT: librarian x\", \"not a sha\"),\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "(\"p at exo_memory/handback/p.md\\nBASE: C:/w/lh\\nNEXT: librarian x\", \"no commit\"),",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000(\"p at exo_memory/handback/p.md\\nBASE: C:/w/lh\\nNEXT: librarian x\", \"no commit\"),\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert!(calls.iter().all(|(c, _)| c == \"C:/Users/n/Downloads/lh wt e586\"), \"a checkout path keeps its spaces and loses its quoting: {calls:?}\");",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000assert!(calls.iter().all(|(c, _)| c == \"C:/Users/n/Downloads/lh wt e586\"), \"a checkout path keeps its spaces and loses its quoting: {calls:?}\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert!(text.lines().any(|l| l.contains(\"MAP NOT UPDATED\") && l.contains(\"C:/w/t180\") && l.contains(\"src/core/n.js\")), \"{text}\");",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000assert!(text.lines().any(|l| l.contains(\"MAP NOT UPDATED\") && l.contains(\"C:/w/t180\") && l.contains(\"src/core/n.js\")), \"{text}\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert!(text.lines().any(|l| l.contains(MAP_MARK) && l.contains(\"C:/w/lh\") && l.contains(\"no source file created or deleted\")), \"{text}\");",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000assert!(text.lines().any(|l| l.contains(MAP_MARK) && l.contains(\"C:/w/lh\") && l.contains(\"no source file created or deleted\")), \"{text}\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "BASE: C:/w/lh e80b2af7\\n\\",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000BASE: C:/w/lh e80b2af7\\n\\\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "let ring = \"hand-back at exo_memory/handback/p-x-A_2026-09-20.md\\nSOURCES: /c/Users/n/lighthouse/exo_memory/loop/plan_x.md · C:\\\\Users\\\\n\\\\other.md\\nNEXT: librarian x\";",
       "key": "consonance/src-tauri/src/mcp.rs\u0000let ring = \"hand-back at exo_memory/handback/p-x-A_2026-09-20.md\\nSOURCES: /c/Users/n/lighthouse/exo_memory/loop/plan_x.md · C:\\\\Users\\\\n\\\\other.md\\nNEXT: librarian x\";\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let ring = \"hand-back at exo_memory/handback/p.md\\n**BASE:** `C:/Users/n/Downloads/lh wt e586` e80b2af7.\\nNEXT: librarian x\";",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000let ring = \"hand-back at exo_memory/handback/p.md\\n**BASE:** `C:/Users/n/Downloads/lh wt e586` e80b2af7.\\nNEXT: librarian x\";\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let ring = \"hand-back at exo_memory/handback/p.md\\nBASE: C:/w/t180 a6af8cf\\nBASE: C:/w/lh e80b2af7\\nNEXT: librarian x\";",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000let ring = \"hand-back at exo_memory/handback/p.md\\nBASE: C:/w/t180 a6af8cf\\nBASE: C:/w/lh e80b2af7\\nNEXT: librarian x\";\u0000#1"
     },
     {
       "file": "consonance/src-tauri/src/sync_launch.rs",
