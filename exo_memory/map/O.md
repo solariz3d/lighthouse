@@ -353,3 +353,8 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### A pane now wakes holding the code map of each repository its newest packet names, found from the packet's own paths (t180 with no path is said, not guessed), seated ahead of the deck; it is the wake, not the delivery
 2026-10-31, D585 — lighthouse d585-o 83b7d1af: latest_packet / packet_repo_maps / repo_map_section in assemble_intake_for; BUILDING.md dispatch item 9; cargo repo_map_tests+intake+fork_note 48/0/2. Could be wrong that the lighthouse map in most wakes is worth the deck it displaces: the D4 instrument can say.
 → `exo_memory/handback/p-d585-map-intake-O_2026-10-31.md`
+
+### The checker's retained heap was its per-segment memos, not its findings: packed into Float64Arrays it fell 1,016 → 506 MB on ELYSIUM and 476 → 295 MB on a 100 km lap, every finding byte-equal
+2026-10-31, D587 — t180 d587-o b6fa925: heapstage.js dropping each holder then each memo (heap + ArrayBuffers); raw.pts's 809,883 findings were ~99 MB, the cup blends' one-object-per-u constants 483 MB, the stacked points 205-248 MB; 11/11 documents' checker and validate() JSON sha256-equal; validate_heap.test.js red at acaa2a0. Could be wrong for a track whose memos are mostly normMemo (165 MB, not cut).
+General form: a heap gauge must count ArrayBuffers, or a cut to typed arrays scores memory moved out of sight as memory saved.
+→ `exo_memory/handback/p-d587-validator-heap-O_2026-10-31.md`
