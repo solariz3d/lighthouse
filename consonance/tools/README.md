@@ -11,6 +11,9 @@ No dependencies; standard library only.
   start. Refits each swell report's own window with its leading seconds removed, and pins
   ledger reports to the track starts their windows begin at. Its negative control — the
   Bernstein's real crescendo must never be indicted — is a test, not a claim. See the header.
+- **`dupe-scan.js`** — blocks of JavaScript written twice: 8+ code lines in 2+ places, as clusters with paths and line ranges,
+  and the duplicated share per tree, test and non-test apart (`node consonance/tools/dupe-scan.js <label>=<dir> … [--json]`).
+  Reads and prints only. First run: D554, `exo_memory/handback/p-d554-dupes-E_2026-10-30.md`. See the header.
 
 ---
 
