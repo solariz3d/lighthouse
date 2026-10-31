@@ -115,3 +115,36 @@ checked: `node S\run.js` → `S\run-tilt2.out`; `node S\verify.js` (in `S\run2-t
 
 - My first build used the plan's 15° bar and gave 28.94 m against the brief's ~31.9. It was set aside, not delivered.
 - Two of my first six tests did not separate the camber rule from the level rule, and 2 mutants survived; fixed as above.
+
+## §STIFF: a second test folder, "ELYSIUM GATES STIFF" (D568, check it)
+
+**Brief:** the chair's ring of 2026-10-31T00:42:19Z.
+
+**The folders** (both in `S`, as above; **neither is installed**; both wait for his word that the game is closed):
+
+| folder | shows as | tests |
+|---|---|---|
+| `S\t180b_elysium_gates\` | ELYSIUM GATES | lap validity (sector 2 on flat road), any car |
+| `S\t180b_elysium_gates_stiff\` | ELYSIUM GATES STIFF | whether a stiffer soft road holds C07's pass at about 63 g, at the same pace |
+
+**What STIFF changes:**
+- It is a copy of GATES with one value: `SOFT_CFM` 0.0002 → 0.00005. That is D525's variant B (`p-d525-soft-O_2026-10-28.md`:45; CSP's own wording: "the higher it is, the softer is the collision").
+- Nothing else in the soft block changed: `MESHES=1ROAD?`, `SOFT_ERP=0.8`, `BOUNCE=0.1`, `FRICTION=0.05`, `MAX_DEPTH=4`.
+- D525's B file also carried a comment line. I left it out, so the diff is exactly the value.
+
+**Checked** (`diff` and `sha256sum` over every file of both folders):
+- **`data/surfaces.ini`:** the diff is one line, `26c26: SOFT_CFM=0.0002` → `SOFT_CFM=0.00005`.
+  - GATES sha256 `21396ea8580aeefff567318e6c4280d132176ae6e9272c76f6fa48983e2af5b3`.
+  - STIFF sha256 `039e54dad3f8f1c0bc9990187cf70819f0841dae74350e5da928657427ff62fb`.
+- **`ui/ui_track.json`:** the diff is one line, `"name": "ELYSIUM GATES"` → `"ELYSIUM GATES STIFF"`.
+  - GATES `ba978a66cd380d7acb3397a27f4e8d6190f65c0befa008673263ece05fe8eb77`.
+  - STIFF `4e7ad6ecd85317e94948d6335cdad14d15ba53243710871e05174c087692da88`.
+- **`t180b_elysium.kn5`:** sha256 `d41a9f41ddce69767aace05b3609f76bb1017653ed4a053e3b9ece6ae6f60173` in both. **Byte-equal.**
+- **The other 7 files are identical in both folders:** `.t180b-builder.json`, `ai/fast_lane.ai`, `data/map.ini`, `map.png`, `models.ini`, `ui/outline.png`, `ui/preview.png`. Each folder holds 10 files.
+
+**Installing** (on his word, with the game closed):
+- Copy both folders into `content\tracks\`. Nothing of `t180b_elysium` changes.
+- The soft block is CSP's; plain AC ignores it (`surfaces.ini`'s own note).
+- **The STIFF test's falsifier:** C07 driven through the helix at the same pace on STIFF (peak about 63 g, about 780 km/h).
+  - If the box still sinks without settling and goes through, the contact's stiffness is not the lever, at least at a quarter of the CFM.
+  - If it holds, what the car does instead is read from that replay with the same `helixtrace.js`.
