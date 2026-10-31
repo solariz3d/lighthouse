@@ -337,3 +337,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### On CRAZY TEST soft_b (CFM 0.00005) C07 held the helix at 71.23 g / 842 km/h for 6.34 s with its box +2 cm clear at every load, riding like the active car on the soft road (the soft road's Mach 6: -25 cm)
 2026-10-30, the chair's 02:25Z ring — crazy.js / sinkrate2.js on the variants' own export; both falsifiers silent; also found: the wheel readers cast along the AI centre normal and are invalid on cup walls past ~60 degrees (pieces 4-5), where table.js has the box 7-43 cm over. Could be wrong for C11 or at a still higher load.
 → `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (CRAZY TEST, soft_b, C07)
+
+### CI for t180 is one script and one workflow: the fast subset (277 of 302 files, 20.8 min here, clean profile) on every push, the 22 mutation harnesses weekly; and land-0431 is already red on menubar-page row 17, so the first CI run will be too
+2026-10-30, D579 — d579-o 94b5092; test-fast.cjs excludes by name (mutation, 3 frame-timing pages); Node pinned 24.14.1 from the repo's own Node-24 dependence; actions v7 from the releases API (my first draft said v4). Could be wrong that no test needs this machine: the clean-profile run is a stand-in, not a runner.
+→ `exo_memory/handback/p-d579-ci-O_2026-10-30.md`
