@@ -329,3 +329,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### Both cars that went through on the soft road held the helix on STIFF (box +4-5 cm over the mesh at 65 g); C11 on STIFF took two one-sided hops at new places on piece 29 that no soft pass took, confounded by car; and it crossed the moved TIME_2 inside
 2026-10-30, the chair's 01:44Z ring — hoplap.js (the hop signature recurs at the same places on every lap; only s 17,026 and 17,458 are new, and only in C11s), seam.js and profile.js (no seam or kink there), gates.js on C11s. Could be wrong that the hops are the car's and not STIFF's: no same-car soft pass exists there.
 → `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (STIFF, the second car); `p-d567-gate-patch-O_2026-10-30.md`
+
+### A complete lap on GATES STIFF counted (2:24.509, three splits, cuts 0), but the game's split 2 ends at s ~17,512, not at the moved gate, so the lap does not prove the gate was the fix; and the Mach 6 on STIFF took no hop on piece 29
+2026-10-30, the chair's 02:01Z ring — race_out.json and laps.ini copies; gates.js / gates-far.js; the installed kn5 hashed d41a9f41. The gate test is C03 on a GATES folder. Could be wrong about the split if AC times sectors by something these reads do not model.
+→ `exo_memory/handback/p-d567-gate-patch-O_2026-10-30.md`; `p-d563-wheel-under-O_2026-10-30.md` (STIFF, the third car)

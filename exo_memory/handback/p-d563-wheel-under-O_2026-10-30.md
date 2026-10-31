@@ -616,3 +616,65 @@
 - It yaws 18° → 50° while u goes −8.9 → −17.6 m: across the road to the right edge.
 - It leaves the road there at about t 117.4 (s 17,720): the wheels have no road under them from t 117.45.
 - inferred: the braking, misjudged after the hops, is the keeper's own account. The replay holds no inputs.
+
+## STIFF, the third car: the Mach 6 on ELYSIUM GATES STIFF, the 20:01 save (the chair's ring of 02:01Z)
+
+- **Replay:** sha256 `263aaf1bf2aa4e54…`, 34,106,722 bytes; labelled C00s; 13,905 frames.
+- **What it holds:** one complete lap (t 13.34 → 157.84), then a second lap that ends at s 9,220.
+- **Scripts:** `S\d560\hop-C00s.txt`, `sinkrate.txt`, `entry-C00s-w0..w3.txt`, `out\C00s\`.
+
+### 1. Piece 29 first: no hops (the librarian's separating test)
+
+| pass through s 16,900–17,600 | speed | hops | load at s 17,008 / 17,440 over the local median | h |
+|---|---|---|---|---|
+| **Mach 6 on STIFF** (t 110.56–114.06) | 602–762 km/h; **742 km/h at s 17,008, 762 km/h at s 17,440** | **0** | **+0.2 / +0.2 g** | −18.3 to −18.6 cm, steady |
+| Mach 6 on the soft road, the reference's two passes | to 724 and 741 km/h | 0 | +0.1 to +0.5 g | — |
+| Mach 6 on the soft road, the 19:04 lap | did not reach piece 29 | — | — | — |
+| C11 on STIFF | 724–751 km/h | **2** (h +10.5 / +10.7 cm, box +15.2 / +16.0 cm, about 0.1 s, −4 to −5 km/h) | **+3.9 / +4.8 g** | — |
+
+- **The Mach 6 on STIFF went through both spots faster than C11 did (742 and 762 km/h against 724 and 747) and felt nothing.**
+- **So STIFF does not, by itself, make piece 29 hop.** The two hops are the pair (C11, STIFF): the shortest wheelbase (2.93 m) on the firmer contact, or that car's own line or inputs there.
+- inferred: of those, the car is the variable left. Separating line from car would need C11 on the soft road reaching piece 29, which it has not yet done.
+- **The CFM plan's bounce falsifier:** on the Mach 6 it does not fire at piece 29. On C11 it stands as a car-specific bounce.
+
+### 2. The helix: two passes, both held with the box over the road
+
+| pass | peak load | box's lowest | h's lowest | box p50 at 50–55 / 55–60 g | sinking past −11 cm |
+|---|---|---|---|---|---|
+| lap 1 (t 57.8–60.2) | 64.67 g at 792 km/h | **+2.1 cm** (t 60.21, 46.5 g) | −19.8 cm | +4.4 / +5.7 cm | never |
+| lap 2 (t 201.7–204.1) | 64.58 g at 791 km/h | **+4.0 cm** (t 202.155, 48.8 g) | −19.6 cm | +5.0 / +5.5 cm | never |
+
+- **Both falsifiers are silent for the third car too.** No sink at all; the plateau is +4.4 to +5.7 cm, not −14 cm.
+- **Three cars, four STIFF helix passes, all at 64.6–64.9 g; the box never went under.** On the soft road this car rode at −13 to −15 cm (the 19:04 lap) and at −11 cm (the reference).
+
+### 3. Wheels under: one event, the end of lap 2, a whole-car edge departure at s 9,150–9,240
+
+**Arrival** (t 205.30–205.50):
+- The car comes over the crest at s 9,125–9,203 (where every lap hops, `hoplap.js`) unloaded: all four wheel centres 0.38–0.49 m over the top, load −4 to +3 g.
+- It is drifting left at +7 to +8 m/s, the body from u 15.6 to 16.9 m.
+
+**The left side over the edge** (`entry.js` against the mesh edge, u +17.10):
+
+| | w0 (front left) | w2 (rear left) |
+|---|---|---|
+| out over the edge | t ≈ 205.51, s 9,165 (centre +0.18 to +0.36 m against the edge row) | t ≈ 205.51, s 9,162 |
+| farthest past the edge before the car drops | **0.782 m** at t 205.71, s 9,205 (centre **0.83 m below** the edge row) | **0.780 m** at t 205.71, s 9,201 (centre 0.76 m below) |
+| after | the car is falling: 1.3–6.8 m below the edge row by t 205.89 | 1.30 m past at t 205.845, 2.7 m below |
+
+**The right side through the road near the edge:**
+- The right wheels were still on the road, 0.7–0.9 m inside the edge.
+- At t 205.755–205.80 they go under the top surface: w1 +0.209 → −1.03 m, w3 +0.343 → −0.06 → −3.33 m.
+- That is as the car rolls over the edge with its left side unsupported. Yaw −0.2° → −57° in 0.18 s.
+
+**The throw:**
+- In the station frame at t 205.50: the velocity along the road's normal goes −9.9 → −48.6 m/s (t 205.725 → 205.815), and the speed 741 → 682 km/h.
+- So about 39 m/s down and out, and 59 km/h lost, in 0.09 s, as the right wheels and the box went into the road at the edge.
+
+**Classification:**
+- **An edge departure of the whole car:** the left side off the edge, then the right side through the road at the edge as it rolls.
+- It is not a mid-road pass-through and not a single wheel under. It starts unloaded off a known crest, drifting left.
+- **For the apron:**
+  - the left wheels reached 0.78 m past the edge, with their centres 0.76–0.83 m below the edge row, before the car fell;
+  - that is inside 2.0 m. But the drop below the edge row (0.83 m) is the deepest of any event so far (D563 0.34, C09 0.59, C07s 0.33 / 0.19);
+  - **an apron has to stand as low as 0.8 m under the edge row within 0.8 m of the edge to catch this one.**
+- **The place:** s 9,065–9,354 now holds five of the edge events (C09's launch at 9,065, C07s at 9,176, this at 9,205, D563's C19 at 9,354, C09's left edge at 8,937–8,987 just before). inferred: the crest at s 9,125–9,203 sets the cars up for it.

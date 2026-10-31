@@ -189,3 +189,37 @@ checked: `node S\run.js` → `S\run-tilt2.out`; `node S\verify.js` (in `S\run2-t
 - **What the game wrote:** `out\laps.ini` (19:42:47, read from a copy): `LAPS=0`; no `race_out.json` that session. `personalbest.ini` is unchanged since 2026-10-17.
 - **So the HUD's sectors 1 and 2 should have completed on this lap.** The keeper's own eye on the HUD would confirm it; the replay holds no HUD state.
 - **The full test still wants one complete lap:** sector 3 and a recorded time.
+
+## Validity: a complete lap on GATES STIFF, recorded by the game (the Mach 6, the 20:01 save)
+
+**The lap closed and counted.**
+- **`Documents\Assetto Corsa\out\race_out.json`** (20:01:10, read from a copy, `S\d560\out-ac-2001\`):
+  - track `t180b_elysium_gates_stiff`, the Mach 6, Hotlap;
+  - **one lap: time 144,509 ms (2:24.509), sectors 49,132 / 51,093 / 44,284, cuts 0**; best lap 144,509.
+- **`laps.ini`:** `LAPS=1`, `TIME=144509`, `SPLITS=3`, the same three splits.
+- **Blackbox's lap clock** in the replay agrees: it resets at t 157.86 from 144,504 ms.
+
+**The gate crossings** (`S\d567\gates.js` on the patched dummies):
+
+| gate | crossing |
+|---|---|
+| AC_TIME_0 | t 13.337, inside (tau 0.125); and t 157.841, inside (tau 0.134) |
+| AC_TIME_1 (s 9,335) | t 62.465, inside (tau 0.202) |
+| AC_TIME_2 (moved, s 12,958.5) | **t 82.594, inside** (tau 0.888), 2.38 m from the segment in 3D |
+
+**The game's splits do NOT line up with the moved TIME_2.** checked: the crossing times above, against `laps.ini`'s splits:
+- **Split 1** (49,132 ms) matches the start line → TIME_1, 49.128 s, to 4 ms.
+- **Split 2** (51,093 ms) would end at **t ≈ 113.56** (s ≈ 17,512, piece 29). The moved TIME_2 was crossed at t 82.59; that split would be 20.13 s.
+  - It is not the original TIME_2 either. This lap crosses the original gate's plane at t 114.645 (s 17,680), 1.08 s later.
+  - The moved gate's plane, scanned over the whole lap out to 2 km (`gates-far.js`), has no crossing near t 113.56. Its other crossings (t 90.97, 98.08) are the road passing 62 m and 204 m over it.
+- **The installed STIFF folder's kn5 is the patched one:** sha256 `d41a9f41…`, the same as GATES, hashed in background mode, read only. No `data/sections.ini` exists in any ELYSIUM folder.
+- **The AI-spline idea does not fit:** each gate's nearest AI point (`S\d560` one-off) is its own station in 3D (moved TIME_2 → s 12,958, original → s 17,680). None is near s 17,512, in 3D or top-down.
+- **So how the game places sector 2's boundary is not known from these reads.** inferred: not by the moved gate's crossing as `gates.js` models it.
+- **The question that leaves open:** whether moving the gate was what made the lap count.
+
+**What this does and does not answer:**
+- **Answered:** on GATES STIFF a clean lap counts. The time is recorded with all three splits and 0 cuts.
+- **Not answered:** whether the moved gate is why. This car's laps counted on the original ELYSIUM too: the 10-17 reference's 2:25.284 is the personal best there.
+- **The keeper's failing case was another car:** C03, a complete lap the game closed at 2:30.216 and did not record (D565).
+- **The test that answers the gate question:** C03 on GATES or STIFF. A recorded lap where the original ELYSIUM recorded none.
+- **`personalbest.ini`:** still last written 2026-10-17. It has no entry for either GATES folder although this lap was recorded, and the game had exited (no `acs` process) when it was read. When AC writes this file is not established here.

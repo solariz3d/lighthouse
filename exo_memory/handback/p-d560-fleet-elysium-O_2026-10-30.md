@@ -288,3 +288,17 @@
 | lift-off above 300 km/h | 121 frames, worst −6.77 g | **holds** |
 
 **Helix** (t 58.6–61.0, 162 frames): the box under the mesh on 0 frames, its lowest +4.1 cm; box median at 50–55 g +5.3 cm (27 frames), at 55–60 g +5.4 cm (44); h median −17.0 cm; peak 64.90 g at 793 km/h; load median 56.3 g, speed median 770 km/h (`helix-C11s.txt`).
+
+### C00, the Mach 6, on ELYSIUM GATES STIFF, the 20:01 save (its own row: SOFT_CFM 0.00005)
+
+- **The replay:** sha256 `263aaf1bf2aa4e54…`, 34,106,722 bytes.
+- **It holds a complete lap,** recorded by the game at **2:24.509** (sectors 49.132 / 51.093 / 44.284, cuts 0; p-d567). Then a second lap ends in an edge departure at s 9,205 (p-d563, "STIFF, the third car").
+- **The road:** the same as his export, byte for byte.
+
+| line | Mach 6 on STIFF (two helix passes) | verdict |
+|---|---|---|
+| chassis, 40 g: box over the mesh p50 at 50–55 / 55–60 g | +4.4 / +5.7 cm (lap 1); +5.0 / +5.5 cm (lap 2) | **holds, and does not reach the mesh** (its lowest +2.1 cm) |
+| proven, 90 g | peak 64.67 g (lap 1), 64.58 g (lap 2), 791–792 km/h | **not reached** |
+| sustained | not separately read for this row; the helix carried ≥ 55 g as on the other STIFF passes (load median 56.8–57.3 g) | — |
+
+**Helix:** two passes, 160 frames each; the box under the mesh on 0 frames; h median −18.7 / −18.8 cm (`helix.js` on `out\C00s`).
