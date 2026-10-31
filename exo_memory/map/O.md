@@ -321,3 +321,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### On STIFF (SOFT_CFM ×¼) C07 held the helix at 64.9 g for 1.54 s with its box +4.5 cm OVER the mesh (soft: −16 cm and through); both falsifiers stayed silent; its run then ended on the edge mechanism before reaching the moved gate
 2026-10-30, the chair's 01:31Z ring — helixtrace/sinkrate/wheel.js/entry.js on the 19:30 save; race_out.json laps 0; gates.js: TIME_0 and TIME_1 crossed inside, TIME_2 never reached. Could be wrong for other cars or passes: one pass of one car.
 → `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (STIFF); `p-d567-gate-patch-O_2026-10-30.md` (validity)
+
+### Four measured edge excursions now size the apron: 0.31, 0.54, 0.595 and 0.86 m past the mesh edge (all inside 2.0 m), centre 0.19-0.59 m below the edge row at the peak
+2026-10-30, the chair's 01:32Z addendum — entry.js on C07 on STIFF (rear left at s 9,176, rear right at s 11,303; 0.195 s and 0.270 s outside), beside D563 and C09. Could be wrong for a faster or steeper exit: four events, 640-740 km/h.
+→ `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (STIFF (2b))

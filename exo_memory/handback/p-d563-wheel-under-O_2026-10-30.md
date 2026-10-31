@@ -483,3 +483,46 @@
 **For the fixes:**
 - **The pass-through and the box-under ride:** STIFF removed both on this pass.
 - **The edge mechanism is now what stops C07's laps:** this run's end, and C09's. The apron is that fix.
+
+### STIFF (2b): the wheel clips, the pace, and the exit yaw (the chair's addendum of 01:32Z)
+
+**The keeper:** "I sent the [C07] hard, it seemed to hold, I think we are onto something"; "another perfect example of data for wheel clipping".
+
+**The pace:**
+- **Peak load:** 64.9 g at t 63.81, s 8,591, 798 km/h raw (`hx-C07s-yaw.txt`; `table.js` gives 64.88 g at 793 km/h).
+- **Against C07's broken pass on the soft road:** C07 broke after 62.87 g at 786 km/h; C11 after 57.67 g at 780.
+- **So the soft road broke at about 58–63 g and 780–790 km/h, and STIFF held at 64.9 g and 798 km/h, for 1.54 s at ≥ 55 g.** It was not a slower pass.
+
+**The exit yaw against path** (`yaw` minus `vel-dir`, `hx-C07s-yaw.txt`):
+
+| moment | yaw against path | for comparison |
+|---|---|---|
+| in the plateau (t 63.3–64.3) | −5.3° to −7.1° | — |
+| leaving the helix | **−15.3°** at t 65.58, s 8,945 (box +8 cm, 37.6 g) | reference −15.6°, the 19:04 Mach 6 −16.3°, C09 −33.7° |
+| after the helix | −18.6° at t 66.00, s 9,023, u 15.59 m | the car drifting to the left edge; the first clip begins 0.66 s later |
+
+- The STIFF pass's exit is as calm as the passes that held on the soft road. There was no box to come out of the road, and no C09-sized kick.
+
+**The two wheel-clip events, in D563's entry table** (`entry.js` per frame against the mesh's own edge; `entry-C07s-w2.txt`, `entry-C07s-w3.txt`):
+
+| | **event 1: w2, rear left** | **event 2: w3, rear right** | D563, C19 rear right | C09, rear left |
+|---|---|---|---|---|
+| where | s 9,154–9,190 (left edge, u +17.10) | s 11,285–11,330 (right edge, u −17.11 to −17.13) | s 9,354–9,391 | s 8,937–8,957 |
+| leaves the road | t 66.66 (between frames at −0.003 and +0.112 m past) | t 76.545 (between −0.121 and +0.421) | t 66.287 | before t 66.36 |
+| its centre against the edge row as it leaves | +0.60 m above | +0.18 m above | +0.34 m above | (already out) |
+| **farthest past the edge** | **0.309 m** at t 66.795, s 9,176 | **0.540 m** at t 76.635, s 11,303 | 0.856 m | 0.595 m |
+| its centre against the edge row there | −0.33 m (below) | −0.19 m (below) | −0.34 m | −0.59 m |
+| **back across, inward** | t 66.855, s 9,191 | t 76.815, s 11,334 | t 66.484 | t ≈ 66.475 |
+| its centre against the edge row as it comes back | **−0.26 m** | **−0.39 m** | −0.32 m | −0.82 m |
+| **time outside the road** | **≈ 0.195 s** | **≈ 0.270 s** | 0.196 s | ≥ 0.12 s |
+| **depth under the top surface after** | 0.23–0.26 m, about 0.65 s (t 66.87–67.52) | 0.15–0.35 m, about 1.8 s (t 76.85–78.66) | 0.21–0.31 m, 6.57 s | 0.78–1.44 m, 0.77 s |
+| **how it ended** | came out on its own at t 67.53 (back to +0.40 m), no launch; the car yawed +17.9° and recovered | the car crossed the road yawing 15–34°; at t 78.86 (s 11,662) it left the road upward and flew off the right edge | the jump jack lifted it | launched out the top at +24.7 m/s, off the track |
+
+- **The error on each excursion:** as in D563.
+  - The peak is taken over every 15 ms frame of `entry.js`'s output; a parabola through the three frames around it is not needed at this resolution (the wheel was turning round at under 4 m/s).
+  - The edge's step is ±0.005 m. The wheel centre is blackbox's (±0.02–0.03 m).
+  - inferred: **0.31 ± 0.03 m and 0.54 ± 0.03 m.**
+- **For sizing the apron: four measured excursions now: 0.31, 0.54, 0.595 and 0.86 m.**
+  - Every one is inside 2.0 m.
+  - The largest is still D563's, 0.86 m, at 655 km/h. On the evidence, an apron of 2.0 m carries a margin of more than twice the largest.
+  - The centre was 0.19–0.59 m below the edge row at the peak. That is the drop the apron's surface has to catch the wheel within.

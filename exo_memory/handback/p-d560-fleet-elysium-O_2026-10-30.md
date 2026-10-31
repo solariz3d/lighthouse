@@ -228,7 +228,7 @@
 
 **"Lightning"** (the chair's note): group A, no replay saved, so no row.
 
-### C00 at 19:04: the Mach 6 at the GRX's pace (group A, the reference's own car; the 19:04 auto-save)
+### C00 at 19:04: the Mach 6 at C07's pace (group A, the reference's own car; the 19:04 auto-save)
 
 - **The replay:** sha256 `c74e4fd355588711…`, 28,566,592 bytes; `table.js` 4,627 rows, none dropped.
 - **It covers** s 0 → the line → 10,912 (t 0–71.6), the auto-save window; not a whole lap.
@@ -250,3 +250,24 @@
 - box median at 50–55 g: −6.0 cm (39 frames); at 55–60 g: −12.9 cm (32);
 - h median −28.2 cm;
 - peak 64.61 g at 794 km/h; load median 54.8 g, speed median 778 km/h (`helix-C00b.txt`).
+
+### C07 on ELYSIUM GATES STIFF, the 19:30 save (its own row: not the stock road; SOFT_CFM 0.00005, D568)
+
+- **The replay:** sha256 `ff1dfc70990c48c6…`, 30,413,904 bytes; `table.js` 5,382 rows, 5,376 after the reset filter.
+- **The road:** the same as his export, byte for byte (the kn5 is GATES', which differs only in the two sector-2 gate matrices; the AI line is his). The same-road check is moot here. Its marked cells (9,000–9,500 and 11,500–13,000) are the two wheel clips and the departure.
+- **It is not a lap:** it holds the helix, then leaves the road at s 11,662 (p-d563, "STIFF" and "STIFF (2b)").
+
+| line | C07 on STIFF (to s 11,600) | verdict |
+|---|---|---|
+| suspension stop, 25 g: h p50 at 25–30 / 30–35 / 35–40 / 40–45 g | −18.3 / −19.1 / −18.9 / −17.0 cm (98, 82, 86, 15 frames) | **holds** (the plateau) |
+| chassis, 40 g: box over the mesh p50 at 45–50 / 50–55 / 55–60 / 60–70 g | **+5.3 / +5.4 / +5.4 / +5.4 cm** (17, 19, 50, 53 frames), h flat at −17.5 cm | **holds, and does not reach the mesh at all** (on the soft road the mesh is reached at about 47–50 g) |
+| sustained, ≥ 55 g over 0.5 s | **longest 1.54 s** | **does not hold** as a limit (past 0.5 s at ≥ 55 g); the car held the road through it |
+| proven, 90 g | peak **64.88 g**, s 8,591, 793 km/h | **not reached** |
+| line-predicted margin, top-10 peaks | median +3.9 g | **holds** |
+| lift-off above 300 km/h | 397 frames, worst −31.22 g | **not read**: the departure after s 11,662 |
+
+**Helix** (t 62.9–65.3, 160 frames):
+- **the box under the mesh on 0 frames**; its deepest 50 m median +4.8 cm;
+- box median at 50–55 g: +5.4 cm (19 frames); at 55–60 g: +5.4 cm (50);
+- h median −17.5 cm;
+- peak 64.88 g at 793 km/h; load median 57.1 g, speed median 774 km/h (`helix-C07s.txt`).
