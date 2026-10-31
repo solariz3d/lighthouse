@@ -281,3 +281,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### On ELYSIUM the reference replay (10-17 09:30) parses only with a later probe, and checks against today's export by wheel height; the first fleet car measured (C03, group B) holds every MACH6 line it reached
 2026-10-30, D560 v1 — wheel-centre height over today's mesh within 4.2 cm per 500 m between the two laps; C03 stop plateau equal, box over the mesh +0.5 cm at 45-50 g (reference -0.9), longest >= 55 g 0.44 s, peak 58.7 g. Could be wrong that the road is unchanged at a finer scale than 5 cm per 500 m.
 → `exo_memory/handback/p-d560-fleet-elysium-O_2026-10-30.md`
+
+### A wheel that goes past a road edge at the edge row's height and comes back can end up under the single-sided road, hanging at full droop with nothing under it (the underskin is scenery), until a lift frees it
+2026-10-30, D563 Part 1 — C19 rear-right 6.57 s under (0.23-0.31 m), at full droop the whole time (the airborne droop value), freed by the jump jack, then the car left the road 0.45 s later; the reference car did the same for 0.5 s at s 1,926. Could be wrong that AC's tyre contact cannot see a road above the wheel centre: inferred from the 6.6 s hang, not from AC's source.
+→ `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md`
