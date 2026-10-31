@@ -349,3 +349,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### The drag tick is capped at 35 ms (about 28 a second; a row red at 4), and every title in t180 now shows in a hover card drawn by each look's own menu rule, 4.5:1 or better in all six looks
 2026-10-31, D581 additions — d581-o 5e90523 (tick: sound tests 44/44 + 14/14) and e94cc90 (hovertip.js: one document listener, the title moved to data-tip only while hovered; hovertip.test.js 6/6, texture-page row 10 worst 5.82 in aqua). Could be wrong that no page test reads a hovered element's title: the full suite at landing is the check.
 → `exo_memory/handback/p-d581-early-O_2026-10-31.md` (§tick, §hovercard)
+
+### A pane now wakes holding the code map of each repository its newest packet names, found from the packet's own paths (t180 with no path is said, not guessed), seated ahead of the deck; it is the wake, not the delivery
+2026-10-31, D585 — lighthouse d585-o 83b7d1af: latest_packet / packet_repo_maps / repo_map_section in assemble_intake_for; BUILDING.md dispatch item 9; cargo repo_map_tests+intake+fork_note 48/0/2. Could be wrong that the lighthouse map in most wakes is worth the deck it displaces: the D4 instrument can say.
+→ `exo_memory/handback/p-d585-map-intake-O_2026-10-31.md`
