@@ -333,3 +333,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### A complete lap on GATES STIFF counted (2:24.509, three splits, cuts 0), but the game's split 2 ends at s ~17,512, not at the moved gate, so the lap does not prove the gate was the fix; and the Mach 6 on STIFF took no hop on piece 29
 2026-10-30, the chair's 02:01Z ring — race_out.json and laps.ini copies; gates.js / gates-far.js; the installed kn5 hashed d41a9f41. The gate test is C03 on a GATES folder. Could be wrong about the split if AC times sectors by something these reads do not model.
 → `exo_memory/handback/p-d567-gate-patch-O_2026-10-30.md`; `p-d563-wheel-under-O_2026-10-30.md` (STIFF, the third car)
+
+### On CRAZY TEST soft_b (CFM 0.00005) C07 held the helix at 71.23 g / 842 km/h for 6.34 s with its box +2 cm clear at every load, riding like the active car on the soft road (the soft road's Mach 6: -25 cm)
+2026-10-30, the chair's 02:25Z ring — crazy.js / sinkrate2.js on the variants' own export; both falsifiers silent; also found: the wheel readers cast along the AI centre normal and are invalid on cup walls past ~60 degrees (pieces 4-5), where table.js has the box 7-43 cm over. Could be wrong for C11 or at a still higher load.
+→ `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (CRAZY TEST, soft_b, C07)

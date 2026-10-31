@@ -678,3 +678,38 @@
   - that is inside 2.0 m. But the drop below the edge row (0.83 m) is the deepest of any event so far (D563 0.34, C09 0.59, C07s 0.33 / 0.19);
   - **an apron has to stand as low as 0.8 m under the edge row within 0.8 m of the edge to catch this one.**
 - **The place:** s 9,065–9,354 now holds five of the edge events (C09's launch at 9,065, C07s at 9,176, this at 9,205, D563's C19 at 9,354, C09's left edge at 8,937–8,987 just before). inferred: the crest at s 9,125–9,203 sets the cars up for it.
+
+## CRAZY TEST, soft_b, C07 (the 20:24 save; the chair's ring of 02:25Z)
+
+- **Replay:** sha256 `6eecebc537c11bd3…`, 28,915,579 bytes; labelled X07b.
+- **The road:** the soft variants' own export: kn5 `93daef61…` (all four variants), AI line `0cb82e6b…` (the same line D544 measured; its road mesh equal to D515's within 0.0005 mm).
+- **soft_b's block:** `SOFT_CFM` 0.00005, the same firm value as ELYSIUM STIFF (D525 manifest).
+- **Scripts:** `S\d560\crazy.js` (the D515 tools + `table.js` + `wheel.js` on the staged variant folder, under the heavy-run lock with its own tree name), `sinkrate2.js` → `crazy-X07b.txt`.
+- **The helix is piece 13, s 14,817–19,652:** a descending helix at bank 85°, cup 20°, 31 m wide.
+
+**The helix held, from entry to the track's end, at loads near the active car's ceiling:**
+
+| | **C07 on soft_b** | Mach 6 on the soft road (D515, the CRAZY TEST reference) | the active Mach 6 (D544, the load ceiling) |
+|---|---|---|---|
+| peak load | **71.23 g** at s 16,455, **842 km/h** | 63.28 g at 720 km/h | 72.82 g at 771 km/h |
+| longest unbroken at ≥ 55 g | **6.34 s** (≥ 40 g: 11.41 s) | 7.13 s | 8.45 s |
+| box over the mesh at ≥ 55 g (median) | **+2.1 cm** | **−25.3 cm** | +2.6 cm |
+| the box's lowest in the helix | **+0.8 cm** (t 74.64, 39.4 g) | −28.1 cm | 0.0 cm |
+| h's lowest | −19.6 cm | −49.1 cm | −20.6 cm |
+| sinking past −11 cm | **never** | at 0.04 m/s (settled, held) | never |
+
+- **The box by load band** (`out\X07b\table.csv`, piece 13): +2.2 cm at 40–45 g, +2.2 at 50–55, +2.0 at 55–60, +2.2 at 60–65, +2.1 at 65–70, **+2.0 at 70–75 g**. Flat; the box is clear of the road at every load reached.
+- **The registered falsifiers, read as on ELYSIUM:**
+  - **"A sink past −11 cm faster than 1 m/s":** silent. There was no sink.
+  - **"A plateau of −14 cm or deeper at matched load":** silent. The plateau is **+2 cm**, against the soft road's −25 cm at 55–63 g.
+- **Against the ceiling:** C07 on the firm road reached 71.23 g, 98% of the active car's 72.82 g. It rode the same way the active car does on the soft road: box about +2 cm, h about −20 cm.
+  - inferred: the firm contact gives a regular car what the active car's stiffer end stop gives it (D544): the box never meets the road.
+- **This car broke on ELYSIUM's soft road at 58–63 g.** Here it held 71 g for longer than any ELYSIUM pass.
+
+**Wheels under:** none in the helix (every wheel event listed below is outside it).
+- **One reader artifact, not an event:** `wheel.js` lists all four wheels "3.6–4.0 m under" at s 2,016–2,574 (t 17.1–18.7 and 19.4–20.3).
+  - That stretch is pieces 4–5, a bowl 17 m wide and steeply cupped (cup 35.5 / 52.9). The car rode 6–9 m off the line, where the surface tilts 40–114° (`table.csv` tilt).
+  - Both wheel readers cast along the AI station's normal, the bowl's centre normal (bank 0). On a wall that steep, that ray passes through the wall, and the reading depends on where the ray starts: `helixtrace.js`'s 8 m start reads −0.34 to −5.8 m over the same frames.
+  - **`table.js`, which reads against the local surface, has the box 7–43 cm over the road there**, at 822–876 km/h and 1–25 g.
+  - **So the wheel readers are not valid on cup walls past about 60°.** The ELYSIUM reads were on banks the AI normal follows (the helix at 85° with cup 20°, the car within 15° of the station normal), so they stand.
+- **The end:** the replay ends at the track's end (s 19,652); 128 frames there read box 0.000 at 23–77 km/h with load 0 g, after the finish.
