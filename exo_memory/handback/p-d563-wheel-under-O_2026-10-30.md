@@ -393,7 +393,7 @@
 - **STIFF's question becomes concrete:** does a stiffer contact slow that sink below about 0.6 m/s at 57–63 g?
 - **Its falsifier:** on STIFF, C07 or C11 at the same pace sinks past −11 cm faster than 1 m/s.
 
-## C00 at 19:04: the Mach 6 at the GRX's pace, the fifth held pass (the chair's ring of 01:05Z)
+## C00 at 19:04: the Mach 6 at C07's pace, the fifth held pass (the chair's ring of 01:05Z)
 
 - **Replay:** the 19:04 auto-save (sha256 `c74e4fd355588711…`, 28,566,592 bytes). C00 is the reference's own car, labelled "C00 19:04" here to keep it apart from the 10-17 reference lap.
 - **Scripts:** `S\d560\hx-C00b.txt`, `sinkrate.txt` (re-run with this pass added), `out\C00b\wheels.csv`.
@@ -438,3 +438,48 @@
 
 **Wheels anywhere on the lap:** `wheel.js` finds **0 events on all four wheels** over the replay's 4,646 rows (t 0–71.6, s 0 → the line → 10,912). No centre is under the top surface inside the footprint, or more than 0.5 m below an edge row outside it.
 - The replay ends at t 71.6, s 10,912: the auto-save window, not a stop. Blackbox's lap clock shows one reset, at t 13.89.
+
+## STIFF: C07 on ELYSIUM GATES STIFF (SOFT_CFM 0.00005), the 19:30 save (the chair's ring of 01:31Z)
+
+- **Replay:** sha256 `ff1dfc70990c48c6…`, 30,413,904 bytes; labelled C07s.
+- **The road:** the STIFF folder's kn5 is byte-equal to GATES. That differs from his export only in the two AC_TIME_2 matrices, and its AI line is his. So `S\d560\track` (his export's copy) is the right geometry for every reader here.
+- **Scripts:** `S\d560\hx-C07s*.txt`, `sinkrate.txt` (re-run with this pass), `entry-C07s-w2/w3.txt`, `out\C07s\`.
+
+**The helix held, and the box never went under the road.**
+
+| | C07 on ELYSIUM (soft, CFM 0.0002) | **C07 on STIFF (CFM 0.00005)** |
+|---|---|---|
+| peak load | 62.87 g at 786 km/h | **64.88 g at 793–798 km/h** |
+| longest unbroken at ≥ 55 g | 0.42 s | **1.54 s** |
+| box over the mesh at 55–60 / 60–70 g (p50) | −0.1 / −1.3 cm, then sinking to −16 cm | **+5.4 / +5.4 cm** |
+| the box's lowest in the helix | −16.1 cm, then through | **+4.5 cm** (t 63.405, 51.6 g); 0 frames under |
+| h (body over the wheel centres) at 55–70 g | −22 to −44 cm, still falling | **−17.5 to −17.6 cm, flat** |
+| sinking rate at −11 cm | 1.66 m/s → broke | **never sinks; never below +4.5 cm** |
+| wheel centres | on top until the break, then through | **≥ +0.235 m throughout** |
+| largest one-frame speed loss | 68.5 km/h | **1.1 km/h** |
+| where across the road at ≥ 50 g | u 14.1–15.0 m | u 13.5–14.5 m |
+
+**The falsifiers, read as registered:**
+- **"On STIFF, C07 or C11 at the same pace sinks past −11 cm faster than 1 m/s":** did **not** fire. The box did not sink at all. At a higher load and speed than the broken pass, it stayed 4.5–5.4 cm over the mesh.
+- **"STIFF's plateau at matched load (58–62 g) is −14 cm or deeper":** did **not** fire. The plateau is **+5.4 cm**, about 20 cm higher than any soft-road pass (−11 to −16 cm).
+- **Read plainly: on this one pass, a quarter of the CFM is the lever.** It held C07 at 64.9 g for 1.54 s, harder and longer than the pass that went through, with nothing under.
+- inferred: the soft road's CFM sets how far the body goes into the road under a held load; on STIFF the body stops at the suspension's own plateau (h −17.5 cm, the D515 "travel gone" stage) instead of riding into the mesh.
+- One pass of one car. C11 and C09 on STIFF would test it further.
+
+**What the car did instead: the edge, twice, and a flight off the road** (`entry.js` against the mesh's own edge, about u ±17.1 m here):
+
+| | w2 (rear, left) | w3 (rear, right) |
+|---|---|---|
+| out over the edge | t 66.66, s 9,15x, its centre 0.60 m above the edge row | t 76.545, s 11,28x, 0.18 m above |
+| farthest past the edge | **0.309 m** at t 66.795, s 9,176 (centre 0.33 m below the edge row) | **0.540 m** at t 76.635, s 11,303 (0.19 m below) |
+| back across, inward | t 66.855, **0.26 m below the edge row** | t 76.815, **0.39 m below** |
+| under the top surface after | 0.23–0.26 m, about 0.65 s, then out at t 67.53 (no launch) | 0.15–0.35 m, about 1.8 s (t 76.85–78.66), the car yawing 15–34° |
+| how it ended | came out clean | at t 78.86 (s 11,662) the car left the road upward (body +1.2 → +3.6 m, load −5 g), flew across and off the right edge (u −19.6 at t 81.1), and never regained a lap |
+
+- **Both are D563's shape** (out over the edge, down below the edge row, back under the road). **Both fit inside the apron's 2.0 m** (0.31 and 0.54 m, against D563's 0.86 and C09's 0.595).
+- The second ended the run, as C09's did. inferred: the trapped wheel's exit threw the car up. The departure frames are not traced in detail.
+- **`wheel.js` over the whole replay:** 2 events, these two. No wheel was under anywhere else.
+
+**For the fixes:**
+- **The pass-through and the box-under ride:** STIFF removed both on this pass.
+- **The edge mechanism is now what stops C07's laps:** this run's end, and C09's. The apron is that fix.

@@ -148,3 +148,27 @@ checked: `node S\run.js` → `S\run-tilt2.out`; `node S\verify.js` (in `S\run2-t
 - **The STIFF test's falsifier:** C07 driven through the helix at the same pace on STIFF (peak about 63 g, about 780 km/h).
   - If the box still sinks without settling and goes through, the contact's stiffness is not the lever, at least at a quarter of the CFM.
   - If it holds, what the car does instead is read from that replay with the same `helixtrace.js`.
+
+## Validity on the GATES layout: the first lap, on STIFF, did not reach the moved gate (the chair's ring of 01:31Z)
+
+**The lap:** C07 on ELYSIUM GATES STIFF, the 19:30 save (sha256 `ff1dfc70990c48c6…`). STIFF carries GATES' kn5 byte for byte, so its gates are the moved ones.
+
+**The sector crossings** (`S\d567\gates.js` against `S\d567\gates.json`, the patched kn5's dummies) → `S\d567\gates-C07s.txt`:
+
+| gate | crossing |
+|---|---|
+| AC_TIME_0 | **t 16.482, inside the segment** (tau 0.110); blackbox's lap clock resets at t 16.500 |
+| AC_TIME_1 (s 9,335) | **t 67.540, inside** (tau 0.233) |
+| AC_TIME_2 (moved, s 12,958.5) | **never crossed.** The car left the road at s 11,662 (t 78.86, p-d563 "STIFF") and never came back to it. |
+
+- The other listed crossings (TIME_0 at t 39.2 and 58.2, TIME_1 at t 73.4) are the path passing 36–132 m over or under the gate line, as in D565.
+
+**What the game recorded:**
+- **`Documents\Assetto Corsa\out\race_out.json`** (written 19:31:03, read from a copy, `S\d560\out-ac-1931\`): track `t180b_elysium_gates_stiff`, the C07 car, a Hotlap session, **`laps: []`, `lapsCount: 0`, best lap 0**. `laps.ini`: `LAPS=0`.
+- **`personalbest.ini`:** last written 2026-10-17 09:45. It has no entry for either GATES folder. Its only ELYSIUM line is the 10-17 Mach 6's 145,284 ms. The game had exited by the time it was read (no `acs` process; Content Manager open).
+
+**So:**
+- **No lap was completed. The gate question is not answered by this run.**
+- The run reached TIME_1, and left the road 1,296 m before the moved TIME_2.
+- What ended it is the edge mechanism (a rear wheel 0.54 m past the right edge, trapped under, then the car thrown up), not the gate.
+- **The test still stands as written:** a complete clean lap on GATES or STIFF, sectors 1–3 shown, and a time in `race_out.json` and `personalbest.ini`.

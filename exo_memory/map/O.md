@@ -314,6 +314,10 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 2026-10-30, the chair's 00:58Z ring — sinkrate.js (raw box, 3-frame rate, read to the raw break) and helixtrace.js on C11: box at the surface at its 57.67 g peak, sinking 1.75–2.5 m/s, broke at −13 cm, thrown −54 m/s along n and −48 along T, as C07. Could be wrong with more passes: 6 in all.
 → `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (C11)
 
-### The Mach 6 at the GRX's pace held the hardest pass yet (64.61 g, 1.18 s ≥ 55 g, box −14.9 cm) because its box crossed −11 cm at 0.15 m/s; now 5 held ≤ 0.63 m/s, 2 broke ≥ 1.66 m/s
+### The Mach 6 at C07's pace held the hardest pass yet (64.61 g, 1.18 s ≥ 55 g, box −14.9 cm) because its box crossed −11 cm at 0.15 m/s; now 5 held ≤ 0.63 m/s, 2 broke ≥ 1.66 m/s
 2026-10-30, the chair's 01:05Z ring — sinkrate.js and helixtrace.js on the 19:04 replay; no wheel under anywhere in it; exit yaw against path −16.3° (C09 −33.7°, reference −15.6°). Could be wrong with more passes: 7 in all.
 → `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (C00 at 19:04)
+
+### On STIFF (SOFT_CFM ×¼) C07 held the helix at 64.9 g for 1.54 s with its box +4.5 cm OVER the mesh (soft: −16 cm and through); both falsifiers stayed silent; its run then ended on the edge mechanism before reaching the moved gate
+2026-10-30, the chair's 01:31Z ring — helixtrace/sinkrate/wheel.js/entry.js on the 19:30 save; race_out.json laps 0; gates.js: TIME_0 and TIME_1 crossed inside, TIME_2 never reached. Could be wrong for other cars or passes: one pass of one car.
+→ `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (STIFF); `p-d567-gate-patch-O_2026-10-30.md` (validity)
