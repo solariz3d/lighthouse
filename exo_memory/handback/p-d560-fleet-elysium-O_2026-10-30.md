@@ -227,3 +227,26 @@
 **Helix** (t 59.3–60.6, 90 frames): the box under the mesh on 14.4% of frames; the deepest 50 m median −9.9 cm (s 8,550–8,600, which holds the break); h median −22.0 cm; peak 57.67 g at 776 km/h; speed median 783 km/h.
 
 **"Lightning"** (the chair's note): group A, no replay saved, so no row.
+
+### C00 at 19:04: the Mach 6 at the GRX's pace (group A, the reference's own car; the 19:04 auto-save)
+
+- **The replay:** sha256 `c74e4fd355588711…`, 28,566,592 bytes; `table.js` 4,627 rows, none dropped.
+- **It covers** s 0 → the line → 10,912 (t 0–71.6), the auto-save window; not a whole lap.
+- **Same road:** worst |Δ| 0.034 m, none marked.
+- **Wheels:** 0 events on all four (p-d563, "C00 at 19:04").
+
+| line | C00 19:04 | verdict |
+|---|---|---|
+| suspension stop, 25 g: h p50 at 25–30 / 30–35 g | −18.7 / −19.5 cm (103, 39 frames) | **holds** (the plateau) |
+| chassis, 40 g: box over the mesh p50 at 45–50 / 50–55 / 55–60 / 60–70 g | 0.3 / −6.0 / −12.9 / −12.5 cm (20, 39, 32, 47 frames) | **holds at the threshold, deeper past it** (the mesh at about 47–50 g; settled at −13 to −15 cm past it, see p-d563) |
+| sustained, ≥ 55 g over 0.5 s | **longest 1.18 s** (total 1.19 s) | **does not hold**: past 0.5 s at ≥ 55 g, and it held the road through it |
+| proven, 90 g | peak **64.61 g**, s 8,591, 794 km/h (the highest of any pass) | **not reached** |
+| line-predicted margin, top-10 peaks | median +6.1 g | **holds** |
+| lift-off above 300 km/h | 74 frames, worst −6.12 g | **holds** |
+
+**Helix** (t 59.5–61.9, 161 frames):
+- deepest 50 m median of the box: −14.2 cm (s 8,650–8,700);
+- under the mesh: 73.3%;
+- box median at 50–55 g: −6.0 cm (39 frames); at 55–60 g: −12.9 cm (32);
+- h median −28.2 cm;
+- peak 64.61 g at 794 km/h; load median 54.8 g, speed median 778 km/h (`helix-C00b.txt`).

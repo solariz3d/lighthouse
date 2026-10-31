@@ -313,3 +313,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### The second broken helix pass confirms the separator: the box's sinking rate at −11 cm, held ≤ 0.63 m/s (4 passes), broke ≥ 1.66 m/s (C07, C11); speed, load, depth and bank position do not separate them
 2026-10-30, the chair's 00:58Z ring — sinkrate.js (raw box, 3-frame rate, read to the raw break) and helixtrace.js on C11: box at the surface at its 57.67 g peak, sinking 1.75–2.5 m/s, broke at −13 cm, thrown −54 m/s along n and −48 along T, as C07. Could be wrong with more passes: 6 in all.
 → `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (C11)
+
+### The Mach 6 at the GRX's pace held the hardest pass yet (64.61 g, 1.18 s ≥ 55 g, box −14.9 cm) because its box crossed −11 cm at 0.15 m/s; now 5 held ≤ 0.63 m/s, 2 broke ≥ 1.66 m/s
+2026-10-30, the chair's 01:05Z ring — sinkrate.js and helixtrace.js on the 19:04 replay; no wheel under anywhere in it; exit yaw against path −16.3° (C09 −33.7°, reference −15.6°). Could be wrong with more passes: 7 in all.
+→ `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (C00 at 19:04)

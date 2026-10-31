@@ -392,3 +392,49 @@
 - **Both broken passes started sinking from the surface at their load peak and never settled.** The held ones either never went deep or settled.
 - **STIFF's question becomes concrete:** does a stiffer contact slow that sink below about 0.6 m/s at 57–63 g?
 - **Its falsifier:** on STIFF, C07 or C11 at the same pace sinks past −11 cm faster than 1 m/s.
+
+## C00 at 19:04: the Mach 6 at the GRX's pace, the fifth held pass (the chair's ring of 01:05Z)
+
+- **Replay:** the 19:04 auto-save (sha256 `c74e4fd355588711…`, 28,566,592 bytes). C00 is the reference's own car, labelled "C00 19:04" here to keep it apart from the 10-17 reference lap.
+- **Scripts:** `S\d560\hx-C00b.txt`, `sinkrate.txt` (re-run with this pass added), `out\C00b\wheels.csv`.
+
+**It held, at the highest load of any pass:**
+- **The load:** peak **64.61 g** at s 8,591, 794–799 km/h.
+- **Sustained:** ≥ 55 g for **1.18 s** unbroken.
+- **The box crossed −11 cm sinking at 0.15 m/s** (t 60.405, 792 km/h, 64.3 g). Its fastest sink in the −5 to −16 cm band was 0.48 m/s.
+- **Then it settled:** −13.1 to −14.9 cm from t 60.51 to 61.11 (0.6 s, 58–64 g), deepest −14.9 cm at t 60.810 (60.4 g).
+- **The wheels:** every wheel centre ≥ +0.229 m, none under.
+- **Speed:** the largest one-frame speed loss in the stretch was 1.3 km/h.
+
+**The separator, now 5 held and 2 broken** (`sinkrate.txt`, the box's rate as it crosses −11 cm):
+
+| pass | outcome | rate at −11 cm | deepest box |
+|---|---|---|---|
+| reference 1 | held | 0.28 m/s | −11.3 cm |
+| reference 2 | held | never crosses | −6.9 cm |
+| C05 | held | never crosses | −3.0 cm |
+| C09 | held | 0.63 m/s | −15.9 cm |
+| **C00 19:04** | **held** | **0.15 m/s** | −14.9 cm |
+| C07 | broke | 1.66 m/s | −16.1 cm |
+| C11 | broke | 1.96 m/s | −13.1 cm |
+
+- **This pass is the hardest test of the separator so far:** it carried the most load (64.6 g) for the longest (1.18 s ≥ 55 g) and rode as deep as the broken passes (−14.9 cm).
+- **It held, and it reached that depth slowly.**
+- inferred: load and depth are not the trigger; a fast sink is.
+
+**The exit: yaw against the path** (`hx-C00b.txt`; `yaw` minus `vel-dir`; read the change, since the level carries the bank's offset):
+- **In the plateau:** −6° to −11° (t 60.0–60.75).
+- **As the box came out** (t 61.35, box −8.3 cm, 53.6 g): yaw −17.1° against vel-dir −0.8°, so **−16.3°**. It recovers to −10° by t 61.71.
+- **Near the left side after the helix** (t 62.07–62.43, u 14.2–14.9 m): −15.5° to −18.6° against vel-dir 0° to +2.4°. The box was out of the road (+7 to +10 cm), and no wheel went past the edge.
+- **For comparison, the peak yaw against path at the exit:**
+
+| pass | peak yaw against path at the exit |
+|---|---|
+| C00 19:04 | −16.3° (box at −8 cm) |
+| reference 1 | −15.6° (box from −5 to +2.5 cm) |
+| C09 | −33.7° (t 65.22, box at −3 cm) |
+
+- inferred: **"something similar to the Hangul, but no critical kill"** fits. The same box-under ride (−13 to −15 cm, wheels on top) and the same yaw kick as the box came out, at about half C09's size. It recovered, it did not reach the edge, and nothing went under.
+
+**Wheels anywhere on the lap:** `wheel.js` finds **0 events on all four wheels** over the replay's 4,646 rows (t 0–71.6, s 0 → the line → 10,912). No centre is under the top surface inside the footprint, or more than 0.5 m below an edge row outside it.
+- The replay ends at t 71.6, s 10,912: the auto-save window, not a stop. Blackbox's lap clock shows one reset, at t 13.89.
