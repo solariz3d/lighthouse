@@ -1,0 +1,59 @@
+== wv-before-elysium  (0.4.32; crashes 0)
+step      s       page  checker  page+checker  export worker  (MB, peaks)
+launch      0.9      16        2            18              0
+open       64.1     921     1546          2454              0
+export    149.5    1318     1398          2716           2627
+install   143.5    1415     1398          2813           2496
+  open: loaded: head shown at 1.5 s, still from 44.1 s
+== wv-after-elysium  (0.4.33 15:02; crashes 0)
+step      s       page  checker  page+checker  export worker  (MB, peaks)
+launch      0.8      14        2            16              0
+open       48.2     913     1072          1908              0
+export    152.5     926      748          1674           2018
+install   152.4     883      748          1631           2231
+  open: loaded: head shown at 1.7 s, still from 28.2 s
+== wv-b3-elysium  (0.4.33 17:26; crashes 0)
+step      s       page  checker  page+checker  export worker  (MB, peaks)
+launch      0.9      13        2            15              0
+open       47.8     997     1065          1966              0
+export    106.1    1360      748          2108           2372
+install   108.2    1041      748          1789           2476
+  open: loaded: head shown at 1.4 s, still from 27.8 s
+== wv-before-50  (0.4.32; crashes 1)
+step      s       page  checker  page+checker  export worker  (MB, peaks)
+launch      1.2      16        2            18              0
+open       25.5     251      342           593              0
+export     86.7     347      342           659            686  FAILED Error: export failed: Invalid string length | No saved pieces yet: select pieces
+  open: loaded: head shown at 1.3 s, still from 5.6 s
+== wv-after-50  (0.4.33 17:07; crashes 1)
+step      s       page  checker  page+checker  export worker  (MB, peaks)
+launch      0.9      17        2            19              0
+open       24.4     267      229           479              0
+export     62.6     245      212           452            766  FAILED Error: the page went away; crashes [{"t":"83.8","what":"the CDP socket closed: c
+  open: loaded: head shown at 1.1 s, still from 4.4 s
+== wv-b3-50  (0.4.33 17:18; crashes 0)
+step      s       page  checker  page+checker  export worker  (MB, peaks)
+launch      0.8      16        2            18              0
+open       23.3     252      211           463              0
+export     56.7     305      211           513            623
+install    55.2     308      206           514            830
+  open: loaded: head shown at 1.1 s, still from 3.4 s
+== wv-before-100  (0.4.32; crashes 1)
+step      s       page  checker  page+checker  export worker  (MB, peaks)
+launch      0.9      16        2            18              0
+open       24.4     462      649          1111              0
+export    108.7     948      649          1249           1476  FAILED Error: export failed: Invalid string length | No saved pieces yet: select pieces
+  open: loaded: head shown at 1.1 s, still from 4.4 s
+== wv-after-100  (0.4.33 17:13; crashes 1)
+step      s       page  checker  page+checker  export worker  (MB, peaks)
+launch      0.8      14        2            16              0
+open       24.4     464      443           907              0
+export    135.3     627      443          1048           1636  FAILED Error: the page went away; crashes [{"t":"156.8","what":"the CDP socket closed: 
+  open: loaded: head shown at 1.1 s, still from 4.3 s
+== wv-b3-100  (0.4.33 17:20; crashes 0)
+step      s       page  checker  page+checker  export worker  (MB, peaks)
+launch      0.8      12        2            14              0
+open       24.4     459      441           900              0
+export    140.9     625      441          1041           1722
+install   134.6     621      407          1028           1720
+  open: loaded: head shown at 1.1 s, still from 4.3 s

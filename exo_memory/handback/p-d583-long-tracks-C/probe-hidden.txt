@@ -1,0 +1,14 @@
+launched hidden: pid 54224
+page: ready visible http://tauri.localhost/app/index.html
+processes in the tree: 7
+windows on the user's desktop: 0 (visible 0)
+windows on t180-measure: 19 (visible 4)
+  24036 visible=False class=Touch Tooltip Window title=Tooltip
+  24036 visible=True class=UAC_InputIndicatorOverlayWnd title=
+  24036 visible=True class=UAC Input Indicator title=
+  46928 visible=False class=Chrome_WidgetWin_0 title=
+  54224 visible=True class=Tauri Window title=T-180 Track Builder
+  24036 visible=False class=Chrome_WidgetWin_0 title=
+  24036 visible=False class=Chrome_WidgetWin_0 title=
+  24036 visible=False class=Base_PowerMessageWindow title=
+after kill: t180-track-builder.exe running 0

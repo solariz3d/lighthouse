@@ -1,0 +1,91 @@
+{
+ "rows": [
+  {
+   "look": "aurora",
+   "track": "empty",
+   "pieces": "0 pieces",
+   "canvas": [
+    2560,
+    1396
+   ],
+   "frames": 3398,
+   "gpuFrames": 3398,
+   "notStrip": 0,
+   "disjoint": 0,
+   "skyMedian": 0.125952,
+   "skyP95": 0.131232,
+   "restMedian": 0.022464,
+   "restP95": 0.76416,
+   "gpuMedian": 0.14912,
+   "gpuP95": 0.8895679999999999,
+   "cpuMedian": 0.19999980926513672,
+   "cpuP95": 1.2999999523162842,
+   "gapMedian": 0.6000000000003638,
+   "gapP95": 1.7000000000007276,
+   "draws": 4,
+   "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  },
+  {
+   "look": "aurora",
+   "track": "12 x 100 m turns",
+   "pieces": "12 pieces",
+   "canvas": [
+    2560,
+    1396
+   ],
+   "frames": 3151,
+   "gpuFrames": 3151,
+   "notStrip": 0,
+   "disjoint": 0,
+   "skyMedian": 0.132768,
+   "skyP95": 0.149152,
+   "restMedian": 0.0464,
+   "restP95": 0.89856,
+   "gpuMedian": 0.181312,
+   "gpuP95": 1.038976,
+   "cpuMedian": 0.19999980926513672,
+   "cpuP95": 2.000000238418579,
+   "gapMedian": 0.5,
+   "gapP95": 2.899999999999636,
+   "draws": 11,
+   "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  },
+  {
+   "look": "aurora",
+   "track": "30 x 1,000 m",
+   "pieces": "30 pieces",
+   "canvas": [
+    2560,
+    1396
+   ],
+   "frames": 2927,
+   "gpuFrames": 2927,
+   "notStrip": 0,
+   "disjoint": 0,
+   "skyMedian": 0.157408,
+   "skyP95": 0.16336,
+   "restMedian": 0.19616,
+   "restP95": 1.086656,
+   "gpuMedian": 0.352992,
+   "gpuP95": 1.227744,
+   "cpuMedian": 0.20000004768371582,
+   "cpuP95": 2.799999952316284,
+   "gapMedian": 0.5,
+   "gapP95": 3.100000000002183,
+   "draws": 92,
+   "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  },
+  {
+   "cssChange": {
+    "median": 1.1000001430511475,
+    "p95": 1.4000000953674316,
+    "max": 1.5
+   },
+   "control": {
+    "median": 0,
+    "p95": 0
+   }
+  }
+ ],
+ "errors": []
+}

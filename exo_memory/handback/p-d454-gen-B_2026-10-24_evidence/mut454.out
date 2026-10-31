@@ -1,0 +1,29 @@
+heavy-run: waiting on a2122153 pid 13336 (t180 D454 E prove 2: touched and downstream tests, own mutants, since 2026-10-25T04:50:03.458Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 13336 (t180 D454 E prove 2: touched and downstream tests, own mutants, since 2026-10-25T04:50:03.458Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 13336 (t180 D454 E prove 2: touched and downstream tests, own mutants, since 2026-10-25T04:50:03.458Z) and 0845a868 pid 39940 (D454 part 2 touched tests (pane C), since 2026-10-25T04:52:17.945Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 13336 (t180 D454 E prove 2: touched and downstream tests, own mutants, since 2026-10-25T04:50:03.458Z) and 0845a868 pid 39940 (D454 part 2 touched tests (pane C), since 2026-10-25T04:52:17.945Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 13336 (t180 D454 E prove 2: touched and downstream tests, own mutants, since 2026-10-25T04:50:03.458Z) and 0845a868 pid 39940 (D454 part 2 touched tests (pane C), since 2026-10-25T04:52:17.945Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 13336 (t180 D454 E prove 2: touched and downstream tests, own mutants, since 2026-10-25T04:50:03.458Z) — one heavy run at a time
+lockrun: holding the lock at 2026-10-25T04:55:42.894Z; starting B D454 mutants over the gen-consumer D454 rows (19; BelowNormal, very low I/O; not a timing run)
+lowio: class BelowNormal, io-priority set to 0 rc 0
+caught       M1 the d423-letters-swap.js row dropped (a workshop tool ships)
+caught       M2 the mistake-bench-toolstub.js row dropped
+caught       M3 the worktree-sweep.test.js row dropped
+caught       M4 janitor-task.ps1 loses its UNREACHABLE: declaration
+caught       M5 the janitor-task.ps1 row dropped (absent, undecided)
+caught       M6 leftovers.js withheld (a product file excluded)
+caught       M7 the claim-replay.js row reason emptied (excluded with no reason)
+caught       M8 HANDLE_RE back to its 0.1.1 form (1C.1 unfixed)
+caught       M9 HANDLE_RE keeps ANY bare owner/repo, not only the project's own two
+caught       M10 HANDLE_RE loses its profile-URL branch (github.com/solariz3d kept)
+caught       M11 a t180 research row dropped
+caught       M12 the units.js MANIFEST row dropped
+caught       M13 the units.js SHIPS_FROM_PRIVATE row dropped (the whole file)
+caught       M14 the janitor WORKSHOP row dropped
+caught       M15 a PRIVATE hit carries the matched line
+caught       M16 privPattern never reads the variable
+caught       M17 the dry-run refusal removed
+caught       M18 the real-run refusal removed
+caught       M19 the command line stops requiring the guard
+applied 19 / caught 19 / NOT APPLIED 0; restored sha256 equal
+lockrun: done at 2026-10-25T05:03:50.285Z, exit 0

@@ -1,0 +1,43 @@
+lockrun: holding the lock at 2026-10-25T07:08:10.175Z; starting B D454 E's 13 files in a stranger clone of gen4 (BelowNormal, very low I/O; not a timing run)
+lowio: class BelowNormal, io-priority set to 0 rc 0
+consonance/hooks/claim-check.test.js
+   stranger clone of gen3: exit 0
+   d454-b worktree, this machine: exit 0
+consonance/hooks/delete-gate.test.js
+   stranger clone of gen3: exit 0
+   d454-b worktree, this machine: exit 0
+consonance/hooks/dispatch-gate.test.js
+   stranger clone of gen3: exit 0
+   d454-b worktree, this machine: exit 0
+consonance/hooks/dream-gate.test.js
+   stranger clone of gen3: exit 1 — 
+      ✖ consonance\hooks\dream-gate.test.js
+   d454-b worktree, this machine: exit 0
+consonance/hooks/push-gate.test.js
+   stranger clone of gen3: exit 0
+   d454-b worktree, this machine: exit 0
+consonance/hooks/sessionstart-state.test.js
+   stranger clone of gen3: exit 0
+   d454-b worktree, this machine: exit 0
+consonance/tools/attached.test.js
+   stranger clone of gen3: exit 0
+   d454-b worktree, this machine: exit 0
+consonance/tools/claim-check-adapter.test.js
+   stranger clone of gen3: not shipped
+   d454-b worktree, this machine: exit 0
+consonance/tools/claim-replay.test.js
+   stranger clone of gen3: not shipped
+   d454-b worktree, this machine: exit 0
+consonance/tools/janitor.test.js
+   stranger clone of gen3: exit 0
+   d454-b worktree, this machine: exit 0
+consonance/tools/mistake-bench.test.js
+   stranger clone of gen3: not shipped
+   d454-b worktree, this machine: exit 0
+consonance/tools/pulse-degrade.test.js
+   stranger clone of gen3: exit 0
+   d454-b worktree, this machine: exit 0
+consonance/tools/scratch.test.js
+   stranger clone of gen3: exit 0
+   d454-b worktree, this machine: exit 0
+lockrun: done at 2026-10-25T07:10:05.634Z, exit 0

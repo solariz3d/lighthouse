@@ -1,0 +1,16 @@
+lockrun: holding the lock at 2026-10-27T13:37:35.359Z; starting D490 timing session skypass half
+pitch  0 | aurora                                           | median 0.030 ms  p95 0.036  max 0.037  (n 120, disjoint 0)
+pitch  0 | aurora1                                          | median 0.071 ms  p95 0.079  max 0.081  (n 120, disjoint 0)
+pitch  0 | aurora2                                          | median 0.053 ms  p95 0.061  max 0.069  (n 120, disjoint 0)
+pitch  0 | aurora3 (its low-resolution pass only)           | median 0.263 ms  p95 0.272  max 0.281  (n 120, disjoint 0)
+pitch 40 | aurora                                           | median 0.030 ms  p95 0.035  max 0.040  (n 120, disjoint 0)
+pitch 40 | aurora1                                          | median 0.093 ms  p95 0.101  max 0.105  (n 120, disjoint 0)
+pitch 40 | aurora2                                          | median 0.176 ms  p95 0.190  max 0.192  (n 120, disjoint 0)
+pitch 40 | aurora3 (its low-resolution pass only)           | median 0.797 ms  p95 0.830  max 1.032  (n 120, disjoint 0)
+pitch 85 | aurora                                           | median 0.030 ms  p95 0.036  max 0.046  (n 120, disjoint 0)
+pitch 85 | aurora1                                          | median 0.074 ms  p95 0.081  max 0.086  (n 120, disjoint 0)
+pitch 85 | aurora2                                          | median 0.298 ms  p95 0.313  max 0.553  (n 120, disjoint 0)
+pitch 85 | aurora3 (its low-resolution pass only)           | median 0.758 ms  p95 0.801  max 1.384  (n 120, disjoint 0)
+renderer: ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)
+lockrun: done at 2026-10-27T13:37:40.614Z, exit 0
+[D490 timing session skypass half] exit 0

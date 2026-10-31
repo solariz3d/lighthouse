@@ -1,0 +1,6 @@
+FAIL   consonance\tools\consumer-relabel.test.js  (exit 1)
+FAIL   consonance\tools\portable-paths.test.js  (exit 1)
+js-suite: 183 green · 2 failed · 0 crashed · 0 silent · 1 canary · 0 sang · 1 not-run · 0 class-error  (of 187)
+universe: 187 test files discovered · 186 ran assertions to a summary · 1 declared NOT-RUN · 0 neither
+FAILED: consonance\tools\consumer-relabel.test.js
+FAILED: consonance\tools\portable-paths.test.js

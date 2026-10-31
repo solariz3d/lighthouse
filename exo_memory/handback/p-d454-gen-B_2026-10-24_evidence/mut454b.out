@@ -1,0 +1,17 @@
+heavy-run: waiting on a2122153 pid 29644 (t180 D454 E prove 3: chime, scratch, consumers, own mutants, since 2026-10-25T05:03:56.288Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 29644 (t180 D454 E prove 3: chime, scratch, consumers, own mutants, since 2026-10-25T05:03:56.288Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 29644 (t180 D454 E prove 3: chime, scratch, consumers, own mutants, since 2026-10-25T05:03:56.288Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 29644 (t180 D454 E prove 3: chime, scratch, consumers, own mutants, since 2026-10-25T05:03:56.288Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 29644 (t180 D454 E prove 3: chime, scratch, consumers, own mutants, since 2026-10-25T05:03:56.288Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 29644 (t180 D454 E prove 3: chime, scratch, consumers, own mutants, since 2026-10-25T05:03:56.288Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 29644 (t180 D454 E prove 3: chime, scratch, consumers, own mutants, since 2026-10-25T05:03:56.288Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 29644 (t180 D454 E prove 3: chime, scratch, consumers, own mutants, since 2026-10-25T05:03:56.288Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 29644 (t180 D454 E prove 3: chime, scratch, consumers, own mutants, since 2026-10-25T05:03:56.288Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 29644 (t180 D454 E prove 3: chime, scratch, consumers, own mutants, since 2026-10-25T05:03:56.288Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 29644 (t180 D454 E prove 3: chime, scratch, consumers, own mutants, since 2026-10-25T05:03:56.288Z) — one heavy run at a time
+lockrun: holding the lock at 2026-10-25T05:20:13.883Z; starting B D454 mutants M12+M13 re-run (BelowNormal, very low I/O; not a timing run)
+lowio: class BelowNormal, io-priority set to 0 rc 0
+caught       M12 the units.js MANIFEST row dropped
+caught       M13 the units.js SHIPS_FROM_PRIVATE row dropped (the whole file)
+applied 2 / caught 2 / NOT APPLIED 0; restored sha256 equal
+lockrun: done at 2026-10-25T05:22:36.454Z, exit 0

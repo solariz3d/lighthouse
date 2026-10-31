@@ -1,0 +1,34 @@
+{"case":"F1-bowl-default-lap-closed.core2.json buildMesh","sha":"5e91dc2a2775576c73ce1f9c75c5650a7f4f35ff08d43edbd84e2c9655454722","parts":3745}
+{"case":"F2-halfpipe-default-lap-closed.core2.json buildMesh","sha":"d0e2806c49debfcf590d16714e92dd6ee97ff3dec54d4a9792ac802f93757ffa","parts":3745}
+{"case":"F3-bowl-narrow-12m-cap-binds.core2.json buildMesh","sha":"26d5916b9c173962a8bdb41b28f075d74984ddbdaa1ea3ef2371810fec19c69e","parts":1050}
+{"case":"F3-bowl-narrow-12m-cap-binds.core2.json sculptMesh","sha":"858a775c66f8c6556b02d69a0d3e048a50f3a07ba8d3bed1c55f03c8476b8942","parts":1050,"reused":104}
+{"case":"F4-halfpipe-width-31.5-to-12-along-s.core2.json buildMesh","sha":"ddb85fb3d7baa8f28b1ea635052ddb3fd6121a372d534569e9a648a385fdd869","parts":1245}
+{"case":"F4-halfpipe-width-31.5-to-12-along-s.core2.json sculptMesh","sha":"29d417fa1ee9ec856ba222edc7939f41422d30d878703910faf46bdf915dc966","parts":1245,"reused":0}
+{"case":"F5-flat-20m-bank-30.core2.json buildMesh","sha":"829a4449e68f5697b4b2c124df942a390829ccd2151941e09d985703bf884a3a","parts":600}
+{"case":"F5-flat-20m-bank-30.core2.json sculptMesh","sha":"5288afb9c8c719c0cca246fa4c62245068e6b45406bc3fd70c87329234d4b579","parts":600,"reused":59}
+{"case":"F6-bowl-r-brushed.core2.json buildMesh","sha":"99a0cdb75fb0de9de7643ea826fe085773cce782b612680d0e6658aba4708a41","parts":1110}
+{"case":"F6-bowl-r-brushed.core2.json sculptMesh","sha":"51aab39869e4d1f204520431bded651ebc59b2f701f31a0f6807ffc9576df5ed","parts":1110,"reused":99}
+{"case":"F7-hill-then-jump.core2.json buildMesh","sha":"6fceb6cd12a73f68fc72401181a40d7ee71927a6568129bc42ac82a8f18582ae","parts":800}
+{"case":"F7-hill-then-jump.core2.json sculptMesh","sha":"f28d914a0e68e1fe4e382edcd558a70f6ad27dac85b9ca277838599d552d25ea","parts":800,"reused":79}
+{"case":"F8-mixed-families.core2.json buildMesh","sha":"88529824541ce523cc0c143673fc507088eb4c881aaf1b2f8924f88b67f05f13","parts":1075}
+{"case":"F8-mixed-families.core2.json sculptMesh","sha":"6b4bc691fa47f27e778a26ebe5af1d00bd937d565d57432e9266cafc17999279","parts":1075,"reused":74}
+{"case":"F9-empty.core2.json","empty":true}
+{"case":"finish-banked-end-leaves-road.core2.json buildMesh","sha":"4cfc474477d730bb662ea63414f9af45016dc9eb800a6fd00b29a1f2316607ee","parts":7960}
+{"case":"ghost empty full","sha":"d174c3ebd783471373897767fddf9435735e303a2d2b74209116c8a7e8d7b469","parts":4000}
+{"case":"ghost empty cheap 1000","sha":"a1dd640194ed6e5f32c42be104c15b403687344c3fc2d3bfdc2770a95b298c58","parts":384}
+{"case":"ghost empty cheap 1006","sha":"31cc115062974e2d6e9202c455fde0db37af52bac20c3233c9505888721f1fcf","parts":384}
+{"case":"ghost empty cheap 1006","sha":"31cc115062974e2d6e9202c455fde0db37af52bac20c3233c9505888721f1fcf","parts":384}
+{"case":"ghost empty cheap 1240","sha":"8a803bb22319a49a8b9cbc08d47f3f18f4e945251469cbe6a54dd48f19aa4aa6","parts":384}
+{"case":"ghost empty cheap turn 10","sha":"88339180ec729ef20194d47d9013f95a258794ea17cad7b7ccd46be36fe35b3a","parts":384}
+{"case":"ghost empty cheap turn 12","sha":"78a38f020278a9a1438964331e1f0c4d626cfa20b1a6652e0bc0cfab9f343b88","parts":384}
+{"case":"ghost empty cheap turn 12","sha":"78a38f020278a9a1438964331e1f0c4d626cfa20b1a6652e0bc0cfab9f343b88","parts":384}
+{"case":"placed empty + edge piece","sha":"0a9f0d5a4b1e1f83045ff72beefd418df5f28eecd1b1971723c42f2af25d4f81","parts":2500}
+{"case":"ghost after 300 m full","sha":"ae34e2b001f706a5b9b8a0cca53a14aac3825d2db8c0744aa3d65aeaec4e46d4","parts":4008}
+{"case":"ghost after 300 m cheap 1000","sha":"a434c472625bd79658f26e64cc5bbc1c771e8674eb5242170bccab9c229233ee","parts":392}
+{"case":"ghost after 300 m cheap 1006","sha":"aa90b7f33b2fdb9051775da8174ad34440611ca830280251ed66152754892228","parts":392}
+{"case":"ghost after 300 m cheap 1006","sha":"aa90b7f33b2fdb9051775da8174ad34440611ca830280251ed66152754892228","parts":392}
+{"case":"ghost after 300 m cheap 1240","sha":"69956df91ac3457f5ca3b42762cf4411579f7b56a60d2b7e523f7eba965de894","parts":392}
+{"case":"ghost after 300 m cheap turn 10","sha":"75fa4cf66f1fedc68c2f6829536d182123921b2c3ef88a070728790438176da2","parts":392}
+{"case":"ghost after 300 m cheap turn 12","sha":"4f78e420a29e494620a6c40a31f59699f433f78992df10c58fecebdd8b8c8259","parts":392}
+{"case":"ghost after 300 m cheap turn 12","sha":"4f78e420a29e494620a6c40a31f59699f433f78992df10c58fecebdd8b8c8259","parts":392}
+{"case":"placed after 300 m + edge piece","sha":"5b161a8a83a8547a469737f6a1d4f94c62906940eea50ca0f721a6707ccb4792","parts":3255}

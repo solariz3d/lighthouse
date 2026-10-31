@@ -1,0 +1,6 @@
+s      | least clearance above the road (m) and where across, per mesh class (within 6 m); the lower road itself is the 0 line
+  2932 | 1ROAD 1.96 m at x 11 (1ROAD_p4_chunk_5)
+  2934 | UNDERSKIN 2.37 m at x 11 (UNDERSKIN_p5_chunk_5) ; 1ROAD_CATCH 2.61 m at x 11 (1ROAD_CATCH_p5_chunk_1) ; 1ROAD 2.96 m at x 11 (1ROAD_p4_chunk_5)
+  2936 | UNDERSKIN 3.35 m at x 11 (UNDERSKIN_p5_chunk_5) ; 1ROAD_CATCH 3.58 m at x 11 (1ROAD_CATCH_p5_chunk_1) ; 1ROAD 3.94 m at x 11 (1ROAD_p4_chunk_5)
+  2938 | UNDERSKIN 4.31 m at x 11 (UNDERSKIN_p5_chunk_5) ; 1ROAD_CATCH 4.54 m at x 11 (1ROAD_CATCH_p5_chunk_1) ; 1ROAD 4.90 m at x 11 (1ROAD_p4_chunk_5)
+  2940 | UNDERSKIN 5.26 m at x 11 (UNDERSKIN_p5_chunk_5) ; 1ROAD_CATCH 5.49 m at x 11 (1ROAD_CATCH_p5_chunk_1) ; 1ROAD 5.85 m at x 11 (1ROAD_p4_chunk_5)

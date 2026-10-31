@@ -1,0 +1,48 @@
+control (unmutated copy)                                        pass 27 fail 0
+ 1 (a) TEMP_MIN_AGE is zero: a young folder is deleted                                               pass 26 fail 1  CAUGHT
+ 2 (a) only the folder's own mtime counts, not the newest thing inside                               pass 26 fail 1  CAUGHT
+ 3 (a) a link inside does not keep the folder                                                        pass 26 fail 1  CAUGHT
+ 4 (a) any name with a room prefix matches (no mkdtemp suffix shape)                                 pass 26 fail 1  CAUGHT
+ 5 (a) the Claude Code temp root is not excluded                                                     pass 26 fail 1  CAUGHT
+ 6 (b) LOG_MIN_AGE is zero: a young log is moved                                                     pass 26 fail 1  CAUGHT
+ 7 (b) a cited log is not kept                                                                       pass 26 fail 1  CAUGHT
+ 8 (b) the archive is not written: a log is DELETED, not moved                                       pass 26 fail 1  CAUGHT
+ 9 (c) SCRATCH_MIN_IDLE is zero: a target in use is deleted                                          pass 26 fail 1  CAUGHT
+10 (c) any target-named folder is a cargo target (cargo's tag not read)                              pass 26 fail 1  CAUGHT
+11 (b)(c) every Claude project, not only the room's                                                  pass 26 fail 1  CAUGHT
+12 (d) WORKTREE_MIN_IDLE is zero                                                                     pass 26 fail 1  CAUGHT
+13 (d) an unmerged worktree is not kept                                                              pass 26 fail 1  CAUGHT
+14 (d) a held lock does not keep its worktree                                                        pass 26 fail 1  CAUGHT
+15 (d) a lock with no tree does not keep anything                                                    pass 26 fail 1  CAUGHT
+16 (d) a main checkout is not kept                                                                   pass 26 fail 1  CAUGHT
+17 (d) idle ignores git: only the target's own age counts                                            pass 26 fail 1  CAUGHT
+18 (d) an unreadable lock is not counted as untreed                                                  pass 26 fail 1  CAUGHT
+19 (e) REMOVE_MIN_IDLE is zero: a worktree worked in an hour ago is removed                          pass 26 fail 1  CAUGHT
+20 (e) a worktree that is not clean is not kept                                                      pass 26 fail 1  CAUGHT
+21 (e) untracked files do not count as unclean                                                       pass 26 fail 1  CAUGHT
+22 (e) a worktree with patches not in main is not kept                                               pass 26 fail 1  CAUGHT
+23 (e) landed means an ancestor of main only (git cherry not read)                                   pass 26 fail 1  CAUGHT
+24 (e) a link inside does not keep the worktree                                                      pass 26 fail 1  CAUGHT
+25 (e) a held or untreed heavy-run lock does not keep it                                             pass 25 fail 2  CAUGHT
+26 (e) a main checkout is not kept                                                                   pass 26 fail 1  CAUGHT
+27 (e) a live pane does not keep it                                                                  pass 25 fail 2  CAUGHT
+28 (e) the transcripts are not read for the worktree's path                                          pass 26 fail 1  CAUGHT
+29 (e) status rewrites the index (no --no-optional-locks): the plan makes every worktree young       pass 22 fail 5  CAUGHT
+30 (e) act: no re-check before the removal                                                           pass 26 fail 1  CAUGHT
+31 (e) act: the removal is FORCED                                                                    pass 26 fail 1  CAUGHT
+32 (e) act: a removal is not logged                                                                  pass 25 fail 2  CAUGHT
+33 (e) strays are not listed                                                                         pass 25 fail 2  CAUGHT
+34 (e) a worktree inside an owned folder is listed as a stray too                                    pass 25 fail 2  CAUGHT
+35 (e) a drive root in the list is owned (not refused)                                               pass 26 fail 1  CAUGHT
+36 (e) only the first listed folder is walked                                                        pass 26 fail 1  CAUGHT
+37 (e) strays are judged against the first folder only                                               pass 26 fail 1  CAUGHT
+38 (e) a malformed worktrees_dirs is guessed at, not refused                                         pass 26 fail 1  CAUGHT
+39 act: no re-check (a folder that turned young is deleted)                                          pass 26 fail 1  CAUGHT
+40 act: assertSafe is not called                                                                     pass 26 fail 1  CAUGHT
+41 refusal: D: is allowed                                                                            pass 26 fail 1  CAUGHT
+42 refusal: a drive root is allowed                                                                  pass 26 fail 1  CAUGHT
+43 refusal: the keeper's folders are allowed                                                         pass 26 fail 1  CAUGHT
+44 refusal: outside the class root is allowed                                                        pass 25 fail 2  CAUGHT
+45 dry run: plan() deletes what it finds                                                             pass 26 fail 1  CAUGHT
+
+45 applied · 45 caught · 0 survived · 0 NOT APPLIED

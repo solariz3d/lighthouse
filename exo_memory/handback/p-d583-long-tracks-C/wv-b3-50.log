@@ -1,0 +1,27 @@
+heavy-run: WARNING: C:\ has 22.8 GB free, under 50 GB; run node consonance/tools/janitor.js
+lockrun: holding the lock at 2026-10-31T17:18:03.197Z; starting d583-webview2-b3-50 (the built app on a long track; not a timing session)
+launched pid 55808; track STADIUM 50
+ok   launch (0.8 s): menus ready
+  10.7 s open: 445 MB (page 228, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 211)
+  [open loop 9] headAt 5.7 still 6 prev 453 last sample 14.8 462 closed false
+  20.8 s open: 458 MB (page 242, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 211)
+  [open loop 19] headAt 5.7 still 16 prev 460 last sample 24.8 444 closed false
+ok   open (23.3 s): loaded: head shown at 1.1 s, still from 3.4 s; peak 468 MB at 12.8 s (page 252, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 211); settled 446 MB (page 230,
+  30.9 s export: 798 MB (page 295, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 211, srcdoc#4 8, f62bff5d-1089-4d79-b097-7461e6#5 279)
+  41.0 s export: 618 MB (page 224, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 206, srcdoc#4 8, f62bff5d-1089-4d79-b097-7461e6#5 175)
+  51.1 s export: 831 MB (page 228, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 206, srcdoc#4 8, f62bff5d-1089-4d79-b097-7461e6#5 385)
+  61.1 s export: 815 MB (page 229, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 206, srcdoc#4 1, f62bff5d-1089-4d79-b097-7461e6#5 374)
+  71.2 s export: 838 MB (page 222, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 206, srcdoc#4 1, f62bff5d-1089-4d79-b097-7461e6#5 404)
+  81.2 s export: 440 MB (page 223, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 206, srcdoc#4 1, f62bff5d-1089-4d79-b097-7461e6#5 6)
+ok   export (56.7 s): STADIUM 50 · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exported t180b_stadium_ | files 10, kn5 261725896 B; peak 1069 MB at 67.2 s (page 235, worker:overlapwo
+  91.3 s install: 684 MB (page 291, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 206, srcdoc#4 6, f62bff5d-1089-4d79-b097-7461e6#5 176)
+  101.5 s install: 689 MB (page 224, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 206, srcdoc#4 1, f62bff5d-1089-4d79-b097-7461e6#5 254)
+  111.5 s install: 940 MB (page 228, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 206, srcdoc#4 1, f62bff5d-1089-4d79-b097-7461e6#5 500)
+  121.6 s install: 943 MB (page 230, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 206, srcdoc#4 1, f62bff5d-1089-4d79-b097-7461e6#5 501)
+  131.7 s install: 663 MB (page 228, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 206, srcdoc#4 1, f62bff5d-1089-4d79-b097-7461e6#5 223)
+ok   install (55.2 s): STADIUM 50 · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exported t180b_stadium_50 to C:\Users\nname | files 10, kn5 261725896 B; peak 1275 MB at 123.6 s (page 
+crashes 0; page errors 0; samples 138; overall peak 1275 MB at 123.6 s (page 234, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 206, iframe:about:srcdoc#4 1, worker:f62bff5d-1089-4d79-b097-7461e6#5 830)
+SOCKET CLOSED {"t":"142.2","what":"the CDP socket closed: code 1000 reason  clean true; app pid GONE; webview/t180 processes 20","mark":"install"}
+killed pid 55808; t180-track-builder.exe left running: 0
+exit 0
+lockrun: done at 2026-10-31T17:20:27.521Z, exit 0

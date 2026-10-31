@@ -1,0 +1,21 @@
+launched pid 24132; track STADIUM 50
+ok   launch (1.2 s): menus ready
+  11.2 s open: 595 MB (page 248, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 342)
+  [open loop 9] headAt 6.4 still 4 prev 575 last sample 15.2 593 closed false
+  21.3 s open: 579 MB (page 232, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 342)
+  [open loop 19] headAt 6.4 still 14 prev 597 last sample 25.4 589 closed false
+ok   open (25.5 s): loaded: head shown at 1.3 s, still from 5.6 s; peak 598 MB at 27.4 s (page 251, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 342); settled 595 MB (page 249,
+  31.4 s export: 707 MB (page 317, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 342, srcdoc#4 8, ad0ca11a-340a-4929-9881-1d6cef#5 36)
+  41.5 s export: 799 MB (page 322, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 289, srcdoc#4 8, ad0ca11a-340a-4929-9881-1d6cef#5 175)
+  51.6 s export: 791 MB (page 314, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 289, srcdoc#4 8, ad0ca11a-340a-4929-9881-1d6cef#5 175)
+  61.7 s export: 974 MB (page 317, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 289, srcdoc#4 1, ad0ca11a-340a-4929-9881-1d6cef#5 362)
+  71.9 s export: 960 MB (page 337, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 289, srcdoc#4 1, ad0ca11a-340a-4929-9881-1d6cef#5 328)
+  82.5 s export: 1018 MB (page 334, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 289, srcdoc#4 1, ad0ca11a-340a-4929-9881-1d6cef#5 389)
+  92.7 s export: 990 MB (page 323, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 289, srcdoc#4 1, ad0ca11a-340a-4929-9881-1d6cef#5 372)
+  102.8 s export: 1029 MB (page 336, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 289, srcdoc#4 1, ad0ca11a-340a-4929-9881-1d6cef#5 399)
+  112.9 s export: 743 MB (page 224, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 289, srcdoc#4 1, ad0ca11a-340a-4929-9881-1d6cef#5 224)
+FAIL export: Error: export failed: Invalid string length | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exporting… | end heading 0.00°, on the 90° grid | ; peak 1327 MB at 98.7 s (page 346, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.j
+FATAL Error: export failed: Invalid string length | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exporting… | end heading 0.00°, on the 90° grid | ; peak 1327 MB at 98.7 s (page 346, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 289, iframe:about:srcdoc#4 1, worker:ad0ca11a-340a-4929-9881-1d6cef#5 686)
+SOCKET CLOSED {"t":"119.1","what":"the CDP socket closed: code 1006 reason  clean false; app pid GONE; webview/t180 processes 20","mark":"export"}
+killed pid 24132; t180-track-builder.exe left running: 0
+exit 1

@@ -1,0 +1,94 @@
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) and fbf98f8e pid 14456 (js-suite, since 2026-10-25T06:22:25.533Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) and fbf98f8e pid 14456 (js-suite, since 2026-10-25T06:22:25.533Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) and fbf98f8e pid 14456 (js-suite, since 2026-10-25T06:22:25.533Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) and fbf98f8e pid 14456 (js-suite, since 2026-10-25T06:22:25.533Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) and fbf98f8e pid 14456 (js-suite, since 2026-10-25T06:22:25.533Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) and fbf98f8e pid 14456 (js-suite, since 2026-10-25T06:22:25.533Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) and fbf98f8e pid 14456 (js-suite, since 2026-10-25T06:22:25.533Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) and fbf98f8e pid 14456 (js-suite, since 2026-10-25T06:22:25.533Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 35340 (t180 D454 E prove 4: the four older gates, since 2026-10-25T06:08:37.241Z) — one heavy run at a time
+lockrun: holding the lock at 2026-10-25T06:42:27.065Z; starting B D454 cargo intake_light tests on the d454-b source (BelowNormal, very low I/O; not a timing run)
+lowio: class BelowNormal, io-priority set to 0 rc 0
+   Compiling consonance v0.1.1 (C:\Users\nname\Desktop\worktrees\lh-d454-b\consonance\src-tauri)
+warning: unused import: `HashMap`
+     --> src\main.rs:15605:28
+      |
+15605 |     use std::collections::{HashMap, HashSet};
+      |                            ^^^^^^^
+      |
+      = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `ratio`
+    --> src\cochlea.rs:3004:13
+     |
+3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
+     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `sr`
+    --> src\cochlea.rs:3157:13
+     |
+3157 |         let sr = 46.875;
+     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
+
+warning: unused variable: `rows`
+     --> src\main.rs:15863:14
+      |
+15863 |         let (rows, flags) = render(&format!("❯ {msg}"));
+      |              ^^^^ help: if this is intentional, prefix it with an underscore: `_rows`
+
+warning: function `sysdrive` is never used
+   --> src\main.rs:512:4
+    |
+512 | fn sysdrive() -> String {
+    |    ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `tool_router` is never read
+   --> src\mcp.rs:338:5
+    |
+291 | pub struct ConsonanceMcp {
+    |            ------------- field in this struct
+...
+338 |     tool_router: ToolRouter<ConsonanceMcp>,
+    |     ^^^^^^^^^^^
+    |
+    = note: `ConsonanceMcp` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: `consonance` (bin "consonance" test) generated 6 warnings (run `cargo fix --bin "consonance" -p consonance --tests` to apply 4 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.19s
+     Running unittests src\main.rs (G:/consonance-scratch/d454-src-target\debug\deps\consonance-f57d9dc35633c577.exe)
+
+running 10 tests
+test intake_light_tests::dump_intakes_for_measure ... ignored
+test intake_light_tests::fork_span_measures_the_note_in_either_form_and_nothing_without_one ... ok
+test intake_light_tests::light_caps_hold_whatever_the_brief_frees_and_strict_is_unchanged ... ok
+test intake_light_tests::the_switch_is_the_gates_key_and_absent_is_strict ... ok
+test intake_light_tests::light_the_shelf_carries_a_fixed_set_and_never_backfills ... ok
+LIBRARIAN INTAKE strict 141657 B, light 104588 B
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... ok
+test intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists ... ok
+PANE INTAKE strict 105364 B, light 91139 B
+PANE INTAKE light rest 86240 B, map section 4899 B, reserve 8000 B
+PANE INTAKE fork note 0 B (set aside; 0 in a dev tree)
+PANE INTAKE rests at the floor reserve: light 86240 B, strict 100465 B
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... ok
+test intake_light_tests::key_absent_the_pane_intake_is_todays ... ok
+test intake_light_tests::key_absent_the_librarian_intake_is_todays ... ok
+
+test result: ok. 9 passed; 0 failed; 1 ignored; 0 measured; 1096 filtered out; finished in 17.22s
+
+lockrun: done at 2026-10-25T06:42:52.049Z, exit 0

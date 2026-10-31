@@ -1,0 +1,1820 @@
+{
+ "runs": [
+  {
+   "label": "v422b",
+   "run": 0,
+   "pieces": "12 pieces",
+   "changes": 32,
+   "p95": 6.2,
+   "median": 3.8,
+   "handlerP95": 1.2,
+   "handlerMedian": 1,
+   "largestP95": 2.9,
+   "per": [
+    {
+     "handler": 1.2,
+     "cost": 4,
+     "frames": 1,
+     "frameMs": [
+      2.8
+     ],
+     "largest": 2.8,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0.1,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.7
+     }
+    },
+    {
+     "handler": 1.3,
+     "cost": 6.2,
+     "frames": 3,
+     "frameMs": [
+      1,
+      2.9,
+      1
+     ],
+     "largest": 2.9,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0.1,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 4.7
+     }
+    },
+    {
+     "handler": 1.2,
+     "cost": 4.7,
+     "frames": 2,
+     "frameMs": [
+      2.8,
+      0.7
+     ],
+     "largest": 2.8,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.2,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.2
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 4.2,
+     "frames": 2,
+     "frameMs": [
+      2.5,
+      0.7
+     ],
+     "largest": 2.5,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0.1,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.1
+     }
+    },
+    {
+     "handler": 1.1,
+     "cost": 3.7,
+     "frames": 1,
+     "frameMs": [
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.4
+     }
+    },
+    {
+     "handler": 0.8,
+     "cost": 3.4,
+     "frames": 1,
+     "frameMs": [
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 0.8,
+     "cost": 4.4,
+     "frames": 2,
+     "frameMs": [
+      0.6,
+      3
+     ],
+     "largest": 3,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.2,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.3
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 3.5,
+     "frames": 1,
+     "frameMs": [
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.1,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 1.2,
+     "cost": 4.4,
+     "frames": 2,
+     "frameMs": [
+      0.6,
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.3,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.9
+     }
+    },
+    {
+     "handler": 1.2,
+     "cost": 4.8,
+     "frames": 2,
+     "frameMs": [
+      1,
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.1,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0.1,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.3
+     }
+    },
+    {
+     "handler": 0.8,
+     "cost": 7.7,
+     "frames": 4,
+     "frameMs": [
+      1,
+      2.5,
+      0.6,
+      2.8
+     ],
+     "largest": 2.8,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 2.2,
+      "Object.mount (app/core/griplayer.js:61)": 0.2,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.2,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 4.3
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 4.9,
+     "frames": 2,
+     "frameMs": [
+      1.2,
+      2.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.2,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.7
+     }
+    },
+    {
+     "handler": 1.3,
+     "cost": 4.4,
+     "frames": 2,
+     "frameMs": [
+      0.6,
+      2.5
+     ],
+     "largest": 2.5,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3
+     }
+    },
+    {
+     "handler": 0.8,
+     "cost": 4.8,
+     "frames": 2,
+     "frameMs": [
+      1.2,
+      2.8
+     ],
+     "largest": 2.8,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.1,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.8
+     }
+    },
+    {
+     "handler": 1.1,
+     "cost": 3.2,
+     "frames": 1,
+     "frameMs": [
+      2.1
+     ],
+     "largest": 2.1,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.1,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 1.9
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 4.8,
+     "frames": 2,
+     "frameMs": [
+      1.2,
+      2.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.2,
+      "Object.mount (app/core/griplayer.js:61)": 0.2,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.4,
+      "Object.mount (app/core/flightlayer.js:77)": 0.1,
+      "createPreview (app/preview/preview.js:405)": 3
+     }
+    },
+    {
+     "handler": 1.1,
+     "cost": 5.1,
+     "frames": 2,
+     "frameMs": [
+      1.5,
+      2.5
+     ],
+     "largest": 2.5,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.9
+     }
+    },
+    {
+     "handler": 1.1,
+     "cost": 3.7,
+     "frames": 1,
+     "frameMs": [
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 1.1,
+     "cost": 3.8,
+     "frames": 1,
+     "frameMs": [
+      2.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.7
+     }
+    },
+    {
+     "handler": 0.8,
+     "cost": 2.8,
+     "frames": 1,
+     "frameMs": [
+      2
+     ],
+     "largest": 2,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.1,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 1.8
+     }
+    },
+    {
+     "handler": 0.7,
+     "cost": 3.2,
+     "frames": 1,
+     "frameMs": [
+      2.5
+     ],
+     "largest": 2.5,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 3.7,
+     "frames": 1,
+     "frameMs": [
+      2.8
+     ],
+     "largest": 2.8,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.7
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 3,
+     "frames": 1,
+     "frameMs": [
+      2
+     ],
+     "largest": 2,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 1.9
+     }
+    },
+    {
+     "handler": 0.8,
+     "cost": 3.1,
+     "frames": 1,
+     "frameMs": [
+      2.3
+     ],
+     "largest": 2.3,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.2
+     }
+    },
+    {
+     "handler": 0.8,
+     "cost": 3.1,
+     "frames": 1,
+     "frameMs": [
+      2.3
+     ],
+     "largest": 2.3,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.3
+     }
+    },
+    {
+     "handler": 0.8,
+     "cost": 3.4,
+     "frames": 1,
+     "frameMs": [
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 6.7,
+     "frames": 3,
+     "frameMs": [
+      0.6,
+      2.1,
+      3.1
+     ],
+     "largest": 3.1,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 1.8,
+      "Object.mount (app/core/griplayer.js:61)": 0.1,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.2,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.7
+     }
+    },
+    {
+     "handler": 1.2,
+     "cost": 4.9,
+     "frames": 2,
+     "frameMs": [
+      1,
+      2.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0.1,
+      "Object.mount (app/core/handles.js:477)": 0.2,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.4
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 3.3,
+     "frames": 1,
+     "frameMs": [
+      2.3
+     ],
+     "largest": 2.3,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.1,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.2
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 3,
+     "frames": 1,
+     "frameMs": [
+      2.1
+     ],
+     "largest": 2.1,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.1,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 3.6,
+     "frames": 1,
+     "frameMs": [
+      2.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.2,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 1.9,
+     "frames": 1,
+     "frameMs": [
+      1
+     ],
+     "largest": 1,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 0.9
+     }
+    }
+   ]
+  },
+  {
+   "label": "v422b",
+   "run": 1,
+   "pieces": "12 pieces",
+   "changes": 32,
+   "p95": 6.4,
+   "median": 3.8,
+   "handlerP95": 1.2,
+   "handlerMedian": 1,
+   "largestP95": 2.9,
+   "per": [
+    {
+     "handler": 1,
+     "cost": 5.8,
+     "frames": 2,
+     "frameMs": [
+      1.9,
+      2.9
+     ],
+     "largest": 2.9,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.2,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 4.6
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 4.9,
+     "frames": 2,
+     "frameMs": [
+      1,
+      2.9
+     ],
+     "largest": 2.9,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.2,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0.1,
+      "createPreview (app/preview/preview.js:405)": 3.5
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 3.8,
+     "frames": 1,
+     "frameMs": [
+      2.8
+     ],
+     "largest": 2.8,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0.1,
+      "createPreview (app/preview/preview.js:405)": 2.7
+     }
+    },
+    {
+     "handler": 1.1,
+     "cost": 3.7,
+     "frames": 1,
+     "frameMs": [
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.6
+     }
+    },
+    {
+     "handler": 0.8,
+     "cost": 3.4,
+     "frames": 1,
+     "frameMs": [
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 1.2,
+     "cost": 5.4,
+     "frames": 2,
+     "frameMs": [
+      2.6,
+      1.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 4
+     }
+    },
+    {
+     "handler": 0.7,
+     "cost": 3.4,
+     "frames": 1,
+     "frameMs": [
+      2.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.6
+     }
+    },
+    {
+     "handler": 0.7,
+     "cost": 3.2,
+     "frames": 1,
+     "frameMs": [
+      2.5
+     ],
+     "largest": 2.5,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 6.4,
+     "frames": 4,
+     "frameMs": [
+      0.7,
+      1.3,
+      2.6,
+      0.8
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.2,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.2,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 5
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 3.5,
+     "frames": 1,
+     "frameMs": [
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 4.2,
+     "frames": 2,
+     "frameMs": [
+      0.6,
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 4.4,
+     "frames": 2,
+     "frameMs": [
+      0.8,
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.2
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 4.6,
+     "frames": 2,
+     "frameMs": [
+      0.6,
+      3.1
+     ],
+     "largest": 3.1,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.5
+     }
+    },
+    {
+     "handler": 0.8,
+     "cost": 3.4,
+     "frames": 1,
+     "frameMs": [
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 3.7,
+     "frames": 1,
+     "frameMs": [
+      2.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 1.1,
+     "cost": 4.4,
+     "frames": 2,
+     "frameMs": [
+      0.8,
+      2.5
+     ],
+     "largest": 2.5,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0.1,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.1
+     }
+    },
+    {
+     "handler": 0.8,
+     "cost": 3.5,
+     "frames": 1,
+     "frameMs": [
+      2.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.6
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 7.3,
+     "frames": 2,
+     "frameMs": [
+      3.1,
+      3.3
+     ],
+     "largest": 3.3,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.2,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 6.2
+     }
+    },
+    {
+     "handler": 1.1,
+     "cost": 5.4,
+     "frames": 3,
+     "frameMs": [
+      1,
+      2.7,
+      0.6
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.1,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 4
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 6.8,
+     "frames": 4,
+     "frameMs": [
+      1.1,
+      1.1,
+      2.7,
+      0.9
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.1,
+      "Object.mount (app/core/labels.js:264)": 0.4,
+      "Object.mount (app/core/griplayer.js:61)": 0.2,
+      "Object.mount (app/core/spawnslayer.js:102)": 0.1,
+      "Object.mount (app/core/handles.js:477)": 1.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0.3,
+      "createPreview (app/preview/preview.js:405)": 3.6
+     }
+    },
+    {
+     "handler": 1.2,
+     "cost": 4.5,
+     "frames": 2,
+     "frameMs": [
+      1,
+      2.3
+     ],
+     "largest": 2.3,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.9,
+      "Object.mount (app/core/griplayer.js:61)": 0.1,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.2
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 3.6,
+     "frames": 1,
+     "frameMs": [
+      2.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.1,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 3.5,
+     "frames": 1,
+     "frameMs": [
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 1.2,
+     "cost": 5.9,
+     "frames": 2,
+     "frameMs": [
+      2.2,
+      2.5
+     ],
+     "largest": 2.5,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 4.5
+     }
+    },
+    {
+     "handler": 1.1,
+     "cost": 3.7,
+     "frames": 1,
+     "frameMs": [
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 3.4,
+     "frames": 1,
+     "frameMs": [
+      2.4
+     ],
+     "largest": 2.4,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.1,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.2
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 3.6,
+     "frames": 1,
+     "frameMs": [
+      2.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.1,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.6
+     }
+    },
+    {
+     "handler": 0.7,
+     "cost": 4.2,
+     "frames": 2,
+     "frameMs": [
+      0.8,
+      2.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.1,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.3
+     }
+    },
+    {
+     "handler": 1.1,
+     "cost": 3.8,
+     "frames": 2,
+     "frameMs": [
+      0.6,
+      2.1
+     ],
+     "largest": 2.1,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.2,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 0.8,
+     "cost": 3.2,
+     "frames": 1,
+     "frameMs": [
+      2.4
+     ],
+     "largest": 2.4,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.3
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 3.7,
+     "frames": 1,
+     "frameMs": [
+      2.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.6
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 1,
+     "frames": 0,
+     "frameMs": [],
+     "largest": 1,
+     "by": {}
+    }
+   ]
+  },
+  {
+   "label": "v422b",
+   "run": 2,
+   "pieces": "12 pieces",
+   "changes": 32,
+   "p95": 5.4,
+   "median": 4.2,
+   "handlerP95": 1.2,
+   "handlerMedian": 1,
+   "largestP95": 2.8,
+   "per": [
+    {
+     "handler": 1.2,
+     "cost": 4,
+     "frames": 1,
+     "frameMs": [
+      2.8
+     ],
+     "largest": 2.8,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.8
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 4,
+     "frames": 2,
+     "frameMs": [
+      0.6,
+      2.5
+     ],
+     "largest": 2.5,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 10.4,
+     "frames": 10,
+     "frameMs": [
+      0.8,
+      0.9,
+      0.8,
+      0.8,
+      0.7,
+      0.8,
+      0.8,
+      0.6,
+      2.7,
+      0.6
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.1,
+      "Object.mount (app/core/labels.js:264)": 0.3,
+      "Object.mount (app/core/griplayer.js:61)": 0.2,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.6,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 8.3
+     }
+    },
+    {
+     "handler": 1.1,
+     "cost": 3.7,
+     "frames": 1,
+     "frameMs": [
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 5.4,
+     "frames": 2,
+     "frameMs": [
+      1.8,
+      2.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0.1,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 4.4
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 5.2,
+     "frames": 3,
+     "frameMs": [
+      0.8,
+      2.7,
+      0.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.1,
+      "Object.mount (app/core/labels.js:264)": 0.2,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.3,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.6
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 3.4,
+     "frames": 1,
+     "frameMs": [
+      2.4
+     ],
+     "largest": 2.4,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.4
+     }
+    },
+    {
+     "handler": 0.8,
+     "cost": 3.1,
+     "frames": 1,
+     "frameMs": [
+      2.3
+     ],
+     "largest": 2.3,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.2
+     }
+    },
+    {
+     "handler": 0.8,
+     "cost": 3.6,
+     "frames": 1,
+     "frameMs": [
+      2.8
+     ],
+     "largest": 2.8,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.1,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0.1,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.6
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 5.1,
+     "frames": 3,
+     "frameMs": [
+      0.7,
+      2.6,
+      0.8
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.3,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.8
+     }
+    },
+    {
+     "handler": 1.1,
+     "cost": 3.4,
+     "frames": 1,
+     "frameMs": [
+      2.3
+     ],
+     "largest": 2.3,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.3
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 3.5,
+     "frames": 1,
+     "frameMs": [
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 0.7,
+     "cost": 4.2,
+     "frames": 2,
+     "frameMs": [
+      0.8,
+      2.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.3
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 4.8,
+     "frames": 2,
+     "frameMs": [
+      1.2,
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0.1,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0.1,
+      "createPreview (app/preview/preview.js:405)": 2.6
+     }
+    },
+    {
+     "handler": 1.3,
+     "cost": 11.4,
+     "frames": 5,
+     "frameMs": [
+      2.7,
+      0.8,
+      2.9,
+      2.9,
+      0.8
+     ],
+     "largest": 2.9,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.3,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 9.7
+     }
+    },
+    {
+     "handler": 0.8,
+     "cost": 4.3,
+     "frames": 2,
+     "frameMs": [
+      2.8,
+      0.7
+     ],
+     "largest": 2.8,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.4
+     }
+    },
+    {
+     "handler": 1.1,
+     "cost": 3.8,
+     "frames": 1,
+     "frameMs": [
+      2.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.6
+     }
+    },
+    {
+     "handler": 1.1,
+     "cost": 4.3,
+     "frames": 2,
+     "frameMs": [
+      0.7,
+      2.5
+     ],
+     "largest": 2.5,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.1
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 3.7,
+     "frames": 1,
+     "frameMs": [
+      2.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.6
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 4.2,
+     "frames": 2,
+     "frameMs": [
+      0.8,
+      2.4
+     ],
+     "largest": 2.4,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.2,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.9
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 3.3,
+     "frames": 1,
+     "frameMs": [
+      2.4
+     ],
+     "largest": 2.4,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.4
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 3.7,
+     "frames": 1,
+     "frameMs": [
+      2.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 2.3,
+     "cost": 4.5,
+     "frames": 1,
+     "frameMs": [
+      2.2
+     ],
+     "largest": 2.3,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2
+     }
+    },
+    {
+     "handler": 1.1,
+     "cost": 4.4,
+     "frames": 2,
+     "frameMs": [
+      0.7,
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.2,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.3,
+      "Object.mount (app/core/flightlayer.js:77)": 0.1,
+      "createPreview (app/preview/preview.js:405)": 2.7
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 3.5,
+     "frames": 1,
+     "frameMs": [
+      2.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.5
+     }
+    },
+    {
+     "handler": 1.1,
+     "cost": 4.5,
+     "frames": 2,
+     "frameMs": [
+      0.7,
+      2.7
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.2
+     }
+    },
+    {
+     "handler": 1.2,
+     "cost": 4.2,
+     "frames": 2,
+     "frameMs": [
+      0.8,
+      2.2
+     ],
+     "largest": 2.2,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.1,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.8
+     }
+    },
+    {
+     "handler": 0.9,
+     "cost": 4.1,
+     "frames": 2,
+     "frameMs": [
+      2.6,
+      0.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0.1,
+      "Object.mount (app/core/labels.js:264)": 0,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0.1,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 3.9,
+     "frames": 1,
+     "frameMs": [
+      2.9
+     ],
+     "largest": 2.9,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.8
+     }
+    },
+    {
+     "handler": 0.8,
+     "cost": 4.3,
+     "frames": 2,
+     "frameMs": [
+      2.7,
+      0.8
+     ],
+     "largest": 2.7,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.1,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 3.4
+     }
+    },
+    {
+     "handler": 1.1,
+     "cost": 4.3,
+     "frames": 2,
+     "frameMs": [
+      2.6,
+      0.6
+     ],
+     "largest": 2.6,
+     "by": {
+      "Object.mount (app/core/selectionlayer.js:163)": 0,
+      "Object.mount (app/core/labels.js:264)": 0.3,
+      "Object.mount (app/core/griplayer.js:61)": 0,
+      "Object.mount (app/core/spawnslayer.js:102)": 0,
+      "Object.mount (app/core/handles.js:477)": 0,
+      "Object.mount (app/core/flightlayer.js:77)": 0,
+      "createPreview (app/preview/preview.js:405)": 2.9
+     }
+    },
+    {
+     "handler": 1,
+     "cost": 1,
+     "frames": 0,
+     "frameMs": [],
+     "largest": 1,
+     "by": {}
+    }
+   ]
+  }
+ ],
+ "errors": []
+}

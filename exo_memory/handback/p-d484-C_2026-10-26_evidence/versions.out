@@ -1,0 +1,14 @@
+lockrun: holding the lock at 2026-10-27T03:54:37.737Z; starting c484 timing session row4 by version
+v419 run 0: 12 pieces, 32 changes; row cost p95 6.50 median 3.90 | handler p95 1.30 median 1.00 | largest single piece p95 2.90
+v419 run 1: 12 pieces, 32 changes; row cost p95 7.70 median 3.70 | handler p95 1.20 median 0.90 | largest single piece p95 3.00
+v419 run 2: 12 pieces, 32 changes; row cost p95 5.20 median 3.90 | handler p95 1.10 median 0.90 | largest single piece p95 3.10
+v420 run 0: 12 pieces, 32 changes; row cost p95 6.30 median 3.80 | handler p95 1.20 median 1.00 | largest single piece p95 2.80
+v420 run 1: 12 pieces, 32 changes; row cost p95 6.10 median 4.10 | handler p95 1.20 median 1.00 | largest single piece p95 2.90
+v420 run 2: 12 pieces, 32 changes; row cost p95 5.50 median 3.70 | handler p95 1.20 median 0.90 | largest single piece p95 2.80
+v421 run 0: 12 pieces, 32 changes; row cost p95 5.40 median 3.80 | handler p95 1.10 median 1.00 | largest single piece p95 3.00
+v421 run 1: 12 pieces, 32 changes; row cost p95 7.70 median 4.30 | handler p95 1.20 median 1.00 | largest single piece p95 2.90
+v421 run 2: 12 pieces, 32 changes; row cost p95 5.70 median 3.80 | handler p95 1.20 median 1.00 | largest single piece p95 3.00
+v422b run 0: 12 pieces, 32 changes; row cost p95 6.20 median 3.80 | handler p95 1.20 median 1.00 | largest single piece p95 2.90
+v422b run 1: 12 pieces, 32 changes; row cost p95 6.40 median 3.80 | handler p95 1.20 median 1.00 | largest single piece p95 2.90
+v422b run 2: 12 pieces, 32 changes; row cost p95 5.40 median 4.20 | handler p95 1.20 median 1.00 | largest single piece p95 2.80
+lockrun: done at 2026-10-27T03:56:14.613Z, exit 0

@@ -1,0 +1,31 @@
+FAIL   consonance\hooks\claim-check.test.js  (exit 1)
+FAIL   consonance\hooks\delete-gate.test.js  (exit 1)
+FAIL   consonance\hooks\dispatch-gate.test.js  (exit 1)
+CRASH  consonance\hooks\dream-gate.test.js  (exit 1)
+FAIL   consonance\hooks\push-gate.test.js  (exit 1)
+FAIL   consonance\hooks\sessionstart-state.test.js  (exit 1)
+FAIL   consonance\tools\attached.test.js  (exit 1)
+CRASH  consonance\tools\claim-check-adapter.test.js  (exit 1)
+CRASH  consonance\tools\claim-replay.test.js  (exit 1)
+FAIL   consonance\tools\janitor.test.js  (exit 1)
+CRASH  consonance\tools\mistake-bench.test.js  (exit 1)
+FAIL   consonance\tools\pulse-degrade.test.js  (exit 1)
+FAIL   consonance\tools\scratch.test.js  (exit 1)
+canary  consonance\tools\targetless-pull.test.js  (exit 1)
+js-suite: 128 green · 9 failed · 4 crashed · 0 silent · 1 canary · 0 sang · 1 not-run · 0 class-error  (of 143)
+universe: 143 test files discovered · 138 ran assertions to a summary · 1 declared NOT-RUN · 4 neither
+CRASHED — died before its summary, so an unknown number of assertions never ran: consonance\hooks\dream-gate.test.js
+CRASHED — died before its summary, so an unknown number of assertions never ran: consonance\tools\claim-check-adapter.test.js
+CRASHED — died before its summary, so an unknown number of assertions never ran: consonance\tools\claim-replay.test.js
+CRASHED — died before its summary, so an unknown number of assertions never ran: consonance\tools\mistake-bench.test.js
+FAILED: consonance\hooks\claim-check.test.js
+FAILED: consonance\hooks\delete-gate.test.js
+FAILED: consonance\hooks\dispatch-gate.test.js
+FAILED: consonance\hooks\push-gate.test.js
+FAILED: consonance\hooks\sessionstart-state.test.js
+FAILED: consonance\tools\attached.test.js
+FAILED: consonance\tools\janitor.test.js
+FAILED: consonance\tools\pulse-degrade.test.js
+FAILED: consonance\tools\scratch.test.js
+canary (declared EXPECTED-RED, still red — not counted as a failure): consonance\tools\targetless-pull.test.js
+NOT-RUN (declared MACHINE-BOUND, universe absent here): consonance\tools\actors.evidence.test.js

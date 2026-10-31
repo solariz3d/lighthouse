@@ -1,0 +1,12 @@
+﻿processes before the backup: 0 (2026-10-31T12:38:27.7550237-06:00)
+installed before: 15746560 B sha256 803ba3350002483b0002d892c10a3ef96c6c5f8e336b0006cf12c953704a349f
+backup: C:\Users\nname\AppData\Local\T-180 Track Builder\t180-track-builder.exe.before-0.4.33-land sha256 803ba3350002483b0002d892c10a3ef96c6c5f8e336b0006cf12c953704a349f = the installed exe
+built exe: 15749632 B sha256 87df8e0681ccb0b35154fb3f3334de39ccac4ee92c2e6b2699f79932bc03d761
+setup: 8052741 B sha256 7b22470e6589d7e4b7e39547968d482d01def11610468e1ac18dc64b27ca4f84
+processes before the installer: 0 (2026-10-31T12:38:28.1298803-06:00)
+installer /S exit 0
+processes after: 0 
+installed after: 15749632 B sha256 9e6e37b24c1538a883c86f4fbecd23ce00e16d23ecaf9263a316e2d01cc21464
+bytes differing: 3 at 13317256,13317257,13317258
+built there: UNK installed there: NSS
+built with the installed marker: sha256 9e6e37b24c1538a883c86f4fbecd23ce00e16d23ecaf9263a316e2d01cc21464 = the installed exe

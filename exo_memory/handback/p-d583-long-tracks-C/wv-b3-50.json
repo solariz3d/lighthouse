@@ -1,0 +1,171 @@
+{
+  "started": "2026-10-31T17:18:03.226Z",
+  "exe": "C:/Users/nname/Desktop/worktrees/t180-c583/src-tauri/target/release/t180-track-builder.exe",
+  "track": "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d583/doc/eq-STADIUM 50.t180track",
+  "steps": [
+    {
+      "name": "launch",
+      "ok": true,
+      "s": 0.846,
+      "result": "menus ready"
+    },
+    {
+      "name": "open",
+      "ok": true,
+      "s": 23.33,
+      "result": "loaded: head shown at 1.1 s, still from 3.4 s; peak 468 MB at 12.8 s (page 252, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 211); settled 446 MB (page 230, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 211)"
+    },
+    {
+      "name": "export",
+      "ok": true,
+      "s": 56.703,
+      "result": "STADIUM 50 · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exported t180b_stadium_ | files 10, kn5 261725896 B; peak 1069 MB at 67.2 s (page 235, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 206, iframe:about:srcdoc#4 1, worker:f62bff5d-1089-4d79-b097-7461e6#5 623)"
+    },
+    {
+      "name": "install",
+      "ok": true,
+      "s": 55.238,
+      "result": "STADIUM 50 · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exported t180b_stadium_50 to C:\\Users\\nname | files 10, kn5 261725896 B; peak 1275 MB at 123.6 s (page 234, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 206, iframe:about:srcdoc#4 1, worker:f62bff5d-1089-4d79-b097-7461e6#5 830)"
+    }
+  ],
+  "marks": [
+    {
+      "t": "0.8",
+      "mark": "begin launch"
+    },
+    {
+      "t": "1.6",
+      "mark": "end launch"
+    },
+    {
+      "t": "4.6",
+      "mark": "begin open"
+    },
+    {
+      "t": "28.0",
+      "mark": "end open"
+    },
+    {
+      "t": "28.0",
+      "mark": "begin export"
+    },
+    {
+      "t": "84.7",
+      "mark": "end export"
+    },
+    {
+      "t": "84.7",
+      "mark": "begin install"
+    },
+    {
+      "t": "139.9",
+      "mark": "end install"
+    }
+  ],
+  "crashes": [
+    {
+      "t": "142.2",
+      "what": "the CDP socket closed: code 1000 reason  clean true; app pid GONE; webview/t180 processes 20",
+      "mark": "install"
+    }
+  ],
+  "pageErrors": [],
+  "targets": {
+    "worker:overlapworker.js#0": "1.1",
+    "worker:overlapworker.js#1": "1.1",
+    "worker:closeworker.js#2": "1.1",
+    "worker:checkworker.js#3": "1.4",
+    "iframe:about:srcdoc#4": "28.2",
+    "worker:f62bff5d-1089-4d79-b097-7461e6#5": "28.3"
+  },
+  "pid": 55808,
+  "files": {
+    "export": [
+      [
+        "t180b_stadium_50\\.t180b-builder.json",
+        418
+      ],
+      [
+        "t180b_stadium_50\\ai\\fast_lane.ai",
+        767856
+      ],
+      [
+        "t180b_stadium_50\\data\\map.ini",
+        114
+      ],
+      [
+        "t180b_stadium_50\\data\\surfaces.ini",
+        772
+      ],
+      [
+        "t180b_stadium_50\\map.png",
+        302639218
+      ],
+      [
+        "t180b_stadium_50\\models.ini",
+        66
+      ],
+      [
+        "t180b_stadium_50\\t180b_stadium_50.kn5",
+        261725896
+      ],
+      [
+        "t180b_stadium_50\\ui\\outline.png",
+        280600
+      ],
+      [
+        "t180b_stadium_50\\ui\\preview.png",
+        284288
+      ],
+      [
+        "t180b_stadium_50\\ui\\ui_track.json",
+        382
+      ]
+    ],
+    "ac": [
+      [
+        "t180b_stadium_50\\.t180b-builder.json",
+        418
+      ],
+      [
+        "t180b_stadium_50\\ai\\fast_lane.ai",
+        767856
+      ],
+      [
+        "t180b_stadium_50\\data\\map.ini",
+        114
+      ],
+      [
+        "t180b_stadium_50\\data\\surfaces.ini",
+        772
+      ],
+      [
+        "t180b_stadium_50\\map.png",
+        302639218
+      ],
+      [
+        "t180b_stadium_50\\models.ini",
+        66
+      ],
+      [
+        "t180b_stadium_50\\t180b_stadium_50.kn5",
+        261725896
+      ],
+      [
+        "t180b_stadium_50\\ui\\outline.png",
+        280600
+      ],
+      [
+        "t180b_stadium_50\\ui\\preview.png",
+        284288
+      ],
+      [
+        "t180b_stadium_50\\ui\\ui_track.json",
+        382
+      ]
+    ]
+  },
+  "leftRunning": 0,
+  "exitCode": 0,
+  "nSamples": 138
+}

@@ -1,0 +1,6 @@
+lockrun: holding the lock at 2026-10-27T12:50:01.473Z; starting D489 timing session inapp
+aurora | empty                  | 0 pieces   canvas 2560x1396 | frames 2574 (gpu 2574, not-strip 0, disjoint 0) | GPU sky 0.127 / p95 0.131 | GPU rest 0.034 / 0.990 | GPU frame 0.169 / 1.118 | CPU 0.200 / 1.700 | gap 0.800 / 2.100 | draws 4
+aurora | 12 x 100 m turns       | 12 pieces  canvas 2560x1396 | frames 2280 (gpu 2280, not-strip 0, disjoint 0) | GPU sky 0.134 / p95 0.150 | GPU rest 0.138 / 1.282 | GPU frame 0.295 / 1.422 | CPU 0.200 / 3.800 | gap 0.600 / 4.500 | draws 11
+aurora | 30 x 1,000 m           | 30 pieces  canvas 2560x1396 | frames 1899 (gpu 1899, not-strip 0, disjoint 0) | GPU sky 0.158 / p95 0.164 | GPU rest 0.276 / 1.633 | GPU frame 0.437 / 1.769 | CPU 0.300 / 4.800 | gap 0.700 / 5.200 | draws 92
+renderer: ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)
+lockrun: done at 2026-10-27T12:50:47.807Z, exit 0

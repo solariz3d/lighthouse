@@ -1,0 +1,80 @@
+{
+ "rows": [
+  {
+   "look": "aurora",
+   "track": "empty",
+   "pieces": "0 pieces",
+   "canvas": [
+    2560,
+    1396
+   ],
+   "frames": 1916,
+   "gpuFrames": 1916,
+   "notStrip": 0,
+   "disjoint": 0,
+   "skyMedian": 1.24384,
+   "skyP95": 1.42624,
+   "restMedian": 0.022208,
+   "restP95": 0.189376,
+   "gpuMedian": 1.2825600000000001,
+   "gpuP95": 1.456576,
+   "cpuMedian": 0.20000004768371582,
+   "cpuP95": 1.7000000476837158,
+   "gapMedian": 0.8000000000001819,
+   "gapP95": 3,
+   "draws": 4,
+   "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  },
+  {
+   "look": "aurora",
+   "track": "12 x 100 m turns",
+   "pieces": "12 pieces",
+   "canvas": [
+    2560,
+    1396
+   ],
+   "frames": 1842,
+   "gpuFrames": 1842,
+   "notStrip": 0,
+   "disjoint": 0,
+   "skyMedian": 1.258496,
+   "skyP95": 1.448992,
+   "restMedian": 0.037632,
+   "restP95": 0.207392,
+   "gpuMedian": 1.388512,
+   "gpuP95": 1.61392,
+   "cpuMedian": 0.20000004768371582,
+   "cpuP95": 6.3999998569488525,
+   "gapMedian": 0.6000000000003638,
+   "gapP95": 7,
+   "draws": 11,
+   "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  },
+  {
+   "look": "aurora",
+   "track": "30 x 1,000 m",
+   "pieces": "30 pieces",
+   "canvas": [
+    2560,
+    1396
+   ],
+   "frames": 1679,
+   "gpuFrames": 1679,
+   "notStrip": 0,
+   "disjoint": 0,
+   "skyMedian": 1.250016,
+   "skyP95": 2.193024,
+   "restMedian": 0.181536,
+   "restP95": 0.404736,
+   "gpuMedian": 1.584064,
+   "gpuP95": 2.447456,
+   "cpuMedian": 0.3000001907348633,
+   "cpuP95": 5.700000047683716,
+   "gapMedian": 0.7000000000007276,
+   "gapP95": 6,
+   "draws": 92,
+   "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  }
+ ],
+ "errors": []
+}

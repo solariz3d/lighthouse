@@ -1,0 +1,279 @@
+{
+ "rows": [
+  {
+   "label": "v19-turn-empty",
+   "mode": "plain",
+   "handle": "turnDeg",
+   "placed": false,
+   "trackSegments": 0,
+   "idle": {
+    "framesPerSec": 2629,
+    "workPerSec": 0,
+    "p95": null,
+    "median": null,
+    "by": [
+     {
+      "origin": "createPreview (app/preview/preview.js:405)",
+      "calls": 5258,
+      "over05PerSec": 0,
+      "msPerSec": 124.5,
+      "p95": 0.1,
+      "max": 0.2
+     },
+     {
+      "origin": "Object.mount (app/core/handles.js:477)",
+      "calls": 5258,
+      "over05PerSec": 0,
+      "msPerSec": 103,
+      "p95": 0.1,
+      "max": 0.5
+     },
+     {
+      "origin": "Object.mount (app/core/labels.js:264)",
+      "calls": 5258,
+      "over05PerSec": 0,
+      "msPerSec": 23.8,
+      "p95": 0.1,
+      "max": 0.1
+     },
+     {
+      "origin": "Object.mount (app/core/selectionlayer.js:163)",
+      "calls": 5258,
+      "over05PerSec": 0,
+      "msPerSec": 22.5,
+      "p95": 0.1,
+      "max": 0.2
+     },
+     {
+      "origin": "Object.mount (app/core/flightlayer.js:77)",
+      "calls": 5258,
+      "over05PerSec": 0,
+      "msPerSec": 17.9,
+      "p95": 0.1,
+      "max": 0.1
+     },
+     {
+      "origin": "Object.mount (app/core/griplayer.js:61)",
+      "calls": 5258,
+      "over05PerSec": 0,
+      "msPerSec": 9.9,
+      "p95": 0,
+      "max": 0.1
+     },
+     {
+      "origin": "Object.mount (app/core/spawnslayer.js:102)",
+      "calls": 5258,
+      "over05PerSec": 0,
+      "msPerSec": 9,
+      "p95": 0,
+      "max": 0.1
+     }
+    ]
+   },
+   "drag": {
+    "framesPerSec": 2709,
+    "workPerSec": 0,
+    "p95": null,
+    "median": null,
+    "by": [
+     {
+      "origin": "createPreview (app/preview/preview.js:405)",
+      "calls": 8127,
+      "over05PerSec": 0.3,
+      "msPerSec": 136.3,
+      "p95": 0.1,
+      "max": 0.6
+     },
+     {
+      "origin": "Object.mount (app/core/handles.js:477)",
+      "calls": 8127,
+      "over05PerSec": 0,
+      "msPerSec": 49.5,
+      "p95": 0.1,
+      "max": 0.2
+     },
+     {
+      "origin": "Object.mount (app/core/labels.js:264)",
+      "calls": 8127,
+      "over05PerSec": 0,
+      "msPerSec": 23.6,
+      "p95": 0.1,
+      "max": 0.1
+     },
+     {
+      "origin": "Object.mount (app/core/selectionlayer.js:163)",
+      "calls": 8127,
+      "over05PerSec": 0,
+      "msPerSec": 23.3,
+      "p95": 0.1,
+      "max": 0.2
+     },
+     {
+      "origin": "Object.mount (app/core/flightlayer.js:77)",
+      "calls": 8127,
+      "over05PerSec": 0,
+      "msPerSec": 17.1,
+      "p95": 0.1,
+      "max": 0.2
+     },
+     {
+      "origin": "Object.mount (app/core/griplayer.js:61)",
+      "calls": 8127,
+      "over05PerSec": 0,
+      "msPerSec": 9.8,
+      "p95": 0,
+      "max": 0.2
+     },
+     {
+      "origin": "Object.mount (app/core/spawnslayer.js:102)",
+      "calls": 8127,
+      "over05PerSec": 0,
+      "msPerSec": 8.6,
+      "p95": 0,
+      "max": 0.2
+     }
+    ],
+    "moves": 193,
+    "held": false
+   }
+  },
+  {
+   "label": "v19-turn-empty",
+   "mode": "edge",
+   "handle": "turnDeg",
+   "placed": false,
+   "trackSegments": 0,
+   "idle": {
+    "framesPerSec": 2604,
+    "workPerSec": 0,
+    "p95": null,
+    "median": null,
+    "by": [
+     {
+      "origin": "createPreview (app/preview/preview.js:405)",
+      "calls": 5208,
+      "over05PerSec": 0,
+      "msPerSec": 124.9,
+      "p95": 0.1,
+      "max": 0.2
+     },
+     {
+      "origin": "Object.mount (app/core/handles.js:477)",
+      "calls": 5208,
+      "over05PerSec": 0,
+      "msPerSec": 106.4,
+      "p95": 0.1,
+      "max": 0.4
+     },
+     {
+      "origin": "Object.mount (app/core/labels.js:264)",
+      "calls": 5208,
+      "over05PerSec": 0,
+      "msPerSec": 24.1,
+      "p95": 0.1,
+      "max": 0.2
+     },
+     {
+      "origin": "Object.mount (app/core/selectionlayer.js:163)",
+      "calls": 5208,
+      "over05PerSec": 0,
+      "msPerSec": 21.7,
+      "p95": 0.1,
+      "max": 0.1
+     },
+     {
+      "origin": "Object.mount (app/core/flightlayer.js:77)",
+      "calls": 5208,
+      "over05PerSec": 0,
+      "msPerSec": 15.5,
+      "p95": 0.1,
+      "max": 0.2
+     },
+     {
+      "origin": "Object.mount (app/core/griplayer.js:61)",
+      "calls": 5208,
+      "over05PerSec": 0,
+      "msPerSec": 8.7,
+      "p95": 0,
+      "max": 0.1
+     },
+     {
+      "origin": "Object.mount (app/core/spawnslayer.js:102)",
+      "calls": 5208,
+      "over05PerSec": 0,
+      "msPerSec": 7.8,
+      "p95": 0,
+      "max": 0.1
+     }
+    ]
+   },
+   "drag": {
+    "framesPerSec": 2724.7,
+    "workPerSec": 1.3,
+    "p95": 4,
+    "median": 3.5,
+    "by": [
+     {
+      "origin": "createPreview (app/preview/preview.js:405)",
+      "calls": 8174,
+      "over05PerSec": 1,
+      "msPerSec": 137.7,
+      "p95": 0.1,
+      "max": 3.9
+     },
+     {
+      "origin": "Object.mount (app/core/handles.js:477)",
+      "calls": 8174,
+      "over05PerSec": 0,
+      "msPerSec": 49.2,
+      "p95": 0.1,
+      "max": 0.4
+     },
+     {
+      "origin": "Object.mount (app/core/labels.js:264)",
+      "calls": 8174,
+      "over05PerSec": 0,
+      "msPerSec": 23.6,
+      "p95": 0.1,
+      "max": 0.3
+     },
+     {
+      "origin": "Object.mount (app/core/selectionlayer.js:163)",
+      "calls": 8174,
+      "over05PerSec": 0,
+      "msPerSec": 22.6,
+      "p95": 0.1,
+      "max": 0.2
+     },
+     {
+      "origin": "Object.mount (app/core/flightlayer.js:77)",
+      "calls": 8174,
+      "over05PerSec": 0,
+      "msPerSec": 17.1,
+      "p95": 0.1,
+      "max": 0.3
+     },
+     {
+      "origin": "Object.mount (app/core/griplayer.js:61)",
+      "calls": 8174,
+      "over05PerSec": 0,
+      "msPerSec": 9.4,
+      "p95": 0,
+      "max": 0.1
+     },
+     {
+      "origin": "Object.mount (app/core/spawnslayer.js:102)",
+      "calls": 8174,
+      "over05PerSec": 0,
+      "msPerSec": 8.1,
+      "p95": 0,
+      "max": 0.2
+     }
+    ],
+    "moves": 193,
+    "held": false
+   }
+  }
+ ],
+ "errors": []
+}

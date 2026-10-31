@@ -1,0 +1,15 @@
+src/validate @ a6af8cf: in comments {"decision numbers":69,"room paths":4,"seat words":7,"keeper":0}; in code (strings) {"decision numbers":19,"room paths":4,"seat words":0,"keeper":0}
+src/markers @ a6af8cf: in comments {"decision numbers":10,"room paths":0,"seat words":2,"keeper":0}; in code (strings) {"decision numbers":0,"room paths":0,"seat words":0,"keeper":0}
+app/core @ a6af8cf: in comments {"decision numbers":512,"room paths":9,"seat words":23,"keeper":0}; in code (strings) {"decision numbers":3,"room paths":0,"seat words":0,"keeper":0}
+src/validate @ HEAD: in comments {"decision numbers":0,"room paths":0,"seat words":0,"keeper":0}; in code (strings) {"decision numbers":19,"room paths":4,"seat words":0,"keeper":0}
+src/markers @ HEAD: in comments {"decision numbers":0,"room paths":0,"seat words":0,"keeper":0}; in code (strings) {"decision numbers":0,"room paths":0,"seat words":0,"keeper":0}
+app/core @ HEAD: in comments {"decision numbers":0,"room paths":0,"seat words":0,"keeper":0}; in code (strings) {"decision numbers":3,"room paths":0,"seat words":0,"keeper":0}
+src/validate @ 2f902355d1b6ac317aeb7fce7aeba22d79337475: in comments {"decision numbers":0,"room paths":0,"seat words":0,"keeper":0}; in code (strings) {"decision numbers":19,"room paths":4,"seat words":0,"keeper":0}
+src/markers @ 2f902355d1b6ac317aeb7fce7aeba22d79337475: in comments {"decision numbers":0,"room paths":0,"seat words":0,"keeper":0}; in code (strings) {"decision numbers":0,"room paths":0,"seat words":0,"keeper":0}
+app/core @ 2f902355d1b6ac317aeb7fce7aeba22d79337475: in comments {"decision numbers":0,"room paths":0,"seat words":0,"keeper":0}; in code (strings) {"decision numbers":3,"room paths":0,"seat words":0,"keeper":0}
+src/validate @ a6af8cf: {"seat possessive":15,"hand-back":3,"ledger":0,"packet":0,"lap":55,"ruling":5,"chair":1,"librarian":6,"plan_ file":0,"p-d file":2}
+src/markers @ a6af8cf: {"seat possessive":2,"hand-back":1,"ledger":0,"packet":0,"lap":9,"ruling":0,"chair":0,"librarian":0,"plan_ file":0,"p-d file":0}
+app/core @ a6af8cf: {"seat possessive":118,"hand-back":9,"ledger":1,"packet":0,"lap":108,"ruling":12,"chair":4,"librarian":5,"plan_ file":10,"p-d file":14}
+src/validate @ HEAD: {"seat possessive":1,"hand-back":0,"ledger":0,"packet":0,"lap":55,"ruling":0,"chair":0,"librarian":0,"plan_ file":0,"p-d file":0}
+src/markers @ HEAD: {"seat possessive":0,"hand-back":0,"ledger":0,"packet":0,"lap":9,"ruling":0,"chair":0,"librarian":0,"plan_ file":0,"p-d file":0}
+app/core @ HEAD: {"seat possessive":2,"hand-back":0,"ledger":0,"packet":0,"lap":107,"ruling":0,"chair":0,"librarian":0,"plan_ file":0,"p-d file":0}

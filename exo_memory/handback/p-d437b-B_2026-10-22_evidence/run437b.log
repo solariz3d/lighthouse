@@ -1,0 +1,6 @@
+head b6969da dirty=[13] 08:08:20Z
+harness export-isolated-mutation exit 0, 462 s: # tests 13 # pass 13 # fail 0 # cancelled 0 # skipped 0  NOT_APPLIED 0 NOT_CAUGHT 0 08:16:02Z
+harness core-mutation exit 0, 105 s: # tests 65 # pass 65 # fail 0 # cancelled 0 # skipped 0  NOT_APPLIED 0 NOT_CAUGHT 2 08:17:47Z
+harness core-close-mutation exit 0, 247 s: # tests 49 # pass 49 # fail 0 # cancelled 0 # skipped 0  NOT_APPLIED 0 NOT_CAUGHT 4 08:21:54Z
+after: dirty=[13] 08:21:54Z
+done

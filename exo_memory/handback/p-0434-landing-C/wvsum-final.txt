@@ -1,0 +1,14 @@
+== wvf-elysium  (0.4.32; crashes 0)
+step      s       page  checker  page+checker  export worker  (MB, peaks)
+launch      0.8      17        2            19              0
+open       48.0     587      510          1097              0
+export     99.1     549      321           870           1138
+install   102.5     503      321           824           1223
+  open: loaded: head shown at 1.5 s, still from 28.0 s
+== wvf-50  (0.4.32; crashes 0)
+step      s       page  checker  page+checker  export worker  (MB, peaks)
+launch      0.8      15        2            17              0
+open       23.4     238      141           379              0
+export     54.7     285      141           426            548
+install    55.4     290      136           426            586
+  open: loaded: head shown at 1.1 s, still from 3.4 s

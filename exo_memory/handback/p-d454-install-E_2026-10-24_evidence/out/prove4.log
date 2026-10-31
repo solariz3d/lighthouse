@@ -1,0 +1,29 @@
+2026-10-25T06:08:37.205Z no timing session in any slot; taking the lock
+consonance/hooks/ask-ending.test.js exit 0 # pass 7 # fail 0 
+consonance/hooks/second-reader.test.js exit 0 # pass 30 # fail 0 
+consonance/hooks/push-gate.test.js exit 0 # pass 16 # fail 0 
+consonance/hooks/delete-gate.test.js exit 0 # pass 14 # fail 0 
+consonance/hooks/dream-gate.test.js exit 0 # pass 1 # fail 0 
+install-only exit 0 47 passed, 0 failed
+consonance/tools/second-reader.mutants.js exit 0 38 applied · 38 caught · 0 survived · 0 NOT APPLIED
+consonance/tools/sources-gate.mutants.js exit 0 87 applied · 87 caught · 0 survived · 0 NOT APPLIED
+ownmut exit 0
+caught     M22 ask-ending: no third step  (# fail 1)
+caught     M23 second-reader: no third step  (# fail 1)
+caught     M24 push-gate: no third step  (# fail 1)
+caught     M25 delete-gate: no third step  (# fail 1)
+applied 25 / caught 25 / NOT APPLIED 0
+js-suite exit 1
+FAIL   consonance\tools\consumer-relabel.test.js  (exit 1)
+FAIL   consonance\tools\portable-paths.test.js  (exit 1)
+js-suite: 183 green · 2 failed · 0 crashed · 0 silent · 1 canary · 0 sang · 1 not-run · 0 class-error  (of 187)
+FAILED: consonance\tools\consumer-relabel.test.js
+FAILED: consonance\tools\portable-paths.test.js
+ M consonance/hooks/ask-ending.js
+ M consonance/hooks/ask-ending.test.js
+ M consonance/hooks/delete-gate.js
+ M consonance/hooks/delete-gate.test.js
+ M consonance/hooks/push-gate.js
+ M consonance/hooks/push-gate.test.js
+ M consonance/hooks/second-reader.js
+ M consonance/hooks/second-reader.test.js

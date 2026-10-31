@@ -1,0 +1,16 @@
+== chain-status.js rc 0 bytes 194 frames 0
+chain-status: silent — no ledger at C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-5bf9d657\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\scratchpad\d454\empty-data\lap.jsonl
+
+== board-audit.js rc 1 bytes 271 frames 0
+board-audit: no board at C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-5bf9d657\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\scratchpad\d454\empty-data\board.jsonl (CONSONANCE_BOARD, CONSONANCE_DATA, data_dir in ~/.consonance.json, then ~/.consonance)
+
+== ferry.js --due rc 0 bytes 104 frames 0
+c8a173b  2026-10-25 05:24  Consonance (generated from 6606832a3bc6)
+
+1 artifact commit(s) never ferried
+
+== carrier-drift.js rc 1 bytes 4218 frames 0
+CARRIER DRIFT — registered withdrawals vs the carriers that still assert them
+
+  corpus: 89 carriers · 1 traces skipped (exo_memory/journal/, dreams/, attic/, dev/one-shot/, dated verbatim extract (exo_memory/map/<X>-<date>.md declaring "Extracted mechanically"), any directory named *_evidence)
+ 

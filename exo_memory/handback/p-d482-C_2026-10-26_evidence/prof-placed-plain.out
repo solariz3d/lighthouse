@@ -1,0 +1,4 @@
+total sampled 3167 ms
+NAMED handleKey: 47 ms 1.5%  handleKey geom/mesh.js:117
+NAMED reuseMesh: 144 ms 4.5%  reuseMesh geom/mesh.js:406
+NAMED flush: 420 ms 13.3%  flush core/handles.js:372

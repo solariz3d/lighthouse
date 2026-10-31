@@ -1,0 +1,109 @@
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) and c88002b1 pid 30576 (t180 O D421 part 2 core_close.test.js core_close_best.test.js core_close_flip.test.js core_close_joint.test.js core_close_local.test.js core_close_refusal.test.js core_finish.test.js core_finish_bank.test.js core_finish_joints.test.js, since 2026-10-23T04:22:27.737Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) and c88002b1 pid 30576 (t180 O D421 part 2 core_close.test.js core_close_best.test.js core_close_flip.test.js core_close_joint.test.js core_close_local.test.js core_close_refusal.test.js core_finish.test.js core_finish_bank.test.js core_finish_joints.test.js, since 2026-10-23T04:22:27.737Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) and c88002b1 pid 30576 (t180 O D421 part 2 core_close.test.js core_close_best.test.js core_close_flip.test.js core_close_joint.test.js core_close_local.test.js core_close_refusal.test.js core_finish.test.js core_finish_bank.test.js core_finish_joints.test.js, since 2026-10-23T04:22:27.737Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) and c88002b1 pid 30576 (t180 O D421 part 2 core_close.test.js core_close_best.test.js core_close_flip.test.js core_close_joint.test.js core_close_local.test.js core_close_refusal.test.js core_finish.test.js core_finish_bank.test.js core_finish_joints.test.js, since 2026-10-23T04:22:27.737Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) and c88002b1 pid 30576 (t180 O D421 part 2 core_close.test.js core_close_best.test.js core_close_flip.test.js core_close_joint.test.js core_close_local.test.js core_close_refusal.test.js core_finish.test.js core_finish_bank.test.js core_finish_joints.test.js, since 2026-10-23T04:22:27.737Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) and c88002b1 pid 30576 (t180 O D421 part 2 core_close.test.js core_close_best.test.js core_close_flip.test.js core_close_joint.test.js core_close_local.test.js core_close_refusal.test.js core_finish.test.js core_finish_bank.test.js core_finish_joints.test.js, since 2026-10-23T04:22:27.737Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) and c88002b1 pid 30576 (t180 O D421 part 2 core_close.test.js core_close_best.test.js core_close_flip.test.js core_close_joint.test.js core_close_local.test.js core_close_refusal.test.js core_finish.test.js core_finish_bank.test.js core_finish_joints.test.js, since 2026-10-23T04:22:27.737Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) and c88002b1 pid 30576 (t180 O D421 part 2 core_close.test.js core_close_best.test.js core_close_flip.test.js core_close_joint.test.js core_close_local.test.js core_close_refusal.test.js core_finish.test.js core_finish_bank.test.js core_finish_joints.test.js, since 2026-10-23T04:22:27.737Z) — one heavy run at a time
+heavy-run: waiting on a2122153 pid 37856 (t180 E D437a Chrome export then tests, since 2026-10-23T04:00:04.713Z) and c88002b1 pid 30576 (t180 O D421 part 2 core_close.test.js core_close_best.test.js core_close_flip.test.js core_close_joint.test.js core_close_local.test.js core_close_refusal.test.js core_finish.test.js core_finish_bank.test.js core_finish_joints.test.js, since 2026-10-23T04:22:27.737Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 30576 (t180 O D421 part 2 (second slot), since 2026-10-23T04:30:36.244Z) and c88002b1 pid 30576 (t180 O D421 part 2 core_close.test.js core_close_best.test.js core_close_flip.test.js core_close_joint.test.js core_close_local.test.js core_close_refusal.test.js core_finish.test.js core_finish_bank.test.js core_finish_joints.test.js, since 2026-10-23T04:22:27.737Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 20744 (t180 O D421 part 2 core-close-mutation.test.js core-mutation.test.js, since 2026-10-23T04:32:25.787Z) and c88002b1 pid 20744 (t180 O D421 part 2 (second slot), since 2026-10-23T04:32:25.791Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 20744 (t180 O D421 part 2 core-close-mutation.test.js core-mutation.test.js, since 2026-10-23T04:32:25.787Z) and c88002b1 pid 20744 (t180 O D421 part 2 (second slot), since 2026-10-23T04:32:25.791Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 20744 (t180 O D421 part 2 core-close-mutation.test.js core-mutation.test.js, since 2026-10-23T04:32:25.787Z) and c88002b1 pid 20744 (t180 O D421 part 2 (second slot), since 2026-10-23T04:32:25.791Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 20744 (t180 O D421 part 2 core-close-mutation.test.js core-mutation.test.js, since 2026-10-23T04:32:25.787Z) and c88002b1 pid 20744 (t180 O D421 part 2 (second slot), since 2026-10-23T04:32:25.791Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 20744 (t180 O D421 part 2 core-close-mutation.test.js core-mutation.test.js, since 2026-10-23T04:32:25.787Z) and c88002b1 pid 20744 (t180 O D421 part 2 (second slot), since 2026-10-23T04:32:25.791Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 20744 (t180 O D421 part 2 core-close-mutation.test.js core-mutation.test.js, since 2026-10-23T04:32:25.787Z) and c88002b1 pid 20744 (t180 O D421 part 2 (second slot), since 2026-10-23T04:32:25.791Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 20744 (t180 O D421 part 2 core-close-mutation.test.js core-mutation.test.js, since 2026-10-23T04:32:25.787Z) and c88002b1 pid 20744 (t180 O D421 part 2 (second slot), since 2026-10-23T04:32:25.791Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) and a2122153 pid 10332 (t180 E D437a own mutants, since 2026-10-23T04:39:26.557Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) and a2122153 pid 10332 (t180 E D437a own mutants, since 2026-10-23T04:39:26.557Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) and c88002b1 pid 19248 (t180 O D438 headless shots of the closer joints and seam (chrome, muted), since 2026-10-23T04:40:58.730Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+heavy-run: waiting on c88002b1 pid 9704 (d438-mutants (finish joints + bank rows), since 2026-10-23T04:39:26.396Z) — one heavy run at a time
+lockrun: holding the lock at 2026-10-23T05:02:02.201Z; starting B D437b ELYSIUM export in headless Chrome (not timing)
+    2.3 s menubar ready errors [33m0[39m js heap {"usedMB":17.1,"totalMB":31.8,"limitMB":4192}
+    9.8 s opened: 44 pieces · 27,592 m · closed loop | ELYSIUM · closed loop | js heap {"usedMB":1343.8,"totalMB":1410.4,"limitMB":4192}
+  168.5 s preview settled: ELYSIUM · closed loop | js heap {"usedMB":1462.7,"totalMB":1527.2,"limitMB":4192}
+  168.5 s export-like buttons: ["Export…","Test export (unfinished)…","Export layouts…","See it in Assetto","Assetto Corsa folder…","Export to Assetto Corsa"]
+  168.5 s before the press: js heap {"usedMB":1462.7,"totalMB":1527.2,"limitMB":4192}
+  168.5 s pressed Export to Assetto Corsa
+  169.0 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1499[39m MB
+  171.1 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1525[39m MB
+  173.1 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1552[39m MB
+  175.2 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1578[39m MB
+  177.2 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1604[39m MB
+  179.3 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1605[39m MB
+  181.3 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1632[39m MB
+  183.4 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1658[39m MB
+  185.5 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1685[39m MB
+  187.5 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1294[39m MB
+  189.6 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1321[39m MB
+  191.6 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1348[39m MB
+  193.7 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1374[39m MB
+  195.7 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1398[39m MB
+  197.8 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1397[39m MB
+  199.8 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1423[39m MB
+  201.9 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1446[39m MB
+  203.9 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1469[39m MB
+  206.0 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1494[39m MB
+  208.0 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1518[39m MB
+  210.1 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1541[39m MB
+  212.1 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1540[39m MB
+  214.2 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1562[39m MB
+  216.2 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1587[39m MB
+  218.3 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1612[39m MB
+  220.3 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1638[39m MB
+  222.4 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1300[39m MB
+  224.4 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1325[39m MB
+  226.5 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1325[39m MB
+  228.6 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1350[39m MB
+  230.6 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1373[39m MB
+  232.7 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1396[39m MB
+  234.7 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1422[39m MB
+  236.8 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1447[39m MB
+  238.8 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1448[39m MB
+  240.9 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1473[39m MB
+  242.9 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1498[39m MB
+  245.0 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1523[39m MB
+  247.0 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1547[39m MB
+  249.1 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1572[39m MB
+  251.1 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1571[39m MB
+  253.2 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1597[39m MB
+  255.2 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1623[39m MB
+  257.3 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1649[39m MB
+  259.3 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1676[39m MB
+  261.3 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1676[39m MB
+  263.4 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1703[39m MB
+  265.4 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1730[39m MB
+  267.5 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1755[39m MB
+  269.5 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1755[39m MB
+  271.6 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1780[39m MB
+  273.6 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1805[39m MB
+  275.7 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1295[39m MB
+  277.7 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1319[39m MB
+  279.8 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1341[39m MB
+  281.8 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1364[39m MB
+  283.9 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1389[39m MB
+  285.9 s page answers: ELYSIUM · closed loop | note:  | export frames [33m1[39m | heap [33m1409[39m MB
+  286.9 s RESULT: the export finished 118.4 s after the press: {"status":"ELYSIUM · closed loop","note":"RED: validation is red, nothing written: stacked-within-2m at s 22669.0–22671.0 m (ARCHITECTURE.md:85); stacked-within-2m at s 23722.0–23728.0 m (ARCHITECTURE.md:85)","frames":1,"installed":null,"heapMB":1407}
+  286.9 s after: js heap {"id":561,"result":{"result":{"type":"string","value":"{\"u\":1407,\"t\":1468}"}}}
+  286.9 s page errors: none
+lockrun: done at 2026-10-23T05:06:51.637Z, exit 0

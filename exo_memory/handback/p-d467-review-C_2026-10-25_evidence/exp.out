@@ -1,0 +1,24 @@
+lap-base.t180track: findFins 0; warnings 1
+  24 mesh-node names repeat in the builder's scene (e.g. CELL_p1_body_0 ×150); the kn5 gets unique names (acready.js), INTERFACES §2, C's mesh.js safeId
+lap-old.t180track: findFins 0; warnings 1
+  24 mesh-node names repeat in the builder's scene (e.g. CELL_p1_body_0 ×150); the kn5 gets unique names (acready.js), INTERFACES §2, C's mesh.js safeId
+lap-new.t180track: REFUSED NO_START_STRAIGHT: not exported: the longest straight is 16.0 m; a grid of 4 and 2 pit boxes need 67.4 m
+test10-smoothed.t180track: findFins 0; warnings 16
+  amber: bank-cup-edge at s 2566.0–3172.0 m (D463 (the user, 2026-10-25, TEST 10: bank, cup and edge stacked rode rough at speed, the same turns without the edges did not): the cross-slope change over the car's 2 m on the raised side passes 8° where all three st
+  amber: bank-cup-edge at s 3318.0–3582.0 m (D463 (the user, 2026-10-25, TEST 10: bank, cup and edge stacked rode rough at speed, the same turns without the edges did not): the cross-slope change over the car's 2 m on the raised side passes 8° where all three st
+  amber: bank-cup-edge at s 3722.0–4710.0 m (D463 (the user, 2026-10-25, TEST 10: bank, cup and edge stacked rode rough at speed, the same turns without the edges did not): the cross-slope change over the car's 2 m on the raised side passes 8° where all three st
+  amber: load-above-proven at s 1658.0–1980.0 m (FINDINGS.md:105, :112-113)
+  amber: load-above-proven at s 2624.0–2902.0 m (FINDINGS.md:105, :112-113)
+  amber: load-above-proven at s 3320.0–3384.0 m (FINDINGS.md:105, :112-113)
+  amber: load-above-proven at s 3416.0–3484.0 m (FINDINGS.md:105, :112-113)
+  amber: load-above-proven at s 3524.0–3568.0 m (FINDINGS.md:105, :112-113)
+  amber: load-above-proven at s 3718.0–3740.0 m (FINDINGS.md:105, :112-113)
+  amber: load-above-proven at s 3858.0–3892.0 m (FINDINGS.md:105, :112-113)
+  amber: load-above-proven at s 4008.0–4042.0 m (FINDINGS.md:105, :112-113)
+  amber: load-sustained at s 1546.0–2078.0 m (D341: the ELYSIUM replay of 2026-10-16 (56-62 g held for about 2 s: seven passes held, one went through the road); src/validate/limits.js sustainedG, sustainedS)
+  amber: load-sustained at s 2522.0–3024.0 m (D341: the ELYSIUM replay of 2026-10-16 (56-62 g held for about 2 s: seven passes held, one went through the road); src/validate/limits.js sustainedG, sustainedS)
+  near-touch: two parts of the road come within 0.70 m of each other edge to edge, at 2.57 km, 2.93 km (information: it does not stop the export)
+  catch: a second road surface 0.3 m under the road on 601 cells, s 1504–3066 m (where the load stays over 55 g for more than 0.5 s); it is a second chance for a body that gets through the road, untested in AC
+  96 mesh-node names repeat in the builder's scene (e.g. CELL_p1_body_0 ×500); the kn5 gets unique names (acready.js), INTERFACES §2, C's mesh.js safeId
+sm-bent-old.t180track: REFUSED RED: RED: validation is red, nothing written: downforce-ray-gap at s 2930.0–2930.0 m (FINDINGS.md:110 (gaps in the road mesh are RED); docs/research/04_ac_physics_drivability.md §4 (the Mach 6's downforce is one ray to the road, 1 m ahead of the car: a gap under it takes ALL the downforce))
+sm-bent-t180-wt-e467.t180track: REFUSED RED: RED: validation is red, nothing written: downforce-ray-gap at s 1378.0–1382.0 m (FINDINGS.md:110 (gaps in the road mesh are RED); docs/research/04_ac_physics_drivability.md §4 (the Mach 6's downforce is one ray to the road, 1 m ahead of the car: a gap under it takes ALL the downforce)); downforce-ray-gap at s 4152.0–4158.0 m (FINDINGS.md:110 (gaps in the road mesh are RED); docs/research/04_ac_physics_drivability.md §4 (the Mach 6's downforce is one ray to the road, 1 m ahead of the car: a gap under it takes ALL the downforce)); self-intersection at s 1376.0–1378.0 m (ARCHITECTURE.md:58, :84); self-intersection at s 4152.0–4154.0 m (ARCHITECTURE.md:58, :84)

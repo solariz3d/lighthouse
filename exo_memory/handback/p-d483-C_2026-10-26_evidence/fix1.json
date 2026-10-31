@@ -1,0 +1,177 @@
+{
+ "rows": [
+  {
+   "label": "fix1",
+   "mode": "edge",
+   "handle": "length",
+   "placed": false,
+   "trackSegments": 0,
+   "idle": {
+    "framesPerSec": 2589,
+    "workPerSec": 0,
+    "p95": null,
+    "median": null,
+    "by": [
+     {
+      "origin": "createPreview (app/preview/preview.js:405)",
+      "calls": 5178,
+      "over05PerSec": 0,
+      "msPerSec": 129.3,
+      "p95": 0.1,
+      "max": 0.3
+     },
+     {
+      "origin": "Object.mount (app/core/handles.js:477)",
+      "calls": 5178,
+      "over05PerSec": 0,
+      "msPerSec": 104.8,
+      "p95": 0.1,
+      "max": 0.3
+     },
+     {
+      "origin": "Object.mount (app/core/labels.js:264)",
+      "calls": 5178,
+      "over05PerSec": 0,
+      "msPerSec": 25.5,
+      "p95": 0.1,
+      "max": 0.2
+     },
+     {
+      "origin": "Object.mount (app/core/selectionlayer.js:163)",
+      "calls": 5178,
+      "over05PerSec": 0,
+      "msPerSec": 22.3,
+      "p95": 0.1,
+      "max": 0.2
+     },
+     {
+      "origin": "Object.mount (app/core/flightlayer.js:77)",
+      "calls": 5178,
+      "over05PerSec": 0,
+      "msPerSec": 15.8,
+      "p95": 0.1,
+      "max": 0.1
+     },
+     {
+      "origin": "Object.mount (app/core/griplayer.js:61)",
+      "calls": 5178,
+      "over05PerSec": 0,
+      "msPerSec": 8.4,
+      "p95": 0,
+      "max": 0.1
+     },
+     {
+      "origin": "Object.mount (app/core/spawnslayer.js:102)",
+      "calls": 5178,
+      "over05PerSec": 0,
+      "msPerSec": 7.8,
+      "p95": 0,
+      "max": 0.1
+     }
+    ]
+   },
+   "drag": {
+    "framesPerSec": 1077,
+    "workPerSec": 60.3,
+    "p95": 10.9,
+    "median": 6.6,
+    "by": [
+     {
+      "origin": "HTMLDivElement.onMove (app/core/handles.js:441)",
+      "calls": 169,
+      "over05PerSec": 56.3,
+      "msPerSec": 335,
+      "p95": 10.7,
+      "max": 18.3
+     },
+     {
+      "origin": "createPreview (app/preview/preview.js:405)",
+      "calls": 3231,
+      "over05PerSec": 9,
+      "msPerSec": 197.9,
+      "p95": 0.3,
+      "max": 1.7
+     },
+     {
+      "origin": "Object.mount (app/core/handles.js:477)",
+      "calls": 3231,
+      "over05PerSec": 0.3,
+      "msPerSec": 73.5,
+      "p95": 0.2,
+      "max": 1.1
+     },
+     {
+      "origin": "Object.mount (app/core/selectionlayer.js:163)",
+      "calls": 3231,
+      "over05PerSec": 0,
+      "msPerSec": 16.8,
+      "p95": 0.1,
+      "max": 0.4
+     },
+     {
+      "origin": "Object.mount (app/core/labels.js:264)",
+      "calls": 3231,
+      "over05PerSec": 0,
+      "msPerSec": 11.5,
+      "p95": 0.1,
+      "max": 0.2
+     },
+     {
+      "origin": "Object.mount (app/core/flightlayer.js:77)",
+      "calls": 3231,
+      "over05PerSec": 0,
+      "msPerSec": 9.9,
+      "p95": 0.1,
+      "max": 0.2
+     },
+     {
+      "origin": "Object.mount (app/core/griplayer.js:61)",
+      "calls": 3231,
+      "over05PerSec": 0,
+      "msPerSec": 3.6,
+      "p95": 0,
+      "max": 0.2
+     },
+     {
+      "origin": "Object.mount (app/core/spawnslayer.js:102)",
+      "calls": 3231,
+      "over05PerSec": 0,
+      "msPerSec": 3.5,
+      "p95": 0,
+      "max": 0.5
+     }
+    ],
+    "moves": 196,
+    "held": true,
+    "frozen": {
+     "ghostKeys": "samples,segments,jump,s0",
+     "ghostHeadFrozen": false,
+     "trackPath": false,
+     "trackHeadFrozen": null,
+     "ghostHeadKnots": 137,
+     "segs": 48,
+     "roadSegs": 48,
+     "segFrozen": false,
+     "profFrozen": [
+      true,
+      true,
+      true
+     ],
+     "blendFrom": [
+      true,
+      false,
+      true
+     ],
+     "fractions": [
+      8,
+      true
+     ],
+     "keys": "id,word,part,kind,length,k0,k1,kp0,kp1,roll0,roll1,heartline,profile,blend,speed,chord,fractions",
+     "jsonLen": 10378,
+     "profJson": 5016
+    }
+   }
+  }
+ ],
+ "errors": []
+}

@@ -1,0 +1,46 @@
+total sampled 2780 ms; under frame preview/preview.js: 387 ms
+DIRECT callees:
+     192 ms  49.6%  draw preview/renderer.js:410
+      73 ms  18.9%  stepGhostJob preview/preview.js:349
+      49 ms  12.6%  (self)
+      38 ms   9.8%  headMarker preview/look.js:119
+      11 ms   2.8%  update :61
+       9 ms   2.4%  update camera/cameras.js:188
+       6 ms   1.5%  skyTime :114
+       3 ms   0.8%  window.requestAnimationFrame :3
+       3 ms   0.8%  ctx preview/preview.js:222
+       2 ms   0.4%  markerSize preview/preview.js:620
+       1 ms   0.2%  unit camera/cameras.js:63
+       1 ms   0.1%  clearanceAtHead preview/preview.js:591
+INCLUSIVE below, top 18:
+     192 ms  49.6%  draw preview/renderer.js:410
+      73 ms  18.9%  stepGhostJob preview/preview.js:349
+      69 ms  17.8%  ghostSteps preview/trackmodel.js:336
+      56 ms  14.6%  drawAc preview/renderer.js:305
+      53 ms  13.7%  meshNew preview/trackmodel.js:350
+      52 ms  13.4%  extendMeshSteps geom/mesh.js:339
+      38 ms   9.8%  headMarker preview/look.js:119
+      35 ms   9.1%  meshRange geom/mesh.js:285
+      34 ms   8.7%  meshPiece geom/mesh.js:169
+      24 ms   6.3%  bufferFor :264
+      24 ms   6.1%  drawLines :352
+      23 ms   6.1%  drawRoadLines preview/renderer.js:359
+      22 ms   5.6%  drawSky preview/renderer.js:376
+      14 ms   3.5%  assemble geom/mesh.js:261
+      12 ms   3.1%  use preview/renderer.js:338
+      12 ms   3.1%  drawLines preview/renderer.js:352
+      11 ms   2.9%  bufferData :0
+      11 ms   2.9%  uniform3f :0
+SELF, top 10:
+      49 ms  12.6%  (root self)
+      30 ms   7.8%  headMarker preview/look.js:119
+      14 ms   3.5%  draw preview/renderer.js:410
+      11 ms   2.9%  bufferData :0
+      11 ms   2.9%  uniform3f :0
+      11 ms   2.8%  clear :0
+      11 ms   2.7%  vertexAttribPointer :0
+      10 ms   2.5%  uniformMatrix4fv :0
+       9 ms   2.3%  update preview/guideslayer.js:41
+       9 ms   2.2%  meshPiece geom/mesh.js:169
+       8 ms   2.1%  uniform1f :0
+       8 ms   2.1%  linesFor preview/look.js:41

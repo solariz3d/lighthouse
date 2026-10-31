@@ -1,0 +1,22 @@
+heavy-run: WARNING: C:\ has 22.8 GB free, under 50 GB; run node consonance/tools/janitor.js
+heavy-run: took over a stale lock — 0845a868 pid 3160 (t180 C d583-webview2-before-100 (the built app on a long track; not a timing session), since 2026-10-31T17:05:55.031Z) is not running; it was 2m old (slot 2)
+lockrun: holding the lock at 2026-10-31T17:07:32.769Z; starting d583-webview2-after-50 (the built app on a long track; not a timing session)
+launched pid 56052; track STADIUM 50
+ok   launch (0.9 s): menus ready
+  10.8 s open: 463 MB (page 246, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 212)
+  [open loop 9] headAt 5.8 still 5 prev 473 last sample 14.8 483 closed false
+  20.9 s open: 461 MB (page 245, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 212)
+  [open loop 19] headAt 5.8 still 15 prev 463 last sample 24.9 472 closed false
+ok   open (24.4 s): loaded: head shown at 1.1 s, still from 4.4 s; peak 484 MB at 17.8 s (page 267, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 212); settled 482 MB (page 265,
+  31.0 s export: 579 MB (page 240, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 212, srcdoc#4 8, 46bded2f-ae3f-4a87-85bd-480510#5 114)
+  41.1 s export: 619 MB (page 225, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 206, srcdoc#4 8, 46bded2f-ae3f-4a87-85bd-480510#5 175)
+  51.2 s export: 750 MB (page 227, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 206, srcdoc#4 8, 46bded2f-ae3f-4a87-85bd-480510#5 305)
+  61.3 s export: 858 MB (page 231, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 206, srcdoc#4 1, 46bded2f-ae3f-4a87-85bd-480510#5 416)
+  71.4 s export: 840 MB (page 229, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 206, srcdoc#4 1, 46bded2f-ae3f-4a87-85bd-480510#5 400)
+SOCKET CLOSED {"t":"83.8","what":"the CDP socket closed: code 1006 reason  clean false; app pid alive; webview/t180 processes 21","mark":"export"}
+  86.5 s export: 0 MB (page x, overlapworker.js#0 x, overlapworker.js#1 x, closeworker.js#2 x, checkworker.js#3 x, srcdoc#4 x, 46bded2f-ae3f-4a87-85bd-480510#5 x)
+FAIL export: Error: the page went away; crashes [{"t":"83.8","what":"the CDP socket closed: code 1006 reason  clean false; app pid alive; webview/t180 processes 21","mark":"export"}]; peak 1213 MB at 69.3 s (page 235, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:che
+FATAL Error: the page went away; crashes [{"t":"83.8","what":"the CDP socket closed: code 1006 reason  clean false; app pid alive; webview/t180 processes 21","mark":"export"}]; peak 1213 MB at 69.3 s (page 235, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 206, iframe:about:srcdoc#4 1, worker:46bded2f-ae3f-4a87-85bd-480510#5 766)
+killed pid 56052; t180-track-builder.exe left running: 0
+exit 1
+lockrun: done at 2026-10-31T17:09:07.453Z, exit 1

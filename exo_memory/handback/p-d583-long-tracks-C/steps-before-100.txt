@@ -1,0 +1,7 @@
+doc doc/eq-STADIUM 100.t180track 209388 B; undo 0 B
+step      ms        heap before  peak during  retained after  arraybuffers after  (MB)
+open           213          9.9         39.4            25.4                 0.0   pieces 194 segments 50034 closed true undo-past 0
+preview       2508         25.4        580.5           468.4               516.5   how full samples 50035 lengthM 100000 cells 50035
+check         4980        468.4       1477.0          1365.7              1034.9   how full error null red 0
+export      122568       1365.8       3259.1          1852.3              3897.1   files 10 bytes 1200260413 largest t180b_x/map.png 680713457, t180b_x/t180b_x.kn5 517445948, t180b_x/ai/fast_lane.ai 1534400
+handoff       2471       1852.0       2568.5          1851.9              2187.0   json chars 0

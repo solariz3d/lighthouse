@@ -1,0 +1,4 @@
+caught       G1 the .gitignore is not generated
+caught       G2 the target/ rule dropped
+caught       G3 a rule that ignores shipped files (*.md)
+applied 3 / caught 3 / NOT APPLIED 0; restored sha256 equal

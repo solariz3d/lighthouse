@@ -1,0 +1,16 @@
+menubar ready errors 0
+opened: 20 pieces · 8,900 m · open | TEST 10
+wrote press-before-press.png
+Close the loop: clicked
+after the press 15.4 s: 23 pieces · 11,484 m · closed loop · last close 13521 ms | TEST 10 • · closed loop
+close box: closed: laid 2584 m of new road from the end to the start (3 pieces); nothing already built moved
+wrote press-after-press-2s.png
+wrote press-s8900.png
+wrote press-close-s8900.png
+wrote press-s9819.png
+wrote press-close-s9819.png
+wrote press-s10565.png
+wrote press-close-s10565.png
+wrote press-s11484.png
+wrote press-close-s11484.png
+page errors: none

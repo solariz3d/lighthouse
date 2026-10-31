@@ -1,0 +1,12 @@
+no timing lock; head 4ae8f07 changed=[0] SWEEP_SEEDS=60 08:11:27Z
+suite exit 1, 1509 s: ℹ tests 4237 ℹ pass 4210 ℹ fail 5 ℹ cancelled 0 ℹ skipped 21 ℹ todo 1  08:36:36Z
+suite non-TODO not ok rows: 5
+not ok 682 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms)
+    not ok 1 - row 1: the page exports through a sandboxed iframe of its own, and writes b6969da's bytes
+    not ok 2 - row 2: a real heap out-of-memory in the export's process ends the export with the stage; the page stays drawn and the next export works
+not ok 713 - the export runs in its own process in a real page: b6969da's bytes, and a real heap out-of-memory there leaves the page drawn
+not ok 1488 - row 9: the warning texts (the checker's red, amber and lap lines, and Track ▸ Pit lane…) read 4.5:1 or more on their own pixels in every look
+fixtures: ok 2011 - row 5a (amended D196): against the D196 baseline every fixture renders identically: "0 of 9 differ"
+mutant rows: applied-and-caught 768, not ok mutant rows 0, NOT APPLIED mentions 0
+after suite: changed=[0] 08:36:41Z
+DONE

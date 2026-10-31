@@ -1,0 +1,12 @@
+joint 8900 (+-60 m, 24531 probes, 333 without a surface within +-0.5 m): kn5 surface vs the core: largest |height| 0.5 mm at s 8876.00 x 8 (1ROAD_p20_chunk_21); largest step between neighbouring s at one x 0.0 mm at s 8917.75 -> 8918.00 x -6 (0.2 -> 0.3 mm, 1ROAD_p20_chunk_21)
+joint 9819 (+-60 m, 24531 probes, 495 without a surface within +-0.5 m): kn5 surface vs the core: largest |height| 0.5 mm at s 9825.75 x 8 (1ROAD_p21_chunk_23); largest step between neighbouring s at one x 0.0 mm at s 9759.00 -> 9759.25 x 9 (0.2 -> 0.2 mm, 1ROAD_p21_chunk_23)
+joint 10565 (+-60 m, 24531 probes, 479 without a surface within +-0.5 m): kn5 surface vs the core: largest |height| 0.5 mm at s 10624.25 x -2.5 (1ROAD_p22_chunk_25); largest step between neighbouring s at one x 0.0 mm at s 10612.75 -> 10613.00 x 9.5 (0.0 -> -0.0 mm, 1ROAD_p22_chunk_25)
+joint 11484 (+-60 m, 24449 probes, 326 without a surface within +-0.5 m): kn5 surface vs the core: largest |height| 8.1 mm at s 11477.00 x 12 (1ROAD_p23_chunk_27); largest step between neighbouring s at one x 3.0 mm at s 11483.75 -> 11484.00 x 12 (2.9 -> -0.1 mm, 1ROAD_p23_chunk_27)
+whole lap (1 m x 5 lines, 57420 probes, 323 without a surface within +-0.5 m): largest |height| 21.5 mm at s 3875 x -11 (1ROAD_p12_chunk_9); largest step 21.2 mm at s 3875 -> 3876 x -11 (1ROAD_p12_chunk_9); probes over 20 mm: 6
+   over: s 3873 x -11 21.0 mm 1ROAD_p12_chunk_9
+   over: s 3875 x -11 21.5 mm 1ROAD_p12_chunk_9
+   over: s 3877 x -11 21.0 mm 1ROAD_p12_chunk_9
+   over: s 4023 x -11 21.0 mm 1ROAD_p12_chunk_9
+   over: s 4025 x -11 21.4 mm 1ROAD_p12_chunk_9
+   over: s 4027 x -11 21.0 mm 1ROAD_p12_chunk_9
+exit 0

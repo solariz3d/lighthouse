@@ -1,0 +1,45 @@
+total sampled 2780 ms; under stepGhostJob preview/preview.js: 73 ms
+DIRECT callees:
+      69 ms  94.3%  ghostSteps preview/trackmodel.js:336
+       3 ms   3.8%  clockNow :256
+       1 ms   1.9%  (self)
+INCLUSIVE below, top 18:
+      69 ms  94.3%  ghostSteps preview/trackmodel.js:336
+      53 ms  72.4%  meshNew preview/trackmodel.js:350
+      52 ms  70.9%  extendMeshSteps geom/mesh.js:339
+      35 ms  48.4%  meshRange geom/mesh.js:285
+      34 ms  46.3%  meshPiece geom/mesh.js:169
+      14 ms  18.6%  assemble geom/mesh.js:261
+      10 ms  13.8%  rowWith geom/mesh.js:90
+      10 ms  13.8%  (anon) geom/mesh.js:190
+       9 ms  12.6%  warmLines preview/trackmodel.js:152
+       8 ms  11.3%  (anon) geom/mesh.js:264
+       8 ms  11.1%  linesFor preview/look.js:41
+       8 ms  10.9%  (anon) geom/mesh.js:93
+       8 ms  10.5%  (anon) geom/mesh.js:214
+       4 ms   5.9%  (anon) geom/mesh.js:216
+       4 ms   5.0%  growIntoSteps geom/path.js:296
+       4 ms   5.0%  extendPathSteps geom/path.js:357
+       3 ms   4.3%  growBlock geom/path.js:219
+       3 ms   3.9%  meshSeam geom/mesh.js:233
+SELF, top 10:
+       9 ms  11.7%  meshPiece geom/mesh.js:169
+       8 ms  11.1%  linesFor preview/look.js:41
+       5 ms   6.5%  assemble geom/mesh.js:261
+       4 ms   5.4%  (anon) geom/mesh.js:264
+       3 ms   4.6%  (anon) geom/mesh.js:214
+       3 ms   3.9%  meshSeam geom/mesh.js:233
+       3 ms   3.7%  mul :53
+       3 ms   3.7%  (anon) geom/mesh.js:93
+       3 ms   3.6%  (anon) geom/mesh.js:216
+       2 ms   3.0%  clockNow :256
+       2 ms   3.0%  matrixOf geom/mesh.js:126
+       2 ms   2.9%  ghostSteps preview/trackmodel.js:336
+       2 ms   2.9%  rowWith geom/mesh.js:90
+       2 ms   2.6%  samplesShared geom/profile.js:127
+       2 ms   2.4%  dot :54
+       2 ms   2.2%  tangent geom/path.js:80
+       2 ms   2.1%  add :51
+       1 ms   1.9%  (root self)
+       1 ms   1.5%  warmLines preview/trackmodel.js:152
+       1 ms   1.5%  get _v geom/path.js:273

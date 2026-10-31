@@ -1,0 +1,8 @@
+# tests 1777
+# pass 1767
+# fail 5
+not ok 671 - row 17 (D396): the bar fits at 900, 1100, 1280 and 1400 px and on both sides of each fold: no overflow, the window buttons wholly inside the window, a grab strip of at least 24 px, every menu and Export on one line left of them; at 125% scaling too, where a window can be a fraction of a pixel wide
+not ok 947 - row 2: Grab, r = 200 m across three pieces of a 10 km open lap: p95 within one frame at 165 Hz (6.0 ms)
+not ok 948 - row 3: Bend on a 10 km CLOSED lap: p95 within 6.0 ms during the drag, the release's handler within 6.0 ms, and the re-closed exact road whole within 10 s
+not ok 949 - row 4a: Grab on the 360 deg tube oval (Twist is refused there: the user's call 3): p95 within 6.0 ms during the drag, no frame or task over 120 ms during it or for 10 s after, and the exact road whole within 10 s
+not ok 950 - row 4b: Twist on the same oval at a 280 deg sweep: p95 within 6.0 ms during the drag, no frame or task over 120 ms during it or for 10 s after, and the exact road whole within 10 s

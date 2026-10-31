@@ -1,0 +1,11 @@
+no timing lock; head 0c84052 changed=[0] SWEEP_SEEDS=60 06:44:51Z
+suite exit 1, 4430 s: ℹ tests 4191 ℹ pass 4170 ℹ fail 4 ℹ cancelled 0 ℹ skipped 16 ℹ todo 1  07:58:41Z
+suite non-TODO not ok rows: 4
+not ok 678 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms)
+not ok 887 - row 17 (D396): the bar fits at 900, 1100, 1280 and 1400 px and on both sides of each fold: no overflow, the window buttons wholly inside the window, a grab strip of at least 24 px, every 
+not ok 1215 - row 2: Grab, r = 200 m across three pieces of a 10 km open lap: p95 within one frame at 165 Hz (6.0 ms)
+not ok 1217 - row 4a: Grab on the 360 deg tube oval (Twist is refused there: the user's call 3): p95 within 6.0 ms during the drag, no frame or task over 120 ms during it or for 10 s after, and the ex
+fixtures: ok 1988 - row 5a (amended D196): against the D196 baseline every fixture renders identically: "0 of 9 differ"
+mutant rows: applied-and-caught 762, not ok mutant rows 0, NOT APPLIED mentions 0
+after suite: changed=[0] 07:58:46Z
+DONE
