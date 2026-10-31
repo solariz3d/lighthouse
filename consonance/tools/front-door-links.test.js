@@ -60,10 +60,11 @@ test('the README links the GUIDE, and the glossary it promises exists', () => {
 
 // Split in D273 lap 4b (pane B's note): the six gates and their off switches are the product and run everywhere; the evidence
 // links name files of the keeper's record, which the generated consumer does not carry, so that row alone is declared workshop-bound there.
-test('GATES.md documents six gates, each with how to turn it off', () => {
+// AMENDED (D588, the landing of D586): the map gate on call_librarian is the seventh gate, section 7, so the count is seven.
+test('GATES.md documents seven gates, each with how to turn it off', () => {
   const gates = fs.readFileSync(path.join(ROOT, 'consonance/GATES.md'), 'utf8');
   const sections = gates.split(/\r?\n## /).filter((s) => /^\d\. /.test(s));
-  assert.strictEqual(sections.length, 6, sections.map((s) => s.split('\n')[0]).join(' | '));
+  assert.strictEqual(sections.length, 7, sections.map((s) => s.split('\n')[0]).join(' | '));
   for (const s of sections) assert.match(s, /\*\*To turn it off:\*\*/, s.split('\n')[0]);
 });
 

@@ -159,6 +159,12 @@ seat's in-flight file. Checkable from git history.*
   say which packet it answers, never the finding in prose.
   Why: the file is the master and the call the pointer; the chair-relay hop re-characterised a finding on 2026-09-01
   (`6677540`), and a summary in the call is the same copy.
+- When the lap changed a repository, carry one line per repository above the `SOURCES:` line,
+  `BASE: <checkout path> <base sha>`: the checkout you worked in and the commit your packet names as the base (a sha, never a
+  branch name). A lap that changed no repository carries none.
+  Why: the map gate (`mcp.rs` `map_gate`, D586; `consonance/GATES.md` section 7) diffs base..HEAD there and warns or refuses
+  when source files were created or deleted with no MAP.md change; a ring without the line is delivered marked "NO map check"
+  and counted, so without it the gate only counts skips. Above SOURCES, because the SOURCES slot runs to the next blank line.
 - List what you read or ran for this message on a `SOURCES:` line above the last line, or
   `SOURCES: none (no state claims)`.
   Why: it lets the reader open what you opened. Today `consonance/hooks/sources-gate.js` refuses the ring when an item

@@ -239,7 +239,9 @@ his process list or his disk is ours to clean, and he should never be the one to
    gates it matches against what was run and fetched.
 9. Every "where" as a map anchor. Each place a packet points at (a file, a module, a function) is an anchor in that
    repository's code map (`consonance/src-tauri/src/MAP.md`, t180's `MAP.md`) or a path the librarian supplied, never the
-   chair's memory; and a packet for a repository names its checkout by path.
+   chair's memory; and a packet for a repository names its checkout by path and its base sha beside it, as a line
+   `BASE: <checkout path> <base sha>`, which the pane carries back above SOURCES on its ring for the map gate (`mcp.rs`
+   `map_gate`, D586; `consonance/GATES.md` section 7).
    Why: the orchestrator's view is as small as any agent's (the outside reader's point 4,
    `exo_memory/loop/plan_consonance_learns_from_the_reader_2026-10-30.md` Part 2), and figures briefed from memory were wrong
    (115 that was 70). The pane wakes holding the map of each repository its newest packet names (`main.rs` `packet_maps_for`,
