@@ -22,3 +22,6 @@ The carry moves each seat's WHOLE conversation, not a summary. Every seat on the
 - ELYSIUM: the driven 25 km version is tracks/eq-ELYSIUM as driven, now re-saved as ELYSIUM by him. The others are in set-aside-2026-10-31-elysium. The game's original is backed up at G:\t180-backups\t180b_elysium.before-2026-10-31.
 - Consonance: Parts 2 and 3 (the map in the intake, the map gate) are landed and pushed (fdec4a77). The exe rebuild and swap still wait for his restart word.
 - Open with him: the minimap cap (map.png 303 to 681 MB on long tracks); C: at 22 GB free (cleanup is his call); the old builder backups, about 150 files totalling about 1.8 GB.
+
+## Amended 17:5x: work continues; the close is at 22:30
+The keeper, 17:54: "dont get it ready yet since we still have lots of work to do... we go to work at 12am tonight". So the panes keep working on 0.4.35. The pre-close steps (WIP commits, the lighthouse sync and push, my ready-to-close word) start at 22:30 local, which leaves the close by 23:00, the carry's 30 to 40 min, and slack before 00:00. The lighthouse sync (item 1) can run now as well, since it changes nothing in the work. The disk is a blocker before then: C: has 22 GB and the heavy-run lock refuses under 20 GB (E's D592 note), so the 0.4.35 suites need space. That is his call.
