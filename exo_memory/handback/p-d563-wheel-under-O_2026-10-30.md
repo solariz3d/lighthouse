@@ -18,6 +18,42 @@
 2. each wheel's height over the top surface along t;
 3. the cross-section at the entry station.
 
+## FINAL AIM: the entry over the edge (the chair's ring of 00:01Z, plan at 8058214c)
+
+**The keeper:** "IT STARTS on the edge, but then can clip further into the road"; "it drops below the track if the wheel falls off the edge". The frames agree. **The rear right falls off the right edge, drops below the edge row while it is outside, and comes back inside below the road.**
+
+**Measured against the MESH's own edge, not the AI line's footprint.**
+- `S\d560\entry.js` → `S\d560\entry-w3.txt` works per frame. It projects the wheel centre onto the AI line, interpolating the station's frame between the two nearest AI points. It finds the road's outermost top-surface hit on that side, stepping 0.01 m. It reports the wheel against that edge and against the edge row's height.
+- **The mesh's edge here is u −17.10 m on every frame** (s 9,329–9,414), with the edge row 2.54–2.57 m over the line's plane.
+- **The AI line's footprint (±17.5 m) is 0.40 m outside the real edge.** My first read, "0.1–0.5 m past the edge", was against that footprint and understated the excursion by 0.40 m.
+
+| | value | how measured, and the error |
+|---|---|---|
+| **leaves the road** | t 66.2874 s (lap 52.277), s 9,354 | the crossing interpolated between frames at −0.030 and +0.161 m past; ±0.002 s |
+| its centre against the edge row as it leaves | **+0.34 m above** | interpolated; ±0.01 m |
+| **farthest past the edge** | **0.856 m**, at t 66.391 s (lap 52.381), s 9,373 | a parabola through the three frames around it (0.803, 0.856, 0.812) also gives 0.856 m |
+| its centre against the edge row there | **−0.335 m (below)** | the frame itself |
+| **back across the edge, inward** | t 66.4837 s (lap 52.474), s 9,391 | interpolated; ±0.002 s |
+| its centre against the edge row as it comes back | **−0.32 m (below)** | interpolated between −0.290 and −0.411 |
+| **time outside the road** | **0.196 s** (13 frames) | ±0.004 s |
+| its drop against the edge row while outside | **0.68 m** (+0.34 → −0.34) | — |
+| lateral speed out / back | −10 to −12 m/s out; +10 to +16 m/s back | the inter-frame term |
+| **first frame with road over it** | t 66.495 s (lap 52.485), u −16.92 m: **0.308 m under the top surface** | the down-ray over the 1ROAD meshes |
+| **inward under the road** | from u −16.92 to **+10.64 m**: **27.6 m across**, carried **1,236 m along** (s 9,395 → 10,631) | `wheels.csv`, 439 frames under |
+| depth under the top surface | 0.21–0.31 m (0.08–0.13 in the last frames, as the jack lifted) | as above |
+| **how it ended** | the jump jack, lap 59.04 s; landed with all four wheels on top at lap 59.76 s | the body-height step; the "Re-aimed" table below |
+
+**The error on the excursion,** the number the fix gets sized by: **0.86 m ± 0.03 m (inferred).**
+- **Frame sampling:** under 0.01 m. The parabola's peak equals the sampled peak; the wheel was slowing to 3.6 m/s laterally at the turn-round.
+- **Edge position:** ±0.005 m (the 0.01 m step). It reads the same −17.10 m on all 32 frames, so the interpolated station frame does not wobble it.
+- **The wheel centre itself:** this is blackbox's recorded wheel position from the replay. That it equals the physics wheel centre to a centimetre or two is inferred, not checked. It sits a consistent +0.25 m over the surface when on the road, which fits a 0.395 m tyre under load. I put ±0.02–0.03 m on it.
+- inferred: **a fix sized to catch a wheel 0.86 m past the edge, whose centre has dropped 0.34 m below the edge row, covers this event with about 3 cm to spare on the measurement.** Other events, other speeds and other angles will differ. This is one excursion, at 655 km/h, returning at 10–16 m/s.
+
+**Separating it from D341's mid-road sink** (the per-wheel depth reads, kept from the re-aimed pass below):
+- **This event:** one wheel, at full droop, 0.21–0.31 m under, no load on it, the other three normal, entered over the edge.
+- **D341's kind:** the whole car pushed through at 50–62 g. The reference lap has one: s 17,584, a 50 g landing on a 67° bank, all wheels to −3.8 m, then a reset.
+- **Nowhere else** in any of the three laps is a wheel more than a tyre radius under.
+
 ## Re-aimed: the chair's ring of 23:58 (plan at 402dbbb5), lap t 52.7 s
 
 **Where his screenshot is in the replay.**

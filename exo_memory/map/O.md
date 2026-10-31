@@ -285,3 +285,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### A wheel that goes past a road edge at the edge row's height and comes back can end up under the single-sided road, hanging at full droop with nothing under it (the underskin is scenery), until a lift frees it
 2026-10-30, D563 Part 1 — C19 rear-right 6.57 s under (0.23-0.31 m), at full droop the whole time (the airborne droop value), freed by the jump jack, then the car left the road 0.45 s later; the reference car did the same for 0.5 s at s 1,926. Could be wrong that AC's tyre contact cannot see a road above the wheel centre: inferred from the 6.6 s hang, not from AC's source.
 → `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md`
+
+### The wheel that ends up under the road got there over the edge: 0.86 m (±0.03) past the mesh edge for 0.20 s, dropping 0.68 m against the edge row, then back in 0.32 m below it
+2026-10-30, D563 final aim — entry.js against the mesh's own edge (u -17.10 m; the AI footprint sits 0.40 m outside it); then 27.6 m inward under the road over 1,236 m, freed by the jack. Could be wrong by the wheel-centre term: blackbox's recorded wheel position is taken as the physics centre, inferred.
+→ `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md`
