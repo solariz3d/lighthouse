@@ -16,7 +16,7 @@ the file in all, is `#[cfg(test)]` modules. `mcp.rs` ~4,400, `cochlea.rs` ~4,100
 | **the inbox** (queued messages waiting for a pane) | `main.rs` `struct Inbox` | `gate_or_queue`, `drain_inboxes`, `withdraw_directive` |
 | **the rings** (`call_librarian`, `call_chair`, `chair_inject`) | `mcp.rs` the `#[tool]` methods of `impl ConsonanceMcp`: `call_librarian`, `call_chair`, `chair_inject` | their auth (`auth_address`, `auth_station`, `auth_chair`, `auth_librarian`), then `main.rs` `pane_call_librarian_exec`, `librarian_call_exec`, `chair_inject_exec` |
 | **who may speak to whom** | `main.rs` `address_row` (None is refused, never defaulted), `chair_target_guard` | `mcp.rs` `required_station`, `station_allows` |
-| **the gates on a ring** | `mcp.rs` `trailer_gate` (the NEXT line; the pure rule is `trailer.rs`), `digest_gate` (the digest at ring), `seal_gate` (sealed tasks), `gates_mode` | the return-leg trap: `mcp.rs` `mark_owed`, `mark_rung`, `handback_refusal_text`; the private-folder refusal `points_into_private` |
+| **the gates on a ring** | `mcp.rs` `trailer_gate` (the NEXT line; the pure rule is `trailer.rs`), `digest_gate` (the digest at ring), `map_gate` (source files created or deleted since the ring's `BASE:` with no MAP.md change), `seal_gate` (sealed tasks), `gates_mode` | the return-leg trap: `mcp.rs` `mark_owed`, `mark_rung`, `handback_refusal_text`; the private-folder refusal `points_into_private` |
 | **the ask-first gate on a raised pull** | `gate.rs` (threshold, GateCard; holds no actuator) | `main.rs` `gate_decide` (the chair's Approve or Deny), then `deliver_pull` |
 | **the board** | `main.rs` `board_push` (the one funnel every writer passes; dedup and the blind window are applied there), `struct Board`, `get_board` | `board_path` (the file), the dedup belt (`dedup_key`, `note_unseen`), the blind window (`blind_lock`); the MCP side is `mcp.rs` `post_board`, `read_board` |
 | **launch** (what happens when the app starts) | `main.rs` `fn main()` → `.setup(...)`: `priority::start`, `leave_cleanup_at_launch`, `sync_at_launch`, `start_exit_waiter`, `watch_session_end`, `keep_awake_thread`, the drain and keep-warm threads, `mcp::start` | `sync_launch.rs` (`decide`, `retire_plan`, `apply_retire`), `launch_effects` |
@@ -33,7 +33,7 @@ the file in all, is `#[cfg(test)]` modules. `mcp.rs` ~4,400, `cochlea.rs` ~4,100
 | file | what it does |
 |---|---|
 | `main.rs` | The app: the Tauri commands, the pane processes, delivery, the board, intake, capture, keep-warm, launch and leave. Sections below. |
-| `mcp.rs` | The one shared MCP control plane over loopback HTTP: the tools every seat's claude calls (`post_board`, `read_board`, `raise_pull`, `call_librarian`, `call_chair`, `chair_*`), their auth by token and by mount, and three gates (trailer, digest, seal). |
+| `mcp.rs` | The one shared MCP control plane over loopback HTTP: the tools every seat's claude calls (`post_board`, `read_board`, `raise_pull`, `call_librarian`, `call_chair`, `chair_*`), their auth by token and by mount, and four gates (trailer, digest, map, seal). |
 | `trailer.rs` | The pure check behind the NEXT-trailer gate: is the last non-empty line of a message a `NEXT:` hand-off, by verb policy. |
 | `gate.rs` | The ask-first gate for raised pulls (control plane only; it holds no actuator, and delivering an approved pull is `main.rs`'s). |
 | `lap_holders.rs` | Whose turn it is when more than one lap is open: the pure half of the baton guard. |

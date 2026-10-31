@@ -661,6 +661,18 @@ impl ConsonanceMcp {
         });
     }
 
+    /// The map gate's own board line (D586), on its own pane name for the digest gate's reason: what it checked, warned, skipped
+    /// and refused can be counted without reading them out of the other gates' rows.
+    fn map_audit(&self, text: String) {
+        board_push(&self.board, BoardEntry {
+            pane: "map-gate".to_string(),
+            role: "committee".to_string(),
+            text,
+            ts: now_ms(),
+            ts_source: crate::TsSource::Push,
+        });
+    }
+
     fn trailer_audit(&self, text: String) {
         board_push(&self.board, BoardEntry {
             pane: "trailer-gate".to_string(),
@@ -967,6 +979,40 @@ impl ConsonanceMcp {
                     msg.lines().next().unwrap_or("")
                 ));
                 return Ok(CallToolResult::success(vec![Content::text(msg)]));
+            }
+        };
+        // THE MAP GATE (D586). After the digest gate, so its line sits under the digest's and above the NEXT trailer the trailer
+        // gate then reads; off the async thread, because it runs git. The mode is read HERE: under cargo test it is thread-local,
+        // and the blocking task runs on another thread. Not on the Third Place's seat, whose ring names no repository and whose
+        // words stay off the board (D476).
+        let text = if third_place {
+            text
+        } else {
+            let map_mode = gates_mode();
+            let map_text = text.clone();
+            let verdict = tokio::task::spawn_blocking(move || map_gate_at(&map_text, map_mode))
+                .await
+                .unwrap_or_else(|e| map_gate_failed(&text, map_mode, &format!("the gate's task did not finish ({e})")));
+            match verdict {
+                MapVerdict::Deliver { text, audit } => {
+                    for line in audit {
+                        self.map_audit(format!("call_librarian from {who}: {line}"));
+                    }
+                    text
+                }
+                MapVerdict::Refuse { reply, audit } => {
+                    board_push(&self.board, BoardEntry {
+                        pane: "chair".to_string(),
+                        role: "committee".to_string(),
+                        text: refused_map_row(&who, &text),
+                        ts: now_ms(),
+                        ts_source: crate::TsSource::Push,
+                    });
+                    for line in audit {
+                        self.map_audit(format!("call_librarian from {who}: {line}"));
+                    }
+                    return Ok(CallToolResult::success(vec![Content::text(reply)]));
+                }
             }
         };
         let text = match trailer_gate(crate::trailer::Verb::CallLibrarian, &format!("call_librarian from {who}"), &text) {
@@ -3761,6 +3807,499 @@ mod digest_at_ring_tests {
         let d = delivered(digest_gate_at(RING, Some(&root)));
         // `git hash-object` of "hello\n" is this id in every git repository on earth.
         assert!(d.text.contains(&format!("git-blob {BLOB}")), "real git did not return the known id: {}", d.text);
+    }
+}
+
+// ── THE MAP GATE (D586, plan_consonance_learns_from_the_reader_2026-10-30.md Part 3, pane E) ────────────────────────
+// A hand-back whose repository gained or lost source files since the packet's base, with no MAP.md in the same diff, is
+// the map going stale one lap at a time: everyone writes what they built, nobody checks that the map heard. Created and
+// deleted files are gated because that is mechanical; a file changed in place is not, because whether its entry still
+// reads true is judgment.
+//
+// HOW THE GATE LEARNS THE REPOSITORY AND THE BASE: from the ring itself, one line per repository,
+//     BASE: <checkout path> <base commit>
+// above the SOURCES: line. The packet names both (its "branch … off <sha>" and the worktree the pane made), and the pane is
+// the one seat that knows which checkout it worked in; a ring may name two repositories and then carries two lines. The
+// commit must be a sha, never a ref, because a ref moves after the packet is sent. A ring with NO BASE line is delivered
+// with a mark saying it was not checked, in both modes, and the mark is posted, so the rings that skip the gate can be
+// counted; a lap that changed no repository has nothing to name.
+//
+// WHAT FAILS LOUDLY. A BASE line the gate cannot use (no commit, a commit that is not a sha, a checkout git cannot open, a
+// base that is not a commit there, a git that does not run) never passes in silence. gates_mode strict refuses the ring,
+// and the attempt is posted to the board as every refused call_librarian is (D077). gates_mode light delivers it with a
+// bracketed "MAP GATE COULD NOT RUN" line naming the checkout and the reason, posts the same line, and says strict would
+// refuse.
+//
+// What it reads: `git diff --no-renames --name-status <base> HEAD` in the named checkout, so a rename or a split counts as
+// the files it deleted and created. HEAD is the committed tree: a file the pane has not committed is not seen.
+const MAP_MARK: &str = "map gate";
+const MAP_GATED: [&str; 4] = ["src/", "app/", "consonance/src-tauri/src/", "consonance/tools/"];
+const MAP_LIST_MAX: usize = 40;
+
+#[derive(Debug)]
+enum MapVerdict {
+    /// Send `text`; post each `audit` line to the board.
+    Deliver { text: String, audit: Vec<String> },
+    /// Send nothing; tell the pane `reply` and post each `audit` line.
+    Refuse { reply: String, audit: Vec<String> },
+}
+
+/// The rest of a `BASE:` line after its label (markdown emphasis around the label tolerated, as `is_sources_head` does), or None.
+fn base_line_rest(line: &str) -> Option<&str> {
+    let t = line.trim_start_matches(|c: char| c == '*' || c == '_' || c == '>' || c == '-' || c.is_whitespace());
+    let rest = t.strip_prefix("BASE")?.trim_start_matches(|c: char| c == '*' || c == '_').trim_start();
+    Some(rest.strip_prefix(':')?.trim_start_matches(|c: char| c == '*' || c == '_'))
+}
+
+/// One BASE line read: the checkout (everything before the last word, so a path keeps its spaces) and the commit, or what the line lacks.
+fn parse_base_line(rest: &str) -> Result<(String, String), String> {
+    let quote = |c: char| c == '`' || c == '"' || c == '\'';
+    let Some((checkout, commit)) = rest.trim().rsplit_once(char::is_whitespace) else {
+        return Err("the line names no commit (BASE: <checkout path> <base commit>)".to_string());
+    };
+    let checkout = checkout.trim().trim_matches(quote).trim();
+    let commit = commit.trim_matches(|c: char| quote(c) || c == '.' || c == ',' || c == ';');
+    if checkout.is_empty() {
+        return Err("the line names no checkout (BASE: <checkout path> <base commit>)".to_string());
+    }
+    if !(7..=40).contains(&commit.len()) || !commit.chars().all(|c| c.is_ascii_hexdigit()) {
+        return Err(format!("the commit is not a sha of 7 to 40 hex characters, and a ref moves after the packet is sent: {commit}"));
+    }
+    Ok((checkout.to_string(), commit.to_string()))
+}
+
+enum MapOne {
+    /// Nothing created or deleted under the source folders.
+    Clean(String),
+    /// Files created or deleted, and MAP.md in the same diff.
+    Updated(String),
+    /// Files created or deleted, and no MAP.md: the line without its mode note.
+    Stale(String),
+}
+
+/// One repository: resolve HEAD and the base there, read the diff between them, decide. `Err` is the gate failing, with why.
+fn map_one(checkout: &str, base: &str, git: &mut dyn FnMut(&str, &[&str]) -> Result<GitOut, String>) -> Result<MapOne, String> {
+    let sha = |o: &GitOut| {
+        let s = o.stdout.trim();
+        (o.code == 0 && s.len() == 40 && s.chars().all(|c| c.is_ascii_hexdigit())).then(|| s.to_string())
+    };
+    let head = match git(checkout, &["rev-parse", "--verify", "--quiet", "HEAD^{commit}"]) {
+        Ok(o) => sha(&o).ok_or_else(|| format!("git cannot open a checkout there (rev-parse HEAD, exit {})", o.code))?,
+        Err(e) => return Err(format!("git could not run: {e}")),
+    };
+    let base_at = format!("{base}^{{commit}}");
+    let b = match git(checkout, &["rev-parse", "--verify", "--quiet", &base_at]) {
+        Ok(o) => sha(&o).ok_or_else(|| format!("{base} is not a commit in that checkout"))?,
+        Err(e) => return Err(format!("git could not run: {e}")),
+    };
+    let out = match git(checkout, &["-c", "core.quotePath=false", "diff", "--no-renames", "--name-status", &b, &head]) {
+        Ok(o) if o.code == 0 => o.stdout,
+        Ok(o) => return Err(format!("git diff {}..{} failed (exit {})", &b[..7], &head[..7], o.code)),
+        Err(e) => return Err(format!("git could not run: {e}")),
+    };
+    let is_map = |p: &str| p.rsplit('/').next() == Some("MAP.md");
+    let rows: Vec<(char, &str)> = out
+        .lines()
+        .filter_map(|l| l.split_once('\t'))
+        .filter_map(|(s, p)| s.chars().next().map(|c| (c, p.trim())))
+        .collect();
+    let map_changed = rows.iter().any(|(_, p)| is_map(p));
+    let gated: Vec<String> = rows
+        .iter()
+        .filter(|(s, p)| (*s == 'A' || *s == 'D') && !is_map(p) && MAP_GATED.iter().any(|g| p.starts_with(g)))
+        .map(|(s, p)| format!("{s} {p}"))
+        .collect();
+    let span = format!("{checkout} {}..{}", &b[..7], &head[..7]);
+    let n = gated.len();
+    Ok(if n == 0 {
+        MapOne::Clean(format!("[{MAP_MARK}: {span} — no source file created or deleted]"))
+    } else if map_changed {
+        MapOne::Updated(format!("[{MAP_MARK}: {span} — {n} source file(s) created or deleted, and MAP.md changed]"))
+    } else {
+        let mut list = gated.iter().take(MAP_LIST_MAX).cloned().collect::<Vec<_>>().join(", ");
+        if n > MAP_LIST_MAX {
+            list.push_str(&format!(", +{} more", n - MAP_LIST_MAX));
+        }
+        MapOne::Stale(format!("[MAP NOT UPDATED — {span}: {n} source file(s) created or deleted and no MAP.md in the diff: {list}"))
+    })
+}
+
+fn map_refusal(lines: &[String]) -> String {
+    format!(
+        "refused by the map gate:\n{}\n\
+         The hand-back was NOT delivered, and the attempt was posted to the board.\n\
+         Recovery: for each file created or deleted, add, change or remove its entry in that repository's MAP.md and commit it there; \
+         for a line the gate could not use, correct it. Then ring again. The line is BASE: <checkout path> <base commit sha>, one per \
+         repository the lap changed, above the SOURCES: line.",
+        lines.join("\n")
+    )
+}
+
+/// The gate failed as a whole (its task did not finish): loud in light, a refusal in strict, as for any line it cannot use.
+fn map_gate_failed(text: &str, mode: crate::trailer::GateMode, why: &str) -> MapVerdict {
+    let light = mode == crate::trailer::GateMode::Light;
+    let line = format!("[MAP GATE COULD NOT RUN — {why}{}]", if light { "; gates_mode light, strict would refuse" } else { "" });
+    if light {
+        MapVerdict::Deliver { text: insert_before_trailer(text, &line), audit: vec![line] }
+    } else {
+        MapVerdict::Refuse { reply: map_refusal(&[line.clone()]), audit: vec![format!("REFUSED BY THE MAP GATE: {line}")] }
+    }
+}
+
+/// The gate, pure but for the injected `git(checkout, args)` — `digest_gate`'s shape, for its reason. Audit lines carry no
+/// caller; `call_librarian` prefixes who rang.
+fn map_gate(
+    text: &str,
+    mode: crate::trailer::GateMode,
+    git: &mut dyn FnMut(&str, &[&str]) -> Result<GitOut, String>,
+) -> MapVerdict {
+    let light = mode == crate::trailer::GateMode::Light;
+    let tail = if light { "; gates_mode light, strict would refuse" } else { "" };
+    let body = text.replace("\r\n", "\n");
+    let bases: Vec<(String, Result<(String, String), String>)> = body
+        .split('\n')
+        .filter_map(|l| base_line_rest(l).map(|r| (l.trim().to_string(), parse_base_line(r))))
+        .collect();
+    if bases.is_empty() {
+        let line = "[NO map check — this ring names no BASE: line (BASE: <checkout path> <base commit>, one per repository it changed)]";
+        return MapVerdict::Deliver {
+            text: insert_before_trailer(text, line),
+            audit: vec!["NO map check — the ring names no BASE: line".to_string()],
+        };
+    }
+    let (mut lines, mut audit, mut bad) = (Vec::new(), Vec::new(), Vec::new());
+    for (raw, parsed) in bases {
+        let one = match parsed {
+            Err(why) => Err(format!("the line \"{raw}\": {why}")),
+            Ok((checkout, base)) => map_one(&checkout, &base, git).map_err(|why| format!("{checkout} {base}: {why}")),
+        };
+        match one {
+            Ok(MapOne::Clean(l)) => lines.push(l),
+            Ok(MapOne::Updated(l)) => {
+                audit.push(l.clone());
+                lines.push(l);
+            }
+            Ok(MapOne::Stale(l)) => {
+                let l = format!("{l}{tail}]");
+                bad.push(l.clone());
+                lines.push(l);
+            }
+            Err(why) => {
+                let l = format!("[MAP GATE COULD NOT RUN — {why}{tail}]");
+                bad.push(l.clone());
+                lines.push(l);
+            }
+        }
+    }
+    if !bad.is_empty() && !light {
+        return MapVerdict::Refuse { reply: map_refusal(&bad), audit: bad.iter().map(|l| format!("REFUSED BY THE MAP GATE: {l}")).collect() };
+    }
+    audit.extend(bad);
+    let text = lines.iter().fold(text.to_string(), |t, l| insert_before_trailer(&t, l));
+    MapVerdict::Deliver { text, audit }
+}
+
+/// The gate as `call_librarian` calls it: the real `git -C <checkout> …`, bounded as the seal gate's is.
+fn map_gate_at(text: &str, mode: crate::trailer::GateMode) -> MapVerdict {
+    map_gate(text, mode, &mut |c, a| run_git_for_seal(std::path::Path::new(c), a))
+}
+
+/// The board row that KEEPS a hand-back refused by this gate (D077's terms, the digest row's family).
+fn refused_map_row(who: &str, text: &str) -> String {
+    refused_row_labelled("call_librarian REFUSED (map)", who, text)
+}
+
+#[cfg(test)]
+mod map_gate_tests {
+    use super::*;
+    use crate::trailer::GateMode::{Light, Strict};
+
+    const BASE40: &str = "e80b2af70000000000000000000000000000beef";
+    const HEAD40: &str = "d586e00000000000000000000000000000000abc";
+    const RING: &str = "D586 hand-back at exo_memory/handback/p-d586-map-gate-E_2026-10-31.md\n\
+                        BASE: C:/w/lh e80b2af7\n\
+                        SOURCES: exo_memory/loop/plan.md\n\
+                        NEXT: librarian collate it when the others are in";
+
+    fn ok(stdout: &str) -> Result<GitOut, String> {
+        Ok(GitOut { code: 0, stdout: stdout.to_string() })
+    }
+
+    /// A git that answers the three questions the gate asks: the base, HEAD, and the diff between them.
+    fn git_with(diff: &str) -> impl FnMut(&str, &[&str]) -> Result<GitOut, String> + '_ {
+        move |_checkout, a| {
+            if a.contains(&"diff") {
+                ok(diff)
+            } else if a.iter().any(|s| s.starts_with("HEAD")) {
+                ok(&format!("{HEAD40}\n"))
+            } else {
+                ok(&format!("{BASE40}\n"))
+            }
+        }
+    }
+
+    fn delivered(v: MapVerdict) -> (String, Vec<String>) {
+        match v {
+            MapVerdict::Deliver { text, audit } => (text, audit),
+            MapVerdict::Refuse { reply, .. } => panic!("refused, expected delivery: {reply}"),
+        }
+    }
+
+    fn refused(v: MapVerdict) -> (String, Vec<String>) {
+        match v {
+            MapVerdict::Refuse { reply, audit } => (reply, audit),
+            MapVerdict::Deliver { text, .. } => panic!("delivered, expected a refusal: {text}"),
+        }
+    }
+
+    fn last_line(t: &str) -> &str {
+        t.lines().rev().find(|l| !l.trim().is_empty()).unwrap_or("")
+    }
+
+    // ── the three rows the order names ───────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn a_new_source_file_with_no_map_change_is_delivered_with_a_warning_naming_it_in_light() {
+        let (text, audit) = delivered(map_gate(RING, Light, &mut git_with("A\tconsonance/tools/new-tool.js\nM\tconsonance/src-tauri/src/mcp.rs\n")));
+        let line = text.lines().find(|l| l.contains("MAP NOT UPDATED")).unwrap_or_else(|| panic!("no warning: {text}"));
+        assert!(line.contains("A consonance/tools/new-tool.js"), "the warning must name the file: {line}");
+        assert!(!line.contains("mcp.rs"), "a file changed in place is not gated: {line}");
+        assert!(line.contains("strict would refuse"), "light must say what strict does: {line}");
+        assert!(audit.iter().any(|a| a.contains("MAP NOT UPDATED") && a.contains("new-tool.js")), "the warning must reach the board: {audit:?}");
+    }
+
+    #[test]
+    fn a_new_source_file_with_the_map_changed_passes() {
+        let (text, _) = delivered(map_gate(RING, Strict, &mut git_with("A\tconsonance/tools/new-tool.js\nM\tconsonance/src-tauri/src/MAP.md\n")));
+        assert!(!text.contains("MAP NOT UPDATED"), "{text}");
+        let line = text.lines().find(|l| l.contains(MAP_MARK)).unwrap_or_else(|| panic!("no map line: {text}"));
+        assert!(line.contains("MAP.md changed"), "{line}");
+    }
+
+    #[test]
+    fn strict_refuses_a_new_source_file_with_no_map_change_and_names_it() {
+        let (reply, audit) = refused(map_gate(RING, Strict, &mut git_with("A\tsrc/core/newpart.js\n")));
+        assert!(reply.contains("A src/core/newpart.js"), "{reply}");
+        assert!(reply.contains("NOT delivered"), "the pane must be told it did not go: {reply}");
+        assert!(reply.contains("BASE:"), "the refusal must say how to recover: {reply}");
+        assert!(!audit.is_empty(), "a refusal must reach the board");
+    }
+
+    // ── the plan's other two rows ────────────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn a_change_to_an_existing_file_passes() {
+        let (text, _) = delivered(map_gate(RING, Strict, &mut git_with("M\tsrc/core/close.js\nM\tapp/core/coreshell.js\n")));
+        let line = text.lines().find(|l| l.contains(MAP_MARK)).unwrap_or_else(|| panic!("no map line: {text}"));
+        assert!(line.contains("no source file created or deleted"), "{line}");
+    }
+
+    #[test]
+    fn a_deleted_file_warns() {
+        let (text, _) = delivered(map_gate(RING, Light, &mut git_with("D\tapp/core/oldpart.js\n")));
+        assert!(text.lines().any(|l| l.contains("MAP NOT UPDATED") && l.contains("D app/core/oldpart.js")), "{text}");
+    }
+
+    // ── what is gated and what is not ────────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn a_rename_reads_as_the_file_deleted_and_the_file_created() {
+        let mut seen: Vec<String> = Vec::new();
+        let (reply, _) = refused(map_gate(RING, Strict, &mut |c, a| {
+            if a.contains(&"diff") {
+                seen = a.iter().map(|s| s.to_string()).collect();
+            }
+            git_with("D\tsrc/geom/a.js\nA\tsrc/geom/b.js\n")(c, a)
+        }));
+        assert!(seen.iter().any(|s| s == "--no-renames"), "the diff must not fold a rename into one row: {seen:?}");
+        assert!(reply.contains("D src/geom/a.js") && reply.contains("A src/geom/b.js"), "{reply}");
+    }
+
+    #[test]
+    fn files_outside_the_four_source_folders_are_not_gated() {
+        let diff = "A\texo_memory/handback/p-x-E_2026-10-31.md\nA\tdocs/new.md\nA\tconsonance/hooks/new.js\nA\tsrcx/y.js\nD\ttest/old.test.js\n";
+        let (text, _) = delivered(map_gate(RING, Strict, &mut git_with(diff)));
+        assert!(!text.contains("MAP NOT UPDATED"), "{text}");
+    }
+
+    #[test]
+    fn a_new_map_md_is_the_map_change_not_a_gated_file() {
+        // t180 keeps its map at the root; lighthouse keeps it inside a gated folder.
+        for diff in ["A\tMAP.md\nA\tsrc/x.js\n", "A\tconsonance/src-tauri/src/MAP.md\nA\tconsonance/src-tauri/src/new.rs\n"] {
+            let (text, _) = delivered(map_gate(RING, Strict, &mut git_with(diff)));
+            assert!(!text.contains("MAP NOT UPDATED"), "{diff}: {text}");
+            assert!(text.lines().any(|l| l.contains("— 1 source file(s) created or deleted, and MAP.md changed")), "the map is not a source file: {text}");
+        }
+        let (text, _) = delivered(map_gate(RING, Strict, &mut git_with("A\tconsonance/src-tauri/src/MAP.md\n")));
+        assert!(text.lines().any(|l| l.contains("no source file created or deleted")), "a new map alone creates no source file: {text}");
+    }
+
+    #[test]
+    fn a_long_list_is_capped_and_says_how_many_it_left_out() {
+        let diff: String = (0..55).map(|i| format!("A\tsrc/many/f{i:02}.js\n")).collect();
+        let (text, _) = delivered(map_gate(RING, Light, &mut git_with(&diff)));
+        let line = text.lines().find(|l| l.contains("MAP NOT UPDATED")).unwrap();
+        assert!(line.contains("55 source file(s)"), "{line}");
+        assert!(line.contains("f39.js") && !line.contains("f40.js"), "{line}");
+        assert!(line.contains("+15 more"), "{line}");
+    }
+
+    // ── the BASE line ────────────────────────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn the_gate_asks_git_in_the_checkout_the_ring_names_for_the_base_it_names() {
+        let mut calls: Vec<(String, Vec<String>)> = Vec::new();
+        let ring = "hand-back at exo_memory/handback/p.md\n**BASE:** `C:/Users/n/Downloads/lh wt e586` e80b2af7.\nNEXT: librarian x";
+        let _ = map_gate(ring, Strict, &mut |c, a| {
+            calls.push((c.to_string(), a.iter().map(|s| s.to_string()).collect()));
+            git_with("")(c, a)
+        });
+        assert!(!calls.is_empty(), "the gate asked git nothing");
+        assert!(calls.iter().all(|(c, _)| c == "C:/Users/n/Downloads/lh wt e586"), "a checkout path keeps its spaces and loses its quoting: {calls:?}");
+        assert!(calls.iter().any(|(_, a)| a.iter().any(|s| s.starts_with("e80b2af7"))), "the base the ring named: {calls:?}");
+        let diff = calls.iter().find(|(_, a)| a.contains(&"diff".to_string())).expect("no diff");
+        assert!(diff.1.contains(&BASE40.to_string()) && diff.1.contains(&HEAD40.to_string()), "the diff runs between the resolved commits: {diff:?}");
+    }
+
+    #[test]
+    fn every_base_line_is_checked() {
+        let ring = "hand-back at exo_memory/handback/p.md\nBASE: C:/w/t180 a6af8cf\nBASE: C:/w/lh e80b2af7\nNEXT: librarian x";
+        let (text, _) = delivered(map_gate(ring, Light, &mut |c, a| {
+            git_with(if c.ends_with("t180") { "A\tsrc/core/n.js\n" } else { "M\tconsonance/tools/x.js\n" })(c, a)
+        }));
+        assert!(text.lines().any(|l| l.contains("MAP NOT UPDATED") && l.contains("C:/w/t180") && l.contains("src/core/n.js")), "{text}");
+        assert!(text.lines().any(|l| l.contains(MAP_MARK) && l.contains("C:/w/lh") && l.contains("no source file created or deleted")), "{text}");
+    }
+
+    #[test]
+    fn a_ring_with_no_base_line_is_delivered_marked_and_counted_in_both_modes() {
+        let ring = "hand-back at exo_memory/handback/p.md\nSOURCES: none (no state claims)\nNEXT: librarian x";
+        for mode in [Light, Strict] {
+            let mut asked = false;
+            let (text, audit) = delivered(map_gate(ring, mode, &mut |_, _| {
+                asked = true;
+                ok("")
+            }));
+            assert!(!asked, "with no BASE line there is nothing to ask git");
+            assert!(text.contains("NO map check"), "{text}");
+            assert!(audit.iter().any(|a| a.contains("NO map check")), "the skip must be countable: {audit:?}");
+        }
+    }
+
+    #[test]
+    fn the_gate_s_line_sits_above_the_next_trailer() {
+        for v in [map_gate(RING, Light, &mut git_with("A\tsrc/x.js\n")), map_gate(RING, Strict, &mut git_with("M\tsrc/x.js\n"))] {
+            let (text, _) = delivered(v);
+            assert!(last_line(&text).starts_with("NEXT:"), "the trailer must stay last: {text}");
+        }
+    }
+
+    // ── a gate that cannot run is loud ───────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn a_base_line_it_cannot_use_is_loud_in_light_and_refused_in_strict() {
+        for (ring, why) in [
+            ("p at exo_memory/handback/p.md\nBASE: C:/w/lh\nNEXT: librarian x", "no commit"),
+            ("p at exo_memory/handback/p.md\nBASE: C:/w/lh origin/main\nNEXT: librarian x", "not a sha"),
+            ("p at exo_memory/handback/p.md\nBASE: C:/w/lh e80b\nNEXT: librarian x", "not a sha"),
+            ("p at exo_memory/handback/p.md\nBASE:\nNEXT: librarian x", "no commit"),
+        ] {
+            let (text, audit) = delivered(map_gate(ring, Light, &mut git_with("")));
+            let line = text.lines().find(|l| l.contains("MAP GATE COULD NOT RUN")).unwrap_or_else(|| panic!("{ring}: not loud: {text}"));
+            assert!(line.contains(why) && line.contains("strict would refuse"), "{line}");
+            assert!(audit.iter().any(|a| a.contains("MAP GATE COULD NOT RUN")), "{audit:?}");
+            let (reply, _) = refused(map_gate(ring, Strict, &mut git_with("")));
+            assert!(reply.contains(why), "{reply}");
+        }
+    }
+
+    #[test]
+    fn a_base_that_is_not_a_commit_in_that_checkout_is_loud() {
+        let mut git = |_: &str, a: &[&str]| {
+            if a.iter().any(|s| s.starts_with("e80b2af7")) { Ok(GitOut { code: 1, stdout: String::new() }) } else { git_with("")("", a) }
+        };
+        let (text, _) = delivered(map_gate(RING, Light, &mut git));
+        assert!(text.lines().any(|l| l.contains("MAP GATE COULD NOT RUN") && l.contains("e80b2af7") && l.contains("not a commit")), "{text}");
+        let (reply, _) = refused(map_gate(RING, Strict, &mut git));
+        assert!(reply.contains("not a commit"), "{reply}");
+    }
+
+    #[test]
+    fn a_git_that_does_not_run_or_a_diff_that_fails_is_loud() {
+        let (text, _) = delivered(map_gate(RING, Light, &mut |_, _| Err("git is not on PATH".to_string())));
+        assert!(text.lines().any(|l| l.contains("MAP GATE COULD NOT RUN") && l.contains("git is not on PATH")), "{text}");
+        let mut diff_fails = |c: &str, a: &[&str]| if a.contains(&"diff") { Ok(GitOut { code: 128, stdout: String::new() }) } else { git_with("")(c, a) };
+        let (text, _) = delivered(map_gate(RING, Light, &mut diff_fails));
+        assert!(text.lines().any(|l| l.contains("MAP GATE COULD NOT RUN") && l.contains("diff")), "{text}");
+        refused(map_gate(RING, Strict, &mut |_, _| Err("git is not on PATH".to_string())));
+    }
+
+    // ── the real command, on a real repository ───────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn real_git_on_a_scratch_repository_warns_then_passes_once_the_map_is_committed() {
+        static N: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+        let n = N.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+        let dir = crate::test_scratch::Scratch::owning(crate::test_scratch::root().join(format!("map-gate-{}-{}-{n}", std::process::id(), now_ms())));
+        std::fs::create_dir_all(dir.join("src")).unwrap();
+        let sh = |args: &[&str]| {
+            let o = std::process::Command::new("git").arg("-C").arg(&*dir).args(["-c", "user.name=t", "-c", "user.email=t@t", "-c", "commit.gpgsign=false"]).args(args).output().expect("git");
+            assert!(o.status.success(), "git {args:?}: {}", String::from_utf8_lossy(&o.stderr));
+            String::from_utf8_lossy(&o.stdout).trim().to_string()
+        };
+        sh(&["init", "-q"]);
+        std::fs::write(dir.join("src/old.js"), "1\n").unwrap();
+        sh(&["add", "."]);
+        sh(&["commit", "-q", "-m", "base"]);
+        let base = sh(&["rev-parse", "HEAD"]);
+        std::fs::write(dir.join("src/new.js"), "2\n").unwrap();
+        sh(&["add", "."]);
+        sh(&["commit", "-q", "-m", "new"]);
+        let ring = format!("hand-back at exo_memory/handback/p.md\nBASE: {} {}\nNEXT: librarian x", dir.to_string_lossy(), &base[..12]);
+        let (reply, _) = refused(map_gate_at(&ring, Strict));
+        assert!(reply.contains("A src/new.js"), "{reply}");
+        std::fs::write(dir.join("MAP.md"), "src/new.js: the new part\n").unwrap();
+        sh(&["add", "."]);
+        sh(&["commit", "-q", "-m", "map"]);
+        let (text, _) = delivered(map_gate_at(&ring, Strict));
+        assert!(text.lines().any(|l| l.contains("MAP.md changed")), "{text}");
+    }
+
+    #[test]
+    fn real_git_on_a_folder_that_is_no_checkout_is_loud() {
+        let dir = crate::test_scratch::Scratch::owning(crate::test_scratch::root().join(format!("map-gate-none-{}-{}", std::process::id(), now_ms())));
+        std::fs::create_dir_all(&*dir).unwrap();
+        let ring = format!("p at exo_memory/handback/p.md\nBASE: {} e80b2af7\nNEXT: librarian x", dir.join("not-here").to_string_lossy());
+        let (text, _) = delivered(map_gate_at(&ring, Light));
+        assert!(text.contains("MAP GATE COULD NOT RUN"), "{text}");
+    }
+
+    // ── the wiring, read from the source (anchors built with concat!, the D076 lesson) ─────────────────────────────
+
+    fn librarian_body() -> String {
+        let src = std::fs::read_to_string("src/mcp.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split("async fn call_librarian(").nth(1).expect("call_librarian moved — re-point this test").to_string();
+        f.split("\n    }\n").next().unwrap_or(&f).to_string()
+    }
+
+    #[test]
+    fn the_map_gate_runs_after_the_digest_and_before_the_trailer_gate_and_the_delivery() {
+        let b = librarian_body();
+        let digest = b.find(concat!("digest_gate", "_at(")).expect("the digest gate");
+        let map = b.find(concat!("map_gate", "_at(")).expect("call_librarian does not run the map gate");
+        let trailer = b.find(concat!("trailer_", "gate(")).expect("the trailer gate");
+        let send = b.find(concat!(".send_", "chair(ChairCmd::CallLibrarian")).expect("the delivery");
+        assert!(digest < map && map < trailer && trailer < send, "order must be digest < map < trailer < delivery");
+    }
+
+    #[test]
+    fn a_refused_map_keeps_the_attempt_on_the_board_and_reads_the_mode_on_the_calling_thread() {
+        let b = librarian_body();
+        assert!(b.contains(concat!("refused_map", "_row(&who, &text)")), "a map refusal must keep the pointer");
+        assert!(b.contains(concat!("MapVerdict::", "Refuse {")), "the refusal arm");
+        let mode = b.find(concat!("let map_mode = ", "gates_mode()")).expect("the mode is read before the blocking task");
+        let spawn = b[mode..].find("spawn_blocking").map(|i| i + mode).expect("off the async thread");
+        assert!(mode < spawn, "under cargo test the mode is thread-local, so it must be read before the task is spawned");
     }
 }
 
