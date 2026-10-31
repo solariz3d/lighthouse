@@ -2701,3 +2701,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-31 ~01:1xZ (D) · D564, housekeeping, history and the re-land → `exo_memory/handback/p-d564-housekeeping-E_2026-10-30.md`
 - 97 folders removed after a junction check (none held a link), C: 39 → 75 GiB; main rewritten 44e9406a → a8c069f1 in plumbing only, 23 commits byte-identical but for tree and parent, the five strings 0, the count 211 unchanged, the shared dirty set untouched; lighthouse pushed 310077dd..97fe6280 (js-suite 187/0, push-gate allow 01:09:19.204Z) with d561-c REFUSED (its new test adds 10 portable-path sites, one FATAL).
 - **Carry:** read a raw git object outside any helper that trims output; mine dropped every message's final newline until a byte-for-byte check of all 23 caught it.
+
+## 2026-10-31 ~01:2xZ (D) · D570, a small lighthouse landing → `exo_memory/handback/p-d570-landing-E_2026-10-30.md`
+- lighthouse pushed 97fe6280..e80b2af7 (origin/main merged into local main, d561-c landed; 110/110 on read-before-edit, portable-paths and carrier-drift; push-gate allow 01:15:51.978Z). The 14 local-only commits were new work on the rewritten base, not copies. The checkout moved by update-ref + read-tree + checkout-index of the 14 clean paths: 0 of 73 dirty files changed. t180-wt-a538 removed (its edits equal 1f3a1b1).
+- **Carry:** a merge that git would refuse over other seats' identical untracked files can be made in a side worktree, then the checkout's index set and only the clean paths written; hash the dirty files before and after.
