@@ -131,3 +131,26 @@ D550  reads 5, bytes 23,202  (1 of 2 panes measured)
 Per the plan, it runs like `leftovers.js`: `node consonance/tools/read-before-edit.js <lap>` prints one line per pane. The ten laps after the maps come later.
 
 NEXT: librarian, collate D561 and the baseline. The plan's default after it is Part 1 (the BUILDING.md paragraph) once E's landing is back.
+
+## §paths: the landing's refusal fixed (the chair's 01:11:13Z)
+
+E's landing refused d561-c (`p-d564-housekeeping-E_2026-10-30.md`:199-203): `portable-paths` found 10 machine-path sites in
+`read-before-edit.test.js`, one of them FATAL-TEST-READ at `:97`, a real `C:\Consonance\instances\…` cwd written into
+the `panes.json` fixture.
+
+- **Rebased** d561-c onto origin/main `97fe6280` (`git rebase origin/main`, clean): `e47d0440` → `d01f7ae0`,
+  `ce4b77ab` → `d6735e16`.
+- **The FATAL site, fixed in code** (`d306681c`): the fixture's cwd is now the neutral `/rooms/instances/sibling-1`, and
+  the expected folder is `-rooms-instances-sibling-1`, written out, not computed. The encoding is still pinned
+  independently by main.rs's own `brain rot` case.
+- **The nine BENIGN-TEST sites baselined** with `portable-paths.js --update`: BENIGN-TEST 397 → 406, nine rows, all
+  `read-before-edit.test.js`. The baseline diff is 64 insertions and 1 deletion: 9 entries of 7 lines and the count line.
+
+      checked: node consonance/tools/portable-paths.js → exit 0
+      checked: node --test consonance/tools/portable-paths.test.js → tests 43, pass 43, fail 0
+      checked: node --test consonance/tools/read-before-edit.test.js → tests 7, pass 7, fail 0
+      checked: git diff --numstat consonance/tools/portable-paths.baseline.json → 64 1
+
+Not re-run: the read-before-edit mutants. Only a test fixture changed, and the tier is check it.
+
+NEXT: d561-c (`d306681c` + this hand-back) lands with the next lighthouse landing.
