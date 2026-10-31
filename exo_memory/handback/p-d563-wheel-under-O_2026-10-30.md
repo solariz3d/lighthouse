@@ -266,3 +266,65 @@
 - inferred: **the wheel trapped under the road, and the box reaching it from below, pushed the car out the top.** That is the throw this section's C07 case shows in the other direction. Contact forces are not in the replay.
 - **For the apron:** C09's excursion (0.595 m past the edge, centre 0.59 m below the edge row) is smaller than D563's 0.86 m. Both fit inside 2.0 m.
 - **This lap shows what the edge mechanism costs when it is not caught:** a wheel 1.4 m under for 0.77 s, then the car thrown off the track.
+
+## C09 again: the keeper's "the body itself going underneath and causing a slide" (the chair's ring of 00:48Z)
+
+**Answer: a third shape, the BOX-UNDER RIDE.**
+- **What it is:** the chassis box rides deep under the top surface while all four wheels stay on top. It neither goes through (C07's shape) nor goes off an edge (D563's).
+- **The "slide" begins as the box comes back out of the road, not while it is in.**
+- Same replay as above: the 18:45 save, sha256 `e5c0fd08…`.
+- New outputs in `S\d560\`: `hx-C09-slide.txt`, `hx-C09-yaw.txt`.
+- **New columns in `helixtrace.js`:**
+  - `yaw`: the car's axis (the front wheels' midpoint minus the rears') against the road's tangent;
+  - `vel-dir`: the velocity's direction against the same tangent.
+
+**How deep and how long the box rode under** (`out/*/table.csv`, the longest unbroken run of frames below each depth):
+
+| pass | box < 0 | < −5 cm | < −10 cm | < −14 cm | deepest |
+|---|---|---|---|---|---|
+| **C09** | 1.09 s | 0.82 s | **0.58 s** (t 64.47–65.04) | **0.36 s** (64.55–64.89) | **−15.9 cm at 60.2 g** |
+| reference, pass 1 | 1.51 s | 0.96 s | 0.30 s | 0 | −11.4 cm |
+| reference, pass 2 | 1.74 s | 0.69 s | 0 | 0 | −6.9 cm |
+| C05 | 1.27 s | 0 | 0 | 0 | −3.0 cm |
+
+- **All four wheels stayed on top throughout:** every wheel centre ≥ +0.230 m, none under, and no frame lost more than 2.6 km/h.
+- **This is D515's "box under the mesh from 47 g", but deeper and longer at depth than any other pass:** 0.58 s below −10 cm, against the reference's 0.30 s.
+- **The load:** 58–62.8 g at the deepest, 787–796 km/h.
+- **Placed against the other shapes:**
+  - C07 reached the same depth still sinking (about 1.6 m/s) and went through;
+  - C09 settled there (a plateau, −14.5 to −15.9 cm for 0.24 s);
+  - **the box-under ride is the settled branch of the same stage.**
+
+**How it ended: the box came out of the road and the car spun** (`hx-C09-yaw.txt`, every 6th frame):
+
+| t | s | u | yaw | vel-dir | load | box |
+|---|---|---|---|---|---|---|
+| 64.950 | 8,681 | 11.45 | −21.3° | −1.8° | 53.8 g | −13.3 cm |
+| 65.040 | 8,699 | 10.50 | −25.3° | −2.2° | 51.4 | −10.3 |
+| 65.130 | 8,717 | 9.34 | −31.2° | −2.8° | 48.7 | −6.3 |
+| **65.220** | 8,729 | 7.98 | **−38.7°** | −5.0° | 46.8 | −3.4 |
+| 65.310 | 8,747 | 6.40 | −29.6° | −4.8° | 45.9 | −0.7 |
+| 65.490 | 8,783 | 4.28 | −4.6° | +0.3° | 46.9 | +0.4 |
+| 65.940 | 8,867 | 10.48 | −4.9° | +8.0° | 46.5 | +0.4 |
+| 66.300 | 8,927 | 16.27 | −24.9° | +1.4° | 33.3 | +1.8 |
+| **66.480** | 8,957 | 15.49 | **−43.3°** | −2.9° | 26.4 | −7.9 |
+
+- **From t 64.95 to 65.22 the car rotates 17.4° against the road while its path turns 3.2°.** That is a yaw away from its direction of travel, a slide or spin.
+- It happens over exactly the frames in which the box rose from −13 to −3 cm and the load fell from 54 to 47 g.
+- **The reference over the same exit:** its yaw holds −8.6° to −15.3° (t 419.5–421.4; this column's zero carries an offset from the bank, so read the change, not the level). Its box comes out from −5 to +2.5 cm.
+- **Then:**
+  - the car recovers (−4.6° at t 65.49);
+  - it crosses the road leftward at up to 25 m/s, 4.3 → 16.3 m in about 0.8 s;
+  - it yaws −25° → −43° as its left rear goes 0.595 m past the edge (above);
+  - the trapped wheel launches it (above);
+  - it lands beyond the right edge: the crash.
+- inferred: the box leaving the road at speed upsets the car. One case, and the cause is not separated from the driver's inputs; the replay holds no steering or throttle.
+- **The chain is:** the box-under ride, a spin as the box comes out, the edge, the trapped wheel, the launch.
+
+**For the fixes:**
+- **Three shapes stand,** each with its own lever:
+  1. **through:** C07, the box sinking and not settling;
+  2. **off the edge:** D563 and C09's left rear; the apron's 2.0 m covers both measured excursions;
+  3. **the box-under ride:** C09, settled at −16 cm for 0.36 s with the wheels on top, and the car upset as the box came out.
+- **What would move the third:** a road whose soft contact settles shallower. That is STIFF's question too: the same C07 / C09 pace on STIFF should show a shallower plateau if the CFM is the lever.
+- **Its falsifier:** STIFF's plateau at matched load (58–62 g) is −14 cm or deeper.

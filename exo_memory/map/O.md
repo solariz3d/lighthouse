@@ -305,3 +305,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### Box depth does not separate a held helix from a pass-through: C09 held a -15.9 cm plateau at 60 g where C07 broke at -16 cm still sinking ~1.6 m/s; C09 then went off the left edge and was launched out the top by the wheel trapped under
 2026-10-30, the 18:45 replay — helixtrace.js / entry.js on C09; four held passes, one broken; C09's excursion 0.595 m past the edge (inside the apron's 2.0 m), w2 0.78-1.44 m under for 0.77 s, +24.7 m/s along the normal. Could be wrong that sinking rate is the separator: one broken case.
 → `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (C09)
+
+### C09's helix is a third shape, the box-under ride: box 13-16 cm under for 0.58 s at 58-63 g, all wheels on top, then a 17° yaw as the box came out
+2026-10-30, the chair's 00:48Z ring — table.csv runs below depth (C09 0.58 s under -10 cm; reference 0.30, 0; C05 0) and helixtrace yaw/vel-dir: -21 -> -39° while the path turned 3°, as the box rose -13 -> -3 cm. Could be wrong that the box leaving caused the spin: no driver inputs in the replay.
+→ `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (C09 again)
