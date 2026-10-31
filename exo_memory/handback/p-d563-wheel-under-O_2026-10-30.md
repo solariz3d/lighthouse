@@ -713,3 +713,44 @@
   - **`table.js`, which reads against the local surface, has the box 7–43 cm over the road there**, at 822–876 km/h and 1–25 g.
   - **So the wheel readers are not valid on cup walls past about 60°.** The ELYSIUM reads were on banks the AI normal follows (the helix at 85° with cup 20°, the car within 15° of the station normal), so they stand.
 - **The end:** the replay ends at the track's end (s 19,652); 128 frames there read box 0.000 at 23–77 km/h with load 0 g, after the finish.
+
+## CRAZY TEST, soft_b, the active Mach 6 (C23; the 20:46 save; the chair's ring of 02:47Z)
+
+- **Replay:** sha256 `d84ee772ae14f295…`, 28,005,242 bytes; labelled X23b.
+- **The road and scripts:** as the C07 soft_b section above (the variants' own export; `crazy.js`, `sinkrate2.js` → `crazy-X23b.txt`).
+- **The run:** the helix pass is t 143.9–174 (piece 13, s 14,817–19,652). It reaches the track's end.
+
+**A slower pass than C07's: it never reached 55 g, so it does not test the ceiling.**
+
+| | **active on soft_b** | active on the soft road (D544, the ceiling) | C07 on soft_b |
+|---|---|---|---|
+| peak load | **54.60 g** at s 16,971, **667 km/h** | 72.82 g at 771 km/h | 71.23 g at 842 km/h |
+| longest unbroken at ≥ 55 g | **0 s** (≥ 50 g: 4.51 s; ≥ 40 g: 8.92 s) | 8.45 s | 6.34 s |
+| the box's lowest in the helix | **0.0 cm** (a single no-reading frame, below); otherwise over the mesh throughout | 0.0 cm | +0.8 cm |
+| h's lowest | −18.5 cm | −20.6 cm | −19.6 cm |
+| sinking past −11 cm | never | never | never |
+
+**The box by load band, against the same car on the soft road** (`out\X23b\table.csv` and D544's `active\table.csv`, piece 13):
+
+| load | active on soft_b | active on the soft road (D544) |
+|---|---|---|
+| 30–35 g | +11.7 cm (105 frames) | — |
+| 35–40 g | +9.2 cm (129) | — |
+| 40–45 g | +7.3 cm (118) | +6.0 cm (71) |
+| 45–50 g | +5.8 cm (174) | +5.1 cm (73) |
+| 50–55 g | +4.9 cm (309) | +4.3 cm (81) |
+| 55–75 g | not reached | +3.4 → +2.1 cm |
+
+- **At matched load the active car rides the same on soft_b as on the soft road:** within 0.6–1.3 cm, soft_b slightly higher. Its box never meets either road.
+- inferred: for the active car the soft block's stiffness does not matter in this range. Its stiffer end stop keeps the box off the road on its own (D544), and that is what the firm block gives the regular cars.
+- **The falsifiers, read as written:** "a sink past −11 cm faster than 1 m/s" is silent (no sink); "a plateau of −14 cm or deeper" is silent (the box stays +4.9 cm or higher at every band reached).
+- **They are read at a lower load than registered** (to 54.6 g, not 58–62 g). The C07 pass above is the one that tested soft_b at the ceiling.
+
+**"Box under" frames, none real:** 118 frames on piece 13 read the box at exactly 0.0000.
+- One is a single frame at s 18,614 (t 164.21, 659 km/h, 19.4 g).
+- The rest are past the finish, at the clamped station s 19,598–19,652, at 147–168 km/h with load about 0 g.
+- inferred: they are the reader's no-reading value, not a box at the surface; every neighbour of the s 18,614 frame reads over the mesh.
+
+**Wheels under:** none in the helix.
+- `wheel.js` again lists all four wheels "3.2–4.0 m under" through pieces 4–5 (s 1,356–2,052, t 66–73).
+- That is the same bowl-wall artifact as the C07 section: the car went right round the bowl, the surface tilting 26° → 176° (`table.csv` tilt), while `table.js` has the box 16–46 cm over the local surface throughout.
