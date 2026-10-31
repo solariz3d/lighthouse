@@ -3334,7 +3334,9 @@ fn latest_packet(transcript: &str) -> Option<&str> {
 /// a list separator, and trimmed of a sentence's closing stop.
 fn packet_paths(packet: &str) -> Vec<PathBuf> {
     let b = packet.as_bytes();
-    let stop = |c: u8| c.is_ascii_whitespace() || b"`'\"(),;<>|*?[]".contains(&c);
+    // 0x22 is the double quote, written as a number: an escaped quote in a literal here flips the parity of the quote split
+    // that `no_string_the_app_can_show_claims_it_stops_a_restart` reads this file with.
+    let stop = |c: u8| c.is_ascii_whitespace() || c == 0x22 || b"`'(),;<>|*?[]".contains(&c);
     let mut out = Vec::new();
     let mut i = 0;
     while i + 2 < b.len() {
