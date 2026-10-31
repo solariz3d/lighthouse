@@ -20,3 +20,10 @@ Falsifier: if after the fix a 100 km track still crashes the page, or ELYSIUM's 
 Release: 0.4.32 does not publish until this lands; it rides as 0.4.33 with the rest of the batch (his named-trade rule: he tries it installed first).
 
 surfaced: the four crash reports; ELYSIUM's ui_track.json and .t180b-builder.json; plan_t180_outside_review (CI), p-d582-batch-C (the built-app export test ran on a small track only).
+
+## Added 08:3x, the keeper: "in the previewer, the track doesnt have to be full fidelity topography until it is exported to ease strain on preview?"
+Yes, and it becomes part 3 (load and preview). A grep of land-582 for lod, level of detail, decimate or simplify finds no reduced-detail road in the previewer (only the flight line in app/core/flightlayer.js is simplified), so the preview draws the road at export density today.
+- The preview draws the road coarser with distance from the camera (and coarser overall on long tracks), full detail near the camera; export always builds full detail.
+- What must NOT go coarse: the checker, the reds, the readouts and anything measured; they keep reading the full geometry (or its maths) so what he is told matches what exports. Only the drawn mesh changes.
+- Proof: the checker's answers byte-equal with the coarse preview on; the preview holds his refresh rate on the 100 km track (memory preview-at-refresh-rate); the near-camera road within 1 cm of the export mesh where he edits.
+- This eases load and preview; it does not by itself fix the export ceiling, which needs full detail, so part 2 stands.
