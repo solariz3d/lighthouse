@@ -328,3 +328,67 @@
   3. **the box-under ride:** C09, settled at −16 cm for 0.36 s with the wheels on top, and the car upset as the box came out.
 - **What would move the third:** a road whose soft contact settles shallower. That is STIFF's question too: the same C07 / C09 pace on STIFF should show a shallower plateau if the CFM is the lever.
 - **Its falsifier:** STIFF's plateau at matched load (58–62 g) is −14 cm or deeper.
+
+## C11 ("Matryoshka"), the second broken helix pass (the chair's ring of 00:58Z)
+
+- **Replay:** the 18:55 auto-save (sha256 `065789823b52c45b…`, 30,292,928 bytes). C11 is D551 group B, the shortest wheelbase at 2.93 m.
+- **Scripts:** `helixtrace.js` → `S\d560\helixtrace-C11.txt` (velocity held in the station frame at t 59.94, s 8,549); `sinkrate.js` → `sinkrate.txt`; `wheel.js` → `out\C11\wheels.csv`.
+
+**The answer: the separator holds. A box still sinking past −11 cm broke, twice. Every pass that crossed −11 cm slowly, or never did, held.**
+
+| pass | outcome | sinking rate crossing −11 cm | deepest box before the break | fastest sinking in the −5 to −16 cm band |
+|---|---|---|---|---|
+| reference 1 | held | 0.28 m/s (t 418.950, 751 km/h, 58 g) | −11.3 cm | 0.44 m/s |
+| reference 2 | held | never crosses | −6.9 cm | 0.22 m/s |
+| C05 | held | never crosses | −3.0 cm | — |
+| C09 | held | **0.63 m/s** (t 64.485, 786 km/h, 62.8 g) | −15.9 cm | 0.63 m/s |
+| **C07** | **broke**, t 59.880 | **1.66 m/s** (t 59.865) | −16.1 cm | 1.66 m/s |
+| **C11** | **broke**, t 60.060 | **1.96 m/s** (t 60.060) | −13.1 cm | 1.96 m/s |
+
+- **The rate:** the held passes sank at most 0.63 m/s, the broken ones at 1.66–1.96 m/s, a gap of 2.6× between the fastest held and the slowest broken.
+- **The rate is `sinkrate.js`'s** 3-frame difference of `table.csv`'s box, which is per-frame and raw.
+- **That script's km/h and g at the broken passes' crossings are `table.csv`'s smoothed columns,** already falling with the break. The raw speeds there are 745 km/h (C07) and 756–773 km/h (C11); the loads before the collapse were about 54–58 g.
+- **The break times are the raw ones** (the first frame losing more than 10 km/h, `helixtrace.js`). A first run cut on `table.csv`'s smoothed speed fired 2–4 frames early, before either broken pass reached −11 cm. Corrected before any figure here was written.
+
+**At matched speed:**
+- **Speed does not separate them:**
+  - C11 crossed −11 cm at 756–773 km/h raw and broke;
+  - C09 crossed at 786 km/h and held;
+  - the reference crossed at 751 km/h and held.
+- **Load does not separate them:** C11 broke after a 57.67 g peak, lower than C09's held 62.8 g.
+- **Depth does not separate them:** C09 held at −15.9 cm, C11 broke at −13.1.
+- **Only the rate does.**
+
+**C11's frames** (box, raw speed, the wheels, and the velocity along n and T in the fixed frame):
+
+| t | km/h | box | wheels w0..w3 over the top (m) | v along n / T (m/s) | yaw |
+|---|---|---|---|---|---|
+| 59.985 (the 57.67 g peak) | 780 | −1.8 cm | +0.24 to +0.25 | +38.6 / 214.2 | −2.5° |
+| 60.000 | 779 | −2.6 | +0.24 to +0.25 | +46.3 / 212.5 | −1.8° |
+| 60.030 | 775 | −7.2 | +0.24 to +0.25 | +60.9 / 207.8 | −1.3° |
+| 60.060 | 756 | **−13.1** | +0.23 to +0.25 | **+73.8 / 197.6** | +0.2° |
+| 60.075 | 709 | −16.9 | +0.24 to +0.25 | +72.1 / 183.9 | +1.8° |
+| 60.090 | 645 | −29.4 | +0.22 to +0.30 | +58.6 / 169.6 | +6.0° |
+| 60.105 | 588 | −71.4 | −0.01 / +0.08 / +0.29 / +0.36 | +35.8 / 159.1 | +8.2° |
+| 60.120 | 560 | −151.1 | **−1.41 / −0.86 / −0.18 / −0.05** | +21.8 / 152.7 | +18.4° |
+| 60.135 | 553 | −248.1 | −2.84 / −2.08 / −1.15 / −0.61 | +20.8 / 150.7 | +33.7° |
+| 60.165 | 549 | — | — / −4.32 / −3.51 / −2.71 | +19.7 / 150.1 | +63.9° |
+| 60.300 | 537 | — | — | +17.2 / 146.9 | +176.1° |
+
+- **The same sequence as C07:**
+  - the box was at the surface at the load peak, then sank without settling (about 1.75 → 2.5 m/s);
+  - it broke at −13 to −17 cm with all four wheels on top;
+  - the fronts went through first, at t 60.105–60.120.
+- **The throw matches C07's almost exactly:**
+  - −54 m/s along the road's normal (C07 −53.5);
+  - −48 m/s along the road (C07 −48);
+  - over about 0.06 s; then a straight flight at 537–549 km/h, about +17 to +20 m/s along the fixed n.
+- **C11 also spun:** its yaw went +6° → +176° in 0.21 s (about 800°/s) as it went through. inferred: the fronts caught first and the car pivoted.
+- **Where on the road:** at ≥ 50 g it ran at u 14.10–14.19 m. C07 ran at 14.1–15.0, C09 at 10.0–14.1 and the reference at 12.5–14.1. Position on the bank does not separate them either.
+- **After t 60.6:** the replay holds two later wheel events (s 9,412 at t 62.7, all four 3.0–3.6 m under; s 10,894 at t 63.75–65.43, the fronts 2.1 m under). These are after the departure and a reset, and were not read.
+
+**For the fix** (inferred, on 4 held passes and 2 broken):
+- The separating quantity is how fast the box is still sinking when it is about 11–13 cm in: ≤ 0.63 m/s held, ≥ 1.66 m/s broke.
+- **Both broken passes started sinking from the surface at their load peak and never settled.** The held ones either never went deep or settled.
+- **STIFF's question becomes concrete:** does a stiffer contact slow that sink below about 0.6 m/s at 57–63 g?
+- **Its falsifier:** on STIFF, C07 or C11 at the same pace sinks past −11 cm faster than 1 m/s.

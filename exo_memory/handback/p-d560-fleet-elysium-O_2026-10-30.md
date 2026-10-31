@@ -208,3 +208,22 @@
 - deepest frame −15.9 cm at 60.2 g;
 - peak 62.82 g at 787 km/h;
 - every wheel centre ≥ +0.230 m (`hx-C09.txt`, `helix-C09.txt`).
+
+### C11 ("Matryoshka"), the 18:55 auto-save (D551 group B, wheelbase 2.93 m)
+
+- **The replay:** sha256 `065789823b52c45b…`, 30,292,928 bytes; `table.js` 4,208 rows, none dropped.
+- **It is not a lap:** it goes through the road in the helix at t 60.06, s 8,585. See p-d563, "C11".
+- **Same road:** two cells are marked (9,000–9,500 and 10,500–11,000), and both are the post-departure frames, not the road.
+
+| line | C11 (to s 8,585) | verdict |
+|---|---|---|
+| suspension stop, 25 g: h p50 at 25–30 / 30–35 / 35–40 / 40–45 g | −17.0 / −17.2 / −17.5 / −17.9 cm (8, 6, 5, 5 frames) | **too few frames to read** |
+| chassis, 40 g: box over the mesh p50 at 45–50 / 50–55 / 55–60 g | 3.8 / 1.6 / **0.4** cm (7, 6, 11 frames) | **holds at the threshold, on few frames**: the box is at the mesh at its peak, and went through after it, sinking (p-d563) |
+| sustained, ≥ 55 g over 0.5 s | longest 0.17 s | **holds** |
+| proven, 90 g | peak 57.67 g, s 8,561, 776 km/h | **not reached** |
+| line-predicted margin, top-10 peaks | median +2.4 g | **holds** |
+| lift-off above 300 km/h | 110 frames, worst −64.43 g | **not read**: the worst frames are the pass-through |
+
+**Helix** (t 59.3–60.6, 90 frames): the box under the mesh on 14.4% of frames; the deepest 50 m median −9.9 cm (s 8,550–8,600, which holds the break); h median −22.0 cm; peak 57.67 g at 776 km/h; speed median 783 km/h.
+
+**"Lightning"** (the chair's note): group A, no replay saved, so no row.

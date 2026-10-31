@@ -309,3 +309,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### C09's helix is a third shape, the box-under ride: box 13-16 cm under for 0.58 s at 58-63 g, all wheels on top, then a 17° yaw as the box came out
 2026-10-30, the chair's 00:48Z ring — table.csv runs below depth (C09 0.58 s under -10 cm; reference 0.30, 0; C05 0) and helixtrace yaw/vel-dir: -21 -> -39° while the path turned 3°, as the box rose -13 -> -3 cm. Could be wrong that the box leaving caused the spin: no driver inputs in the replay.
 → `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (C09 again)
+
+### The second broken helix pass confirms the separator: the box's sinking rate at −11 cm, held ≤ 0.63 m/s (4 passes), broke ≥ 1.66 m/s (C07, C11); speed, load, depth and bank position do not separate them
+2026-10-30, the chair's 00:58Z ring — sinkrate.js (raw box, 3-frame rate, read to the raw break) and helixtrace.js on C11: box at the surface at its 57.67 g peak, sinking 1.75–2.5 m/s, broke at −13 cm, thrown −54 m/s along n and −48 along T, as C07. Could be wrong with more passes: 6 in all.
+→ `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (C11)
