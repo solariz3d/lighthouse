@@ -301,3 +301,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### A car can go through the soft road with all four wheels on top, 1.5 m from the edge: C07's box sank steadily (~1.6 m/s) past the reference's -11 cm plateau and broke at -16 cm, then was thrown ~54 m/s out the underside
 2026-10-30, the chair's 00:39Z re-aim — helixtrace.js on raw frames, the station frame held at t 59.82: 4 frames, ~125 g, after a 62.87 g peak; the reference held at 55-60 g, C05 peaked at 52 g. Not the D563 edge mechanism; the apron does not touch it. Could be wrong that sinking rate, not load, separates the cases: two held passes and one break.
 → `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (C07 through the helix)
+
+### Box depth does not separate a held helix from a pass-through: C09 held a -15.9 cm plateau at 60 g where C07 broke at -16 cm still sinking ~1.6 m/s; C09 then went off the left edge and was launched out the top by the wheel trapped under
+2026-10-30, the 18:45 replay — helixtrace.js / entry.js on C09; four held passes, one broken; C09's excursion 0.595 m past the edge (inside the apron's 2.0 m), w2 0.78-1.44 m under for 0.77 s, +24.7 m/s along the normal. Could be wrong that sinking rate is the separator: one broken case.
+→ `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (C09)

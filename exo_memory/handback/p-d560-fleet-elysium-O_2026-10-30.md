@@ -182,3 +182,29 @@
 - All four wheels were on top, the outer pair 1.5 m inside the mesh edge, until the box broke through at about −16 cm, 0.22 s after a 62.87 g peak.
 - C07's lift-off and deep-box figures are that pass-through.
 - See `p-d563-wheel-under-O_2026-10-30.md`, "C07 through the helix".
+
+### C09, saved 18:45 (D551 group B, a "ma_" regular, wheelbase 3.14 m)
+
+- **The replay:** sha256 `e5c0fd08228288a5…`, 27,611,553 bytes; `table.js` 4,237 rows, 4,236 after the reset filter.
+- **It is not a lap.** The car holds the helix, then leaves the road. In order:
+  - the D563 edge shape on the left at s 8,937–8,987;
+  - a launch at s 9,065–9,083;
+  - off the right edge at s 9,370–9,410.
+  - See `p-d563-wheel-under-O_2026-10-30.md`, "C09: the helix held, then the edge".
+  - The lift-off and deep-box figures below s 9,000 are clean. Those after it are that event.
+- **Same road:** worst |Δ| 0.211 m, at 9,000–9,500 only (0.307 vs 0.096). That cell is the excursion itself, not the road.
+
+| line | C09 (up to s 8,930) | verdict |
+|---|---|---|
+| suspension stop, 25 g: h p50 at 35–40 / 40–45 g | −18.2 / −19.7 cm (13, 15 frames) | **holds** (the plateau; the lower bands are the event's frames) |
+| chassis, 40 g: box over the mesh p50 at 40–45 / 45–50 / 50–55 / 55–60 / 60–70 g | 4.0 / **0.3** / −11.3 / −14.8 / −12.0 cm | **holds at the threshold, deeper past it** (the mesh at about 47–50 g; −15.3 to −15.9 cm at 58–62 g, held, see p-d563) |
+| sustained, ≥ 55 g over 0.5 s | **longest 0.71 s** (total 0.72 s) | **does not hold**: past 0.5 s at ≥ 55 g, and it held the road through it |
+| proven, 90 g | peak 62.82 g, s 8,585, 787 km/h | **not reached** |
+| line-predicted margin, top-10 peaks | median +4.4 g | **holds** |
+
+**Helix** (t 63.6–66.1, 167 frames):
+- deepest 50 m median of the box: −15.3 cm;
+- box median at 55–60 g: −14.8 cm (23 frames);
+- deepest frame −15.9 cm at 60.2 g;
+- peak 62.82 g at 787 km/h;
+- every wheel centre ≥ +0.230 m (`hx-C09.txt`, `helix-C09.txt`).

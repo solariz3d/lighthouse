@@ -241,3 +241,28 @@
 - **Its trigger is a sustained high load with the box still sinking** (about 1.6 m/s, about 0.2 s after a 62.9 g peak), not a landing.
 - **The held case is the reference's plateau at −11 cm.** C07 crossed that depth at t 59.865 still moving and broke about 5 cm deeper.
 - inferred: a guard on load alone would not separate C07 from the reference (54–63 g against 55–60 g). Box depth and its rate do: a plateau held at −11 cm, a box still sinking at −16 cm broke. Two passes that held and one that did not is thin; one more broken pass would test it.
+
+## C09: the helix held, then the edge (the 18:45 save; D551 group B)
+
+**Correction to "For the fix" above, from this lap:**
+- **Depth alone does not separate held from through.** C09 held a plateau at the depth where C07 broke: box −14.5 to −15.9 cm, h −37 to −38 cm, at 58–62 g, for 0.24 s (t 64.53–64.77).
+- **Every wheel stayed on top** (≥ +0.230 m), and no frame lost more than 2.6 km/h.
+- **What still separates C07** is that it reached −16 cm still sinking at about 1.6 m/s, where every pass that held had settled.
+- The set is now **four passes held** (the reference twice, C05, C09) **and one broken.**
+- inferred: a guard on box depth would have to be placed past −16 cm and so would not separate them. The sinking rate still does, on this set.
+
+**Then the D563 edge shape on the LEFT, with a worse ending** (`entry-C09-w2.txt`, `hx-C09-e1.txt`, `hx-C09-mid.txt`, `hx-C09-e2.txt`):
+
+| | C09 w2 (a rear wheel, left side) | D563, C19 rear right |
+|---|---|---|
+| farthest past the mesh edge (u 17.27 here) | **0.595 m** at t 66.36, s 8,937 (the first frame read; the wheel was already out) | 0.856 m |
+| its centre against the edge row while outside | +0.03 → −0.59 m | +0.34 → −0.34 m |
+| back across inward | t ≈ 66.475, s 8,957, **0.82 m below the edge row** | 0.32 m below |
+| under the top surface | **0.78–1.44 m**, from t 66.48, carried inward to u 12.5 (4.7 m in), 0.77 s | 0.21–0.31 m, 6.57 s |
+| how it ended | **launched**: at t 67.11–67.23 (s 9,065–9,083) the load goes 0.8 → −25.3 g, the box from +0.02 to −2.73 m (under the top), and the car's velocity along the road's normal from −0.8 to **+24.7 m/s** (out the top) | the jump jack lifted it |
+
+- **What the other laps do there:** at s 9,040–9,100 (a descending bank of 36–41°) they carry 12–18 g. C09 carried a wheel under the road while its w1 rose (+0.66 → +1.43 m).
+- **After the launch:** the body rose past 10 m over the road (t 67.71), flew about 1.6 s across the road at 18–23 m/s to the right, and came down beyond the right edge at s 9,370–9,410. The right wheels read under the edge row there because they are past it, not through it. The replay ends at t ≈ 71.
+- inferred: **the wheel trapped under the road, and the box reaching it from below, pushed the car out the top.** That is the throw this section's C07 case shows in the other direction. Contact forces are not in the replay.
+- **For the apron:** C09's excursion (0.595 m past the edge, centre 0.59 m below the edge row) is smaller than D563's 0.86 m. Both fit inside 2.0 m.
+- **This lap shows what the edge mechanism costs when it is not caught:** a wheel 1.4 m under for 0.77 s, then the car thrown off the track.
