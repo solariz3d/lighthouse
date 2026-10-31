@@ -118,6 +118,33 @@
 - C03's (−10.2, −9.2) fall at the deep edge of the same spread.
 - inferred: on this evidence, the spread between two passes of one car on this track is about 4–5 cm at the helix. A car has to differ by more than that before its row says anything about its physics.
 
+### C07, saved 18:36 (D551 group B: a "ma_" regular, wheelbase 3.09 m)
+
+- **The replay:** sha256 `9a01897cbe0b21ff…`, 30,068,352 bytes; `table.js` 3,917 rows (t 2.13–65.01), 3,912 after the reset filter.
+- **It is not a lap: it ends at the helix.**
+  - The car runs s 24,890 → the line → s 8,640.
+  - At t 59.895–59.970 (s 8,627–8,639, 14.9 → 14.1 m left of the AI line), its load falls −5.6 → −46.0 g, the box goes to −2.69 m under the mesh, and h goes to −2.02 m.
+  - The table then has no rows until t 61.04, then a reset at t 64.95.
+  - checked: `out/C07/table.csv`, filtered on box < −0.2 m, load < −10 g or a reset.
+  - inferred: the car left the road there. The cause is not separated (driver, car, or the group-B box clearance D551 inferred at R 75 m).
+- **Same road:** worst |Δ| to the reference 0.041 m per 500 m, none marked (`elys-C07.txt`).
+
+| line | C07 (s 24,890 → 8,640) | verdict |
+|---|---|---|
+| suspension stop, 25 g: h p50 at 25–30 / 30–35 / 35–40 / 40–45 g | −16.4 / −17.8 / −18.1 / −18.8 cm (5, 5, 6, 4 frames) | **too few frames to read**: one helix entry |
+| chassis, 40 g: box over the mesh p50 at 40–45 / 45–50 / 50–55 / 55–60 / 60–70 g | 4.0 / 4.0 / 1.9 / **−0.1** / −1.3 cm (4, 5, 7, 15, 13 frames) | **holds at the threshold, on few frames**: the mesh at about 55–60 g, later than the others' 47–50 g |
+| sustained, ≥ 55 g over 0.5 s | longest 0.42 s | **holds** |
+| proven, 90 g | peak **62.87 g**, s 8,579, 779 km/h (the highest of the four cars) | **not reached** |
+| line-predicted margin, top-10 peaks | median +2.1 g | **holds** |
+| lift-off above 300 km/h | 64 frames, worst −46.00 g | **not read**: the worst frames are the departure at s 8,627–8,639, not aero |
+
+**Helix, s 8,400–8,900** (one pass, t 58.9–60.3, 100 frames):
+- deepest 50 m median of the box: −12.5 cm (s 8,600–8,650, which holds the departure frames);
+- under the mesh: 26.0%;
+- box median at 50–55 g: 1.9 cm (7 frames); at 55–60 g: −0.1 cm (15);
+- h median −23.3 cm;
+- peak 62.87 g at 779 km/h; load median 34.3 g, speed median 785 km/h (`helix-C07.txt`).
+
 ## Process
 
 - **Copies** (`S\d560\bgcopy.ps1`, Windows background mode): two replays, `t180b_elysium.kn5` (203,816,893 bytes, sha256 `21a13bf81a0c4eca…`), the AI line, `surfaces.ini`, `models.ini` and `.t180b-builder.json`.
