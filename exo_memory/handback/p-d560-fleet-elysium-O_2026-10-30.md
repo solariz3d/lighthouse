@@ -151,3 +151,34 @@
 - **Runs:** `S\d560\hold.js` (heavy-run slot) → `run560.ps1` (each tool at BelowNormal). `elys.js` → `elys.txt`.
 - **First run, corrected:** a first pass through D544's run script read the CRAZY TEST kn5 name and the unpatched parser. Both outputs were discarded and the runs redone with `run560.ps1`.
 - **Teleport frames:** C03 has one replay reset at t 169.54 s (loads.cjs prints 33,446 g there). loads.cjs and sustained.js do not filter it, so their max is not used; the figures above are `elys.js`'s, after the reset filter.
+
+### C05, the 18:34 auto-save (D551 group B, the keeper's "fine" lap)
+
+- **The replay:** sha256 `f449f0bb1c96a4e6…`, 30,186,339 bytes, 11,598 frames; `table.js` 11,369 rows, 11,368 after the reset filter, s 0–25,039.
+- **No lap clock:** blackbox's lap clock records no completed lap inside this replay (`laps` empty). This auto-save's window does not hold a lap-clock reset. So the row is not tied to a recorded time.
+- **Same road:** worst |Δ| 0.081 m per 500 m. Two cells are marked, 8,000–8,500 (0.298 vs 0.366) and 21,500–22,000 (0.283 vs 0.364). Both are inside the C19 spread (0.118 m), so they are not read as a road change.
+- **Wheels:** `wheel.js` finds 0 events on any wheel. No wheel centre is under the top surface, or more than 0.5 m below an edge row, anywhere on the lap.
+
+| line | C05 | verdict |
+|---|---|---|
+| suspension stop, 25 g: h p50 at 25–30 / 30–35 / 35–40 / 40–45 g | −18.8 / −19.8 / −19.5 / −20.1 cm (86, 87, 19, 21 frames) | **holds** (the plateau) |
+| chassis, 40 g: box over the mesh p50 at 40–45 / 45–50 / 50–55 g | 3.0 / **0.8** / −1.8 cm (21, 32, 93 frames) | **holds at the threshold** (the mesh at about 50 g); never past 52 g |
+| sustained, ≥ 55 g over 0.5 s | 0 s at ≥ 55 g | **holds** (not reached) |
+| proven, 90 g | peak 52.24 g, s 8,597, 713 km/h | **not reached** |
+| line-predicted margin, top-10 peaks | median +4.5 g | **holds** |
+| lift-off above 300 km/h | 233 frames, worst −8.45 g | **holds** |
+
+**Helix, s 8,400–8,900** (one pass, t 62.5–65.1, 175 frames):
+- deepest 50 m median of the box: −2.4 cm (s 8,700–8,750); the deepest frame −3.0 cm at 52.0 g;
+- under the mesh: 54.3%;
+- box median at 50–55 g: −1.8 cm (93 frames);
+- h median −23.7 cm;
+- peak 52.24 g at 713 km/h; load median 50.3 g, speed median 709 km/h (`helix-C05.txt`).
+- C05 was about 50 km/h slower through it than the reference, and about 10 g lower.
+
+### Correction to C07's row, 2026-10-30
+
+- "inferred: the car left the road there" is WRONG in kind. The keeper (18:38) and the frames say it went through the road, not off it.
+- All four wheels were on top, the outer pair 1.5 m inside the mesh edge, until the box broke through at about −16 cm, 0.22 s after a 62.87 g peak.
+- C07's lift-off and deep-box figures are that pass-through.
+- See `p-d563-wheel-under-O_2026-10-30.md`, "C07 through the helix".

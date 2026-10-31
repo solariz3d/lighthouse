@@ -167,3 +167,77 @@
 ## Correction, 2026-10-30 (D565)
 
 - "The saved document … today's core refuses it on a joint check" (the road-there section) is WRONG. The core's own `D.parse` opens it (44 pieces) and `toSegments` builds it (27,592 m). The refusal came from my probe calling `toSegments` on the raw JSON without `parse`, which derives the `edge` and `cup` flags the stored pieces lack. Its handles as read raw still stand. See `p-d565-gates-O_2026-10-30.md` §4.
+
+## C07 through the helix: a high-load pass-through, not an edge event (the chair's re-aim of 00:39Z)
+
+**The keeper, 18:38:** "went hard into the helix and the car clipped and went flying bc it glitched through the track". The frames agree.
+
+- **Replay:** C07 (D551 group B), the 18:36 named save (sha256 `9a01897cbe0b21ff…`), not the 18:37 auto-save.
+- **Compared with:** C05 (the 18:34 auto-save, sha256 `f449f0bb1c96a4e6…`, the keeper's "fine" lap) and the reference's two helix passes (10-17).
+- **Scripts:** `S\d560\helixtrace.js` → `hx-*.txt`, `helixtrace-C07.txt`; `entry.js` → `entry-C07-w0..w3.txt`; `wheel.js` → `out\C07\wheels.csv`.
+- **Raw positions, no smoothing:** helixtrace reads the replay's raw positions. Heights are wheel or body centres over the top surface along the AI station's normal; negative means under.
+- **The `load` column is smoothed:** it is `table.js`'s second difference over ±4 frames (±0.06 s), so a sharp change shows in it up to 4 frames early. The onset below is timed from the raw velocity, not from `load`.
+
+### The answer
+
+**C07 went through the road with all four wheels on top, 1.5 m inside the edge.**
+- **The onset:** about t 59.88 s, s 8,621. That is 0.22 s after the pass's peak load of 62.87 g (t 59.655, 786 km/h).
+- **The load just before:** about 54–58 g.
+- **The box at the onset:** −16 cm under the mesh (h −39 cm).
+- **The wheels at the onset:** all four +0.24 to +0.26 m over the top surface. The outer pair is 1.53–1.72 m inside the mesh edge (u 17.27 m), per `entry.js`.
+
+**What separates it from the passes that held is not the load, which overlaps (C07 54–63 g, reference 55–60 g). It is that C07 never settles:**
+
+| pass | peak load | box: deepest, and how | h there | wheel centres | largest one-frame speed loss |
+|---|---|---|---|---|---|
+| reference, pass 1 (t 417.6–420.4) | 60.19 g | **−11.4 cm, a plateau**: −10.2 to −11.3 cm for 0.21 s at 55–58 g (t 418.95–419.16) | −34 to −35 cm, steady | ≥ +0.231 m, never under | 1.9 km/h |
+| reference, pass 2 (t 563.7–566.6) | 58.24 g | −6.9 cm at 54.9 g | — | ≥ +0.223 m | 1.8 km/h |
+| C05 (t 62.3–65.3) | 52.24 g | −3.0 cm at 52.0 g | — | ≥ +0.237 m | 0.4 km/h |
+| **C07 (t 58.5–59.86, before the break)** | **62.87 g** | **sinking steadily**: −0.1 cm (t 59.76) → −16.1 cm (59.88), **about 1.6 m/s** | −23 → −39 cm | ≥ +0.235 m | 6.7 km/h |
+| **C07 at the break** | — | −21.5, −50.9, −124, −269 cm (t 59.895–59.94) | −44 cm, then lost | **−0.50 to −3.9 m by t 59.955** | **68.5 km/h** (t 59.91) |
+
+- **Where on the road:** every pass runs high on the bank, 12.5–15 m left of the AI line at ≥ 50 g. C07 is the highest, 14.1–15.0 m (per `helixtrace` u).
+- **MAX_DEPTH 4 m** (the soft road's `surfaces.ini`) is not what gave: the box broke at 0.16 m, 4% of it. The body was 3.9 m under at t 59.97 and 5.0 m at 59.985, 0.10 s after the onset.
+
+### The frames (C07; the velocity held in the station frame at t 59.82, s 8,609: n = the road's normal there, T = along)
+
+| t | load (smoothed) | box | body over the top | wheels w0 / w1 / w2 / w3 over the top | v along n / T |
+|---|---|---|---|---|---|
+| 59.820 | 53.8 g | −5.1 cm | 0.00 m | +0.26 / +0.25 / +0.26 / +0.24 | +12.4 / 209.0 m/s |
+| 59.850 | 15.8 | −9.7 | −0.05 | +0.26 / +0.24 / +0.26 / +0.24 | +27.7 / 207.0 |
+| 59.880 | 1.9 | −16.1 | −0.12 | +0.25 / +0.24 / +0.26 / +0.25 | **+38.8 / 198.0** |
+| 59.895 | −5.6 | −21.5 | −0.18 | +0.23 / +0.24 / +0.25 / +0.26 | +33.1 / 185.2 |
+| 59.910 | −10.1 | −50.9 | −0.49 | +0.17 / +0.21 / +0.58 / +0.45 | +12.1 / 167.8 |
+| 59.925 | −30.9 | −124.1 | −1.17 | **−1.26 / −0.50** / +0.14 / +0.35 | −8.6 / 153.7 |
+| 59.940 | −46.0 | −268.6 | −2.02 | −2.83 / −1.78 / **−0.50 / −0.29** | **−14.7 / 150.0** |
+| 59.955 | — | — | −2.93 | −3.92 / −3.15 / −1.70 / −1.21 | −15.9 / 150.3 |
+| 59.985 | — | — | −4.99 | — / −5.42 / −4.00 / −3.43 | −17.3 / 150.0 |
+| 60.015 | — | — | −7.29 | — / −7.85 / −6.46 / −5.73 | −17.0 / 149.6 |
+
+- **The fronts went through first** (w0, w1; wheel order by position, `wheel.js`), at t 59.925, and the rears 15 ms later.
+- **Before the break, the car follows the helix:** its velocity along the fixed n grows +5 → +39 m/s at about 60 g, the centripetal turn.
+- **A plain release would keep that** (+39 m/s along n, 198 m/s along T) and fly straight from there.
+
+### The exit: thrown, not released
+
+- **In 4 frames (t 59.88 → 59.94), the velocity in the fixed frame changes by:**
+  - −53.5 m/s along n, from +38.8 to −14.7, that is out through the road's underside;
+  - −48 m/s along T, from 198.0 to 150.0;
+  - −10 m/s laterally.
+- **That is about 73 m/s in 0.06 s, about 125 g averaged**, directed down through the road and backwards.
+- **After t 59.94 it is constant** (a free flight: −15 to −20 m/s along n as gravity adds, 145–150 m/s along T, 536–553 km/h).
+- **Over the 0.5 s after (t 59.94–60.44):**
+  - the body goes from 2.0 m under the top surface past 7.3 m by t 60.015, beyond the trace's reach after that;
+  - from t 60.36 no AI station is within reach (over about 40 m from the line);
+  - at t 60.6 it is 62.6 m from the line over s 3,870 (a lower part of the track);
+  - then a reset at t 64.95.
+- **Answer to "does the contact throw it on the way out": yes.** It is about 54 m/s outward along the road's normal plus 48 m/s of braking, both delivered while the body was 0.2–2.7 m into the road.
+- inferred: the push outward reads like a contact pushing the car out the far side of a single-sided surface once it is in deep enough. That is not checked; the replay holds positions, not contact forces.
+
+### For the fix
+
+- **Not the D563 edge mechanism:** there is no wheel near an edge, and nothing fell off one. **The apron does not touch this event.** Its 2.0 m sizing stands or falls on the edge excursions (0.86 m in D563); this event is 1.5 m inside the road.
+- **Its class:** the D341 / reference-s-17,584 class, a high-load pass-through of the soft road.
+- **Its trigger is a sustained high load with the box still sinking** (about 1.6 m/s, about 0.2 s after a 62.9 g peak), not a landing.
+- **The held case is the reference's plateau at −11 cm.** C07 crossed that depth at t 59.865 still moving and broke about 5 cm deeper.
+- inferred: a guard on load alone would not separate C07 from the reference (54–63 g against 55–60 g). Box depth and its rate do: a plateau held at −11 cm, a box still sinking at −16 cm broke. Two passes that held and one that did not is thin; one more broken pass would test it.

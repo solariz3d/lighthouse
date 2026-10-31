@@ -297,3 +297,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### On ELYSIUM the plan's 15° bar puts sector 2 on a 14.8° cupped stretch (28.94 m wide, laps 4.6-5.0 m off the line); a 2° bar finds level road at s 12,958 (31.73 m), but the sectors stop being thirds
 2026-10-30, D567 — t180 d567-o acc9280: tools/kn5-move-gate.cjs rewrites only the two gate matrices (88 bytes; 182 meshes, 29 other dummies, 8 other files identical); 8 tests, mutants 13/13/0; both laps cross the new gate inside it at 2.2-2.8 m. Could be wrong that the gate is why laps do not count: the keeper's lap on ELYSIUM GATES decides.
 → `exo_memory/handback/p-d567-gate-patch-O_2026-10-30.md`
+
+### A car can go through the soft road with all four wheels on top, 1.5 m from the edge: C07's box sank steadily (~1.6 m/s) past the reference's -11 cm plateau and broke at -16 cm, then was thrown ~54 m/s out the underside
+2026-10-30, the chair's 00:39Z re-aim — helixtrace.js on raw frames, the station frame held at t 59.82: 4 frames, ~125 g, after a 62.87 g peak; the reference held at 55-60 g, C05 peaked at 52 g. Not the D563 edge mechanism; the apron does not touch it. Could be wrong that sinking rate, not load, separates the cases: two held passes and one break.
+→ `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (C07 through the helix)
