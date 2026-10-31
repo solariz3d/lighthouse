@@ -2713,3 +2713,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-30 ~04:2xZ (D) · D572 Part C, ELYSIUM APRON installed → `exo_memory/handback/p-d572c-apron-export-E_2026-10-30.md`
 - New folder t180b_elysium_apron (kn5 sha256 27321f34…, SOFT_CFM 0.00005 byte-equal to GATES STIFF's), doc 2026-10-22_193736 through the app path on merged 429bc68; TIME_2 by kn5-move-gate on the width-0 export, its matrices byte-equal to GATES STIFF's, 88 bytes patched, gate checks pass. The road is NOT byte-identical to his: same vertices to the float, same triangles to 0.1 mm except 200 upright fins at s 0, 12,604.5 and 19,102.1 that 5fb289c removed (inferred cause); none in the test stretch.
 - **Carry:** compare a re-export's road order-free (vertex and triangle sets); index-paired meshes show metres of "move" when a chunk boundary shifts.
+
+## 2026-10-31 ~07:4xZ (D) · D577 comment sweep, src/geom, src/export, src/core → `exo_memory/handback/p-d577-sweep-E_2026-10-30.md`
+- t180 b212989, 93f38ba, 8aae663 on d577-e off a6af8cf (not pushed): 33 files, 449/448 comment lines; with comments stripped by a scratch scanner (8/8 rows, mutants 7/7/0) every file is byte-identical to the base in both line-ending forms; anchors unchanged after one AMENDED harness line (Q8); fixtures 0 of 9; full suite 15 red, all the base's row 17, frame-time rows under load, or a control that passes alone.
+- **Carry:** with core.autocrlf on, prove identity on both the stored and the checked-out form; a check of one can pass while the other moves.
