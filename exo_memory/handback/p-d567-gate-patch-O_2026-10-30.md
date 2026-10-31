@@ -172,3 +172,20 @@ checked: `node S\run.js` → `S\run-tilt2.out`; `node S\verify.js` (in `S\run2-t
 - The run reached TIME_1, and left the road 1,296 m before the moved TIME_2.
 - What ended it is the edge mechanism (a rear wheel 0.54 m past the right edge, trapped under, then the car thrown up), not the gate.
 - **The test still stands as written:** a complete clean lap on GATES or STIFF, sectors 1–3 shown, and a time in `race_out.json` and `personalbest.ini`.
+
+## Validity, the second STIFF lap: C11 crossed all three gates, the moved TIME_2 inside its segment (the 19:42 save)
+
+`S\d567\gates.js` against the patched dummies, on C11 on STIFF (sha256 `bea03b3c…`):
+
+| gate | crossing |
+|---|---|
+| AC_TIME_0 | **t 13.314, inside** (tau 0.138); blackbox's lap clock resets at t 13.335 |
+| AC_TIME_1 (s 9,335) | **t 63.315, inside** (tau 0.322) |
+| **AC_TIME_2 (moved, s 12,958.5)** | **t 84.704, inside** (tau 0.914), the car 1.7–2.3 m below the gate's line (as at the start gate) |
+
+- The listed TIME_0 at t 35.8 and TIME_2 at t 93.4 are the path passing 49–64 m under or over the gate line. They are not passes.
+- **The first lap through the moved gate: sector 2 was crossed inside its 31.73 m segment.**
+- **It did not complete:** the car left the road at s 17,720 (t ≈ 117.4) before the line.
+- **What the game wrote:** `out\laps.ini` (19:42:47, read from a copy): `LAPS=0`; no `race_out.json` that session. `personalbest.ini` is unchanged since 2026-10-17.
+- **So the HUD's sectors 1 and 2 should have completed on this lap.** The keeper's own eye on the HUD would confirm it; the replay holds no HUD state.
+- **The full test still wants one complete lap:** sector 3 and a recorded time.

@@ -526,3 +526,93 @@
   - Every one is inside 2.0 m.
   - The largest is still D563's, 0.86 m, at 655 km/h. On the evidence, an apron of 2.0 m carries a margin of more than twice the largest.
   - The centre was 0.19–0.59 m below the edge row at the peak. That is the drop the apron's surface has to catch the wheel within.
+
+## STIFF, the second car: C11 on ELYSIUM GATES STIFF, the 19:42 save (the chair's ring of 01:44Z)
+
+- **Replay:** sha256 `bea03b3c90a047df…`, 29,784,647 bytes; labelled C11s.
+- **Scripts:** `S\d560\hx-C11s-lap.txt` (the whole lap, raw), `sinkrate.txt`, `hop.txt`, `hoplap.js`, `seam.js`, `profile.js`, `out\C11s\`.
+- **Lock:** the readers ran under the heavy-run lock with their own tree name (`o-scratchpad-d560`). The default lumps every non-git working directory into one tree, and a C export harness in another non-git directory held it. Mine read and write only my scratchpad.
+
+### 1. The helix held: both falsifiers silent, again
+
+| | C11 on the soft road (went through) | **C11 on STIFF** | C07 on STIFF |
+|---|---|---|---|
+| peak load | 57.67 g at 780 km/h | **64.90 g** at 793 km/h | 64.88 g at 793 km/h |
+| longest unbroken at ≥ 55 g | 0.17 s | **1.35 s** | 1.54 s |
+| box over the mesh at 55–60 / 60–70 g (p50) | +0.4 cm, then sinking to −13 cm and through | **+5.4 / +5.4 cm** | +5.4 / +5.4 cm |
+| the box's lowest in the helix | through | **+4.1 cm** (t 60.915, 48.6 g); 0 frames under | +4.5 cm |
+| h at 50–70 g | −20.6 to −22.0 cm, then falling | **−16.9 to −17.0 cm, flat** (lowest −17.6 cm) | −17.5 cm |
+| sinking rate at −11 cm | 1.96 m/s → broke | **never sinks** | never sinks |
+
+- **"A sink past −11 cm faster than 1 m/s":** did not fire.
+- **"A plateau of −14 cm or deeper at 58–62 g":** did not fire; the plateau is +5.4 cm.
+- **Two cars that went through on the soft road both held on STIFF**, at higher loads than they broke at. They rode at the same suspension plateau (h about −17 cm), with the box 4–5 cm clear of the road.
+
+### 2. The new event: two one-sided hops on piece 29, before the inverted drop
+
+**Where and what** (`hx-C11s-lap.txt`, every frame):
+- Two events on piece 29, both on boost:
+  - s 17,020–17,040 (t 113.61–113.70, 723–727 km/h);
+  - s 17,455–17,475 (t 115.785–115.86, 746–751 km/h).
+- **The road there:** banked 64–67°, climbing 22–24°, R 132–134 m (`table.csv`).
+- They are 432 m apart and 2.0–2.7 s before the braking (t 116.0 onward) that ends in the departure at s 17,700–17,750. That fits "hits weird clipping around 720 km/h … causing me to misjudge my braking".
+
+| t (second event) | km/h | load (smoothed) | box | h | w0 / w1 / w2 / w3 over the top | v along the road's normal (fixed frame at t 115.65) |
+|---|---|---|---|---|---|---|
+| 115.695 | 750 | 27.4 g | +3.2 cm | −17.9 cm | 0.253 / 0.256 / 0.256 / 0.260 | +7.1 m/s |
+| 115.710 | 750 | **31.8** | +3.2 | −17.9 | 0.252 / 0.257 / 0.254 / 0.255 | +10.8 |
+| 115.770 | 748 | 25.0 | +3.2 | −17.8 | 0.253 / 0.255 / 0.253 / 0.257 | +28.6 |
+| 115.785 | 746 | 24.0 | +12.6 | — | **0.276** / 0.258 / **0.269** / 0.256 | +33.8 |
+| **115.815** | 747 | 27.5 | **+19.4** | **−6.7** | **0.359** / 0.258 / **0.361** / 0.253 | +36.4 |
+| 115.845 | 747 | 22.1 | +13.1 | −13.8 | 0.304 / 0.256 / 0.319 / 0.256 | +40.5 |
+| 115.875 | 746 | 26.6 | +2.5 | −17.6 | 0.248 / 0.255 / 0.243 / 0.256 | +50.2 |
+
+- **The first event** (t 113.55–113.715) is the same: the load 25.6 → 29.4 g in one frame, then w0 and w2 to +0.35–0.37 m, h −17.9 → −8.1 cm, the box +3.3 → +18.7 cm, back by t 113.715.
+
+**Classification: a one-sided HOP (a small bounce), not a launch, chatter, or a wheel under:**
+- **Not a launch:**
+  - one side's wheels (w0 and w2) rise from +0.25 to +0.35–0.37 m, still inside the 0.395 m tyre radius, so lightly loaded but not off the road;
+  - the other side stays at +0.25 m;
+  - the body rises about 11 cm against its wheels for about 0.075 s;
+  - it loses 4–5 km/h and settles within about 0.1 s.
+- **Not chatter:** two isolated events 432 m apart, nothing between them.
+- **Not a wheel under:** every wheel centre ≥ +0.236 m on the whole stretch.
+- **Its size:** the same as the ordinary hops every lap takes elsewhere. The reference's at s 9,131 is h +11.7, box +14.7 cm; C11s's are h +10.5–10.7, box +15.2–16.0 cm.
+
+**What is new on STIFF, exactly:**
+- **Hops in general are not new.** `hoplap.js` (frames where h rises over 4 cm and the box over 6 cm above their own 0.3 s median, at once) finds them on every lap, at the same places: s 6,107, 6,605, 9,125–9,131, 9,203, 9,353, 10,637–10,643, 11,627–11,633, 17,626–17,632, 17,872, 22,708, 23,638.
+  - The reference has 27 (both laps), C03 12, C11s 10, C07s 6.
+  - C11s and C07s hop at the same shared places as the soft laps, at similar sizes.
+- **The two piece-29 hops are new:**
+
+| lap (s 16,900–17,600) | hops | load spike at s 17,008 / 17,440 over the local median |
+|---|---|---|
+| reference, two passes (to 724 and 741 km/h) | 0 | +0.1 to +0.5 g |
+| C03 (to 737 km/h) | 0 | +0.8 / +0.1 g |
+| C05 (to 714 km/h) | 0 | +0.1 / +0.1 g |
+| **C11s (724–751 km/h)** | **2** | **+3.9 / +4.8 g** |
+
+- **The road there is ordinary:**
+  - each spot sits in the middle of one road chunk (`1ROAD_p29_chunk_53` and `_54`, each spanning about ±24 m around the point; `seam.js`);
+  - the surface along the car's lane (u −11 m, every 0.25 m; `profile.js`) shows only the mesh's regular faceting, 0.42–0.46° every 2 m, the same through both spots;
+  - no step and no kink.
+- **What the comparison cannot separate:** C11 never reached piece 29 on the soft road (it went through in the helix); C07 on STIFF left the road at s 11,662. So **the two new hops are new to the pair (C11, STIFF), not shown to be STIFF's.**
+  - The soft-road passes at the same speed are the Mach 6, C03 and C05: other cars, other wheelbases. C11's 2.93 m is the shortest.
+  - inferred, not separated: a short-wheelbase car on the firmer contact picks up an input the soft road absorbed. The faceting the profile shows is the only feature there.
+
+**The CFM plan's falsifier, read as written** ("a STIFF pass that bounces or launches … where the soft road did not"):
+- **It fires in its weakest form:** a bounce of about 11 cm, about 0.1 s, at two places where no soft-road pass bounced.
+- **It is confounded by car:** no pass of the same car on the soft road exists there.
+- It is not a launch: no wheel left the road, and the speed cost was 4–5 km/h.
+- **The test that separates it:** C11 on STIFF and on GATES (the soft road with the moved gate) at the same pace through piece 29, or any other car on STIFF there.
+
+### 3. Wheels under anywhere
+
+`wheel.js` finds one event, at s 17,746–17,758 (t 117.66–118.58): all four wheels 59–62 m off the road, which is the departure itself. Nothing was under the road earlier on the lap.
+
+### How the run ended
+
+- From t 116.0 it brakes: 747 → 594 km/h by t 116.70 (about 6.4 g along the road).
+- It yaws 18° → 50° while u goes −8.9 → −17.6 m: across the road to the right edge.
+- It leaves the road there at about t 117.4 (s 17,720): the wheels have no road under them from t 117.45.
+- inferred: the braking, misjudged after the hops, is the keeper's own account. The replay holds no inputs.

@@ -271,3 +271,20 @@
 - box median at 50–55 g: +5.4 cm (19 frames); at 55–60 g: +5.4 cm (50);
 - h median −17.5 cm;
 - peak 64.88 g at 793 km/h; load median 57.1 g, speed median 774 km/h (`helix-C07s.txt`).
+
+### C11 on ELYSIUM GATES STIFF, the 19:42 save (its own row: SOFT_CFM 0.00005)
+
+- **The replay:** sha256 `bea03b3c90a047df…`, 29,784,647 bytes; `table.js` 7,777 rows.
+- **The road:** the same as his export, byte for byte; the same-road check is moot.
+- **It is not a lap:** it holds the helix, crosses all three gates, takes two hops on piece 29, and leaves the road at s 17,720 (p-d563, "STIFF, the second car").
+
+| line | C11 on STIFF (to s 17,600) | verdict |
+|---|---|---|
+| suspension stop, 25 g: h p50 at 25–30 / 30–35 / 35–40 / 40–45 g | −17.8 / −18.8 / −18.9 / −17.1 cm (271, 106, 59, 13 frames) | **holds** (the plateau) |
+| chassis, 40 g: box over the mesh p50 at 45–50 / 50–55 / 55–60 / 60–70 g | **+4.6 / +5.3 / +5.4 / +5.4 cm**, h flat at −17 cm | **holds, and does not reach the mesh** |
+| sustained, ≥ 55 g over 0.5 s | **longest 1.35 s** | **does not hold** as a limit; the car held the road through it |
+| proven, 90 g | peak **64.90 g**, s 8,591, 793 km/h | **not reached** |
+| line-predicted margin, top-10 peaks | median +6.1 g | **holds** |
+| lift-off above 300 km/h | 121 frames, worst −6.77 g | **holds** |
+
+**Helix** (t 58.6–61.0, 162 frames): the box under the mesh on 0 frames, its lowest +4.1 cm; box median at 50–55 g +5.3 cm (27 frames), at 55–60 g +5.4 cm (44); h median −17.0 cm; peak 64.90 g at 793 km/h; load median 56.3 g, speed median 770 km/h (`helix-C11s.txt`).

@@ -325,3 +325,7 @@ General form: an edge read at a side's very end reads its trim; read the shape i
 ### Four measured edge excursions now size the apron: 0.31, 0.54, 0.595 and 0.86 m past the mesh edge (all inside 2.0 m), centre 0.19-0.59 m below the edge row at the peak
 2026-10-30, the chair's 01:32Z addendum — entry.js on C07 on STIFF (rear left at s 9,176, rear right at s 11,303; 0.195 s and 0.270 s outside), beside D563 and C09. Could be wrong for a faster or steeper exit: four events, 640-740 km/h.
 → `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (STIFF (2b))
+
+### Both cars that went through on the soft road held the helix on STIFF (box +4-5 cm over the mesh at 65 g); C11 on STIFF took two one-sided hops at new places on piece 29 that no soft pass took, confounded by car; and it crossed the moved TIME_2 inside
+2026-10-30, the chair's 01:44Z ring — hoplap.js (the hop signature recurs at the same places on every lap; only s 17,026 and 17,458 are new, and only in C11s), seam.js and profile.js (no seam or kink there), gates.js on C11s. Could be wrong that the hops are the car's and not STIFF's: no same-car soft pass exists there.
+→ `exo_memory/handback/p-d563-wheel-under-O_2026-10-30.md` (STIFF, the second car); `p-d567-gate-patch-O_2026-10-30.md`
