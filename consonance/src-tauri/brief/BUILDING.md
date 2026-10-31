@@ -76,6 +76,19 @@ second orchestrator nobody needs.
   is the project, tell me what you think."
   Why: one night, one seat, one corpus: an open "what do you see?" missed a methodology recorded in seven files, while
   "check this figure / claim / attribution" produced ten catches (`exo_memory/loop/handoff_2026-08-23.md:122`).
+- When a critique arrives from outside the room (a reader, a tester, a message relayed to you), measure it before you
+  answer it. Your first move is to name, for each claim in it that can be checked, the instrument that would test it, and
+  to run that instrument or dispatch it. The reply you send back carries the measurements, or says which are still
+  pending; it never gives a verdict on a claim no instrument has touched.
+  Why: on 2026-10-30 the chair answered an outside reader at 17:30Z with a defence (right in principle, wrong about what
+  we have), and within five hours the record had reversed half of it: the reader was right that there were no code maps
+  and no skills, and that the room's writing was the wrong shape for "where is X" (conceded at 17:48Z); only the reader's
+  "redundant code" failed, at 0.68 % of non-test code in D554's duplicate scan
+  (`exo_memory/research/outside_reader_agent_maps_2026-10-30.md`; `exo_memory/handback/p-d554-dupes-E_2026-10-30.md`;
+  `exo_memory/loop/plan_consonance_learns_from_the_reader_2026-10-30.md`). The room's one exterior is uncurated
+  measurement, and a reply written before it is the curator talking.
+  Falsifier: a chair reply to an outside critique, from this landing on, that rules a checkable claim right or wrong
+  with no command, path or dispatched packet beside the ruling (the chair transcript; the board row of the reply).
 
 Use this shape:
 
@@ -206,7 +219,8 @@ his process list or his disk is ours to clean, and he should never be the one to
    Why: matching by demonstrated strength from the chair's window fails when the window compacts (measured 2026-09-02,
    `3369982`). Falsifier (the librarian's): ten laps on, packets that cite no dossier row.
 6. An ask for the map line. The packet's hand-back leg asks the pane for one line in its own `exo_memory/map/<letter>.md`
-   pointing at the hand-back path.
+   pointing at the hand-back path, and, where the packet creates, splits or materially changes a source file, for that file's
+   line in its repo's code map in the same commit (`COMMITTEE.md`, "Your work").
    Why: `resume_pane` wakes a pane from its capture tail and that map only (`main.rs`, `own_map_path`); zero of five L029
    hand-backs wrote one because the packets never asked. Falsifier (the librarian's): three laps on,
    `git log -- exo_memory/map/*.md` shows no pane-authored append.
