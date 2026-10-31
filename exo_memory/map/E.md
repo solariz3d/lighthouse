@@ -2717,3 +2717,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-10-31 ~07:4xZ (D) · D577 comment sweep, src/geom, src/export, src/core → `exo_memory/handback/p-d577-sweep-E_2026-10-30.md`
 - t180 b212989, 93f38ba, 8aae663 on d577-e off a6af8cf (not pushed): 33 files, 449/448 comment lines; with comments stripped by a scratch scanner (8/8 rows, mutants 7/7/0) every file is byte-identical to the base in both line-ending forms; anchors unchanged after one AMENDED harness line (Q8); fixtures 0 of 9; full suite 15 red, all the base's row 17, frame-time rows under load, or a control that passes alone.
 - **Carry:** with core.autocrlf on, prove identity on both the stored and the checked-out form; a check of one can pass while the other moves.
+
+## 2026-10-31 ~15:4xZ (D) · D586 Part 3, the map gate → `exo_memory/handback/p-d586-map-gate-E_2026-10-31.md`
+- lighthouse f59760b3 on d586-e off e80b2af7 (not pushed, exe not rebuilt): call_librarian reads `BASE: <checkout> <sha>` lines from the ring, diffs base..HEAD with renames split, and warns (light) or refuses (strict) when files under src/, app/, consonance/src-tauri/src/ or consonance/tools/ were created or deleted with no MAP.md; a gate that cannot run is marked or refused, never silent; no BASE line is marked and counted. Red 17 of 20 on a stub, green mcp 163/0, mutants applied 19 / caught 19 / NOT APPLIED 0 (M9 after its test was tightened).
+- **Carry:** a test that only checks a warning is absent passes on a stub that warns about nothing; pin what the passing line says too.
