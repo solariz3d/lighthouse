@@ -167,3 +167,16 @@ The angle between the drawn surface's first column and the edge's own last segme
 - **My first pit camera found an edge vertex on another pass of the lap,** about 100 m below the start straight. It was fixed to search near the station's own surface and before the leave.
 - **My crease script's side test matched `APRONLIPR_` as left** (half the rows read 122°). Fixed (`L_`); the figures in §3 are after the fix.
 - **A `sed -i` stripped CR line endings** from the test file once; restored before the commit. One temp file went through `/tmp` instead of the scratchpad.
+
+## Status at close (the chair's ring of 23:50Z)
+
+- **Done, not WIP:**
+  - t180 **d593-o tip `97ab62e`**, committed and clean.
+  - Both amendments are built: the visual-only mesh with the physics kept byte-equal and hidden (17:1x), and the pit lane as one outline (17:2x).
+  - Tests: apron 17/17, harness 11/11/0, touched files 50/50.
+  - No run of mine is going.
+- **The renders** are copied beside this file, in `exo_memory/handback/p-d593-apron-shape-O_2026-10-31_evidence/renders/` (24 PNGs, base-* and cut-*; §0 says which is which).
+- **Next:**
+  1. His look at the renders.
+  2. Then a landing pane takes d593-o into 0.4.35 with the full suite.
+  3. If he asks: smooth the concave pit corners' visual tab (§5), and check in his game that a hidden `1ROAD_` physics mesh still collides.
