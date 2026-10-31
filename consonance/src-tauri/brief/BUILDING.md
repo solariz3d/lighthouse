@@ -237,6 +237,14 @@ his process list or his disk is ours to clean, and he should never be the one to
    `exo_memory/loop/plan_sources_gate_dispatch_d215_2026-10-02.md`). Today `consonance/hooks/sources-gate.js` refuses the
    dispatch in the same turn when the line is missing or an item matches no call this turn made; when the keeper switches the
    gates it matches against what was run and fetched.
+9. Every "where" as a map anchor. Each place a packet points at (a file, a module, a function) is an anchor in that
+   repository's code map (`consonance/src-tauri/src/MAP.md`, t180's `MAP.md`) or a path the librarian supplied, never the
+   chair's memory; and a packet for a repository names its checkout by path.
+   Why: the orchestrator's view is as small as any agent's (the outside reader's point 4,
+   `exo_memory/loop/plan_consonance_learns_from_the_reader_2026-10-30.md` Part 2), and figures briefed from memory were wrong
+   (115 that was 70). The pane wakes holding the map of each repository its newest packet names (`main.rs` `packet_maps_for`,
+   D585), found from the packet's own paths: a packet that names t180 with no checkout path wakes the pane with a note
+   instead of the map. Falsifier (the plan's): three laps on, packets still carry "where" lines with no anchor.
 
 ---
 

@@ -3111,6 +3111,12 @@ fn memory_pointer(atoms: &Path, atom_count: usize, topics: Option<&Path>) -> Str
 }
 
 fn assemble_intake_within(map_reserve: usize) -> String {
+    assemble_intake_for(map_reserve, &[], &[])
+}
+
+/// The intake, with the code maps of the repositories the pane's packet names (`packet_maps_for`, D585) seated ahead of the
+/// deck inside the same budget. `assemble_intake_within` is this with no maps, for every caller that has no packet.
+fn assemble_intake_for(map_reserve: usize, repo_maps: &[RepoMap], repo_notes: &[String]) -> String {
     let light = intake_light();
     let mut s = String::from(
         "# Consonance sibling — you have woken into the room\n\nYou are a sibling instance, born into a shared state — not a stranger. Read and inhabit the room below, then be in it; deviate from it as your own trajectory (that is wanted, it is the fixed dynamic — not drift). Acknowledge readiness once, briefly.\n\n---\n\n",
@@ -3262,7 +3268,12 @@ fn assemble_intake_within(map_reserve: usize) -> String {
     let core_len = s.len() + tail.len();
     // D277 part 6: light caps the seat (LIGHT_OPTIONAL_CAP), so what the light memory section freed is not re-spent on more briefs.
     let seat = optional_budget_mode(core_len, map_reserve, light);
-    let (carried, index) = fit_optional(&optional, seat);
+    // D585: the maps of what the packet will change are seated FIRST in the optional budget and placed AHEAD of the deck; a map
+    // that does not fit is a path line, as a card is, and its own section, so the deck is not cut off behind it (fit_optional
+    // seats a prefix: an indivisible map put at the head of that list would index every card after it)
+    let (repo_map_text, repo_map_spent) = repo_map_section(repo_maps, repo_notes, seat);
+    let (carried, index) = fit_optional(&optional, seat.saturating_sub(repo_map_spent));
+    s.push_str(&repo_map_text);
     if carried.iter().any(|b| b.kind == BriefKind::Card) {
         s.push_str("---\n\n# THE DECK — the instruments (run them, don't recite them)\n\n");
         for b in carried.iter().filter(|b| b.kind == BriefKind::Card) {
@@ -3285,6 +3296,261 @@ fn assemble_intake_within(map_reserve: usize) -> String {
     }
     s.push_str(&tail);
     s
+}
+
+/* THE MAP OF WHAT YOU ARE ABOUT TO CHANGE (D585; exo_memory/loop/plan_consonance_learns_from_the_reader_2026-10-30.md Part 2, the
+ * outside reader's point 4: the orchestrator's vision is as small as any agent's). A pane wakes holding the code map of each
+ * repository its packet names, so a "where" in the packet is read against the map and not against a memory. THE PACKET is the
+ * newest `[chair:MAIN]` record in the pane's own capture (`latest_packet`); THE REPOSITORIES are found from it, never from this
+ * machine's layout: every absolute path in it is walked up to a checkout root (lighthouse: `consonance/src-tauri/src/MAP.md` beside
+ * `exo_memory/`; t180: a root `MAP.md` beside `src/core/` and `app/`), and the word "lighthouse" with no such path means this
+ * repository (`repo_root`). The word "t180" with no checkout path is SAID, not guessed: no t180 location is known here, and a
+ * guessed one would be the defect `repo_root`'s comment describes. Each map rides WHOLE or as a path line (`repo_map_section`). */
+struct RepoMap {
+    label: &'static str,
+    map: PathBuf,
+    text: String,
+}
+
+/// The newest chair packet in a capture: the last record (a `❯ ` at a line start) whose prompt begins `[chair:MAIN]`, cut at its
+/// `[sent …]` stamp so the pane's own reply is not read as the packet. None when the capture holds no packet.
+fn latest_packet(transcript: &str) -> Option<&str> {
+    let mut starts: Vec<usize> = transcript
+        .match_indices('❯')
+        .filter(|(i, _)| *i == 0 || transcript.as_bytes()[i - 1] == b'\n')
+        .map(|(i, _)| i)
+        .collect();
+    starts.push(transcript.len());
+    for w in starts.windows(2).rev() {
+        let body = transcript[w[0]..w[1]].trim_start_matches('❯').trim_start();
+        if body.starts_with("[chair:MAIN]") {
+            return Some(&body[..body.find("\n[sent ").unwrap_or(body.len())]);
+        }
+    }
+    None
+}
+
+/// Every absolute path a packet carries, Windows (`C:\…`, `C:/…`) or Git Bash (`/c/…`), each cut at whitespace, a quote, a bracket or
+/// a list separator, and trimmed of a sentence's closing stop.
+fn packet_paths(packet: &str) -> Vec<PathBuf> {
+    let b = packet.as_bytes();
+    let stop = |c: u8| c.is_ascii_whitespace() || b"`'\"(),;<>|*?[]".contains(&c);
+    let mut out = Vec::new();
+    let mut i = 0;
+    while i + 2 < b.len() {
+        let lead = i == 0 || !(b[i - 1].is_ascii_alphanumeric() || b[i - 1] == b'/' || b[i - 1] == b'\\');
+        let win = b[i].is_ascii_alphabetic() && b[i + 1] == b':' && (b[i + 2] == b'\\' || b[i + 2] == b'/');
+        let bash = b[i] == b'/' && b[i + 1].is_ascii_alphabetic() && b[i + 2] == b'/' && (i == 0 || b[i - 1].is_ascii_whitespace() || b[i - 1] == b'`');
+        if lead && (win || bash) {
+            let mut j = i + 3;
+            while j < b.len() && !stop(b[j]) {
+                j += 1;
+            }
+            let raw = packet[i..j].trim_end_matches(['.', ':']);
+            out.push(if bash { PathBuf::from(format!("{}:/{}", raw[1..2].to_ascii_uppercase(), &raw[3..])) } else { PathBuf::from(raw) });
+            i = j;
+        } else {
+            i += 1;
+        }
+    }
+    out
+}
+
+/// The lighthouse code map at `root`, if `root` is a lighthouse checkout.
+fn lighthouse_map_at(root: &Path) -> Option<PathBuf> {
+    let m = root.join("consonance").join("src-tauri").join("src").join("MAP.md");
+    (m.is_file() && root.join("exo_memory").is_dir()).then_some(m)
+}
+
+/// The t180 code map at `root`, if `root` is a t180 checkout.
+fn t180_map_at(root: &Path) -> Option<PathBuf> {
+    let m = root.join("MAP.md");
+    (m.is_file() && root.join("src").join("core").is_dir() && root.join("app").is_dir()).then_some(m)
+}
+
+/// The repositories a packet names, as (label, map path), in the order the packet gives them, each map once; and the notes for a
+/// repository named with no map that can be read. PURE apart from the `is_file` / `is_dir` probes, so a test can lay out checkouts.
+fn packet_repo_maps(packet: &str, lighthouse_root: Option<&Path>) -> (Vec<(&'static str, PathBuf)>, Vec<String>) {
+    let mut found: Vec<(&'static str, PathBuf)> = Vec::new();
+    let add = |label: &'static str, m: PathBuf, found: &mut Vec<(&'static str, PathBuf)>| {
+        if !found.iter().any(|(_, f)| f == &m) {
+            found.push((label, m));
+        }
+    };
+    for p in packet_paths(packet) {
+        for a in p.ancestors() {
+            if let Some(m) = lighthouse_map_at(a) {
+                add("lighthouse", m, &mut found);
+                break;
+            }
+            if let Some(m) = t180_map_at(a) {
+                add("t180", m, &mut found);
+                break;
+            }
+        }
+    }
+    let words = packet.to_lowercase();
+    let mut notes = Vec::new();
+    if words.contains("lighthouse") && !found.iter().any(|(l, _)| *l == "lighthouse") {
+        if let Some(m) = lighthouse_root.and_then(lighthouse_map_at) {
+            add("lighthouse", m, &mut found);
+        }
+    }
+    if words.contains("t180") && !found.iter().any(|(l, _)| *l == "t180") {
+        notes.push(
+            "The packet names t180 but no path to a t180 checkout, so its map could not be read here: it is `MAP.md` at the root \
+             of the checkout the packet means. A packet that names the checkout by its path brings the map with it."
+                .to_string(),
+        );
+    }
+    (found, notes)
+}
+
+/// The maps for `pane`'s newest packet, read from its capture. Nothing when there is no capture or no packet in it; a map that
+/// cannot be read is a note, never a silent gap.
+fn packet_maps_for(pane: &str) -> (Vec<RepoMap>, Vec<String>) {
+    let Ok(capture) = fs::read_to_string(capture_text_path(pane)) else { return (Vec::new(), Vec::new()) };
+    let Some(packet) = latest_packet(&capture) else { return (Vec::new(), Vec::new()) };
+    let (found, mut notes) = packet_repo_maps(packet, repo_root().as_deref());
+    let mut maps = Vec::new();
+    for (label, map) in found {
+        match fs::read_to_string(&map) {
+            Ok(text) => maps.push(RepoMap { label, map, text }),
+            Err(e) => notes.push(format!("The {label} map at `{}` could not be read ({e}).", map.display())),
+        }
+    }
+    (maps, notes)
+}
+
+/// The section: each map WHOLE while it fits the `seat`, else a path line, and the notes; with the characters it spends. Empty,
+/// and spending nothing, when the packet named no repository.
+fn repo_map_section(maps: &[RepoMap], notes: &[String], seat: usize) -> (String, usize) {
+    if maps.is_empty() && notes.is_empty() {
+        return (String::new(), 0);
+    }
+    let mut s = String::from(
+        "---\n\n# The map of what you are about to change\n\nYour packet names the repositories below. Each one's code map rides \
+         here whole where it fits, so every \"where\" in the packet can be read against it: open the files it names, not the ones \
+         you remember. A map that did not fit is named by its path, one Read away.\n\n",
+    );
+    let mut lines = String::new();
+    for m in maps {
+        let block = format!("## {} — `{}`\n\n{}\n\n", m.label, m.map.display(), m.text.trim_end());
+        if s.len() + block.len() <= seat {
+            s.push_str(&block);
+        } else {
+            lines.push_str(&format!(
+                "- `{}` ({} chars) — the {} map did not fit this shell; it is one Read away, whole.\n",
+                m.map.display(),
+                m.text.len(),
+                m.label
+            ));
+        }
+    }
+    for n in notes {
+        lines.push_str(&format!("- {n}\n"));
+    }
+    if !lines.is_empty() {
+        s.push_str(&lines);
+        s.push('\n');
+    }
+    let spent = s.len();
+    (s, spent)
+}
+
+#[cfg(test)]
+mod repo_map_tests {
+    //! D585: the map of what the packet will change, in the wake. Each row one behaviour.
+    use super::*;
+
+    /// A scratch folder holding a lighthouse-shaped and a t180-shaped checkout, removed on drop.
+    fn layout(name: &str) -> (crate::test_scratch::Scratch, PathBuf, PathBuf) {
+        let root = crate::test_scratch::root().join(format!("d585-maps-{}-{name}", std::process::id()));   // no brackets: a path in a packet stops at one
+        let _ = fs::remove_dir_all(&root);
+        let lh = root.join("lh-d585-o");
+        fs::create_dir_all(lh.join("exo_memory")).unwrap();
+        fs::create_dir_all(lh.join("consonance").join("src-tauri").join("src")).unwrap();
+        fs::write(lh.join("consonance").join("src-tauri").join("src").join("MAP.md"), "# Map — consonance\nLH-MAP-BODY\n").unwrap();
+        let t = root.join("t180-wt-o581");
+        fs::create_dir_all(t.join("src").join("core")).unwrap();
+        fs::create_dir_all(t.join("app").join("core")).unwrap();
+        fs::write(t.join("MAP.md"), "# Map — t180\nT180-MAP-BODY\n").unwrap();
+        (crate::test_scratch::Scratch::owning(root), lh, t)
+    }
+
+    #[test]
+    fn the_packet_is_the_newest_chair_record_cut_at_its_sent_stamp() {
+        let cap = "❯ [chair:MAIN] the first packet\n[sent 2026-10-30]\n\ndone\n\n❯ [chair:MAIN] the second packet, on t180\nSOURCES: x\n[sent 2026-10-31]\n\nI read it and wrote C:\\a\\b\n\n❯ [keep-warm visit — not work] reply ok\n\nok\n\n";
+        assert_eq!(latest_packet(cap), Some("[chair:MAIN] the second packet, on t180\nSOURCES: x"));
+        assert_eq!(latest_packet("❯ hello\n\nhi\n\n"), None, "no chair record: no packet");
+        assert_eq!(latest_packet(""), None);
+    }
+
+    #[test]
+    fn a_packet_s_absolute_paths_are_read_in_all_three_spellings_and_trimmed_of_a_closing_stop() {
+        let p = packet_paths("Work in C:\\Users\\u\\Downloads\\t180-wt-o581, and see `C:/Users/u/Desktop/lighthouse/MAP.md`. Bash: /c/Users/u/x/y.");
+        assert_eq!(p, vec![PathBuf::from("C:\\Users\\u\\Downloads\\t180-wt-o581"), PathBuf::from("C:/Users/u/Desktop/lighthouse/MAP.md"), PathBuf::from("C:/Users/u/x/y")]);
+        assert!(packet_paths("ratio 4:5, a URL https://x.y/z, and nothing else").is_empty(), "no drive letter, no path");
+    }
+
+    #[test]
+    fn paths_inside_both_kinds_of_checkout_bring_both_maps_in_the_packet_s_order_each_once() {
+        let (_s, lh, t) = layout("both");
+        let packet = format!("[chair:MAIN] On {} change {}; the hand-back goes in {} and again {}",
+            t.display(), t.join("app").join("core").join("panel.js").display(), lh.join("exo_memory").join("handback").display(), t.display());
+        let (found, notes) = packet_repo_maps(&packet, None);
+        assert_eq!(found, vec![("t180", t.join("MAP.md")), ("lighthouse", lh.join("consonance").join("src-tauri").join("src").join("MAP.md"))]);
+        assert!(notes.is_empty());
+    }
+
+    #[test]
+    fn the_word_lighthouse_with_no_path_means_this_repository() {
+        let (_s, lh, _t) = layout("word");
+        let (found, _) = packet_repo_maps("[chair:MAIN] Lighthouse, branch d585-o: change main.rs", Some(&lh));
+        assert_eq!(found, vec![("lighthouse", lh.join("consonance").join("src-tauri").join("src").join("MAP.md"))]);
+        assert!(packet_repo_maps("[chair:MAIN] Lighthouse, branch d585-o", None).0.is_empty(), "no repository root: nothing guessed");
+    }
+
+    #[test]
+    fn the_word_t180_with_no_checkout_path_is_said_not_guessed() {
+        let (found, notes) = packet_repo_maps("[chair:MAIN] On branch d581-o off d576-a (t180): relabel the boxes", None);
+        assert!(found.is_empty());
+        assert_eq!(notes.len(), 1);
+        assert!(notes[0].contains("names t180 but no path to a t180 checkout"), "{}", notes[0]);
+    }
+
+    #[test]
+    fn a_packet_that_names_no_repository_brings_nothing_and_spends_nothing() {
+        let (found, notes) = packet_repo_maps("[chair:MAIN] a keep-warm question about the weather", None);
+        assert!(found.is_empty() && notes.is_empty());
+        assert_eq!(repo_map_section(&[], &[], 100_000), (String::new(), 0));
+    }
+
+    #[test]
+    fn a_map_that_fits_rides_whole_and_one_that_does_not_is_a_path_line() {
+        let m = RepoMap { label: "t180", map: PathBuf::from("C:/x/t180/MAP.md"), text: "# Map — t180\nWHOLE-BODY\n".to_string() };
+        let (s, spent) = repo_map_section(std::slice::from_ref(&m), &[], 100_000);
+        assert!(s.contains("# The map of what you are about to change") && s.contains("## t180 — `C:/x/t180/MAP.md`") && s.contains("WHOLE-BODY"));
+        assert_eq!(spent, s.len());
+        let (small, spent_small) = repo_map_section(std::slice::from_ref(&m), &[], 100);   // under the heading alone: no map fits
+        assert!(!small.contains("WHOLE-BODY"), "over the seat: not carried");
+        assert!(small.contains("- `C:/x/t180/MAP.md` (") && small.contains("the t180 map did not fit this shell"), "{small}");
+        assert_eq!(spent_small, small.len());
+    }
+
+    #[test]
+    fn the_intake_carries_the_map_section_ahead_of_the_deck() {
+        let m = RepoMap { label: "lighthouse", map: PathBuf::from("C:/x/lh/consonance/src-tauri/src/MAP.md"), text: "# Map\nD585-MAP-IN-THE-WAKE\n".to_string() };
+        let i = assemble_intake_for(0, std::slice::from_ref(&m), &[]);
+        let at = i.find("# The map of what you are about to change").expect("the section is in the intake");
+        assert!(i.contains("D585-MAP-IN-THE-WAKE"), "the map rides whole");
+        for later in ["# THE DECK", "# NOT CARRIED IN THIS SHELL"] {
+            if let Some(k) = i.find(later) {
+                assert!(at < k, "the map section comes before {later}");
+            }
+        }
+        assert!(!assemble_intake_within(0).contains("# The map of what you are about to change"), "no packet maps: no section");
+    }
 }
 
 /// One optional brief: a unit that either rides WHOLE or is named by path. Never in part — a
@@ -5844,8 +6110,13 @@ fn intake_with_map(pane: &str, cwd: &str) -> String {
         fs::read_to_string(own_map_path(&pane_letter(pane))).ok()
     };
     let reserve = map_reserve(own_map.as_deref());
-    let mut brief =
-        if is_fresh_cwd(cwd) { String::new() } else { assemble_intake_within(reserve) };
+    // D585: the code maps of the repositories this pane's newest packet names ride ahead of the deck
+    let mut brief = if is_fresh_cwd(cwd) {
+        String::new()
+    } else {
+        let (repo_maps, repo_notes) = packet_maps_for(pane);
+        assemble_intake_for(reserve, &repo_maps, &repo_notes)
+    };
     // GAP 3 — character survives sleep. A kept committee pane wakes with its OWN accumulated
     // findings, recalled from the master it alone writes (exo_memory/map/<letter>.md), never
     // from the chair's summaries — the chair's compression measurably adds certainty, which is
@@ -23741,7 +24012,9 @@ mod fork_note_tests {
     #[test]
     fn the_intake_cuts_the_note_from_the_bundled_brief_after_the_header_and_before_the_room() {
         let src = include_str!("main.rs");
-        let body = src.split("fn assemble_intake_within(").nth(1).expect("assemble_intake_within");
+        // AMENDED (D585): the intake's body moved into assemble_intake_for (assemble_intake_within is now its no-maps wrapper); the
+        // rule read here is unchanged, so the slice follows the body
+        let body = src.split("fn assemble_intake_for(").nth(1).expect("assemble_intake_for");
         let body = &body[..body.find("\n}\n").expect("end of fn")];
         let header = body.find("you have woken into the room").expect("the header");
         let note = body.find(concat!("fork_section(room_brief(", "\"BOOT.md\")")).expect("assemble_intake_within does not add the fork note from the brief");
