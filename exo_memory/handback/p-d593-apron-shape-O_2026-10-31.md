@@ -203,3 +203,39 @@ The angle between the drawn surface's first column and the edge's own last segme
 **Disk:** C: had 22 GB at the ring. My copy of his export (218 MB) moved from `S\d593\his-export\` to `G:\Consonance-tools\scratch-O-d593\his-export\`, its kn5 compared equal before the C: copy was removed. §2's "his own kn5" now reads from there. My scratch on C: is 11 MB.
 
 **Branch tip: t180 d593-o `3e1eee8`.**
+
+## The dark lip, and the big textured renders (the chair's rings of 00:05Z and 00:06Z)
+
+**Narrowed to the keeper's own words (18:05):** the lip and its underside in the road's own asphalt, a darker shade, plus big textured renders. No pit-lane geometry change; the outline stays as it was.
+- **A split was started and is NOT in the branch.** The 00:04Z ring asked to split the outline out. I edited the files, the 00:06Z ring cancelled it, and the six files were restored from 3e1eee8 before any commit. Its background checks were stopped; no lock of mine was left.
+
+**The change:** t180 **d593-o `fbc089e`**.
+- **The shade:** each road material a lip sits on gets one copy, `<name>_lipshade`. Its samplers are the same, so it wears the same asphalt texture, and its ksAmbient, ksDiffuse and ksSpecular are `LIP_SHADE` = 0.45 of the road's.
+- **Who wears it:** the lip and its underside both, including the pit outline's lip. The underside no longer takes the skin's material.
+- **The physics' index:** the shades are appended **after** the apron's own material, so the physics apron's material index is the one it had.
+
+**Checks:**
+- checked: `S\d593\shade-prev.out` → on 3e1eee8's `apron.js` the new rule is red, rows 3 and 16 exactly.
+- checked: `S\d593\shade-apron.out` → 17/17 on fbc089e.
+- checked: `S\d593\shade-harness.out` → applied 11 / caught 11 / NOT APPLIED 0, control passes. P2 and P9 were re-anchored by name.
+- checked: `S\d593\shade-touched.out` → 21/21.
+- checked: `node S\d593\physdigest.js` → `ecb0db14…`, unchanged.
+
+**The renders, 2560×1440, with the game's own textures:** `G:\Consonance-tools\scratch-O-d593\tex\before-<view>.png` and `after-<view>.png`, 12 views each. They are kept off C:, 22 MB in all.
+- **before** is **his own kn5** (the copy at `G:\Consonance-tools\scratch-O-d593\his-export\t180b_elysium.kn5`).
+- **after** is fbc089e's export of his document with the same texture set, `G:\…\after-tex.kn5`.
+  - checked: his texture `t180b_made-993b5297d4ad20a5-1024.dds` is the one the page's asphalt preset builds without the edge fit (`app/core/textures.js`).
+- **Outside the apron the two exports are not byte-identical.** His marker layout paints 25 meshes and my export's default paints 7, so pit-box paint can differ near the pits.
+- **How they are rendered** (`S\d593\render2.js`, headless and software only, with `S\d593\kn5full.js` reading the kn5 whole):
+  - the DDS textures, with mips, bilinear, perspective-correct uvs;
+  - lit as ksPerPixel from each material's own ksAmbient and ksDiffuse;
+  - only renderable, visible meshes, with back faces culled;
+  - **one exposure, 1.8×, on every image of both sets.** AC with CSP lights the road far brighter than plain material maths; the factor is the same both sides.
+- **For his page, full width, one per row:**
+  - **cup-above:** before, a flat light band, the plain apron material; after, a thin dark asphalt line along the edge.
+  - **cup-side, cup-under:** "flat flap"; after, darker asphalt rolling over into the dark underside.
+  - then **bank-***, and **pit-***, where the outline is as it was.
+
+**Deleted as superseded:** the untextured renders, in `S\d593\renders\` and in the git-tracked copy that was beside this file (`git rm`, lighthouse; they stay in history).
+
+**Branch tip: t180 d593-o `fbc089e`.**
