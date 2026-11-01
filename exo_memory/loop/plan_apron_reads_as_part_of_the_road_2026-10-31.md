@@ -44,3 +44,12 @@ Reading: from above, the original edge read as a thin line, and he liked that. U
 
 ## Amended 18:1x: the shade (the keeper, 18:17, on the textured renders)
 "I think thats it, but make the sides not so dark, perhaps the same base as the regular texture, but have it able to be affected by shadows you know? Or perhaps slightly darker not like crazy dark". So the lip uses the road's own material at the same base colour, or at most slightly darker (about 10 to 15 percent, never the near-black of fbc089e). It is lit by the game's own lighting and shadows like the road: normal shading, not a baked dark shade. The underside follows the same rule. That is his named yes on the shape of the main-road lip.
+
+## 21:5x, his drive of ELYSIUM 0435 SCIFI: the lip is a blade
+The keeper, 21:54: "the edges are ruined, they were perfect the first time, BUT just needed to not be the singular slice but filled in". 21:55: "the edges are this thin blade it comes to a point LOOK AT THE GEOMETRY".
+Seen by me, rendered from his game folder (blade/sci-cup-side.png in my scratchpad, O's render2.js, cup-side camera): the lip's top rolls down 25 deg, the underside rises from the skin's edge to the lip's outer row, and the two meet in a knife edge 2 m out. In cross-section the edge is a wedge that comes to a point: the blade.
+What he wants, in his words: the original edge (before any lip: the road's own edge as it was), with the thin slice between the road's top edge and its underside FILLED, so the edge has real thickness. So:
+- DRAWN: no lip and no 2 m blade. The road ends at its own edge row as before the apron. A filled side face runs from the road's edge row down to the underskin's edge row (the existing width-0 SIDE FACE in apron.js), in the road's asphalt about 12 percent darker and lit normally, so from the side the edge reads as a solid band with the road's thickness.
+- PHYSICS: the hidden apron stays exactly as it is (57 meshes byte-equal, hidden). His drive tells whether the hidden surface catches wheels; asked.
+- PIT: the same rule along the lane's outer edge: a filled side face, no lip.
+- Proof: a cross-section render at the cupped spot from the side, showing a blunt filled edge; renders checked by me at every spot before he sees them.
