@@ -30,3 +30,12 @@ The fix, in his terms:
 - The pit lane keeps its FULL length and width as its own lane, beside the road, for everything between the taper ends. Only the first and last stretch blend, and the taper must never shorten or narrow the lane's straight. The top-down view must show the lane as long as before.
 - The pit lane's outer side carries exactly the main road's lip and apron: O's d593-o lip, in the shade he asked for. A therefore builds on top of d593-o, not on a93ae51, so the lane gets the same edge with no second version.
 - Renders: textured, with ambient light, 2560x1440, including the whole-lane top-down. I check the whole-lane view before it reaches him.
+
+## His read of O's pit (ae6d262/18b1774), 18:54, and what I see in the same renders
+His words: "its getting closer, but there are still geometry clipping inconsistencies, and also, from the pics it looks like the pit is banked, if the track is cupped, the pit is still flat and has an apron that would look the part with a flat piece".
+Seen by me, in G:\Consonance-tools\scratch-O-d593\tex at 2000 px wide:
+- after-pit-leave-low.png, about x 780-850, y 540-580: spikes, or slivers of triangles, poking out of the edge where the lane leaves.
+- after-pit-rejoin-above.png, about x 820-1100, y 90-700: a striped band along the lane's inner edge where two surfaces overlap in the same place (z-fighting), plus a small square notch at the top, about x 820-870, y 90-110.
+- after-pit-leave-above.png, about x 810-870, y 620-680: a small square step where the lip starts.
+O's count says 0 intersections, but coplanar overlaps and slivers are not intersections, so the count missed what he sees. The count must add both: overlapping coplanar triangles, and triangles thinner than 1 cm.
+The pit must be FLAT. The lane carried the road's cup and bank over the diverge, so it reads as banked. Correct: the pit lane is flat across, as it was. Where it leaves a cupped road, the road keeps its cup, the lane stays flat, and the surface between them blends without the lane tilting. The lane's outer edge takes the lip and apron of a FLAT road (the plain flat-edge case), not the cupped-road lip.
