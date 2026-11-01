@@ -1,0 +1,2 @@
+﻿start 2026-11-01T00:40:55.1296939-06:00
+end 2026-11-01T00:43:25.4203659-06:00: 74 samples, builder windows seen 0; last sample's titled windows: 5
