@@ -537,3 +537,37 @@ So the "banked" look is the cup rising 2.567 m to the lane, not the lane tilting
 - The scratch worktree at a93ae51 is removed.
 
 **Branch tip: t180 d593-o `02081e4`.**
+
+## Status at the close, 22:20 (the chair's 22:03 ring): WIP
+
+**Branch tip: t180 d593-o `d78e835`** ("WIP: …"), on top of `02081e4`. Nothing landed. The revert lands next session.
+
+**The 21:56 side face was voided by the 21:58 ring.** It was built (a filled face from the edge row down to the skin), then replaced in the same tree. It is not in the WIP except where noted below.
+
+**Done in the WIP (`src/export/apron.js`): the apron is 0.4.34's DRAWN physics plank again.**
+- No lip, and nothing hidden.
+- The main road writes each side's plank and its join exactly as a93ae51 does, so every main-road apron node is a93ae51's.
+- The apron's own material `t180b_apron` is now the road material's 0.88 shade (`apronMaterial(road)` = `shadeOf` under the apron's name: the same texture, ambient, diffuse and specular × 0.88). So no node's material index or name moves, and row 17 (the physics byte for byte) passes.
+- Its uvs are the plank's own, a 4 m tile as before. inferred: the road's asphalt on it is drawn at that tile, not the road's 10 m one.
+- The pit outline's plank is drawn too, with a join back to the skin's edge (`outlineMeshes`).
+- In each across run (the lane's end row, at one s), every row takes the lane row's outer point:
+  - 3 coplanar plank/join overlaps → 0;
+  - the downforce ray stays watertight on the lane's end edge (row 10 green).
+  - A version keeping only the end row's two ends had the ray fall through that seam, at s 40.0, u 15.3.
+
+**Not done; next session:**
+1. **32 slivers (0.51 cm) remain in the pit's two 10 cm end caps.** The end row's 9 points are 1.25 cm apart along the plank's own direction, so the fanned plank triangles are about 0.42 × 1.25 cm thick, and the join's about 0.21 ×.
+   - Proposed, not built: `TAPER_MIN_W` 0.10 → 0.25 m (points 3.1 cm apart, the plank fans 1.3 cm), and each across run's join as one triangle (about 2 cm thick; a T-junction against the skin's end edge, which the hole count reads as closed).
+   - It changes the lane's start width, so it is the chair's or the keeper's call.
+2. **Tests are still the void side face's:**
+   - `export_apron` rows 2, 3, 13, 14, 15, 16 and 20 fail against the plank (8 of 21 red at the last run, row 18's slivers among them);
+   - the harness mutants P2, P6, P8, P9, P13, P14 and P16 name the side face;
+   - `manifest.d593.json` and the export-isolated pins are the side face's.
+   - All of these are to be re-amended for the drawn plank, and the seal record and pins remade.
+3. **The prove-it set**, once those are done:
+   - drawn = physics on every apron mesh, counted;
+   - clips, overlaps, slivers and open edges 0 on his ELYSIUM;
+   - the main-road physics digest `ecb0db14…1d75`;
+   - cup, bank and pit renders to the librarian.
+
+**Nothing is running.** No render was made today after 21:58.
