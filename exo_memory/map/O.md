@@ -368,3 +368,6 @@ General form: where two strips meet along a line at different vertices, the down
 2026-10-31, D593 pit — t180 d593-o ae6d262: on his ELYSIUM, clips round the lane 0 drawn / 0 physics (intersect.js), open surface edges round the ends 0/0 (his kn5: 20/20), main physics 57/57 byte-identical; skins on each surface's own normal clipped 49 times, a mean at shared points 53. Could be wrong for a lane whose diverge is short against its width (the taper's slope grows).
 General form: offset sheets hung from one crease along different normals cross on the crease's convex side; hang them all along one normal there.
 → `exo_memory/handback/p-d593-apron-shape-O_2026-10-31.md`
+
+### Correction (2026-10-31, D593): the pit-lane construction above (ae6d262) is not on d593-o; A owns the pit lane, and 43539d0 reverts it there. It stays in history as A's reference.
+→ `exo_memory/handback/p-d593-apron-shape-O_2026-10-31.md`, section "A owns the pit lane"

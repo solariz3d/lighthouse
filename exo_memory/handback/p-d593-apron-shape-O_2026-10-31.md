@@ -334,3 +334,26 @@ The angle between the drawn surface's first column and the edge's own last segme
 - **Superseded and deleted:** the earlier main-road and pit renders, and the superseded exports (`after-tex.kn5`, `cut.kn5`, `pit-tex.kn5`) on G:.
 
 **Branch tip: t180 d593-o `18b1774`.**
+
+## A owns the pit lane (the chair's ring of 00:22Z, delivered 00:51Z, after ae6d262 was committed)
+
+**The ring crossed my work.** It was sent before I began the pit geometry and delivered after I had committed it (ae6d262).
+- **The revert:** d593-o carries no pit geometry of its own. t180 **d593-o `43539d0`** reverts ae6d262 (`git revert`, so it stays in the history).
+- checked: `git diff fbc089e` → `src/geom/pitlane.js`, `src/export/pitlane.js` and both apron test files are identical to fbc089e; `src/export/apron.js` differs only in 18b1774's lighter shade.
+- **Tests:** checked: `S\d593\rev-apron.out` → 17/17; `S\d593\rev-harness.out` → applied 11 / caught 11 / NOT APPLIED 0, control passes.
+- **Left on d593-o:** the branch keeps the 17:2x outline round the lane as it was at fbc089e (the 18:06 narrowing: "leave the branch as it is beyond the lip"). Its physics is `1ROAD_APRON_PIT_R`, and A's lane replaces it.
+
+**For A, to read, not to merge blindly:** ae6d262 holds a construction that met the 18:11 ask on his ELYSIUM:
+- a taper from 5 cm over the diverge, level;
+- the infill's inner-edge search, along the road only and nearer its inner side;
+- the apron along the one edge, walking the 5 cm end rows;
+- every join's skin hung along the road frame's up.
+
+Its counts there: 0 drawn and 0 physics clips; 0/0 open surface edges at the ends (his kn5: 20/20). Rows 14 and 18 and mutant P12 are its tests. The pit renders made from it stay at `G:\Consonance-tools\scratch-O-d593\tex\*pit-*` as reference, not as d593-o's.
+
+**The shade renders, from the tip:** `G:\Consonance-tools\scratch-O-d593\tex\after-{cup,bank}-{above,side,under}.png` are re-rendered from 43539d0's export (`tip-tex.kn5`); the `before-` ones are his kn5. Ambient and exposure are ×1.8 on both.
+- checked: `S\d593\kn5cmp-base-tip.json` → the main physics apron 57/57 byte-identical to base, plus the outline's `1ROAD_APRON_PIT_R`.
+
+**Next for O:** when A lands its pit outline, put the lip and the apron round it.
+
+**Branch tip: t180 d593-o `43539d0`.**
