@@ -1,0 +1,155 @@
+a08ddcd	ccf14b7	Version 0.4.35
+f45146a	83a2681	Merge the pit lane and the edge lip at 0.88
+708f2fa	5e93e87	Fixture seal: amend F1 F2's kn5 for the visual lip, and guard the rest by name
+b1e95a8	2128e0c	Pit lane: its surface wears the road's texture at the road's scale where it narrows
+6a0e6f7	18e9f06	Pit lane lip: one texture along it, and a gradual turn on a cupped road
+a583b0e	8724c44	Pit lane: no surface drawn twice, no sliver, no step at its ends
+9cb2adf	3c068e6	Reapply "Pit lane: it grows out of the road, and the apron and skins make it one surface"
+43539d0	c143811	Revert "Pit lane: it grows out of the road, and the apron and skins make it one surface"
+18b1774	045219e	Apron: the lip only a little darker than the road, lit and shadowed like it
+ae6d262	f1bac99	Pit lane: it grows out of the road, and the apron and skins make it one surface
+5027841	5768024	Merge: Save and Export to Assetto Corsa ask before writing over another track
+dacdfc3	74d3bd1	Merge: Every export shows one banner while it runs and when it ends
+18e8c0b	e7290ef	overwrite.test.js removes the temp folders it makes
+fbc089e	6c3456d	Apron: the lip and its underside in the road's own asphalt, a darker shade
+3e1eee8	f8f517d	Apron: the pit lane's concave corners drawn as part of the lip, not a flat tab
+97ab62e	5fbe7ff	Apron: keep the driven physics, draw a lip that reads as road, run it round the pit lane
+94f95b6	2b0ea70	Save and Export to Assetto Corsa ask before writing over another track
+ac8d40e	7013973	Every export shows one banner while it runs and when it ends, saying Done and where the track went, or why it failed
+a93ae51	b4761da	Comments name what they mean, not the work packet that made them
+8ead393	37d675c	Version 0.4.34
+de43a6f	a6ec30f	Merge: The hover pick skips the stretches of track that cannot be under the pointer, with the same answer, so a long track no longer stalls on a pointer move
+007a34a	ab81925	Merge: Validator: keep the per-segment memos packed, halving the heap a check keeps
+58ff26d	ee23446	The hover pick skips the stretches of track that cannot be under the pointer, with the same answer, so a long track no longer stalls on a pointer move
+931e580	b9df1a0	Mutation harness covers the pieces and the staged id; the page passes the staged id on
+b2e43b9	7d19fe0	A long track's files go to the native side in pieces of at most 32 MiB, staged and then written whole
+ac649b1	21680e5	Test: a long track's files go to the native side in pieces no larger than one message (red: one 566 MB call killed the page)
+93704ec	91eccc8	The preview draws the road coarser far from the camera; the export, the checker and the readouts still read the full road
+7c8f1e5	c351bf4	A long track's preview mesh keeps a short key per piece and bounded shape memos, so its memory stays small
+b0ef446	1eb9d24	Validator: keep the per-segment memos packed, halving the heap a check keeps
+67e5762	cf2aa6a	Rename a native-side test
+30c725e	de13850	Mutation harness for the bytes hand-off and the checker's no-mesh geometry; neutral sample paths in the hand-off tests
+acaa2a0	d38adaf	Changelog: long tracks export and install, and open with less memory
+49fb5f9	c4ff675	Version 0.4.33
+322cddb	2f61a45	An export's files go to the native side as bytes, not base64 text in JSON
+bcb363d	cd4028d	Test: an export's files reach the native side as bytes, under a fixed heap budget (red: index.html sends base64 in JSON)
+686509e	b5262e4	The track checker's worker no longer meshes the whole track
+ed8373f	e74cb26	Test: the track checker's worker builds no mesh (red: it meshes the whole track)
+d08feea	4078884	Version 0.4.32
+8683e32	df727c7	export-isolated-page: the export byte pin moves with export-isolated's for the firm road and the edge apron together
+4ae8f07	b71347e	Merge: The view tag sits level with the column card where it clears the values strip, else 6 px under the strip
+151d00e	60730c6	Merge: CI on GitHub's Windows runners: the fast subset on every push and pull request, the mutation harnesses weekly
+e2899da	ec50708	Load mutant L13 anchors on the stop's plain-words source, which the shown-strings pass reworded
+a231ca4	2347b10	Merge: Shown strings in plain words: checker sources, export warnings and refusals name no internal document
+ae54c40	74b9df5	Merge: Comments in app/core: no references to sections of a design note (code unchanged)
+c830df4	a620460	Merge: src/core comments: drop internal decision numbers and review pointers, keep the reasoning
+da35d17	66a6a86	Merge: README: the note to hand-builders speaks for itself, not for the reader
+6193062	83c838e	Merge: A content security policy: scripts from the app only, the export host's relay by its hash
+3ede90e	b06d216	Merge: Aqua's dialog buttons read 4.5:1 or more; the contrast probe opens every dialog
+4e6921d	7f913a7	Merge: A width ticked at start eases in as F, a 20 m rise then a fade over 300 m, instead of a 20 m wedge
+b1dd198	026ba1c	Merge: Edge apron: the field moves to the Track menu
+3e08519	4d21ed9	Merge: The edge apron leaves the pit lane, the downforce ray and the catch alone
+40cd56c	b83bd2f	Comments in app/core: no references to sections of a design note (code unchanged)
+633aa37	61d1f40	Shown strings in plain words: checker sources, export warnings and refusals name no internal document
+caf1a8f	46c2c6c	The view tag sits level with the column card where it clears the values strip, else 6 px under the strip
+b4eb1c1	fa2310c	The hover card in the display face (Bahnschrift) at 13 px, as one variable
+840c466	115064e	Every title's words in a hover card drawn in the look's own colours, not Windows' tooltip
+40c0ac5	45250b9	The drag tick is capped at one per 35 ms (was 4): a fast drag ratchets instead of buzzing
+6bc32d1	aa7d476	CHANGELOG: Extend's boxes read "early" and explain themselves
+b26a536	135c6cf	Extend's "start" boxes read "early", each with its own tooltip saying what ticking it does for that row
+9106806	bb4998c	Comments in app/core: keys.js's header reads as a sentence (code unchanged)
+e0f66f8	3c630d2	Comments in src/validate: "ruling" reads "design" (code unchanged)
+0a8899e	4d5c692	Comments in app/core: the last author letters and "ruling" notes dropped (code unchanged)
+911a914	4d464dc	Comments in src/markers: a quoted plan phrase reworded (code unchanged)
+8db7fad	ee54d79	Comments in src/validate: one more pointer to a hand-back dropped (code unchanged)
+8305a67	ac5d415	Comments in app/core stand alone: no decision numbers, internal paths or author names (code unchanged)
+62db57f	a1c0320	Comments in app/test: plain reasons, no internal references
+cdeb70c	e6b3913	Comments in app/preview: plain reasons, no internal references
+f39be1e	ec4c2bc	Comments in src-tauri/src: plain reasons, no internal references
+2672909	70ff5f1	Comments in scripts: plain reasons, no internal references
+b924921	ad850d3	Comments in src/texture: plain reasons, no internal references
+f5d9c6a	78fe4bc	Comments in src/texmaker: plain reasons, no internal references
+69df581	125f73c	Comments in src/lookmatch: plain reasons, no internal references
+8ff3aa0	aa91779	Comments in src/doc: plain reasons, no internal references
+7d448d9	60e56f4	Comments in app/validate-ui: plain reasons, no internal references
+e540e32	cebebf1	Comments in app/themes: plain reasons, no internal references
+c9f90b0	aca2c99	Comments in app/texture: plain reasons, no internal references
+6e35fdf	ef6b8b8	Comments in app/texmaker: plain reasons, no internal references
+29fd788	83b40c5	Comments in app/testhook: plain reasons, no internal references
+25cb2af	22254d7	Comments in app/share: plain reasons, no internal references
+edbb245	ba89b18	Comments in app/palette: plain reasons, no internal references
+37a6ee6	5756afb	Comments in app/onboarding: plain reasons, no internal references
+9b9babf	2f72e65	Comments in app/menubar: plain reasons, no internal references
+27b9696	d5680c7	Comments in app/markers: plain reasons, no internal references
+2d07383	da53219	Comments in app/lib: plain reasons, no internal references
+3d92322	1341136	Comments in app/install: plain reasons, no internal references
+bcc2d20	6eb0572	Comments in app/export: plain reasons, no internal references
+790b0d7	f6bc7c9	Comments in app/camera: plain reasons, no internal references
+17f92fc	bc74cfa	CI on GitHub's Windows runners: the fast subset on every push and pull request, the mutation harnesses weekly
+0b3951f	98e0772	A content security policy: scripts from the app only, the export host's relay by its hash
+863ed69	58bcf63	src/core comments: drop internal decision numbers and review pointers, keep the reasoning
+046cfb6	8830ab5	src/export comments: drop internal decision numbers and review pointers, keep the reasoning
+cffe928	14154b0	src/geom comments: drop internal decision numbers and review pointers, keep the reasoning
+0081150	c9680f8	README: say the numbers the checker uses were measured from community tracks
+b2c29da	25f5b1c	Add an MIT licence for the builder's own code; the actools port keeps its Ms-PL
+9131702	1db7550	Comments in src/markers stand alone: no decision numbers or author names (code unchanged)
+40145cb	cd0f6ef	Comments in src/validate stand alone: no decision numbers, internal paths or author names (code unchanged)
+7a3f782	cd677bc	README: the note to hand-builders speaks for itself, not for the reader
+a5578a3	eaa2806	README: a screenshot of the builder in place of the placeholder
+c3f77bb	1d2eb34	sculpt-frame test: read the lock folder from CONSONANCE_DATA only, no file in the home folder
+a69626e	c5b27c4	Describe the app as it is in Cargo.toml and tauri.conf.json
+6fad35f	0492df4	A width ticked at start eases in as F, a 20 m rise then a fade over 300 m, instead of a 20 m wedge
+cef4c37	258e8e4	Aqua's dialog buttons read 4.5:1 or more; the contrast probe opens every dialog
+c23898e	125eff8	menubar-page row 17: the same fold is under a pixel apart, not equal when rounded
+28fce81	c3c07ca	sculpt-subscribers test: its fake DOM gets replaceChildren, which the values overlay now calls
+4e48652	cf7364d	kn5-move-gate: name the user in its header note
+126f153	c980603	kn5-move-gate: give each placed gate its road point, which the new gate-width check reads
+f3b84a3	f3b84a3	Edge apron: the field moves to the Track menu
+289f159	289f159	File > Edge apron: the apron's width, saved with the track
+45d69aa	45d69aa	The edge apron leaves the pit lane, the downforce ray and the catch alone
+1685276	99045cf	Version 0.4.31
+634e61a	9ec7156	CHANGELOG for 0.4.31: one Fixed section, the at-start line as F, and the firmer soft road
+07396f1	8f4ee26	Merge: Keep the soft road's SOFT_CFM reason in words, without a path to the notes it came from
+e7a39be	531aab9	Merge: Move a sector gate of an exported kn5 onto flat road, in place (tools/kn5-move-gate.cjs)
+321764c	bd770f4	Merge: CHANGELOG: back to the sector-gate line with no cause
+d7c7fe3	ec8fb14	Merge: A bank, cup or edge at start leans in over 20 m, then fades in over 300 m (candidate F)
+6f9d720	1a779d2	Merge: A jump can take off from a lip raised or shifted with the brush
+e3ed2fb	5df754f	Merge: File > Export for Blender: the menu item, Blender found or set, the FBX run hidden
+eb8d737	048dc6e	Merge: Three sizes of type
+8d29ed2	bdbd93e	Merge: Preview: a kept tube cell re-flows when what its flow reads changes
+ba8c10d	188d15c	Merge: A road texture flows through a tube that widens or narrows without a step
+6b3cf96	3f2e1bb	Merge: The values band and the bottom bar centre on the 3D picture
+547282c	603b87f	Merge: The bank at start swells in over a longer, gentler ramp
+a77505c	a77505c	A bank, cup or edge at start leans in over 20 m, then fades in over 300 m (candidate F)
+4504428	4504428	An edge apron outside every open road edge, so a wheel that drops off has a surface under it
+de456f6	de456f6	CHANGELOG: back to the sector-gate line with no cause
+c456efe	c456efe	Keep the soft road's SOFT_CFM reason in words, without a path to the notes it came from
+c720797	c720797	Move the export byte pins for the soft road's new SOFT_CFM line (surfaces.ini is the only file that changes)
+9c0ac2b	9c0ac2b	CHANGELOG: the sector-gate line carries its cause, now measured
+3fb406d	3fb406d	Export the soft road with SOFT_CFM 0.00005, a quarter of the old value, so cars at very high load stay on the road
+980fd7e	980fd7e	Pin the soft road's SOFT_CFM at 0.00005 (red: the exporter still writes 0.0002)
+05461d4	05461d4	CHANGELOG: the sector-gate line states the change, not a cause
+00279d6	00279d6	Sector gates stand on flat road; a gate across a bank is refused
+34a2155	34a2155	Move a sector gate of an exported kn5 onto flat road, in place (tools/kn5-move-gate.cjs)
+97a6422	97a6422	Three sizes of type
+777f279	777f279	The checker says each thing once
+189fe3b	189fe3b	A bank at start takes the roll bar's length where half the piece would roll it past the amber
+49f4205	49f4205	A shaped bank at start is laid as the curve asked: knots across its rise and fall
+e9236e7	e9236e7	Two more at-start candidates, each with a 20 m rise as laid, and the laid length beside the asked
+f9392fb	f9392fb	The two-share ramp's mutants, and a row that the laid bank follows its shares
+c2ae654	c2ae654	A jump can take off from a lip raised or shifted with the brush
+a0a7ec2	a0a7ec2	The bank ramp gets rise and fall shares, and four at-start candidates to look at
+991cfbe	991cfbe	File > Export for Blender: the menu item, Blender found or set, the FBX run hidden
+12b900c	12b900c	Glow only where you are acting, and every text reads in every look
+b917ac7	b917ac7	A piece's label on the road moves clear of the handles
+bd788ca	bd788ca	Export for Blender: the FBX step, and proof the track is not mirrored
+b1bb125	b1bb125	The camera keys button reads in every look; the road label's lines split cleanly
+b7aeb10	b7aeb10	Export for Blender: a glTF 2.0 binary of the export's own scene
+959d9ee	959d9ee	The road's numbers are the biggest thing on screen
+d6cccc5	d6cccc5	Status lines that said nothing are gone
+5518952	5518952	A new install opens in Sigil; Random is still a choice
+2a28cae	2a28cae	Warnings read in every look: red and amber text colours per look
+1a9cd20	1a9cd20	Preview: a kept tube cell re-flows when what its flow reads changes
+f9dbe31	f9dbe31	A road texture flows through a tube that widens or narrows without a step
+6667141	6667141	The values band and the bottom bar centre on the 3D picture
+f0bbf5b	f0bbf5b	The bank at start swells in over a longer, gentler ramp

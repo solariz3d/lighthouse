@@ -2733,3 +2733,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-01 ~00:5xZ (D) · D597, 0.4.35 early merge → `exo_memory/handback/p-d597-merge-0435-E_2026-10-31.md`
 - t180 land-0435-e 5027841 off a93ae51 (not pushed, built or installed): d591-a and d592-e merged, three one-line conflicts kept both sides, and the seam between them fixed (a Cancel at the overwrite question cleared A's banner instead of leaving Export failed; row 10 red then green). Full suite 4,053/4,076 with the one red drag-frame row 8 also red on a93ae51; cargo lib 56/0.
 - **Carry:** two branches that each pass can still disagree at a seam neither owns; read how the second one's new outcome reaches the first one's reporting before calling the merge done.
+
+## 2026-11-01 ~03:2xZ (D) · D598, 0.4.35 landing, NOT installed → `exo_memory/handback/p-d598-land-0435-E_2026-10-31.md`
+- t180 land-0435-msg ccf14b7 (d593-o merged, Version 0.4.35, 155 messages rewritten to one-liners with every tree identical): hidden built-app ELYSIUM export has the main road physics byte-equal to his (89/89), 0 windows shown; the suite is red beyond the timing row (export-isolated's pinned b6969da digest moved, inferred d593's pit lane), so no install; exe 64e16a51 built and the install script ready.
+- **Carry:** the heavy-run lock reads the tree from the runner's working folder; start each runner inside its own worktree or the second waits for the first.

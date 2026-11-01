@@ -1,0 +1,28 @@
+start 02:48:37Z
+launched pid 47484; track ELYSIUM
+ok   launch (1.0 s): menus ready
+windows on the user's desktop: 0
+  11.6 s open: 784 MB (page 459, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 319)
+  21.7 s open: 955 MB (page 512, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 438)
+  31.8 s open: 924 MB (page 619, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300)
+  41.9 s open: 1026 MB (page 722, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300)
+  52.0 s open: 1136 MB (page 831, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300)
+ok   open (47.2 s): loaded: head shown at 1.8 s, still from 27.2 s; peak 1136 MB at 52.0 s (page 831, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 300); settled 1136 MB (page 8
+  62.1 s install: 1556 MB (page 991, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 59, 4bfdd5c6-d2a2-4cae-a47e-fbf094#5 202)
+  72.2 s install: 1938 MB (page 1099, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 59, 4bfdd5c6-d2a2-4cae-a47e-fbf094#5 476)
+  82.3 s install: 1826 MB (page 1205, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 59, 4bfdd5c6-d2a2-4cae-a47e-fbf094#5 259)
+  92.3 s install: 1615 MB (page 466, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, 4bfdd5c6-d2a2-4cae-a47e-fbf094#5 845)
+  102.4 s install: 1750 MB (page 571, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, 4bfdd5c6-d2a2-4cae-a47e-fbf094#5 874)
+  112.5 s install: 1652 MB (page 676, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, 4bfdd5c6-d2a2-4cae-a47e-fbf094#5 671)
+  122.6 s install: 1557 MB (page 504, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, 4bfdd5c6-d2a2-4cae-a47e-fbf094#5 748)
+  132.7 s install: 1690 MB (page 609, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, 4bfdd5c6-d2a2-4cae-a47e-fbf094#5 776)
+  142.8 s install: 1781 MB (page 710, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, 4bfdd5c6-d2a2-4cae-a47e-fbf094#5 766)
+  152.9 s install: 1669 MB (page 536, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, 4bfdd5c6-d2a2-4cae-a47e-fbf094#5 828)
+  163.0 s install: 1541 MB (page 637, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, 4bfdd5c6-d2a2-4cae-a47e-fbf094#5 599)
+ok   install (115.5 s): ELYSIUM · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  |  | end heading 180.00°, on the 90° grid | expo | files 10, kn5 225871348 B; peak 2158 MB at 88.3 s (page 1
+crashes 0; page errors 0; samples 165; overall peak 2158 MB at 88.3 s (page 1257, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 300, iframe:about:srcdoc#4 1, worker:4bfdd5c6-d2a2-4cae-a47e-fbf094#5 596)
+SOCKET CLOSED {"t":"170.8","what":"the CDP socket closed: code 1000 reason  clean true; app pid GONE; webview/t180 processes 20","mark":"install"}
+killed pid 47484; t180-track-builder.exe left running: 0
+exit 0
+wv exit 0 03:14:26Z
+done
