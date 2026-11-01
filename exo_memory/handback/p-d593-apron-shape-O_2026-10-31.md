@@ -462,3 +462,39 @@ So the "banked" look is the cup rising 2.567 m to the lane, not the lane tilting
 **inferred:** the `after-{cup,bank}-*` main-road shade renders are still the 9cb2adf set from the old renderer. Nothing on the main road changed since; not re-rendered.
 
 **Branch tip: t180 d593-o `b1e95a8`.**
+
+## The seal ruling, 01:32Z: AMEND, the way D572 did
+
+**t180 d593-o `708f2fa`**, one commit, three paths:
+- `test/fixtures/manifest.d593.json` (sha256 `9db75a8a…3ada`);
+- `test/fixtures/kn5nodes.js` (sha256 `37deb2ce…7c67`): every mesh node of a kn5 as its own record's bytes, plus the same digest with its four flags zeroed;
+- `test/core_cup_fixtures.test.js`:
+  - the header note;
+  - the record folded into `amendedManifest`;
+  - both new files' digests pinned in the kit row;
+  - the row **"D593 amendment record"**.
+
+**"Before" is exact.** a93ae51 built F1 and F2 with the D572 record's own `after_d572` kn5, digest and bytes.
+- checked: `S\d593\nodes-a93.json` against `manifest.d572.json` → equal for both, compared before anything was written.
+
+**What the row checks, building F1 and F2 now:**
+- every road, skin and paint node is a93ae51's byte for byte (F1 15, F2 16 nodes; F2's road is 5 chunks, from the mesh cap);
+- the four `1ROAD_APRON_p*` keep their geometry and are hidden (all four flags off);
+- the additions, by name, are `APRONLIP_p1_chunk_0`, `_p2_chunk_1`, `_p3_chunk_2`, `_p5_chunk_3`, and the material `t180b_road_lipshade`, after the four, which keep their order;
+- `APRONSIDE_p1_chunk_0`, `_p2_chunk_1`, `_p3_chunk_2`, `_p5_chunk_3` are named as replaced (now the lip's underside);
+- no mesh is left that the record does not name.
+
+**Checks:**
+- checked: `S\d593\os-seal.out` → core_cup_fixtures 15/15. Rows 5a, 5b and the control are green again.
+- Throwaway mutants on the row, each restored from a backup:
+  - the skin's offset 0.5 → 0.51 is caught: "UNDERSKIN_p1_chunk_0 is not a93ae51's byte for byte";
+  - the main road's apron un-hidden (`apron.js:476`) is caught: "1ROAD_APRON_p1_chunk_0 is not hidden";
+  - un-hiding the pit outline's apron (`:496`) was NOT caught, correctly: F1 and F2 have pit boxes, no pit lane, so that line builds nothing they export.
+- checked: `S\d593\os-h-apron.out` → apron harness applied 16 / caught 16 / NOT APPLIED 0.
+- checked: `S\d593\os-h-acready.out` → acready harness applied 10 / caught 10 / NOT APPLIED 0.
+
+**Correction, to myself:** the row's control first required exactly 4 road chunks. F2 has 5 (`1ROAD_p4_chunk_3`, the mesh cap's split). It now requires at least 4. That was my own new line, not an existing test.
+
+**To roll back:** revert `708f2fa`. Rows 5a, 5b and the control then read F1 and F2's kn5 as changed again, the state since 97ab62e.
+
+**Branch tip: t180 d593-o `708f2fa`.** It lands only after the keeper's look.
