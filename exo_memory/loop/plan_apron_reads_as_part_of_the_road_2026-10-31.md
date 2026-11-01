@@ -53,3 +53,11 @@ What he wants, in his words: the original edge (before any lip: the road's own e
 - PHYSICS: the hidden apron stays exactly as it is (57 meshes byte-equal, hidden). His drive tells whether the hidden surface catches wheels; asked.
 - PIT: the same rule along the lane's outer edge: a filled side face, no lip.
 - Proof: a cross-section render at the cupped spot from the side, showing a blunt filled edge; renders checked by me at every spot before he sees them.
+
+## 21:58, his verdict on 0.4.35 in the game: revert the apron, keep the pit
+His shots: "look how the car falls through visible geometry.png" and "same time top down.png", both in Pictures\Screenshots. The car's wheels sink into the drawn lip while the hidden physics plank carries them lower: the 0.3 m mismatch O named in D593 section 5 is visible in play. His words: "the pit changes are decent, but we need to somehow revert back to what we had originally with the apron".
+So:
+- The APRON returns to 0.4.34's: the physics plank DRAWN, so what you see is what the wheels ride. Same vertices, so no sinking. No separate lip and no blade.
+- It keeps two things he asked for tonight: the road's own asphalt texture at 0.88 (instead of the tan material), lit normally, and the "slice filled in", meaning the join under the plank is a closed face back to the underskin, as in 0.4.34, in the darker asphalt.
+- The PIT stays as O built it (flat lane, taper, 0 clips, 0 open edges), with the same plank-style apron along its outer edge, drawn.
+- Proof: drawn equals physics vertex for vertex on every apron mesh (count 0 differ); the clipping counts stay 0; renders of a wheel's view at the cup and bank spots plus the pit, checked by me first.
