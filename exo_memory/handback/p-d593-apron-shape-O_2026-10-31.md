@@ -239,3 +239,62 @@ The angle between the drawn surface's first column and the edge's own last segme
 **Deleted as superseded:** the untextured renders, in `S\d593\renders\` and in the git-tracked copy that was beside this file (`git rm`, lighthouse; they stay in history).
 
 **Branch tip: t180 d593-o `fbc089e`.**
+
+## The pit IS the track (the chair's ring of 00:11Z; plan_pit_lane_grows_out_of_the_road_2026-10-31.md, "Corrected 18:1x")
+
+**The change:** t180 **d593-o `ae6d262`**.
+- **Paths:** `src/geom/pitlane.js`, `src/export/pitlane.js`, `src/export/apron.js`, the two apron test files, `MAP.md` and `CHANGELOG.md`.
+- **No physics changes outside the pit span.**
+- **A's d596-a has no commits** (it is a93ae51), so there was nothing of A's to read.
+
+**The construction, and why.**
+- **The lane was the problem.** It began as a square slab at full width beside the road (`pitlane.js`, "leaves at full width"), so any apron had to turn corners round a box. That was "garbage" at 18:02, and his "clip" at 18:11 is the apron's plank stepping beside that box: my instrument finds 0 true triangle clips in his own kn5 (§ counts below).
+- **The lane now grows out of the road:**
+  - **Width:** it eases from 5 cm (`TAPER_MIN_W`) at the leave to full over the diverge, and back over the merge, on the gap's own smoothstep.
+  - **On the mesh:** a profile blend on the `in` and `out` parts, set from each station's own arc along the lane, so the centre line and the mesh agree.
+  - **Level:** it stays level in the road's frame. That is his D438 rule ("flips up towards the beginning and end"), kept: a tilt that eases with the width would bring back a smaller hump.
+  - **The edge:** its outer edge leaves the road's edge tangentially, so the open edge over the span is one line, road to lane to road.
+  - **The taper's length:** the diverge (80 m on his lane), not the plan's 150 m. The lane leaves the road over its diverge and should reach full width where its run begins; a longer taper cannot fit the lane's own parts.
+- **The apron on that line:** one strip, hidden physics by apronOf's rule plus the darker lip, walking the lane's 5 cm end rows vertex by vertex. No corners, fans or patches.
+- **The underside:** the lane and the infill get skins.
+  - **Where they meet:** every join vertex (every infill vertex) hangs its skin along the road frame's UP, which is the lane's own normal. So the road's, the infill's and the lane's skins meet and do not cross.
+  - **Two first forms failed, measured:**
+    - each surface's own normal: 49 clips, the cupped edge's skin swinging 13 cm under the lane's;
+    - a mean normal only at points that were both road and lane vertices: 53 clips, since the infill joins them at different points.
+- **The infill's inner-edge search** (`src/export/pitlane.js` `boundaryNear`) now takes only edges along the road, nearer the lane's inner side. The narrow lane's whole end row and its outer edge lie within the old 0.3 m search, and taking them left 6 downforce-ray gaps (row 10, red on my own first build).
+
+**Counts on his ELYSIUM** (his kn5 as before; after = ae6d262's export with his texture, `G:\Consonance-tools\scratch-O-d593\pit-tex.kn5`):
+
+| | his kn5 | ae6d262 |
+|---|---|---|
+| triangle clips round the lane, drawn × drawn | 0 | **0** |
+| triangle clips round the lane, physics × physics | 0 | **0** |
+| open drawn-surface edges within 25 m of the leave / the rejoin | 20 / 20 | **0 / 0** |
+| main physics apron meshes byte-identical to base | (is base) | **57 / 57**, plus `1ROAD_APRON_PIT_R` new |
+
+- checked: `S\d593\intersect-pit-tex.json` (`S\d593\intersect.js`).
+- checked: `S\d593\openedges.js` → his kn5 and pit-tex.kn5. It counts surfaces only; a painted marker is a decal, its border open by nature, and my first count included them.
+- checked: `S\d593\kn5cmp-base-pit.json`.
+
+**Tests:**
+- **Row 18 is new:** the clip count, drawn and physics, round the lane, plus the open-edge count round both ends, on the pit test lap. checked: `S\d593\pit-prev.out` → red on fbc089e's three files, row 18 alone.
+- checked: `S\d593\pit-apron.out` → 18/18.
+- checked: `S\d593\pit-harness.out` → applied 12 / caught 12 / NOT APPLIED 0, control passes. **P12 is new**: the road's skin hung along its own cupped normal again, caught by row 18.
+- **The pit-lane and touched files' tests:** checked: `S\d593\pit-batch1.out` … `pit-batch7.out` → **168/168**:
+  - geom-pitlane, tilt, core_pitlane, doc-pitlane, core-pitlane, markers_pitbalance, stacked_not_red, core_pitflat, core-pitlane-even;
+  - export_acready, core_edgeapron, export-apron-setting;
+  - export_pitinfill, export-layouts, core_cut, doc-code, doc, core-spawns-ui, core-trackmenu.
+- **Fixtures: 0 of 9 changed** (none has a pit lane; the road, its skin and its aprons hashed with fbc089e's files and with ae6d262's). checked: `S\d593\fixtures-prev.json`, `S\d593\fixtures-now.json`. The ELYSIUM fixture has a pit lane; its lane changes by design.
+- checked: physics digest `ecb0db14…`, unchanged.
+- **Not run here:** the whole export harness and the full suite. They are the landing's.
+
+**Not done, said before anyone relies on it:**
+- **The taper's mutant lives in `src/geom/pitlane.js`,** which the apron harness does not patch, so a dropped taper is caught only by rows 10, 14 and 18 through their counts, not by a named mutant.
+- **The AI pit line follows the lane's centre,** which now starts at the road's edge and pulls away over the diverge. Its own tests (markers_pitbalance) pass; it is not driven here.
+
+**The renders, 2560×1440, textured, 1.8× exposure on both:** `G:\Consonance-tools\scratch-O-d593\tex\before-<view>.png` and `after-<view>.png`.
+- **pit-leave-top:** a high view looking down the start straight onto the leave. Before, a square slab with a notch beside a grey plank; after, the lane growing out of the road's edge, the dark lip unbroken round it.
+- **pit-leave-above, pit-leave-low, pit-leave-under,** and the same for **pit-rejoin**.
+- **pit-lane-edge:** along the lane's outer edge, mid-lane.
+
+**Branch tip: t180 d593-o `ae6d262`.**

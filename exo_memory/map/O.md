@@ -363,3 +363,8 @@ General form: a heap gauge must count ArrayBuffers, or a cut to typed arrays sco
 2026-10-31, D593 — t180 d593-o 97ab62e: on his ELYSIUM the base plank met the edge at a median 55° (rim 30-60°: 69°, max 82.4°), the lip at 2.08°; the 57 physics apron meshes are byte-identical in his own kn5, the base and the cut (kn5cmp.js), +1 new 1ROAD_APRON_PIT_R; rows red at a93ae51 2/13/14/15/16, 17/17 after; harness 11/11/0. Could be wrong that AC still collides with a non-renderable 1ROAD_ mesh (inferred from catch.js, not run in the game).
 General form: where two strips meet along a line at different vertices, the downforce-ray check reads the line as a gap; share the vertices (a fan from one point), do not just make the lines coincide.
 → `exo_memory/handback/p-d593-apron-shape-O_2026-10-31.md`
+
+### A pit lane that starts square at full width cannot be edged like the road; tapered from 5 cm over its diverge it has one open edge, and with every join's skin hung along the road frame's up nothing clips
+2026-10-31, D593 pit — t180 d593-o ae6d262: on his ELYSIUM, clips round the lane 0 drawn / 0 physics (intersect.js), open surface edges round the ends 0/0 (his kn5: 20/20), main physics 57/57 byte-identical; skins on each surface's own normal clipped 49 times, a mean at shared points 53. Could be wrong for a lane whose diverge is short against its width (the taper's slope grows).
+General form: offset sheets hung from one crease along different normals cross on the crease's convex side; hang them all along one normal there.
+→ `exo_memory/handback/p-d593-apron-shape-O_2026-10-31.md`
