@@ -371,3 +371,12 @@ General form: offset sheets hung from one crease along different normals cross o
 
 ### Correction (2026-10-31, D593): the pit-lane construction above (ae6d262) is not on d593-o; A owns the pit lane, and 43539d0 reverts it there. It stays in history as A's reference.
 → `exo_memory/handback/p-d593-apron-shape-O_2026-10-31.md`, section "A owns the pit lane"
+
+### Correction to my 2026-10-31 line "ae6d262 is not on d593-o": it is again, via 9cb2adf (the revert of the revert), tree identical to 18b1774
+2026-10-31, D593 — `git diff --stat 18b1774 9cb2adf` empty. Also wrong that day: "fixtures 0 of 9" — the seal's row reads F1 F2 kn5 changed since 97ab62e; my instrument never compared that digest.
+→ `exo_memory/handback/p-d593-apron-shape-O_2026-10-31.md` §"The rulings of 00:54Z and 00:55Z"
+
+### "Stripes" and "a notch" on a road surface can be uvs, not geometry: one u per piece from a blended profile stretched the pit merge 80×, and a lip stepping between two uv spaces in one row squeezed 82 repeats into 2 m
+2026-10-31, D593 — overlap count 0 at both spots, a mip bias left the stripes unchanged, the picked mesh's |∇u| was 0.00125 a metre against the road's 0.1; t180 d593-o 6a0e6f7, b1e95a8, rows 19 and 21 red first. Could be wrong for other blended pieces (mesh.js:263 lays every blend this way; only the lane was fixed).
+General form: before calling a visual defect geometry, pick the pixel and read what lies there; my own renderer culled by normals where AC culls by winding, and drew cracks that were not there.
+→ `exo_memory/handback/p-d593-apron-shape-O_2026-10-31.md`

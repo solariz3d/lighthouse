@@ -386,3 +386,79 @@ Its counts there: 0 drawn and 0 physics clips; 0/0 open surface edges at the end
 - checked: `S\d593\kn5cmp-base-tip.json` → the main physics apron 57/57 byte-identical to base, plus the lane's `1ROAD_APRON_PIT_R`.
 
 **Branch tip: t180 d593-o `9cb2adf`.**
+
+## The rulings of 00:54Z and 00:55Z (delivered 01:07Z): the pit fixed, counts extended, renders
+
+**The restore the 00:55Z ring asks for was already exact:** not a cherry-pick, not the stash, but `9cb2adf`, the revert of the revert 43539d0.
+- checked: `git diff --stat 18b1774 9cb2adf` → empty (ae6d262 plus the lip at 0.88).
+
+**Three commits on top, t180 d593-o:**
+- `a583b0e` "no surface drawn twice, no sliver, no step at its ends":
+  - the taper starts at 10 cm (its 8 columns were 6 mm apart at 5 cm);
+  - the lane's end rows are physics-only;
+  - the drawn lip turns from the cupped road to the flat lane over the road the outline has (at most 10 m);
+  - a road row that steps ACROSS to the lane's first or last row leaves the drawn lip, and its corner gets one flat triangle top and under;
+  - outline rows within 0.1 mm are one point (copies 1-3 µm apart in float32).
+- `6a0e6f7` "one texture along it, and a gradual turn on a cupped road":
+  - the lip's edge uvs are walked as one across the road's and the lane parts' uv spaces. The lip squeezed up to 41 repeats a metre into one row: the notch.
+- `b1e95a8` "its surface wears the road's texture at the road's scale where it narrows":
+  - mesh.js lays one u per piece from its own profile, so the lane's diverge kept the full width's u over 10 cm (80× squeezed) and its merge the narrow end's over 8 m (80× stretched: the stripes);
+  - laneForExport scales each blended row's u to its own width;
+  - mesh.js is untouched (every road's, and the fixtures read it).
+
+**The lane is flat across, with the flat road's lip.** Measured before these commits, on the 9cb2adf export:
+- every lane mesh's normal is y 1.00000, 0.00° tilt;
+- the lane and the infill sit at height 2.567;
+- the road at p1 runs 0.000 at its centre to 2.567 at its cupped edge.
+So the "banked" look is the cup rising 2.567 m to the lane, not the lane tilting.
+- inferred: still flat at b1e95a8. Nothing since touches the lane's positions, only its uvs and the lip.
+
+**New rows, each red first and named to what it catches:**
+- 18 extended: coplanar overlaps (2 mm, 2°, > 1 cm²), slivers under 1 cm, and holes that read T-junctions as closed, all 0. It read 28 overlaps, then 4, then 4 slivers, then 0.
+- 19: no lip or underside edge round the lane squeezes more than 1 repeat a metre. 372 at a583b0e.
+- 20: on a road cupped 15.5°, no lip row turns more than 0.6 of the cup from its neighbour. 15.5° in one row without the turn; 7.5° with it, bounded by the ~6 m of road the outline has before the leave.
+- 21: on every lane triangle, u changes 0.1 a metre within 10%. 776 triangles off before b1e95a8 (8.0 a metre at the leave).
+
+**Tests:**
+- checked: `S\d593\os-apron.out` → export_apron 21/21.
+- checked: `S\d593\os-pittests.out` → 11 files that load the pit lane, 124/124.
+- checked: `S\d593\os-harness3.out` → apron harness applied 16 / caught 16 / NOT APPLIED 0. P13-P16 are new, one per fix in a583b0e and 6a0e6f7.
+- **No harness names `src/export/pitlane.js`.** For b1e95a8 the check is row 21: red before, green after, with only that change between.
+
+**Still red, and a ruling is owed: core_cup_fixtures rows 5a, 5b and the control.**
+- checked: `S\d593\os-touched3.out` → those 3 of 87, nothing else.
+- F1 and F2 (the closed laps) differ in their kn5 only, and since my first lip commit:
+  - checked: a scratch worktree → 0 of 9 differ at a93ae51, 2 of 9 at 97ab62e.
+- **Correction:** my earlier "fixtures 0 of 9 changed" was wrong in its unit. My fixtures.js instrument never compared the kn5 digest this row seals.
+- What changed, mesh by mesh, a93ae51 against the tree (`S\d593\fixcmp-F1.json`, `-F2.json`):
+  - F1: 15 of 23 meshes byte-identical (F2: 16 of 24): the road, skins and paint;
+  - the 4 physics apron meshes keep their geometry, their flags only turn hidden;
+  - the 4 APRONSIDE meshes are now the lip's underside;
+  - 4 APRONLIP meshes are added;
+  - one material, `t180b_road_lipshade`, is appended after the four, which keep their order.
+- This is what D593 asked for. The project's way to seal it is an amendment record like D572's (`test/fixtures/manifest.d593.json` plus a row). I have not written one: amending a seal over stored fixtures is the chair's call.
+
+**His ELYSIUM at b1e95a8** (copy `S\d593\doc\eq-ELYSIUM.his.t180track`, export `G:\Consonance-tools\scratch-O-d593\tip4-tex.kn5`):
+- checked: `S\d593\intersect-tip4.json` → clips 0 drawn, 0 physics, of 92,262 triangles round the lane.
+- checked: `S\d593\defects-tip4.json` → coplanar overlaps 0, slivers 0, of 91,738 drawn triangles.
+- checked: `S\d593\openedges-tip4.json` → open drawn surface edges at the leave / rejoin 0 / 0. His kn5: 20 / 20.
+  - Physics 29 / 29, against 24 / 24 on a93ae51's export and his kn5. Every one is a plank's free outer row 2 m out (a plank ends in the air by design); the 5 new are the lane outline's own outer row.
+- checked: `S\d593\kn5cmp-tip4.json` → the main physics apron 57/57 byte-identical to base, plus `1ROAD_APRON_PIT_R`.
+- checked: `S\d593\physdigest-tip4.json` → `ecb0db14…1d75`, unchanged since a93ae51.
+
+**The pit renders,** ten views, 2560×1440, ambient and exposure ×1.8, at `G:\Consonance-tools\scratch-O-d593\tex\`:
+- `after-pit-*.png` from tip4-tex.kn5;
+- `before-pit-*.png` from his kn5, re-rendered with the same renderer.
+
+**I looked at all ten.** The named spots:
+- **pit-leave-low:** the slivers are gone. A sky-through crack left there was MY RENDERER. It culled on vertex normals, and the road skin beside the lane (hung along the frame's up) tips past edge-on there. AC culls on winding, and render2.js now does too.
+  - checked: `S\d593\pick.js` → the front triangle at every crack pixel was `UNDERSKIN_p1`, front by winding, back by normals.
+- **pit-rejoin-above:** the notch was the lip's 82-repeat jump in one row (6a0e6f7), and the stripes were the merge's 80× stretched texture (b1e95a8). Both are gone.
+  - The stripes were not z-fighting: overlaps there read 0 throughout.
+  - A mip bias of +1 left them unchanged, which ruled out sampling.
+- **pit-leave-above:** the step is gone, by the across-row fix and the turn.
+- **pit-lane-edge:** two white pixels at the far tip are the start line's paint, 600 m away (pick).
+
+**inferred:** the `after-{cup,bank}-*` main-road shade renders are still the 9cb2adf set from the old renderer. Nothing on the main road changed since; not re-rendered.
+
+**Branch tip: t180 d593-o `b1e95a8`.**
