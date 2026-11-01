@@ -395,3 +395,9 @@ General form: a byte digest per node reports a renumbering as a change; read the
 2026-11-01, D593 overnight: t180 d593-o 8dd5029, the pit lane's end caps. The plank's wedge is 25 deg, the join's 12 deg, so the lane's 8 end-row spaces need 4.8 cm, a 0.39 m start; at 0.1 m they were 0.5 cm, and a single long triangle instead cracked as a T-junction my hole count had credited as closed (now strict). Could be wrong if a different cap topology (graded rows) avoids it: not tried.
 General form: a hole count that credits T-junctions hides the cracks a renderer shows; count strict, and pick the pixel before calling a mark geometry or renderer.
 → `exo_memory/handback/p-d593-apron-shape-O_2026-10-31.md` §overnight
+
+### The road as a solid slab costs his ELYSIUM no physics byte and no seam: skin at the plank's drop (0.93 m), 89/89 road physics same, strict drawn open edges 0, clips 0 except the one overpass (14 → 36, ruled kept)
+2026-11-01, D604 — t180 d604-o 66b04aa; isocmp, defects, openedges STRICT, slabcheck over his ELYSIUM's export; harnesses apron 17, underskin 9 (new), acready 10, NOT APPLIED 0. At slab depth a flat lane's end points go collinear: a fan
+replaces the zero-area cells (thinnest 0.0609 m against the 0.01 m floor). Could be wrong for a track with a convex edge under 0.93 m radius: row 24 covers the core's floor (e −30, s 0.9), not his saves.
+General form: a camera kept from a previous lap can be blind to the new change; compare before/after bytes before calling a render pair evidence.
+→ `exo_memory/handback/p-d604-slab-O_2026-11-01.md`
