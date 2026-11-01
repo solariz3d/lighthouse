@@ -13,3 +13,10 @@ The lane is a flat slab set beside the road. Its front end is square at full wid
 - D593 lands WITHOUT its pit outline (the main-road lip only), so the edges he liked are not held back. The pit outline returns with this lap.
 
 Falsifier: if on his eye the lane still reads as a box set beside the road, the taper is too short or its surface does not carry the road's bank long enough. Lengthen the blend, do not add trim.
+
+## Corrected 18:1x, in his words (the keeper, 18:11, answering when I asked)
+"the pit and apron geometry clip through each other... I want it to look exactly how it does on the rest of the track like the pit IS the track". And on the bank ramp: "Nope, just how the apron is different on increased CUpping, it was my bad for that." So the D521 bank-ramp lap is DROPPED (plan_bank_ramp_smooth_not_a_slice_2026-10-31.md is void).
+The pit ask, as he states it:
+1. No geometry clipping through other geometry. The pit lane, the infill and the apron must not intersect. His screenshot "as well it doesnt connect to the pits seemlessly with the edges.png" shows the apron's wedge stepping into the lane.
+2. The pit lane is built and looks EXACTLY like the rest of the track: the same road surface, the same edge treatment, the same lip in darker asphalt, the same apron physics under it. The join to the main road is one continuous surface. The 150 m taper above is one way to get there, not a requirement of his. O chooses the construction that meets 1 and 2 and says why.
+Proof as above, plus: zero triangle intersections between the pit lane, the infill, the road and the apron meshes in the export (a mesh-intersection count, 0 before landing), and renders from his "pits" spot with textures at 2560x1440.
