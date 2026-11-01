@@ -35,3 +35,9 @@ His ask is the right shape: one outline. The apron is generated along the open o
 - Visual: the separate visual mesh of the 17:1x amendment follows the same one outline.
 - Same pane and branch as the apron's look (O), in this order: the outline first, then the physics along the lane, then the visual mesh over everything. One file (apron.js) and one design, so it is not split.
 - Proof adds: a wheel 0.86 m off the lane's outer edge has the apron under it within 0.1 m; the main apron outside the span is byte-equal; renders of the leave and the rejoin from his "pits" spot, before and after, in the artifact.
+
+## Amended 18:0x: the colour, and the pictures (the keeper, 18:04)
+"i liked the look of the original, it worked and was functional, BUT IT WAS JUST A THIN 1 PIXEL SLICE, NOT THE WHOLE THING IN REALITY... It should be darker shades asphalt on the sides or carry like the shadow if it needs be out of the light being darker than the same color of base of the track texture... the artifact images are too damn small cant even see or zoom in".
+Reading: from above, the original edge read as a thin line, and he liked that. Up close, the side is a whole surface in a different, light colour. So:
+- The lip and its underside carry the ROAD'S OWN asphalt texture, shaded DARKER than the road: one darker variant of the road material, as if in shadow, applied to the lip and the underside. They are not the old tan, not the skin's slate, and not a light colour. From above it then still reads as a thin dark edge line, and up close as darker asphalt rolling over.
+- Renders: from his kn5 WITH the game's textures (the road's DDS), at 2560x1440. The page shows each picture full width, one per row, and opens the full-size image on click.
