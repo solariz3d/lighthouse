@@ -401,3 +401,9 @@ General form: a hole count that credits T-junctions hides the cracks a renderer 
 replaces the zero-area cells (thinnest 0.0609 m against the 0.01 m floor). Could be wrong for a track with a convex edge under 0.93 m radius: row 24 covers the core's floor (e −30, s 0.9), not his saves.
 General form: a camera kept from a previous lap can be blind to the new change; compare before/after bytes before calling a render pair evidence.
 → `exo_memory/handback/p-d604-slab-O_2026-11-01.md`
+
+### A hull bottom hung at one depth cannot leave a plank tip and run smoothly under a rising edge: both ends are steeper than the chord, so it must make an S; deepen the skin under the edge
+2026-11-01, D604 hull — the keeper's red line (1.68 m under the centre, ~2.1 m under the road edge). At 1.5 m all across, the Hermite run from the tip showed a shoulder (hull1). hullDepth = drop + 2 m·tan(rim + 5°), capped 3 m, eased over 4 m, made it only flatten (hull3/5/6). Its end tangent must be the deepened skin's, not the road's, or a corner sits under the edge (hull2). t180 d604-o e911792; 211/211, harnesses 12/20/10 caught, NOT APPLIED 0; physics 89/89; overpass 14 → 80, all within 6.2 m.
+Could be wrong for steep cups past the 3 m cap (rim ≥ 44°): there the chord can be shallower than the skin and a slight S returns (his 57° cup read smooth).
+General form: read a drawing's depth at more than one point before choosing the depth rule; a sketch's shape lives in how its depth changes, not in its centre value.
+→ `exo_memory/handback/p-d604-slab-O_2026-11-01.md`
