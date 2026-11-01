@@ -385,3 +385,8 @@ General form: before calling a visual defect geometry, pick the pixel and read w
 2026-10-31, D593 seal — t180 d593-o 708f2fa: kn5nodes.js digests each mesh node's record (and again with its four flags zeroed, for a node only hidden); the row caught a 1 cm skin move and an un-hidden apron. Could be wrong for a change that moves a node between chunks (the names would shift; F2's mesh-cap split shows they can).
 General form: an amendment that only checks its own recorded measure guards nothing after it lands; one that rebuilds and compares keeps guarding.
 → `exo_memory/handback/p-d593-apron-shape-O_2026-10-31.md` §"The seal ruling, 01:32Z"
+
+### A kn5 node can change bytes without changing: inserting a material ahead of others renumbers every later node's material index
+2026-11-01, D593 re-pin — the three 1ROAD_CATCH_ nodes differed only in material index 5 -> 6 (same name, same geometry, same material) after the lip shade was inserted before t180b_catch; t180 d593-o 02081e4. Could be wrong if a reader keys by index rather than name.
+General form: a byte digest per node reports a renumbering as a change; read the field before calling it one.
+→ `exo_memory/handback/p-d593-apron-shape-O_2026-10-31.md` §"The re-pin, 03:17Z"

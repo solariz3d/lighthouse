@@ -498,3 +498,42 @@ So the "banked" look is the cup rising 2.567 m to the lane, not the lane tilting
 **To roll back:** revert `708f2fa`. Rows 5a, 5b and the control then read F1 and F2's kn5 as changed again, the state since 97ab62e.
 
 **Branch tip: t180 d593-o `708f2fa`.** It lands only after the keeper's look.
+
+## The re-pin, 03:17Z: the isolated export's two digests, and E's "catch 3 differ"
+
+**t180 d593-o `02081e4`**, one commit:
+- `app/test/export-isolated.test.js`: the PIN, with an AMENDED BY NAME note;
+- `app/test/export-isolated-page.test.js`: the same PIN.
+- The pins go from lap `257d550e6870bdf1` / open `2b6ad34e0f135050` to `60e346e18df0144b` / `7b587edcbcefc314`; the file counts stay 10 / 11.
+
+**The move is d593's alone.**
+- checked: row 1 with `PRINT_D437B=1` at a93ae51 → `257d550e…` / `2b6ad34e…` (the old pins);
+- at d593-o → `60e346e1…` / `7b587edc…` (E's actual).
+
+**1. What moved in that lap's export, mesh by mesh against a93ae51** (`S\d593\isodump.js` dumps row 1's two exports; `S\d593\isocmp.js` compares them with `test/fixtures/kn5nodes.js`; result `S\d593\isocmp.txt`):
+- Of the 21 files, 5 changed: both kn5, and the lap's `data/map.ini`, `map.png` and `ui/outline.png`.
+- **The lap's kn5:**
+  - road physics 4 and paint 5: the same bytes;
+  - physics apron: 4 flags only (hidden), plus the new `1ROAD_APRON_PIT_R`;
+  - `APRONSIDE_` 4 changed (now the lip's underside), plus `APRONSIDE_PIT_R`;
+  - `APRONLIP_` 5 added;
+  - pit lane: in, out and fill changed (taper and uvs), plus three new `UNDERSKIN_PIT_*`;
+  - road skins: three changed. `UNDERSKIN_p1_chunk_0` and `_1` moved 339 and 143 vertices, all within 0.5 m of a lane or infill vertex, indices unchanged. `UNDERSKIN_p5_chunk_3` gained 252 vertices and lost 0, all inside the lane's diverge (z 60–140, 0.5 m under it): the lane's diverge skin, merged into that chunk.
+- **The open kn5:** road physics 3, paint 5, pit 2, underskin 3 and other 1 are all the same; physics apron 3 flags only; `APRONSIDE_` 3 changed; `APRONLIP_` 3 added; the lip shade material appended.
+- **The map:** WIDTH 230 → 232 and X_OFFSET 45.5988 → 47.5988. The map's bounds are the drivable physics meshes (`src/export/trackfiles.js:132-146`). The lane's new physics apron, 2 m wide, takes the outer bound from x −35.6 to −37.6. That is 2 m exactly, the apron's width.
+
+**2. "catch 3 differ" (p-d598 §4):** the catch GEOMETRY did not change.
+- His ELYSIUM exported at a93ae51 against the same at d593-o, the three `1ROAD_CATCH_p17/p23/p45` meshes field by field (kn5full.js):
+  - positions, normals, uvs, indices and flags identical;
+  - `t180b_catch` material identical;
+  - **material index 5 → 6, by name t180b_catch → t180b_catch.**
+- The lip's shade material is inserted ahead of `t180b_catch`, so every catch node stores an index one higher. That changes the node's bytes, not the catch.
+- His export against a93ae51: catch 3 same. So in E's compare, the "differ" is that index alone.
+- Also seen, not d593's: his export against a93ae51 differs in one road physics mesh, `1ROAD_p38_chunk_77`. Against a93ae51, d593-o keeps all 89 road physics meshes the same bytes. inferred: his export came from his installed build, not a93ae51, so that difference predates d593.
+
+**3. Checks:**
+- checked: `S\d593\os-iso.out` → `export-isolated`, `-mutation` and `-page` 24/24.
+- Private-term scan of the diff: 0.
+- The scratch worktree at a93ae51 is removed.
+
+**Branch tip: t180 d593-o `02081e4`.**
