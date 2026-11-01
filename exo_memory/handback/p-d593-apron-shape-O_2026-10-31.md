@@ -370,3 +370,19 @@ Its counts there: 0 drawn and 0 physics clips; 0/0 open surface edges at the end
 **The shade is done:** 18b1774, `LIP_SHADE` 0.88. The six renders are §"A owns the pit lane", from 43539d0.
 
 **Branch tip: t180 d593-o `43539d0`.**
+
+## The newest ruling, 00:48Z (delivered 00:54Z): keep ae6d262
+
+**ae6d262 is back on d593-o.** t180 **d593-o `9cb2adf`** reapplies it by reverting 43539d0, so the history is only added to.
+- checked: `git diff --cached --quiet 18b1774` before the commit → the tree is identical to 18b1774 (ae6d262 plus the lighter shade).
+- checked: `S\d593\rerev-apron.out` → 18/18.
+- **The branch name is gone:** `o-pit-taper-superseded` (made minutes before) is deleted, since ae6d262 is in d593-o again.
+
+**The six shade renders, from 9cb2adf's export** (`G:\Consonance-tools\scratch-O-d593\tip-tex.kn5`): `G:\Consonance-tools\scratch-O-d593\tex\after-{cup,bank}-{above,side,under}.png` against his kn5's `before-`. Ambient and exposure are ×1.8 on both.
+
+**Counts on the same export:**
+- checked: `S\d593\intersect-tip.json` → clips round the lane 0 drawn / 0 physics.
+- checked: `S\d593\openedges.js` → open surface edges at the leave / rejoin 0 / 0.
+- checked: `S\d593\kn5cmp-base-tip.json` → the main physics apron 57/57 byte-identical to base, plus the lane's `1ROAD_APRON_PIT_R`.
+
+**Branch tip: t180 d593-o `9cb2adf`.**
