@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: row 1: the Aurora sky fits its GPU budget: at most 1.5 ms at the 95th percentile, 2560 x 1440, from every pitch
+ok 1 - row 1: the Aurora sky fits its GPU budget: at most 1.5 ms at the 95th percentile, 2560 x 1440, from every pitch
+  ---
+  duration_ms: 1733.2401
+  type: 'test'
+  ...
+# aurora: pitch 0: p95 0.227 ms; pitch 40: p95 0.738 ms; pitch 85: p95 1.304 ms
+# Subtest: row 2: its flat fallback fits the budget too
+ok 2 - row 2: its flat fallback fits the budget too
+  ---
+  duration_ms: 885.9247
+  type: 'test'
+  ...
+# aurora fallback: pitch 0: p95 0.299 ms; pitch 40: p95 0.404 ms; pitch 85: p95 0.329 ms
+# Subtest: row 3: the aurora it replaced (0.4.23) fits the budget, as it did
+ok 3 - row 3: the aurora it replaced (0.4.23) fits the budget, as it did
+  ---
+  duration_ms: 214.9333
+  type: 'test'
+  ...
+# 0.4.23 aurora: pitch 0: p95 0.126 ms; pitch 40: p95 0.127 ms; pitch 85: p95 0.127 ms
+# Subtest: row 4: the row can fail: a sky deliberately over budget (three 64-step volume curtains, full resolution) is over 1.5 ms
+ok 4 - row 4: the row can fail: a sky deliberately over budget (three 64-step volume curtains, full resolution) is over 1.5 ms
+  ---
+  duration_ms: 4473.8107
+  type: 'test'
+  ...
+# heavy control: pitch 0: p95 2.661 / 2.661 ms; pitch 40: p95 5.363 / 5.365 ms; pitch 85: p95 5.372 / 5.371 ms
+# Subtest: row 5: the renderer's own budget works on the GPU: the Aurora sky fits it, and a budget no sky can meet makes it fall back to the flat form, said once
+ok 5 - row 5: the renderer's own budget works on the GPU: the Aurora sky fits it, and a budget no sky can meet makes it fall back to the flat form, said once
+  ---
+  duration_ms: 1048.5645
+  type: 'test'
+  ...
+# default budget: fits at p95 1.254 ms after 121 frames
+# a 1e-6 ms budget: fell back at p95 1.254 ms after 121 frames; said: renderer: the aurora sky took 1.25 ms of GPU time a frame (95th percentile of 90 frames), over its 0.000001 ms budget; it is drawn in its flat form from now on
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8830.4601

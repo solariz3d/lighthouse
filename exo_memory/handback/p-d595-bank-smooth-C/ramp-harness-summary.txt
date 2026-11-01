@@ -1,0 +1,6 @@
+ℹ tests 74
+ℹ pass 74
+ℹ fail 0
+applied-and-caught 72, NOT APPLIED 0
+ok 73 - mutant Z1 the unticked bank is the rounded ramp again (the slice): applied, and caught by "smooth S, no slice"
+ok 74 - mutant Z2 the S rises over a quarter, not a third (it starts sooner and peaks lower): applied, and caught by "smooth S, no slice"

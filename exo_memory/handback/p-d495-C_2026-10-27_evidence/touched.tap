@@ -1,0 +1,1417 @@
+TAP version 13
+# Subtest: mapping: ksAmbient, ksDiffuse, ksSpecular, ksSpecularEXP, ksEmissive and ksAlphaRef become the uniforms, value for value
+ok 1 - mapping: ksAmbient, ksDiffuse, ksSpecular, ksSpecularEXP, ksEmissive and ksAlphaRef become the uniforms, value for value
+  ---
+  duration_ms: 1.6292
+  type: 'test'
+  ...
+# Subtest: mapping: a property the material lacks reads 0, as actools GetPropertyValue*ByName does
+ok 2 - mapping: a property the material lacks reads 0, as actools GetPropertyValue*ByName does
+  ---
+  duration_ms: 0.1638
+  type: 'test'
+  ...
+# Subtest: mapping: txDiffuse is the texture the material's sampler names
+ok 3 - mapping: txDiffuse is the texture the material's sampler names
+  ---
+  duration_ms: 0.1214
+  type: 'test'
+  ...
+# Subtest: mapping: ksPerPixelNM takes txNormal and nmObjectSpace
+ok 4 - mapping: ksPerPixelNM takes txNormal and nmObjectSpace
+  ---
+  duration_ms: 0.0921
+  type: 'test'
+  ...
+# Subtest: mapping: ksMultilayer takes the mask, the four detail textures and their scales, and magicMult
+ok 5 - mapping: ksMultilayer takes the mask, the four detail textures and their scales, and magicMult
+  ---
+  duration_ms: 0.1499
+  type: 'test'
+  ...
+# Subtest: mapping: the shader picks the program the way actools MaterialsProviderDark does
+ok 6 - mapping: the shader picks the program the way actools MaterialsProviderDark does
+  ---
+  duration_ms: 0.1132
+  type: 'test'
+  ...
+# Subtest: mapping: a material without a shader is refused
+ok 7 - mapping: a material without a shader is refused
+  ---
+  duration_ms: 0.3224
+  type: 'test'
+  ...
+# Subtest: light: one sun, stated: 14:00, 42° up, and toSun is a unit vector at that elevation
+ok 8 - light: one sun, stated: 14:00, 42° up, and toSun is a unit vector at that elevation
+  ---
+  duration_ms: 0.0987
+  type: 'test'
+  ...
+# Subtest: shade: a white surface facing the sun, seen from the sun, is tx·(Ambient·ambient + Diffuse·sun) + Specular·sun
+ok 9 - shade: a white surface facing the sun, seen from the sun, is tx·(Ambient·ambient + Diffuse·sun) + Specular·sun
+  ---
+  duration_ms: 0.3845
+  type: 'test'
+  ...
+# Subtest: shade: a surface facing away from the sun gets ambient only (no diffuse, no specular)
+ok 10 - shade: a surface facing away from the sun gets ambient only (no diffuse, no specular)
+  ---
+  duration_ms: 0.2049
+  type: 'test'
+  ...
+# Subtest: shaders: every uniform the renderer sets is declared in each program it sets it for
+ok 11 - shaders: every uniform the renderer sets is declared in each program it sets it for
+  ---
+  duration_ms: 0.8832
+  type: 'test'
+  ...
+# Subtest: shaders: the three programs are the three the packet names, and each fragment shader has a precision
+ok 12 - shaders: the three programs are the three the packet names, and each fragment shader has a precision
+  ---
+  duration_ms: 0.2287
+  type: 'test'
+  ...
+# Subtest: shaders: the ported file carries the Ms-PL notice, and the licence text sits beside it
+ok 13 - shaders: the ported file carries the Ms-PL notice, and the licence text sits beside it
+  ---
+  duration_ms: 1.2025
+  type: 'test'
+  ...
+# Subtest: renderer: an AC material's properties reach the shader as the mapped uniforms
+ok 14 - renderer: an AC material's properties reach the shader as the mapped uniforms
+  ---
+  duration_ms: 2.4966
+  type: 'test'
+  ...
+# Subtest: renderer: the multilayer scales and magicMult reach the shader
+ok 15 - renderer: the multilayer scales and magicMult reach the shader
+  ---
+  duration_ms: 0.4199
+  type: 'test'
+  ...
+# Subtest: renderer: a named texture is uploaded at its size and bound to its sampler; an absent one gets a 1×1 white texel
+ok 16 - renderer: a named texture is uploaded at its size and bound to its sampler; an absent one gets a 1×1 white texel
+  ---
+  duration_ms: 0.3541
+  type: 'test'
+  ...
+# Subtest: renderer: a texture no longer drawn is deleted after the frame, like a buffer
+ok 17 - renderer: a texture no longer drawn is deleted after the frame, like a buffer
+  ---
+  duration_ms: 0.7701
+  type: 'test'
+  ...
+# Subtest: renderer: look "words" draws the per-word colours even when materials are given
+ok 18 - renderer: look "words" draws the per-word colours even when materials are given
+  ---
+  duration_ms: 0.341
+  type: 'test'
+  ...
+# Subtest: renderer: an unknown look is refused
+ok 19 - renderer: an unknown look is refused
+  ---
+  duration_ms: 0.1862
+  type: 'test'
+  ...
+# Subtest: renderer: a batch with no material is refused, not drawn in some default
+ok 20 - renderer: a batch with no material is refused, not drawn in some default
+  ---
+  duration_ms: 0.1899
+  type: 'test'
+  ...
+# Subtest: list: every mesh the preview draws is in the kn5, under the same name, with the same material
+ok 21 - list: every mesh the preview draws is in the kn5, under the same name, with the same material
+  ---
+  duration_ms: 18749.312
+  type: 'test'
+  ...
+# Subtest: list: each material the preview draws equals the kn5's, property for property at float32, sampler for sampler
+ok 22 - list: each material the preview draws equals the kn5's, property for property at float32, sampler for sampler
+  ---
+  duration_ms: 0.3077
+  type: 'test'
+  ...
+# Subtest: list: the textures the preview draws equal the kn5's (an untextured track: the export's solid diffuse, src/export/acready.js)
+ok 23 - list: the textures the preview draws equal the kn5's (an untextured track: the export's solid diffuse, src/export/acready.js)
+  ---
+  duration_ms: 0.1285
+  type: 'test'
+  ...
+# Subtest: list: the preview's material and texture list EQUALS the kn5's
+not ok 24 - list: the preview's material and texture list EQUALS the kn5's # TODO the preview does not draw the start and grid paint (t180b_paint, PAINT_* meshes) or the closing seam the export builds (D177 §3)
+  ---
+  duration_ms: 0.9502
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-c495\\app\\test\\aclook.test.js:219:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    [32m+ actual[39m [31m- expected[39m
+    ... Skipped lines
+    
+    [39m  [
+    [39m    [
+    [31m-[39m     't180b_paint',
+    [39m      't180b_road'
+    [39m    ],
+    [39m    [
+    [39m      '1ROAD_w1_body_0',
+    [39m      '1ROAD_w1_in_0',
+    [34m...[39m
+    [39m      '1ROAD_w8_out_0',
+    [32m+[39m     'PAINT_GRID_0',
+    [32m+[39m     'PAINT_GRID_1',
+    [32m+[39m     'PAINT_GRID_2',
+    [32m+[39m     'PAINT_GRID_3',
+    [32m+[39m     'PAINT_PIT_0',
+    [32m+[39m     'PAINT_PIT_1',
+    [32m+[39m     'PAINT_START_LINE'
+    [39m    ]
+    [39m  ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      0: 't180b_paint'
+      1: 't180b_road'
+    1:
+      0: '1ROAD_w1_body_0'
+      1: '1ROAD_w1_in_0'
+      2: '1ROAD_w1_out_0'
+      3: '1ROAD_w2_body_0'
+      4: '1ROAD_w2_in_0'
+      5: '1ROAD_w2_out_0'
+      6: '1ROAD_w3_body_0'
+      7: '1ROAD_w3_in_0'
+      8: '1ROAD_w3_out_0'
+      9: '1ROAD_w4_body_0'
+      10: '1ROAD_w4_in_0'
+      11: '1ROAD_w4_out_0'
+      12: '1ROAD_w5_body_0'
+      13: '1ROAD_w5_in_0'
+      14: '1ROAD_w5_out_0'
+      15: '1ROAD_w6_body_0'
+      16: '1ROAD_w6_in_0'
+      17: '1ROAD_w6_out_0'
+      18: '1ROAD_w7_body_0'
+      19: '1ROAD_w7_in_0'
+      20: '1ROAD_w7_out_0'
+      21: '1ROAD_w8_body_0'
+      22: '1ROAD_w8_in_0'
+      23: '1ROAD_w8_out_0'
+  actual:
+    0:
+      0: 't180b_road'
+    1:
+      0: '1ROAD_w1_body_0'
+      1: '1ROAD_w1_in_0'
+      2: '1ROAD_w1_out_0'
+      3: '1ROAD_w2_body_0'
+      4: '1ROAD_w2_in_0'
+      5: '1ROAD_w2_out_0'
+      6: '1ROAD_w3_body_0'
+      7: '1ROAD_w3_in_0'
+      8: '1ROAD_w3_out_0'
+      9: '1ROAD_w4_body_0'
+      10: '1ROAD_w4_in_0'
+      11: '1ROAD_w4_out_0'
+      12: '1ROAD_w5_body_0'
+      13: '1ROAD_w5_in_0'
+      14: '1ROAD_w5_out_0'
+      15: '1ROAD_w6_body_0'
+      16: '1ROAD_w6_in_0'
+      17: '1ROAD_w6_out_0'
+      18: '1ROAD_w7_body_0'
+      19: '1ROAD_w7_in_0'
+      20: '1ROAD_w7_out_0'
+      21: '1ROAD_w8_body_0'
+      22: '1ROAD_w8_in_0'
+      23: '1ROAD_w8_out_0'
+      24: 'PAINT_GRID_0'
+      25: 'PAINT_GRID_1'
+      26: 'PAINT_GRID_2'
+      27: 'PAINT_GRID_3'
+      28: 'PAINT_PIT_0'
+      29: 'PAINT_PIT_1'
+      30: 'PAINT_START_LINE'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-c495\app\test\aclook.test.js:221:10)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: textured: a word whose floor names a made texture is drawn with the set's material; the others keep the scene's
+ok 25 - textured: a word whose floor names a made texture is drawn with the set's material; the others keep the scene's
+  ---
+  duration_ms: 58.2923
+  type: 'test'
+  ...
+# Subtest: textured: the textured material the preview draws equals the one the set writes into the kn5
+ok 26 - textured: the textured material the preview draws equals the one the set writes into the kn5
+  ---
+  duration_ms: 2.6392
+  type: 'test'
+  ...
+# Subtest: textured: the preview's texels are the kn5's DDS level 0, byte for byte
+ok 27 - textured: the preview's texels are the kn5's DDS level 0, byte for byte
+  ---
+  duration_ms: 3.3222
+  type: 'test'
+  ...
+# Subtest: textured: an untextured floor in a set still draws the scene's material, not the set's untextured one the export does not write
+ok 28 - textured: an untextured floor in a set still draws the scene's material, not the set's untextured one the export does not write
+  ---
+  duration_ms: 0.8556
+  type: 'test'
+  ...
+# Subtest: preview: the AC look is the default: every placed batch is drawn with its exported material
+ok 29 - preview: the AC look is the default: every placed batch is drawn with its exported material
+  ---
+  duration_ms: 6.3775
+  type: 'test'
+  ...
+# Subtest: preview: a texture set with a made floor texture is uploaded at its size and drawn
+ok 30 - preview: a texture set with a made floor texture is uploaded at its size and drawn
+  ---
+  duration_ms: 2.1924
+  type: 'test'
+  ...
+# Subtest: preview: L toggles the look between the AC shaders and the colour per word (ARCHITECTURE §4 feedback layer), and the HUD says which
+ok 31 - preview: L toggles the look between the AC shaders and the colour per word (ARCHITECTURE §4 feedback layer), and the HUD says which
+  ---
+  duration_ms: 2.6268
+  type: 'test'
+  ...
+# Subtest: renderer: the ties fade out between TIE_FADE's distances, with blending; the edges do not fade
+ok 32 - renderer: the ties fade out between TIE_FADE's distances, with blending; the edges do not fade
+  ---
+  duration_ms: 0.7095
+  type: 'test'
+  ...
+# Subtest: renderer: the canvas is cleared to CLEAR, darker than the fog colour (the fog colour is the look and is unchanged)
+ok 33 - renderer: the canvas is cleared to CLEAR, darker than the fog colour (the fog colour is the look and is unchanged)
+  ---
+  duration_ms: 0.2741
+  type: 'test'
+  ...
+# Subtest: light: the floor gets exactly ambient + key·key.y + fill·fill.y
+ok 34 - light: the floor gets exactly ambient + key·key.y + fill·fill.y
+  ---
+  duration_ms: 1.4971
+  type: 'test'
+  ...
+# Subtest: light: a floor and a vertical wall, and a bank toward and away from the key, differ by at least 0.15
+ok 35 - light: a floor and a vertical wall, and a bank toward and away from the key, differ by at least 0.15
+  ---
+  duration_ms: 0.4519
+  type: 'test'
+  ...
+# Subtest: light: two-sided (an overhang facing down is lit like the floor facing up), and never below ambient or above 1
+ok 36 - light: two-sided (an overhang facing down is lit like the floor facing up), and never below ambient or above 1
+  ---
+  duration_ms: 0.4936
+  type: 'test'
+  ...
+# Subtest: light: the fragment shader carries look.js's own constants (the test of shade() is a test of the shader)
+ok 37 - light: the fragment shader carries look.js's own constants (the test of shade() is a test of the shader)
+  ---
+  duration_ms: 0.1726
+  type: 'test'
+  ...
+# Subtest: edge lines: through the two edge vertices and the centre vertex, lifted 3 cm, on the geometry's own surface
+ok 38 - edge lines: through the two edge vertices and the centre vertex, lifted 3 cm, on the geometry's own surface
+  ---
+  duration_ms: 69.2041
+  type: 'test'
+  ...
+# Subtest: edge lines: a tie across the road at least every 10 m of the cell, and none on seams
+ok 39 - edge lines: a tie across the road at least every 10 m of the cell, and none on seams
+  ---
+  duration_ms: 81.6649
+  type: 'test'
+  ...
+# Subtest: overhead fit (aspect 1.7): every vertex of the whole track projects inside the view, and the head is in frame
+ok 40 - overhead fit (aspect 1.7): every vertex of the whole track projects inside the view, and the head is in frame
+  ---
+  duration_ms: 854.9586
+  type: 'test'
+  ...
+# Subtest: overhead fit (aspect 0.6): every vertex of the whole track projects inside the view, and the head is in frame
+ok 41 - overhead fit (aspect 0.6): every vertex of the whole track projects inside the view, and the head is in frame
+  ---
+  duration_ms: 240.653
+  type: 'test'
+  ...
+# Subtest: ghost: the ghost of a segment tail equals what placing it builds, and the placed track is untouched by the ghost
+ok 42 - ghost: the ghost of a segment tail equals what placing it builds, and the placed track is untouched by the ghost
+  ---
+  duration_ms: 70.4292
+  type: 'test'
+  ...
+# Subtest: ghost: a candidate that does not extend the placed track is refused; on an empty track the ghost stands alone
+ok 43 - ghost: a candidate that does not extend the placed track is refused; on an empty track the ghost stands alone
+  ---
+  duration_ms: 17.02
+  type: 'test'
+  ...
+# Subtest: ghost through A's real shell: the candidate for a word equals what shell.place() then builds
+ok 44 - ghost through A's real shell: the candidate for a word equals what shell.place() then builds
+  ---
+  duration_ms: 64.4977
+  type: 'test'
+  ...
+# Subtest: preview: showGhost draws the ghost, clearGhost removes it, and placing the word retires it
+ok 45 - preview: showGhost draws the ghost, clearGhost removes it, and placing the word retires it
+  ---
+  duration_ms: 45.4274
+  type: 'test'
+  ...
+# Subtest: preview: a frame draws the grid and the head marker as lines (the grid only with ground: true)
+ok 46 - preview: a frame draws the grid and the head marker as lines (the grid only with ground: true)
+  ---
+  duration_ms: 14.9157
+  type: 'test'
+  ...
+# Subtest: preview: by default there is no ground grid, only the track and the head marker
+ok 47 - preview: by default there is no ground grid, only the track and the head marker
+  ---
+  duration_ms: 12.0534
+  type: 'test'
+  ...
+# Subtest: grid: every vertex at y = 0, covering the track's box, and the spacing widens so a long track stays a few hundred lines
+ok 48 - grid: every vertex at y = 0, covering the track's box, and the spacing widens so a long track stays a few hundred lines
+  ---
+  duration_ms: 199.0816
+  type: 'test'
+  ...
+# Subtest: head marker: it grows with the camera distance (2%, never under 3 m), and its ring surrounds the head in the road plane
+ok 49 - head marker: it grows with the camera distance (2%, never under 3 m), and its ring surrounds the head in the road plane
+  ---
+  duration_ms: 0.578
+  type: 'test'
+  ...
+# Subtest: head marker: a 10 m mast from the head along the road's up
+ok 50 - head marker: a 10 m mast from the head along the road's up
+  ---
+  duration_ms: 0.4024
+  type: 'test'
+  ...
+# Subtest: batches: the node matrix read column-major (as GL reads it) puts every vertex on the geometry's surface
+ok 51 - batches: the node matrix read column-major (as GL reads it) puts every vertex on the geometry's surface
+  ---
+  duration_ms: 71.5801
+  type: 'test'
+  ...
+# Subtest: batches: one colour per placed word, alternating along the track; a seam is darker than its piece
+ok 52 - batches: one colour per placed word, alternating along the track; a seam is darker than its piece
+  ---
+  duration_ms: 43.0281
+  type: 'test'
+  ...
+# Subtest: track model: append → extend, a word edit → sculpt, a removal → full, no change → same; each equals a full build
+ok 53 - track model: append → extend, a word edit → sculpt, a removal → full, no change → same; each equals a full build
+  ---
+  duration_ms: 333.2865
+  type: 'test'
+  ...
+# Subtest: track model: a document that does not resolve keeps the last good track and marks it stale
+ok 54 - track model: a document that does not resolve keeps the last good track and marks it stale
+  ---
+  duration_ms: 337.003
+  type: 'test'
+  ...
+# Subtest: track model through A's shell: placing words grows the preview by extend, and it equals a full build
+ok 55 - track model through A's shell: placing words grows the preview by extend, and it equals a full build
+  ---
+  duration_ms: 92.9363
+  type: 'test'
+  ...
+# Subtest: renderer: every array is uploaded once; drawing the same batches again uploads nothing
+ok 56 - renderer: every array is uploaded once; drawing the same batches again uploads nothing
+  ---
+  duration_ms: 78.3595
+  type: 'test'
+  ...
+# Subtest: renderer: after a sculpt, the chunks before the edited piece upload nothing; stale buffers are deleted
+ok 57 - renderer: after a sculpt, the chunks before the edited piece upload nothing; stale buffers are deleted
+  ---
+  duration_ms: 125.407
+  type: 'test'
+  ...
+# Subtest: renderer: merged chunks draw the triangles of the cells, in order, where the cells put them in world space, in a handful of draws
+ok 58 - renderer: merged chunks draw the triangles of the cells, in order, where the cells put them in world space, in a handful of draws
+  ---
+  duration_ms: 355.7659
+  type: 'test'
+  ...
+# Subtest: renderer: after a sculpt that moves later pieces, the drawn road equals a fresh renderer drawing of it (no chunk kept at its old place, even with the same cells)
+ok 59 - renderer: after a sculpt that moves later pieces, the drawn road equals a fresh renderer drawing of it (no chunk kept at its old place, even with the same cells)
+  ---
+  duration_ms: 221.069
+  type: 'test'
+  ...
+# Subtest: renderer: a chunk limit outside 1..65535 is refused
+ok 60 - renderer: a chunk limit outside 1..65535 is refused
+  ---
+  duration_ms: 0.5068
+  type: 'test'
+  ...
+# Subtest: renderer: a shader that does not compile throws with the compiler's log; a canvas without size is refused
+ok 61 - renderer: a shader that does not compile throws with the compiler's log; a canvas without size is refused
+  ---
+  duration_ms: 0.313
+  type: 'test'
+  ...
+# Subtest: keys: C switches, B is the build view, WASD/QE fly, arrows turn, anything else does nothing
+ok 62 - keys: C switches, B is the build view, WASD/QE fly, arrows turn, anything else does nothing
+  ---
+  duration_ms: 0.245
+  type: 'test'
+  ...
+# Subtest: the preview shader sources carry no environment (v1 is the track only): no sky, texture or sampler
+ok 63 - the preview shader sources carry no environment (v1 is the track only): no sky, texture or sampler
+  ---
+  duration_ms: 0.1307
+  type: 'test'
+  ...
+# Subtest: keys: a key held when the window loses focus is let go, so the camera stops (the drift)
+ok 64 - keys: a key held when the window loses focus is let go, so the camera stops (the drift)
+  ---
+  duration_ms: 7.7729
+  type: 'test'
+  ...
+# Subtest: keys: already in free, a key held when the window loses focus is let go, so the camera stops (V11 of B: 4.5 m of drift at HEAD)
+ok 65 - keys: already in free, a key held when the window loses focus is let go, so the camera stops (V11 of B: 4.5 m of drift at HEAD)
+  ---
+  duration_ms: 13.7417
+  type: 'test'
+  ...
+# Subtest: keys: Shift sprints (×4 the distance per frame)
+ok 66 - keys: Shift sprints (×4 the distance per frame)
+  ---
+  duration_ms: 11.2092
+  type: 'test'
+  ...
+# Subtest: mouse: a right drag looks from the build view (taking it over), a drag right turns right, and keys move at the same time
+ok 67 - mouse: a right drag looks from the build view (taking it over), a drag right turns right, and keys move at the same time
+  ---
+  duration_ms: 1.7331
+  type: 'test'
+  ...
+# Subtest: mouse: the scroll wheel zooms the build view
+ok 68 - mouse: the scroll wheel zooms the build view
+  ---
+  duration_ms: 1.4117
+  type: 'test'
+  ...
+# Subtest: keys: W then D goes diagonally: both axes at once, the same 3 m a frame as a straight line (1.0×, not √2)
+ok 69 - keys: W then D goes diagonally: both axes at once, the same 3 m a frame as a straight line (1.0×, not √2)
+  ---
+  duration_ms: 4.6412
+  type: 'test'
+  ...
+# Subtest: keys: D then W is the same diagonal (the order across axes does not matter)
+ok 70 - keys: D then W is the same diagonal (the order across axes does not matter)
+  ---
+  duration_ms: 2.4473
+  type: 'test'
+  ...
+# Subtest: keys: three axes at once (W, D and E) move along the sum W + D + up at 1.0× in METRES (D189: the world displacement is normalised, not the input)
+ok 71 - keys: three axes at once (W, D and E) move along the sum W + D + up at 1.0× in METRES (D189: the world displacement is normalised, not the input)
+  ---
+  duration_ms: 5.2227
+  type: 'test'
+  ...
+# Subtest: keys: D and E (right and up are perpendicular) go at 1.0× too: (D + up) / √2, 3 m a frame
+ok 72 - keys: D and E (right and up are perpendicular) go at 1.0× too: (D + up) / √2, 3 m a frame
+  ---
+  duration_ms: 2.6509
+  type: 'test'
+  ...
+# Subtest: keys: releasing one key of a diagonal leaves a straight line on the other, and releasing both stops
+ok 73 - keys: releasing one key of a diagonal leaves a straight line on the other, and releasing both stops
+  ---
+  duration_ms: 2.8629
+  type: 'test'
+  ...
+# Subtest: keys: on one axis the NEWER key wins (w then s), and on its release the w takes over
+ok 74 - keys: on one axis the NEWER key wins (w then s), and on its release the w takes over
+  ---
+  duration_ms: 3.2536
+  type: 'test'
+  ...
+# Subtest: keys: on one axis the NEWER key wins (s then w), and on its release the s takes over
+ok 75 - keys: on one axis the NEWER key wins (s then w), and on its release the s takes over
+  ---
+  duration_ms: 3.4405
+  type: 'test'
+  ...
+# Subtest: keys: on one axis the NEWER key wins (d then a), and on its release the d takes over
+ok 76 - keys: on one axis the NEWER key wins (d then a), and on its release the d takes over
+  ---
+  duration_ms: 3.1555
+  type: 'test'
+  ...
+# Subtest: keys: on one axis the NEWER key wins (a then d), and on its release the a takes over
+ok 77 - keys: on one axis the NEWER key wins (a then d), and on its release the a takes over
+  ---
+  duration_ms: 3.2704
+  type: 'test'
+  ...
+# Subtest: keys: on one axis the NEWER key wins (e then q), and on its release the e takes over
+ok 78 - keys: on one axis the NEWER key wins (e then q), and on its release the e takes over
+  ---
+  duration_ms: 2.9814
+  type: 'test'
+  ...
+# Subtest: keys: on one axis the NEWER key wins (q then e), and on its release the q takes over
+ok 79 - keys: on one axis the NEWER key wins (q then e), and on its release the q takes over
+  ---
+  duration_ms: 2.9371
+  type: 'test'
+  ...
+# Subtest: keys: releasing the OLDER key of an axis leaves the newer moving
+ok 80 - keys: releasing the OLDER key of an axis leaves the newer moving
+  ---
+  duration_ms: 5.2288
+  type: 'test'
+  ...
+# Subtest: keys: an axis with both keys held still combines with another axis: W, S (newer) and D go along (D − W) / √2, and on S released (W + D) / √2
+ok 81 - keys: an axis with both keys held still combines with another axis: W, S (newer) and D go along (D − W) / √2, and on S released (W + D) / √2
+  ---
+  duration_ms: 4.5831
+  type: 'test'
+  ...
+# Subtest: keys: a held key that repeats (auto-repeat key-down) keeps its place: with W, S (newer) held a repeat of W does not make W the newer
+ok 82 - keys: a held key that repeats (auto-repeat key-down) keeps its place: with W, S (newer) held a repeat of W does not make W the newer
+  ---
+  duration_ms: 2.2839
+  type: 'test'
+  ...
+# Subtest: keys: Shift multiplies the diagonal as it does a straight line: ×4 at the press, so 12 m a frame, not 12·√2
+ok 83 - keys: Shift multiplies the diagonal as it does a straight line: ×4 at the press, so 12 m a frame, not 12·√2
+  ---
+  duration_ms: 0.9421
+  type: 'test'
+  ...
+# Subtest: keys: a blur lets go of a diagonal (both keys), so the camera stops
+ok 84 - keys: a blur lets go of a diagonal (both keys), so the camera stops
+  ---
+  duration_ms: 6.8688
+  type: 'test'
+  ...
+# Subtest: keys: the arrow (look) keys are not movement keys: they turn while the movement keys fly
+ok 85 - keys: the arrow (look) keys are not movement keys: they turn while the movement keys fly
+  ---
+  duration_ms: 1.5729
+  type: 'test'
+  ...
+# Subtest: P3: C or B pressed while a movement key is held leaves free mode and stays out of it
+ok 86 - P3: C or B pressed while a movement key is held leaves free mode and stays out of it
+  ---
+  duration_ms: 2.3533
+  type: 'test'
+  ...
+# Subtest: P3: a NEW movement key-down after C takes the view over again
+ok 87 - P3: a NEW movement key-down after C takes the view over again
+  ---
+  duration_ms: 1.1235
+  type: 'test'
+  ...
+# Subtest: P5: Shift+wheel is ×4 when the device reports the scroll as deltaX (deltaY 0), not only as deltaY
+ok 88 - P5: Shift+wheel is ×4 when the device reports the scroll as deltaX (deltaY 0), not only as deltaY
+  ---
+  duration_ms: 1.5357
+  type: 'test'
+  ...
+# Subtest: P2: a key that flies by its label but sits on another physical key (another layout) flies, and lets go by its own code
+ok 89 - P2: a key that flies by its label but sits on another physical key (another layout) flies, and lets go by its own code
+  ---
+  duration_ms: 1.0889
+  type: 'test'
+  ...
+# Subtest: the sprint curve: ×4 at 0 s, ×20 from 2.5 s, smooth and rising between (1 s is 4 + 16·S(0.4))
+ok 90 - the sprint curve: ×4 at 0 s, ×20 from 2.5 s, smooth and rising between (1 s is 4 + 16·S(0.4))
+  ---
+  duration_ms: 0.2445
+  type: 'test'
+  ...
+# Subtest: keys: Shift held ramps the speed: ×4 at the press, then along the curve, ×20 at 2.5 s (measured per frame)
+ok 91 - keys: Shift held ramps the speed: ×4 at the press, then along the curve, ×20 at 2.5 s (measured per frame)
+  ---
+  duration_ms: 1.8272
+  type: 'test'
+  ...
+# Subtest: keys: releasing Shift returns to ×1, and pressing it again starts at ×4 again
+ok 92 - keys: releasing Shift returns to ×1, and pressing it again starts at ×4 again
+  ---
+  duration_ms: 2.3441
+  type: 'test'
+  ...
+# Subtest: keys: a blur resets the ramp (the key-up never comes), and the next press starts at ×4
+ok 93 - keys: a blur resets the ramp (the key-up never comes), and the next press starts at ×4
+  ---
+  duration_ms: 2.2382
+  type: 'test'
+  ...
+# Subtest: focus: Enter in a text field or a number field lets go of it (and does not touch the camera)
+ok 94 - focus: Enter in a text field or a number field lets go of it (and does not touch the camera)
+  ---
+  duration_ms: 2.6011
+  type: 'test'
+  ...
+# Subtest: focus: Esc in a field lets go of it, in every kind of field
+ok 95 - focus: Esc in a field lets go of it, in every kind of field
+  ---
+  duration_ms: 3.3796
+  type: 'test'
+  ...
+# Subtest: focus: Enter in a text AREA is a new line, and is left alone
+ok 96 - focus: Enter in a text AREA is a new line, and is left alone
+  ---
+  duration_ms: 0.8474
+  type: 'test'
+  ...
+# Subtest: focus: Enter or Esc on the page (no field) does nothing to the camera
+ok 97 - focus: Enter or Esc on the page (no field) does nothing to the camera
+  ---
+  duration_ms: 1.1751
+  type: 'test'
+  ...
+# Subtest: focus: a mouse-down on the canvas (either button, or the middle) takes focus off the active field
+ok 98 - focus: a mouse-down on the canvas (either button, or the middle) takes focus off the active field
+  ---
+  duration_ms: 2.3194
+  type: 'test'
+  ...
+# Subtest: focus: a mouse-down with nothing focused (the page body, or none) is fine
+ok 99 - focus: a mouse-down with nothing focused (the page body, or none) is fine
+  ---
+  duration_ms: 1.4636
+  type: 'test'
+  ...
+# Subtest: focus: a NUMBER field lets the camera keys through: W A S D Q E fly, the arrows turn
+ok 100 - focus: a NUMBER field lets the camera keys through: W A S D Q E fly, the arrows turn
+  ---
+  duration_ms: 8.3756
+  type: 'test'
+  ...
+# Subtest: focus: Shift sprints while a number field has focus
+ok 101 - focus: Shift sprints while a number field has focus
+  ---
+  duration_ms: 1.6899
+  type: 'test'
+  ...
+# Subtest: focus: a number field still gets its digits (a digit is not the camera's key, and is not stopped)
+ok 102 - focus: a number field still gets its digits (a digit is not the camera's key, and is not stopped)
+  ---
+  duration_ms: 0.9493
+  type: 'test'
+  ...
+# Subtest: focus: a TEXT field swallows every camera key: typing a name never moves the camera
+ok 103 - focus: a TEXT field swallows every camera key: typing a name never moves the camera
+  ---
+  duration_ms: 5.7355
+  type: 'test'
+  ...
+# Subtest: the plain wheel is unchanged: a follow view changes distance, free mode dollies 4 m a notch, and the lens stays
+ok 104 - the plain wheel is unchanged: a follow view changes distance, free mode dollies 4 m a notch, and the lens stays
+  ---
+  duration_ms: 1.3322
+  type: 'test'
+  ...
+# Subtest: Ctrl+wheel is the LENS, in every view: the fov changes and the eye does not (in and out, stepwise, clamped to 10°–100°)
+ok 105 - Ctrl+wheel is the LENS, in every view: the fov changes and the eye does not (in and out, stepwise, clamped to 10°–100°)
+  ---
+  duration_ms: 4.9852
+  type: 'test'
+  ...
+# Subtest: Ctrl+wheel: Shift makes it 4 notches, and a device that reports deltaX works too
+ok 106 - Ctrl+wheel: Shift makes it 4 notches, and a device that reports deltaX works too
+  ---
+  duration_ms: 1.6933
+  type: 'test'
+  ...
+# Subtest: a middle click resets the lens to 60° (and does not start a drag or change the view)
+ok 107 - a middle click resets the lens to 60° (and does not start a drag or change the view)
+  ---
+  duration_ms: 0.8534
+  type: 'test'
+  ...
+# Subtest: the HUD shows the fov once the lens has moved off 60°, and drops it on the reset
+ok 108 - the HUD shows the fov once the lens has moved off 60°, and drops it on the reset
+  ---
+  duration_ms: 0.7295
+  type: 'test'
+  ...
+# Subtest: the pick still hits the station under the cursor after the lens changes (the pick reads the drawn pose, fov and all)
+ok 109 - the pick still hits the station under the cursor after the lens changes (the pick reads the drawn pose, fov and all)
+  ---
+  duration_ms: 2.388
+  type: 'test'
+  ...
+# Subtest: W1: W held and REPEATING, C pressed: W's next auto-repeats do not take the view back into free
+ok 110 - W1: W held and REPEATING, C pressed: W's next auto-repeats do not take the view back into free
+  ---
+  duration_ms: 7.2886
+  type: 'test'
+  ...
+# Subtest: W1: W held and REPEATING, B pressed: W's next auto-repeats do not take the view back into free
+ok 111 - W1: W held and REPEATING, B pressed: W's next auto-repeats do not take the view back into free
+  ---
+  duration_ms: 0.895
+  type: 'test'
+  ...
+# Subtest: W2: a trackpad swipe SIDEWAYS (deltaX only, no Shift: 20 events of 2 px) does not zoom
+ok 112 - W2: a trackpad swipe SIDEWAYS (deltaX only, no Shift: 20 events of 2 px) does not zoom
+  ---
+  duration_ms: 0.8081
+  type: 'test'
+  ...
+# Subtest: W2: the same sideways swipe with Ctrl held does not move the LENS either (the lens shares the wheel line)
+ok 113 - W2: the same sideways swipe with Ctrl held does not move the LENS either (the lens shares the wheel line)
+  ---
+  duration_ms: 0.8742
+  type: 'test'
+  ...
+# Subtest: D195: with nothing placed and no ghost, a frame draws, looking at where the first piece will start
+ok 114 - D195: with nothing placed and no ghost, a frame draws, looking at where the first piece will start
+  ---
+  duration_ms: 1.3235
+  type: 'test'
+  ...
+# Subtest: D195: with nothing placed, the wheel zooms on the next frame (not later, when a ghost appears)
+ok 115 - D195: with nothing placed, the wheel zooms on the next frame (not later, when a ghost appears)
+  ---
+  duration_ms: 0.7631
+  type: 'test'
+  ...
+# Subtest: D195: with nothing placed, W takes the view over and flies on the next frame
+ok 116 - D195: with nothing placed, W takes the view over and flies on the next frame
+  ---
+  duration_ms: 0.51
+  type: 'test'
+  ...
+# Subtest: D195: with nothing placed, every camera mode draws (chase included, on the start alone)
+ok 117 - D195: with nothing placed, every camera mode draws (chase included, on the start alone)
+  ---
+  duration_ms: 0.5145
+  type: 'test'
+  ...
+# Subtest: D195: with no start in the document (the piece builder), the empty view looks from the origin along +z, level
+ok 118 - D195: with no start in the document (the piece builder), the empty view looks from the origin along +z, level
+  ---
+  duration_ms: 0.2446
+  type: 'test'
+  ...
+# Subtest: D195: the empty track's head is the frame the first piece starts with (src/geom buildPath's first sample, no roll)
+ok 119 - D195: the empty track's head is the frame the first piece starts with (src/geom buildPath's first sample, no roll)
+  ---
+  duration_ms: 0.3151
+  type: 'test'
+  ...
+# Subtest: D195: once a ghost shows on the empty track, the camera follows the ghost's head, as before
+ok 120 - D195: once a ghost shows on the empty track, the camera follows the ghost's head, as before
+  ---
+  duration_ms: 2.5549
+  type: 'test'
+  ...
+# Subtest: D252: Space held flies UP like E (3 m a frame, world up), and its release stops it
+ok 121 - D252: Space held flies UP like E (3 m a frame, world up), and its release stops it
+  ---
+  duration_ms: 2.1566
+  type: 'test'
+  ...
+# Subtest: D252: Left Ctrl ALONE flies DOWN like Q; Right Ctrl does not fly
+ok 122 - D252: Left Ctrl ALONE flies DOWN like Q; Right Ctrl does not fly
+  ---
+  duration_ms: 3.5064
+  type: 'test'
+  ...
+# Subtest: D252: Ctrl+Z never moves the camera: the descent before Z is undone, in free mode and from the build view (the view is kept too)
+ok 123 - D252: Ctrl+Z never moves the camera: the descent before Z is undone, in free mode and from the build view (the view is kept too)
+  ---
+  duration_ms: 1.6477
+  type: 'test'
+  ...
+# Subtest: D257: a SHORTCUT key held BEFORE Ctrl (Z) means Ctrl never flies on that press; Shift or W held first does not stop it, and Ctrl+Shift+Z still leaves the camera put
+ok 124 - D257: a SHORTCUT key held BEFORE Ctrl (Z) means Ctrl never flies on that press; Shift or W held first does not stop it, and Ctrl+Shift+Z still leaves the camera put
+  ---
+  duration_ms: 1.5865
+  type: 'test'
+  ...
+# Subtest: D252: Ctrl+wheel is still the LENS and the camera does not move; a mouse button down (a handle drag, Ctrl to snap) means no descent
+ok 125 - D252: Ctrl+wheel is still the LENS and the camera does not move; a mouse button down (a handle drag, Ctrl to snap) means no descent
+  ---
+  duration_ms: 2.3941
+  type: 'test'
+  ...
+# Subtest: D252: Space is TAKEN (preventDefault, down and up) so a focused button is never clicked; in a text field it types and the camera stays
+ok 126 - D252: Space is TAKEN (preventDefault, down and up) so a focused button is never clicked; in a text field it types and the camera stays
+  ---
+  duration_ms: 1.727
+  type: 'test'
+  ...
+# Subtest: D255: Left Ctrl descends on the FIRST frame, like Space; Ctrl+Z still puts the camera back where Ctrl found it, and the view it found
+ok 127 - D255: Left Ctrl descends on the FIRST frame, like Space; Ctrl+Z still puts the camera back where Ctrl found it, and the view it found
+  ---
+  duration_ms: 1.6789
+  type: 'test'
+  ...
+# Subtest: D255: a LEFT drag never turns the camera, in free mode either; a RIGHT drag still looks
+ok 128 - D255: a LEFT drag never turns the camera, in free mode either; a RIGHT drag still looks
+  ---
+  duration_ms: 1.9735
+  type: 'test'
+  ...
+# Subtest: a move key from the OVERHEAD view enters free with no frame throwing: pitch held at -89 degrees, facing where the overhead view had up the screen
+ok 129 - a move key from the OVERHEAD view enters free with no frame throwing: pitch held at -89 degrees, facing where the overhead view had up the screen
+  ---
+  duration_ms: 6.6198
+  type: 'test'
+  ...
+# Subtest: a handle drag (pointerdown only, its mousedown suppressed) with Ctrl held past 200 ms to snap: the camera does not move; a press joining Ctrl undoes it
+ok 130 - a handle drag (pointerdown only, its mousedown suppressed) with Ctrl held past 200 ms to snap: the camera does not move; a press joining Ctrl undoes it
+  ---
+  duration_ms: 2.1109
+  type: 'test'
+  ...
+# Subtest: D257: Left Ctrl with W flies down AND forward, whichever went down first (the same move as W with Q)
+ok 131 - D257: Left Ctrl with W flies down AND forward, whichever went down first (the same move as W with Q)
+  ---
+  duration_ms: 2.5044
+  type: 'test'
+  ...
+# Subtest: D257: Left Ctrl with a RIGHT-button look drag flies down and looks
+ok 132 - D257: Left Ctrl with a RIGHT-button look drag flies down and looks
+  ---
+  duration_ms: 0.9075
+  type: 'test'
+  ...
+# Subtest: D257: Left Ctrl with Space nets ZERO on the up axis, whichever went down first
+ok 133 - D257: Left Ctrl with Space nets ZERO on the up axis, whichever went down first
+  ---
+  duration_ms: 1.7528
+  type: 'test'
+  ...
+# Subtest: D257: Ctrl+Z still leaves the camera where it started (and still undoes): flying with W, the descent is undone and the forward travel kept
+ok 134 - D257: Ctrl+Z still leaves the camera where it started (and still undoes): flying with W, the descent is undone and the forward travel kept
+  ---
+  duration_ms: 1.3863
+  type: 'test'
+  ...
+# Subtest: the surface: asphalt or solid draws the sigil surface, an image draws the set, and no kind keeps the set
+ok 135 - the surface: asphalt or solid draws the sigil surface, an image draws the set, and no kind keeps the set
+  ---
+  duration_ms: 1.3832
+  type: 'test'
+  ...
+# Subtest: D409: the camera HUD names the plain surface as the road's, never "sigil", for asphalt and solid alike
+ok 136 - D409: the camera HUD names the plain surface as the road's, never "sigil", for asphalt and solid alike
+  ---
+  duration_ms: 1.3325
+  type: 'test'
+  ...
+# Subtest: row 1: mergeChords makes a piece's 2 m chords a few long ones, within the heading cap, never across two pieces or a gap; one chord is the very same object
+ok 137 - row 1: mergeChords makes a piece's 2 m chords a few long ones, within the heading cap, never across two pieces or a gap; one chord is the very same object
+  ---
+  duration_ms: 32.1753
+  type: 'test'
+  ...
+# Subtest: row 2: a drag step builds nothing placed: how "drag", the placed path and mesh the very ones, every other batch the placed one, the window a few dozen chords; the release equals a fresh build
+ok 138 - row 2: a drag step builds nothing placed: how "drag", the placed path and mesh the very ones, every other batch the placed one, the window a few dozen chords; the release equals a fresh build
+  ---
+  duration_ms: 424.259
+  type: 'test'
+  ...
+# Subtest: row 3: a route step on an OPEN track moves the road after the window as one piece, the placed vertex arrays within 2 cm of an exact build
+ok 139 - row 3: a route step on an OPEN track moves the road after the window as one piece, the placed vertex arrays within 2 cm of an exact build
+  ---
+  duration_ms: 591.4327
+  type: 'test'
+  ...
+# Subtest: row 4: a route step on a CLOSED lap leaves it open while the drag lasts: the joint's seam hidden, the gap a line from the moved end to the start
+ok 140 - row 4: a route step on a CLOSED lap leaves it open while the drag lasts: the joint's seam hidden, the gap a line from the moved end to the start
+  ---
+  duration_ms: 527.0333
+  type: 'test'
+  ...
+# Subtest: row 5: a hill (Grab, the lift): the window is the brush's span, and the ghost stands on the hill
+ok 141 - row 5: a hill (Grab, the lift): the window is the brush's span, and the ghost stands on the hill
+  ---
+  duration_ms: 186.3383
+  type: 'test'
+  ...
+# Subtest: row 6: coarsen keeps a frozen segment frozen (A's D421 §1.3), so the track model keys its coarse copy once; an unfrozen segment stays unfrozen
+ok 142 - row 6: coarsen keeps a frozen segment frozen (A's D421 §1.3), so the track model keys its coarse copy once; an unfrozen segment stays unfrozen
+  ---
+  duration_ms: 10.7911
+  type: 'test'
+  ...
+# Subtest: row 7: the renderer draws a moved batch (xform) from its baked chunk under the move: a new move uploads nothing, and the picture is the one the moved matrices give
+ok 143 - row 7: the renderer draws a moved batch (xform) from its baked chunk under the move: a new move uploads nothing, and the picture is the one the moved matrices give
+  ---
+  duration_ms: 199.7794
+  type: 'test'
+  ...
+# Subtest: row 1: a route step tints exactly the moved batches in the tool's colour with the placed arrays; a shape step tints nothing
+ok 144 - row 1: a route step tints exactly the moved batches in the tool's colour with the placed arrays; a shape step tints nothing
+  ---
+  duration_ms: 1027.2812
+  type: 'test'
+  ...
+# Subtest: row 2: the renderer draws each tinted chunk's edge lines in its tint and every other line as before, with no draw and no upload added
+ok 145 - row 2: the renderer draws each tinted chunk's edge lines in its tint and every other line as before, with no draw and no upload added
+  ---
+  duration_ms: 240.4952
+  type: 'test'
+  ...
+# Subtest: row 3: hover: a route tool's wash is a line across the road at every station past the window's end; a shape or local tool has none; the same hover builds nothing again
+ok 146 - row 3: hover: a route tool's wash is a line across the road at every station past the window's end; a shape or local tool has none; the same hover builds nothing again
+  ---
+  duration_ms: 119.689
+  type: 'test'
+  ...
+# Subtest: row 4: a closed lap: the hover hatches the last and first road pieces; a drag that opened the lap draws the last piece's hatch under its move
+ok 147 - row 4: a closed lap: the hover hatches the last and first road pieces; a drag that opened the lap draws the last piece's hatch under its move
+  ---
+  duration_ms: 318.6456
+  type: 'test'
+  ...
+# Subtest: row D467: the start pieces a release moved are hatched with no hover, both at full strength; nothing when they did not move
+ok 148 - row D467: the start pieces a release moved are hatched with no hover, both at full strength; nothing when they did not move
+  ---
+  duration_ms: 192.137
+  type: 'test'
+  ...
+# Subtest: row D467 frame: the preview draws the start pieces' hatch after such a release, and not after an undo
+ok 149 - row D467 frame: the preview draws the start pieces' hatch after such a release, and not after an undo
+  ---
+  duration_ms: 832.7242
+  type: 'test'
+  ...
+# Subtest: row D467 frame (straight start): the preview draws the start pieces' hatch after such a release, and not after an undo
+ok 150 - row D467 frame (straight start): the preview draws the start pieces' hatch after such a release, and not after an undo
+  ---
+  duration_ms: 894.6737
+  type: 'test'
+  ...
+# Subtest: row 1: the contract: the aurora source breaks neither GLSL rule (D391)
+ok 151 - row 1: the contract: the aurora source breaks neither GLSL rule (D391)
+  ---
+  duration_ms: 6370.0341
+  type: 'test'
+  ...
+# Subtest: row 2: vertical structure: along the hem every 5 degrees of azimuth holds rays, the dimmest column at least 60% below the brightest (median)
+ok 152 - row 2: vertical structure: along the hem every 5 degrees of azimuth holds rays, the dimmest column at least 60% below the brightest (median)
+  ---
+  duration_ms: 187.0211
+  type: 'test'
+  ...
+# rays: median 5-degree contrast 0.693 (windows 73, min 0.012, max 0.969)
+# Subtest: row 3: several curtains: down some column of the sky there are three separate lit stretches (a near curtain, a middle one and a fainter far one)
+ok 153 - row 3: several curtains: down some column of the sky there are three separate lit stretches (a near curtain, a middle one and a fainter far one)
+  ---
+  duration_ms: 181.8568
+  type: 'test'
+  ...
+# most separate lit stretches down one column: 4 (column 541)
+# Subtest: row 4: motion is slow and alive: the hem pattern drifts under 0.0044 rad/s, keeps its shape, and nothing pulses by more than 15% of the curtain brightness in a second
+ok 154 - row 4: motion is slow and alive: the hem pattern drifts under 0.0044 rad/s, keeps its shape, and nothing pulses by more than 15% of the curtain brightness in a second
+  ---
+  duration_ms: 3636.9247
+  type: 'test'
+  ...
+# rms change of the hem over two minutes, against the curtain brightness: 0.188
+# worst drift 0.00000 rad/s, lowest correlation at the best shift 0.994, worst 1 s change 0.1250
+# the ribbon's folds and hem sway move at 0.00000 rad/s at most (t0 0.00000 (252 columns), t100 0.00000 (254 columns), t200 0.00000 (249 columns), t300 0.00000 (248 columns), t400 0.00000 (252 columns), t500 0.00000 (257 columns))
+# Subtest: row 5: a corona: overhead there is a point where rays converge: a fan of at least 6 rays round it, brighter than the sky beside it
+ok 155 - row 5: a corona: overhead there is a point where rays converge: a fan of at least 6 rays round it, brighter than the sky beside it
+  ---
+  duration_ms: 1148.746
+  type: 'test'
+  ...
+# corona at azimuth 224, elevation 71; ring rays 52, ring Y 0.0033..0.0530, peak Y 0.0963
+# Subtest: row 6: the corona's centre is soft: round its point the brightness holds no ray contrast finer than the default view can show (at most 2% rms)
+ok 156 - row 6: the corona's centre is soft: round its point the brightness holds no ray contrast finer than the default view can show (at most 2% rms)
+  ---
+  duration_ms: 870.8708
+  type: 'test'
+  ...
+# ray contrast above the view's Nyquist limit over the 8-bit floor, rms of the ring's mean: t0 0.003: 1.66% (floor 0.72%), t0 0.006: 1.66% (floor 0.72%), t0 0.009: 1.66% (floor 0.72%), t0 0.012: 1.66% (floor 0.72%), t0 0.015: 1.66% (floor 0.72%), t0 0.018: 1.66% (floor 0.72%), t0 0.021: 1.66% (floor 0.72%), t0 0.024: 1.66% (floor 0.72%), t0 0.027: 1.66% (floor 0.72%), t0 0.030: 1.66% (floor 0.72%), t500 0.003: 1.66% (floor 0.72%), t500 0.006: 1.66% (floor 0.72%), t500 0.009: 1.66% (floor 0.72%), t500 0.012: 1.66% (floor 0.72%), t500 0.015: 1.66% (floor 0.72%), t500 0.018: 1.66% (floor 0.72%), t500 0.021: 1.66% (floor 0.72%), t500 0.024: 1.66% (floor 0.72%), t500 0.027: 1.66% (floor 0.72%), t500 0.030: 1.66% (floor 0.72%)
+# Subtest: row 7: the corona is the right way round: round the magnetic zenith the ray bases, 0.30 rad out, are at least 1.5 times as bright as the tops, 0.05 rad out
+ok 157 - row 7: the corona is the right way round: round the magnetic zenith the ray bases, 0.30 rad out, are at least 1.5 times as bright as the tops, 0.05 rad out
+  ---
+  duration_ms: 7.9077
+  type: 'test'
+  ...
+# the corona round the magnetic zenith: t0: bases 0.0066, tops 0.0033, ratio 2.02; t500: bases 0.0099, tops 0.0033, ratio 3.02
+# Subtest: row 1: the meter waits out its warm-up and its samples, then gives one verdict: the p95 against the budget
+ok 158 - row 1: the meter waits out its warm-up and its samples, then gives one verdict: the p95 against the budget
+  ---
+  duration_ms: 2.9064
+  type: 'test'
+  ...
+# Subtest: row 2: over budget, the aurora falls back to its flat form, compiled once, drawn from then on, said once
+ok 159 - row 2: over budget, the aurora falls back to its flat form, compiled once, drawn from then on, said once
+  ---
+  duration_ms: 13.9385
+  type: 'test'
+  ...
+# Subtest: row 3: within budget the volume sky stays, nothing more is compiled, and timing stops
+ok 160 - row 3: within budget the volume sky stays, nothing more is compiled, and timing stops
+  ---
+  duration_ms: 10.1834
+  type: 'test'
+  ...
+# Subtest: row 4: a disjoint reading is dropped and a reading not ready yet is waited for
+ok 161 - row 4: a disjoint reading is dropped and a reading not ready yet is waited for
+  ---
+  duration_ms: 13.0169
+  type: 'test'
+  ...
+# Subtest: row 5: without the timer query nothing is timed and the sky is drawn as it is; a style with no fallback is never timed
+ok 162 - row 5: without the timer query nothing is timed and the sky is drawn as it is; a style with no fallback is never timed
+  ---
+  duration_ms: 17.1099
+  type: 'test'
+  ...
+# Subtest: row 6: the cycle: the skin's own colours at t = 0, then --sky-b drifts while --sky-a and --sky-c (the fog) stay
+ok 163 - row 6: the cycle: the skin's own colours at t = 0, then --sky-b drifts while --sky-a and --sky-c (the fog) stay
+  ---
+  duration_ms: 1.9833
+  type: 'test'
+  ...
+# Subtest: caustics: the registry builds it, GLSL defining vec3 skyPattern(vec3 dir, float t)
+ok 164 - caustics: the registry builds it, GLSL defining vec3 skyPattern(vec3 dir, float t)
+  ---
+  duration_ms: 1.4073
+  type: 'test'
+  ...
+# Subtest: caustics: keeps the module contract (prefixed helpers, the pass's uniforms only, nothing declared, constant loops)
+ok 165 - caustics: keeps the module contract (prefixed helpers, the pass's uniforms only, nothing declared, constant loops)
+  ---
+  duration_ms: 1.6523
+  type: 'test'
+  ...
+# Subtest: aqua.css names the caustics sky and sets every colour it reads
+ok 166 - aqua.css names the caustics sky and sets every colour it reads
+  ---
+  duration_ms: 1.257
+  type: 'test'
+  ...
+# Subtest: aurora: the registry builds it, GLSL defining vec3 skyPattern(vec3 dir, float t)
+ok 167 - aurora: the registry builds it, GLSL defining vec3 skyPattern(vec3 dir, float t)
+  ---
+  duration_ms: 0.1446
+  type: 'test'
+  ...
+# Subtest: aurora: keeps the module contract (prefixed helpers, the pass's uniforms only, nothing declared, constant loops)
+ok 168 - aurora: keeps the module contract (prefixed helpers, the pass's uniforms only, nothing declared, constant loops)
+  ---
+  duration_ms: 0.3068
+  type: 'test'
+  ...
+# Subtest: aurora.css names the aurora sky and sets every colour it reads
+ok 169 - aurora.css names the aurora sky and sets every colour it reads
+  ---
+  duration_ms: 4.9309
+  type: 'test'
+  ...
+# Subtest: aqua.css: --sky-c is its --fog, so the sky meets the far road in the fog colour under 10 degrees
+ok 170 - aqua.css: --sky-c is its --fog, so the sky meets the far road in the fog colour under 10 degrees
+  ---
+  duration_ms: 2.128
+  type: 'test'
+  ...
+# Subtest: aurora.css: --sky-c is its --fog, so the sky meets the far road in the fog colour under 10 degrees
+ok 171 - aurora.css: --sky-c is its --fog, so the sky meets the far road in the fog colour under 10 degrees
+  ---
+  duration_ms: 22.5111
+  type: 'test'
+  ...
+# Subtest: aqua.css: --bad is SIGIL's red, only lighter, and reads at least 4.5:1 on --panel, --bg and --raise (D384, A's review 6 finding 2)
+ok 172 - aqua.css: --bad is SIGIL's red, only lighter, and reads at least 4.5:1 on --panel, --bg and --raise (D384, A's review 6 finding 2)
+  ---
+  duration_ms: 12.3318
+  type: 'test'
+  ...
+# Subtest: neither skin draws a screen-pinned layer on \#preview::after any more (the sky is in the world)
+ok 173 - neither skin draws a screen-pinned layer on \#preview::after any more (the sky is in the world)
+  ---
+  duration_ms: 3.1384
+  type: 'test'
+  ...
+# Subtest: the contract check refuses each kind of break (it is not vacuous)
+ok 174 - the contract check refuses each kind of break (it is not vacuous)
+  ---
+  duration_ms: 0.225
+  type: 'test'
+  ...
+# Subtest: row 1 (river): Glass's river of stars: the stars are points, median width at half peak at most 1.5 px and 90th percentile at most 1.8 px, at DPR 1 and DPR 1.5
+ok 175 - row 1 (river): Glass's river of stars: the stars are points, median width at half peak at most 1.5 px and 90th percentile at most 1.8 px, at DPR 1 and DPR 1.5
+  ---
+  duration_ms: 8482.4446
+  type: 'test'
+  ...
+# DPR 1 (2560 x 1440): 9422 stars found, 4048 lone; width at half peak median 1.13 px, p90 1.19 px
+# DPR 1.5 (3840 x 2160): 9447 stars found, 7004 lone; width at half peak median 1.13 px, p90 1.19 px
+# Subtest: row 1 (prism): the prism sky: the stars are points, median width at half peak at most 1.5 px and 90th percentile at most 1.8 px, at DPR 1 and DPR 1.5
+ok 176 - row 1 (prism): the prism sky: the stars are points, median width at half peak at most 1.5 px and 90th percentile at most 1.8 px, at DPR 1 and DPR 1.5
+  ---
+  duration_ms: 6618.248
+  type: 'test'
+  ...
+# DPR 1 (2560 x 1440): 784 stars found, 751 lone; width at half peak median 1.11 px, p90 1.17 px
+# DPR 1.5 (3840 x 2160): 784 stars found, 780 lone; width at half peak median 1.11 px, p90 1.17 px
+# Subtest: row 1 (aurora): Aurora's sky: the stars are points, median width at half peak at most 1.5 px and 90th percentile at most 1.8 px, at DPR 1 and DPR 1.5
+ok 177 - row 1 (aurora): Aurora's sky: the stars are points, median width at half peak at most 1.5 px and 90th percentile at most 1.8 px, at DPR 1 and DPR 1.5
+  ---
+  duration_ms: 4964.9788
+  type: 'test'
+  ...
+# DPR 1 (2560 x 1440): 1251 stars found, 1184 lone; width at half peak median 1.13 px, p90 1.19 px
+# DPR 1.5 (3840 x 2160): 1250 stars found, 1244 lone; width at half peak median 1.14 px, p90 1.19 px
+# Subtest: row 1 (city): Skyline Night's city sky: the stars are points, median width at half peak at most 1.5 px and 90th percentile at most 1.8 px, at DPR 1 and DPR 1.5
+ok 178 - row 1 (city): Skyline Night's city sky: the stars are points, median width at half peak at most 1.5 px and 90th percentile at most 1.8 px, at DPR 1 and DPR 1.5
+  ---
+  duration_ms: 5684.0206
+  type: 'test'
+  ...
+# DPR 1 (2560 x 1440): 385 stars found, 385 lone; width at half peak median 1.14 px, p90 1.21 px
+# DPR 1.5 (3840 x 2160): 386 stars found, 386 lone; width at half peak median 1.14 px, p90 1.23 px
+# Subtest: row 1 (caustics): Aqua's sea (its motes): the stars are points, median width at half peak at most 1.5 px and 90th percentile at most 1.8 px, at DPR 1 and DPR 1.5
+ok 179 - row 1 (caustics): Aqua's sea (its motes): the stars are points, median width at half peak at most 1.5 px and 90th percentile at most 1.8 px, at DPR 1 and DPR 1.5
+  ---
+  duration_ms: 3878.2421
+  type: 'test'
+  ...
+# DPR 1 (2560 x 1440): 54 stars found, 54 lone; width at half peak median 1.14 px, p90 1.19 px
+# DPR 1.5 (3840 x 2160): 54 stars found, 54 lone; width at half peak median 1.13 px, p90 1.21 px
+# Subtest: row 2: the prism moon's limb rises from the sky to the disc within 2 px, all the way round, at DPR 1 and DPR 1.5
+ok 180 - row 2: the prism moon's limb rises from the sky to the disc within 2 px, all the way round, at DPR 1 and DPR 1.5
+  ---
+  duration_ms: 0.3471
+  type: 'test'
+  ...
+# DPR 1: limb worst 1.47 px, median 1.32 px
+# DPR 1.5: limb worst 1.42 px, median 1.29 px
+# Subtest: row 3: the sky pass hands the pattern uPx, the angle of one device pixel at the middle of the view, so a point stays a pixel at any window size
+ok 181 - row 3: the sky pass hands the pattern uPx, the angle of one device pixel at the middle of the view, so a point stays a pixel at any window size
+  ---
+  duration_ms: 2.3404
+  type: 'test'
+  ...
+# Subtest: row 4: the prism sky is still calm: the stars vary in brightness and stay sparse
+ok 182 - row 4: the prism sky is still calm: the stars vary in brightness and stay sparse
+  ---
+  duration_ms: 0.5538
+  type: 'test'
+  ...
+# Subtest: row 5: the prism band has fine structure along its length, not only a slow wander
+ok 183 - row 5: the prism band has fine structure along its length, not only a slow wander
+  ---
+  duration_ms: 31.5529
+  type: 'test'
+  ...
+# Subtest: row 6: the stars can be seen: in the river, the aurora and the city the median star stands at least 10 levels over its sky and the brightest tenth at least 30, at DPR 1
+ok 184 - row 6: the stars can be seen: in the river, the aurora and the city the median star stands at least 10 levels over its sky and the brightest tenth at least 30, at DPR 1
+  ---
+  duration_ms: 979.8373
+  type: 'test'
+  ...
+# river: peaks over the sky, median 51.0, p90 118.9 levels, over 4048 lone stars
+# aurora: peaks over the sky, median 79.6, p90 217.4 levels, over 1225 lone stars
+# city: peaks over the sky, median 159.5, p90 238.4 levels, over 385 lone stars
+# Subtest: row 1: no style's sky shows 8-bit steps: down each column of open sky, level and looking up, the longest run of one colour is at most 12 px
+ok 185 - row 1: no style's sky shows 8-bit steps: down each column of open sky, level and looking up, the longest run of one colour is at most 12 px
+  ---
+  duration_ms: 4735.5494
+  type: 'test'
+  ...
+# longest flat run, px (level, up): {"sun":[4,6],"prism":[6,8],"caustics":[6,7],"aurora":[6,8],"city":[4,4],"river":[4,8]}
+# Subtest: row 2: the quiet band keeps its rule with the dither: every pixel from -10 to 10 degrees, all the way round, within 1.30:1 of --fog
+ok 186 - row 2: the quiet band keeps its rule with the dither: every pixel from -10 to 10 degrees, all the way round, within 1.30:1 of --fog
+  ---
+  duration_ms: 790.9927
+  type: 'test'
+  ...
+# the control sky (white beyond 90 degrees of azimuth 0): white in 700 of the band's 1400 columns
+# the band's largest ratio to --fog: {"sun":1.157,"prism":1.173,"caustics":1.239,"aurora":1.044,"city":1.148,"river":1.047}
+# Subtest: row 3: the dither pattern keeps all 16 levels on a tall canvas, at pixel rows 2400 and 4320
+ok 187 - row 3: the dither pattern keeps all 16 levels on a tall canvas, at pixel rows 2400 and 4320
+  ---
+  duration_ms: 10.5396
+  type: 'test'
+  ...
+# levels in a 4 x 4 block (of 255): {"0":[8,24,40,56,72,88,104,120,135,151,167,183,199,215,231,247],"2400":[8,24,40,56,72,88,104,120,135,151,167,183,199,215,231,247],"4320":[8,24,40,56,72,88,104,120,135,151,167,183,199,215,231,247]}
+# Subtest: a sky feature moves on screen by the camera's yaw, exactly where a point infinitely far in that direction would go
+ok 188 - a sky feature moves on screen by the camera's yaw, exactly where a point infinitely far in that direction would go
+  ---
+  duration_ms: 1.8483
+  type: 'test'
+  ...
+# Subtest: moving or zooming without turning leaves every sky direction, and the sky pass's calls, unchanged
+ok 189 - moving or zooming without turning leaves every sky direction, and the sky pass's calls, unchanged
+  ---
+  duration_ms: 3.8923
+  type: 'test'
+  ...
+# Subtest: the sky pass runs before the track, over the whole view, without writing depth, and its rays come from the basis
+ok 190 - the sky pass runs before the track, over the whole view, without writing depth, and its rays come from the basis
+  ---
+  duration_ms: 0.9392
+  type: 'test'
+  ...
+# Subtest: 'none' draws the very calls cbd7a40 drew: SIGIL, the one skin left without a sky
+ok 191 - 'none' draws the very calls cbd7a40 drew: SIGIL, the one skin left without a sky
+  ---
+  duration_ms: 18.0341
+  type: 'test'
+  ...
+# Subtest: an unknown sky style fails loudly, at setTheme and in the registry; a style not built yet says so
+ok 192 - an unknown sky style fails loudly, at setTheme and in the registry; a style not built yet says so
+  ---
+  duration_ms: 0.7118
+  type: 'test'
+  ...
+# Subtest: the page's own loader (app/lib/cjs.js, which follows only written-out requires) loads every sky style with the renderer
+ok 193 - the page's own loader (app/lib/cjs.js, which follows only written-out requires) loads every sky style with the renderer
+  ---
+  duration_ms: 28.6701
+  type: 'test'
+  ...
+# Subtest: the skin names its sky with --sky-style, and its sky colours with --sky-a/b/c, each falling back to --sky
+ok 194 - the skin names its sky with --sky-style, and its sky colours with --sky-a/b/c, each falling back to --sky
+  ---
+  duration_ms: 3.0312
+  type: 'test'
+  ...
+# Subtest: D405: Skyline Night names the city sky, a built style that keeps the GLSL rules
+ok 195 - D405: Skyline Night names the city sky, a built style that keeps the GLSL rules
+  ---
+  duration_ms: 8.445
+  type: 'test'
+  ...
+# Subtest: Glass names the river sky, a built style that keeps the GLSL rules; the prism stays built; SIGIL alone names none
+ok 196 - Glass names the river sky, a built style that keeps the GLSL rules; the prism stays built; SIGIL alone names none
+  ---
+  duration_ms: 11.664
+  type: 'test'
+  ...
+# Subtest: the drift stops under prefers-reduced-motion: the preview hands the sky pass t = 0
+ok 197 - the drift stops under prefers-reduced-motion: the preview hands the sky pass t = 0
+  ---
+  duration_ms: 57.1925
+  type: 'test'
+  ...
+# Subtest: D391: every sky style keeps the GLSL rules: no smoothstep with literal edge0 >= edge1, no sin hash
+ok 198 - D391: every sky style keeps the GLSL rules: no smoothstep with literal edge0 >= edge1, no sin hash
+  ---
+  duration_ms: 0.7543
+  type: 'test'
+  ...
+# Subtest: D391: the GLSL rule check refuses each broken form and keeps the good ones (it is not vacuous)
+ok 199 - D391: the GLSL rule check refuses each broken form and keeps the good ones (it is not vacuous)
+  ---
+  duration_ms: 0.5432
+  type: 'test'
+  ...
+# Subtest: D393: A's probe forms: the dot-less and the via-variable sin hash and exponent-literal reversed edges are refused; a sine wave of a dot product passes
+ok 200 - D393: A's probe forms: the dot-less and the via-variable sin hash and exponent-literal reversed edges are refused; a sine wave of a dot product passes
+  ---
+  duration_ms: 0.2709
+  type: 'test'
+  ...
+# Subtest: D398: the shared sky pass dithers every style by one 8-bit step (an ordered 4x4 pattern on the pixel), and its own code keeps the GLSL rules
+ok 201 - D398: the shared sky pass dithers every style by one 8-bit step (an ordered 4x4 pattern on the pixel), and its own code keeps the GLSL rules
+  ---
+  duration_ms: 0.4106
+  type: 'test'
+  ...
+# Subtest: each melody sets its own skin on <html data-theme>; an unknown or missing melody leaves SIGIL
+ok 202 - each melody sets its own skin on <html data-theme>; an unknown or missing melody leaves SIGIL
+  ---
+  duration_ms: 1.8586
+  type: 'test'
+  ...
+# Subtest: the page sets the skin in its head, before the first paint, from the same number the player draws its melody from
+ok 203 - the page sets the skin in its head, before the first paint, from the same number the player draws its melody from
+  ---
+  duration_ms: 10.8947
+  type: 'test'
+  ...
+# Subtest: D394: Settings ▸ Theme has seven choices: music follows the melody, each of the four is its own skin, Skyline Night is its own, sigil is none
+ok 204 - D394: Settings ▸ Theme has seven choices: music follows the melody, each of the four is its own skin, Skyline Night is its own, sigil is none
+  ---
+  duration_ms: 0.2694
+  type: 'test'
+  ...
+# Subtest: D394: the head reads the saved theme: a fixed theme sets its own skin AND melody; music, nothing saved and broken saved text keep the random pick; sigil plays its own melody under SIGIL
+ok 205 - D394: the head reads the saved theme: a fixed theme sets its own skin AND melody; music, nothing saved and broken saved text keep the random pick; sigil plays its own melody under SIGIL
+  ---
+  duration_ms: 33.7488
+  type: 'test'
+  ...
+# Subtest: D405: Skyline Night is a sixth look on Skyline's melody: its own skin, chosen by name or by the random pick, kept by the boot
+ok 206 - D405: Skyline Night is a sixth look on Skyline's melody: its own skin, chosen by name or by the random pick, kept by the boot
+  ---
+  duration_ms: 12.3053
+  type: 'test'
+  ...
+# Subtest: the reader understands every colour form a skin may write
+ok 207 - the reader understands every colour form a skin may write
+  ---
+  duration_ms: 1.3568
+  type: 'test'
+  ...
+# Subtest: the reader falls back to today's literal where the page has no such token or cannot read it, and says so once per token
+ok 208 - the reader falls back to today's literal where the page has no such token or cannot read it, and says so once per token
+  ---
+  duration_ms: 0.5666
+  type: 'test'
+  ...
+# Subtest: the reader reads again when data-theme changes, and tells whoever listens
+ok 209 - the reader reads again when data-theme changes, and tells whoever listens
+  ---
+  duration_ms: 0.335
+  type: 'test'
+  ...
+# Subtest: SIGIL's tokens are today's literals, so SIGIL draws exactly as before
+ok 210 - SIGIL's tokens are today's literals, so SIGIL draws exactly as before
+  ---
+  duration_ms: 0.6224
+  type: 'test'
+  ...
+# Subtest: SIGIL's 3D frame is the same, call for call, with its tokens applied; a skin's tokens change it
+ok 211 - SIGIL's 3D frame is the same, call for call, with its tokens applied; a skin's tokens change it
+  ---
+  duration_ms: 2.1639
+  type: 'test'
+  ...
+# Subtest: a skin is styling only: no theme file sets a property that moves or sizes a box, and each skin the page links is a look's
+ok 212 - a skin is styling only: no theme file sets a property that moves or sizes a box, and each skin the page links is a look's
+  ---
+  duration_ms: 8.4016
+  type: 'test'
+  ...
+# Subtest: the canvas layers and overlays name no chrome colour of their own: they read the tokens (the meaning colours stay literal)
+ok 213 - the canvas layers and overlays name no chrome colour of their own: they read the tokens (the meaning colours stay literal)
+  ---
+  duration_ms: 12.8123
+  type: 'test'
+  ...
+1..213
+# tests 213
+# suites 0
+# pass 212
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 1
+# duration_ms 31267.9506

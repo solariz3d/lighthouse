@@ -1,0 +1,8 @@
+06ee3ac1 Merge origin/main (D588) into the D594 sync
+76b2488b D594: commit the seats' maps A, B and C
+34fa75d5 D594: commit the Third Place seat's notes, 2026-10-26 to 2026-10-28
+e4bc9f82 D594: commit the loop plans of D430 to D446 and the batch landings
+16280403 D594: commit the hand-backs and their evidence from D424 to D589 (no TAP files, nothing over 5 MB)
+97756537 librarian: tonight's close moves to 22:30; work continues
+69dee521 librarian: E's WIP checked
+015cb279 D592: pane E's work-in-progress hand-back for the overwrite question

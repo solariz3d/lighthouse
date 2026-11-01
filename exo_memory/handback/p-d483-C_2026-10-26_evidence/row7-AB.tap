@@ -1,0 +1,28 @@
+lockrun: holding the lock at 2026-10-27T02:44:34.026Z; starting c483 timing session row7-AB
+[31m✖ row 7: a 1,000 m piece with a left edge typed, stretched on an empty track and turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms) [90m(14954.7883ms)[39m[39m
+[34mℹ tests 1[39m
+[34mℹ suites 0[39m
+[34mℹ pass 0[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 15410.1543[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\zz-c483-both.test.js:167:1
+[31m✖ row 7: a 1,000 m piece with a left edge typed, stretched on an empty track and turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms) [90m(14954.7883ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: aqua 1000 m stretch: the drag moved nothing (the field still reads 1000): the handle was not held
+      at drag [90m(C:\Users\nname\Downloads\t180-wt-c483\[39mapp\test\zz-c483-both.test.js:102:10[90m)[39m
+      at async TestContext.<anonymous> [90m(C:\Users\nname\Downloads\t180-wt-c483\[39mapp\test\zz-c483-both.test.js:171:48[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'1000'[39m,
+    expected: [32m'1000'[39m,
+    operator: [32m'notStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+lockrun: done at 2026-10-27T02:44:49.472Z, exit 1
