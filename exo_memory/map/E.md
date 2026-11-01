@@ -2729,3 +2729,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-01 ~00:2xZ (D) · D592, the overwrite question → `exo_memory/handback/p-d592-overwrite-E_2026-10-31.md`
 - t180 d592-e 18e8c0b off a93ae51 (not pushed): Save asks Replace or Cancel before writing over a saved track that is not the open one, and Export to AC before replacing a t180b folder with a different or unrecorded road; Cancel writes nothing (sha256 and mtime of every file unchanged). Red 8 of 9 then 9/9; mutants JS 21/21/0, Rust 6/6; touched tests 1,163/1,170 with the one red (drag-frame row 8) red on a93ae51 too; screenshots of both dialogs in six looks.
 - **Carry:** a yes/no callback guarded by `=== false` lets every other answer through; test the answers that are neither, or "only true replaces" is not pinned.
+
+## 2026-11-01 ~00:5xZ (D) · D597, 0.4.35 early merge → `exo_memory/handback/p-d597-merge-0435-E_2026-10-31.md`
+- t180 land-0435-e 5027841 off a93ae51 (not pushed, built or installed): d591-a and d592-e merged, three one-line conflicts kept both sides, and the seam between them fixed (a Cancel at the overwrite question cleared A's banner instead of leaving Export failed; row 10 red then green). Full suite 4,053/4,076 with the one red drag-frame row 8 also red on a93ae51; cargo lib 56/0.
+- **Carry:** two branches that each pass can still disagree at a seam neither owns; read how the second one's new outcome reaches the first one's reporting before calling the merge done.
