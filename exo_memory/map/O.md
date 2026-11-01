@@ -390,3 +390,8 @@ General form: an amendment that only checks its own recorded measure guards noth
 2026-11-01, D593 re-pin — the three 1ROAD_CATCH_ nodes differed only in material index 5 -> 6 (same name, same geometry, same material) after the lip shade was inserted before t180b_catch; t180 d593-o 02081e4. Could be wrong if a reader keys by index rather than name.
 General form: a byte digest per node reports a renumbering as a change; read the field before calling it one.
 → `exo_memory/handback/p-d593-apron-shape-O_2026-10-31.md` §"The re-pin, 03:17Z"
+
+### A cap fanned from one point inside a thin wedge is at most spacing x sin(wedge) thick, whatever the third point; the sliver floor sets the spacing
+2026-11-01, D593 overnight: t180 d593-o 8dd5029, the pit lane's end caps. The plank's wedge is 25 deg, the join's 12 deg, so the lane's 8 end-row spaces need 4.8 cm, a 0.39 m start; at 0.1 m they were 0.5 cm, and a single long triangle instead cracked as a T-junction my hole count had credited as closed (now strict). Could be wrong if a different cap topology (graded rows) avoids it: not tried.
+General form: a hole count that credits T-junctions hides the cracks a renderer shows; count strict, and pick the pixel before calling a mark geometry or renderer.
+→ `exo_memory/handback/p-d593-apron-shape-O_2026-10-31.md` §overnight

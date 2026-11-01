@@ -571,3 +571,75 @@ So the "banked" look is the cup rising 2.567 m to the lane, not the lane tilting
    - cup, bank and pit renders to the librarian.
 
 **Nothing is running.** No render was made today after 21:58.
+
+## overnight (the chair's 23:23 ring; tier PROVE IT)
+
+**t180 d593-o `8dd5029`**, one commit on `d78e835`. The apron is 0.4.34's DRAWN plank again, in the road's asphalt at 0.88. The pit is as built, with the same plank along its outer edge.
+
+### What was built
+- **`src/export/apron.js`, the main road:** each side writes its plank and its join exactly as a93ae51 does, drawn, with no lip and nothing hidden.
+  - The apron's own material `t180b_apron` is now the road material's 0.88 shade (`apronMaterial(road)`: the road's texture, ambient, diffuse and specular × 0.88), under the apron's own name, at the index it always had.
+  - So every main-road apron node is byte for byte a93ae51's, and only that one material record changes.
+  - The plank keeps its own 4 m uv tile. inferred: the road's asphalt is drawn on it at that scale, not the road's 10 m.
+- **`apron.js`, the pit outline:** the plank is drawn, with a join back to the skin's edge.
+  - At each end the outline walks the lane's end row across the road, at one s. In those **across runs**, every row takes the lane row's outer point, so the plank and the join fan out from it, every vertex shared.
+  - The inner rows of the run take one normal, out of the lane's end, so every cap triangle faces out.
+- **`src/geom/pitlane.js`: `TAPER_MIN_W` 0.10 → 0.50 m** (the lane's width where it leaves and rejoins). This is the one change to the pit as built. Why it has to be this wide:
+  - A cap triangle on two neighbouring end-row points lies inside a wedge: 25° for the plank, 12° for the join. Its thickness is at most their spacing × sin(wedge), whatever its third point.
+  - The end row has 8 spaces, so the 1 cm floor needs the points 4.8 cm apart, a start of at least 0.39 m.
+  - Measured on the way:
+    - at 0.10 m, the plank fans were 0.5 cm thick (32 slivers);
+    - at 0.25 m, the join had to be one triangle, and its long edge met the skin's end row in a T-junction. That rendered as a dotted crack with the sky behind it, from above and from below.
+    - at 0.50 m, the points are 6.25 cm apart, the plank fans 2.6 cm and the join fans 1.3 cm thick.
+
+### Counts on his ELYSIUM
+His copy `S\d593\doc\eq-ELYSIUM.his.t180track`, exported at the tip to `G:\Consonance-tools\scratch-O-d593\tip7-tex.kn5`:
+- **Drawn = physics** (`S\d593\drawnphys-tip7.json`):
+  - 58 physics apron meshes, 58 drawn, 0 hidden;
+  - 58 joins, 58 drawn;
+  - 0 other apron nodes;
+  - **differ 0**.
+  - A drawn physics node is itself what is seen, so its drawn vertices ARE its physics vertices.
+- checked: `S\d593\intersect-tip7.json` → clips 0 drawn / 0 physics, of 86,846 triangles round the lane.
+- checked: `S\d593\defects-tip7.json` → coplanar overlaps 0, slivers under 1 cm 0.
+- checked: `S\d593\openedges-tip7.json` and `openedges-strict-tip7.json` → open drawn edges at the leave / rejoin 0 / 0, and 0 / 0 STRICT (no T-junction counted as closed).
+- checked: `S\d593\kn5cmp-tip7.json` → the main-road physics apron 57/57 byte for byte with a93ae51's export, plus `1ROAD_APRON_PIT_R`.
+- checked: `S\d593\physdigest-tip7.json` → `ecb0db14…1d75`, the same as 0.4.34.
+- checked: `S\d593\isocmp-elysium-tip7.txt`, against his ELYSIUM exported at a93ae51:
+  - road physics 89 and paint 5 are the same bytes;
+  - apron planks 57 and joins 57 are the same bytes;
+  - the catch 3 is the same bytes (no material is inserted ahead of it now);
+  - moved: the pit lane's in, out and fill, its new skins, plank and join, and the 3 road skin chunks beside it.
+
+### Tests
+- **`export_apron` 22/22.**
+  - Rows 2 and 3 are a93ae51's again.
+  - Rows 13, 14, 15, 16 and 20 are amended for the drawn plank: drawn is physics; drawn round the lane; the material is the road's shade; tops and joins are `apronOf`'s byte for byte and drawn; his cupped case.
+  - Row 18's holes are now STRICT.
+  - New row 22: the caps across the lane's ends face out of the lane. It read 17 of 32 cap triangles facing in without the fix.
+  - A throwaway one-triangle join (the T-junction) fails strict row 18: "9 open drawn edges round the leave".
+- **Seal, `core_cup_fixtures` 15/15.**
+  - `manifest.d593.json` is remade: F1 and F2 keep every mesh node byte for byte (23 / 24) and their kn5 size; of their materials only `t180b_apron`'s own record changed.
+  - `kn5nodes.js` now also digests each material's record.
+  - The row builds F1 and F2 now and holds them to that.
+  - Two throwaway mutants are caught by name: the shade at 0.9 ("the material t180b_apron"), and the skin moved 1 cm ("not a93ae51's byte for byte").
+- **Export-isolated pins** (both files): lap `257d550e…` → `74130c5b646222a5`; open `2b6ad34e…` → `e15aed9879bf1ca0`. The AMENDED BY NAME note names exactly what moved.
+- checked: `S\d593\os-final2-all.out` → the 23 touched files 220/220.
+- checked: `S\d593\os-final2-h-apron.out` → apron harness applied 17 / caught 17 / NOT APPLIED 0. P2, P6, P8, P9, P10, P13, P14 and P16 now stand for the drawn plank's faults, and P17 (the caps unfaced) is new.
+- checked: `S\d593\os-final2-h-acready.out` → acready harness applied 10 / caught 10 / NOT APPLIED 0.
+
+### Renders
+All in `G:\Consonance-tools\scratch-O-d593\tex\`, textured, ambient and exposure × 1.8, through one renderer (culling by winding as AC does):
+- `before-*.png` from his own export;
+- `after-*.png` from tip7, except cup and bank, which are from tip5 (the cup and bank don't change between them).
+
+The views:
+- `{cup,bank}-{above,side,under}`: the cup at side shows 0.4.34's plank, now in the road's darker asphalt instead of flat grey. No lip, no blade.
+- `pit-*`, ten views.
+
+I looked at every one. **What the keeper should look at: the leave and the rejoin from above (`after-pit-leave-above.png`, `after-pit-rejoin-above.png`).** The lane's start is now 0.5 m wide, so the plank's edge jogs out 0.5 m there. It is the spot of the 18:54 "square step", and wider.
+- The alternative is one number, `TAPER_MIN_W` in `src/geom/pitlane.js`.
+- inferred: at 0.10 m the jog is a fifth of this, and the price is about 32 end-cap triangles under 1 cm thick, all in a vertical face 10 cm wide.
+- The counts as ordered ("slivers under 1 cm: 0") pick 0.5 m. His eye picks between them.
+
+**Branch tip: t180 d593-o `8dd5029`.**
