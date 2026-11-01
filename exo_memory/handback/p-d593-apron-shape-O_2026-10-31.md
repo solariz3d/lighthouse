@@ -180,3 +180,26 @@ The angle between the drawn surface's first column and the edge's own last segme
   1. His look at the renders.
   2. Then a landing pane takes d593-o into 0.4.35 with the full suite.
   3. If he asks: smooth the concave pit corners' visual tab (§5), and check in his game that a hidden `1ROAD_` physics mesh still collides.
+
+## After the cancel (the chair's ring of 23:55Z: "dont get it ready yet")
+
+**Nothing was readied or landed by the 23:50Z ring:** it only added the status line above and copied the renders. Work carried on.
+
+**The concave-corner tab is fixed:** t180 **d593-o `3e1eee8`**, `src/export/apron.js` only.
+- **The cause:** the drawn fan at each concave pit corner started from the physics corner point, 0.93 m below the edge, while the curled lips either side reach only 0.43 m. That was the square tab in §0.
+- **The fix:** it now starts from the outer point of the lip row the corner hangs from, and runs over the whole curled rows either side (`lipRow`, shared with the strips).
+
+**Checks:**
+- checked: `S\d593\kn5cmp-cut97-cut2.json` → 58 of 58 physics apron meshes, the outline's included, byte-identical to 97ab62e's export.
+- checked: `S\d593\kn5cmp-base-cut2.json` → the 57 main ones still byte-identical to base.
+- checked: `S\d593\apron-test-cut2.out` → 17/17.
+- checked: `S\d593\harness2.out` → applied 11 / caught 11 / NOT APPLIED 0, control passes.
+
+**The renders:**
+- `cut-*.png` in the evidence folder are re-rendered at 3e1eee8; `base-*.png` are unchanged.
+- **A sliver is left:** a tiny dark one at the very corner point, where the road's corner vertex and the lane's first inner vertex stand 2–9 cm apart. Visual only.
+- inferred: that it is that gap, from where it sits; not measured.
+
+**Disk:** C: had 22 GB at the ring. My copy of his export (218 MB) moved from `S\d593\his-export\` to `G:\Consonance-tools\scratch-O-d593\his-export\`, its kn5 compared equal before the C: copy was removed. §2's "his own kn5" now reads from there. My scratch on C: is 11 MB.
+
+**Branch tip: t180 d593-o `3e1eee8`.**
