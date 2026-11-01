@@ -317,3 +317,20 @@ The angle between the drawn surface's first column and the edge's own last segme
 - **The edge where the darker band stops:** the lip's underside is lighter than the skin, and the lane's skin starts in front of it, on the camera's side, and hides it from there. inferred: from the views, not measured. The hole count says the surface has no opening there.
 
 **Branch tip unchanged: t180 d593-o `ae6d262`.**
+
+## The shade, lighter (the chair's ring of 00:18Z, delivered 00:47Z): "not like crazy dark"
+
+**The change:** t180 **d593-o `18b1774`**. `LIP_SHADE` 0.45 → **0.88**.
+- **What the lip and its underside wear:** the road's own material and texture, in a copy whose ksAmbient, ksDiffuse and ksSpecular are 12% lower.
+- **Lit like the road:** it is a ksPerPixel material, lit and shadowed by the game as the road is; nothing is baked.
+- **The shape is unchanged** ("I think that's it").
+- **Tests:** checked: `S\d593\shade2-apron.out` → 18/18; `S\d593\shade2-harness.out` → applied 12 / caught 12 / NOT APPLIED 0, control passes. Rows 3 and 16 read the factor, so they needed no change.
+- **The counts again on this export:** checked: `S\d593\intersect-shade2.json` → clips round the lane 0 drawn / 0 physics; `S\d593\openedges.js` → open surface edges at the leave / rejoin 0 / 0.
+
+**Renders,** `G:\Consonance-tools\scratch-O-d593\tex\`, 2560×1440, textured.
+- **The light:** this set has **ambient ×1.8 and exposure ×1.8**, the same on before and after, so the shade can be judged. (`render2.js` `AMBIENT`/`EXPOSURE`.)
+- **The six main-road views, his kn5 against 18b1774's export of his document:** `before-` and `after-` × `cup-above`, `cup-side`, `cup-under`, `bank-above`, `bank-side`, `bank-under`.
+- **The pit views, re-rendered from the same export under the same light:** `pit-leave-*`, `pit-rejoin-*`, `pit-lane-edge`, `pit-leave-top`, `pit-leave-under-close`, `pit-rejoin-under-close`.
+- **Superseded and deleted:** the earlier main-road and pit renders, and the superseded exports (`after-tex.kn5`, `cut.kn5`, `pit-tex.kn5`) on G:.
+
+**Branch tip: t180 d593-o `18b1774`.**
