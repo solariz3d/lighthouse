@@ -23,3 +23,10 @@ Proof as above, plus: zero triangle intersections between the pit lane, the infi
 
 ## His marked-up shot, 18:13 ("look how its smooth in red before but then in after orange there is a big gap for some reason its not good.png", Pictures\Screenshots)
 This is O's view pit-leave-under, before and after (97ab62e). Before, the underside under the lane's leave is one smooth sheet from the road's underside to the lane's tip. After, the new underside stops short of the lane and leaves a bite: a curved notch, open between the road's underside and the lane's underside, with a stepped sliver. The defect to fix: no gap and no notch under the leave or the rejoin. The underside is one continuous surface under road plus lane, as smooth as before, and in the darker asphalt from below. The proof adds a view of pit-leave-under and pit-rejoin-under at 2560x1440 with textures, and an open-edge count of 0 on the undersides' join.
+
+## His read of A's D596 renders, 18:25 (https://claude.ai/artifact/YNU5tK6qdHwUzu48FcFTiB)
+"where did the pit lane go lmfao? Most of it is gone, and the side of it doesnt look like the rest of the apron on the track". Checked against pit-lane-top, base and new: in base, a separate strip runs beside the main road for the lane's whole length. In new, that strip is mostly folded into the main road's outline, and the lane no longer reads as its own lane. My slip: I called the shape "a clear improvement" from the close taper views, without opening the whole-lane view.
+The fix, in his terms:
+- The pit lane keeps its FULL length and width as its own lane, beside the road, for everything between the taper ends. Only the first and last stretch blend, and the taper must never shorten or narrow the lane's straight. The top-down view must show the lane as long as before.
+- The pit lane's outer side carries exactly the main road's lip and apron: O's d593-o lip, in the shade he asked for. A therefore builds on top of d593-o, not on a93ae51, so the lane gets the same edge with no second version.
+- Renders: textured, with ambient light, 2560x1440, including the whole-lane top-down. I check the whole-lane view before it reaches him.
