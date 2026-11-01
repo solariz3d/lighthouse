@@ -357,3 +357,16 @@ Its counts there: 0 drawn and 0 physics clips; 0/0 open surface edges at the end
 **Next for O:** when A lands its pit outline, put the lip and the apron round it.
 
 **Branch tip: t180 d593-o `43539d0`.**
+
+## The ruling of 00:42Z (delivered 00:54Z): the stash
+
+**There was nothing to stash.** The pit work was committed (ae6d262) before the ruling reached me, and 43539d0 had already reverted it.
+- checked: `git status --short` in t180-wt-o593 → clean.
+- checked: `git diff --quiet fbc089e -- src/geom/pitlane.js src/export/pitlane.js` → both identical to fbc089e, A's base.
+- checked: `git merge-base --is-ancestor fbc089e HEAD` → d593-o's history was only added to (ae6d262, 18b1774, 43539d0), never moved.
+
+**Its name instead of a stash:** a branch, **`o-pit-taper-superseded` → ae6d262**, in the same repository (t180-fresh's worktrees). It holds the superseded pit taper, kept, not dropped. It touches neither the tree nor d593-o.
+
+**The shade is done:** 18b1774, `LIP_SHADE` 0.88. The six renders are §"A owns the pit lane", from 43539d0.
+
+**Branch tip: t180 d593-o `43539d0`.**
