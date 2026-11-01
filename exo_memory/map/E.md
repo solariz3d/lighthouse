@@ -2738,3 +2738,6 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - t180 land-0435-msg ccf14b7 (d593-o merged, Version 0.4.35, 155 messages rewritten to one-liners with every tree identical): hidden built-app ELYSIUM export has the main road physics byte-equal to his (89/89), 0 windows shown; the suite is red beyond the timing row (export-isolated's pinned b6969da digest moved, inferred d593's pit lane), so no install; exe 64e16a51 built and the install script ready.
 - **Carry:** the heavy-run lock reads the tree from the runner's working folder; start each runner inside its own worktree or the second waits for the first.
 - 2026-11-01 ~03:4xZ (D) · D598 INSTALLED (same hand-back §0): t180 land-0435-msg 3e82d7c with O's re-pin; export-isolated 24/24; installed sha256 b95319ba (backup .before-0.4.35 = 9036ee3f); the relinked exe c71e582c differs from 64e16a51 by link stamp and PDB id (inferred) yet exports ELYSIUM byte-identically; 1ROAD_p38_chunk_77 SAME as his t180b_elysium.
+
+## 2026-11-01 ~04:3xZ (D) · D594, the 10-31 close → `exo_memory/handback/p-d594-close-E_2026-10-31.md`
+- lighthouse main pushed 06ee3ac1..0b6cbb46 (push-gate allow): 121 uncommitted exo_memory paths committed by name; a 12 MB evidence file and the Third Place note left out and listed; the private-handle grep 0; two prefix mentions in prose flagged, neither a key.
