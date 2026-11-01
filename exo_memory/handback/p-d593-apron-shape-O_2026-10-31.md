@@ -298,3 +298,22 @@ The angle between the drawn surface's first column and the edge's own last segme
 - **pit-lane-edge:** along the lane's outer edge, mid-lane.
 
 **Branch tip: t180 d593-o `ae6d262`.**
+
+## His marked-up shot (the chair's ring of 00:14Z, delivered 00:46Z): one underside under road and lane
+
+**Already in ae6d262 when the ring arrived.** It is the lane's and the infill's skins, every join hung along the road frame's up (§ "The pit IS the track").
+- checked: `S\d593\openedges.js` → **0 open drawn-surface edges** within 25 m of the leave and of the rejoin (his kn5: 20 and 20).
+- **The count is a test:** row 18, beside the clip count, red on fbc089e and green on ae6d262.
+
+**What his red "before" was:**
+- My earlier renderer drew BOTH sides of every face. The smooth sheet he circled is the top of his lane, seen through from below.
+- AC culls back faces. Rendered that way (`before-pit-leave-under-close.png`, from his own kn5), the lane has no underside at all from below: only the road's skin shows.
+- inferred: AC's culling, from render2.js's rule and his kn5's single-sided lane; not checked in his game.
+
+**Renders, 2560×1440, textured, 4× exposure so the dark undersides read (the same on both):** `G:\Consonance-tools\scratch-O-d593\tex\`
+- `before-pit-leave-under-close.png` / `after-pit-leave-under-close.png`
+- `before-pit-rejoin-under-close.png` / `after-pit-rejoin-under-close.png`
+- **What they show:** after, the lane's underside curves out of the road's as one sheet, with no notch.
+- **The edge where the darker band stops:** the lip's underside is lighter than the skin, and the lane's skin starts in front of it, on the camera's side, and hides it from there. inferred: from the views, not measured. The hole count says the surface has no opening there.
+
+**Branch tip unchanged: t180 d593-o `ae6d262`.**
