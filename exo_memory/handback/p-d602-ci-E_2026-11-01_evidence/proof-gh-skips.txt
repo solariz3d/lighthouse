@@ -1,0 +1,28 @@
+row 2: a real heap out-of-memory in the export's process ends the export with the stage; the page stays drawn and the next export works # SKIP skipped on GitHub's runner only: filling a second process
+row 16 (D394): Settings ▸ Theme: a fixed theme sets the look at once and fetches its own melody's two files; it survives a reload as that look and melody; SIGIL plays its own, Obsidian (D402) # SKIP
+row 17 (D396): the bar fits at 900, 1100, 1280 and 1400 px and on both sides of each fold: no overflow, the window buttons wholly inside the window, a grab strip of at least 24 px, every menu and Expo
+row 18 (D401, AMENDED): Settings ▸ Theme offers Random, not Music, after the named looks; a fresh start is Sigil; with Random saved, choosing it picks another look at once and that look's melody fol
+row 18b (D401, B's D408 probe): the same with Math.random pinned, so both branches run every time: at 0.1 the start look is the pick (its files already in), at 0.5 it is not # SKIP skipped on GitHub's
+row 19 (D401, A's read §8, AMENDED): Random saved and ticked: one click on Random picks another look and its melody, and so does the next # SKIP skipped on GitHub's runner only: the page did not moun
+row 19b (D401, AMENDED): on a fresh install, Sigil; the first click on Random picks once, not twice: with Math.random at 0.4, Sigil becomes Glass, then Aurora # SKIP skipped on GitHub's runner only: t
+row 1: the whole 100 km track in the opening view holds one frame at 144 Hz (p95 <= 6.9 ms, the GPU's work included) # SKIP skipped on GitHub's runner only: the runner has no GPU, so Chrome draws in s
+row 2: above the road, 37% of the way along, it holds one frame at 144 Hz too # SKIP skipped on GitHub's runner only: the runner has no GPU, so Chrome draws in software: 3 frames in 3 s on the 100 km 
+row 3: in the opening view the preview draws at most 40% of the triangles of the full mesh # SKIP skipped on GitHub's runner only: the runner has no GPU, so Chrome draws in software: 3 frames in 3 s o
+row 4: in the overhead view, with the pointer moving over the track, it holds one frame at 144 Hz (the hover pick included) # SKIP skipped on GitHub's runner only: the runner has no GPU, so Chrome dra
+row 1: each look's tile is the top background layer of the header, the left panel and an open menu, and it loads; the 3D view carries none # SKIP skipped on GitHub's runner only: the page did not moun
+row 2: the texture pushes no text under 4.5:1 in any look, in the builder and with the File menu open # SKIP skipped on GitHub's runner only: the page did not mount within the rows' own 30 s wait in a
+row 3 (D409): with no pieces, in every look, the empty builder shows no picture over the 3D view: no \#empty-art and no <pre> in \#stage # SKIP skipped on GitHub's runner only: the page did not mount 
+row 5: at display scales 1.25 and 1.5, each fine tile is drawn one tile pixel per device pixel (its size times the pixel ratio is its own size) # SKIP skipped on GitHub's runner only: the page did not
+row 8 (D405): Skyline Night: every enabled text is 4.5:1 or more on its own pixels, in the builder and with the File menu open # SKIP skipped on GitHub's runner only: the page did not mount within the
+row 6 (D409): no label in the 3D view sits under the top readout or the camera and grid bars, in every look, at 1400 x 860 and 2560 x 1440 # SKIP skipped on GitHub's runner only: the page did not moun
+row 7 (D417): the first actions row is Extend, Straight, Undo, Redo, and Extend sits above "Extend at the head", in every look # SKIP skipped on GitHub's runner only: the page did not mount within the
+row 9: the warning texts (the checker's red, amber and lap lines, and Track ▸ Pit lane…) read 4.5:1 or more on their own pixels in every look # SKIP skipped on GitHub's runner only: the page did n
+row 10 (D575): every dialog the page draws reads 4.5:1 or more on its own pixels in every look, its buttons (main, plain and quiet) first among them # SKIP skipped on GitHub's runner only: the page di
+row 11 (D581): the hover card reads 4.5:1 or more on its own pixels in every look # SKIP skipped on GitHub's runner only: the page did not mount within the rows' own 30 s wait in any look there, with 
+row 12: the export banner reads 4.5:1 or more on its own pixels in every look, running, done and failed # SKIP skipped on GitHub's runner only: the page did not mount within the rows' own 30 s wait in
+row 1: an install backs the old exe up, installs, finds the installed exe is the built one stamped NSS, and releases the lock # SKIP skipped on GitHub's runner only: Windows PowerShell started from th
+row 2: an installed exe that is not the built one stamped NSS fails the compare, exit 7, and the backup is kept # SKIP skipped on GitHub's runner only: Windows PowerShell started from the job's pwsh 7
+row 3: while the builder is open it waits, never closes it, and gives up with exit 3 with nothing changed # SKIP skipped on GitHub's runner only: Windows PowerShell started from the job's pwsh 7 canno
+row 4: a lock held by a live process makes it wait and give up with exit 4; a lock whose holder is gone is taken over # SKIP skipped on GitHub's runner only: Windows PowerShell started from the job's 
+row 5: -Take holds the lock for a merge; an install with its token runs under it and leaves it held; -Release frees it # SKIP skipped on GitHub's runner only: Windows PowerShell started from the job's
+row 6: an existing backup of that name is refused, exit 5, and nothing is installed # SKIP skipped on GitHub's runner only: Windows PowerShell started from the job's pwsh 7 cannot load Get-FileHash th

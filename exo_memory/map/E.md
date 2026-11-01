@@ -2745,3 +2745,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-01 ~07:4xZ (D) · D600, 0.4.36 published → `exo_memory/handback/p-d600-release-0436-E_2026-11-01.md`
 - t180 main f44f76e, tag v0.4.36 (object 100f59e0), release with setup 6dc0ef3a: d593-o's d78e835 and 8dd5029 on v0.4.35 with plain messages; suite 4,077/4,100 with only the known timing row; hidden run 0 windows, main road 89/89 and the apron 114/114 equal to his export. First CI run cancelled at its 45-minute limit with 12 runner-only page reds, as 0.4.35's was.
 - **Carry:** a cancelled CI run is a timeout, not a pass; read the log for how far it got and compare with the last release's run before calling it new.
+
+## 2026-11-01 ~17:1xZ (D) · D602, CI as a true signal → `exo_memory/handback/p-d602-ci-E_2026-11-01.md`
+- t180 d602-e dfa0789 (branch only): green run 41326706678, fast 34 min 48 s; the timeout 75 against a measured 56 min 42 s; 28 rows skip on GitHub only with their reason (menubar 16 to 19b, texture-page, the 100 km preview, the real out-of-memory row, install_local), menubar's page wait 120 s there; locally 46/46 run.
+- **Carry:** a CI run cut off by its limit hides its failures with it; raise the limit once to measure, then calibrate from what the finished run says.
