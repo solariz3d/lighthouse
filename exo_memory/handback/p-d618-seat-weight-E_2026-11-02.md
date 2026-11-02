@@ -61,7 +61,7 @@ How to read it:
    ```
    node _evidence/weigh.js <transcript.jsonl> "<letter> <dir>" 2026-11-01T23:38:00Z > <letter>.json
    ```
-   One line at a time: lines are typed from their first characters, and only user prompts and attachments are parsed. Usage numbers are read by pattern from assistant lines; `api-request*`, `file-history*` and `queue-operation` lines are skipped unparsed. `_evidence/run.sh` and `inner.sh` ran all nine in turn under the heavy-run lock (holdrun), at BelowNormal (`belownormal.js`), with `lowio.ps1 -RootPid`, hidden (`Start-Process -WindowStyle Hidden`), after an `acs.exe` check. **9 files, 6.94 GB, 36 s** (`_evidence/run.log`).
+   One line at a time: lines are typed from their first characters, and only user prompts and attachments are parsed. Usage numbers are read by pattern from assistant lines; `api-request*`, `file-history*` and `queue-operation` lines are skipped unparsed. `_evidence/run.sh` and `inner.sh` ran all nine in turn under the heavy-run lock (holdrun), at BelowNormal (`belownormal.js`), with `lowio.ps1 -RootPid`, hidden (`Start-Process -WindowStyle Hidden`), after an `acs.exe` check. **9 files, 6.87 GB (the sum of the JSON `bytes`), 36 s** (`_evidence/run.log`).
 2. **The table:**
    ```
    node _evidence/table.js <dir of the nine JSON>
