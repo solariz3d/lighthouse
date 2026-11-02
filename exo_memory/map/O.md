@@ -421,3 +421,7 @@ General form: a mutant that blanks a result can be undone by the next step, whic
 2026-11-02, D612 — t180 d612-o c2d3880: six looks headless, box contrast 1.09-1.7 → 4.2-19.6, toggling and the saved key unchanged. Could be wrong for a look added later with its own checkbox styling.
 General form: a control inherits the layout of the wrapper it sits in; check what the wrapper's columns were made for.
 → `exo_memory/handback/p-d612-mirror-checkbox-O_2026-11-02.md`
+
+### A saved track's own name field can be "untitled": the page exports under the Save field's name, so a headless export must give the shell that name, and its slug is the folder
+2026-11-02, D613 — TEST 10 from 6f0969e installed as content	racks	180b_test_10_0438 (10 files, sha256 equal staged and installed, 0 refusals). The edge fit was read from his own installed kn5's texture name (off). Could be wrong for a track whose saved Save-name differs from its slug.
+→ `exo_memory/handback/p-d613-test10-preview-O_2026-11-02.md`
