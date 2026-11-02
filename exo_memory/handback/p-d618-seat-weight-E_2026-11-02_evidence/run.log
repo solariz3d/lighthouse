@@ -1,0 +1,22 @@
+start 23:41:28Z
+heavy-run: WARNING: C:\ has 49.2 GB free, under 50 GB; run node consonance/tools/janitor.js
+D main 23:41:28Z
+  done 0 23:41:31Z
+M librarian 23:41:31Z
+  done 0 23:41:33Z
+N third-place 23:41:33Z
+  done 0 23:41:35Z
+A sibling-3d57124e 23:41:35Z
+  done 0 23:41:38Z
+B sibling-5bf9d657 23:41:38Z
+  done 0 23:41:39Z
+C sibling-0845a868 23:41:39Z
+  done 0 23:41:42Z
+E sibling-07b8a48f 23:41:42Z
+  done 0 23:41:45Z
+O sibling-36313935 23:41:45Z
+  done 0 23:41:46Z
+P sibling-372c8abc 23:41:46Z
+  done 0 23:41:46Z
+exit 0 23:41:47Z
+RUN-END

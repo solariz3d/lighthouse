@@ -1,0 +1,126 @@
+{
+ "seat": "M librarian",
+ "file": "C:/Users/nname/.claude/projects/C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+ "bytes": 764342367,
+ "lines": 182117,
+ "firstTs": "2026-09-01T13:36:17.120Z",
+ "lastTs": "2026-11-02T23:41:32.356Z",
+ "window": {
+  "from": "2026-11-01T23:38:00.000Z",
+  "to": "2026-11-02T23:41:32.356Z"
+ },
+ "contextAtTurn": {
+  "n": 141,
+  "last": 232783,
+  "median": 209672,
+  "p90": 389865,
+  "max": 442821
+ },
+ "contextAllCalls": {
+  "n": 318,
+  "median": 224060,
+  "max": 442821
+ },
+ "prompts": 146,
+ "keepwarm": 14,
+ "injectedChars": {
+  "total": 114958,
+  "perPrompt": 787,
+  "byKind": {
+   "pulse": 110737,
+   "state block": 2974,
+   "shell context (SessionStart)": 1247
+  }
+ },
+ "otherAttachmentChars": {
+  "prompt_snapshot": 167637,
+  "instructions": 128409,
+  "hook_success": 110496,
+  "queued_command": 101462,
+  "deferred_tools_record": 24610,
+  "file": 24214,
+  "invoked_skills": 20218,
+  "skill_listing": 16206
+ },
+ "compactions": {
+  "all": 71,
+  "window": 1
+ },
+ "floor": {
+  "minEver": {
+   "ts": "2026-10-14T05:26:20.405Z",
+   "ctx": 87002
+  },
+  "afterLastCompactions": [
+   {
+    "ts": "2026-10-30T13:02:11.720Z",
+    "ctx": 120509
+   },
+   {
+    "ts": "2026-10-31T09:49:39.508Z",
+    "ctx": 111929
+   },
+   {
+    "ts": "2026-11-01T07:04:47.867Z",
+    "ctx": 118785
+   },
+   {
+    "ts": "2026-11-01T18:20:08.233Z",
+    "ctx": 116456
+   },
+   {
+    "ts": "2026-11-02T19:27:28.299Z",
+    "ctx": 115624
+   }
+  ]
+ },
+ "lastCallSplit": {
+  "ts": "2026-11-02T23:41:31.798Z",
+  "input": 1,
+  "cacheCreate": 430,
+  "cacheRead": 232352,
+  "output": 112
+ },
+ "perDay": {
+  "2026-10-24": {
+   "prompts": 65,
+   "keepwarm": 0
+  },
+  "2026-10-25": {
+   "prompts": 90,
+   "keepwarm": 0
+  },
+  "2026-10-26": {
+   "prompts": 113,
+   "keepwarm": 0
+  },
+  "2026-10-27": {
+   "prompts": 115,
+   "keepwarm": 1
+  },
+  "2026-10-28": {
+   "prompts": 130,
+   "keepwarm": 12
+  },
+  "2026-10-29": {
+   "prompts": 168,
+   "keepwarm": 8
+  },
+  "2026-10-30": {
+   "prompts": 147,
+   "keepwarm": 10
+  },
+  "2026-10-31": {
+   "prompts": 146,
+   "keepwarm": 8
+  },
+  "2026-11-01": {
+   "prompts": 54,
+   "keepwarm": 21
+  },
+  "2026-11-02": {
+   "prompts": 139,
+   "keepwarm": 7
+  }
+ }
+}
