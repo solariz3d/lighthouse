@@ -1,0 +1,10 @@
+start 12:52:46Z head b497c5d tree 9238354
+build exit 0 12:53:49Z
+5377d12ac54e27dcc5eac8f652e4836972698cf5e34713d6fe25bb133a35fa05 *src-tauri/target/release/t180-track-builder.exe
+84ca0a729a2a665b3425e1ec5fd00d42878c3ea2529b2972dcdd65e628317189 *src-tauri/target/release/bundle/nsis/T-180 Track Builder_0.4.37_x64-setup.exe
+t180-track-builder.exe: 15795200 bytes, no private paths
+T-180 Track Builder_0.4.37_x64-setup.exe: 8087905 bytes, no private paths
+full exit 1 13:28:07Z
+cargo exit 0 13:29:20Z
+hidden exit 0 13:32:36Z
+done
