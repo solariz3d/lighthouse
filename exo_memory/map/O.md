@@ -416,3 +416,8 @@ General form: read a drawing's depth at more than one point before choosing the 
 Could be wrong about the margin: the joint rows meet within 1.87 mm, against the test's 2 mm cover.
 General form: a mutant that blanks a result can be undone by the next step, which rebuilds it; check a "not caught" against the output before trusting it.
 → `exo_memory/handback/p-d604-slab-O_2026-11-01.md` §notch part 2, §tube
+
+### The Pieces "mirror on insert" box sat in a slider's grid column (.picker), so it stretched to 329 px; as the menus' own .menu-check it is a 13 px box beside its words
+2026-11-02, D612 — t180 d612-o c2d3880: six looks headless, box contrast 1.09-1.7 → 4.2-19.6, toggling and the saved key unchanged. Could be wrong for a look added later with its own checkbox styling.
+General form: a control inherits the layout of the wrapper it sits in; check what the wrapper's columns were made for.
+→ `exo_memory/handback/p-d612-mirror-checkbox-O_2026-11-02.md`
