@@ -407,3 +407,12 @@ General form: a camera kept from a previous lap can be blind to the new change; 
 Could be wrong for steep cups past the 3 m cap (rim ≥ 44°): there the chord can be shallower than the skin and a slight S returns (his 57° cup read smooth).
 General form: read a drawing's depth at more than one point before choosing the depth rule; a sketch's shape lives in how its depth changes, not in its centre value.
 → `exo_memory/handback/p-d604-slab-O_2026-11-01.md`
+
+### The pit notch was the lane's 0.5 m end (8fb6ecc's TAPER_MIN_W) under a plank that walked across it; a tube's skin cracked at every joint from decimated chords and a centre normal half a column off
+2026-11-02, D604 follow-up — t180 d604-o a48e41e (the notch), f1f3416 (the tube).
+- The taper alone, back at 0.1 m, removed the notch on e911792.
+- C's tube test is 7/7 on f1f3416 (red on e911792 in rows 2–4).
+- His ELYSIUM changes exactly the four drivable meshes; his CRAZY TEST changes 2 of 39 planks (the taper at its wall sides).
+Could be wrong about the margin: the joint rows meet within 1.87 mm, against the test's 2 mm cover.
+General form: a mutant that blanks a result can be undone by the next step, which rebuilds it; check a "not caught" against the output before trusting it.
+→ `exo_memory/handback/p-d604-slab-O_2026-11-01.md` §notch part 2, §tube
