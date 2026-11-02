@@ -1,0 +1,7 @@
+ok 1 - row 1: glass, the lower view under the vignette: where it darkens no channel holds one value for more than 4 rows, and the 4 x 4 mean never steps
+# glass: {"300":{"longest":1,"whole":10,"steps":0},"1500":{"longest":1,"whole":10,"steps":0},"1700":{"longest":1,"whole":10,"steps":0}}
+ok 2 - row 2: aqua, the lower view under the vignette: where it darkens no channel holds one value for more than 4 rows, and the 4 x 4 mean never steps
+# aqua: {"300":{"longest":1,"whole":90,"steps":0},"1500":{"longest":1,"whole":158,"steps":0},"1700":{"longest":1,"whole":120,"steps":0}}
+# tests 2
+# pass 2
+# fail 0
