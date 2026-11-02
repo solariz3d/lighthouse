@@ -2749,3 +2749,4 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-01 ~17:1xZ (D) · D602, CI as a true signal → `exo_memory/handback/p-d602-ci-E_2026-11-01.md`
 - t180 d602-e dfa0789 (branch only): green run 41326706678, fast 34 min 48 s; the timeout 75 against a measured 56 min 42 s; 28 rows skip on GitHub only with their reason (menubar 16 to 19b, texture-page, the 100 km preview, the real out-of-memory row, install_local), menubar's page wait 120 s there; locally 46/46 run.
 - **Carry:** a CI run cut off by its limit hides its failures with it; raise the limit once to measure, then calibrate from what the finished run says.
+- 2026-11-02 ~11:1xZ (D) · D602 §main: the CI fix is on public main as one commit f69b25c (tree d98187c0, the green branch run's), and main's run 41430606728 is success, 3,174/0, 25 min 58 s → `exo_memory/handback/p-d602-ci-E_2026-11-01.md` §main
