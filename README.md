@@ -37,8 +37,8 @@ does not simply vanish.
 - **A desktop app for Windows** that runs several copies of Claude Code side by side in one window. Claude Code is
   Anthropic's AI assistant that works in a terminal: it reads and edits files and runs commands in a folder you give it.
   Each copy is one **session**, with its own conversation and its own folder, and you can type into any of them.
-- **One main session** you talk to, **a librarian** session that keeps the project's notes and results, and **worker**
-  sessions that each take a separate piece of a job.
+- **A librarian** session you talk to first, which keeps the project's notes and results, **one main session** that
+  splits and routes the work, and **worker** sessions that each take a separate piece of a job.
 - **Each session keeps its own conversation.** Close the app and reopen it, and each one resumes the same saved
   conversation, told how long it was away.
 - **You stay in charge.** When a session asks to involve another session outside the normal hand-off, the request waits
@@ -114,8 +114,8 @@ root: `powershell -ExecutionPolicy Bypass -File dev\shell\install.ps1` (what it 
 
 | in the app | what it is |
 |---|---|
-| **Orchestrator** | The main session, and the one you talk to. It keeps a fixed identity, so it wakes into the same conversation every time. It plans the work and lands the results. |
-| **Librarian** | Keeps the record so the others don't have to. Asked a question, it returns what the record already says about it, cited by file and line. It checks the workers' reports before anything lands. |
+| **Orchestrator** | The main session. It keeps a fixed identity, so it wakes into the same conversation every time. It splits the work and routes it to the workers. |
+| **Librarian** | The one you talk to first. Keeps the record so the others don't have to. Asked a question, it returns what the record already says about it, cited by file and line. It checks the workers' reports before anything lands. |
 | **Workers** (the committee panes, in the Terminal tab) | Each gets a short written brief and owns named files, so two never edit the same thing. They report to the librarian directly. |
 | **Third Place** | A session with no work to do and no channel into the work: the conversation is the point. |
 | **Listen** | Listens to one application's audio and reports it as intervals rather than a spectrum. Off until you pick a source. |
@@ -128,8 +128,9 @@ before anything counts.**
 
 **One round of work, step by step:**
 
-1. **You say what you want.** You can give it to the main session, or go straight to the librarian. Either way the
-   round starts once.
+1. **You say what you want, to the librarian.** It is the front door: it takes the ask, plans it with what is already
+   known, and hands it to the main session. If you speak to the main session by mistake, it passes the ask on and the
+   round still starts once.
 2. **The librarian looks up what is already known.** It answers with what earlier work bears on the question, which
    earlier attempt it resembles, and what is missing, each pointed to by file and line. "Nothing relevant" is an
    acceptable answer.
