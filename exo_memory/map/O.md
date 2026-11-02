@@ -425,3 +425,8 @@ General form: a control inherits the layout of the wrapper it sits in; check wha
 ### A saved track's own name field can be "untitled": the page exports under the Save field's name, so a headless export must give the shell that name, and its slug is the folder
 2026-11-02, D613 — TEST 10 from 6f0969e installed as content	racks	180b_test_10_0438 (10 files, sha256 equal staged and installed, 0 refusals). The edge fit was read from his own installed kn5's texture name (off). Could be wrong for a track whose saved Save-name differs from its slug.
 → `exo_memory/handback/p-d613-test10-preview-O_2026-11-02.md`
+
+### Of 85 open laps, 68 were done and only never filed; a "retake" baton row is written to every lap in working, which keeps them from ever reading stale
+2026-11-02, D620 — chain-status openLaps over lap.jsonl: 85 open (44 stale); 36 of the filed ones in a release tag (matched by subject: landings re-commit). All 32 "delivery-unconfirmed" dispatches were received: the chair writes its row seconds after the pane's, past a 1800 ms window. Could be wrong for dispatches before the 10-30 anchor (not read).
+General form: a count of "unconfirmed" is only as good as the signal it waits for; check the receiver's own record before believing a sender's timeout.
+→ `exo_memory/handback/p-d620-stale-laps-O_2026-11-02.md`
