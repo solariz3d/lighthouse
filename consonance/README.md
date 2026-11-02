@@ -107,8 +107,8 @@ not reconstruct it from memory — read it there.
         you                              8. only on direction — never on state
 ```
 
-**Two doors.** Work can enter through the orchestrator or go straight to the librarian; entry runs
-once, by either door. Once a lap is open the ring runs on its own — the user is the way in, not a
+**Two doors, the librarian first.** The user starts with the librarian (door two); the orchestrator's door stays open,
+so an ask that lands there by mistake still starts the lap, and entry runs once, by either door. Once a lap is open the ring runs on its own — the user is the way in, not a
 station it waits at. What door two owes is `BUILDING.md` § **THE JOINT STEP**.
 
 **Step 6 is the one that gets skipped.** A pane finishes, writes its hand-back to the file it was
