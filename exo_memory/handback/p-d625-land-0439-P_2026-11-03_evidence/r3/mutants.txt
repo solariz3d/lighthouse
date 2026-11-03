@@ -1,0 +1,3 @@
+?: applied 895 / caught 895 / NOT APPLIED 0 · control ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok
+C:\\Users\\nname\\Desktop\\worktrees\\t180-p625r2\\test\\markers_sectors_mutation.test.js: applied 2 / caught 0 / NOT APPLIED 0 / NOT CAUGHT 2
+all harnesses: applied 897 / caught 895 / NOT APPLIED 0
