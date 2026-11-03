@@ -91,7 +91,8 @@ checked: `S\d621\cargo-test2.out` (`cargo test --bin consonance`, BelowNormal, u
 
 - d621-o took origin/main (4 commits ahead, only the librarian's and my exo_memory files) as merge **`5c64caf1`**. The range brings 3 paths, `lap_holders.rs`, `main.rs`, `mcp.rs`, none dirty in the shared checkout, with 0 staged. So the shared main fast-forwarded to it, and main and origin stay one commit.
 - checked: `S\d621\keyscan.js origin/main..HEAD` (push-gate.js `findKeys`, 6 key shapes; a planted `ghp_` line read 1, so it can fire) → 3 commits, 0 key hits.
-- checked: `S\d505\lhpriv.js origin/main..HEAD` (13 alternatives) → 915 added lines, total 0. The fungi grep and the other three private terms over the added lines → 0 0 0 0.
+- checked: `S\d505\lhpriv.js origin/main..HEAD` (13 alternatives) → 915 added lines, total 0. The four-term private grep (the dispatch's first term and three others) over the added lines → 0 0 0 0.
+- **Correction, my slip:** this section's first version, `0352f872`, named that first private term literally, copied from the dispatch's wording. Both scans counted it (lhpriv total 1; four-term grep 1 0 0 0), but my command chain did not stop on a nonzero count, so it went to origin in `0352f872`. Origin already held the term in 1 file before it. This fix-forward commit removes the word from the file. The line stays in history at `0352f872`, and I did not rewrite it: a force-push is the keeper's call. General form: a scan inside an `&&` chain must exit nonzero on a hit, or it only prints.
 - checked: `git push origin 5c64caf1:main` → `72753965..5c64caf1`; `C:\Consonance\data\push-gate.jsonl` → decision **allow**, 2026-11-03T00:28:22.659Z, src 5c64caf1.
 - No exe rebuilt or swapped; that waits for his restart word.
 - This section rides in its own commit after the push, scanned the same way before it went out.
