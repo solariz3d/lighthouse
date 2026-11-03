@@ -87,6 +87,15 @@ checked: `S\d621\cargo-test2.out` (`cargo test --bin consonance`, BelowNormal, u
 
 **Commit:** d621-o **`846df413`** on top of `5c1aa36e` (2 paths, `lap_holders.rs` and `mcp.rs`), NOT pushed. Private-term scan of the diff: 0 / 0 / 0 / 0. No exe rebuilt or swapped.
 
+## Landing (the chair, 00:27Z): pushed lighthouse main **5c64caf1**
+
+- d621-o took origin/main (4 commits ahead, only the librarian's and my exo_memory files) as merge **`5c64caf1`**. The range brings 3 paths, `lap_holders.rs`, `main.rs`, `mcp.rs`, none dirty in the shared checkout, with 0 staged. So the shared main fast-forwarded to it, and main and origin stay one commit.
+- checked: `S\d621\keyscan.js origin/main..HEAD` (push-gate.js `findKeys`, 6 key shapes; a planted `ghp_` line read 1, so it can fire) → 3 commits, 0 key hits.
+- checked: `S\d505\lhpriv.js origin/main..HEAD` (13 alternatives) → 915 added lines, total 0. The fungi grep and the other three private terms over the added lines → 0 0 0 0.
+- checked: `git push origin 5c64caf1:main` → `72753965..5c64caf1`; `C:\Consonance\data\push-gate.jsonl` → decision **allow**, 2026-11-03T00:28:22.659Z, src 5c64caf1.
+- No exe rebuilt or swapped; that waits for his restart word.
+- This section rides in its own commit after the push, scanned the same way before it went out.
+
 `S` = `C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-36313935\c88002b1-74d8-4036-8cc0-f64aefbeabff\scratchpad`.
 
 SOURCES: `consonance/src-tauri/src/mcp.rs` (required_station, auth_station, auth_station_for, chair_inject), `lap_holders.rs` (lap_of_text, station_allows_for_lap), `main.rs` (chain_holders, await_render, delivery_receipt, chair_inject_exec, the tailer's board push), `consonance/tools/lap-row.js` (gateVerdict), `S\d621\cargo-test.out`, `S\d621\red.out`, `S\d621\green.out`, `S\d621\cargo-test2.out`
