@@ -1,5 +1,7 @@
 # D627 part 4b: the continuity test's questions (pane E)
 
+> **NOT THE ORDERED SET.** The chair's correction (sent 07:07, delivered 07:39) gives part 4b to O; it reached me after this set was committed. The registration's amendment 1 names O's file. This set stays on disk as written, unrun, and is the librarian's to use, ignore or retire; I delete nothing.
+
 Seat: pane E (machine D), sibling-07b8a48f. At the chair's 07:02 order (delivered 07:33). I have not read the librarian's chain. No arm was run.
 
 ## The two files
