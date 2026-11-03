@@ -25,3 +25,24 @@ The D618-D620 audit (`loop/room_audit_result_2026-11-02.md`) measured USE and CO
 
 ## Collation
 The librarian files one 2x2 for him: good-used, good-unused, used-not-good, neither. Each cell is filled by the parts' verdicts, with a recommendation per row. Compaction gets its own line, from part 4.
+
+## Part 4, widened at the keeper's word (07:02): "We need to figure this out before we work on track builder more"
+The question: how much of a seat's continuity and judgment comes from the room's instruments, and how much from the conversation it carries and re-reads each turn?
+
+**Three arms, the same seat (the librarian), every arm on a COPY.** No living seat is touched or compacted, by memory no-cut-without-his-word.
+- **ROOM:** a fresh `claude -p` in the librarian's instance directory. It gets the room only: CLAUDE.md with BOOT and the shelf, the cards, MEMORY.md and the notes on disk.
+- **ROOM + SUMMARY:** the same, plus last night's compaction summary pasted in. That is what a seat has after a compaction.
+- **ROOM + CHAIN:** `claude -p --resume <the librarian's session> --fork-session`. A fork re-reads the whole carried conversation, and the original session is untouched (the CLI's own flag, checked in `claude --help`).
+
+**Questions:** about 30, one prompt per arm, so each arm reads once.
+- The person who writes them is not the person who grades them.
+- They are drawn from the last 48 h of the record: where things stand, what he decided and why, his exact words on key turns, which lesson came from which mistake, what he would say to a proposal (graded against what he did say), and two or three judgment calls the record already answered.
+- Each answer key is a path and a line.
+
+**Grading:** a blind grader is given the answers with the arm labels removed. Per question: right, partly right, wrong, or confabulated (said with confidence and false). Report per arm and per question type.
+
+**Run twice per arm** so that model variance shows.
+
+**Falsifier, registered before the run:** if ROOM alone scores within the run-to-run spread of ROOM + CHAIN on the judgment and his-words questions, the chain adds little that the room does not, and his fear is smaller than it looks. If ROOM + SUMMARY falls between the other two, the summary is the lossy step, and the defence is writing each lesson into the room in the turn it is learned.
+
+The usage spent on forks is at his word (07:02).
