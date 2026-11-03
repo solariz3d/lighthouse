@@ -1,0 +1,1362 @@
+TAP version 13
+# Subtest: an audited DISAGREE surfaces once, with claim, command, and derived value
+ok 1 - an audited DISAGREE surfaces once, with claim, command, and derived value
+  ---
+  duration_ms: 90.6888
+  type: 'test'
+  ...
+# Subtest: unread means unread — the same finding never surfaces twice
+ok 2 - unread means unread — the same finding never surfaces twice
+  ---
+  duration_ms: 192.1048
+  type: 'test'
+  ...
+# Subtest: AGREE rows surface nowhere and leave no trace
+ok 3 - AGREE rows surface nowhere and leave no trace
+  ---
+  duration_ms: 142.0393
+  type: 'test'
+  ...
+# Subtest: another pane's DISAGREE does not surface here
+ok 4 - another pane's DISAGREE does not surface here
+  ---
+  duration_ms: 265.4166
+  type: 'test'
+  ...
+# Subtest: C3: an unaudited DISAGREE is held — announced as a count line, content withheld, then surfaces when audited
+ok 5 - C3: an unaudited DISAGREE is held — announced as a count line, content withheld, then surfaces when audited
+  ---
+  duration_ms: 312.4551
+  type: 'test'
+  ...
+# Subtest: C2: WORLD-MOVED surfaces as nothing — no block, no trace
+ok 6 - C2: WORLD-MOVED surfaces as nothing — no block, no trace
+  ---
+  duration_ms: 160.8103
+  type: 'test'
+  ...
+# Subtest: C6: any F0 mention carries both denominators, appended mechanically
+ok 7 - C6: any F0 mention carries both denominators, appended mechanically
+  ---
+  duration_ms: 198.4543
+  type: 'test'
+  ...
+# Subtest: no F0 mention, no caveat — the line is not furniture
+ok 8 - no F0 mention, no caveat — the line is not furniture
+  ---
+  duration_ms: 232.7101
+  type: 'test'
+  ...
+# Subtest: a malformed DISAGREE (no command) is a traced hold, not a silent drop and not a loop
+ok 9 - a malformed DISAGREE (no command) is a traced hold, not a silent drop and not a loop
+  ---
+  duration_ms: 300.924
+  type: 'test'
+  ...
+# Subtest: overflow past the per-turn cap rides the next turn — every finding surfaces exactly once
+ok 10 - overflow past the per-turn cap rides the next turn — every finding surfaces exactly once
+  ---
+  duration_ms: 649.8216
+  type: 'test'
+  ...
+# Subtest: the non-coverage sentence rides every surfaced block (anti-halo, visible non-coverage)
+ok 11 - the non-coverage sentence rides every surfaced block (anti-halo, visible non-coverage)
+  ---
+  duration_ms: 177.458
+  type: 'test'
+  ...
+# Subtest: CONSONANCE_DREAM: exits 0, prints nothing, writes no state
+ok 12 - CONSONANCE_DREAM: exits 0, prints nothing, writes no state
+  ---
+  duration_ms: 284.5352
+  type: 'test'
+  ...
+# Subtest: garbage stdin: exits 0, prints nothing
+ok 13 - garbage stdin: exits 0, prints nothing
+  ---
+  duration_ms: 166.3039
+  type: 'test'
+  ...
+# Subtest: missing findings ledger is a LINE, once — not a silent early return
+ok 14 - missing findings ledger is a LINE, once — not a silent early return
+  ---
+  duration_ms: 379.7168
+  type: 'test'
+  ...
+# Subtest: empty findings ledger says so once, then goes quiet; rows arriving later still surface
+ok 15 - empty findings ledger says so once, then goes quiet; rows arriving later still surface
+  ---
+  duration_ms: 456.9087
+  type: 'test'
+  ...
+# Subtest: a row with no id is watermarked by content hash — it still cannot loop
+ok 16 - a row with no id is watermarked by content hash — it still cannot loop
+  ---
+  duration_ms: 263.7281
+  type: 'test'
+  ...
+# Subtest: WIRE: producer and both consumers resolve the SAME findings path by default
+ok 17 - WIRE: producer and both consumers resolve the SAME findings path by default
+  ---
+  duration_ms: 271.4278
+  type: 'test'
+  ...
+# Subtest: WIRE (D454): on a machine with no data_dir set, all three resolve under that user's own .consonance; a configured data_dir moves all three
+ok 18 - WIRE (D454): on a machine with no data_dir set, all three resolve under that user's own .consonance; a configured data_dir moves all three
+  ---
+  duration_ms: 880.8956
+  type: 'test'
+  ...
+# Subtest: WIRE: one env var moves all three together (VANTAGE_FINDINGS), and VANTAGE_DATA rebases all defaults
+ok 19 - WIRE: one env var moves all three together (VANTAGE_FINDINGS), and VANTAGE_DATA rebases all defaults
+  ---
+  duration_ms: 1206.1914
+  type: 'test'
+  ...
+# Subtest: B→A: fromV2 maps claims/paths/heads to sentences/wrote/read/head
+ok 20 - B→A: fromV2 maps claims/paths/heads to sentences/wrote/read/head
+  ---
+  duration_ms: 0.3932
+  type: 'test'
+  ...
+# Subtest: B→A: a v1 row (no claims[]) passes through unmapped and fails the C2 gate LOUDLY
+ok 21 - B→A: a v1 row (no claims[]) passes through unmapped and fails the C2 gate LOUDLY
+  ---
+  duration_ms: 1.6648
+  type: 'test'
+  ...
+# Subtest: KNOWN GAP pinned: schema v2 carries no excerpt, so a claimless floor row is UNLAUNCHABLE (visible), not silent
+ok 22 - KNOWN GAP pinned: schema v2 carries no excerpt, so a claimless floor row is UNLAUNCHABLE (visible), not silent
+  ---
+  duration_ms: 0.3282
+  type: 'test'
+  ...
+# Subtest: A→K: a SURFACE finding written under the producer's constants is rendered by the consumer hook
+ok 23 - A→K: a SURFACE finding written under the producer's constants is rendered by the consumer hook
+  ---
+  duration_ms: 717.4958
+  type: 'test'
+  ...
+# Subtest: the 2026-08-23 casualties survive the REAL build byte-intact, apart from their WORKSHOP-BOUND declarations
+ok 24 - the 2026-08-23 casualties survive the REAL build byte-intact, apart from their WORKSHOP-BOUND declarations
+  ---
+  duration_ms: 7.2417
+  type: 'test'
+  ...
+# Subtest: the generated Rust carries no MACHINE-class path
+ok 25 - the generated Rust carries no MACHINE-class path
+  ---
+  duration_ms: 3.7456
+  type: 'test'
+  ...
+# Subtest: a MACHINE hit in a Rust file is refused OR reported -- never silent
+ok 26 - a MACHINE hit in a Rust file is refused OR reported -- never silent
+  ---
+  duration_ms: 3.65
+  type: 'test'
+  ...
+# Subtest: a MACHINE path in live Rust is scanned; in a path-fixture it is waived
+ok 27 - a MACHINE path in live Rust is scanned; in a path-fixture it is waived
+  ---
+  duration_ms: 0.2608
+  type: 'test'
+  ...
+# Subtest: a DANGLING reference in live Rust is still waived, and reported instead
+ok 28 - a DANGLING reference in live Rust is still waived, and reported instead
+  ---
+  duration_ms: 0.1551
+  type: 'test'
+  ...
+# Subtest: the repaired generator still BUILDS — no leak refuses it
+ok 29 - the repaired generator still BUILDS — no leak refuses it
+  ---
+  duration_ms: 0.0877
+  type: 'test'
+  ...
+# Subtest: the module header does not call the source tree private
+ok 30 - the module header does not call the source tree private
+  ---
+  duration_ms: 0.7135
+  type: 'test'
+  ...
+# Subtest: the manifest is an ALLOW-list — every entry names a file or a matched directory
+ok 31 - the manifest is an ALLOW-list — every entry names a file or a matched directory
+  ---
+  duration_ms: 2.2654
+  type: 'test'
+  ...
+# Subtest: every EXCLUDE carries a reason
+ok 32 - every EXCLUDE carries a reason
+  ---
+  duration_ms: 0.163
+  type: 'test'
+  ...
+# Subtest: every ALLOW carries the classes it exempts, and exempts nothing globally
+ok 33 - every ALLOW carries the classes it exempts, and exempts nothing globally
+  ---
+  duration_ms: 0.1048
+  type: 'test'
+  ...
+# Subtest: every resource tauri.conf DECLARES is produced by the manifest
+ok 34 - every resource tauri.conf DECLARES is produced by the manifest
+  ---
+  duration_ms: 28.5331
+  type: 'test'
+  ...
+# Subtest: build.rs and Cargo.lock ship — without them the tree cannot compile at all
+ok 35 - build.rs and Cargo.lock ship — without them the tree cannot compile at all
+  ---
+  duration_ms: 35.691
+  type: 'test'
+  ...
+# Subtest: the bundle identifier survives transformation as valid reverse-DNS
+ok 36 - the bundle identifier survives transformation as valid reverse-DNS
+  ---
+  duration_ms: 1.6761
+  type: 'test'
+  ...
+# Subtest: the generic prose rules never touch structured config
+ok 37 - the generic prose rules never touch structured config
+  ---
+  duration_ms: 0.2504
+  type: 'test'
+  ...
+# Subtest: binary files are never read as text
+ok 38 - binary files are never read as text
+  ---
+  duration_ms: 0.8911
+  type: 'test'
+  ...
+# Subtest: the scan catches a planted leak in the OUTPUT
+ok 39 - the scan catches a planted leak in the OUTPUT
+  ---
+  duration_ms: 1.6841
+  type: 'test'
+  ...
+# Subtest: a synthetic test fixture is NOT treated as a leak
+ok 40 - a synthetic test fixture is NOT treated as a leak
+  ---
+  duration_ms: 0.3887
+  type: 'test'
+  ...
+# Subtest: the synthetic exemption is INERT today, and must fire the moment it is needed
+ok 41 - the synthetic exemption is INERT today, and must fire the moment it is needed
+  ---
+  duration_ms: 0.3952
+  type: 'test'
+  ...
+# Subtest: a bare directory reference is not dangling; a dated file is
+ok 42 - a bare directory reference is not dangling; a dated file is
+  ---
+  duration_ms: 0.2363
+  type: 'test'
+  ...
+# Subtest: a dangling citation is RE-POINTED, and one with no destination is still rewritten to prose
+ok 43 - a dangling citation is RE-POINTED, and one with no destination is still rewritten to prose
+  ---
+  duration_ms: 0.7314
+  type: 'test'
+  ...
+# Subtest: a full dry run over the real tree is clean and refuses nothing
+ok 44 - a full dry run over the real tree is clean and refuses nothing
+  ---
+  duration_ms: 20406.6767
+  type: 'test'
+  ...
+# Subtest: the generator does not ship itself
+ok 45 - the generator does not ship itself
+  ---
+  duration_ms: 20.0147
+  type: 'test'
+  ...
+# Subtest: scan() itself refuses a corrupted bundle identifier
+ok 46 - scan() itself refuses a corrupted bundle identifier
+  ---
+  duration_ms: 0.3009
+  type: 'test'
+  ...
+# Subtest: scan() does not flag a capability identifier, which is legitimately not reverse-DNS
+ok 47 - scan() does not flag a capability identifier, which is legitimately not reverse-DNS
+  ---
+  duration_ms: 0.1201
+  type: 'test'
+  ...
+# Subtest: a test file is classified as a fixture
+ok 48 - a test file is classified as a fixture
+  ---
+  duration_ms: 0.1222
+  type: 'test'
+  ...
+# Subtest: a fixture keeps its dangling reference — the assertion keys on it
+ok 49 - a fixture keeps its dangling reference — the assertion keys on it
+  ---
+  duration_ms: 0.1277
+  type: 'test'
+  ...
+# Subtest: a fixture keeps its path SHAPE — token identity only
+ok 50 - a fixture keeps its path SHAPE — token identity only
+  ---
+  duration_ms: 0.1753
+  type: 'test'
+  ...
+# Subtest: the Rust test assertion the generator once broke is left alone
+ok 51 - the Rust test assertion the generator once broke is left alone
+  ---
+  duration_ms: 0.0683
+  type: 'test'
+  ...
+# Subtest: coordinates are SUBSTITUTED, not exempted — shape preserved, value gone
+ok 52 - coordinates are SUBSTITUTED, not exempted — shape preserved, value gone
+  ---
+  duration_ms: 0.1138
+  type: 'test'
+  ...
+# Subtest: a fixture is exempt from REFERENCE classes and never from CONTENT classes
+ok 53 - a fixture is exempt from REFERENCE classes and never from CONTENT classes
+  ---
+  duration_ms: 0.1784
+  type: 'test'
+  ...
+# Subtest: unportable fixtures are REPORTED, and the report is not empty
+ok 54 - unportable fixtures are REPORTED, and the report is not empty
+  ---
+  duration_ms: 2317.25
+  type: 'test'
+  ...
+# Subtest: RE-POINT: the widening reaches the three tools gaps
+ok 55 - RE-POINT: the widening reaches the three tools gaps
+  ---
+  duration_ms: 0.1573
+  type: 'test'
+  ...
+# Subtest: RE-POINT: the fourth gap is CLOSED -- hooks/README.md ships
+ok 56 - RE-POINT: the fourth gap is CLOSED -- hooks/README.md ships
+  ---
+  duration_ms: 9.9974
+  type: 'test'
+  ...
+# Subtest: RE-POINT: and it ships WITHOUT the machine state that kept it back
+ok 57 - RE-POINT: and it ships WITHOUT the machine state that kept it back
+  ---
+  duration_ms: 0.5873
+  type: 'test'
+  ...
+# Subtest: RE-POINT: entry 1 is ARMED — the baseline is reachable and withheld
+ok 58 - RE-POINT: entry 1 is ARMED — the baseline is reachable and withheld
+  ---
+  duration_ms: 9.7526
+  type: 'test'
+  ...
+# Subtest: RE-POINT: restoring the UNREACHABLE: prefix REFUSES the build
+ok 59 - RE-POINT: restoring the UNREACHABLE: prefix REFUSES the build
+  ---
+  duration_ms: 4778.4852
+  type: 'test'
+  ...
+# Subtest: RE-POINT: entry 6 names its SUBJECT, not the crash
+ok 60 - RE-POINT: entry 6 names its SUBJECT, not the crash
+  ---
+  duration_ms: 0.331
+  type: 'test'
+  ...
+# Subtest: SEED: the registry ships and the private bytes do not
+ok 61 - SEED: the registry ships and the private bytes do not
+  ---
+  duration_ms: 8671.1338
+  type: 'test'
+  ...
+# Subtest: SEED: its shape is the one carrier-drift.js actually reads
+ok 62 - SEED: its shape is the one carrier-drift.js actually reads
+  ---
+  duration_ms: 0.1819
+  type: 'test'
+  ...
+# Subtest: SEED: a seeded file that is missing on disk still reports missing
+ok 63 - SEED: a seeded file that is missing on disk still reports missing
+  ---
+  duration_ms: 4744.1852
+  type: 'test'
+  ...
+# Subtest: DEBT: the exclusion set is charged for the references it orphans
+ok 64 - DEBT: the exclusion set is charged for the references it orphans
+  ---
+  duration_ms: 2502.4799
+  type: 'test'
+  ...
+# Subtest: DEBT: the pattern is derived from EXCLUDE, so a seventh entry is charged automatically
+ok 65 - DEBT: the pattern is derived from EXCLUDE, so a seventh entry is charged automatically
+  ---
+  duration_ms: 5149.7138
+  type: 'test'
+  ...
+# Subtest: RESIDUAL: the private tree's path with the drive TEMPLATED out is caught and rewritten
+ok 66 - RESIDUAL: the private tree's path with the drive TEMPLATED out is caught and rewritten
+  ---
+  duration_ms: 0.2002
+  type: 'test'
+  ...
+# Subtest: RESIDUAL: the generated main.rs carries neither half of that sentence's private paths
+ok 67 - RESIDUAL: the generated main.rs carries neither half of that sentence's private paths
+  ---
+  duration_ms: 50.9894
+  type: 'test'
+  ...
+# Subtest: L038 · HOSTNAME: the class catches a real one, and the OLD literal is gone from the fixture
+ok 68 - L038 · HOSTNAME: the class catches a real one, and the OLD literal is gone from the fixture
+  ---
+  duration_ms: 0.9298
+  type: 'test'
+  ...
+# Subtest: L038 · HOSTNAME: the rewrite keeps the FIELD and replaces only the VALUE
+ok 69 - L038 · HOSTNAME: the rewrite keeps the FIELD and replaces only the VALUE
+  ---
+  duration_ms: 0.3824
+  type: 'test'
+  ...
+# Subtest: L038 · a name on the OUTSIDE of a file: the destination path is scanned
+ok 70 - L038 · a name on the OUTSIDE of a file: the destination path is scanned
+  ---
+  duration_ms: 0.1733
+  type: 'test'
+  ...
+# Subtest: L038 · and the rename and the LINK to it land on the same string
+ok 71 - L038 · and the rename and the LINK to it land on the same string
+  ---
+  duration_ms: 14.5725
+  type: 'test'
+  ...
+# Subtest: L038 · dedangle RE-POINTS a dated citation instead of destroying it
+ok 72 - L038 · dedangle RE-POINTS a dated citation instead of destroying it
+  ---
+  duration_ms: 0.1617
+  type: 'test'
+  ...
+# Subtest: L038 · THE ANTI-LOOSENING GUARD: the re-pointed classes still catch the old form
+ok 73 - L038 · THE ANTI-LOOSENING GUARD: the re-pointed classes still catch the old form
+  ---
+  duration_ms: 0.2749
+  type: 'test'
+  ...
+# Subtest: L038 · the CUTOFF is a pure function of the commit, and a hand-edit is detectable
+ok 74 - L038 · the CUTOFF is a pure function of the commit, and a hand-edit is detectable
+  ---
+  duration_ms: 232.8261
+  type: 'test'
+  ...
+# Subtest: L038 · every exo_memory/ entry is in exactly one column
+ok 75 - L038 · every exo_memory/ entry is in exactly one column
+  ---
+  duration_ms: 13.851
+  type: 'test'
+  ...
+# Subtest: L038 · SEED gains ONE sentence, and the transform refuses to be inert
+ok 76 - L038 · SEED gains ONE sentence, and the transform refuses to be inert
+  ---
+  duration_ms: 0.7323
+  type: 'test'
+  ...
+# Subtest: L038 · the status document matches E's contract byte for byte
+ok 77 - L038 · the status document matches E's contract byte for byte
+  ---
+  duration_ms: 1480.8034
+  type: 'test'
+  ...
+# Subtest: L038 · the sync-directory rewrite spares the tool built to detect it
+ok 78 - L038 · the sync-directory rewrite spares the tool built to detect it
+  ---
+  duration_ms: 0.2724
+  type: 'test'
+  ...
+# Subtest: L038 · a citation to an inheritance entry that is not in the tree REFUSES
+ok 79 - L038 · a citation to an inheritance entry that is not in the tree REFUSES
+  ---
+  duration_ms: 3297.7142
+  type: 'test'
+  ...
+# Subtest: L038/A · every rewrite in this file EXPANDS its capture groups
+ok 80 - L038/A · every rewrite in this file EXPANDS its capture groups
+  ---
+  duration_ms: 0.2882
+  type: 'test'
+  ...
+# Subtest: L080 · the sweep catches a rewrite that emits a literal $1, and passes a price the build copied verbatim
+ok 81 - L080 · the sweep catches a rewrite that emits a literal $1, and passes a price the build copied verbatim
+  ---
+  duration_ms: 4.1298
+  type: 'test'
+  ...
+# Subtest: L038/A · and the produced tree carries no $<digit> that is not regex source
+ok 82 - L038/A · and the produced tree carries no $<digit> that is not regex source
+  ---
+  duration_ms: 3437.2863
+  type: 'test'
+  ...
+# Subtest: L038/A · a dirty tree is REFUSED, because the sha it would stamp is not earned
+ok 83 - L038/A · a dirty tree is REFUSED, because the sha it would stamp is not earned
+  ---
+  duration_ms: 9926.7296
+  type: 'test'
+  ...
+# Subtest: L038/A · an overridden stamp is legible as one, in both documents
+ok 84 - L038/A · an overridden stamp is legible as one, in both documents
+  ---
+  duration_ms: 222.2863
+  type: 'test'
+  ...
+# Subtest: L038 · memory/ ships exactly the six, and a new card goes RED rather than shipping
+ok 85 - L038 · memory/ ships exactly the six, and a new card goes RED rather than shipping
+  ---
+  duration_ms: 12.2145
+  type: 'test'
+  ...
+# Subtest: L038 · ONE MASTER — no card name ships from two directories at once
+ok 86 - L038 · ONE MASTER — no card name ships from two directories at once
+  ---
+  duration_ms: 11.1448
+  type: 'test'
+  ...
+# Subtest: L038 · a list item that loses its only link loses the ITEM
+ok 87 - L038 · a list item that loses its only link loses the ITEM
+  ---
+  duration_ms: 0.3128
+  type: 'test'
+  ...
+# Subtest: L038 · the index is FILTERED to what shipped, and cannot dangle
+ok 88 - L038 · the index is FILTERED to what shipped, and cannot dangle
+  ---
+  duration_ms: 0.1368
+  type: 'test'
+  ...
+# Subtest: L038 · no [[wiki-link]] in the produced tree points at a card that is not there
+ok 89 - L038 · no [[wiki-link]] in the produced tree points at a card that is not there
+  ---
+  duration_ms: 2451.2929
+  type: 'test'
+  ...
+# Subtest: L038 · no transform changes whether a shipped file ends in a newline
+ok 90 - L038 · no transform changes whether a shipped file ends in a newline
+  ---
+  duration_ms: 3313.6324
+  type: 'test'
+  ...
+# Subtest: D273: the Jev tool family does not ship (retired, D164): every consonance/tools/jev-* file is EXCLUDED with a reason; the jev-flags hook still ships
+ok 91 - D273: the Jev tool family does not ship (retired, D164): every consonance/tools/jev-* file is EXCLUDED with a reason; the jev-flags hook still ships
+  ---
+  duration_ms: 30.9447
+  type: 'test'
+  ...
+# Subtest: D273: consonance/state-manifest.json and the root README.md ship, and the README keeps the About block the app checks
+ok 92 - D273: consonance/state-manifest.json and the root README.md ship, and the README keeps the About block the app checks
+  ---
+  duration_ms: 3070.7907
+  type: 'test'
+  ...
+# Subtest: D273: the output is a FRESH-HISTORY git repository: one commit, a neutral author, a clean tree, no remote, and a push goes nowhere
+ok 93 - D273: the output is a FRESH-HISTORY git repository: one commit, a neutral author, a clean tree, no remote, and a push goes nowhere
+  ---
+  duration_ms: 10064.8261
+  type: 'test'
+  ...
+# Subtest: D273: generating into a directory that already holds a history is REFUSED before anything is written (fresh history means fresh)
+ok 94 - D273: generating into a directory that already holds a history is REFUSED before anything is written (fresh history means fresh)
+  ---
+  duration_ms: 2632.2091
+  type: 'test'
+  ...
+# Subtest: D273: the FORK hook point sees every text file once with (body, to, kind), never a binary, and the scan reads what it returns
+ok 95 - D273: the FORK hook point sees every text file once with (body, to, kind), never a binary, and the scan reads what it returns
+  ---
+  duration_ms: 12601.5382
+  type: 'test'
+  ...
+# Subtest: D273/A: the six composer screens ship SCRUBBED, byte for byte A's acceptance hashes, each the length of its source
+ok 96 - D273/A: the six composer screens ship SCRUBBED, byte for byte A's acceptance hashes, each the length of its source
+  ---
+  duration_ms: 2815.7351
+  type: 'test'
+  ...
+# Subtest: D273/A: a screen is a WHOLE fixture, scrubbed same-length, and what the scrub cannot remove is a leak the scan reports
+ok 97 - D273/A: a screen is a WHOLE fixture, scrubbed same-length, and what the scrub cannot remove is a leak the scan reports
+  ---
+  duration_ms: 0.2874
+  type: 'test'
+  ...
+# Subtest: D273/A: githooks/pre-commit ships, LF, as the shell script commit-gate names
+ok 98 - D273/A: githooks/pre-commit ships, LF, as the shell script commit-gate names
+  ---
+  duration_ms: 3723.5075
+  type: 'test'
+  ...
+# Subtest: D273/A: contamination and tj1-k-render do not ship, with their tests, each saying why
+ok 99 - D273/A: contamination and tj1-k-render do not ship, with their tests, each saying why
+  ---
+  duration_ms: 79.9918
+  type: 'test'
+  ...
+# Subtest: D273/A: the declared JS rows (26 of A + 1 Jev) and 12 Rust tests are declared in the OUTPUT, and plain in the SOURCE so the source suite still runs them
+ok 100 - D273/A: the declared JS rows (26 of A + 1 Jev) and 12 Rust tests are declared in the OUTPUT, and plain in the SOURCE so the source suite still runs them
+  ---
+  duration_ms: 3020.7863
+  type: 'test'
+  ...
+# Subtest: D273/A: a declaration whose anchor is gone is REFUSED, not silently skipped
+ok 101 - D273/A: a declaration whose anchor is gone is REFUSED, not silently skipped
+  ---
+  duration_ms: 0.3605
+  type: 'test'
+  ...
+# Subtest: D273: a markdown LINK whose target is a record path becomes its text and the prose, never a link to prose (the root README carried 13)
+ok 102 - D273: a markdown LINK whose target is a record path becomes its text and the prose, never a link to prose (the root README carried 13)
+  ---
+  duration_ms: 0.3822
+  type: 'test'
+  ...
+# Subtest: D273 lap 3: METHOD.md, INSTRUMENTS.md, dev/SPINE.md and consonance/AUTONOMY.md ship through the scan, and the README links no excluded jev/README.md
+ok 103 - D273 lap 3: METHOD.md, INSTRUMENTS.md, dev/SPINE.md and consonance/AUTONOMY.md ship through the scan, and the README links no excluded jev/README.md
+  ---
+  duration_ms: 2899.3719
+  type: 'test'
+  ...
+# Subtest: D273 lap 3 (A's catch): the GENERATED corrections-gate.js guards exactly what the source one guards (the muscle_map rule had emptied its regex)
+ok 104 - D273 lap 3 (A's catch): the GENERATED corrections-gate.js guards exactly what the source one guards (the muscle_map rule had emptied its regex)
+  ---
+  duration_ms: 2514.2702
+  type: 'test'
+  ...
+# Subtest: D273 lap 3 (C): consumer-relabel.js and its two tests do not ship, each with C's reason
+ok 105 - D273 lap 3 (C): consumer-relabel.js and its two tests do not ship, each with C's reason
+  ---
+  duration_ms: 42.2915
+  type: 'test'
+  ...
+# Subtest: D273 lap 3: brief/frag-fork.md ships byte for byte (main.rs include_str!s it in a test, and the generated tree did not compile its tests without it)
+ok 106 - D273 lap 3: brief/frag-fork.md ships byte for byte (main.rs include_str!s it in a test, and the generated tree did not compile its tests without it)
+  ---
+  duration_ms: 2589.9533
+  type: 'test'
+  ...
+# Subtest: D273 lap 3: dev/shell/install-fresh-home.test.js ships beside the install.ps1 it tests (E, lap 2)
+ok 107 - D273 lap 3: dev/shell/install-fresh-home.test.js ships beside the install.ps1 it tests (E, lap 2)
+  ---
+  duration_ms: 24.0249
+  type: 'test'
+  ...
+# Subtest: D273 lap 3: decoordinate swaps America/Regina for a zone that keeps the CLOCK (UTC-6, no daylight time), so time-keyed fixtures keep their meaning
+ok 108 - D273 lap 3: decoordinate swaps America/Regina for a zone that keeps the CLOCK (UTC-6, no daylight time), so time-keyed fixtures keep their meaning
+  ---
+  duration_ms: 11.0913
+  type: 'test'
+  ...
+# Subtest: D273 lap 3: the OS-user rule does not eat a "\\n" escape followed by name = (it broke gen-consumer.build.test.js's control crate), and still takes every real path
+ok 109 - D273 lap 3: the OS-user rule does not eat a "\\n" escape followed by name = (it broke gen-consumer.build.test.js's control crate), and still takes every real path
+  ---
+  duration_ms: 0.2915
+  type: 'test'
+  ...
+# Subtest: D273: consonance/GATES.md ships, and the gate refusals' pointer resolves to it in the generated tree
+ok 110 - D273: consonance/GATES.md ships, and the gate refusals' pointer resolves to it in the generated tree
+  ---
+  duration_ms: 2267.5091
+  type: 'test'
+  ...
+# Subtest: D273: identity-diff.js and its test do not ship (they need gen-consumer.js and the dev tree, as consumer-relabel does)
+ok 111 - D273: identity-diff.js and its test do not ship (they need gen-consumer.js and the dev tree, as consumer-relabel does)
+  ---
+  duration_ms: 21.3928
+  type: 'test'
+  ...
+# Subtest: D273: shippedSets() is exported and is what build() uses, so identity-diff can read it instead of copying (C, item 3)
+ok 112 - D273: shippedSets() is exported and is what build() uses, so identity-diff can read it instead of copying (C, item 3)
+  ---
+  duration_ms: 2361.8746
+  type: 'test'
+  ...
+# Subtest: D273 lap 4 (A1, A2): github.com/solariz3d/<repo> URLs survive intact, no generated URL holds a space, and the clone instructions are the consumer's
+ok 113 - D273 lap 4 (A1, A2): github.com/solariz3d/<repo> URLs survive intact, no generated URL holds a space, and the clone instructions are the consumer's
+  ---
+  duration_ms: 3347.2251
+  type: 'test'
+  ...
+# Subtest: D273 lap 4: the app id com.solariz3d.consonance becomes com.consonance.app everywhere it ships, so stick-waiter registers the id tauri.conf carries
+ok 114 - D273 lap 4: the app id com.solariz3d.consonance becomes com.consonance.app everywhere it ships, so stick-waiter registers the id tauri.conf carries
+  ---
+  duration_ms: 2582.7752
+  type: 'test'
+  ...
+# Subtest: D273 lap 4 (A4): a link whose TEXT is the record path becomes the prose ONCE, never "(a registration…) (a registration…)"
+ok 115 - D273 lap 4 (A4): a link whose TEXT is the record path becomes the prose ONCE, never "(a registration…) (a registration…)"
+  ---
+  duration_ms: 2554.5472
+  type: 'test'
+  ...
+# Subtest: D273 lap 4 (A13): the USB mode ships, scanned: the stick scripts, launch.ps1 and their tests, finding the repo the way the app does
+ok 116 - D273 lap 4 (A13): the USB mode ships, scanned: the stick scripts, launch.ps1 and their tests, finding the repo the way the app does
+  ---
+  duration_ms: 2497.3369
+  type: 'test'
+  ...
+# Subtest: D273 lap 4 (A14): the docs that name catch-ledger.js say this copy does not carry it; tools/README names resonance/atoms.jsonl as the data folder's
+ok 117 - D273 lap 4 (A14): the docs that name catch-ledger.js say this copy does not carry it; tools/README names resonance/atoms.jsonl as the data folder's
+  ---
+  duration_ms: 2630.9972
+  type: 'test'
+  ...
+# Subtest: D273 lap 4 (A15): CONSUMER-STATUS's GATE line says the gate runs in the source repository, which carries the generator this tree lacks
+ok 118 - D273 lap 4 (A15): CONSUMER-STATUS's GATE line says the gate runs in the source repository, which carries the generator this tree lacks
+  ---
+  duration_ms: 0.3624
+  type: 'test'
+  ...
+# Subtest: D273 lap 4 (C, the cold read C3/C4): a new user's memory starts blank: the generated memory/ holds only MEMORY.md, with no entries
+ok 119 - D273 lap 4 (C, the cold read C3/C4): a new user's memory starts blank: the generated memory/ holds only MEMORY.md, with no entries
+  ---
+  duration_ms: 2464.7135
+  type: 'test'
+  ...
+# Subtest: D273 lap 5 (C4): the keeper's two record files ship in inheritance/, not record/, and no shipped text points at their old place
+ok 120 - D273 lap 5 (C4): the keeper's two record files ship in inheritance/, not record/, and no shipped text points at their old place
+  ---
+  duration_ms: 2563.096
+  type: 'test'
+  ...
+# Subtest: D273 lap 5 (A2): CONSUMER-STATUS.md ships only MEASURED (parity, identity-diff, cold read), for this commit; unmeasured it does not ship
+ok 121 - D273 lap 5 (A2): CONSUMER-STATUS.md ships only MEASURED (parity, identity-diff, cold read), for this commit; unmeasured it does not ship
+  ---
+  duration_ms: 4924.5685
+  type: 'test'
+  ...
+# Subtest: D273 lap 5 (A3): a record link and a commit sha that are on the PUBLIC lighthouse main become links there; anything not public stays as it was
+ok 122 - D273 lap 5 (A3): a record link and a commit sha that are on the PUBLIC lighthouse main become links there; anything not public stays as it was
+  ---
+  duration_ms: 2535.1887
+  type: 'test'
+  ...
+# Subtest: D273 lap 5 (A7): the dead targets resolve or become prose: COMMITTEE's memory/ note, SPINE's dev/PLAN.md, dev/shell/README's dev/dream/, the card's Third Place entry
+ok 123 - D273 lap 5 (A7): the dead targets resolve or become prose: COMMITTEE's memory/ note, SPINE's dev/PLAN.md, dev/shell/README's dev/dream/, the card's Third Place entry
+  ---
+  duration_ms: 2585.0269
+  type: 'test'
+  ...
+# Subtest: D273 lap 5 (B7): hooks/jev-flags.js and its test do not ship (install.ps1 no longer registers it; Jev retired)
+ok 124 - D273 lap 5 (B7): hooks/jev-flags.js and its test do not ship (install.ps1 no longer registers it; Jev retired)
+  ---
+  duration_ms: 29.2101
+  type: 'test'
+  ...
+# Subtest: D273 lap 5 (A9): CUTOFF.md calls the source record PUBLIC (the keeper, 2026-10-08), never private
+ok 125 - D273 lap 5 (A9): CUTOFF.md calls the source record PUBLIC (the keeper, 2026-10-08), never private
+  ---
+  duration_ms: 0.1643
+  type: 'test'
+  ...
+# Subtest: D273 lap 5 (E): both launch files ship, launch.vbs beside launch.ps1, scanned, and launch.vbs finds launch.ps1 beside itself (no machine path)
+ok 126 - D273 lap 5 (E): both launch files ship, launch.vbs beside launch.ps1, scanned, and launch.vbs finds launch.ps1 beside itself (no machine path)
+  ---
+  duration_ms: 2415.0065
+  type: 'test'
+  ...
+# Subtest: D273 lap 5b: dev/dream/ ships as system (librarian ruling): its four files, scanned with no leak, and the runner sets the variable dream-gate checks
+ok 127 - D273 lap 5b: dev/dream/ ships as system (librarian ruling): its four files, scanned with no leak, and the runner sets the variable dream-gate checks
+  ---
+  duration_ms: 2699.9027
+  type: 'test'
+  ...
+# Subtest: D273 lap 6 (A3): the PreCompact hook finds its script: exo_memory/loop/checkpoint.py ships (the scan passes it), so the registered hook is not silently dead
+ok 128 - D273 lap 6 (A3): the PreCompact hook finds its script: exo_memory/loop/checkpoint.py ships (the scan passes it), so the registered hook is not silently dead
+  ---
+  duration_ms: 2641.8275
+  type: 'test'
+  ...
+# Subtest: D273 lap 6 (A4): what the docs say about jev-flags.js is true in a generated copy: not "in the repo", and the README counts the hooks by a command, not a fixed number
+ok 129 - D273 lap 6 (A4): what the docs say about jev-flags.js is true in a generated copy: not "in the repo", and the README counts the hooks by a command, not a fixed number
+  ---
+  duration_ms: 2590.1466
+  type: 'test'
+  ...
+# Subtest: D273 lap 6 (A5): the unshipped names the cold read listed are linked to the public record or say where they live
+ok 130 - D273 lap 6 (A5): the unshipped names the cold read listed are linked to the public record or say where they live
+  ---
+  duration_ms: 2346.4939
+  type: 'test'
+  ...
+# Subtest: D273 lap 6 (LICENSE): the MIT LICENSE ships at the consumer root byte for byte, the copyright holder intact (the keeper's choice)
+ok 131 - D273 lap 6 (LICENSE): the MIT LICENSE ships at the consumer root byte for byte, the copyright holder intact (the keeper's choice)
+  ---
+  duration_ms: 2228.9176
+  type: 'test'
+  ...
+# Subtest: D273 lap 6 (LICENSE): the exemption is the ONE registered copyright line; any other identity in a verbatim legal file is still a leak
+ok 132 - D273 lap 6 (LICENSE): the exemption is the ONE registered copyright line; any other identity in a verbatim legal file is still a leak
+  ---
+  duration_ms: 0.7048
+  type: 'test'
+  ...
+# Subtest: D273 lap 7: the NSIS installer images ship byte for byte, SCANNED (kind image), and the build is not refused
+ok 133 - D273 lap 7: the NSIS installer images ship byte for byte, SCANNED (kind image), and the build is not refused
+  ---
+  duration_ms: 2232.5288
+  type: 'test'
+  ...
+# Subtest: D273 lap 7 GUARD: every path the GENERATED tauri.conf.json references (frontendDist, resources, icons, nsis images, any other path-valued field) exists in the generated tree
+ok 134 - D273 lap 7 GUARD: every path the GENERATED tauri.conf.json references (frontendDist, resources, icons, nsis images, any other path-valued field) exists in the generated tree
+  ---
+  duration_ms: 4674.1468
+  type: 'test'
+  ...
+# Subtest: D273 lap 7 (CRLF): under a global core.autocrlf=true the generated repo's HEAD carries every screen fixture byte for byte
+ok 135 - D273 lap 7 (CRLF): under a global core.autocrlf=true the generated repo's HEAD carries every screen fixture byte for byte
+  ---
+  duration_ms: 4902.5233
+  type: 'test'
+  ...
+# Subtest: D273 lap 7 (CRLF) GUARD: verifyCommitted reports a byte-exact file whose HEAD blob differs, as a commit under autocrlf=true makes it
+ok 136 - D273 lap 7 (CRLF) GUARD: verifyCommitted reports a byte-exact file whose HEAD blob differs, as a commit under autocrlf=true makes it
+  ---
+  duration_ms: 164.4921
+  type: 'test'
+  ...
+# Subtest: D273 lap 7 (CRLF): the consumer ships its own .gitattributes: eol pinned, the binary list, *.bin and screens/** binary, and none of our two-machine merge rules
+ok 137 - D273 lap 7 (CRLF): the consumer ships its own .gitattributes: eol pinned, the binary list, *.bin and screens/** binary, and none of our two-machine merge rules
+  ---
+  duration_ms: 2341.3336
+  type: 'test'
+  ...
+# Subtest: D454: the workshop tools added since 0.1.1 are withheld with a reason, janitor-task.ps1 is declared unreachable, and the product files added beside them ship
+ok 138 - D454: the workshop tools added since 0.1.1 are withheld with a reason, janitor-task.ps1 is declared unreachable, and the product files added beside them ship
+  ---
+  duration_ms: 12.5281
+  type: 'test'
+  ...
+# Subtest: D454 1C.1: the bare owner/repo form of the project's own repos (solariz3d/consonance, solariz3d/lighthouse) survives; every ROLE or PROVENANCE use of the handle is still neutralised
+ok 139 - D454 1C.1: the bare owner/repo form of the project's own repos (solariz3d/consonance, solariz3d/lighthouse) survives; every ROLE or PROVENANCE use of the handle is still neutralised
+  ---
+  duration_ms: 2.5872
+  type: 'test'
+  ...
+# Subtest: D454: the t180 product research (exo_memory/research/t180_*) is withheld; the rest of research/ ships
+ok 140 - D454: the t180 product research (exo_memory/research/t180_*) is withheld; the rest of research/ ships
+  ---
+  duration_ms: 11.8062
+  type: 'test'
+  ...
+# Subtest: D454: the claim check ships with its unit splitter at the path the hook reads in a repository (exo_memory/loop/claimrec/units.js), so the gate a stranger turns on is not inert
+ok 141 - D454: the claim check ships with its unit splitter at the path the hook reads in a repository (exo_memory/loop/claimrec/units.js), so the gate a stranger turns on is not inert
+  ---
+  duration_ms: 11.1557
+  type: 'test'
+  ...
+# Subtest: D454: the four product-test cases that drive gen-consumer.js itself are DECLARED workshop, one by one, and the rest of their files stays live
+ok 142 - D454: the four product-test cases that drive gen-consumer.js itself are DECLARED workshop, one by one, and the rest of their files stays live
+  ---
+  duration_ms: 1.3537
+  type: 'test'
+  ...
+# Subtest: D454 PRIVATE: with PRIV_PATTERN set, a line or a destination path matching it is a leak, and no report carries the matched text
+ok 143 - D454 PRIVATE: with PRIV_PATTERN set, a line or a destination path matching it is a leak, and no report carries the matched text
+  ---
+  duration_ms: 1.1851
+  type: 'test'
+  ...
+# Subtest: D454 PRIVATE: a run that requires the guard refuses with PRIV_PATTERN unset, dry or real, before it writes anything
+ok 144 - D454 PRIVATE: a run that requires the guard refuses with PRIV_PATTERN unset, dry or real, before it writes anything
+  ---
+  duration_ms: 6813.8437
+  type: 'test'
+  ...
+# Subtest: D454 PRIVATE: the command line requires the guard: gen-consumer.js --dry with PRIV_PATTERN unset exits non-zero, naming PRIV_PATTERN
+ok 145 - D454 PRIVATE: the command line requires the guard: gen-consumer.js --dry with PRIV_PATTERN unset exits non-zero, naming PRIV_PATTERN
+  ---
+  duration_ms: 14534.5152
+  type: 'test'
+  ...
+# Subtest: D454 (E §7): the consumer ships its own .gitignore keeping the build output out of git, and it ignores no shipped file
+ok 146 - D454 (E §7): the consumer ships its own .gitignore keeping the build output out of git, and it ignores no shipped file
+  ---
+  duration_ms: 2211.5004
+  type: 'test'
+  ...
+# warning: in the working copy of 'value.txt', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'value.txt', LF will be replaced by CRLF the next time Git touches it
+# Subtest: 1: heads differ and the claim-time reader AGREEs: WORLD-MOVED, nothing surfaces, and that reader was handed the OLD commit's tree
+ok 147 - 1: heads differ and the claim-time reader AGREEs: WORLD-MOVED, nothing surfaces, and that reader was handed the OLD commit's tree
+  ---
+  duration_ms: 501.1647
+  type: 'test'
+  ...
+# Subtest: 2: heads differ and the reader DISAGREEs in BOTH trees: it surfaces
+ok 148 - 2: heads differ and the reader DISAGREEs in BOTH trees: it surfaces
+  ---
+  duration_ms: 649.1398
+  type: 'test'
+  ...
+# Subtest: 3: a claim-time head this repository does not have: the DISAGREE is withheld, never surfaced
+ok 149 - 3: a claim-time head this repository does not have: the DISAGREE is withheld, never surfaced
+  ---
+  duration_ms: 537.2175
+  type: 'test'
+  ...
+# Subtest: 4: heads equal: no world check runs and a clean DISAGREE surfaces
+ok 150 - 4: heads equal: no world check runs and a clean DISAGREE surfaces
+  ---
+  duration_ms: 181.0927
+  type: 'test'
+  ...
+# Subtest: 5: the claim-time worktree is removed afterwards, whatever the verdict
+ok 151 - 5: the claim-time worktree is removed afterwards, whatever the verdict
+  ---
+  duration_ms: 1497.1573
+  type: 'test'
+  ...
+# second-vantage: 1 selected and ZERO verdicts returned — every reader was unlaunchable or failed. Exiting nonzero so the launch log shows it.
+# second-vantage: 1 rows since watermark, 1 selected (1 artifact / 0 middle / 0 floor)
+#   [AGREE] the suite reads 267 on this branch
+# second-vantage: outcomes {"AGREE":1}; 0 to surface; findings -> G:\\consonance-scratch\\sv-K0c63X\\findings.jsonl
+# second-vantage: 2 rows since watermark, 2 selected (2 artifact / 0 middle / 0 floor)
+#   [AGREE] a claim sentence long enough to match
+# Subtest: contaminated DISAGREE is disqualified — and surfaces when the guard is removed
+ok 152 - contaminated DISAGREE is disqualified — and surfaces when the guard is removed
+  ---
+  duration_ms: 2.9727
+  type: 'test'
+  ...
+# Subtest: prose .md outside the row paths disqualifies; the claim object itself is allowed
+ok 153 - prose .md outside the row paths disqualifies; the claim object itself is allowed
+  ---
+  duration_ms: 1.2442
+  type: 'test'
+  ...
+# Subtest: locating the object by its parent directory is NOT contamination (live-smoke regression)
+ok 154 - locating the object by its parent directory is NOT contamination (live-smoke regression)
+  ---
+  duration_ms: 1.5342
+  type: 'test'
+  ...
+# Subtest: row lacking head is UNLAUNCHABLE and no reader spawns
+ok 155 - row lacking head is UNLAUNCHABLE and no reader spawns
+  ---
+  duration_ms: 2.569
+  type: 'test'
+  ...
+# Subtest: floor row with no excerpt is UNLAUNCHABLE; with excerpt it launches
+ok 156 - floor row with no excerpt is UNLAUNCHABLE; with excerpt it launches
+  ---
+  duration_ms: 3.0985
+  type: 'test'
+  ...
+# Subtest: heads equal: no world check, clean DISAGREE surfaces
+ok 157 - heads equal: no world check, clean DISAGREE surfaces
+  ---
+  duration_ms: 169.731
+  type: 'test'
+  ...
+# Subtest: heads differ: claim-time AGREE means WORLD-MOVED, no surface
+ok 158 - heads differ: claim-time AGREE means WORLD-MOVED, no surface
+  ---
+  duration_ms: 11224.0214
+  type: 'test'
+  ...
+# Subtest: heads differ: DISAGREE in both trees surfaces
+ok 159 - heads differ: DISAGREE in both trees surfaces
+  ---
+  duration_ms: 8685.2535
+  type: 'test'
+  ...
+# Subtest: artifact-bound rows always select; floor is deterministic and near 3%
+ok 160 - artifact-bound rows always select; floor is deterministic and near 3%
+  ---
+  duration_ms: 13.654
+  type: 'test'
+  ...
+# Subtest: middle tier: state-only selects less often than non-state
+ok 161 - middle tier: state-only selects less often than non-state
+  ---
+  duration_ms: 16.7003
+  type: 'test'
+  ...
+# Subtest: reader failure is recorded, never silent
+ok 162 - reader failure is recorded, never silent
+  ---
+  duration_ms: 0.5746
+  type: 'test'
+  ...
+# Subtest: the watermark never moves BACKWARD
+ok 163 - the watermark never moves BACKWARD
+  ---
+  duration_ms: 55.3645
+  type: 'test'
+  ...
+# Subtest: a run over zero new rows exits 0 — a claimless day is an honest zero
+ok 164 - a run over zero new rows exits 0 — a claimless day is an honest zero
+  ---
+  duration_ms: 131.2153
+  type: 'test'
+  ...
+# Subtest: every run leaves a durable line, because the shim throws stdout away
+ok 165 - every run leaves a durable line, because the shim throws stdout away
+  ---
+  duration_ms: 63.6277
+  type: 'test'
+  ...
+# Subtest: the run log distinguishes a DEAD sensor from a quiet day by age
+ok 166 - the run log distinguishes a DEAD sensor from a quiet day by age
+  ---
+  duration_ms: 58.3343
+  type: 'test'
+  ...
+# Subtest: selected-but-ZERO-verdicts exits nonzero — the one unambiguously wrong case
+ok 167 - selected-but-ZERO-verdicts exits nonzero — the one unambiguously wrong case
+  ---
+  duration_ms: 66.0907
+  type: 'test'
+  ...
+# Subtest: advanceWatermark is monotonic — a stale row cannot un-consume paid claims
+ok 168 - advanceWatermark is monotonic — a stale row cannot un-consume paid claims
+  ---
+  duration_ms: 4.5132
+  type: 'test'
+  ...
+# Subtest: an all-AGREE day is NOT a false alarm — the healthy case
+ok 169 - an all-AGREE day is NOT a false alarm — the healthy case
+  ---
+  duration_ms: 6.0425
+  type: 'test'
+  ...
+# Subtest: a killed loop keeps what it paid for — the per-row watermark, now testable
+ok 170 - a killed loop keeps what it paid for — the per-row watermark, now testable
+  ---
+  duration_ms: 3.7852
+  type: 'test'
+  ...
+# Subtest: D100: with no VANTAGE_CELL, the resolved cell is NOT under the data dir
+ok 171 - D100: with no VANTAGE_CELL, the resolved cell is NOT under the data dir
+  ---
+  duration_ms: 58.7829
+  type: 'test'
+  ...
+# Subtest: D100: VANTAGE_CELL still overrides, exactly
+ok 172 - D100: VANTAGE_CELL still overrides, exactly
+  ---
+  duration_ms: 76.2587
+  type: 'test'
+  ...
+# Subtest: D100: a leftover from one reader is gone before the next reader launches, and never reached the data dir
+ok 173 - D100: a leftover from one reader is gone before the next reader launches, and never reached the data dir
+  ---
+  duration_ms: 50.4946
+  type: 'test'
+  ...
+# Subtest: D100: a cell held open by a process inside it is a REFUSAL, never a reader launched into the leftover
+ok 174 - D100: a cell held open by a process inside it is a REFUSAL, never a reader launched into the leftover
+  ---
+  duration_ms: 109.5533
+  type: 'test'
+  ...
+# Subtest: D100: an operator-chosen VANTAGE_CELL is never emptied — its contents are not the tool's to delete
+ok 175 - D100: an operator-chosen VANTAGE_CELL is never emptied — its contents are not the tool's to delete
+  ---
+  duration_ms: 50.2053
+  type: 'test'
+  ...
+# Subtest: L085 the claim sits between one open and one close marker carrying the same fresh id
+ok 176 - L085 the claim sits between one open and one close marker carrying the same fresh id
+  ---
+  duration_ms: 0.4161
+  type: 'test'
+  ...
+# Subtest: L085 before the claim, a data line says it is data and that instructions inside are not to be followed
+ok 177 - L085 before the claim, a data line says it is data and that instructions inside are not to be followed
+  ---
+  duration_ms: 0.1716
+  type: 'test'
+  ...
+# Subtest: L085 a planted instruction in a claim stays inside the data
+ok 178 - L085 a planted instruction in a claim stays inside the data
+  ---
+  duration_ms: 0.1387
+  type: 'test'
+  ...
+# Subtest: L085 a claim carrying a forged close marker cannot end the data early
+ok 179 - L085 a claim carrying a forged close marker cannot end the data early
+  ---
+  duration_ms: 0.0649
+  type: 'test'
+  ...
+# Subtest: L085 a claim that happens to contain the drawn id makes the brief draw another
+ok 180 - L085 a claim that happens to contain the drawn id makes the brief draw another
+  ---
+  duration_ms: 0.0448
+  type: 'test'
+  ...
+# Subtest: L085 the reader keeps its task: re-derive from the repository, return the verdict format
+ok 181 - L085 the reader keeps its task: re-derive from the repository, return the verdict format
+  ---
+  duration_ms: 0.0505
+  type: 'test'
+  ...
+# Subtest: L085 the reader is launched with EXACTLY its four tools, no hooks, no MCP and no saved session
+ok 182 - L085 the reader is launched with EXACTLY its four tools, no hooks, no MCP and no saved session
+  ---
+  duration_ms: 0.1111
+  type: 'test'
+  ...
+# Subtest: L085 the real spawner launches exactly readerArgs(brief) — checked at the process boundary, no model called
+ok 183 - L085 the real spawner launches exactly readerArgs(brief) — checked at the process boundary, no model called
+  ---
+  duration_ms: 1.23
+  type: 'test'
+  ...
+# Subtest: L085 hooks are off by loading project settings only and disabling all hooks — not by an empty hooks object
+ok 184 - L085 hooks are off by loading project settings only and disabling all hooks — not by an empty hooks object
+  ---
+  duration_ms: 0.0815
+  type: 'test'
+  ...
+# Subtest: L085 the close tag is followed by a line saying the data has ended, before the task resumes
+ok 185 - L085 the close tag is followed by a line saying the data has ended, before the task resumes
+  ---
+  duration_ms: 0.1116
+  type: 'test'
+  ...
+# Subtest: D632 the live-state test knows the plan's classes: versions, processes, disk, "now"
+ok 186 - D632 the live-state test knows the plan's classes: versions, processes, disk, "now"
+  ---
+  duration_ms: 0.2431
+  type: 'test'
+  ...
+# Subtest: D632 a claim whose every sentence is about live state is SKIPPED, and no reader spawns
+ok 187 - D632 a claim whose every sentence is about live state is SKIPPED, and no reader spawns
+  ---
+  duration_ms: 0.1606
+  type: 'test'
+  ...
+# Subtest: D632 a claim with one checkable sentence beside a live one still goes to a reader
+ok 188 - D632 a claim with one checkable sentence beside a live one still goes to a reader
+  ---
+  duration_ms: 0.3642
+  type: 'test'
+  ...
+# Subtest: D632 a commit the claim names that only another repo holds sends the reader to that repo
+ok 189 - D632 a commit the claim names that only another repo holds sends the reader to that repo
+  ---
+  duration_ms: 382.3921
+  type: 'test'
+  ...
+# Subtest: D632 a claim naming no commit and no path stays in this repo
+ok 190 - D632 a claim naming no commit and no path stays in this repo
+  ---
+  duration_ms: 277.1329
+  type: 'test'
+  ...
+# Subtest: D632 an absolute path the claim names under another repo sends the reader there
+ok 191 - D632 an absolute path the claim names under another repo sends the reader there
+  ---
+  duration_ms: 271.9991
+  type: 'test'
+  ...
+# Subtest: D632 the world check runs in the resolved repo, at that repo's claim-time head
+ok 192 - D632 the world check runs in the resolved repo, at that repo's claim-time head
+  ---
+  duration_ms: 842.82
+  type: 'test'
+  ...
+# Subtest: D632 the brief states the claim's time and head, and says live state is not to be judged
+ok 193 - D632 the brief states the claim's time and head, and says live state is not to be judged
+  ---
+  duration_ms: 0.2407
+  type: 'test'
+  ...
+# Subtest: D632 the other repos come from VANTAGE_REPOS, else the config's vantage_repos
+ok 194 - D632 the other repos come from VANTAGE_REPOS, else the config's vantage_repos
+  ---
+  duration_ms: 1.872
+  type: 'test'
+  ...
+# Subtest: ONE SEAT ONE DAY: two responses are one seat-day with the four fields summed
+ok 195 - ONE SEAT ONE DAY: two responses are one seat-day with the four fields summed
+  ---
+  duration_ms: 117.5965
+  type: 'test'
+  ...
+# Subtest: TWO DAYS: responses either side of LOCAL midnight land on two days
+ok 196 - TWO DAYS: responses either side of LOCAL midnight land on two days
+  ---
+  duration_ms: 118.6307
+  type: 'test'
+  ...
+# Subtest: DEDUP: one response written as three rows is counted ONCE, each field at its maximum (mid-stream row first)
+ok 197 - DEDUP: one response written as three rows is counted ONCE, each field at its maximum (mid-stream row first)
+  ---
+  duration_ms: 147.6232
+  type: 'test'
+  ...
+# Subtest: DEDUP ACROSS FILES: a response copied into a resumed session and an .orphaned file is counted once
+ok 198 - DEDUP ACROSS FILES: a response copied into a resumed session and an .orphaned file is counted once
+  ---
+  duration_ms: 317.087
+  type: 'test'
+  ...
+# Subtest: DEDUP KEY is the message id: a row with no requestId is still counted, and still once
+ok 199 - DEDUP KEY is the message id: a row with no requestId is still counted, and still once
+  ---
+  duration_ms: 122.2013
+  type: 'test'
+  ...
+# Subtest: an .orphaned file holding a response found nowhere else IS counted
+ok 200 - an .orphaned file holding a response found nowhere else IS counted
+  ---
+  duration_ms: 146.6825
+  type: 'test'
+  ...
+# Subtest: a SUBAGENT transcript is counted, under the seat whose session spawned it
+ok 201 - a SUBAGENT transcript is counted, under the seat whose session spawned it
+  ---
+  duration_ms: 156.107
+  type: 'test'
+  ...
+# Subtest: <synthetic> rows are not API calls and are skipped; cost-state totals are never added
+ok 202 - <synthetic> rows are not API calls and are skipped; cost-state totals are never added
+  ---
+  duration_ms: 209.4554
+  type: 'test'
+  ...
+# Subtest: SEATS: fixed seats by name, a sibling by its letter, a retired sibling by its session file, other work as itself
+ok 203 - SEATS: fixed seats by name, a sibling by its letter, a retired sibling by its session file, other work as itself
+  ---
+  duration_ms: 239.0581
+  type: 'test'
+  ...
+# Subtest: KEEP-WARM: the reply to the ping is keep-warm; a tool_result does not end it; the next real prompt does
+ok 204 - KEEP-WARM: the reply to the ping is keep-warm; a tool_result does not end it; the next real prompt does
+  ---
+  duration_ms: 139.9112
+  type: 'test'
+  ...
+# Subtest: WEEK WINDOW ends at the NEXT reset: Wed 04:00 Regina, reset fri@04:00 → Fri 18 10:00Z to Fri 25 10:00Z
+ok 205 - WEEK WINDOW ends at the NEXT reset: Wed 04:00 Regina, reset fri@04:00 → Fri 18 10:00Z to Fri 25 10:00Z
+  ---
+  duration_ms: 16.5157
+  type: 'test'
+  ...
+# Subtest: WEEK WINDOW at the exact reset instant starts the NEW week
+ok 206 - WEEK WINDOW at the exact reset instant starts the NEW week
+  ---
+  duration_ms: 2.074
+  type: 'test'
+  ...
+# Subtest: WEEK BOUNDARY: one millisecond before the week is out, the first millisecond of it is in
+ok 207 - WEEK BOUNDARY: one millisecond before the week is out, the first millisecond of it is in
+  ---
+  duration_ms: 135.6752
+  type: 'test'
+  ...
+# Subtest: --week without a reset is refused, loudly
+ok 208 - --week without a reset is refused, loudly
+  ---
+  duration_ms: 227.1103
+  type: 'test'
+  ...
+# Subtest: a malformed --reset is refused
+ok 209 - a malformed --reset is refused
+  ---
+  duration_ms: 240.961
+  type: 'test'
+  ...
+# Subtest: the reset can come from ~/.consonance.json usage.reset
+ok 210 - the reset can come from ~/.consonance.json usage.reset
+  ---
+  duration_ms: 171.4078
+  type: 'test'
+  ...
+# Subtest: LIMIT NOT SET: the report says "limit: not set" and prints no percentage of a limit
+ok 211 - LIMIT NOT SET: the report says "limit: not set" and prints no percentage of a limit
+  ---
+  duration_ms: 284.0072
+  type: 'test'
+  ...
+# Subtest: LIMIT SET with what it counts: the percentage is of that measure
+ok 212 - LIMIT SET with what it counts: the percentage is of that measure
+  ---
+  duration_ms: 168.7325
+  type: 'test'
+  ...
+# Subtest: LIMIT SET but not what it counts: no percentage, and the report says what is missing
+ok 213 - LIMIT SET but not what it counts: no percentage, and the report says what is missing
+  ---
+  duration_ms: 170.1041
+  type: 'test'
+  ...
+# Subtest: LIMIT from ~/.consonance.json, and the flag wins over it
+ok 214 - LIMIT from ~/.consonance.json, and the flag wins over it
+  ---
+  duration_ms: 373.4123
+  type: 'test'
+  ...
+# Subtest: LIMIT without --week is not compared (it is a weekly limit)
+ok 215 - LIMIT without --week is not compared (it is a weekly limit)
+  ---
+  duration_ms: 179.396
+  type: 'test'
+  ...
+# Subtest: a limit that is not a positive whole number is refused
+ok 216 - a limit that is not a positive whole number is refused
+  ---
+  duration_ms: 644.3438
+  type: 'test'
+  ...
+# Subtest: an unknown --limit-counts is refused
+ok 217 - an unknown --limit-counts is refused
+  ---
+  duration_ms: 76.0212
+  type: 'test'
+  ...
+# Subtest: THE BLIND SPOT is printed in every report, with the no-persistence sites and Jev named
+ok 218 - THE BLIND SPOT is printed in every report, with the no-persistence sites and Jev named
+  ---
+  duration_ms: 76.1276
+  type: 'test'
+  ...
+# Subtest: an empty projects dir still reports, and says there is nothing in the window
+ok 219 - an empty projects dir still reports, and says there is nothing in the window
+  ---
+  duration_ms: 73.3471
+  type: 'test'
+  ...
+# Subtest: a seat name longer than the column does not run into the day column
+ok 220 - a seat name longer than the column does not run into the day column
+  ---
+  duration_ms: 81.3958
+  type: 'test'
+  ...
+# Subtest: THE BLIND SPOT says what the machine boundary really is: carried conversations are in, uncarried work is not
+ok 221 - THE BLIND SPOT says what the machine boundary really is: carried conversations are in, uncarried work is not
+  ---
+  duration_ms: 69.7546
+  type: 'test'
+  ...
+#   ok   the installer itself carries a UTF-8 BOM
+#   ok   it refuses to register around a runner that does not parse
+#   ok   the generated shim WAITS and returns the runner’s real exit code
+#   ok   the shim stamps a heartbeat BEFORE launching
+#   ok   the shim is written WITHOUT a BOM and contains no non-ASCII
+#   ok   the task does NOT wake the machine
+#   ok   it warns loudly when sourced-stop is unregistered
+#   ok   it never REACHES the dream task, the dream launcher, or power settings
+#   ok   uninstall exists and removes only this task
+#   ok   the runner it registers actually exists and parses
+#   ok   it invokes the runner with --run, a flag the runner accepts
+# install_vantage: 11 passed, 0 failed
+# Subtest: dev\\vantage\\install_vantage.test.js
+ok 8 - dev\\vantage\\install_vantage.test.js
+  ---
+  duration_ms: 156.3832
+  type: 'test'
+  ...
+1..222
+# tests 222
+# suites 0
+# pass 222
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 206178.1859
