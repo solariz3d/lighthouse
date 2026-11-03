@@ -430,3 +430,7 @@ General form: a control inherits the layout of the wrapper it sits in; check wha
 2026-11-02, D620 — chain-status openLaps over lap.jsonl: 85 open (44 stale); 36 of the filed ones in a release tag (matched by subject: landings re-commit). All 32 "delivery-unconfirmed" dispatches were received: the chair writes its row seconds after the pane's, past a 1800 ms window. Could be wrong for dispatches before the 10-30 anchor (not read).
 General form: a count of "unconfirmed" is only as good as the signal it waits for; check the receiver's own record before believing a sender's timeout.
 → `exo_memory/handback/p-d620-stale-laps-O_2026-11-02.md`
+
+### A station gate that cannot name the lap a call serves forces the caller to hold every lap; give the call its lap and gate on that one
+2026-11-02, D621 — lighthouse d621-o 5c1aa36e: chair_inject reads its lap (arg, "Ledger Dnnn", first id) and is refused only when that lap is open and another station holds it; the inject receipt reads the pane's own user row on the board first. cargo test 1175/0. Could be wrong for a packet that names two laps without a Ledger line (the first wins).
+→ `exo_memory/handback/p-d621-bookkeeping-O_2026-11-02.md`
