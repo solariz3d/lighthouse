@@ -510,3 +510,112 @@ test('L085 the close tag is followed by a line saying the data has ended, before
   assert.match(after.trimStart(), /^The data has ended\./, 'the first words after the data say it has ended');
   assert.ok(after.indexOf('The data has ended.') < after.indexOf('Re-derive'), 'and they come before the task');
 });
+
+// ── D632 · the reader checks the repo the claim names, at the claim's own time, and leaves live state alone ──────────
+// P's D627 scoring of the 37 SURFACE rows: 30 were the reader's own error. 12 checked t180 claims in this repo; most of
+// the rest re-measured live state (CLI version, processes, disk, a tree's cleanliness) hours or days later.
+const D632_CP = require('node:child_process');
+const D632_FS = require('node:fs');
+const D632_PATH = require('node:path');
+function d632Repo(name, commits) {
+  const dir = D632_FS.mkdtempSync(D632_PATH.join(require('node:os').tmpdir(), `d632-${name}-`));
+  const git = (...a) => D632_CP.spawnSync('git', a, { cwd: dir, encoding: 'utf8', windowsHide: true });
+  git('init', '-q');
+  const shas = [];
+  for (let i = 0; i < commits; i++) {
+    D632_FS.writeFileSync(D632_PATH.join(dir, 'f.dat'), `${name} ${i}\n`);
+    git('add', 'f.dat');
+    git('-c', 'user.name=t', '-c', 'user.email=t@t', '-c', 'commit.gpgsign=false', 'commit', '-q', '-m', `c${i}`);
+    shas.push(git('rev-parse', 'HEAD').stdout.trim());
+  }
+  return { dir, shas, git };
+}
+const agree = { failed: false, raw: 'VERDICT: AGREE\nCOMMANDS:\nx\nEVIDENCE: y' };
+
+test('D632 the live-state test knows the plan\'s classes: versions, processes, disk, "now"', () => {
+  for (const s of ['D runs 2.1.287 (`claude --version`).', 'The four harnesses are running under the lock.',
+    '| `worktrees/t180-land-0431` | the 0.4.31 merge | 1.3 GB |', 'Close Consonance now and the seat will open.',
+    'Committed as `01165a09`, and the worktree is clean.', 'nothing was installed, so the hook has no guard',
+    'The watcher is still armed.',
+    // one sentence per pattern, so dropping any single pattern turns this red (the D632 mutants)
+    'Stress round 1 of 3 is still running.', 'The four harnesses wait under the lock.', 'main.rs is clean vs HEAD.',
+    'WMI reads the RAM at 6000 MT/s.', '`claude doctor` is clean.']) assert.strictEqual(sv.liveState(s), true, s);
+  for (const s of ['README.md 92 → 78 lines', 'Committed as `4ca68a9` (11 files, +815 −32).',
+    'carrier-drift is 811 lines and eighth-longest', 'The dream cycle skips while a pane is live.'])
+    assert.strictEqual(sv.liveState(s), false, s);
+});
+
+test('D632 a claim whose every sentence is about live state is SKIPPED, and no reader spawns', () => {
+  let spawned = 0;
+  const f = sv.processRow({ ...ROW, sentences: ['The four harnesses are running under the lock.', 'D runs 2.1.287.'] },
+    'artifact', sv.REPO, () => { spawned++; return disagree(['x'], 'y'); }, []);
+  assert.strictEqual(f.status, 'SKIPPED-LIVE-STATE');
+  assert.strictEqual(f.surface, false);
+  assert.strictEqual(spawned, 0, 'live state is never re-measured later');
+});
+
+test('D632 a claim with one checkable sentence beside a live one still goes to a reader', () => {
+  let spawned = 0;
+  const f = sv.processRow({ ...ROW, sentences: ['Suite is running.', 'live-host.js gained 220 lines.'] },
+    'artifact', sv.REPO, () => { spawned++; return agree; }, []);
+  assert.strictEqual(spawned, 1);
+  assert.strictEqual(f.status, 'AGREE');
+});
+
+test('D632 a commit the claim names that only another repo holds sends the reader to that repo', () => {
+  const other = d632Repo('other', 1);
+  let root = null;
+  const f = sv.processRow({ ...ROW, sentences: [`Committed as \`${other.shas[0].slice(0, 7)}\` (1 file, +1).`] },
+    'artifact', sv.REPO, (b, r) => { root = r; return agree; }, [other.dir]);
+  assert.strictEqual(D632_PATH.resolve(root), D632_PATH.resolve(other.dir), 'the reader measures the repo that holds the commit');
+  assert.strictEqual(D632_PATH.resolve(f.repo.root), D632_PATH.resolve(other.dir));
+  assert.strictEqual(f.repo.by, 'commit');
+});
+
+test('D632 a claim naming no commit and no path stays in this repo', () => {
+  const other = d632Repo('stay', 1);
+  let root = null;
+  sv.processRow(ROW, 'artifact', sv.REPO, (b, r) => { root = r; return agree; }, [other.dir]);
+  assert.strictEqual(root, sv.REPO);
+});
+
+test('D632 an absolute path the claim names under another repo sends the reader there', () => {
+  const other = d632Repo('path', 1);
+  let root = null;
+  const f = sv.processRow({ ...ROW, sentences: [`${D632_PATH.join(other.dir, 'f.dat')} holds 1 line`] },
+    'artifact', sv.REPO, (b, r) => { root = r; return agree; }, [other.dir]);
+  assert.strictEqual(D632_PATH.resolve(root), D632_PATH.resolve(other.dir));
+  assert.strictEqual(f.repo.by, 'path');
+});
+
+test('D632 the world check runs in the resolved repo, at that repo\'s claim-time head', () => {
+  const other = d632Repo('world', 2);
+  const row = { ...ROW, heads: { [other.dir.split(D632_PATH.sep).join('/')]: other.shas[0] },
+    sentences: [`f.dat at \`${other.shas[1].slice(0, 7)}\` holds world 0`] };
+  const seenHeads = [];
+  const f = sv.processRow(row, 'artifact', sv.REPO, (b, r) => {
+    seenHeads.push(D632_CP.spawnSync('git', ['rev-parse', 'HEAD'], { cwd: r, encoding: 'utf8', windowsHide: true }).stdout.trim());
+    return seenHeads.length === 1 ? disagree(['cat f.dat → world 1'], 'differs now') : agree;
+  }, [other.dir]);
+  assert.deepStrictEqual(seenHeads, [other.shas[1], other.shas[0]], 'now, then the claim-time tree of THAT repo');
+  assert.strictEqual(f.status, 'WORLD-MOVED');
+  assert.strictEqual(f.world.claimHead, other.shas[0]);
+});
+
+test('D632 the brief states the claim\'s time and head, and says live state is not to be judged', () => {
+  const b = sv.brief({ ...svRow(['x']), turn_ts: '2026-10-17T15:42:46.274Z', head: 'f4485ee1' }, 'artifact', '/repo', seq('ID-9'));
+  const task = b.slice(b.indexOf('</claim_ID-9>'));
+  assert.ok(task.includes('2026-10-17T15:42:46.274Z'), 'the claim\'s own time');
+  assert.ok(task.includes('f4485ee1'), 'the claim-time head');
+  assert.match(task, /later commits/i);
+  assert.match(task, /running processes/i);
+  assert.match(task, /CANNOT-SETTLE/);
+});
+
+test('D632 the other repos come from VANTAGE_REPOS, else the config\'s vantage_repos', () => {
+  const dir = D632_FS.mkdtempSync(D632_PATH.join(require('node:os').tmpdir(), 'd632-cfg-'));
+  D632_FS.writeFileSync(D632_PATH.join(dir, '.consonance.json'), JSON.stringify({ vantage_repos: ['X:/a', 'X:/b'] }));
+  assert.deepStrictEqual(sv.configuredRepos({ USERPROFILE: dir }), ['X:/a', 'X:/b']);
+  assert.deepStrictEqual(sv.configuredRepos({ USERPROFILE: dir, VANTAGE_REPOS: 'Y:/c;Y:/d' }), ['Y:/c', 'Y:/d']);
+  assert.deepStrictEqual(sv.configuredRepos({ USERPROFILE: D632_PATH.join(dir, 'none') }), [], 'no config: this repo only');
+});
