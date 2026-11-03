@@ -87,3 +87,12 @@ Packet: the chair's D633 (14:30Z), PROVE IT, at the keeper's 08:29 word ("can we
 
 SOURCES: plan_room_fixes_2_5_2026-11-03.md (6fa5aa26); chain-status.js line/main; userprompt_pulse.py (repo and installed); trailer.rs; mcp.rs trailer_gate and the three verbs; S\d633\{rust-red.out, cargo-full.out, mutants.json}; the live chain-status runs above
 NEXT: librarian checks 37c82dbd and the kept/dropped table when this ring is read; the chair rules on delivery-unconfirmed when collating fixes 2-5
+
+## Amend (the chair's ruling, 08:48): delivery-unconfirmed dropped too
+- **Commit `3aed0c72`** on d633-o, over 37c82dbd, not pushed. `PULSE_KEEPS` loses `unconfirmed`, and its comment names the ruling. The item stays computed and in `--full`.
+- **Row:** `D633 (the chair, 08:48) the trimmed pulse DROPS delivery-unconfirmed; it stays computed and in --full`.
+  - It has an untrimmed control: `1 dispatch(es) delivery-unconfirmed` is present in the full line.
+  - checked: red on 37c82dbd ("not dropped: … · 1 dispatch(es) delivery-unco…"), green after.
+- checked: `chain-status.test.js` → 162/162; consumers `ask` 42/42, `lap-row` 142/142, `userprompt_pulse` 13/13, `third-place-gate` 7/7, `userprompt-submit` 5/5.
+- checked: the mutant that puts `'unconfirmed'` back in the keep set → caught (the row exits 1); the file was restored.
+- **Live sample now:** checked: `node consonance/tools/chain-status.js` → **`handbacks 1 of 5 (owing A,C,O,P)`**.
