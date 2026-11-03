@@ -1,0 +1,3 @@
+V1 call_chair only (the librarian relaying the panes): calls 53 of 80 (saved 27); real errors kept 8 of 8 [0305 0493 1109 1153 1562 2475 3017 3057]
+V2 the ruling's own phrases only ("all green", "still runs", "refuses"): calls 6 of 80 (saved 74); real errors kept 2 of 8 [2475 3057]
+V3 ring length over 1,500 characters: calls 10 of 80 (saved 70); real errors kept 2 of 8 [1153 3057]

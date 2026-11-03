@@ -1,0 +1,9 @@
+{"rows":80,"verdicts":80,"inClass":77,"skipped":3,"errors":8,"errorsInClass":8,"noErrorInClass":69,"noErrorSkipped":3,"byTool":[{"t":"call_chair","rows":53,"inClass":53},{"t":"call_librarian","rows":27,"inClass":24}],"byWhy":{"status":50,"relayed":27}}
+error 0305 librarian call_chair ERROR-MISSED true status
+error 0493 librarian call_chair ERROR-CAUGHT-ANYWAY true relayed-figure
+error 1109 librarian call_chair ERROR-CAUGHT-ANYWAY true status
+error 1153 librarian call_chair ERROR-MISSED true status
+error 1562 librarian call_chair ERROR-CAUGHT-ANYWAY true relayed-figure
+error 2475 librarian call_chair ERROR-CAUGHT-ANYWAY true status
+error 3017 librarian call_chair ERROR-CAUGHT-ANYWAY true relayed-figure
+error 3057 librarian call_chair ERROR-CAUGHT-ANYWAY true status
