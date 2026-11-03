@@ -103,6 +103,43 @@ If he wants the ≤ 60 m heading-keeping rounding anyway, it needs his yes on th
 
 **Not done, because nothing landed:** the full shell-making run, CAR_MARGIN and joint-feel. t180 d637-e is unchanged at 0692d11.
 
+## 4c. HIS JOINT, named: p32|p33 (s 18,353 m), and the acceptance view (the chair's 13:56 order)
+
+His screenshot (13:55): `Pictures\Screenshots\downward on the mega drop lets you see what I mean about the bump with the climb that is where the new piece then starts climbing back up with banking.png`. It looks down a steep drop to where the road creases and climbs back up into ring loops overhead. The crease is circled on the right edge.
+
+**The joint is p32|p33, at s 18,353 m. It is NOT one of the five candidates.**
+- **The mega drop** is p30–p32: 768 m down to 185 m, then on to −231 m by p33's end. p31 and p32 fall at −86° to −87°, banked −154° (`acceptance/name.js`; the per-piece listing).
+- **"The new piece then starts climbing back up with banking"** is p33. It pulls out of that dive, its pitch going from −90° to +14° over its 750 m, banked −154° to −158°.
+- **Checked by the picture, not by the name:**
+  - A driver's view on p32 (s 18,250, 1.2 m above the road, the camera standing on the road's own up as a car does: `render637.js` adds `up` to O's renderer) shows his composition: the road falling away, the ring loops overhead, the road necking and turning up into them (`acceptance/p32-none-drive-18250.png`).
+  - Projected into that camera with the renderer's own maths, **s 18,353 lands at (800, 457), the neck, and the road beyond (s 18,600) rises to y 327.** The other candidates sit elsewhere (p33|p34 at (1233, 452), 528 m ahead).
+  - The same view from p22's drop (the first candidate) has no rings at all (`look-p22-drive-10480.png`).
+- **Why my §2 table did not list it:** within 8° of vertical my turn/climb split has no direction, so feel.js left those 1,131 samples out. p31|p32 and p32|p33 are there.
+- **Measured directly** (`acceptance/vert.js`, the load and jerk from the built path's own kvec, no split):
+  - **p32|p33: vertical jerk 134 g/s 5 m into p33, against 3 g/s mid-piece (47×); side jerk 81 against 5 (17×).**
+  - Its neighbour at the top of the pull-up, p33|p34 (s 19,103), is worse: 290 g/s (103×) and 233 (49×).
+  - The document's turn and climb rates are 0 at both joints.
+
+**The acceptance view** (`evidence/acceptance/`):
+- **base** = 0692d11 as built;
+- **fix** = the ≤ 60 m heading-keeping prototype of §4b, built open;
+- the same cameras for both, taken from the as-built path. The files are `acceptance-base-*` and `acceptance-fix60-*`: `drive-18250` (his view), `look-18250` (toward the joint) and `side-18353` (the joint from the side).
+
+Its rows (`acceptance/acceptance-rows.txt`):
+
+| joint | build | vertical jerk at the joint (g/s) | its middles (g/s) | side jerk (g/s) |
+|---|---|---|---|---|
+| **p32\|p33** | base | **134** (at +5 m) | 3 | 81 |
+| p32\|p33 | fix (≤ 60 m, keeps heading) | **121** (at +13 m) | **71** | 69 |
+| p33\|p34 | base | 290 | 3 | 233 |
+| p33\|p34 | fix | 257 | 152 | 207 |
+
+**What it says:**
+- **The prototype does not remove his crease.** It lowers the joint's peak by about 10% and moves it 8 m in. It reads "1.7× mid-piece" only because it RAISES the jerk inside the pieces (3 → 71 g/s), by putting the curvature change there.
+- In the side views, base and fix are near enough the same edge, and the fix shows a slight new angle further up (around x 1000, y 320).
+- That is §4b's finding again, on the joint he chose: within the pieces as laid, there is no rounding that takes this crease out and keeps his route.
+- What p33 asks for is the remedy: the pull-out from a −87° dive starts at full rate at the joint, over its first ~15 m. A pull-out laid over a longer ease-in, in the document, takes it out. That is his edit, or the joint-transition command offered in §4b.
+
 ## 5. Corrections
 
 - My first run of the lock check read P's landing lock ("…not a timing session…") as a timing session, because I matched the bare word "timing". Re-checked by the room's rule (a lock that says "not a timing session" is not one), then run. Nothing was spoiled; I only waited.
