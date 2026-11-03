@@ -140,8 +140,64 @@ Its rows (`acceptance/acceptance-rows.txt`):
 - That is §4b's finding again, on the joint he chose: within the pieces as laid, there is no rounding that takes this crease out and keeps his route.
 - What p33 asks for is the remedy: the pull-out from a −87° dive starts at full rate at the joint, over its first ~15 m. A pull-out laid over a longer ease-in, in the document, takes it out. That is his edit, or the joint-transition command offered in §4b.
 
+## 4d. THE WRITER FOUND, and VARIANT 4 measured (the chair's 14:03 and 14:11 re-briefs; his 14:02: "I like the idea of 2, but almost wish we could just make the generation system one shot this problem on its own")
+
+### The writer, and why the ramp is two spans
+
+- **The panel:** `app/core/panel.js:49-59` `AT_START_M = 20`. A turn or climb ticked "early" (read as a rate) is reached within 20 m, "or the whole piece if shorter", then held.
+  - The cross-section channels were sized to their change in October: bank, cup and edge by F and `crossStartM` (`:84-90`), the width by F.
+  - The comment at `:59` says it plainly: **"Turn, climb and width keep AT_START_M"**. The words the user sees on the tick say the same (`:96-97`, `EARLY_SHORT`).
+- **The core:** `src/core/extend.js` lays a ramp shorter than the piece without a fit, by `rampControl` (`:146-154`).
+  - The ideal Bloss ramp is read at the knot averages, over `rampKnots`' 4 subdivisions (`:131`, `:135-140`).
+  - It is compressed to R − 2R/4 (`:148`), so the CURVE reaches the target by R and holds after.
+  - A 20 m ramp is therefore laid in about 10–15 m: two knot spans.
+  - checked: p33's saved climb (the librarian's read, 14:11): kv 0 → −2.513e-3 over s 0–15 m, then flat for 735 m; `ramps.js` → p33 "1-15".
+- **So:** the change is squeezed into a fixed 20 m whatever its size, and the size of p33's change (Δκ 2.51e-3, a pull-out of a −87° dive) needs about three times that at the §4b bar.
+
+### Variant 4, measured (`evidence/variant4/`)
+
+**(a) A NEW build, through the real writer.** `newbuild.js` lays p32 → p33 → p34's shape fresh with `extend`, using his saved targets: the climb and turn "early", today's 20 m against a transition sized to the change, R* = max(20 m, 2.35 · |Δκ| / bar), at most half the piece.
+
+| new build | the curvature's largest rate | vertical / side jerk at the 2\|3 joint (p32\|p33's shape) | at the 3\|4 joint |
+|---|---|---|---|
+| today's writer (20 m) | **6.84× the bar** | 156 / 263 g/s | 179 / 165 g/s |
+| sized | **1.25×** | **61 / 60** | **61 / 32** |
+
+- Nothing overshoots: a ramp from one held value to the next, in the convex hull of its control points (`extend.js:124`).
+- The end of the sized route lands 24 m from today's. **In a new build that is not a move:** the route he sees while placing each piece is the sized one.
+- The writer lays a ramp in about half its length, so 2.35 peaks at 1.25× the bar. A spread of about 3 holds it at the bar (inferred from that ratio; to measure when built).
+
+**(b) His saved ELYSIUM NEW, REGENERATED** (`regen.js`: the 29 short start ramps re-laid sized, or turnplan's carried rate through the joints, or both, on the real segments, built open):
+
+| variant | joints over mid-piece, U (over 2×) | L (over 2×) | worst joint jerk U / L | **p32\|p33** U / L | **p33\|p34** U / L | **p10–p14** worst U / L | largest centre-line move | lap closure gap | overshoot |
+|---|---|---|---|---|---|---|---|---|---|
+| as built (0692d11) | 25 (21) | 21 (19) | 533 / 660 | **134 / 81** | **290 / 233** | 533 / 660 | 0 | 0 | — |
+| **sized (the writer)** | 15 (10) | 13 (9) | 533 / 660 | **19 / 12** | **19 / 1** | 533 / 660 (untouched) | **1,687 m** | **767 m** | 0% |
+| carry (the build) | 2 (0) | 1 (0) | 278 / 347 | 0 / 0 | 3 / 4 | 278 / 347 | 7,436 m | 1,697 m | 1,160% |
+| sized + carry | 7 (3) | 6 (3) | 278 / 347 | 20 / 9 | 20 / 1 | 278 / 347 | 2,166 m | 785 m | 1,160% |
+
+(Re-laid on his track: p33's climb 14 m as saved → 58.1 m, its turn → 100.4 m; p34's climb → 66.9 m, its turn → 125.4 m; p32's climb → 20 m.)
+
+### What it says
+
+1. **The writer is the one-shot fix for his crease, and for every turn or climb laid "early".**
+   - At p32|p33 the vertical jerk falls from 134 to 19 g/s, below the pieces' own middles; p33|p34 from 290 to 19. No overshoot, no layer.
+   - **Because the fix is at the writer, his saved tracks stay exactly as they are by themselves:** the build reads the saved knots, and only a piece laid (or re-laid) after the change gets the sized ramp.
+2. **Existing saves, if he opts in, MOVE A LOT.** Re-laying ELYSIUM NEW's 29 early ramps sized moves its centre line by up to 1.7 km and leaves the lap 767 m from closing. A longer ramp turns or climbs less early, and on a 25 km lap that adds up. So a re-lay of an existing track is a re-closed, different track: an opt-in per track (a command), never automatic.
+3. **The carried rate (the build-time half of variant 4) should NOT land.**
+   - It reaches p10–p14 (533 → 278 g/s), but it rewrites each half-piece from its middle to the joint, so on his saved lap the route moves 7.4 km and a curve can overshoot its own change many times over (1,160% of a small one).
+   - In the builder it would also move a placed piece's last half when the next piece is placed: the one thing the order says must not happen.
+   - **p10–p14 are short pieces turning along their whole length** (their middles already read 168–252 g/s). What reaches them is longer pieces there, his edit, not the generator.
+
+**My recommendation, for his call:**
+- Land the writer fix: a turn or climb ticked "early" is reached over a length sized to its change, like the bank, cup, edge and width already are. Spread about 3, at least 20 m, at most half the piece. PROVE IT tier: tests first, a red row on today's 6.84×, and the fixtures and his saves byte-equal (they do not re-lay).
+- Re-laying an EXISTING track's early ramps is a separate opt-in command, with the route move shown and the lap re-closed.
+- No build-time carry for turn and climb.
+
+Nothing has landed; t180 d637-e is still 0692d11.
+
 ## 5. Corrections
 
 - My first run of the lock check read P's landing lock ("…not a timing session…") as a timing session, because I matched the bare word "timing". Re-checked by the room's rule (a lock that says "not a timing session" is not one), then run. Nothing was spoiled; I only waited.
 
-NEXT: librarian puts §4b to the keeper when this lands; E builds whichever he picks (the ≤ 60 m heading-keeping rounding with a re-close, a document command, or nothing), and holds d637-e at 0692d11 until then.
+NEXT: librarian puts §4d to the keeper when this lands; E builds the writer fix (sized early turn and climb ramps, PROVE IT) on d637-e once he says yes, and the opt-in re-lay only if he asks for it.

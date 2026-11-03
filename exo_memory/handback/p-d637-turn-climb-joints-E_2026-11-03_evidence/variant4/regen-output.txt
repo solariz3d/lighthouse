@@ -1,0 +1,37 @@
+ELYSIUM NEW none: joints U>mid 25 (>2× 21), L>mid 21 (>2× 19); worst joint jerk U 533.2 g/s, L 660.0 g/s | route: largest centre-line move 0.000 m, end heading 0.0000°, lap closure gap 0.0000 m | start ramps re-laid 0, carried halves 0, largest overshoot 0.0%
+    p10|p11 (s 6103): U jerk 504 g/s at -12 m, mid 234 (2.2×); L 660 at -13 m, mid 252 (2.6×)
+    p11|p12 (s 6203): U jerk 171 g/s at 14 m, mid 168 (1.0×); L 203 at 14 m, mid 201 (1.0×)
+    p12|p13 (s 6303): U jerk 533 g/s at -13 m, mid 168 (3.2×); L 635 at -13 m, mid 201 (3.2×)
+    p13|p14 (s 6453): U jerk 64 g/s at -16 m, mid 95 (0.7×); L 577 at -13 m, mid 115 (5.0×)
+    p14|p15 (s 6603): U jerk 363 g/s at -11 m, mid 95 (3.8×); L 453 at -13 m, mid 88 (5.2×)
+    p32|p33 (s 18353): U jerk 134 g/s at 5 m, mid 3 (47.3×); L 81 at 5 m, mid 5 (17.1×)
+    p33|p34 (s 19103): U jerk 290 g/s at 5 m, mid 3 (102.7×); L 233 at 5 m, mid 5 (49.0×)
+ELYSIUM NEW sized: joints U>mid 15 (>2× 10), L>mid 13 (>2× 9); worst joint jerk U 533.2 g/s, L 660.0 g/s | route: largest centre-line move 1687.106 m, end heading -60.0468°, lap closure gap 766.5701 m | start ramps re-laid 29, carried halves 0, largest overshoot 0.0%
+    p10|p11 (s 6103): U jerk 504 g/s at -12 m, mid 234 (2.2×); L 660 at -13 m, mid 252 (2.6×)
+    p11|p12 (s 6203): U jerk 171 g/s at 14 m, mid 168 (1.0×); L 203 at 14 m, mid 201 (1.0×)
+    p12|p13 (s 6303): U jerk 533 g/s at -13 m, mid 168 (3.2×); L 635 at -13 m, mid 201 (3.2×)
+    p13|p14 (s 6453): U jerk 64 g/s at -16 m, mid 95 (0.7×); L 577 at -13 m, mid 115 (5.0×)
+    p14|p15 (s 6603): U jerk 363 g/s at -11 m, mid 95 (3.8×); L 453 at -13 m, mid 88 (5.2×)
+    p32|p33 (s 18353): U jerk 19 g/s at 14 m, mid 34 (0.5×); L 12 at 14 m, mid 23 (0.5×)
+    p33|p34 (s 19103): U jerk 19 g/s at 14 m, mid 48 (0.4×); L 1 at 13 m, mid 37 (0.0×)
+    re-laid p33 kh: Δκ -4.346e-3, its ramp 14.0 m as saved → 100.4 m
+    re-laid p34 kh: Δκ 5.428e-3, its ramp 14.0 m as saved → 125.4 m
+    re-laid p32 kv: Δκ 6.807e-4, its ramp 14.0 m as saved → 20.0 m
+    re-laid p33 kv: Δκ -2.513e-3, its ramp 14.0 m as saved → 58.1 m
+    re-laid p34 kv: Δκ 2.897e-3, its ramp 14.0 m as saved → 66.9 m
+ELYSIUM NEW carry: joints U>mid 2 (>2× 0), L>mid 1 (>2× 0); worst joint jerk U 277.7 g/s, L 347.4 g/s | route: largest centre-line move 7435.910 m, end heading 130.9926°, lap closure gap 1697.2031 m | start ramps re-laid 0, carried halves 184, largest overshoot 1160.2%
+    p10|p11 (s 6103): U jerk 258 g/s at -16 m, mid 217 (1.2×); L 347 at -16 m, mid 411 (0.8×)
+    p11|p12 (s 6203): U jerk 115 g/s at 14 m, mid 272 (0.4×); L 137 at 14 m, mid 324 (0.4×)
+    p12|p13 (s 6303): U jerk 278 g/s at -16 m, mid 272 (1.0×); L 331 at -16 m, mid 324 (1.0×)
+    p13|p14 (s 6453): U jerk 17 g/s at -16 m, mid 113 (0.2×); L 144 at -16 m, mid 184 (0.8×)
+    p14|p15 (s 6603): U jerk 66 g/s at -16 m, mid 113 (0.6×); L 83 at -16 m, mid 184 (0.4×)
+    p32|p33 (s 18353): U jerk 0 g/s at 14 m, mid 10 (0.0×); L 0 at 14 m, mid 7 (0.0×)
+    p33|p34 (s 19103): U jerk 3 g/s at 14 m, mid 10 (0.2×); L 4 at -0 m, mid 7 (0.6×)
+ELYSIUM NEW sized+carry: joints U>mid 7 (>2× 3), L>mid 6 (>2× 3); worst joint jerk U 277.7 g/s, L 347.4 g/s | route: largest centre-line move 2166.205 m, end heading -102.3886°, lap closure gap 785.4894 m | start ramps re-laid 29, carried halves 184, largest overshoot 1160.2%
+    p10|p11 (s 6103): U jerk 258 g/s at -16 m, mid 217 (1.2×); L 347 at -16 m, mid 411 (0.8×)
+    p11|p12 (s 6203): U jerk 115 g/s at 14 m, mid 272 (0.4×); L 137 at 14 m, mid 324 (0.4×)
+    p12|p13 (s 6303): U jerk 278 g/s at -16 m, mid 272 (1.0×); L 331 at -16 m, mid 324 (1.0×)
+    p13|p14 (s 6453): U jerk 17 g/s at -16 m, mid 113 (0.2×); L 144 at -16 m, mid 184 (0.8×)
+    p14|p15 (s 6603): U jerk 66 g/s at -16 m, mid 113 (0.6×); L 83 at -16 m, mid 184 (0.4×)
+    p32|p33 (s 18353): U jerk 20 g/s at 14 m, mid 38 (0.5×); L 9 at 14 m, mid 16 (0.6×)
+    p33|p34 (s 19103): U jerk 20 g/s at 14 m, mid 48 (0.4×); L 1 at -1 m, mid 35 (0.0×)

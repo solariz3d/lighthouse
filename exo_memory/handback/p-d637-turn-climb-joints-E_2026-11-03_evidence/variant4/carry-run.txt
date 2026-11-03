@@ -1,0 +1,19 @@
+timing lock gone after ~440 s
+ELYSIUM NEW as built (0692d11): joints U>mid 25 (>2× 21), L>mid 21 (>2× 19); worst joint jerk U 533.2 g/s, L 660.0 g/s | route: largest centre-line move 0.000 m, end heading 0.0000°, lap closure gap 0.0000 m (as laid 0.0000 m)
+ELYSIUM NEW carry: joints U>mid 2 (>2× 0), L>mid 1 (>2× 0); worst joint jerk U 277.7 g/s, L 347.4 g/s | route: largest centre-line move 7435.910 m, end heading 130.9926°, lap closure gap 1697.2031 m (as laid 0.0000 m) | windows 184, largest curvature rate left 0.00× the bar, largest overshoot 1160.2%
+none p10|p11 at s 6103; U jerk 504 g/s at -12 m, mid-piece 234 (2.2×); L jerk 660 g/s at -13 m, mid-piece 252 (2.6×)
+none p11|p12 at s 6203; U jerk 171 g/s at 14 m, mid-piece 168 (1.0×); L jerk 203 g/s at 14 m, mid-piece 201 (1.0×)
+none p12|p13 at s 6303; U jerk 533 g/s at -13 m, mid-piece 168 (3.2×); L jerk 635 g/s at -13 m, mid-piece 201 (3.2×)
+none p13|p14 at s 6453; U jerk 64 g/s at -16 m, mid-piece 95 (0.7×); L jerk 577 g/s at -13 m, mid-piece 115 (5.0×)
+none p14|p15 at s 6603; U jerk 363 g/s at -11 m, mid-piece 95 (3.8×); L jerk 453 g/s at -13 m, mid-piece 88 (5.2×)
+none p32|p33 at s 18353; U jerk 134 g/s at 5 m, mid-piece 3 (47.3×); L jerk 81 g/s at 5 m, mid-piece 5 (17.1×)
+none p33|p34 at s 19103; U jerk 290 g/s at 5 m, mid-piece 3 (102.7×); L jerk 233 g/s at 5 m, mid-piece 5 (49.0×)
+carry p10|p11 at s 6103; U jerk 258 g/s at -16 m, mid-piece 217 (1.2×); L jerk 347 g/s at -16 m, mid-piece 411 (0.8×)
+carry p11|p12 at s 6203; U jerk 115 g/s at 14 m, mid-piece 272 (0.4×); L jerk 137 g/s at 14 m, mid-piece 324 (0.4×)
+carry p12|p13 at s 6303; U jerk 278 g/s at -16 m, mid-piece 272 (1.0×); L jerk 331 g/s at -16 m, mid-piece 324 (1.0×)
+carry p13|p14 at s 6453; U jerk 17 g/s at -16 m, mid-piece 113 (0.2×); L jerk 144 g/s at -16 m, mid-piece 184 (0.8×)
+carry p14|p15 at s 6603; U jerk 66 g/s at -16 m, mid-piece 113 (0.6×); L jerk 83 g/s at -16 m, mid-piece 184 (0.4×)
+carry p32|p33 at s 18353; U jerk 0 g/s at 14 m, mid-piece 10 (0.0×); L jerk 0 g/s at 14 m, mid-piece 7 (0.0×)
+carry p33|p34 at s 19103; U jerk 3 g/s at 14 m, mid-piece 10 (0.2×); L jerk 4 g/s at -0 m, mid-piece 7 (0.6×)
+
+[exited with code 0]
