@@ -9641,6 +9641,19 @@ fn chain_holders() -> Vec<String> {
     lap_holders::open_holders(&rows)
 }
 
+/// D621: where one lap stands (the lap a dispatch serves), read from the same ledger as `chain_holders`.
+/// None when the ledger cannot be read: the caller then keeps the old rule, never a lap-scoped yes on no evidence.
+fn chain_lap_state(lap: &str) -> Option<lap_holders::LapState> {
+    let path = data_dir().join("lap.jsonl");
+    let Ok(text) = fs::read_to_string(&path) else { return None };
+    let rows: Vec<serde_json::Value> = text
+        .lines()
+        .filter(|l| !l.trim().is_empty())
+        .filter_map(|l| serde_json::from_str(l).ok())
+        .collect();
+    Some(lap_holders::lap_state(&rows, lap))
+}
+
 #[tauri::command]
 fn chain_state() -> ChainState {
     let path = data_dir().join("lap.jsonl");
@@ -12615,6 +12628,70 @@ fn await_render(path: &Path, from: u64, needle: &str, tail_needle: &str) -> Rece
     Receipt::Unconfirmed
 }
 
+// ── D621: THE PANE'S OWN ROW IS THE RECEIPT ───────────────────────────────────────────────────
+//
+// THE CASE (p-d620-stale-laps-O_2026-11-02.md): 32 of 32 dispatches since 2026-10-30 read "WRITTEN BUT
+// UNCONFIRMED — no render in the pane's capture within 1800ms", and every one had arrived. The
+// receiving pane's own USER row, carrying the message, was on the board SECONDS BEFORE the chair's
+// audit row; the render check simply missed the window. That row is the pane's transcript of the
+// message it took in: stronger evidence than a render, which a message still in the composer also
+// produces. So the receipt reads the board first and the capture after, on every poll.
+//
+// THE SLACK: a transcript row is stamped with the transcript's own time, which can sit a little before
+// our clock read at the write (rounding, the write itself). BOARD_RECEIPT_SLACK_MS covers that; the
+// needle (the message's own opening, as the render check uses it) keeps an older copy from counting.
+const BOARD_RECEIPT_SLACK_MS: u64 = 5_000;
+
+/// Is the message on the board as the receiving pane's own user row? `pane` the full pane id, `since` our clock at the
+/// write; the row must be that pane's, a `user` row, no older than `since` less the slack, and carry the needle (or its
+/// tail). An empty needle never confirms, as `render_present` holds.
+fn board_receipt<'a, I: IntoIterator<Item = &'a BoardEntry>>(rows: I, pane: &str, since: u64, needle: &str, tail_needle: &str) -> bool {
+    if needle.is_empty() && tail_needle.is_empty() {
+        return false;
+    }
+    rows.into_iter().any(|e| {
+        e.pane == pane && e.role == "user" && e.ts + BOARD_RECEIPT_SLACK_MS >= since && (render_present(&e.text, needle) || render_present(&e.text, tail_needle))
+    })
+}
+
+/// The receipt wait for a chair inject: on every poll the board first (the pane's own user row), then the capture, as
+/// `await_render`. Returns the render-path receipt and whether the board row was found.
+fn await_receipt(board: &Arc<Mutex<VecDeque<BoardEntry>>>, path: &Path, from: u64, since: u64, pane: &str, needle: &str, tail_needle: &str) -> (Receipt, bool) {
+    let on_board = || board.lock().map(|q| board_receipt(q.iter().rev().take(400), pane, since, needle, tail_needle)).unwrap_or(false);
+    if needle.is_empty() {
+        return (Receipt::Unconfirmed, false);
+    }
+    let deadline = std::time::Instant::now() + Duration::from_millis(RECEIPT_WAIT_MS);
+    while std::time::Instant::now() < deadline {
+        std::thread::sleep(Duration::from_millis(RECEIPT_POLL_MS));
+        if on_board() {
+            return (Receipt::Received, true);
+        }
+        let Ok(mut f) = fs::File::open(path) else { continue };
+        if f.seek(SeekFrom::Start(from)).is_err() {
+            continue;
+        }
+        let mut buf = Vec::new();
+        if f.read_to_end(&mut buf).is_err() {
+            continue;
+        }
+        let window = String::from_utf8_lossy(&buf);
+        if render_present(&window, needle) || render_present(&window, tail_needle) {
+            return (Receipt::Received, false);
+        }
+    }
+    (Receipt::Unconfirmed, on_board())
+}
+
+/// The inject's receipt from both checks: the pane's own row on the board settles it (the message was taken in, so it was
+/// submitted); without it, the render and the submit checks as before (`delivery_receipt`).
+fn inject_receipt(render: Receipt, on_board: bool, submit: Submit) -> Receipt {
+    if on_board {
+        return Receipt::Received;
+    }
+    delivery_receipt(render, submit)
+}
+
 // ── KEEP-WARM (L067, pane E) ─────────────────────────────────────────────────────────────────────
 //
 // THE KEEPER, 2026-09-21 ~05:28 (`exo_memory/loop/plan_keep_warm_2026-09-21.md`): *"if consonance is
@@ -13596,9 +13673,14 @@ fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
         return queued;
     }
     let before = fs::metadata(&cap).map(|m| m.len()).unwrap_or(0);
+    let since = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
     let delivered = inject_to_pane(&panes, &tid, &msg, &app.state::<PaneEmus>());
+    // D621: the receipt reads the pane's own user row on the board first, the render after (await_receipt)
     let receipt = match delivered {
-        Ok(submit) => delivery_receipt(await_render(&cap, before, &receipt_needle(text), &receipt_needle_tail(text)), submit),
+        Ok(submit) => {
+            let (render, on_board) = await_receipt(&app.state::<Board>().0, &cap, before, since, &tid, &receipt_needle(text), &receipt_needle_tail(text));
+            inject_receipt(render, on_board, submit)
+        }
         Err(_) => Receipt::NotAttempted,
     };
     chair_audit(
@@ -17199,6 +17281,59 @@ mod chair_tests {
         assert_eq!(receipt_needle(""), "");
         assert!(!render_present("anything at all in the capture", ""));
         assert_eq!(await_render(Path::new("nonexistent"), 0, "", ""), Receipt::Unconfirmed);
+    }
+
+    // ── D621: the pane's own user row on the board is the receipt ─────────────────────────────
+
+    fn row(pane: &str, role: &str, ts: u64, text: &str) -> BoardEntry {
+        BoardEntry { pane: pane.into(), role: role.into(), text: text.into(), ts, ts_source: TsSource::Transcript }
+    }
+
+    /// The D620 case: the pane's row carrying the message is on the board, two seconds BEFORE the chair's audit row would
+    /// be written and inside the render window's miss: it reads delivered.
+    #[test]
+    fn a_dispatch_reads_delivered_from_the_panes_own_board_row() {
+        let text = "Ledger D612: a small UI bug. The keeper, 10:22: in the Pieces menu";
+        let (n, t) = (receipt_needle(text), receipt_needle_tail(text));
+        let pane = "c88002b1-74d8-4036-8cc0-f64aefbeabff";
+        let since = 1_793_636_667_000;
+        let rows = vec![row(pane, "user", since + 348, &format!("<pasted_content id=\"d58e\">\n[chair:MAIN] {text}"))];
+        assert!(board_receipt(rows.iter(), pane, since, &n, &t));
+        assert_eq!(inject_receipt(Receipt::Unconfirmed, true, Submit::Unknown), Receipt::Received, "the board row settles it");
+        // the old path alone, on the same delivery: what 32 of 32 dispatches read
+        assert_eq!(inject_receipt(Receipt::Unconfirmed, false, Submit::Unknown), Receipt::Unconfirmed);
+    }
+
+    /// What must NOT count: another pane's row, the pane's own assistant row, a copy older than the write, other text.
+    #[test]
+    fn only_the_receiving_panes_own_new_user_row_with_the_message_counts() {
+        let text = "Ledger D612: a small UI bug. The keeper, 10:22: in the Pieces menu";
+        let (n, t) = (receipt_needle(text), receipt_needle_tail(text));
+        let (pane, since) = ("c88002b1-74d8-4036-8cc0-f64aefbeabff", 1_793_636_667_000u64);
+        let msg = format!("[chair:MAIN] {text}");
+        assert!(!board_receipt([row("0845a868-38f2-4cc2-b45a-431e0c088fb1", "user", since + 1, &msg)].iter(), pane, since, &n, &t), "another pane");
+        assert!(!board_receipt([row(pane, "assistant", since + 1, &msg)].iter(), pane, since, &n, &t), "the pane quoting it back");
+        assert!(!board_receipt([row(pane, "user", since - BOARD_RECEIPT_SLACK_MS - 1, &msg)].iter(), pane, since, &n, &t), "an older copy of the same text");
+        assert!(!board_receipt([row(pane, "user", since + 1, "[chair:MAIN] something else entirely")].iter(), pane, since, &n, &t), "other text");
+        assert!(!board_receipt([row(pane, "user", since + 1, &msg)].iter(), pane, since, "", ""), "an empty needle never confirms");
+        assert!(board_receipt([row(pane, "user", since - 2_000, &msg)].iter(), pane, since, &n, &t), "within the slack it counts");
+    }
+
+    /// The fall-back keeps its old meaning: with no board row, a render still needs the submit, and text still in the
+    /// composer reads NotSubmitted.
+    #[test]
+    fn without_a_board_row_the_render_and_submit_checks_decide_as_before() {
+        assert_eq!(inject_receipt(Receipt::Received, false, Submit::Submitted { retries: 0 }), Receipt::Received);
+        assert_eq!(inject_receipt(Receipt::Received, false, Submit::NotSubmitted { retries: 2 }), Receipt::NotSubmitted);
+        assert_eq!(inject_receipt(Receipt::NotAttempted, false, Submit::Unknown), Receipt::NotAttempted);
+    }
+
+    /// The wiring: chair_inject's delivery takes its receipt through the board-first wait.
+    #[test]
+    fn the_chair_inject_receipt_reads_the_board_first() {
+        let src = include_str!("main.rs");
+        assert!(src.contains("let (render, on_board) = await_receipt(&app.state::<Board>().0, &cap, before, since, &tid,"), "chair_inject's delivery must read the board");
+        assert!(src.contains("inject_receipt(render, on_board, submit)"));
     }
 
     /// Boundary: a message too short to be distinctive declines to confirm rather than matching

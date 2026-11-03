@@ -131,6 +131,84 @@ pub fn station_allows(required: Option<&str>, open: bool, holders: &[String]) ->
     }
 }
 
+// ── D621: A DISPATCH IS CHECKED AGAINST THE LAP IT SERVES ────────────────────────────────────────
+//
+// THE CASE (p-d620-stale-laps-O_2026-11-02.md, "Why so many laps stayed open"). The rule above lets
+// `chair_inject` through only while SOME open lap is held by the chair. With every open lap in
+// `working` (holder `panes`), the chair could dispatch nothing, so before each dispatch it re-took
+// EVERY working lap and handed them all back: 41 laps carried the same "retake to …" rows, and a lap
+// re-stamped every few hours never reads as stale. The guard was not wrong about whose turn it was;
+// it could not tell which lap a dispatch was for, because no gated verb carried one (the module's
+// own note above). `chair_inject` now does: an optional `lap` argument, else the packet's own
+// "Ledger Dnnn" line, else the first lap id in it (`lap_of_text`).
+//
+// THE PROTECTION KEPT: a dispatch that names a lap another station holds is refused. That is the
+// out-of-turn ring the rule exists for, a ring into the pane working that lap. A dispatch that names
+// NO lap keeps the old rule above, unchanged.
+
+/// Where a lap stands on the ledger: never seen, filed, or open with its newest holder (None when that
+/// row carries none). Newest chain row per lap, as `open_holders` reads it.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum LapState {
+    Unknown,
+    Filed,
+    Open(Option<String>),
+}
+
+pub fn lap_state(rows: &[serde_json::Value], lap: &str) -> LapState {
+    let mut newest: Option<&serde_json::Value> = None;
+    for r in rows {
+        if r.get("stage").and_then(|v| v.as_str()) != Some("chain") || r.get("lap").and_then(|v| v.as_str()) != Some(lap) {
+            continue;
+        }
+        let at = r.get("at").and_then(|v| v.as_u64()).unwrap_or(0);
+        if newest.map_or(true, |n| at >= n.get("at").and_then(|v| v.as_u64()).unwrap_or(0)) {
+            newest = Some(r);
+        }
+    }
+    match newest {
+        None => LapState::Unknown,
+        Some(r) if r.get("chain").and_then(|v| v.as_str()) == Some("filed") => LapState::Filed,
+        Some(r) => LapState::Open(r.get("holder").and_then(|v| v.as_str()).map(|s| s.to_string())),
+    }
+}
+
+/// A lap id: `D` or `L` and three to five digits, the ledger's own shape (L001, D620).
+fn is_lap_id(w: &str) -> bool {
+    let mut c = w.chars();
+    matches!(c.next(), Some('D') | Some('L')) && { let d: Vec<char> = c.collect(); (3..=5).contains(&d.len()) && d.iter().all(|x| x.is_ascii_digit()) }
+}
+
+/// The lap a dispatch's text serves: the id after "Ledger " when the packet has that line (a packet
+/// often names the lap it closes before the one it opens: "D620 collated … Ledger D621: …"), else the
+/// first lap id in the text. None when it names none.
+pub fn lap_of_text(text: &str) -> Option<String> {
+    let words: Vec<&str> = text.split(|c: char| !(c.is_ascii_alphanumeric())).filter(|w| !w.is_empty()).collect();
+    for (i, w) in words.iter().enumerate() {
+        if w.eq_ignore_ascii_case("ledger") {
+            if let Some(n) = words.get(i + 1) {
+                if is_lap_id(n) {
+                    return Some(n.to_string());
+                }
+            }
+        }
+    }
+    words.iter().find(|w| is_lap_id(w)).map(|w| w.to_string())
+}
+
+/// The gate for a verb whose call names the lap it serves. `lap` None: the old rule (`station_allows`).
+/// A lap that is open is the caller's only if its holder IS the required station; a lap never seen
+/// (a new lap whose rows the chair has not written yet) or filed (a word after the lap closed) is no
+/// one's mid-lap, so it does not refuse.
+pub fn station_allows_for_lap(required: Option<&str>, open: bool, holders: &[String], lap: Option<&LapState>) -> bool {
+    let Some(req) = required else { return true };
+    match lap {
+        None => station_allows(Some(req), open, holders),
+        Some(LapState::Unknown) | Some(LapState::Filed) => true,
+        Some(LapState::Open(h)) => h.as_deref() == Some(req),
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -224,5 +302,67 @@ mod tests {
             .filter(|s| station_allows(Some(s), true, &hs))
             .count();
         assert_eq!(open_stations, 2, "if this becomes 3 the guard is permitting everything");
+    }
+
+    // ── D621: the lap a dispatch serves ──────────────────────────────────────────────────────
+
+    const Y_PANES: &str = r#"{"lap":"D617","stage":"chain","chain":"working","holder":"panes","at":20}"#;
+    const X_CHAIR: &str = r#"{"lap":"D621","stage":"chain","chain":"dispatched","holder":"chair","at":30}"#;
+    const W_FILED: &str = r#"{"lap":"D613","stage":"chain","chain":"filed","holder":"chair","at":10}"#;
+
+    #[test]
+    fn a_dispatch_names_its_lap_by_its_ledger_line_first() {
+        assert_eq!(lap_of_text("D620 collated (librarian 17:57). Ledger D621: the TWO BOOKKEEPING BUGS"), Some("D621".into()));
+        assert_eq!(lap_of_text("D606 GO: LAND AND RELEASE 0.4.37"), Some("D606".into()));
+        assert_eq!(lap_of_text("Ledger L042, the loop"), Some("L042".into()));
+        assert_eq!(lap_of_text("no lap here, 0.4.38 and D61 and DX621"), None, "too short or not a lap id");
+        assert_eq!(lap_of_text(""), None);
+    }
+
+    #[test]
+    fn lap_state_reads_the_newest_chain_row_of_that_lap() {
+        let r = rows(&[Y_PANES, X_CHAIR, W_FILED]);
+        assert_eq!(lap_state(&r, "D617"), LapState::Open(Some("panes".into())));
+        assert_eq!(lap_state(&r, "D621"), LapState::Open(Some("chair".into())));
+        assert_eq!(lap_state(&r, "D613"), LapState::Filed);
+        assert_eq!(lap_state(&r, "D999"), LapState::Unknown);
+    }
+
+    /// RED on the old rule, the D620 case: lap Y is held by the panes and the chair dispatches lap X.
+    #[test]
+    fn a_dispatch_for_lap_x_is_allowed_while_the_panes_hold_lap_y() {
+        let r = rows(&[Y_PANES]);
+        let hs = open_holders(&r);
+        assert!(!station_allows(Some("chair"), true, &hs), "control: the old rule refuses, so the chair re-took every working lap");
+        // a new lap the chair is about to write rows for
+        assert!(station_allows_for_lap(Some("chair"), true, &hs, Some(&lap_state(&r, "D621"))));
+        // a lap the chair holds, beside the panes' lap
+        let r2 = rows(&[Y_PANES, X_CHAIR]);
+        assert!(station_allows_for_lap(Some("chair"), true, &open_holders(&r2), Some(&lap_state(&r2, "D621"))));
+        // a word on a filed lap
+        let r3 = rows(&[Y_PANES, W_FILED]);
+        assert!(station_allows_for_lap(Some("chair"), true, &open_holders(&r3), Some(&lap_state(&r3, "D613"))));
+    }
+
+    /// The protection kept: a ring into the lap another station holds is refused, whatever else is open.
+    #[test]
+    fn a_ring_into_a_lap_another_station_holds_is_still_refused() {
+        let r = rows(&[Y_PANES, X_CHAIR]);
+        assert!(!station_allows_for_lap(Some("chair"), true, &open_holders(&r), Some(&lap_state(&r, "D617"))),
+            "the panes hold D617: a ring into it mid-lap is out of turn even while the chair holds D621");
+        let held = rows(&[r#"{"lap":"D617","stage":"chain","chain":"handbacks-in","holder":"librarian","at":40}"#]);
+        assert!(!station_allows_for_lap(Some("chair"), true, &open_holders(&held), Some(&lap_state(&held, "D617"))));
+        let holderless = rows(&[r#"{"lap":"D617","stage":"chain","chain":"working","at":40}"#]);
+        assert!(!station_allows_for_lap(Some("chair"), true, &open_holders(&holderless), Some(&lap_state(&holderless, "D617"))),
+            "a lap that cannot say whose turn it is does not vote yes");
+    }
+
+    /// A dispatch that names no lap keeps the old rule exactly.
+    #[test]
+    fn a_dispatch_naming_no_lap_keeps_the_old_rule() {
+        let hs = open_holders(&rows(&[Y_PANES]));
+        assert_eq!(station_allows_for_lap(Some("chair"), true, &hs, None), station_allows(Some("chair"), true, &hs));
+        assert!(station_allows_for_lap(Some("chair"), false, &[], None), "no open lap: everything is allowed");
+        assert!(station_allows_for_lap(None, true, &hs, Some(&LapState::Open(Some("panes".into())))), "an ungated verb");
     }
 }
