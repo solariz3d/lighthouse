@@ -1217,10 +1217,11 @@ function owedVisit(opts = {}) {
 
 /* D633, fix 5 (the keeper 08:29; plan_room_fixes_2_5 part D633; D627 part 3 measured each item): the kinds the PULSE prints. KEPT: QUEUED,
  * the hand-back counts (what D628's owed visit reads) and HANDBACKS IN, plus what the plan named neither way: the ledger's own health, a
- * bounced or unknown delivery, a seat waiting on the keeper, and delivery-unconfirmed. DROPPED: STALE, dirty, the sync segment, the
- * chain/holder/age/+N tail, unwitnessed/older/rows-only, fused and UNRECEIVED. Everything is still COMPUTED; only the print is trimmed,
- * and `--full` prints the whole line. */
-const PULSE_KEEPS = new Set(['ledger', 'delivery', 'queued', 'waiting', 'handbacks', 'unconfirmed']);
+ * bounced or unknown delivery, and a seat waiting on the keeper. DROPPED: STALE, dirty, the sync segment, the chain/holder/age/+N tail,
+ * unwitnessed/older/rows-only, fused, UNRECEIVED and delivery-unconfirmed (the chair's ruling, 08:48: D627 measured it false 32 of 32,
+ * and it cost seats checks; if D621's board receipt makes it real, 'unconfirmed' comes back here by name). Everything is still COMPUTED;
+ * only the print is trimmed, and `--full` prints the whole line. */
+const PULSE_KEEPS = new Set(['ledger', 'delivery', 'queued', 'waiting', 'handbacks']);
 
 function line(opts = {}) {
   const now = opts.now != null ? opts.now : Date.now();

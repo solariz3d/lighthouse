@@ -1881,3 +1881,14 @@ test('D633 the CLI (the channel the pulse reads) prints the TRIMMED line; --full
   assert.match(full.stdout, /chain: L900 WORKING · holder panes/, full.stdout);
   s.cleanup();
 });
+
+test('D633 (the chair, 08:48) the trimmed pulse DROPS delivery-unconfirmed; it stays computed and in --full', () => {
+  const UNCONF = (ts, id) => ({ pane: 'chair', role: 'committee', ts,
+    text: 'chair injected (chair: claude-opus-5) -> ' + id.slice(0, 8) + ' [WRITTEN BUT UNCONFIRMED — no render in the pane\'s capture within 1800ms]: go' });
+  const s = store(LAP633, [UNCONF(1100, A), DISPATCH(1200, B), HANDBACK(1300, 'A')]);
+  const { full, trim } = both633(s);
+  assert.match(full, /1 dispatch\(es\) delivery-unconfirmed/, 'control: the untrimmed line has it: ' + full);
+  assert.doesNotMatch(trim, /delivery-unconfirmed/, 'not dropped: ' + trim);
+  assert.match(trim, /handbacks 1 of 2 \(owing B\)/, 'the count beside it is still printed: ' + trim);
+  s.cleanup();
+});
