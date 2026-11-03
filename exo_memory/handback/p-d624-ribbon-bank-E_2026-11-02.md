@@ -132,3 +132,11 @@ checked: `toSegments` of his current saves (`eq-ELYSIUM NEW`, `eq-CRAZY TEST`, `
   - **That ripple is everywhere, on every track, and was there before this change.** It is not this bug. A possible later item, not touched.
 - **His replay has no telemetry tail** (`parseTelemetry` → null), so the felt acceleration is from positions, at 15 ms steps.
 - `S` = my scratchpad; `d624/` there holds `ribbon.js`, `bumps.js`, `bankplot.js`, `docmesh624.js`, `render.js` (A's d596, copied), `touched.sh`, and both runs' TAP.
+
+## 7. The ruling (2026-11-03T02:02Z) and its commit
+
+The D185 TEST 3 amendment stands, as written. **t180 `4e6398c`** on d624-e adds one comment line to it recording the ruling, worded for a public file: "Ruled 2026-11-02: the ride through the joint outweighs the sealed locality here; the route and the document stay local as sealed".
+- The amendment itself was already committed in `3e7b7cd`.
+- checked: the six phi-brush rows of `test/core_sculpt.test.js` pass on `4e6398c`.
+
+d624-e waits for the 0.4.39 landing, and for him to drive it.
