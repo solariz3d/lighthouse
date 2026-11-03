@@ -1,0 +1,4 @@
+j-final2-t180-e624-base-ribbon.txt	joints 11, wheel jerk at the joint / mid-piece: worst 680.0x, within 2x 2; largest joint jerk 1.53e-2
+j-final2-t180-e624-ribbon.txt	joints 11, wheel jerk at the joint / mid-piece: worst 2.6x, within 2x 10; largest joint jerk 2.39e-4
+j-final2-t180-e624-base-ely-fixture.txt	joints 43, wheel jerk at the joint / mid-piece: worst 842.0x, within 2x 36; largest joint jerk 1.12e-2
+j-final2-t180-e624-ely-fixture.txt	joints 43, wheel jerk at the joint / mid-piece: worst 842.0x, within 2x 16; largest joint jerk 1.35e-3

@@ -1,0 +1,10 @@
+fix ribbon.t180track	peak 0.00575 °/m² at s 1032	segment ends over the bar 0	worst against bar-or-floor 0.99x at s 1032 (0.00575 of 0.00583)
+fix ribbon.t180track	turning points 0, kept within 0.05° 0
+fix eq-ELYSIUM NEW.t180track	peak 0.02075 °/m² at s 6023	segment ends over the bar 170	worst against bar-or-floor 1.31x at s 22673 (0.00761 of 0.00583)
+fix eq-ELYSIUM NEW.t180track	turning points 2, kept within 0.05° 2; worst 0.001° at s 22667 (p38: document -216.96°, built -216.96°)
+fix eq-TEST 10.t180track	peak 0.02286 °/m² at s 3710	segment ends over the bar 301	worst against bar-or-floor 1.97x at s 11366 (0.01146 of 0.00583)
+fix eq-TEST 10.t180track	turning points 7, kept within 0.05° 7; worst 0.001° at s 9887 (p22: document 5.19°, built 5.19°)
+fix eq-CRAZY TEST.t180track	peak 0.00026 °/m² at s 4082	segment ends over the bar 0	worst against bar-or-floor 0.04x at s 4082 (0.00026 of 0.00583)
+fix eq-CRAZY TEST.t180track	turning points 0, kept within 0.05° 0
+fix ely-fixture.t180track	peak 0.03859 °/m² at s 23797	segment ends over the bar 174	worst against bar-or-floor 0.94x at s 23797 (0.03859 of 0.04119)
+fix ely-fixture.t180track	turning points 0, kept within 0.05° 0
