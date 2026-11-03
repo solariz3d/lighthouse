@@ -1,0 +1,2 @@
+?: applied 902 / caught 902 / NOT APPLIED 0 · control ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok
+all harnesses: applied 902 / caught 902 / NOT APPLIED 0
