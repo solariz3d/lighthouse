@@ -53,3 +53,16 @@ The arms:
 - **CHAIN answers may name their source** ("as I said earlier"), which can unblind a grader. I strip nothing from the answers; I name the risk.
 - **ROOM may read the board file** (173 MB of verbatim turns). The board is a room file, so it is allowed; the files-vs-board finding of part 4a says it can hold his words.
 - **My stake:** this seat runs from a compaction summary itself.
+
+## Amendment, before any run (the librarian's 07:07 word, through the chair)
+
+1. **The questions come from O (part 4b), not E.** O passes the file's path and sha256.
+2. **The board's back door is closed.** O's part 3 found that 74% of the board mirrors the transcripts.
+   - ROOM, ROOM + SUMMARY and ROOM + CHAIN are denied Read and Grep on `C:\Consonance\data\board.jsonl`, its pre-union copy, and `~/.claude/shell/*.jsonl` (the event log and the overseer logs, which also hold turn text).
+   - CHAIN is denied too, so that CHAIN means the room plus the carried conversation and nothing else. The order denied it only in ROOM and ROOM + SUMMARY; this extension is my call, stated here.
+   - checked in a scratch trial: Grep on board.jsonl → "Permission to read … has been denied"; Read on l2_overseer.jsonl → "File is in a directory that is denied".
+3. **A fourth arm, ROOM + BOARD,** run twice. It is ROOM with the board and the shell logs readable. I added it because part 4a found the board holds his words verbatim where the markdown files do not, so this arm measures that directly. It is read the same way as ROOM: "within the spread" is its mean of r1 and r2 against the lower of CHAIN's r1 and r2, on judgment and his words.
+4. **The order is now eight runs:** room1, summary1, board1, chain1, chain2, board2, summary2, room2.
+5. **The grader is P,** after its part 1.
+
+Still allowed in every arm, as the room by design (named in CLAUDE.md under THE MEMORY): `C:\Consonance\data\resonance\` (the topics and atoms.jsonl). Those are model-written copies of board posts, distilled, not the turns themselves. They are an open, partial back door, and I name it rather than close it.
