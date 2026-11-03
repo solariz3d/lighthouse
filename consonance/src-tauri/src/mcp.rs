@@ -570,8 +570,12 @@ impl ConsonanceMcp {
             return Ok(CallToolResult::success(vec![Content::text("refused: bad chair token (the attempt was posted to the board)")]));
         }
         // D621: the gate reads the lap this dispatch serves, so a dispatch for one lap is not refused because the panes hold another
-        let lap = lap.filter(|l| !l.trim().is_empty()).or_else(|| crate::lap_holders::lap_of_text(&text));
-        if !self.auth_station_for("chair_inject", lap.as_deref()) {
+        // D621 bounce: an explicit `lap` is NAMED; a lap read from the packet carries how it was found (lap_holders::LapSource)
+        let lap = lap
+            .filter(|l| !l.trim().is_empty())
+            .map(|l| (l, crate::lap_holders::LapSource::Named))
+            .or_else(|| crate::lap_holders::lap_of_text(&text));
+        if !self.auth_station_for("chair_inject", lap.as_ref().map(|(l, s)| (l.as_str(), *s))) {
             return Ok(CallToolResult::success(vec![Content::text(
                 "refused: OUT OF TURN — a lap is open and the chair is not the holder (the attempt was posted to the board). Nothing renders into a working pane; wait for the loop, or move the baton with lap-row.js if it is stuck.",
             )]));
@@ -839,9 +843,10 @@ impl ConsonanceMcp {
     }
 
     /// D621: the station gate for a call that names the lap it serves (`chair_inject`'s `lap`, or the lap its packet names).
-    /// `lap` None, or a ledger that cannot be read: the old rule. Named and readable: refused only when that lap is OPEN and
-    /// held by another station (`lap_holders::station_allows_for_lap`); the refusal then names that lap and its holder.
-    fn auth_station_for(&self, verb: &str, lap: Option<&str>) -> bool {
+    /// `lap` None, or a ledger that cannot be read: the old rule. Readable: refused when that lap is OPEN and held by another
+    /// station; a filed or new lap passes only when NAMED, an inferred one falls back to the old rule
+    /// (`lap_holders::station_allows_for_lap`). A refusal on an open lap names that lap and its holder.
+    fn auth_station_for(&self, verb: &str, lap: Option<(&str, crate::lap_holders::LapSource)>) -> bool {
         // D476 part 2: THE THIRD PLACE IS NOT A STATION IN THE LOOP. The one-station rule orders the loop's seats; under it the
         // Third Place's ring would be refused whenever no open lap is held by the panes, which is nearly always, and every refusal
         // would post its pointer to the shared board while delivering nothing. Exempt for its one verb only; its delivery still goes
@@ -851,8 +856,8 @@ impl ConsonanceMcp {
         }
         let st = crate::chain_state();        // still the source of open/lap/holder FOR THE MESSAGE
         let holders = crate::chain_holders(); // and the set the decision is actually made on
-        let named = lap.and_then(|l| crate::chain_lap_state(l).map(|s| (l.to_string(), s)));
-        if crate::lap_holders::station_allows_for_lap(Self::required_station(verb), st.open, &holders, named.as_ref().map(|(_, s)| s)) {
+        let named = lap.and_then(|(l, src)| crate::chain_lap_state(l).map(|s| (l.to_string(), s, src)));
+        if crate::lap_holders::station_allows_for_lap(Self::required_station(verb), st.open, &holders, named.as_ref().map(|(_, s, src)| (s, *src))) {
             return true;
         }
         if let Some(absorbed) = refusal_should_post(verb, now_ms()) {
@@ -865,7 +870,7 @@ impl ConsonanceMcp {
             } else {
                 String::new()
             };
-            if let Some((l, crate::lap_holders::LapState::Open(h))) = &named {
+            if let Some((l, crate::lap_holders::LapState::Open(h), _)) = &named {
                 let h = h.clone().unwrap_or_else(|| "nobody".to_string());
                 board_push(&self.board, BoardEntry {
                     pane: "chair".to_string(),
@@ -1637,9 +1642,11 @@ mod tests {
     fn chair_inject_is_gated_on_the_station() {
         let b = body_of("async fn chair_inject(");
         // AMENDED BY NAME (D621, 2026-11-02): chair_inject asks the gate about the lap it serves
-        assert!(b.contains("auth_station_for(\"chair_inject\", lap.as_deref())"),
+        // AMENDED AGAIN (D621 bounce): the lap goes with how it was found, an explicit argument as Named
+        assert!(b.contains("auth_station_for(\"chair_inject\", lap.as_ref().map(|(l, s)| (l.as_str(), *s)))"),
             "chair_inject must refuse out of turn — nothing renders into a working pane");
         assert!(b.contains("crate::lap_holders::lap_of_text(&text)"), "with no lap argument, the lap is read from the packet");
+        assert!(b.contains(".map(|l| (l, crate::lap_holders::LapSource::Named))"), "an explicit lap argument is Named, never Inferred");
     }
 
     #[test]
@@ -4889,7 +4896,8 @@ mod third_place_mount_tests {
     #[test]
     fn the_third_place_ring_is_not_held_to_the_loop_station() {
         // AMENDED BY NAME (D621, 2026-11-02): the gate's body moved into `auth_station_for` (it reads the lap a call serves); `auth_station` delegates to it.
-        let b = body_of("fn auth_station_for(&self, verb: &str, lap: Option<&str>) -> bool {");
+        // AMENDED AGAIN (D621 bounce): the lap argument carries its source (lap_holders::LapSource).
+        let b = body_of("fn auth_station_for(&self, verb: &str, lap: Option<(&str, crate::lap_holders::LapSource)>) -> bool {");
         let exempt = b.find("if verb == \"call_librarian\" && self.seat() == \"third_place\" {").expect("the Third Place's exemption from the station gate is gone");
         assert!(exempt < b.find("crate::chain_state()").expect("the gate's read moved"), "the exemption must come before the gate decides");
         assert!(body_of("async fn call_librarian(").contains("if !self.auth_station(\"call_librarian\") {"), "call_librarian still asks the gate");

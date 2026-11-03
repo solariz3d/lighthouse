@@ -179,33 +179,45 @@ fn is_lap_id(w: &str) -> bool {
     matches!(c.next(), Some('D') | Some('L')) && { let d: Vec<char> = c.collect(); (3..=5).contains(&d.len()) && d.iter().all(|x| x.is_ascii_digit()) }
 }
 
+/// How a call came to name its lap. NAMED: the explicit `lap` argument or the packet's "Ledger Dnnn"
+/// line, a statement of which lap the call serves. INFERRED: the first lap id anywhere in the text, which
+/// may be a lap the packet only mentions ("D615 is done; also …") or a typo, so it is trusted only for
+/// what the ledger shows OPEN (D621 bounce, the librarian 2026-11-02 18:19).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum LapSource {
+    Named,
+    Inferred,
+}
+
 /// The lap a dispatch's text serves: the id after "Ledger " when the packet has that line (a packet
-/// often names the lap it closes before the one it opens: "D620 collated … Ledger D621: …"), else the
-/// first lap id in the text. None when it names none.
-pub fn lap_of_text(text: &str) -> Option<String> {
+/// often names the lap it closes before the one it opens: "D620 collated … Ledger D621: …"), NAMED;
+/// else the first lap id in the text, INFERRED. None when it names none.
+pub fn lap_of_text(text: &str) -> Option<(String, LapSource)> {
     let words: Vec<&str> = text.split(|c: char| !(c.is_ascii_alphanumeric())).filter(|w| !w.is_empty()).collect();
     for (i, w) in words.iter().enumerate() {
         if w.eq_ignore_ascii_case("ledger") {
             if let Some(n) = words.get(i + 1) {
                 if is_lap_id(n) {
-                    return Some(n.to_string());
+                    return Some((n.to_string(), LapSource::Named));
                 }
             }
         }
     }
-    words.iter().find(|w| is_lap_id(w)).map(|w| w.to_string())
+    words.iter().find(|w| is_lap_id(w)).map(|w| (w.to_string(), LapSource::Inferred))
 }
 
 /// The gate for a verb whose call names the lap it serves. `lap` None: the old rule (`station_allows`).
 /// A lap that is open is the caller's only if its holder IS the required station; a lap never seen
 /// (a new lap whose rows the chair has not written yet) or filed (a word after the lap closed) is no
-/// one's mid-lap, so it does not refuse.
-pub fn station_allows_for_lap(required: Option<&str>, open: bool, holders: &[String], lap: Option<&LapState>) -> bool {
+/// one's mid-lap, so it does not refuse, but only when the call NAMED it; an INFERRED lap that is not
+/// open says nothing about where the call lands, so the old rule decides.
+pub fn station_allows_for_lap(required: Option<&str>, open: bool, holders: &[String], lap: Option<(&LapState, LapSource)>) -> bool {
     let Some(req) = required else { return true };
     match lap {
         None => station_allows(Some(req), open, holders),
-        Some(LapState::Unknown) | Some(LapState::Filed) => true,
-        Some(LapState::Open(h)) => h.as_deref() == Some(req),
+        Some((LapState::Open(h), _)) => h.as_deref() == Some(req),
+        Some((LapState::Unknown | LapState::Filed, LapSource::Named)) => true,
+        Some((LapState::Unknown | LapState::Filed, LapSource::Inferred)) => station_allows(Some(req), open, holders),
     }
 }
 
@@ -312,9 +324,10 @@ mod tests {
 
     #[test]
     fn a_dispatch_names_its_lap_by_its_ledger_line_first() {
-        assert_eq!(lap_of_text("D620 collated (librarian 17:57). Ledger D621: the TWO BOOKKEEPING BUGS"), Some("D621".into()));
-        assert_eq!(lap_of_text("D606 GO: LAND AND RELEASE 0.4.37"), Some("D606".into()));
-        assert_eq!(lap_of_text("Ledger L042, the loop"), Some("L042".into()));
+        // amended (D621 bounce): the lap now carries how it was found, Named by the Ledger line, Inferred otherwise
+        assert_eq!(lap_of_text("D620 collated (librarian 17:57). Ledger D621: the TWO BOOKKEEPING BUGS"), Some(("D621".into(), LapSource::Named)));
+        assert_eq!(lap_of_text("D606 GO: LAND AND RELEASE 0.4.37"), Some(("D606".into(), LapSource::Inferred)));
+        assert_eq!(lap_of_text("Ledger L042, the loop"), Some(("L042".into(), LapSource::Named)));
         assert_eq!(lap_of_text("no lap here, 0.4.38 and D61 and DX621"), None, "too short or not a lap id");
         assert_eq!(lap_of_text(""), None);
     }
@@ -334,26 +347,27 @@ mod tests {
         let r = rows(&[Y_PANES]);
         let hs = open_holders(&r);
         assert!(!station_allows(Some("chair"), true, &hs), "control: the old rule refuses, so the chair re-took every working lap");
+        // amended (D621 bounce): new and filed laps pass when NAMED; the inferred cases are the rows at the end
         // a new lap the chair is about to write rows for
-        assert!(station_allows_for_lap(Some("chair"), true, &hs, Some(&lap_state(&r, "D621"))));
+        assert!(station_allows_for_lap(Some("chair"), true, &hs, Some((&lap_state(&r, "D621"), LapSource::Named))));
         // a lap the chair holds, beside the panes' lap
         let r2 = rows(&[Y_PANES, X_CHAIR]);
-        assert!(station_allows_for_lap(Some("chair"), true, &open_holders(&r2), Some(&lap_state(&r2, "D621"))));
+        assert!(station_allows_for_lap(Some("chair"), true, &open_holders(&r2), Some((&lap_state(&r2, "D621"), LapSource::Inferred))));
         // a word on a filed lap
         let r3 = rows(&[Y_PANES, W_FILED]);
-        assert!(station_allows_for_lap(Some("chair"), true, &open_holders(&r3), Some(&lap_state(&r3, "D613"))));
+        assert!(station_allows_for_lap(Some("chair"), true, &open_holders(&r3), Some((&lap_state(&r3, "D613"), LapSource::Named))));
     }
 
     /// The protection kept: a ring into the lap another station holds is refused, whatever else is open.
     #[test]
     fn a_ring_into_a_lap_another_station_holds_is_still_refused() {
         let r = rows(&[Y_PANES, X_CHAIR]);
-        assert!(!station_allows_for_lap(Some("chair"), true, &open_holders(&r), Some(&lap_state(&r, "D617"))),
+        assert!(!station_allows_for_lap(Some("chair"), true, &open_holders(&r), Some((&lap_state(&r, "D617"), LapSource::Named))),
             "the panes hold D617: a ring into it mid-lap is out of turn even while the chair holds D621");
         let held = rows(&[r#"{"lap":"D617","stage":"chain","chain":"handbacks-in","holder":"librarian","at":40}"#]);
-        assert!(!station_allows_for_lap(Some("chair"), true, &open_holders(&held), Some(&lap_state(&held, "D617"))));
+        assert!(!station_allows_for_lap(Some("chair"), true, &open_holders(&held), Some((&lap_state(&held, "D617"), LapSource::Named))));
         let holderless = rows(&[r#"{"lap":"D617","stage":"chain","chain":"working","at":40}"#]);
-        assert!(!station_allows_for_lap(Some("chair"), true, &open_holders(&holderless), Some(&lap_state(&holderless, "D617"))),
+        assert!(!station_allows_for_lap(Some("chair"), true, &open_holders(&holderless), Some((&lap_state(&holderless, "D617"), LapSource::Named))),
             "a lap that cannot say whose turn it is does not vote yes");
     }
 
@@ -363,6 +377,60 @@ mod tests {
         let hs = open_holders(&rows(&[Y_PANES]));
         assert_eq!(station_allows_for_lap(Some("chair"), true, &hs, None), station_allows(Some("chair"), true, &hs));
         assert!(station_allows_for_lap(Some("chair"), false, &[], None), "no open lap: everything is allowed");
-        assert!(station_allows_for_lap(None, true, &hs, Some(&LapState::Open(Some("panes".into())))), "an ungated verb");
+        assert!(station_allows_for_lap(None, true, &hs, Some((&LapState::Open(Some("panes".into())), LapSource::Named))), "an ungated verb");
+    }
+
+    // ── D621 bounce: a lap read from free text must not open the gate ───────────────────────
+    // The gate as `mcp.rs` `chair_inject` composes it: the explicit `lap` argument, else the packet's lap.
+    const D614_CHAIR: &str = r#"{"lap":"D614","stage":"chain","chain":"dispatched","holder":"chair","at":50}"#;
+    const D614_PANES: &str = r#"{"lap":"D614","stage":"chain","chain":"working","holder":"panes","at":50}"#;
+
+    fn gate(lines: &[&str], text: &str, explicit: Option<&str>) -> bool {
+        let r = rows(lines);
+        let lap = explicit.map(|l| (l.to_string(), LapSource::Named)).or_else(|| lap_of_text(text));
+        let st = lap.map(|(l, s)| (lap_state(&r, &l), s));
+        station_allows_for_lap(Some("chair"), true, &open_holders(&r), st.as_ref().map(|(st, s)| (st, *s)))
+    }
+
+    #[test]
+    fn an_explicit_lap_argument_naming_a_filed_or_new_lap_is_allowed() {
+        assert!(gate(&[Y_PANES, W_FILED], "D617 note", Some("D613")), "filed, named by the argument");
+        assert!(gate(&[Y_PANES], "D617 note", Some("D999")), "not on the ledger yet, named by the argument");
+    }
+
+    #[test]
+    fn a_ledger_line_naming_a_filed_or_new_lap_is_allowed() {
+        assert!(gate(&[Y_PANES, W_FILED], "D617 checked; Ledger D613: a word after it closed", None));
+        assert!(gate(&[Y_PANES], "D617 checked; Ledger D999: a new lap", None));
+    }
+
+    /// RED at 5c1aa36e: "D613 is done; also …" passed into the panes' lap because D613 is filed.
+    #[test]
+    fn free_text_naming_a_filed_lap_falls_back_to_the_old_rule() {
+        assert!(!gate(&[Y_PANES, W_FILED], "D613 is done; also, one more thing for the pane", None),
+            "the chair holds nothing and the panes hold D617: the old rule refuses");
+        assert!(gate(&[Y_PANES, W_FILED, X_CHAIR], "D613 is done; also, one more thing", None),
+            "the old rule allows while the chair holds some lap");
+    }
+
+    /// RED at 5c1aa36e: a mistyped id is Unknown, and Unknown passed.
+    #[test]
+    fn free_text_naming_a_lap_not_on_the_ledger_falls_back_to_the_old_rule() {
+        assert!(!gate(&[Y_PANES], "D6177 GO: the typo of D617", None));
+        assert!(!gate(&[Y_PANES], "D916 is the next one", None));
+    }
+
+    #[test]
+    fn free_text_naming_an_open_lap_counts() {
+        assert!(gate(&[Y_PANES, X_CHAIR], "D621 GO: the fix", None), "open and held by the chair");
+        assert!(!gate(&[Y_PANES, X_CHAIR], "D617 one more thing", None), "open and held by the panes");
+    }
+
+    /// The librarian's own packet shape: a filed lap first, then "Ledger" an open one. The Ledger lap decides.
+    #[test]
+    fn a_packet_naming_a_filed_lap_then_ledger_an_open_one_is_decided_by_the_ledger_lap() {
+        assert!(gate(&[W_FILED, Y_PANES, D614_CHAIR], "D613 checked, all clean; Ledger D614: the next build", None));
+        assert!(!gate(&[W_FILED, D614_PANES], "D613 checked, all clean; Ledger D614: the next build", None),
+            "D614 is the panes': refused, though D613 named first is filed");
     }
 }
