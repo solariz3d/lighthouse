@@ -57,7 +57,8 @@ test('SILENT: an ok row with no flags, a skipped-class row, a skipped-busy row a
   }
 });
 test('SAME RING ONLY: flags on another ring\'s row (another tool_use_id) are never shown', () => {
-  const dir = tmpDir(); addRow(dir, { status: 'ok', toolUseId: 'toolu_other', flags: FLAGS });
+  // 'toolu_n2' CONTAINS 'toolu_n': the ledger line passes the substring pre-filter, so only the exact id match can refuse it (mutant 49 survived 'toolu_other')
+  const dir = tmpDir(); addRow(dir, { status: 'ok', toolUseId: 'toolu_n2', flags: FLAGS });
   const r = run(dir, post(LIB)); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');
 });
 test('WAITS FOR THE WORKER: with the worker still running (live lock, no row yet), a row that lands a second later is shown in the same call', async () => {

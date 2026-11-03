@@ -18,6 +18,8 @@ const { spawnSync } = require('child_process');
 
 const HERE = path.join(__dirname, '..', 'hooks'), REPO = path.join(__dirname, '..', '..');   // HERE is where the sources and the suite live
 const HOOK = 'second-reader.js', WORKER = 'second-reader-worker.js', SUITE = 'second-reader.test.js';
+const NOTE = 'second-reader-note.js', NOTE_SUITE = 'second-reader-note.test.js';   // D631 (b): the same-turn note and its own suite
+const SUITE_OF = (file) => (file === NOTE ? NOTE_SUITE : SUITE);
 const PLAN = path.join('exo_memory', 'loop', 'plan_second_reader_d203_2026-10-01.md'), INSTALL = path.join('dev', 'shell', 'install.ps1');
 
 const MUTANTS = [
@@ -34,7 +36,7 @@ const MUTANTS = [
   ['hook: a lock older than 180 s still counts as live', HOOK, 'Date.now() - held.ts < LOCK_STALE_MS &&', ''],
   // (no mutant on the outer catch: no input reaches it, every step inside main() handles its own errors, so exit(2) there is an equivalent mutant)
   ['hook: prints a deny decision', HOOK, 'child.stdin.end(JSON.stringify(job), () => process.exit(0));', "child.stdin.end(JSON.stringify(job), () => { process.stdout.write('{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\"}}'); process.exit(0); });"],
-  ['hook: the message text is written into the busy row', HOOK, "record(dir, { seat, tool, ringSha, status: 'skipped-busy' });", "record(dir, { seat, tool, ringSha, text, status: 'skipped-busy' });"],
+  ['hook: the message text is written into the busy row', HOOK, "record(dir, { seat, tool, ringSha, toolUseId, status: 'skipped-busy' });", "record(dir, { seat, tool, ringSha, toolUseId, text, status: 'skipped-busy' });"],   // anchor moved by D631 (toolUseId)
   ['hook: the lock is released only by the worker\'s own token', HOOK, 'if (JSON.parse(fs.readFileSync(p, \'utf8\')).token === token) fs.unlinkSync(p);', 'fs.unlinkSync(p);'],
   // ---- the worker: what the model child can do ----
   ['worker: --safe-mode dropped (the child loads every hook)', WORKER, "'--safe-mode', ", ''],
@@ -63,22 +65,44 @@ const MUTANTS = [
   ['secrets: the message is sent to the model unscrubbed', WORKER, '    scrub(text),\n', '    text,\n'],
   ['secrets: the turn is sent to the model unscrubbed', WORKER, "scrub(turn) || '(no tool calls in this turn)',", "turn || '(no tool calls in this turn)',"],
   ['secrets: a stored flag quote is not scrubbed', WORKER, 'quote: clip(scrub(quote), 300)', 'quote: clip(quote, 300)'],
+  // ---- D631 (a): the narrowed trigger ----
+  ['D631: an out-of-class ring is sent to the model anyway', HOOK, 'if (!classify(text, tool).inClass) {', 'if (false) {'],
+  ['D631: the skipped-class row carries the message text', HOOK, "record(dir, { seat, tool, ringSha, toolUseId, status: 'skipped-class' });", "record(dir, { seat, tool, ringSha, toolUseId, text, status: 'skipped-class' });"],
+  ['D631: status claims are not in the class', HOOK, 'if (STATUS.some((re) => re.test(s))) return', 'if (false) return'],
+  ['D631: an inferred: line counts', HOOK, "if (/^inferred:/i.test(s)) continue;", ''],
+  ['D631: numbers inside paths, shas, dates and ids count as figures', HOOK, "for (const re of NOT_A_FIGURE) bare = bare.replace(re, ' ');", ''],
+  ['D631: any figure counts as relayed (no attribution needed)', HOOK, "(tool === 'mcp__consonance__call_chair' || RELAY.test(s))", '(true)'],
+  ['D631: a call_chair figure needs an attribution too', HOOK, "(tool === 'mcp__consonance__call_chair' || RELAY.test(s))", '(RELAY.test(s))'],
+  ['D631: the worker row loses the tool_use_id', WORKER, ', toolUseId: job.toolUseId || null };', ' };'],
+  // ---- D631 (b): the same-turn note ----
+  ['note: the dream gate removed', NOTE, "if (process.env.CONSONANCE_DREAM) process.exit(0);", ''],
+  ['note: reentrancy guard removed', NOTE, "if (process.env[RUN_ENV] === '1') return;", ''],
+  ['note: a tool that is not a ring tool is acted on', NOTE, "if (!payload || !RING_TOOLS.has(payload.tool_name)) return;", 'if (!payload) return;'],
+  ['note: another ring\'s row is shown', NOTE, 'if (r && r.toolUseId === toolUseId && FINAL.has(r.status)) return r;', 'if (r && FINAL.has(r.status)) return r;'],
+  ['note: an ok row with no flags prints a note', NOTE, " || !r.flags.length) return;", ') return;'],
+  ['note: it prints a block decision', NOTE, "process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: 'PostToolUse', additionalContext: render(r.flags) } }));", "process.stdout.write(JSON.stringify({ decision: 'block', reason: render(r.flags), hookSpecificOutput: { hookEventName: 'PostToolUse', additionalContext: render(r.flags) } }));"],
+  ['note: a shown note is not a ledger line', NOTE, "record(dir, { seat, tool: payload.tool_name, ringSha: r.ringSha || null, toolUseId: id, status: 'note-shown', flags: r.flags.length, waitedMs: Date.now() - t0 });", ''],
+  ['note: the quotes are copied into the note-shown row', NOTE, "status: 'note-shown', flags: r.flags.length,", "status: 'note-shown', flags: r.flags.length, quotes: r.flags,"],
+  ['note: the wait is unbounded', NOTE, 'if (waited >= WAIT_MS) {', 'if (false) {'],
+  ['note: no grace exit when no worker is running', NOTE, "if (waited >= GRACE_MS && !workerRunning(dir) && !findRow(dir, id)) return;", ''],
+  ['note: the note does not say it is not a block', NOTE, 'was DELIVERED; this is a note, not a block. In it,', 'needs a look. In it,'],
+  ['note: more than five flags are listed', NOTE, 'const SHOW = 5;', 'const SHOW = 50;'],
   ['secrets: an error row is not scrubbed', WORKER, "error: scrub('exit ' + r.code + ': ' + (r.stderr || r.stdout || '')).slice(0, 200)", "error: ('exit ' + r.code + ': ' + (r.stderr || r.stdout || '')).slice(0, 200)"],
 ];
 
 function tree() {
   const dir = require('./scratch.js').mkdtemp('sr-mut-');
   fs.mkdirSync(path.join(dir, 'consonance', 'hooks'), { recursive: true });
-  for (const f of [HOOK, WORKER, SUITE]) fs.copyFileSync(path.join(HERE, f), path.join(dir, 'consonance', 'hooks', f));
+  for (const f of [HOOK, WORKER, SUITE, NOTE, NOTE_SUITE]) fs.copyFileSync(path.join(HERE, f), path.join(dir, 'consonance', 'hooks', f));
   // scratch.js: the suite makes its temp folders through it (D287 part 1); without it the control is red at load
   fs.mkdirSync(path.join(dir, 'consonance', 'tools'), { recursive: true }); fs.copyFileSync(path.join(HERE, '..', 'tools', 'scratch.js'), path.join(dir, 'consonance', 'tools', 'scratch.js'));
   fs.mkdirSync(path.join(dir, 'dev', 'shell'), { recursive: true }); fs.copyFileSync(path.join(REPO, INSTALL), path.join(dir, INSTALL));
   fs.mkdirSync(path.dirname(path.join(dir, PLAN)), { recursive: true }); fs.copyFileSync(path.join(REPO, PLAN), path.join(dir, PLAN));
   return dir;
 }
-function run(dir) {
+function run(dir, suite = SUITE) {
   const env = { ...process.env }; for (const k of Object.keys(env)) if (/^CONSONANCE_/.test(k)) delete env[k];
-  const r = spawnSync(process.execPath, ['--max-old-space-size=4096', '--test', '--test-concurrency=1', path.join(dir, 'consonance', 'hooks', SUITE)], { encoding: 'utf8', env, timeout: 15 * 60 * 1000 });
+  const r = spawnSync(process.execPath, ['--max-old-space-size=4096', '--test', '--test-concurrency=1', path.join(dir, 'consonance', 'hooks', suite)], { encoding: 'utf8', env, timeout: 15 * 60 * 1000 });
   const o = (r.stdout + r.stderr).replace(/\x1b\[[0-9;]*m/g, ''), n = (k) => Number((o.match(new RegExp(`^ℹ ${k} (\\d+)`, 'm')) || [])[1]);
   return { pass: n('pass'), fail: n('fail') };
 }
@@ -87,9 +111,9 @@ function main() {
   require('./heavy-run.js').hold({ cmd: 'second-reader.mutants' });   // ONE HEAVY RUNNER PER TREE
   const onlyAt = process.argv.indexOf('--only'), only = onlyAt > 0 ? Number(process.argv[onlyAt + 1]) : null;
   const read = (f) => fs.readFileSync(path.join(HERE, f), 'utf8').replace(/\r\n/g, '\n');
-  const control = (() => { const d = tree(); try { return run(d); } finally { fs.rmSync(d, { recursive: true, force: true }); } })();
-  console.log(`control (unmutated copy)                              pass ${control.pass} fail ${control.fail}`);
-  if (!(control.fail === 0 && control.pass > 0)) { console.log('CONTROL NOT GREEN - no mutant result means anything'); process.exitCode = 1; return; }
+  const control = (() => { const d = tree(); try { const a = run(d), b = run(d, NOTE_SUITE); return { pass: a.pass + b.pass, fail: a.fail + b.fail, a, b }; } finally { fs.rmSync(d, { recursive: true, force: true }); } })();
+  console.log(`control (unmutated copy)                              pass ${control.pass} fail ${control.fail}   (${SUITE} ${control.a.pass}/${control.a.fail}, ${NOTE_SUITE} ${control.b.pass}/${control.b.fail})`);
+  if (!(control.fail === 0 && control.a.pass > 0 && control.b.pass > 0)) { console.log('CONTROL NOT GREEN - no mutant result means anything'); process.exitCode = 1; return; }
   let applied = 0, caught = 0, notApplied = 0;
   MUTANTS.forEach(([name, file, anchor, repl], i) => {
     if (only != null && only !== i + 1) return;
@@ -99,7 +123,7 @@ function main() {
     const d = tree();
     try {
       fs.writeFileSync(path.join(d, 'consonance', 'hooks', file), src.replace(anchor, () => repl));
-      const r = run(d), ok = r.fail > 0; if (ok) caught++;
+      const r = run(d, SUITE_OF(file)), ok = r.fail > 0; if (ok) caught++;
       console.log(`${label} pass ${r.pass} fail ${r.fail}  ${ok ? 'CAUGHT' : 'SURVIVED'}`);
     } finally { fs.rmSync(d, { recursive: true, force: true }); }
   });

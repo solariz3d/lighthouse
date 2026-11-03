@@ -325,6 +325,11 @@ test('D631 CLASS: a bare pointer, an own figure with no attribution, an inferred
   }
   assert.strictEqual(H.classify(42, LIB).inClass, false);
 });
+// Added after mutant 42 (second-reader.mutants.js) survived: no test above paired an attribution word with digits that sit only inside a path or a sha.
+test('D631 CLASS: an attributed sentence whose only digits are inside a path, a :line and a sha is OUT of the class (they are not figures)', () => {
+  assert.strictEqual(H.classify("The librarian's note is at exo_memory/librarian/2026-10-18.md:1736, sha 82da03fc.", LIB).inClass, false);
+  assert.strictEqual(H.classify("The librarian's note counts 12 rows.", LIB).inClass, true, 'control: the same attribution with a real figure is in');
+});
 test('D631 SKIP: a ring out of the class writes ONE skipped-class row (seat, tool, sha, tool_use_id; no text) and starts NO worker; it still allows with no output', async () => {
   const dir = tmpDir(); writeStub(dir); const text = 'Hand-back: exo_memory/handback/x.md, lighthouse aab84353.';
   const r = runHook(dir, rawPayload(LIB, text)); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');
