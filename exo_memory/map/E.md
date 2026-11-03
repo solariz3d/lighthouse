@@ -2772,3 +2772,8 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - t180 `bc99ee1` on d637-e over 3b73343 (test only, not pushed): the rounded bank exit leaned out sooner, so the first gate flat at the road was flat at its dummies too (14.11°) and the row could not tell the two searches apart; now 66°/60° edge (gates 6 m apart) plus a guard that the searches differ. S5, S6: old row 7/7 pass, new row 1 of 7 fails; harness applied 6 / caught 6. The code was right.
 - My shell-making list missed 24 of the 175 files whose require graph reaches adapter.js or panel.js (11 mutation harnesses); all 23 others ran green (345/348, 3 skipped).
 - **Carry:** a harness reaches the code only through its inner test file; build the shell-making set from the require closure plus harness inner files, never a grep for what a test calls.
+
+## 2026-11-03 ~23:5xZ (D) · D638 step 1, ELYSIUM as 0.4.39 lays it → `exo_memory/handback/p-d638-regen-E_2026-11-03.md`
+- The shipped builder (d10eacf) refuses it: driving shell.extend with the save's own typed values and only the 20 early pieces re-laid, Extend refuses his p33 (PASS_CLEARANCE, p33 through p29, 31 places); laid past that without the gate, Close refuses (12 new reds, 3,236 m of new road). No closed save exists; nothing faked. Control: the same splice with the old rule moves his road 1.5 m.
+- A full regenerate is not faithful at all: today's Turn by lays his 90° corners in another shape (up to 1.41e-2 rad/m), and Extend then refuses p26 even with the old rule.
+- **Carry:** a replay through today's writer first proves itself with the old rule on the same save; whatever moves in that control is not the change being measured.
