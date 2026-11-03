@@ -1,0 +1,13 @@
+Console output of trade.js on his eq-ELYSIUM NEW.t180track (sha256 2ab08386…), t180 d637-e = 0692d11, 2026-11-03 ~14:3x local.
+  node trade.js C:/Users/nname/Desktop/worktrees/t180-e637 ely-new.t180track "ELYSIUM NEW"            (windows up to 500 m, the bank's reach)
+  node trade.js … "ELYSIUM NEW, windows ≤ 30 m" 30
+  node trade.js … "ELYSIUM NEW, windows ≤ 60 m" 60
+Each run also printed the "as built" line, the same as the first below; those repeats are left out.
+
+ELYSIUM NEW as built (0692d11): joints U>mid 25 (>2× 21), L>mid 21 (>2× 19); worst joint jerk U 533.2 g/s, L 660.0 g/s | route: largest centre-line move 0.000 m, end heading 0.0000°, lap closure gap 0.0000 m (as laid 0.0000 m)
+ELYSIUM NEW plain: joints U>mid 11 (>2× 9), L>mid 9 (>2× 6); worst joint jerk U 603.4 g/s, L 752.9 g/s | route: largest centre-line move 1625.256 m, end heading -51.3258°, lap closure gap 839.6368 m (as laid 0.0000 m) | windows 71, largest curvature rate left 18.47× the bar, largest overshoot 0.0%
+ELYSIUM NEW heading: joints U>mid 12 (>2× 7), L>mid 7 (>2× 4); worst joint jerk U 552.2 g/s, L 674.7 g/s | route: largest centre-line move 98.268 m, end heading 0.0001°, lap closure gap 71.7172 m (as laid 0.0000 m) | windows 69, largest curvature rate left 17.11× the bar, largest overshoot 98.2%
+ELYSIUM NEW, windows ≤ 30 m plain: joints U>mid 24 (>2× 20), L>mid 20 (>2× 19); worst joint jerk U 603.4 g/s, L 752.9 g/s | route: largest centre-line move 269.337 m, end heading -9.3266°, lap closure gap 122.3132 m (as laid 0.0000 m) | windows 80, largest curvature rate left 18.47× the bar, largest overshoot 0.0%
+ELYSIUM NEW, windows ≤ 30 m heading: joints U>mid 23 (>2× 20), L>mid 19 (>2× 18); worst joint jerk U 552.2 g/s, L 674.7 g/s | route: largest centre-line move 0.039 m, end heading 0.0005°, lap closure gap 0.0060 m (as laid 0.0000 m) | windows 80, largest curvature rate left 17.11× the bar, largest overshoot 20.6%
+ELYSIUM NEW, windows ≤ 60 m plain: joints U>mid 11 (>2× 9), L>mid 8 (>2× 6); worst joint jerk U 603.4 g/s, L 752.9 g/s | route: largest centre-line move 748.389 m, end heading -18.7279°, lap closure gap 380.6720 m (as laid 0.0000 m) | windows 75, largest curvature rate left 18.47× the bar, largest overshoot 0.0%
+ELYSIUM NEW, windows ≤ 60 m heading: joints U>mid 22 (>2× 8), L>mid 17 (>2× 4); worst joint jerk U 552.2 g/s, L 674.7 g/s | route: largest centre-line move 0.455 m, end heading 0.0005°, lap closure gap 0.1395 m (as laid 0.0000 m) | windows 75, largest curvature rate left 17.11× the bar, largest overshoot 56.3%

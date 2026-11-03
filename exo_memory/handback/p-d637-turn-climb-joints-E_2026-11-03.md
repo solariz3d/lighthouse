@@ -66,8 +66,45 @@ inferred: these are the knot spans at the ends of a fitted piece (knots every 20
   - The climb is the same, with pitch and height.
   - I will measure the position, heading and lap-closure change it leaves on ELYSIUM NEW and the fixtures before proposing it, and CAR_MARGIN and the joint-feel tests stay green.
 
+## 4b. Steps 2 and 3, PROTOTYPED AND MEASURED: the route trade (nothing has landed; his look decides)
+
+I built the rounding as a scratch prototype first (`evidence/turnplan.js`): the bank's corner rounding, generalised to a curvature channel. Its bar: the load changes by at most 3 g over 10 m at 170 m/s, κ′ ≤ 1.02e-4 /m², about 51 g/s. It never crosses a joint or a turning point of the curvature, and the curvature's rate of change is 0 at those kept points.
+
+`evidence/trade.js` re-lays the real segments' turn and climb from it and rebuilds with the real `buildPath`, OPEN, because **a closed lap that misses its start by more than 1 mm does not build at all** (path.js throws: closing is the document's job). Three variants, on his ELYSIUM NEW (`evidence/trade-output.txt`):
+
+| variant | joints over mid-piece, U (over 2×) | L (over 2×) | worst joint jerk U / L (g/s) | largest centre-line move | lap closure gap | overshoot |
+|---|---|---|---|---|---|---|
+| as built (0692d11) | 25 (21) | 21 (19) | 533 / 660 | 0 | 0 | — |
+| plain (no overshoot), windows to 500 m | 11 (9) | 9 (6) | 603 / 753 | **1,625 m** | **840 m** | 0% |
+| keeps heading, windows to 500 m | 12 (7) | 7 (4) | 552 / 675 | **98 m** | **72 m** | 98% |
+| plain, windows ≤ 60 m | 11 (9) | 8 (6) | 603 / 753 | 748 m | 381 m | 0% |
+| **keeps heading, windows ≤ 60 m** | 22 (**8**) | 17 (**4**) | 552 / 675 | **0.46 m** | **0.14 m** | **56%** |
+| keeps heading, windows ≤ 30 m | 23 (20) | 19 (18) | 552 / 675 | 0.04 m | 0.006 m | 21% |
+
+What that says:
+1. **No variant meets all of the order's guarantees at once** (every piece ends at its typed value, no overshoot, the route kept). The bank could have all three because rolling the road does not move it. A curvature change does:
+   - spreading it without overshoot moves the lap by hundreds of metres to kilometres;
+   - keeping each piece's end heading needs the spread curvature to overshoot (up to 98% of the change), and still moves the position at second order.
+2. **The one variant worth his look: heading-keeping windows of ≤ 60 m around each joint.**
+   - Joints over 2× mid-piece: vertical 21 → 8, side 19 → 4.
+   - The centre line moves at most 0.46 m.
+   - **The lap then misses its start by 0.14 m and needs re-closing** (Close's last-piece fix, or the build refuses the lap).
+   - Its curvature overshoots the change by up to 56%: for a moment it turns tighter than either piece asked.
+3. **The worst joints are not reached by any variant.**
+   - p10–p14 (the three the librarian named, up to 533 g/s) are 100–150 m pieces whose turn changes along their whole length (§3). There is no room to spread a change within them.
+   - The plain variants make them WORSE (603 g/s): forcing the rate of change to 0 at the joint steepens the middle.
+   - That is the document's shape: a piece too short for its turn.
+
+**My read, for his call:** I would not land a turn/climb rounding in the generator. Each version changes his route or overshoots his curvature, and the joints that bump most are left as they are. The remedy that fits is in the DOCUMENT, where he can see it:
+- longer pieces at s 5.7–6.6 km, or one piece where three are;
+- or a builder command that re-lays a joint's transition over a length he picks, and then re-closes the lap as Close does, so the route change is shown and undoable.
+
+If he wants the ≤ 60 m heading-keeping rounding anyway, it needs his yes on the 56% overshoot and the re-close.
+
+**Not done, because nothing landed:** the full shell-making run, CAR_MARGIN and joint-feel. t180 d637-e is unchanged at 0692d11.
+
 ## 5. Corrections
 
 - My first run of the lock check read P's landing lock ("…not a timing session…") as a timing session, because I matched the bare word "timing". Re-checked by the room's rule (a lock that says "not a timing session" is not one), then run. Nothing was spoiled; I only waited.
 
-NEXT: librarian files step 1 when this lands; E starts step 2 (turn and climb rounding that keeps each piece's end heading) at once, and rings again with the route trade measured before anything lands.
+NEXT: librarian puts §4b to the keeper when this lands; E builds whichever he picks (the ≤ 60 m heading-keeping rounding with a re-close, a document command, or nothing), and holds d637-e at 0692d11 until then.
