@@ -444,3 +444,7 @@ General form: an allowance keyed to a value is only as safe as the way the value
 2026-11-03, D621 landing — lighthouse main 5c64caf1 pushed clean; the hand-back note 0352f872 quoted a term from the dispatch, lhpriv read total 1 and the four-term grep 1 0 0 0, and the `&&` chain pushed anyway; fixed forward at a6d2c6da, history not rewritten (the keeper's call). Could be wrong that it matters much: origin already held the term in 1 file.
 General form: a scan in a chain must exit nonzero on a hit; and the hand-back is part of the range, so do not quote a private term while reporting its count.
 → `exo_memory/handback/p-d621-bookkeeping-O_2026-11-02.md` §Landing
+
+### From a wheel on p41's apron the new hull cut looks almost like the old export: the cut shows from beside the road and in a slice, not at wheel height
+2026-11-02, D622 — textured renders of ELYSIUM old (a7c986de) and new (384fdb1f, still 33 pairs by A's int616) from identical cameras; the x-ray of the 26 crossing hull triangles shows ~6 m through the apron beside the road against one small old patch; the cut at x 38 shows the hull through the apron. Could be wrong for a driver whose eye sits higher than 0.4 m, or on another part of the apron.
+→ `exo_memory/handback/p-d622-crossing-renders-O_2026-11-02.md`
