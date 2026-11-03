@@ -38,7 +38,7 @@ const FLAGS = [{ quote: 'The suite is all green.', names: 'the js suite run' }, 
 
 test('NOTE: an ok row with flags for THIS ring gives one PostToolUse additionalContext naming each flagged sentence and its source; never a decision', () => {
   const dir = tmpDir(); addRow(dir, { status: 'ok', toolUseId: 'toolu_n', flags: FLAGS });
-  const r = run(dir, post(LIB)); assert.strictEqual(r.status, 0);
+  const r = run(dir, post(CHAIR)); assert.strictEqual(r.status, 0);
   assert.ok(r.out && r.out.hookSpecificOutput, r.stdout); assert.strictEqual(r.out.hookSpecificOutput.hookEventName, 'PostToolUse');
   const ctx = r.out.hookSpecificOutput.additionalContext;
   for (const f of FLAGS) { assert.ok(ctx.includes(f.quote), ctx); assert.ok(ctx.includes(f.names), ctx); }
@@ -46,20 +46,20 @@ test('NOTE: an ok row with flags for THIS ring gives one PostToolUse additionalC
   assert.ok(!/"decision"|permissionDecision|"continue"\s*:\s*false/.test(r.stdout), r.stdout);
 });
 test('NOTE: a shown note is a ledger line (status note-shown, the tool_use_id and the count; no quote text)', () => {
-  const dir = tmpDir(); addRow(dir, { status: 'ok', toolUseId: 'toolu_n', flags: FLAGS }); run(dir, post(LIB));
+  const dir = tmpDir(); addRow(dir, { status: 'ok', toolUseId: 'toolu_n', flags: FLAGS }); run(dir, post(CHAIR));
   const x = rows(dir).filter((r) => r.status === 'note-shown'); assert.strictEqual(x.length, 1); assert.strictEqual(x[0].toolUseId, 'toolu_n'); assert.strictEqual(x[0].flags, 2);
   assert.strictEqual(rows(dir).filter((r) => r.status === 'note-shown').some((r) => JSON.stringify(r).includes('all green')), false);
 });
 test('SILENT: an ok row with no flags, a skipped-class row, a skipped-busy row and an error row each give no output, at once', () => {
   for (const row of [{ status: 'ok', flags: [] }, { status: 'skipped-class' }, { status: 'skipped-busy' }, { status: 'skipped-no-text' }, { status: 'error', error: 'timeout' }]) {
     const dir = tmpDir(); addRow(dir, { ...row, toolUseId: 'toolu_n' }); liveLock(dir);   // a live lock (another ring's worker) must not make it wait: this ring's row is final
-    const r = run(dir, post(LIB)); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '', row.status); assert.ok(r.ms < 1500, `${row.status} took ${r.ms} ms`);
+    const r = run(dir, post(CHAIR)); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '', row.status); assert.ok(r.ms < 1500, `${row.status} took ${r.ms} ms`);
   }
 });
 test('SAME RING ONLY: flags on another ring\'s row (another tool_use_id) are never shown', () => {
   // 'toolu_n2' CONTAINS 'toolu_n': the ledger line passes the substring pre-filter, so only the exact id match can refuse it (mutant 49 survived 'toolu_other')
   const dir = tmpDir(); addRow(dir, { status: 'ok', toolUseId: 'toolu_n2', flags: FLAGS });
-  const r = run(dir, post(LIB)); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');
+  const r = run(dir, post(CHAIR)); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');
 });
 test('WAITS FOR THE WORKER: with the worker still running (live lock, no row yet), a row that lands a second later is shown in the same call', async () => {
   const dir = tmpDir(); liveLock(dir);
@@ -68,30 +68,38 @@ test('WAITS FOR THE WORKER: with the worker still running (live lock, no row yet
 });
 test('BOUNDED: a worker that never writes its row gives no output by the wait limit, and one note-timeout line', () => {
   const dir = tmpDir(); liveLock(dir);
-  const r = run(dir, post(LIB), { CONSONANCE_SECOND_READER_NOTE_WAIT_MS: '1200' }); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');
+  const r = run(dir, post(CHAIR), { CONSONANCE_SECOND_READER_NOTE_WAIT_MS: '1200' }); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');
   assert.ok(r.ms < 4000, `took ${r.ms} ms`); assert.deepStrictEqual(rows(dir).map((x) => x.status), ['note-timeout']);
 });
 test('BOUNDED: no row and no worker running (the reader is not installed, or never started) gives no output within the short grace, and no row', () => {
-  const dir = tmpDir(); const r = run(dir, post(LIB)); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, ''); assert.ok(r.ms < 2500, `took ${r.ms} ms`);
+  const dir = tmpDir(); const r = run(dir, post(CHAIR)); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, ''); assert.ok(r.ms < 2500, `took ${r.ms} ms`);
   assert.strictEqual(rows(dir).length, 0);
 });
 test('NEVER BLOCKS: any input gives exit 0 and never a decision; other tools, the reentrancy variable and the dream gate are silent no-ops', () => {
   const dir = tmpDir(); addRow(dir, { status: 'ok', toolUseId: 'toolu_n', flags: FLAGS });
-  for (const input of ['', 'not json', '{', 'null', '[]', post('Bash'), post('mcp__consonance__chair_inject'), post(LIB, null)]) {
+  for (const input of ['', 'not json', '{', 'null', '[]', post('Bash'), post('mcp__consonance__chair_inject'), post(CHAIR, null)]) {
     const r = run(dir, input); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '', input.slice(0, 60));
   }
-  assert.strictEqual(run(dir, post(LIB), { CONSONANCE_SECOND_READER_RUN: '1' }).stdout, '');
-  assert.strictEqual(run(dir, post(LIB), { CONSONANCE_DREAM: '1' }).stdout, '');
-  const bad = path.join(dir, 'a-file'); fs.writeFileSync(bad, 'x'); assert.strictEqual(run(dir, post(LIB), { CONSONANCE_DATA: bad }).status, 0);
+  assert.strictEqual(run(dir, post(CHAIR), { CONSONANCE_SECOND_READER_RUN: '1' }).stdout, '');
+  assert.strictEqual(run(dir, post(CHAIR), { CONSONANCE_DREAM: '1' }).stdout, '');
+  const bad = path.join(dir, 'a-file'); fs.writeFileSync(bad, 'x'); assert.strictEqual(run(dir, post(CHAIR), { CONSONANCE_DATA: bad }).status, 0);
 });
 test('RENDER: the note is plain counts and quotes from the row, at most 5 shown with the rest counted, each quote clipped', () => {
   const many = Array.from({ length: 8 }, (_, i) => ({ quote: 'sentence ' + i + ' ' + 'y'.repeat(400), names: 'src ' + i }));
   const t = N.render(many); assert.ok(t.includes('8 sentence')); assert.ok(t.includes('sentence 4') && !t.includes('sentence 5 ')); assert.ok(/3 more/.test(t)); assert.ok(!t.includes('y'.repeat(301)));
 });
-test('REGISTERED: install.ps1 copies the note hook and registers it on PostToolUse with exactly the two hand-back verbs and a timeout above the wait', () => {
+test('REGISTERED: install.ps1 copies the note hook and registers it on PostToolUse with exactly call_chair and a timeout above the wait', () => {
   const src = fs.readFileSync(INSTALL, 'utf8').replace(/\r\n/g, '\n');
   assert.ok(/From = 'consonance\\hooks\\second-reader-note\.js';\s+To = 'hooks\\second-reader-note\.js'/.test(src), 'no file entry');
   const m = src.match(/@\{ Event = 'PostToolUse';\s+Rel = 'hooks\\second-reader-note\.js';\s+Runner = 'node';\s*\n\s*Matcher = '([^']+)'(?:;\s*Timeout = (\d+))? \}/);
-  assert.ok(m, 'no PostToolUse registration'); assert.deepStrictEqual(m[1].split('|').sort(), [CHAIR, LIB].sort());
+  assert.ok(m, 'no PostToolUse registration'); assert.deepStrictEqual(m[1].split('|'), [CHAIR], 'the note is for call_chair rings only (D631, amended)');
   assert.ok(m[2] && Number(m[2]) * 1000 > N.WAIT_MS, 'the registration needs a Timeout above the note\'s own wait');
+});
+
+// D631, AMENDED to call_chair only (the librarian's ruling 09:18): the second reader no longer reads a call_librarian ring, and the note is ON for
+// call_chair rings only. Even a flagged row for a call_librarian ring (an old ledger, or a reader installed out of step) is never shown.
+test('CALL_CHAIR ONLY: a call_librarian ring gets no note, at once, even when its row has flags', () => {
+  const dir = tmpDir(); addRow(dir, { status: 'ok', toolUseId: 'toolu_n', flags: FLAGS }); liveLock(dir);
+  const r = run(dir, post(LIB)); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, ''); assert.ok(r.ms < 1500, `took ${r.ms} ms`);
+  assert.deepStrictEqual([...N.RING_TOOLS], [CHAIR]);
 });

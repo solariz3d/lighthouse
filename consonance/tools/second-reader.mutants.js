@@ -65,18 +65,16 @@ const MUTANTS = [
   ['secrets: the message is sent to the model unscrubbed', WORKER, '    scrub(text),\n', '    text,\n'],
   ['secrets: the turn is sent to the model unscrubbed', WORKER, "scrub(turn) || '(no tool calls in this turn)',", "turn || '(no tool calls in this turn)',"],
   ['secrets: a stored flag quote is not scrubbed', WORKER, 'quote: clip(scrub(quote), 300)', 'quote: clip(quote, 300)'],
-  // ---- D631 (a): the narrowed trigger ----
-  ['D631: an out-of-class ring is sent to the model anyway', HOOK, 'if (!classify(text, tool).inClass) {', 'if (false) {'],
+  // ---- D631 (a): the narrowed trigger, call_chair only (amended post-hoc) ----
+  ['D631: a call_librarian ring is sent to the model anyway', HOOK, 'if (!READ_TOOLS.has(tool)) {', 'if (false) {'],
+  ['D631: call_librarian joins the read set', HOOK, "const READ_TOOLS = new Set(['mcp__consonance__call_chair']);", "const READ_TOOLS = new Set(['mcp__consonance__call_chair', 'mcp__consonance__call_librarian']);"],
+  ['D631: call_chair leaves the read set', HOOK, "const READ_TOOLS = new Set(['mcp__consonance__call_chair']);", 'const READ_TOOLS = new Set([]);'],
   ['D631: the skipped-class row carries the message text', HOOK, "record(dir, { seat, tool, ringSha, toolUseId, status: 'skipped-class' });", "record(dir, { seat, tool, ringSha, toolUseId, text, status: 'skipped-class' });"],
-  ['D631: status claims are not in the class', HOOK, 'if (STATUS.some((re) => re.test(s))) return', 'if (false) return'],
-  ['D631: an inferred: line counts', HOOK, "if (/^inferred:/i.test(s)) continue;", ''],
-  ['D631: numbers inside paths, shas, dates and ids count as figures', HOOK, "for (const re of NOT_A_FIGURE) bare = bare.replace(re, ' ');", ''],
-  ['D631: any figure counts as relayed (no attribution needed)', HOOK, "(tool === 'mcp__consonance__call_chair' || RELAY.test(s))", '(true)'],
-  ['D631: a call_chair figure needs an attribution too', HOOK, "(tool === 'mcp__consonance__call_chair' || RELAY.test(s))", '(RELAY.test(s))'],
   ['D631: the worker row loses the tool_use_id', WORKER, ', toolUseId: job.toolUseId || null };', ' };'],
   // ---- D631 (b): the same-turn note ----
   ['note: the dream gate removed', NOTE, "if (process.env.CONSONANCE_DREAM) process.exit(0);", ''],
   ['note: reentrancy guard removed', NOTE, "if (process.env[RUN_ENV] === '1') return;", ''],
+  ['note: the note acts on call_librarian rings too', NOTE, "const RING_TOOLS = new Set(['mcp__consonance__call_chair']);", "const RING_TOOLS = new Set(['mcp__consonance__call_chair', 'mcp__consonance__call_librarian']);"],
   ['note: a tool that is not a ring tool is acted on', NOTE, "if (!payload || !RING_TOOLS.has(payload.tool_name)) return;", 'if (!payload) return;'],
   ['note: another ring\'s row is shown', NOTE, 'if (r && r.toolUseId === toolUseId && FINAL.has(r.status)) return r;', 'if (r && FINAL.has(r.status)) return r;'],
   ['note: an ok row with no flags prints a note', NOTE, " || !r.flags.length) return;", ') return;'],

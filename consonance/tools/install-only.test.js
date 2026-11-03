@@ -647,8 +647,8 @@ test('D454: hooks/README names exactly the files of install.ps1 $unmanaged as no
 test('D631: an entry with its own Timeout is registered with it (the second reader\'s note, PostToolUse, 30 s); an entry without one keeps 10', () => {
   const repo = mkRepo(), home = mkHome();
   const r = run(repo, home, ['-Only', 'second-reader.js,second-reader-worker.js,second-reader-note.js']);
-  const post = [].concat(settings(home).hooks.PostToolUse || []), g = post.find((x) => x.matcher === SR);
-  assert.ok(g, 'no PostToolUse group on the two hand-back verbs: ' + JSON.stringify(post) + '\n' + r.out);
+  const post = [].concat(settings(home).hooks.PostToolUse || []), g = post.find((x) => x.matcher === 'mcp__consonance__call_chair');   // D631, amended: the note is on call_chair only
+  assert.ok(g, 'no PostToolUse group on call_chair: ' + JSON.stringify(post) + '\n' + r.out);
   const note = [].concat(g.hooks).find((h) => /second-reader-note\.js"$/.test(h.command.replace(/\//g, '\\')));
   assert.ok(note, JSON.stringify(g)); assert.strictEqual(note.timeout, 30);
   const pre = groupsOf(home).find((x) => x.matcher === SR), sr = [].concat(pre.hooks).find((h) => /second-reader\.js"$/.test(h.command));

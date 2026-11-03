@@ -1,6 +1,6 @@
 // second-reader-note.js - the second reader's SAME-TURN NOTE (D631 (b); plan: exo_memory/loop/plan_room_fixes_2_5_2026-11-03.md).
 //
-// A PostToolUse hook on mcp__consonance__call_librarian and mcp__consonance__call_chair. By the time it fires the ring has been DELIVERED
+// A PostToolUse hook on mcp__consonance__call_chair (the one ring the narrowed reader reads; D631, amended). By the time it fires the ring has been DELIVERED
 // (PostToolUse "fire[s] after a tool has already executed successfully", code.claude.com/docs/en/hooks, read 2026-11-03), so it cannot block,
 // delay or alter a ring: it only shows the RINGING seat what the second reader found on that ring, as `additionalContext` beside the tool result
 // ("Claude reads the reminder on the next model request", same page), in the same turn. A NOTE, NEVER A BLOCK: it never prints a decision,
@@ -23,7 +23,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-const RING_TOOLS = new Set(['mcp__consonance__call_librarian', 'mcp__consonance__call_chair']);
+const RING_TOOLS = new Set(['mcp__consonance__call_chair']);   // D631, amended: the note is ON for call_chair rings only, the one ring the reader reads
 const RUN_ENV = 'CONSONANCE_SECOND_READER_RUN';
 const WAIT_MS = Number(process.env.CONSONANCE_SECOND_READER_NOTE_WAIT_MS) > 0 ? Number(process.env.CONSONANCE_SECOND_READER_NOTE_WAIT_MS) : 25000;   // the override is the tests' seam
 const GRACE_MS = 1500;      // no row and no worker holding the lock: the reader never started for this ring

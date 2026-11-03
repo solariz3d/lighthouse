@@ -170,7 +170,7 @@ $files = @(
   # on a pipe, not from the host). Plan: exo_memory/loop/plan_second_reader_d203_2026-10-01.md. Install it with -Only second-reader.js,second-reader-worker.js.
   @{ From = 'consonance\hooks\second-reader.js';           To = 'hooks\second-reader.js' }
   @{ From = 'consonance\hooks\second-reader-worker.js';    To = 'hooks\second-reader-worker.js'; Lib = $true }
-  # Added 2026-11-03 (D631 (b)) with its registration below, same commit. The second reader's SAME-TURN NOTE: a PostToolUse hook on the same two verbs that shows
+  # Added 2026-11-03 (D631 (b)) with its registration below, same commit. The second reader's SAME-TURN NOTE: a PostToolUse hook on call_chair that shows
   # the ringing seat the flags on the ring it just sent (the ring is already delivered: a note, never a block). Install with -Only second-reader.js,second-reader-worker.js,second-reader-note.js.
   @{ From = 'consonance\hooks\second-reader-note.js';      To = 'hooks\second-reader-note.js' }
   # Added 2026-10-02 (D212, the keeper's approval 13:42) with its registration below, same commit, same reason as the entries above. THE SOURCES GATE: a PreToolUse hook
@@ -317,10 +317,10 @@ $register = @(
   # RELEASE-CHIME (D281): after a Bash or PowerShell call. Reads the command and what came back, and exits at once unless a release or a push to main really shipped.
   @{ Event = 'PostToolUse';      Rel = 'hooks\release-chime.js';      Runner = 'node';
      Matcher = 'Bash|PowerShell' }
-  # The second reader's same-turn note (D631 (b)). It waits, bounded at 25 s, for the worker's row (7.1 s median, 10.3 s p90), so it carries its own Timeout;
-  # every entry without one is registered at 10 s as before.
+  # The second reader's same-turn note (D631 (b)), on call_chair only: the one ring the narrowed reader reads (D631, amended). It waits, bounded at 25 s, for
+  # the worker's row (7.1 s median, 10.3 s p90), so it carries its own Timeout; every entry without one is registered at 10 s as before.
   @{ Event = 'PostToolUse';      Rel = 'hooks\second-reader-note.js'; Runner = 'node';
-     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair'; Timeout = 30 }
+     Matcher = 'mcp__consonance__call_chair'; Timeout = 30 }
 )
 
 # DELIBERATELY UNMANAGED -- the THIRD STATE, named. A file in a manifest source directory that is

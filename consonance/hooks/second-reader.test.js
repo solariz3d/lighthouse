@@ -48,12 +48,9 @@ function envFor(dir, extra = {}) {
   const base = { ...process.env }; delete base.CONSONANCE_DREAM; delete base.CONSONANCE_SECOND_READER_RUN;   // the host's own variables must not leak into a test; `extra` may set them on purpose
   return { ...base, CONSONANCE_DATA: dir, CONSONANCE_PANE: 'A', CONSONANCE_SECOND_READER_WORKER: path.join(dir, 'stub-worker.js'), ...extra };
 }
-// AMENDED 2026-11-03 (D631, the trigger narrowed): the model call now runs only on a ring with a relayed figure or a status claim, so every
-// ring these machinery tests send carries one (IN_CLASS, appended to a non-empty string). Empty and non-string texts are passed unchanged.
-// The class itself is tested on raw text below, under D631; `rawPayload` sends a text exactly as given.
-const IN_CLASS = ' The suite is all green.';
-const rawPayload = (tool, text, extra = {}) => JSON.stringify({ session_id: 's1', transcript_path: null, cwd: '.', hook_event_name: 'PreToolUse', tool_name: tool, tool_input: { text }, tool_use_id: 'toolu_x', ...extra });
-const payload = (tool, text, extra = {}) => rawPayload(tool, typeof text === 'string' && text.trim() ? text + IN_CLASS : text, extra);
+// AMENDED 2026-11-03 (D631, amended to call_chair only): the model call now runs only on a call_chair ring, so the machinery tests below that
+// need a worker ring on CHAIR; a call_librarian ring is a skipped-class row (tested under D631).
+const payload = (tool, text, extra = {}) => JSON.stringify({ session_id: 's1', transcript_path: null, cwd: '.', hook_event_name: 'PreToolUse', tool_name: tool, tool_input: { text }, tool_use_id: 'toolu_x', ...extra });
 function runHook(dir, input, extra = {}) {
   const t0 = Date.now(), r = spawnSync(process.execPath, [HOOK], { input, env: envFor(dir, extra), encoding: 'utf8', timeout: 15000 });
   return { status: r.status, stdout: r.stdout, stderr: r.stderr, ms: Date.now() - t0 };
@@ -78,8 +75,9 @@ test('MATCHER: the hook acts only on the two tools: every other tool name is a s
   }
   await sleep(300); assert.strictEqual(stubRuns(dir).length, 0, 'a worker ran for a non-ring tool'); assert.strictEqual(rows(dir).length, 0);
 });
-test('ALLOW IS IMMEDIATE: a ring on either tool returns in well under 1.5 s with exit 0 and NO output (no deny, no ask) while a slow worker is still running; the worker still runs, once', async () => {
-  for (const tool of [LIB, CHAIR]) {
+// AMENDED 2026-11-03 (D631): was both tools; call_librarian is no longer read (its immediate skipped-class row is tested under D631).
+test('ALLOW IS IMMEDIATE: a call_chair ring returns in well under 1.5 s with exit 0 and NO output (no deny, no ask) while a slow worker is still running; the worker still runs, once', async () => {
+  for (const tool of [CHAIR]) {
     const dir = tmpDir(); writeStub(dir, { sleepMs: 3500 });
     const r = runHook(dir, payload(tool, 'hand-back: see exo_memory/handback/x.md'));
     assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, ''); assert.ok(r.ms < 1500, `the hook took ${r.ms} ms`);
@@ -100,19 +98,19 @@ test('NEVER BLOCKS: no input the hook is given makes it print a decision or exit
 
 test('FAIL OPEN: an unwritable data dir, an unresolvable one, and a missing worker all still allow, with no output', async () => {
   const dir = tmpDir(), file = path.join(dir, 'a-file'); fs.writeFileSync(file, 'x');
-  let r = runHook(dir, payload(LIB, 'a message'), { CONSONANCE_DATA: file }); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');
-  r = runHook(dir, payload(LIB, 'a message'), { CONSONANCE_DATA: path.join(dir, 'does', 'not', 'exist') }); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');
-  r = runHook(dir, payload(LIB, 'a message'), { CONSONANCE_SECOND_READER_WORKER: path.join(dir, 'no-such-worker.js') }); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');
+  let r = runHook(dir, payload(CHAIR, 'a message'), { CONSONANCE_DATA: file }); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');
+  r = runHook(dir, payload(CHAIR, 'a message'), { CONSONANCE_DATA: path.join(dir, 'does', 'not', 'exist') }); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');
+  r = runHook(dir, payload(CHAIR, 'a message'), { CONSONANCE_SECOND_READER_WORKER: path.join(dir, 'no-such-worker.js') }); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');
 });
 test('FAIL OPEN: a worker that dies at once leaves a lock that the NEXT ring finds dead (pid gone) and replaces: a ring is not skipped forever', async () => {
   const dir = tmpDir(); writeStub(dir);
-  const r1 = runHook(dir, payload(LIB, 'first'), { CONSONANCE_SECOND_READER_WORKER: path.join(dir, 'no-such-worker.js') }); assert.strictEqual(r1.status, 0);
+  const r1 = runHook(dir, payload(CHAIR, 'first'), { CONSONANCE_SECOND_READER_WORKER: path.join(dir, 'no-such-worker.js') }); assert.strictEqual(r1.status, 0);
   const lock = path.join(dir, 'second-reader.lock'); await waitFor(() => { try { return !H.pidAlive(JSON.parse(fs.readFileSync(lock, 'utf8')).pid); } catch (_) { return true; } }, 8000);
-  const r2 = runHook(dir, payload(LIB, 'second')); assert.strictEqual(r2.status, 0);
+  const r2 = runHook(dir, payload(CHAIR, 'second')); assert.strictEqual(r2.status, 0);
   assert.ok(await waitFor(() => stubRuns(dir).length === 1), 'the second ring was not read'); assert.ok(!rows(dir).some((x) => x.status === 'skipped-busy'));
 });
 test('FAIL OPEN: a message with no text writes a skipped-no-text row and nothing else', () => {
-  const dir = tmpDir(); writeStub(dir); const r = runHook(dir, payload(LIB, ''));
+  const dir = tmpDir(); writeStub(dir); const r = runHook(dir, payload(CHAIR, ''));
   assert.strictEqual(r.status, 0); assert.deepStrictEqual(rows(dir).map((x) => x.status), ['skipped-no-text']); assert.strictEqual(stubRuns(dir).length, 0);
 });
 
@@ -120,25 +118,25 @@ test('FAIL OPEN: a message with no text writes a skipped-no-text row and nothing
 
 test('LOCK: a live lock gives skipped-busy (a row, no worker, no queue)', async () => {
   const dir = tmpDir(); writeStub(dir); fs.writeFileSync(path.join(dir, 'second-reader.lock'), JSON.stringify({ pid: process.pid, ts: Date.now(), token: 'held' }));
-  const r = runHook(dir, payload(LIB, 'a ring while busy'));
+  const r = runHook(dir, payload(CHAIR, 'a ring while busy'));
   assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');
-  const x = rows(dir); assert.strictEqual(x.length, 1); assert.strictEqual(x[0].status, 'skipped-busy'); assert.strictEqual(x[0].ringSha, sha('a ring while busy' + IN_CLASS)); assert.strictEqual(x[0].tool, LIB); assert.strictEqual(x[0].seat, 'A');
+  const x = rows(dir); assert.strictEqual(x.length, 1); assert.strictEqual(x[0].status, 'skipped-busy'); assert.strictEqual(x[0].ringSha, sha('a ring while busy')); assert.strictEqual(x[0].tool, CHAIR); assert.strictEqual(x[0].seat, 'A');
   await sleep(300); assert.strictEqual(stubRuns(dir).length, 0); assert.ok(fs.existsSync(path.join(dir, 'second-reader.lock')), 'the live lock was taken');
 });
 test('LOCK: a lock whose pid is dead, or older than 180 s, is stale and is replaced', async () => {
   for (const held of [{ pid: 2147483000, ts: Date.now(), token: 'dead' }, { pid: process.pid, ts: Date.now() - 200000, token: 'old' }]) {
     const dir = tmpDir(); writeStub(dir); fs.writeFileSync(path.join(dir, 'second-reader.lock'), JSON.stringify(held));
-    const r = runHook(dir, payload(LIB, 'after a stale lock')); assert.strictEqual(r.status, 0);
+    const r = runHook(dir, payload(CHAIR, 'after a stale lock')); assert.strictEqual(r.status, 0);
     assert.ok(await waitFor(() => stubRuns(dir).length === 1), `the stale lock ${held.token} blocked the ring`); assert.ok(!rows(dir).some((x) => x.status === 'skipped-busy'));
   }
 });
 test('LOCK: an unreadable lock file is stale', async () => {
   const dir = tmpDir(); writeStub(dir); fs.writeFileSync(path.join(dir, 'second-reader.lock'), '{ not json');
-  runHook(dir, payload(LIB, 'x')); assert.ok(await waitFor(() => stubRuns(dir).length === 1));
+  runHook(dir, payload(CHAIR, 'x')); assert.ok(await waitFor(() => stubRuns(dir).length === 1));
 });
 test('LOCK: two rings at the same instant start exactly ONE worker; the other is skipped-busy', async () => {
   const dir = tmpDir(); writeStub(dir, { sleepMs: 1500 });
-  const go = (text) => new Promise((resolve) => { const c = spawn(process.execPath, [HOOK], { env: envFor(dir), stdio: ['pipe', 'ignore', 'ignore'] }); c.on('close', resolve); c.stdin.end(payload(LIB, text)); });
+  const go = (text) => new Promise((resolve) => { const c = spawn(process.execPath, [HOOK], { env: envFor(dir), stdio: ['pipe', 'ignore', 'ignore'] }); c.on('close', resolve); c.stdin.end(payload(CHAIR, text)); });
   await Promise.all([go('ring one'), go('ring two')]);
   assert.ok(await waitFor(() => stubRuns(dir).length >= 1)); await sleep(400);
   assert.strictEqual(stubRuns(dir).length, 1, 'more than one worker ran'); assert.strictEqual(rows(dir).filter((x) => x.status === 'skipped-busy').length, 1);
@@ -152,7 +150,7 @@ test('LOCK: acquire is exclusive, release removes only the holder\'s own lock', 
 // ------------------------------------------------------------------ reentrancy and the dream gate
 
 test('REENTRANCY: the hook exits at once, silently, with no worker and no row, when CONSONANCE_SECOND_READER_RUN=1 (the worker\'s own environment)', async () => {
-  const dir = tmpDir(); writeStub(dir); const r = runHook(dir, payload(LIB, 'a ring from inside the second reader'), { CONSONANCE_SECOND_READER_RUN: '1' });
+  const dir = tmpDir(); writeStub(dir); const r = runHook(dir, payload(CHAIR, 'a ring from inside the second reader'), { CONSONANCE_SECOND_READER_RUN: '1' });
   assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, ''); await sleep(300); assert.strictEqual(stubRuns(dir).length, 0); assert.strictEqual(rows(dir).length, 0); assert.ok(!fs.existsSync(path.join(dir, 'second-reader.lock')));
 });
 test('REENTRANCY: the worker the hook starts carries CONSONANCE_SECOND_READER_RUN=1', async () => {
@@ -169,7 +167,7 @@ test('REENTRANCY: the model child is started with --safe-mode (no hooks), --stri
   assert.strictEqual(opts.env.CONSONANCE_SECOND_READER_RUN, '1'); assert.notStrictEqual(opts.cwd, process.cwd(), 'the model child must not run in the repo');
 });
 test('DREAM GATE: with CONSONANCE_DREAM set the hook does nothing at all', async () => {
-  const dir = tmpDir(); writeStub(dir); const r = runHook(dir, payload(LIB, 'x'), { CONSONANCE_DREAM: '1' });
+  const dir = tmpDir(); writeStub(dir); const r = runHook(dir, payload(CHAIR, 'x'), { CONSONANCE_DREAM: '1' });
   assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, ''); await sleep(300); assert.strictEqual(stubRuns(dir).length, 0); assert.strictEqual(rows(dir).length, 0);
 });
 
@@ -286,7 +284,7 @@ test('SECRET SCAN: a key in the message never reaches the model, the stored flag
 });
 test('SECRET SCAN: the hook\'s own rows (skipped-busy) carry the ring\'s sha and length class only: no text, no key', async () => {
   const dir = tmpDir(); writeStub(dir); fs.writeFileSync(path.join(dir, 'second-reader.lock'), JSON.stringify({ pid: process.pid, ts: Date.now(), token: 'held' }));
-  runHook(dir, payload(LIB, `ZEBRA-UNIQUE ${OR_TOKEN}`)); const log = fs.readFileSync(path.join(dir, 'second-reader.jsonl'), 'utf8'); assert.ok(!/ZEBRA-UNIQUE|sk-or-/.test(log), log);
+  runHook(dir, payload(CHAIR, `ZEBRA-UNIQUE ${OR_TOKEN}`)); const log = fs.readFileSync(path.join(dir, 'second-reader.jsonl'), 'utf8'); assert.ok(!/ZEBRA-UNIQUE|sk-or-/.test(log), log);
 });
 
 // D454 part 3 (pane E): the data dir by the app's rule (main.rs data_dir: data_dir from ~/.consonance.json when set, else %USERPROFILE%\.consonance).
@@ -295,55 +293,34 @@ test('APP RULE (D454): with CONSONANCE_DATA unset and data_dir empty, a ring is 
   const h = require('../tools/scratch.js').mkdtemp('app-rule-home-'), def = path.join(h, '.consonance'); fs.mkdirSync(def); fs.writeFileSync(path.join(h, '.consonance.json'), JSON.stringify({ data_dir: '' }));
   const strangerEnv = (extra = {}) => { const e = { ...process.env, USERPROFILE: h, HOME: h, CONSONANCE_DREAM: '', ...extra }; delete e.CONSONANCE_DATA; return e; };
   writeStub(def);
-  const r = spawnSync(process.execPath, [HOOK], { input: payload(LIB, 'a pointer to read'), encoding: 'utf8', timeout: 15000, env: strangerEnv({ CONSONANCE_PANE: 'A', CONSONANCE_SECOND_READER_WORKER: path.join(def, 'stub-worker.js') }) });
+  const r = spawnSync(process.execPath, [HOOK], { input: payload(CHAIR, 'a pointer to read'), encoding: 'utf8', timeout: 15000, env: strangerEnv({ CONSONANCE_PANE: 'A', CONSONANCE_SECOND_READER_WORKER: path.join(def, 'stub-worker.js') }) });
   assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '', 'it never blocks the ring');
   assert.ok(await waitFor(() => stubDone(def) === 1), 'the worker ran from the default data dir');
   // a started read leaves its row to the worker; a ring with no text is one the hook records itself, so the ledger is shown with that one
-  const r2 = spawnSync(process.execPath, [HOOK], { input: payload(LIB, ''), encoding: 'utf8', timeout: 15000, env: strangerEnv({ CONSONANCE_PANE: 'A', CONSONANCE_SECOND_READER_WORKER: path.join(def, 'stub-worker.js') }) });
+  const r2 = spawnSync(process.execPath, [HOOK], { input: payload(CHAIR, ''), encoding: 'utf8', timeout: 15000, env: strangerEnv({ CONSONANCE_PANE: 'A', CONSONANCE_SECOND_READER_WORKER: path.join(def, 'stub-worker.js') }) });
   assert.strictEqual(r2.status, 0); assert.deepStrictEqual(rows(def).map((x) => x.status), ['skipped-no-text'], 'and its ledger is there');
 });
 
-// ------------------------------------------------------------------ D631: the trigger NARROWED (plan_room_fixes_2_5_2026-11-03.md, D631 (a))
-// The model call runs only on a ring with a RELAYED FIGURE (a number attributed to another seat or source, or any number in a call_chair relay)
-// or a STATUS CLAIM ("all green", "still runs", "refuses"). Any other ring is one `skipped-class` row: a line, not an absence; no worker.
+// ------------------------------------------------------------------ D631: the trigger NARROWED to call_chair (plan_room_fixes_2_5_2026-11-03.md, D631 (a))
+// AMENDED POST-HOC (the librarian's ruling 09:18, the keeper's veto open): the lexical class first registered at acbc2a60 sent 77 of 80 sampled
+// rings to the model; every real error in that sample was in the librarian's relays to the chair. The model call now runs on call_chair ONLY.
+// A call_librarian ring is one `skipped-class` row: a line, not an absence; no worker.
 
-test('D631 CLASS: status claims are in the class ("all green", "still runs", "refuses", a landed or failing state)', () => {
-  for (const t of ['cargo test is all green.', 'The old hook still runs on every ring.', 'sources-gate refuses a ring with no SOURCES line.', 'js-suite: 412 pass, 0 fail.', '0.4.38 is still installed on the desktop.', 'The worker crashed at 02:20Z.', 'Tests 29/29 green.']) {
-    const c = H.classify(t, LIB); assert.ok(c.inClass, t); assert.strictEqual(c.why, 'status', t);
-  }
-});
-test('D631 CLASS: a relayed figure is in the class: a number attributed to another seat or source, and any number in the librarian\'s call_chair relay', () => {
-  for (const t of ["A's count is 1584 flags.", 'Pane O found 34 questions.', 'The librarian reports 37 SURFACE rows.', 'Per the runs log, 67 runs.']) {
-    const c = H.classify(t, LIB); assert.ok(c.inClass, t); assert.strictEqual(c.why, 'relayed-figure', t);
-  }
-  const c = H.classify('Both hand-backs in: 8 files graded, 272 answers.', CHAIR); assert.ok(c.inClass); assert.strictEqual(c.why, 'relayed-figure');
-});
-test('D631 CLASS: a bare pointer, an own figure with no attribution, an inferred: line, and numbers only inside paths, shas, dates, times and packet ids are OUT of the class', () => {
-  for (const t of ['Hand-back: exo_memory/handback/p-d631-reader-narrowed-P_2026-11-03.md, git-blob b181d583, lighthouse aab84353.\nNEXT: librarian collate when all five are in',
-    'I wrote 3 tests and a note hook.', "inferred: A's figure of 12 holds.", 'Sent 2026-11-03T14:30:50Z for D631 on lap L098, sha 82da03fc.', 'A pointer to read', '', '   ']) {
-    assert.strictEqual(H.classify(t, LIB).inClass, false, JSON.stringify(t));
-  }
-  assert.strictEqual(H.classify(42, LIB).inClass, false);
-});
-// Added after mutant 42 (second-reader.mutants.js) survived: no test above paired an attribution word with digits that sit only inside a path or a sha.
-test('D631 CLASS: an attributed sentence whose only digits are inside a path, a :line and a sha is OUT of the class (they are not figures)', () => {
-  assert.strictEqual(H.classify("The librarian's note is at exo_memory/librarian/2026-10-18.md:1736, sha 82da03fc.", LIB).inClass, false);
-  assert.strictEqual(H.classify("The librarian's note counts 12 rows.", LIB).inClass, true, 'control: the same attribution with a real figure is in');
-});
-test('D631 SKIP: a ring out of the class writes ONE skipped-class row (seat, tool, sha, tool_use_id; no text) and starts NO worker; it still allows with no output', async () => {
-  const dir = tmpDir(); writeStub(dir); const text = 'Hand-back: exo_memory/handback/x.md, lighthouse aab84353.';
-  const r = runHook(dir, rawPayload(LIB, text)); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');
-  await sleep(500); assert.strictEqual(stubRuns(dir).length, 0, 'a worker ran on an out-of-class ring');
-  const x = rows(dir); assert.strictEqual(x.length, 1); assert.strictEqual(x[0].status, 'skipped-class'); assert.strictEqual(x[0].ringSha, sha(text)); assert.strictEqual(x[0].toolUseId, 'toolu_x'); assert.strictEqual(x[0].seat, 'A');
-  assert.ok(!fs.readFileSync(path.join(dir, 'second-reader.jsonl'), 'utf8').includes('aab84353'), 'message text reached the log');
+test('D631 AMENDED: a call_librarian ring, even one with a status claim and a relayed figure, writes ONE skipped-class row (seat, tool, sha, tool_use_id; no text) and starts NO worker', async () => {
+  const dir = tmpDir(); writeStub(dir); const text = "The suite is all green. A's count is 1584 flags.";
+  const r = runHook(dir, payload(LIB, text)); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');
+  await sleep(500); assert.strictEqual(stubRuns(dir).length, 0, 'a worker ran on a call_librarian ring');
+  const x = rows(dir); assert.strictEqual(x.length, 1); assert.strictEqual(x[0].status, 'skipped-class'); assert.strictEqual(x[0].tool, LIB); assert.strictEqual(x[0].ringSha, sha(text)); assert.strictEqual(x[0].toolUseId, 'toolu_x'); assert.strictEqual(x[0].seat, 'A');
+  assert.ok(!fs.readFileSync(path.join(dir, 'second-reader.jsonl'), 'utf8').includes('1584'), 'message text reached the log');
   assert.ok(!fs.existsSync(path.join(dir, 'second-reader.lock')), 'a skipped ring took the lock');
 });
-test('D631 IN CLASS: a ring in the class still starts the worker, which is handed the tool_use_id', async () => {
-  const dir = tmpDir(); writeStub(dir); const r = runHook(dir, rawPayload(LIB, "A's count is 1584 flags."));
-  assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, ''); assert.ok(await waitFor(() => stubRuns(dir).length === 1), 'the worker did not run');
+test('D631 AMENDED: a call_chair ring is read whatever it says (no figure, no status word), and the worker is handed the tool_use_id', async () => {
+  const dir = tmpDir(); writeStub(dir); const r = runHook(dir, payload(CHAIR, 'A pointer to read'));
+  assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, ''); assert.ok(await waitFor(() => stubRuns(dir).length === 1), 'the worker did not run on a call_chair ring');
+  assert.deepStrictEqual([...H.READ_TOOLS], [CHAIR]);
 });
 test('D631 ROW: the worker\'s ok row carries the ring\'s tool_use_id, so the same-turn note can find it', async () => {
   const dir = tmpDir(), text = 'The suite passed 12 tests.', tr = writeTranscript(dir, [U('go')]);
-  await W.processJob({ dir, tool: LIB, seat: 'B', text, ringSha: sha(text), token: 't', transcriptPath: tr, toolUseId: 'toolu_q' }, { spawnFn: () => mockChild({ stdout: okJson({ flags: [] }) }) });
+  await W.processJob({ dir, tool: CHAIR, seat: 'B', text, ringSha: sha(text), token: 't', transcriptPath: tr, toolUseId: 'toolu_q' }, { spawnFn: () => mockChild({ stdout: okJson({ flags: [] }) }) });
   assert.strictEqual(rows(dir)[0].toolUseId, 'toolu_q');
 });
