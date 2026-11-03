@@ -14,7 +14,36 @@ Packet: the chair's D631 dispatch (14:30:50Z), from `exo_memory/loop/plan_room_f
   - In-sample, 77 rings get a model call and 8 of them hold a real error. The other 69 would still get a note, since every sampled ring was flagged.
   - This is the 10-03 "49% nagging" moving from a shadow log to the seats' turns. Read it before the restart swaps the hook in.
 
-## What was built (commits acbc2a60 and 5faa4014 on d631-p)
+## AMENDMENT (POST-HOC): call_chair only — the librarian's ruling 09:18, the keeper's veto open
+The ruling (chair relay, 15:19:20Z): narrow to `call_chair` ONLY, with the same-turn note ON for those rings only, in one amending commit with its rows red first. This is registered as a **POST-HOC amendment**: it was chosen after the replay below had shown where the errors were, so the in-sample 8 of 8 is not evidence for it; only the falsifier can be.
+
+**FALSIFIER (the ruling's, registered here before any live run).** Revisit the amendment when either happens within two weeks of install:
+- **(1)** under 5% of the shown notes are real errors;
+- **(2)** an error is found in a pane's ring (`call_librarian`, now unread) that nothing else caught.
+
+Reading (1) needs the `note-shown` rows in `second-reader.jsonl` scored as this hand-back scored D627. The ledger counts the notes; it does not judge them.
+
+**The amending commit: bd576735 on d631-p** (tip; parents 5faa4014 → acbc2a60).
+- `second-reader.js`: the lexical `classify` is removed. The trigger is `READ_TOOLS = {call_chair}`. A `call_librarian` ring is one `skipped-class` row (seat, tool, sha, tool_use_id; no text) and gets no worker.
+- `second-reader-note.js`: `RING_TOOLS = {call_chair}`, and the `install.ps1` registration matcher is `mcp__consonance__call_chair`, Timeout 30.
+- **Tests:**
+  - New: "D631 AMENDED: a call_librarian ring, even one with a status claim and a relayed figure, writes ONE skipped-class row … and starts NO worker"; "D631 AMENDED: a call_chair ring is read whatever it says"; the note's "CALL_CHAIR ONLY: a call_librarian ring gets no note, at once, even when its row has flags". The note's REGISTERED test now pins the matcher to call_chair alone.
+  - Amended, each with a comment: the machinery tests now ring on call_chair (the `payload` helper's in-class suffix is gone, and its texts are back to the originals); "ALLOW IS IMMEDIATE" now covers call_chair only; sources-gate's two second-reader tests send call_chair rings; install-only's D631 test reads the call_chair group.
+  - The five lexical-class tests and their five mutants are removed with the code they tested. Three mutants were added: the read gate, call_librarian joining the read set, call_chair leaving it. A fourth: the note acting on call_librarian.
+- **Red first:** EV/tests/d631-amend-red.txt, the amended tests against 5faa4014: 44 tests, 12 failed. They are the 3 new tests, the note's REGISTERED test, and the 8 machinery tests whose plain texts the lexical class skipped.
+- **Green:**
+  - EV/tests/d631-amend-green.txt: second-reader + note + dream-gate → 45/45.
+  - EV/tests/d631-amend-sg.txt: sources-gate → 68/68.
+  - EV/tests/d631-amend-io.txt: install-only → 48 passed, 0 failed.
+- **Mutants on bd576735** (EV/tests/mutants-run3-amended.out): control 44/0 (second-reader.test.js 33, note 11); **applied 56 / caught 56 / NOT APPLIED 0**. Run at BelowNormal, hidden, under the heavy-run lock.
+
+**The replay, re-run with the amended trigger.**
+- checked: `node EV/replay-amended.js <D627 evidence> EV/replay-oos.out.jsonl <worktree>/consonance/hooks/second-reader.js` → EV/replay-amended.out.txt.
+  - **In sample (80):** calls 53, saved 27, real errors kept **8 of 8**. 45 of those 53 rings hold no real error; every sampled ring was flagged, so all 45 would show a note.
+  - **Out of sample (80):** calls 34, **saved 46 (58%)**. A note would show on **22 of 80** rings, about 28%, against about 44% under the lexical class.
+- **The note's precision in sample is 8 of 53 (15%; Wilson 95% [7.9, 27.1]).** That is above the falsifier's 5% line, but it is the same sample that chose the trigger.
+
+## What was built (commits acbc2a60 and 5faa4014 on d631-p; amended by bd576735, above)
 - **(a) the narrowed trigger**, `consonance/hooks/second-reader.js`: `classify(text, tool)`.
   - It is lexical, deterministic and free, so it can be replayed over past rings.
   - **STATUS:** a pass/fail/green/red state, "still/no longer …", refuses/blocks/crashed/hangs, or is live/installed/landed/pushed/fixed/broken.
@@ -97,4 +126,5 @@ Packet: the chair's D631 dispatch (14:30:50Z), from `exo_memory/loop/plan_room_f
 - To land, the install needs `-Only second-reader.js,second-reader-worker.js,second-reader-note.js`, and the new `Timeout` path in install.ps1 runs.
 
 SOURCES: the chair's D631 dispatch; plan_room_fixes_2_5_2026-11-03.md at 6fa5aa26; consonance/hooks/second-reader.js, second-reader-worker.js, findings-return.js, second-reader.test.js, sources-gate.test.js, dream-gate.test.js; consonance/tools/install-only.test.js, second-reader.mutants.js, heavy-run.js; dev/shell/install.ps1; code.claude.com/docs/en/hooks; C:\Consonance\data\second-reader.jsonl; p-d627-p1-flags-P_2026-11-03_evidence (table.md, rows/, sample.js, extract.js); EV/*
-NEXT: librarian check acbc2a60 and rule (a) as registered vs call_chair only when this ring lands; the landing pane merges d631-p onto d628-o after that ruling
+NEXT (first ring, kept): librarian check acbc2a60 and rule (a) as registered vs call_chair only when this ring lands; the landing pane merges d631-p onto d628-o after that ruling
+NEXT (amendment): C merges d631-p at bd576735 onto d628-o when the chair rings it; the librarian scores the note-shown rows against the falsifier two weeks after install
