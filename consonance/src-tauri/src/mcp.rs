@@ -612,12 +612,12 @@ impl ConsonanceMcp {
         // THE NEXT-TRAILER GATE (D069). LAST, after the seal gate: a keyed dispatch fails on its seal before its
         // formatting, and a trailer refusal only ever fires on a dispatch that would otherwise have been sent. The
         // refusal hands the message back whole (`trailer::refusal_text`). See `trailer_gate`.
-        let text = match trailer_gate(crate::trailer::Verb::ChairInject, &format!("chair_inject -> {target}"), &text) {
-            TrailerDecision::Deliver { text, audit } => {
+        let (text, note) = match trailer_gate(crate::trailer::Verb::ChairInject, &format!("chair_inject -> {target}"), &text) {
+            TrailerDecision::Deliver { text, audit, note } => {
                 if let Some(line) = audit {
                     self.trailer_audit(line);
                 }
-                text
+                (text, note)
             }
             TrailerDecision::Refuse { reply, audit } => {
                 self.trailer_audit(audit);
@@ -630,7 +630,7 @@ impl ConsonanceMcp {
         // Stamped whatever the actuator reported, because a delivery that FAILED still means the
         // chair believes it woke someone, and the refusal it produces downstream is the same one.
         mark_rung(&target, now_ms());
-        Ok(CallToolResult::success(vec![Content::text(out)]))
+        Ok(CallToolResult::success(vec![Content::text(with_sender_note(out, note))]))
     }
 
     /// Is a hand-back owed that the loop's own rules forbid delivering? Returns the refusal, with
@@ -711,12 +711,12 @@ impl ConsonanceMcp {
         // careful one.
         // THE NEXT-TRAILER GATE (D069): refused, because the librarian reads this reply in the same turn and the
         // refusal carries its message back whole — a re-send, never a loss. See `trailer::policy`.
-        let text = match trailer_gate(crate::trailer::Verb::CallChair, "call_chair", &text) {
-            TrailerDecision::Deliver { text, audit } => {
+        let (text, note) = match trailer_gate(crate::trailer::Verb::CallChair, "call_chair", &text) {
+            TrailerDecision::Deliver { text, audit, note } => {
                 if let Some(line) = audit {
                     self.trailer_audit(line);
                 }
-                text
+                (text, note)
             }
             TrailerDecision::Refuse { reply, audit } => {
                 self.trailer_audit(audit);
@@ -725,7 +725,7 @@ impl ConsonanceMcp {
         };
         let (tx, rx) = tokio::sync::oneshot::channel();
         let out = self.send_chair(ChairCmd::CallChair { text, reply: tx }, rx).await;
-        Ok(CallToolResult::success(vec![Content::text(out)]))
+        Ok(CallToolResult::success(vec![Content::text(with_sender_note(out, note))]))
     }
 
     /// Gate a cross-seat verb on the ADDRESS TABLE (main.rs `ADDRESS_TABLE`), by the seat the
@@ -1048,8 +1048,8 @@ impl ConsonanceMcp {
                 }
             }
         };
-        let text = match trailer_gate(crate::trailer::Verb::CallLibrarian, &format!("call_librarian from {who}"), &text) {
-            TrailerDecision::Deliver { text, audit } => {
+        let (text, note) = match trailer_gate(crate::trailer::Verb::CallLibrarian, &format!("call_librarian from {who}"), &text) {
+            TrailerDecision::Deliver { text, audit, note } => {
                 if third_place {
                     if audit.is_some() {
                         self.trailer_audit(THIRD_PLACE_TRAILER_ROW.to_string());
@@ -1057,7 +1057,7 @@ impl ConsonanceMcp {
                 } else if let Some(line) = audit {
                     self.trailer_audit(line);
                 }
-                text
+                (text, if third_place { None } else { note })
             }
             TrailerDecision::Refuse { audit, .. } => {
                 if third_place {
@@ -1065,7 +1065,7 @@ impl ConsonanceMcp {
                 } else {
                     self.trailer_audit(audit);
                 }
-                text
+                (text, None)
             }
         };
         // Delivering clears nothing by hand: the mark is read against the baton, and the baton had
@@ -1074,7 +1074,7 @@ impl ConsonanceMcp {
         let out = self
             .send_chair(ChairCmd::CallLibrarian { from: self.identity.clone(), text, reply: tx }, rx)
             .await;
-        Ok(CallToolResult::success(vec![Content::text(out)]))
+        Ok(CallToolResult::success(vec![Content::text(with_sender_note(out, note))]))
     }
 
     /// WHICH SILENCE THIS IS — the two absences a refused hand-back can mean, told apart by an
@@ -4349,8 +4349,9 @@ mod map_gate_tests {
 /// What a verb does with its message after the trailer check.
 #[derive(Debug, PartialEq, Eq)]
 enum TrailerDecision {
-    /// Send `text` — unchanged, or with the warning appended. `audit`, when present, is the board line.
-    Deliver { text: String, audit: Option<String> },
+    /// Send `text`, always the message unchanged. `audit`, when present, is the board line. `note`, when present, is the
+    /// warning for the SENDER, returned in its own tool result (D633: it used to be appended to the receiver's copy).
+    Deliver { text: String, audit: Option<String>, note: Option<String> },
     /// Send nothing. Return `reply` to the caller (it carries the message back whole) and post `audit`.
     Refuse { reply: String, audit: String },
 }
@@ -4390,9 +4391,9 @@ fn gates_mode() -> crate::trailer::GateMode {
 fn trailer_gate(verb: crate::trailer::Verb, verb_name: &str, text: &str) -> TrailerDecision {
     // L084: `check_for`, not `check` — the verb decides whether the collation's `OUTPUT → NEXT:` line is owed
     // (call_chair only). For call_librarian and chair_inject it returns exactly what `check` did.
-    use crate::trailer::{check_for, delivered_with_warning, policy, policy_in, refusal_text, Action, GateMode};
+    use crate::trailer::{check_for, policy, policy_in, refusal_text, sender_note, Action, GateMode};
     let why = match check_for(verb, text) {
-        Ok(_) => return TrailerDecision::Deliver { text: text.to_string(), audit: None },
+        Ok(_) => return TrailerDecision::Deliver { text: text.to_string(), audit: None, note: None },
         Err(why) => why,
     };
     // D273: the refusal's GATES.md pointer, resolved to the path it has on this machine (the first occurrence is the pointer line).
@@ -4413,13 +4414,22 @@ fn trailer_gate(verb: crate::trailer::Verb, verb_name: &str, text: &str) -> Trai
     match policy_in(verb, mode) {
         Action::Refuse => TrailerDecision::Refuse { audit: format!("{verb_name} REFUSED BY THE NEXT-TRAILER GATE: {missing}"), reply },
         Action::WarnAndDeliver => TrailerDecision::Deliver {
-            text: delivered_with_warning(text, why),
+            text: text.to_string(),
+            note: Some(sender_note(why)),
             audit: Some(if softened {
                 format!("{verb_name} DELIVERED WITHOUT A NEXT TRAILER (gates_mode light; strict would refuse): {missing}")
             } else {
                 format!("{verb_name} DELIVERED WITHOUT A NEXT TRAILER: {missing}")
             }),
         },
+    }
+}
+
+/// D633: what the sender is told, with the trailer note after it when there is one.
+fn with_sender_note(out: String, note: Option<String>) -> String {
+    match note {
+        Some(n) => format!("{out}\n\n{n}"),
+        None => out,
     }
 }
 
@@ -4508,9 +4518,10 @@ mod trailer_gate_tests {
     fn d277_light_mode_delivers_with_the_warning_and_marks_the_board_line() {
         for (verb, name) in [(Verb::ChairInject, "chair_inject -> B"), (Verb::CallChair, "call_chair")] {
             match with_mode(crate::trailer::GateMode::Light, || trailer_gate(verb, name, WITHOUT)) {
-                TrailerDecision::Deliver { text, audit: Some(audit) } => {
-                    assert!(text.starts_with(WITHOUT), "the message is delivered whole: {text}");
-                    assert!(text.len() > WITHOUT.len(), "with the warning appended");
+                // AMENDED BY NAME (D633): the warning is no longer appended to the receiver's copy; it is the sender's `note`.
+                TrailerDecision::Deliver { text, audit: Some(audit), note } => {
+                    assert_eq!(text, WITHOUT, "the message is delivered whole and unchanged: {text}");
+                    assert!(note.is_some_and(|n| n.contains(RULE_FILE)), "with the warning going to the sender");
                     assert!(audit.contains("DELIVERED WITHOUT A NEXT TRAILER (gates_mode light; strict would refuse)"), "{audit}");
                 }
                 other => panic!("{name}: not delivered in light mode: {other:?}"),
@@ -4552,15 +4563,53 @@ mod trailer_gate_tests {
     #[test]
     fn call_librarian_without_a_trailer_is_delivered_pointer_first_with_a_board_warning() {
         match trailer_gate(Verb::CallLibrarian, "call_librarian from A", WITHOUT) {
-            TrailerDecision::Deliver { text, audit: Some(line) } => {
-                assert!(text.starts_with(WITHOUT), "the pointer must arrive first and unchanged: {text}");
-                assert!(text.contains(RULE_FILE), "the receiver is not told the rule: {text}");
+            // AMENDED BY NAME (D633): the receiver gets the pointer unchanged; the rule goes to the SENDER in `note`.
+            TrailerDecision::Deliver { text, audit: Some(line), note } => {
+                assert_eq!(text, WITHOUT, "the pointer must arrive first and unchanged: {text}");
+                assert!(note.is_some_and(|n| n.contains(RULE_FILE)), "the sender is not told the rule");
                 assert!(line.contains("call_librarian from A") && line.contains("WITHOUT A NEXT TRAILER"), "{line}");
             }
             TrailerDecision::Deliver { audit: None, .. } => {
                 panic!("delivered with no board line — a warning nobody sees is the silent-absence class")
             }
             TrailerDecision::Refuse { .. } => panic!("a hand-back was refused over its trailer — that destroys the hand-back"),
+        }
+    }
+
+    // ── D633 (fix 5): the trailer note goes to the SENDER; the receiver gets the message unchanged ─────────────────────
+    #[test]
+    fn d633_a_warned_message_reaches_the_receiver_unchanged_and_the_note_goes_to_the_sender() {
+        for (verb, name) in [(Verb::ChairInject, "chair_inject -> B"), (Verb::CallChair, "call_chair"), (Verb::CallLibrarian, "call_librarian from A")] {
+            match with_mode(crate::trailer::GateMode::Light, || trailer_gate(verb, name, WITHOUT)) {
+                TrailerDecision::Deliver { text, audit: Some(_), note: Some(n) } => {
+                    assert_eq!(text, WITHOUT, "{name}: the receiver's copy must be the message, unchanged");
+                    assert!(n.contains("End your next hand-off with `NEXT:") && n.contains(RULE_FILE), "{name}: {n}");
+                }
+                other => panic!("{name}: {other:?}"),
+            }
+        }
+        match trailer_gate(Verb::CallLibrarian, "call_librarian from A", WITH) {
+            TrailerDecision::Deliver { note: None, audit: None, .. } => {}
+            other => panic!("a compliant ring carries no note: {other:?}"),
+        }
+    }
+
+    #[test]
+    fn d633_the_note_is_appended_to_what_the_sender_is_told() {
+        assert_eq!(with_sender_note("delivered to the librarian".to_string(), None), "delivered to the librarian");
+        let n = crate::trailer::sender_note(crate::trailer::Missing::NoTrailer);
+        let out = with_sender_note("delivered to the librarian".to_string(), Some(n.clone()));
+        assert!(out.starts_with("delivered to the librarian") && out.ends_with(&n), "{out}");
+    }
+
+    /// WIRING: each of the three verbs returns the note in ITS OWN tool result (the sender's turn), and only the delivered text is sent.
+    #[test]
+    fn d633_each_verb_returns_the_note_to_its_sender() {
+        let src = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/mcp.rs")).unwrap().replace("\r\n", "\n");
+        for f in ["async fn chair_inject(", "async fn call_chair(", "async fn call_librarian("] {
+            let b = src.split(f).nth(1).unwrap_or_else(|| panic!("{f} moved")).split("\n    }\n").next().unwrap();
+            assert!(b.contains("TrailerDecision::Deliver { text, audit, note } => {"), "{f}: the note is taken from the decision");
+            assert!(b.contains("Content::text(with_sender_note(out, note))"), "{f}: the note goes back to the sender");
         }
     }
 
@@ -4573,7 +4622,7 @@ mod trailer_gate_tests {
         for (verb, msg) in [(Verb::ChairInject, WITH), (Verb::CallLibrarian, WITH), (Verb::CallChair, COLLATION)] {
             assert_eq!(
                 trailer_gate(verb, "v", msg),
-                TrailerDecision::Deliver { text: msg.to_string(), audit: None },
+                TrailerDecision::Deliver { text: msg.to_string(), audit: None, note: None },
                 "{verb:?} altered or audited a compliant message"
             );
         }
@@ -4611,7 +4660,7 @@ mod trailer_gate_tests {
     fn l084_call_chair_with_the_output_line_is_delivered_unchanged() {
         assert_eq!(
             trailer_gate(Verb::CallChair, "call_chair", COLLATION),
-            TrailerDecision::Deliver { text: COLLATION.to_string(), audit: None }
+            TrailerDecision::Deliver { text: COLLATION.to_string(), audit: None, note: None }
         );
     }
 
@@ -4621,7 +4670,7 @@ mod trailer_gate_tests {
         for verb in [Verb::CallLibrarian, Verb::ChairInject] {
             assert_eq!(
                 trailer_gate(verb, "v", WITH),
-                TrailerDecision::Deliver { text: WITH.to_string(), audit: None },
+                TrailerDecision::Deliver { text: WITH.to_string(), audit: None, note: None },
                 "{verb:?} was reached by the collation-only rule"
             );
         }
@@ -4950,7 +4999,8 @@ mod third_place_mount_tests {
         assert!(refuse.contains("THIRD_PLACE_NOT_ECHOED"), "the Third Place is told why its words are not echoed:\n{refuse}");
         let deliver = branch("DigestVerdict::Deliver(d) => {");
         assert!(deliver.contains("THIRD_PLACE_DIGEST_NOTED") && !deliver.contains("(line)"), "{deliver}");
-        for arm in ["TrailerDecision::Deliver { text, audit } => {", "TrailerDecision::Refuse { audit, .. } => {"] {
+        // AMENDED BY NAME (D633): the Deliver arm now also takes the sender's note.
+        for arm in ["TrailerDecision::Deliver { text, audit, note } => {", "TrailerDecision::Refuse { audit, .. } => {"] {
             let tr = branch(arm);
             assert!(tr.contains("THIRD_PLACE_TRAILER_ROW") && !tr.contains("(audit)") && !tr.contains("(line)"), "{arm}:\n{tr}");
         }

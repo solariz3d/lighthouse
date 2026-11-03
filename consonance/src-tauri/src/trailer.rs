@@ -285,13 +285,14 @@ pub fn refusal_text(verb: Verb, why: Missing, message: &str) -> String {
     )
 }
 
-/// The text actually delivered on a return leg with no usable trailer: the message FIRST and unchanged, then a note
-/// the receiver can act on. The note is not addressed to the sender, who has already moved on.
-pub fn delivered_with_warning(message: &str, why: Missing) -> String {
+/// D633 (fix 5): the note for a message delivered with no usable trailer goes to the SENDER, in its own tool result, the
+/// turn it sends. The message itself is delivered UNCHANGED. D627 part 3 measured the old route, where the note was
+/// appended to the receiver's copy: 935 notes received, 0 rings changed, and the chair's `when` compliance fell from 45%
+/// to 3% while it fired, because the one seat that could fix the trailer never saw it.
+pub fn sender_note(why: Missing) -> String {
     format!(
-        "{message}\n\n[NEXT-trailer gate — delivered anyway: {missing}. The rule: {file}, WHAT A HAND-BACK OWES item 6. \
-         The receiver decides the next station; the sender should end with `NEXT: <station> <command> when <condition>`.]",
-        message = message,
+        "[NEXT-trailer gate — your message was delivered, unchanged, but {missing}. The rule: {file}, WHAT A HAND-BACK OWES item 6. \
+         End your next hand-off with `NEXT: <station> <command> when <condition>`.]",
         missing = what_is_missing(why),
         file = RULE_FILE,
     )
@@ -459,12 +460,15 @@ mod tests {
         }
     }
 
+    // AMENDED BY NAME (D633, fix 5): the note no longer rides the receiver's copy (the message is delivered unchanged, pinned in
+    // mcp.rs); it is the SENDER's, and this row now reads the sender's note for the rule.
     #[test]
     fn a_warned_hand_back_is_delivered_whole_with_the_rule_named() {
-        let d = delivered_with_warning(A_RING, Missing::NoTrailer);
-        assert!(d.starts_with(A_RING), "the pointer must arrive first and unchanged: {d}");
-        assert!(d.len() > A_RING.len(), "no warning was added");
-        assert!(d.contains("WHAT A HAND-BACK OWES") && d.contains("item 6") && d.contains(RULE_FILE), "{d}");
+        let n = sender_note(Missing::NoTrailer);
+        assert!(n.contains("delivered, unchanged"), "the sender is told its message still went: {n}");
+        assert!(n.contains("WHAT A HAND-BACK OWES") && n.contains("item 6") && n.contains(RULE_FILE), "{n}");
+        assert!(n.contains("End your next hand-off with `NEXT:"), "addressed to the sender, who can fix it: {n}");
+        assert!(!n.contains(A_RING), "the note carries no copy of the message: {n}");
     }
 
     // ── L084 · THE OUTPUT → NEXT LINE — the keeper, 2026-09-23: the next step comes from the OUTPUT, not the plan ──
