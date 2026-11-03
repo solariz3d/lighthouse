@@ -536,7 +536,10 @@ test('D632 the live-state test knows the plan\'s classes: versions, processes, d
   for (const s of ['D runs 2.1.287 (`claude --version`).', 'The four harnesses are running under the lock.',
     '| `worktrees/t180-land-0431` | the 0.4.31 merge | 1.3 GB |', 'Close Consonance now and the seat will open.',
     'Committed as `01165a09`, and the worktree is clean.', 'nothing was installed, so the hook has no guard',
-    'The watcher is still armed.']) assert.strictEqual(sv.liveState(s), true, s);
+    'The watcher is still armed.',
+    // one sentence per pattern, so dropping any single pattern turns this red (the D632 mutants)
+    'Stress round 1 of 3 is still running.', 'The four harnesses wait under the lock.', 'main.rs is clean vs HEAD.',
+    'WMI reads the RAM at 6000 MT/s.', '`claude doctor` is clean.']) assert.strictEqual(sv.liveState(s), true, s);
   for (const s of ['README.md 92 → 78 lines', 'Committed as `4ca68a9` (11 files, +815 −32).',
     'carrier-drift is 811 lines and eighth-longest', 'The dream cycle skips while a pane is live.'])
     assert.strictEqual(sv.liveState(s), false, s);
