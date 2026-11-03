@@ -1,0 +1,11 @@
+ok 1 - DPR: the backing store is the css size × devicePixelRatio, and the renderer draws at that size
+ok 2 - DPR: a change of devicePixelRatio or of the css size resizes on the next frame
+ok 3 - DPR edges: missing or nonsense DPR is 1; a side is capped at 8192 with the aspect kept; zero size draws nothing
+ok 4 - keys: Ctrl, Alt or Meta with C or B do not switch the camera; plain C and B do
+ok 5 - keys in the frame loop: Ctrl+C leaves the camera where it was; C then moves it
+ok 6 - mount failure: no WebGL throws a PreviewMountError naming the reason, and shows it in the panel
+ok 7 - probe: the head lands in the middle of the build view, which looks along the growth direction
+ok 8 - probe: in overhead (fit to the whole track) the head is in frame
+# tests 8
+# pass 8
+# fail 0
