@@ -161,6 +161,58 @@ it('an unreadable file is a FINDING, not a silent skip', () => {
   assert.ok(report(r).includes('docs/does-not-exist.md'), report(r));
 });
 
+// ── type rows: "*.png  <reason>" allows a file by what it IS, checked by its header bytes ────────
+// D629 (2026-11-03): 294 evidence images, 12 .gz and 6 .ico were never listed, so every run was red
+// and the one real row (a map file invisible to grep for 29 days) was 1 of 313. A row per image
+// cannot keep up with the hand-backs; a row per TYPE can, and the header check keeps it honest.
+
+const PNG_HEAD = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
+const EV_PNG = write('handback/x_evidence/shot.png', Buffer.from([...PNG_HEAD, 0x00, 0x00, 0x00, 0x0d]));
+const EV_GZ = write('handback/x_evidence/run.tap.gz', Buffer.from([0x1f, 0x8b, 0x08, 0x00, 0x00]));
+const EV_ICO = write('handback/x_evidence/app.ico', Buffer.from([0x00, 0x00, 0x01, 0x00, 0x01]));
+const FAKE_PNG = write('handback/x_evidence/notes.png', Buffer.from('a text file\0 named .png\n', 'utf8'));
+const NUL_MD = write('map/B.md', Buffer.from('line\n\0\0\0more\n', 'utf8'));
+
+it('a type row "*.png" allows a NUL-bearing file whose header IS a PNG', () => {
+  const r = run([CLEAN, EV_PNG], '*.png  PNG images, binary by nature\n');
+  assert.deepStrictEqual(r.findings, []);
+  assert.strictEqual(r.ok, true);
+});
+
+it('type rows cover .gz and .ico by their own headers', () => {
+  const r = run([EV_GZ, EV_ICO], '*.gz  gzip archives\n*.ico  Windows icons\n');
+  assert.deepStrictEqual(r.findings, []);
+  assert.strictEqual(r.ok, true);
+});
+
+it('a file NAMED .png whose header is not a PNG still FAILS, and the report says why', () => {
+  const r = run([EV_PNG, FAKE_PNG], '*.png  PNG images\n');
+  assert.strictEqual(r.ok, false);
+  assert.deepStrictEqual(r.findings.map((f) => f.path), [FAKE_PNG]);
+  assert.ok(/header/i.test(report(r)), report(r));
+});
+
+it('with the images allowed by type, the NUL-bearing text file is the ONLY finding', () => {
+  const r = run([CLEAN, EV_PNG, EV_GZ, EV_ICO, NUL_MD], '*.png  PNG\n*.gz  gzip\n*.ico  icons\n');
+  assert.deepStrictEqual(r.findings.map((f) => f.path), [NUL_MD]);
+});
+
+it('a type row for a type with no known header is REFUSED by the parser', () => {
+  assert.throws(() => parseAllow('*.md  markdown is text\n'), /header|type/i);
+});
+
+it('a type row that matches NO tracked file is stale and FAILS', () => {
+  const r = run([CLEAN], '*.png  PNG images\n');
+  assert.strictEqual(r.ok, false);
+  assert.strictEqual(r.stale.length, 1);
+});
+
+it('the green line states how many files a type row allowed — exempted must not read as fixed', () => {
+  const r = run([CLEAN, EV_PNG, EV_GZ], '*.png  PNG\n*.gz  gzip\n');
+  assert.strictEqual(r.ok, true);
+  assert.ok(/2 allowed by type/.test(report(r)), report(r));
+});
+
 console.log('\n  ' + pass + ' passed, ' + fail + ' failed');
 try {
   fs.rmSync(ROOT, { recursive: true, force: true });

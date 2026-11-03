@@ -61,6 +61,31 @@ function atOffset(buf, offset) {
 }
 
 /**
+ * TYPE ROWS (D629, 2026-11-03): a row whose path is `*.<ext>` allows every tracked file with that
+ * extension — but only when the file's first bytes ARE that type. The hand-backs file evidence
+ * images by the hundred, none were ever listed, and so every run was red: 312 image rows buried the
+ * one real one, a map file invisible to grep for 29 days. A row per image cannot keep up; a row per
+ * type can, and the header check keeps a text file named `.png` from hiding behind it.
+ * A type with no entry here has no header to check, so a row for it is refused.
+ */
+const MAGIC = {
+  png: [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a],
+  gz: [0x1f, 0x8b],
+  ico: [0x00, 0x00, 0x01, 0x00],
+};
+
+/** The extension a type row names (`*.png` -> 'png'), or null for an ordinary path row. */
+function typeOf(rowPath) {
+  const m = /^\*\.([A-Za-z0-9]+)$/.exec(rowPath);
+  return m ? m[1].toLowerCase() : null;
+}
+
+function hasMagic(buf, ext) {
+  const sig = MAGIC[ext];
+  return !!sig && buf.length >= sig.length && sig.every((b, i) => buf[i] === b);
+}
+
+/**
  * The allow-list, validated BEFORE use (L061 R3: a malformed row is not a typo, it is a silent
  * re-interpretation). `null` or missing text is an empty list, never a crash — a guard that dies
  * when its data file is absent is a guard that gets deleted.
@@ -80,7 +105,14 @@ function parseAllow(text) {
           `reason — an exemption nobody can read is an exemption nobody can retire: ${JSON.stringify(line)}`
       );
     }
-    rows.push({ path: m[1], reason: m[2].trim(), line: i + 1 });
+    const ext = typeOf(m[1]);
+    if (ext !== null && !MAGIC[ext]) {
+      throw new Error(
+        `text-census.allow line ${i + 1}: "${m[1]}" is a type row for a type with no known header ` +
+          `(known: ${Object.keys(MAGIC).map((e) => '*.' + e).join(', ')}) — without one, any file of that name would pass`
+      );
+    }
+    rows.push({ path: m[1], reason: m[2].trim(), line: i + 1, ext });
   }
   return rows;
 }
@@ -90,11 +122,14 @@ function parseAllow(text) {
  * it over a temp dir and the CLI drives it over `git ls-files`.
  */
 function census({ root, files, allow }) {
-  const allowed = new Map(allow.map((r) => [r.path, r]));
+  const allowed = new Map(allow.filter((r) => !r.ext).map((r) => [r.path, r]));
+  const byType = new Map(allow.filter((r) => r.ext).map((r) => [r.ext, r]));
+  const extOf = (rel) => path.extname(rel).slice(1).toLowerCase();
   const tracked = new Set(files);
   const findings = [];
   const allowedClean = [];
   const unreadable = [];
+  let allowedByType = 0;
 
   for (const rel of files) {
     let buf;
@@ -111,12 +146,21 @@ function census({ root, files, allow }) {
       continue;
     }
     if (row) continue; // allowed, and it really is binary
+    const typeRow = byType.get(extOf(rel));
+    if (typeRow && hasMagic(buf, typeRow.ext)) {
+      allowedByType++;
+      continue;
+    }
     const { line, col } = atOffset(buf, offset);
-    findings.push({ path: rel, offset, line, col, size: buf.length });
+    const finding = { path: rel, offset, line, col, size: buf.length };
+    if (typeRow) finding.badHeader = typeRow.ext;
+    findings.push(finding);
   }
 
-  // A listed path that is no longer tracked. Its own failure, independent of the scan's result.
-  const stale = allow.filter((r) => !tracked.has(r.path));
+  // A listed path that is no longer tracked, or a type row no tracked file matches. Its own
+  // failure, independent of the scan's result.
+  const extsTracked = new Set(files.map(extOf));
+  const stale = allow.filter((r) => (r.ext ? !extsTracked.has(r.ext) : !tracked.has(r.path)));
 
   return {
     findings,
@@ -125,6 +169,7 @@ function census({ root, files, allow }) {
     unreadable,
     scanned: files.length,
     allowed: allow.length,
+    allowedByType,
     ok: findings.length === 0 && stale.length === 0 && unreadable.length === 0,
   };
 }
@@ -141,6 +186,9 @@ function report(r) {
     for (const f of r.findings) {
       out.push(`  ${f.path}`);
       out.push(`      byte ${f.offset} of ${f.size}  (line ${f.line}, col ${f.col})`);
+      if (f.badHeader) {
+        out.push(`      named .${f.badHeader}, but its header is not a ${f.badHeader.toUpperCase()}, so the *.${f.badHeader} row does not cover it`);
+      }
     }
     out.push(
       '  Repair the file, or — only if it is genuinely binary — add a row to',
@@ -165,7 +213,7 @@ function report(r) {
   if (r.ok) {
     out.push(
       `text-census: ${r.scanned} tracked file(s) scanned, 0 with a raw NUL, ${r.allowed} allowed ` +
-        '(allowed is NOT fixed).'
+        `(${r.allowedByType || 0} allowed by type, by their header bytes; allowed is NOT fixed).`
     );
   }
   return out.join('\n');
