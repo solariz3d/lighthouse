@@ -448,3 +448,7 @@ General form: a scan in a chain must exit nonzero on a hit; and the hand-back is
 ### From a wheel on p41's apron the new hull cut looks almost like the old export: the cut shows from beside the road and in a slice, not at wheel height
 2026-11-02, D622 — textured renders of ELYSIUM old (a7c986de) and new (384fdb1f, still 33 pairs by A's int616) from identical cameras; the x-ray of the 26 crossing hull triangles shows ~6 m through the apron beside the road against one small old patch; the cut at x 38 shows the hull through the apron. Could be wrong for a driver whose eye sits higher than 0.4 m, or on another part of the apron.
 → `exo_memory/handback/p-d622-crossing-renders-O_2026-11-02.md`
+
+### What runs every turn mostly fires without changing anything: of 10 pulse item classes only QUEUED moved a seat, and the owed lines are unactionable because idle seats get only "not work" keep-warms
+2026-11-03, D627 part 3 — 5,241 prompts since 10-20 (scan.js/analyze.js); STALE 4,577 fires, 1 indirect use; trailer note 935, 0 changes, compliance fell 45%→3%; sources-gate 1,783 silent warns; UNRECEIVED false 15 h; digests (167 librarian cites) and QUEUED earn. Could be wrong where a seat acted on the pulse without naming it.
+→ `exo_memory/handback/p-d627-p3-everyturn-O_2026-11-03.md`
