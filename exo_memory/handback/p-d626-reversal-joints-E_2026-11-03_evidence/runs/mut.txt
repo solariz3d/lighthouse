@@ -1,0 +1,114 @@
+TAP version 13
+# Subtest: CONTROL: the whole of core_bank_corners.test.js passes on an unmutated copy of src/, tools/ and app/
+ok 1 - CONTROL: the whole of core_bank_corners.test.js passes on an unmutated copy of src/, tools/ and app/
+  ---
+  duration_ms: 15801.0039
+  type: 'test'
+  ...
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in)
+ok 2 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in)
+  ---
+  duration_ms: 305.8029
+  type: 'test'
+  ...
+# Subtest: mutant C1 no corner is rounded: applied, and caught by "row 1|row 2"
+ok 3 - mutant C1 no corner is rounded: applied, and caught by "row 1|row 2"
+  ---
+  duration_ms: 1194.6328
+  type: 'test'
+  ...
+# C1 no corner is rounded: 2 of 3 run tests failed
+# Subtest: mutant C2 a window never grows past its first try: applied, and caught by "row 1|row 2"
+ok 4 - mutant C2 a window never grows past its first try: applied, and caught by "row 1|row 2"
+  ---
+  duration_ms: 1422.4444
+  type: 'test'
+  ...
+# C2 a window never grows past its first try: 2 of 3 run tests failed
+# Subtest: mutant C3 the bar is ten times looser: applied, and caught by "row 1|row 2"
+ok 5 - mutant C3 the bar is ten times looser: applied, and caught by "row 1|row 2"
+  ---
+  duration_ms: 1329.7974
+  type: 'test'
+  ...
+# C3 the bar is ten times looser: 2 of 3 run tests failed
+# Subtest: mutant C4 windows that would overlap are kept apart: applied, and caught by "row 1|row 2|row 3"
+ok 6 - mutant C4 windows that would overlap are kept apart: applied, and caught by "row 1|row 2|row 3"
+  ---
+  duration_ms: 1810.6952
+  type: 'test'
+  ...
+# C4 windows that would overlap are kept apart: 1 of 4 run tests failed
+# Subtest: mutant C6 the segments carry no roll rate, so each eases its roll to rest at its ends: applied, and caught by "row 6"
+ok 7 - mutant C6 the segments carry no roll rate, so each eases its roll to rest at its ends: applied, and caught by "row 6"
+  ---
+  duration_ms: 470.6745
+  type: 'test'
+  ...
+# C6 the segments carry no roll rate, so each eases its roll to rest at its ends: 1 of 1 run tests failed
+# Subtest: mutant C7 a window may cross a joint: applied, and caught by "row 7|row 8"
+ok 8 - mutant C7 a window may cross a joint: applied, and caught by "row 7|row 8"
+  ---
+  duration_ms: 4026.0737
+  type: 'test'
+  ...
+# C7 a window may cross a joint: 2 of 2 run tests failed
+# Subtest: mutant C8 a corner at a joint is rounded as if inside a piece: applied, and caught by "row 1|row 2|row 7|row 8"
+ok 9 - mutant C8 a corner at a joint is rounded as if inside a piece: applied, and caught by "row 1|row 2|row 7|row 8"
+  ---
+  duration_ms: 14243.354
+  type: 'test'
+  ...
+# C8 a corner at a joint is rounded as if inside a piece: 1 of 5 run tests failed
+# Subtest: mutant C13 a corner that reaches two pins is rounded at the first only: applied, and caught by "row 2"
+ok 10 - mutant C13 a corner that reaches two pins is rounded at the first only: applied, and caught by "row 2"
+  ---
+  duration_ms: 520.7827
+  type: 'test'
+  ...
+# C13 a corner that reaches two pins is rounded at the first only: 1 of 1 run tests failed
+# Subtest: mutant C9 the bank's own turning points are not pinned: applied, and caught by "row 9"
+ok 11 - mutant C9 the bank's own turning points are not pinned: applied, and caught by "row 9"
+  ---
+  duration_ms: 399.1552
+  type: 'test'
+  ...
+# C9 the bank's own turning points are not pinned: 1 of 1 run tests failed
+# Subtest: mutant C11 at a joint a window starts from whatever acceleration the bank has there: applied, and caught by "row 2|row 10"
+ok 12 - mutant C11 at a joint a window starts from whatever acceleration the bank has there: applied, and caught by "row 2|row 10"
+  ---
+  duration_ms: 1200.063
+  type: 'test'
+  ...
+# C11 at a joint a window starts from whatever acceleration the bank has there: 1 of 2 run tests failed
+# Subtest: mutant C12 a window that overshoots is used: applied, and caught by "row 2|row 10"
+ok 13 - mutant C12 a window that overshoots is used: applied, and caught by "row 2|row 10"
+  ---
+  duration_ms: 1081.7719
+  type: 'test'
+  ...
+# C12 a window that overshoots is used: 1 of 2 run tests failed
+# Subtest: mutant C10 a corner inside a piece is first tried where the runs meet, whether or not that covers it: applied, and caught by "row 2"
+ok 14 - mutant C10 a corner inside a piece is first tried where the runs meet, whether or not that covers it: applied, and caught by "row 2"
+  ---
+  duration_ms: 453.6768
+  type: 'test'
+  ...
+# C10 a corner inside a piece is first tried where the runs meet, whether or not that covers it: 1 of 1 run tests failed
+# Subtest: mutant C5 the cache keeps a piece whose corner the next piece rounds: applied, and caught by "row 5"
+ok 15 - mutant C5 the cache keeps a piece whose corner the next piece rounds: applied, and caught by "row 5"
+  ---
+  duration_ms: 456.0947
+  type: 'test'
+  ...
+# C5 the cache keeps a piece whose corner the next piece rounds: 1 of 1 run tests failed
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 44781.5042
+DONE

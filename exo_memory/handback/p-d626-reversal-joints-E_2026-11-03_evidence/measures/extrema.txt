@@ -1,0 +1,10 @@
+t180-e624-base ribbon.t180track	turning points 0, kept within 0.05° 0
+t180-e624 ribbon.t180track	turning points 0, kept within 0.05° 0
+t180-e624-base eq-ELYSIUM NEW.t180track	turning points 2, kept within 0.05° 2; worst 0.002° at s 22667 (p38: document -216.96°, built -216.96°)
+t180-e624 eq-ELYSIUM NEW.t180track	turning points 2, kept within 0.05° 2; worst 0.001° at s 22667 (p38: document -216.96°, built -216.96°)
+t180-e624-base eq-TEST 10.t180track	turning points 7, kept within 0.05° 7; worst 0.003° at s 8879 (p20: document -0.80°, built -0.80°)
+t180-e624 eq-TEST 10.t180track	turning points 7, kept within 0.05° 7; worst 0.001° at s 9887 (p22: document 5.19°, built 5.19°)
+t180-e624-base eq-CRAZY TEST.t180track	turning points 0, kept within 0.05° 0
+t180-e624 eq-CRAZY TEST.t180track	turning points 0, kept within 0.05° 0
+t180-e624-base ely-fixture.t180track	turning points 0, kept within 0.05° 0
+t180-e624 ely-fixture.t180track	turning points 0, kept within 0.05° 0
