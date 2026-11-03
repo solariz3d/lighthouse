@@ -1,0 +1,13 @@
+heavy-run: WARNING: C:\ has 47.3 GB free, under 50 GB; run node consonance/tools/janitor.js
+CONTROL: tests 7, pass 7, fail 0
+P1 the text record's own tool is ignored: caught (1 of 1 failed, pattern "read forward")
+P2 a tool after the last text is ignored: caught (1 of 1 failed, pattern "read forward")
+P3 the prefilter skips every record: caught (2 of 2 failed, pattern "pane-status")
+P4 pane-status reads the whole file as one string again: caught (1 of 1 failed, pattern "past the string limit instead of crashing")
+U1 a read error is skipped: caught (2 of 2 failed, pattern "cannot be read")
+U2 a stat error is skipped: NOT CAUGHT (0 of 2 failed, pattern "cannot be read|cannot be stat")
+U3 the command line lets the error through uncaught: NOT CAUGHT (0 of 1 failed, pattern "command line")
+U4 usage reads the whole file as one string again, skipping on error: caught (1 of 1 failed, pattern "counts every response")
+O1 offramp-check reads the whole file as one string again: caught (1 of 1 failed, pattern "offramp-check")
+applied 9 / caught 7 / NOT APPLIED 0
+MUT-END
