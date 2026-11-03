@@ -434,3 +434,8 @@ General form: a count of "unconfirmed" is only as good as the signal it waits fo
 ### A station gate that cannot name the lap a call serves forces the caller to hold every lap; give the call its lap and gate on that one
 2026-11-02, D621 — lighthouse d621-o 5c1aa36e: chair_inject reads its lap (arg, "Ledger Dnnn", first id) and is refused only when that lap is open and another station holds it; the inject receipt reads the pane's own user row on the board first. cargo test 1175/0. Could be wrong for a packet that names two laps without a Ledger line (the first wins).
 → `exo_memory/handback/p-d621-bookkeeping-O_2026-11-02.md`
+
+### A lap read from free text must not open a gate the way a named lap does: "D615 is done; also" names a lap it does not serve
+2026-11-02, D621 bounce — lighthouse d621-o 846df413: LapSource Named (lap argument, "Ledger Dnnn") keeps the filed/new allowance; Inferred (first id in the text) counts only if open, else the old any-lap rule. Two rows red at 5c1aa36e; cargo 1181/0. Could be wrong for a packet whose Ledger line itself names the wrong lap (Named is trusted as stated).
+General form: an allowance keyed to a value is only as safe as the way the value was found; carry the provenance into the decision.
+→ `exo_memory/handback/p-d621-bookkeeping-O_2026-11-02.md` §Gate fallback

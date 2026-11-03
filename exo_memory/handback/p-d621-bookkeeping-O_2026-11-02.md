@@ -62,7 +62,32 @@ checked: `cargo test --bin consonance` (BelowNormal, under the heavy-run lock, t
 - It does not remove the chair's own habit. A dispatch that names its lap no longer needs the retakes, but the chair has to stop writing them.
 - It does not touch `lap-row.js`, which writes one lap per call and was not the batch.
 
+## Gate fallback (the librarian's bounce, 18:19): a lap read from free text no longer opens the gate
+
+**The hole, as the librarian found it.** At `5c1aa36e` the Unknown/Filed allowance applied to ANY lap the dispatch named, and with no "Ledger" line that was the first lap id anywhere in the text. "D615 is done; also …", or a typo like "D6177", passed into a pane working another lap, where the old any-lap rule refused it while the chair held nothing.
+
+**The fix** (`lap_holders::LapSource`, `lap_of_text` → `Option<(String, LapSource)>`, `station_allows_for_lap(.., lap: Option<(&LapState, LapSource)>)`, `mcp.rs` `chair_inject` and `auth_station_for`):
+- **Named:** the explicit `lap` argument, or the id after "Ledger ". A lap that is open passes only if its holder is the chair; a filed lap or one not on the ledger yet passes.
+- **Inferred:** the first lap id in free text. It counts only if that lap is open (its holder decides). Filed or Unknown: **the old rule** (`station_allows`) decides, exactly as for a dispatch naming no lap.
+- The refusal on the board still names the lap and its holder for an open lap; an inferred filed/unknown lap refused by the old rule gets the old message, since that lap is not the reason.
+
+**Test rows, `lap_holders::tests`, one per case** (helper `gate()` composes the gate as `chair_inject` does). Red first:
+checked: `S\d621\red.out` (at 5c1aa36e plus the rows only) → 16 passed, **2 FAILED**: `free_text_naming_a_filed_lap_falls_back_to_the_old_rule`, `free_text_naming_a_lap_not_on_the_ledger_falls_back_to_the_old_rule`.
+- `an_explicit_lap_argument_naming_a_filed_or_new_lap_is_allowed`;
+- `a_ledger_line_naming_a_filed_or_new_lap_is_allowed`;
+- **`free_text_naming_a_filed_lap_falls_back_to_the_old_rule`** (red at 5c1aa36e): "D613 is done; also …" refused while the panes hold D617 and the chair holds nothing; allowed when the chair holds a lap;
+- **`free_text_naming_a_lap_not_on_the_ledger_falls_back_to_the_old_rule`** (red at 5c1aa36e): "D6177 …", "D916 …";
+- `free_text_naming_an_open_lap_counts`: allowed when the chair holds it, refused when the panes do;
+- `a_packet_naming_a_filed_lap_then_ledger_an_open_one_is_decided_by_the_ledger_lap`: "D613 checked …; Ledger D614: …" is allowed when the chair holds D614 and refused when the panes do.
+
+**Amended by name, reason in place:** `a_dispatch_names_its_lap_by_its_ledger_line_first` (asserts the source too), `a_dispatch_for_lap_x_is_allowed_while_the_panes_hold_lap_y`, `a_ring_into_a_lap_another_station_holds_is_still_refused` and `a_dispatch_naming_no_lap_keeps_the_old_rule` (new argument shape, same verdicts); in `mcp.rs`, `chair_inject_is_gated_on_the_station` (new call text, plus a check that the explicit argument is Named) and `the_third_place_ring_is_not_held_to_the_loop_station` (new signature).
+
+checked: `S\d621\green.out` (`cargo test --bin consonance station`) → 16 passed, 0 failed: the wiring tests and the older station rows. That filter misses most of the new rows, whose names do not say "station" (my correction to my own first reading of it). They ran in the whole binary below.
+checked: `S\d621\cargo-test2.out` (`cargo test --bin consonance`, BelowNormal, under the lock) → **1181 passed, 0 failed, 6 ignored**, 179 s; all six new rows `ok`.
+
+**Commit:** d621-o **`846df413`** on top of `5c1aa36e` (2 paths, `lap_holders.rs` and `mcp.rs`), NOT pushed. Private-term scan of the diff: 0 / 0 / 0 / 0. No exe rebuilt or swapped.
+
 `S` = `C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-36313935\c88002b1-74d8-4036-8cc0-f64aefbeabff\scratchpad`.
 
-SOURCES: `consonance/src-tauri/src/mcp.rs` (required_station, auth_station, chair_inject), `lap_holders.rs`, `main.rs` (chain_holders, await_render, delivery_receipt, chair_inject_exec, the tailer's board push), `consonance/tools/lap-row.js` (gateVerdict), `S\d621\cargo-test.out`
-NEXT: the librarian checks the diff and the tests when this ring is read; the app is rebuilt with it at the keeper's restart word, not before
+SOURCES: `consonance/src-tauri/src/mcp.rs` (required_station, auth_station, auth_station_for, chair_inject), `lap_holders.rs` (lap_of_text, station_allows_for_lap), `main.rs` (chain_holders, await_render, delivery_receipt, chair_inject_exec, the tailer's board push), `consonance/tools/lap-row.js` (gateVerdict), `S\d621\cargo-test.out`, `S\d621\red.out`, `S\d621\green.out`, `S\d621\cargo-test2.out`
+NEXT: the librarian checks the gate-fallback diff (846df413) and its six rows when this ring is read; the app is rebuilt with it at the keeper's restart word, not before
