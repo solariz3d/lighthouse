@@ -452,3 +452,7 @@ General form: a scan in a chain must exit nonzero on a hit; and the hand-back is
 ### What runs every turn mostly fires without changing anything: of 10 pulse item classes only QUEUED moved a seat, and the owed lines are unactionable because idle seats get only "not work" keep-warms
 2026-11-03, D627 part 3 — 5,241 prompts since 10-20 (scan.js/analyze.js); STALE 4,577 fires, 1 indirect use; trailer note 935, 0 changes, compliance fell 45%→3%; sources-gate 1,783 silent warns; UNRECEIVED false 15 h; digests (167 librarian cites) and QUEUED earn. Could be wrong where a seat acted on the pulse without naming it.
 → `exo_memory/handback/p-d627-p3-everyturn-O_2026-11-03.md`
+
+### A continuity test keyed only to files cannot measure what only the carried conversation holds: every key in my 34 questions is in a room file the ROOM arm may read
+2026-11-03, D627 part 4b — 34 questions (state 7, his words 12, judgment 9, lesson 6), keys path:line in the librarian notebook 1628-1776, where_we_are and plan_room_value, pinned at d0ee92de; questions sha256 6a599d28…9584. Could be wrong if the ROOM arm cannot find the notebook lines in practice, which is what the test measures.
+→ `exo_memory/handback/p-d627-p4b-questions-O_2026-11-03.md`
