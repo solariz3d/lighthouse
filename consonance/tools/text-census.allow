@@ -23,3 +23,11 @@ essay/sim/out/fig6_hysteresis.png  PNG, a simulation figure written by essay/sim
 essay/sim/out/fig7_basin.png  PNG, a simulation figure written by essay/sim
 essay/sim/out/fig8_tracking.png  PNG, a simulation figure written by essay/sim
 essay/sim/out/fig9_gain_vs_lag.png  PNG, a simulation figure written by essay/sim
+
+# Type rows (D629, 2026-11-03): every tracked file of the type, checked by its header bytes, so a
+# text file merely NAMED .png still fails. They exist because the hand-backs file evidence images by
+# the hundred and no row per image ever kept up: 312 unlisted image rows made every run red and
+# buried the one real finding.
+*.png  PNG images (hand-back evidence screenshots), binary by nature
+*.gz  gzip archives (hand-back evidence, compressed TAP and logs), binary by nature
+*.ico  Windows icons, binary by nature
