@@ -1732,3 +1732,73 @@ test('UNRECEIVED — a receipt row that ends on the send line (sent, or sent and
   const row = RECV(T0 + 2 * MIN, RING2, 'B'); row.text += '\n[sent 2026-10-12T07:25:51Z · Oct 12, 1:25 AM local]';
   assert.doesNotMatch(qline([SEND(T0, 'Unconfirmed', RING2, 'B'), row], T0 + 15 * MIN), /UNRECEIVED/, 'a pane ring too');
 });
+
+// ── D628: the owed visit reads the pulse's own collation (O, 2026-11-03) ─────────────────────────────
+// The keep-warm actuator (main.rs keep_warm_send) asks `chain-status.js --owed-json` whether the seat it
+// is about to visit is OWED an action. The answer must be the SAME verdict the pulse line prints, from
+// the same code, so these rows drive owedVisit and line() over one fixture and compare.
+const CALL_LIB_AT = (ts, letter, p) => ({ pane: 'chair', role: 'committee', ts,
+  text: 'call_librarian ' + letter + ' -> LIB [Received]: "D900 part 1: ' + p + ' (lighthouse 1234abcd)…"' });
+
+test('D628 owedVisit: holder panes, B still owing, names the lap and exactly the pulse\'s owing letters', () => {
+  const s = store(WORKING(1000), [DISPATCH(1100, A), DISPATCH(1200, B), CALL_LIB_AT(1300, 'A', 'exo_memory/handback/p-d900-a-A_2026-11-03.md')]);
+  const v = mod().owedVisit({ ledger: s.ledger, now: 9e6 });
+  assert.strictEqual(v.state, 'owing');
+  assert.strictEqual(v.lap, 'L900');
+  assert.deepStrictEqual(v.owing, ['B']);
+  assert.match(mod().line({ ledger: s.ledger, now: 9e6, dirty: 0 }).text, /handbacks 1 of 2 \(owing B\)/, 'the pulse and the visit disagree');
+  s.cleanup();
+});
+
+test('D628 owedVisit: all in, the round with each letter\'s newest hand-back pointer', () => {
+  const s = store(WORKING(1000), [DISPATCH(1100, A), DISPATCH(1200, B),
+    CALL_LIB_AT(1300, 'A', 'exo_memory/handback/p-d900-old-A_2026-11-03.md'),
+    CALL_LIB_AT(1350, 'A', 'exo_memory/handback/p-d900-a-A_2026-11-03.md'),
+    HANDBACK(1400, 'B')]);
+  const v = mod().owedVisit({ ledger: s.ledger, now: 1400 + 65 * 60000 });
+  assert.strictEqual(v.state, 'all-in');
+  assert.deepStrictEqual(v.round, ['A', 'B']);
+  assert.deepStrictEqual(v.pointers, { A: 'exo_memory/handback/p-d900-a-A_2026-11-03.md' }, 'newest pointer per letter; a bare post carries none');
+  assert.match(mod().line({ ledger: s.ledger, now: 1400 + 65 * 60000, dirty: 0 }).text, /HANDBACKS IN, NOT COLLATED — 2 of 2 \(A,B\)/);
+  s.cleanup();
+});
+
+test('D628 owedVisit: the panes are not the holder, so nobody is owed a visit (the pulse prints no hand-back count either)', () => {
+  const lap = [WORKING(1000)[0], { lap: 'L900', stage: 'chain', at: 1000, chain: 'dispatched', holder: 'chair' }];
+  const s = store(lap, [DISPATCH(1100, A)]);
+  const v = mod().owedVisit({ ledger: s.ledger, now: 9e6 });
+  assert.strictEqual(v.state, 'n/a');
+  assert.ok(!v.owing && !v.round, JSON.stringify(v));
+  assert.ok(!/HANDBACKS IN|handbacks /.test(mod().line({ ledger: s.ledger, now: 9e6, dirty: 0 }).text));
+  s.cleanup();
+});
+
+test('D628 owedVisit: an unreadable board is unknown, never an owed or all-in claim', () => {
+  const s = store(WORKING(1000), [], { rawBoard: '{not json' });
+  const v = mod().owedVisit({ ledger: s.ledger, now: 9e6 });
+  assert.strictEqual(v.state, 'unknown', JSON.stringify(v));
+  s.cleanup();
+});
+
+test('D628 --owed-json prints owedVisit\'s object on stdout, and nothing else', () => {
+  const s = store(WORKING(1000), [DISPATCH(1100, A), DISPATCH(1200, B), CALL_LIB_AT(1300, 'A', 'exo_memory/handback/p-d900-a-A_2026-11-03.md')]);
+  const r = spawnSync(NODE, [READER, '--owed-json', '--ledger', s.ledger], { encoding: 'utf8', env: Object.assign({}, process.env) });
+  assert.strictEqual(r.status, 0, r.stderr);
+  const v = JSON.parse(r.stdout);
+  assert.strictEqual(v.state, 'owing');
+  assert.deepStrictEqual(v.owing, ['B']);
+  s.cleanup();
+});
+
+test('D628 owedVisit: a pointer rung before the anchor (an earlier, filed lap) is not this round\'s hand-back path', () => {
+  const lap = [
+    { lap: 'L899', stage: 'open', at: 500, initiator: 'human', inquiry: 'x', guess: ['a/b.js'], blind: true, head: null },
+    { lap: 'L899', stage: 'chain', at: 900, chain: 'filed', holder: 'chair' },
+    ...WORKING(1000),
+  ];
+  const s = store(lap, [CALL_LIB_AT(800, 'A', 'exo_memory/handback/p-d899-old-A_2026-11-02.md'), DISPATCH(1100, A), HANDBACK(1300, 'A')]);
+  const v = mod().owedVisit({ ledger: s.ledger, now: 1300 + 5 * 60000 });
+  assert.strictEqual(v.state, 'all-in', JSON.stringify(v));
+  assert.deepStrictEqual(v.pointers, {}, 'the last lap\'s pointer was offered as this round\'s');
+  s.cleanup();
+});
