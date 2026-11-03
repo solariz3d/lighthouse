@@ -207,7 +207,7 @@ function releaseLock(dir, token) {
 
 /** One job, start to finish. Always resolves; always releases the lock; writes exactly one row. */
 async function processJob(job, deps = {}) {
-  const t0 = Date.now(), base = { seat: job.seat || null, tool: job.tool, ringSha: job.ringSha || sha256(String(job.text || '')) };
+  const t0 = Date.now(), base = { seat: job.seat || null, tool: job.tool, ringSha: job.ringSha || sha256(String(job.text || '')), toolUseId: job.toolUseId || null };   // D631: toolUseId lets the same-turn note find this row
   const dir = job.dir;
   try {
     if (!dir) return;

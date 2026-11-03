@@ -439,7 +439,8 @@ test('IN-TURN: a denied ring, then the read, then the re-send in the SAME turn i
 });
 
 test('THE SECOND READER STILL FIRES: both hooks run on the same denied ring in parallel; the gate denies and the second reader still starts its worker and prints nothing', async () => {
-  const dir = tmpDir(), text = 'ring with no sources line';
+  // AMENDED 2026-11-03 (D631): the second reader now reads only a ring with a relayed figure or a status claim, so the ring carries one.
+  const dir = tmpDir(), text = 'ring with no sources line; the suite is all green';
   const stub = path.join(dir, 'stub-worker.js');
   fs.writeFileSync(stub, "const fs=require('fs'),path=require('path');let b='';process.stdin.on('data',c=>b+=c).on('end',()=>{const j=JSON.parse(b);fs.writeFileSync(path.join(j.dir,'stub-ran-'+j.ringSha.slice(0,8)),'1');try{fs.unlinkSync(path.join(j.dir,'second-reader.lock'));}catch(_){}process.exit(0);});");
   const input = payloadOf(dir, [USER('go')], { text });
@@ -520,7 +521,8 @@ test('D215 SECOND READER: chair_inject does NOT trigger the second reader (its t
   assert.strictEqual(r1.status, 0); assert.strictEqual(r1.stdout.trim(), '');
   await new Promise((r) => setTimeout(r, 800));
   assert.ok(!fs.existsSync(path.join(dir, 'stub-ran-' + INJECT)), 'the second reader started a worker on a dispatch'); assert.ok(!fs.existsSync(path.join(dir, 'second-reader.jsonl')), 'the second reader logged a dispatch');
-  spawnSync(process.execPath, [SR_HOOK], { input: payloadOf(dir, [USER('go')], { text: 'a hand-back ring' }), env, encoding: 'utf8', timeout: 15000 });
+  // AMENDED 2026-11-03 (D631): an in-class ring (a status claim), since the second reader no longer reads a ring outside the narrowed class.
+  spawnSync(process.execPath, [SR_HOOK], { input: payloadOf(dir, [USER('go')], { text: 'a hand-back ring; the suite is all green' }), env, encoding: 'utf8', timeout: 15000 });
   const end = Date.now() + 6000; while (Date.now() < end && !fs.existsSync(path.join(dir, 'stub-ran-' + LIB))) await new Promise((r) => setTimeout(r, 50));
   assert.ok(fs.existsSync(path.join(dir, 'stub-ran-' + LIB)), 'control: the second reader no longer fires on a hand-back ring');
 });

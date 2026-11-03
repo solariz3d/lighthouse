@@ -79,6 +79,52 @@ function releaseLock(dir, token) {
   } catch (_) { /* already gone */ }
 }
 
+// THE NARROWED TRIGGER (D631, 2026-11-03; plan_room_fixes_2_5_2026-11-03.md, the librarian's ruling NARROW, not stop, the keeper's veto open).
+// D627 part 1 scored 80 sampled rings: 8 held a real error, 72 did not, and the reader's value sat in RELAYED FIGURES and STATUS CLAIMS ("all
+// green", "still runs", "refuses", a pane's number repeated). The model call now runs only on a ring with at least one sentence of that class.
+// It is a lexical test on purpose: deterministic, free, and re-runnable over the ledger's past rings (the replay in the D631 hand-back).
+//   STATUS          a pass/fail/green/red state, a "still"/"no longer" state, refuses/blocks/crashed/hangs, is live/installed/landed/pushed/fixed/broken.
+//   RELAYED FIGURE  a sentence with a number (after paths, shas, dates, times and packet ids are taken out) that is attributed to another
+//                   seat or source (A's, pane O, the librarian, per, reports, found, measured ...); on call_chair (the librarian relaying the
+//                   panes) any number is relayed.
+// A sentence marked `inferred:` is out (the question ignores it). Everything else is `skipped-class`: one row, no worker.
+const NOT_A_FIGURE = [
+  /\b[A-Za-z]:[\\/][^\s,;)]*/g,                                   // a Windows path
+  /(?:^|\s)[\w.~-]*[\\/][\w./\\~:-]+/g,                            // a relative path (it has a separator)
+  /\b[\w.-]+\.(?:md|js|rs|json|jsonl|ps1|py|txt|toml|log|exe|html|css|ts)(?::\d+(?:-\d+)?)?\b/gi,   // a file name, with its :line
+  /\b\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?Z?)?/g, // a date or timestamp
+  /\b\d{1,2}:\d{2}(?::\d{2})?Z?\b/g,                               // a clock time
+  /\b(?=[0-9a-f]*\d)(?=[0-9a-f]*[a-f])[0-9a-f]{7,64}\b/gi,          // a sha (hex with a letter and a digit)
+  /\b[0-9a-f]{8,64}\b/gi,                                          // an all-digit hex run of sha length
+  /\b[A-Z]{1,2}\d{2,4}[a-z]?\b/g,                                  // a packet or lap id: D631, L098, Q26
+  /^\s*(?:\d+[.)]|\(\w\))\s/gm,                                    // a list marker
+];
+const FIGURE = /(?:^|[^\w.])\d+(?:[.,/]\d+)*%?/;
+const STATUS = [
+  /\b(?:all|is|are|stays?|still|now|went|goes|turned|suite|tests?|cargo test|mutants?)\b[^.\n]{0,40}\b(?:green|red)\b/i,
+  /\bgreen\b/i,
+  /\b\d+\s*(?:\/\s*\d+\s*)?(?:pass(?:ed|es|ing)?|fail(?:ed|s|ing|ures?)?|caught|green)\b/i,
+  /\b(?:pass(?:es|ed)?|fail(?:s|ed)?)\b/i,
+  /\b(?:still|no longer|now)\s+(?:\w+\s+){0,2}(?:runs?|running|works?|holds?|fires?|installed|live|open|broken|fails?|passes?|refuses?|blocks?|red|green|there|waits?|held)\b/i,
+  /\b(?:refuses?|refused|denies|denied|blocks|blocked|crash(?:es|ed)?|hangs|hung|timed out)\b/i,
+  /\b(?:is|are|was|were|now|still)\s+(?:not\s+)?(?:live|installed|landed|pushed|merged|fixed|broken|stale|clean|in sync|running|stopped|held|released)\b/i,
+];
+const RELAY = /\b[A-Z]'s\b|\b(?:pane|seat)\s+[A-Z]\b|\b(?:librarian|chair|keeper|his|their|per|according to|reports?|reported|found|finds|measured|says|said|counted|scored|registered|quotes?|quoted|relayed|confirms?|confirmed)\b/i;
+
+/** Is this ring in the narrowed class? -> { inClass, why: 'status' | 'relayed-figure' | null }. Never throws. */
+function classify(text, tool) {
+  if (typeof text !== 'string' || !text.trim()) return { inClass: false, why: null };
+  const sentences = text.split(/\n+|(?<=[.!?;])\s+/).map((s) => s.trim()).filter(Boolean);
+  let relayed = false;
+  for (const s of sentences) {
+    if (/^inferred:/i.test(s)) continue;
+    if (STATUS.some((re) => re.test(s))) return { inClass: true, why: 'status' };
+    let bare = s; for (const re of NOT_A_FIGURE) bare = bare.replace(re, ' ');
+    if (FIGURE.test(bare) && (tool === 'mcp__consonance__call_chair' || RELAY.test(s))) relayed = true;
+  }
+  return relayed ? { inClass: true, why: 'relayed-figure' } : { inClass: false, why: null };
+}
+
 function main() {
   if (process.env[RUN_ENV] === '1') return process.exit(0);   // the second reader's own run: never recurse
 
@@ -93,25 +139,27 @@ function main() {
   const seat = (process.env.CONSONANCE_PANE || '').trim() || null;
   if (typeof text !== 'string' || !text.trim()) { record(dir, { seat, tool, ringSha: null, status: 'skipped-no-text' }); return process.exit(0); }
   const ringSha = crypto.createHash('sha256').update(text).digest('hex');
+  const toolUseId = payload.tool_use_id || null;   // D631: the same-turn note finds this ring's row by it
+  if (!classify(text, tool).inClass) { record(dir, { seat, tool, ringSha, toolUseId, status: 'skipped-class' }); return process.exit(0); }   // D631: out of the narrowed class, no model call
 
   let token;
-  try { token = acquireLock(dir); } catch (e) { record(dir, { seat, tool, ringSha, status: 'error', error: 'lock: ' + String(e && e.code || e).slice(0, 60) }); return process.exit(0); }
-  if (!token) { record(dir, { seat, tool, ringSha, status: 'skipped-busy' }); return process.exit(0); }
+  try { token = acquireLock(dir); } catch (e) { record(dir, { seat, tool, ringSha, toolUseId, status: 'error', error: 'lock: ' + String(e && e.code || e).slice(0, 60) }); return process.exit(0); }
+  if (!token) { record(dir, { seat, tool, ringSha, toolUseId, status: 'skipped-busy' }); return process.exit(0); }
 
   try {
     const child = spawn(process.execPath, [WORKER], {
       env: { ...process.env, [RUN_ENV]: '1' },
       detached: true, stdio: ['pipe', 'ignore', 'ignore'], windowsHide: true,
     });
-    child.on('error', (e) => { record(dir, { seat, tool, ringSha, status: 'error', error: 'spawn: ' + String(e && e.code || e).slice(0, 60) }); releaseLock(dir, token); });
+    child.on('error', (e) => { record(dir, { seat, tool, ringSha, toolUseId, status: 'error', error: 'spawn: ' + String(e && e.code || e).slice(0, 60) }); releaseLock(dir, token); });
     child.stdin.on('error', () => { /* the worker died before reading: its own row or the stale lock says so */ });
     setLockPid(dir, token, child.pid);
-    const job = { tool, seat, ringSha, text, token, dir, sessionId: payload.session_id || null, transcriptPath: payload.transcript_path || null, toolUseId: payload.tool_use_id || null };
+    const job = { tool, seat, ringSha, text, token, dir, sessionId: payload.session_id || null, transcriptPath: payload.transcript_path || null, toolUseId };
     child.unref();
     child.stdin.end(JSON.stringify(job), () => process.exit(0));
     setTimeout(() => process.exit(0), 1500).unref();   // whatever the pipe does, the hook is gone in under two seconds
   } catch (e) {
-    record(dir, { seat, tool, ringSha, status: 'error', error: 'spawn: ' + String(e && e.code || e).slice(0, 60) });
+    record(dir, { seat, tool, ringSha, toolUseId, status: 'error', error: 'spawn: ' + String(e && e.code || e).slice(0, 60) });
     releaseLock(dir, token);
     process.exit(0);
   }
@@ -119,4 +167,4 @@ function main() {
 
 if (require.main === module) { try { main(); } catch (_) { process.exit(0); } }   // fail OPEN, without exception
 
-module.exports = { RING_TOOLS, RUN_ENV, LOCK_STALE_MS, acquireLock, releaseLock, pidAlive };
+module.exports = { classify, RING_TOOLS, RUN_ENV, LOCK_STALE_MS, acquireLock, releaseLock, pidAlive };

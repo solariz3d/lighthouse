@@ -642,6 +642,19 @@ test('D454: hooks/README names exactly the files of install.ps1 $unmanaged as no
   assert.match(sentence, new RegExp('\\b' + words[listed.length] + '\\b'), 'and gives their number, ' + words[listed.length]);
 });
 
+// D631 (b): the second reader's same-turn NOTE waits for the worker's row, which takes 7.1 s at the median and 10.3 s at p90 (the live ledger,
+// 2026-11-03), so it cannot live under the installer's fixed 10 s. An entry's own Timeout is written instead; every other entry keeps 10.
+test('D631: an entry with its own Timeout is registered with it (the second reader\'s note, PostToolUse, 30 s); an entry without one keeps 10', () => {
+  const repo = mkRepo(), home = mkHome();
+  const r = run(repo, home, ['-Only', 'second-reader.js,second-reader-worker.js,second-reader-note.js']);
+  const post = [].concat(settings(home).hooks.PostToolUse || []), g = post.find((x) => x.matcher === SR);
+  assert.ok(g, 'no PostToolUse group on the two hand-back verbs: ' + JSON.stringify(post) + '\n' + r.out);
+  const note = [].concat(g.hooks).find((h) => /second-reader-note\.js"$/.test(h.command.replace(/\//g, '\\')));
+  assert.ok(note, JSON.stringify(g)); assert.strictEqual(note.timeout, 30);
+  const pre = groupsOf(home).find((x) => x.matcher === SR), sr = [].concat(pre.hooks).find((h) => /second-reader\.js"$/.test(h.command));
+  assert.strictEqual(sr.timeout, 10, 'an entry with no Timeout changed');
+});
+
 console.log(`\n${pass} passed, ${fail} failed`);
 fs.rmSync(tmp, { recursive: true, force: true });
 process.exit(fail ? 1 : 0);
