@@ -107,27 +107,31 @@ function readResponses(projectsDir, sinceMs = 0) {
   let costState = 0;
   let synthetic = 0;
   let read = 0;
+  // A file that cannot be stat'd or read is an ERROR, never a skip (D630): the old whole-file read threw ERR_STRING_TOO_LONG on every
+  // transcript past 536,870,888 bytes, the catch went on to the next file, and the table printed short with nothing to say so. Files
+  // are now read a line at a time (sourced.js eachLine), and a read that fails stops the count with the file's name.
+  const unreadable = (file, e) => new Error(`could not read ${file} (${e.code || e.message}); refusing to print a table that would leave it out`);
   for (const { file, dir } of listFiles(projectsDir)) {
-    try { if (fs.statSync(file).mtimeMs < sinceMs) continue; } catch (_) { continue; }
+    let st;
+    try { st = fs.statSync(file); } catch (e) { throw unreadable(file, e); }
+    if (st.mtimeMs < sinceMs) continue;
     read += 1;
-    let text;
-    try { text = fs.readFileSync(file, 'utf8'); } catch (_) { continue; }
     let keepWarm = false;
-    for (const line of text.split('\n')) {
-      if (!line) continue;
+    const onLine = (line) => {
+      if (!line) return;
       let v;
-      try { v = JSON.parse(line); } catch (_) { continue; }
-      if (v.type === 'cost-state') { costState += 1; continue; }
+      try { v = JSON.parse(line); } catch (_) { return; }
+      if (v.type === 'cost-state') { costState += 1; return; }
       if (v.type === 'user' && !v.isSidechain && v.message) {
         const t = textOf(v.message.content);
         if (t !== null && t.trim()) keepWarm = t.trim().startsWith(KEEP_WARM_PREFIX);
-        continue;
+        return;
       }
       const m = v.message;
-      if (!m || !m.usage || !m.id) continue;
-      if (m.model === '<synthetic>') { synthetic += 1; continue; }
+      if (!m || !m.usage || !m.id) return;
+      if (m.model === '<synthetic>') { synthetic += 1; return; }
       const ts = Date.parse(v.timestamp);
-      if (!Number.isFinite(ts)) continue;
+      if (!Number.isFinite(ts)) return;
       const u = m.usage;
       const n = (k) => (Number.isFinite(Number(u[k])) ? Number(u[k]) : 0);
       const row = { input: n('input_tokens'), output: n('output_tokens'), cacheWrite: n('cache_creation_input_tokens'), cacheRead: n('cache_read_input_tokens') };
@@ -139,7 +143,8 @@ function readResponses(projectsDir, sinceMs = 0) {
         if (ts < prev.ts) prev.ts = ts;
         prev.keepWarm = prev.keepWarm || keepWarm;
       }
-    }
+    };
+    try { require('./sourced.js').eachLine(file, onLine); } catch (e) { throw unreadable(file, e); }
   }
   return { responses, costState, synthetic, files: read };
 }
@@ -340,7 +345,8 @@ function parseArgs(argv, env) {
 if (require.main === module) {
   let opts;
   try { opts = parseArgs(process.argv.slice(2), process.env); } catch (e) { console.error(`usage.js: ${e.message}`); process.exit(2); }
-  const r = build(opts);
+  let r;
+  try { r = build(opts); } catch (e) { console.error(`usage.js: ${e.message}`); process.exit(1); }
   console.log(opts.json ? JSON.stringify(r, null, 1) : render(r));
 }
 

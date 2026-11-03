@@ -69,26 +69,27 @@ function newestTranscript() {
 }
 
 function scan(file) {
-  const lines = fs.readFileSync(file, 'utf8').split('\n');
+  // One line at a time (sourced.js eachLine): the old whole-file read threw ERR_STRING_TOO_LONG on a transcript past 536,870,888
+  // bytes (D630), and the transcripts this exists to read are the long ones.
   const hits = [];
   let assistantTurns = 0, userSaidTired = 0;
   let lastUserTired = false;
 
-  for (const line of lines) {
-    if (!line.trim()) continue;
-    let o; try { o = JSON.parse(line); } catch (_) { continue; }
-    if (o.isSidechain === true || o.isMeta === true) continue;
+  require('./sourced.js').eachLine(file, (line) => {
+    if (!line.trim()) return;
+    let o; try { o = JSON.parse(line); } catch (_) { return; }
+    if (o.isSidechain === true || o.isMeta === true) return;
     const joined = texts(o.message).join('\n');
-    if (!joined) continue;
+    if (!joined) return;
 
     if (o.type === 'user') {
       // Did the USER raise stopping first? Then an assistant reply about it is a RESPONSE, and the
       // card explicitly permits that: "believe them immediately". Tracked, never silently merged.
       lastUserTired = /\b(?:tired|sleep|bed|exhausted|call it|stop here|break|goodnight|good night|crash)\b/i.test(joined);
       if (lastUserTired) userSaidTired++;
-      continue;
+      return;
     }
-    if (o.type !== 'assistant') continue;
+    if (o.type !== 'assistant') return;
     assistantTurns++;
 
     for (const re of OFFRAMP) {
@@ -118,7 +119,7 @@ function scan(file) {
       });
       break; // one hit per turn; the count is turns-that-offered, not phrases
     }
-  }
+  });
   return { file, assistantTurns, userSaidTired, hits };
 }
 
