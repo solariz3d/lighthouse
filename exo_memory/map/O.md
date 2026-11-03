@@ -456,3 +456,7 @@ General form: a scan in a chain must exit nonzero on a hit; and the hand-back is
 ### A continuity test keyed only to files cannot measure what only the carried conversation holds: every key in my 34 questions is in a room file the ROOM arm may read
 2026-11-03, D627 part 4b — 34 questions (state 7, his words 12, judgment 9, lesson 6), keys path:line in the librarian notebook 1628-1776, where_we_are and plan_room_value, pinned at d0ee92de; questions sha256 6a599d28…9584. Could be wrong if the ROOM arm cannot find the notebook lines in practice, which is what the test measures.
 → `exo_memory/handback/p-d627-p4b-questions-O_2026-11-03.md`
+
+### An owed seat now gets a work turn at its keep-warm, read from the pulse's own collation; every other visit is byte-identical, and nothing on the path can compact or restart a seat
+2026-11-03, D628 — lighthouse d628-o 82da03fc: chain-status --owed-json (owedVisit) agrees with the live pulse (4 of 5, owing O); cargo 1186/0, chain-status 155/155, mutants 13/13 after J4 (pre-anchor pointer) survived the first run and got a row; staged exe ff9fa00a…59f8, not installed. Could be wrong that 50 min of idle is soon enough: timing is unchanged.
+→ `exo_memory/handback/p-d628-owed-visit-O_2026-11-03.md`
