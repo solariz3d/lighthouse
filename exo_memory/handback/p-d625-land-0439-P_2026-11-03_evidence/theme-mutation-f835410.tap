@@ -1,0 +1,334 @@
+TAP version 13
+# Subtest: control: the unmutated copy passes theme.test.js
+ok 1 - control: the unmutated copy passes theme.test.js
+  ---
+  duration_ms: 390.3063
+  type: 'test'
+  ...
+# Subtest: control: the unmutated copy passes sky.test.js
+ok 2 - control: the unmutated copy passes sky.test.js
+  ---
+  duration_ms: 283.9394
+  type: 'test'
+  ...
+# Subtest: control: the unmutated copy passes sky-crisp.test.js (D410, D416)
+ok 3 - control: the unmutated copy passes sky-crisp.test.js (D410, D416)
+  ---
+  duration_ms: 29304.4604
+  type: 'test'
+  ...
+# Subtest: mutation T1 any name sets a skin: applied, and caught by "each melody sets its own skin…"
+ok 4 - mutation T1 any name sets a skin: applied, and caught by "each melody sets its own skin…"
+  ---
+  duration_ms: 321.0833
+  type: 'test'
+  ...
+# Subtest: mutation T2 the head rounds the pick: applied, and caught by "the page sets the skin in its head…"
+ok 5 - mutation T2 the head rounds the pick: applied, and caught by "the page sets the skin in its head…"
+  ---
+  duration_ms: 309.8006
+  type: 'test'
+  ...
+# Subtest: mutation T3 the head names the melodies in another order: applied, and caught by "the page sets the skin in its head…"
+ok 6 - mutation T3 the head names the melodies in another order: applied, and caught by "the page sets the skin in its head…"
+  ---
+  duration_ms: 322.1755
+  type: 'test'
+  ...
+# Subtest: mutation T4 the boot does not follow the player: applied, and caught by "the page sets the skin in its head…"
+ok 7 - mutation T4 the boot does not follow the player: applied, and caught by "the page sets the skin in its head…"
+  ---
+  duration_ms: 350.5286
+  type: 'test'
+  ...
+# Subtest: mutation T14 the head ignores a saved theme: applied, and caught by "D394: the head reads the saved theme…"
+ok 8 - mutation T14 the head ignores a saved theme: applied, and caught by "D394: the head reads the saved theme…"
+  ---
+  duration_ms: 305.3257
+  type: 'test'
+  ...
+# Subtest: mutation T15 the head takes any saved text as a theme: applied, and caught by "D394: the head reads the saved theme…"
+ok 9 - mutation T15 the head takes any saved text as a theme: applied, and caught by "D394: the head reads the saved theme…"
+  ---
+  duration_ms: 298.2734
+  type: 'test'
+  ...
+# Subtest: mutation T16 sigil shows a skin: applied, and caught by "D394: Settings ▸ Theme has seven choices…"
+ok 10 - mutation T16 sigil shows a skin: applied, and caught by "D394: Settings ▸ Theme has seven choices…"
+  ---
+  duration_ms: 309.1845
+  type: 'test'
+  ...
+# Subtest: mutation T17 Skyline Night plays a melody of its own name: applied, and caught by "D405: Skyline Night is a sixth look…"
+ok 11 - mutation T17 Skyline Night plays a melody of its own name: applied, and caught by "D405: Skyline Night is a sixth look…"
+  ---
+  duration_ms: 306.8936
+  type: 'test'
+  ...
+# Subtest: mutation T18 the random start never lands on the night: applied, and caught by "D405: Skyline Night is a sixth look…"
+ok 12 - mutation T18 the random start never lands on the night: applied, and caught by "D405: Skyline Night is a sixth look…"
+  ---
+  duration_ms: 332.6793
+  type: 'test'
+  ...
+# Subtest: mutation T19 the boot turns a random night back into Skyline: applied, and caught by "D405: Skyline Night is a sixth look…"
+ok 13 - mutation T19 the boot turns a random night back into Skyline: applied, and caught by "D405: Skyline Night is a sixth look…"
+  ---
+  duration_ms: 312.9239
+  type: 'test'
+  ...
+# Subtest: mutation T5 a skin change keeps the old colours: applied, and caught by "the reader reads again…"
+ok 14 - mutation T5 a skin change keeps the old colours: applied, and caught by "the reader reads again…"
+  ---
+  duration_ms: 326.5669
+  type: 'test'
+  ...
+# Subtest: mutation T6 the reader watches the wrong attribute: applied, and caught by "the reader reads again…"
+ok 15 - mutation T6 the reader watches the wrong attribute: applied, and caught by "the reader reads again…"
+  ---
+  duration_ms: 315.3864
+  type: 'test'
+  ...
+# Subtest: mutation T7 a translucent token comes back opaque: applied, and caught by "the reader understands every colour form…"
+ok 16 - mutation T7 a translucent token comes back opaque: applied, and caught by "the reader understands every colour form…"
+  ---
+  duration_ms: 319.7559
+  type: 'test'
+  ...
+# Subtest: mutation T8 color(srgb) floats are rounded to bytes: applied, and caught by "the reader understands every colour form…"
+ok 17 - mutation T8 color(srgb) floats are rounded to bytes: applied, and caught by "the reader understands every colour form…"
+  ---
+  duration_ms: 320.8228
+  type: 'test'
+  ...
+# Subtest: mutation T9 solid keeps a skin's alpha: applied, and caught by "the reader understands every colour form…"
+ok 18 - mutation T9 solid keeps a skin's alpha: applied, and caught by "the reader understands every colour form…"
+  ---
+  duration_ms: 346.8548
+  type: 'test'
+  ...
+# Subtest: mutation T10 a missing token is black, not today's colour: applied, and caught by "the reader falls back…"
+ok 19 - mutation T10 a missing token is black, not today's colour: applied, and caught by "the reader falls back…"
+  ---
+  duration_ms: 317.5012
+  type: 'test'
+  ...
+# Subtest: mutation T11 an unreadable token is not reported: applied, and caught by "the reader falls back…"
+ok 20 - mutation T11 an unreadable token is not reported: applied, and caught by "the reader falls back…"
+  ---
+  duration_ms: 326.3936
+  type: 'test'
+  ...
+# Subtest: mutation T12 the 3D sky ignores the skin: applied, and caught by "SIGIL's 3D frame is the same…"
+ok 21 - mutation T12 the 3D sky ignores the skin: applied, and caught by "SIGIL's 3D frame is the same…"
+  ---
+  duration_ms: 320.4845
+  type: 'test'
+  ...
+# Subtest: mutation T13 SIGIL's grid token drifts from the literal: applied, and caught by "SIGIL's tokens are today's literals…"
+ok 22 - mutation T13 SIGIL's grid token drifts from the literal: applied, and caught by "SIGIL's tokens are today's literals…"
+  ---
+  duration_ms: 325.3614
+  type: 'test'
+  ...
+# Subtest: mutation S1 the sky follows the camera's position: applied, and caught by "moving or zooming without turning…"
+ok 23 - mutation S1 the sky follows the camera's position: applied, and caught by "moving or zooming without turning…"
+  ---
+  duration_ms: 323.3431
+  type: 'test'
+  ...
+# Subtest: mutation S2 the rays turn the other way: applied, and caught by "a sky feature moves on screen…"
+ok 24 - mutation S2 the rays turn the other way: applied, and caught by "a sky feature moves on screen…"
+  ---
+  duration_ms: 303.4173
+  type: 'test'
+  ...
+# Subtest: mutation S3 the shader builds its rays without the basis: applied, and caught by "the sky pass runs before the track…"
+ok 25 - mutation S3 the shader builds its rays without the basis: applied, and caught by "the sky pass runs before the track…"
+  ---
+  duration_ms: 306.8381
+  type: 'test'
+  ...
+# Subtest: mutation S4 the sky writes depth: applied, and caught by "the sky pass runs before the track…"
+ok 26 - mutation S4 the sky writes depth: applied, and caught by "the sky pass runs before the track…"
+  ---
+  duration_ms: 308.6689
+  type: 'test'
+  ...
+# Subtest: mutation S5 the pattern gets no time: applied, and caught by "the sky pass runs before the track…"
+ok 27 - mutation S5 the pattern gets no time: applied, and caught by "the sky pass runs before the track…"
+  ---
+  duration_ms: 326.7145
+  type: 'test'
+  ...
+# Subtest: mutation S6 none still draws a sky: applied, and caught by "'none' draws the very calls cbd7a40 drew…"
+ok 28 - mutation S6 none still draws a sky: applied, and caught by "'none' draws the very calls cbd7a40 drew…"
+  ---
+  duration_ms: 321.5565
+  type: 'test'
+  ...
+# Subtest: mutation S7 going back to none keeps the old sky: applied, and caught by "'none' draws the very calls cbd7a40 drew…"
+ok 29 - mutation S7 going back to none keeps the old sky: applied, and caught by "'none' draws the very calls cbd7a40 drew…"
+  ---
+  duration_ms: 327.2765
+  type: 'test'
+  ...
+# Subtest: mutation S8 an unknown style is quietly none: applied, and caught by "an unknown sky style fails loudly…"
+ok 30 - mutation S8 an unknown style is quietly none: applied, and caught by "an unknown sky style fails loudly…"
+  ---
+  duration_ms: 302.6627
+  type: 'test'
+  ...
+# Subtest: mutation S9 --sky-a falls back to black-ish, not the skin's sky: applied, and caught by "the skin names its sky…"
+ok 31 - mutation S9 --sky-a falls back to black-ish, not the skin's sky: applied, and caught by "the skin names its sky…"
+  ---
+  duration_ms: 300.0978
+  type: 'test'
+  ...
+# Subtest: mutation S10 the style word keeps its quotes: applied, and caught by "the skin names its sky…"
+ok 32 - mutation S10 the style word keeps its quotes: applied, and caught by "the skin names its sky…"
+  ---
+  duration_ms: 301.0542
+  type: 'test'
+  ...
+# Subtest: mutation S11 reduced motion still drifts: applied, and caught by "the drift stops under prefers-reduced-motion…"
+ok 33 - mutation S11 reduced motion still drifts: applied, and caught by "the drift stops under prefers-reduced-motion…"
+  ---
+  duration_ms: 307.4591
+  type: 'test'
+  ...
+# Subtest: mutation S12 the preview hands the sky no time: applied, and caught by "the drift stops under prefers-reduced-motion…"
+ok 34 - mutation S12 the preview hands the sky no time: applied, and caught by "the drift stops under prefers-reduced-motion…"
+  ---
+  duration_ms: 305.4425
+  type: 'test'
+  ...
+# Subtest: mutation S13 Skyline names no sky: applied, and caught by "the skin names its sky…"
+ok 35 - mutation S13 Skyline names no sky: applied, and caught by "the skin names its sky…"
+  ---
+  duration_ms: 318.5058
+  type: 'test'
+  ...
+# Subtest: mutation S14 Glass names no sky (D384 widened; D416: the river): applied, and caught by "Glass names the river sky…"
+ok 36 - mutation S14 Glass names no sky (D384 widened; D416: the river): applied, and caught by "Glass names the river sky…"
+  ---
+  duration_ms: 298.9802
+  type: 'test'
+  ...
+# Subtest: mutation S15 the registry leaves prism out (D384 widened): applied, and caught by "Glass names the river sky…"
+ok 37 - mutation S15 the registry leaves prism out (D384 widened): applied, and caught by "Glass names the river sky…"
+  ---
+  duration_ms: 303.5305
+  type: 'test'
+  ...
+# Subtest: mutation S16 the sky pass does not dither (D398): applied, and caught by "D398: the shared sky pass dithers…"
+not ok 38 - mutation S16 the sky pass does not dither (D398): applied, and caught by "D398: the shared sky pass dithers…"
+  ---
+  duration_ms: 299.305
+  type: 'test'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-e611\\app\\test\\theme-mutation.test.js:111:3'
+  failureType: 'testCodeFailure'
+  error: 'NOT CAUGHT; failing tests on the mutant: none'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\t180-e611\app\test\theme-mutation.test.js:114:12)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: mutation S17 Skyline Night names no sky (D405): applied, and caught by "D405: Skyline Night names the city sky…"
+ok 39 - mutation S17 Skyline Night names no sky (D405): applied, and caught by "D405: Skyline Night names the city sky…"
+  ---
+  duration_ms: 301.9325
+  type: 'test'
+  ...
+# Subtest: mutation P1 the sky pass sends no uPx: applied, and caught by "row 3…"
+ok 40 - mutation P1 the sky pass sends no uPx: applied, and caught by "row 3…"
+  ---
+  duration_ms: 29140.2737
+  type: 'test'
+  ...
+# Subtest: mutation P2 the moon's limb fades over 0.020 rad again: applied, and caught by "row 2…"
+ok 41 - mutation P2 the moon's limb fades over 0.020 rad again: applied, and caught by "row 2…"
+  ---
+  duration_ms: 29086.533
+  type: 'test'
+  ...
+# Subtest: mutation P3 a star is the old gaussian: applied, and caught by "row 1 (prism)…"
+ok 42 - mutation P3 a star is the old gaussian: applied, and caught by "row 1 (prism)…"
+  ---
+  duration_ms: 28774.3817
+  type: 'test'
+  ...
+# Subtest: mutation P4 the band has no filaments: applied, and caught by "row 5…"
+ok 43 - mutation P4 the band has no filaments: applied, and caught by "row 5…"
+  ---
+  duration_ms: 28797.6403
+  type: 'test'
+  ...
+# Subtest: mutation P5 an aurora star is a cell-sized gaussian again: applied, and caught by "row 1 (aurora)…"
+ok 44 - mutation P5 an aurora star is a cell-sized gaussian again: applied, and caught by "row 1 (aurora)…"
+  ---
+  duration_ms: 27146.9417
+  type: 'test'
+  ...
+# Subtest: mutation P6 a city star is a cell-sized gaussian again: applied, and caught by "row 1 (city)…"
+ok 45 - mutation P6 a city star is a cell-sized gaussian again: applied, and caught by "row 1 (city)…"
+  ---
+  duration_ms: 24046.1191
+  type: 'test'
+  ...
+# Subtest: mutation P7 a mote is a cell-sized gaussian again: applied, and caught by "row 1 (caustics)…"
+ok 46 - mutation P7 a mote is a cell-sized gaussian again: applied, and caught by "row 1 (caustics)…"
+  ---
+  duration_ms: 26963.1961
+  type: 'test'
+  ...
+# Subtest: mutation P8 a river star is a fixed angle, not a device pixel: applied, and caught by "row 1 (river)…"
+ok 47 - mutation P8 a river star is a fixed angle, not a device pixel: applied, and caught by "row 1 (river)…"
+  ---
+  duration_ms: 23006.7092
+  type: 'test'
+  ...
+# Subtest: mutation P9 the river's stars are a tenth as bright: applied, and caught by "row 6…"
+ok 48 - mutation P9 the river's stars are a tenth as bright: applied, and caught by "row 6…"
+  ---
+  duration_ms: 23045.5451
+  type: 'test'
+  ...
+# Subtest: mutation P10 the prism limb is a fixed angle, not device pixels: applied, and caught by "row 2…"
+ok 49 - mutation P10 the prism limb is a fixed angle, not device pixels: applied, and caught by "row 2…"
+  ---
+  duration_ms: 28132.1485
+  type: 'test'
+  ...
+# Subtest: mutation P11 Glass names the prism again: applied, and caught by "Glass names the river sky…"
+ok 50 - mutation P11 Glass names the prism again: applied, and caught by "Glass names the river sky…"
+  ---
+  duration_ms: 306.2169
+  type: 'test'
+  ...
+# Subtest: mutation P12 a river star is sized by the middle pixel everywhere, so it grows toward the screen's edges: applied, and caught by "row 1 (river)…"
+ok 51 - mutation P12 a river star is sized by the middle pixel everywhere, so it grows toward the screen's edges: applied, and caught by "row 1 (river)…"
+  ---
+  duration_ms: 22704.4075
+  type: 'test'
+  ...
+1..51
+# tests 51
+# suites 0
+# pass 50
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 332583.2868
+
+# bn: exit 1 in 333 s

@@ -1,0 +1,137 @@
+TAP version 13
+# Subtest: DPR: the backing store is the css size × devicePixelRatio, and the renderer draws at that size
+not ok 1 - DPR: the backing store is the css size × devicePixelRatio, and the renderer draws at that size
+  ---
+  duration_ms: 19.2103
+  type: 'test'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-e611\\app\\test\\render_proof.test.js:55:1'
+  failureType: 'testCodeFailure'
+  error: 'gl.depthFunc is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    drawVignette (C:\Users\nname\Desktop\worktrees\t180-e611\app\preview\renderer.js:495:29)
+    Object.draw (C:\Users\nname\Desktop\worktrees\t180-e611\app\preview\renderer.js:576:20)
+    frame (C:\Users\nname\Desktop\worktrees\t180-e611\app\preview\preview.js:414:16)
+    Object.step (C:\Users\nname\Desktop\worktrees\t180-e611\app\test\render_proof.test.js:42:63)
+    TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\t180-e611\app\test\render_proof.test.js:58:7)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.start (node:internal/test_runner/test:1015:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)
+  ...
+# Subtest: DPR: a change of devicePixelRatio or of the css size resizes on the next frame
+not ok 2 - DPR: a change of devicePixelRatio or of the css size resizes on the next frame
+  ---
+  duration_ms: 6.8779
+  type: 'test'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-e611\\app\\test\\render_proof.test.js:62:1'
+  failureType: 'testCodeFailure'
+  error: 'gl.depthFunc is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    drawVignette (C:\Users\nname\Desktop\worktrees\t180-e611\app\preview\renderer.js:495:29)
+    Object.draw (C:\Users\nname\Desktop\worktrees\t180-e611\app\preview\renderer.js:576:20)
+    frame (C:\Users\nname\Desktop\worktrees\t180-e611\app\preview\preview.js:414:16)
+    Object.step (C:\Users\nname\Desktop\worktrees\t180-e611\app\test\render_proof.test.js:42:63)
+    TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\t180-e611\app\test\render_proof.test.js:65:7)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+  ...
+# Subtest: DPR edges: missing or nonsense DPR is 1; a side is capped at 8192 with the aspect kept; zero size draws nothing
+ok 3 - DPR edges: missing or nonsense DPR is 1; a side is capped at 8192 with the aspect kept; zero size draws nothing
+  ---
+  duration_ms: 5.2776
+  type: 'test'
+  ...
+# Subtest: keys: Ctrl, Alt or Meta with C or B do not switch the camera; plain C and B do
+ok 4 - keys: Ctrl, Alt or Meta with C or B do not switch the camera; plain C and B do
+  ---
+  duration_ms: 0.1501
+  type: 'test'
+  ...
+# Subtest: keys in the frame loop: Ctrl+C leaves the camera where it was; C then moves it
+not ok 5 - keys in the frame loop: Ctrl+C leaves the camera where it was; C then moves it
+  ---
+  duration_ms: 8.4367
+  type: 'test'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-e611\\app\\test\\render_proof.test.js:89:1'
+  failureType: 'testCodeFailure'
+  error: 'gl.depthFunc is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    drawVignette (C:\Users\nname\Desktop\worktrees\t180-e611\app\preview\renderer.js:495:29)
+    Object.draw (C:\Users\nname\Desktop\worktrees\t180-e611\app\preview\renderer.js:576:20)
+    frame (C:\Users\nname\Desktop\worktrees\t180-e611\app\preview\preview.js:414:16)
+    Object.step (C:\Users\nname\Desktop\worktrees\t180-e611\app\test\render_proof.test.js:42:63)
+    TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\t180-e611\app\test\render_proof.test.js:91:75)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+  ...
+# Subtest: mount failure: no WebGL throws a PreviewMountError naming the reason, and shows it in the panel
+ok 6 - mount failure: no WebGL throws a PreviewMountError naming the reason, and shows it in the panel
+  ---
+  duration_ms: 0.522
+  type: 'test'
+  ...
+# Subtest: probe: the head lands in the middle of the build view, which looks along the growth direction
+not ok 7 - probe: the head lands in the middle of the build view, which looks along the growth direction
+  ---
+  duration_ms: 6.0022
+  type: 'test'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-e611\\app\\test\\render_proof.test.js:104:1'
+  failureType: 'testCodeFailure'
+  error: 'gl.depthFunc is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    drawVignette (C:\Users\nname\Desktop\worktrees\t180-e611\app\preview\renderer.js:495:29)
+    Object.draw (C:\Users\nname\Desktop\worktrees\t180-e611\app\preview\renderer.js:576:20)
+    frame (C:\Users\nname\Desktop\worktrees\t180-e611\app\preview\preview.js:414:16)
+    Object.step (C:\Users\nname\Desktop\worktrees\t180-e611\app\test\render_proof.test.js:42:63)
+    TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\t180-e611\app\test\render_proof.test.js:106:103)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+  ...
+# Subtest: probe: in overhead (fit to the whole track) the head is in frame
+not ok 8 - probe: in overhead (fit to the whole track) the head is in frame
+  ---
+  duration_ms: 4.8219
+  type: 'test'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-e611\\app\\test\\render_proof.test.js:115:1'
+  failureType: 'testCodeFailure'
+  error: 'gl.depthFunc is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    drawVignette (C:\Users\nname\Desktop\worktrees\t180-e611\app\preview\renderer.js:495:29)
+    Object.draw (C:\Users\nname\Desktop\worktrees\t180-e611\app\preview\renderer.js:576:20)
+    frame (C:\Users\nname\Desktop\worktrees\t180-e611\app\preview\preview.js:414:16)
+    Object.step (C:\Users\nname\Desktop\worktrees\t180-e611\app\test\render_proof.test.js:42:63)
+    TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\t180-e611\app\test\render_proof.test.js:117:128)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 3
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 151.9429

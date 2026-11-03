@@ -1,0 +1,47 @@
+1..4272
+# tests 4274
+# suites 0
+# pass 4241
+# fail 11
+# cancelled 0
+# skipped 21
+# todo 1
+# duration_ms 2566724.6872
+
+red rows (not ok, bar the TODO at 24):
+4327:not ok 683 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+4382:not ok 689 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms)
+5787:not ok 917 - control: the unmutated temp copy passes every test the mutants are run against
+7878:not ok 1244 - row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+7977:not ok 1258 - DPR: the backing store is the css size × devicePixelRatio, and the renderer draws at that size
+7998:not ok 1259 - DPR: a change of devicePixelRatio or of the css size resizes on the next frame
+8032:not ok 1262 - keys in the frame loop: Ctrl+C leaves the camera where it was; C then moves it
+8060:not ok 1264 - probe: the head lands in the middle of the build view, which looks along the growth direction
+8082:not ok 1265 - probe: in overhead (fit to the whole track) the head is in frame
+9766:not ok 1539 - row 9: the warning texts (the checker's red, amber and lap lines, and Track ▸ Pit lane…) read 4.5:1 or more on their own pixels in every look
+10075:not ok 1588 - mutation S16 the sky pass does not dither (D398): applied, and caught by "D398: the shared sky pass dithers…"
+
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-p625\\app\\test\\aclook.test.js:219:1'
+  error: |-
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-p625\\app\\test\\drag-frame.test.js:132:1'
+  error: 'aqua: the turn handle is on the overlay'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-p625\\app\\test\\drag-frame.test.js:192:1'
+  error: 'aqua, a 1000 m stretch with a left edge typed on an empty track drag: p95 7.9 / 8.4 ms (median 4.8 / 4.6), over 6.9 ms, 56.0 / 53.3 work frames a second (at most 120)'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-p625\\app\\test\\mutation.test.js:211:1'
+  error: 'the unmutated copy fails: DPR: the backing store is the css size × devicePixelRatio, and the renderer draws at that size (31.0263ms) | DPR: a change of devicePixelRatio or of the css size resizes on the next frame (13.377ms) | keys in the frame loop: Ctrl+C leaves the camera where it was; C then moves it (12.5019ms) | probe: the head lands in the middle of the build view, which looks along the growth direction (5.9211ms) | probe: in overhead (fit to the whole track) the head is in frame (9.3087ms)'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-p625\\app\\test\\release-frame.test.js:121:1'
+  error: 'aurora, letting go of a 1,000 m turn: handler 4.1, worst frame 6.9 / handler 3.8, worst frame 7.0 ms, over 6'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-p625\\app\\test\\render_proof.test.js:55:1'
+  error: 'gl.depthFunc is not a function'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-p625\\app\\test\\render_proof.test.js:62:1'
+  error: 'gl.depthFunc is not a function'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-p625\\app\\test\\render_proof.test.js:89:1'
+  error: 'gl.depthFunc is not a function'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-p625\\app\\test\\render_proof.test.js:104:1'
+  error: 'gl.depthFunc is not a function'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-p625\\app\\test\\render_proof.test.js:115:1'
+  error: 'gl.depthFunc is not a function'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-p625\\app\\test\\texture-page.test.js:266:1'
+  error: 'sigil: the checker lists a red and an amber ()'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-p625\\app\\test\\theme-mutation.test.js:111:3'
+  error: 'NOT CAUGHT; failing tests on the mutant: none'

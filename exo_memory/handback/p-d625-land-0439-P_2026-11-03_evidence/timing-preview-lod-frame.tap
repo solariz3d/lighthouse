@@ -1,0 +1,38 @@
+TAP version 13
+# Subtest: row 1: the whole 100 km track in the opening view holds one frame at 144 Hz (p95 <= 6.9 ms, the GPU's work included)
+ok 1 - row 1: the whole 100 km track in the opening view holds one frame at 144 Hz (p95 <= 6.9 ms, the GPU's work included)
+  ---
+  duration_ms: 76866.0242
+  type: 'test'
+  ...
+# p95 1.4 ms, 0 of 3379 over
+# Subtest: row 2: above the road, 37% of the way along, it holds one frame at 144 Hz too
+ok 2 - row 2: above the road, 37% of the way along, it holds one frame at 144 Hz too
+  ---
+  duration_ms: 4517.5424
+  type: 'test'
+  ...
+# p95 0.5 ms, 0 of 4020 over
+# Subtest: row 3: in the opening view the preview draws at most 40% of the triangles of the full mesh
+ok 3 - row 3: in the opening view the preview draws at most 40% of the triangles of the full mesh
+  ---
+  duration_ms: 1503.4023
+  type: 'test'
+  ...
+# 1114890 of 6248980 triangles drawn, 97 of 97 chunks thinned
+# Subtest: row 4: in the overhead view, with the pointer moving over the track, it holds one frame at 144 Hz (the hover pick included)
+ok 4 - row 4: in the overhead view, with the pointer moving over the track, it holds one frame at 144 Hz (the hover pick included)
+  ---
+  duration_ms: 3573.8357
+  type: 'test'
+  ...
+# p95 1.3 ms, 0 of 3239 over
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 89207.1784

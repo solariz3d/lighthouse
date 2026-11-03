@@ -1,0 +1,7 @@
+    Finished `release` profile [optimized] target(s) in 1m 25s
+    Finished 1 bundle at:
+t180-track-builder.exe: 15835648 bytes, no private paths
+T-180 Track Builder_0.4.39_x64-setup.exe: 8127677 bytes, no private paths
+release: G:\Consonance-tools\scratch-P-d625\target\release\bundle\nsis\T-180 Track Builder_0.4.39_x64-setup.exe
+575abd76581695be9b5311b7267a6be811a529bfe263b980fa8c70d0be02a9ca *G:/Consonance-tools/scratch-P-d625/target/release/bundle/nsis/T-180 Track Builder_0.4.39_x64-setup.exe
+f20a61fc3edb6f055e07e1abbeecef122191fc1f077561a97252dbf09f4d8a81 *G:/Consonance-tools/scratch-P-d625/target/release/t180-track-builder.exe

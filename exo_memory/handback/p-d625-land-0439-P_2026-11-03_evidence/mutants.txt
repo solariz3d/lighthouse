@@ -1,0 +1,4 @@
+?: applied 882 / caught 882 / NOT APPLIED 0 · control ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok
+C:\\Users\\nname\\Desktop\\worktrees\\t180-p625\\app\\test\\mutation.test.js: applied 0 / caught 0 / NOT APPLIED 0 · control not ok
+C:\\Users\\nname\\Desktop\\worktrees\\t180-p625\\app\\test\\theme-mutation.test.js: applied 1 / caught 0 / NOT APPLIED 0 / NOT CAUGHT 1
+all harnesses: applied 883 / caught 882 / NOT APPLIED 0
