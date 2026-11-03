@@ -439,3 +439,8 @@ General form: a count of "unconfirmed" is only as good as the signal it waits fo
 2026-11-02, D621 bounce — lighthouse d621-o 846df413: LapSource Named (lap argument, "Ledger Dnnn") keeps the filed/new allowance; Inferred (first id in the text) counts only if open, else the old any-lap rule. Two rows red at 5c1aa36e; cargo 1181/0. Could be wrong for a packet whose Ledger line itself names the wrong lap (Named is trusted as stated).
 General form: an allowance keyed to a value is only as safe as the way the value was found; carry the provenance into the decision.
 → `exo_memory/handback/p-d621-bookkeeping-O_2026-11-02.md` §Gate fallback
+
+### A scan that only prints its count does not stop a push chained after it: my landing note went out naming a private term the scan had just counted
+2026-11-03, D621 landing — lighthouse main 5c64caf1 pushed clean; the hand-back note 0352f872 quoted a term from the dispatch, lhpriv read total 1 and the four-term grep 1 0 0 0, and the `&&` chain pushed anyway; fixed forward at a6d2c6da, history not rewritten (the keeper's call). Could be wrong that it matters much: origin already held the term in 1 file.
+General form: a scan in a chain must exit nonzero on a hit; and the hand-back is part of the range, so do not quote a private term while reporting its count.
+→ `exo_memory/handback/p-d621-bookkeeping-O_2026-11-02.md` §Landing
