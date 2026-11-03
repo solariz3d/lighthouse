@@ -2,7 +2,7 @@
   "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
-    "BENIGN-TEST": 422,
+    "BENIGN-TEST": 426,
     "BENIGN-FIXTURE": 12,
     "REVIEW": 8,
     "DISGUISED": 15,
@@ -2149,6 +2149,13 @@
       "key": "consonance/tools/chain-status.test.js\u0000'a temp-dir fixture must not see C:\\Consonance\\data: ' + r.text);\u0000#1"
     },
     {
+      "file": "consonance/tools/chain-status.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.match(trim, /QUEUED E 24m, 2 waiting \\(receiver busy since \\d\\d:\\d\\d\\)/, trim);",
+      "key": "consonance/tools/chain-status.test.js\u0000assert.match(trim, /QUEUED E 24m, 2 waiting \\(receiver busy since \\d\\d:\\d\\d\\)/, trim);\u0000#1"
+    },
+    {
       "file": "consonance/tools/cite-check.js",
       "detector": "DRIVE",
       "verdict": "REVIEW",
@@ -2925,6 +2932,27 @@
       "verdict": "BENIGN-TEST",
       "text": "['wc -l \"C:/x/lighthouse/exo_memory/loop/run1/items/t1/data/events.log\" → 1847'],",
       "key": "consonance/tools/second-vantage.test.js\u0000['wc -l \"C:/x/lighthouse/exo_memory/loop/run1/items/t1/data/events.log\" → 1847'],\u0000#1"
+    },
+    {
+      "file": "consonance/tools/second-vantage.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepStrictEqual(sv.configuredRepos({ USERPROFILE: dir }), ['X:/a', 'X:/b']);",
+      "key": "consonance/tools/second-vantage.test.js\u0000assert.deepStrictEqual(sv.configuredRepos({ USERPROFILE: dir }), ['X:/a', 'X:/b']);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/second-vantage.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepStrictEqual(sv.configuredRepos({ USERPROFILE: dir, VANTAGE_REPOS: 'Y:/c;Y:/d' }), ['Y:/c', 'Y:/d']);",
+      "key": "consonance/tools/second-vantage.test.js\u0000assert.deepStrictEqual(sv.configuredRepos({ USERPROFILE: dir, VANTAGE_REPOS: 'Y:/c;Y:/d' }), ['Y:/c', 'Y:/d']);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/second-vantage.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "D632_FS.writeFileSync(D632_PATH.join(dir, '.consonance.json'), JSON.stringify({ vantage_repos: ['X:/a', 'X:/b'] }));",
+      "key": "consonance/tools/second-vantage.test.js\u0000D632_FS.writeFileSync(D632_PATH.join(dir, '.consonance.json'), JSON.stringify({ vantage_repos: ['X:/a', 'X:/b'] }));\u0000#1"
     },
     {
       "file": "consonance/tools/second-vantage.test.js",
