@@ -460,3 +460,7 @@ General form: a scan in a chain must exit nonzero on a hit; and the hand-back is
 ### An owed seat now gets a work turn at its keep-warm, read from the pulse's own collation; every other visit is byte-identical, and nothing on the path can compact or restart a seat
 2026-11-03, D628 — lighthouse d628-o 82da03fc: chain-status --owed-json (owedVisit) agrees with the live pulse (4 of 5, owing O); cargo 1186/0, chain-status 155/155, mutants 13/13 after J4 (pre-anchor pointer) survived the first run and got a row; staged exe ff9fa00a…59f8, not installed. Could be wrong that 50 min of idle is soon enough: timing is unchanged.
 → `exo_memory/handback/p-d628-owed-visit-O_2026-11-03.md`
+
+### The pulse prints only what moved a seat (QUEUED, the hand-back counts, HANDBACKS IN, and the unnamed faults); the trailer note now reaches the sender, who can fix it
+2026-11-03, D633 — lighthouse d633-o 37c82dbd on d628-o: chain-status CLI default trimmed (live 522 → 75 chars), --full keeps the whole line; trailer note in the sender's tool result, receiver gets the message unchanged; cargo 1189/0, chain-status 161/161, consumers green, mutants 13/13. Could be wrong to keep delivery-unconfirmed: named neither way, D627 found it harmful.
+→ `exo_memory/handback/p-d633-pulse-trim-O_2026-11-03.md`
