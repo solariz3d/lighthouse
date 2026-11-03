@@ -706,6 +706,8 @@ const DISPATCH_RE = /^chair injected \([^)]*\) -> ([0-9a-fA-F][0-9a-fA-F-]{5,}) 
  *  deliberately not required to read `Received`: a written-but-unconfirmed hand-back is still a
  *  hand-back the pane made, and the existing board-post signal never required a receipt either. */
 const CALL_LIB_RE = /^call_librarian ([A-Z][A-Z0-9]*) -> LIB \[/;
+// D628: the hand-back pointer inside a call_librarian audit row (the row clips the ring's text, and a pointer comes first by the rule).
+const HANDBACK_PTR_RE = /exo_memory\/handback\/[A-Za-z0-9._\-\/]+?\.md\b/;
 
 /** The librarian's fixed session id (main.rs LIBRARIAN_SID). Copied for the reason fromConfig()
  *  states: a hook must survive the repo moving. Used only to find the librarian's LETTER in
@@ -1076,6 +1078,7 @@ function collation(opts = {}) {
   let earliest = Infinity;
   let unreadable = 0;
   let fused = 0;
+  const pointers = new Map();     // D628, withPointers only: letter -> its newest call_librarian pointer since the anchor
   const rows = [];
   for (const raw of t.lines) {
     // COUNTED, never filtered away — residue.js's law, and it caught this file's own first draft.
@@ -1128,6 +1131,11 @@ function collation(opts = {}) {
     if (c) {
       const L = toLetter(c[1], letters);
       if (L && e.ts > (posted.get(L) || 0)) posted.set(L, e.ts);
+      // D628: the pointer the ring carried, for the librarian's owed visit. Only when asked, so every other caller's result is unchanged.
+      if (opts.withPointers && L && e.ts > anchor) {
+        const p = HANDBACK_PTR_RE.exec(String(e.text || ''));
+        if (p && e.ts >= ((pointers.get(L) || {}).at || 0)) pointers.set(L, { path: p[0], at: e.ts });
+      }
       continue;
     }
     if (String(e.pane) === 'chair') continue;   // the chair's own traffic is not a hand-back
@@ -1173,11 +1181,47 @@ function collation(opts = {}) {
   }
   const examined = dispatched.size;
   const round = [...dispatched.keys()].sort();
+  const ptr = opts.withPointers
+    ? { pointers: Object.fromEntries(round.filter((L) => pointers.has(L)).map((L) => [L, pointers.get(L).path])) } : {};
   if (owing.length) {
-    return { state: 'owing', examined, round, owing: owing.sort(), in: examined - owing.length, unconfirmed, fused, ...c3 };
+    return { state: 'owing', examined, round, owing: owing.sort(), in: examined - owing.length, unconfirmed, fused, ...c3, ...ptr };
   }
-  return { state: 'all-in', examined, round, in: examined, allIn, unconfirmed, fused, ...c3 };
+  return { state: 'all-in', examined, round, in: examined, allIn, unconfirmed, fused, ...c3, ...ptr };
 }
+
+/**
+ * D628: WHO IS OWED AN ACTION, for the keep-warm actuator (main.rs keep_warm_send, read_owed_state). The SAME verdict the
+ * pulse line prints, from the same code and the same anchor: `line()` shows the hand-back count only when the head lap's
+ * holder is `panes`, so this answers only then, and `n/a` otherwise. `owing` names the panes owed a hand-back; `all-in`
+ * means the librarian is owed the collation, with each letter's newest hand-back pointer from its call_librarian row.
+ * Read-only: it reads the ledger, the board and letters.json, and writes nothing.
+ */
+function owedVisit(opts = {}) {
+  const now = opts.now != null ? opts.now : Date.now();
+  const ledger = opts.ledger || LEDGER;
+  if (!ledger) return { state: 'unknown', why: 'cannot locate the ledger' };
+  const led = readLedger(ledger);
+  if (led.missing) return { state: 'unknown', why: 'no ledger at ' + ledger };
+  const head = openLaps(led.rows)[0] || null;
+  if (!head) return { state: 'n/a', why: 'no open lap' };
+  if (head.holder !== 'panes') return { state: 'n/a', lap: head.lap, holder: head.holder, why: 'the panes are not the holder' };
+  const store = path.dirname(ledger);
+  const board = opts.board !== undefined ? opts.board : path.join(store, 'board.jsonl');
+  const letters = opts.letters !== undefined ? opts.letters : path.join(store, 'letters.json');
+  if (!board || !fs.existsSync(board)) return { state: 'n/a', lap: head.lap, holder: head.holder, why: 'no board.jsonl in ' + store };
+  const prevFiled = chainLaps(led.rows).filter(L => L.filed).map(L => L.newest)
+    .filter(r => r.at < (head.at || 0)).sort((a, b) => b.at - a.at)[0];
+  const col = collation({ now, anchor: prevFiled ? prevFiled.at : 0, board, letters, withPointers: true, blindState: opts.blindState });
+  return { lap: head.lap, holder: head.holder, ...col };
+}
+
+/* D633, fix 5 (the keeper 08:29; plan_room_fixes_2_5 part D633; D627 part 3 measured each item): the kinds the PULSE prints. KEPT: QUEUED,
+ * the hand-back counts (what D628's owed visit reads) and HANDBACKS IN, plus what the plan named neither way: the ledger's own health, a
+ * bounced or unknown delivery, and a seat waiting on the keeper. DROPPED: STALE, dirty, the sync segment, the chain/holder/age/+N tail,
+ * unwitnessed/older/rows-only, fused, UNRECEIVED and delivery-unconfirmed (the chair's ruling, 08:48: D627 measured it false 32 of 32,
+ * and it cost seats checks; if D621's board receipt makes it real, 'unconfirmed' comes back here by name). Everything is still COMPUTED;
+ * only the print is trimmed, and `--full` prints the whole line. */
+const PULSE_KEEPS = new Set(['ledger', 'delivery', 'queued', 'waiting', 'handbacks']);
 
 function line(opts = {}) {
   const now = opts.now != null ? opts.now : Date.now();
@@ -1234,24 +1278,26 @@ function line(opts = {}) {
     };
   }
 
-  const parts = [];
+  // D633: every part carries its KIND, so the trimmed pulse (opts.trim, the CLI's default) prints only the kinds it keeps.
+  const parts = [], kinds = [];
+  const put = (k, s) => { kinds.push(k); parts.push(s); };
   // FIRST, by the plan's bar and for the reason the case gives: the verdict has to arrive before a head
   // that reads exactly like a healthy lap. Every stale open lap, not only the head — a stale lap behind a
   // newer open one used to be nothing but "+1 more open".
   if (stale.length) {
-    parts.push('STALE ' + stale.slice(0, LIST_CAP).map(s => s.lap + ' ' + ago(s.age) + ' (holder ' + s.holder + ')').join(', ')
+    put('stale', 'STALE ' + stale.slice(0, LIST_CAP).map(s => s.lap + ' ' + ago(s.age) + ' (holder ' + s.holder + ')').join(', ')
       + (stale.length > LIST_CAP ? ', +' + (stale.length - LIST_CAP) : ''));
   } else if (staleWhy) {
-    parts.push('STALE UNKNOWN \u2014 ' + staleWhy);
+    put('stale', 'STALE UNKNOWN \u2014 ' + staleWhy);
   }
   if (head) {
-    parts.push('chain: ' + head.lap + ' ' + (CHAIN_STAGES.has(head.chain) ? String(head.chain).toUpperCase() : 'MALFORMED'));
-    parts.push('holder ' + head.holder);
-    if (headUnwitnessed) parts.push('WORK LEG UNWITNESSED');
+    put('chain', 'chain: ' + head.lap + ' ' + (CHAIN_STAGES.has(head.chain) ? String(head.chain).toUpperCase() : 'MALFORMED'));
+    put('chain', 'holder ' + head.holder);
+    if (headUnwitnessed) put('chain', 'WORK LEG UNWITNESSED');
   } else {
     // No live position and something to report. `no open lap` is the honest head: the chain is
     // nowhere, and that is the state in which the count below matters most.
-    parts.push('chain: no open lap');
+    put('chain', 'chain: no open lap');
   }
   // THE COLLATION CLAIM, and it is applicable in exactly one state. `holder chair` and
   // `holder librarian` lines stay byte-identical to what they printed before this existed: the
@@ -1300,11 +1346,11 @@ function line(opts = {}) {
       + t.handbacks.slice(0, LIST_CAP).join(', ')
       + (t.handbacks.length > LIST_CAP ? ', +' + (t.handbacks.length - LIST_CAP) : '') + ')';
   }
-  parts.push(dirtyPart);
-  if (head && head.at) parts.push(ago(now - head.at));
-  if (open.length > 1) parts.push('+' + (open.length - 1) + ' more open');
-  if (led.unreadable) parts.push(led.unreadable + ' unreadable');
-  if (un.damaged) parts.push(un.damaged + ' lap(s) UNKNOWN, damaged rows');
+  put('dirty', dirtyPart);
+  if (head && head.at) put('chain', ago(now - head.at));
+  if (open.length > 1) put('chain', '+' + (open.length - 1) + ' more open');
+  if (led.unreadable) put('ledger', led.unreadable + ' unreadable');
+  if (un.damaged) put('ledger', un.damaged + ' lap(s) UNKNOWN, damaged rows');
   if (un.laps.length || un.older) {
     // The denominator IS the universe print, and it rides every claim rather than being filed in a
     // header the reader of the number never opens.
@@ -1317,52 +1363,53 @@ function line(opts = {}) {
     // NO SILENT CAP. What the window dropped is named in the line, not left for a reader to infer
     // from a count that quietly shrank (pane E, 3.2).
     if (un.older) s += ' \u00b7 ' + un.older + ' older beyond the ' + WINDOW + '-lap window';
-    parts.push(s);
+    put('unwitnessed', s);
   }
   // The universe rides the claim, and the UNKNOWN rides it too. Never silent on an unreadable
   // source: silence here reads as "nobody owes", which is the state the claim exists to announce.
   // CLAUSE 3 RIDES EVERY HOLDER. Printed before the collation segments because a hand-back that
   // could not be delivered outranks the question of who has handed back.
   if (col && col.undelivered && col.undelivered.length) {
-    parts.push('UNDELIVERED ' + col.undelivered.map(u => u.letter + ' (refused ' + ago(now - u.at) + ' ago)').join(', '));
+    put('delivery', 'UNDELIVERED ' + col.undelivered.map(u => u.letter + ' (refused ' + ago(now - u.at) + ' ago)').join(', '));
   }
   // CLAUSE 4 RIDES EVERY HOLDER, like clause 3, and for the same reason: a ring waiting at a busy seat is a fault under
   // any holder, and it is the one fault the sender cannot see after its first "queued" reply.
   const qp = queuedPart(queued.list, now);
-  if (qp) parts.push(qp);
+  if (qp) put('queued', qp);
   // CLAUSE 5 rides with clause 4: a ring written but never seen rendered is the same class of fault, one step later.
   const up = unreceivedPart(unrec);
-  if (up) parts.push(up);
+  if (up) put('unreceived', up);
   // CLAUSE 6: a seat waiting on the keeper says so, in the keeper's words — not a stall, not a turn running (D138).
   const wp = waitingPart(waiting);
-  if (wp) parts.push(wp);
-  if (queued.why) parts.push('queue UNKNOWN — ' + queued.why);
+  if (wp) put('waiting', wp);
+  if (queued.why) put('queued', 'queue UNKNOWN — ' + queued.why);
   if (col && col.refusedUnresolved) {
-    parts.push(col.refusedUnresolved + ' refusal(s) UNRESOLVED to a letter');
+    put('delivery', col.refusedUnresolved + ' refusal(s) UNRESOLVED to a letter');
   }
   if (col && col.deliveryUnknown) {
-    parts.push('delivery UNKNOWN — ' + col.deliveryUnknown);
+    put('delivery', 'delivery UNKNOWN — ' + col.deliveryUnknown);
   }
   if (showCollation && col && col.state === 'unknown') {
-    parts.push('collation UNKNOWN — ' + col.why);
+    put('handbacks', 'collation UNKNOWN — ' + col.why);
   } else if (showCollation && col && col.state === 'owing') {
-    parts.push('handbacks ' + col.in + ' of ' + col.examined + ' (owing ' + col.owing.join(',') + ')');
+    put('handbacks', 'handbacks ' + col.in + ' of ' + col.examined + ' (owing ' + col.owing.join(',') + ')');
   } else if (showCollation && col && col.state === 'all-in') {
-    parts.push('HANDBACKS IN, NOT COLLATED — ' + col.examined + ' of ' + col.examined +
+    put('handbacks', 'HANDBACKS IN, NOT COLLATED — ' + col.examined + ' of ' + col.examined +
       ' (' + col.round.join(',') + '), last ' + ago(now - col.allIn) + ' ago');
   }
-  if (col && col.unconfirmed) parts.push(col.unconfirmed + ' dispatch(es) delivery-unconfirmed');
+  if (col && col.unconfirmed) put('unconfirmed', col.unconfirmed + ' dispatch(es) delivery-unconfirmed');
   // A fused line is recovered, not cleaned: the count prints so the torn-append defect in
   // board_push stays visible from the one line everyone reads, instead of vanishing into a repair.
-  if (col && col.fused) parts.push(col.fused + ' board line(s) fused, rows recovered');
+  if (col && col.fused) put('fused', col.fused + ' board line(s) fused, rows recovered');
 
-  parts.push(inSync(path.dirname(opts.ledger || LEDGER || '.'), now));
+  put('sync', inSync(path.dirname(opts.ledger || LEDGER || '.'), now));
   // Only where a work-leg claim was actually made: a healthy lap's line stays byte-identical to what
   // it printed before this section existed. `rows only` is the limit belonging to THIS claim \u2014 that
   // `unwitnessed` is a fact about the ledger and not about the panes.
-  if (claim) parts.push('rows only');
+  if (claim) put('unwitnessed', 'rows only');
+  const shown = opts.trim ? parts.filter((_, i) => PULSE_KEEPS.has(kinds[i])) : parts;
   return {
-    text: parts.join(' \u00b7 '), why: null, laps: open.length,
+    text: shown.length ? shown.join(' \u00b7 ') : null, why: shown.length ? null : 'nothing the trimmed pulse keeps (D633)', laps: open.length,
     unwitnessed: un.laps.length, older: un.older, damaged: un.damaged,
   };
 }
@@ -1426,7 +1473,10 @@ function main(argv, out = console.log, err = console.error) {
   const i = argv.indexOf('--ledger');
   const ledger = i >= 0 ? argv[i + 1] : undefined;
   if (argv.includes('--replay')) return replay({ ledger }, out);
-  const r = line({ ledger });
+  // D628: the keep-warm actuator's question, one JSON object on stdout (owedVisit). Read-only, like every mode here.
+  if (argv.includes('--owed-json')) { out(JSON.stringify(owedVisit({ ledger }))); return 0; }
+  // D633: the CLI is the channel the pulse reads, so its default is the trimmed line; --full prints the whole one.
+  const r = line({ ledger, trim: !argv.includes('--full') });
   // D273 lap 2: the reason for a silence goes to stderr whether or not --why was given (still accepted). Run by a person it said nothing at all, which the
   // parity cold sweep scores MUTE; both pulse callers read stdout only, so the pulse is unchanged
   if (r.text) out(r.text);
@@ -1437,7 +1487,7 @@ function main(argv, out = console.log, err = console.error) {
 if (require.main === module) process.exit(main(process.argv.slice(2)));
 
 module.exports = {
-  line, openLaps, staleLaps, STALE_MS, chainLaps, unwitnessed, readLedger, dirtyCount, tree, ago, main, collation, toLetter, tail, replay,
+  line, openLaps, staleLaps, STALE_MS, chainLaps, unwitnessed, readLedger, dirtyCount, tree, ago, main, collation, toLetter, tail, replay, owedVisit,
   queueRow, queuedWaiting, queuedScan, QUEUED_WORKING_MS, QUEUED_BOUNDED_MS,
   ringRow, unreceived, UNRECEIVED_MS, UNRECEIVED_LOOKBACK_MS,
   openQuestion, waitingOnAnswer, findTranscript,

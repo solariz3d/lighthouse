@@ -178,6 +178,8 @@ const ENTRY = {
   // Added 2026-10-01 (D203) with second-reader.js, in the same change as its install.ps1 entry: the roster is discovered, this table is hand-kept.
   // Call site, not definition, per this table's header.
   'second-reader.js': 'try { main(); }',
+  // Added 2026-11-03 (D631) with second-reader-note.js, in the same change as its install.ps1 entry. Call site, not definition, per this table's header.
+  'second-reader-note.js': 'main().then(',
   // Added 2026-10-02 (D212) with sources-gate.js, in the same change as its install.ps1 entry. Call site, not definition, per this table's header.
   'sources-gate.js': 'try { main(); }',
   // Added 2026-10-08 (D273) for push-gate.js, delete-gate.js and ask-ending.js: all three were registered in install.ps1 with no row here, and this suite

@@ -13220,7 +13220,20 @@ fn keep_warm_send(app: &AppHandle, pane: &str, role: &str, idle: Duration, conte
         },
         Err(_) => (KEEP_WARM_TEXT.to_string(), None),
     };
-    let visiting = text != KEEP_WARM_TEXT;
+    // D628: a seat the pulse names as OWED gets a work turn in place of the visit; every other seat's text is exactly the above.
+    let work = if matches!(role, "committee" | "librarian") {
+        match read_owed_state() {
+            Ok(s) => read_letters().get(pane).and_then(|l| owed_work_text(l, role, &s, sent_ms)),
+            Err(why) => {
+                chair_audit(app, format!("keep-warm -> {}: the owed state was not read ({why}); the usual visit goes", short_id(pane)));
+                None
+            }
+        }
+    } else {
+        None
+    };
+    let owed = work.is_some();
+    let (text, visiting) = owed_visit_choice(text, work);
     let text = if visiting { format!("{text} (letter {nonce})") } else { text };
     if gate_or_queue(app, pane, &text, KEEP_WARM_LABEL).is_some() {
         let pulled = app.state::<Inbox>().withdraw_tail_if(pane, KEEP_WARM_LABEL);
@@ -13254,6 +13267,9 @@ fn keep_warm_send(app: &AppHandle, pane: &str, role: &str, idle: Duration, conte
         }
     }
     chair_audit(app, keep_warm_row(short_id(pane), role, idle, context, ok));
+    if owed && ok {
+        chair_audit(app, format!("keep-warm -> {}: OWED, so this visit went as a work turn naming the action (D628)", short_id(pane)));
+    }
     // D415: a ping left in the box is in the keeper's way, so it gets its own row.
     if let Ok(Submit::NotSubmitted { .. }) = wrote {
         chair_audit(app, format!("keep-warm -> {}: {}", short_id(pane), not_submitted_line(short_id(pane))));
@@ -13312,6 +13328,125 @@ fn visit_text_noting(answer: Option<&str>, refused: Option<&str>) -> String {
 /// D507: a working seat's visit, from the book: ITS OWN answer and ITS OWN refusal notice, nothing of any other seat's.
 fn seat_visit_text(b: &VisitBook, pane: &str) -> String {
     visit_text_noting(b.answers.get(pane).map(|s| s.as_str()), b.refused.get(pane).copied())
+}
+
+// ── D628: THE OWED VISIT (O; the keeper 08:12, "yes to fix 1, but make sure u dont lobotomize urself guy"; D627 part 3 rows 1b, 1c, 3) ──
+//
+// When the keep-warm timer comes due for a seat the pulse names as OWED (a pane in "handbacks X of Y (owing …)", or the librarian on
+// "HANDBACKS IN, NOT COLLATED"), the visit becomes a WORK turn naming the action. Every other visit is today's, byte for byte, Third Place
+// letters included. WHO is visited and WHEN is unchanged (keep_warm_decision is not touched): only what the one inject SAYS.
+//
+// THE GUARD: nothing here compacts, clears, restarts or trims any seat's conversation, CLAUDE.md, memory or shelf. The owed state is READ
+// from the pulse's own code (`chain-status.js --owed-json`, owedVisit: the same collation, the same anchor), never re-derived here, so the
+// visit and the pulse cannot disagree about who is owed. Unreadable means no change: the usual visit is sent, and a row says why.
+
+/// The pulse's verdict for the head lap, as `chain-status.js --owed-json` prints it. `state` is `owing`, `all-in`, `n/a` or `unknown`.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+struct OwedState {
+    lap: String,
+    state: String,
+    owing: Vec<String>,
+    round: Vec<String>,
+    examined: u64,
+    got: u64,
+    all_in_ms: Option<u64>,
+    pointers: BTreeMap<String, String>,
+}
+
+/// None for anything that is not one JSON object carrying a `state`: a reader that cannot be read changes nothing.
+fn owed_state_from_json(raw: &str) -> Option<OwedState> {
+    let v: serde_json::Value = serde_json::from_str(raw.trim()).ok()?;
+    let o = v.as_object()?;
+    let s = |k: &str| o.get(k).and_then(|x| x.as_str()).map(str::to_string);
+    let list = |k: &str| -> Vec<String> {
+        o.get(k).and_then(|x| x.as_array()).map(|a| a.iter().filter_map(|x| x.as_str().map(str::to_string)).collect()).unwrap_or_default()
+    };
+    Some(OwedState {
+        lap: s("lap").unwrap_or_default(),
+        state: s("state")?,
+        owing: list("owing"),
+        round: list("round"),
+        examined: o.get("examined").and_then(|x| x.as_u64()).unwrap_or(0),
+        got: o.get("in").and_then(|x| x.as_u64()).unwrap_or(0),
+        all_in_ms: o.get("allIn").and_then(|x| x.as_u64()),
+        pointers: o.get("pointers").and_then(|x| x.as_object())
+            .map(|m| m.iter().filter_map(|(k, x)| x.as_str().map(|p| (k.clone(), p.to_string()))).collect())
+            .unwrap_or_default(),
+    })
+}
+
+/// THE DECISION, pure: the work turn this seat is owed, or None (then its visit is today's). A pane is owed only while the pulse names
+/// its letter in `owing`; the librarian only when every hand-back of the round is in. The chair, the Third Place and a human-driven pane
+/// are never given a work turn by this path.
+fn owed_work_text(letter: &str, role: &str, s: &OwedState, now_ms: u64) -> Option<String> {
+    if s.lap.is_empty() {
+        return None;
+    }
+    match (role, s.state.as_str()) {
+        ("committee", "owing") if s.owing.iter().any(|l| l == letter) => Some(format!(
+            "[work turn — from the room, not the keeper, and not a keep-warm] Lap {lap}: the pulse has you owing a hand-back ({got} of \
+             {n} in). Finish the packet's work, write the hand-back to the path your packet names, append your map line, and ring \
+             call_librarian with the pointer. If you are blocked or waiting on something, ring call_librarian saying what.",
+            lap = s.lap, got = s.got, n = s.examined,
+        )),
+        ("librarian", "all-in") if !s.round.is_empty() => {
+            let ago = s.all_in_ms.map(|t| format!(", the last {} min ago", now_ms.saturating_sub(t) / 60_000)).unwrap_or_default();
+            let ptrs: Vec<String> = s.round.iter()
+                .map(|l| match s.pointers.get(l) { Some(p) => format!("{l}: {p}"), None => format!("{l}: no pointer on the board") })
+                .collect();
+            Some(format!(
+                "[work turn — from the room, not the keeper, and not a keep-warm] Lap {lap}: every hand-back is in and not collated \
+                 ({n} of {n}: {round}{ago}). The pointers: {ptrs}. Collate them and ring the chair with call_chair.",
+                lap = s.lap, n = s.round.len(), round = s.round.join(","), ptrs = ptrs.join("; "),
+            ))
+        }
+        _ => None,
+    }
+}
+
+/// The text the one inject carries, and whether it is a Third Place letter. A work turn replaces the visit and is NOT a letter, so its
+/// reply is never harvested as one and the seat's waiting answer stays in the book for its next real visit.
+fn owed_visit_choice(normal: String, work: Option<String>) -> (String, bool) {
+    match work {
+        Some(w) => (w, false),
+        None => {
+            let visiting = normal != KEEP_WARM_TEXT;
+            (normal, visiting)
+        }
+    }
+}
+
+const OWED_STATE_TIMEOUT: Duration = Duration::from_secs(8);
+
+/// Ask the pulse's own code who is owed: `node consonance/tools/chain-status.js --owed-json`, hidden, bounded, read-only. Its output is
+/// one small JSON line, far under a pipe's buffer, so the piped stdout cannot block the child.
+fn read_owed_state() -> Result<OwedState, String> {
+    let script = repo_root().ok_or("the repo root is not known")?.join("consonance").join("tools").join("chain-status.js");
+    let mut child = Command::new("node")
+        .arg(&script)
+        .arg("--owed-json")
+        .creation_flags(NO_WINDOW)
+        .stdin(Stdio::null())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::null())
+        .spawn()
+        .map_err(|e| format!("could not start node: {e}"))?;
+    let started = Instant::now();
+    loop {
+        match child.try_wait() {
+            Ok(Some(_)) => break,
+            Ok(None) if started.elapsed() > OWED_STATE_TIMEOUT => {
+                let _ = child.kill();
+                let _ = child.wait();
+                return Err(format!("chain-status --owed-json did not answer within {}s", OWED_STATE_TIMEOUT.as_secs()));
+            }
+            Ok(None) => std::thread::sleep(Duration::from_millis(50)),
+            Err(e) => return Err(format!("waiting on node failed: {e}")),
+        }
+    }
+    let mut out = String::new();
+    child.stdout.take().ok_or("no stdout")?.read_to_string(&mut out).map_err(|e| format!("reading its output failed: {e}"))?;
+    owed_state_from_json(&out).ok_or_else(|| "its output is not an owed state".to_string())
 }
 
 /// The visit hour the Third Place receives in place of "ok": every held line, by name, in one message.
@@ -24788,6 +24923,95 @@ mod keep_warm_visit_tests {
             "the refusal row is built from the seat and the rule, never the line");
         let tick = src.split("fn keep_warm_tick(").nth(1).unwrap().split("\n}\n").next().unwrap();
         assert!(tick.contains("keep_warm_harvest("), "the tick harvests replies");
+    }
+}
+
+// ── D628: a visit to a seat that is OWED an action becomes a work turn (O, 2026-11-03) ───────────────────────────────────────────────
+// The keeper, 08:12: "yes to fix 1, but make sure u dont lobotomize urself guy". D627 part 3 measured the gap: an idle seat's only turns were
+// keep-warm visits saying "not work", so the owed line in its own pulse could never be acted on (E owed 7 h through 8 visits, C 2 h 46 through 4).
+#[cfg(test)]
+mod owed_visit_tests {
+    use super::*;
+
+    fn owed(json: &str) -> OwedState { owed_state_from_json(json).expect("the fixture parses") }
+    // The shapes `chain-status.js --owed-json` prints (owedVisit), one per state.
+    const OWING: &str = r#"{"lap":"D628","holder":"panes","state":"owing","examined":2,"round":["C","O"],"owing":["O"],"in":1}"#;
+    const ALL_IN: &str = r#"{"lap":"D627","holder":"panes","state":"all-in","examined":4,"round":["A","C","E","P"],"in":4,"allIn":1000,"pointers":{"A":"exo_memory/handback/p-a.md","C":"exo_memory/handback/p-c.md"}}"#;
+    const NA: &str = r#"{"state":"n/a","lap":"D628","holder":"chair","why":"the panes are not the holder"}"#;
+    const NOW: u64 = 1000 + 65 * 60_000;
+
+    #[test]
+    fn an_owed_pane_gets_a_work_turn_naming_its_lap_and_the_action() {
+        let t = owed_work_text("O", "committee", &owed(OWING), NOW).expect("O is owing on D628");
+        for want in ["D628", "owing a hand-back", "1 of 2", "the path your packet names", "map line", "call_librarian"] {
+            assert!(t.contains(want), "missing {want:?} in {t}");
+        }
+        assert!(!t.starts_with("[keep-warm visit"), "a work turn must not wear the keep-warm frame (the tailer would hide it as a letter): {t}");
+        let (text, visiting) = owed_visit_choice(visit_text(None), Some(t.clone()));
+        assert_eq!(text, t, "the owed seat is sent the work turn, not the visit");
+        assert!(!visiting, "a work turn is not a Third Place letter: its reply must not be harvested as one");
+    }
+
+    #[test]
+    fn the_librarian_with_every_hand_back_in_gets_a_collation_turn_with_the_paths() {
+        let t = owed_work_text("M", "librarian", &owed(ALL_IN), NOW).expect("all in on D627");
+        for want in ["D627", "4 of 4", "A,C,E,P", "65 min", "exo_memory/handback/p-a.md", "exo_memory/handback/p-c.md", "E: no pointer on the board", "call_chair"] {
+            assert!(t.contains(want), "missing {want:?} in {t}");
+        }
+        assert!(!t.starts_with("[keep-warm visit"));
+    }
+
+    #[test]
+    fn a_seat_not_owed_keeps_its_keep_warm_byte_for_byte() {
+        for (letter, role, json) in [
+            ("C", "committee", OWING),    // in the round, already handed back
+            ("O", "librarian", OWING),    // the librarian is never owed a pane's hand-back
+            ("O", "committee", ALL_IN),   // all in: the action is the librarian's, not a pane's
+            ("O", "committee", NA),       // the panes are not the holder
+            ("M", "librarian", NA),
+            ("D", "main", OWING),         // the chair is not in the owed fix
+            ("O", "third_place", OWING),  // the Third Place keeps its letters
+            ("O", "human", OWING),        // a human-driven pane is never given work by the room
+        ] {
+            assert_eq!(owed_work_text(letter, role, &owed(json), NOW), None, "{letter} {role} {json}");
+        }
+        let v = visit_text(Some("the river was loud today"));
+        assert_eq!(owed_visit_choice(v.clone(), None), (v, true), "a seat's visit is unchanged, and still a letter");
+        assert_eq!(owed_visit_choice(KEEP_WARM_TEXT.to_string(), None), (KEEP_WARM_TEXT.to_string(), false), "the plain ok is unchanged");
+        assert_eq!(owed_work_text("O", "committee", &OwedState { lap: String::new(), ..owed(OWING) }, NOW), None, "no lap named: no work turn");
+    }
+
+    #[test]
+    fn an_unreadable_owed_state_changes_nothing() {
+        for raw in ["", "not json", "{}", r#"{"lap":"D628"}"#, "[1,2]"] {
+            assert_eq!(owed_state_from_json(raw), None, "{raw:?} must not read as a state");
+        }
+        let u = owed(r#"{"state":"unknown","why":"board unreadable"}"#);
+        assert_eq!(owed_work_text("O", "committee", &u, NOW), None);
+        assert_eq!(owed_work_text("M", "librarian", &u, NOW), None);
+    }
+
+    /// THE GUARD, in his words: "make sure u dont lobotomize urself". The change alters only what a visit SAYS. Nothing on the visit path
+    /// compacts, clears, restarts, kills, trims or rewrites any seat's carried conversation, CLAUDE.md, memory or shelf: the one write into a
+    /// pane is the one inject of `text`, and every text it can carry is a plain line that is not a slash command.
+    #[test]
+    fn the_guard_the_visit_path_only_changes_what_a_visit_says() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let body = |sig: &str| src.split(sig).nth(1).unwrap_or_else(|| panic!("{sig} moved")).split("\n}\n").next().unwrap().to_string();
+        let send = body("fn keep_warm_send(");
+        let path = [send.clone(), body("fn owed_work_text("), body("fn owed_visit_choice("), body("fn owed_state_from_json("), body("fn read_owed_state(")].join("\n");
+        for banned in ["/compact", "/clear", "/resume", "restart", "respawn", "relaunch", "kill_pane", "close_pane", "spawn_claude_pane",
+                       "remove_file", "fs::write", "truncate", "CLAUDE.md", "MEMORY.md", "shelf"] {
+            assert!(!path.contains(banned), "the visit path must not touch {banned:?}");
+        }
+        assert_eq!(send.matches("inject_to_pane(").count(), 1, "one write into the pane, as before");
+        assert!(send.contains("inject_to_pane(&app.state::<Panes>(), pane, &text, &app.state::<PaneEmus>())"), "and it writes `text`, nothing else");
+        assert!(send.contains("let (text, visiting) = owed_visit_choice(text, work);"), "the only new step chooses the text");
+        let reader = body("fn read_owed_state(");
+        assert!(reader.contains("\"--owed-json\"") && reader.contains("creation_flags(NO_WINDOW)"), "it only asks chain-status, hidden");
+        for t in [owed_work_text("O", "committee", &owed(OWING), NOW).unwrap(), owed_work_text("M", "librarian", &owed(ALL_IN), NOW).unwrap()] {
+            assert!(!t.trim_start().starts_with('/') && !t.contains("/compact") && !t.contains("/clear"), "a work turn is never a command: {t}");
+        }
     }
 }
 
