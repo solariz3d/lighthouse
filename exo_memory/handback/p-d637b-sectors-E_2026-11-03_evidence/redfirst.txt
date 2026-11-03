@@ -1,0 +1,4 @@
+S5 on the old row: tests 7 pass 7 fail 0
+S5 on the new row: tests 7 pass 6 fail 1 — the sector gate the search picks passes the export's own gate check (its dummies, as check
+S6 on the old row: tests 7 pass 7 fail 0
+S6 on the new row: tests 7 pass 6 fail 1 — the sector gate the search picks passes the export's own gate check (its dummies, as check
