@@ -42,13 +42,18 @@ The track: his `eq-ELYSIUM NEW.t180track` (saved 11-02 16:32), which `t180b_elys
 
 ## 3. Why: where each piece changes its turn and climb (`evidence/ramps-0692d11.txt`)
 
-At every one of the 23 joints over 2×, **the peak sits 5 m past the joint, or 11–16 m before it.** On this track each piece holds its turn and climb (nearly) constant through its middle and **does ALL its changing in its last ~14 m and its first ~15 m**:
-- p22: turn and climb change at 236–250 of 250 m;
-- p23: turn and climb change at 1–15 m.
-- The same shape for p23 to p31, p33 to p40, p27 to p29.
-  checked: `ramps.js` → "turn changes in p22 (before its end) 236-250, in p23 (from its start) 1-15; climb 236-250 / 1-15"
+Of the 23 joints over 2×:
+- **14 peak exactly 5 m past the joint**;
+- 6 peak 11–16 m before it;
+- 2 peak 13–14 m after it;
+- 1 at the joint.
 
-So the turn and the climb do not merely come to rest at the joint (§5 of D626, a pause in jerk). **Every change in curvature on this track is squeezed into the 30 m around a joint**, and the jerk of each change is concentrated there: hundreds of g/s, where mid-piece reads single figures. That is the same shape the bank had before D626 (its whole change in a 10–20 m rounding), now in turn and climb.
+Two shapes of piece make them:
+- **From p19 to p40 (s 9.1–23.6 km): every change at the ends.** The piece after the joint changes its turn or climb only in its first 15 m (16 of the 23), and on 13 of them the piece before changes only in its last 14 m (e.g. p22: turn and climb at 236–250 of 250 m; p23: at 1–15 m; the same for p23 to p31 and p33 to p40). Through the middle they are (nearly) constant. Here **all of a piece's change in curvature is squeezed into the 30 m around a joint**, so its jerk is concentrated there: hundreds of g/s, where mid-piece reads single figures.
+- **s 5.7–6.6 km (p8 to p15): short pieces of 100–150 m** whose turn changes along most of their length (p10 and p12 over 1–100 m) and eases to a zero rate at the joint. The jerk peaks 11–16 m before the joint, where that ease is sharpest. These are the three the librarian named.
+  checked: `ramps.js` → "p22|p23 … 236-250 / 1-15 … 236-250 / 1-15"; the peak column → 14 rows at 5.0
+
+So the turn and the climb do not merely come to rest at the joint (§5 of D626, a pause in jerk): the ends of each piece are where its curvature changes, quickly. That is the same shape the bank had before D626 (its whole change in a 10–20 m rounding), now in turn and climb.
 
 inferred: these are the knot spans at the ends of a fitted piece (knots every 20 m; a piece whose curvature eases to a zero rate at both ends puts its whole change in the first and last span). The fix belongs where the bank's went: rounding the corner over the length the change needs.
 
