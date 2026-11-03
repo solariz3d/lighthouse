@@ -58,3 +58,29 @@ Part 4c, the three-arm continuity test, is running; its line is added when A and
 7. Retire the NEITHER list to attic/ only after he has seen this. One mv returns each.
 
 OUTPUT → NEXT: changed — value, not use, now decides what stays; the idle-gap fix is the first recommendation.
+
+## Part 4c, the continuity test: unblinded and scored (librarian, 2026-11-03)
+Grades: `handback/p-d627-p4c-grades-P_2026-11-03.md` (git-blob b181d583). Map (`arms/librarian-only/key-map.json`): room 8f2e, summary dc6b, board e958, chain 5e11.
+
+| arm | score of 34 (r1 / r2) | judgment + his words RIGHT of 21 | don't-know | wrong or confabulated |
+|---|---|---|---|---|
+| ROOM | 32.5 / 33.5 | 19 / 20 | 0 | 0 |
+| ROOM + SUMMARY | 32 / 33 | 18 / 19 | 0 | 0 |
+| ROOM + BOARD | 33 / 33 | 20 / 19 | 0 | 0 |
+| ROOM + CHAIN | 20 / 20 | 8 / 8 | 11 / 11 | 0 |
+
+**Against A's registration:**
+- "Within the spread": YES. ROOM's 19.5 on judgment and his words is above CHAIN's lower run (8). By the registered words, "the chain adds little that the room does not".
+- "Falls between": NO. The order is CHAIN well below the other three, not ROOM < SUMMARY < CHAIN.
+
+**What the numbers mean, read from the answers:**
+- **The CHAIN fork lost by not looking.** Both runs say they "opened no file" and answered from memory alone. Its carried conversation starts at the 02:58Z compaction, so it answered Tuesday fully, and said "don't know" to 11 Sunday and Monday items that the files held. Every arm that read the files got them.
+- **This is one finding twice:** a seat carrying a long conversation trusts it and does not reach for the shelf (memory fluency-is-not-a-check, here measured). Its honesty held: 0 confabulated in all eight runs.
+- **The room recovered the last 48 h nearly whole,** his words included. inferred: that is because this seat writes his words and rulings into its notes in the turn.
+
+**What this test could NOT measure, said plainly:**
+- O's keys were sourced from files, so every question had a file answer by construction. A question whose only answer lives in the carried conversation (the unwritten lesson, the attunement) could not be asked. Part 4a's lost release precedent is that class, and it was found in the record, so it is not covered by this test.
+- The grader saw each file's source class in its first lines (P's unblinding table), so the grading was blind to the code but not to the condition.
+- One grader, on the same model.
+
+**Reading for him:** the room carries what gets written down, and it carried the last two days almost perfectly. The carried conversation, used alone, did worse, because it didn't check. His fear is smaller than it looked for facts, words and decisions. It is not tested for what is never written down. The defence for that class stays: write each lesson into the room in the turn it is learned.
