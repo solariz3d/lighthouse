@@ -79,6 +79,15 @@ function releaseLock(dir, token) {
   } catch (_) { /* already gone */ }
 }
 
+// THE NARROWED TRIGGER (D631, 2026-11-03; plan_room_fixes_2_5_2026-11-03.md; the librarian's rulings, the keeper's veto open).
+// The model call runs on call_chair rings ONLY: the librarian relaying the panes to the chair. A call_librarian ring is one `skipped-class` row
+// (seat, tool, sha, tool_use_id; no text) and no worker.
+// POST-HOC, registered as such: a lexical class (relayed figures and status claims) was registered first (acbc2a60) and replayed on D627's 80
+// sampled rings: it kept 8 of 8 real errors but still read 77 of 80. All 8 were call_chair rings, which this keeps at 53 of 80 in sample and
+// 34 of 80 out of it (exo_memory/handback/p-d631-reader-narrowed-P_2026-11-03.md). FALSIFIER, from the ruling: revisit if, over two weeks, the
+// shown notes are real errors under 5%, or an error in a pane's ring (call_librarian, now unread) is found that nothing else caught.
+const READ_TOOLS = new Set(['mcp__consonance__call_chair']);
+
 function main() {
   if (process.env[RUN_ENV] === '1') return process.exit(0);   // the second reader's own run: never recurse
 
@@ -93,25 +102,27 @@ function main() {
   const seat = (process.env.CONSONANCE_PANE || '').trim() || null;
   if (typeof text !== 'string' || !text.trim()) { record(dir, { seat, tool, ringSha: null, status: 'skipped-no-text' }); return process.exit(0); }
   const ringSha = crypto.createHash('sha256').update(text).digest('hex');
+  const toolUseId = payload.tool_use_id || null;   // D631: the same-turn note finds this ring's row by it
+  if (!READ_TOOLS.has(tool)) { record(dir, { seat, tool, ringSha, toolUseId, status: 'skipped-class' }); return process.exit(0); }   // D631: not a call_chair ring, no model call
 
   let token;
-  try { token = acquireLock(dir); } catch (e) { record(dir, { seat, tool, ringSha, status: 'error', error: 'lock: ' + String(e && e.code || e).slice(0, 60) }); return process.exit(0); }
-  if (!token) { record(dir, { seat, tool, ringSha, status: 'skipped-busy' }); return process.exit(0); }
+  try { token = acquireLock(dir); } catch (e) { record(dir, { seat, tool, ringSha, toolUseId, status: 'error', error: 'lock: ' + String(e && e.code || e).slice(0, 60) }); return process.exit(0); }
+  if (!token) { record(dir, { seat, tool, ringSha, toolUseId, status: 'skipped-busy' }); return process.exit(0); }
 
   try {
     const child = spawn(process.execPath, [WORKER], {
       env: { ...process.env, [RUN_ENV]: '1' },
       detached: true, stdio: ['pipe', 'ignore', 'ignore'], windowsHide: true,
     });
-    child.on('error', (e) => { record(dir, { seat, tool, ringSha, status: 'error', error: 'spawn: ' + String(e && e.code || e).slice(0, 60) }); releaseLock(dir, token); });
+    child.on('error', (e) => { record(dir, { seat, tool, ringSha, toolUseId, status: 'error', error: 'spawn: ' + String(e && e.code || e).slice(0, 60) }); releaseLock(dir, token); });
     child.stdin.on('error', () => { /* the worker died before reading: its own row or the stale lock says so */ });
     setLockPid(dir, token, child.pid);
-    const job = { tool, seat, ringSha, text, token, dir, sessionId: payload.session_id || null, transcriptPath: payload.transcript_path || null, toolUseId: payload.tool_use_id || null };
+    const job = { tool, seat, ringSha, text, token, dir, sessionId: payload.session_id || null, transcriptPath: payload.transcript_path || null, toolUseId };
     child.unref();
     child.stdin.end(JSON.stringify(job), () => process.exit(0));
     setTimeout(() => process.exit(0), 1500).unref();   // whatever the pipe does, the hook is gone in under two seconds
   } catch (e) {
-    record(dir, { seat, tool, ringSha, status: 'error', error: 'spawn: ' + String(e && e.code || e).slice(0, 60) });
+    record(dir, { seat, tool, ringSha, toolUseId, status: 'error', error: 'spawn: ' + String(e && e.code || e).slice(0, 60) });
     releaseLock(dir, token);
     process.exit(0);
   }
@@ -119,4 +130,4 @@ function main() {
 
 if (require.main === module) { try { main(); } catch (_) { process.exit(0); } }   // fail OPEN, without exception
 
-module.exports = { RING_TOOLS, RUN_ENV, LOCK_STALE_MS, acquireLock, releaseLock, pidAlive };
+module.exports = { READ_TOOLS, RING_TOOLS, RUN_ENV, LOCK_STALE_MS, acquireLock, releaseLock, pidAlive };
